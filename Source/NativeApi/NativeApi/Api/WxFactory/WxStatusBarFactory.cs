@@ -62,7 +62,7 @@ namespace NativeApi.Api
         public static void SetStatusStyles(IntPtr handle, int[] styles){}
 
         // Get the position and size of the field's internal bounding rectangle
-        public static Int32Rect GetFieldRect(IntPtr handle, int i) => default;
+        public static RectI GetFieldRect(IntPtr handle, int i) => default;
 
         // sets the minimal vertical size of the status bar
         public static void SetMinHeight(IntPtr handle, int height) { }

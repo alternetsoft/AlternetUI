@@ -85,7 +85,7 @@ namespace Alternet.UI
 
             if (source != null)
             {
-                return Rect.Parse(source);
+                return RectD.Parse(source);
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -107,9 +107,9 @@ namespace Alternet.UI
         /// <param name="destinationType"> The type to which this will convert the Rect instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Rect)
+            if (destinationType != null && value is RectD)
             {
-                Rect instance = (Rect)value;
+                RectD instance = (RectD)value;
 
                 if (destinationType == typeof(string))
                 {

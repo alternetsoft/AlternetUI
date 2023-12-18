@@ -26,15 +26,15 @@ namespace LayoutSample
             }
         }
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             var image = Image;
             if (image == null)
-                return new Size();
+                return new SizeD();
 
             var size = image.SizeDip(this);
             var zoom = Zoom;
-            return new Size(size.Width * zoom, size.Height * zoom);
+            return new SizeD(size.Width * zoom, size.Height * zoom);
         }
 
         protected override void OnPaint(PaintEventArgs e)

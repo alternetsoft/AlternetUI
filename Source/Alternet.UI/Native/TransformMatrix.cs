@@ -165,13 +165,13 @@ namespace Alternet.UI.Native
             NativeApi.TransformMatrix_Invert_(NativePointer);
         }
         
-        public Alternet.Drawing.Point TransformPoint(Alternet.Drawing.Point point)
+        public Alternet.Drawing.PointD TransformPoint(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
             return NativeApi.TransformMatrix_TransformPoint_(NativePointer, point);
         }
         
-        public Alternet.Drawing.Size TransformSize(Alternet.Drawing.Size size)
+        public Alternet.Drawing.SizeD TransformSize(Alternet.Drawing.SizeD size)
         {
             CheckDisposed();
             return NativeApi.TransformMatrix_TransformSize_(NativePointer, size);
@@ -259,10 +259,10 @@ namespace Alternet.UI.Native
             public static extern void TransformMatrix_Invert_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point TransformMatrix_TransformPoint_(IntPtr obj, Alternet.Drawing.Point point);
+            public static extern Alternet.Drawing.PointD TransformMatrix_TransformPoint_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size TransformMatrix_TransformSize_(IntPtr obj, Alternet.Drawing.Size size);
+            public static extern Alternet.Drawing.SizeD TransformMatrix_TransformSize_(IntPtr obj, Alternet.Drawing.SizeD size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TransformMatrix_IsEqualTo_(IntPtr obj, IntPtr other);

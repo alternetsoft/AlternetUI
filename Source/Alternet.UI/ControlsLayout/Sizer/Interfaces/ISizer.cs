@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Does the actual calculation of children's minimal sizes.
         /// </summary>
-        Int32Size CalcMin();
+        SizeI CalcMin();
 
         /// <summary>
         /// Appends a child to the sizer.
@@ -514,17 +514,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the current size of the sizer.
         /// </summary>
-        Int32Size GetSize();
+        SizeI GetSize();
 
         /// <summary>
         /// Gets the current position of the sizer.
         /// </summary>
-        Int32Point GetPosition();
+        PointI GetPosition();
 
         /// <summary>
         /// Gets the minimal size of the sizer.
         /// </summary>
-        Int32Size GetMinSize();
+        SizeI GetMinSize();
 
         /// <summary>
         /// Recalculates sizes of the items. It is better to use <see cref="Layout"/>.
@@ -548,7 +548,7 @@ namespace Alternet.UI
         /// the display) and maximum control size if previously set by
         /// <see cref="Control.MaximumSize"/>.
         /// </remarks>
-        Int32Size ComputeFittingClientSize(Control control);
+        SizeI ComputeFittingClientSize(Control control);
 
         /// <summary>
         /// Like <see cref="ComputeFittingClientSize"/>, but converts the result into control size.
@@ -558,7 +558,7 @@ namespace Alternet.UI
         /// The returned value is suitable for passing to <see cref="Control.Size"/> or
         /// <see cref="Control.MinimumSize"/>.
         /// </remarks>
-        Int32Size ComputeFittingWindowSize(Control control);
+        SizeI ComputeFittingWindowSize(Control control);
 
         /// <summary>
         /// Tells the sizer to resize the control so that its client area matches the sizer's
@@ -569,7 +569,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This is commonly done in the constructor of the control itself.
         /// </remarks>
-        Int32Size Fit(Control control);
+        SizeI Fit(Control control);
 
         /// <summary>
         /// Tell the sizer to resize the virtual size of the control to match the sizer's minimal size.

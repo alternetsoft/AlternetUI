@@ -18,7 +18,7 @@ namespace Alternet.UI
 
             public abstract void Layout();
 
-            public abstract Size GetPreferredSize(Size availableSize);
+            public abstract SizeD GetPreferredSize(SizeD availableSize);
 
             public class AlignedPosition
             {

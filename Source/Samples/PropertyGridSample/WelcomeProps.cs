@@ -39,10 +39,10 @@ namespace PropertyGridSample
         Font asFont = Font.Default;
         Brush asBrush = Brush.Default;
         Pen asPen = Pen.Default;
-        Size asSize = new(26, 30);
+        SizeD asSize = new(26, 30);
         Thickness asThickness = new(126, 50, 80, 24);
-        Rect asRect = new(51, 82, 354, 40);
-        Point asPoint = new(50, 85);
+        RectD asRect = new(51, 82, 354, 40);
+        PointD asPoint = new(50, 85);
 
         static WelcomeProps()
         {
@@ -205,7 +205,7 @@ namespace PropertyGridSample
         }
 
         [Category(CategoryStruct)]
-        public Size AsSize
+        public SizeD AsSize
         {
             get => asSize;
             set => asSize = value;
@@ -219,14 +219,14 @@ namespace PropertyGridSample
         }
 
         [Category(CategoryStruct)]
-        public Rect AsRect
+        public RectD AsRect
         {
             get => asRect;
             set => asRect = value;
         }
 
         [Category(CategoryStruct)]
-        public Point AsPoint
+        public PointD AsPoint
         {
             get => asPoint;
             set => asPoint = value;

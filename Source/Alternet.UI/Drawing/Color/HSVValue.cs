@@ -54,7 +54,7 @@ namespace Alternet.Drawing
             left.Hue == right.Hue && left.Saturation == right.Saturation && left.Value == right.Value;
 
         /// <summary>
-        /// Gets the hash code for this <see cref='Rect'/>.
+        /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
         public override readonly int GetHashCode() => HashCode.Combine(Hue, Saturation, Value);
 

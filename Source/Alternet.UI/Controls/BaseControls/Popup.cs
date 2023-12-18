@@ -20,7 +20,7 @@ namespace Alternet.UI
         {
             SetVisibleValue(false);
 
-            Bounds = new Rect(0, 0, 100, 100);
+            Bounds = new RectD(0, 0, 100, 100);
         }
 
         /*/// <summary>
@@ -119,7 +119,7 @@ namespace Alternet.UI
         /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
         /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
         /// </remarks>
-        public void SetPositionInPixels(Int32Point ptOrigin, Int32Size sizePopup)
+        public void SetPositionInPixels(PointI ptOrigin, SizeI sizePopup)
         {
             Handler.NativeControl.Position(ptOrigin, sizePopup);
         }
@@ -163,8 +163,8 @@ namespace Alternet.UI
                 if (mode == WindowSizeToContentMode.None)
                     return;
 
-                var newSize = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                if (newSize != Size.Empty)
+                var newSize = GetChildrenMaxPreferredSizePadded(new SizeD(double.PositiveInfinity, double.PositiveInfinity));
+                if (newSize != SizeD.Empty)
                 {
                     var currentSize = Control.ClientSize;
                     switch (mode)
@@ -184,7 +184,7 @@ namespace Alternet.UI
                             throw new Exception();
                     }
 
-                    Control.ClientSize = newSize + new Size(1, 0);
+                    Control.ClientSize = newSize + new SizeD(1, 0);
                     Control.ClientSize = newSize;
                     Control.Refresh();
                     NativeControl.SendSizeEvent();

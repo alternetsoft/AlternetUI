@@ -128,16 +128,16 @@ namespace NativeApi.Api
         public static bool SetCustomBoxItemMinSize(IntPtr handle, int index,
             int width, int height) => default;
 
-        public static Int32Size GetSize(IntPtr handle) => default;
-        public static Int32Point GetPosition(IntPtr handle) => default;
-        public static Int32Size GetMinSize(IntPtr handle) => default;
-        public static Int32Size CalcMin(IntPtr handle) => default;
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
+        public static SizeI GetSize(IntPtr handle) => default;
+        public static PointI GetPosition(IntPtr handle) => default;
+        public static SizeI GetMinSize(IntPtr handle) => default;
+        public static SizeI CalcMin(IntPtr handle) => default;
+        public static void RepositionChildren(IntPtr handle, SizeI minSize) { }
         public static void RecalcSizes(IntPtr handle) { }
         public static void Layout(IntPtr handle) { }
-        public static Int32Size ComputeFittingClientSize(IntPtr handle, IntPtr window) => default;
-        public static Int32Size ComputeFittingWindowSize(IntPtr handle, IntPtr window) => default;
-        public static Int32Size Fit(IntPtr handle, IntPtr window) => default;
+        public static SizeI ComputeFittingClientSize(IntPtr handle, IntPtr window) => default;
+        public static SizeI ComputeFittingWindowSize(IntPtr handle, IntPtr window) => default;
+        public static SizeI Fit(IntPtr handle, IntPtr window) => default;
         public static void FitInside(IntPtr handle, IntPtr window) { }
         public static void SetSizeHints(IntPtr handle, IntPtr window) { }
         public static IntPtr GetChildren(IntPtr handle) => default;

@@ -21,7 +21,7 @@ namespace DragAndDropSample
 
             InitializeComponent();
 
-            var sizePixels = PixelFromDip(new Size(64, 64));
+            var sizePixels = PixelFromDip(new SizeD(64, 64));
             testBitmap = new Bitmap(sizePixels);
 
             SetSizeToContent();

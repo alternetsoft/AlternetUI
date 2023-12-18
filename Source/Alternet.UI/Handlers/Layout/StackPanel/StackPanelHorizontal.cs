@@ -12,7 +12,7 @@ namespace Alternet.UI
             {
             }
 
-            public override Size GetPreferredSize(Size availableSize)
+            public override SizeD GetPreferredSize(SizeD availableSize)
             {
                 var stackPanelPadding = Control.Padding;
 
@@ -22,14 +22,14 @@ namespace Alternet.UI
                 {
                     var margin = control.Margin;
                     var preferredSize = control.GetPreferredSizeLimited(
-                        new Size(availableSize.Width - width, availableSize.Height));
+                        new SizeD(availableSize.Width - width, availableSize.Height));
                     width += preferredSize.Width + margin.Horizontal;
                     maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
                 }
 
                 var isNan = double.IsNaN(Control.SuggestedHeight);
 
-                return new Size(
+                return new SizeD(
                     width + stackPanelPadding.Horizontal,
                     isNan ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
             }
@@ -45,13 +45,13 @@ namespace Alternet.UI
                     var horizontalMargin = margin.Horizontal;
 
                     var preferredSize = control.GetPreferredSizeLimited(
-                        new Size(
+                        new SizeD(
                             childrenLayoutBounds.Width - x - horizontalMargin,
                             childrenLayoutBounds.Height));
                     var alignedPosition =
                         AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
                     control.Handler.Bounds =
-                        new Rect(
+                        new RectD(
                             childrenLayoutBounds.Left + x + margin.Left,
                             alignedPosition.Origin,
                             preferredSize.Width,

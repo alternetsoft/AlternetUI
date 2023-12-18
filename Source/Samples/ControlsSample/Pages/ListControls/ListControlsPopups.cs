@@ -26,9 +26,9 @@ namespace ControlsSample
 
         private readonly PopupListBox popupListBox = new();
 
-        public Rect GetPossiblePopupRect()
+        public RectD GetPossiblePopupRect()
         {
-            return Rect.Empty;
+            return RectD.Empty;
         }
 
         /*

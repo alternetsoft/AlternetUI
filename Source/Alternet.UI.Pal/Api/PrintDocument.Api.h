@@ -61,22 +61,22 @@ ALTERNET_UI_API void PrintDocument_SetPrintPage_HasMorePages_(PrintDocument* obj
     obj->SetPrintPage_HasMorePages(value);
 }
 
-ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_MarginBounds_(PrintDocument* obj)
+ALTERNET_UI_API RectD_C PrintDocument_GetPrintPage_MarginBounds_(PrintDocument* obj)
 {
     return obj->GetPrintPage_MarginBounds();
 }
 
-ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PhysicalPageBounds_(PrintDocument* obj)
+ALTERNET_UI_API RectD_C PrintDocument_GetPrintPage_PhysicalPageBounds_(PrintDocument* obj)
 {
     return obj->GetPrintPage_PhysicalPageBounds();
 }
 
-ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PageBounds_(PrintDocument* obj)
+ALTERNET_UI_API RectD_C PrintDocument_GetPrintPage_PageBounds_(PrintDocument* obj)
 {
     return obj->GetPrintPage_PageBounds();
 }
 
-ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PrintablePageBounds_(PrintDocument* obj)
+ALTERNET_UI_API RectD_C PrintDocument_GetPrintPage_PrintablePageBounds_(PrintDocument* obj)
 {
     return obj->GetPrintPage_PrintablePageBounds();
 }

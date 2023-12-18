@@ -414,32 +414,32 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default best size of the left pane.
         /// </summary>
-        public virtual Size DefaultLeftPaneBestSize { get; set; } = (200, 200);
+        public virtual SizeD DefaultLeftPaneBestSize { get; set; } = (200, 200);
 
         /// <summary>
         /// Gets or sets default min size of the left pane.
         /// </summary>
-        public virtual Size DefaultLeftPaneMinSize { get; set; } = (150, 200);
+        public virtual SizeD DefaultLeftPaneMinSize { get; set; } = (150, 200);
 
         /// <summary>
         /// Gets or sets default best size of the right pane.
         /// </summary>
-        public virtual Size DefaultRightPaneBestSize { get; set; } = (350, 200);
+        public virtual SizeD DefaultRightPaneBestSize { get; set; } = (350, 200);
 
         /// <summary>
         /// Gets or sets default min size of the right pane.
         /// </summary>
-        public virtual Size DefaultRightPaneMinSize { get; set; } = (350, 200);
+        public virtual SizeD DefaultRightPaneMinSize { get; set; } = (350, 200);
 
         /// <summary>
         /// Gets or sets default best size of the bottom pane.
         /// </summary>
-        public virtual Size DefaultBottomPaneBestSize { get; set; } = (200, 150);
+        public virtual SizeD DefaultBottomPaneBestSize { get; set; } = (200, 150);
 
         /// <summary>
         /// Gets or sets default min size of the bottom pane.
         /// </summary>
-        public virtual Size DefaultBottomPaneMinSize { get; set; } = (200, 150);
+        public virtual SizeD DefaultBottomPaneMinSize { get; set; } = (200, 150);
 
         /// <summary>
         /// Gets the bottom pane.
@@ -463,7 +463,7 @@ namespace Alternet.UI
         /// as svg images are scaled automatically by the toolbar.
         /// </remarks>
         /// <returns></returns>
-        public static Int32Size GetBaseToolSvgSize()
+        public static SizeI GetBaseToolSvgSize()
         {
             var imageSize = Math.Max(UI.Toolbar.DefaultImageSize96dpi, DefaultMinToolbarImageSize);
             return imageSize;
@@ -535,11 +535,11 @@ namespace Alternet.UI
         /// Gets toolbar button bitmap size in pixels.
         /// </summary>
         /// <returns></returns>
-        public virtual Int32Size GetToolBitmapSize()
+        public virtual SizeI GetToolBitmapSize()
         {
-            var imageSize = Int32Size.Max(
+            var imageSize = SizeI.Max(
                 UI.Toolbar.GetDefaultImageSize(this),
-                new Int32Size(DefaultMinToolbarImageSize));
+                new SizeI(DefaultMinToolbarImageSize));
             return imageSize;
         }
 

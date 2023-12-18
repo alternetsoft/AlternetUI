@@ -82,19 +82,19 @@ namespace PaintSample
             }
         }
 
-        void DrawSinglePoint(DrawingContext dc, Point point)
+        void DrawSinglePoint(DrawingContext dc, PointD point)
         {
             if (state == null)
                 throw new InvalidOperationException();
 
             var width = state.Pen.Width;
-            Rect rect;
+            RectD rect;
             if (width == 1)
-                rect = new Rect(point, new Size(width, width));
+                rect = new RectD(point, new SizeD(width, width));
             else
             {
                 double halfWidth = width / 2;
-                rect = new Rect(point - new Size(halfWidth, halfWidth), new Size(width, width));
+                rect = new RectD(point - new SizeD(halfWidth, halfWidth), new SizeD(width, width));
             }
 
             dc.FillEllipse(new SolidBrush(state.Pen.Color), rect);
@@ -109,12 +109,12 @@ namespace PaintSample
                 DrawSinglePoint(dc, state.Points.Single());
             else
             {
-                Point? prevPoint = null;
+                PointD? prevPoint = null;
 
-                foreach (Point p in state.Points)
+                foreach (PointD p in state.Points)
                 {
                     if(prevPoint != null)
-                        dc.DrawLine(state.Pen, (Point)prevPoint, p);
+                        dc.DrawLine(state.Pen, (PointD)prevPoint, p);
                     prevPoint = p;
                 }
             }
@@ -134,7 +134,7 @@ namespace PaintSample
 
         private class State
         {
-            public State(Pen pen, Point firstPoint)
+            public State(Pen pen, PointD firstPoint)
             {
                 Pen = pen;
                 Points.Add(firstPoint);
@@ -142,7 +142,7 @@ namespace PaintSample
 
             public Pen Pen { get; }
 
-            public List<Point> Points { get; } = [];
+            public List<PointD> Points { get; } = [];
         }
     }
 }

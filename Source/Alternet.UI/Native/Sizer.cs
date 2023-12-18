@@ -243,27 +243,27 @@ namespace Alternet.UI.Native
             return NativeApi.Sizer_SetCustomBoxItemMinSize_(handle, index, width, height);
         }
         
-        public static Alternet.Drawing.Int32Size GetSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetSize(System.IntPtr handle)
         {
             return NativeApi.Sizer_GetSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Point GetPosition(System.IntPtr handle)
+        public static Alternet.Drawing.PointI GetPosition(System.IntPtr handle)
         {
             return NativeApi.Sizer_GetPosition_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMinSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMinSize(System.IntPtr handle)
         {
             return NativeApi.Sizer_GetMinSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI CalcMin(System.IntPtr handle)
         {
             return NativeApi.Sizer_CalcMin_(handle);
         }
         
-        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.SizeI minSize)
         {
             NativeApi.Sizer_RepositionChildren_(handle, minSize);
         }
@@ -278,17 +278,17 @@ namespace Alternet.UI.Native
             NativeApi.Sizer_Layout_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size ComputeFittingClientSize(System.IntPtr handle, System.IntPtr window)
+        public static Alternet.Drawing.SizeI ComputeFittingClientSize(System.IntPtr handle, System.IntPtr window)
         {
             return NativeApi.Sizer_ComputeFittingClientSize_(handle, window);
         }
         
-        public static Alternet.Drawing.Int32Size ComputeFittingWindowSize(System.IntPtr handle, System.IntPtr window)
+        public static Alternet.Drawing.SizeI ComputeFittingWindowSize(System.IntPtr handle, System.IntPtr window)
         {
             return NativeApi.Sizer_ComputeFittingWindowSize_(handle, window);
         }
         
-        public static Alternet.Drawing.Int32Size Fit(System.IntPtr handle, System.IntPtr window)
+        public static Alternet.Drawing.SizeI Fit(System.IntPtr handle, System.IntPtr window)
         {
             return NativeApi.Sizer_Fit_(handle, window);
         }
@@ -545,19 +545,19 @@ namespace Alternet.UI.Native
             public static extern bool Sizer_SetCustomBoxItemMinSize_(System.IntPtr handle, int index, int width, int height);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Sizer_GetSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI Sizer_GetSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point Sizer_GetPosition_(System.IntPtr handle);
+            public static extern Alternet.Drawing.PointI Sizer_GetPosition_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Sizer_GetMinSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI Sizer_GetMinSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Sizer_CalcMin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI Sizer_CalcMin_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Sizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            public static extern void Sizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.SizeI minSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Sizer_RecalcSizes_(System.IntPtr handle);
@@ -566,13 +566,13 @@ namespace Alternet.UI.Native
             public static extern void Sizer_Layout_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Sizer_ComputeFittingClientSize_(System.IntPtr handle, System.IntPtr window);
+            public static extern Alternet.Drawing.SizeI Sizer_ComputeFittingClientSize_(System.IntPtr handle, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Sizer_ComputeFittingWindowSize_(System.IntPtr handle, System.IntPtr window);
+            public static extern Alternet.Drawing.SizeI Sizer_ComputeFittingWindowSize_(System.IntPtr handle, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Sizer_Fit_(System.IntPtr handle, System.IntPtr window);
+            public static extern Alternet.Drawing.SizeI Sizer_Fit_(System.IntPtr handle, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Sizer_FitInside_(System.IntPtr handle, System.IntPtr window);

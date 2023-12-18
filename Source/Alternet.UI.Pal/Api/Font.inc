@@ -16,7 +16,7 @@ static void* OpenFamiliesArray();
 static int GetFamiliesItemCount(void* array);
 static string GetFamiliesItemAt(void* array, int index);
 static void CloseFamiliesArray(void* array);
-Int32Size GetPixelSize();
+SizeI GetPixelSize();
 bool IsUsingSizeInPixels();
 int GetNumericWeight();
 bool GetUnderlined();

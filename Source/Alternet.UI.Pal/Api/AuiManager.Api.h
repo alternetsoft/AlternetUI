@@ -148,7 +148,7 @@ ALTERNET_UI_API void AuiManager_LoadPaneInfo_(void* handle, const char16_t* pane
     AuiManager::LoadPaneInfo(handle, panePart, paneInfo);
 }
 
-ALTERNET_UI_API Size_C AuiManager_GetDockSizeConstraint_(void* handle)
+ALTERNET_UI_API SizeD_C AuiManager_GetDockSizeConstraint_(void* handle)
 {
     return AuiManager::GetDockSizeConstraint(handle);
 }

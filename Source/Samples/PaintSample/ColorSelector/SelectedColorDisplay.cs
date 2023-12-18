@@ -23,7 +23,7 @@ namespace PaintSample
             }
         }
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             return (50, 50);
         }

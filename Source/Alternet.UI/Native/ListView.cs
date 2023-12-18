@@ -268,7 +268,7 @@ namespace Alternet.UI.Native
             NativeApi.ListView_SetSelected_(NativePointer, index, value);
         }
         
-        public System.IntPtr ItemHitTest(Alternet.Drawing.Point point)
+        public System.IntPtr ItemHitTest(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
             return NativeApi.ListView_ItemHitTest_(NativePointer, point);
@@ -304,7 +304,7 @@ namespace Alternet.UI.Native
             NativeApi.ListView_BeginLabelEdit_(NativePointer, itemIndex);
         }
         
-        public Alternet.Drawing.Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion)
+        public Alternet.Drawing.RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion)
         {
             CheckDisposed();
             return NativeApi.ListView_GetItemBounds_(NativePointer, itemIndex, portion);
@@ -531,7 +531,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetSelected_(IntPtr obj, long index, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, Alternet.Drawing.Point point);
+            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ListViewHitTestLocations ListView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);
@@ -549,7 +549,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_BeginLabelEdit_(IntPtr obj, long itemIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect ListView_GetItemBounds_(IntPtr obj, long itemIndex, ListViewItemBoundsPortion portion);
+            public static extern Alternet.Drawing.RectD ListView_GetItemBounds_(IntPtr obj, long itemIndex, ListViewItemBoundsPortion portion);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_Clear_(IntPtr obj);

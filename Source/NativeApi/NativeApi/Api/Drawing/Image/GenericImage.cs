@@ -95,7 +95,7 @@ namespace NativeApi.Api
         public static void SetRGB(IntPtr handle, int x, int y, byte r, byte g, byte b) { }
 
         // Sets the color of the pixels within the given rectangle.
-        public static void SetRGBRect(IntPtr handle, Int32Rect rect, byte red,
+        public static void SetRGBRect(IntPtr handle, RectI rect, byte red,
             byte green, byte blue) { }
 
         // Sets the type of image returned by GetType().
@@ -151,7 +151,7 @@ namespace NativeApi.Api
 
         //Changes the size of the image in-place without scaling it by adding either a border
         //with the given color or cropping as necessary.
-        public static void Resize(IntPtr handle, Int32Size size, Int32Point pos, int red = -1,
+        public static void Resize(IntPtr handle, SizeI size, PointI pos, int red = -1,
             int green = -1, int blue = -1)
         { }
 
@@ -181,7 +181,7 @@ namespace NativeApi.Api
 
         // Returns a resized version of this image without scaling it by adding either a
         // border with the given color or cropping as necessary.
-        public static IntPtr Size(IntPtr handle, Int32Size size, Int32Point pos, int red = -1,
+        public static IntPtr Size(IntPtr handle, SizeI size, PointI pos, int red = -1,
             int green = -1, int blue = -1) => default;
 
         // If the image has alpha channel, this method converts it to mask.
@@ -237,7 +237,7 @@ namespace NativeApi.Api
         public static int GetHeight(IntPtr handle) => default;
 
         // Returns the size of the image in pixels.
-        public static Int32Size GetSize(IntPtr handle) => default;
+        public static SizeI GetSize(IntPtr handle) => default;
 
         // Gets a user-defined string-valued option.
         public static string GetOptionString(IntPtr handle, string name) => default;
@@ -246,7 +246,7 @@ namespace NativeApi.Api
         public static int GetOptionInt(IntPtr handle, string name) => default;
 
         // Returns a sub image of the current one as long as the rect belongs entirely to the image.
-        public static IntPtr GetSubImage(IntPtr handle, Int32Rect rect) => default;
+        public static IntPtr GetSubImage(IntPtr handle, RectI rect) => default;
 
         // Gets the type of image found by LoadFile() or specified with SaveFile().
         public static int GetImageType(IntPtr handle) => default;

@@ -230,12 +230,12 @@ namespace Alternet.UI
             return NativeControl.GetNumberOfLines();
         }
 
-        public Int32Point PositionToXY(long pos)
+        public PointI PositionToXY(long pos)
         {
             return NativeControl.PositionToXY(pos);
         }
 
-        public Point PositionToCoords(long pos)
+        public PointD PositionToCoords(long pos)
         {
             return NativeControl.PositionToCoords(pos);
         }

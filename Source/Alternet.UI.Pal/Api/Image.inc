@@ -5,19 +5,19 @@ double GetScaleFactor();
 void SetScaleFactor(double value);
 
 
-Int32Size GetDipSize();
+SizeI GetDipSize();
 
 
 double GetScaledHeight();
 
 
-Int32Size GetScaledSize();
+SizeI GetScaledSize();
 
 
 double GetScaledWidth();
 
 
-Int32Size GetPixelSize();
+SizeI GetPixelSize();
 
 
 bool GetIsOk();
@@ -38,8 +38,8 @@ int GetDepth();
 bool InitializeFromDipSize(int width, int height, double scale, int depth);
 bool LoadFromStream(void* stream);
 bool LoadSvgFromStream(void* stream, int width, int height, const Color& color);
-void Initialize(const Int32Size& size);
-void InitializeFromImage(Image* source, const Int32Size& size);
+void Initialize(const SizeI& size);
+void InitializeFromImage(Image* source, const SizeI& size);
 void CopyFrom(Image* otherImage);
 bool SaveToStream(void* stream, const string& format);
 bool SaveToFile(const string& fileName);
@@ -51,9 +51,9 @@ bool LoadFile(const string& name, int type);
 bool SaveFile(const string& name, int type);
 bool SaveStream(void* stream, int type);
 bool LoadStream(void* stream, int type);
-Image* GetSubBitmap(const Int32Rect& rect);
+Image* GetSubBitmap(const RectI& rect);
 Image* ConvertToDisabled(uint8_t brightness);
-void Rescale(const Int32Size& sizeNeeded);
+void Rescale(const SizeI& sizeNeeded);
 static int GetDefaultBitmapType();
 public:
 Image();

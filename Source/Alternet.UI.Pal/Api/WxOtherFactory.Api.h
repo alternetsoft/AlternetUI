@@ -26,72 +26,72 @@ ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
     WxOtherFactory::SetRichToolTipUseGeneric(value);
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
+ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
 {
     return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
+ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
 {
     return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, void* win)
+ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, void* win)
 {
     return WxOtherFactory::RendererGetExpanderSize(renderer, win);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawPushButton(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCollapseButtonSize_(void* renderer, void* win, void* dc)
+ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCollapseButtonSize_(void* renderer, void* win, void* dc)
 {
     return WxOtherFactory::RendererGetCollapseButtonSize(renderer, win, dc);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawChoice(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawComboBox(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, void* dc, Int32Rect rect, int value, int max, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, void* dc, RectI rect, int value, int max, int flags)
 {
     WxOtherFactory::RendererDrawGauge(renderer, win, dc, rect, value, max, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, void* dc, const char16_t* text, Int32Rect rect, int align, int flags, int ellipsizeMode)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, void* dc, const char16_t* text, RectI rect, int align, int flags, int ellipsizeMode)
 {
     WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, rect, align, flags, ellipsizeMode);
 }
@@ -131,7 +131,7 @@ ALTERNET_UI_API void* WxOtherFactory_MemorySet_(void* dest, int fillByte, uint64
     return WxOtherFactory::MemorySet(dest, fillByte, count);
 }
 
-ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, Int32Point pos, Int32Size sz)
+ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
     WxOtherFactory::TestPopupWindow(parent, pos, sz);
 }
@@ -186,7 +186,7 @@ ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFont_(void* handle, Font*
     WxOtherFactory::RichToolTipSetTitleFont(handle, font);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* window, Int32Rect rect)
+ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* window, RectI rect)
 {
     WxOtherFactory::RichToolTipShowFor(handle, window, rect);
 }
@@ -271,7 +271,7 @@ ALTERNET_UI_API c_bool WxOtherFactory_CursorIsOk_(void* handle)
     return WxOtherFactory::CursorIsOk(handle);
 }
 
-ALTERNET_UI_API Int32Point_C WxOtherFactory_CursorGetHotSpot_(void* handle)
+ALTERNET_UI_API PointI_C WxOtherFactory_CursorGetHotSpot_(void* handle)
 {
     return WxOtherFactory::CursorGetHotSpot(handle);
 }
@@ -296,12 +296,12 @@ ALTERNET_UI_API void WxOtherFactory_DeleteCaret_(void* handle)
     WxOtherFactory::DeleteCaret(handle);
 }
 
-ALTERNET_UI_API Int32Point_C WxOtherFactory_CaretGetPosition_(void* handle)
+ALTERNET_UI_API PointI_C WxOtherFactory_CaretGetPosition_(void* handle)
 {
     return WxOtherFactory::CaretGetPosition(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_CaretGetSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxOtherFactory_CaretGetSize_(void* handle)
 {
     return WxOtherFactory::CaretGetSize(handle);
 }
@@ -376,7 +376,7 @@ ALTERNET_UI_API uint32_t WxOtherFactory_DisplayGetCount_()
     return WxOtherFactory::DisplayGetCount();
 }
 
-ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(Int32Point pt)
+ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(PointI pt)
 {
     return WxOtherFactory::DisplayGetFromPoint(pt);
 }
@@ -391,7 +391,7 @@ ALTERNET_UI_API int WxOtherFactory_DisplayGetStdPPIValue_()
     return WxOtherFactory::DisplayGetStdPPIValue();
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_DisplayGetStdPPI_()
+ALTERNET_UI_API SizeI_C WxOtherFactory_DisplayGetStdPPI_()
 {
     return WxOtherFactory::DisplayGetStdPPI();
 }
@@ -401,7 +401,7 @@ ALTERNET_UI_API char16_t* WxOtherFactory_DisplayGetName_(void* handle)
     return AllocPInvokeReturnString(WxOtherFactory::DisplayGetName(handle));
 }
 
-ALTERNET_UI_API Int32Size_C WxOtherFactory_DisplayGetPPI_(void* handle)
+ALTERNET_UI_API SizeI_C WxOtherFactory_DisplayGetPPI_(void* handle)
 {
     return WxOtherFactory::DisplayGetPPI(handle);
 }
@@ -416,12 +416,12 @@ ALTERNET_UI_API c_bool WxOtherFactory_DisplayIsPrimary_(void* handle)
     return WxOtherFactory::DisplayIsPrimary(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C WxOtherFactory_DisplayGetClientArea_(void* handle)
+ALTERNET_UI_API RectI_C WxOtherFactory_DisplayGetClientArea_(void* handle)
 {
     return WxOtherFactory::DisplayGetClientArea(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C WxOtherFactory_DisplayGetGeometry_(void* handle)
+ALTERNET_UI_API RectI_C WxOtherFactory_DisplayGetGeometry_(void* handle)
 {
     return WxOtherFactory::DisplayGetGeometry(handle);
 }
@@ -486,17 +486,17 @@ ALTERNET_UI_API char16_t* WxOtherFactory_GetTextFromUser_(const char16_t* messag
     return AllocPInvokeReturnString(WxOtherFactory::GetTextFromUser(message, caption, defaultValue, parent, x, y, centre));
 }
 
-ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, Int32Point pos)
+ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, PointI pos)
 {
     return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, pos);
 }
 
-ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags, int sortArrow, void* headerButtonParams)
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, void* dc, RectI rect, int flags, int sortArrow, void* headerButtonParams)
 {
     return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
 }
 
-ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, void* dc, Int32Rect rect, int flags, int sortArrow, void* headerButtonParams)
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, void* dc, RectI rect, int flags, int sortArrow, void* headerButtonParams)
 {
     return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
 }
@@ -511,37 +511,37 @@ ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonMargin_(void* renderer
     return WxOtherFactory::RendererGetHeaderButtonMargin(renderer, win);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, void* dcReal, Int32Size sizeReal, int position, int orientation, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, void* dcReal, SizeI sizeReal, int position, int orientation, int flags)
 {
     WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, sizeReal, position, orientation, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, void* dc, RectI rect, int flags)
 {
     WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
 }

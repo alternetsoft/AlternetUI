@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// <param name="effect">One of the <see cref="DragDropEffects"/> values.</param>
         public DragEventArgs(
             IDataObject data,
-            Point mouseClientLocation,
+            PointD mouseClientLocation,
             DragDropEffects effect)
         {
             Data = data;
@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the client coordinates of the mouse pointer in logical units (1/96th of an inch).
         /// </summary>
-        public Point MouseClientLocation { get; }
+        public PointD MouseClientLocation { get; }
 
         /// <summary>
         /// Gets or sets the target drop effect in a drag-and-drop operation.

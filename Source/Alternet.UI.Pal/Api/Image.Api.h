@@ -25,7 +25,7 @@ ALTERNET_UI_API void Image_SetScaleFactor_(Image* obj, double value)
     obj->SetScaleFactor(value);
 }
 
-ALTERNET_UI_API Int32Size_C Image_GetDipSize_(Image* obj)
+ALTERNET_UI_API SizeI_C Image_GetDipSize_(Image* obj)
 {
     return obj->GetDipSize();
 }
@@ -35,7 +35,7 @@ ALTERNET_UI_API double Image_GetScaledHeight_(Image* obj)
     return obj->GetScaledHeight();
 }
 
-ALTERNET_UI_API Int32Size_C Image_GetScaledSize_(Image* obj)
+ALTERNET_UI_API SizeI_C Image_GetScaledSize_(Image* obj)
 {
     return obj->GetScaledSize();
 }
@@ -45,7 +45,7 @@ ALTERNET_UI_API double Image_GetScaledWidth_(Image* obj)
     return obj->GetScaledWidth();
 }
 
-ALTERNET_UI_API Int32Size_C Image_GetPixelSize_(Image* obj)
+ALTERNET_UI_API SizeI_C Image_GetPixelSize_(Image* obj)
 {
     return obj->GetPixelSize();
 }
@@ -95,12 +95,12 @@ ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int wi
     return obj->LoadSvgFromStream(stream, width, height, color);
 }
 
-ALTERNET_UI_API void Image_Initialize_(Image* obj, Int32Size size)
+ALTERNET_UI_API void Image_Initialize_(Image* obj, SizeI size)
 {
     obj->Initialize(size);
 }
 
-ALTERNET_UI_API void Image_InitializeFromImage_(Image* obj, Image* source, Int32Size size)
+ALTERNET_UI_API void Image_InitializeFromImage_(Image* obj, Image* source, SizeI size)
 {
     obj->InitializeFromImage(source, size);
 }
@@ -160,7 +160,7 @@ ALTERNET_UI_API c_bool Image_LoadStream_(Image* obj, void* stream, int type)
     return obj->LoadStream(stream, type);
 }
 
-ALTERNET_UI_API Image* Image_GetSubBitmap_(Image* obj, Int32Rect rect)
+ALTERNET_UI_API Image* Image_GetSubBitmap_(Image* obj, RectI rect)
 {
     return obj->GetSubBitmap(rect);
 }
@@ -170,7 +170,7 @@ ALTERNET_UI_API Image* Image_ConvertToDisabled_(Image* obj, uint8_t brightness)
     return obj->ConvertToDisabled(brightness);
 }
 
-ALTERNET_UI_API void Image_Rescale_(Image* obj, Int32Size sizeNeeded)
+ALTERNET_UI_API void Image_Rescale_(Image* obj, SizeI sizeNeeded)
 {
     obj->Rescale(sizeNeeded);
 }

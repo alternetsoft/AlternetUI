@@ -23,12 +23,12 @@ namespace Alternet.Drawing
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct Rect : IEquatable<Rect>
+    public struct RectD : IEquatable<RectD>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref='Rect'/> class.
+        /// Initializes a new instance of the <see cref='RectD'/> class.
         /// </summary>
-        public static readonly Rect Empty;
+        public static readonly RectD Empty;
 
         private double x; // Do not rename (binary serialization)
         private double y; // Do not rename (binary serialization)
@@ -36,11 +36,11 @@ namespace Alternet.Drawing
         private double height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Rect'/> class with the
+        /// Initializes a new instance of the <see cref='RectD'/> class with the
         /// specified location
         /// and size.
         /// </summary>
-        public Rect(double x, double y, double width, double height)
+        public RectD(double x, double y, double width, double height)
         {
             this.x = x;
             this.y = y;
@@ -49,11 +49,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Rect'/> class with the
+        /// Initializes a new instance of the <see cref='RectD'/> class with the
         /// specified location
         /// and size.
         /// </summary>
-        public Rect(Point location, Size size)
+        public RectD(PointD location, SizeD size)
         {
             x = location.X;
             y = location.Y;
@@ -62,10 +62,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Rect'/> struct from the specified
+        /// Initializes a new instance of the <see cref='RectD'/> struct from the specified
         /// <see cref="Vector4"/>.
         /// </summary>
-        public Rect(Vector4 vector)
+        public RectD(Vector4 vector)
         {
             x = vector.X;
             y = vector.Y;
@@ -75,10 +75,10 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the coordinates of the upper-left corner of the rectangular
-        /// region represented by this <see cref='Rect'/>.
+        /// region represented by this <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
-        public Point Location
+        public PointD Location
         {
             readonly get => new(x, y);
             set
@@ -89,10 +89,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the size of this <see cref='Rect'/>.
+        /// Gets or sets the size of this <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
-        public Size Size
+        public SizeD Size
         {
             readonly get => new(width, height);
             set
@@ -105,7 +105,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region
         /// defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         public double X
         {
@@ -116,7 +116,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the y-coordinate of the upper-left corner of the rectangular
         /// region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         public double Y
         {
@@ -126,7 +126,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the width of the rectangular region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         public double Width
         {
@@ -136,7 +136,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the height of the rectangular region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         public double Height
         {
@@ -146,41 +146,41 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
         public readonly double Left => x;
 
         /// <summary>
         /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
         public readonly double Top => y;
 
         /// <summary>
         /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
         public readonly double Right => x + width;
 
         /// <summary>
         /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='Rect'/>.
+        /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
         public readonly double Bottom => y + height;
 
         /// <summary>
-        /// Tests whether this <see cref='Rect'/> has a <see cref='Width'/>
+        /// Tests whether this <see cref='RectD'/> has a <see cref='Width'/>
         /// or a <see cref='Height'/> less than or equal to 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => (width <= 0) || (height <= 0);
 
         /// <summary>
-        /// Tests whether this <see cref='Rect'/> has all properties equal to 0.
+        /// Tests whether this <see cref='RectD'/> has all properties equal to 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsZero => (width == 0) && (height == 0) && (x == 0) && (y == 0);
@@ -190,11 +190,11 @@ namespace Alternet.Drawing
         /// If this is the empty rectangle, the value will be positive infinity, positive infinity.
         /// </summary>
         [Browsable(false)]
-        public readonly Point TopLeft
+        public readonly PointD TopLeft
         {
             get
             {
-                return new Point(x, y);
+                return new PointD(x, y);
             }
         }
 
@@ -203,11 +203,11 @@ namespace Alternet.Drawing
         /// If this is the empty rectangle, the value will be negative infinity, positive infinity.
         /// </summary>
         [Browsable(false)]
-        public readonly Point TopRight
+        public readonly PointD TopRight
         {
             get
             {
-                return new Point(Right, y);
+                return new PointD(Right, y);
             }
         }
 
@@ -216,11 +216,11 @@ namespace Alternet.Drawing
         /// If this is the empty rectangle, the value will be positive infinity, negative infinity.
         /// </summary>
         [Browsable(false)]
-        public readonly Point BottomLeft
+        public readonly PointD BottomLeft
         {
             get
             {
-                return new Point(x, Bottom);
+                return new PointD(x, Bottom);
             }
         }
 
@@ -230,11 +230,11 @@ namespace Alternet.Drawing
         /// If this is the empty rectangle, the value will be negative infinity, negative infinity.
         /// </summary>
         [Browsable(false)]
-        public readonly Point BottomRight
+        public readonly PointD BottomRight
         {
             get
             {
-                return new Point(Right, Bottom);
+                return new PointD(Right, Bottom);
             }
         }
 
@@ -249,10 +249,10 @@ namespace Alternet.Drawing
         public readonly double MaxWidthHeight => Math.Max(width, height);
 
         /// <summary>
-        /// Gets the center point of this <see cref="Rect"/>.
+        /// Gets the center point of this <see cref="RectD"/>.
         /// </summary>
         [Browsable(false)]
-        public readonly Point Center => Location + (Size / 2);
+        public readonly PointD Center => Location + (Size / 2);
 
         /* TODO: uncommment when Double System.Numerics is availble.
          * See https://github.com/dotnet/runtime/issues/24168
@@ -269,90 +269,90 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Converts the specified <see cref="Vector2"/> to a
-        /// <see cref="Rect"/>.
+        /// <see cref="RectD"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Rect(Vector4 vector) => new(vector);
+        public static explicit operator RectD(Vector4 vector) => new(vector);
 
         /// <summary>
         /// Implicit operator convertion from tuple with four <see cref="double"/> values
-        /// to <see cref="Rect"/>.
+        /// to <see cref="RectD"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Rect((double, double, double, double) d) =>
+        public static implicit operator RectD((double, double, double, double) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
         /// <summary>
-        /// Creates a <see cref='Rect'/> with the properties of the
+        /// Creates a <see cref='RectD'/> with the properties of the
         /// specified <see cref='System.Drawing.Rectangle'/>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Rect(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
+        public static implicit operator RectD(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Rectangle'/> with the properties of the
-        /// specified <see cref='Rect'/>
+        /// specified <see cref='RectD'/>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator System.Drawing.Rectangle(Rect p) =>
+        public static implicit operator System.Drawing.Rectangle(RectD p) =>
             new(CoordToInt(p.X), CoordToInt(p.Y), CoordToInt(p.Width), CoordToInt(p.Height));
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.RectangleF'/> with the properties of the
-        /// specified <see cref='Rect'/>
+        /// specified <see cref='RectD'/>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator System.Drawing.RectangleF(Rect p) =>
+        public static implicit operator System.Drawing.RectangleF(RectD p) =>
             new((float)p.X, (float)p.Y, (float)p.Width, (float)p.Height);
 
         /// <summary>
-        /// Implicit operator convertion from tuple (<see cref="Point"/>, <see cref="Size"/>)
-        /// to <see cref="Rect"/>.
+        /// Implicit operator convertion from tuple (<see cref="PointD"/>, <see cref="Size"/>)
+        /// to <see cref="RectD"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Rect((Point, Size) d) => new(d.Item1, d.Item2);
+        public static implicit operator RectD((PointD, SizeD) d) => new(d.Item1, d.Item2);
 
         /// <summary>
-        /// Converts the specified <see cref='Drawing.Int32Rect'/> to a
-        /// <see cref='Rect'/>.
+        /// Converts the specified <see cref='Drawing.RectI'/> to a
+        /// <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Rect(Int32Rect r) => new(r.X, r.Y, r.Width, r.Height);
+        public static implicit operator RectD(RectI r) => new(r.X, r.Y, r.Width, r.Height);
 
         /// <summary>
-        /// Tests whether two <see cref='Rect'/> objects differ in location or size.
+        /// Tests whether two <see cref='RectD'/> objects differ in location or size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(Rect left, Rect right) => !(left == right);
+        public static bool operator !=(RectD left, RectD right) => !(left == right);
 
         /// <summary>
-        /// Tests whether two <see cref='Rect'/> objects have equal location and size.
+        /// Tests whether two <see cref='RectD'/> objects have equal location and size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(Rect left, Rect right) =>
+        public static bool operator ==(RectD left, RectD right) =>
             left.x == right.x && left.y == right.y && left.width == right.width
             && left.height == right.height;
 
         /// <summary>
-        /// Creates a <see cref='Rect'/> that is inflated by the specified amount.
+        /// Creates a <see cref='RectD'/> that is inflated by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Rect Inflate(Rect rect, double x, double y)
+        public static RectD Inflate(RectD rect, double x, double y)
         {
-            Rect r = rect;
+            RectD r = rect;
             r.Inflate(x, y);
             return r;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rect"/> from a centerpoint and size.
+        /// Creates a new <see cref="RectD"/> from a centerpoint and size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Rect FromCenter(Point center, Size size)
+        public static RectD FromCenter(PointD center, SizeD size)
         {
-            return new Rect(
+            return new RectD(
                 center.X - (size.Width / 2),
                 center.Y - (size.Height / 2),
                 size.Width,
@@ -362,14 +362,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a rectangle that represents the union between a and b.
         /// </summary>
-        public static Rect Union(Rect a, Rect b)
+        public static RectD Union(RectD a, RectD b)
         {
             double x1 = Math.Min(a.x, b.x);
             double x2 = Math.Max(a.x + a.width, b.x + b.width);
             double y1 = Math.Min(a.y, b.y);
             double y2 = Math.Max(a.y + a.height, b.y + b.height);
 
-            return new Rect(x1, y1, x2 - x1, y2 - y1);
+            return new RectD(x1, y1, x2 - x1, y2 - y1);
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Alternet.Drawing
         /// is no intersection, an
         /// empty rectangle is returned.
         /// </summary>
-        public static Rect Intersect(Rect a, Rect b)
+        public static RectD Intersect(RectD a, RectD b)
         {
             double x1 = Math.Max(a.x, b.x);
             double x2 = Math.Min(a.x + a.width, b.x + b.width);
@@ -386,7 +386,7 @@ namespace Alternet.Drawing
 
             if (x2 >= x1 && y2 >= y1)
             {
-                return new Rect(x1, y1, x2 - x1, y2 - y1);
+                return new RectD(x1, y1, x2 - x1, y2 - y1);
             }
 
             return Empty;
@@ -397,13 +397,13 @@ namespace Alternet.Drawing
         /// the culture "en-US"
         /// <param name="source">string with Rect data.</param>
         /// </summary>
-        public static Rect Parse(string source)
+        public static RectD Parse(string source)
         {
             IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 
-            Rect value;
+            RectD value;
 
             string firstToken = th.NextTokenRequired();
 
@@ -415,7 +415,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                value = new Rect(
+                value = new RectD(
                     Convert.ToDouble(firstToken, formatProvider),
                     Convert.ToDouble(th.NextTokenRequired(), formatProvider),
                     Convert.ToDouble(th.NextTokenRequired(), formatProvider),
@@ -429,16 +429,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref='Rect'/> with the specified location and size.
+        /// Creates a new <see cref='RectD'/> with the specified location and size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Rect FromLTRB(double left, double top, double right, double bottom) =>
+        public static RectD FromLTRB(double left, double top, double right, double bottom) =>
             new(left, top, right - left, bottom - top);
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined
         /// by this
-        /// <see cref='Rect'/> .
+        /// <see cref='RectD'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Contains(double x, double y) =>
@@ -447,10 +447,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined
         /// by this
-        /// <see cref='Rect'/> .
+        /// <see cref='RectD'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool Contains(Point pt) => Contains(pt.X, pt.Y);
+        public readonly bool Contains(PointD pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
         /// Gets percentage of <see cref="Width"/>.
@@ -479,13 +479,13 @@ namespace Alternet.Drawing
         public readonly double PercentOfHeight(double percent) => MathUtils.PercentOf(height, percent);
 
         /// <summary>
-        /// Tests whether <paramref name="obj"/> is a <see cref='Rect'/> with the
+        /// Tests whether <paramref name="obj"/> is a <see cref='RectD'/> with the
         /// same location and
-        /// size of this <see cref='Rect'/>.
+        /// size of this <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Rect rect && Equals(rect);
+            obj is RectD rect && Equals(rect);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -494,37 +494,37 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool Equals(Rect other) => this == other;
+        public readonly bool Equals(RectD other) => this == other;
 
         /// <summary>
         /// Determines if the rectangular region represented by <paramref name="rect"/> is
         /// entirely contained within
-        /// the rectangular region represented by this <see cref='Rect'/> .
+        /// the rectangular region represented by this <see cref='RectD'/> .
         /// </summary>
-        public readonly bool Contains(Rect rect) =>
+        public readonly bool Contains(RectD rect) =>
             (x <= rect.x) && (rect.x + rect.width <= x + width)
             && (y <= rect.y) && (rect.y + rect.height <= y + height);
 
         /// <summary>
-        /// Converts a <see cref="Rect"/> structure to a
-        /// <see cref="Int32Rect"/> structure.
+        /// Converts a <see cref="RectD"/> structure to a
+        /// <see cref="RectI"/> structure.
         /// </summary>
-        /// <returns>A <see cref="Int32Rect"/> structure.</returns>
-        /// <remarks>The <see cref="Rect"/> structure is converted
-        /// to a <see cref="Int32Rect"/> structure by
-        /// truncating the values of the <see cref="Rect"/> to the next
+        /// <returns>A <see cref="RectI"/> structure.</returns>
+        /// <remarks>The <see cref="RectD"/> structure is converted
+        /// to a <see cref="RectI"/> structure by
+        /// truncating the values of the <see cref="RectD"/> to the next
         /// lower integer values.</remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Int32Rect ToRect() => Int32Rect.Truncate(this);
+        public readonly RectI ToRect() => RectI.Truncate(this);
 
         /// <summary>
-        /// Gets the hash code for this <see cref='Rect'/>.
+        /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode() => HashCode.Combine(x, y, width, height);
 
         /// <summary>
-        /// Inflates this <see cref='Rect'/> by the specified amount.
+        /// Inflates this <see cref='RectD'/> by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate(double dx, double dy)
@@ -536,16 +536,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref='Rect'/> that is inflated by the specified amount.
+        /// Creates a <see cref='RectD'/> that is inflated by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Rect InflatedBy(double x, double y) => Inflate(this, x, y);
+        public readonly RectD InflatedBy(double x, double y) => Inflate(this, x, y);
 
         /// <summary>
-        /// Creates a <see cref='Rect'/> that is offset by the specified amount.
+        /// Creates a <see cref='RectD'/> that is offset by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Rect OffsetBy(double dx, double dy)
+        public readonly RectD OffsetBy(double dx, double dy)
         {
             var r = this;
             r.x += dx;
@@ -554,10 +554,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref='Rect'/> with the specified size.
+        /// Creates a <see cref='RectD'/> with the specified size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Rect WithSize(double width, double height)
+        public readonly RectD WithSize(double width, double height)
         {
             var r = this;
             r.width = width;
@@ -566,21 +566,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns new <see cref="Rect"/> value with ceiling of location and size.
+        /// Returns new <see cref="RectD"/> value with ceiling of location and size.
         /// Uses <see cref="Math.Ceiling(double)"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Rect Ceiling()
+        public readonly RectD Ceiling()
         {
             return new(Math.Ceiling(x), Math.Ceiling(y), Math.Ceiling(width), Math.Ceiling(height));
         }
 
         /// <summary>
-        /// Creates a <see cref='Rect'/> with the specified location.
+        /// Creates a <see cref='RectD'/> with the specified location.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Rect WithLocation(double x, double y)
+        public readonly RectD WithLocation(double x, double y)
         {
             var r = this;
             r.x = x;
@@ -589,18 +589,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Inflates this <see cref='Rect'/> by the specified amount.
+        /// Inflates this <see cref='RectD'/> by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Inflate(Size size) => Inflate(size.Width, size.Height);
+        public void Inflate(SizeD size) => Inflate(size.Width, size.Height);
 
         /// <summary>
         /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Intersect(Rect rect)
+        public void Intersect(RectD rect)
         {
-            Rect result = Intersect(rect, this);
+            RectD result = Intersect(rect, this);
 
             x = result.x;
             y = result.y;
@@ -611,7 +611,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Determines if this rectangle intersects with rect.
         /// </summary>
-        public readonly bool IntersectsWith(Rect rect) =>
+        public readonly bool IntersectsWith(RectD rect) =>
             (rect.x < x + width) && (x < rect.x + rect.width) && (rect.y < y + height)
             && (y < rect.y + rect.height);
 
@@ -619,7 +619,7 @@ namespace Alternet.Drawing
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Offset(Point pos) => Offset(pos.X, pos.Y);
+        public void Offset(PointD pos) => Offset(pos.X, pos.Y);
 
         /// <summary>
         /// Centers this rectangle in the given (usually, but not necessarily, larger) one.
@@ -628,9 +628,9 @@ namespace Alternet.Drawing
         /// <param name="centerHorz">Specifies whether to center horizontally.</param>
         /// <param name="centerVert">Specifies whether to center vertically.</param>
         /// <returns></returns>
-        public readonly Rect CenterIn(Rect r, bool centerHorz = true, bool centerVert = true)
+        public readonly RectD CenterIn(RectD r, bool centerHorz = true, bool centerVert = true)
         {
-            return new Rect(
+            return new RectD(
                 centerHorz ? r.x + ((r.width - width) / 2) : x,
                 centerVert ? r.y + ((r.height - height) / 2) : y,
                 width,
@@ -649,7 +649,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Converts the <see cref='Location'/> and <see cref='Size'/>
-        /// of this <see cref='Rect'/> to a human-readable string.
+        /// of this <see cref='RectD'/> to a human-readable string.
         /// </summary>
         public override readonly string ToString()
         {

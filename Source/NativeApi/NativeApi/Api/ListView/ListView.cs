@@ -44,7 +44,7 @@ namespace NativeApi.Api
 
         public ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
 
-        public IntPtr ItemHitTest(Point point) => throw new Exception();
+        public IntPtr ItemHitTest(PointD point) => throw new Exception();
         public ListViewHitTestLocations GetHitTestResultLocations(IntPtr hitTestResult) => throw new Exception();
         public long GetHitTestResultItemIndex(IntPtr hitTestResult) => throw new Exception();
         public long GetHitTestResultColumnIndex(IntPtr hitTestResult) => throw new Exception();
@@ -52,7 +52,7 @@ namespace NativeApi.Api
 
         public void BeginLabelEdit(long itemIndex) => throw new Exception();
 
-        public Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion) => throw new Exception();
+        public RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion) => throw new Exception();
 
         public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort { add => throw new Exception(); remove => throw new Exception(); }
 

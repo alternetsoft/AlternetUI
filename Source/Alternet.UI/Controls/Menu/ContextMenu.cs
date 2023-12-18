@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// <param name="control">A <see cref="Control"/> that specifies the control with which
         /// this shortcut menu is associated.</param>
         /// <param name="position">
-        /// A <see cref="Point"/> that specifies the coordinates at which to display the menu.
+        /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
         /// These coordinates are specified relative
         /// to the client coordinates of the control specified in the control parameter.</param>
         /// <remarks>
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// If <paramref name="position"/> is <c>null</c> (default value), popup menu is shown
         /// under the control specified in the <paramref name="control"/> parameter.
         /// </remarks>
-        public void Show(Control control, Point? position = null)
+        public void Show(Control control, PointD? position = null)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
@@ -78,15 +78,15 @@ namespace Alternet.UI
             if (position == null)
                 ShowUnder();
             else
-                ((NativeContextMenuHandler)Handler).Show(control, (Point)position);
+                ((NativeContextMenuHandler)Handler).Show(control, (PointD)position);
 
             void ShowUnder()
             {
                 Window? window = control.ParentWindow;
                 if (window == null)
                     return;
-                Rect toolRect = control.Bounds;
-                Point pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
+                RectD toolRect = control.Bounds;
+                PointD pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
                 pt = window.ScreenToClient(pt);
                 window.ShowPopupMenu(this, (int)pt.X, (int)pt.Y);
             }

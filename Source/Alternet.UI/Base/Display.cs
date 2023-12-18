@@ -62,13 +62,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets default display resolution for the current platform as <see cref="Int32Size"/>.
+        /// Gets default display resolution for the current platform as <see cref="SizeI"/>.
         /// </summary>
         /// <remarks>
         /// This property may return 96 on high dpi displays. It is better to get primary display with
         /// <see cref="Primary"/> property and use it's <see cref="Display.DPI"/> property to get DPI.
         /// </remarks>
-        public static Int32Size DefaultDPI => Native.WxOtherFactory.DisplayGetStdPPI();
+        public static SizeI DefaultDPI => Native.WxOtherFactory.DisplayGetStdPPI();
 
         /// <summary>
         /// Gets the display's name.
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets display resolution in pixels per inch.
         /// </summary>
-        public Int32Size DPI => Native.WxOtherFactory.DisplayGetPPI(Handle);
+        public SizeI DPI => Native.WxOtherFactory.DisplayGetPPI(Handle);
 
         /// <summary>
         /// Gets scaling factor used by this display.
@@ -93,7 +93,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the client area of the display.
         /// </summary>
-        public Int32Rect ClientArea => Native.WxOtherFactory.DisplayGetClientArea(Handle);
+        public RectI ClientArea => Native.WxOtherFactory.DisplayGetClientArea(Handle);
 
         /// <summary>
         /// Gets whether display height is bigger than width.
@@ -111,7 +111,7 @@ namespace Alternet.UI
         /// Gets the client area of the display in the
         /// device-independent units (1/96th inch per unit).
         /// </summary>
-        public Rect ClientAreaDip
+        public RectD ClientAreaDip
         {
             get
             {
@@ -122,13 +122,13 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the bounding rectangle of the display.
         /// </summary>
-        public Int32Rect Geometry => Native.WxOtherFactory.DisplayGetGeometry(Handle);
+        public RectI Geometry => Native.WxOtherFactory.DisplayGetGeometry(Handle);
 
         /// <summary>
         /// Returns the bounding rectangle of the display in the
         /// device-independent units (1/96th inch per unit).
         /// </summary>
-        public Rect GeometryDip
+        public RectD GeometryDip
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// or -1 if the point is not on any connected display.
         /// </summary>
         /// <param name="pt">Point for which index of display is returned.</param>
-        public static int GetFromPoint(Int32Point pt) =>
+        public static int GetFromPoint(PointI pt) =>
             Native.WxOtherFactory.DisplayGetFromPoint(pt);
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public Int32Size PixelFromDip(Size value)
+        public SizeI PixelFromDip(SizeD value)
         {
             return new(PixelFromDip(value.Width), PixelFromDip(value.Height));
         }
@@ -233,7 +233,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public Int32Point PixelFromDip(Point value)
+        public PointI PixelFromDip(PointD value)
         {
             return new(PixelFromDip(value.X), PixelFromDip(value.Y));
         }
@@ -243,37 +243,37 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public Int32Rect PixelFromDip(Rect value)
+        public RectI PixelFromDip(RectD value)
         {
             return new(PixelFromDip(value.Location), PixelFromDip(value.Size));
         }
 
         /// <summary>
-        /// Converts <see cref="Int32Size"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="value"><see cref="Int32Size"/> in pixels.</param>
+        /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
-        public Size PixelToDip(Int32Size value)
+        public SizeD PixelToDip(SizeI value)
         {
             return new(PixelToDip(value.Width), PixelToDip(value.Height));
         }
 
         /// <summary>
-        /// Converts <see cref="Int32Point"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="value"><see cref="Int32Point"/> in pixels.</param>
+        /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
-        public Point PixelToDip(Int32Point value)
+        public PointD PixelToDip(PointI value)
         {
             return new(PixelToDip(value.X), PixelToDip(value.Y));
         }
 
         /// <summary>
-        /// Converts <see cref="Int32Rect"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="value"><see cref="Int32Rect"/> in pixels.</param>
+        /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
-        public Rect PixelToDip(Int32Rect value)
+        public RectD PixelToDip(RectI value)
         {
             return new(PixelToDip(value.Location), PixelToDip(value.Size));
         }

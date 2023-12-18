@@ -34,12 +34,12 @@ ALTERNET_UI_API c_bool AuiToolBar_GetEventIsDropDownClicked_(AuiToolBar* obj)
     return obj->GetEventIsDropDownClicked();
 }
 
-ALTERNET_UI_API Int32Point_C AuiToolBar_GetEventClickPoint_(AuiToolBar* obj)
+ALTERNET_UI_API PointI_C AuiToolBar_GetEventClickPoint_(AuiToolBar* obj)
 {
     return obj->GetEventClickPoint();
 }
 
-ALTERNET_UI_API Int32Rect_C AuiToolBar_GetEventItemRect_(AuiToolBar* obj)
+ALTERNET_UI_API RectI_C AuiToolBar_GetEventItemRect_(AuiToolBar* obj)
 {
     return obj->GetEventItemRect();
 }
@@ -179,7 +179,7 @@ ALTERNET_UI_API c_bool AuiToolBar_GetToolFits_(AuiToolBar* obj, int toolId)
     return obj->GetToolFits(toolId);
 }
 
-ALTERNET_UI_API Rect_C AuiToolBar_GetToolRect_(AuiToolBar* obj, int toolId)
+ALTERNET_UI_API RectD_C AuiToolBar_GetToolRect_(AuiToolBar* obj, int toolId)
 {
     return obj->GetToolRect(toolId);
 }
@@ -194,12 +194,12 @@ ALTERNET_UI_API c_bool AuiToolBar_GetToolBarFits_(AuiToolBar* obj)
     return obj->GetToolBarFits();
 }
 
-ALTERNET_UI_API void AuiToolBar_SetToolBitmapSizeInPixels_(AuiToolBar* obj, Int32Size size)
+ALTERNET_UI_API void AuiToolBar_SetToolBitmapSizeInPixels_(AuiToolBar* obj, SizeI size)
 {
     obj->SetToolBitmapSizeInPixels(size);
 }
 
-ALTERNET_UI_API Int32Size_C AuiToolBar_GetToolBitmapSizeInPixels_(AuiToolBar* obj)
+ALTERNET_UI_API SizeI_C AuiToolBar_GetToolBitmapSizeInPixels_(AuiToolBar* obj)
 {
     return obj->GetToolBitmapSizeInPixels();
 }
@@ -364,7 +364,7 @@ ALTERNET_UI_API void AuiToolBar_SetToolMinSize_(AuiToolBar* obj, int tool_id, in
     obj->SetToolMinSize(tool_id, width, height);
 }
 
-ALTERNET_UI_API Int32Size_C AuiToolBar_GetToolMinSize_(AuiToolBar* obj, int tool_id)
+ALTERNET_UI_API SizeI_C AuiToolBar_GetToolMinSize_(AuiToolBar* obj, int tool_id)
 {
     return obj->GetToolMinSize(tool_id);
 }

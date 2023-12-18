@@ -73,12 +73,12 @@ ALTERNET_UI_API void* FlexGridSizer_GetColWidths_(void* handle)
     return FlexGridSizer::GetColWidths(handle);
 }
 
-ALTERNET_UI_API void FlexGridSizer_RepositionChildren_(void* handle, Int32Size minSize)
+ALTERNET_UI_API void FlexGridSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
     FlexGridSizer::RepositionChildren(handle, minSize);
 }
 
-ALTERNET_UI_API Int32Size_C FlexGridSizer_CalcMin_(void* handle)
+ALTERNET_UI_API SizeI_C FlexGridSizer_CalcMin_(void* handle)
 {
     return FlexGridSizer::CalcMin(handle);
 }

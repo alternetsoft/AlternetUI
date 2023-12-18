@@ -36,10 +36,10 @@ namespace PropertyGridSample
         Font? asFont;
         Brush? asBrush;
         Pen? asPen;
-        Size? asSize;
+        SizeD? asSize;
         Thickness? asThickness;
-        Rect? asRect;
-        Point? asPoint;
+        RectD? asRect;
+        PointD? asPoint;
         FontStyle? asFontStyleN;
         VerticalAlignment? asVerticalAlignmnentN;
 
@@ -194,7 +194,7 @@ namespace PropertyGridSample
             set => asPen = value;
         }
 
-        public Size? AsSizeN
+        public SizeD? AsSizeN
         {
             get => asSize;
             set => asSize = value;
@@ -206,13 +206,13 @@ namespace PropertyGridSample
             set => asThickness = value;
         }
 
-        public Rect? AsRectN
+        public RectD? AsRectN
         {
             get => asRect;
             set => asRect = value;
         }
 
-        public Point? AsPointN
+        public PointD? AsPointN
         {
             get => asPoint;
             set => asPoint = value;
@@ -288,10 +288,10 @@ namespace PropertyGridSample
             asFont = Font.Default;
             asBrush = Brush.Default;
             asPen = Pen.Default;
-            asSize = new Size(26, 30);
+            asSize = new SizeD(26, 30);
             asThickness = new Thickness(126, 50, 80, 24);
-            asRect = new Rect(51, 82, 354, 40);
-            asPoint = new Point(50, 85);
+            asRect = new RectD(51, 82, 354, 40);
+            asPoint = new PointD(50, 85);
         }
     }
 }

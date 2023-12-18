@@ -249,7 +249,7 @@ ALTERNET_UI_API void TreeView_CollapseAll_(TreeView* obj)
     obj->CollapseAll();
 }
 
-ALTERNET_UI_API void* TreeView_ItemHitTest_(TreeView* obj, Point point)
+ALTERNET_UI_API void* TreeView_ItemHitTest_(TreeView* obj, PointD point)
 {
     return obj->ItemHitTest(point);
 }

@@ -53,7 +53,7 @@ ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
     Font::CloseFamiliesArray(array);
 }
 
-ALTERNET_UI_API Int32Size_C Font_GetPixelSize_(Font* obj)
+ALTERNET_UI_API SizeI_C Font_GetPixelSize_(Font* obj)
 {
     return obj->GetPixelSize();
 }

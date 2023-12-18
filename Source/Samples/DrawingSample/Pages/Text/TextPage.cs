@@ -185,7 +185,7 @@ namespace DrawingSample
             }
         }
 
-        public override void Draw(DrawingContext dc, Rect bounds)
+        public override void Draw(DrawingContext dc, RectD bounds)
         {
             paragraphs ??= CreateParagraphs().ToArray();
 
@@ -198,7 +198,7 @@ namespace DrawingSample
             double y = 20;
             foreach (var paragraph in paragraphs)
             {
-                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new Point(x, y));
+                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
                 double textHeight;
@@ -216,11 +216,11 @@ namespace DrawingSample
                 }
 
                 if (TextWidthLimitEnabled)
-                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimit, textHeight), textFormat);
+                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new RectD(x, y, TextWidthLimit, textHeight), textFormat);
                 else if (TextHeightSet)
-                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimitEnabled ? TextWidthLimit : double.MaxValue, textHeight), textFormat);
+                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new RectD(x, y, TextWidthLimitEnabled ? TextWidthLimit : double.MaxValue, textHeight), textFormat);
                 else
-                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Point(x, y), textFormat);
+                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new PointD(x, y), textFormat);
 
                 y += textHeight + 20;
 
@@ -229,7 +229,7 @@ namespace DrawingSample
             }
 
             if (TextWidthLimitEnabled)
-                dc.DrawLine(textWidthLimitPen, new Point(TextWidthLimit + x, bounds.Top), new Point(TextWidthLimit + x, bounds.Bottom));
+                dc.DrawLine(textWidthLimitPen, new PointD(TextWidthLimit + x, bounds.Top), new PointD(TextWidthLimit + x, bounds.Bottom));
         }
 
         protected override Control CreateSettingsControl()

@@ -54,15 +54,15 @@ namespace Alternet.UI
 
         event EventHandler? DragLeave;
 
-        Size ClientSize { get; set; }
+        SizeD ClientSize { get; set; }
 
         bool IsMouseCaptured { get; }
 
         object? Tag { get; set; }
 
-        Rect Bounds { get; set; }
+        RectD Bounds { get; set; }
 
-        Point Location { get; set; }
+        PointD Location { get; set; }
 
         bool Visible { get; set; }
 
@@ -76,7 +76,7 @@ namespace Alternet.UI
         /* IList Children { get; }*/
         /* public IControl? Parent { get; }*/
 
-        Size SuggestedSize { get; set; }
+        SizeD SuggestedSize { get; set; }
 
         double SuggestedWidth { get; set; }
 
@@ -138,13 +138,13 @@ namespace Alternet.UI
 
         void SuspendLayout();
 
-        public Point ScreenToClient(Point point);
+        public PointD ScreenToClient(PointD point);
 
-        public Point ClientToScreen(Point point);
+        public PointD ClientToScreen(PointD point);
 
-        public Int32Point ScreenToDevice(Point point);
+        public PointI ScreenToDevice(PointD point);
 
-        public Point DeviceToScreen(Int32Point point);
+        public PointD DeviceToScreen(PointI point);
 
         void ResumeLayout(bool performLayout = true);
 
@@ -154,7 +154,7 @@ namespace Alternet.UI
 
         void PerformLayout(bool layoutParent = true);
 
-        Size GetPreferredSize(Size availableSize);
+        SizeD GetPreferredSize(SizeD availableSize);
 
         bool SetFocus();
 

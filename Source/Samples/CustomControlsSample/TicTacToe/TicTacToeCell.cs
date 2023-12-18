@@ -64,7 +64,7 @@ namespace CustomControlsSample
                 if (mark != null)
                 {
                     var markSize = minBoundsSize * 0.7;
-                    var markBounds = Rect.FromCenter(bounds.Center, new Size(markSize, markSize));
+                    var markBounds = RectD.FromCenter(bounds.Center, new SizeD(markSize, markSize));
 
                     if (mark == PlayerMark.X)
                     {

@@ -72,37 +72,37 @@ namespace NativeApi.Api
         // client coordinates for child windows and screen coordinates for the
         // top level ones, use GetScreenPosition() if you need screen
         // coordinates for all kinds of windows
-        public static Int32Point GetPosition(IntPtr handle) => default;
+        public static PointI GetPosition(IntPtr handle) => default;
 
         // get the window position in screen coordinates
-        public static Int32Point GetScreenPosition(IntPtr handle) => default;
+        public static PointI GetScreenPosition(IntPtr handle) => default;
 
         // get the window size (pointers may be NULL)
-        public static Int32Size GetSize(IntPtr handle) => default;
+        public static SizeI GetSize(IntPtr handle) => default;
 
-        public static Int32Size GetClientSize(IntPtr handle) => default;
+        public static SizeI GetClientSize(IntPtr handle) => default;
 
         // get the position and size at once
-        public static Int32Rect GetRect(IntPtr handle) => default;
+        public static RectI GetRect(IntPtr handle) => default;
 
-        public static Int32Rect GetScreenRect(IntPtr handle) => default;
+        public static RectI GetScreenRect(IntPtr handle) => default;
 
         // get the origin of the client area of the window relative to the
         // window top left corner (the client area may be shifted because of
         // the borders, scrollbars, other decorations...)
-        public static Int32Point GetClientAreaOrigin(IntPtr handle) => default;
+        public static PointI GetClientAreaOrigin(IntPtr handle) => default;
 
         // get the client rectangle in window (i.e. client) coordinates
-        public static Int32Rect GetClientRect(IntPtr handle) => default;
+        public static RectI GetClientRect(IntPtr handle) => default;
 
         // client<->window size conversion
-        public static Int32Size ClientToWindowSize(IntPtr handle, Int32Size size) => default;
-        public static Int32Size WindowToClientSize(IntPtr handle, Int32Size size) => default;
+        public static SizeI ClientToWindowSize(IntPtr handle, SizeI size) => default;
+        public static SizeI WindowToClientSize(IntPtr handle, SizeI size) => default;
 
         // get the size best suited for the window (in fact, minimal
         // acceptable size using which it will still look "nice" in
         // most situations)
-        public static Int32Size GetBestSize(IntPtr handle) => default;
+        public static SizeI GetBestSize(IntPtr handle) => default;
 
         // Determine the best size in the other direction if one of them is
         // fixed. This is used with windows that can wrap their contents and
@@ -116,16 +116,16 @@ namespace NativeApi.Api
         // reset the cached best size value so it will be recalculated the
         // next time it is needed.
         public static void InvalidateBestSize(IntPtr handle) { }
-        public static void CacheBestSize(IntPtr handle, Int32Size size) { }
+        public static void CacheBestSize(IntPtr handle, SizeI size) { }
 
         // This function will merge the window's best size into the window's
         // minimum size, giving priority to the min size components, and
         // returns the results.
-        public static Int32Size GetEffectiveMinSize(IntPtr handle) => default;
+        public static SizeI GetEffectiveMinSize(IntPtr handle) => default;
 
         // A 'Smart' SetSize that will fill in default size values with 'best'
         // size.  Sets the minsize to what was passed in.
-        public static void SetInitialSize(IntPtr handle, Int32Size size/*=wxDefaultSize*/) { }
+        public static void SetInitialSize(IntPtr handle, SizeI size/*=wxDefaultSize*/) { }
 
         // the generic centre function - centers the window on parent by`
         // default or on screen if it doesn't have parent or
@@ -155,22 +155,22 @@ namespace NativeApi.Api
         // Call these to override what GetBestSize() returns. This
         // method is only because it is overridden in wxTLW
         // as a different API for SetSizeHints().
-        public static void SetMinSize(IntPtr handle, Int32Size minSize) { }
-        public static void SetMaxSize(IntPtr handle, Int32Size maxSize) { }
+        public static void SetMinSize(IntPtr handle, SizeI minSize) { }
+        public static void SetMaxSize(IntPtr handle, SizeI maxSize) { }
 
         // Like Set*Size, but for client, not window, size
-        public static void SetMinClientSize(IntPtr handle, Int32Size size) { }
-        public static void SetMaxClientSize(IntPtr handle, Int32Size size) { }
+        public static void SetMinClientSize(IntPtr handle, SizeI size) { }
+        public static void SetMaxClientSize(IntPtr handle, SizeI size) { }
 
         // Override these methods to impose restrictions on min/max size.
         // The easier way is to call SetMinSize() and SetMaxSize() which
         // will have the same effect. Doing both is non-sense.
-        public static Int32Size GetMinSize(IntPtr handle) => default;
-        public static Int32Size GetMaxSize(IntPtr handle) => default;
+        public static SizeI GetMinSize(IntPtr handle) => default;
+        public static SizeI GetMaxSize(IntPtr handle) => default;
 
         // Like Get*Size, but for client, not window, size
-        public static Int32Size GetMinClientSize(IntPtr handle) => default;
-        public static Int32Size GetMaxClientSize(IntPtr handle) => default;
+        public static SizeI GetMinClientSize(IntPtr handle) => default;
+        public static SizeI GetMaxClientSize(IntPtr handle) => default;
 
         // Get the min and max values one by one
         public static int GetMinWidth(IntPtr handle) => default;
@@ -184,11 +184,11 @@ namespace NativeApi.Api
         // the screen window size.  You may override the DoXXXVirtual
         // methods below for classes where that is the case.
         public static void SetVirtualSize(IntPtr handle, int x, int y) { }
-        public static Int32Size GetVirtualSize(IntPtr handle) => default;
+        public static SizeI GetVirtualSize(IntPtr handle) => default;
 
         // Return the largest of ClientSize and BestSize (as determined
         // by a sizer, interior children, or other means)
-        public static Int32Size GetBestVirtualSize(IntPtr handle) => default;
+        public static SizeI GetBestVirtualSize(IntPtr handle) => default;
 
         // Return the magnification of the content of this window for the platforms
         // using logical pixels different from physical ones, i.e. those for which
@@ -202,7 +202,7 @@ namespace NativeApi.Api
 
         // return the size of the left/right and top/bottom borders in x and y
         // components of the result respectively
-        public static Int32Size GetWindowBorderSize(IntPtr handle) => default;
+        public static SizeI GetWindowBorderSize(IntPtr handle) => default;
 
         // wxSizer and friends use this to give a chance to a component to recalc
         // its min size once one of the final size components is known. Override
@@ -449,7 +449,7 @@ namespace NativeApi.Api
         bool UnregisterHotKey(IntPtr handle, int hotkeyId) => default;
 
         // Get the DPI used by the given window or wxSize(0, 0) if unknown.
-        public static Int32Size GetDPI(IntPtr handle) => default;
+        public static SizeI GetDPI(IntPtr handle) => default;
 
         // Some ports need to modify the font object when the DPI of the window it
         // is used with changes, this function can be used to do it.
@@ -463,19 +463,19 @@ namespace NativeApi.Api
         // used under all platforms to convert between them without using any
         // preprocessor checks.
 
-        public static Int32Size FromPhys(Int32Size sz, IntPtr w) => default;//real static 
-        public static Int32Point FromPhys2(Int32Point pt, IntPtr w) => default;//real static 
+        public static SizeI FromPhys(SizeI sz, IntPtr w) => default;//real static 
+        public static PointI FromPhys2(PointI pt, IntPtr w) => default;//real static 
         public static int FromPhys3(int d, IntPtr w) => default;//real static 
 
-        public static Int32Size FromPhys4(Int32Size sz) => default;
-        public static Int32Point FromPhys5(Int32Point pt) => default;
+        public static SizeI FromPhys4(SizeI sz) => default;
+        public static PointI FromPhys5(PointI pt) => default;
         public static int FromPhys6(int d) => default;
 
-        public static Int32Size ToPhys(Int32Size sz, IntPtr w) => default;//real static 
-        public static Int32Point ToPhys2(Int32Point pt, IntPtr w) => default;//real static 
+        public static SizeI ToPhys(SizeI sz, IntPtr w) => default;//real static 
+        public static PointI ToPhys2(PointI pt, IntPtr w) => default;//real static 
         public static int ToPhys3(int d, IntPtr w) => default;//real static 
-        public static Int32Size ToPhys4(Int32Size sz) => default;
-        public static Int32Point ToPhys5(Int32Point pt) => default;
+        public static SizeI ToPhys4(SizeI sz) => default;
+        public static PointI ToPhys5(PointI pt) => default;
         public static int ToPhys6(int d) => default;
 
         // DPI-independent pixels, or DIPs, are pixel values for the standard
@@ -487,25 +487,25 @@ namespace NativeApi.Api
         // Similarly, currently in practice the factor is the same in both
         // horizontal and vertical directions, but this could, in principle,
         // change too, so prefer using the overloads taking Int32Point or wxSize.
-        public static Int32Size FromDIP(Int32Size sz, IntPtr window) => default;//real static 
-        public static Int32Point FromDIP2(Int32Point pt, IntPtr window) => default;//real static 
+        public static SizeI FromDIP(SizeI sz, IntPtr window) => default;//real static 
+        public static PointI FromDIP2(PointI pt, IntPtr window) => default;//real static 
         public static int FromDIP3(int d, IntPtr w) => default;//real static 
-        public static Int32Size FromDIP4(IntPtr handle, Int32Size sz) => default;
-        public static Int32Point FromDIP5(IntPtr handle, Int32Point pt) => default;
+        public static SizeI FromDIP4(IntPtr handle, SizeI sz) => default;
+        public static PointI FromDIP5(IntPtr handle, PointI pt) => default;
         public static int FromDIP6(IntPtr handle, int d) => default;
 
-        public static Int32Size ToDIP(Int32Size sz, IntPtr w) => default;//real static 
-        public static Int32Point ToDIP2(Int32Point pt, IntPtr w) => default;//real static 
+        public static SizeI ToDIP(SizeI sz, IntPtr w) => default;//real static 
+        public static PointI ToDIP2(PointI pt, IntPtr w) => default;//real static 
         public static int ToDIP3(int d, IntPtr w) => default;//real static 
-        public static Int32Size ToDIP4(IntPtr handle, Int32Size sz) => default;
-        public static Int32Point ToDIP5(IntPtr handle, Int32Point pt) => default;
+        public static SizeI ToDIP4(IntPtr handle, SizeI sz) => default;
+        public static PointI ToDIP5(IntPtr handle, PointI pt) => default;
         public static int ToDIP6(int d) => default;
 
         // Dialog units are based on the size of the current font.
-        public static Int32Point ConvertPixelsToDialog(IntPtr handle, Int32Point pt) => default;
-        public static Int32Point ConvertDialogToPixels(IntPtr handle, Int32Point pt) => default;
-        public static Int32Size ConvertPixelsToDialog2(IntPtr handle, Int32Size sz) => default;
-        public static Int32Size ConvertDialogToPixels2(IntPtr handle, Int32Size sz) => default;
+        public static PointI ConvertPixelsToDialog(IntPtr handle, PointI pt) => default;
+        public static PointI ConvertDialogToPixels(IntPtr handle, PointI pt) => default;
+        public static SizeI ConvertPixelsToDialog2(IntPtr handle, SizeI sz) => default;
+        public static SizeI ConvertDialogToPixels2(IntPtr handle, SizeI sz) => default;
 
         // move the mouse to the specified position
         public static void WarpPointer(IntPtr handle, int x, int y) { }
@@ -529,7 +529,7 @@ namespace NativeApi.Api
 
         // mark the specified rectangle (or the whole window) as "dirty" so it
         // will be repainted
-        public static void RefreshRect(IntPtr handle, Int32Rect rect, bool eraseBackground = true) { }
+        public static void RefreshRect(IntPtr handle, RectI rect, bool eraseBackground = true) { }
 
         // repaint all invalid areas of the window immediately
         public static void Update(IntPtr handle) { }
@@ -560,7 +560,7 @@ namespace NativeApi.Api
         public static IntPtr GetUpdateRegion(IntPtr handle) => default;
 
         // get the update rectangle region bounding box in client coords
-        public static Int32Rect GetUpdateClientRect(IntPtr handle) => default;
+        public static RectI GetUpdateClientRect(IntPtr handle) => default;
 
         // these functions verify whether the given point/rectangle belongs to
         // (or at least intersects with) the update region
@@ -625,11 +625,11 @@ namespace NativeApi.Api
         public static int GetCharHeight(IntPtr handle) => default;
         public static int GetCharWidth(IntPtr handle) => default;
 
-        public static Int32Size GetTextExtent(IntPtr handle, string str) => default;
+        public static SizeI GetTextExtent(IntPtr handle, string str) => default;
 
         // Int32Point interface to do the same thing
-        public static Int32Point ClientToScreen(IntPtr handle, Int32Point pt) => default;
-        public static Int32Point ScreenToClient(IntPtr handle, Int32Point pt) => default;
+        public static PointI ClientToScreen(IntPtr handle, PointI pt) => default;
+        public static PointI ScreenToClient(IntPtr handle, PointI pt) => default;
 
         // test where the given (in client coords) point lies
         public static /*wxHitTest*/ int HitTest(IntPtr handle, int x, int y) => default;
@@ -702,7 +702,7 @@ namespace NativeApi.Api
         // get the help string associated with the given position in this window
         // notice that pt may be invalid if event origin is keyboard or unknown
         // and this method should return the global window help text then
-        public static string GetHelpTextAtPoint(IntPtr handle, Int32Point pt,
+        public static string GetHelpTextAtPoint(IntPtr handle, PointI pt,
             /*wxHelpEvent::Origin*/ int origin) => default;
         // returns the position-independent help text
         public static string GetHelpText(IntPtr handle) => default;
@@ -756,9 +756,9 @@ namespace NativeApi.Api
         // these methods are but normally won't be overridden
         public static void SetSizeConstraint(IntPtr handle, int x, int y, int w, int h) { }
         public static void MoveConstraint(IntPtr handle, int x, int y) { }
-        public static Int32Size GetSizeConstraint(IntPtr handle) => default;
-        public static Int32Size GetClientSizeConstraint(IntPtr handle) => default;
-        public static Int32Size GetPositionConstraint(IntPtr handle) => default;
+        public static SizeI GetSizeConstraint(IntPtr handle) => default;
+        public static SizeI GetClientSizeConstraint(IntPtr handle) => default;
+        public static SizeI GetPositionConstraint(IntPtr handle) => default;
 
         // when usingraints or sizers, it makes sense to update
         // children positions automatically whenever the window is resized

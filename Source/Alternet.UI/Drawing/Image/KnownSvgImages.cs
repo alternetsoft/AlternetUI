@@ -13,9 +13,9 @@ namespace Alternet.UI
     /// </summary>
     public class KnownSvgImages
     {
-        private static readonly AdvDictionary<Int32Size, List<KnownSvgImages>> Images = [];
+        private static readonly AdvDictionary<SizeI, List<KnownSvgImages>> Images = [];
 
-        private readonly Int32Size size;
+        private readonly SizeI size;
         private readonly Color color;
 
         private ImageSet? imgBrowserBack;
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="size">Images size.</param>
         /// <param name="color">Images color.</param>
-        public KnownSvgImages(Color color, Int32Size size)
+        public KnownSvgImages(Color color, SizeI size)
         {
             this.size = size;
             this.color = color;
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets images size.
         /// </summary>
-        public Int32Size Size => size;
+        public SizeI Size => size;
 
         /// <summary>
         /// Gets or sets image that can be used in "Back" toolbar buttons
@@ -278,7 +278,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="size">Image size.</param>
         /// <param name="color">Image color.</param>
-        public static KnownSvgImages GetForSize(Color color, Int32Size size)
+        public static KnownSvgImages GetForSize(Color color, SizeI size)
         {
             var images = Images.GetOrCreate(size, () => new List<KnownSvgImages>());
             foreach(var item in images)
@@ -298,7 +298,7 @@ namespace Alternet.UI
         /// <param name="size">Image size.</param>
         /// <param name="color">Image color.</param>
         public static KnownSvgImages GetForSize(Color color, int size)
-            => GetForSize(color, new Int32Size(size));
+            => GetForSize(color, new SizeI(size));
 
         /// <summary>
         /// Gets <see cref="KnownSvgImages.ImgMessageBoxWarning"/> image for the specified bitmap size.

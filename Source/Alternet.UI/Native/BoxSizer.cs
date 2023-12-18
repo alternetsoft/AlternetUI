@@ -33,7 +33,7 @@ namespace Alternet.UI.Native
             return NativeApi.BoxSizer_AddSpacer_(handle, size);
         }
         
-        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI CalcMin(System.IntPtr handle)
         {
             return NativeApi.BoxSizer_CalcMin_(handle);
         }
@@ -48,7 +48,7 @@ namespace Alternet.UI.Native
             NativeApi.BoxSizer_SetOrientation_(handle, orient);
         }
         
-        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.SizeI minSize)
         {
             NativeApi.BoxSizer_RepositionChildren_(handle, minSize);
         }
@@ -69,7 +69,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr BoxSizer_AddSpacer_(System.IntPtr handle, int size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size BoxSizer_CalcMin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI BoxSizer_CalcMin_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int BoxSizer_GetOrientation_(System.IntPtr handle);
@@ -78,7 +78,7 @@ namespace Alternet.UI.Native
             public static extern void BoxSizer_SetOrientation_(System.IntPtr handle, int orient);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void BoxSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            public static extern void BoxSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.SizeI minSize);
             
         }
     }

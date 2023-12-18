@@ -22,7 +22,7 @@ namespace Alternet.UI
         string? Name { get; set; }
 
         /// <inheritdoc cref="RichTextBox.CurrentPosition"/>
-        Int32Point? CurrentPosition { get; set; }
+        PointI? CurrentPosition { get; set; }
 
         /// <inheritdoc cref="RichTextBox.LastLineNumber"/>
         long LastLineNumber { get; }

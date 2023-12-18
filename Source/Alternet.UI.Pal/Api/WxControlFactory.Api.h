@@ -33,17 +33,17 @@ ALTERNET_UI_API void WxControlFactory_MoveConstraint_(void* handle, int x, int y
     WxControlFactory::MoveConstraint(handle, x, y);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetSizeConstraint_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetSizeConstraint_(void* handle)
 {
     return WxControlFactory::GetSizeConstraint(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetClientSizeConstraint_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetClientSizeConstraint_(void* handle)
 {
     return WxControlFactory::GetClientSizeConstraint(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetPositionConstraint_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetPositionConstraint_(void* handle)
 {
     return WxControlFactory::GetPositionConstraint(handle);
 }
@@ -178,7 +178,7 @@ ALTERNET_UI_API c_bool WxControlFactory_EnableTouchEvents_(void* handle, int WXU
     return WxControlFactory::EnableTouchEvents(handle, WXUNUSEDeventsMask);
 }
 
-ALTERNET_UI_API void WxControlFactory_RefreshRect_(void* handle, Int32Rect rect, c_bool eraseBackground)
+ALTERNET_UI_API void WxControlFactory_RefreshRect_(void* handle, RectI rect, c_bool eraseBackground)
 {
     WxControlFactory::RefreshRect(handle, rect, eraseBackground);
 }
@@ -228,7 +228,7 @@ ALTERNET_UI_API void* WxControlFactory_GetUpdateRegion_(void* handle)
     return WxControlFactory::GetUpdateRegion(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C WxControlFactory_GetUpdateClientRect_(void* handle)
+ALTERNET_UI_API RectI_C WxControlFactory_GetUpdateClientRect_(void* handle)
 {
     return WxControlFactory::GetUpdateClientRect(handle);
 }
@@ -358,17 +358,17 @@ ALTERNET_UI_API int WxControlFactory_GetCharWidth_(void* handle)
     return WxControlFactory::GetCharWidth(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetTextExtent_(void* handle, const char16_t* str)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetTextExtent_(void* handle, const char16_t* str)
 {
     return WxControlFactory::GetTextExtent(handle, str);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ClientToScreen_(void* handle, Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_ClientToScreen_(void* handle, PointI pt)
 {
     return WxControlFactory::ClientToScreen(handle, pt);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ScreenToClient_(void* handle, Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_ScreenToClient_(void* handle, PointI pt)
 {
     return WxControlFactory::ScreenToClient(handle, pt);
 }
@@ -488,7 +488,7 @@ ALTERNET_UI_API void WxControlFactory_SetHelpText_(void* handle, const char16_t*
     WxControlFactory::SetHelpText(handle, text);
 }
 
-ALTERNET_UI_API char16_t* WxControlFactory_GetHelpTextAtPoint_(void* handle, Int32Point pt, int origin)
+ALTERNET_UI_API char16_t* WxControlFactory_GetHelpTextAtPoint_(void* handle, PointI pt, int origin)
 {
     return AllocPInvokeReturnString(WxControlFactory::GetHelpTextAtPoint(handle, pt, origin));
 }
@@ -838,7 +838,7 @@ ALTERNET_UI_API void* WxControlFactory_GetAcceleratorTable_(void* handle)
     return WxControlFactory::GetAcceleratorTable(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetDPI_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetDPI_(void* handle)
 {
     return WxControlFactory::GetDPI(handle);
 }
@@ -848,12 +848,12 @@ ALTERNET_UI_API void WxControlFactory_WXAdjustFontToOwnPPI_(void* handle, void* 
     WxControlFactory::WXAdjustFontToOwnPPI(handle, font);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_FromPhys_(Int32Size sz, void* w)
+ALTERNET_UI_API SizeI_C WxControlFactory_FromPhys_(SizeI sz, void* w)
 {
     return WxControlFactory::FromPhys(sz, w);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_FromPhys2_(Int32Point pt, void* w)
+ALTERNET_UI_API PointI_C WxControlFactory_FromPhys2_(PointI pt, void* w)
 {
     return WxControlFactory::FromPhys2(pt, w);
 }
@@ -863,12 +863,12 @@ ALTERNET_UI_API int WxControlFactory_FromPhys3_(int d, void* w)
     return WxControlFactory::FromPhys3(d, w);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_FromPhys4_(Int32Size sz)
+ALTERNET_UI_API SizeI_C WxControlFactory_FromPhys4_(SizeI sz)
 {
     return WxControlFactory::FromPhys4(sz);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_FromPhys5_(Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_FromPhys5_(PointI pt)
 {
     return WxControlFactory::FromPhys5(pt);
 }
@@ -878,12 +878,12 @@ ALTERNET_UI_API int WxControlFactory_FromPhys6_(int d)
     return WxControlFactory::FromPhys6(d);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ToPhys_(Int32Size sz, void* w)
+ALTERNET_UI_API SizeI_C WxControlFactory_ToPhys_(SizeI sz, void* w)
 {
     return WxControlFactory::ToPhys(sz, w);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ToPhys2_(Int32Point pt, void* w)
+ALTERNET_UI_API PointI_C WxControlFactory_ToPhys2_(PointI pt, void* w)
 {
     return WxControlFactory::ToPhys2(pt, w);
 }
@@ -893,12 +893,12 @@ ALTERNET_UI_API int WxControlFactory_ToPhys3_(int d, void* w)
     return WxControlFactory::ToPhys3(d, w);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ToPhys4_(Int32Size sz)
+ALTERNET_UI_API SizeI_C WxControlFactory_ToPhys4_(SizeI sz)
 {
     return WxControlFactory::ToPhys4(sz);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ToPhys5_(Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_ToPhys5_(PointI pt)
 {
     return WxControlFactory::ToPhys5(pt);
 }
@@ -908,12 +908,12 @@ ALTERNET_UI_API int WxControlFactory_ToPhys6_(int d)
     return WxControlFactory::ToPhys6(d);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_FromDIP_(Int32Size sz, void* window)
+ALTERNET_UI_API SizeI_C WxControlFactory_FromDIP_(SizeI sz, void* window)
 {
     return WxControlFactory::FromDIP(sz, window);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_FromDIP2_(Int32Point pt, void* window)
+ALTERNET_UI_API PointI_C WxControlFactory_FromDIP2_(PointI pt, void* window)
 {
     return WxControlFactory::FromDIP2(pt, window);
 }
@@ -923,12 +923,12 @@ ALTERNET_UI_API int WxControlFactory_FromDIP3_(int d, void* w)
     return WxControlFactory::FromDIP3(d, w);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_FromDIP4_(void* handle, Int32Size sz)
+ALTERNET_UI_API SizeI_C WxControlFactory_FromDIP4_(void* handle, SizeI sz)
 {
     return WxControlFactory::FromDIP4(handle, sz);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_FromDIP5_(void* handle, Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_FromDIP5_(void* handle, PointI pt)
 {
     return WxControlFactory::FromDIP5(handle, pt);
 }
@@ -938,12 +938,12 @@ ALTERNET_UI_API int WxControlFactory_FromDIP6_(void* handle, int d)
     return WxControlFactory::FromDIP6(handle, d);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ToDIP_(Int32Size sz, void* w)
+ALTERNET_UI_API SizeI_C WxControlFactory_ToDIP_(SizeI sz, void* w)
 {
     return WxControlFactory::ToDIP(sz, w);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ToDIP2_(Int32Point pt, void* w)
+ALTERNET_UI_API PointI_C WxControlFactory_ToDIP2_(PointI pt, void* w)
 {
     return WxControlFactory::ToDIP2(pt, w);
 }
@@ -953,12 +953,12 @@ ALTERNET_UI_API int WxControlFactory_ToDIP3_(int d, void* w)
     return WxControlFactory::ToDIP3(d, w);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ToDIP4_(void* handle, Int32Size sz)
+ALTERNET_UI_API SizeI_C WxControlFactory_ToDIP4_(void* handle, SizeI sz)
 {
     return WxControlFactory::ToDIP4(handle, sz);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ToDIP5_(void* handle, Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_ToDIP5_(void* handle, PointI pt)
 {
     return WxControlFactory::ToDIP5(handle, pt);
 }
@@ -968,22 +968,22 @@ ALTERNET_UI_API int WxControlFactory_ToDIP6_(int d)
     return WxControlFactory::ToDIP6(d);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ConvertPixelsToDialog_(void* handle, Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_ConvertPixelsToDialog_(void* handle, PointI pt)
 {
     return WxControlFactory::ConvertPixelsToDialog(handle, pt);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_ConvertDialogToPixels_(void* handle, Int32Point pt)
+ALTERNET_UI_API PointI_C WxControlFactory_ConvertDialogToPixels_(void* handle, PointI pt)
 {
     return WxControlFactory::ConvertDialogToPixels(handle, pt);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ConvertPixelsToDialog2_(void* handle, Int32Size sz)
+ALTERNET_UI_API SizeI_C WxControlFactory_ConvertPixelsToDialog2_(void* handle, SizeI sz)
 {
     return WxControlFactory::ConvertPixelsToDialog2(handle, sz);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ConvertDialogToPixels2_(void* handle, Int32Size sz)
+ALTERNET_UI_API SizeI_C WxControlFactory_ConvertDialogToPixels2_(void* handle, SizeI sz)
 {
     return WxControlFactory::ConvertDialogToPixels2(handle, sz);
 }
@@ -1108,57 +1108,57 @@ ALTERNET_UI_API void WxControlFactory_SetClientSize_(void* handle, int width, in
     WxControlFactory::SetClientSize(handle, width, height);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_GetPosition_(void* handle)
+ALTERNET_UI_API PointI_C WxControlFactory_GetPosition_(void* handle)
 {
     return WxControlFactory::GetPosition(handle);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_GetScreenPosition_(void* handle)
+ALTERNET_UI_API PointI_C WxControlFactory_GetScreenPosition_(void* handle)
 {
     return WxControlFactory::GetScreenPosition(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetSize_(void* handle)
 {
     return WxControlFactory::GetSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetClientSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetClientSize_(void* handle)
 {
     return WxControlFactory::GetClientSize(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C WxControlFactory_GetRect_(void* handle)
+ALTERNET_UI_API RectI_C WxControlFactory_GetRect_(void* handle)
 {
     return WxControlFactory::GetRect(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C WxControlFactory_GetScreenRect_(void* handle)
+ALTERNET_UI_API RectI_C WxControlFactory_GetScreenRect_(void* handle)
 {
     return WxControlFactory::GetScreenRect(handle);
 }
 
-ALTERNET_UI_API Int32Point_C WxControlFactory_GetClientAreaOrigin_(void* handle)
+ALTERNET_UI_API PointI_C WxControlFactory_GetClientAreaOrigin_(void* handle)
 {
     return WxControlFactory::GetClientAreaOrigin(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C WxControlFactory_GetClientRect_(void* handle)
+ALTERNET_UI_API RectI_C WxControlFactory_GetClientRect_(void* handle)
 {
     return WxControlFactory::GetClientRect(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_ClientToWindowSize_(void* handle, Int32Size size)
+ALTERNET_UI_API SizeI_C WxControlFactory_ClientToWindowSize_(void* handle, SizeI size)
 {
     return WxControlFactory::ClientToWindowSize(handle, size);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_WindowToClientSize_(void* handle, Int32Size size)
+ALTERNET_UI_API SizeI_C WxControlFactory_WindowToClientSize_(void* handle, SizeI size)
 {
     return WxControlFactory::WindowToClientSize(handle, size);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetBestSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetBestSize_(void* handle)
 {
     return WxControlFactory::GetBestSize(handle);
 }
@@ -1188,17 +1188,17 @@ ALTERNET_UI_API void WxControlFactory_InvalidateBestSize_(void* handle)
     WxControlFactory::InvalidateBestSize(handle);
 }
 
-ALTERNET_UI_API void WxControlFactory_CacheBestSize_(void* handle, Int32Size size)
+ALTERNET_UI_API void WxControlFactory_CacheBestSize_(void* handle, SizeI size)
 {
     WxControlFactory::CacheBestSize(handle, size);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetEffectiveMinSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetEffectiveMinSize_(void* handle)
 {
     return WxControlFactory::GetEffectiveMinSize(handle);
 }
 
-ALTERNET_UI_API void WxControlFactory_SetInitialSize_(void* handle, Int32Size size)
+ALTERNET_UI_API void WxControlFactory_SetInitialSize_(void* handle, SizeI size)
 {
     WxControlFactory::SetInitialSize(handle, size);
 }
@@ -1228,42 +1228,42 @@ ALTERNET_UI_API void WxControlFactory_SetSizeHints_(void* handle, int minW, int 
     WxControlFactory::SetSizeHints(handle, minW, minH, maxW, maxH, incW, incH);
 }
 
-ALTERNET_UI_API void WxControlFactory_SetMinSize_(void* handle, Int32Size minSize)
+ALTERNET_UI_API void WxControlFactory_SetMinSize_(void* handle, SizeI minSize)
 {
     WxControlFactory::SetMinSize(handle, minSize);
 }
 
-ALTERNET_UI_API void WxControlFactory_SetMaxSize_(void* handle, Int32Size maxSize)
+ALTERNET_UI_API void WxControlFactory_SetMaxSize_(void* handle, SizeI maxSize)
 {
     WxControlFactory::SetMaxSize(handle, maxSize);
 }
 
-ALTERNET_UI_API void WxControlFactory_SetMinClientSize_(void* handle, Int32Size size)
+ALTERNET_UI_API void WxControlFactory_SetMinClientSize_(void* handle, SizeI size)
 {
     WxControlFactory::SetMinClientSize(handle, size);
 }
 
-ALTERNET_UI_API void WxControlFactory_SetMaxClientSize_(void* handle, Int32Size size)
+ALTERNET_UI_API void WxControlFactory_SetMaxClientSize_(void* handle, SizeI size)
 {
     WxControlFactory::SetMaxClientSize(handle, size);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetMinSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetMinSize_(void* handle)
 {
     return WxControlFactory::GetMinSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetMaxSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetMaxSize_(void* handle)
 {
     return WxControlFactory::GetMaxSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetMinClientSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetMinClientSize_(void* handle)
 {
     return WxControlFactory::GetMinClientSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetMaxClientSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetMaxClientSize_(void* handle)
 {
     return WxControlFactory::GetMaxClientSize(handle);
 }
@@ -1293,12 +1293,12 @@ ALTERNET_UI_API void WxControlFactory_SetVirtualSize_(void* handle, int x, int y
     WxControlFactory::SetVirtualSize(handle, x, y);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetVirtualSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetVirtualSize_(void* handle)
 {
     return WxControlFactory::GetVirtualSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetBestVirtualSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetBestVirtualSize_(void* handle)
 {
     return WxControlFactory::GetBestVirtualSize(handle);
 }
@@ -1313,7 +1313,7 @@ ALTERNET_UI_API double WxControlFactory_GetDPIScaleFactor_(void* handle)
     return WxControlFactory::GetDPIScaleFactor(handle);
 }
 
-ALTERNET_UI_API Int32Size_C WxControlFactory_GetWindowBorderSize_(void* handle)
+ALTERNET_UI_API SizeI_C WxControlFactory_GetWindowBorderSize_(void* handle)
 {
     return WxControlFactory::GetWindowBorderSize(handle);
 }

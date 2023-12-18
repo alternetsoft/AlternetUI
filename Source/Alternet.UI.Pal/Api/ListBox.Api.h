@@ -93,7 +93,7 @@ ALTERNET_UI_API void ListBox_EnsureVisible_(ListBox* obj, int itemIndex)
     obj->EnsureVisible(itemIndex);
 }
 
-ALTERNET_UI_API int ListBox_ItemHitTest_(ListBox* obj, Point position)
+ALTERNET_UI_API int ListBox_ItemHitTest_(ListBox* obj, PointD position)
 {
     return obj->ItemHitTest(position);
 }

@@ -9,16 +9,16 @@ namespace DrawingSample.RandomArt
 {
     internal static class Utils
     {
-        public static Vector2 GetVector(Point point) => new Vector2((float)point.X, (float)point.Y);
+        public static Vector2 GetVector(PointD point) => new Vector2((float)point.X, (float)point.Y);
 
-        public static bool IsDistanceGreaterOrEqual(Point p1, Point p2, double distanceThreshold)
+        public static bool IsDistanceGreaterOrEqual(PointD p1, PointD p2, double distanceThreshold)
         {
             return Vector2.DistanceSquared(GetVector(p1), GetVector(p2)) >= distanceThreshold * distanceThreshold;
         }
 
-        public static Point GetJitteredPointAlongLineSegment(
-            Point startPoint,
-            Point endPoint,
+        public static PointD GetJitteredPointAlongLineSegment(
+            PointD startPoint,
+            PointD endPoint,
             double distance,
             double jitter,
             Random random)
@@ -31,7 +31,7 @@ namespace DrawingSample.RandomArt
             var perpendicular = Vector2.Normalize(new Vector2(direction.Y, -direction.X));
 
             var result = pointOnLine + (perpendicular * random.Next(-(int)jitter, (int)jitter));
-            return new Point(result);
+            return new PointD(result);
         }
     }
 }

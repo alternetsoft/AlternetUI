@@ -92,13 +92,13 @@ namespace Alternet.UI
             long min = 0,
             long max = 100,
             Control? parent = null,
-            Int32Point? pos = default)
+            PointI? pos = default)
         {
             message ??= string.Empty;
             prompt ??= string.Empty;
             caption ??= CommonStrings.Default.WindowTitleInput;
 
-            pos ??= Int32Point.MinusOne;
+            pos ??= PointI.MinusOne;
             var handle = parent?.WxWidget ?? IntPtr.Zero;
 
             var result = Native.WxOtherFactory.GetNumberFromUser(

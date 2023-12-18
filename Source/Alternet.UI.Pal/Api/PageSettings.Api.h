@@ -43,12 +43,12 @@ ALTERNET_UI_API void PageSettings_SetMargins_(PageSettings* obj, Thickness value
     obj->SetMargins(value);
 }
 
-ALTERNET_UI_API Size_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
+ALTERNET_UI_API SizeD_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
 {
     return obj->GetCustomPaperSize();
 }
 
-ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, Size value)
+ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, SizeD value)
 {
     obj->SetCustomPaperSize(value);
 }

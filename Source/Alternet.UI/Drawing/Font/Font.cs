@@ -371,7 +371,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the pixel size.
         /// </summary>
-        public Int32Size SizeInPixels => NativeFont.GetPixelSize();
+        public SizeI SizeInPixels => NativeFont.GetPixelSize();
 
         /// <summary>
         /// Gets whether font size is in pixels.
@@ -793,7 +793,7 @@ namespace Alternet.Drawing
         /// <param name="text">Text string to measure its size.</param>
         /// <param name="dc">Drawing context where measuring is performed.</param>
         /// <returns></returns>
-        public Size MeasureText(string text, DrawingContext dc)
+        public SizeD MeasureText(string text, DrawingContext dc)
         {
             var result = dc.GetTextExtent(text, this);
             return result;

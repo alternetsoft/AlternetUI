@@ -89,7 +89,7 @@ namespace Alternet.UI
             }
         }
 
-        public Int32Size Size
+        public SizeI Size
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Alternet.UI
             }
         }
 
-        public Int32Size MinSizeWithBorder
+        public SizeI MinSizeWithBorder
         {
             get
             {
@@ -105,7 +105,7 @@ namespace Alternet.UI
             }
         }
 
-        public Int32Size MaxSize
+        public SizeI MaxSize
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Alternet.UI
             }
         }
 
-        public Int32Size MaxSizeWithBorder
+        public SizeI MaxSizeWithBorder
         {
             get
             {
@@ -121,7 +121,7 @@ namespace Alternet.UI
             }
         }
 
-        public Int32Size MinSize
+        public SizeI MinSize
         {
             get
             {
@@ -249,12 +249,12 @@ namespace Alternet.UI
             Native.SizerItem.DetachWindow(Handle);
         }
 
-        public Int32Size CalcMin()
+        public SizeI CalcMin()
         {
             return Native.SizerItem.CalcMin(Handle);
         }
 
-        public void SetDimension(Int32Point pos, Int32Size size)
+        public void SetDimension(PointI pos, SizeI size)
         {
             Native.SizerItem.SetDimension(Handle, pos, size);
         }
@@ -269,7 +269,7 @@ namespace Alternet.UI
             Native.SizerItem.SetRatio(Handle, width, height);
         }
 
-        public Int32Rect GetRect()
+        public RectI GetRect()
         {
             return Native.SizerItem.GetRect(Handle);
         }
@@ -280,7 +280,7 @@ namespace Alternet.UI
             return new Sizer(result, false);
         }
 
-        public Int32Size GetSpacer()
+        public SizeI GetSpacer()
         {
             return Native.SizerItem.GetSpacer(Handle);
         }
@@ -290,7 +290,7 @@ namespace Alternet.UI
             Native.SizerItem.Show(Handle, show);
         }
 
-        public Int32Point GetPosition()
+        public PointI GetPosition()
         {
             return Native.SizerItem.GetPosition(Handle);
         }

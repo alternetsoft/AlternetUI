@@ -85,7 +85,7 @@ namespace Alternet.UI
 
             if (source != null)
             {
-                return Point.Parse(source);
+                return PointD.Parse(source);
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -107,9 +107,9 @@ namespace Alternet.UI
         /// <param name="destinationType"> The type to which this will convert the Point instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Point)
+            if (destinationType != null && value is PointD)
             {
-                Point instance = (Point)value;
+                PointD instance = (PointD)value;
 
                 if (destinationType == typeof(string))
                 {

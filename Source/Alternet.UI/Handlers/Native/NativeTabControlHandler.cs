@@ -17,7 +17,7 @@ namespace Alternet.UI
 
         public new Native.TabControl NativeControl => (Native.TabControl)base.NativeControl!;
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             return NativeControl.GetTotalPreferredSizeFromPageSize(
                 GetSpecifiedOrChildrenPreferredSize(availableSize));

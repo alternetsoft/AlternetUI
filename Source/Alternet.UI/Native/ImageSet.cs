@@ -43,7 +43,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Int32Size DefaultSize
+        public Alternet.Drawing.SizeI DefaultSize
         {
             get
             {
@@ -89,13 +89,13 @@ namespace Alternet.UI.Native
             NativeApi.ImageSet_InitImageFor_(NativePointer, image.NativePointer, window);
         }
         
-        public Alternet.Drawing.Int32Size GetPreferredBitmapSizeAtScale(double scale)
+        public Alternet.Drawing.SizeI GetPreferredBitmapSizeAtScale(double scale)
         {
             CheckDisposed();
             return NativeApi.ImageSet_GetPreferredBitmapSizeAtScale_(NativePointer, scale);
         }
         
-        public Alternet.Drawing.Int32Size GetPreferredBitmapSizeFor(System.IntPtr window)
+        public Alternet.Drawing.SizeI GetPreferredBitmapSizeFor(System.IntPtr window)
         {
             CheckDisposed();
             return NativeApi.ImageSet_GetPreferredBitmapSizeFor_(NativePointer, window);
@@ -117,7 +117,7 @@ namespace Alternet.UI.Native
             public static extern bool ImageSet_GetIsReadOnly_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size ImageSet_GetDefaultSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeI ImageSet_GetDefaultSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageSet_LoadFromStream_(IntPtr obj, IntPtr stream);
@@ -138,10 +138,10 @@ namespace Alternet.UI.Native
             public static extern void ImageSet_InitImageFor_(IntPtr obj, IntPtr image, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size ImageSet_GetPreferredBitmapSizeAtScale_(IntPtr obj, double scale);
+            public static extern Alternet.Drawing.SizeI ImageSet_GetPreferredBitmapSizeAtScale_(IntPtr obj, double scale);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size ImageSet_GetPreferredBitmapSizeFor_(IntPtr obj, System.IntPtr window);
+            public static extern Alternet.Drawing.SizeI ImageSet_GetPreferredBitmapSizeFor_(IntPtr obj, System.IntPtr window);
             
         }
     }

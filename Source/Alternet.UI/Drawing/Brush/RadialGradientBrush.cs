@@ -8,9 +8,9 @@ namespace Alternet.Drawing
     /// </summary>
     public sealed class RadialGradientBrush : Brush
     {
-        private Point center;
+        private PointD center;
         private double radius;
-        private Point gradientOrigin;
+        private PointD gradientOrigin;
         private GradientStop[] gradientStops;
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Alternet.Drawing
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
         public RadialGradientBrush(GradientStop[] gradientStops)
-            : this(new Point(0, 0), 10, gradientStops)
+            : this(new PointD(0, 0), 10, gradientStops)
         {
         }
 
@@ -51,8 +51,8 @@ namespace Alternet.Drawing
         /// <param name="radius">The radius of the outermost circle of the radial gradient.</param>
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
-        public RadialGradientBrush(Point center, double radius, GradientStop[] gradientStops)
-            : this(center, radius, new Point(0, 0), gradientStops)
+        public RadialGradientBrush(PointD center, double radius, GradientStop[] gradientStops)
+            : this(center, radius, new PointD(0, 0), gradientStops)
         {
         }
 
@@ -68,9 +68,9 @@ namespace Alternet.Drawing
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
         public RadialGradientBrush(
-            Point center,
+            PointD center,
             double radius,
-            Point gradientOrigin,
+            PointD gradientOrigin,
             GradientStop[] gradientStops)
             : this(new UI.Native.RadialGradientBrush())
         {
@@ -91,7 +91,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the center of the outermost circle of the radial gradient.
         /// </summary>
-        public Point Center
+        public PointD Center
         {
             get => center;
             set
@@ -124,7 +124,7 @@ namespace Alternet.Drawing
         /// Gets or sets the location of the two-dimensional focal point that defines the
         /// beginning of the gradient.
         /// </summary>
-        public Point GradientOrigin
+        public PointD GradientOrigin
         {
             get => gradientOrigin;
             set

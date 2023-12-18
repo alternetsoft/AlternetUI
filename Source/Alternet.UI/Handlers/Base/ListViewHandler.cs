@@ -48,13 +48,13 @@ namespace Alternet.UI
         /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
         /// unit).
         /// </summary>
-        /// <param name="point">The <see cref="Point"/> at which to retrieve item information.</param>
+        /// <param name="point">The <see cref="PointD"/> at which to retrieve item information.</param>
         /// <returns>The hit test result information.</returns>
         /// <remarks>
         /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/> and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public abstract ListViewHitTestInfo HitTest(Point point);
+        public abstract ListViewHitTestInfo HitTest(PointD point);
 
         /// <summary>
         /// Initiates the editing of the list view item label.
@@ -70,9 +70,9 @@ namespace Alternet.UI
         /// whose bounding rectangle you want to get.</param>
         /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
         /// the item for which to retrieve the bounding rectangle.</param>
-        /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of the
+        /// <returns>A <see cref="RectD"/> that represents the bounding rectangle for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
-        public abstract Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion);
+        public abstract RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion);
 
         ///// <summary>
         ///// Gets or sets the custom sorting comparer for the control.

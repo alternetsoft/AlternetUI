@@ -73,7 +73,7 @@ ALTERNET_UI_API void WxStatusBarFactory_SetStatusStyles_(void* handle, int* styl
     WxStatusBarFactory::SetStatusStyles(handle, styles, stylesCount);
 }
 
-ALTERNET_UI_API Int32Rect_C WxStatusBarFactory_GetFieldRect_(void* handle, int i)
+ALTERNET_UI_API RectI_C WxStatusBarFactory_GetFieldRect_(void* handle, int i)
 {
     return WxStatusBarFactory::GetFieldRect(handle, i);
 }

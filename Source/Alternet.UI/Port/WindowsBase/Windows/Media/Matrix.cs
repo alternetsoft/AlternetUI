@@ -79,7 +79,7 @@ namespace Alternet.UI
             DeriveMatrixType();
         }
 
-        internal Point Transform(object topLeft)
+        internal PointD Transform(object topLeft)
         {
             throw new NotImplementedException();
         }
@@ -341,19 +341,19 @@ namespace Alternet.UI
         /// The transformed point
         /// </returns>
         /// <param name="point"> The Point to transform </param>
-        public Point Transform(Point point)
+        public PointD Transform(PointD point)
         {
             var x = point.X;
             var y = point.Y;
             MultiplyPoint(ref x, ref y);
-            return new Point(x, y);
+            return new PointD(x, y);
         }
 
         /// <summary>
         /// Transform - Transforms each point in the array by this matrix
         /// </summary>
         /// <param name="points"> The Point array to transform </param>
-        public void Transform(Point[] points)
+        public void Transform(PointD[] points)
         {
             if (points != null)
             {

@@ -71,7 +71,7 @@ namespace NativeApi.Api
         public static void LoadPaneInfo(IntPtr handle, string panePart,
             IntPtr paneInfo) => throw new Exception();
 
-        public static Size GetDockSizeConstraint(IntPtr handle) => throw new Exception();
+        public static SizeD GetDockSizeConstraint(IntPtr handle) => throw new Exception();
 
         public static void ClosePane(IntPtr handle, IntPtr paneInfo) =>
             throw new Exception();

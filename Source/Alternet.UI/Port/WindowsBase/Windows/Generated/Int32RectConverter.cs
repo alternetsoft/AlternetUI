@@ -85,7 +85,7 @@ namespace Alternet.UI
 
             if (source != null)
             {
-                return Int32Rect.Parse(source);
+                return RectI.Parse(source);
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -107,9 +107,9 @@ namespace Alternet.UI
         /// <param name="destinationType"> The type to which this will convert the Int32Rect instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Int32Rect)
+            if (destinationType != null && value is RectI)
             {
-                Int32Rect instance = (Int32Rect)value;
+                RectI instance = (RectI)value;
 
                 if (destinationType == typeof(string))
                 {

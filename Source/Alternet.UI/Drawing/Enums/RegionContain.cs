@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Types of results returned from a call to <see cref="Region.Contains(Rect)"/>.
+    /// Types of results returned from a call to <see cref="Region.Contains(RectD)"/>.
     /// </summary>
     public enum RegionContain
     {

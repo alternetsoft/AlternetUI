@@ -5,17 +5,17 @@ FillMode GetFillMode();
 void SetFillMode(FillMode value);
 
 void Initialize(DrawingContext* dc);
-void AddLines(Point* points, int pointsCount);
-void AddLine(const Point& pt1, const Point& pt2);
-void AddLineTo(const Point& pt);
-void AddEllipse(const Rect& rect);
-void AddBezier(const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint);
-void AddBezierTo(const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint);
-void AddArc(const Point& center, double radius, double startAngle, double sweepAngle);
-void AddRectangle(const Rect& rect);
-void AddRoundedRectangle(const Rect& rect, double cornerRadius);
-Rect GetBounds();
-void StartFigure(const Point& point);
+void AddLines(PointD* points, int pointsCount);
+void AddLine(const PointD& pt1, const PointD& pt2);
+void AddLineTo(const PointD& pt);
+void AddEllipse(const RectD& rect);
+void AddBezier(const PointD& startPoint, const PointD& controlPoint1, const PointD& controlPoint2, const PointD& endPoint);
+void AddBezierTo(const PointD& controlPoint1, const PointD& controlPoint2, const PointD& endPoint);
+void AddArc(const PointD& center, double radius, double startAngle, double sweepAngle);
+void AddRectangle(const RectD& rect);
+void AddRoundedRectangle(const RectD& rect, double cornerRadius);
+RectD GetBounds();
+void StartFigure(const PointD& point);
 void CloseFigure();
 public:
 GraphicsPath();

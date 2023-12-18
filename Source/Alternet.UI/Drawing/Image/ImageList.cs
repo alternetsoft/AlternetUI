@@ -37,7 +37,7 @@ namespace Alternet.Drawing
         /// Gets or sets the size of the images in the image list, in pixels.
         /// </summary>
         /// <value>
-        /// The <see cref="Size"/> that defines the height and width, in pixels, of the images
+        /// The <see cref="SizeD"/> that defines the height and width, in pixels, of the images
         /// in the list.
         /// The default size is 16 by 16 device-independent units (1/96th inch per unit).
         /// </value>
@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         /// the <see cref="Images"/>collection causes the images to be resized to the size
         /// specified.
         /// </remarks>
-        public Int32Size PixelImageSize
+        public SizeI PixelImageSize
         {
             get => NativeImageList.PixelImageSize;
             set => NativeImageList.PixelImageSize = value;
@@ -57,7 +57,7 @@ namespace Alternet.Drawing
         /// Gets or sets the size of the images in the image list, in device-independent units
         /// (1/96th inch per unit).
         /// </summary>
-        /// <value>The <see cref="Size"/> that defines the height and width, in
+        /// <value>The <see cref="SizeD"/> that defines the height and width, in
         /// device-independent units (1/96th inch per unit),
         /// of the images in the list. The default size is 16 by 16.</value>
         /// <remarks>
@@ -66,7 +66,7 @@ namespace Alternet.Drawing
         /// the <see cref="Images"/>collection causes the images to be resized to the size
         /// specified.
         /// </remarks>
-        public Size ImageSize
+        public SizeD ImageSize
         {
             get => NativeImageList.ImageSize;
             set => NativeImageList.ImageSize = value;

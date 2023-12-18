@@ -688,7 +688,7 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per
         /// unit).
         /// </summary>
-        /// <param name="point">The <see cref="Point"/> at which to retrieve
+        /// <param name="point">The <see cref="PointD"/> at which to retrieve
         /// item information.</param>
         /// <returns>The hit test result information.</returns>
         /// <remarks>
@@ -696,7 +696,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/> and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public TreeViewHitTestInfo HitTest(Point point)
+        public TreeViewHitTestInfo HitTest(PointD point)
         {
             return Handler.HitTest(point);
         }

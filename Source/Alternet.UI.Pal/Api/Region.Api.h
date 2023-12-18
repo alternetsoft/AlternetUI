@@ -18,12 +18,12 @@ ALTERNET_UI_API void Region_Clear_(Region* obj)
     obj->Clear();
 }
 
-ALTERNET_UI_API int Region_ContainsPoint_(Region* obj, Point pt)
+ALTERNET_UI_API int Region_ContainsPoint_(Region* obj, PointD pt)
 {
     return obj->ContainsPoint(pt);
 }
 
-ALTERNET_UI_API int Region_ContainsRect_(Region* obj, Rect rect)
+ALTERNET_UI_API int Region_ContainsRect_(Region* obj, RectD rect)
 {
     return obj->ContainsRect(rect);
 }
@@ -43,17 +43,17 @@ ALTERNET_UI_API void Region_InitializeWithRegion_(Region* obj, Region* region)
     obj->InitializeWithRegion(region);
 }
 
-ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, Rect rect)
+ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, RectD rect)
 {
     obj->InitializeWithRect(rect);
 }
 
-ALTERNET_UI_API void Region_InitializeWithPolygon_(Region* obj, Point* points, int pointsCount, FillMode fillMode)
+ALTERNET_UI_API void Region_InitializeWithPolygon_(Region* obj, PointD* points, int pointsCount, FillMode fillMode)
 {
     obj->InitializeWithPolygon(points, pointsCount, fillMode);
 }
 
-ALTERNET_UI_API void Region_IntersectWithRect_(Region* obj, Rect rect)
+ALTERNET_UI_API void Region_IntersectWithRect_(Region* obj, RectD rect)
 {
     obj->IntersectWithRect(rect);
 }
@@ -63,7 +63,7 @@ ALTERNET_UI_API void Region_IntersectWithRegion_(Region* obj, Region* region)
     obj->IntersectWithRegion(region);
 }
 
-ALTERNET_UI_API void Region_UnionWithRect_(Region* obj, Rect rect)
+ALTERNET_UI_API void Region_UnionWithRect_(Region* obj, RectD rect)
 {
     obj->UnionWithRect(rect);
 }
@@ -73,7 +73,7 @@ ALTERNET_UI_API void Region_UnionWithRegion_(Region* obj, Region* region)
     obj->UnionWithRegion(region);
 }
 
-ALTERNET_UI_API void Region_XorWithRect_(Region* obj, Rect rect)
+ALTERNET_UI_API void Region_XorWithRect_(Region* obj, RectD rect)
 {
     obj->XorWithRect(rect);
 }
@@ -83,7 +83,7 @@ ALTERNET_UI_API void Region_XorWithRegion_(Region* obj, Region* region)
     obj->XorWithRegion(region);
 }
 
-ALTERNET_UI_API void Region_SubtractRect_(Region* obj, Rect rect)
+ALTERNET_UI_API void Region_SubtractRect_(Region* obj, RectD rect)
 {
     obj->SubtractRect(rect);
 }
@@ -98,7 +98,7 @@ ALTERNET_UI_API void Region_Translate_(Region* obj, double dx, double dy)
     obj->Translate(dx, dy);
 }
 
-ALTERNET_UI_API Rect_C Region_GetBounds_(Region* obj)
+ALTERNET_UI_API RectD_C Region_GetBounds_(Region* obj)
 {
     return obj->GetBounds();
 }

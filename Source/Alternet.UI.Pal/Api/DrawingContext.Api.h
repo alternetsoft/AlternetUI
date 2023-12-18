@@ -50,22 +50,22 @@ ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
     obj->DestroyClippingRegion();
 }
 
-ALTERNET_UI_API void DrawingContext_SetClippingRegion_(DrawingContext* obj, Rect rect)
+ALTERNET_UI_API void DrawingContext_SetClippingRegion_(DrawingContext* obj, RectD rect)
 {
     obj->SetClippingRegion(rect);
 }
 
-ALTERNET_UI_API Rect_C DrawingContext_GetClippingBox_(DrawingContext* obj)
+ALTERNET_UI_API RectD_C DrawingContext_GetClippingBox_(DrawingContext* obj)
 {
     return obj->GetClippingBox();
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, Point location, Font* font, Color foreColor, Color backColor)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Color backColor)
 {
     obj->DrawText(text, location, font, foreColor, backColor);
 }
 
-ALTERNET_UI_API Size_C DrawingContext_GetDpi_(DrawingContext* obj)
+ALTERNET_UI_API SizeD_C DrawingContext_GetDpi_(DrawingContext* obj)
 {
     return obj->GetDpi();
 }
@@ -85,17 +85,17 @@ ALTERNET_UI_API void DrawingContext_GetPartialTextExtents_(DrawingContext* obj, 
     obj->GetPartialTextExtents(text, widths, widthsCount, font, control);
 }
 
-ALTERNET_UI_API Rect_C DrawingContext_GetTextExtent_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
+ALTERNET_UI_API RectD_C DrawingContext_GetTextExtent_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
 {
     return obj->GetTextExtent(text, font, control);
 }
 
-ALTERNET_UI_API Size_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
+ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
 {
     return obj->GetTextExtentSimple(text, font, control);
 }
 
-ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font, double maximumWidth, TextWrapping textWrapping)
+ALTERNET_UI_API SizeD_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font, double maximumWidth, TextWrapping textWrapping)
 {
     return obj->MeasureText(text, font, maximumWidth, textWrapping);
 }
@@ -105,17 +105,17 @@ ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
     return DrawingContext::FromImage(image);
 }
 
-ALTERNET_UI_API void DrawingContext_RoundedRectangle_(DrawingContext* obj, Pen* pen, Brush* brush, Rect rectangle, double cornerRadius)
+ALTERNET_UI_API void DrawingContext_RoundedRectangle_(DrawingContext* obj, Pen* pen, Brush* brush, RectD rectangle, double cornerRadius)
 {
     obj->RoundedRectangle(pen, brush, rectangle, cornerRadius);
 }
 
-ALTERNET_UI_API void DrawingContext_Rectangle_(DrawingContext* obj, Pen* pen, Brush* brush, Rect rectangle)
+ALTERNET_UI_API void DrawingContext_Rectangle_(DrawingContext* obj, Pen* pen, Brush* brush, RectD rectangle)
 {
     obj->Rectangle(pen, brush, rectangle);
 }
 
-ALTERNET_UI_API void DrawingContext_Ellipse_(DrawingContext* obj, Pen* pen, Brush* brush, Rect rectangle)
+ALTERNET_UI_API void DrawingContext_Ellipse_(DrawingContext* obj, Pen* pen, Brush* brush, RectD rectangle)
 {
     obj->Ellipse(pen, brush, rectangle);
 }
@@ -125,42 +125,42 @@ ALTERNET_UI_API void DrawingContext_Path_(DrawingContext* obj, Pen* pen, Brush* 
     obj->Path(pen, brush, path);
 }
 
-ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* brush, Point center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* brush, PointD center, double radius, double startAngle, double sweepAngle)
 {
     obj->Pie(pen, brush, center, radius, startAngle, sweepAngle);
 }
 
-ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, Point center, double radius)
+ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, PointD center, double radius)
 {
     obj->Circle(pen, brush, center, radius);
 }
 
-ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brush* brush, Point* points, int pointsCount, FillMode fillMode)
+ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* points, int pointsCount, FillMode fillMode)
 {
     obj->Polygon(pen, brush, points, pointsCount, fillMode);
 }
 
-ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, Rect rectangle)
+ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, RectD rectangle)
 {
     obj->FillRectangle(brush, rectangle);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Pen* pen, Rect rectangle)
+ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Pen* pen, RectD rectangle)
 {
     obj->DrawRectangle(pen, rectangle);
 }
 
-ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, Brush* brush, Rect bounds)
+ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, Brush* brush, RectD bounds)
 {
     obj->FillEllipse(brush, bounds);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Pen* pen, Rect bounds)
+ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Pen* pen, RectD bounds)
 {
     obj->DrawEllipse(pen, bounds);
 }
 
-ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Brush* brush, Point point)
+ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Brush* brush, PointD point)
 {
     obj->FloodFill(brush, point);
 }
@@ -175,27 +175,27 @@ ALTERNET_UI_API void DrawingContext_FillPath_(DrawingContext* obj, Brush* brush,
     obj->FillPath(brush, path);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawTextAtPoint_(DrawingContext* obj, const char16_t* text, Point origin, Font* font, Brush* brush)
+ALTERNET_UI_API void DrawingContext_DrawTextAtPoint_(DrawingContext* obj, const char16_t* text, PointD origin, Font* font, Brush* brush)
 {
     obj->DrawTextAtPoint(text, origin, font, brush);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawTextAtRect_(DrawingContext* obj, const char16_t* text, Rect bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming, TextWrapping wrapping)
+ALTERNET_UI_API void DrawingContext_DrawTextAtRect_(DrawingContext* obj, const char16_t* text, RectD bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming, TextWrapping wrapping)
 {
     obj->DrawTextAtRect(text, bounds, font, brush, horizontalAlignment, verticalAlignment, trimming, wrapping);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image* image, Point origin)
+ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image* image, PointD origin)
 {
     obj->DrawImageAtPoint(image, origin);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image* image, Rect destinationRect)
+ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image* image, RectD destinationRect)
 {
     obj->DrawImageAtRect(image, destinationRect);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj, Image* image, Rect destinationRect, Rect sourceRect)
+ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj, Image* image, RectD destinationRect, RectD sourceRect)
 {
     obj->DrawImagePortionAtRect(image, destinationRect, sourceRect);
 }
@@ -210,37 +210,37 @@ ALTERNET_UI_API void DrawingContext_Pop_(DrawingContext* obj)
     obj->Pop();
 }
 
-ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Pen* pen, Point a, Point b)
+ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Pen* pen, PointD a, PointD b)
 {
     obj->DrawLine(pen, a, b);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, Point* points, int pointsCount)
+ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, PointD* points, int pointsCount)
 {
     obj->DrawLines(pen, points, pointsCount);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, Point center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, PointD center, double radius, double startAngle, double sweepAngle)
 {
     obj->DrawArc(pen, center, radius, startAngle, sweepAngle);
 }
 
-ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, Point center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, PointD center, double radius, double startAngle, double sweepAngle)
 {
     obj->FillPie(brush, center, radius, startAngle, sweepAngle);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawPie_(DrawingContext* obj, Pen* pen, Point center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_DrawPie_(DrawingContext* obj, Pen* pen, PointD center, double radius, double startAngle, double sweepAngle)
 {
     obj->DrawPie(pen, center, radius, startAngle, sweepAngle);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawBezier_(DrawingContext* obj, Pen* pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+ALTERNET_UI_API void DrawingContext_DrawBezier_(DrawingContext* obj, Pen* pen, PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
 {
     obj->DrawBezier(pen, startPoint, controlPoint1, controlPoint2, endPoint);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, Point* points, int pointsCount)
+ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, PointD* points, int pointsCount)
 {
     obj->DrawBeziers(pen, points, pointsCount);
 }
@@ -250,42 +250,42 @@ ALTERNET_UI_API void DrawingContext_DrawPoint_(DrawingContext* obj, Pen* pen, do
     obj->DrawPoint(pen, x, y);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, Point center, double radius)
+ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, PointD center, double radius)
 {
     obj->DrawCircle(pen, center, radius);
 }
 
-ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brush, Point center, double radius)
+ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brush, PointD center, double radius)
 {
     obj->FillCircle(brush, center, radius);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, Pen* pen, Rect rect, double cornerRadius)
+ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, Pen* pen, RectD rect, double cornerRadius)
 {
     obj->DrawRoundedRectangle(pen, rect, cornerRadius);
 }
 
-ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, Brush* brush, Rect rect, double cornerRadius)
+ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, Brush* brush, RectD rect, double cornerRadius)
 {
     obj->FillRoundedRectangle(brush, rect, cornerRadius);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawPolygon_(DrawingContext* obj, Pen* pen, Point* points, int pointsCount)
+ALTERNET_UI_API void DrawingContext_DrawPolygon_(DrawingContext* obj, Pen* pen, PointD* points, int pointsCount)
 {
     obj->DrawPolygon(pen, points, pointsCount);
 }
 
-ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* brush, Point* points, int pointsCount, FillMode fillMode)
+ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* brush, PointD* points, int pointsCount, FillMode fillMode)
 {
     obj->FillPolygon(brush, points, pointsCount, fillMode);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRectangles_(DrawingContext* obj, Pen* pen, Rect* rects, int rectsCount)
+ALTERNET_UI_API void DrawingContext_DrawRectangles_(DrawingContext* obj, Pen* pen, RectD* rects, int rectsCount)
 {
     obj->DrawRectangles(pen, rects, rectsCount);
 }
 
-ALTERNET_UI_API void DrawingContext_FillRectangles_(DrawingContext* obj, Brush* brush, Rect* rects, int rectsCount)
+ALTERNET_UI_API void DrawingContext_FillRectangles_(DrawingContext* obj, Brush* brush, RectD* rects, int rectsCount)
 {
     obj->FillRectangles(brush, rects, rectsCount);
 }

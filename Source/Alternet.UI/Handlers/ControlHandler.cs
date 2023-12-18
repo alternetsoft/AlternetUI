@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the minimum size the window can be resized to.
         /// </summary>
-        public Size MinimumSize
+        public SizeD MinimumSize
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the maximum size the window can be resized to.
         /// </summary>
-        public Size MaximumSize
+        public SizeD MaximumSize
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in
         /// device-independent units (1/96th inch per unit).
         /// </summary>
-        public virtual Rect Bounds
+        public virtual RectD Bounds
         {
             get => NativeControl.Bounds;
             set
@@ -118,12 +118,12 @@ namespace Alternet.UI
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
         /// device-independent units (1/96th inch per unit).
         /// </summary>
-        public Size ClientSize
+        public SizeD ClientSize
         {
             get
             {
                 if (Control.IsDummy)
-                    return Size.Empty;
+                    return SizeD.Empty;
                 return NativeControl.ClientSize;
             }
 
@@ -137,7 +137,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Control.DrawClientRectangle"/>
-        public virtual Rect DrawClientRectangle => Control.DrawClientRectangle;
+        public virtual RectD DrawClientRectangle => Control.DrawClientRectangle;
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="Control"/> is contained in a
@@ -325,10 +325,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Control.GetDPI"/>
-        public Size GetDPI()
+        public SizeD GetDPI()
         {
             if (NativeControl == null)
-                return Size.Empty;
+                return SizeD.Empty;
             return NativeControl.GetDPI();
         }
 
@@ -427,9 +427,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="availableSize">The available space that a parent element
         /// can allocate a child control.</param>
-        /// <returns>A <see cref="Size"/> representing the width and height of
+        /// <returns>A <see cref="SizeD"/> representing the width and height of
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual Size GetPreferredSize(Size availableSize)
+        public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
             if (Control.HasChildren || HasVisualChildren)
                 return GetSpecifiedOrChildrenPreferredSize(availableSize);
@@ -470,10 +470,10 @@ namespace Alternet.UI
         /// The ScreenToClient function converts the screen coordinates of a
         /// specified point on the screen to client-area coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point ScreenToClient(Point point)
+        public PointD ScreenToClient(PointD point)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
@@ -485,10 +485,10 @@ namespace Alternet.UI
         /// Converts the client-area coordinates of a specified point to
         /// screen coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the
+        /// <param name="point">A <see cref="PointD"/> that contains the
         /// client coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point ClientToScreen(Point point)
+        public PointD ClientToScreen(PointD point)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
@@ -501,10 +501,10 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per unit) to device
         /// (pixel) coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen device-independent coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Int32Point ScreenToDevice(Point point)
+        public PointI ScreenToDevice(PointD point)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
@@ -538,11 +538,11 @@ namespace Alternet.UI
         /// Converts the device (pixel) coordinates of a specified point to
         /// coordinates in device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the
+        /// <param name="point">A <see cref="PointD"/> that contains the
         /// coordinates in device-independent units (1/96th inch per unit)
         /// to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point DeviceToScreen(Int32Point point)
+        public PointD DeviceToScreen(PointI point)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
@@ -706,12 +706,12 @@ namespace Alternet.UI
         /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
-        protected Size GetSpecifiedOrChildrenPreferredSize(Size availableSize)
+        protected SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
         {
             var specifiedWidth = Control.SuggestedWidth;
             var specifiedHeight = Control.SuggestedHeight;
             if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
-                return new Size(specifiedWidth, specifiedHeight);
+                return new SizeD(specifiedWidth, specifiedHeight);
 
             var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
             var maxWidth = maxSize.Width;
@@ -720,13 +720,13 @@ namespace Alternet.UI
             var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
             var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
 
-            return new Size(width, height);
+            return new SizeD(width, height);
         }
 
         /// <summary>
         /// Returns a preferred size of control with an added padding.
         /// </summary>
-        protected Size GetChildrenMaxPreferredSizePadded(Size availableSize)
+        protected SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
         {
             return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
         }
@@ -735,7 +735,7 @@ namespace Alternet.UI
         /// Returns the size of the area which can fit all the children of this
         /// control, with an added padding.
         /// </summary>
-        protected Size GetPaddedPreferredSize(Size preferredSize)
+        protected SizeD GetPaddedPreferredSize(SizeD preferredSize)
         {
             var padding = Control.Padding;
 
@@ -750,7 +750,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the size of the area which can fit all the children of this control.
         /// </summary>
-        protected Size GetChildrenMaxPreferredSize(Size availableSize)
+        protected SizeD GetChildrenMaxPreferredSize(SizeD availableSize)
         {
             double maxWidth = 0;
             double maxHeight = 0;
@@ -763,7 +763,7 @@ namespace Alternet.UI
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
 
-            return new Size(maxWidth, maxHeight);
+            return new SizeD(maxWidth, maxHeight);
         }
 
         /// <summary>
@@ -915,13 +915,13 @@ namespace Alternet.UI
             VisualChildren.ItemRemoved += Children_ItemRemoved;
         }
 
-        private protected Size GetNativeControlSize(Size availableSize)
+        private protected SizeD GetNativeControlSize(SizeD availableSize)
         {
             if (Control.IsDummy)
-                return Size.Empty;
-            var s = NativeControl?.GetPreferredSize(availableSize) ?? Size.Empty;
+                return SizeD.Empty;
+            var s = NativeControl?.GetPreferredSize(availableSize) ?? SizeD.Empty;
             s += Control.Padding.Size;
-            return new Size(
+            return new SizeD(
                 double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
                 double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
         }
@@ -972,7 +972,7 @@ namespace Alternet.UI
             NativeControlSizeChanged();
         }
 
-        private void ReportBoundsChanged(Rect oldBounds, Rect newBounds)
+        private void ReportBoundsChanged(RectD oldBounds, RectD newBounds)
         {
             var locationChanged = oldBounds.Location != newBounds.Location;
             var sizeChanged = oldBounds.Size != newBounds.Size;
@@ -1036,7 +1036,7 @@ namespace Alternet.UI
             var ea = new DragEventArgs(
                 new UnmanagedDataObjectAdapter(
                     new Native.UnmanagedDataObject(data.data)),
-                new Point(data.mouseClientLocationX, data.mouseClientLocationY),
+                new PointD(data.mouseClientLocationX, data.mouseClientLocationY),
                 (DragDropEffects)data.effect);
 
             raiseAction(ea);

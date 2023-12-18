@@ -61,7 +61,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ListViewHitTestInfo HitTest(Point point)
+        public override ListViewHitTestInfo HitTest(PointD point)
         {
             var result = NativeControl.ItemHitTest(point);
             if (result == IntPtr.Zero)
@@ -92,7 +92,7 @@ namespace Alternet.UI
             NativeControl.BeginLabelEdit(itemIndex);
 
         /// <inheritdoc/>
-        public override Rect GetItemBounds(
+        public override RectD GetItemBounds(
             long itemIndex,
             ListViewItemBoundsPortion portion) =>
             NativeControl.GetItemBounds(

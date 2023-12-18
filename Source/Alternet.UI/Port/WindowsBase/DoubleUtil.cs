@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <param name='rect1'>The first rectangle to compare</param>
         /// <param name='rect2'>The second rectangle to compare</param>
         /// <returns>Whether or not the two rectangles are equal</returns>
-        public static bool AreClose(Rect rect1, Rect rect2)
+        public static bool AreClose(RectD rect1, RectD rect2)
         {
             // If they're both empty, don't bother with the double logic.
             if (rect1.IsEmpty)
@@ -203,7 +203,7 @@ namespace Alternet.UI
         /// <param name='size1'>The first size to compare</param>
         /// <param name='size2'>The second size to compare</param>
         /// <returns>Whether or not the two Size instances are equal</returns>
-        public static bool AreClose(Size size1, Size size2)
+        public static bool AreClose(SizeD size1, SizeD size2)
         {
             return DoubleUtil.AreClose(size1.Width, size2.Width) &&
                    DoubleUtil.AreClose(size1.Height, size2.Height);

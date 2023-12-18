@@ -691,20 +691,20 @@ namespace Alternet.UI
         /// Caret position starts from (0,0).
         /// </remarks>
         [Browsable(false)]
-        public virtual Int32Point? CurrentPosition
+        public virtual PointI? CurrentPosition
         {
             get
             {
                 var insertPoint = GetInsertionPoint();
                 var currentPos = PositionToXY(insertPoint);
-                if (currentPos == Int32Point.MinusOne)
+                if (currentPos == PointI.MinusOne)
                     return null;
                 return currentPos;
             }
 
             set
             {
-                value ??= Int32Point.Empty;
+                value ??= PointI.Empty;
                 var insertPoint = XYToPosition((long)value.Value.X, (long)value.Value.Y);
                 SetInsertionPoint(insertPoint);
                 CurrentPositionChanged?.Invoke(this, EventArgs.Empty);
@@ -715,7 +715,7 @@ namespace Alternet.UI
         /// Gets or sets position of the caret which was reported in the event.
         /// </summary>
         [Browsable(false)]
-        public virtual Int32Point? ReportedPosition { get; set; }
+        public virtual PointI? ReportedPosition { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the user can undo the previous operation
@@ -1012,7 +1012,7 @@ namespace Alternet.UI
         /// <param name="pos">Position in the text.</param>
         /// <returns>Point.X receives zero based column number. Point.Y receives
         /// zero based line number. If failure returns (-1,-1).</returns>
-        public virtual Int32Point PositionToXY(long pos)
+        public virtual PointI PositionToXY(long pos)
         {
             return Handler.PositionToXY(pos);
         }
@@ -1038,7 +1038,7 @@ namespace Alternet.UI
         /// Additionally, GTK only implements this method for multiline
         /// controls and (-1,-1) is always returned for the single line ones.
         /// </remarks>
-        public virtual Point PositionToCoords(long pos)
+        public virtual PointD PositionToCoords(long pos)
         {
             return Handler.PositionToCoords(pos);
         }

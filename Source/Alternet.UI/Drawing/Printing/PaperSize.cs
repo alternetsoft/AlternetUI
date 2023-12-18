@@ -5,7 +5,7 @@ namespace Alternet.Drawing.Printing
     /// </summary>
     /// <remarks>
     /// This class is used by the <see cref="PageSettings.PaperSize"/> property to get the paper to set the paper size
-    /// for a page. You can use the <see cref="PaperSize"/> constructor to specify a custom paper size. The <see cref="Size"/> property can be set only for
+    /// for a page. You can use the <see cref="PaperSize"/> constructor to specify a custom paper size. The <see cref="SizeD"/> property can be set only for
     /// custom <see cref="PaperSize"/> objects.
     /// </remarks>
     public class PaperSize
@@ -14,7 +14,7 @@ namespace Alternet.Drawing.Printing
         /// Initializes a new instance of the <see cref="PaperSize"/> class with the specified custom size, in millimeters.
         /// </summary>
         /// <param name="customSize">The custom size of the paper, in millimeters.</param>
-        public PaperSize(Size customSize)
+        public PaperSize(SizeD customSize)
         {
             IsCustom = true;
             CustomSize = customSize;
@@ -38,7 +38,7 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Gets the custom size of the paper, in millimeters.
         /// </summary>
-        public Size CustomSize { get; private set; }
+        public SizeD CustomSize { get; private set; }
 
         /// <summary>
         /// Gets the type of paper.

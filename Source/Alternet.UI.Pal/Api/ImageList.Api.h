@@ -14,22 +14,22 @@ ALTERNET_UI_API ImageList* ImageList_Create_()
     return new ImageList();
 }
 
-ALTERNET_UI_API Int32Size_C ImageList_GetPixelImageSize_(ImageList* obj)
+ALTERNET_UI_API SizeI_C ImageList_GetPixelImageSize_(ImageList* obj)
 {
     return obj->GetPixelImageSize();
 }
 
-ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, Int32Size value)
+ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, SizeI value)
 {
     obj->SetPixelImageSize(value);
 }
 
-ALTERNET_UI_API Size_C ImageList_GetImageSize_(ImageList* obj)
+ALTERNET_UI_API SizeD_C ImageList_GetImageSize_(ImageList* obj)
 {
     return obj->GetImageSize();
 }
 
-ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, Size value)
+ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, SizeD value)
 {
     obj->SetImageSize(value);
 }

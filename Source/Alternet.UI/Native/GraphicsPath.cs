@@ -44,67 +44,67 @@ namespace Alternet.UI.Native
             NativeApi.GraphicsPath_Initialize_(NativePointer, dc.NativePointer);
         }
         
-        public void AddLines(Alternet.Drawing.Point[] points)
+        public void AddLines(Alternet.Drawing.PointD[] points)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddLines_(NativePointer, points, points.Length);
         }
         
-        public void AddLine(Alternet.Drawing.Point pt1, Alternet.Drawing.Point pt2)
+        public void AddLine(Alternet.Drawing.PointD pt1, Alternet.Drawing.PointD pt2)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddLine_(NativePointer, pt1, pt2);
         }
         
-        public void AddLineTo(Alternet.Drawing.Point pt)
+        public void AddLineTo(Alternet.Drawing.PointD pt)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddLineTo_(NativePointer, pt);
         }
         
-        public void AddEllipse(Alternet.Drawing.Rect rect)
+        public void AddEllipse(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddEllipse_(NativePointer, rect);
         }
         
-        public void AddBezier(Alternet.Drawing.Point startPoint, Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint)
+        public void AddBezier(Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddBezier_(NativePointer, startPoint, controlPoint1, controlPoint2, endPoint);
         }
         
-        public void AddBezierTo(Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint)
+        public void AddBezierTo(Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddBezierTo_(NativePointer, controlPoint1, controlPoint2, endPoint);
         }
         
-        public void AddArc(Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle)
+        public void AddArc(Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddArc_(NativePointer, center, radius, startAngle, sweepAngle);
         }
         
-        public void AddRectangle(Alternet.Drawing.Rect rect)
+        public void AddRectangle(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddRectangle_(NativePointer, rect);
         }
         
-        public void AddRoundedRectangle(Alternet.Drawing.Rect rect, double cornerRadius)
+        public void AddRoundedRectangle(Alternet.Drawing.RectD rect, double cornerRadius)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddRoundedRectangle_(NativePointer, rect, cornerRadius);
         }
         
-        public Alternet.Drawing.Rect GetBounds()
+        public Alternet.Drawing.RectD GetBounds()
         {
             CheckDisposed();
             return NativeApi.GraphicsPath_GetBounds_(NativePointer);
         }
         
-        public void StartFigure(Alternet.Drawing.Point point)
+        public void StartFigure(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_StartFigure_(NativePointer, point);
@@ -135,37 +135,37 @@ namespace Alternet.UI.Native
             public static extern void GraphicsPath_Initialize_(IntPtr obj, IntPtr dc);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLines_(IntPtr obj, Alternet.Drawing.Point[] points, int pointsCount);
+            public static extern void GraphicsPath_AddLines_(IntPtr obj, Alternet.Drawing.PointD[] points, int pointsCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLine_(IntPtr obj, Alternet.Drawing.Point pt1, Alternet.Drawing.Point pt2);
+            public static extern void GraphicsPath_AddLine_(IntPtr obj, Alternet.Drawing.PointD pt1, Alternet.Drawing.PointD pt2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLineTo_(IntPtr obj, Alternet.Drawing.Point pt);
+            public static extern void GraphicsPath_AddLineTo_(IntPtr obj, Alternet.Drawing.PointD pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddEllipse_(IntPtr obj, Alternet.Drawing.Rect rect);
+            public static extern void GraphicsPath_AddEllipse_(IntPtr obj, Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddBezier_(IntPtr obj, Alternet.Drawing.Point startPoint, Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint);
+            public static extern void GraphicsPath_AddBezier_(IntPtr obj, Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddBezierTo_(IntPtr obj, Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint);
+            public static extern void GraphicsPath_AddBezierTo_(IntPtr obj, Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddArc_(IntPtr obj, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle);
+            public static extern void GraphicsPath_AddArc_(IntPtr obj, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddRectangle_(IntPtr obj, Alternet.Drawing.Rect rect);
+            public static extern void GraphicsPath_AddRectangle_(IntPtr obj, Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddRoundedRectangle_(IntPtr obj, Alternet.Drawing.Rect rect, double cornerRadius);
+            public static extern void GraphicsPath_AddRoundedRectangle_(IntPtr obj, Alternet.Drawing.RectD rect, double cornerRadius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect GraphicsPath_GetBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectD GraphicsPath_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_StartFigure_(IntPtr obj, Alternet.Drawing.Point point);
+            public static extern void GraphicsPath_StartFigure_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_CloseFigure_(IntPtr obj);

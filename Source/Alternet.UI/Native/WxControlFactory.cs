@@ -43,17 +43,17 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_MoveConstraint_(handle, x, y);
         }
         
-        public static Alternet.Drawing.Int32Size GetSizeConstraint(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetSizeConstraint(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetSizeConstraint_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetClientSizeConstraint(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetClientSizeConstraint(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetClientSizeConstraint_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetPositionConstraint(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetPositionConstraint(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetPositionConstraint_(handle);
         }
@@ -188,7 +188,7 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_EnableTouchEvents_(handle, WXUNUSEDeventsMask);
         }
         
-        public static void RefreshRect(System.IntPtr handle, Alternet.Drawing.Int32Rect rect, bool eraseBackground)
+        public static void RefreshRect(System.IntPtr handle, Alternet.Drawing.RectI rect, bool eraseBackground)
         {
             NativeApi.WxControlFactory_RefreshRect_(handle, rect, eraseBackground);
         }
@@ -238,7 +238,7 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_GetUpdateRegion_(handle);
         }
         
-        public static Alternet.Drawing.Int32Rect GetUpdateClientRect(System.IntPtr handle)
+        public static Alternet.Drawing.RectI GetUpdateClientRect(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetUpdateClientRect_(handle);
         }
@@ -368,17 +368,17 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_GetCharWidth_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetTextExtent(System.IntPtr handle, string str)
+        public static Alternet.Drawing.SizeI GetTextExtent(System.IntPtr handle, string str)
         {
             return NativeApi.WxControlFactory_GetTextExtent_(handle, str);
         }
         
-        public static Alternet.Drawing.Int32Point ClientToScreen(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI ClientToScreen(System.IntPtr handle, Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_ClientToScreen_(handle, pt);
         }
         
-        public static Alternet.Drawing.Int32Point ScreenToClient(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI ScreenToClient(System.IntPtr handle, Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_ScreenToClient_(handle, pt);
         }
@@ -498,7 +498,7 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_SetHelpText_(handle, text);
         }
         
-        public static string GetHelpTextAtPoint(System.IntPtr handle, Alternet.Drawing.Int32Point pt, int origin)
+        public static string GetHelpTextAtPoint(System.IntPtr handle, Alternet.Drawing.PointI pt, int origin)
         {
             return NativeApi.WxControlFactory_GetHelpTextAtPoint_(handle, pt, origin);
         }
@@ -848,7 +848,7 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_GetAcceleratorTable_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetDPI(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetDPI(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetDPI_(handle);
         }
@@ -858,12 +858,12 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_WXAdjustFontToOwnPPI_(handle, font);
         }
         
-        public static Alternet.Drawing.Int32Size FromPhys(Alternet.Drawing.Int32Size sz, System.IntPtr w)
+        public static Alternet.Drawing.SizeI FromPhys(Alternet.Drawing.SizeI sz, System.IntPtr w)
         {
             return NativeApi.WxControlFactory_FromPhys_(sz, w);
         }
         
-        public static Alternet.Drawing.Int32Point FromPhys2(Alternet.Drawing.Int32Point pt, System.IntPtr w)
+        public static Alternet.Drawing.PointI FromPhys2(Alternet.Drawing.PointI pt, System.IntPtr w)
         {
             return NativeApi.WxControlFactory_FromPhys2_(pt, w);
         }
@@ -873,12 +873,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_FromPhys3_(d, w);
         }
         
-        public static Alternet.Drawing.Int32Size FromPhys4(Alternet.Drawing.Int32Size sz)
+        public static Alternet.Drawing.SizeI FromPhys4(Alternet.Drawing.SizeI sz)
         {
             return NativeApi.WxControlFactory_FromPhys4_(sz);
         }
         
-        public static Alternet.Drawing.Int32Point FromPhys5(Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI FromPhys5(Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_FromPhys5_(pt);
         }
@@ -888,12 +888,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_FromPhys6_(d);
         }
         
-        public static Alternet.Drawing.Int32Size ToPhys(Alternet.Drawing.Int32Size sz, System.IntPtr w)
+        public static Alternet.Drawing.SizeI ToPhys(Alternet.Drawing.SizeI sz, System.IntPtr w)
         {
             return NativeApi.WxControlFactory_ToPhys_(sz, w);
         }
         
-        public static Alternet.Drawing.Int32Point ToPhys2(Alternet.Drawing.Int32Point pt, System.IntPtr w)
+        public static Alternet.Drawing.PointI ToPhys2(Alternet.Drawing.PointI pt, System.IntPtr w)
         {
             return NativeApi.WxControlFactory_ToPhys2_(pt, w);
         }
@@ -903,12 +903,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_ToPhys3_(d, w);
         }
         
-        public static Alternet.Drawing.Int32Size ToPhys4(Alternet.Drawing.Int32Size sz)
+        public static Alternet.Drawing.SizeI ToPhys4(Alternet.Drawing.SizeI sz)
         {
             return NativeApi.WxControlFactory_ToPhys4_(sz);
         }
         
-        public static Alternet.Drawing.Int32Point ToPhys5(Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI ToPhys5(Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_ToPhys5_(pt);
         }
@@ -918,12 +918,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_ToPhys6_(d);
         }
         
-        public static Alternet.Drawing.Int32Size FromDIP(Alternet.Drawing.Int32Size sz, System.IntPtr window)
+        public static Alternet.Drawing.SizeI FromDIP(Alternet.Drawing.SizeI sz, System.IntPtr window)
         {
             return NativeApi.WxControlFactory_FromDIP_(sz, window);
         }
         
-        public static Alternet.Drawing.Int32Point FromDIP2(Alternet.Drawing.Int32Point pt, System.IntPtr window)
+        public static Alternet.Drawing.PointI FromDIP2(Alternet.Drawing.PointI pt, System.IntPtr window)
         {
             return NativeApi.WxControlFactory_FromDIP2_(pt, window);
         }
@@ -933,12 +933,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_FromDIP3_(d, w);
         }
         
-        public static Alternet.Drawing.Int32Size FromDIP4(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        public static Alternet.Drawing.SizeI FromDIP4(System.IntPtr handle, Alternet.Drawing.SizeI sz)
         {
             return NativeApi.WxControlFactory_FromDIP4_(handle, sz);
         }
         
-        public static Alternet.Drawing.Int32Point FromDIP5(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI FromDIP5(System.IntPtr handle, Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_FromDIP5_(handle, pt);
         }
@@ -948,12 +948,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_FromDIP6_(handle, d);
         }
         
-        public static Alternet.Drawing.Int32Size ToDIP(Alternet.Drawing.Int32Size sz, System.IntPtr w)
+        public static Alternet.Drawing.SizeI ToDIP(Alternet.Drawing.SizeI sz, System.IntPtr w)
         {
             return NativeApi.WxControlFactory_ToDIP_(sz, w);
         }
         
-        public static Alternet.Drawing.Int32Point ToDIP2(Alternet.Drawing.Int32Point pt, System.IntPtr w)
+        public static Alternet.Drawing.PointI ToDIP2(Alternet.Drawing.PointI pt, System.IntPtr w)
         {
             return NativeApi.WxControlFactory_ToDIP2_(pt, w);
         }
@@ -963,12 +963,12 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_ToDIP3_(d, w);
         }
         
-        public static Alternet.Drawing.Int32Size ToDIP4(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        public static Alternet.Drawing.SizeI ToDIP4(System.IntPtr handle, Alternet.Drawing.SizeI sz)
         {
             return NativeApi.WxControlFactory_ToDIP4_(handle, sz);
         }
         
-        public static Alternet.Drawing.Int32Point ToDIP5(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI ToDIP5(System.IntPtr handle, Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_ToDIP5_(handle, pt);
         }
@@ -978,22 +978,22 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_ToDIP6_(d);
         }
         
-        public static Alternet.Drawing.Int32Point ConvertPixelsToDialog(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI ConvertPixelsToDialog(System.IntPtr handle, Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_ConvertPixelsToDialog_(handle, pt);
         }
         
-        public static Alternet.Drawing.Int32Point ConvertDialogToPixels(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        public static Alternet.Drawing.PointI ConvertDialogToPixels(System.IntPtr handle, Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxControlFactory_ConvertDialogToPixels_(handle, pt);
         }
         
-        public static Alternet.Drawing.Int32Size ConvertPixelsToDialog2(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        public static Alternet.Drawing.SizeI ConvertPixelsToDialog2(System.IntPtr handle, Alternet.Drawing.SizeI sz)
         {
             return NativeApi.WxControlFactory_ConvertPixelsToDialog2_(handle, sz);
         }
         
-        public static Alternet.Drawing.Int32Size ConvertDialogToPixels2(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        public static Alternet.Drawing.SizeI ConvertDialogToPixels2(System.IntPtr handle, Alternet.Drawing.SizeI sz)
         {
             return NativeApi.WxControlFactory_ConvertDialogToPixels2_(handle, sz);
         }
@@ -1118,57 +1118,57 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_SetClientSize_(handle, width, height);
         }
         
-        public static Alternet.Drawing.Int32Point GetPosition(System.IntPtr handle)
+        public static Alternet.Drawing.PointI GetPosition(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetPosition_(handle);
         }
         
-        public static Alternet.Drawing.Int32Point GetScreenPosition(System.IntPtr handle)
+        public static Alternet.Drawing.PointI GetScreenPosition(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetScreenPosition_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetClientSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetClientSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetClientSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Rect GetRect(System.IntPtr handle)
+        public static Alternet.Drawing.RectI GetRect(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetRect_(handle);
         }
         
-        public static Alternet.Drawing.Int32Rect GetScreenRect(System.IntPtr handle)
+        public static Alternet.Drawing.RectI GetScreenRect(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetScreenRect_(handle);
         }
         
-        public static Alternet.Drawing.Int32Point GetClientAreaOrigin(System.IntPtr handle)
+        public static Alternet.Drawing.PointI GetClientAreaOrigin(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetClientAreaOrigin_(handle);
         }
         
-        public static Alternet.Drawing.Int32Rect GetClientRect(System.IntPtr handle)
+        public static Alternet.Drawing.RectI GetClientRect(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetClientRect_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size ClientToWindowSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        public static Alternet.Drawing.SizeI ClientToWindowSize(System.IntPtr handle, Alternet.Drawing.SizeI size)
         {
             return NativeApi.WxControlFactory_ClientToWindowSize_(handle, size);
         }
         
-        public static Alternet.Drawing.Int32Size WindowToClientSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        public static Alternet.Drawing.SizeI WindowToClientSize(System.IntPtr handle, Alternet.Drawing.SizeI size)
         {
             return NativeApi.WxControlFactory_WindowToClientSize_(handle, size);
         }
         
-        public static Alternet.Drawing.Int32Size GetBestSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetBestSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetBestSize_(handle);
         }
@@ -1198,17 +1198,17 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_InvalidateBestSize_(handle);
         }
         
-        public static void CacheBestSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        public static void CacheBestSize(System.IntPtr handle, Alternet.Drawing.SizeI size)
         {
             NativeApi.WxControlFactory_CacheBestSize_(handle, size);
         }
         
-        public static Alternet.Drawing.Int32Size GetEffectiveMinSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetEffectiveMinSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetEffectiveMinSize_(handle);
         }
         
-        public static void SetInitialSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        public static void SetInitialSize(System.IntPtr handle, Alternet.Drawing.SizeI size)
         {
             NativeApi.WxControlFactory_SetInitialSize_(handle, size);
         }
@@ -1238,42 +1238,42 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_SetSizeHints_(handle, minW, minH, maxW, maxH, incW, incH);
         }
         
-        public static void SetMinSize(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        public static void SetMinSize(System.IntPtr handle, Alternet.Drawing.SizeI minSize)
         {
             NativeApi.WxControlFactory_SetMinSize_(handle, minSize);
         }
         
-        public static void SetMaxSize(System.IntPtr handle, Alternet.Drawing.Int32Size maxSize)
+        public static void SetMaxSize(System.IntPtr handle, Alternet.Drawing.SizeI maxSize)
         {
             NativeApi.WxControlFactory_SetMaxSize_(handle, maxSize);
         }
         
-        public static void SetMinClientSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        public static void SetMinClientSize(System.IntPtr handle, Alternet.Drawing.SizeI size)
         {
             NativeApi.WxControlFactory_SetMinClientSize_(handle, size);
         }
         
-        public static void SetMaxClientSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        public static void SetMaxClientSize(System.IntPtr handle, Alternet.Drawing.SizeI size)
         {
             NativeApi.WxControlFactory_SetMaxClientSize_(handle, size);
         }
         
-        public static Alternet.Drawing.Int32Size GetMinSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMinSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetMinSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMaxSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMaxSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetMaxSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMinClientSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMinClientSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetMinClientSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMaxClientSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMaxClientSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetMaxClientSize_(handle);
         }
@@ -1303,12 +1303,12 @@ namespace Alternet.UI.Native
             NativeApi.WxControlFactory_SetVirtualSize_(handle, x, y);
         }
         
-        public static Alternet.Drawing.Int32Size GetVirtualSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetVirtualSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetVirtualSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetBestVirtualSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetBestVirtualSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetBestVirtualSize_(handle);
         }
@@ -1323,7 +1323,7 @@ namespace Alternet.UI.Native
             return NativeApi.WxControlFactory_GetDPIScaleFactor_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetWindowBorderSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetWindowBorderSize(System.IntPtr handle)
         {
             return NativeApi.WxControlFactory_GetWindowBorderSize_(handle);
         }
@@ -1455,13 +1455,13 @@ namespace Alternet.UI.Native
             public static extern void WxControlFactory_MoveConstraint_(System.IntPtr handle, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetSizeConstraint_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetSizeConstraint_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetClientSizeConstraint_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetClientSizeConstraint_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetPositionConstraint_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetPositionConstraint_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxControlFactory_SetAutoLayout_(System.IntPtr handle, bool autoLayout);
@@ -1542,7 +1542,7 @@ namespace Alternet.UI.Native
             public static extern bool WxControlFactory_EnableTouchEvents_(System.IntPtr handle, int WXUNUSEDeventsMask);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_RefreshRect_(System.IntPtr handle, Alternet.Drawing.Int32Rect rect, bool eraseBackground);
+            public static extern void WxControlFactory_RefreshRect_(System.IntPtr handle, Alternet.Drawing.RectI rect, bool eraseBackground);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxControlFactory_Update_(System.IntPtr handle);
@@ -1572,7 +1572,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr WxControlFactory_GetUpdateRegion_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetUpdateClientRect_(System.IntPtr handle);
+            public static extern Alternet.Drawing.RectI WxControlFactory_GetUpdateClientRect_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxControlFactory_IsExposed_(System.IntPtr handle, int x, int y);
@@ -1650,13 +1650,13 @@ namespace Alternet.UI.Native
             public static extern int WxControlFactory_GetCharWidth_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetTextExtent_(System.IntPtr handle, string str);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetTextExtent_(System.IntPtr handle, string str);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ClientToScreen_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ClientToScreen_(System.IntPtr handle, Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ScreenToClient_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ScreenToClient_(System.IntPtr handle, Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_HitTest_(System.IntPtr handle, int x, int y);
@@ -1728,7 +1728,7 @@ namespace Alternet.UI.Native
             public static extern void WxControlFactory_SetHelpText_(System.IntPtr handle, string text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxControlFactory_GetHelpTextAtPoint_(System.IntPtr handle, Alternet.Drawing.Int32Point pt, int origin);
+            public static extern string WxControlFactory_GetHelpTextAtPoint_(System.IntPtr handle, Alternet.Drawing.PointI pt, int origin);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WxControlFactory_GetHelpText_(System.IntPtr handle);
@@ -1938,94 +1938,94 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr WxControlFactory_GetAcceleratorTable_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetDPI_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetDPI_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxControlFactory_WXAdjustFontToOwnPPI_(System.IntPtr handle, System.IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromPhys_(Alternet.Drawing.Int32Size sz, System.IntPtr w);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_FromPhys_(Alternet.Drawing.SizeI sz, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromPhys2_(Alternet.Drawing.Int32Point pt, System.IntPtr w);
+            public static extern Alternet.Drawing.PointI WxControlFactory_FromPhys2_(Alternet.Drawing.PointI pt, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_FromPhys3_(int d, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromPhys4_(Alternet.Drawing.Int32Size sz);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_FromPhys4_(Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromPhys5_(Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_FromPhys5_(Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_FromPhys6_(int d);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToPhys_(Alternet.Drawing.Int32Size sz, System.IntPtr w);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ToPhys_(Alternet.Drawing.SizeI sz, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToPhys2_(Alternet.Drawing.Int32Point pt, System.IntPtr w);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ToPhys2_(Alternet.Drawing.PointI pt, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_ToPhys3_(int d, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToPhys4_(Alternet.Drawing.Int32Size sz);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ToPhys4_(Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToPhys5_(Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ToPhys5_(Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_ToPhys6_(int d);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromDIP_(Alternet.Drawing.Int32Size sz, System.IntPtr window);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_FromDIP_(Alternet.Drawing.SizeI sz, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromDIP2_(Alternet.Drawing.Int32Point pt, System.IntPtr window);
+            public static extern Alternet.Drawing.PointI WxControlFactory_FromDIP2_(Alternet.Drawing.PointI pt, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_FromDIP3_(int d, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromDIP4_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_FromDIP4_(System.IntPtr handle, Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromDIP5_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_FromDIP5_(System.IntPtr handle, Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_FromDIP6_(System.IntPtr handle, int d);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToDIP_(Alternet.Drawing.Int32Size sz, System.IntPtr w);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ToDIP_(Alternet.Drawing.SizeI sz, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToDIP2_(Alternet.Drawing.Int32Point pt, System.IntPtr w);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ToDIP2_(Alternet.Drawing.PointI pt, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_ToDIP3_(int d, System.IntPtr w);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToDIP4_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ToDIP4_(System.IntPtr handle, Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToDIP5_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ToDIP5_(System.IntPtr handle, Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_ToDIP6_(int d);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ConvertPixelsToDialog_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ConvertPixelsToDialog_(System.IntPtr handle, Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_ConvertDialogToPixels_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            public static extern Alternet.Drawing.PointI WxControlFactory_ConvertDialogToPixels_(System.IntPtr handle, Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ConvertPixelsToDialog2_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ConvertPixelsToDialog2_(System.IntPtr handle, Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ConvertDialogToPixels2_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ConvertDialogToPixels2_(System.IntPtr handle, Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxControlFactory_WarpPointer_(System.IntPtr handle, int x, int y);
@@ -2100,37 +2100,37 @@ namespace Alternet.UI.Native
             public static extern void WxControlFactory_SetClientSize_(System.IntPtr handle, int width, int height);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_GetPosition_(System.IntPtr handle);
+            public static extern Alternet.Drawing.PointI WxControlFactory_GetPosition_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_GetScreenPosition_(System.IntPtr handle);
+            public static extern Alternet.Drawing.PointI WxControlFactory_GetScreenPosition_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetClientSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetClientSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetRect_(System.IntPtr handle);
+            public static extern Alternet.Drawing.RectI WxControlFactory_GetRect_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetScreenRect_(System.IntPtr handle);
+            public static extern Alternet.Drawing.RectI WxControlFactory_GetScreenRect_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point WxControlFactory_GetClientAreaOrigin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.PointI WxControlFactory_GetClientAreaOrigin_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetClientRect_(System.IntPtr handle);
+            public static extern Alternet.Drawing.RectI WxControlFactory_GetClientRect_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_ClientToWindowSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_ClientToWindowSize_(System.IntPtr handle, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_WindowToClientSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_WindowToClientSize_(System.IntPtr handle, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetBestSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetBestSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_GetBestHeight_(System.IntPtr handle, int width);
@@ -2148,13 +2148,13 @@ namespace Alternet.UI.Native
             public static extern void WxControlFactory_InvalidateBestSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_CacheBestSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            public static extern void WxControlFactory_CacheBestSize_(System.IntPtr handle, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetEffectiveMinSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetEffectiveMinSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_SetInitialSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            public static extern void WxControlFactory_SetInitialSize_(System.IntPtr handle, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxControlFactory_Center_(System.IntPtr handle, int dir);
@@ -2172,28 +2172,28 @@ namespace Alternet.UI.Native
             public static extern void WxControlFactory_SetSizeHints_(System.IntPtr handle, int minW, int minH, int maxW, int maxH, int incW, int incH);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_SetMinSize_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            public static extern void WxControlFactory_SetMinSize_(System.IntPtr handle, Alternet.Drawing.SizeI minSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_SetMaxSize_(System.IntPtr handle, Alternet.Drawing.Int32Size maxSize);
+            public static extern void WxControlFactory_SetMaxSize_(System.IntPtr handle, Alternet.Drawing.SizeI maxSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_SetMinClientSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            public static extern void WxControlFactory_SetMinClientSize_(System.IntPtr handle, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxControlFactory_SetMaxClientSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            public static extern void WxControlFactory_SetMaxClientSize_(System.IntPtr handle, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMinSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetMinSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMaxSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetMaxSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMinClientSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetMinClientSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMaxClientSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetMaxClientSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxControlFactory_GetMinWidth_(System.IntPtr handle);
@@ -2211,10 +2211,10 @@ namespace Alternet.UI.Native
             public static extern void WxControlFactory_SetVirtualSize_(System.IntPtr handle, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetVirtualSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetVirtualSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetBestVirtualSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetBestVirtualSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern double WxControlFactory_GetContentScaleFactor_(System.IntPtr handle);
@@ -2223,7 +2223,7 @@ namespace Alternet.UI.Native
             public static extern double WxControlFactory_GetDPIScaleFactor_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetWindowBorderSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WxControlFactory_GetWindowBorderSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxControlFactory_InformFirstDirection_(System.IntPtr handle, int direction, int size, int availableOtherDir);

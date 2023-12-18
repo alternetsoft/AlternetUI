@@ -65,7 +65,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 try
                 {
-                    var point = Point.Parse(text);
+                    var point = PointD.Parse(text);
             
                     result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Point, types.PointFullConstructor,
                         new[] { point.X, point.Y });
@@ -99,7 +99,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 try
                 {
-                    var size = Size.Parse(text);
+                    var size = SizeD.Parse(text);
                 
                     result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Size, types.SizeFullConstructor,
                         new[] { size.Width, size.Height });

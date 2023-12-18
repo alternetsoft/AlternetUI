@@ -8,7 +8,7 @@ int GetItemsCount();
 
 void InsertItemAt(int index, MenuItem* item);
 void RemoveItemAt(int index);
-void ShowContextMenu(Control* control, const Point& position);
+void ShowContextMenu(Control* control, const PointD& position);
 public:
 Menu();
 protected:

@@ -12,10 +12,10 @@ namespace Alternet.UI
         /// <param name="control">A <see cref="Control"/> that specifies the control with which
         /// this shortcut menu is associated.</param>
         /// <param name="position">
-        /// A <see cref="Point"/> that specifies the coordinates at which to display the menu.
+        /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
         /// These coordinates are specified relative
         /// to the client coordinates of the control specified in the control parameter.</param>
-        public void Show(Control control, Point position)
+        public void Show(Control control, PointD position)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));

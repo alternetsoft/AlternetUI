@@ -35,7 +35,7 @@ ALTERNET_UI_API void Menu_RemoveItemAt_(Menu* obj, int index)
     obj->RemoveItemAt(index);
 }
 
-ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, Point position)
+ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, PointD position)
 {
     obj->ShowContextMenu(control, position);
 }

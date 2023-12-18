@@ -132,7 +132,7 @@ namespace WindowPropertiesSample
             testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
 
             testWindow.StartLocation = (WindowStartLocation)startLocationComboBox.SelectedItem!;
-            testWindow.Location = new Point();
+            testWindow.Location = new PointD();
 
             testWindow.EndInit();
 
@@ -372,33 +372,33 @@ namespace WindowPropertiesSample
         private void SetSizeButton_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Size = new Size(300, 300);
+                testWindow.Size = new SizeD(300, 300);
         }
 
         private void SetClientSizeButton_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
-                testWindow.ClientSize = new Size(300, 300);
+                testWindow.ClientSize = new SizeD(300, 300);
         }
 
         private void IncreaseLocationButton_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Location += new Size(10, 10);
+                testWindow.Location += new SizeD(10, 10);
         }
 
         private void SetBoundsButton_Click(object sender, System.EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Bounds = new Rect(0, 0, 400, 400);
+                testWindow.Bounds = new RectD(0, 0, 400, 400);
         }
 
         private void SetMinMaxSizeButton_Click(object sender, System.EventArgs e)
         {
             if (testWindow != null)
             {
-                testWindow.MinimumSize = new Size(100, 100);
-                testWindow.MaximumSize = new Size(300, 300);
+                testWindow.MinimumSize = new SizeD(100, 100);
+                testWindow.MaximumSize = new SizeD(300, 300);
             }
         }
 

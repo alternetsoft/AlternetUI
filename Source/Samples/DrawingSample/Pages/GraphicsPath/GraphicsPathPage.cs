@@ -39,7 +39,7 @@ namespace DrawingSample
             }
         }
 
-        public override void Draw(DrawingContext dc, Rect bounds)
+        public override void Draw(DrawingContext dc, RectD bounds)
         {
             DrawRandomArtModel(dc);
             DrawDemoForeground(dc, bounds);
@@ -98,7 +98,7 @@ namespace DrawingSample
             }
         }
 
-        private void DrawDemoForeground(DrawingContext dc, Rect bounds)
+        private void DrawDemoForeground(DrawingContext dc, RectD bounds)
         {
             dc.DrawText(
                 "\n\nClick and drag here to draw.\nYou can select the path segment type to draw in the combo box in the panel to the right.",
@@ -109,22 +109,22 @@ namespace DrawingSample
 
             using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
 
-            path.AddLines(new[] { new Point(210, 210), new Point(300, 300), new Point(300, 320) });
-            path.AddLine(new Point(320, 320), new Point(340, 340));
-            path.AddLineTo(new Point(340, 350));
+            path.AddLines(new[] { new PointD(210, 210), new PointD(300, 300), new PointD(300, 320) });
+            path.AddLine(new PointD(320, 320), new PointD(340, 340));
+            path.AddLineTo(new PointD(340, 350));
             path.CloseFigure();
 
-            path.AddEllipse(new Rect(260, 260, 40, 20));
+            path.AddEllipse(new RectD(260, 260, 40, 20));
 
-            path.AddBezier(new Point(240, 210), new Point(450, 250), new Point(550, 250), new Point(310, 300));
-            path.AddBezierTo(new Point(450, 250), new Point(550, 250), new Point(400, 210));
+            path.AddBezier(new PointD(240, 210), new PointD(450, 250), new PointD(550, 250), new PointD(310, 300));
+            path.AddBezierTo(new PointD(450, 250), new PointD(550, 250), new PointD(400, 210));
             path.CloseFigure();
 
-            path.StartFigure(new Point(310, 210));
-            path.AddArc(new Point(310, 210), 30, 295, 285);
+            path.StartFigure(new PointD(310, 210));
+            path.AddArc(new PointD(310, 210), 30, 295, 285);
 
-            path.AddRectangle(new Rect(260, 260, 40, 20));
-            path.AddRoundedRectangle(new Rect(250, 250, 60, 40), 5);
+            path.AddRectangle(new RectD(260, 260, 40, 20));
+            path.AddRoundedRectangle(new RectD(250, 250, 60, 40), 5);
 
             dc.FillPath(Brushes.LightGreen, path);
             dc.DrawPath(Pens.Fuchsia, path);

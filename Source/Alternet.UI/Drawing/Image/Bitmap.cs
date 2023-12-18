@@ -91,7 +91,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
         public Bitmap()
-            : base(Drawing.Int32Size.Empty)
+            : base(Drawing.SizeI.Empty)
         {
         }
 
@@ -99,7 +99,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class with the specified size.
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
-        public Bitmap(Int32Size size)
+        public Bitmap(SizeI size)
             : base(size)
         {
         }
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         /// <param name="control">The control from which pixel scaling factor is used.</param>
-        public Bitmap(Int32Size size, Control control)
+        public Bitmap(SizeI size, Control control)
             : base(size, control)
         {
         }
@@ -121,7 +121,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageSet">Source of the image.</param>
         /// <param name="size">Size of the image in device pixels.</param>
-        public Bitmap(ImageSet imageSet, Int32Size size)
+        public Bitmap(ImageSet imageSet, SizeI size)
             : base(imageSet, size)
         {
         }
@@ -132,9 +132,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="original">The <see cref="Image" /> from which to create the
         /// new <see cref="Bitmap" />.</param>
-        /// <param name="newSize">The <see cref="Int32Size" /> structure that represent the
+        /// <param name="newSize">The <see cref="SizeI" /> structure that represent the
         /// size of the new <see cref="Bitmap" />.</param>
-        public Bitmap(Image original, Int32Size newSize)
+        public Bitmap(Image original, SizeI newSize)
             : base(original, newSize)
         {
         }

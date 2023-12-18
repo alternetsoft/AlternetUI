@@ -25,7 +25,7 @@ namespace DrawingSample.RandomArt
 
         public bool IsDrawing { get; private set; }
 
-        public Point TipPoint { get; private set; }
+        public PointD TipPoint { get; private set; }
 
         public PathSegmentType PathSegmentType { get; set; }
 

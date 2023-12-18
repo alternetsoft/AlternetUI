@@ -18,11 +18,11 @@ namespace Alternet.UI
             }
         }
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             var text = Control.Text;
             if (text == null)
-                return new Size();
+                return new SizeD();
 
             using var dc = Control.CreateDrawingContext();
             return dc.MeasureText(text, Control.Font ?? UI.Control.DefaultFont) + Control.Padding.Size;

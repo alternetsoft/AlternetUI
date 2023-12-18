@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Possible flags for <see cref="Control.SetBounds(Rect,SetBoundsFlags)"/>.
+    /// Possible flags for <see cref="Control.SetBounds(RectD,SetBoundsFlags)"/>.
     /// </summary>
     [Flags]
     public enum SetBoundsFlags

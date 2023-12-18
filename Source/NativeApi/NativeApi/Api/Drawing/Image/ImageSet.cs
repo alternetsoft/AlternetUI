@@ -26,7 +26,7 @@ namespace NativeApi.Api
         Note that this function is mostly used by wxWidgets itself and not
         the application. 
          */
-        public Int32Size DefaultSize { get; }
+        public SizeI DefaultSize { get; }
 
         /*
         Get bitmap of the size appropriate for the DPI scaling used by the given window.
@@ -48,7 +48,7 @@ namespace NativeApi.Api
         Passing a size returned by this function to GetBitmap() ensures that bitmap
         doesn't need to be rescaled, which typically significantly lowers its quality.         
          */
-        public Int32Size GetPreferredBitmapSizeAtScale(double scale) => default;
+        public SizeI GetPreferredBitmapSizeAtScale(double scale) => default;
 
         /*
         Get the size that would be best to use for this bundle at the DPI
@@ -57,7 +57,7 @@ namespace NativeApi.Api
         This is just a convenient wrapper for GetPreferredBitmapSizeAtScale() calling
         that function with the result of wxWindow::GetDPIScaleFactor()         
          */
-        public Int32Size GetPreferredBitmapSizeFor(IntPtr window) => default;
+        public SizeI GetPreferredBitmapSizeFor(IntPtr window) => default;
     }
 }
 

@@ -5,6 +5,6 @@ namespace NativeApi.Api
 {
     public class LinearGradientBrush : Brush
     {
-        public void Initialize(Point startPoint, Point endPoint, Color[] gradientStopsColors, double[] gradientStopsOffsets) => throw new Exception();
+        public void Initialize(PointD startPoint, PointD endPoint, Color[] gradientStopsColors, double[] gradientStopsOffsets) => throw new Exception();
     }
 }

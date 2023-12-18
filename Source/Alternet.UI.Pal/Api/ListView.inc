@@ -57,13 +57,13 @@ void InsertColumnAt(int64_t index, const string& header, double width, ListViewC
 void RemoveColumnAt(int64_t index);
 void ClearSelected();
 void SetSelected(int64_t index, bool value);
-void* ItemHitTest(const Point& point);
+void* ItemHitTest(const PointD& point);
 ListViewHitTestLocations GetHitTestResultLocations(void* hitTestResult);
 int64_t GetHitTestResultItemIndex(void* hitTestResult);
 int64_t GetHitTestResultColumnIndex(void* hitTestResult);
 void FreeHitTestResult(void* hitTestResult);
 void BeginLabelEdit(int64_t itemIndex);
-Rect GetItemBounds(int64_t itemIndex, ListViewItemBoundsPortion portion);
+RectD GetItemBounds(int64_t itemIndex, ListViewItemBoundsPortion portion);
 void Clear();
 void EnsureItemVisible(int64_t itemIndex);
 void SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text);

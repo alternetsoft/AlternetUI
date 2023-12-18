@@ -68,7 +68,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Size CustomPaperSize
+        public Alternet.Drawing.SizeD CustomPaperSize
         {
             get
             {
@@ -156,10 +156,10 @@ namespace Alternet.UI.Native
             public static extern void PageSettings_SetMargins_(IntPtr obj, Alternet.UI.Thickness value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size PageSettings_GetCustomPaperSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD PageSettings_GetCustomPaperSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetCustomPaperSize_(IntPtr obj, Alternet.Drawing.Size value);
+            public static extern void PageSettings_SetCustomPaperSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PageSettings_GetUseCustomPaperSize_(IntPtr obj);

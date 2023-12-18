@@ -16,7 +16,7 @@ namespace CustomControlsSample
         private readonly Pen knobPointerPen1 = new((Color)"#FC4154", 3);
         private readonly Pen knobPointerPen2 = new((Color)"#FF827D", 1);
         private bool dragging = false;
-        private Point dragStartPosition;
+        private PointD dragStartPosition;
 
         public override SliderOrientation Orientation { get; set; }
 
@@ -34,7 +34,7 @@ namespace CustomControlsSample
             dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
 
 
-            using var scaleGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
+            using var scaleGradientBrush = new LinearGradientBrush(new PointD(0, 0), new PointD(0, scaleBounds.Height),
                 new[]
                 {
                         new GradientStop((Color)"#1B222C", 0),
@@ -53,7 +53,7 @@ namespace CustomControlsSample
             var knobPadding = largeTickLength * 0.5;
             var knobRadius = controlRadius - largeTickLength - knobPadding;
 
-            using var knobGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(knobRadius * 2, knobRadius * 2),
+            using var knobGradientBrush = new LinearGradientBrush(new PointD(0, 0), new PointD(knobRadius * 2, knobRadius * 2),
                 new[]
                 {
                     new GradientStop((Color)"#A9A9A9", 0),
@@ -80,10 +80,10 @@ namespace CustomControlsSample
 
             const double DegreesToRadians = Math.PI / 180;
 
-            Point GetScalePoint(double angle, double radius)
+            PointD GetScalePoint(double angle, double radius)
             {
                 var radians = angle * DegreesToRadians;
-                return center + new Size(radius * Math.Cos(radians), radius * Math.Sin(radians));
+                return center + new SizeD(radius * Math.Cos(radians), radius * Math.Sin(radians));
             }
 
             var pointerEndPoint1 = GetScalePoint(pointerAngle, knobRadius * 0.95);
@@ -104,9 +104,9 @@ namespace CustomControlsSample
             DrawTicks(largeTickPen, scaleRange / largeTicksCount, largeTickLength);
         }
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            return new Size(100, 100);
+            return new SizeD(100, 100);
         }
 
         protected override void OnAttach()
@@ -142,7 +142,7 @@ namespace CustomControlsSample
             return Math.Min(bounds.Width, bounds.Height) / 2 - gaugePadding;
         }
 
-        private Point GetControlCenter()
+        private PointD GetControlCenter()
         {
             return Control.ClientRectangle.Center;
         }

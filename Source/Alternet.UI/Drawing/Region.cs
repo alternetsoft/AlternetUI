@@ -18,11 +18,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Region"/> from the specified <see cref="Rect"/> structure.
+        /// Initializes a new <see cref="Region"/> from the specified <see cref="RectD"/> structure.
         /// </summary>
-        /// <param name="rect">A <see cref="Rect"/> structure that defines the interior
+        /// <param name="rect">A <see cref="RectD"/> structure that defines the interior
         /// of the new <see cref="Region"/>.</param>
-        public Region(Rect rect)
+        public Region(RectD rect)
         {
             NativeRegion = new UI.Native.Region();
             NativeRegion.InitializeWithRect(rect);
@@ -43,10 +43,10 @@ namespace Alternet.Drawing
         /// Initializes a new <see cref="Region"/> from the polygon specified by the
         /// <paramref name="points"/> array.
         /// </summary>
-        /// <param name="points">A <see cref="Point"/> structures array
+        /// <param name="points">A <see cref="PointD"/> structures array
         /// describing the polygon.</param>
         /// <param name="fillMode">The polygon fill mode.</param>
-        public Region(Point[] points, FillMode fillMode = FillMode.Alternate)
+        public Region(PointD[] points, FillMode fillMode = FillMode.Alternate)
         {
             NativeRegion = new UI.Native.Region();
             NativeRegion.InitializeWithPolygon(points, (UI.Native.FillMode)fillMode);
@@ -83,7 +83,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="pt">Point to check.</param>
         /// <returns></returns>
-        public RegionContain Contains(Point pt)
+        public RegionContain Contains(PointD pt)
         {
             CheckDisposed();
             return (RegionContain)NativeRegion.ContainsPoint(pt);
@@ -94,7 +94,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">Rectangle to check.</param>
         /// <returns></returns>
-        public RegionContain Contains(Rect rect)
+        public RegionContain Contains(RectD rect)
         {
             CheckDisposed();
             return (RegionContain)NativeRegion.ContainsRect(rect);
@@ -102,11 +102,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the intersection of itself with the
-        /// specified <see cref="Rect"/> structure.
+        /// specified <see cref="RectD"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to intersect with this
+        /// <param name="rect">The <see cref="RectD"/> structure to intersect with this
         /// <see cref="Region"/>.</param>
-        public void Intersect(Rect rect)
+        public void Intersect(RectD rect)
         {
             CheckDisposed();
             NativeRegion.IntersectWithRect(rect);
@@ -125,11 +125,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the union of itself with the
-        /// specified <see cref="Rect"/> structure.
+        /// specified <see cref="RectD"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to union with
+        /// <param name="rect">The <see cref="RectD"/> structure to union with
         /// this <see cref="Region"/>.</param>
-        public void Union(Rect rect)
+        public void Union(RectD rect)
         {
             CheckDisposed();
             NativeRegion.UnionWithRect(rect);
@@ -161,11 +161,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the xor of itself with the
-        /// specified <see cref="Rect"/> structure.
+        /// specified <see cref="RectD"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to xor with
+        /// <param name="rect">The <see cref="RectD"/> structure to xor with
         /// this <see cref="Region"/>.</param>
-        public void Xor(Rect rect)
+        public void Xor(RectD rect)
         {
             CheckDisposed();
             NativeRegion.XorWithRect(rect);
@@ -183,7 +183,7 @@ namespace Alternet.Drawing
         /// This method always fails, i.e.returns false, if this region is invalid but
         /// may nevertheless be safely used even in this case.
         /// </remarks>
-        public void Subtract(Rect rect)
+        public void Subtract(RectD rect)
         {
             CheckDisposed();
             NativeRegion.SubtractRect(rect);
@@ -219,10 +219,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets a <see cref="Rect"/> structure that represents a rectangle that
+        /// Gets a <see cref="RectD"/> structure that represents a rectangle that
         /// bounds this <see cref="Region"/>.
         /// </summary>
-        public Rect GetBounds()
+        public RectD GetBounds()
         {
             CheckDisposed();
             return NativeRegion.GetBounds();

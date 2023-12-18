@@ -26,8 +26,8 @@ namespace NativeApi.Api
         public void Scale(double scaleX, double scaleY) => throw new Exception();
         public void Rotate(double angle) => throw new Exception();
         public void Invert() => throw new Exception();
-        public Point TransformPoint(Point point) => throw new Exception();
-        public Size TransformSize(Size size) => throw new Exception();
+        public PointD TransformPoint(PointD point) => throw new Exception();
+        public SizeD TransformSize(SizeD size) => throw new Exception();
         public bool IsIdentity { get; }
         public bool IsEqualTo(TransformMatrix other) => throw new Exception();
         public int GetHashCode_() => throw new Exception();

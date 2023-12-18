@@ -95,7 +95,7 @@ namespace NativeApi.Api
 
         public bool EnableCategories(bool enable) => throw new Exception();
 
-        public Size FitColumns() => throw new Exception();
+        public SizeD FitColumns() => throw new Exception();
 
         public Color GetCaptionBackgroundColor() => throw new Exception();
 
@@ -215,8 +215,8 @@ namespace NativeApi.Api
 
         public void SetCurrentCategory(IntPtr propArg) => throw new Exception();
 
-        public Int32Rect GetImageRect(IntPtr p, int item) => throw new Exception();
+        public RectI GetImageRect(IntPtr p, int item) => throw new Exception();
 
-        public Int32Size GetImageSize(IntPtr p, int item) => throw new Exception();
+        public SizeI GetImageSize(IntPtr p, int item) => throw new Exception();
     }
 }

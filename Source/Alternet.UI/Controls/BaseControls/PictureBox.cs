@@ -205,7 +205,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DefaultPaint(DrawingContext dc, Rect rect)
+        protected override void DefaultPaint(DrawingContext dc, RectD rect)
         {
             BeforePaint(dc, rect);
 
@@ -258,7 +258,7 @@ namespace Alternet.UI
                 Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
             }
 
-            public override Size GetPreferredSize(Size availableSize)
+            public override SizeD GetPreferredSize(SizeD availableSize)
             {
                 if (Control.Image == null)
                     return base.GetPreferredSize(availableSize);
@@ -266,7 +266,7 @@ namespace Alternet.UI
                 var specifiedWidth = Control.SuggestedWidth;
                 var specifiedHeight = Control.SuggestedHeight;
                 if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
-                    return new Size(specifiedWidth, specifiedHeight);
+                    return new SizeD(specifiedWidth, specifiedHeight);
 
                 return Control.Image.SizeDip(Control);
             }

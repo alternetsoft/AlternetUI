@@ -302,7 +302,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Size"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">size of a control.</param>
-        public ControlSet Size(Size value)
+        public ControlSet Size(SizeD value)
         {
             foreach (var item in items)
                 item.Size = value;

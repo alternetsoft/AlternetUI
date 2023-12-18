@@ -356,7 +356,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="size">New maximal width and height.</param>
         /// <returns></returns>
-        IAuiPaneInfo MaxSizeDip(Size size);
+        IAuiPaneInfo MaxSizeDip(SizeD size);
 
         /// <summary>
         /// Sets the position of the floating pane.
@@ -620,16 +620,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets size that the layout engine will prefer.
         /// </summary>
-        Int32Size GetBestSizePixel();
+        SizeI GetBestSizePixel();
 
         /// <summary>
         /// Gets minimum size the pane window can tolerate.
         /// </summary>
-        Int32Size GetMinSizePixel();
+        SizeI GetMinSizePixel();
 
         /// <summary>
         /// Gets maximum size the pane window can tolerate.
         /// </summary>
-        Int32Size GetMaxSizePixel();
+        SizeI GetMaxSizePixel();
     }
 }

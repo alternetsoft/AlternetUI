@@ -55,7 +55,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Rect ChildrenLayoutBounds
+        public override RectD ChildrenLayoutBounds
         {
             get
             {
@@ -234,14 +234,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             var width = Normal.Width;
             return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
         }
 
         /// <inheritdoc/>
-        protected override void DefaultPaint(DrawingContext dc, Rect rect)
+        protected override void DefaultPaint(DrawingContext dc, RectD rect)
         {
             BeforePaint(dc, rect);
             DrawDefaultBackground(dc, rect);
@@ -291,10 +291,10 @@ namespace Alternet.UI
                 Control.DefaultPaint(dc, DrawClientRectangle);
             }
 
-            public override Size GetPreferredSize(Size availableSize)
+            public override SizeD GetPreferredSize(SizeD availableSize)
             {
                 return base.GetPreferredSize(availableSize) +
-                    new Size(
+                    new SizeD(
                         Control.BorderWidth.Horizontal,
                         Control.BorderWidth.Vertical);
             }

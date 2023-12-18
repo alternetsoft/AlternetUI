@@ -206,42 +206,42 @@ ALTERNET_UI_API void Control_SetAllowDrop_(Control* obj, c_bool value)
     obj->SetAllowDrop(value);
 }
 
-ALTERNET_UI_API Size_C Control_GetSize_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetSize_(Control* obj)
 {
     return obj->GetSize();
 }
 
-ALTERNET_UI_API void Control_SetSize_(Control* obj, Size value)
+ALTERNET_UI_API void Control_SetSize_(Control* obj, SizeD value)
 {
     obj->SetSize(value);
 }
 
-ALTERNET_UI_API Point_C Control_GetLocation_(Control* obj)
+ALTERNET_UI_API PointD_C Control_GetLocation_(Control* obj)
 {
     return obj->GetLocation();
 }
 
-ALTERNET_UI_API void Control_SetLocation_(Control* obj, Point value)
+ALTERNET_UI_API void Control_SetLocation_(Control* obj, PointD value)
 {
     obj->SetLocation(value);
 }
 
-ALTERNET_UI_API Rect_C Control_GetBounds_(Control* obj)
+ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
 {
     return obj->GetBounds();
 }
 
-ALTERNET_UI_API void Control_SetBounds_(Control* obj, Rect value)
+ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectD value)
 {
     obj->SetBounds(value);
 }
 
-ALTERNET_UI_API Size_C Control_GetClientSize_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
 {
     return obj->GetClientSize();
 }
 
-ALTERNET_UI_API void Control_SetClientSize_(Control* obj, Size value)
+ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeD value)
 {
     obj->SetClientSize(value);
 }
@@ -326,27 +326,27 @@ ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
     obj->SetFont(value);
 }
 
-ALTERNET_UI_API Size_C Control_GetMinimumSize_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetMinimumSize_(Control* obj)
 {
     return obj->GetMinimumSize();
 }
 
-ALTERNET_UI_API void Control_SetMinimumSize_(Control* obj, Size value)
+ALTERNET_UI_API void Control_SetMinimumSize_(Control* obj, SizeD value)
 {
     obj->SetMinimumSize(value);
 }
 
-ALTERNET_UI_API Size_C Control_GetMaximumSize_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetMaximumSize_(Control* obj)
 {
     return obj->GetMaximumSize();
 }
 
-ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, Size value)
+ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
 {
     obj->SetMaximumSize(value);
 }
 
-ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
+ALTERNET_UI_API Control* Control_HitTest_(PointD screenPoint)
 {
     return Control::HitTest(screenPoint);
 }
@@ -386,7 +386,7 @@ ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
     obj->EndIgnoreRecreate();
 }
 
-ALTERNET_UI_API Size_C Control_GetDPI_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetDPI_(Control* obj)
 {
     return obj->GetDPI();
 }
@@ -416,7 +416,7 @@ ALTERNET_UI_API void Control_Update_(Control* obj)
     obj->Update();
 }
 
-ALTERNET_UI_API Size_C Control_GetPreferredSize_(Control* obj, Size availableSize)
+ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableSize)
 {
     return obj->GetPreferredSize(availableSize);
 }
@@ -461,22 +461,22 @@ ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
     obj->ResetForegroundColor();
 }
 
-ALTERNET_UI_API Point_C Control_ClientToScreen_(Control* obj, Point point)
+ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD point)
 {
     return obj->ClientToScreen(point);
 }
 
-ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
+ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD point)
 {
     return obj->ScreenToClient(point);
 }
 
-ALTERNET_UI_API Int32Point_C Control_ScreenToDevice_(Control* obj, Point point)
+ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD point)
 {
     return obj->ScreenToDevice(point);
 }
 
-ALTERNET_UI_API Point_C Control_DeviceToScreen_(Control* obj, Int32Point point)
+ALTERNET_UI_API PointD_C Control_DeviceToScreen_(Control* obj, PointI point)
 {
     return obj->DeviceToScreen(point);
 }
@@ -526,7 +526,7 @@ ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
     obj->SendMouseUpEvent(x, y);
 }
 
-ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, Rect rect, int flags)
+ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
 {
     obj->SetBoundsEx(rect, flags);
 }
@@ -576,7 +576,7 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
-ALTERNET_UI_API void Control_RefreshRect_(Control* obj, Rect rect, c_bool eraseBackground)
+ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)
 {
     obj->RefreshRect(rect, eraseBackground);
 }

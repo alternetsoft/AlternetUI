@@ -23,7 +23,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override int? HitTest(Point position)
+        public override int? HitTest(PointD position)
         {
             int index = NativeControl.ItemHitTest(position);
             return index == -1 ? null : index;

@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect"> The Rect to transform. </param>
         /// <param name="matrix"> The Matrix with which to transform the Rect. </param>
-        internal static void TransformRect(ref Rect rect, ref Matrix matrix)
+        internal static void TransformRect(ref RectD rect, ref Matrix matrix)
         {
             if (rect.IsEmpty)
             {
@@ -92,10 +92,10 @@ namespace Alternet.UI
             if (matrixType == MatrixTypes.TRANSFORM_IS_UNKNOWN)
             {
                 // Al Bunny implementation.
-                Point point0 = matrix.Transform(rect.TopLeft);
-                Point point1 = matrix.Transform(rect.TopRight);
-                Point point2 = matrix.Transform(rect.BottomRight);
-                Point point3 = matrix.Transform(rect.BottomLeft);
+                PointD point0 = matrix.Transform(rect.TopLeft);
+                PointD point1 = matrix.Transform(rect.TopRight);
+                PointD point2 = matrix.Transform(rect.BottomRight);
+                PointD point3 = matrix.Transform(rect.BottomLeft);
 
                 // Width and height is always positive here.
                 rect.X = Math.Min(Math.Min(point0.X, point1.X), Math.Min(point2.X, point3.X));

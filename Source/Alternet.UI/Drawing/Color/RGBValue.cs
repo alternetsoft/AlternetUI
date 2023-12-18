@@ -101,7 +101,7 @@ namespace Alternet.Drawing
         public readonly bool Equals(RGBValue other) => this == other;
 
         /// <summary>
-        /// Gets the hash code for this <see cref='Rect'/>.
+        /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
         public override readonly int GetHashCode() => HashCode.Combine(R, G, B);
 

@@ -3504,7 +3504,7 @@ namespace Alternet.UI
         /// window style. This function only works properly if grid size prior to call
         /// was already fairly large.
         /// </remarks>
-        public virtual Size FitColumns()
+        public virtual SizeD FitColumns()
         {
             return NativeControl.FitColumns();
         }
@@ -4072,7 +4072,7 @@ namespace Alternet.UI
         /// <param name="prop">Return image rectangle for this property.</param>
         /// <param name="item">Which choice of property to use (each choice may
         /// have different image).</param>
-        public virtual Int32Rect GetImageRect(IPropertyGridItem prop, int item)
+        public virtual RectI GetImageRect(IPropertyGridItem prop, int item)
         {
             return NativeControl.GetImageRect(prop.Handle, item);
         }
@@ -4111,7 +4111,7 @@ namespace Alternet.UI
         /// is <c>null</c>, then preferred size is returned.</param>
         /// <param name="item">Which choice of property to use (each choice may have
         /// different image).</param>
-        public virtual Int32Size GetImageSize(IPropertyGridItem? prop, int item)
+        public virtual SizeI GetImageSize(IPropertyGridItem? prop, int item)
         {
             IntPtr ptr;
             if (prop is null)

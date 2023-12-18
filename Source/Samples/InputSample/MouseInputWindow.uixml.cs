@@ -149,10 +149,10 @@ namespace InputSample
         private void HelloButton_MouseUp(object sender, MouseEventArgs e) =>
             LogMouseButton(lbButton, e, "HelloButton", "Up", (IInputElement)sender);
 
-        static string FormatPoint(Point pt) => FormatPoint(new Int32Point((int)pt.X, (int)pt.Y));
-        static string FormatPoint(Int32Point pt) => $"{pt.X}, {pt.Y}";
+        static string FormatPoint(PointD pt) => FormatPoint(new PointI((int)pt.X, (int)pt.Y));
+        static string FormatPoint(PointI pt) => $"{pt.X}, {pt.Y}";
 
-        private void UpdateMousePositionLabel(Control control, Point clientPosition)
+        private void UpdateMousePositionLabel(Control control, PointD clientPosition)
         {
             var screenPosition = control.ClientToScreen(clientPosition);
             var devicePosition = control.ScreenToDevice(screenPosition);

@@ -8,7 +8,7 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
-        public void RefreshRect(Rect rect, bool eraseBackground = true) { }
+        public void RefreshRect(RectD rect, bool eraseBackground = true) { }
 
         public void Raise() { }
         public void Lower() { }
@@ -78,10 +78,10 @@ namespace NativeApi.Api
         public Control? ParentRefCounted { get; }
         public string? ToolTip { get; set; }
         public bool AllowDrop { get; set; }
-        public Size Size { get; set; }
-        public Point Location { get; set; }
-        public Rect Bounds { get; set; }
-        public Size ClientSize { get; set; }
+        public SizeD Size { get; set; }
+        public PointD Location { get; set; }
+        public RectD Bounds { get; set; }
+        public SizeD ClientSize { get; set; }
         public virtual Thickness IntrinsicLayoutPadding { get; }
         public virtual Thickness IntrinsicPreferredSizePadding { get; }
         public bool Visible { get; set; }
@@ -92,10 +92,10 @@ namespace NativeApi.Api
         public Color BackgroundColor { get; set; }
         public Color ForegroundColor { get; set; }
         public Font? Font { get; set; }
-        public Size MinimumSize { get; set; }
-        public Size MaximumSize { get; set; }
+        public SizeD MinimumSize { get; set; }
+        public SizeD MaximumSize { get; set; }
 
-        public static Control? HitTest(Point screenPoint) => default;
+        public static Control? HitTest(PointD screenPoint) => default;
         public static Control? GetFocusedControl() => default;
         public static void NotifyCaptureLost() { }
         public void Freeze() { }
@@ -103,13 +103,13 @@ namespace NativeApi.Api
         public void ShowPopupMenu(IntPtr menu, double x, double y) { }
         public void BeginIgnoreRecreate() {}
         public void EndIgnoreRecreate() {}
-        public Size GetDPI() => default;
+        public SizeD GetDPI() => default;
         public void SetMouseCapture(bool value) { }
         public void AddChild(Control control) { }
         public void RemoveChild(Control control) { }
         public void Invalidate() { }
         public void Update() { }
-        public virtual Size GetPreferredSize(Size availableSize) => default;
+        public virtual SizeD GetPreferredSize(SizeD availableSize) => default;
         public DragDropEffects DoDragDrop(UnmanagedDataObject data,
             DragDropEffects allowedEffects) => default;
         public DrawingContext OpenPaintDrawingContext() => default;
@@ -119,10 +119,10 @@ namespace NativeApi.Api
         public void RecreateWindow() { }
         public void ResetBackgroundColor() { }
         public void ResetForegroundColor() { }
-        public Point ClientToScreen(Point point) => default;
-        public Point ScreenToClient(Point point) => default;
-        public Int32Point ScreenToDevice(Point point) => default;
-        public Point DeviceToScreen(Int32Point point) => default;
+        public PointD ClientToScreen(PointD point) => default;
+        public PointD ScreenToClient(PointD point) => default;
+        public PointI ScreenToDevice(PointD point) => default;
+        public PointD DeviceToScreen(PointI point) => default;
         public bool SetFocus() => default;
         public void FocusNextControl(bool forward, bool nested) { }
         public void BeginInit() { }
@@ -133,7 +133,7 @@ namespace NativeApi.Api
         public void SendMouseDownEvent(int x, int y) { }
         public void SendMouseUpEvent(int x, int y) { }
 
-        public void SetBoundsEx(Rect rect, int flags) { }
+        public void SetBoundsEx(RectD rect, int flags) { }
 
         public IntPtr GetContainingSizer() => default;
         public IntPtr GetSizer() => default;

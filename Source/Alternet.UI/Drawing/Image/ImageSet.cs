@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// size of the smallest bitmap in it. Note that this function is mostly used by
         /// library itself and not the application.
         /// </remarks>
-        public Int32Size DefaultSize
+        public SizeI DefaultSize
         {
             get
             {
@@ -246,14 +246,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public Image AsImage(Int32Size size) => new(this, size);
+        public Image AsImage(SizeI size) => new(this, size);
 
         /// <summary>
         /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
         /// </summary>
         /// <remarks>
         /// This helper function simply combines <see cref="GetPreferredBitmapSizeFor"/> and
-        /// <see cref="AsImage(Int32Size)"/>, i.e.it returns a (normally unscaled) bitmap
+        /// <see cref="AsImage(SizeI)"/>, i.e.it returns a (normally unscaled) bitmap
         /// from the <see cref="ImageSet"/> of the closest size to the size that should
         /// be used at the DPI scaling of the provided control.
         /// </remarks>
@@ -275,7 +275,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public Int32Size GetPreferredBitmapSizeAtScale(double scale)
+        public SizeI GetPreferredBitmapSizeAtScale(double scale)
         {
             return NativeImageSet.GetPreferredBitmapSizeAtScale(scale);
         }
@@ -290,7 +290,7 @@ namespace Alternet.UI
         /// This is just a convenient wrapper for <see cref="GetPreferredBitmapSizeAtScale"/> calling
         /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
         /// </remarks>
-        public Int32Size GetPreferredBitmapSizeFor(Control control)
+        public SizeI GetPreferredBitmapSizeFor(Control control)
         {
             return NativeImageSet.GetPreferredBitmapSizeFor(control.WxWidget);
         }

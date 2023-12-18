@@ -415,13 +415,13 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the zero-based index of the item at the specified coordinates.
         /// </summary>
-        /// <param name="position">A <see cref="Point"/> object containing
+        /// <param name="position">A <see cref="PointD"/> object containing
         /// the coordinates used to obtain the item
         /// index.</param>
         /// <returns>The zero-based index of the item found at the specified
         /// coordinates; returns <see langword="null"/>
         /// if no match is found.</returns>
-        public int? HitTest(Point position) => Handler.HitTest(position);
+        public int? HitTest(PointD position) => Handler.HitTest(position);
 
         /// <summary>
         /// Gets only valid indexes from the list of indexes in

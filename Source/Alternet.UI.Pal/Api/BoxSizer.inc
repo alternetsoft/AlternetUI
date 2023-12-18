@@ -2,10 +2,10 @@
 public:
 static void* CreateBoxSizer(int orient);
 static void* AddSpacer(void* handle, int size);
-static Int32Size CalcMin(void* handle);
+static SizeI CalcMin(void* handle);
 static int GetOrientation(void* handle);
 static void SetOrientation(void* handle, int orient);
-static void RepositionChildren(void* handle, const Int32Size& minSize);
+static void RepositionChildren(void* handle, const SizeI& minSize);
 public:
 BoxSizer();
 protected:

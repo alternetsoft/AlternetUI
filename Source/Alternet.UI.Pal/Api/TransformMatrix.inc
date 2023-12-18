@@ -34,8 +34,8 @@ void Translate(double offsetX, double offsetY);
 void Scale(double scaleX, double scaleY);
 void Rotate(double angle);
 void Invert();
-Point TransformPoint(const Point& point);
-Size TransformSize(const Size& size);
+PointD TransformPoint(const PointD& point);
+SizeD TransformSize(const SizeD& size);
 bool IsEqualTo(TransformMatrix* other);
 int GetHashCode_();
 public:

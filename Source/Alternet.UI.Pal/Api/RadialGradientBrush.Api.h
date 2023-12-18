@@ -13,7 +13,7 @@ ALTERNET_UI_API RadialGradientBrush* RadialGradientBrush_Create_()
     return new RadialGradientBrush();
 }
 
-ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, Point center, double radius, Point gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
+ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, PointD center, double radius, PointD gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
     obj->Initialize(center, radius, gradientOrigin, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
 }

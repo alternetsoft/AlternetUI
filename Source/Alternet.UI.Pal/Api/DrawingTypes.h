@@ -9,32 +9,32 @@ namespace Alternet::UI
 
     extern "C"
     {
-        struct Int32Size_C
+        struct SizeI_C
         {
             int Width, Height;
         };
 
-        struct Size_C
+        struct SizeD_C
         {
             double Width, Height;
         };
 
-        struct Int32Point_C
+        struct PointI_C
         {
             int X, Y;
         };
 
-        struct Point_C
+        struct PointD_C
         {
             double X, Y;
         };
 
-        struct Int32Rect_C
+        struct RectI_C
         {
             int X, Y, Width, Height;
         };
 
-        struct Rect_C
+        struct RectD_C
         {
             double X, Y, Width, Height;
         };
@@ -71,7 +71,7 @@ namespace Alternet::UI
 
         Int32Size(int width, int height) : Width(width), Height(height) {}
 
-        inline operator Int32Size_C() { return Int32Size_C{ Width, Height }; }
+        inline operator SizeI_C() { return SizeI_C{ Width, Height }; }
 
         inline operator wxSize() const { return wxSize(Width, Height); }
 
@@ -93,6 +93,8 @@ namespace Alternet::UI
         }
     };
 
+#define SizeI Int32Size
+
     struct Size
     {
         double Width = 0, Height = 0;
@@ -112,7 +114,7 @@ namespace Alternet::UI
             return *this;
         }
 
-        inline operator Size_C() { return Size_C{ Width, Height }; }
+        inline operator SizeD_C() { return SizeD_C{ Width, Height }; }
 
         inline bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
         inline bool operator!=(const Size& rhs) { return !(*this == rhs); }
@@ -133,6 +135,8 @@ namespace Alternet::UI
         }
     };
 
+#define SizeD Size
+
     struct Int32Point
     {
         int X = 0, Y = 0;
@@ -143,7 +147,7 @@ namespace Alternet::UI
 
         Int32Point(wxPoint p) : X(p.x), Y(p.y) {}
 
-        inline operator Int32Point_C() const { return Int32Point_C{ X, Y }; }
+        inline operator PointI_C() const { return PointI_C{ X, Y }; }
 
         inline operator wxPoint() const { return wxPoint{ X, Y }; }
 
@@ -165,6 +169,8 @@ namespace Alternet::UI
         }
     };
 
+#define PointI Int32Point
+
     struct Point
     {
         double X = 0, Y = 0;
@@ -173,7 +179,7 @@ namespace Alternet::UI
 
         Point(double x, double y) : X(x), Y(y) {}
 
-        inline operator Point_C() const { return Point_C{ X, Y }; }
+        inline operator PointD_C() const { return PointD_C{ X, Y }; }
 
         inline Point operator+(const Size& value) const {
             return Point(X + value.Width, Y + value.Height); }
@@ -198,6 +204,8 @@ namespace Alternet::UI
         }
     };
 
+#define PointD Point
+
     struct Int32Rect
     {
         int X = 0, Y = 0, Width = 0, Height = 0;
@@ -221,7 +229,7 @@ namespace Alternet::UI
 
         inline operator wxRect() const { return wxRect{ X, Y, Width, Height }; }
 
-        inline operator Int32Rect_C() const { return Int32Rect_C{ X, Y, Width, Height }; }
+        inline operator RectI_C() const { return RectI_C{ X, Y, Width, Height }; }
 
         inline bool operator==(const Int32Rect& rhs)
         { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
@@ -244,6 +252,8 @@ namespace Alternet::UI
             return result;
         }
     };
+
+#define RectI Int32Rect
 
     struct Rect
     {
@@ -272,7 +282,7 @@ namespace Alternet::UI
         inline Rect Offset(const Size& value) const
         { return Rect(X + value.Width, Y + value.Height, Width, Height); }
 
-        inline operator Rect_C() { return Rect_C{ X, Y, Width, Height }; }
+        inline operator RectD_C() { return RectD_C{ X, Y, Width, Height }; }
 
         inline bool operator==(const Rect& rhs)
         { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
@@ -295,6 +305,8 @@ namespace Alternet::UI
             return result;
         }
     };
+
+#define RectD Rect
 
     struct Thickness
     {
@@ -327,7 +339,6 @@ namespace Alternet::UI
             return result;
         }
     };
-
 
     struct Color
     {

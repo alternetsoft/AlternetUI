@@ -12,8 +12,8 @@ static void SetFlexibleDirection(void* handle, int direction);
 static void SetNonFlexibleGrowMode(void* handle, int mode);
 static void* GetRowHeights(void* handle);
 static void* GetColWidths(void* handle);
-static void RepositionChildren(void* handle, const Int32Size& minSize);
-static Int32Size CalcMin(void* handle);
+static void RepositionChildren(void* handle, const SizeI& minSize);
+static SizeI CalcMin(void* handle);
 static void* CreateFlexGridSizer(int cols, int vgap, int hgap);
 static void* CreateFlexGridSizer2(int rows, int cols, int vgap, int hgap);
 public:

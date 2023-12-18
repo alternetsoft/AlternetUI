@@ -22,53 +22,53 @@ namespace Alternet.Drawing
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     /*[TypeConverter("System.Drawing.SizeConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
-    public struct Int32Size : IEquatable<Int32Size>
+    public struct SizeI : IEquatable<SizeI>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref='Int32Size'/> class.
+        /// Initializes a new instance of the <see cref='SizeI'/> class.
         /// </summary>
-        public static readonly Int32Size Empty;
+        public static readonly SizeI Empty;
 
         /// <summary>
         /// Gets a size with (-1, -1) values.
         /// </summary>
-        public static readonly Int32Size MinusOne = new(-1, -1);
+        public static readonly SizeI MinusOne = new(-1, -1);
 
         /// <summary>
         /// Gets a size with (1, 1) values.
         /// </summary>
-        public static readonly Int32Size One = new(1, 1);
+        public static readonly SizeI One = new(1, 1);
 
         private int width; // Do not rename (binary serialization)
         private int height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Int32Size'/>
+        /// Initializes a new instance of the <see cref='SizeI'/>
         /// class from the specified
-        /// <see cref='Int32Point'/>.
+        /// <see cref='PointI'/>.
         /// </summary>
-        public Int32Size(Int32Point pt)
+        public SizeI(PointI pt)
         {
             width = pt.X;
             height = pt.Y;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Int32Size'/>
+        /// Initializes a new instance of the <see cref='SizeI'/>
         /// class from the specified dimensions.
         /// </summary>
-        public Int32Size(int width, int height)
+        public SizeI(int width, int height)
         {
             this.width = width;
             this.height = height;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Int32Size"/> struct with
+        /// Initializes a new instance of the <see cref="SizeI"/> struct with
         /// equal width and height.
         /// </summary>
         /// <param name="size">Width and Height value.</param>
-        public Int32Size(int size)
+        public SizeI(int size)
         {
             this.width = size;
             this.height = size;
@@ -81,13 +81,13 @@ namespace Alternet.Drawing
         public readonly int PixelCount => width * height;
 
         /// <summary>
-        /// Tests whether this <see cref='Int32Size'/> has zero width or height.
+        /// Tests whether this <see cref='SizeI'/> has zero width or height.
         /// </summary>
         [Browsable(false)]
         public readonly bool AnyIsEmpty => width == 0 || height == 0;
 
         /// <summary>
-        /// Tests whether this <see cref='Int32Size'/> has zero
+        /// Tests whether this <see cref='SizeI'/> has zero
         /// width and height.
         /// </summary>
         [Browsable(false)]
@@ -95,7 +95,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Represents the horizontal component of this
-        /// <see cref='Int32Size'/>.
+        /// <see cref='SizeI'/>.
         /// </summary>
         public int Width
         {
@@ -105,7 +105,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Represents the vertical component of this
-        /// <see cref='Int32Size'/>.
+        /// <see cref='SizeI'/>.
         /// </summary>
         public int Height
         {
@@ -114,142 +114,142 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref='Int32Size'/> to a
-        /// <see cref='Int32Point'/>.
+        /// Converts the specified <see cref='SizeI'/> to a
+        /// <see cref='PointI'/>.
         /// </summary>
-        public static explicit operator Int32Point(Int32Size size) =>
+        public static explicit operator PointI(SizeI size) =>
             new(size.Width, size.Height);
 
         /// <summary>
         /// Implicit operator convertion from tuple with two <see cref="int"/> values
-        /// to <see cref="Int32Size"/>.
+        /// to <see cref="SizeI"/>.
         /// </summary>
         /// <param name="d">New size value.</param>
-        public static implicit operator Int32Size((int, int) d) => new(d.Item1, d.Item2);
+        public static implicit operator SizeI((int, int) d) => new(d.Item1, d.Item2);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Size'/> with the coordinates of the
-        /// specified <see cref='Int32Size'/>
+        /// specified <see cref='SizeI'/>
         /// </summary>
-        public static implicit operator System.Drawing.Size(Int32Size p) => new(p.Width, p.Height);
+        public static implicit operator System.Drawing.Size(SizeI p) => new(p.Width, p.Height);
 
         /// <summary>
-        /// Creates a <see cref='Int32Size'/> with the coordinates of the
+        /// Creates a <see cref='SizeI'/> with the coordinates of the
         /// specified <see cref='System.Drawing.Size'/>
         /// </summary>
-        public static implicit operator Int32Size(System.Drawing.Size p) => new(p.Width, p.Height);
+        public static implicit operator SizeI(System.Drawing.Size p) => new(p.Width, p.Height);
 
         /// <summary>
-        /// Converts the specified <see cref='Int32Size'/> to a <see cref='Size'/>.
+        /// Converts the specified <see cref='SizeI'/> to a <see cref='SizeD'/>.
         /// </summary>
-        public static implicit operator Size(Int32Size p) => new(p.Width, p.Height);
+        public static implicit operator SizeD(SizeI p) => new(p.Width, p.Height);
 
         /// <summary>
-        /// Converts the specified <see cref='int'/> to a <see cref='Int32Size'/>.
+        /// Converts the specified <see cref='int'/> to a <see cref='SizeI'/>.
         /// Width and height are set to the <paramref name="value"/>.
         /// </summary>
-        public static implicit operator Int32Size(int value) => new(value, value);
+        public static implicit operator SizeI(int value) => new(value, value);
 
         /// <summary>
-        /// Performs vector addition of two <see cref='Int32Size'/> objects.
+        /// Performs vector addition of two <see cref='SizeI'/> objects.
         /// </summary>
-        public static Int32Size operator +(Int32Size sz1, Int32Size sz2) =>
+        public static SizeI operator +(SizeI sz1, SizeI sz2) =>
             Add(sz1, sz2);
 
         /// <summary>
-        /// Contracts a <see cref='Int32Size'/> by another
-        /// <see cref='Int32Size'/>
+        /// Contracts a <see cref='SizeI'/> by another
+        /// <see cref='SizeI'/>
         /// </summary>
-        public static Int32Size operator -(Int32Size sz1, Int32Size sz2) =>
+        public static SizeI operator -(SizeI sz1, SizeI sz2) =>
             Subtract(sz1, sz2);
 
         /// <summary>
-        /// Multiplies a <see cref="Int32Size"/> by an <see cref="int"/>
-        /// producing <see cref="Int32Size"/>.
+        /// Multiplies a <see cref="SizeI"/> by an <see cref="int"/>
+        /// producing <see cref="SizeI"/>.
         /// </summary>
         /// <param name="left">Multiplier of type <see cref="int"/>.</param>
-        /// <param name="right">Multiplicand of type <see cref="Int32Size"/>.</param>
-        /// <returns>Product of type <see cref="Int32Size"/>.</returns>
-        public static Int32Size operator *(int left, Int32Size right) =>
+        /// <param name="right">Multiplicand of type <see cref="SizeI"/>.</param>
+        /// <returns>Product of type <see cref="SizeI"/>.</returns>
+        public static SizeI operator *(int left, SizeI right) =>
             Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by an <see cref="int"/>
-        /// producing <see cref="Int32Size"/>.
+        /// Multiplies <see cref="SizeI"/> by an <see cref="int"/>
+        /// producing <see cref="SizeI"/>.
         /// </summary>
-        /// <param name="left">Multiplicand of type <see cref="Int32Size"/>.</param>
+        /// <param name="left">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <param name="right">Multiplier of type <see cref="int"/>.</param>
-        /// <returns>Product of type <see cref="Int32Size"/>.</returns>
-        public static Int32Size operator *(Int32Size left, int right) =>
+        /// <returns>Product of type <see cref="SizeI"/>.</returns>
+        public static SizeI operator *(SizeI left, int right) =>
             Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="Int32Size"/> by an <see cref="int"/>
-        /// producing <see cref="Int32Size"/>.
+        /// Divides <see cref="SizeI"/> by an <see cref="int"/>
+        /// producing <see cref="SizeI"/>.
         /// </summary>
-        /// <param name="left">Dividend of type <see cref="Int32Size"/>.</param>
+        /// <param name="left">Dividend of type <see cref="SizeI"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
-        /// <returns>Result of type <see cref="Int32Size"/>.</returns>
-        public static Int32Size operator /(Int32Size left, int right) =>
+        /// <returns>Result of type <see cref="SizeI"/>.</returns>
+        public static SizeI operator /(SizeI left, int right) =>
             new(unchecked(left.width / right), unchecked(left.height / right));
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="double"/>
-        /// producing <see cref="Size"/>.
+        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// producing <see cref="SizeD"/>.
         /// </summary>
         /// <param name="left">Multiplier of type <see cref="double"/>.</param>
-        /// <param name="right">Multiplicand of type <see cref="Int32Size"/>.</param>
-        /// <returns>Product of type <see cref="Size"/>.</returns>
-        public static Size operator *(double left, Int32Size right) =>
+        /// <param name="right">Multiplicand of type <see cref="SizeI"/>.</param>
+        /// <returns>Product of type <see cref="SizeD"/>.</returns>
+        public static SizeD operator *(double left, SizeI right) =>
             Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="double"/>
-        /// producing <see cref="Size"/>.
+        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// producing <see cref="SizeD"/>.
         /// </summary>
-        /// <param name="left">Multiplicand of type <see cref="Int32Size"/>.</param>
+        /// <param name="left">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <param name="right">Multiplier of type <see cref="double"/>.</param>
-        /// <returns>Product of type <see cref="Size"/>.</returns>
-        public static Size operator *(Int32Size left, double right) =>
+        /// <returns>Product of type <see cref="SizeD"/>.</returns>
+        public static SizeD operator *(SizeI left, double right) =>
             Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="Int32Size"/> by a <see cref="double"/>
-        /// producing <see cref="Size"/>.
+        /// Divides <see cref="SizeI"/> by a <see cref="double"/>
+        /// producing <see cref="SizeD"/>.
         /// </summary>
-        /// <param name="left">Dividend of type <see cref="Int32Size"/>.</param>
+        /// <param name="left">Dividend of type <see cref="SizeI"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
-        /// <returns>Result of type <see cref="Size"/>.</returns>
-        public static Size operator /(Int32Size left, double right)
+        /// <returns>Result of type <see cref="SizeD"/>.</returns>
+        public static SizeD operator /(SizeI left, double right)
             => new(left.width / right, left.height / right);
 
         /// <summary>
-        /// Tests whether two <see cref='Int32Size'/> objects are identical.
+        /// Tests whether two <see cref='SizeI'/> objects are identical.
         /// </summary>
-        public static bool operator ==(Int32Size sz1, Int32Size sz2) =>
+        public static bool operator ==(SizeI sz1, SizeI sz2) =>
             sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
-        /// Tests whether two <see cref='Int32Size'/> objects are different.
+        /// Tests whether two <see cref='SizeI'/> objects are different.
         /// </summary>
-        public static bool operator !=(Int32Size sz1, Int32Size sz2) =>
+        public static bool operator !=(SizeI sz1, SizeI sz2) =>
             !(sz1 == sz2);
 
         /// <summary>
-        /// Gets maximal width and height from the two specified <see cref="Int32Size"/> values.
+        /// Gets maximal width and height from the two specified <see cref="SizeI"/> values.
         /// </summary>
-        /// <param name="v1">First <see cref="Int32Size"/> value.</param>
-        /// <param name="v2">Second <see cref="Int32Size"/> value.</param>
+        /// <param name="v1">First <see cref="SizeI"/> value.</param>
+        /// <param name="v2">Second <see cref="SizeI"/> value.</param>
         /// <returns></returns>
-        public static Int32Size Max(Int32Size v1, Int32Size v2)
+        public static SizeI Max(SizeI v1, SizeI v2)
         {
-            return new Int32Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
+            return new SizeI(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
         }
 
         /// <summary>
-        /// Performs vector addition of two <see cref='Int32Size'/> objects.
+        /// Performs vector addition of two <see cref='SizeI'/> objects.
         /// </summary>
-        public static Int32Size Add(Int32Size sz1, Int32Size sz2) =>
+        public static SizeI Add(SizeI sz1, SizeI sz2) =>
             new(unchecked(sz1.Width + sz2.Width),
                 unchecked(sz1.Height + sz2.Height));
 
@@ -257,15 +257,15 @@ namespace Alternet.Drawing
         /// Converts a SizeF to a Size by performing a ceiling operation
         /// on all the coordinates.
         /// </summary>
-        public static Int32Size Ceiling(Size value) =>
+        public static SizeI Ceiling(SizeD value) =>
             new(unchecked((int)Math.Ceiling(value.Width)),
                 unchecked((int)Math.Ceiling(value.Height)));
 
         /// <summary>
-        /// Contracts a <see cref='Int32Size'/> by another
-        /// <see cref='Int32Size'/> .
+        /// Contracts a <see cref='SizeI'/> by another
+        /// <see cref='SizeI'/> .
         /// </summary>
-        public static Int32Size Subtract(Int32Size sz1, Int32Size sz2) =>
+        public static SizeI Subtract(SizeI sz1, SizeI sz2) =>
             new(unchecked(sz1.Width - sz2.Width),
                 unchecked(sz1.Height - sz2.Height));
 
@@ -273,24 +273,24 @@ namespace Alternet.Drawing
         /// Converts a SizeF to a Size by performing a truncate operation
         /// on all the coordinates.
         /// </summary>
-        public static Int32Size Truncate(Size value) =>
+        public static SizeI Truncate(SizeD value) =>
             new(unchecked((int)value.Width), unchecked((int)value.Height));
 
         /// <summary>
         /// Converts a SizeF to a Size by performing a round operation on
         /// all the coordinates.
         /// </summary>
-        public static Int32Size Round(Size value) =>
+        public static SizeI Round(SizeD value) =>
             new(unchecked((int)Math.Round(value.Width)),
                 unchecked((int)Math.Round(value.Height)));
 
         /// <summary>
         /// Tests to see whether the specified object is a
-        /// <see cref='Int32Size'/>  with the same dimensions
-        /// as this <see cref='Int32Size'/>.
+        /// <see cref='SizeI'/>  with the same dimensions
+        /// as this <see cref='SizeI'/>.
         /// </summary>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Int32Size size && Equals(size);
+            obj is SizeI size && Equals(size);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object
@@ -299,7 +299,7 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other;
         /// otherwise, <c>false</c>.</returns>
-        public readonly bool Equals(Int32Size other) => this == other;
+        public readonly bool Equals(SizeI other) => this == other;
 
         /// <summary>
         /// Returns a hash code.
@@ -309,7 +309,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Creates a human-readable string that represents this
-        /// <see cref='Int32Size'/>.
+        /// <see cref='SizeI'/>.
         /// </summary>
         public override readonly string ToString()
         {
@@ -320,24 +320,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by an <see cref="int"/>
-        /// producing <see cref="Int32Size"/>.
+        /// Multiplies <see cref="SizeI"/> by an <see cref="int"/>
+        /// producing <see cref="SizeI"/>.
         /// </summary>
-        /// <param name="size">Multiplicand of type <see cref="Int32Size"/>.</param>
+        /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <param name="multiplier">Multiplier of type <see cref='int'/>.</param>
-        /// <returns>Product of type <see cref="Int32Size"/>.</returns>
-        private static Int32Size Multiply(Int32Size size, int multiplier) =>
+        /// <returns>Product of type <see cref="SizeI"/>.</returns>
+        private static SizeI Multiply(SizeI size, int multiplier) =>
             new(unchecked(size.width * multiplier),
                 unchecked(size.height * multiplier));
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="double"/>
-        /// producing <see cref="Size"/>.
+        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// producing <see cref="SizeD"/>.
         /// </summary>
-        /// <param name="size">Multiplicand of type <see cref="Int32Size"/>.</param>
+        /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type SizeF.</returns>
-        private static Size Multiply(Int32Size size, double multiplier) =>
+        private static SizeD Multiply(SizeI size, double multiplier) =>
             new(size.width * multiplier, size.height * multiplier);
     }
 }

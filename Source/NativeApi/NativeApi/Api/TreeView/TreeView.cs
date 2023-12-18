@@ -76,7 +76,7 @@ namespace NativeApi.Api
 
         public void CollapseAll() => throw new Exception();
 
-        public IntPtr ItemHitTest(Point point) => throw new Exception();
+        public IntPtr ItemHitTest(PointD point) => throw new Exception();
         public TreeViewHitTestLocations GetHitTestResultLocations(
             IntPtr hitTestResult) => throw new Exception();
         public IntPtr GetHitTestResultItem(IntPtr hitTestResult) =>

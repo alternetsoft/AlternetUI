@@ -73,37 +73,37 @@ namespace Alternet.UI.Native
             NativeApi.SizerItem_DetachWindow_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetSize(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI CalcMin(System.IntPtr handle)
         {
             return NativeApi.SizerItem_CalcMin_(handle);
         }
         
-        public static void SetDimension(System.IntPtr handle, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size size)
+        public static void SetDimension(System.IntPtr handle, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI size)
         {
             NativeApi.SizerItem_SetDimension_(handle, pos, size);
         }
         
-        public static Alternet.Drawing.Int32Size GetMinSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMinSize(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetMinSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMinSizeWithBorder(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMinSizeWithBorder(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetMinSizeWithBorder_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMaxSize(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMaxSize(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetMaxSize_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetMaxSizeWithBorder(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetMaxSizeWithBorder(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetMaxSizeWithBorder_(handle);
         }
@@ -133,7 +133,7 @@ namespace Alternet.UI.Native
             return NativeApi.SizerItem_GetRatio_(handle);
         }
         
-        public static Alternet.Drawing.Int32Rect GetRect(System.IntPtr handle)
+        public static Alternet.Drawing.RectI GetRect(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetRect_(handle);
         }
@@ -203,7 +203,7 @@ namespace Alternet.UI.Native
             return NativeApi.SizerItem_GetSizer_(handle);
         }
         
-        public static Alternet.Drawing.Int32Size GetSpacer(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI GetSpacer(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetSpacer_(handle);
         }
@@ -228,7 +228,7 @@ namespace Alternet.UI.Native
             return NativeApi.SizerItem_GetUserData_(handle);
         }
         
-        public static Alternet.Drawing.Int32Point GetPosition(System.IntPtr handle)
+        public static Alternet.Drawing.PointI GetPosition(System.IntPtr handle)
         {
             return NativeApi.SizerItem_GetPosition_(handle);
         }
@@ -293,25 +293,25 @@ namespace Alternet.UI.Native
             public static extern void SizerItem_DetachWindow_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_GetSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_GetSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_CalcMin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_CalcMin_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SizerItem_SetDimension_(System.IntPtr handle, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size size);
+            public static extern void SizerItem_SetDimension_(System.IntPtr handle, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_GetMinSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_GetMinSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_GetMinSizeWithBorder_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_GetMinSizeWithBorder_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_GetMaxSize_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_GetMaxSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_GetMaxSizeWithBorder_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_GetMaxSizeWithBorder_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void SizerItem_SetMinSize_(System.IntPtr handle, int x, int y);
@@ -329,7 +329,7 @@ namespace Alternet.UI.Native
             public static extern float SizerItem_GetRatio_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect SizerItem_GetRect_(System.IntPtr handle);
+            public static extern Alternet.Drawing.RectI SizerItem_GetRect_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void SizerItem_SetId_(System.IntPtr handle, int id);
@@ -371,7 +371,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr SizerItem_GetSizer_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size SizerItem_GetSpacer_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI SizerItem_GetSpacer_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool SizerItem_IsShown_(System.IntPtr handle);
@@ -386,7 +386,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr SizerItem_GetUserData_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point SizerItem_GetPosition_(System.IntPtr handle);
+            public static extern Alternet.Drawing.PointI SizerItem_GetPosition_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool SizerItem_InformFirstDirection_(System.IntPtr handle, int direction, int size, int availableOtherDir);

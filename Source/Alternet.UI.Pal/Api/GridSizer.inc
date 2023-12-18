@@ -10,8 +10,8 @@ static void SetCols(void* handle, int cols);
 static void SetHGap(void* handle, int gap);
 static void SetRows(void* handle, int rows);
 static void SetVGap(void* handle, int gap);
-static Int32Size CalcMin(void* handle);
-static void RepositionChildren(void* handle, const Int32Size& minSize);
+static SizeI CalcMin(void* handle);
+static void RepositionChildren(void* handle, const SizeI& minSize);
 static void* CreateGridSizer(int cols, int vgap, int hgap);
 static void* CreateGridSizer2(int rows, int cols, int vgap, int hgap);
 public:

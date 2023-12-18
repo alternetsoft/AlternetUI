@@ -154,17 +154,17 @@ namespace Alternet.UI
         /// <summary>
         /// Operator Vector + Point
         /// </summary>
-        public static Point operator + (Vector vector, Point point)
+        public static PointD operator + (Vector vector, PointD point)
         {
-            return new Point(point.X + vector._x, point.X + vector._y);
+            return new PointD(point.X + vector._x, point.X + vector._y);
         }
 
         /// <summary>
         /// Add: Vector + Point
         /// </summary>
-        public static Point Add(Vector vector, Point point)
+        public static PointD Add(Vector vector, PointD point)
         {
-            return new Point(point.X + vector._x, point.Y + vector._y);
+            return new PointD(point.X + vector._x, point.Y + vector._y);
         }
 
         /// <summary>
@@ -277,9 +277,9 @@ namespace Alternet.UI
         /// Size - A Size equal to this Vector
         /// </returns>
         /// <param name="vector"> Vector - the Vector to convert to a Size </param>
-        public static explicit operator Size(Vector vector)
+        public static explicit operator SizeD(Vector vector)
         {
-            return new Size(Math.Abs(vector._x), Math.Abs(vector._y));
+            return new SizeD(Math.Abs(vector._x), Math.Abs(vector._y));
         }
 
         /// <summary>
@@ -289,9 +289,9 @@ namespace Alternet.UI
         /// Point - A Point equal to this Vector
         /// </returns>
         /// <param name="vector"> Vector - the Vector to convert to a Point </param>
-        public static explicit operator Point(Vector vector)
+        public static explicit operator PointD(Vector vector)
         {
-            return new Point(vector._x, vector._y);
+            return new PointD(vector._x, vector._y);
         }
         #endregion Public Operators
     }

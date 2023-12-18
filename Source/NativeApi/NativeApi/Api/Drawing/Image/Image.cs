@@ -28,13 +28,13 @@ namespace NativeApi.Api
         // to the current DPI and returns its physical size divided by this scale factor.
         // Unlike LogicalSize, this function returns the same value under all platforms
         // and so its result should not be used as window or device context coordinates.
-        public Int32Size DipSize { get; }
+        public SizeI DipSize { get; }
 
         // Returns the height of the bitmap in logical pixels.
         public double ScaledHeight { get; }
 
         // Returns the size of the bitmap in logical pixels.        
-        public Int32Size ScaledSize { get; }
+        public SizeI ScaledSize { get; }
 
         // Returns the width of the bitmap in logical pixels.
         public double ScaledWidth { get; }
@@ -56,8 +56,8 @@ namespace NativeApi.Api
 
         public bool LoadFromStream(InputStream stream) => default;
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
-        public void Initialize(Int32Size size) { }
-        public void InitializeFromImage(Image source, Int32Size size) { }
+        public void Initialize(SizeI size) { }
+        public void InitializeFromImage(Image source, SizeI size) { }
         public void CopyFrom(Image otherImage) { }
         public bool SaveToStream(OutputStream stream, string format) => default;
         public bool SaveToFile(string fileName) => default;
@@ -65,7 +65,7 @@ namespace NativeApi.Api
         public IntPtr ConvertToGenericImage() => default;
         public void LoadFromGenericImage(IntPtr image, int depth = -1) { }
 
-        public Int32Size PixelSize { get; }
+        public SizeI PixelSize { get; }
 
         public bool IsOk { get; }
 
@@ -87,7 +87,7 @@ namespace NativeApi.Api
         public bool LoadStream(InputStream stream, int type) => default;
 
         // Returns a sub bitmap of the current one as long as the rect belongs entirely to the bitmap.
-        public Image GetSubBitmap(Int32Rect rect) => default;
+        public Image GetSubBitmap(RectI rect) => default;
              
         // Returns disabled (dimmed) version of the bitmap.
         public Image ConvertToDisabled(byte brightness = 255) => default;
@@ -101,7 +101,7 @@ namespace NativeApi.Api
         // resizing, e.g.to specify the quality option different from
         // wxIMAGE_QUALITY_NEAREST used by this function, please use the wxImage function
         // directly instead. Both the bitmap itself and size must be valid.
-        public void Rescale(Int32Size sizeNeeded) { }
+        public void Rescale(SizeI sizeNeeded) { }
 
         public static int GetDefaultBitmapType() => default;
     }

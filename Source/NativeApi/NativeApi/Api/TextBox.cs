@@ -39,9 +39,9 @@ namespace NativeApi.Api
 
         public int GetNumberOfLines() => throw new Exception();
 
-        public Int32Point PositionToXY(long pos) => throw new Exception();
+        public PointI PositionToXY(long pos) => throw new Exception();
 
-        public Point PositionToCoords(long pos) => throw new Exception();
+        public PointD PositionToCoords(long pos) => throw new Exception();
 
         public void ShowPosition(long pos) => throw new Exception();
 

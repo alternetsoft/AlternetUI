@@ -12,7 +12,7 @@ static void SetFieldsCount(void* handle, int number);
 static int GetStatusWidth(void* handle, int n);
 static int GetStatusStyle(void* handle, int n);
 static void SetStatusStyles(void* handle, int* styles, int stylesCount);
-static Int32Rect GetFieldRect(void* handle, int i);
+static RectI GetFieldRect(void* handle, int i);
 static void SetMinHeight(void* handle, int height);
 static int GetBorderX(void* handle);
 static int GetBorderY(void* handle);

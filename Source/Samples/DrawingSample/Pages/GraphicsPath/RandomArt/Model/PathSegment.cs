@@ -9,17 +9,17 @@ namespace DrawingSample.RandomArt
 {
     internal abstract class PathSegment
     {
-        public PathSegment(Point start)
+        public PathSegment(PointD start)
         {
             Start = start;
         }
 
         public abstract PathSegmentType Type { get; }
 
-        public Point Start { get; }
-        public abstract Point End { get; }
+        public PointD Start { get; }
+        public abstract PointD End { get; }
 
-        public abstract void TryAddSegmentParts(Point tipPoint, ToolSettings toolSettings);
+        public abstract void TryAddSegmentParts(PointD tipPoint, ToolSettings toolSettings);
 
         public abstract void Render(GraphicsPath path);
 

@@ -463,7 +463,7 @@ namespace PaintSample
             var alpha = (byte)result.Value;
             Application.Log($"Fill red color (alpha = {alpha}) using new image with native data");
 
-            Int32Size size = (600, 600);
+            SizeI size = (600, 600);
             var pixelCount = size.PixelCount;
             var height = size.Height;
             var width = size.Width;
@@ -556,7 +556,7 @@ namespace PaintSample
             DrawSample(dc, (15, 15));
         }
 
-        public void DrawSample(DrawingContext dc, Point location)
+        public void DrawSample(DrawingContext dc, PointD location)
         {
             Application.LogNameValue("dc.DPI", dc.GetDPI());
             Application.LogNameValue("window.DPI", GetDPI());

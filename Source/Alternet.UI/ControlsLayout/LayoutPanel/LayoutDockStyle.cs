@@ -38,7 +38,7 @@ namespace Alternet.UI
         {
         }
 
-        public static void Layout(Control container, Rect rect)
+        public static void Layout(Control container, RectD rect)
         {
             LayoutDockedChildren(container, rect);
 
@@ -52,9 +52,9 @@ namespace Alternet.UI
             if (parent == null)
                 return;
 
-            Rect space = GetDisplayRectangle(parent);
+            RectD space = GetDisplayRectangle(parent);
 
-            Rect bounds = control.Bounds;
+            RectD bounds = control.Bounds;
             if ((specified & (BoundsSpecified.Width | BoundsSpecified.X))
                 != BoundsSpecified.None)
             {
@@ -72,17 +72,17 @@ namespace Alternet.UI
             }
         }
 
-        private static Rect GetDisplayRectangle(Control control)
+        private static RectD GetDisplayRectangle(Control control)
         {
             var size = control.ClientSize;
-            Rect result = new(0, 0, size.Width - 1, size.Height - 1);
+            RectD result = new(0, 0, size.Width - 1, size.Height - 1);
             result.Offset(control.Padding.Left, control.Padding.Top);
             result.Inflate(-control.Padding.Left, -control.Padding.Top);
             result.Inflate(-control.Padding.Right, -control.Padding.Bottom);
             return result;
         }
 
-        private static void LayoutDockedChildren(Control parent, Rect space)
+        private static void LayoutDockedChildren(Control parent, RectD space)
         {
             if (!parent.HasChildren)
                 return;
@@ -96,7 +96,7 @@ namespace Alternet.UI
                 if (!child.Visible)
                     continue;
 
-                Size child_size = child.Bounds.Size;
+                SizeD child_size = child.Bounds.Size;
                 DockStyle dock = LayoutPanel.GetDock(child);
                 bool autoSize = LayoutPanel.GetAutoSize(child);
 
@@ -129,7 +129,7 @@ namespace Alternet.UI
                         {
                             child_size =
                                 child.GetPreferredSizeLimited(
-                                    new Size(child_size.Width, space.Height));
+                                    new SizeD(child_size.Width, space.Height));
                         }
 
                         child.SetBounds(
@@ -147,7 +147,7 @@ namespace Alternet.UI
                         {
                             child_size =
                                 child.GetPreferredSizeLimited(
-                                    new Size(space.Width, child_size.Height));
+                                    new SizeD(space.Width, child_size.Height));
                         }
 
                         child.SetBounds(
@@ -165,7 +165,7 @@ namespace Alternet.UI
                         {
                             child_size =
                                 child.GetPreferredSizeLimited(
-                                    new Size(child_size.Width, space.Height));
+                                    new SizeD(child_size.Width, space.Height));
                         }
 
                         child.SetBounds(
@@ -182,7 +182,7 @@ namespace Alternet.UI
                         {
                             child_size =
                                 child.GetPreferredSizeLimited(
-                                    new Size(space.Width, child_size.Height));
+                                    new SizeD(space.Width, child_size.Height));
                         }
 
                         child.SetBounds(
@@ -195,7 +195,7 @@ namespace Alternet.UI
                         break;
 
                     case DockStyle.Fill:
-                        child_size = new Size(space.Width, space.Height);
+                        child_size = new SizeD(space.Width, space.Height);
                         if (autoSize)
                             child_size = child.GetPreferredSizeLimited(child_size);
                         child.SetBounds(

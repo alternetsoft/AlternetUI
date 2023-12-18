@@ -16,7 +16,7 @@ namespace Alternet.UI
         {
         }
 
-        public Int32Size EmptyCellSize
+        public SizeI EmptyCellSize
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Alternet.UI
             }
         }
 
-        public Int32Size GetCellSize(int row, int col)
+        public SizeI GetCellSize(int row, int col)
         {
             return Native.GridBagSizer.GetCellSize(Handle, row, col);
         }
@@ -46,67 +46,67 @@ namespace Alternet.UI
             return new SizerItem(itemHandle, false);
         }
 
-        public Int32Point GetItemPosition(Control window)
+        public PointI GetItemPosition(Control window)
         {
             return Native.GridBagSizer.GetItemPosition(Handle, window.WxWidget);
         }
 
-        public Int32Point GetItemPosition(ISizer sizer)
+        public PointI GetItemPosition(ISizer sizer)
         {
             return Native.GridBagSizer.GetItemPosition2(Handle, sizer.Handle);
         }
 
-        public Int32Point GetItemPosition(int index)
+        public PointI GetItemPosition(int index)
         {
             return Native.GridBagSizer.GetItemPosition3(Handle, index);
         }
 
-        public Int32Point GetItemSpan(Control window)
+        public PointI GetItemSpan(Control window)
         {
             return Native.GridBagSizer.GetItemSpan(Handle, window.WxWidget);
         }
 
-        public Int32Point GetItemSpan(ISizer sizer)
+        public PointI GetItemSpan(ISizer sizer)
         {
             return Native.GridBagSizer.GetItemSpan2(Handle, sizer.Handle);
         }
 
-        public Int32Point GetItemSpan(int index)
+        public PointI GetItemSpan(int index)
         {
             return Native.GridBagSizer.GetItemSpan3(Handle, index);
         }
 
-        public bool SetItemPosition(Control window, Int32Point pos)
+        public bool SetItemPosition(Control window, PointI pos)
         {
             return Native.GridBagSizer.SetItemPosition(Handle, window.WxWidget, pos);
         }
 
-        public bool SetItemPosition(ISizer sizer, Int32Point pos)
+        public bool SetItemPosition(ISizer sizer, PointI pos)
         {
             return Native.GridBagSizer.SetItemPosition2(Handle, sizer.Handle, pos);
         }
 
-        public bool SetItemPosition(int index, Int32Point pos)
+        public bool SetItemPosition(int index, PointI pos)
         {
             return Native.GridBagSizer.SetItemPosition3(Handle, index, pos);
         }
 
-        public bool SetItemSpan(Control window, Int32Size span)
+        public bool SetItemSpan(Control window, SizeI span)
         {
             return Native.GridBagSizer.SetItemSpan(Handle, window.WxWidget, span);
         }
 
-        public bool SetItemSpan(ISizer sizer, Int32Size span)
+        public bool SetItemSpan(ISizer sizer, SizeI span)
         {
             return Native.GridBagSizer.SetItemSpan2(Handle, sizer.Handle, span);
         }
 
-        public bool SetItemSpan(int index, Int32Size span)
+        public bool SetItemSpan(int index, SizeI span)
         {
             return Native.GridBagSizer.SetItemSpan3(Handle, index, span);
         }
 
-        public ISizerItem? FindItemAtPoint(Int32Point pt)
+        public ISizerItem? FindItemAtPoint(PointI pt)
         {
             var result = Native.GridBagSizer.FindItemAtPoint(Handle, pt);
             if (result == IntPtr.Zero)
@@ -114,7 +114,7 @@ namespace Alternet.UI
             return new SizerItem(result, false);
         }
 
-        public ISizerItem? FindItemAtPosition(Int32Point pos)
+        public ISizerItem? FindItemAtPosition(PointI pos)
         {
             var result = Native.GridBagSizer.FindItemAtPosition(Handle, pos);
             if (result == IntPtr.Zero)
@@ -124,8 +124,8 @@ namespace Alternet.UI
 
         public ISizerItem Add(
             Control control,
-            Int32Point pos,
-            Int32Size span,
+            PointI pos,
+            SizeI span,
             SizerFlag flag = 0,
             int border = 0)
         {
@@ -142,8 +142,8 @@ namespace Alternet.UI
 
         public ISizerItem Add(
             ISizer sizer,
-            Int32Point pos,
-            Int32Size span,
+            PointI pos,
+            SizeI span,
             SizerFlag flag = 0,
             int border = 0)
         {
@@ -161,8 +161,8 @@ namespace Alternet.UI
         public ISizerItem Add(
             int width,
             int height,
-            Int32Point pos,
-            Int32Size span,
+            PointI pos,
+            SizeI span,
             SizerFlag flag = 0,
             int border = 0)
         {
@@ -185,7 +185,7 @@ namespace Alternet.UI
             return Native.GridBagSizer.CheckForIntersection(Handle, item.Handle, excludeItem.Handle);
         }
 
-        public bool CheckForIntersection(Int32Point pos, Int32Size span, ISizerItem? excludeItem)
+        public bool CheckForIntersection(PointI pos, SizeI span, ISizerItem? excludeItem)
         {
             if (excludeItem is null)
                 return Native.GridBagSizer.CheckForIntersection2(Handle, pos, span, default);

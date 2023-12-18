@@ -45,9 +45,9 @@ namespace NativeApi.Api
         // Sets the vertical gap (in pixels) between the cells in the sizer.
         public static void SetVGap(IntPtr handle, int gap) { }
 
-        public static Int32Size CalcMin(IntPtr handle) => default;
+        public static SizeI CalcMin(IntPtr handle) => default;
 
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
+        public static void RepositionChildren(IntPtr handle, SizeI minSize) { }
 
         public static IntPtr CreateGridSizer(int cols, int vgap, int hgap) => default;
 

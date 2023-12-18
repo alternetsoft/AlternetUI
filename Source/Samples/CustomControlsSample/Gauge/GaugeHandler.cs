@@ -24,9 +24,9 @@ namespace CustomControlsSample.Gauge
 
         protected override bool NeedsPaint => true;
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            return new Size(200, 100);
+            return new SizeD(200, 100);
         }
 
         public override void OnPaint(DrawingContext dc)
@@ -40,7 +40,7 @@ namespace CustomControlsSample.Gauge
 
 
             using var scaleGradientBrush =
-                new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
+                new LinearGradientBrush(new PointD(0, 0), new PointD(0, scaleBounds.Height),
                 new[]
                 {
                         new GradientStop((Color)"#1B222C", 0),
@@ -75,10 +75,10 @@ namespace CustomControlsSample.Gauge
                     if (value > Control.Maximum)
                         break;
 
-                    var startPoint = new Point(ticksStartX, y + shift);
-                    dc.DrawLine(Pens.White, startPoint, new Point(scaleBounds.Right, y + shift));
+                    var startPoint = new PointD(ticksStartX, y + shift);
+                    dc.DrawLine(Pens.White, startPoint, new PointD(scaleBounds.Right, y + shift));
 
-                    dc.DrawText(value.ToString(), font, Brushes.White, startPoint - new Size(fontMaxSize.Width * 0.6, fontMaxSize.Height / 2));
+                    dc.DrawText(value.ToString(), font, Brushes.White, startPoint - new SizeD(fontMaxSize.Width * 0.6, fontMaxSize.Height / 2));
 
                     y += yStep;
                 }
@@ -87,8 +87,8 @@ namespace CustomControlsSample.Gauge
             DrawTicks(scaleBounds.Left + scaleBounds.Width * 0.45, 0);
             DrawTicks(scaleBounds.Left + scaleBounds.Width * 0.7, 0.5);
 
-            var pointerLineStartPoint = new Point(scaleBounds.Left, bounds.Center.Y);
-            var pointerLineEndPoint = new Point(scaleBounds.Right, bounds.Center.Y);
+            var pointerLineStartPoint = new PointD(scaleBounds.Left, bounds.Center.Y);
+            var pointerLineEndPoint = new PointD(scaleBounds.Right, bounds.Center.Y);
             dc.DrawLine(pointerPen1, pointerLineStartPoint, pointerLineEndPoint);
             dc.DrawLine(pointerPen2, pointerLineStartPoint, pointerLineEndPoint);
         }

@@ -24,7 +24,7 @@ namespace ControlsTest
 
         public SizerTestPage()
         {
-            Size size = new(100, 100);
+            SizeD size = new(100, 100);
 
             button1.Size = size;
             button2.Size = size;

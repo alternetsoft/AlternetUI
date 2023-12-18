@@ -158,7 +158,7 @@ namespace Alternet.UI.Native
             NativeApi.AuiManager_LoadPaneInfo_(handle, panePart, paneInfo);
         }
         
-        public static Alternet.Drawing.Size GetDockSizeConstraint(System.IntPtr handle)
+        public static Alternet.Drawing.SizeD GetDockSizeConstraint(System.IntPtr handle)
         {
             return NativeApi.AuiManager_GetDockSizeConstraint_(handle);
         }
@@ -279,7 +279,7 @@ namespace Alternet.UI.Native
             public static extern void AuiManager_LoadPaneInfo_(System.IntPtr handle, string panePart, System.IntPtr paneInfo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size AuiManager_GetDockSizeConstraint_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeD AuiManager_GetDockSizeConstraint_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiManager_ClosePane_(System.IntPtr handle, System.IntPtr paneInfo);

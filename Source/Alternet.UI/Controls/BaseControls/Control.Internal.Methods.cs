@@ -137,7 +137,7 @@ namespace Alternet.UI
                         control,
                         preferredSize);
 
-                control.Handler.Bounds = new Rect(
+                control.Handler.Bounds = new RectD(
                     horizontalPosition.Origin,
                     verticalPosition.Origin,
                     horizontalPosition.Size,
@@ -175,7 +175,7 @@ namespace Alternet.UI
             LogicalParent = value;
         }
 
-        internal virtual Size GetPreferredSizeLimited(Size availableSize)
+        internal virtual SizeD GetPreferredSizeLimited(SizeD availableSize)
         {
             var result = GetPreferredSize(availableSize);
             var minSize = MinimumSize;

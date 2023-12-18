@@ -54,9 +54,9 @@ namespace CustomControlsSample
                 dc.FillRectangle(ColorBrush, bounds.InflatedBy(-2, -2));
             }
 
-            public override Size GetPreferredSize(Size availableSize)
+            public override SizeD GetPreferredSize(SizeD availableSize)
             {
-                return new Size(30, 30);
+                return new SizeD(30, 30);
             }
 
             protected override void OnAttach()

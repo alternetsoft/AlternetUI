@@ -28,13 +28,13 @@ namespace NativeApi.Api
 
         public bool PrintPage_HasMorePages { get => throw new Exception(); set => throw new Exception(); }
 
-        public Rect PrintPage_MarginBounds { get => throw new Exception(); }
+        public RectD PrintPage_MarginBounds { get => throw new Exception(); }
 
-        public Rect PrintPage_PhysicalPageBounds { get => throw new Exception(); }
+        public RectD PrintPage_PhysicalPageBounds { get => throw new Exception(); }
 
-        public Rect PrintPage_PageBounds { get => throw new Exception(); }
+        public RectD PrintPage_PageBounds { get => throw new Exception(); }
 
-        public Rect PrintPage_PrintablePageBounds { get => throw new Exception(); }
+        public RectD PrintPage_PrintablePageBounds { get => throw new Exception(); }
 
         public int PrintPage_PageNumber { get => throw new Exception(); }
     }

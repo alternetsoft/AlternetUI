@@ -281,23 +281,23 @@ namespace Alternet.UI
         {
             const double cornerSize = 5;
 
-            void DrawHorizontal(DrawingContext dc, Brush brush, Rect rect)
+            void DrawHorizontal(DrawingContext dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
                 var rect2 = rect;
                 rect1.Width = cornerSize;
-                rect2.Location = rect2.TopRight - new Size(cornerSize, 0);
+                rect2.Location = rect2.TopRight - new SizeD(cornerSize, 0);
                 rect2.Width = cornerSize;
                 dc.FillRectangle(brush, rect1);
                 dc.FillRectangle(brush, rect2);
             }
 
-            void DrawVertical(DrawingContext dc, Brush brush, Rect rect)
+            void DrawVertical(DrawingContext dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
                 var rect2 = rect;
                 rect1.Height = cornerSize;
-                rect2.Location = rect2.BottomLeft - new Size(0, cornerSize);
+                rect2.Location = rect2.BottomLeft - new SizeD(0, cornerSize);
                 rect2.Height = cornerSize;
                 dc.FillRectangle(brush, rect1);
                 dc.FillRectangle(brush, rect2);
@@ -341,44 +341,44 @@ namespace Alternet.UI
         /// Gets rectangle of the top border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public Rect GetTopRectangle(Rect rect)
+        public RectD GetTopRectangle(RectD rect)
         {
             var point = rect.TopLeft;
-            var size = new Size(rect.Width, Top.Width);
-            return new Rect(point, size);
+            var size = new SizeD(rect.Width, Top.Width);
+            return new RectD(point, size);
         }
 
         /// <summary>
         /// Gets rectangle of the bottom border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public Rect GetBottomRectangle(Rect rect)
+        public RectD GetBottomRectangle(RectD rect)
         {
-            var point = new Point(rect.Left, rect.Bottom - Bottom.Width);
-            var size = new Size(rect.Width, Bottom.Width);
-            return new Rect(point, size);
+            var point = new PointD(rect.Left, rect.Bottom - Bottom.Width);
+            var size = new SizeD(rect.Width, Bottom.Width);
+            return new RectD(point, size);
         }
 
         /// <summary>
         /// Gets rectangle of the left border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public Rect GetLeftRectangle(Rect rect)
+        public RectD GetLeftRectangle(RectD rect)
         {
             var point = rect.TopLeft;
-            var size = new Size(Left.Width, rect.Height);
-            return new Rect(point, size);
+            var size = new SizeD(Left.Width, rect.Height);
+            return new RectD(point, size);
         }
 
         /// <summary>
         /// Gets rectangle of the right border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public Rect GetRightRectangle(Rect rect)
+        public RectD GetRightRectangle(RectD rect)
         {
-            var point = new Point(rect.Right - Right.Width, rect.Top);
-            var size = new Size(Right.Width, rect.Height);
-            return new Rect(point, size);
+            var point = new PointD(rect.Right - Right.Width, rect.Top);
+            var size = new SizeD(Right.Width, rect.Height);
+            return new RectD(point, size);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Ractangle for percentage calculation.</param>
         /// <returns></returns>
-        public double? GetUniformCornerRadius(Rect rect)
+        public double? GetUniformCornerRadius(RectD rect)
         {
             var radius = UniformCornerRadius;
             if (radius is null)
@@ -408,7 +408,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public virtual void Draw(DrawingContext dc, Rect rect)
+        public virtual void Draw(DrawingContext dc, RectD rect)
         {
             Paint?.Invoke(this, new PaintEventArgs(dc, rect));
 

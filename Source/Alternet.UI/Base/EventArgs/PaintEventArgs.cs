@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </remarks>
     public class PaintEventArgs : BaseEventArgs
     {
-        internal PaintEventArgs(DrawingContext drawingContext, Rect bounds)
+        internal PaintEventArgs(DrawingContext drawingContext, RectD bounds)
         {
             DrawingContext = drawingContext;
             Bounds = bounds;
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the rectangle in which to paint.
         /// </summary>
-        /// <value>The <see cref="Rect"/> in which to paint.</value>
-        public Rect Bounds { get; }
+        /// <value>The <see cref="RectD"/> in which to paint.</value>
+        public RectD Bounds { get; }
     }
 }

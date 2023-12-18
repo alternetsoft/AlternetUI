@@ -367,13 +367,13 @@ namespace Alternet.UI.Native
             return NativeApi.TextBox_GetNumberOfLines_(NativePointer);
         }
         
-        public Alternet.Drawing.Int32Point PositionToXY(long pos)
+        public Alternet.Drawing.PointI PositionToXY(long pos)
         {
             CheckDisposed();
             return NativeApi.TextBox_PositionToXY_(NativePointer, pos);
         }
         
-        public Alternet.Drawing.Point PositionToCoords(long pos)
+        public Alternet.Drawing.PointD PositionToCoords(long pos)
         {
             CheckDisposed();
             return NativeApi.TextBox_PositionToCoords_(NativePointer, pos);
@@ -761,10 +761,10 @@ namespace Alternet.UI.Native
             public static extern int TextBox_GetNumberOfLines_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point TextBox_PositionToXY_(IntPtr obj, long pos);
+            public static extern Alternet.Drawing.PointI TextBox_PositionToXY_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point TextBox_PositionToCoords_(IntPtr obj, long pos);
+            public static extern Alternet.Drawing.PointD TextBox_PositionToCoords_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_ShowPosition_(IntPtr obj, long pos);

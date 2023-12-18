@@ -54,7 +54,7 @@ ALTERNET_UI_API void TabControl_SetPageTitle_(TabControl* obj, int index, const 
     obj->SetPageTitle(index, title);
 }
 
-ALTERNET_UI_API Size_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, Size pageSize)
+ALTERNET_UI_API SizeD_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, SizeD pageSize)
 {
     return obj->GetTotalPreferredSizeFromPageSize(pageSize);
 }

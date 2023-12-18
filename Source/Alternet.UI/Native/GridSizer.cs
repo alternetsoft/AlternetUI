@@ -73,12 +73,12 @@ namespace Alternet.UI.Native
             NativeApi.GridSizer_SetVGap_(handle, gap);
         }
         
-        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI CalcMin(System.IntPtr handle)
         {
             return NativeApi.GridSizer_CalcMin_(handle);
         }
         
-        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.SizeI minSize)
         {
             NativeApi.GridSizer_RepositionChildren_(handle, minSize);
         }
@@ -133,10 +133,10 @@ namespace Alternet.UI.Native
             public static extern void GridSizer_SetVGap_(System.IntPtr handle, int gap);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size GridSizer_CalcMin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI GridSizer_CalcMin_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GridSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            public static extern void GridSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.SizeI minSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GridSizer_CreateGridSizer_(int cols, int vgap, int hgap);

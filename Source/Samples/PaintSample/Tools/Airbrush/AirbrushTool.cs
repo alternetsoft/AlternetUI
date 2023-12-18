@@ -99,17 +99,17 @@ namespace PaintSample
             Document.UpdatePreview();
         }
 
-        private Point GetNextPoint()
+        private PointD GetNextPoint()
         {
             if (state == null)
                 throw new InvalidOperationException();
 
-            static Point RandomPointInCircle(Random random, Point center, double radius)
+            static PointD RandomPointInCircle(Random random, PointD center, double radius)
             {
                 var angle = 2.0 * Math.PI * random.NextDouble();
                 var radiusX = random.NextDouble() * radius;
                 var radiusY = random.NextDouble() * radius;
-                return new Point(center.X + radiusX * Math.Cos(angle), center.Y + radiusY * Math.Sin(angle));
+                return new PointD(center.X + radiusX * Math.Cos(angle), center.Y + radiusY * Math.Sin(angle));
             }
 
             return RandomPointInCircle(state.Random, state.Center, Size / 2);
@@ -127,9 +127,9 @@ namespace PaintSample
             Document.PreviewAction = null;
         }
 
-        private void DrawSinglePoint(DrawingContext dc, Brush brush, Point point)
+        private void DrawSinglePoint(DrawingContext dc, Brush brush, PointD point)
         {
-            dc.FillRectangle(brush, new Rect(point, new Size(1, 1)));
+            dc.FillRectangle(brush, new RectD(point, new SizeD(1, 1)));
         }
 
         private void Draw(DrawingContext dc)
@@ -137,7 +137,7 @@ namespace PaintSample
             if (state == null)
                 throw new InvalidOperationException();
 
-            dc.DrawImage(state.PreviewBitmap, new Point());
+            dc.DrawImage(state.PreviewBitmap, new PointD());
         }
 
         private void Cancel()
@@ -153,7 +153,7 @@ namespace PaintSample
 
         private class State : IDisposable
         {
-            public State(Brush brush, Point center, int pointsPerTick, Bitmap previewBitmap)
+            public State(Brush brush, PointD center, int pointsPerTick, Bitmap previewBitmap)
             {
                 Brush = brush;
                 Center = center;
@@ -168,7 +168,7 @@ namespace PaintSample
 
             public int PointsPerTick { get; }
 
-            public Point Center { get; set; }
+            public PointD Center { get; set; }
 
             public Random Random { get; } = new Random();
 

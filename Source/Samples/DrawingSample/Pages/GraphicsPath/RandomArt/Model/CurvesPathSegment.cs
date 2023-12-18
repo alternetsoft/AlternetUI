@@ -8,13 +8,13 @@ namespace DrawingSample.RandomArt
     {
         private List<Curve> curves = new List<Curve>();
 
-        public CurvesPathSegment(Point start) : base(start)
+        public CurvesPathSegment(PointD start) : base(start)
         {
         }
 
         public override PathSegmentType Type => PathSegmentType.Curves;
 
-        public override Point End => curves.Count > 0 ? curves.Last().End : Start;
+        public override PointD End => curves.Count > 0 ? curves.Last().End : Start;
 
         public override void Render(GraphicsPath path)
         {
@@ -27,7 +27,7 @@ namespace DrawingSample.RandomArt
                 path.CloseFigure();
         }
 
-        public override void TryAddSegmentParts(Point tipPoint, ToolSettings toolSettings)
+        public override void TryAddSegmentParts(PointD tipPoint, ToolSettings toolSettings)
         {
             if (Utils.IsDistanceGreaterOrEqual(End, tipPoint, toolSettings.PartLength))
             {
@@ -51,18 +51,18 @@ namespace DrawingSample.RandomArt
 
         private class Curve
         {
-            public Curve(Point control1, Point control2, Point end)
+            public Curve(PointD control1, PointD control2, PointD end)
             {
                 Control1 = control1;
                 Control2 = control2;
                 End = end;
             }
 
-            public Point Control1 { get; }
+            public PointD Control1 { get; }
 
-            public Point Control2 { get; }
+            public PointD Control2 { get; }
 
-            public Point End { get; }
+            public PointD End { get; }
         }
     }
 }

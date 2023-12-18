@@ -88,20 +88,20 @@ bool GetAllowDrop();
 void SetAllowDrop(bool value);
 
 
-Size GetSize();
-void SetSize(const Size& value);
+SizeD GetSize();
+void SetSize(const SizeD& value);
 
 
-Point GetLocation();
-void SetLocation(const Point& value);
+PointD GetLocation();
+void SetLocation(const PointD& value);
 
 
-Rect GetBounds();
-void SetBounds(const Rect& value);
+RectD GetBounds();
+void SetBounds(const RectD& value);
 
 
-Size GetClientSize();
-void SetClientSize(const Size& value);
+SizeD GetClientSize();
+void SetClientSize(const SizeD& value);
 
 
 virtual Thickness GetIntrinsicLayoutPadding();
@@ -140,14 +140,14 @@ Font* GetFont();
 void SetFont(Font* value);
 
 
-Size GetMinimumSize();
-void SetMinimumSize(const Size& value);
+SizeD GetMinimumSize();
+void SetMinimumSize(const SizeD& value);
 
 
-Size GetMaximumSize();
-void SetMaximumSize(const Size& value);
+SizeD GetMaximumSize();
+void SetMaximumSize(const SizeD& value);
 
-static Control* HitTest(const Point& screenPoint);
+static Control* HitTest(const PointD& screenPoint);
 static Control* GetFocusedControl();
 static void NotifyCaptureLost();
 void Freeze();
@@ -155,13 +155,13 @@ void Thaw();
 void ShowPopupMenu(void* menu, double x, double y);
 void BeginIgnoreRecreate();
 void EndIgnoreRecreate();
-Size GetDPI();
+SizeD GetDPI();
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
 void Invalidate();
 void Update();
-virtual Size GetPreferredSize(const Size& availableSize);
+virtual SizeD GetPreferredSize(const SizeD& availableSize);
 DragDropEffects DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects);
 DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
@@ -170,10 +170,10 @@ void EndUpdate();
 void RecreateWindow();
 void ResetBackgroundColor();
 void ResetForegroundColor();
-Point ClientToScreen(const Point& point);
-Point ScreenToClient(const Point& point);
-Int32Point ScreenToDevice(const Point& point);
-Point DeviceToScreen(const Int32Point& point);
+PointD ClientToScreen(const PointD& point);
+PointD ScreenToClient(const PointD& point);
+PointI ScreenToDevice(const PointD& point);
+PointD DeviceToScreen(const PointI& point);
 bool SetFocus();
 void FocusNextControl(bool forward, bool nested);
 void BeginInit();
@@ -183,7 +183,7 @@ void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
 void SendMouseDownEvent(int x, int y);
 void SendMouseUpEvent(int x, int y);
-void SetBoundsEx(const Rect& rect, int flags);
+void SetBoundsEx(const RectD& rect, int flags);
 void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);
@@ -193,7 +193,7 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
-void RefreshRect(const Rect& rect, bool eraseBackground);
+void RefreshRect(const RectD& rect, bool eraseBackground);
 void Raise();
 void Lower();
 void DisableRecreate();

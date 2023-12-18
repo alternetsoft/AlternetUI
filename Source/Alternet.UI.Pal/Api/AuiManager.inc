@@ -27,7 +27,7 @@ static bool AddPane3(void* handle, void* window, int direction, const string& ca
 static bool InsertPane(void* handle, void* window, void* insertLocPaneInfo, int insertLevel);
 static string SavePaneInfo(void* handle, void* paneInfo);
 static void LoadPaneInfo(void* handle, const string& panePart, void* paneInfo);
-static Size GetDockSizeConstraint(void* handle);
+static SizeD GetDockSizeConstraint(void* handle);
 static void ClosePane(void* handle, void* paneInfo);
 static void MaximizePane(void* handle, void* paneInfo);
 static void RestorePane(void* handle, void* paneInfo);

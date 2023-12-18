@@ -104,8 +104,8 @@ namespace Alternet.UI
                 return;
 
             var newSize = GetChildrenMaxPreferredSizePadded(
-                new Size(double.PositiveInfinity, double.PositiveInfinity));
-            if (newSize != Size.Empty)
+                new SizeD(double.PositiveInfinity, double.PositiveInfinity));
+            if (newSize != SizeD.Empty)
             {
                 var currentSize = Control.ClientSize;
                 switch (mode)
@@ -122,7 +122,7 @@ namespace Alternet.UI
                         throw new Exception();
                 }
 
-                Control.ClientSize = newSize + new Size(1, 0);
+                Control.ClientSize = newSize + new SizeD(1, 0);
                 Control.ClientSize = newSize;
                 Control.Refresh();
                 NativeControl.SendSizeEvent();

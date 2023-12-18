@@ -88,7 +88,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Int32Size GetPixelSize()
+        public Alternet.Drawing.SizeI GetPixelSize()
         {
             CheckDisposed();
             return NativeApi.Font_GetPixelSize_(NativePointer);
@@ -220,7 +220,7 @@ namespace Alternet.UI.Native
             public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size Font_GetPixelSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeI Font_GetPixelSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsUsingSizeInPixels_(IntPtr obj);

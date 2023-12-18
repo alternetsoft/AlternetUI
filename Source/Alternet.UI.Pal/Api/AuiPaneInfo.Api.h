@@ -14,17 +14,17 @@ ALTERNET_UI_API AuiPaneInfo* AuiPaneInfo_Create_()
     return new AuiPaneInfo();
 }
 
-ALTERNET_UI_API Int32Size_C AuiPaneInfo_GetBestSize_(void* handle)
+ALTERNET_UI_API SizeI_C AuiPaneInfo_GetBestSize_(void* handle)
 {
     return AuiPaneInfo::GetBestSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C AuiPaneInfo_GetMinSize_(void* handle)
+ALTERNET_UI_API SizeI_C AuiPaneInfo_GetMinSize_(void* handle)
 {
     return AuiPaneInfo::GetMinSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C AuiPaneInfo_GetMaxSize_(void* handle)
+ALTERNET_UI_API SizeI_C AuiPaneInfo_GetMaxSize_(void* handle)
 {
     return AuiPaneInfo::GetMaxSize(handle);
 }

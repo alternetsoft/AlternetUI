@@ -8,9 +8,9 @@ namespace DrawingSample
     {
         public const double DegToRad = Math.PI / 180;
 
-        public static Point GetPointOnCircle(Point center, double radius, double angle)
+        public static PointD GetPointOnCircle(PointD center, double radius, double angle)
         {
-            return new Point(center.X + radius * Math.Cos(angle * DegToRad), center.Y + radius * Math.Sin(angle * DegToRad));
+            return new PointD(center.X + radius * Math.Cos(angle * DegToRad), center.Y + radius * Math.Sin(angle * DegToRad));
         }
 
         public static double MapRanges(double value, double fromLow, double fromHigh, double toLow, double toHigh) =>

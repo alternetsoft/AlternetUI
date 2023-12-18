@@ -15,7 +15,7 @@ namespace CustomControlsSample
             InitializeComponent();
             CreateCells();
             InitializeGame();
-            SuggestedSize = new Size(50 * 3, 50 * 3);
+            SuggestedSize = new SizeD(50 * 3, 50 * 3);
         }
 
         private void CreateCells()

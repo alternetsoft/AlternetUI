@@ -764,13 +764,13 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGrid_SetCurrentCategory_(NativePointer, propArg);
         }
         
-        public Alternet.Drawing.Int32Rect GetImageRect(System.IntPtr p, int item)
+        public Alternet.Drawing.RectI GetImageRect(System.IntPtr p, int item)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetImageRect_(NativePointer, p, item);
         }
         
-        public Alternet.Drawing.Int32Size GetImageSize(System.IntPtr p, int item)
+        public Alternet.Drawing.SizeI GetImageSize(System.IntPtr p, int item)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetImageSize_(NativePointer, p, item);
@@ -1151,7 +1151,7 @@ namespace Alternet.UI.Native
             return NativeApi.PropertyGrid_EnableCategories_(NativePointer, enable);
         }
         
-        public Alternet.Drawing.Size FitColumns()
+        public Alternet.Drawing.SizeD FitColumns()
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_FitColumns_(NativePointer);
@@ -1765,10 +1765,10 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetCurrentCategory_(IntPtr obj, System.IntPtr propArg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect PropertyGrid_GetImageRect_(IntPtr obj, System.IntPtr p, int item);
+            public static extern Alternet.Drawing.RectI PropertyGrid_GetImageRect_(IntPtr obj, System.IntPtr p, int item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size PropertyGrid_GetImageSize_(IntPtr obj, System.IntPtr p, int item);
+            public static extern Alternet.Drawing.SizeI PropertyGrid_GetImageSize_(IntPtr obj, System.IntPtr p, int item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateStringProperty_(IntPtr obj, string label, string name, string value);
@@ -1966,7 +1966,7 @@ namespace Alternet.UI.Native
             public static extern bool PropertyGrid_EnableCategories_(IntPtr obj, bool enable);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size PropertyGrid_FitColumns_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD PropertyGrid_FitColumns_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color PropertyGrid_GetCaptionBackgroundColor_(IntPtr obj);

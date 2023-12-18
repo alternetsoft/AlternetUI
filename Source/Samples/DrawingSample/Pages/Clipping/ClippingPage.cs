@@ -46,11 +46,11 @@ namespace DrawingSample
             timer.Stop();
         }
 
-        public override void Draw(DrawingContext dc, Rect bounds)
+        public override void Draw(DrawingContext dc, RectD bounds)
         {
-            Point[] GetPolygonPoints()
+            PointD[] GetPolygonPoints()
             {
-                var lines = new List<Point>();
+                var lines = new List<PointD>();
                 var r = Math.Min(bounds.Width, bounds.Height) * 0.3;
                 var c = bounds.Center;
                 for (double a = 0; a <= 360; a += 10)
@@ -124,19 +124,19 @@ namespace DrawingSample
             return control;
         }
 
-        private static void DrawScene(DrawingContext dc, Rect bounds)
+        private static void DrawScene(DrawingContext dc, RectD bounds)
         {
             var random = new Random(0);
 
             for (int i = 0; i < 1000; i++)
                 dc.FillRectangle(
                     Brushes.White,
-                    new Rect(random.Next(-(int)bounds.Width, (int)bounds.Width), random.Next(-(int)bounds.Height, (int)bounds.Height), 5, 5));
+                    new RectD(random.Next(-(int)bounds.Width, (int)bounds.Width), random.Next(-(int)bounds.Height, (int)bounds.Height), 5, 5));
 
             for (int i = 0; i < 100; i++)
                 dc.DrawImage(
                     Resources.LogoImage,
-                    new Point(random.Next(-(int)bounds.Width, (int)bounds.Width), random.Next(-(int)bounds.Height, (int)bounds.Height)));
+                    new PointD(random.Next(-(int)bounds.Width, (int)bounds.Width), random.Next(-(int)bounds.Height, (int)bounds.Height)));
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
@@ -152,12 +152,12 @@ namespace DrawingSample
             mouseDown = true;
         }
 
-        private void AddClipAreaPart(Point position)
+        private void AddClipAreaPart(PointD position)
         {
             clipAreaParts.Add(
                 new ClipAreaPart(
                     SelectedClipOperation,
-                    Rect.FromCenter(position, new Size(20, 20))));
+                    RectD.FromCenter(position, new SizeD(20, 20))));
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseEventArgs e)
@@ -201,7 +201,7 @@ namespace DrawingSample
 
         private class ClipAreaPart
         {
-            public ClipAreaPart(ClipOperation operation, Rect bounds)
+            public ClipAreaPart(ClipOperation operation, RectD bounds)
             {
                 Operation = operation;
                 Bounds = bounds;
@@ -209,7 +209,7 @@ namespace DrawingSample
 
             public ClipOperation Operation { get; }
 
-            public Rect Bounds { get; }
+            public RectD Bounds { get; }
         }
     }
 }

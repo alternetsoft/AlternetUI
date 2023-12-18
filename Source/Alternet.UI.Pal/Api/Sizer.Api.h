@@ -233,27 +233,27 @@ ALTERNET_UI_API c_bool Sizer_SetCustomBoxItemMinSize_(void* handle, int index, i
     return Sizer::SetCustomBoxItemMinSize(handle, index, width, height);
 }
 
-ALTERNET_UI_API Int32Size_C Sizer_GetSize_(void* handle)
+ALTERNET_UI_API SizeI_C Sizer_GetSize_(void* handle)
 {
     return Sizer::GetSize(handle);
 }
 
-ALTERNET_UI_API Int32Point_C Sizer_GetPosition_(void* handle)
+ALTERNET_UI_API PointI_C Sizer_GetPosition_(void* handle)
 {
     return Sizer::GetPosition(handle);
 }
 
-ALTERNET_UI_API Int32Size_C Sizer_GetMinSize_(void* handle)
+ALTERNET_UI_API SizeI_C Sizer_GetMinSize_(void* handle)
 {
     return Sizer::GetMinSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C Sizer_CalcMin_(void* handle)
+ALTERNET_UI_API SizeI_C Sizer_CalcMin_(void* handle)
 {
     return Sizer::CalcMin(handle);
 }
 
-ALTERNET_UI_API void Sizer_RepositionChildren_(void* handle, Int32Size minSize)
+ALTERNET_UI_API void Sizer_RepositionChildren_(void* handle, SizeI minSize)
 {
     Sizer::RepositionChildren(handle, minSize);
 }
@@ -268,17 +268,17 @@ ALTERNET_UI_API void Sizer_Layout_(void* handle)
     Sizer::Layout(handle);
 }
 
-ALTERNET_UI_API Int32Size_C Sizer_ComputeFittingClientSize_(void* handle, void* window)
+ALTERNET_UI_API SizeI_C Sizer_ComputeFittingClientSize_(void* handle, void* window)
 {
     return Sizer::ComputeFittingClientSize(handle, window);
 }
 
-ALTERNET_UI_API Int32Size_C Sizer_ComputeFittingWindowSize_(void* handle, void* window)
+ALTERNET_UI_API SizeI_C Sizer_ComputeFittingWindowSize_(void* handle, void* window)
 {
     return Sizer::ComputeFittingWindowSize(handle, window);
 }
 
-ALTERNET_UI_API Int32Size_C Sizer_Fit_(void* handle, void* window)
+ALTERNET_UI_API SizeI_C Sizer_Fit_(void* handle, void* window)
 {
     return Sizer::Fit(handle, window);
 }

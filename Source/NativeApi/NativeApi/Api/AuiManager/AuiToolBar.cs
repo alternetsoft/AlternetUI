@@ -27,8 +27,8 @@ namespace NativeApi.Api
 
         public int EventToolId { get; }
         public bool EventIsDropDownClicked { get; }
-        public Int32Point EventClickPoint { get; }
-        public Int32Rect EventItemRect { get; }
+        public PointI EventClickPoint { get; }
+        public RectI EventItemRect { get; }
 
         public void SetArtProvider(IntPtr art) { }
         public IntPtr GetArtProvider() => throw new Exception();
@@ -89,13 +89,13 @@ namespace NativeApi.Api
 
         public int GetToolIndex(int toolId) => throw new Exception();
         public bool GetToolFits(int toolId) => throw new Exception();
-        public Rect GetToolRect(int toolId) => throw new Exception();
+        public RectD GetToolRect(int toolId) => throw new Exception();
 
         public bool GetToolFitsByIndex(int toolId) => throw new Exception();
         public bool GetToolBarFits() => throw new Exception();
 
-        public void SetToolBitmapSizeInPixels(Int32Size size) => throw new Exception();
-        public Int32Size GetToolBitmapSizeInPixels() => throw new Exception();
+        public void SetToolBitmapSizeInPixels(SizeI size) => throw new Exception();
+        public SizeI GetToolBitmapSizeInPixels() => throw new Exception();
 
         public bool GetOverflowVisible() => throw new Exception();
         public void SetOverflowVisible(bool visible) => throw new Exception();
@@ -150,7 +150,7 @@ namespace NativeApi.Api
         public ulong GetToolCount() => throw new Exception();
 
         public void SetToolMinSize(int tool_id, int width, int height) { }
-        public Int32Size GetToolMinSize(int tool_id) => default;
+        public SizeI GetToolMinSize(int tool_id) => default;
         public void SetAlignment(int tool_id, int l) { }
         public int GetAlignment(int tool_id) => default;
     }

@@ -11,13 +11,13 @@ namespace NativeApi.Api
 	public class AuiPaneInfo
 	{
         // size that the layout engine will prefer
-        public static Int32Size GetBestSize(IntPtr handle) => default;
+        public static SizeI GetBestSize(IntPtr handle) => default;
 
         // minimum size the pane window can tolerate
-        public static Int32Size GetMinSize(IntPtr handle) => default;
+        public static SizeI GetMinSize(IntPtr handle) => default;
 
         // maximum size the pane window can tolerate
-        public static Int32Size GetMaxSize(IntPtr handle) => default;
+        public static SizeI GetMaxSize(IntPtr handle) => default;
 
         public static void Delete(IntPtr handle) { }
         public static IntPtr CreateAuiPaneInfo() => throw new Exception();

@@ -132,7 +132,7 @@ namespace Alternet.UI
         /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
         /// </remarks>
         [Browsable(false)]
-        public Int32Point EventClickPoint
+        public PointI EventClickPoint
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Alternet.UI
         /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
         /// </remarks>
         [Browsable(false)]
-        public Int32Rect EventItemRect
+        public RectI EventItemRect
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Alternet.UI
         /// Note that this is the size of the bitmap you pass to
         /// <see cref="AddTool"/>, and not the eventual size of the tool button.
         /// </remarks>
-        public Int32Size ToolBitmapSizeInPixels
+        public SizeI ToolBitmapSizeInPixels
         {
             get => NativeControl.GetToolBitmapSizeInPixels();
             set => NativeControl.SetToolBitmapSizeInPixels(value);
@@ -282,14 +282,14 @@ namespace Alternet.UI
         /// <param name="imageSize">Svg image width and height.</param>
         /// <param name="color">Svg fill color. Optional.
         /// If provided, svg fill color is changed to the specified value.</param>
-        public static ImageSet LoadSvgImage(string url, Int32Size imageSize, Color? color = null)
+        public static ImageSet LoadSvgImage(string url, SizeI imageSize, Color? color = null)
         {
             var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
             return result;
         }
 
-        /// <inheritdoc cref="LoadSvgImage(string, Int32Size, Color?)"/>
-        public static ImageSet LoadSvgImage(string url, Size imageSize, Color? color = null)
+        /// <inheritdoc cref="LoadSvgImage(string, SizeI, Color?)"/>
+        public static ImageSet LoadSvgImage(string url, SizeD imageSize, Color? color = null)
         {
             var result = ImageSet.FromSvgUrl(url, (int)imageSize.Width, (int)imageSize.Height, color);
             return result;
@@ -525,10 +525,10 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added tool.</param>
         /// <returns>Position and size of the tool in the toolbar in device-independent units
         /// (1/96 inch).</returns>
-        public Rect GetToolRect(int toolId)
+        public RectD GetToolRect(int toolId)
         {
             if (toolId <= 0)
-                return Rect.Empty;
+                return RectD.Empty;
             return NativeControl.GetToolRect(toolId);
         }
 
@@ -738,12 +738,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
         /// <returns>Popup window location in screen coordinates.</returns>
-        public Point? GetToolPopupLocation(int toolId)
+        public PointD? GetToolPopupLocation(int toolId)
         {
             if (toolId <= 0)
                 return null;
-            Rect toolRect = GetToolRect(toolId);
-            Point pt = ClientToScreen(toolRect.BottomLeft);
+            RectD toolRect = GetToolRect(toolId);
+            PointD pt = ClientToScreen(toolRect.BottomLeft);
             return pt;
         }
 
@@ -1064,10 +1064,10 @@ namespace Alternet.UI
         /// Gets minimal size of the toolbar item.
         /// </summary>
         /// <param name="toolId">ID of a previously added toolbar item.</param>
-        public Int32Size GetToolMinSize(int toolId)
+        public SizeI GetToolMinSize(int toolId)
         {
             if (toolId <= 0)
-                return Int32Size.Empty;
+                return SizeI.Empty;
             return NativeControl.GetToolMinSize(toolId);
         }
 

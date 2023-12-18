@@ -6,27 +6,27 @@ namespace Alternet.UI
     internal class AlignedLayout
     {
         public static AlignedPosition AlignHorizontal(
-            Rect layoutBounds,
+            RectD layoutBounds,
             Control childControl,
-            Size childPreferredSize) => AlignHorizontal(
+            SizeD childPreferredSize) => AlignHorizontal(
                 layoutBounds,
                 childControl,
                 childPreferredSize,
                 childControl.HorizontalAlignment);
 
         public static AlignedPosition AlignVertical(
-            Rect layoutBounds,
+            RectD layoutBounds,
             Control childControl,
-            Size childPreferredSize) => AlignVertical(
+            SizeD childPreferredSize) => AlignVertical(
                 layoutBounds,
                 childControl,
                 childPreferredSize,
                 childControl.VerticalAlignment);
 
         public static AlignedPosition AlignHorizontal(
-            Rect layoutBounds,
+            RectD layoutBounds,
             Control childControl,
-            Size childPreferredSize,
+            SizeD childPreferredSize,
             HorizontalAlignment alignment)
         {
             switch (alignment)
@@ -54,9 +54,9 @@ namespace Alternet.UI
         }
 
         public static AlignedPosition AlignVertical(
-            Rect layoutBounds,
+            RectD layoutBounds,
             Control control,
-            Size childPreferredSize,
+            SizeD childPreferredSize,
             VerticalAlignment alignment)
         {
             switch (alignment)

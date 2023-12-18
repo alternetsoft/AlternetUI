@@ -367,7 +367,7 @@ namespace Alternet.UI
         public bool AddPane(
             Control control,
             IAuiPaneInfo paneInfo,
-            Point dropPos)
+            PointD dropPos)
         {
             return Native.AuiManager.AddPane2(
                 handle,
@@ -458,7 +458,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the current dock constraint values.
         /// </summary>
-        public Size GetDockSizeConstraint()
+        public SizeD GetDockSizeConstraint()
         {
             return Native.AuiManager.GetDockSizeConstraint(handle);
         }

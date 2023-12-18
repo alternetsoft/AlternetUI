@@ -287,8 +287,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a point.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> to transform.</param>
-        public Point TransformPoint(Point point)
+        /// <param name="point">A <see cref="PointD"/> to transform.</param>
+        public PointD TransformPoint(PointD point)
         {
             CheckDisposed();
             return NativeMatrix.TransformPoint(point);
@@ -297,8 +297,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a size.
         /// </summary>
-        /// <param name="size">A <see cref="Size"/> to transform.</param>
-        public Size TransformSize(Size size)
+        /// <param name="size">A <see cref="SizeD"/> to transform.</param>
+        public SizeD TransformSize(SizeD size)
         {
             CheckDisposed();
             return NativeMatrix.TransformSize(size);

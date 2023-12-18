@@ -83,7 +83,7 @@ namespace Alternet.UI.Native
             NativeApi.WxStatusBarFactory_SetStatusStyles_(handle, styles, styles.Length);
         }
         
-        public static Alternet.Drawing.Int32Rect GetFieldRect(System.IntPtr handle, int i)
+        public static Alternet.Drawing.RectI GetFieldRect(System.IntPtr handle, int i)
         {
             return NativeApi.WxStatusBarFactory_GetFieldRect_(handle, i);
         }
@@ -149,7 +149,7 @@ namespace Alternet.UI.Native
             public static extern void WxStatusBarFactory_SetStatusStyles_(System.IntPtr handle, System.Int32[] styles, int stylesCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect WxStatusBarFactory_GetFieldRect_(System.IntPtr handle, int i);
+            public static extern Alternet.Drawing.RectI WxStatusBarFactory_GetFieldRect_(System.IntPtr handle, int i);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxStatusBarFactory_SetMinHeight_(System.IntPtr handle, int height);

@@ -185,7 +185,7 @@ ALTERNET_UI_API void GenericImage_SetRGB_(void* handle, int x, int y, uint8_t r,
     GenericImage::SetRGB(handle, x, y, r, g, b);
 }
 
-ALTERNET_UI_API void GenericImage_SetRGBRect_(void* handle, Int32Rect rect, uint8_t red, uint8_t green, uint8_t blue)
+ALTERNET_UI_API void GenericImage_SetRGBRect_(void* handle, RectI rect, uint8_t red, uint8_t green, uint8_t blue)
 {
     GenericImage::SetRGBRect(handle, rect, red, green, blue);
 }
@@ -265,7 +265,7 @@ ALTERNET_UI_API void GenericImage_Rescale_(void* handle, int width, int height, 
     GenericImage::Rescale(handle, width, height, quality);
 }
 
-ALTERNET_UI_API void GenericImage_Resize_(void* handle, Int32Size size, Int32Point pos, int red, int green, int blue)
+ALTERNET_UI_API void GenericImage_Resize_(void* handle, SizeI size, PointI pos, int red, int green, int blue)
 {
     GenericImage::Resize(handle, size, pos, red, green, blue);
 }
@@ -305,7 +305,7 @@ ALTERNET_UI_API void* GenericImage_Scale_(void* handle, int width, int height, i
     return GenericImage::Scale(handle, width, height, quality);
 }
 
-ALTERNET_UI_API void* GenericImage_Size_(void* handle, Int32Size size, Int32Point pos, int red, int green, int blue)
+ALTERNET_UI_API void* GenericImage_Size_(void* handle, SizeI size, PointI pos, int red, int green, int blue)
 {
     return GenericImage::Size(handle, size, pos, red, green, blue);
 }
@@ -390,7 +390,7 @@ ALTERNET_UI_API int GenericImage_GetHeight_(void* handle)
     return GenericImage::GetHeight(handle);
 }
 
-ALTERNET_UI_API Int32Size_C GenericImage_GetSize_(void* handle)
+ALTERNET_UI_API SizeI_C GenericImage_GetSize_(void* handle)
 {
     return GenericImage::GetSize(handle);
 }
@@ -405,7 +405,7 @@ ALTERNET_UI_API int GenericImage_GetOptionInt_(void* handle, const char16_t* nam
     return GenericImage::GetOptionInt(handle, name);
 }
 
-ALTERNET_UI_API void* GenericImage_GetSubImage_(void* handle, Int32Rect rect)
+ALTERNET_UI_API void* GenericImage_GetSubImage_(void* handle, RectI rect)
 {
     return GenericImage::GetSubImage(handle, rect);
 }

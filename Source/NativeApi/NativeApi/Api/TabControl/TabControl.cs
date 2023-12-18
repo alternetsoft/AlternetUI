@@ -21,7 +21,7 @@ namespace NativeApi.Api
 
         public event NativeEventHandler<TabPageSelectionEventData>? SelectedPageIndexChanging { add => throw new Exception(); remove => throw new Exception(); }
 
-        public Size GetTotalPreferredSizeFromPageSize(Size pageSize) => throw new Exception();
+        public SizeD GetTotalPreferredSizeFromPageSize(SizeD pageSize) => throw new Exception();
 
         public TabAlignment TabAlignment { get; set; }
     }

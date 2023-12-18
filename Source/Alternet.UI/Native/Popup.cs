@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void Position(Alternet.Drawing.Int32Point ptOrigin, Alternet.Drawing.Int32Size sizePopup)
+        public void Position(Alternet.Drawing.PointI ptOrigin, Alternet.Drawing.SizeI sizePopup)
         {
             CheckDisposed();
             NativeApi.Popup_Position_(NativePointer, ptOrigin, sizePopup);
@@ -81,7 +81,7 @@ namespace Alternet.UI.Native
             public static extern void Popup_SetPuContainsControls_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Popup_Position_(IntPtr obj, Alternet.Drawing.Int32Point ptOrigin, Alternet.Drawing.Int32Size sizePopup);
+            public static extern void Popup_Position_(IntPtr obj, Alternet.Drawing.PointI ptOrigin, Alternet.Drawing.SizeI sizePopup);
             
         }
     }

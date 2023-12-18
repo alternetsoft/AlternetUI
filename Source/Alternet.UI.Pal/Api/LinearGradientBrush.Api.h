@@ -13,7 +13,7 @@ ALTERNET_UI_API LinearGradientBrush* LinearGradientBrush_Create_()
     return new LinearGradientBrush();
 }
 
-ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, Point startPoint, Point endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
+ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, PointD startPoint, PointD endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
     obj->Initialize(startPoint, endPoint, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
 }

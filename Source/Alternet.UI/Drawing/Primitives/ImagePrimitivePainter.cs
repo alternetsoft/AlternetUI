@@ -11,11 +11,11 @@ namespace Alternet.Drawing
     {
         public Image? Image;
 
-        public Point DestPoint;
+        public PointD DestPoint;
 
-        public Size? Size;
+        public SizeD? Size;
 
-        public Rect? SourceRect = null;
+        public RectD? SourceRect = null;
 
         public bool Stretch = true;
 
@@ -23,16 +23,16 @@ namespace Alternet.Drawing
 
         public bool CenterHorz = true;
 
-        public Rect DestRect
+        public RectD DestRect
         {
             get
             {
                 if(Size is null)
                 {
-                    return new Rect(DestPoint, Drawing.Size.Empty);
+                    return new RectD(DestPoint, Drawing.SizeD.Empty);
                 }
                 else
-                    return new Rect(DestPoint, Size.Value);
+                    return new RectD(DestPoint, Size.Value);
             }
 
             set

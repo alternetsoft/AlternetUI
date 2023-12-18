@@ -100,7 +100,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="Control.SuggestedSize"/> property of the main child control.
         /// </summary>
-        public Size InnerSuggestedSize
+        public SizeD InnerSuggestedSize
         {
             get => MainControl.SuggestedSize;
             set => MainControl.SuggestedSize = value;

@@ -20,7 +20,7 @@ namespace NativeApi.Api
         public static IntPtr AddSpacer(IntPtr handle, int size) => default;
 
         // Implements the calculation of a box sizer's minimal. 
-        public static Int32Size CalcMin(IntPtr handle) => default;
+        public static SizeI CalcMin(IntPtr handle) => default;
 
         // Returns the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.
         public static int GetOrientation(IntPtr handle) => default;
@@ -28,6 +28,6 @@ namespace NativeApi.Api
         // Sets the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL. 
         public static void SetOrientation(IntPtr handle, int orient) { }
 
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
+        public static void RepositionChildren(IntPtr handle, SizeI minSize) { }
     }
 }

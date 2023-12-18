@@ -169,7 +169,7 @@ namespace Alternet.UI
 
         public override void CollapseAll() => NativeControl.CollapseAll();
 
-        public override TreeViewHitTestInfo HitTest(Point point)
+        public override TreeViewHitTestInfo HitTest(PointD point)
         {
             var result = NativeControl.ItemHitTest(point);
             if (result == IntPtr.Zero)

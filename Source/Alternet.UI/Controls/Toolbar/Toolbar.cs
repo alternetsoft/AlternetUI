@@ -266,7 +266,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="GetDefaultImageSize(double)"/>
-        public static Int32Size GetDefaultImageSize(Size deviceDpi)
+        public static SizeI GetDefaultImageSize(SizeD deviceDpi)
         {
             var width = GetDefaultImageSize(deviceDpi.Width);
             var height = GetDefaultImageSize(deviceDpi.Height);
@@ -278,10 +278,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control's <see cref="Control.GetDPI"/> method
         /// is used to get DPI settings.</param>
-        public static Int32Size GetDefaultImageSize(Control? control = null)
+        public static SizeI GetDefaultImageSize(Control? control = null)
         {
             control ??= Application.FirstWindow();
-            Size? dpi;
+            SizeD? dpi;
             if (control is null)
                 dpi = Window.DefaultDPI ?? Display.Primary.DPI;
             else
@@ -297,7 +297,7 @@ namespace Alternet.UI
         /// </summary>
         public int GetDefaultImageSize()
         {
-            Size deviceDpi = GetDPI();
+            SizeD deviceDpi = GetDPI();
             return GetDefaultImageSize(deviceDpi.Width);
         }
 

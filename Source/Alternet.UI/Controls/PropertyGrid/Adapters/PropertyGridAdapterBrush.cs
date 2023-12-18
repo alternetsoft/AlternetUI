@@ -15,10 +15,10 @@ namespace Alternet.UI
     {
         private BrushType brushType = BrushType.None;
         private Color color = DefaultColor;
-        private Point linearGradientStart = DefaultLinearGradientStart;
-        private Point linearGradientEnd = DefaultLinearGradientEnd;
-        private Point radialGradientCenter = DefaultRadialGradientCenter;
-        private Point radialGradientOrigin = DefaultRadialGradientOrigin;
+        private PointD linearGradientStart = DefaultLinearGradientStart;
+        private PointD linearGradientEnd = DefaultLinearGradientEnd;
+        private PointD radialGradientCenter = DefaultRadialGradientCenter;
+        private PointD radialGradientOrigin = DefaultRadialGradientOrigin;
         private Color endColor = DefaultEndColor;
         private double radialGradientRadius = DefaultRadialGradientRadius;
         private BrushHatchStyle hatchStyle;
@@ -29,22 +29,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the <see cref="LinearGradientStart"/> property.
         /// </summary>
-        public static Point DefaultLinearGradientStart { get; set; } = Point.Empty;
+        public static PointD DefaultLinearGradientStart { get; set; } = PointD.Empty;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="LinearGradientEnd"/> property.
         /// </summary>
-        public static Point DefaultLinearGradientEnd { get; set; } = new(250, 250);
+        public static PointD DefaultLinearGradientEnd { get; set; } = new(250, 250);
 
         /// <summary>
         /// Gets or sets default value for the <see cref="RadialGradientCenter"/> property.
         /// </summary>
-        public static Point DefaultRadialGradientCenter { get; set; } = new(150, 50);
+        public static PointD DefaultRadialGradientCenter { get; set; } = new(150, 50);
 
         /// <summary>
         /// Gets or sets default value for the <see cref="RadialGradientOrigin"/> property.
         /// </summary>
-        public static Point DefaultRadialGradientOrigin { get; set; } = new(50, 50);
+        public static PointD DefaultRadialGradientOrigin { get; set; } = new(50, 50);
 
         /// <summary>
         /// Gets or sets default value for the <see cref="Color"/> property.
@@ -123,7 +123,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="LinearGradientBrush.StartPoint"/>
-        public Point LinearGradientStart
+        public PointD LinearGradientStart
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="LinearGradientBrush.EndPoint"/>
-        public Point LinearGradientEnd
+        public PointD LinearGradientEnd
         {
             get
             {
@@ -153,7 +153,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="RadialGradientBrush.Center"/>
-        public Point RadialGradientCenter
+        public PointD RadialGradientCenter
         {
             get
             {
@@ -168,7 +168,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="RadialGradientBrush.GradientOrigin"/>
-        public Point RadialGradientOrigin
+        public PointD RadialGradientOrigin
         {
             get
             {

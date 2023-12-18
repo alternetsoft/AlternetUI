@@ -40,7 +40,7 @@ namespace PropertyGridSample
         static ObjectInitializers()
         {
             const int defaultListHeight = 250;
-            Size defaultListSize = new(defaultListHeight, defaultListHeight);
+            SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
 
             static void SetBackgrounds(Control control)
             {
@@ -554,7 +554,7 @@ namespace PropertyGridSample
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new Size(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new SizeD(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();

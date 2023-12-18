@@ -59,7 +59,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Int32Point EventClickPoint
+        public Alternet.Drawing.PointI EventClickPoint
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Int32Rect EventItemRect
+        public Alternet.Drawing.RectI EventItemRect
         {
             get
             {
@@ -240,7 +240,7 @@ namespace Alternet.UI.Native
             return NativeApi.AuiToolBar_GetToolFits_(NativePointer, toolId);
         }
         
-        public Alternet.Drawing.Rect GetToolRect(int toolId)
+        public Alternet.Drawing.RectD GetToolRect(int toolId)
         {
             CheckDisposed();
             return NativeApi.AuiToolBar_GetToolRect_(NativePointer, toolId);
@@ -258,13 +258,13 @@ namespace Alternet.UI.Native
             return NativeApi.AuiToolBar_GetToolBarFits_(NativePointer);
         }
         
-        public void SetToolBitmapSizeInPixels(Alternet.Drawing.Int32Size size)
+        public void SetToolBitmapSizeInPixels(Alternet.Drawing.SizeI size)
         {
             CheckDisposed();
             NativeApi.AuiToolBar_SetToolBitmapSizeInPixels_(NativePointer, size);
         }
         
-        public Alternet.Drawing.Int32Size GetToolBitmapSizeInPixels()
+        public Alternet.Drawing.SizeI GetToolBitmapSizeInPixels()
         {
             CheckDisposed();
             return NativeApi.AuiToolBar_GetToolBitmapSizeInPixels_(NativePointer);
@@ -462,7 +462,7 @@ namespace Alternet.UI.Native
             NativeApi.AuiToolBar_SetToolMinSize_(NativePointer, tool_id, width, height);
         }
         
-        public Alternet.Drawing.Int32Size GetToolMinSize(int tool_id)
+        public Alternet.Drawing.SizeI GetToolMinSize(int tool_id)
         {
             CheckDisposed();
             return NativeApi.AuiToolBar_GetToolMinSize_(NativePointer, tool_id);
@@ -574,10 +574,10 @@ namespace Alternet.UI.Native
             public static extern bool AuiToolBar_GetEventIsDropDownClicked_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point AuiToolBar_GetEventClickPoint_(IntPtr obj);
+            public static extern Alternet.Drawing.PointI AuiToolBar_GetEventClickPoint_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Rect AuiToolBar_GetEventItemRect_(IntPtr obj);
+            public static extern Alternet.Drawing.RectI AuiToolBar_GetEventItemRect_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiToolBar_DoOnCaptureLost_(IntPtr obj);
@@ -661,7 +661,7 @@ namespace Alternet.UI.Native
             public static extern bool AuiToolBar_GetToolFits_(IntPtr obj, int toolId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect AuiToolBar_GetToolRect_(IntPtr obj, int toolId);
+            public static extern Alternet.Drawing.RectD AuiToolBar_GetToolRect_(IntPtr obj, int toolId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool AuiToolBar_GetToolFitsByIndex_(IntPtr obj, int toolId);
@@ -670,10 +670,10 @@ namespace Alternet.UI.Native
             public static extern bool AuiToolBar_GetToolBarFits_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void AuiToolBar_SetToolBitmapSizeInPixels_(IntPtr obj, Alternet.Drawing.Int32Size size);
+            public static extern void AuiToolBar_SetToolBitmapSizeInPixels_(IntPtr obj, Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size AuiToolBar_GetToolBitmapSizeInPixels_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeI AuiToolBar_GetToolBitmapSizeInPixels_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool AuiToolBar_GetOverflowVisible_(IntPtr obj);
@@ -772,7 +772,7 @@ namespace Alternet.UI.Native
             public static extern void AuiToolBar_SetToolMinSize_(IntPtr obj, int tool_id, int width, int height);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size AuiToolBar_GetToolMinSize_(IntPtr obj, int tool_id);
+            public static extern Alternet.Drawing.SizeI AuiToolBar_GetToolMinSize_(IntPtr obj, int tool_id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiToolBar_SetAlignment_(IntPtr obj, int tool_id, int l);

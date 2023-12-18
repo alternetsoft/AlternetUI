@@ -49,14 +49,14 @@ namespace NativeApi.Api
         // contained window.
         public static void DetachWindow(IntPtr handle) { }
 
-        public static Int32Size GetSize(IntPtr handle) => default;
-        public static Int32Size CalcMin(IntPtr handle) => default;
-        public static void SetDimension(IntPtr handle, Int32Point pos, Int32Size size) { }
+        public static SizeI GetSize(IntPtr handle) => default;
+        public static SizeI CalcMin(IntPtr handle) => default;
+        public static void SetDimension(IntPtr handle, PointI pos, SizeI size) { }
 
-        public static Int32Size GetMinSize(IntPtr handle) => default;
-        public static Int32Size GetMinSizeWithBorder(IntPtr handle) => default;
-        public static Int32Size GetMaxSize(IntPtr handle) => default;
-        public static Int32Size GetMaxSizeWithBorder(IntPtr handle) => default;
+        public static SizeI GetMinSize(IntPtr handle) => default;
+        public static SizeI GetMinSizeWithBorder(IntPtr handle) => default;
+        public static SizeI GetMaxSize(IntPtr handle) => default;
+        public static SizeI GetMaxSizeWithBorder(IntPtr handle) => default;
 
         public static void SetMinSize(IntPtr handle, int x, int y) { }
         public static void SetInitSize(IntPtr handle, int x, int y) { }
@@ -67,7 +67,7 @@ namespace NativeApi.Api
         public static void SetRatio2(IntPtr handle, float ratio) { }
         public static float GetRatio(IntPtr handle) => default;
 
-        public static Int32Rect GetRect(IntPtr handle) => default;
+        public static RectI GetRect(IntPtr handle) => default;
 
         // set a sizer item id (different from a window id, all sizer items,
         // including spacers, can have an associated id)
@@ -87,7 +87,7 @@ namespace NativeApi.Api
 
         public static IntPtr GetWindow(IntPtr handle) => default;
         public static IntPtr GetSizer(IntPtr handle) => default;
-        public static Int32Size GetSpacer(IntPtr handle) => default;
+        public static SizeI GetSpacer(IntPtr handle) => default;
 
         // This function behaves obviously for the windows and spacers but for the
         // sizers it returns true if any sizer element is shown and only returns
@@ -99,7 +99,7 @@ namespace NativeApi.Api
 
         public static void SetUserData(IntPtr handle, IntPtr userData) { }
         public static IntPtr GetUserData(IntPtr handle) => default;
-        public static Int32Point GetPosition(IntPtr handle) => default;
+        public static PointI GetPosition(IntPtr handle) => default;
 
         // Called once the first component of an item has been decided. This is
         // used in algorithms that depend on knowing the size in one direction

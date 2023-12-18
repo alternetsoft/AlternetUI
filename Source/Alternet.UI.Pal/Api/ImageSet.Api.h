@@ -25,7 +25,7 @@ ALTERNET_UI_API c_bool ImageSet_GetIsReadOnly_(ImageSet* obj)
     return obj->GetIsReadOnly();
 }
 
-ALTERNET_UI_API Int32Size_C ImageSet_GetDefaultSize_(ImageSet* obj)
+ALTERNET_UI_API SizeI_C ImageSet_GetDefaultSize_(ImageSet* obj)
 {
     return obj->GetDefaultSize();
 }
@@ -60,12 +60,12 @@ ALTERNET_UI_API void ImageSet_InitImageFor_(ImageSet* obj, Image* image, void* w
     obj->InitImageFor(image, window);
 }
 
-ALTERNET_UI_API Int32Size_C ImageSet_GetPreferredBitmapSizeAtScale_(ImageSet* obj, double scale)
+ALTERNET_UI_API SizeI_C ImageSet_GetPreferredBitmapSizeAtScale_(ImageSet* obj, double scale)
 {
     return obj->GetPreferredBitmapSizeAtScale(scale);
 }
 
-ALTERNET_UI_API Int32Size_C ImageSet_GetPreferredBitmapSizeFor_(ImageSet* obj, void* window)
+ALTERNET_UI_API SizeI_C ImageSet_GetPreferredBitmapSizeFor_(ImageSet* obj, void* window)
 {
     return obj->GetPreferredBitmapSizeFor(window);
 }

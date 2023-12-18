@@ -532,11 +532,11 @@ namespace NativeApi.Api
         public bool ApplyStyleSheet(IntPtr styleSheet = default) => default;
 
         // Shows the given context menu, optionally adding appropriate property-editing commands for the current position in the object hierarchy.    
-        public bool ShowContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true) => default;
+        public bool ShowContextMenu(IntPtr menu, PointI pt, bool addPropertyCommands = true) => default;
 
         // Prepares the context menu, optionally adding appropriate property-editing commands.
         // Returns the number of property commands added.    
-        public int PrepareContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true) => default;
+        public int PrepareContextMenu(IntPtr menu, PointI pt, bool addPropertyCommands = true) => default;
 
         // Returns <c>true</c> if we can edit the object's properties via a GUI.
         public bool CanEditProperties(IntPtr richObj) => default;
@@ -621,10 +621,10 @@ namespace NativeApi.Api
         public void MoveCaretForward(long oldPosition) { }
 
         // Transforms logical (unscrolled) position to physical window position.    
-        public Int32Point GetPhysicalPoint(Int32Point ptLogical) => default;
+        public PointI GetPhysicalPoint(PointI ptLogical) => default;
 
         // Transforms physical window position to logical (unscrolled) position.
-        public Int32Point GetLogicalPoint(Int32Point ptPhysical) => default;
+        public PointI GetLogicalPoint(PointI ptPhysical) => default;
 
         // Helper function for finding the caret position for the next word.
         // Direction is 1 (forward) or -1 (backwards).    
@@ -652,7 +652,7 @@ namespace NativeApi.Api
 
         // Returns the caret height and position for the given character position.
         // If container is null, the current focus object will be used.
-        public bool GetCaretPositionForIndex(long position, Int32Rect rect,
+        public bool GetCaretPositionForIndex(long position, RectI rect,
             IntPtr container = default) => default;
 
         // Internal helper function returning the line for the visible caret position.
@@ -670,7 +670,7 @@ namespace NativeApi.Api
         public bool IsDefaultStyleShowing() => default;
 
         // Returns the first visible point in the window.    
-        public Int32Point GetFirstVisiblePoint() => default;
+        public PointI GetFirstVisiblePoint() => default;
 
         // Enable or disable images
         public void EnableImages(bool b) { }
@@ -898,7 +898,7 @@ namespace NativeApi.Api
         public void SetSelectionRange(long startRange, long endRange) { }
 
         // Converts a text position to zero-based column and line numbers.    
-        public Int32Point PositionToXY(long pos) => default;
+        public PointI PositionToXY(long pos) => default;
 
         // Write a text box at the current insertion point, returning the text box.
         // You can then call SetFocusObject() to set the focus to the new object.    

@@ -179,7 +179,7 @@ ALTERNET_UI_API void ListView_SetSelected_(ListView* obj, int64_t index, c_bool 
     obj->SetSelected(index, value);
 }
 
-ALTERNET_UI_API void* ListView_ItemHitTest_(ListView* obj, Point point)
+ALTERNET_UI_API void* ListView_ItemHitTest_(ListView* obj, PointD point)
 {
     return obj->ItemHitTest(point);
 }
@@ -209,7 +209,7 @@ ALTERNET_UI_API void ListView_BeginLabelEdit_(ListView* obj, int64_t itemIndex)
     obj->BeginLabelEdit(itemIndex);
 }
 
-ALTERNET_UI_API Rect_C ListView_GetItemBounds_(ListView* obj, int64_t itemIndex, ListViewItemBoundsPortion portion)
+ALTERNET_UI_API RectD_C ListView_GetItemBounds_(ListView* obj, int64_t itemIndex, ListViewItemBoundsPortion portion)
 {
     return obj->GetItemBounds(itemIndex, portion);
 }

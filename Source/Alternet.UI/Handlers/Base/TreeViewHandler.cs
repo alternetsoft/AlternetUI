@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per
         /// unit).
         /// </summary>
-        public abstract TreeViewHitTestInfo HitTest(Point point);
+        public abstract TreeViewHitTestInfo HitTest(PointD point);
 
         /// <summary>
         /// Gets a value indicating whether the specified tree item is in the

@@ -22,7 +22,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Test method.</summary>
-        public static void TestPopupWindow(Control control, Int32Point pos, Int32Size sz)
+        public static void TestPopupWindow(Control control, PointI pos, SizeI sz)
         {
             Native.WxOtherFactory.TestPopupWindow(control.WxWidget, pos, sz);
         }
@@ -205,19 +205,19 @@ namespace Alternet.UI
         /// update region, which is the area that will be repainted at the next
         /// paint operation), and causes a paint message to be sent to the
         /// control.</summary>
-        /// <param name="rect">A <see cref="Rect" /> that represents the region to invalidate.</param>
-        public void Invalidate(Rect rect)
+        /// <param name="rect">A <see cref="RectD" /> that represents the region to invalidate.</param>
+        public void Invalidate(RectD rect)
         {
             NativeControl.RefreshRect(rect, true);
         }
 
         /// <summary>
-        /// Same as <see cref="Invalidate(Rect)"/> but has additional
+        /// Same as <see cref="Invalidate(RectD)"/> but has additional
         /// parameter <paramref name="eraseBackground"/>.
         /// </summary>
-        /// <param name="rect">A <see cref="Rect" /> that represents the region to invalidate.</param>
+        /// <param name="rect">A <see cref="RectD" /> that represents the region to invalidate.</param>
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
-        public void RefreshRect(Rect rect, bool eraseBackground = true)
+        public void RefreshRect(RectD rect, bool eraseBackground = true)
         {
             NativeControl.RefreshRect(rect, eraseBackground);
         }
@@ -673,7 +673,7 @@ namespace Alternet.UI
         /// <param name="newBounds">New location and size.</param>
         /// <param name="specified">Specifies which bounds to use when applying new
         /// location and size.</param>
-        public virtual void SetBounds(Rect newBounds, BoundsSpecified specified)
+        public virtual void SetBounds(RectD newBounds, BoundsSpecified specified)
         {
             SetBounds(newBounds.X, newBounds.Y, newBounds.Width, newBounds.Height, specified);
         }
@@ -699,7 +699,7 @@ namespace Alternet.UI
             BoundsSpecified specified)
         {
             var bounds = Bounds;
-            Rect result = new(x, y, width, height);
+            RectD result = new(x, y, width, height);
 
             if ((specified & BoundsSpecified.X) == 0)
                 result.X = bounds.X;
@@ -856,10 +856,10 @@ namespace Alternet.UI
         /// Converts the screen coordinates of a specified point on the screen
         /// to client-area coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point ScreenToClient(Point point)
+        public PointD ScreenToClient(PointD point)
         {
             return Handler.ScreenToClient(point);
         }
@@ -868,10 +868,10 @@ namespace Alternet.UI
         /// Converts the client-area coordinates of a specified point to
         /// screen coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the
+        /// <param name="point">A <see cref="PointD"/> that contains the
         /// client coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point ClientToScreen(Point point)
+        public PointD ClientToScreen(PointD point)
         {
             return Handler.ClientToScreen(point);
         }
@@ -880,10 +880,10 @@ namespace Alternet.UI
         /// Converts the screen coordinates of a specified point in
         /// device-independent units (1/96th inch per unit) to device (pixel) coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen device-independent coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Int32Point ScreenToDevice(Point point)
+        public PointI ScreenToDevice(PointD point)
         {
             return Handler.ScreenToDevice(point);
         }
@@ -892,10 +892,10 @@ namespace Alternet.UI
         /// Converts the device (pixel) coordinates of a specified point
         /// to coordinates in device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the coordinates
+        /// <param name="point">A <see cref="PointD"/> that contains the coordinates
         /// in device-independent units (1/96th inch per unit) to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point DeviceToScreen(Int32Point point)
+        public PointD DeviceToScreen(PointI point)
         {
             return Handler.DeviceToScreen(point);
         }
@@ -1008,7 +1008,7 @@ namespace Alternet.UI
         /// can allocate a child control.</param>
         /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual Size GetPreferredSize(Size availableSize)
+        public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
             return Handler.GetPreferredSize(availableSize);
         }
@@ -1018,7 +1018,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Rectangle.</param>
         /// <param name="flags">Flags.</param>
-        public virtual void SetBounds(Rect rect, SetBoundsFlags flags)
+        public virtual void SetBounds(RectD rect, SetBoundsFlags flags)
         {
             NativeControl.SetBoundsEx(rect, (int)flags);
         }
@@ -1176,7 +1176,7 @@ namespace Alternet.UI
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>
-        public virtual Size GetDPI()
+        public virtual SizeD GetDPI()
         {
             if (Handler != null)
                 return Handler.GetDPI();
@@ -1419,7 +1419,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public Int32Size PixelFromDip(Size value)
+        public SizeI PixelFromDip(SizeD value)
         {
             return new(PixelFromDip(value.Width), PixelFromDip(value.Height));
         }
@@ -1429,7 +1429,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public Int32Point PixelFromDip(Point value)
+        public PointI PixelFromDip(PointD value)
         {
             return new(PixelFromDip(value.X), PixelFromDip(value.Y));
         }
@@ -1439,7 +1439,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public Int32Rect PixelFromDip(Rect value)
+        public RectI PixelFromDip(RectD value)
         {
             return new(PixelFromDip(value.Location), PixelFromDip(value.Size));
         }
@@ -1461,31 +1461,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <see cref="Int32Size"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="value"><see cref="Int32Size"/> in pixels.</param>
+        /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
-        public Size PixelToDip(Int32Size value)
+        public SizeD PixelToDip(SizeI value)
         {
             return new(PixelToDip(value.Width), PixelToDip(value.Height));
         }
 
         /// <summary>
-        /// Converts <see cref="Int32Point"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="value"><see cref="Int32Point"/> in pixels.</param>
+        /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
-        public Point PixelToDip(Int32Point value)
+        public PointD PixelToDip(PointI value)
         {
             return new(PixelToDip(value.X), PixelToDip(value.Y));
         }
 
         /// <summary>
-        /// Converts <see cref="Int32Rect"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="value"><see cref="Int32Rect"/> in pixels.</param>
+        /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
-        public Rect PixelToDip(Int32Rect value)
+        public RectD PixelToDip(RectI value)
         {
             return new(PixelToDip(value.Location), PixelToDip(value.Size));
         }
@@ -1564,10 +1564,10 @@ namespace Alternet.UI
         /// <summary>
         /// Computes the location of the specified client point into screen coordinates.
         /// </summary>
-        /// <param name="p">The client coordinate <see cref="Point" /> to convert.</param>
-        /// <returns>A <see cref="Point" /> that represents the converted <see cref="Point" />,
+        /// <param name="p">The client coordinate <see cref="PointD" /> to convert.</param>
+        /// <returns>A <see cref="PointD" /> that represents the converted <see cref="PointD" />,
         /// <paramref name="p" />, in screen coordinates.</returns>
-        public Point PointToScreen(Point p)
+        public PointD PointToScreen(PointD p)
         {
             return ClientToScreen(p);
         }
@@ -1575,10 +1575,10 @@ namespace Alternet.UI
         /// <summary>
         /// Computes the location of the specified screen point into client coordinates.
         /// </summary>
-        /// <param name="p">The screen coordinate <see cref="Point" /> to convert.</param>
-        /// <returns> A <see cref="Point" /> that represents the converted
-        /// <see cref="Point" />, <paramref name="p" />, in client coordinates.</returns>
-        public Point PointToClient(Point p)
+        /// <param name="p">The screen coordinate <see cref="PointD" /> to convert.</param>
+        /// <returns> A <see cref="PointD" /> that represents the converted
+        /// <see cref="PointD" />, <paramref name="p" />, in client coordinates.</returns>
+        public PointD PointToClient(PointD p)
         {
             return ScreenToClient(p);
         }

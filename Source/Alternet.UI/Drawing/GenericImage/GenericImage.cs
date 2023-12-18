@@ -234,7 +234,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns the size of the image in pixels.
         /// </summary>
-        public Int32Size Size
+        public SizeI Size
         {
             get => UI.Native.GenericImage.GetSize(Handle);
         }
@@ -242,7 +242,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns the bounds of the image in pixels. Result is (0, 0, Width, Height).
         /// </summary>
-        public Int32Rect Bounds
+        public RectI Bounds
         {
             get => (0, 0, Width, Height);
         }
@@ -569,7 +569,7 @@ namespace Alternet.Drawing
         /// <see cref="Bounds"/> property is used.</param>
         /// <param name="rgb">RGB Color.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetRGBRect(RGBValue rgb, Int32Rect? rect = null)
+        public void SetRGBRect(RGBValue rgb, RectI? rect = null)
         {
             rect ??= Bounds;
             UI.Native.GenericImage.SetRGBRect(Handle, rect.Value, rgb.R, rgb.G, rgb.B);
@@ -791,8 +791,8 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ResizeNoScale(
-            Int32Size size,
-            Int32Point pos,
+            SizeI size,
+            PointI pos,
             RGBValue? color = null)
         {
             if (color is null)
@@ -828,7 +828,7 @@ namespace Alternet.Drawing
         /// Otherwise, the areas will be filled with the color with the specified RGB components.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage SizeNoScale(Int32Size size, Int32Point pos = default, RGBValue? color = null)
+        public GenericImage SizeNoScale(SizeI size, PointI pos = default, RGBValue? color = null)
         {
             var red = color?.R ?? -1;
             var green = color?.G ?? -1;
@@ -1264,7 +1264,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Bounds of the sub-image.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage GetSubImage(Int32Rect rect)
+        public GenericImage GetSubImage(RectI rect)
         {
             return new(UI.Native.GenericImage.GetSubImage(Handle, rect));
         }

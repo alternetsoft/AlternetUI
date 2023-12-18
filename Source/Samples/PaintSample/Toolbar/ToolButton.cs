@@ -64,9 +64,9 @@ namespace PaintSample
 
         public Tool Tool { get; }
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            return new Size(30, 30);
+            return new SizeD(30, 30);
         }
 
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
@@ -125,13 +125,13 @@ namespace PaintSample
             dc.FillRectangle(IsToggled ? Brushes.White : Brushes.WhiteSmoke, innerRect);
             dc.DrawRectangle(Pens.Gray, innerRect);
 
-            var imageSize = new Size(image.PixelSize.Width, image.PixelSize.Height);
+            var imageSize = new SizeD(image.PixelSize.Width, image.PixelSize.Height);
 
-            var imageOrigin = new Point(
+            var imageOrigin = new PointD(
                 innerRect.X + (innerRect.Width - imageSize.Width) / 2,
                 innerRect.Y + (innerRect.Height - imageSize.Height) / 2);
 
-            dc.DrawImage(image, new Rect(imageOrigin, imageSize));
+            dc.DrawImage(image, new RectD(imageOrigin, imageSize));
 
             if (IsToggled)
             {

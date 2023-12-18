@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
         /// </summary>
-        public static Size DefaultAdditionalSpace = new(30, 30);
+        public static SizeD DefaultAdditionalSpace = new(30, 30);
 
         private static Thickness? defaultBorderWidth;
 
@@ -76,7 +76,7 @@ namespace Alternet.UI
         private bool useTabBold = DefaultUseTabBold;
         private bool useTabForegroundColor = DefaultUseTabForegroundColor;
         private bool useTabBackgroundColor = DefaultUseTabBackgroundColor;
-        private Size additionalSpace = DefaultAdditionalSpace;
+        private SizeD additionalSpace = DefaultAdditionalSpace;
         private CardPanelHeaderItem? selectedTab;
         private bool tabHasBorder = DefaultTabHasBorder;
         private CardPanel? cardPanel;
@@ -511,7 +511,7 @@ namespace Alternet.UI
         /// <see cref="UpdateCardsMode"/> is not <see cref="WindowSizeToContentMode.None"/>.
         /// </summary>
         [Browsable(false)]
-        public Size AdditionalSpace
+        public SizeD AdditionalSpace
         {
             get
             {
@@ -644,9 +644,9 @@ namespace Alternet.UI
         /// <summary>
         /// Calculates maximal width of cards.
         /// </summary>
-        public virtual Size GetMaxCardSize()
+        public virtual SizeD GetMaxCardSize()
         {
-            return Size.MaxWidthHeight(GetCardSizes());
+            return SizeD.MaxWidthHeight(GetCardSizes());
         }
 
         /// <summary>
@@ -682,7 +682,7 @@ namespace Alternet.UI
                     update = double.IsNaN(parent.SuggestedHeight);
                     break;
                 case WindowSizeToContentMode.WidthAndHeight:
-                    update = Size.AnyIsNaN(parent.SuggestedSize);
+                    update = SizeD.AnyIsNaN(parent.SuggestedSize);
                     break;
             }
 
@@ -709,7 +709,7 @@ namespace Alternet.UI
                         parent.MinHeight = newHeight;
                         break;
                     case WindowSizeToContentMode.WidthAndHeight:
-                        parent.SuggestedSize = new Size(newWidth, newHeight);
+                        parent.SuggestedSize = new SizeD(newWidth, newHeight);
                         parent.MinimumSize = parent.SuggestedSize;
                         break;
                 }
@@ -795,9 +795,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets cards width and height.
         /// </summary>
-        public virtual Size[] GetCardSizes()
+        public virtual SizeD[] GetCardSizes()
         {
-            Size[] result = new Size[tabs.Count];
+            SizeD[] result = new SizeD[tabs.Count];
             for (int i = 0; i < tabs.Count; i++)
             {
                 var control = tabs[i].CardControl;

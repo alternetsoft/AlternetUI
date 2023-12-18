@@ -108,7 +108,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Rect PrintPage_MarginBounds
+        public Alternet.Drawing.RectD PrintPage_MarginBounds
         {
             get
             {
@@ -118,7 +118,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Rect PrintPage_PhysicalPageBounds
+        public Alternet.Drawing.RectD PrintPage_PhysicalPageBounds
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Rect PrintPage_PageBounds
+        public Alternet.Drawing.RectD PrintPage_PageBounds
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Rect PrintPage_PrintablePageBounds
+        public Alternet.Drawing.RectD PrintPage_PrintablePageBounds
         {
             get
             {
@@ -267,16 +267,16 @@ namespace Alternet.UI.Native
             public static extern void PrintDocument_SetPrintPage_HasMorePages_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect PrintDocument_GetPrintPage_MarginBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectD PrintDocument_GetPrintPage_MarginBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect PrintDocument_GetPrintPage_PhysicalPageBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectD PrintDocument_GetPrintPage_PhysicalPageBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect PrintDocument_GetPrintPage_PageBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectD PrintDocument_GetPrintPage_PageBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect PrintDocument_GetPrintPage_PrintablePageBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectD PrintDocument_GetPrintPage_PrintablePageBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int PrintDocument_GetPrintPage_PageNumber_(IntPtr obj);

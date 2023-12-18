@@ -16,12 +16,12 @@ namespace Alternet.UI
         {
         }
 
-        public Int32Size CalcMin()
+        public SizeI CalcMin()
         {
             return Native.Sizer.CalcMin(Handle);
         }
 
-        public void RepositionChildren(Int32Size minSize)
+        public void RepositionChildren(SizeI minSize)
         {
             Native.Sizer.RepositionChildren(Handle, minSize);
         }
@@ -275,17 +275,17 @@ namespace Alternet.UI
             return Native.Sizer.SetCustomBoxItemMinSize(Handle, index, width, height);
         }
 
-        public Int32Size GetSize()
+        public SizeI GetSize()
         {
             return Native.Sizer.GetSize(Handle);
         }
 
-        public Int32Point GetPosition()
+        public PointI GetPosition()
         {
             return Native.Sizer.GetPosition(Handle);
         }
 
-        public Int32Size GetMinSize()
+        public SizeI GetMinSize()
         {
             return Native.Sizer.GetMinSize(Handle);
         }
@@ -300,17 +300,17 @@ namespace Alternet.UI
             Native.Sizer.Layout(Handle);
         }
 
-        public Int32Size ComputeFittingClientSize(Control window)
+        public SizeI ComputeFittingClientSize(Control window)
         {
             return Native.Sizer.ComputeFittingClientSize(Handle, window.WxWidget);
         }
 
-        public Int32Size ComputeFittingWindowSize(Control window)
+        public SizeI ComputeFittingWindowSize(Control window)
         {
             return Native.Sizer.ComputeFittingWindowSize(Handle, window.WxWidget);
         }
 
-        public Int32Size Fit(Control window)
+        public SizeI Fit(Control window)
         {
             return Native.Sizer.Fit(Handle, window.WxWidget);
         }

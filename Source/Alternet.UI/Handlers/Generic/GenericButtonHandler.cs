@@ -24,7 +24,7 @@ namespace Alternet.UI
             }
         }
 
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             return base.GetPreferredSize(availableSize);
         }

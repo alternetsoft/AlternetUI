@@ -107,12 +107,12 @@ ALTERNET_UI_API void RichTextBox_MoveCaretForward_(RichTextBox* obj, int64_t old
     obj->MoveCaretForward(oldPosition);
 }
 
-ALTERNET_UI_API Int32Point_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, Int32Point ptLogical)
+ALTERNET_UI_API PointI_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, PointI ptLogical)
 {
     return obj->GetPhysicalPoint(ptLogical);
 }
 
-ALTERNET_UI_API Int32Point_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, Int32Point ptPhysical)
+ALTERNET_UI_API PointI_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, PointI ptPhysical)
 {
     return obj->GetLogicalPoint(ptPhysical);
 }
@@ -147,7 +147,7 @@ ALTERNET_UI_API void RichTextBox_MoveCaretBack_(RichTextBox* obj, int64_t oldPos
     obj->MoveCaretBack(oldPosition);
 }
 
-ALTERNET_UI_API c_bool RichTextBox_GetCaretPositionForIndex_(RichTextBox* obj, int64_t position, Int32Rect rect, void* container)
+ALTERNET_UI_API c_bool RichTextBox_GetCaretPositionForIndex_(RichTextBox* obj, int64_t position, RectI rect, void* container)
 {
     return obj->GetCaretPositionForIndex(position, rect, container);
 }
@@ -167,7 +167,7 @@ ALTERNET_UI_API c_bool RichTextBox_IsDefaultStyleShowing_(RichTextBox* obj)
     return obj->IsDefaultStyleShowing();
 }
 
-ALTERNET_UI_API Int32Point_C RichTextBox_GetFirstVisiblePoint_(RichTextBox* obj)
+ALTERNET_UI_API PointI_C RichTextBox_GetFirstVisiblePoint_(RichTextBox* obj)
 {
     return obj->GetFirstVisiblePoint();
 }
@@ -412,7 +412,7 @@ ALTERNET_UI_API void RichTextBox_SetSelectionRange_(RichTextBox* obj, int64_t st
     obj->SetSelectionRange(startRange, endRange);
 }
 
-ALTERNET_UI_API Int32Point_C RichTextBox_PositionToXY_(RichTextBox* obj, int64_t pos)
+ALTERNET_UI_API PointI_C RichTextBox_PositionToXY_(RichTextBox* obj, int64_t pos)
 {
     return obj->PositionToXY(pos);
 }
@@ -827,12 +827,12 @@ ALTERNET_UI_API c_bool RichTextBox_ApplyStyleSheet_(RichTextBox* obj, void* styl
     return obj->ApplyStyleSheet(styleSheet);
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ShowContextMenu_(RichTextBox* obj, void* menu, Int32Point pt, c_bool addPropertyCommands)
+ALTERNET_UI_API c_bool RichTextBox_ShowContextMenu_(RichTextBox* obj, void* menu, PointI pt, c_bool addPropertyCommands)
 {
     return obj->ShowContextMenu(menu, pt, addPropertyCommands);
 }
 
-ALTERNET_UI_API int RichTextBox_PrepareContextMenu_(RichTextBox* obj, void* menu, Int32Point pt, c_bool addPropertyCommands)
+ALTERNET_UI_API int RichTextBox_PrepareContextMenu_(RichTextBox* obj, void* menu, PointI pt, c_bool addPropertyCommands)
 {
     return obj->PrepareContextMenu(menu, pt, addPropertyCommands);
 }

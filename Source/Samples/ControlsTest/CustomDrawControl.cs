@@ -30,7 +30,7 @@ namespace ControlsTest
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
 
-            dc.FillRectangle(Brushes.Gray, new Rect(50, 50, 250, 150));
+            dc.FillRectangle(Brushes.Gray, new RectD(50, 50, 250, 150));
         }
     }
 }

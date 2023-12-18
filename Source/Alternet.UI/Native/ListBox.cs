@@ -131,7 +131,7 @@ namespace Alternet.UI.Native
             NativeApi.ListBox_EnsureVisible_(NativePointer, itemIndex);
         }
         
-        public int ItemHitTest(Alternet.Drawing.Point position)
+        public int ItemHitTest(Alternet.Drawing.PointD position)
         {
             CheckDisposed();
             return NativeApi.ListBox_ItemHitTest_(NativePointer, position);
@@ -249,7 +249,7 @@ namespace Alternet.UI.Native
             public static extern void ListBox_EnsureVisible_(IntPtr obj, int itemIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_ItemHitTest_(IntPtr obj, Alternet.Drawing.Point position);
+            public static extern int ListBox_ItemHitTest_(IntPtr obj, Alternet.Drawing.PointD position);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetItem_(IntPtr obj, int index, string value);

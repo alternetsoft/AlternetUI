@@ -82,7 +82,7 @@ namespace Alternet.UI.Native
             NativeApi.TabControl_SetPageTitle_(NativePointer, index, title);
         }
         
-        public Alternet.Drawing.Size GetTotalPreferredSizeFromPageSize(Alternet.Drawing.Size pageSize)
+        public Alternet.Drawing.SizeD GetTotalPreferredSizeFromPageSize(Alternet.Drawing.SizeD pageSize)
         {
             CheckDisposed();
             return NativeApi.TabControl_GetTotalPreferredSizeFromPageSize_(NativePointer, pageSize);
@@ -171,7 +171,7 @@ namespace Alternet.UI.Native
             public static extern void TabControl_SetPageTitle_(IntPtr obj, int index, string title);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size TabControl_GetTotalPreferredSizeFromPageSize_(IntPtr obj, Alternet.Drawing.Size pageSize);
+            public static extern Alternet.Drawing.SizeD TabControl_GetTotalPreferredSizeFromPageSize_(IntPtr obj, Alternet.Drawing.SizeD pageSize);
             
         }
     }

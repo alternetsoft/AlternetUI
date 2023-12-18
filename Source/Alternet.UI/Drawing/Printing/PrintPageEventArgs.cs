@@ -45,12 +45,12 @@ namespace Alternet.Drawing.Printing
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
         /// units (1/96th inch per unit).
         /// </summary>
-        public Rect MarginBounds { get => nativePrintDocument.PrintPage_MarginBounds; }
+        public RectD MarginBounds { get => nativePrintDocument.PrintPage_MarginBounds; }
 
         /// <summary>
         /// Gets the rectangular area that represents the total area of the page, in millimeters.
         /// </summary>
-        public Rect PhysicalPageBounds { get => nativePrintDocument.PrintPage_PhysicalPageBounds; }
+        public RectD PhysicalPageBounds { get => nativePrintDocument.PrintPage_PhysicalPageBounds; }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
@@ -59,7 +59,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The rectangular area, measured in device-independent units (1/96th inch per unit) that represents the total area of the page.
         /// </value>
-        public Rect PageBounds { get => nativePrintDocument.PrintPage_PageBounds; }
+        public RectD PageBounds { get => nativePrintDocument.PrintPage_PageBounds; }
 
         /// <summary>
         /// Gets the rectangular area that represents the printable portion of the page, in device-independent
@@ -68,7 +68,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The rectangular area, measured in device-independent units (1/96th inch per unit) that represents the printable area of the page.
         /// </value>
-        public Rect PrintablePageBounds { get => nativePrintDocument.PrintPage_PrintablePageBounds; }
+        public RectD PrintablePageBounds { get => nativePrintDocument.PrintPage_PrintablePageBounds; }
 
         /// <summary>
         /// Gets the 1-based number of the page being printed.

@@ -83,12 +83,12 @@ namespace Alternet.UI.Native
             return NativeApi.FlexGridSizer_GetColWidths_(handle);
         }
         
-        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.SizeI minSize)
         {
             NativeApi.FlexGridSizer_RepositionChildren_(handle, minSize);
         }
         
-        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI CalcMin(System.IntPtr handle)
         {
             return NativeApi.FlexGridSizer_CalcMin_(handle);
         }
@@ -149,10 +149,10 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr FlexGridSizer_GetColWidths_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FlexGridSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            public static extern void FlexGridSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.SizeI minSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size FlexGridSizer_CalcMin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI FlexGridSizer_CalcMin_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr FlexGridSizer_CreateFlexGridSizer_(int cols, int vgap, int hgap);

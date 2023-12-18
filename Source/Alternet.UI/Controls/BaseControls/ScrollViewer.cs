@@ -25,7 +25,7 @@ namespace Alternet.UI
 
             public new Native.Panel NativeControl => (Native.Panel)base.NativeControl!;
 
-            private Size LayoutOffset { get; set; }
+            private SizeD LayoutOffset { get; set; }
 
             public override void OnLayout()
             {
@@ -80,7 +80,7 @@ namespace Alternet.UI
                     var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
                     var unboundedPreferredSize =
                         control.GetPreferredSize(
-                            new Size(double.PositiveInfinity, double.PositiveInfinity));
+                            new SizeD(double.PositiveInfinity, double.PositiveInfinity));
 
                     var verticalAlignment = control.VerticalAlignment;
                     var horizontalAlignment = control.HorizontalAlignment;
@@ -110,7 +110,7 @@ namespace Alternet.UI
 
                     var offset = LayoutOffset;
 
-                    control.Handler.Bounds = new Rect(
+                    control.Handler.Bounds = new RectD(
                         horizontalPosition.Origin + offset.Width,
                         verticalPosition.Origin + offset.Height,
                         horizontalPosition.Size,
@@ -121,7 +121,7 @@ namespace Alternet.UI
             private void SetScrollInfo()
             {
                 var preferredSize = GetChildrenMaxPreferredSizePadded(
-                    new Size(double.PositiveInfinity, double.PositiveInfinity));
+                    new SizeD(double.PositiveInfinity, double.PositiveInfinity));
                 var size = Control.ClientRectangle.Size;
 
                 if (preferredSize.Width <= size.Width)
@@ -148,7 +148,7 @@ namespace Alternet.UI
                         (int)preferredSize.Height);
                 }
 
-                LayoutOffset = Size.Empty;
+                LayoutOffset = SizeD.Empty;
 
                 scrollInfoValid = true;
             }
@@ -156,7 +156,7 @@ namespace Alternet.UI
             private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
             {
                 settingLayoutOffset = true;
-                LayoutOffset = new Size(
+                LayoutOffset = new SizeD(
                     -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Horizontal),
                     LayoutOffset.Height);
                 Control.PerformLayout();
@@ -166,7 +166,7 @@ namespace Alternet.UI
             private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
             {
                 settingLayoutOffset = true;
-                LayoutOffset = new Size(
+                LayoutOffset = new SizeD(
                     LayoutOffset.Width,
                     -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Vertical));
                 Control.PerformLayout();

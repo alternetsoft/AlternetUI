@@ -55,7 +55,7 @@ namespace Alternet.UI.Native
             NativeApi.Menu_RemoveItemAt_(NativePointer, index);
         }
         
-        public void ShowContextMenu(Control control, Alternet.Drawing.Point position)
+        public void ShowContextMenu(Control control, Alternet.Drawing.PointD position)
         {
             CheckDisposed();
             NativeApi.Menu_ShowContextMenu_(NativePointer, control.NativePointer, position);
@@ -83,7 +83,7 @@ namespace Alternet.UI.Native
             public static extern void Menu_RemoveItemAt_(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_ShowContextMenu_(IntPtr obj, IntPtr control, Alternet.Drawing.Point position);
+            public static extern void Menu_ShowContextMenu_(IntPtr obj, IntPtr control, Alternet.Drawing.PointD position);
             
         }
     }

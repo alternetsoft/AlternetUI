@@ -22,16 +22,16 @@ bool GetPrintPage_HasMorePages();
 void SetPrintPage_HasMorePages(bool value);
 
 
-Rect GetPrintPage_MarginBounds();
+RectD GetPrintPage_MarginBounds();
 
 
-Rect GetPrintPage_PhysicalPageBounds();
+RectD GetPrintPage_PhysicalPageBounds();
 
 
-Rect GetPrintPage_PageBounds();
+RectD GetPrintPage_PageBounds();
 
 
-Rect GetPrintPage_PrintablePageBounds();
+RectD GetPrintPage_PrintablePageBounds();
 
 
 int GetPrintPage_PageNumber();

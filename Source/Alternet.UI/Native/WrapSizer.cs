@@ -28,12 +28,12 @@ namespace Alternet.UI.Native
             return NativeApi.WrapSizer_CreateWrapSizer_(orient, flags);
         }
         
-        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.SizeI minSize)
         {
             NativeApi.WrapSizer_RepositionChildren_(handle, minSize);
         }
         
-        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        public static Alternet.Drawing.SizeI CalcMin(System.IntPtr handle)
         {
             return NativeApi.WrapSizer_CalcMin_(handle);
         }
@@ -51,10 +51,10 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr WrapSizer_CreateWrapSizer_(int orient, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WrapSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            public static extern void WrapSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.SizeI minSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WrapSizer_CalcMin_(System.IntPtr handle);
+            public static extern Alternet.Drawing.SizeI WrapSizer_CalcMin_(System.IntPtr handle);
             
         }
     }

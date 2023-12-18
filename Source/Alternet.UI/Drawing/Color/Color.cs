@@ -1854,7 +1854,7 @@ namespace Alternet.Drawing
         /// <param name="size">Size of the created image.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage AsImage(Int32Size size)
+        public GenericImage AsImage(SizeI size)
         {
             GenericImage image = new(size.Width, size.Height);
             image.SetRGBRect(this);

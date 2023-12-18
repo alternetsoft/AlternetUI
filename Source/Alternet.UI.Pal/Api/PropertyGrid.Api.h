@@ -604,12 +604,12 @@ ALTERNET_UI_API void PropertyGrid_SetCurrentCategory_(PropertyGrid* obj, void* p
     obj->SetCurrentCategory(propArg);
 }
 
-ALTERNET_UI_API Int32Rect_C PropertyGrid_GetImageRect_(PropertyGrid* obj, void* p, int item)
+ALTERNET_UI_API RectI_C PropertyGrid_GetImageRect_(PropertyGrid* obj, void* p, int item)
 {
     return obj->GetImageRect(p, item);
 }
 
-ALTERNET_UI_API Int32Size_C PropertyGrid_GetImageSize_(PropertyGrid* obj, void* p, int item)
+ALTERNET_UI_API SizeI_C PropertyGrid_GetImageSize_(PropertyGrid* obj, void* p, int item)
 {
     return obj->GetImageSize(p, item);
 }
@@ -939,7 +939,7 @@ ALTERNET_UI_API c_bool PropertyGrid_EnableCategories_(PropertyGrid* obj, c_bool 
     return obj->EnableCategories(enable);
 }
 
-ALTERNET_UI_API Size_C PropertyGrid_FitColumns_(PropertyGrid* obj)
+ALTERNET_UI_API SizeD_C PropertyGrid_FitColumns_(PropertyGrid* obj)
 {
     return obj->FitColumns();
 }

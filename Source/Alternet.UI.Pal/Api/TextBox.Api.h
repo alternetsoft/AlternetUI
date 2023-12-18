@@ -233,12 +233,12 @@ ALTERNET_UI_API int TextBox_GetNumberOfLines_(TextBox* obj)
     return obj->GetNumberOfLines();
 }
 
-ALTERNET_UI_API Int32Point_C TextBox_PositionToXY_(TextBox* obj, int64_t pos)
+ALTERNET_UI_API PointI_C TextBox_PositionToXY_(TextBox* obj, int64_t pos)
 {
     return obj->PositionToXY(pos);
 }
 
-ALTERNET_UI_API Point_C TextBox_PositionToCoords_(TextBox* obj, int64_t pos)
+ALTERNET_UI_API PointD_C TextBox_PositionToCoords_(TextBox* obj, int64_t pos)
 {
     return obj->PositionToCoords(pos);
 }

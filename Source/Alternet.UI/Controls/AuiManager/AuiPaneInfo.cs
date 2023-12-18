@@ -41,17 +41,17 @@ namespace Alternet.UI
             GC.SuppressFinalize(this);
         }
 
-        public Int32Size GetBestSizePixel()
+        public SizeI GetBestSizePixel()
         {
             return Native.AuiPaneInfo.GetBestSize(handle);
         }
 
-        public Int32Size GetMinSizePixel()
+        public SizeI GetMinSizePixel()
         {
             return Native.AuiPaneInfo.GetMinSize(handle);
         }
 
-        public Int32Size GetMaxSizePixel()
+        public SizeI GetMaxSizePixel()
         {
             return Native.AuiPaneInfo.GetMaxSize(handle);
         }
@@ -273,7 +273,7 @@ namespace Alternet.UI
             return this;
         }
 
-        public IAuiPaneInfo MinSizeDip(Size size)
+        public IAuiPaneInfo MinSizeDip(SizeD size)
         {
             var px = owner.PixelFromDip(size.Width);
             var py = owner.PixelFromDip(size.Height);
@@ -295,7 +295,7 @@ namespace Alternet.UI
             return this;
         }
 
-        public IAuiPaneInfo MaxSizeDip(Size size)
+        public IAuiPaneInfo MaxSizeDip(SizeD size)
         {
             var px = owner.PixelFromDip(size.Width);
             var py = owner.PixelFromDip(size.Height);

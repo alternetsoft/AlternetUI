@@ -5,6 +5,6 @@ namespace NativeApi.Api
 {
     public class RadialGradientBrush : Brush
     {
-        public void Initialize(Point center, double radius, Point gradientOrigin, Color[] gradientStopsColors, double[] gradientStopsOffsets) => throw new Exception();
+        public void Initialize(PointD center, double radius, PointD gradientOrigin, Color[] gradientStopsColors, double[] gradientStopsOffsets) => throw new Exception();
     }
 }

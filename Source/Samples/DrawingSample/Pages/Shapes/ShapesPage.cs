@@ -61,7 +61,7 @@ namespace DrawingSample
 
         public Brush BackgroundBrush { get; private set; }
 
-        public override void Draw(DrawingContext dc, Rect bounds)
+        public override void Draw(DrawingContext dc, RectD bounds)
         {
             var s = shapes;
 
@@ -98,7 +98,7 @@ namespace DrawingSample
             return control;
         }
 
-        private void DrawShapesGrid(DrawingContext dc, Rect bounds, Cell[] cells)
+        private void DrawShapesGrid(DrawingContext dc, RectD bounds, Cell[] cells)
         {
             using var clip = new Region(bounds);
             dc.Clip = clip;
@@ -126,7 +126,7 @@ namespace DrawingSample
             {
                 var cell = cells[i];
 
-                var cellRect = new Rect(x, y, cellSize, cellSize);
+                var cellRect = new RectD(x, y, cellSize, cellSize);
                 if (cellRect.Width <= 0 || cellRect.Height <= 0)
                     continue;
 
@@ -186,7 +186,7 @@ namespace DrawingSample
 
         private class Cell
         {
-            public Cell(string name, Action<DrawingContext, Rect> drawAction)
+            public Cell(string name, Action<DrawingContext, RectD> drawAction)
             {
                 Name = name;
                 DrawAction = drawAction;
@@ -194,7 +194,7 @@ namespace DrawingSample
 
             public string Name { get; }
 
-            public Action<DrawingContext, Rect> DrawAction { get; }
+            public Action<DrawingContext, RectD> DrawAction { get; }
         }
     }
 }

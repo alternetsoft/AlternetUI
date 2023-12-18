@@ -13,8 +13,8 @@ Thickness GetMargins();
 void SetMargins(const Thickness& value);
 
 
-Size GetCustomPaperSize();
-void SetCustomPaperSize(const Size& value);
+SizeD GetCustomPaperSize();
+void SetCustomPaperSize(const SizeD& value);
 
 
 bool GetUseCustomPaperSize();

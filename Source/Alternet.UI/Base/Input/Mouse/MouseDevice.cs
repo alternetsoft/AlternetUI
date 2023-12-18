@@ -84,7 +84,7 @@ namespace Alternet.UI
         /// <returns>
         ///     The current mouse location in screen co-ords
         /// </returns>
-        public Point GetScreenPosition()
+        public PointD GetScreenPosition()
         {
             //if (_stylusDevice != null)
             //    return _stylusDevice.GetMouseScreenPosition(this);
@@ -109,7 +109,7 @@ namespace Alternet.UI
         /// <returns>
         ///     The current mouse location in screen co-ords
         /// </returns>
-        internal abstract Point GetScreenPositionFromSystem();
+        internal abstract PointD GetScreenPositionFromSystem();
 
         //        /// <summary>
         //        ///     Gets the current position of the mouse in client co-ords of the current PresentationSource
@@ -541,7 +541,7 @@ namespace Alternet.UI
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
         /// </summary>
-        public Point GetPosition(IInputElement relativeTo)
+        public PointD GetPosition(IInputElement relativeTo)
         {
             if (relativeTo is Control control)
             {

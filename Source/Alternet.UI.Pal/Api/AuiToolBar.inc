@@ -11,10 +11,10 @@ int GetEventToolId();
 bool GetEventIsDropDownClicked();
 
 
-Int32Point GetEventClickPoint();
+PointI GetEventClickPoint();
 
 
-Int32Rect GetEventItemRect();
+RectI GetEventItemRect();
 
 void DoOnCaptureLost();
 void DoOnLeftUp(int x, int y);
@@ -43,11 +43,11 @@ bool DeleteTool(int toolId);
 bool DeleteByIndex(int toolId);
 int GetToolIndex(int toolId);
 bool GetToolFits(int toolId);
-Rect GetToolRect(int toolId);
+RectD GetToolRect(int toolId);
 bool GetToolFitsByIndex(int toolId);
 bool GetToolBarFits();
-void SetToolBitmapSizeInPixels(const Int32Size& size);
-Int32Size GetToolBitmapSizeInPixels();
+void SetToolBitmapSizeInPixels(const SizeI& size);
+SizeI GetToolBitmapSizeInPixels();
 bool GetOverflowVisible();
 void SetOverflowVisible(bool visible);
 bool GetGripperVisible();
@@ -80,7 +80,7 @@ string GetToolLongHelp(int toolId);
 void SetToolLongHelp(int toolId, const string& helpString);
 uint64_t GetToolCount();
 void SetToolMinSize(int tool_id, int width, int height);
-Int32Size GetToolMinSize(int tool_id);
+SizeI GetToolMinSize(int tool_id);
 void SetAlignment(int tool_id, int l);
 int GetAlignment(int tool_id);
 public:

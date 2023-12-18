@@ -20,8 +20,8 @@ namespace NativeApi.Api
         public static IntPtr CreateWrapSizer(
             int orient /*= wxHORIZONTAL*/, int flags /*= wxWRAPSIZER_DEFAULT_FLAGS*/) => default;
 
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize){}
+        public static void RepositionChildren(IntPtr handle, SizeI minSize){}
 
-        public static Int32Size CalcMin(IntPtr handle) => default;
+        public static SizeI CalcMin(IntPtr handle) => default;
     }
 }

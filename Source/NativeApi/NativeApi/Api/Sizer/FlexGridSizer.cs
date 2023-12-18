@@ -56,9 +56,9 @@ namespace NativeApi.Api
         // Returns a read-only array containing the widths of the columns in the sizer.
         public static IntPtr GetColWidths(IntPtr handle) => default;
 
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
+        public static void RepositionChildren(IntPtr handle, SizeI minSize) { }
 
-        public static Int32Size CalcMin(IntPtr handle) => default;
+        public static SizeI CalcMin(IntPtr handle) => default;
 
         public static IntPtr CreateFlexGridSizer(int cols,
             int vgap, int hgap) => default;

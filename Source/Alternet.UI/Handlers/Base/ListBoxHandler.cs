@@ -28,6 +28,6 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the zero-based index of the item at the specified coordinates.
         /// </summary>
-        public abstract int? HitTest(Point position);
+        public abstract int? HitTest(PointD position);
     }
 }

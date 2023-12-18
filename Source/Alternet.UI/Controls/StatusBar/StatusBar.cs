@@ -442,17 +442,17 @@ namespace Alternet.UI
         /// native control.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
-        /// <returns><see cref="Int32Rect"/> with the size and position of a panels's
+        /// <returns><see cref="RectI"/> with the size and position of a panels's
         /// internal bounding rectangle on success; <c>null</c> otherwise.</returns>
         /// <remarks>
         /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
         /// </remarks>
-        public virtual Int32Rect? GetFieldRect(int index)
+        public virtual RectI? GetFieldRect(int index)
         {
             if (!IsOk)
                 return null;
             var result = Native.WxStatusBarFactory.GetFieldRect(StatusBarHandle, index);
-            if (result == Int32Rect.Empty)
+            if (result == RectI.Empty)
                 return null;
             return result;
         }

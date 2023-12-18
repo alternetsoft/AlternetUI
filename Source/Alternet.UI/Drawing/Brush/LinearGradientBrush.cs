@@ -8,8 +8,8 @@ namespace Alternet.Drawing
     /// </summary>
     public sealed class LinearGradientBrush : Brush
     {
-        private Point startPoint;
-        private Point endPoint;
+        private PointD startPoint;
+        private PointD endPoint;
         private GradientStop[] gradientStops;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Alternet.Drawing
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
         public LinearGradientBrush(GradientStop[] gradientStops)
-            : this(new Point(), new Point(1, 1), gradientStops)
+            : this(new PointD(), new PointD(1, 1), gradientStops)
         {
         }
 
@@ -51,7 +51,7 @@ namespace Alternet.Drawing
         /// <param name="endPoint">The end point of the gradient.</param>
         /// <param name="startColor">The start color of the gradient.</param>
         /// <param name="endColor">The end color of the gradient.</param>
-        public LinearGradientBrush(Point startPoint, Point endPoint, Color startColor, Color endColor)
+        public LinearGradientBrush(PointD startPoint, PointD endPoint, Color startColor, Color endColor)
             : this(startPoint, endPoint, GetGradientStopsFromEdgeColors(startColor, endColor))
         {
         }
@@ -65,7 +65,7 @@ namespace Alternet.Drawing
         /// <param name="endPoint">The end point of the gradient.</param>
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
-        public LinearGradientBrush(Point startPoint, Point endPoint, GradientStop[] gradientStops)
+        public LinearGradientBrush(PointD startPoint, PointD endPoint, GradientStop[] gradientStops)
             : this(new UI.Native.LinearGradientBrush())
         {
             this.startPoint = startPoint;
@@ -84,7 +84,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the starting two-dimensional coordinates of the linear gradient.
         /// </summary>
-        public Point StartPoint
+        public PointD StartPoint
         {
             get => startPoint;
 
@@ -101,7 +101,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the ending two-dimensional coordinates of the linear gradient.
         /// </summary>
-        public Point EndPoint
+        public PointD EndPoint
         {
             get => endPoint;
 

@@ -15,8 +15,8 @@ namespace Alternet.UI
     {
         private readonly MouseEventArgs mouseDownArgs;
         private readonly MouseEventArgs mouseMoveArgs;
-        private readonly Point mouseClientLocation;
-        private readonly Point mouseDownLocation;
+        private readonly PointD mouseClientLocation;
+        private readonly PointD mouseDownLocation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DragStartEventArgs"/> class.
@@ -28,8 +28,8 @@ namespace Alternet.UI
         /// <param name="mouseDownArgs"></param>
         /// <param name="mouseMoveArgs"></param>
         internal DragStartEventArgs(
-            Point mouseClientLocation,
-            Point mouseDownLocation,
+            PointD mouseClientLocation,
+            PointD mouseDownLocation,
             MouseEventArgs mouseDownArgs,
             MouseEventArgs mouseMoveArgs)
         {
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the client coordinates of the mouse pointer in logical units (1/96th of an inch).
         /// </summary>
-        public Point MouseClientLocation => mouseClientLocation;
+        public PointD MouseClientLocation => mouseClientLocation;
 
         /// <summary>
         /// Gets coordinates of the mouse pointer in the moment when
@@ -62,7 +62,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Coordinates of the mouse pointer are in logical units (1/96th of an inch).
         /// </remarks>
-        public Point MouseDownLocation => mouseDownLocation;
+        public PointD MouseDownLocation => mouseDownLocation;
 
         /// <summary>
         /// Gets or sets whether drag operation was actually started.

@@ -63,7 +63,7 @@ namespace Alternet.Drawing
         /// Appends a series of connected line segments to the end of this <see cref="GraphicsPath"/>.
         /// </summary>
         /// <param name="points">
-        /// An array of <see cref="Point"/> structures that represents the points that define the line segments to add.
+        /// An array of <see cref="PointD"/> structures that represents the points that define the line segments to add.
         /// </param>
         /// <remarks>
         /// If there are previous lines or curves in the figure, a line is added to connect the endpoint
@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         /// The first two specify the first line. Each additional point specifies the endpoint of a line segment
         /// whose starting point is the endpoint of the previous line.
         /// </remarks>
-        public void AddLines(Point[] points)
+        public void AddLines(PointD[] points)
         {
             CheckDisposed();
             NativePath.AddLines(points);
@@ -80,14 +80,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Appends a line segment to this <see cref="GraphicsPath"/>.
         /// </summary>
-        /// <param name="pt1">A <see cref="Point"/> that represents the starting point of the line.</param>
-        /// <param name="pt2">A <see cref="Point"/> that represents the endpoint of the line.</param>
+        /// <param name="pt1">A <see cref="PointD"/> that represents the starting point of the line.</param>
+        /// <param name="pt2">A <see cref="PointD"/> that represents the endpoint of the line.</param>
         /// <remarks>
         /// This method adds the line segment defined by the specified points to the end of this <see cref="GraphicsPath"/>. If there
         /// are previous lines or curves in the <see cref="GraphicsPath"/>, a line segment is drawn to connect the last point in the
         /// path to the first point in the new line segment.
         /// </remarks>
-        public void AddLine(Point pt1, Point pt2)
+        public void AddLine(PointD pt1, PointD pt2)
         {
             CheckDisposed();
             NativePath.AddLine(pt1, pt2);
@@ -96,12 +96,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Appends a line segment to this <see cref="GraphicsPath"/>.
         /// </summary>
-        /// <param name="pt">A <see cref="Point"/> that represents the endpoint of the line.</param>
+        /// <param name="pt">A <see cref="PointD"/> that represents the endpoint of the line.</param>
         /// <remarks>
         /// This method adds the line segment defined by the specified point to the end of this <see cref="GraphicsPath"/>. If there
         /// are no previous lines or curves in the <see cref="GraphicsPath"/>, a line segment is drawn for the (0, 0) point.
         /// </remarks>
-        public void AddLineTo(Point pt)
+        public void AddLineTo(PointD pt)
         {
             CheckDisposed();
             NativePath.AddLineTo(pt);
@@ -110,8 +110,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds an ellipse to the current path.
         /// </summary>
-        /// <param name="rect">A <see cref="Rect"/> that represents the bounding rectangle that defines the ellipse.</param>
-        public void AddEllipse(Rect rect)
+        /// <param name="rect">A <see cref="RectD"/> that represents the bounding rectangle that defines the ellipse.</param>
+        public void AddEllipse(RectD rect)
         {
             CheckDisposed();
             NativePath.AddEllipse(rect);
@@ -120,16 +120,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds a cubic Bézier curve to the current figure.
         /// </summary>
-        /// <param name="startPoint">A <see cref="Point"/> that represents the starting point of the curve.</param>
-        /// <param name="controlPoint1">A <see cref="Point"/> that represents the first control point for the curve.</param>
-        /// <param name="controlPoint2">A <see cref="Point"/> that represents the second control point for the curve.</param>
-        /// <param name="endPoint">A <see cref="Point"/> that represents the endpoint of the curve.</param>
+        /// <param name="startPoint">A <see cref="PointD"/> that represents the starting point of the curve.</param>
+        /// <param name="controlPoint1">A <see cref="PointD"/> that represents the first control point for the curve.</param>
+        /// <param name="controlPoint2">A <see cref="PointD"/> that represents the second control point for the curve.</param>
+        /// <param name="endPoint">A <see cref="PointD"/> that represents the endpoint of the curve.</param>
         /// <remarks>
         /// The cubic curve is constructed from the first point to the fourth point by using the second and third points
         /// as control points. If there is a previous line or curve segment in the figure, a line is added to connect
         /// the endpoint of the previous segment to the starting point of the cubic curve.
         /// </remarks>
-        public void AddBezier(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+        public void AddBezier(PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             CheckDisposed();
             NativePath.AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
@@ -138,15 +138,15 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds a cubic Bézier curve to the current figure.
         /// </summary>
-        /// <param name="controlPoint1">A <see cref="Point"/> that represents the first control point for the curve.</param>
-        /// <param name="controlPoint2">A <see cref="Point"/> that represents the second control point for the curve.</param>
-        /// <param name="endPoint">A <see cref="Point"/> that represents the endpoint of the curve.</param>
+        /// <param name="controlPoint1">A <see cref="PointD"/> that represents the first control point for the curve.</param>
+        /// <param name="controlPoint2">A <see cref="PointD"/> that represents the second control point for the curve.</param>
+        /// <param name="endPoint">A <see cref="PointD"/> that represents the endpoint of the curve.</param>
         /// <remarks>
         /// The cubic curve is constructed from the last point in the figure to the fourth point by using the second and third points
         /// as control points. If there is a previous line or curve segment in the figure, a line is added to connect
         /// the endpoint of the previous segment to the starting point of the cubic curve.
         /// </remarks>
-        public void AddBezierTo(Point controlPoint1, Point controlPoint2, Point endPoint)
+        public void AddBezierTo(PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             CheckDisposed();
             NativePath.AddBezierTo(controlPoint1, controlPoint2, endPoint);
@@ -155,7 +155,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Appends a circular arc to the current figure.
         /// </summary>
-        /// <param name="center">The center <see cref="Point"/> of the arc.</param>
+        /// <param name="center">The center <see cref="PointD"/> of the arc.</param>
         /// <param name="radius">The radius of the arc.</param>
         /// <param name="startAngle">The starting angle of the arc, measured in degrees clockwise from the
         /// x-axis.</param>
@@ -167,7 +167,7 @@ namespace Alternet.Drawing
         /// is similarly located by measuring clockwise from the starting point by the number of degrees in the sweep
         /// angle.
         /// </remarks>
-        public void AddArc(Point center, double radius, double startAngle, double sweepAngle)
+        public void AddArc(PointD center, double radius, double startAngle, double sweepAngle)
         {
             CheckDisposed();
             NativePath.AddArc(center, radius, startAngle, sweepAngle);
@@ -176,8 +176,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds a rectangle to this path.
         /// </summary>
-        /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
-        public void AddRectangle(Rect rect)
+        /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
+        public void AddRectangle(RectD rect)
         {
             CheckDisposed();
             NativePath.AddRectangle(rect);
@@ -186,9 +186,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds a rounded rectangle to this path.
         /// </summary>
-        /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
+        /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
-        public void AddRoundedRectangle(Rect rect, double cornerRadius)
+        public void AddRoundedRectangle(RectD rect, double cornerRadius)
         {
             CheckDisposed();
             NativePath.AddRoundedRectangle(rect, cornerRadius);
@@ -197,8 +197,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a rectangle that bounds this <see cref="GraphicsPath"/>.
         /// </summary>
-        /// <returns>A <see cref="Rect"/> that represents a rectangle that bounds this <see cref="GraphicsPath"/>.</returns>
-        public Rect GetBounds()
+        /// <returns>A <see cref="RectD"/> that represents a rectangle that bounds this <see cref="GraphicsPath"/>.</returns>
+        public RectD GetBounds()
         {
             CheckDisposed();
             return NativePath.GetBounds();
@@ -207,7 +207,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Starts a new figure without closing the current figure. All subsequent points added to the path are added to this new figure.
         /// </summary>
-        public void StartFigure(Point point)
+        public void StartFigure(PointD point)
         {
             CheckDisposed();
             NativePath.StartFigure(point);

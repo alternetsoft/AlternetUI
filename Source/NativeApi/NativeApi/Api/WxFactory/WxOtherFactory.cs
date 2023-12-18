@@ -20,7 +20,7 @@ namespace NativeApi.Api
     {
         // =================== Tests
 
-        public static void TestPopupWindow(IntPtr parent, Int32Point pos, Int32Size sz) { }
+        public static void TestPopupWindow(IntPtr parent, PointI pos, SizeI sz) { }
 
         // =================== RichToolTip
 
@@ -65,7 +65,7 @@ namespace NativeApi.Api
         public static void RichToolTipSetTitleFont(IntPtr handle, Font? font) { }
 
         // Show the tooltip for the given window and optionally a specified area.
-        public static void RichToolTipShowFor(IntPtr handle, IntPtr window, Int32Rect rect) { }
+        public static void RichToolTipShowFor(IntPtr handle, IntPtr window, RectI rect) { }
 
         // =================== ToolTip
 
@@ -116,7 +116,7 @@ namespace NativeApi.Api
         // Returns true if cursor data is present. 
         public static bool CursorIsOk(IntPtr handle) => default;
 
-        public static Int32Point CursorGetHotSpot(IntPtr handle) => default;
+        public static PointI CursorGetHotSpot(IntPtr handle) => default;
 
         public static void SetCursor(IntPtr handle) { }
 
@@ -131,10 +131,10 @@ namespace NativeApi.Api
         public static void DeleteCaret(IntPtr handle) { }
 
         // Get the caret position(in pixels).
-        public static Int32Point CaretGetPosition(IntPtr handle) => default;
+        public static PointI CaretGetPosition(IntPtr handle) => default;
 
         // Get the caret size.
-        public static Int32Size CaretGetSize(IntPtr handle) => default;
+        public static SizeI CaretGetSize(IntPtr handle) => default;
 
         // Move the caret to given position(in logical coordinates).
         public static void CaretMove(IntPtr handle, int x, int y) { }
@@ -182,7 +182,7 @@ namespace NativeApi.Api
 
         // Returns the index of the display on which the given point lies,
         // or -1 if the point is not on any connected display.
-        public static int DisplayGetFromPoint(Int32Point pt) => default;
+        public static int DisplayGetFromPoint(PointI pt) => default;
 
         // Returns the index of the display on which the given window lies.
         public static int DisplayGetFromWindow(IntPtr win) => default;
@@ -191,13 +191,13 @@ namespace NativeApi.Api
         public static int DisplayGetStdPPIValue() => default;
 
         // Returns default display resolution for the current platform as wxSize. 
-        public static Int32Size DisplayGetStdPPI() => default;
+        public static SizeI DisplayGetStdPPI() => default;
 
         // Returns the display's name.
         public static string DisplayGetName(IntPtr handle) => default;
 
         // Returns display resolution in pixels per inch.
-        public static Int32Size DisplayGetPPI(IntPtr handle) => default;
+        public static SizeI DisplayGetPPI(IntPtr handle) => default;
 
         // Returns scaling factor used by this display. 
         public static double DisplayGetScaleFactor(IntPtr handle) => default;
@@ -206,10 +206,10 @@ namespace NativeApi.Api
         public static bool DisplayIsPrimary(IntPtr handle) => default;
 
         // Returns the client area of the display.
-        public static Int32Rect DisplayGetClientArea(IntPtr handle) => default;
+        public static RectI DisplayGetClientArea(IntPtr handle) => default;
 
         // Returns the bounding rectangle of the display
-        public static Int32Rect DisplayGetGeometry(IntPtr handle) => default;
+        public static RectI DisplayGetGeometry(IntPtr handle) => default;
 
         // =================== SystemSettings
 
@@ -254,13 +254,13 @@ namespace NativeApi.Api
             IntPtr parent, int x = -1, int y = -1, bool centre = true) => default;
 
         public static long GetNumberFromUser(string message, string prompt, string caption,
-            long value, long min, long max, IntPtr parent, Int32Point pos) => default;
+            long value, long min, long max, IntPtr parent, PointI pos) => default;
 
         // ===================
 
         public static int RendererDrawHeaderButton(IntPtr renderer, IntPtr win,
             IntPtr dc,
-            Int32Rect rect,
+            RectI rect,
             int flags /*= 0*/,
             int sortArrow /*= wxHDR_SORT_ICON_NONE*/,
             IntPtr headerButtonParams /*= NULL*/) => default;
@@ -269,7 +269,7 @@ namespace NativeApi.Api
         // Normally only called by DrawHeaderButton.
         public static int RendererDrawHeaderButtonContents(IntPtr renderer, IntPtr win,
             IntPtr dc,
-            Int32Rect rect,
+            RectI rect,
             int flags /*= 0*/,
             int sortArrow /*= wxHDR_SORT_ICON_NONE*/,
             IntPtr headerButtonParams /*= NULL*/) => default;
@@ -282,16 +282,16 @@ namespace NativeApi.Api
         public static int RendererGetHeaderButtonMargin(IntPtr renderer, IntPtr win) => default;
 
         // draw the expanded/collapsed icon for a tree control item
-        public static void RendererDrawTreeItemButton(IntPtr renderer, IntPtr win, IntPtr dc, Int32Rect rect, int flags = 0) { }
+        public static void RendererDrawTreeItemButton(IntPtr renderer, IntPtr win, IntPtr dc, RectI rect, int flags = 0) { }
 
         // draw the border for sash window: this border must be such that the sash
         // drawn by DrawSash() blends into it well
-        public static void RendererDrawSplitterBorder(IntPtr renderer, IntPtr win, IntPtr dc, Int32Rect rect, int flags = 0) { }
+        public static void RendererDrawSplitterBorder(IntPtr renderer, IntPtr win, IntPtr dc, RectI rect, int flags = 0) { }
 
         // draw a (vertical) sash
         public static void RendererDrawSplitterSash(IntPtr renderer, IntPtr win,
             IntPtr dcReal,
-            Int32Size sizeReal,
+            SizeI sizeReal,
             int position,
             int orientation,
             int flags = 0)
@@ -302,7 +302,7 @@ namespace NativeApi.Api
         // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
         public static void RendererDrawComboBoxDropButton(IntPtr renderer, IntPtr win,
             IntPtr dc,
-            Int32Rect rect,
+            RectI rect,
             int flags = 0)
         {
         }
@@ -311,7 +311,7 @@ namespace NativeApi.Api
         // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
         public static void RendererDrawDropArrow(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -320,7 +320,7 @@ namespace NativeApi.Api
         // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
         public static void RendererDrawCheckBox(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -329,26 +329,26 @@ namespace NativeApi.Api
         // flags may use wxCONTROL_DISABLED
         public static void RendererDrawCheckMark(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
 
         // Returns the default size of a check box.
-        public static Int32Size RendererGetCheckBoxSize(IntPtr renderer, IntPtr win, int flags = 0) => default;
+        public static SizeI RendererGetCheckBoxSize(IntPtr renderer, IntPtr win, int flags = 0) => default;
 
         // Returns the default size of a check mark.
-        public static Int32Size RendererGetCheckMarkSize(IntPtr renderer, IntPtr win) => default;
+        public static SizeI RendererGetCheckMarkSize(IntPtr renderer, IntPtr win) => default;
 
         // Returns the default size of a expander.
-        public static Int32Size RendererGetExpanderSize(IntPtr renderer, IntPtr win) => default;
+        public static SizeI RendererGetExpanderSize(IntPtr renderer, IntPtr win) => default;
 
         // draw blank button
         //
         // flags may use wxCONTROL_PRESSED, wxCONTROL_CURRENT and wxCONTROL_ISDEFAULT
         public static void RendererDrawPushButton(IntPtr renderer, IntPtr win,
             IntPtr dc,
-            Int32Rect rect,
+            RectI rect,
             int flags = 0)
         {
         }
@@ -358,13 +358,13 @@ namespace NativeApi.Api
         // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
         public static void RendererDrawCollapseButton(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
 
         // Returns the default size of a collapse button
-        public static Int32Size RendererGetCollapseButtonSize(IntPtr renderer, IntPtr win, IntPtr dc) => default;
+        public static SizeI RendererGetCollapseButtonSize(IntPtr renderer, IntPtr win, IntPtr dc) => default;
 
         // draw rectangle indicating that an item in e.g. a list control
         // has been selected or focused
@@ -375,7 +375,7 @@ namespace NativeApi.Api
         // wxCONTROL_FOCUSED (the whole control has focus, e.g. blue background vs. grey otherwise)
         public static void RendererDrawItemSelectionRect(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -385,7 +385,7 @@ namespace NativeApi.Api
         // only wxCONTROL_SELECTED makes sense in flags here
         public static void RendererDrawFocusRect(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -393,7 +393,7 @@ namespace NativeApi.Api
         // Draw a native wxChoice
         public static void RendererDrawChoice(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -401,7 +401,7 @@ namespace NativeApi.Api
         // Draw a native wxComboBox
         public static void RendererDrawComboBox(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -409,7 +409,7 @@ namespace NativeApi.Api
         // Draw a native wxTextCtrl frame
         public static void RendererDrawTextCtrl(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -417,7 +417,7 @@ namespace NativeApi.Api
         // Draw a native wxRadioButton bitmap
         public static void RendererDrawRadioBitmap(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int flags = 0)
         {
         }
@@ -426,7 +426,7 @@ namespace NativeApi.Api
         // wxCONTROL_SPECIAL flag must be used for drawing vertical gauges.
         public static void RendererDrawGauge(IntPtr renderer, IntPtr win,
             IntPtr dc,
-                Int32Rect rect,
+                RectI rect,
             int value,
             int max,
             int flags = 0)
@@ -437,7 +437,7 @@ namespace NativeApi.Api
         public static void RendererDrawItemText(IntPtr renderer, IntPtr win,
             IntPtr dc,
             string text,
-            Int32Rect rect,
+            RectI rect,
             int align /*= wxALIGN_LEFT | wxALIGN_TOP*/,
             int flags /*= 0*/,
             int ellipsizeMode /*= wxELLIPSIZE_END*/)

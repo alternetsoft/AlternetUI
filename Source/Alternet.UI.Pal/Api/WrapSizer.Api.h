@@ -18,12 +18,12 @@ ALTERNET_UI_API void* WrapSizer_CreateWrapSizer_(int orient, int flags)
     return WrapSizer::CreateWrapSizer(orient, flags);
 }
 
-ALTERNET_UI_API void WrapSizer_RepositionChildren_(void* handle, Int32Size minSize)
+ALTERNET_UI_API void WrapSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
     WrapSizer::RepositionChildren(handle, minSize);
 }
 
-ALTERNET_UI_API Int32Size_C WrapSizer_CalcMin_(void* handle)
+ALTERNET_UI_API SizeI_C WrapSizer_CalcMin_(void* handle)
 {
     return WrapSizer::CalcMin(handle);
 }

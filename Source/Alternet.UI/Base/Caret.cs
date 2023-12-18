@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the caret size.
         /// </summary>
-        public Int32Size Size
+        public SizeI Size
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the caret position (in pixels).
         /// </summary>
-        public Int32Point Position
+        public PointI Position
         {
             get
             {

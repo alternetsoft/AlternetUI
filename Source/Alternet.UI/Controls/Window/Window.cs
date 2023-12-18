@@ -220,7 +220,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets DPI of the first created window.
         /// </summary>
-        public static Size? DefaultDPI => Application.FirstWindow()?.GetDPI();
+        public static SizeD? DefaultDPI => Application.FirstWindow()?.GetDPI();
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for
@@ -827,7 +827,7 @@ namespace Alternet.UI
         /// Gets default bounds assigned to the window.
         /// </summary>
         /// <returns></returns>
-        public virtual Rect GetDefaultBounds()
+        public virtual RectD GetDefaultBounds()
         {
             return new(100, 100, 400, 400);
         }

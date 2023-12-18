@@ -22,7 +22,7 @@ void ClearItems();
 void ClearSelected();
 void SetSelected(int index, bool value);
 void EnsureVisible(int itemIndex);
-int ItemHitTest(const Point& position);
+int ItemHitTest(const PointD& position);
 void SetItem(int index, const string& value);
 public:
 enum class ListBoxEvent

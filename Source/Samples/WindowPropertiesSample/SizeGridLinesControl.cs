@@ -18,10 +18,10 @@ namespace WindowPropertiesSample
             var pen = Pens.LightGray;
 
             for (double x = 0; x < bounds.Width; x += Step)
-                dc.DrawLine(pen, new Point(x, bounds.Top), new Point(x, bounds.Bottom));
+                dc.DrawLine(pen, new PointD(x, bounds.Top), new PointD(x, bounds.Bottom));
 
             for (double y = bounds.Y; y < bounds.Bottom; y += Step)
-                dc.DrawLine(pen, new Point(bounds.Left, y), new Point(bounds.Right, y));
+                dc.DrawLine(pen, new PointD(bounds.Left, y), new PointD(bounds.Right, y));
         }
     }
 }

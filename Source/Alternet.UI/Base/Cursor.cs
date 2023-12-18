@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets hot spot of the cursor.
         /// </summary>
-        public Int32Point HotSpot
+        public PointI HotSpot
         {
             get
             {

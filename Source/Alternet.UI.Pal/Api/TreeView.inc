@@ -81,7 +81,7 @@ void ClearSelected();
 void SetSelected(void* item, bool value);
 void ExpandAll();
 void CollapseAll();
-void* ItemHitTest(const Point& point);
+void* ItemHitTest(const PointD& point);
 TreeViewHitTestLocations GetHitTestResultLocations(void* hitTestResult);
 void* GetHitTestResultItem(void* hitTestResult);
 void FreeHitTestResult(void* hitTestResult);

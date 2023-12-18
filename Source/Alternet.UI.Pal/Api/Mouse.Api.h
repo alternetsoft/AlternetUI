@@ -13,7 +13,7 @@ ALTERNET_UI_API Mouse* Mouse_Create_()
     return new Mouse();
 }
 
-ALTERNET_UI_API Point_C Mouse_GetPosition_(Mouse* obj)
+ALTERNET_UI_API PointD_C Mouse_GetPosition_(Mouse* obj)
 {
     return obj->GetPosition();
 }

@@ -63,37 +63,37 @@ ALTERNET_UI_API void SizerItem_DetachWindow_(void* handle)
     SizerItem::DetachWindow(handle);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_GetSize_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_GetSize_(void* handle)
 {
     return SizerItem::GetSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_CalcMin_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_CalcMin_(void* handle)
 {
     return SizerItem::CalcMin(handle);
 }
 
-ALTERNET_UI_API void SizerItem_SetDimension_(void* handle, Int32Point pos, Int32Size size)
+ALTERNET_UI_API void SizerItem_SetDimension_(void* handle, PointI pos, SizeI size)
 {
     SizerItem::SetDimension(handle, pos, size);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_GetMinSize_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_GetMinSize_(void* handle)
 {
     return SizerItem::GetMinSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_GetMinSizeWithBorder_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_GetMinSizeWithBorder_(void* handle)
 {
     return SizerItem::GetMinSizeWithBorder(handle);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_GetMaxSize_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_GetMaxSize_(void* handle)
 {
     return SizerItem::GetMaxSize(handle);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_GetMaxSizeWithBorder_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_GetMaxSizeWithBorder_(void* handle)
 {
     return SizerItem::GetMaxSizeWithBorder(handle);
 }
@@ -123,7 +123,7 @@ ALTERNET_UI_API float SizerItem_GetRatio_(void* handle)
     return SizerItem::GetRatio(handle);
 }
 
-ALTERNET_UI_API Int32Rect_C SizerItem_GetRect_(void* handle)
+ALTERNET_UI_API RectI_C SizerItem_GetRect_(void* handle)
 {
     return SizerItem::GetRect(handle);
 }
@@ -193,7 +193,7 @@ ALTERNET_UI_API void* SizerItem_GetSizer_(void* handle)
     return SizerItem::GetSizer(handle);
 }
 
-ALTERNET_UI_API Int32Size_C SizerItem_GetSpacer_(void* handle)
+ALTERNET_UI_API SizeI_C SizerItem_GetSpacer_(void* handle)
 {
     return SizerItem::GetSpacer(handle);
 }
@@ -218,7 +218,7 @@ ALTERNET_UI_API void* SizerItem_GetUserData_(void* handle)
     return SizerItem::GetUserData(handle);
 }
 
-ALTERNET_UI_API Int32Point_C SizerItem_GetPosition_(void* handle)
+ALTERNET_UI_API PointI_C SizerItem_GetPosition_(void* handle)
 {
     return SizerItem::GetPosition(handle);
 }

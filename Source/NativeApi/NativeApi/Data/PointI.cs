@@ -4,8 +4,8 @@ using System.Globalization;
 
 namespace Alternet.Drawing
 {
-    [ManagedExternName("Alternet.Drawing.Rect")]
-    public struct Rect
+    [ManagedExternName("Alternet.Drawing.PointI")]
+    public struct PointI
     {
     }
 }

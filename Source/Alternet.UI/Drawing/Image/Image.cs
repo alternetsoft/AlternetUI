@@ -46,9 +46,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="original">The <see cref="Image" /> from which to create the
         /// new <see cref="Image" />.</param>
-        /// <param name="newSize">The <see cref="Int32Size" /> structure that represent the
+        /// <param name="newSize">The <see cref="SizeI" /> structure that represent the
         /// size of the new <see cref="Bitmap" />.</param>
-        internal Image(Image original, Int32Size newSize)
+        internal Image(Image original, SizeI newSize)
         {
             nativeImage = new UI.Native.Image();
             nativeImage.InitializeFromImage(original.NativeImage, newSize);
@@ -76,7 +76,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         /// <param name="control">The control from which pixel scaling factor is used.</param>
-        internal Image(Int32Size size, Control control)
+        internal Image(SizeI size, Control control)
             : this(size)
         {
             ScaleFactor = control.GetPixelScaleFactor();
@@ -161,13 +161,13 @@ namespace Alternet.Drawing
         /// with the specified size in device pixels.
         /// </summary>
         /// <param name="size">The size in device pixels used to create the image.</param>
-        internal Image(Int32Size size)
+        internal Image(SizeI size)
         {
             nativeImage = new UI.Native.Image();
             NativeImage.Initialize(size);
         }
 
-        internal Image(ImageSet imageSet, Int32Size size)
+        internal Image(ImageSet imageSet, SizeI size)
         {
             nativeImage = new UI.Native.Image();
             imageSet.NativeImageSet.InitImage(nativeImage, size.Width, size.Height);
@@ -177,7 +177,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
         private protected Image()
-            : this(Drawing.Int32Size.Empty)
+            : this(Drawing.SizeI.Empty)
         {
         }
 
@@ -208,7 +208,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
-        public Int32Size PixelSize => NativeImage.PixelSize;
+        public SizeI PixelSize => NativeImage.PixelSize;
 
         /// <summary>
         /// Gets whether image is ok (is not disposed and has non-zero width and height).
@@ -266,7 +266,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets image size in pixels.
         /// </summary>
-        public Int32Size Size => (NativeImage.PixelWidth, NativeImage.PixelHeight);
+        public SizeI Size => (NativeImage.PixelWidth, NativeImage.PixelHeight);
 
         /// <summary>
         /// Gets or sets the scale factor of this image.
@@ -307,7 +307,7 @@ namespace Alternet.Drawing
         /// Unlike LogicalSize, this function returns the same value under all platforms
         /// and so its result should not be used as window or device context coordinates.
         /// </remarks>
-        public Int32Size DipSize
+        public SizeI DipSize
         {
             get
             {
@@ -329,7 +329,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the size of the bitmap in logical pixels.
         /// </summary>
-        public Int32Size ScaledSize
+        public SizeI ScaledSize
         {
             get
             {
@@ -463,7 +463,7 @@ namespace Alternet.Drawing
         /// If provided, svg fill color is changed to the specified value.</param>
         public static Image FromSvgUrlForToolbar(string url, Control control, Color? color = null)
         {
-            Size deviceDpi = control.GetDPI();
+            SizeD deviceDpi = control.GetDPI();
             var width = Toolbar.GetDefaultImageSize(deviceDpi.Width);
             var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
             var result = Image.FromSvgUrl(url, width, height, color);
@@ -631,7 +631,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">Rectangle in this image.</param>
         /// <returns></returns>
-        public Image GetSubBitmap(Int32Rect rect)
+        public Image GetSubBitmap(RectI rect)
         {
             var converted = NativeImage.GetSubBitmap(rect);
             return new Bitmap(converted);
@@ -641,7 +641,7 @@ namespace Alternet.Drawing
         /// Sets <see cref="ScaleFactor"/> using DPI value.
         /// </summary>
         /// <param name="dpi"></param>
-        public void SetDPI(Size dpi)
+        public void SetDPI(SizeD dpi)
         {
             var factor = dpi.Width / 96;
             this.ScaleFactor = factor;
@@ -650,7 +650,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
         /// </summary>
-        public Rect BoundsDip(Control control)
+        public RectD BoundsDip(Control control)
         {
             var size = SizeDip(control);
             return (0, 0, size.Width, size.Height);
@@ -679,7 +679,7 @@ namespace Alternet.Drawing
         /// directly instead. Size must be valid.
         /// </remarks>
         /// <param name="sizeNeeded"></param>
-        public void Rescale(Int32Size sizeNeeded)
+        public void Rescale(SizeI sizeNeeded)
         {
             NativeImage.Rescale(sizeNeeded);
         }
@@ -706,7 +706,7 @@ namespace Alternet.Drawing
         /// Gets the size of the image in device-independent units (1/96th inch
         /// per unit).
         /// </summary>
-        public Size SizeDip(Control control) => control.PixelToDip(NativeImage.PixelSize);
+        public SizeD SizeDip(Control control) => control.PixelToDip(NativeImage.PixelSize);
 
         /// <summary>
         /// Creates a clone of this image with fully copied image data.

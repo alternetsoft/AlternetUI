@@ -32,22 +32,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the current size of the item, as set in the last Layout.
         /// </summary>
-        Int32Size Size { get; }
+        SizeI Size { get; }
 
         /// <summary>
         /// Gets the minimum size to be allocated for this item including border size.
         /// </summary>
-        Int32Size MinSizeWithBorder { get; }
+        SizeI MinSizeWithBorder { get; }
 
         /// <summary>
         /// Gets the maximum size to be allocated for this item.
         /// </summary>
-        Int32Size MaxSize { get; }
+        SizeI MaxSize { get; }
 
         /// <summary>
         /// Gets the maximum size to be allocated for this item including border size.
         /// </summary>
-        Int32Size MaxSizeWithBorder { get; }
+        SizeI MaxSizeWithBorder { get; }
 
         /// <summary>
         /// Gets or sets the minimum size to be allocated for this item.
@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If this item is a control, the size is also passed to <see cref="Control.MinimumSize"/>.
         /// </remarks>
-        Int32Size MinSize { get; set; }
+        SizeI MinSize { get; set; }
 
         /// <summary>
         /// Gets or sets the numeric id of the item. Returns (-3) if the id has not been set.
@@ -111,7 +111,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calculates the minimum desired size for the item, including any space needed by borders.
         /// </summary>
-        Int32Size CalcMin();
+        SizeI CalcMin();
 
         /// <summary>
         /// Set the position and size of the space allocated to the sizer, and
@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="pos">Item position.</param>
         /// <param name="size">Item size.</param>
-        void SetDimension(Int32Point pos, Int32Size size);
+        void SetDimension(PointI pos, SizeI size);
 
         /// <summary>
         /// Sets the initial size.
@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the rectangle of the item on the parent window, excluding borders.
         /// </summary>
-        Int32Rect GetRect();
+        RectI GetRect();
 
         /// <summary>
         /// If this item is tracking a sizer, return it; <c>null</c> otherwise.
@@ -153,7 +153,7 @@ namespace Alternet.UI
         /// <summary>
         /// If this item is tracking a spacer, return its size.
         /// </summary>
-        Int32Size GetSpacer();
+        SizeI GetSpacer();
 
         /// <summary>
         /// Set the show item attribute, which sizers use to determine if the item is
@@ -166,7 +166,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the current position of the item, as set in the last Layout.
         /// </summary>
-        Int32Point GetPosition();
+        PointI GetPosition();
 
         /// <summary>
         /// Set the control to be tracked by this item. The old control isn't deleted.

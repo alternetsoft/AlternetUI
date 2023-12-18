@@ -63,12 +63,12 @@ ALTERNET_UI_API void GridSizer_SetVGap_(void* handle, int gap)
     GridSizer::SetVGap(handle, gap);
 }
 
-ALTERNET_UI_API Int32Size_C GridSizer_CalcMin_(void* handle)
+ALTERNET_UI_API SizeI_C GridSizer_CalcMin_(void* handle)
 {
     return GridSizer::CalcMin(handle);
 }
 
-ALTERNET_UI_API void GridSizer_RepositionChildren_(void* handle, Int32Size minSize)
+ALTERNET_UI_API void GridSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
     GridSizer::RepositionChildren(handle, minSize);
 }

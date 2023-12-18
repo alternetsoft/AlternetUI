@@ -38,7 +38,7 @@ namespace Alternet.UI
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if (!(value is Point))
+            if (!(value is PointD))
             {
                 return false;
             }
@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             if (value != null)
             {
-                return Point.Parse(value );
+                return PointD.Parse(value );
             }
             else
             {
@@ -66,9 +66,9 @@ namespace Alternet.UI
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Point)
+            if (value is PointD)
             {
-                Point instance = (Point) value;
+                PointD instance = (PointD) value;
 
 
                 #pragma warning suppress 6506 // instance is obviously not null

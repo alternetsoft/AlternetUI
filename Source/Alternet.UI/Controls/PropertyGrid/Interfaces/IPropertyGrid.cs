@@ -690,13 +690,13 @@ namespace Alternet.UI
         void SetCurrentCategory(IPropertyGridItem prop);
 
         /// <inheritdoc cref="PropertyGrid.GetImageRect"/>
-        Int32Rect GetImageRect(IPropertyGridItem prop, int item);
+        RectI GetImageRect(IPropertyGridItem prop, int item);
 
         /// <inheritdoc cref="PropertyGrid.SetPropertyValidator"/>
         void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator);
 
         /// <inheritdoc cref="PropertyGrid.GetImageSize"/>
-        Int32Size GetImageSize(IPropertyGridItem? prop, int item);
+        SizeI GetImageSize(IPropertyGridItem? prop, int item);
 
         /// <inheritdoc cref="PropertyGrid.GetItemsFiltered"/>
         IEnumerable<IPropertyGridItem> GetItemsFiltered(
@@ -728,7 +728,7 @@ namespace Alternet.UI
         bool EnableCategories(bool enable);
 
         /// <inheritdoc cref="PropertyGrid.FitColumns"/>
-        Size FitColumns();
+        SizeD FitColumns();
 
         /// <inheritdoc cref="PropertyGrid.GetColumnCount"/>
         uint GetColumnCount();

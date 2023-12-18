@@ -42,7 +42,7 @@ namespace Alternet.UI
             return (MouseButtonState)Application.Current.NativeMouse.GetButtonState((Native.MouseButton)mouseButton);
         }
 
-        internal override Point GetScreenPositionFromSystem()
+        internal override PointD GetScreenPositionFromSystem()
         {
             return Application.Current.NativeMouse.GetPosition();
         }

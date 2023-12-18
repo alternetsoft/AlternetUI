@@ -7,7 +7,7 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_font.html
     public class Font
     {
-        public Int32Size GetPixelSize() => default;
+        public SizeI GetPixelSize() => default;
         public bool IsUsingSizeInPixels() => default;
         public int GetNumericWeight() => default;
         public bool GetUnderlined() => default;

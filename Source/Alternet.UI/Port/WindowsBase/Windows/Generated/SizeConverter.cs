@@ -85,7 +85,7 @@ namespace Alternet.UI
 
             if (source != null)
             {
-                return Size.Parse(source);
+                return SizeD.Parse(source);
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -107,9 +107,9 @@ namespace Alternet.UI
         /// <param name="destinationType"> The type to which this will convert the Size instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Size)
+            if (destinationType != null && value is SizeD)
             {
-                Size instance = (Size)value;
+                SizeD instance = (SizeD)value;
 
                 if (destinationType == typeof(string))
                 {

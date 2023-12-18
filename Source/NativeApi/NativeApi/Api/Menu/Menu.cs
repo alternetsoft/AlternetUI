@@ -12,6 +12,6 @@ namespace NativeApi.Api
 
         public void RemoveItemAt(int index) => throw new Exception();
 
-        public void ShowContextMenu(Control control, Point position) => throw new Exception();
+        public void ShowContextMenu(Control control, PointD position) => throw new Exception();
     }
 }

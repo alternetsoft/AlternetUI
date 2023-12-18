@@ -318,9 +318,9 @@ namespace Alternet.UI
         /// <param name="portion">One of the
         /// <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
         /// the item for which to retrieve the bounding rectangle.</param>
-        /// <returns>A <see cref="Rect"/> that represents the bounding
+        /// <returns>A <see cref="RectD"/> that represents the bounding
         /// rectangle for the specified portion of this item.</returns>
-        public Rect GetItemBounds(
+        public RectD GetItemBounds(
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
                 => RequiredListView.GetItemBounds(RequiredIndex, portion);
 

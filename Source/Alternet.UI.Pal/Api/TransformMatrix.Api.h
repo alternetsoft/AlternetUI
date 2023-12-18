@@ -113,12 +113,12 @@ ALTERNET_UI_API void TransformMatrix_Invert_(TransformMatrix* obj)
     obj->Invert();
 }
 
-ALTERNET_UI_API Point_C TransformMatrix_TransformPoint_(TransformMatrix* obj, Point point)
+ALTERNET_UI_API PointD_C TransformMatrix_TransformPoint_(TransformMatrix* obj, PointD point)
 {
     return obj->TransformPoint(point);
 }
 
-ALTERNET_UI_API Size_C TransformMatrix_TransformSize_(TransformMatrix* obj, Size size)
+ALTERNET_UI_API SizeD_C TransformMatrix_TransformSize_(TransformMatrix* obj, SizeD size)
 {
     return obj->TransformSize(size);
 }

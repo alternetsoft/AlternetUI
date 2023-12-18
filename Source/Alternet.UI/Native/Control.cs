@@ -342,7 +342,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Size Size
+        public Alternet.Drawing.SizeD Size
         {
             get
             {
@@ -357,7 +357,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Point Location
+        public Alternet.Drawing.PointD Location
         {
             get
             {
@@ -372,7 +372,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Rect Bounds
+        public Alternet.Drawing.RectD Bounds
         {
             get
             {
@@ -387,7 +387,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Size ClientSize
+        public Alternet.Drawing.SizeD ClientSize
         {
             get
             {
@@ -535,7 +535,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Size MinimumSize
+        public Alternet.Drawing.SizeD MinimumSize
         {
             get
             {
@@ -550,7 +550,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Size MaximumSize
+        public Alternet.Drawing.SizeD MaximumSize
         {
             get
             {
@@ -565,7 +565,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public static Control? HitTest(Alternet.Drawing.Point screenPoint)
+        public static Control? HitTest(Alternet.Drawing.PointD screenPoint)
         {
             var _nnn = NativeApi.Control_HitTest_(screenPoint);
             var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
@@ -616,7 +616,7 @@ namespace Alternet.UI.Native
             NativeApi.Control_EndIgnoreRecreate_(NativePointer);
         }
         
-        public Alternet.Drawing.Size GetDPI()
+        public Alternet.Drawing.SizeD GetDPI()
         {
             CheckDisposed();
             return NativeApi.Control_GetDPI_(NativePointer);
@@ -652,7 +652,7 @@ namespace Alternet.UI.Native
             NativeApi.Control_Update_(NativePointer);
         }
         
-        public Alternet.Drawing.Size GetPreferredSize(Alternet.Drawing.Size availableSize)
+        public Alternet.Drawing.SizeD GetPreferredSize(Alternet.Drawing.SizeD availableSize)
         {
             CheckDisposed();
             return NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
@@ -712,25 +712,25 @@ namespace Alternet.UI.Native
             NativeApi.Control_ResetForegroundColor_(NativePointer);
         }
         
-        public Alternet.Drawing.Point ClientToScreen(Alternet.Drawing.Point point)
+        public Alternet.Drawing.PointD ClientToScreen(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
             return NativeApi.Control_ClientToScreen_(NativePointer, point);
         }
         
-        public Alternet.Drawing.Point ScreenToClient(Alternet.Drawing.Point point)
+        public Alternet.Drawing.PointD ScreenToClient(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
             return NativeApi.Control_ScreenToClient_(NativePointer, point);
         }
         
-        public Alternet.Drawing.Int32Point ScreenToDevice(Alternet.Drawing.Point point)
+        public Alternet.Drawing.PointI ScreenToDevice(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
             return NativeApi.Control_ScreenToDevice_(NativePointer, point);
         }
         
-        public Alternet.Drawing.Point DeviceToScreen(Alternet.Drawing.Int32Point point)
+        public Alternet.Drawing.PointD DeviceToScreen(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
             return NativeApi.Control_DeviceToScreen_(NativePointer, point);
@@ -790,7 +790,7 @@ namespace Alternet.UI.Native
             NativeApi.Control_SendMouseUpEvent_(NativePointer, x, y);
         }
         
-        public void SetBoundsEx(Alternet.Drawing.Rect rect, int flags)
+        public void SetBoundsEx(Alternet.Drawing.RectD rect, int flags)
         {
             CheckDisposed();
             NativeApi.Control_SetBoundsEx_(NativePointer, rect, flags);
@@ -850,7 +850,7 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
-        public void RefreshRect(Alternet.Drawing.Rect rect, bool eraseBackground)
+        public void RefreshRect(Alternet.Drawing.RectD rect, bool eraseBackground)
         {
             CheckDisposed();
             NativeApi.Control_RefreshRect_(NativePointer, rect, eraseBackground);
@@ -1240,28 +1240,28 @@ namespace Alternet.UI.Native
             public static extern void Control_SetAllowDrop_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetSize_(IntPtr obj, Alternet.Drawing.Size value);
+            public static extern void Control_SetSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_GetLocation_(IntPtr obj);
+            public static extern Alternet.Drawing.PointD Control_GetLocation_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetLocation_(IntPtr obj, Alternet.Drawing.Point value);
+            public static extern void Control_SetLocation_(IntPtr obj, Alternet.Drawing.PointD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Rect Control_GetBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBounds_(IntPtr obj, Alternet.Drawing.Rect value);
+            public static extern void Control_SetBounds_(IntPtr obj, Alternet.Drawing.RectD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetClientSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetClientSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetClientSize_(IntPtr obj, Alternet.Drawing.Size value);
+            public static extern void Control_SetClientSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.Thickness Control_GetIntrinsicLayoutPadding_(IntPtr obj);
@@ -1312,19 +1312,19 @@ namespace Alternet.UI.Native
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetMinimumSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetMinimumSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetMinimumSize_(IntPtr obj, Alternet.Drawing.Size value);
+            public static extern void Control_SetMinimumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetMaximumSize_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetMaximumSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
+            public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_HitTest_(Alternet.Drawing.Point screenPoint);
+            public static extern IntPtr Control_HitTest_(Alternet.Drawing.PointD screenPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetFocusedControl_();
@@ -1348,7 +1348,7 @@ namespace Alternet.UI.Native
             public static extern void Control_EndIgnoreRecreate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetDPI_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetDPI_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
@@ -1366,7 +1366,7 @@ namespace Alternet.UI.Native
             public static extern void Control_Update_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.Size availableSize);
+            public static extern Alternet.Drawing.SizeD Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.SizeD availableSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, DragDropEffects allowedEffects);
@@ -1393,16 +1393,16 @@ namespace Alternet.UI.Native
             public static extern void Control_ResetForegroundColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.Point point);
+            public static extern Alternet.Drawing.PointD Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.Point point);
+            public static extern Alternet.Drawing.PointD Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.Point point);
+            public static extern Alternet.Drawing.PointI Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.Int32Point point);
+            public static extern Alternet.Drawing.PointD Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_SetFocus_(IntPtr obj);
@@ -1432,7 +1432,7 @@ namespace Alternet.UI.Native
             public static extern void Control_SendMouseUpEvent_(IntPtr obj, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBoundsEx_(IntPtr obj, Alternet.Drawing.Rect rect, int flags);
+            public static extern void Control_SetBoundsEx_(IntPtr obj, Alternet.Drawing.RectD rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
@@ -1462,7 +1462,7 @@ namespace Alternet.UI.Native
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_RefreshRect_(IntPtr obj, Alternet.Drawing.Rect rect, bool eraseBackground);
+            public static extern void Control_RefreshRect_(IntPtr obj, Alternet.Drawing.RectD rect, bool eraseBackground);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Raise_(IntPtr obj);

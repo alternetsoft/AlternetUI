@@ -110,7 +110,7 @@ namespace PaintSample
         public void Paint(Control control, DrawingContext drawingContext)
         {
             drawingContext.FillRectangle(Brushes.White, Bitmap.BoundsDip(control));
-            drawingContext.DrawImage(Bitmap, Point.Empty);
+            drawingContext.DrawImage(Bitmap, PointD.Empty);
             previewAction?.Invoke(drawingContext);
         }
 
@@ -137,7 +137,7 @@ namespace PaintSample
 
         private Bitmap CreateBitmap(Control control)
         {
-            var pixelSize = control.PixelFromDip(new Size(600, 600));
+            var pixelSize = control.PixelFromDip(new SizeD(600, 600));
             var bitmap = new Bitmap(pixelSize, control);
             using var dc = DrawingContext.FromImage(bitmap);
             dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.BoundsDip(control)); 

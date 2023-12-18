@@ -19,21 +19,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the size used for cells in the grid with no item.
         /// </summary>
-        Int32Size EmptyCellSize { get; set; }
+        SizeI EmptyCellSize { get; set; }
 
         /// <summary>
         /// Return the sizer item located at the point given in pt, or <c>null</c> if there is
         /// no item at that point.
         /// </summary>
         /// <param name="pt">Point.</param>
-        ISizerItem? FindItemAtPoint(Int32Point pt);
+        ISizerItem? FindItemAtPoint(PointI pt);
 
         /// <summary>
         /// Return the sizer item for the given grid cell, or <c>null</c> if there is no item
         /// at that position.
         /// </summary>
         /// <param name="pos">Grid cell position.</param>
-        ISizerItem? FindItemAtPosition(Int32Point pos);
+        ISizerItem? FindItemAtPosition(PointI pos);
 
         /// <summary>
         /// Adds the given item to the given position.
@@ -45,8 +45,8 @@ namespace Alternet.UI
         /// <param name="border">Item border.</param>
         ISizerItem Add(
             Control control,
-            Int32Point pos,
-            Int32Size span,
+            PointI pos,
+            SizeI span,
             SizerFlag flag = 0,
             int border = 0);
 
@@ -60,8 +60,8 @@ namespace Alternet.UI
         /// <param name="border">Item border.</param>
         ISizerItem Add(
             ISizer sizer,
-            Int32Point pos,
-            Int32Size span,
+            PointI pos,
+            SizeI span,
             SizerFlag flag = 0,
             int border = 0);
 
@@ -77,8 +77,8 @@ namespace Alternet.UI
         ISizerItem Add(
             int width,
             int height,
-            Int32Point pos,
-            Int32Size span,
+            PointI pos,
+            SizeI span,
             SizerFlag flag = 0,
             int border = 0);
 
@@ -105,14 +105,14 @@ namespace Alternet.UI
         /// If an excludeItem is given then it will not be checked for intersection,
         /// for example it may be the item we are checking the position of.
         /// </remarks>
-        bool CheckForIntersection(Int32Point pos, Int32Size span, ISizerItem? excludeItem = null);
+        bool CheckForIntersection(PointI pos, SizeI span, ISizerItem? excludeItem = null);
 
         /// <summary>
         /// Gets the size of the specified cell, including hgap and vgap.
         /// </summary>
         /// <param name="row">Item row.</param>
         /// <param name="col">Item column.</param>
-        Int32Size GetCellSize(int row, int col);
+        SizeI GetCellSize(int row, int col);
 
         /// <summary>
         /// Finds the sizer item for the given control, returns <c>null</c> if not found.
@@ -130,37 +130,37 @@ namespace Alternet.UI
         /// Gets the grid position of the specified item.
         /// </summary>
         /// <param name="control">Control which is attached to the item.</param>
-        Int32Point GetItemPosition(Control control);
+        PointI GetItemPosition(Control control);
 
         /// <summary>
         /// Gets the grid position of the specified item.
         /// </summary>
         /// <param name="sizer">Sizer which is attached to the item.</param>
-        Int32Point GetItemPosition(ISizer sizer);
+        PointI GetItemPosition(ISizer sizer);
 
         /// <summary>
         /// Gets the grid position of the specified item.
         /// </summary>
         /// <param name="index">Item index.</param>
-        Int32Point GetItemPosition(int index);
+        PointI GetItemPosition(int index);
 
         /// <summary>
         /// Gets the row/col spanning of the specified item.
         /// </summary>
         /// <param name="control">Control which is attached to the item.</param>
-        Int32Point GetItemSpan(Control control);
+        PointI GetItemSpan(Control control);
 
         /// <summary>
         /// Gets the row/col spanning of the specified item.
         /// </summary>
         /// <param name="sizer">Sizer which is attached to the item.</param>
-        Int32Point GetItemSpan(ISizer sizer);
+        PointI GetItemSpan(ISizer sizer);
 
         /// <summary>
         /// Gets the row/col spanning of the specified item.
         /// </summary>
         /// <param name="index">Index of the item.</param>
-        Int32Point GetItemSpan(int index);
+        PointI GetItemSpan(int index);
 
         /// <summary>
         /// Sets the grid position of the specified item.
@@ -168,7 +168,7 @@ namespace Alternet.UI
         /// <param name="control">Control which is attached to the item.</param>
         /// <param name="pos">Item position in the grid.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
-        bool SetItemPosition(Control control, Int32Point pos);
+        bool SetItemPosition(Control control, PointI pos);
 
         /// <summary>
         /// Sets the grid position of the specified item.
@@ -176,7 +176,7 @@ namespace Alternet.UI
         /// <param name="sizer">Sizer which is attached to the item.</param>
         /// <param name="pos">Item position in the grid.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
-        bool SetItemPosition(ISizer sizer, Int32Point pos);
+        bool SetItemPosition(ISizer sizer, PointI pos);
 
         /// <summary>
         /// Sets the grid position of the specified item.
@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// <param name="index">Item index.</param>
         /// <param name="pos">Item position in the grid.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
-        bool SetItemPosition(int index, Int32Point pos);
+        bool SetItemPosition(int index, PointI pos);
 
         /// <summary>
         /// Sets the row/col spanning of the specified item.
@@ -192,7 +192,7 @@ namespace Alternet.UI
         /// <param name="control">Control which is attached to the item.</param>
         /// <param name="span">Number of rows and columns spanned by the item.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
-        bool SetItemSpan(Control control, Int32Size span);
+        bool SetItemSpan(Control control, SizeI span);
 
         /// <summary>
         /// Sets the row/col spanning of the specified item.
@@ -200,7 +200,7 @@ namespace Alternet.UI
         /// <param name="span">Number of rows and columns spanned by the item.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
         /// <param name="sizer">Sizer which is attached to the item.</param>
-        bool SetItemSpan(ISizer sizer, Int32Size span);
+        bool SetItemSpan(ISizer sizer, SizeI span);
 
         /// <summary>
         /// Sets the row/col spanning of the specified item.
@@ -208,6 +208,6 @@ namespace Alternet.UI
         /// <param name="span">Number of rows and columns spanned by the item.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
         /// <param name="index">Item index.</param>
-        bool SetItemSpan(int index, Int32Size span);
+        bool SetItemSpan(int index, SizeI span);
     }
 }

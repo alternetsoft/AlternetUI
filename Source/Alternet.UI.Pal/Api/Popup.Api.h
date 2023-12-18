@@ -33,7 +33,7 @@ ALTERNET_UI_API void Popup_SetPuContainsControls_(Popup* obj, c_bool value)
     obj->SetPuContainsControls(value);
 }
 
-ALTERNET_UI_API void Popup_Position_(Popup* obj, Int32Point ptOrigin, Int32Size sizePopup)
+ALTERNET_UI_API void Popup_Position_(Popup* obj, PointI ptOrigin, SizeI sizePopup)
 {
     obj->Position(ptOrigin, sizePopup);
 }

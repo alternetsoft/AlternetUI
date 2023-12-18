@@ -5,13 +5,13 @@ namespace Alternet.UI
 {
     internal class NativeGroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>
     {
-        public override Size GetPreferredSize(Size availableSize)
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
             // Ensure the group box label is included in the size.
             var nativeControlSize = GetNativeControlSize(availableSize);
             var calculatedSize = base.GetPreferredSize(availableSize);
 
-            return new Size(
+            return new SizeD(
                 Math.Max(nativeControlSize.Width, calculatedSize.Width),
                 Math.Max(nativeControlSize.Height, calculatedSize.Height));
         }

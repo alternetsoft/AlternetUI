@@ -204,7 +204,7 @@ namespace Alternet.UI
         /// Shows popup at the specified location.
         /// </summary>
         /// <param name="location">Popup window location.</param>
-        public void ShowPopup(Point location)
+        public void ShowPopup(PointD location)
         {
             PopupResult = ModalResult.None;
             Location = location;

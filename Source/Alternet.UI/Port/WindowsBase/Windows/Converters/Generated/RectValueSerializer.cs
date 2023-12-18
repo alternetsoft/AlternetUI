@@ -38,7 +38,7 @@ namespace Alternet.UI
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if (!(value is Rect))
+            if (!(value is RectD))
             {
                 return false;
             }
@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             if (value != null)
             {
-                return Rect.Parse(value );
+                return RectD.Parse(value );
             }
             else
             {
@@ -66,9 +66,9 @@ namespace Alternet.UI
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Rect)
+            if (value is RectD)
             {
-                Rect instance = (Rect) value;
+                RectD instance = (RectD) value;
 
 
                 #pragma warning suppress 6506 // instance is obviously not null

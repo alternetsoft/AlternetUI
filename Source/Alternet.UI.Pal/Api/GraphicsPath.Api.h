@@ -29,57 +29,57 @@ ALTERNET_UI_API void GraphicsPath_Initialize_(GraphicsPath* obj, DrawingContext*
     obj->Initialize(dc);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, Point* points, int pointsCount)
+ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, PointD* points, int pointsCount)
 {
     obj->AddLines(points, pointsCount);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddLine_(GraphicsPath* obj, Point pt1, Point pt2)
+ALTERNET_UI_API void GraphicsPath_AddLine_(GraphicsPath* obj, PointD pt1, PointD pt2)
 {
     obj->AddLine(pt1, pt2);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddLineTo_(GraphicsPath* obj, Point pt)
+ALTERNET_UI_API void GraphicsPath_AddLineTo_(GraphicsPath* obj, PointD pt)
 {
     obj->AddLineTo(pt);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddEllipse_(GraphicsPath* obj, Rect rect)
+ALTERNET_UI_API void GraphicsPath_AddEllipse_(GraphicsPath* obj, RectD rect)
 {
     obj->AddEllipse(rect);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddBezier_(GraphicsPath* obj, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+ALTERNET_UI_API void GraphicsPath_AddBezier_(GraphicsPath* obj, PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
 {
     obj->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, Point controlPoint1, Point controlPoint2, Point endPoint)
+ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
 {
     obj->AddBezierTo(controlPoint1, controlPoint2, endPoint);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, Point center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, PointD center, double radius, double startAngle, double sweepAngle)
 {
     obj->AddArc(center, radius, startAngle, sweepAngle);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, Rect rect)
+ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, RectD rect)
 {
     obj->AddRectangle(rect);
 }
 
-ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, Rect rect, double cornerRadius)
+ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, RectD rect, double cornerRadius)
 {
     obj->AddRoundedRectangle(rect, cornerRadius);
 }
 
-ALTERNET_UI_API Rect_C GraphicsPath_GetBounds_(GraphicsPath* obj)
+ALTERNET_UI_API RectD_C GraphicsPath_GetBounds_(GraphicsPath* obj)
 {
     return obj->GetBounds();
 }
 
-ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj, Point point)
+ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj, PointD point)
 {
     obj->StartFigure(point);
 }

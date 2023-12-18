@@ -35,14 +35,14 @@ namespace PrintingSample
 
         private readonly Pen thickGrayPen = new(Color.Gray, 4);
 
-        private void DrawFirstPage(DrawingContext dc, Rect bounds)
+        private void DrawFirstPage(DrawingContext dc, RectD bounds)
         {
             dc.DrawRectangle(Pens.Blue, bounds);
 
-            var cornerRectSize = new Size(50, 50);
-            var cornerRectLeft = new Rect(bounds.Location, cornerRectSize);
+            var cornerRectSize = new SizeD(50, 50);
+            var cornerRectLeft = new RectD(bounds.Location, cornerRectSize);
             var cornerRectRight =
-                new Rect(bounds.TopRight - new Size(cornerRectSize.Width, 0), cornerRectSize);
+                new RectD(bounds.TopRight - new SizeD(cornerRectSize.Width, 0), cornerRectSize);
 
             dc.DrawRectangle(Pens.Red, cornerRectLeft);
             dc.DrawRectangle(Pens.Red, cornerRectRight);
@@ -156,7 +156,7 @@ namespace PrintingSample
 
             int pageNumber = e.PageNumber;
 
-            var bounds = new Rect(new Point(), originAtMarginCheckBox.IsChecked
+            var bounds = new RectD(new PointD(), originAtMarginCheckBox.IsChecked
                 ? e.MarginBounds.Size : e.PrintablePageBounds.Size);
 
             if (pageNumber == 1)
@@ -175,13 +175,13 @@ namespace PrintingSample
             e.HasMorePages = pageNumber - 1 < v;
         }
 
-        private void DrawAdditionalPage(DrawingContext dc, int pageNumber, Rect bounds)
+        private void DrawAdditionalPage(DrawingContext dc, int pageNumber, RectD bounds)
         {
             dc.DrawText(
                 "Additional page #" + pageNumber,
                 font,
                 Brushes.Black,
-                bounds.Location + new Size(10, 10));
+                bounds.Location + new SizeD(10, 10));
         }
 
         private void AboutMenuItem_Click(object sender, System.EventArgs e) =>

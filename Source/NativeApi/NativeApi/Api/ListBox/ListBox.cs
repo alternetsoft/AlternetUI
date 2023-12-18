@@ -22,7 +22,7 @@ namespace NativeApi.Api
         public void ClearSelected() { }
         public void SetSelected(int index, bool value) { }
         public void EnsureVisible(int itemIndex) { }
-        public int ItemHitTest(Point position) => default;
+        public int ItemHitTest(PointD position) => default;
         public void SetItem(int index, string value) { }
     }
 }

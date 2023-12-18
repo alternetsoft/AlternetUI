@@ -79,7 +79,7 @@ namespace Alternet.UI
         /// Gets or sets position of the caret which was reported in the event.
         /// </summary>
         [Browsable(false)]
-        public virtual Int32Point? ReportedPosition { get; set; }
+        public virtual PointI? ReportedPosition { get; set; }
 
         /// <summary>
         /// Gets or sets string search provider.
@@ -190,20 +190,20 @@ namespace Alternet.UI
         /// Caret position starts from (0,0).
         /// </remarks>
         [Browsable(false)]
-        public virtual Int32Point? CurrentPosition
+        public virtual PointI? CurrentPosition
         {
             get
             {
                 var insertPoint = GetInsertionPoint();
                 var currentPos = PositionToXY(insertPoint);
-                if (currentPos == Int32Point.MinusOne)
+                if (currentPos == PointI.MinusOne)
                     return null;
                 return currentPos;
             }
 
             set
             {
-                value ??= Int32Point.Empty;
+                value ??= PointI.Empty;
                 var insertPoint = XYToPosition((long)value.Value.X, (long)value.Value.Y);
                 SetInsertionPoint(insertPoint);
                 CurrentPositionChanged?.Invoke(this, EventArgs.Empty);
@@ -1784,7 +1784,7 @@ namespace Alternet.UI
         /// <summary>
         /// Transforms logical (unscrolled) position to physical window position.
         /// </summary>
-        public Int32Point GetPhysicalPoint(Int32Point ptLogical)
+        public PointI GetPhysicalPoint(PointI ptLogical)
         {
             return NativeControl.GetPhysicalPoint(ptLogical);
         }
@@ -1792,7 +1792,7 @@ namespace Alternet.UI
         /// <summary>
         /// Transforms physical window position to logical (unscrolled) position.
         /// </summary>
-        public Int32Point GetLogicalPoint(Int32Point ptPhysical)
+        public PointI GetLogicalPoint(PointI ptPhysical)
         {
             return NativeControl.GetLogicalPoint(ptPhysical);
         }
@@ -1872,7 +1872,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the first visible point in the control.
         /// </summary>
-        public Int32Point GetFirstVisiblePoint()
+        public PointI GetFirstVisiblePoint()
         {
             return NativeControl.GetFirstVisiblePoint();
         }
@@ -2390,7 +2390,7 @@ namespace Alternet.UI
         /// <summary>
         /// Converts a text position to zero-based column and line numbers.
         /// </summary>
-        public Int32Point PositionToXY(long pos)
+        public PointI PositionToXY(long pos)
         {
             return NativeControl.PositionToXY(pos);
         }
@@ -2564,7 +2564,7 @@ namespace Alternet.UI
         /// Shows the given context menu, optionally adding appropriate property-editing
         /// commands for the current position in the object hierarchy.
         /// </summary>
-        internal bool ShowContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true)
+        internal bool ShowContextMenu(IntPtr menu, PointI pt, bool addPropertyCommands = true)
         {
             return NativeControl.ShowContextMenu(menu, pt, addPropertyCommands);
         }
@@ -2573,7 +2573,7 @@ namespace Alternet.UI
         /// Prepares the context menu, optionally adding appropriate property-editing commands.
         /// Returns the number of property commands added.
         /// </summary>
-        internal int PrepareContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true)
+        internal int PrepareContextMenu(IntPtr menu, PointI pt, bool addPropertyCommands = true)
         {
             return NativeControl.PrepareContextMenu(menu, pt, addPropertyCommands);
         }
@@ -2624,7 +2624,7 @@ namespace Alternet.UI
         /// </summary>
         internal bool GetCaretPositionForIndex(
             long position,
-            Int32Rect rect,
+            RectI rect,
             IntPtr container = default)
         {
             return NativeControl.GetCaretPositionForIndex(position, rect, container);

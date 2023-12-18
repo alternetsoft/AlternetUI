@@ -14,7 +14,7 @@ namespace Alternet.Drawing
         public int DrawHeaderButton(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0,
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
             object? headerButtonParams = null)
@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         public int DrawHeaderButtonContents(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0,
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
             object? headerButtonParams = null)
@@ -49,7 +49,7 @@ namespace Alternet.Drawing
         public void DrawTreeItemButton(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -59,7 +59,7 @@ namespace Alternet.Drawing
         public void DrawSplitterBorder(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -68,7 +68,7 @@ namespace Alternet.Drawing
         public void DrawSplitterSash(
             Control control,
             DrawingContext dcReal,
-            Int32Size sizeReal,
+            SizeI sizeReal,
             int position,
             int orientation,
             NativeControlPainterFlags flags = 0)
@@ -80,7 +80,7 @@ namespace Alternet.Drawing
         public void DrawComboBoxDropButton(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -90,7 +90,7 @@ namespace Alternet.Drawing
         public void DrawDropArrow(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -100,7 +100,7 @@ namespace Alternet.Drawing
         public void DrawCheckBox(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -110,25 +110,25 @@ namespace Alternet.Drawing
         public void DrawCheckMark(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
 
         // Returns the default size of a check box.
-        public Int32Size GetCheckBoxSize(Control control, NativeControlPainterFlags flags = 0)
+        public SizeI GetCheckBoxSize(Control control, NativeControlPainterFlags flags = 0)
         {
             return default;
         }
 
         // Returns the default size of a check mark.
-        public Int32Size GetCheckMarkSize(Control control)
+        public SizeI GetCheckMarkSize(Control control)
         {
             return default;
         }
 
         // Returns the default size of a expander.
-        public Int32Size GetExpanderSize(Control control)
+        public SizeI GetExpanderSize(Control control)
         {
             return default;
         }
@@ -138,7 +138,7 @@ namespace Alternet.Drawing
         public void DrawPushButton(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -148,13 +148,13 @@ namespace Alternet.Drawing
         public void DrawCollapseButton(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
 
         // Returns the default size of a collapse button
-        public Int32Size GetCollapseButtonSize(Control control, DrawingContext dc) => default;
+        public SizeI GetCollapseButtonSize(Control control, DrawingContext dc) => default;
 
         // draw rectangle indicating that an item in e.g. a list control
         // has been selected or focused
@@ -165,7 +165,7 @@ namespace Alternet.Drawing
         public void DrawItemSelectionRect(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -175,7 +175,7 @@ namespace Alternet.Drawing
         public void DrawFocusRect(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -184,7 +184,7 @@ namespace Alternet.Drawing
         public void DrawChoice(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -193,7 +193,7 @@ namespace Alternet.Drawing
         public void DrawComboBox(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -202,7 +202,7 @@ namespace Alternet.Drawing
         public void DrawTextCtrl(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -211,7 +211,7 @@ namespace Alternet.Drawing
         public void DrawRadioBitmap(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
@@ -221,7 +221,7 @@ namespace Alternet.Drawing
         public void DrawGauge(
             Control control,
             DrawingContext dc,
-            Rect rect,
+            RectD rect,
             int value,
             int max,
             NativeControlPainterFlags flags = 0)
@@ -233,7 +233,7 @@ namespace Alternet.Drawing
             Control control,
             DrawingContext dc,
             string text,
-            Rect rect,
+            RectD rect,
             GenericAlignment align = GenericAlignment.Left | GenericAlignment.Top,
             NativeControlPainterFlags flags = 0,
             TextEllipsizeType ellipsizeMode = TextEllipsizeType.End)

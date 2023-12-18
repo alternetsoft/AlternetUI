@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
 
-        private static readonly Size DefaultControlSize = Size.NaN;
+        private static readonly SizeD DefaultControlSize = SizeD.NaN;
         private static int groupIndexCounter;
         private static Font? defaultFont;
 
@@ -36,12 +36,12 @@ namespace Alternet.UI
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
         private MouseEventArgs? dragEventArgs;
-        private Point dragEventMousePos;
+        private PointD dragEventMousePos;
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
         private ControlCollection? children;
-        private Size suggestedSize = DefaultControlSize;
+        private SizeD suggestedSize = DefaultControlSize;
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
@@ -287,10 +287,10 @@ namespace Alternet.UI
         /// Gets the position of the mouse cursor in screen coordinates.
         /// </summary>
         /// <returns>
-        /// A <see cref="Point" /> that contains the coordinates of the mouse cursor
+        /// A <see cref="PointD" /> that contains the coordinates of the mouse cursor
         /// relative to the upper-left corner of the screen.
         /// </returns>
-        public static Point MousePosition
+        public static PointD MousePosition
         {
             get
             {
@@ -491,7 +491,7 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per unit).
         /// </summary>
         [Browsable(false)]
-        public virtual Size ClientSize
+        public virtual SizeD ClientSize
         {
             get => Handler.ClientSize;
             set => Handler.ClientSize = value;
@@ -685,7 +685,7 @@ namespace Alternet.UI
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
         [Browsable(false)]
-        public virtual Rect Bounds
+        public virtual RectD Bounds
         {
             get => Handler.Bounds;
             set => Handler.Bounds = value;
@@ -707,7 +707,7 @@ namespace Alternet.UI
                 var bounds = Bounds;
                 if (bounds.Left == value)
                     return;
-                Bounds = new Rect(value, bounds.Top, bounds.Width, bounds.Height);
+                Bounds = new RectD(value, bounds.Top, bounds.Width, bounds.Height);
             }
         }
 
@@ -734,7 +734,7 @@ namespace Alternet.UI
                 var bounds = Bounds;
                 if (bounds.Top == value)
                     return;
-                Bounds = new Rect(bounds.Left, value, bounds.Width, bounds.Height);
+                Bounds = new RectD(bounds.Left, value, bounds.Width, bounds.Height);
             }
         }
 
@@ -745,7 +745,7 @@ namespace Alternet.UI
         /// <value>The position of the control's upper-left corner, in logical
         /// units (1/96th of an inch).</value>
         [Browsable(false)]
-        public virtual Point Location
+        public virtual PointD Location
         {
             get
             {
@@ -754,7 +754,7 @@ namespace Alternet.UI
 
             set
             {
-                Bounds = new Rect(value, Bounds.Size);
+                Bounds = new RectD(value, Bounds.Size);
             }
         }
 
@@ -947,17 +947,17 @@ namespace Alternet.UI
         /// Gets or sets the size of the control.
         /// </summary>
         /// <value>The size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Alternet.Drawing.Size"/>(<see cref="double.NaN"/>,
+        /// The default value is <see cref="Alternet.Drawing.SizeD"/>(<see cref="double.NaN"/>,
         /// <see cref="double.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the size of the control.
-        /// Set this property to <see cref="Alternet.Drawing.Size"/>(<see cref="double.NaN"/>,
+        /// Set this property to <see cref="Alternet.Drawing.SizeD"/>(<see cref="double.NaN"/>,
         /// <see cref="double.NaN"/>) to specify system-default sizing
         /// behavior when the control is first shown.
         /// </remarks>
         [Browsable(false)]
-        public virtual Size Size
+        public virtual SizeD Size
         {
             get
             {
@@ -966,7 +966,7 @@ namespace Alternet.UI
 
             set
             {
-                Handler.Bounds = new Rect(Bounds.Location, value);
+                Handler.Bounds = new RectD(Bounds.Location, value);
             }
         }
 
@@ -1010,20 +1010,20 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The suggested size of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="Alternet.Drawing.Size"/>
+        /// The default value is <see cref="Alternet.Drawing.SizeD"/>
         /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested size of the control. An actual
         /// size is calculated by the layout system.
-        /// Set this property to <see cref="Alternet.Drawing.Size"/>
+        /// Set this property to <see cref="Alternet.Drawing.SizeD"/>
         /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
         [Browsable(false)]
-        public Size SuggestedSize
+        public SizeD SuggestedSize
         {
             get
             {
@@ -1255,7 +1255,7 @@ namespace Alternet.UI
         /// Gets or sets the minimum size the window can be resized to.
         /// </summary>
         [Browsable(false)]
-        public virtual Size MinimumSize
+        public virtual SizeD MinimumSize
         {
             get => Handler.MinimumSize;
             set => Handler.MinimumSize = value;
@@ -1265,7 +1265,7 @@ namespace Alternet.UI
         /// Gets or sets the maximum size the window can be resized to.
         /// </summary>
         [Browsable(false)]
-        public virtual Size MaximumSize
+        public virtual SizeD MaximumSize
         {
             get => Handler.MaximumSize;
             set => Handler.MaximumSize = value;
@@ -1748,7 +1748,7 @@ namespace Alternet.UI
         /// Useful for custom draw controls
         /// </summary>
         [Browsable(false)]
-        public virtual Rect DrawClientRectangle
+        public virtual RectD DrawClientRectangle
         {
             get
             {
@@ -1805,7 +1805,7 @@ namespace Alternet.UI
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
         [Browsable(false)]
-        public virtual Rect ClientRectangle => new(Point.Empty, ClientSize);
+        public virtual RectD ClientRectangle => new(PointD.Empty, ClientSize);
 
         /// <summary>
         /// Gets a rectangle which describes an area inside of the
@@ -1814,19 +1814,19 @@ namespace Alternet.UI
         /// units (1/96th inch per unit).
         /// </summary>
         [Browsable(false)]
-        public virtual Rect ChildrenLayoutBounds
+        public virtual RectD ChildrenLayoutBounds
         {
             get
             {
                 var childrenBounds = ClientRectangle;
                 if (childrenBounds.IsEmpty)
-                    return Rect.Empty;
+                    return RectD.Empty;
 
                 var padding = Padding;
                 var intrinsicPadding = NativeControl.IntrinsicLayoutPadding;
 
-                return new Rect(
-                    new Point(
+                return new RectD(
+                    new PointD(
                         padding.Left + intrinsicPadding.Left,
                         padding.Top + intrinsicPadding.Top),
                     childrenBounds.Size - padding.Size - intrinsicPadding.Size);
