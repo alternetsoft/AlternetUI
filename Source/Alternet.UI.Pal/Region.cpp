@@ -12,6 +12,11 @@ namespace Alternet::UI
     {
     }
 
+    void Region::InitializeWithRegion(Region* region)
+    {
+        _region = wxRegion(region->_region);
+    }
+
     void Region::InitializeWithRect(const Rect& rect)
     {
         _region = wxRegion(fromDip(rect, GetWindow()));

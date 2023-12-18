@@ -38,6 +38,11 @@ ALTERNET_UI_API c_bool Region_IsOk_(Region* obj)
     return obj->IsOk();
 }
 
+ALTERNET_UI_API void Region_InitializeWithRegion_(Region* obj, Region* region)
+{
+    obj->InitializeWithRegion(region);
+}
+
 ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, Rect rect)
 {
     obj->InitializeWithRect(rect);

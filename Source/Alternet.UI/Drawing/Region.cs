@@ -29,6 +29,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new <see cref="Region"/> from the specified <see cref="Region"/>.
+        /// </summary>
+        /// <param name="region">A <see cref="Region"/> that defines the interior
+        /// of the new <see cref="Region"/>.</param>
+        public Region(Region region)
+        {
+            NativeRegion = new UI.Native.Region();
+            NativeRegion.InitializeWithRegion(region.NativeRegion);
+        }
+
+        /// <summary>
         /// Initializes a new <see cref="Region"/> from the polygon specified by the
         /// <paramref name="points"/> array.
         /// </summary>

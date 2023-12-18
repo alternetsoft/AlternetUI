@@ -17,6 +17,8 @@ namespace NativeApi.Api
 
         public bool IsOk() => default;
 
+        public void InitializeWithRegion(Region region) => throw new Exception();
+
         public void InitializeWithRect(Rect rect) => throw new Exception();
 
         public void InitializeWithPolygon(

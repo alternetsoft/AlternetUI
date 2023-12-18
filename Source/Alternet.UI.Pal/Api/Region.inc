@@ -5,6 +5,7 @@ int ContainsPoint(const Point& pt);
 int ContainsRect(const Rect& rect);
 bool IsEmpty();
 bool IsOk();
+void InitializeWithRegion(Region* region);
 void InitializeWithRect(const Rect& rect);
 void InitializeWithPolygon(Point* points, int pointsCount, FillMode fillMode);
 void IntersectWithRect(const Rect& rect);

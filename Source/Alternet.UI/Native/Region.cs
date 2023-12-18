@@ -53,6 +53,12 @@ namespace Alternet.UI.Native
             return NativeApi.Region_IsOk_(NativePointer);
         }
         
+        public void InitializeWithRegion(Region region)
+        {
+            CheckDisposed();
+            NativeApi.Region_InitializeWithRegion_(NativePointer, region.NativePointer);
+        }
+        
         public void InitializeWithRect(Alternet.Drawing.Rect rect)
         {
             CheckDisposed();
@@ -160,6 +166,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Region_IsOk_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Region_InitializeWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_InitializeWithRect_(IntPtr obj, Alternet.Drawing.Rect rect);
