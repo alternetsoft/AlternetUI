@@ -193,6 +193,8 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+int GetScrollBarEvtKind();
+int GetScrollBarEvtPosition();
 void RefreshRect(const RectD& rect, bool eraseBackground);
 void Raise();
 void Lower();

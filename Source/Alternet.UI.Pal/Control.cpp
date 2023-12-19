@@ -465,55 +465,65 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+#define ScrollEventType_SmallDecrement 0
+#define ScrollEventType_SmallIncrement 1
+#define ScrollEventType_LargeDecrement 2
+#define ScrollEventType_LargeIncrement 3
+#define ScrollEventType_ThumbPosition 4
+#define ScrollEventType_ThumbTrack 5
+#define ScrollEventType_First 6
+#define ScrollEventType_Last 7
+#define ScrollEventType_EndScroll 8
+
     void Control::OnScrollTop(wxScrollWinEvent& event)
     {
-        ApplyScroll(event, 0);
+        ApplyScroll(ScrollEventType_First, event, 0);
         event.Skip();
     }
 
     void Control::OnScrollBottom(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(event, scrollInfo.maximum);
+        ApplyScroll(ScrollEventType_Last, event, scrollInfo.maximum);
         event.Skip();
     }
 
     void Control::OnScrollLineUp(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(event, scrollInfo.value - 1);
+        ApplyScroll(ScrollEventType_SmallDecrement, event, scrollInfo.value - 1);
         event.Skip();
     }
 
     void Control::OnScrollLineDown(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(event, scrollInfo.value + 1);
+        ApplyScroll(ScrollEventType_SmallIncrement, event, scrollInfo.value + 1);
         event.Skip();
     }
 
     void Control::OnScrollPageUp(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(event, scrollInfo.value - scrollInfo.largeChange);
+        ApplyScroll(ScrollEventType_LargeDecrement, event, scrollInfo.value - scrollInfo.largeChange);
         event.Skip();
     }
 
     void Control::OnScrollPageDown(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(event, scrollInfo.value + scrollInfo.largeChange);
+        ApplyScroll(ScrollEventType_LargeIncrement, event, scrollInfo.value + scrollInfo.largeChange);
     }
 
     void Control::OnScrollThumbTrack(wxScrollWinEvent& event)
     {
-        ApplyScroll(event, event.GetPosition());
+        ApplyScroll(ScrollEventType_ThumbTrack, event, event.GetPosition());
         event.Skip();
     }
 
     void Control::OnScrollThumbRelease(wxScrollWinEvent& event)
     {
-        ApplyScroll(event, event.GetPosition());
+        ApplyScroll(ScrollEventType_ThumbPosition, event, event.GetPosition());
         event.Skip();
     }
 
@@ -525,7 +535,7 @@ namespace Alternet::UI
             ScrollBarOrientation::Horizontal : ScrollBarOrientation::Vertical);
     }
 
-    void Control::ApplyScroll(wxScrollWinEvent& event, int position)
+    void Control::ApplyScroll(int evtKind, wxScrollWinEvent& event, int position)
     {
         auto wxOrientation = event.GetOrientation();
         GetWxWindow()->SetScrollPos(wxOrientation, position);
@@ -542,8 +552,19 @@ namespace Alternet::UI
                 throwExNoInfo;
             }
         };
-
+        _scrollbarEvtKind = evtKind;
+        _scrollbarEvtPosition = event.GetPosition();
         RaiseEvent(getEvent());
+    }
+
+    int Control::GetScrollBarEvtPosition()
+    {
+        return _scrollbarEvtPosition;
+    }
+
+    int Control::GetScrollBarEvtKind()
+    {
+        return _scrollbarEvtKind;
     }
 
     void Control::OnGotFocus(wxFocusEvent& event)

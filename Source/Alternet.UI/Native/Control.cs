@@ -850,6 +850,18 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public int GetScrollBarEvtKind()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarEvtKind_(NativePointer);
+        }
+        
+        public int GetScrollBarEvtPosition()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarEvtPosition_(NativePointer);
+        }
+        
         public void RefreshRect(Alternet.Drawing.RectD rect, bool eraseBackground)
         {
             CheckDisposed();
@@ -1460,6 +1472,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarEvtKind_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarEvtPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_RefreshRect_(IntPtr obj, Alternet.Drawing.RectD rect, bool eraseBackground);

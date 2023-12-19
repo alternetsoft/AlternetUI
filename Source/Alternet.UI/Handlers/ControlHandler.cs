@@ -936,8 +936,8 @@ namespace Alternet.UI
             var args = new ScrollEventArgs
             {
                 ScrollOrientation = ScrollOrientation.HorizontalScroll,
-                NewValue =
-                    NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Horizontal),
+                NewValue = NativeControl.GetScrollBarEvtPosition(),
+                Type = (ScrollEventType)NativeControl.GetScrollBarEvtKind(),
             };
             Control.RaiseScroll(args);
         }
@@ -947,8 +947,8 @@ namespace Alternet.UI
             var args = new ScrollEventArgs
             {
                 ScrollOrientation = ScrollOrientation.VerticalScroll,
-                NewValue =
-                    NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Vertical),
+                NewValue = NativeControl.GetScrollBarEvtPosition(),
+                Type = (ScrollEventType)NativeControl.GetScrollBarEvtKind(),
             };
             Control.RaiseScroll(args);
         }

@@ -576,6 +576,16 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
+ALTERNET_UI_API int Control_GetScrollBarEvtKind_(Control* obj)
+{
+    return obj->GetScrollBarEvtKind();
+}
+
+ALTERNET_UI_API int Control_GetScrollBarEvtPosition_(Control* obj)
+{
+    return obj->GetScrollBarEvtPosition();
+}
+
 ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)
 {
     obj->RefreshRect(rect, eraseBackground);

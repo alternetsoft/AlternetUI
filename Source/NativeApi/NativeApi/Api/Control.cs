@@ -146,5 +146,7 @@ namespace NativeApi.Api
         public int GetScrollBarValue(ScrollBarOrientation orientation) => default;
         public int GetScrollBarLargeChange(ScrollBarOrientation orientation) => default;
         public int GetScrollBarMaximum(ScrollBarOrientation orientation) => default;
+        public int GetScrollBarEvtKind() => default;
+        public int GetScrollBarEvtPosition() => default;
     }
 }

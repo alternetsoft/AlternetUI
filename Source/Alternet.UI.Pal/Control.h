@@ -239,6 +239,8 @@ namespace Alternet::UI
 
         Size _appliedMinimumSize;
         Size _appliedMaximumSize;
+        int _scrollbarEvtKind = 0;
+        int _scrollbarEvtPosition = 0;
 
         optional<Size> CoerceSize(const Size& value);
 
@@ -286,7 +288,7 @@ namespace Alternet::UI
         DelayedValue<Control, Control::ScrollInfo>& GetScrollInfoDelayedValue(
             const wxScrollWinEvent& event);
 
-        void ApplyScroll(wxScrollWinEvent& event, int position);
+        void ApplyScroll(int evtKind, wxScrollWinEvent& event, int position);
 
         void OnGotFocus(wxFocusEvent& event);
         void OnLostFocus(wxFocusEvent& event);
