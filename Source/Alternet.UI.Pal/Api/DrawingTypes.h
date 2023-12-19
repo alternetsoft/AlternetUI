@@ -9,482 +9,510 @@ namespace Alternet::UI
 
 	extern "C"
 	{
-		/*struct SizeI_C
-		{
-			int Width, Height;
-		};*/
-
-		/*struct SizeD_C
-		{
-			double Width, Height;
-		};*/
-
-		/*struct PointI_C
-		{
-			int X, Y;
-		};*/
-
-		/*struct PointD_C
-		{
-			double X, Y;
-		};*/
-
-		/*struct RectI_C
-		{
-			int X, Y, Width, Height;
-		};*/
-
-		/*struct RectD_C
-		{
-			double X, Y, Width, Height;
-		};*/
-
-		/*struct Thickness_C
-		{
-			double Left, Top, Right, Bottom;
-		};*/
-
-		/*struct Color_C
-		{
-			uint8_t R, G, B, A, state;
-		};*/
-
-		/*struct DateTime_C
-		{
-			int Year, Month, Day, H, M, S, MS;
-		};*/
-
-		struct Int32Size
+		struct SizeI_C
 		{
 			int Width = 0, Height = 0;
-
-			Int32Size()
-			{
-			}
-
-			Int32Size(const wxSize& s) : Width(s.x), Height(s.y)
-			{
-			}
-
-			Int32Size(int width, int height) : Width(width), Height(height) {}
-
-			/*inline operator SizeI_C() { return SizeI_C{Width, Height}; }*/
-
-			inline operator wxSize() const { return wxSize(Width, Height); }
-
-			inline bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
-			inline bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
-
-			std::string ToString() const
-			{
-				std::string w = std::to_string(Width);
-				std::string h = std::to_string(Height);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + w + comma + h + suffix;
-
-				return result;
-			}
 		};
 
-#define SizeI Int32Size
-#define SizeI_C Int32Size
-
-		struct Size
+		struct SizeD_C
 		{
 			double Width = 0, Height = 0;
-
-			Size() {}
-
-			Size(double width, double height) : Width(width), Height(height) {}
-
-			Size(wxSize size) : Width(size.x), Height(size.y) {}
-
-			inline Size operator+(const Size& rhs) const {
-				return Size(Width + rhs.Width, Height + rhs.Height);
-			}
-			inline Size& operator+=(const Size& rhs)
-			{
-				Width += rhs.Width;
-				Height += rhs.Height;
-				return *this;
-			}
-
-			/*inline operator SizeD_C() { return SizeD_C{Width, Height}; }*/
-
-			inline bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
-			inline bool operator!=(const Size& rhs) { return !(*this == rhs); }
-
-		public:
-			std::string ToString() const
-			{
-				std::string w = std::to_string(Width);
-				std::string h = std::to_string(Height);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + w + comma + h + suffix;
-
-				return result;
-			}
 		};
 
-#define SizeD Size
-#define SizeD_C Size
-
-		struct Int32Point
+		struct PointI_C
 		{
 			int X = 0, Y = 0;
-
-			Int32Point() {}
-
-			Int32Point(int x, int y) : X(x), Y(y) {}
-
-			Int32Point(wxPoint p) : X(p.x), Y(p.y) {}
-
-			/*inline operator PointI_C() const { return PointI_C{X, Y}; }*/
-
-			inline operator wxPoint() const { return wxPoint{ X, Y }; }
-
-			inline bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
-			inline bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
-
-			std::string ToString() const
-			{
-				std::string x = std::to_string(X);
-				std::string y = std::to_string(Y);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + x + comma + y + suffix;
-
-				return result;
-			}
 		};
 
-#define PointI Int32Point
-#define PointI_C Int32Point
-
-		struct Point
+		struct PointD_C
 		{
 			double X = 0, Y = 0;
-
-			Point() {}
-
-			Point(double x, double y) : X(x), Y(y) {}
-
-			/*inline operator PointD_C() const { return PointD_C{X, Y}; }*/
-
-			inline Point operator+(const Size& value) const {
-				return Point(X + value.Width, Y + value.Height);
-			}
-			inline Point operator-(const Size& value) const {
-				return Point(X - value.Width, Y - value.Height);
-			}
-
-			inline bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
-			inline bool operator!=(const Point& rhs) { return !(*this == rhs); }
-
-			std::string ToString() const
-			{
-				std::string x = std::to_string(X);
-				std::string y = std::to_string(Y);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + x + comma + y + suffix;
-
-				return result;
-			}
 		};
 
-#define PointD Point
-#define PointD_C Point
-
-		struct Int32Rect
+		struct RectI_C
 		{
 			int X = 0, Y = 0, Width = 0, Height = 0;
-
-			Int32Rect() {}
-
-			Int32Rect(wxRect r) : X(r.x), Y(r.y), Width(r.width), Height(r.height) {}
-
-			Int32Rect(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
-
-			Int32Rect(const Int32Point& location, const Int32Size& size) :
-				Int32Rect(location.X, location.Y, size.Width, size.Height) {}
-
-			inline Int32Point GetLocation() const { return Int32Point(X, Y); };
-			inline Int32Size GetSize() const { return Int32Size(Width, Height); };
-
-			inline bool IsZero() const
-			{
-				return (Width == 0) && (Height == 0) && (X == 0) && (Y == 0);
-			}
-
-			inline operator wxRect() const { return wxRect{ X, Y, Width, Height }; }
-
-			/*inline operator RectI_C() const { return RectI_C{X, Y, Width, Height}; }*/
-
-			inline bool operator==(const Int32Rect& rhs)
-			{
-				return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height;
-			}
-
-			inline bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
-
-			std::string ToString() const
-			{
-				std::string x = std::to_string(X);
-				std::string y = std::to_string(Y);
-				std::string width = std::to_string(Width);
-				std::string height = std::to_string(Height);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + x + comma + y + comma + width + comma + height + suffix;
-
-				return result;
-			}
 		};
 
-#define RectI Int32Rect
-#define RectI_C Int32Rect
-
-		struct Rect
+		struct RectD_C
 		{
 			double X = 0, Y = 0, Width = 0, Height = 0;
-
-			Rect() {}
-
-			Rect(double x, double y, double width, double height)
-				: X(x), Y(y), Width(width), Height(height) {}
-
-			Rect(wxRect rect)
-				: X(rect.x), Y(rect.y), Width(rect.width), Height(rect.height) {}
-
-
-			Rect(const Point& location, const Size& size)
-				: Rect(location.X, location.Y, size.Width, size.Height) {}
-
-			bool IsEmpty() const
-			{
-				return X == 0 && Y == 0 && Width == 0 && Height == 0;
-			}
-
-			inline Point GetLocation() const { return Point(X, Y); };
-			inline Size GetSize() const { return Size(Width, Height); };
-
-			inline Rect Offset(const Size& value) const
-			{
-				return Rect(X + value.Width, Y + value.Height, Width, Height);
-			}
-
-			/*inline operator RectD_C() { return RectD_C{X, Y, Width, Height}; }*/
-
-			inline bool operator==(const Rect& rhs)
-			{
-				return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height;
-			}
-
-			inline bool operator!=(const Rect& rhs) { return !(*this == rhs); }
-
-			std::string ToString() const
-			{
-				std::string x = std::to_string(X);
-				std::string y = std::to_string(Y);
-				std::string width = std::to_string(Width);
-				std::string height = std::to_string(Height);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + x + comma + y + comma + width + comma + height + suffix;
-
-				return result;
-			}
 		};
 
-#define RectD Rect
-#define RectD_C Rect
-
-		struct Thickness
+		struct Thickness_C
 		{
 			double Left = 0, Top = 0, Right = 0, Bottom = 0;
-
-			Thickness() {}
-
-			Thickness(double left, double top, double right, double bottom)
-				: Left(left), Top(top), Right(right), Bottom(bottom) {}
-
-			/*inline operator Thickness_C() { return Thickness_C{Left, Top, Right, Bottom}; }*/
-
-			inline bool operator==(const Thickness& rhs) {
-				return Left == rhs.Left
-					&& Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom;
-			}
-			inline bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
-
-			std::string ToString() const
-			{
-				std::string v1 = std::to_string(Left);
-				std::string v2 = std::to_string(Top);
-				std::string v3 = std::to_string(Right);
-				std::string v4 = std::to_string(Bottom);
-
-				std::string prefix("(");
-				std::string suffix(")");
-				std::string comma(", ");
-
-				std::string result = prefix + v1 + comma + v2 + comma + v3 + comma + v4 + suffix;
-
-				return result;
-			}
 		};
 
-#define Thickness_C Thickness
-
-		struct Color
+		struct Color_C
 		{
-		public:
-			uint8_t R, G, B, A;
-		private:
-			uint8_t state = 0;
-		public:
-			inline bool IsEmpty() const { return state == 0; }
-
-			bool IsBlack() const
-			{
-				return R == 0 && G == 0 && B == 0 && A == 255;
-			}
-
-			Color(uint8_t alpha, uint8_t red, uint8_t green, uint8_t blue) :
-				R(red), G(green), B(blue), A(alpha), state(1)
-			{
-			}
-
-			Color() : R(0), G(0), B(0), A(0), state(0)
-			{
-			}
-
-			Color(const wxColor& c)
-			{
-				if (c.IsOk())
-				{
-					R = c.Red();
-					G = c.Green();
-					B = c.Blue();
-					A = c.Alpha();
-					state = 1;
-				}
-				else
-				{
-					R = 0;
-					G = 0;
-					B = 0;
-					A = 0;
-					state = 0;
-				}
-			}
-
-			/*inline operator Color_C() { return Color_C{R, G, B, A, state}; }*/
-
-			bool operator==(const Color& rhs)
-			{
-				return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A &&
-					state == rhs.state;
-			}
-
-			inline bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
-
-			operator wxColor() const
-			{
-				if (IsEmpty())
-					return wxColor();
-				else
-					return wxColor(R, G, B, A);
-			}
+			uint8_t R = 0, G = 0, B = 0, A = 0, state = 0;
 		};
 
-#define Color_C Color
-
-		struct DateTime
+		struct DateTime_C
 		{
-			int Year = 0, Month = 0, Day = 0;
-			int Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
-
-			DateTime()
-				:DateTime(wxDateTime::Now())
-			{
-			}
-
-			DateTime(const wxDateTime& c)
-			{
-				wxDateTime::Tm cc = c.GetTm();
-
-				Year = cc.year; // tm_year field is the offset from 1900
-				Month = cc.mon + 1; // mon should be < 12
-				Day = cc.mday; // mday - Day of the month in 1..31 range
-				Hour = cc.hour;
-				Minute = cc.min;
-				Second = cc.sec;
-				Millisecond = cc.msec;
-			}
-
-			void Reset()
-			{
-				Year = 0;
-				Month = 0;
-				Day = 0;
-				Hour = 0;
-				Minute = 0;
-				Second = 0;
-				Millisecond = 0;
-			}
-
-			/*operator DateTime_C() {
-				return DateTime_C{ Year, Month, // was (uint8_t)(Month + 1)
-					Day, Hour, Minute, Second, Millisecond };
-			}*/
-
-			bool operator==(const DateTime& rhs) {
-				return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second
-					&& Millisecond == rhs.Millisecond && Year == rhs.Year &&
-					Month == rhs.Month && Day == rhs.Day;
-			}
-			inline bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
-
-			inline operator wxDateTime() const {
-
-				/*
-				inline wxDateTime::wxDateTime(wxDateTime_t day,
-					Month        month,
-					int          year,
-					wxDateTime_t hour,
-					wxDateTime_t minute,
-					wxDateTime_t second,
-					wxDateTime_t millisec)
-				*/
-
-				return wxDateTime(Day, (wxDateTime::Month)(Month - 1),
-					Year, Hour, Minute, Second, Millisecond);
-			}
+			int Year = 0, Month = 0, Day = 0, Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
 		};
-
-#define DateTime_C DateTime
 	}
+
+	struct Int32Size : SizeI_C
+	{
+		Int32Size()
+		{
+		}
+
+		Int32Size(const wxSize& s)
+		{
+			Width = s.x;
+			Height = s.y;
+		}
+
+		Int32Size(int width, int height)
+		{
+			Width = width;
+			Height = height;
+		}
+
+		/*inline operator SizeI_C() { return SizeI_C{Width, Height}; }*/
+
+		inline operator wxSize() const { return wxSize(Width, Height); }
+
+		inline bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+		inline bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
+
+		std::string ToString() const
+		{
+			std::string w = std::to_string(Width);
+			std::string h = std::to_string(Height);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + w + comma + h + suffix;
+
+			return result;
+		}
+	};
+
+#define SizeI Int32Size
+
+	struct Size	: SizeD_C
+	{
+		Size() {}
+
+		Size(double width, double height)
+		{
+			Width = width;
+			Height = height;
+		}
+
+		Size(wxSize size)
+		{
+			Width = size.x;
+			Height = size.y;
+		}
+
+		inline Size operator+(const Size& rhs) const {
+			return Size(Width + rhs.Width, Height + rhs.Height);
+		}
+		inline Size& operator+=(const Size& rhs)
+		{
+			Width += rhs.Width;
+			Height += rhs.Height;
+			return *this;
+		}
+
+		/*inline operator SizeD_C() { return SizeD_C{Width, Height}; }*/
+
+		inline bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+		inline bool operator!=(const Size& rhs) { return !(*this == rhs); }
+
+	public:
+		std::string ToString() const
+		{
+			std::string w = std::to_string(Width);
+			std::string h = std::to_string(Height);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + w + comma + h + suffix;
+
+			return result;
+		}
+	};
+
+#define SizeD Size
+
+	struct Int32Point : PointI_C
+	{
+		Int32Point() {}
+
+		Int32Point(int x, int y)
+		{
+			X = x;
+			Y = y;
+		}
+
+		Int32Point(wxPoint p)
+		{
+			X = p.x;
+			Y = p.y;
+		}
+
+		/*inline operator PointI_C() const { return PointI_C{X, Y}; }*/
+
+		inline operator wxPoint() const { return wxPoint{ X, Y }; }
+
+		inline bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
+		inline bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
+
+		std::string ToString() const
+		{
+			std::string x = std::to_string(X);
+			std::string y = std::to_string(Y);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + x + comma + y + suffix;
+
+			return result;
+		}
+	};
+
+#define PointI Int32Point
+
+	struct Point : PointD_C
+	{
+		Point() {}
+
+		Point(double x, double y)
+		{
+			X = x;
+			Y = y;
+		}
+
+		/*inline operator PointD_C() const { return PointD_C{X, Y}; }*/
+
+		inline Point operator+(const Size& value) const {
+			return Point(X + value.Width, Y + value.Height);
+		}
+		inline Point operator-(const Size& value) const {
+			return Point(X - value.Width, Y - value.Height);
+		}
+
+		inline bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
+		inline bool operator!=(const Point& rhs) { return !(*this == rhs); }
+
+		std::string ToString() const
+		{
+			std::string x = std::to_string(X);
+			std::string y = std::to_string(Y);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + x + comma + y + suffix;
+
+			return result;
+		}
+	};
+
+#define PointD Point
+
+	struct Int32Rect : RectI_C
+	{
+		Int32Rect() {}
+
+		Int32Rect(wxRect r)
+		{
+			X = r.x;
+			Y = r.y;
+			Width = r.width;
+			Height = r.height;
+		}
+
+		Int32Rect(int x, int y, int width, int height)
+		{
+			X = x;
+			Y = y;
+			Width = width;
+			Height = height;
+		}
+
+		Int32Rect(const Int32Point& location, const Int32Size& size) :
+			Int32Rect(location.X, location.Y, size.Width, size.Height) {}
+
+		inline Int32Point GetLocation() const { return Int32Point(X, Y); };
+		inline Int32Size GetSize() const { return Int32Size(Width, Height); };
+
+		inline bool IsZero() const
+		{
+			return (Width == 0) && (Height == 0) && (X == 0) && (Y == 0);
+		}
+
+		inline operator wxRect() const { return wxRect{ X, Y, Width, Height }; }
+
+		/*inline operator RectI_C() const { return RectI_C{X, Y, Width, Height}; }*/
+
+		inline bool operator==(const Int32Rect& rhs)
+		{
+			return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height;
+		}
+
+		inline bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
+
+		std::string ToString() const
+		{
+			std::string x = std::to_string(X);
+			std::string y = std::to_string(Y);
+			std::string width = std::to_string(Width);
+			std::string height = std::to_string(Height);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + x + comma + y + comma + width + comma + height + suffix;
+
+			return result;
+		}
+	};
+
+#define RectI Int32Rect
+
+	struct Rect : RectD_C
+	{
+		Rect() {}
+
+		Rect(double x, double y, double width, double height)
+		{
+			X = x;
+			Y = y;
+			Width = width;
+			Height = height;
+		}
+
+		Rect(wxRect rect)			
+		{
+			X = rect.x;
+			Y = rect.y;
+			Width = rect.width;
+			Height = rect.height;
+		}
+
+		Rect(const Point& location, const Size& size)
+			: Rect(location.X, location.Y, size.Width, size.Height) {}
+
+		bool IsEmpty() const
+		{
+			return X == 0 && Y == 0 && Width == 0 && Height == 0;
+		}
+
+		inline Point GetLocation() const { return Point(X, Y); };
+		inline Size GetSize() const { return Size(Width, Height); };
+
+		inline Rect Offset(const Size& value) const
+		{
+			return Rect(X + value.Width, Y + value.Height, Width, Height);
+		}
+
+		/*inline operator RectD_C() { return RectD_C{X, Y, Width, Height}; }*/
+
+		inline bool operator==(const Rect& rhs)
+		{
+			return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height;
+		}
+
+		inline bool operator!=(const Rect& rhs) { return !(*this == rhs); }
+
+		std::string ToString() const
+		{
+			std::string x = std::to_string(X);
+			std::string y = std::to_string(Y);
+			std::string width = std::to_string(Width);
+			std::string height = std::to_string(Height);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + x + comma + y + comma + width + comma + height + suffix;
+
+			return result;
+		}
+	};
+
+#define RectD Rect
+
+	struct Thickness : Thickness_C
+	{
+		Thickness() {}
+
+		Thickness(double left, double top, double right, double bottom)
+		{
+			Left = left;
+			Top = top;
+			Right = right;
+			Bottom = bottom;
+		}
+
+		/*inline operator Thickness_C() { return Thickness_C{Left, Top, Right, Bottom}; }*/
+
+		inline bool operator==(const Thickness& rhs) {
+			return Left == rhs.Left
+				&& Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom;
+		}
+		inline bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
+
+		std::string ToString() const
+		{
+			std::string v1 = std::to_string(Left);
+			std::string v2 = std::to_string(Top);
+			std::string v3 = std::to_string(Right);
+			std::string v4 = std::to_string(Bottom);
+
+			std::string prefix("(");
+			std::string suffix(")");
+			std::string comma(", ");
+
+			std::string result = prefix + v1 + comma + v2 + comma + v3 + comma + v4 + suffix;
+
+			return result;
+		}
+	};
+
+	struct Color : Color_C
+	{
+	public:
+		inline bool IsEmpty() const { return state == 0; }
+
+		bool IsBlack() const
+		{
+			return R == 0 && G == 0 && B == 0 && A == 255;
+		}
+
+		Color(uint8_t alpha, uint8_t red, uint8_t green, uint8_t blue)			
+		{
+			R = red;
+			G = green;
+			B = blue;
+			A = alpha;
+			state = 1;
+		}
+
+		Color()
+		{
+			R = 0;
+			G = 0;
+			B = 0;
+			A = 0;
+			state = 0;
+		}
+
+		Color(const wxColor& c)
+		{
+			if (c.IsOk())
+			{
+				R = c.Red();
+				G = c.Green();
+				B = c.Blue();
+				A = c.Alpha();
+				state = 1;
+			}
+			else
+			{
+				R = 0;
+				G = 0;
+				B = 0;
+				A = 0;
+				state = 0;
+			}
+		}
+
+		/*inline operator Color_C() { return Color_C{R, G, B, A, state}; }*/
+
+		bool operator==(const Color& rhs)
+		{
+			return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A &&
+				state == rhs.state;
+		}
+
+		inline bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
+
+		operator wxColor() const
+		{
+			if (IsEmpty())
+				return wxColor();
+			else
+				return wxColor(R, G, B, A);
+		}
+	};
+
+	struct DateTime : DateTime_C
+	{
+		DateTime()
+			:DateTime(wxDateTime::Now())
+		{
+		}
+
+		DateTime(const wxDateTime& c)
+		{
+			wxDateTime::Tm cc = c.GetTm();
+
+			Year = cc.year; // tm_year field is the offset from 1900
+			Month = cc.mon + 1; // mon should be < 12
+			Day = cc.mday; // mday - Day of the month in 1..31 range
+			Hour = cc.hour;
+			Minute = cc.min;
+			Second = cc.sec;
+			Millisecond = cc.msec;
+		}
+
+		void Reset()
+		{
+			Year = 0;
+			Month = 0;
+			Day = 0;
+			Hour = 0;
+			Minute = 0;
+			Second = 0;
+			Millisecond = 0;
+		}
+
+		/*operator DateTime_C() {
+			return DateTime_C{ Year, Month, // was (uint8_t)(Month + 1)
+				Day, Hour, Minute, Second, Millisecond };
+		}*/
+
+		bool operator==(const DateTime& rhs) {
+			return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second
+				&& Millisecond == rhs.Millisecond && Year == rhs.Year &&
+				Month == rhs.Month && Day == rhs.Day;
+		}
+		inline bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
+
+		inline operator wxDateTime() const {
+
+			/*
+			inline wxDateTime::wxDateTime(wxDateTime_t day,
+				Month        month,
+				int          year,
+				wxDateTime_t hour,
+				wxDateTime_t minute,
+				wxDateTime_t second,
+				wxDateTime_t millisec)
+			*/
+
+			return wxDateTime(Day, (wxDateTime::Month)(Month - 1),
+				Year, Hour, Minute, Second, Millisecond);
+		}
+	};
 
 	class wxFrame2 : public wxFrame
 	{
