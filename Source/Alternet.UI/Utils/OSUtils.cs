@@ -21,5 +21,25 @@ namespace Alternet.UI
         {
             Thread.Sleep(milliSeconds);
         }
+
+        /// <summary>
+        /// Retrieves the low-order word from the specified value.
+        /// </summary>
+        /// <param name="value">Specifies the value to be converted.</param>
+        /// <returns>The return value is the low-order word of the specified value.</returns>
+        public static short LoWord(IntPtr value)
+        {
+            return (short)value.ToInt32();
+        }
+
+        /// <summary>
+        /// Retrieves the high-order word from the given value.
+        /// </summary>
+        /// <param name="value">Specifies the value to be converted.</param>
+        /// <returns>The return value is the high-order word of the specified value.</returns>
+        public static short HiWord(IntPtr value)
+        {
+            return (short)(value.ToInt32() >> 16);
+        }
     }
 }
