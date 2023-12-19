@@ -78,6 +78,8 @@ namespace Alternet.UI
 
         internal void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
 
+        internal void RaiseScroll(ScrollEventArgs e) => OnScroll(e);
+
         internal void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
 
         internal void RaiseMouseCaptureLost()

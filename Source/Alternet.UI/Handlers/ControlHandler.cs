@@ -601,19 +601,9 @@ namespace Alternet.UI
             NativeControl.FocusNextControl(forward, nested);
         }
 
-        /*
-        private static Dictionary<Native.Control, ControlHandler>
-            handlersByNativeControls = new();
-        */
-
         internal static ControlHandler? NativeControlToHandler(
             Native.Control control)
         {
-            /*
-              handlersByNativeControls.TryGetValue(
-                  control,
-                  out var handler) ? handler : null;
-            */
             return (ControlHandler?)control.handler;
         }
 
@@ -685,21 +675,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnIsVisualChildChanged()
         {
-            /*if (!NeedsNativeControl())*/
             DisposeNativeControl();
         }
-
-        /*/// <summary>
-        /// Gets a value indicating whether the control needs a native control
-        /// to be created.
-        /// </summary>
-        protected bool NeedsNativeControl()
-        {
-            // if (IsVisualChild)
-            //    return VisualChildNeedsNativeControl;
-
-            return true;
-        }*/
 
         /// <summary>
         /// Gets the size of the control specified in its
@@ -838,10 +815,7 @@ namespace Alternet.UI
             // todo: consider clearing the native control's children.
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
-            /*Control.BackgroundChanged -= Control_BackgroundChanged;*/
-            /*Control.ForegroundChanged -= Control_ForegroundChanged;*/
             Control.FontChanged -= Control_FontChanged;
-            /*Control.BorderBrushChanged -= Control_BorderBrushChanged;*/
             Control.VisibleChanged -= Control_VisibleChanged;
             Control.EnabledChanged -= Control_EnabledChanged;
             Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
@@ -868,6 +842,10 @@ namespace Alternet.UI
                 NativeControl.GotFocus -= NativeControl_GotFocus;
                 NativeControl.LostFocus -= NativeControl_LostFocus;
                 NativeControl.SizeChanged -= NativeControl_SizeChanged;
+                NativeControl.VerticalScrollBarValueChanged -=
+                    NativeControl_VerticalScrollBarValueChanged;
+                NativeControl.HorizontalScrollBarValueChanged -=
+                    NativeControl_HorizontalScrollBarValueChanged;
             }
         }
 
@@ -885,23 +863,11 @@ namespace Alternet.UI
         {
             ApplyVisible();
             ApplyEnabled();
-
-            /*
-            ApplyBorderColor();
-            ApplyBackgroundColor();
-            ApplyForegroundColor();
-            ApplyFont();
-            */
-
-            /*ApplyToolTip();*/
             ApplyChildren();
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
-            /*Control.BackgroundChanged += Control_BackgroundChanged;*/
-            /*Control.ForegroundChanged += Control_ForegroundChanged;*/
             Control.FontChanged += Control_FontChanged;
-            /*Control.BorderBrushChanged += Control_BorderBrushChanged;*/
             Control.VisibleChanged += Control_VisibleChanged;
             Control.EnabledChanged += Control_EnabledChanged;
             Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
@@ -950,7 +916,10 @@ namespace Alternet.UI
             NativeControl.LostFocus += NativeControl_LostFocus;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
             NativeControl.Idle += NativeControl_Idle;
-
+            NativeControl.VerticalScrollBarValueChanged +=
+                NativeControl_VerticalScrollBarValueChanged;
+            NativeControl.HorizontalScrollBarValueChanged +=
+                NativeControl_HorizontalScrollBarValueChanged;
 #if DEBUG
             /*Debug.WriteLine($"{GetType()} {NativeControl.Id} {NativeControl.Name}");*/
 #endif
@@ -960,6 +929,28 @@ namespace Alternet.UI
         {
             nativeControl.handler = null;
             nativeControl.Dispose();
+        }
+
+        private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.HorizontalScroll,
+                NewValue =
+                    NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Horizontal),
+            };
+            Control.RaiseScroll(args);
+        }
+
+        private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.VerticalScroll,
+                NewValue =
+                    NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Vertical),
+            };
+            Control.RaiseScroll(args);
         }
 
         private void NativeControl_Idle(object? sender, EventArgs e)

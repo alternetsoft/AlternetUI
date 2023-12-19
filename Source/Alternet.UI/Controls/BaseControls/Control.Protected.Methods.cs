@@ -45,6 +45,16 @@ namespace Alternet.UI
             SizeChanged?.Invoke(this, e);
 
         /// <summary>
+        /// Raises the <see cref="Scroll"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="ScrollEventArgs"/> that contains the event
+        /// data.</param>
+        protected virtual void OnScroll(ScrollEventArgs e)
+        {
+            Scroll?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the

@@ -72,6 +72,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the user scrolls through the control contents using scrollbars.
+        /// </summary>
+        [Category("Action")]
+        public event ScrollEventHandler? Scroll;
+
+        /// <summary>
         /// Occurs when the contol gets focus.
         /// </summary>
         public event EventHandler? GotFocus;
@@ -883,7 +889,7 @@ namespace Alternet.UI
             {
                 if (children == null)
                 {
-                    children = new();
+                    children = [];
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }

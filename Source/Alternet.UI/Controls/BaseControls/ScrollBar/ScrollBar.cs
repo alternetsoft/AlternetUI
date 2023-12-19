@@ -39,13 +39,8 @@ namespace Alternet.UI
         private int value;
 
         /// <summary>
-        /// Occurs when the scroll box has been moved by either a mouse or keyboard action.
-        /// </summary>
-        public event ScrollEventHandler? Scroll;
-
-        /// <summary>
         /// Occurs when the <see cref="Value" /> property is changed, either
-        /// by a <see cref="Scroll" /> event or programmatically.
+        /// by a <see cref="Control.Scroll" /> event or programmatically.
         /// </summary>
         [Category("Action")]
         public event EventHandler? ValueChanged;
@@ -393,7 +388,7 @@ namespace Alternet.UI
             var eventType = (ScrollEventType)NativeControl.EventTypeID;
             var orientation = NativeControl.IsVertical ? ScrollOrientation.VerticalScroll
                 : ScrollOrientation.HorizontalScroll;
-            Scroll?.Invoke(this, new ScrollEventArgs(eventType, oldPos, pos, orientation));
+            RaiseScroll(new ScrollEventArgs(eventType, oldPos, pos, orientation));
             OnValueChanged(EventArgs.Empty);
         }
 
