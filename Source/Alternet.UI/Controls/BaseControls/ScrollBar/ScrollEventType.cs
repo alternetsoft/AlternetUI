@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the type of action used to raise the <see cref="ScrollBar.Scroll" /> event.
+    /// Specifies the type of action used to raise the <see cref="Control.Scroll" /> event.
     /// </summary>
     public enum ScrollEventType
     {

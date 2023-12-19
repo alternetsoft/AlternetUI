@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the scroll bar orientation for the <see cref="ScrollBar.Scroll" /> event.
+    /// Specifies the scroll bar orientation for the <see cref="Control.Scroll" /> event.
     /// </summary>
     public enum ScrollOrientation
     {
