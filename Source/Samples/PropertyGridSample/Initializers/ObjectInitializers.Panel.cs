@@ -15,6 +15,7 @@ namespace PropertyGridSample
                 return;
             panel.SuggestedSize = 150;
             panel.KeyPress += Panel_KeyPress;
+            panel.Scroll += Panel_Scroll;
 
             static void Panel_KeyPress(object? sender, KeyPressEventArgs e)
             {
@@ -24,5 +25,10 @@ namespace PropertyGridSample
             }
         }
 
+        private static void Panel_Scroll(object sender, ScrollEventArgs e)
+        {
+            var s = $"Panel.Scroll: {e.Type}";
+            Application.LogReplace($"{s}, {e.ScrollOrientation}, {e.NewValue}", s);
+        }
     }
 }
