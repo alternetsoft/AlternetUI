@@ -15,7 +15,7 @@ namespace Alternet.UI
     public class UserPaintControl : LayoutPanel
     {
         private bool hasBorder = true; // !! to border settings
-        private RichTextBoxScrollBars scrollbars = RichTextBoxScrollBars.None;
+        private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
 
 #if DEBUG
         private bool drawDebugPointsBefore;
@@ -68,18 +68,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the type of scroll bars displayed in the control.
         /// </summary>
-        public RichTextBoxScrollBars Scrollbars
+        public RichTextBoxScrollBars ScrollBars
         {
             get
             {
-                return scrollbars;
+                return scrollBars;
             }
 
             set
             {
-                if (scrollbars == value)
+                if (scrollBars == value)
                     return;
-                scrollbars = value;
+                scrollBars = value;
                 switch (value)
                 {
                     default:
