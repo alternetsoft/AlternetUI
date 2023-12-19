@@ -1,3 +1,23 @@
+# 0.9.411 (work in progress)
+
+## 2023 December 19
+
+- Control.KeyPress event.
+- Control.Invalidate with Region param.
+- UserPaintControl: Scrollbars, WantChars.
+- Optimized structures (Rect, Point, Size, Color, etc.) in UI C++ code. As a result, all structures are passed
+ faster from C# to C++ code.
+- Control: IsScrollable, Dock (works when inside LayoutPanel), BackgroundImage (dummy), BackgroundImages (dummy).
+- Control Scroll methods:
+    * void SetScrollBar(bool isVertical, bool visible, int value, int largeChange, int maximum)
+    * bool IsScrollBarVisible(bool isVertical)
+    * int GetScrollBarValue(bool isVertical)
+    * int GetScrollBarLargeChange(bool isVertical)
+    * int GetScrollBarMaximum(bool isVertical)
+- Region: IsEmpty, IsOk, Clear(), Contains(Point), Contains(Rect), new constrcutor.
+- Renamed Rect, Size, Point. This rename is done to make drawing structures more compatible with WinForms and less confusing.
+Rect -> RectD, Point -> PointD, Size -> SizeD, Int32Rect -> RectI, Int32Size -> SizeI, Int32Point -> PointI.
+
 # 0.9.410 (2023 December 15)
 
 ## 2023 December 15
