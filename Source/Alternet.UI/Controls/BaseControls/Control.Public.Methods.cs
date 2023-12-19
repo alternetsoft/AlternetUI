@@ -1609,5 +1609,68 @@ namespace Alternet.UI
             var rect = region.GetBounds();
             Invalidate(rect);
         }
+
+        /// <summary>
+        /// Sets system scrollbar properties.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <param name="visible">Is scrollbar visible or not.</param>
+        /// <param name="value">Thumb position.</param>
+        /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
+        /// <param name="maximum">Scrollbar Range.</param>
+        public void SetScrollBar(bool isVertical, bool visible, int value, int largeChange, int maximum)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            NativeControl.SetScrollBar(orientation, visible, value, largeChange, maximum);
+        }
+
+        /// <summary>
+        /// Gets whether system scrollbar is visible.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public bool IsScrollBarVisible(bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return NativeControl.IsScrollBarVisible(orientation);
+        }
+
+        /// <summary>
+        /// Gets system scrollbar thumb position.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public int GetScrollBarValue(bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return NativeControl.GetScrollBarValue(orientation);
+        }
+
+        /// <summary>
+        /// Gets system scrollbar large change value.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public int GetScrollBarLargeChange(bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return NativeControl.GetScrollBarLargeChange(orientation);
+        }
+
+        /// <summary>
+        /// Gets system scrollbar max range.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public int GetScrollBarMaximum(bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return NativeControl.GetScrollBarMaximum(orientation);
+        }
     }
 }
