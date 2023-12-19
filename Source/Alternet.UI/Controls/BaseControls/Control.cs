@@ -383,6 +383,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether controls is scrollable.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsScrollable
+        {
+            get => NativeControl.IsScrollable;
+
+            set => NativeControl.IsScrollable = value;
+        }
+
+        /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.
         /// </summary>
         /// <returns>One of the <see cref="ImeMode" /> values.
