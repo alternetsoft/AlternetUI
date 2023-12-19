@@ -18,9 +18,9 @@ namespace Alternet.UI
     /// </summary>
     public class ScrollEventArgs : BaseEventArgs
     {
-        private readonly ScrollEventType type;
-        private readonly int oldValue = -1;
-        private readonly ScrollOrientation scrollOrientation;
+        private int oldValue = -1;
+        private ScrollEventType type;
+        private ScrollOrientation scrollOrientation;
         private int newValue;
 
         /// <summary>
@@ -93,13 +93,21 @@ namespace Alternet.UI
         /// Gets the scroll bar orientation that raised the <see langword="Scroll" /> event.
         /// </summary>
         /// <returns>One of the <see cref="ScrollOrientation" /> values.</returns>
-        public ScrollOrientation ScrollOrientation => scrollOrientation;
+        public ScrollOrientation ScrollOrientation
+        {
+            get => scrollOrientation;
+            internal set => scrollOrientation = value;
+        }
 
         /// <summary>
         /// Gets the type of scroll event that occurred.
         /// </summary>
         /// <returns>One of the <see cref="ScrollEventType" /> values.</returns>
-        public ScrollEventType Type => type;
+        public ScrollEventType Type
+        {
+            get => type;
+            internal set => type = value;
+        }
 
         /// <summary>Gets or sets the new <see cref="ScrollBar.Value" /> of the scroll bar.</summary>
         /// <returns>The numeric value that the <see cref="ScrollBar.Value" /> property
@@ -120,6 +128,10 @@ namespace Alternet.UI
         /// <summary>Gets the old <see cref="ScrollBar.Value" /> of the scroll bar.</summary>
         /// <returns>The numeric value that the <see cref="ScrollBar.Value" /> property
         /// contained before it changed.</returns>
-        public int OldValue => oldValue;
+        public int OldValue
+        {
+            get => oldValue;
+            internal set => oldValue = value;
+        }
     }
 }
