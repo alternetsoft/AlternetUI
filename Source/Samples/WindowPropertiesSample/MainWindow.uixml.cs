@@ -7,15 +7,15 @@ namespace WindowPropertiesSample
     public partial class MainWindow : Window
     {
         private readonly CardPanelHeader panelHeader;
-        private readonly PopupPropertyGrid popupSetBounds;
-        private readonly PopupPropertyGrid popupWindowProps;
+        /*private readonly PopupPropertyGrid popupSetBounds;*/
+        /*private readonly PopupPropertyGrid popupWindowProps;*/
         private readonly SetBoundsProperties setBoundsProperties;
         private TestWindow? testWindow;
 
         public MainWindow()
         {
             panelHeader = new();
-            popupSetBounds = new();
+            /*popupSetBounds = new();*/
             setBoundsProperties = new(this);
             Icon = new("embres:WindowPropertiesSample.Sample.ico");
 
@@ -35,12 +35,7 @@ namespace WindowPropertiesSample
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
 
-            popupSetBounds.Title = "Set Bounds (hide to change)";
-            popupSetBounds.HasTitleBar = true;
-            popupSetBounds.HasBorder = true;
-            popupSetBounds.Border.HasBorder = false;
-            popupSetBounds.Resizable = true;
-            popupSetBounds.CloseEnabled = true;
+            /*popupSetBounds.IsTransient = false;
             popupSetBounds.AfterHide += PopupSetBounds_AfterHide;
             popupSetBounds.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue;
             popupSetBounds.HideOnEnter = false;
@@ -48,9 +43,8 @@ namespace WindowPropertiesSample
             popupSetBounds.HideOnClick = false;
             popupSetBounds.HideOnDoubleClick = false;
             popupSetBounds.MainControl.SuggestedInitDefaults();
-            popupSetBounds.StatusBar = new();
 
-            popupWindowProps = PopupPropertyGrid.CreatePropertiesPopup();
+            popupWindowProps = PopupPropertyGrid.CreatePropertiesPopup();*/
         }
 
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
@@ -63,15 +57,15 @@ namespace WindowPropertiesSample
         {
             if (testWindow is null)
                 return;
-            popupWindowProps.MainControl.SetProps(testWindow, true);
-            popupWindowProps.ShowPopup(propertiesButton);
+            /*popupWindowProps.MainControl.SetProps(testWindow, true);
+            popupWindowProps.ShowPopup(propertiesButton);*/
         }
 
         private void SetBoundsExButton_Click(object? sender, EventArgs e)
         {
             if (testWindow is null)
                 return;
-            setBoundsProperties.X = testWindow.Location.X;
+            /*setBoundsProperties.X = testWindow.Location.X;
             setBoundsProperties.Y = testWindow.Location.Y;
             setBoundsProperties.Width = testWindow.Size.Width;
             setBoundsProperties.Height = testWindow.Size.Height;
@@ -80,7 +74,7 @@ namespace WindowPropertiesSample
             popupSetBounds.MainControl.SetProps(setBoundsProperties);
             var flagsItem = popupSetBounds.MainControl.GetProperty("Flags");
             popupSetBounds.MainControl.Expand(flagsItem);
-            popupSetBounds.ShowPopup(setBoundsExButton);
+            popupSetBounds.ShowPopup(setBoundsExButton);*/
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
@@ -217,6 +211,9 @@ namespace WindowPropertiesSample
                 clearIconButton,
                 setBoundsExButton,
                 propertiesButton).Enabled(haveTestWindow);
+
+            propertiesButton.Enabled = false;
+            setBoundsExButton.Enabled = false;
 
             if (!haveTestWindow)
                 currentBoundsLabel.Text = string.Empty;

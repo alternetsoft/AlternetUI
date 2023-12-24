@@ -31,46 +31,6 @@ namespace ControlsSample
             return RectD.Empty;
         }
 
-        /*
-        $procs.getPossiblePopupRects=function(e,width,height){
-            var 
-                screen = $procs.getScreenRect(), 
-                target = $procs.getBoundingClientRect(e),
-
-                nw = {
-                    right:target.right,
-                    bottom:target.top,
-                    left:target.right-width,
-                    top:target.top-height
-                },		
-                ne = {
-                    left:target.left,
-                    bottom:target.top,
-                    right:screen.right,
-                    top:target.top-height			
-                },
-                sw = {
-                    right:target.right,
-                    top:target.bottom,
-                    left:target.right-width,
-                    bottom:screen.bottom
-                },
-                se = {
-                    left:target.left,
-                    top:target.bottom,
-                    right:screen.right,
-                    bottom:screen.bottom
-                };
-
-            return { 
-                ne:ne,
-                nw:nw,
-                sw:sw,
-                se:se,
-                items:[se,sw,ne,nw]
-            };
-        }
-         */
         public ListControlsPopups()
             : base()
         {
@@ -161,14 +121,14 @@ namespace ControlsSample
                 return;
             }
 
-            var posDip = showPopupListBoxButton.ClientToScreen((0, 0));
+            /*var posDip = showPopupListBoxButton.ClientToScreen((0, 0));
             var pos = PixelFromDip(posDip);
             var szDip = showPopupListBoxButton.Size;
             var sz = PixelFromDip(szDip);
 
             sz = (0, sz.Height);
 
-            Control.TestPopupWindow(this, pos , sz);
+            Control.TestPopupWindow(this, pos , sz);*/
 
             void Do()
             {

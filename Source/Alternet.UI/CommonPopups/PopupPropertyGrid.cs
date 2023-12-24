@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="PropertyGrid"/> control.
     /// </summary>
-    public class PopupPropertyGrid : PopupWindow
+    internal class PopupPropertyGrid : PopupWindow
     {
         static PopupPropertyGrid()
         {
@@ -41,17 +41,18 @@ namespace Alternet.UI
         {
             PopupPropertyGrid popupWindowProps = new()
             {
-                Title = CommonStrings.Default.WindowTitleProperties,
-                HasTitleBar = true,
+                /*Title = CommonStrings.Default.WindowTitleProperties,*/
+                /*HasTitleBar = true,
                 HasBorder = true,
                 Resizable = true,
                 CloseEnabled = true,
-                AlwaysOnTop = true,
+                AlwaysOnTop = true,*/
+                IsTransient = false,
                 HideOnEnter = false,
                 HideOnClick = false,
                 HideOnDoubleClick = false,
                 HideOnDeactivate = false,
-                StatusBar = new(),
+                /*StatusBar = new(),*/
             };
             popupWindowProps.Border.HasBorder = false;
             popupWindowProps.MainControl.SuggestedInitDefaults();

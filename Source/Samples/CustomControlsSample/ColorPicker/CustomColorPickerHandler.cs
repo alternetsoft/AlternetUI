@@ -33,7 +33,7 @@ namespace CustomControlsSample
                 {
                     popup = new()
                     {
-                        Owner = Control.ParentWindow,
+                        /*Owner = Control.ParentWindow,*/
                         Name = "Popup",
                         HideOnEnter = false,
                         HideOnDoubleClick = false,

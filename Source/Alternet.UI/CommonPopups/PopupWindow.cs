@@ -12,16 +12,16 @@ namespace Alternet.UI
     /// The <see cref="PopupWindow"/> displays content in a separate window that floats
     /// over the current application window.
     /// </summary>
-    public class PopupWindow : Window
+    public class PopupWindow : Popup
     {
-        /// <summary>
+/*        /// <summary>
         /// Gets or sets whether to log popup window bounds.
         /// </summary>
 #if DEBUG
         public static bool LogDebugInfo = true;
 #else
         public static bool LogDebugInfo = false;
-#endif
+#endif*/
 
         private static readonly BorderSettings Settings = BorderSettings.Default.Clone();
         private readonly Border border = new();
@@ -34,10 +34,10 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
-            MakeAsPopup();
+            /*MakeAsPopup();*/
             border.Normal = Settings;
             border.Parent = this;
-            Deactivated += Popup_Deactivated;
+            /*Deactivated += Popup_Deactivated;*/
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += PopupWindow_Disposed;
@@ -184,35 +184,48 @@ namespace Alternet.UI
         /// <param name="control">Control.</param>
         public void ShowPopup(Control control)
         {
-            var log = false;
-
             PopupOwner = control;
-            var bl = control.ClientRectangle.BottomLeft;
+
+            var posDip = control.ClientToScreen((0, 0));
+            var szDip = control.Size;
+            var sz = (0, szDip.Height);
+
+            /*var bl = control.ClientRectangle.BottomLeft;
             Application.LogNameValueIf("control.ClientRectangle.BottomLeft", bl, LogDebugInfo && log);
             var blScreen = control.ClientToScreen(bl);
             Application.LogNameValueIf("control.ClientToScreen", blScreen, LogDebugInfo && log);
 
-            Application.LogNameValueIf("ParentWindow:", control.ParentWindow?.Location, LogDebugInfo && log);
+            Application.LogNameValueIf("ParentWindow:", control.ParentWindow?.Location, LogDebugInfo && log);*/
 
             control.BeginInvoke(() =>
             {
-                ShowPopup(blScreen);
+                ShowPopup(posDip, sz);
             });
         }
 
         /// <summary>
         /// Shows popup at the specified location.
         /// </summary>
-        /// <param name="location">Popup window location.</param>
-        public void ShowPopup(PointD location)
+        /// <param name="ptOrigin">Popup window location.</param>
+        /// <param name="sizePopup">The size of the popup window.</param>
+        /// <remarks>
+        /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
+        /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
+        /// </remarks>
+        /// <remarks>
+        /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
+        /// device-inpependent units (1/96 inch).
+        /// </remarks>
+        public void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
-            Location = location;
+            /*Location = ptOrigin;*/
             SetSizeToContent();
+            SetPositionInDips(ptOrigin, sizePopup);
             Show();
             FocusChildControl();
 
-            Application.LogNameValueIf("Popup:", Location, LogDebugInfo && false);
+            /*Application.LogNameValueIf("Popup:", Location, LogDebugInfo && false);*/
         }
 
         /// <summary>
@@ -255,12 +268,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
+        /*/// <inheritdoc/>
         protected override void OnClosing(WindowClosingEventArgs e)
         {
             e.Cancel = true;
             HidePopup(ModalResult.Canceled);
-        }
+        }*/
 
         /// <summary>
         /// Creates main control of the popup window.

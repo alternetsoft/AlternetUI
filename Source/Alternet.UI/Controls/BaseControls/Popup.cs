@@ -119,9 +119,32 @@ namespace Alternet.UI
         /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
         /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
         /// </remarks>
+        /// <remarks>
+        /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in pixels.
+        /// </remarks>
         public void SetPositionInPixels(PointI ptOrigin, SizeI sizePopup)
         {
             Handler.NativeControl.Position(ptOrigin, sizePopup);
+        }
+
+        /// <summary>
+        /// Move the popup window to the right position, i.e. such that it is entirely visible.
+        /// </summary>
+        /// <param name="ptOrigin">Must be given in screen coordinates.</param>
+        /// <param name="sizePopup">The size of the popup window.</param>
+        /// <remarks>
+        /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
+        /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
+        /// </remarks>
+        /// <remarks>
+        /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
+        /// device-inpependent units (1/96 inch).
+        /// </remarks>
+        public void SetPositionInDips(PointD ptOrigin, SizeD sizePopup)
+        {
+            var pos = PixelFromDip(ptOrigin);
+            var sz = PixelFromDip(sizePopup);
+            Handler.NativeControl.Position(pos, sz);
         }
 
         /// <summary>

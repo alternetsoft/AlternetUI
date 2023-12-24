@@ -21,7 +21,7 @@ namespace Alternet::UI
         wxPopupWindow* GetWxPopup();
 
         bool _isTransient = true;
-        bool _puContainsControls = false;
+        bool _puContainsControls = true;
 
         /*inline static std::vector<wxWindow*> _popupWindows;*/
     };
