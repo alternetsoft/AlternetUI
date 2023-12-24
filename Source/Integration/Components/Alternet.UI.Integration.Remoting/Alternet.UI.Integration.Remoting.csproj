@@ -8,8 +8,8 @@
     <DefineConstants>ALTERNET_UI_INTEGRATION_REMOTING;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\Alternet.UI\Port\Input\Key.cs" Link="Key.cs" />
-    <Compile Include="..\..\..\Alternet.UI\Port\Input\ModifierKeys.cs" Link="ModifierKeys.cs" />
-    <Compile Include="..\..\..\Alternet.UI\Port\Input\MouseButton.cs" Link="MouseButton.cs" />
+    <Compile Include="..\..\..\Alternet.UI\Base\Input\Keyboard\Key.cs" Link="Key.cs" />
+    <Compile Include="..\..\..\Alternet.UI\Base\Input\Keyboard\ModifierKeys.cs" Link="ModifierKeys.cs" />
+    <Compile Include="..\..\..\Alternet.UI\Base\Input\Mouse\MouseButton.cs" Link="MouseButton.cs" />
   </ItemGroup>
 </Project>
