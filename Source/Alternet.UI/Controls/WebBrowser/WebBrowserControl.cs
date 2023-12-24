@@ -828,7 +828,7 @@ namespace Alternet.UI
                 return;
             }
 
-            Browser.NavigateToString(html, baseUrl!);
+            Browser.NavigateToString(html, baseUrl ?? string.Empty);
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/NavigateToStream/*'/>

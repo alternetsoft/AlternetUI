@@ -204,18 +204,24 @@ namespace ControlsTest
             DoRunScript("get_browser()");
         }
 
-        internal void TestNavigateToString1()
+        internal void DoTestNavigateToString1()
         {
             WebBrowser.NavigateToString("<html><body>NavigateToString example 1</body></html>");
         }
 
-        internal void TestNavigateToString2()
+        internal void DoTestNavigateToString2()
         {
             WebBrowser.NavigateToString(
                 "<html><body>NavigateToString example 2</body></html>", "www.aa.com");
         }
 
-        internal void TestNavigateToStream()
+        internal void DoTestNavigateToString3()
+        {
+            string html = "<html><body><h1>Sample HTML File</h1><p>First Sample paragraph.</p><p>Second Sample paragraph.</p></body></html>";
+            WebBrowser.NavigateToString(html);
+        }
+
+        internal void DoTestNavigateToStream()
         {
             var filename =
                 PathUtils.AddDirectorySeparatorChar(CommonUtils.GetAppFolder() + "Html") + "version.html";
@@ -508,7 +514,7 @@ namespace ControlsTest
             {
                 if (!item.Name.StartsWith("DoTest"))
                     continue;
-                AddTestAction(item.Name, AssemblyUtils.CreateAction(this, item));
+                AddTestAction(item.Name.Substring(6), AssemblyUtils.CreateAction(this, item));
             }
         }
 
