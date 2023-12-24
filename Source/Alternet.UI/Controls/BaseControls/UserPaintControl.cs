@@ -16,6 +16,7 @@ namespace Alternet.UI
     {
         private bool hasBorder = true; // !! to border settings
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
+        private Caret? caret;
 
 #if DEBUG
         private bool drawDebugPointsBefore;
@@ -179,6 +180,22 @@ namespace Alternet.UI
                     return;
                 hasBorder = value;
                 Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Caret"/> associated with this control.
+        /// </summary>
+        public Caret? Caret
+        {
+            get
+            {
+                return caret;
+            }
+
+            set
+            {
+                caret = value;
             }
         }
 
