@@ -61,6 +61,8 @@ void DrawPolygon(Pen* pen, PointD* points, int pointsCount);
 void FillPolygon(Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
 void DrawRectangles(Pen* pen, RectD* rects, int rectsCount);
 void FillRectangles(Brush* brush, RectD* rects, int rectsCount);
+Color GetPixel(const PointD& p);
+void SetPixel(const PointD& p, Pen* pen);
 private:
 DrawingContext() {}
 protected:

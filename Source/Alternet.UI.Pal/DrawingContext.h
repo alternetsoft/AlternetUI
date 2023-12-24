@@ -16,7 +16,7 @@ namespace Alternet::UI
     // https://docs.wxwidgets.org/3.2/classwx_graphics_context.html
 
     class TextPainter;                            
-
+                                          
     class DrawingContext : public Object
     {
 #include "Api/DrawingContext.inc"

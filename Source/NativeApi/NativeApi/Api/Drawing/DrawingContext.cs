@@ -146,7 +146,8 @@ namespace NativeApi.Api
 
         public void FillRectangles(Brush brush, RectD[] rects) => throw new Exception();
 
-        /*public Color GetPixel(Point p) => throw new Exception();*/
+        public Color GetPixel(PointD p) => throw new Exception();
+        public void SetPixel(PointD p, Pen pen) { }
 
         public Region? Clip { get; set; }
 

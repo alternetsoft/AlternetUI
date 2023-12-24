@@ -290,3 +290,13 @@ ALTERNET_UI_API void DrawingContext_FillRectangles_(DrawingContext* obj, Brush* 
     obj->FillRectangles(brush, rects, rectsCount);
 }
 
+ALTERNET_UI_API Color_C DrawingContext_GetPixel_(DrawingContext* obj, PointD p)
+{
+    return obj->GetPixel(p);
+}
+
+ALTERNET_UI_API void DrawingContext_SetPixel_(DrawingContext* obj, PointD p, Pen* pen)
+{
+    obj->SetPixel(p, pen);
+}
+

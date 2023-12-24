@@ -445,14 +445,26 @@ namespace Alternet::UI
         }
     }
 
-    /*Color DrawingContext::GetPixel(const Point& p)
+    void DrawingContext::SetPixel(const PointD& p, Pen* pen)
     {
         UseDC();
+        auto pixelPoint = fromDip(p, _dc->GetWindow());
+        
+        auto& oldPen = _dc->GetPen();
+        _dc->SetPen(pen->GetWxPen());
+        _dc->DrawPoint(pixelPoint);
+        _dc->SetPen(oldPen);
+    }
+
+    Color DrawingContext::GetPixel(const PointD& p)
+    {
+        UseDC();
+        auto pixelPoint = fromDip(p, _dc->GetWindow());
         wxColor seedColor;
-        if (!_dc->GetPixel(p, &seedColor))
+        if (!_dc->GetPixel(pixelPoint, &seedColor))
             return seedColor;
         return seedColor;
-    }*/
+    }
 
     void DrawingContext::FloodFill(Brush* fillBrush, const Point& point)
     {

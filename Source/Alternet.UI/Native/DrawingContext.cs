@@ -367,6 +367,18 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FillRectangles_(NativePointer, brush.NativePointer, rects, rects.Length);
         }
         
+        public Alternet.Drawing.Color GetPixel(Alternet.Drawing.PointD p)
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_GetPixel_(NativePointer, p);
+        }
+        
+        public void SetPixel(Alternet.Drawing.PointD p, Pen pen)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_SetPixel_(NativePointer, p, pen.NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -537,6 +549,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangles_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD[] rects, int rectsCount);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color DrawingContext_GetPixel_(IntPtr obj, Alternet.Drawing.PointD p);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_SetPixel_(IntPtr obj, Alternet.Drawing.PointD p, IntPtr pen);
             
         }
     }

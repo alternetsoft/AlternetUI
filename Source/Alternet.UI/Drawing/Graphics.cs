@@ -894,6 +894,59 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
+        /// <param name="point">The coordinates of the pixel to set.</param>
+        /// <param name="pen">A <see cref="Pen"/> structure that represents the color to
+        /// assign to the specified pixel.</param>
+        /// <remarks>
+        /// Not all drawing contexts support this operation.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetPixel(PointD point, Pen pen)
+        {
+            dc.SetPixel(point, pen.NativePen);
+        }
+
+        /// <summary>
+        /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
+        /// <param name="pen">A <see cref="Pen"/> structure that represents the color to
+        /// assign to the specified pixel.</param>
+        /// <remarks>
+        /// Not all drawing contexts support this operation.
+        /// </remarks>
+        /// <param name="x">The x-coordinate of the pixel to set.</param>
+        /// <param name="y">The y-coordinate of the pixel to set.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetPixel(double x, double y, Pen pen)
+            => dc.SetPixel(new PointD(x, y), pen.NativePen);
+
+        /// <summary>
+        /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
+        /// <param name="color">A <see cref="Color"/> structure that represents the color to
+        /// assign to the specified pixel.</param>
+        /// <remarks>
+        /// Not all drawing contexts support this operation.
+        /// </remarks>
+        /// <param name="x">The x-coordinate of the pixel to set.</param>
+        /// <param name="y">The y-coordinate of the pixel to set.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetPixel(double x, double y, Color color)
+            => dc.SetPixel(new PointD(x, y), color.AsPen.NativePen);
+
+        /// <summary>
+        /// Gets the color of the specified pixel in this <see cref="Graphics" />.</summary>
+        /// <param name="point">The coordinates of the pixel to retrieve.</param>
+        /// <returns>A <see cref="Color" /> structure that represents the color
+        /// of the specified pixel.</returns>
+        /// <remarks>
+        /// Not all drawing contexts support this operation.
+        /// </remarks>
+        public Color GetPixel(PointD point)
+        {
+            return dc.GetPixel(point);
+        }
+
+        /// <summary>
         /// Draws the specified portion of the image into the region defined by the specified
         /// <see cref="RectD"/>.
         /// </summary>
