@@ -150,4 +150,8 @@ namespace Alternet::UI
 		return WXVARIANT(v.m_colour);
 	}
 
+	wxSize wxAlternetColourProperty::OnMeasureImage(int) const
+	{
+		return wxPG_DEFAULT_IMAGE_SIZE;
+	}
 }

@@ -24,6 +24,7 @@ namespace Alternet::UI
 
         virtual wxString ValueToString(wxVariant& value, int argFlags = 0) const wxOVERRIDE;
         virtual wxColour GetColour(int index) const wxOVERRIDE;
+        virtual wxSize OnMeasureImage(int item) const wxOVERRIDE;
 
     protected:
         virtual wxVariant DoTranslateVal(wxColourPropertyValue& v) const wxOVERRIDE;
