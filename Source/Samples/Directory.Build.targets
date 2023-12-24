@@ -36,8 +36,15 @@
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86' AND '$(IsSampleProject)'=='true'">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
+	<PropertyGroup>
+		<PALx86DebugPDB>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb</PALx86DebugPDB>
+		<PALx86Debug>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll</PALx86Debug>
+		<PALx86Release>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll</PALx86Release>
+	</PropertyGroup>
+
+
+    <ItemGroup Condition="Exists($(PALx86Release)) AND '$(Configuration)|$(Platform)'=='Release|x86' AND '$(IsSampleProject)'=='true'">
+        <None Include="$(PALx86Release)" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <!-- <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.pdb" Link="Alternet.UI.Pal.pdb"> -->
@@ -47,22 +54,22 @@
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86' AND '$(IsSampleProject)'=='true'">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
+    <ItemGroup Condition="Exists($(PALx86Debug)) AND '$(Configuration)|$(Platform)'=='Debug|x86' AND '$(IsSampleProject)'=='true'">
+        <None Include="$(PALx86Debug)" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb" Link="Alternet.UI.Pal.pdb">
+        <None Include="$(PALx86DebugPDB)" Link="Alternet.UI.Pal.pdb" Condition="Exists($(PALx86DebugPDB))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(IsSampleProject)'=='true'">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="x86\Alternet.UI.Pal.dll">
+    <ItemGroup Condition="Exists($(PALx86Debug)) AND $([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(IsSampleProject)'=='true'">
+        <None Include="$(PALx86Debug)" Link="x86\Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb" Link="x86\Alternet.UI.Pal.pdb">
+        <None Include="$(PALx86DebugPDB)" Link="x86\Alternet.UI.Pal.pdb">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
