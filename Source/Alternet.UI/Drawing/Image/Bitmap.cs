@@ -12,13 +12,13 @@ namespace Alternet.Drawing
     public class Bitmap : Image
     {
         /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/>, inheriting
+        /// Creates a bitmap compatible with the given <see cref="Graphics"/>, inheriting
         /// its magnification factor.
         /// </summary>
         /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
-        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling factor is inherited.</param>
-        public Bitmap(int width, int height, DrawingContext dc)
+        /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
+        public Bitmap(int width, int height, Graphics dc)
             : base(width, height, dc)
         {
         }
@@ -34,18 +34,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/> from
+        /// Creates a bitmap compatible with the given <see cref="Graphics"/> from
         /// the given <see cref="GenericImage"/>.
         /// </summary>
         /// <param name="genericImage">Platform-independent image object.</param>
-        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling
+        /// <param name="dc"><see cref="Graphics"/> from which the scaling
         /// factor is inherited.</param>
         /// <remarks>
         /// This constructor initializes the bitmap with the data of the given image, which
         /// must be valid, but inherits the scaling factor from the given device context
         /// instead of simply using the default factor of 1.
         /// </remarks>
-        public Bitmap(GenericImage genericImage, DrawingContext dc)
+        public Bitmap(GenericImage genericImage, Graphics dc)
             : base(genericImage, dc)
         {
         }

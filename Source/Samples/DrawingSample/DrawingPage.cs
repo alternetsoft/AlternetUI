@@ -39,7 +39,7 @@ namespace DrawingSample
 
         public abstract string Name { get; }
 
-        public abstract void Draw(DrawingContext dc, RectD bounds);
+        public abstract void Draw(Graphics dc, RectD bounds);
 
         protected abstract Control CreateSettingsControl();
 

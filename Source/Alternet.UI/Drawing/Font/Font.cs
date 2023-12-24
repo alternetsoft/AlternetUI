@@ -788,12 +788,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Measures text size on the specified <see cref="DrawingContext"/>.
+        /// Measures text size on the specified <see cref="Graphics"/>.
         /// </summary>
         /// <param name="text">Text string to measure its size.</param>
         /// <param name="dc">Drawing context where measuring is performed.</param>
         /// <returns></returns>
-        public SizeD MeasureText(string text, DrawingContext dc)
+        public SizeD MeasureText(string text, Graphics dc)
         {
             var result = dc.GetTextExtent(text, this);
             return result;

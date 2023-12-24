@@ -12,7 +12,7 @@ namespace PaintSample
 
         private Image? bitmap;
 
-        private Action<DrawingContext>? previewAction;
+        private Action<Graphics>? previewAction;
 
         public Document(Control control)
         {
@@ -80,7 +80,7 @@ namespace PaintSample
             RaiseChanged();
         }
 
-        public Action<DrawingContext>? PreviewAction
+        public Action<Graphics>? PreviewAction
         {
             get => previewAction;
             set
@@ -92,12 +92,12 @@ namespace PaintSample
 
         public bool Dirty { get; private set; }
 
-        public void Modify(Action<DrawingContext> action)
+        public void Modify(Action<Graphics> action)
         {
-            using (var dc = DrawingContext.FromImage(Bitmap))
+            using (var dc = Graphics.FromImage(Bitmap))
                 action(dc);
 
-            using (var dc = DrawingContext.FromImage(Bitmap)) { }
+            using (var dc = Graphics.FromImage(Bitmap)) { }
 
             OnChanged();
         }
@@ -107,7 +107,7 @@ namespace PaintSample
             OnChanged();
         }
 
-        public void Paint(Control control, DrawingContext drawingContext)
+        public void Paint(Control control, Graphics drawingContext)
         {
             drawingContext.FillRectangle(Brushes.White, Bitmap.BoundsDip(control));
             drawingContext.DrawImage(Bitmap, PointD.Empty);
@@ -139,7 +139,7 @@ namespace PaintSample
         {
             var pixelSize = control.PixelFromDip(new SizeD(600, 600));
             var bitmap = new Bitmap(pixelSize, control);
-            using var dc = DrawingContext.FromImage(bitmap);
+            using var dc = Graphics.FromImage(bitmap);
             dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.BoundsDip(control)); 
             return bitmap;
         }

@@ -8,7 +8,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Describes an image to be drawn on a <see cref="DrawingContext"/> or
+    /// Describes an image to be drawn on a <see cref="Graphics"/> or
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
@@ -83,13 +83,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/>, inheriting
+        /// Creates a bitmap compatible with the given <see cref="Graphics"/>, inheriting
         /// its magnification factor.
         /// </summary>
         /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
-        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling factor is inherited.</param>
-        internal Image(int width, int height, DrawingContext dc)
+        /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
+        internal Image(int width, int height, Graphics dc)
         {
             nativeImage = new UI.Native.Image();
             UI.Native.DrawingContext.ImageFromDrawingContext(
@@ -100,18 +100,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/> from
+        /// Creates a bitmap compatible with the given <see cref="Graphics"/> from
         /// the given <see cref="GenericImage"/>.
         /// </summary>
         /// <param name="genericImage">Platform-independent image object.</param>
-        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling
+        /// <param name="dc"><see cref="Graphics"/> from which the scaling
         /// factor is inherited.</param>
         /// <remarks>
         /// This constructor initializes the bitmap with the data of the given image, which
         /// must be valid, but inherits the scaling factor from the given device context
         /// instead of simply using the default factor of 1.
         /// </remarks>
-        internal Image(GenericImage genericImage, DrawingContext dc)
+        internal Image(GenericImage genericImage, Graphics dc)
         {
             nativeImage = new UI.Native.Image();
             UI.Native.DrawingContext.ImageFromGenericImageDC(
@@ -237,11 +237,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="DrawingContext"/> which allows to draw on the image.
+        /// Gets <see cref="Graphics"/> which allows to draw on the image.
         /// Same as <see cref="GetDrawingContext"/>.
         /// </summary>
         [Browsable(false)]
-        public DrawingContext Canvas => GetDrawingContext();
+        public Graphics Canvas => GetDrawingContext();
 
         /// <summary>
         /// Gets image width in pixels.
@@ -693,12 +693,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="DrawingContext"/> for this image on which you can paint.
+        /// Gets <see cref="Graphics"/> for this image on which you can paint.
         /// </summary>
         /// <returns></returns>
-        public DrawingContext GetDrawingContext()
+        public Graphics GetDrawingContext()
         {
-            var dc = DrawingContext.FromImage(this);
+            var dc = Graphics.FromImage(this);
             return dc;
         }
 

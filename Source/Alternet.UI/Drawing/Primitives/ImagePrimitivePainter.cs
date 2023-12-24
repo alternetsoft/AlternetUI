@@ -44,7 +44,7 @@ namespace Alternet.Drawing
 
         public bool CenterHorzOrVert => CenterHorz || CenterVert;
 
-        public void Draw(Control control, DrawingContext dc)
+        public void Draw(Control control, Graphics dc)
         {
             if (Image.IsNullOrEmpty(Image) || !Visible)
                 return;

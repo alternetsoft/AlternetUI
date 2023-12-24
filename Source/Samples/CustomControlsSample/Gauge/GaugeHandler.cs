@@ -29,7 +29,7 @@ namespace CustomControlsSample.Gauge
             return new SizeD(200, 100);
         }
 
-        public override void OnPaint(DrawingContext dc)
+        public override void OnPaint(Graphics dc)
         {
             var bounds = Control.ClientRectangle;
 

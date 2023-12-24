@@ -175,7 +175,7 @@ namespace DrawingSample
                 new ShapeType(CreateRectangle),
                 new ShapeType(CreateEllipse));
 
-        public override void Draw(DrawingContext dc, RectD bounds)
+        public override void Draw(Graphics dc, RectD bounds)
         {
             if (Canvas == null)
                 throw new Exception();
@@ -308,7 +308,7 @@ namespace DrawingSample
 
             protected Pen Stroke { get; }
 
-            public abstract void Draw(DrawingContext dc);
+            public abstract void Draw(Graphics dc);
         }
 
         public class ShapeType
@@ -345,7 +345,7 @@ namespace DrawingSample
                 this.rectangle = rectangle;
             }
 
-            public override void Draw(DrawingContext dc)
+            public override void Draw(Graphics dc)
             {
                 dc.FillRectangle(Fill, rectangle);
                 dc.DrawRectangle(Stroke, rectangle);
@@ -361,7 +361,7 @@ namespace DrawingSample
                 this.bounds = bounds;
             }
 
-            public override void Draw(DrawingContext dc)
+            public override void Draw(Graphics dc)
             {
                 dc.FillEllipse(Fill, bounds);
                 dc.DrawEllipse(Stroke, bounds);

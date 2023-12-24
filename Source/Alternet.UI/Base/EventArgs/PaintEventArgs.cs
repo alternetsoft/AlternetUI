@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </remarks>
     public class PaintEventArgs : BaseEventArgs
     {
-        internal PaintEventArgs(DrawingContext drawingContext, RectD bounds)
+        internal PaintEventArgs(Graphics drawingContext, RectD bounds)
         {
             DrawingContext = drawingContext;
             Bounds = bounds;
@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The <see cref="DrawingContext"/> object used to paint.
         /// The <see cref="DrawingContext"/> object provides methods for drawing objects on the display device.</value>
-        public DrawingContext DrawingContext { get; }
+        public Graphics DrawingContext { get; }
 
         /// <summary>
         /// Gets the rectangle in which to paint.

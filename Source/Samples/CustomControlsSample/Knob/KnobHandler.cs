@@ -24,7 +24,7 @@ namespace CustomControlsSample
 
         protected override bool NeedsPaint => true;
 
-        public override void OnPaint(DrawingContext dc)
+        public override void OnPaint(Graphics dc)
         {
             var bounds = Control.ClientRectangle;
 

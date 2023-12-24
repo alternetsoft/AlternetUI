@@ -556,7 +556,7 @@ namespace PaintSample
             DrawSample(dc, (15, 15));
         }
 
-        public void DrawSample(DrawingContext dc, PointD location)
+        public void DrawSample(Graphics dc, PointD location)
         {
             Application.LogNameValue("dc.DPI", dc.GetDPI());
             Application.LogNameValue("window.DPI", GetDPI());

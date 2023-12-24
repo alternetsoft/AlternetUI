@@ -21,7 +21,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
         /// </summary>
-        public GraphicsPath(DrawingContext drawingContext)
+        public GraphicsPath(Graphics drawingContext)
             : this(new UI.Native.GraphicsPath())
         {
             if (drawingContext is null)

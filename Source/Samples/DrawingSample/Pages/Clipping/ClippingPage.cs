@@ -46,7 +46,7 @@ namespace DrawingSample
             timer.Stop();
         }
 
-        public override void Draw(DrawingContext dc, RectD bounds)
+        public override void Draw(Graphics dc, RectD bounds)
         {
             PointD[] GetPolygonPoints()
             {
@@ -124,7 +124,7 @@ namespace DrawingSample
             return control;
         }
 
-        private static void DrawScene(DrawingContext dc, RectD bounds)
+        private static void DrawScene(Graphics dc, RectD bounds)
         {
             var random = new Random(0);
 

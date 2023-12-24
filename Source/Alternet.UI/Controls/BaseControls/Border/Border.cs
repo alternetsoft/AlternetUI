@@ -241,7 +241,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DefaultPaint(DrawingContext dc, RectD rect)
+        protected override void DefaultPaint(Graphics dc, RectD rect)
         {
             BeforePaint(dc, rect);
             DrawDefaultBackground(dc, rect);
@@ -286,7 +286,7 @@ namespace Alternet.UI
         {
             protected override bool NeedsPaint => true;
 
-            public override void OnPaint(DrawingContext dc)
+            public override void OnPaint(Graphics dc)
             {
                 Control.DefaultPaint(dc, DrawClientRectangle);
             }

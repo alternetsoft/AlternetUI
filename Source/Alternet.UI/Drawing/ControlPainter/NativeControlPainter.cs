@@ -13,7 +13,7 @@ namespace Alternet.Drawing
 
         public int DrawHeaderButton(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0,
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
@@ -26,7 +26,7 @@ namespace Alternet.Drawing
         // Normally only called by DrawHeaderButton.
         public int DrawHeaderButtonContents(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0,
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
@@ -48,7 +48,7 @@ namespace Alternet.Drawing
         // draw the expanded/collapsed icon for a tree control item
         public void DrawTreeItemButton(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -58,7 +58,7 @@ namespace Alternet.Drawing
         // drawn by DrawSash() blends into it well
         public void DrawSplitterBorder(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -67,7 +67,7 @@ namespace Alternet.Drawing
         // draw a (vertical) sash
         public void DrawSplitterSash(
             Control control,
-            DrawingContext dcReal,
+            Graphics dcReal,
             SizeI sizeReal,
             int position,
             int orientation,
@@ -79,7 +79,7 @@ namespace Alternet.Drawing
         // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
         public void DrawComboBoxDropButton(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -89,7 +89,7 @@ namespace Alternet.Drawing
         // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
         public void DrawDropArrow(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -99,7 +99,7 @@ namespace Alternet.Drawing
         // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
         public void DrawCheckBox(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
         // flags may use wxCONTROL_DISABLED
         public void DrawCheckMark(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -137,7 +137,7 @@ namespace Alternet.Drawing
         // flags may use wxCONTROL_PRESSED, wxCONTROL_CURRENT and wxCONTROL_ISDEFAULT
         public void DrawPushButton(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -147,14 +147,14 @@ namespace Alternet.Drawing
         // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
         public void DrawCollapseButton(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
         }
 
         // Returns the default size of a collapse button
-        public SizeI GetCollapseButtonSize(Control control, DrawingContext dc) => default;
+        public SizeI GetCollapseButtonSize(Control control, Graphics dc) => default;
 
         // draw rectangle indicating that an item in e.g. a list control
         // has been selected or focused
@@ -164,7 +164,7 @@ namespace Alternet.Drawing
         // wxCONTROL_FOCUSED (the whole control has focus, e.g. blue background vs. grey otherwise)
         public void DrawItemSelectionRect(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -174,7 +174,7 @@ namespace Alternet.Drawing
         // only wxCONTROL_SELECTED makes sense in flags here
         public void DrawFocusRect(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -183,7 +183,7 @@ namespace Alternet.Drawing
         // Draw a native wxChoice
         public void DrawChoice(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -192,7 +192,7 @@ namespace Alternet.Drawing
         // Draw a native wxComboBox
         public void DrawComboBox(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -201,7 +201,7 @@ namespace Alternet.Drawing
         // Draw a native wxTextCtrl frame
         public void DrawTextCtrl(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -210,7 +210,7 @@ namespace Alternet.Drawing
         // Draw a native wxRadioButton bitmap
         public void DrawRadioBitmap(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             NativeControlPainterFlags flags = 0)
         {
@@ -220,7 +220,7 @@ namespace Alternet.Drawing
         // wxCONTROL_SPECIAL flag must be used for drawing vertical gauges.
         public void DrawGauge(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             RectD rect,
             int value,
             int max,
@@ -231,7 +231,7 @@ namespace Alternet.Drawing
         // Draw text using the appropriate color for normal and selected states.
         public void DrawItemText(
             Control control,
-            DrawingContext dc,
+            Graphics dc,
             string text,
             RectD rect,
             GenericAlignment align = GenericAlignment.Left | GenericAlignment.Top,

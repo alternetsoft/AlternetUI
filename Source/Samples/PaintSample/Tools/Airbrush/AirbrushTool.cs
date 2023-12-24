@@ -90,7 +90,7 @@ namespace PaintSample
             if (state == null)
                 throw new InvalidOperationException();
 
-            using (var dc = DrawingContext.FromImage(state.PreviewBitmap))
+            using (var dc = Graphics.FromImage(state.PreviewBitmap))
             {
                 for (int i = 0; i < state.PointsPerTick; i++)
                     DrawSinglePoint(dc, state.Brush, GetNextPoint());
@@ -127,12 +127,12 @@ namespace PaintSample
             Document.PreviewAction = null;
         }
 
-        private void DrawSinglePoint(DrawingContext dc, Brush brush, PointD point)
+        private void DrawSinglePoint(Graphics dc, Brush brush, PointD point)
         {
             dc.FillRectangle(brush, new RectD(point, new SizeD(1, 1)));
         }
 
-        private void Draw(DrawingContext dc)
+        private void Draw(Graphics dc)
         {
             if (state == null)
                 throw new InvalidOperationException();

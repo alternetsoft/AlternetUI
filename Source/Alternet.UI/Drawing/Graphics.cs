@@ -11,23 +11,23 @@ namespace Alternet.Drawing
     /// <summary>
     /// Describes a drawing surface.
     /// </summary>
-    public class DrawingContext : DisposableObject
+    public class Graphics : DisposableObject
     {
         private UI.Native.DrawingContext dc;
 
-        internal DrawingContext(UI.Native.DrawingContext dc)
+        internal Graphics(UI.Native.DrawingContext dc)
         {
             this.dc = dc;
         }
 
         /// <summary>
-        /// Gets or sets name of the <see cref="DrawingContext"/> for the debug purposes.
+        /// Gets or sets name of the <see cref="Graphics"/> for the debug purposes.
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets a copy of the geometric world transformation for this
-        /// <see cref="DrawingContext"/>.
+        /// <see cref="Graphics"/>.
         /// </summary>
         public TransformMatrix Transform
         {
@@ -44,10 +44,10 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets a <see cref="Region"/> that limits the drawing region of this
-        /// <see cref="DrawingContext"/>.
+        /// <see cref="Graphics"/>.
         /// </summary>
         /// <value>
-        /// A <see cref="Region"/> that limits the portion of this <see cref="DrawingContext"/>
+        /// A <see cref="Region"/> that limits the portion of this <see cref="Graphics"/>
         /// that is currently available for drawing.
         /// </value>
         public Region? Clip
@@ -68,7 +68,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the interpolation mode associated with this <see cref="DrawingContext"/>.
+        /// Gets or sets the interpolation mode associated with this <see cref="Graphics"/>.
         /// </summary>
         /// <value>One of the <see cref="InterpolationMode"/> values.</value>
         /// <remarks>
@@ -91,29 +91,29 @@ namespace Alternet.Drawing
         internal UI.Native.DrawingContext NativeDrawingContext => dc;
 
         /// <summary>
-        /// Creates a new <see cref="DrawingContext"/> from the specified
+        /// Creates a new <see cref="Graphics"/> from the specified
         /// <see cref="Image"/>.
         /// </summary>
         /// <param name="image"><see cref="Image"/> from which to create the
-        /// new <see cref="DrawingContext"/>.</param>
-        /// <returns>A new <see cref="DrawingContext"/> for the specified
+        /// new <see cref="Graphics"/>.</param>
+        /// <returns>A new <see cref="Graphics"/> for the specified
         /// <see cref="Image"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/>
         /// is <see langword="null"/>.</exception>
         /// <remarks>
         /// Use this method to draw on the specified image.
         /// You should always call the Dispose() method to release
-        /// the <see cref="DrawingContext"/> and
+        /// the <see cref="Graphics"/> and
         /// related resources created by the <see cref="FromImage"/> method.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DrawingContext FromImage(Image image)
+        public static Graphics FromImage(Image image)
         {
 #if DEBUG
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 #endif
-            return new DrawingContext(UI.Native.DrawingContext.FromImage(image.NativeImage));
+            return new Graphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
         }
 
         /// <summary>
@@ -1038,7 +1038,7 @@ namespace Alternet.Drawing
         {
             Draw(this, rect.ToRect(), color);
 
-            static void Draw(DrawingContext dc, RectI rect, Color color)
+            static void Draw(Graphics dc, RectI rect, Color color)
             {
                 int minSize = 4;
                 int offset = 6;
@@ -1177,7 +1177,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Pushes the current state of the <see cref="DrawingContext"/> transformation
+        /// Pushes the current state of the <see cref="Graphics"/> transformation
         /// matrix on a stack.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1201,7 +1201,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Pushes the current state of the <see cref="DrawingContext"/> transformation
+        /// Pushes the current state of the <see cref="Graphics"/> transformation
         /// matrix on a stack
         /// and concatenates the current transform with a new transform.
         /// </summary>

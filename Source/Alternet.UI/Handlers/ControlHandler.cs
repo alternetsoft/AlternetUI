@@ -292,7 +292,7 @@ namespace Alternet.UI
         /// <summary>
         /// This property may be overridden by control handlers to indicate that
         /// the handler needs
-        /// <see cref="OnPaint(DrawingContext)"/> to be called. Default value
+        /// <see cref="OnPaint(Graphics)"/> to be called. Default value
         /// is <c>false</c>.
         /// </summary>
         protected virtual bool NeedsPaint => false;
@@ -403,12 +403,12 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// <see cref="NeedsPaint"/> for this handler should return <c>true</c> in
-        /// order for <see cref="OnPaint(DrawingContext)"/>
+        /// order for <see cref="OnPaint(Graphics)"/>
         /// to be called.
         /// </remarks>
-        /// <param name="drawingContext">The <see cref="DrawingContext"/> to paint
+        /// <param name="drawingContext">The <see cref="Graphics"/> to paint
         /// on.</param>
-        public virtual void OnPaint(DrawingContext drawingContext)
+        public virtual void OnPaint(Graphics drawingContext)
         {
         }
 
@@ -1306,7 +1306,7 @@ namespace Alternet.UI
                 return;
 
             using var dc =
-                new DrawingContext(NativeControl.OpenPaintDrawingContext());
+                new Graphics(NativeControl.OpenPaintDrawingContext());
 
             if (Control.UserPaint)
                 Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
@@ -1315,7 +1315,7 @@ namespace Alternet.UI
                 PaintSelfAndVisualChildren(dc);
         }
 
-        private void PaintSelfAndVisualChildren(DrawingContext dc)
+        private void PaintSelfAndVisualChildren(Graphics dc)
         {
             if (NeedsPaint)
                 OnPaint(dc);

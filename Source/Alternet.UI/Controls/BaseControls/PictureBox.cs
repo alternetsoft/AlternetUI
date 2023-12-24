@@ -64,10 +64,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="DrawingContext"/> for the <see cref="Image"/> on which
+        /// Gets <see cref="Graphics"/> for the <see cref="Image"/> on which
         /// you can paint.
         /// </summary>
-        public DrawingContext? Canvas
+        public Graphics? Canvas
         {
             get
             {
@@ -205,7 +205,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DefaultPaint(DrawingContext dc, RectD rect)
+        protected override void DefaultPaint(Graphics dc, RectD rect)
         {
             BeforePaint(dc, rect);
 
@@ -253,7 +253,7 @@ namespace Alternet.UI
         {
             protected override bool NeedsPaint => true;
 
-            public override void OnPaint(DrawingContext drawingContext)
+            public override void OnPaint(Graphics drawingContext)
             {
                 Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
             }

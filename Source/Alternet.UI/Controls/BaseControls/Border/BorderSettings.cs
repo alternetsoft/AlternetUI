@@ -281,7 +281,7 @@ namespace Alternet.UI
         {
             const double cornerSize = 5;
 
-            void DrawHorizontal(DrawingContext dc, Brush brush, RectD rect)
+            void DrawHorizontal(Graphics dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
                 var rect2 = rect;
@@ -292,7 +292,7 @@ namespace Alternet.UI
                 dc.FillRectangle(brush, rect2);
             }
 
-            void DrawVertical(DrawingContext dc, Brush brush, RectD rect)
+            void DrawVertical(Graphics dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
                 var rect2 = rect;
@@ -408,7 +408,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public virtual void Draw(DrawingContext dc, RectD rect)
+        public virtual void Draw(Graphics dc, RectD rect)
         {
             Paint?.Invoke(this, new PaintEventArgs(dc, rect));
 

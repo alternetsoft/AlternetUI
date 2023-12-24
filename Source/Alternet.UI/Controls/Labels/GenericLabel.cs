@@ -39,7 +39,7 @@ namespace Alternet.UI
         {
             protected override bool NeedsPaint => true;
 
-            public override void OnPaint(DrawingContext drawingContext)
+            public override void OnPaint(Graphics drawingContext)
             {
                 if (Control.Text != null)
                 {

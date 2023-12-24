@@ -72,7 +72,7 @@ namespace CustomControlsSample
             }
         }
 
-        public override void OnPaint(DrawingContext dc)
+        public override void OnPaint(Graphics dc)
         {
             var bounds = Control.ClientRectangle;
             dc.FillRectangle(GetBackgroundBrush(), bounds);

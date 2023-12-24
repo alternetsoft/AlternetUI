@@ -82,7 +82,7 @@ namespace PaintSample
             }
         }
 
-        void DrawSinglePoint(DrawingContext dc, PointD point)
+        void DrawSinglePoint(Graphics dc, PointD point)
         {
             if (state == null)
                 throw new InvalidOperationException();
@@ -100,7 +100,7 @@ namespace PaintSample
             dc.FillEllipse(new SolidBrush(state.Pen.Color), rect);
         }
 
-        private void Draw(DrawingContext dc)
+        private void Draw(Graphics dc)
         {
             if (state == null)
                 throw new InvalidOperationException();

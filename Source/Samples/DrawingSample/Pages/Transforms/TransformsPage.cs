@@ -83,7 +83,7 @@ namespace DrawingSample
             }
         }
 
-        public override void Draw(DrawingContext dc, RectD bounds)
+        public override void Draw(Graphics dc, RectD bounds)
         {
             dc.PushTransform(GetTransform());
 
@@ -100,7 +100,7 @@ namespace DrawingSample
             return control;
         }
 
-        private static void DrawScene(DrawingContext dc)
+        private static void DrawScene(Graphics dc)
         {
             var outerFrame = new RectD(10, 10, 200, 300);
             var innerFrame = outerFrame.InflatedBy(-10, -10);
@@ -157,7 +157,7 @@ namespace DrawingSample
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
 
-        private static void DrawSubTransformedPart(DrawingContext dc)
+        private static void DrawSubTransformedPart(Graphics dc)
         {
             dc.PushTransform(TransformMatrix.CreateTranslation(210, 50));
             dc.PushTransform(TransformMatrix.CreateScale(2, 2));

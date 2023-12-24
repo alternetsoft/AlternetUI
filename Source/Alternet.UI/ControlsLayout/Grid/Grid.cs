@@ -3748,7 +3748,7 @@ namespace Alternet.UI
             /// Draw single hi-contrast line.
             /// </summary>
             private static void DrawGridLine(
-                DrawingContext drawingContext,
+                Graphics drawingContext,
                 double startX,
                 double startY,
                 double endX,

@@ -36,7 +36,7 @@ namespace PrintingSample
 
         private readonly Pen thickGrayPen = new(Color.Gray, 4);
 
-        private void DrawFirstPage(DrawingContext dc, RectD bounds)
+        private void DrawFirstPage(Graphics dc, RectD bounds)
         {
             dc.DrawRectangle(Pens.Blue, bounds);
 
@@ -176,7 +176,7 @@ namespace PrintingSample
             e.HasMorePages = pageNumber - 1 < v;
         }
 
-        private void DrawAdditionalPage(DrawingContext dc, int pageNumber, RectD bounds)
+        private void DrawAdditionalPage(Graphics dc, int pageNumber, RectD bounds)
         {
             dc.DrawText(
                 "Additional page #" + pageNumber,

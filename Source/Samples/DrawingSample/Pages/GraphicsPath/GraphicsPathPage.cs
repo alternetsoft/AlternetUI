@@ -39,7 +39,7 @@ namespace DrawingSample
             }
         }
 
-        public override void Draw(DrawingContext dc, RectD bounds)
+        public override void Draw(Graphics dc, RectD bounds)
         {
             DrawRandomArtModel(dc);
             DrawDemoForeground(dc, bounds);
@@ -69,7 +69,7 @@ namespace DrawingSample
             return control;
         }
 
-        private void DrawRandomArtModel(DrawingContext dc)
+        private void DrawRandomArtModel(Graphics dc)
         {
             if (randomArtController == null)
                 throw new Exception();
@@ -98,7 +98,7 @@ namespace DrawingSample
             }
         }
 
-        private void DrawDemoForeground(DrawingContext dc, RectD bounds)
+        private void DrawDemoForeground(Graphics dc, RectD bounds)
         {
             dc.DrawText(
                 "\n\nClick and drag here to draw.\nYou can select the path segment type to draw in the combo box in the panel to the right.",

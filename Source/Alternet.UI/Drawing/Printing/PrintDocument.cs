@@ -16,7 +16,7 @@ namespace Alternet.Drawing.Printing
     {
         private bool isDisposed;
 
-        private DrawingContext? currentDrawingContext;
+        private Graphics? currentDrawingContext;
 
         private PrinterSettings? printerSettings;
 
@@ -46,7 +46,7 @@ namespace Alternet.Drawing.Printing
         /// <para>
         /// To specify the output to print, use the <see cref="PrintPageEventArgs.DrawingContext"/> property of the <see
         /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be printed, draw the text
-        /// using the <see cref="DrawingContext.DrawText(string, Font, Brush, PointD)"/> method.
+        /// using the <see cref="Graphics.DrawText(string, Font, Brush, PointD)"/> method.
         /// </para>
         /// <para>
         /// In addition to specifying the output, you can indicate if there are additional pages to print by setting the
@@ -263,7 +263,7 @@ namespace Alternet.Drawing.Printing
             if (currentDrawingContext != null)
                 throw new InvalidOperationException();
 
-            currentDrawingContext = new DrawingContext(NativePrintDocument.PrintPage_DrawingContext);
+            currentDrawingContext = new Graphics(NativePrintDocument.PrintPage_DrawingContext);
 
             var ea = new PrintEventArgs();
             OnBeginPrint(ea);

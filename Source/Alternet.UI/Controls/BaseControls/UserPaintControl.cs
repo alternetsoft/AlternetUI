@@ -189,7 +189,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Ractangle.</param>
-        public virtual void DrawDefaultBackground(DrawingContext dc, RectD rect)
+        public virtual void DrawDefaultBackground(Graphics dc, RectD rect)
         {
             var state = CurrentState;
             var brush = GetBackground(state);
@@ -221,7 +221,7 @@ namespace Alternet.UI
             }
         }
 
-        internal virtual void BeforePaint(DrawingContext dc, RectD rect)
+        internal virtual void BeforePaint(Graphics dc, RectD rect)
         {
 #if DEBUG
             if (DrawDebugPointsBefore)
@@ -229,7 +229,7 @@ namespace Alternet.UI
 #endif
         }
 
-        internal virtual void AfterPaint(DrawingContext dc, RectD rect)
+        internal virtual void AfterPaint(Graphics dc, RectD rect)
         {
 #if DEBUG
             if (DrawDebugPointsAfter)
@@ -243,7 +243,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dc">Drawing Context.</param>
         /// <param name="rect">Rectangle to draw in.</param>
-        protected virtual void DefaultPaint(DrawingContext dc, RectD rect)
+        protected virtual void DefaultPaint(Graphics dc, RectD rect)
         {
         }
 
@@ -269,7 +269,7 @@ namespace Alternet.UI
         {
             protected override bool NeedsPaint => true;
 
-            public override void OnPaint(DrawingContext dc)
+            public override void OnPaint(Graphics dc)
             {
                 var r = DrawClientRectangle;
                 Control.BeforePaint(dc, r);

@@ -185,7 +185,7 @@ namespace DrawingSample
             }
         }
 
-        public override void Draw(DrawingContext dc, RectD bounds)
+        public override void Draw(Graphics dc, RectD bounds)
         {
             paragraphs ??= CreateParagraphs().ToArray();
 
