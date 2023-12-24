@@ -30,11 +30,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Occurs when a link is clicked within the control.
         /// </summary>
         public event CancelEventHandler? LinkClicked;
@@ -72,7 +67,7 @@ namespace Alternet.UI
                     return;
                 text = value;
                 NativeControl.Text = text ?? " ";
-                RaiseTextChanged(EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
             }
         }
 
@@ -147,18 +142,6 @@ namespace Alternet.UI
         internal new NativeLinkLabelHandler Handler =>
             (NativeLinkLabelHandler)base.Handler;
 
-        /// <summary>
-        /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        public void RaiseTextChanged(EventArgs e)
-        {
-            OnTextChanged(e);
-            TextChanged?.Invoke(this, e);
-        }
-
         internal void RaiseLinkClicked(CancelEventArgs e)
         {
             OnLinkClicked(e);
@@ -175,14 +158,6 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return new NativeLinkLabelHandler();
-        }
-
-        /// <summary>
-        /// Called when content in this Control changes.
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnTextChanged(EventArgs e)
-        {
         }
 
         /// <summary>

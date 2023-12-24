@@ -45,7 +45,7 @@ namespace Alternet.UI
 
         private void NativeControl_TextChanged(object? sender, EventArgs e)
         {
-            Control.OnTextChanged(e);
+            Control.RaiseTextChanged(e);
         }
     }
 }

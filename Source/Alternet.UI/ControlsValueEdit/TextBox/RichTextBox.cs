@@ -37,11 +37,6 @@ namespace Alternet.UI
         public event EventHandler? CurrentPositionChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Occurs when Enter key is pressed in the control.
         /// </summary>
         public event EventHandler? EnterPressed;
@@ -468,17 +463,6 @@ namespace Alternet.UI
         public virtual void OnEnterPressed(EventArgs e)
         {
             EnterPressed?.Invoke(this, e);
-        }
-
-        /// <summary>
-        ///     Raises the <see cref="TextChanged"/> event.
-        /// </summary>
-        /// <param name="e">
-        ///     An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        public virtual void OnTextChanged(EventArgs e)
-        {
-            TextChanged?.Invoke(this, e);
         }
 
         /// <summary>

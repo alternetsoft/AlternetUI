@@ -129,11 +129,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Occurs when the <see cref="Shortcut"/> property changes.
         /// </summary>
         public event EventHandler? ShortcutChanged;
@@ -216,7 +211,7 @@ namespace Alternet.UI
                     return;
 
                 text = value;
-                TextChanged?.Invoke(this, EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
             }
         }
 

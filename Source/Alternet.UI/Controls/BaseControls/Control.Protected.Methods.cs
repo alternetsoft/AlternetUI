@@ -94,6 +94,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="Control.TextChanged" /> event.</summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnTextChanged(EventArgs e)
+        {
+            TextChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Called when the control is clicked.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event

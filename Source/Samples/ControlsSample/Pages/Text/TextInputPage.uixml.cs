@@ -77,14 +77,14 @@ namespace ControlsSample
             Application.Log("TextBox: Text max length reached");
         }
 
-        private void MaxLengthBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void MaxLengthBox_TextChanged(object? sender, EventArgs e)
         {
             var value = maxLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
             textBox.MaxLength = (int)value;
             textBox.RunDefaultValidation();
         }
 
-        private void MinLengthBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void MinLengthBox_TextChanged(object? sender, EventArgs e)
         {
             var value = minLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
             textBox.MinLength = (int)value;

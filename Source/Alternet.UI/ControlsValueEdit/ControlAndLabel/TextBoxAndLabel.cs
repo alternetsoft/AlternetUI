@@ -37,11 +37,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Gets main child control.
         /// </summary>
         public new TextBox MainControl => (TextBox)base.MainControl;
@@ -107,10 +102,10 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void MainControlTextChanged()
         {
-            TextChanged?.Invoke(this, EventArgs.Empty);
+            OnTextChanged(EventArgs.Empty);
         }
 
-        private void MainControl_TextChanged(object sender, TextChangedEventArgs e)
+        private void MainControl_TextChanged(object? sender, EventArgs e)
         {
             MainControlTextChanged();
         }

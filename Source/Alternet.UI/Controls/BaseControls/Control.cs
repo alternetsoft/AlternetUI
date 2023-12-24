@@ -88,6 +88,11 @@ namespace Alternet.UI
         public event EventHandler? LostFocus;
 
         /// <summary>
+        /// Occurs when the <see cref="Control.Text" /> property value changes.
+        /// </summary>
+        public event EventHandler? TextChanged;
+
+        /// <summary>
         /// Occurs when the <see cref="CurrentState"/> property value changes.
         /// </summary>
         public event EventHandler? CurrentStateChanged;

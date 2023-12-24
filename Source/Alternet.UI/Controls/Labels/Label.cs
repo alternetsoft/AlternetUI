@@ -50,11 +50,6 @@ namespace Alternet.UI
                 UserPaint = true;
         }
 
-        /// <summary>
-        /// Occurs when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
         /// <inheritdoc/>
         public override string Text
         {
@@ -69,24 +64,12 @@ namespace Alternet.UI
                     return;
                 value ??= string.Empty;
                 text = value;
-                RaiseTextChanged(EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
             }
         }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Label;
-
-        /// <summary>
-        /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        public void RaiseTextChanged(EventArgs e)
-        {
-            TextChanged?.Invoke(this, e);
-            OnTextChanged(e);
-        }
 
         /// <summary>
         /// Wraps <see cref="Text"/> so that each of its lines becomes at most width
@@ -109,14 +92,6 @@ namespace Alternet.UI
 
             Native.Label label = (Native.Label)(Handler.NativeControl!);
             label?.Wrap((int)v);
-        }
-
-        /// <summary>
-        /// Called when content in this control changes.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        protected virtual void OnTextChanged(EventArgs e)
-        {
         }
 
         /// <inheritdoc/>

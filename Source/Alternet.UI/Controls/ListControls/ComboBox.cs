@@ -94,15 +94,6 @@ namespace Alternet.UI
         public event EventHandler? SelectedItemChanged;
 
         /// <summary>
-        /// Occurs when the <see cref="Text"/> property value changes.
-        /// </summary>
-        /// <remarks>
-        /// This event is raised if the <see cref="Text"/> property is changed
-        /// by either a programmatic modification or user interaction.
-        /// </remarks>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Occurs when the <see cref="IsEditable"/> property value changes.
         /// </summary>
         public event EventHandler? IsEditableChanged;
@@ -178,7 +169,7 @@ namespace Alternet.UI
                 if (foundIndex != null)
                     SelectedIndex = foundIndex.Value;
 
-                RaiseTextChanged(EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
             }
         }
 
@@ -402,35 +393,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains
-        /// the event data.</param>
-        public void RaiseTextChanged(EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnTextChanged(e);
-            TextChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
         /// Called when the value of the <see cref="SelectedItem"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains
-        /// the event data.</param>
-        protected virtual void OnTextChanged(EventArgs e)
         {
         }
 

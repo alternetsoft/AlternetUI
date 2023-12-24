@@ -12,11 +12,6 @@ namespace Alternet.UI
         private Action? clickAction;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Gets or sets the text displayed on this button.
         /// </summary>
         public override string Text
@@ -33,7 +28,7 @@ namespace Alternet.UI
                 CheckDisposed();
 
                 text = value;
-                RaiseTextChanged(EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
                 PerformLayout();
             }
         }
@@ -56,23 +51,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Called when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnTextChanged(EventArgs e)
-        {
-        }
-
         private void OnClickAction(object? sender, EventArgs? e)
         {
             clickAction?.Invoke();
-        }
-
-        private void RaiseTextChanged(EventArgs e)
-        {
-            OnTextChanged(e);
-            TextChanged?.Invoke(this, e);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
 using Alternet.UI;
@@ -189,12 +190,12 @@ namespace PrintingSample
 
         private void ExitMenuItem_Click(object sender, System.EventArgs e) => Close();
 
-        private void OriginAtMarginCheckBox_CheckedChanged(object? sender, System.EventArgs e)
+        private void OriginAtMarginCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             DrawingArea.Invalidate();
         }
 
-        private void PageMarginTextBox_TextChanged(object? sender, TextChangedEventArgs e)
+        private void PageMarginTextBox_TextChanged(object? sender, EventArgs e)
         {
             DrawingArea.Invalidate();
         }

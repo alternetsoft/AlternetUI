@@ -76,6 +76,8 @@ namespace Alternet.UI
             Invalidate();
         }
 
+        internal void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
+
         internal void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
 
         internal void RaiseScroll(ScrollEventArgs e) => OnScroll(e);

@@ -35,16 +35,6 @@ namespace Alternet.UI
                         true, // IsAnimationProhibited
                         UpdateSourceTrigger.PropertyChanged));
 
-        /// <summary>
-        /// Event for "Text has changed"
-        /// </summary>
-        public static readonly RoutedEvent TextChangedEvent =
-            EventManager.RegisterRoutedEvent(
-            "TextChanged",
-            RoutingStrategy.Bubble,
-            typeof(TextChangedEventHandler),
-            typeof(TextBox));
-
         private bool isRichEdit = false;
         private bool multiline = false;
         private bool hasBorder = true;
@@ -96,22 +86,6 @@ namespace Alternet.UI
         /// <see cref="CurrentPositionChanged"/> event firing.
         /// </remarks>
         public event EventHandler? CurrentPositionChanged;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        public event TextChangedEventHandler TextChanged
-        {
-            add
-            {
-                AddHandler(TextChangedEvent, value);
-            }
-
-            remove
-            {
-                RemoveHandler(TextChangedEvent, value);
-            }
-        }
 
         /// <summary>
         /// Occurs when Enter key is pressed in the control.
@@ -1419,22 +1393,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
-        public void RaiseTextChanged(TextChangedEventArgs e)
-        {
-#pragma warning disable
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-#pragma warning restore
-
-            OnTextChanged(e);
-        }
-
-        /// <summary>
         /// Moves caret to the beginning of the text.
         /// </summary>
         public virtual void MoveToBeginOfText()
@@ -1612,27 +1570,13 @@ namespace Alternet.UI
             SelectionSetAlignment(TextBoxTextAttrAlignment.Justified);
         }
 
-        /// <summary>
-        /// Called when content in this Control changes.
-        /// Raises the TextChanged event.
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnTextChanged(TextChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
         {
-            RaiseEvent(e);
+            base.OnTextChanged(e);
             if (Options.HasFlag(TextBoxOptions.DefaultValidation))
                 RunDefaultValidation();
         }
-
-        /*
-        /// <summary>
-        /// Called when the value of the <see cref="Text"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
-        protected virtual void OnTextChanged(EventArgs e)
-        {
-        }*/
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
@@ -1651,7 +1595,7 @@ namespace Alternet.UI
             DependencyPropertyChangedEventArgs e)
         {
             TextBox textBox = (TextBox)d;
-            textBox.OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
+            textBox.OnTextChanged(EventArgs.Empty);
         }
     }
 }

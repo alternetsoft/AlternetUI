@@ -20,7 +20,7 @@ namespace ControlsSample
             AddDefaultItems(listBox);
         }
 
-        private void FindText_TextChanged(object sender, TextChangedEventArgs e)
+        private void FindText_TextChanged(object? sender, EventArgs e)
         {
             var text = findText.Text;
             if(text is null)

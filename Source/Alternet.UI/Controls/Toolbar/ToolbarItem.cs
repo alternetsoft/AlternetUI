@@ -88,11 +88,6 @@ namespace Alternet.UI
         public event EventHandler? ImageChanged;
 
         /// <summary>
-        /// Occurs when the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        /// <summary>
         /// Occurs when the <see cref="Checked"/> property changes.
         /// </summary>
         public event EventHandler? CheckedChanged;
@@ -163,7 +158,7 @@ namespace Alternet.UI
                     return;
 
                 text = value;
-                TextChanged?.Invoke(this, EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
             }
         }
 
