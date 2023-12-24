@@ -17,3 +17,11 @@ to the path where Alternet.UI folder is located.
 
 - Uixml forms are not supported by this template. You need to create forms and controls
 from code. See MainWindow.cs for an example.
+
+## Issue url
+
+- You can comment or add bug report for MinMaster template here:
+https://github.com/alternetsoft/AlternetUI/issues/68
+- There is an improved template project created by @neoxeo.
+It has script file that asks for project name, path. etc.
+https://github.com/alternetsoft/AlternetUI/issues/68#issuecomment-1864016068
