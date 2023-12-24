@@ -1,5 +1,16 @@
 # 0.9.411 (work in progress)
 
+## 2023 December 24
+
+- Control.Scroll event.
+- Fixed NewtonSoft.Json vulnerability (updated to new nuget version).
+- Fixed Alternet.UI.Integration.Remoting compilation #72.
+- Fixed WebBrowser.NavigateToString #71.
+- Control: TextChanged, OnTextChanged.
+- DrawingContext -> Graphics (WinForms related).
+- Graphics: SetPixel, GetPixel.
+- Control: Resize, OnResize (WinForms related).
+
 ## 2023 December 19
 
 - Control.KeyPress event.
