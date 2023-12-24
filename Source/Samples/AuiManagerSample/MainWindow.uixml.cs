@@ -308,9 +308,10 @@ namespace AuiManagerSample
                 popupListBox.MainControl.SelectFirstItem();
             }
 
-            var location = toolbar4.GetToolPopupLocation(toolbar4.EventToolId);
-            if (location is not null)
-                popupListBox.ShowPopup(location.Value);
+            RectD toolRect = toolbar4.GetToolRect(toolbar4.EventToolId);
+            var pos = toolbar4.ClientToScreen(toolRect.Location);
+            var sz = (0, toolRect.Height);
+            popupListBox.ShowPopup(pos, sz);
         }
 
         private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
