@@ -222,6 +222,11 @@ namespace Alternet.UI
         public event EventHandler? SizeChanged;
 
         /// <summary>
+        /// Occurs when the control's size is changed.
+        /// </summary>
+        public event EventHandler? Resize;
+
+        /// <summary>
         /// Occurs when the control's location is changed.
         /// </summary>
         public event EventHandler? LocationChanged;

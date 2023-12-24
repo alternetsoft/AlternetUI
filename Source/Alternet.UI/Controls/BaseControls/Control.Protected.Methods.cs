@@ -41,8 +41,20 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        protected virtual void OnSizeChanged(EventArgs e) =>
+        protected virtual void OnSizeChanged(EventArgs e)
+        {
             SizeChanged?.Invoke(this, e);
+            OnResize(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Control.Resize" /> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        protected virtual void OnResize(EventArgs e)
+        {
+            Resize?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Raises the <see cref="Scroll"/> event.
