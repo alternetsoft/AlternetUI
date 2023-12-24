@@ -638,10 +638,12 @@ namespace Alternet.UI
             else
             {
                 // Otherwise treat it as a web search.
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
                 uri = new Uri("https://google.com/search?q=" +
                     string.Join("+", Uri.EscapeDataString(url).Split(
                         new string[] { "%20" },
                         StringSplitOptions.RemoveEmptyEntries)));
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
             }
 #pragma warning restore CA1847 // Use char literal for a single character lookup
 #pragma warning restore IDE0079
