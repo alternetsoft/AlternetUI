@@ -34,15 +34,12 @@ namespace Alternet.UI
         /// <param name="keyboard">
         /// The logical keyboard device associated with this event.
         /// </param>
-        /// <param name="timestamp">
-        /// The time when the input occurred.
-        /// </param>
         /// <param name="key">
         /// The key referenced by the event.
         /// </param>
         /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
-        public KeyEventArgs(KeyboardDevice keyboard, long timestamp, Key key, bool isRepeat)
-            : base(keyboard, timestamp)
+        public KeyEventArgs(KeyboardDevice keyboard, Key key, bool isRepeat)
+            : base(keyboard)
         {
             if (!Keyboard.IsValidKey(key))
                 throw new InvalidEnumArgumentException(nameof(key), (int)key, typeof(Key));
@@ -201,20 +198,6 @@ namespace Alternet.UI
         /// Whether or not the key referenced by the event is toggled.
         /// </summary>
         public bool IsToggled => keyStates == KeyStates.Toggled;
-
-        /// <summary>
-        /// The mechanism used to call the type-specific handler on the target.
-        /// </summary>
-        /// <param name="genericHandler">
-        /// The generic handler to call in a type-specific way.
-        /// </param>
-        /// <param name="genericTarget">The target to call the handler on.</param>
-        protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
-        {
-            KeyEventHandler handler = (KeyEventHandler) genericHandler;
-            
-            handler(genericTarget, this);
-        }
     }
 }
 

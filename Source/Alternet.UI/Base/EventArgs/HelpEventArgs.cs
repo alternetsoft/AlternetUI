@@ -14,7 +14,8 @@ namespace Alternet.UI
     public delegate void HelpEventHandler(object? sender, HelpEventArgs hlpevent);
 
     /// <summary>
-    /// Provides data for the help request events.</summary>
+    /// Provides data for the help request events.
+    /// </summary>
     public class HelpEventArgs : BaseEventArgs
     {
         private readonly PointD mousePos;

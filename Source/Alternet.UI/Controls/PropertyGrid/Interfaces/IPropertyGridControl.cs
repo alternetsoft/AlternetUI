@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal interface IPropertyGridControl : IControl, IPropertyGrid
+    internal interface IPropertyGridControl : IPropertyGrid
     {
     }
 }

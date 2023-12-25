@@ -26,8 +26,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
         /// </summary>
-        public KeyPressEventArgs(KeyboardDevice keyboard, long timestamp, char keyChar)
-            : base(keyboard, timestamp)
+        public KeyPressEventArgs(KeyboardDevice keyboard, char keyChar)
+            : base(keyboard)
         {
             this.keyChar = keyChar;
         }
@@ -39,24 +39,6 @@ namespace Alternet.UI
         public char KeyChar
         {
             get {return keyChar;}
-        }
-
-        /// <summary>
-        ///     The mechanism used to call the type-specific handler on the
-        ///     target.
-        /// </summary>
-        /// <param name="genericHandler">
-        ///     The generic handler to call in a type-specific way.
-        /// </param>
-        /// <param name="genericTarget">
-        ///     The target to call the handler on.
-        /// </param>
-        /// <ExternalAPI/> 
-        protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
-        {
-            KeyPressEventHandler handler = (KeyPressEventHandler) genericHandler;
-            
-            handler(genericTarget, this);
         }
     }
 }

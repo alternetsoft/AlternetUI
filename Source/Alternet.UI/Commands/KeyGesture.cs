@@ -190,27 +190,6 @@ namespace Alternet.UI
                 typeof(string));
         }
 
-        /// <summary>
-        /// Compares InputEventArgs with current Input
-        /// </summary>
-        /// <param name="targetElement">the element to receive the command</param>
-        /// <param name="inputEventArgs">inputEventArgs to compare to</param>
-        /// <returns>True - KeyGesture matches, false otherwise.
-        /// </returns>
-        public override bool Matches(
-            object targetElement,
-            InputEventArgs inputEventArgs)
-        {
-            if (inputEventArgs is KeyEventArgs keyEventArgs &&
-                IsDefinedKey(keyEventArgs.Key))
-            {
-                return ((int)Key == (int)keyEventArgs.Key) &&
-                    (this.Modifiers == Keyboard.Modifiers);
-            }
-
-            return false;
-        }
-
         // Check for Valid enum, as any int can be casted to the enum.
         internal static bool IsDefinedKey(Key key)
         {

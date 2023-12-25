@@ -18,26 +18,6 @@ namespace Alternet.UI
     public static class Keyboard
     {
         /// <summary>
-        ///     KeyDown
-        /// </summary>
-        public static readonly RoutedEvent KeyDownEvent = EventManager.RegisterRoutedEvent("KeyDown", RoutingStrategy.Bubble, typeof(KeyEventHandler), typeof(Keyboard));
-
-        /*/// <summary>
-        ///     TextInput
-        /// </summary>
-        public static readonly RoutedEvent KeyPressEvent
-            = EventManager.RegisterRoutedEvent(
-                "KeyPress",
-                RoutingStrategy.Bubble,
-                typeof(KeyPressEventHandler),
-                typeof(Keyboard));*/
-
-        /// <summary>
-        ///     KeyUp
-        /// </summary>
-        public static readonly RoutedEvent KeyUpEvent = EventManager.RegisterRoutedEvent("KeyUp", RoutingStrategy.Bubble, typeof(KeyEventHandler), typeof(Keyboard));
-
-        /// <summary>
         ///     The set of modifier keys currently pressed.
         /// </summary>
         public static ModifierKeys Modifiers

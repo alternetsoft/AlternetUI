@@ -156,23 +156,51 @@ namespace Alternet.UI
                 out handled);
         }
 
-        internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
-        {
-            ReportKeyEvent(UIElement.KeyDownEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
-        }
-
-        internal void ReportKeyUp(long timestamp, Key key, bool isRepeat, out bool handled)
-        {
-            ReportKeyEvent(UIElement.KeyUpEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
-        }
-
-        internal void ReportTextInput(long timestamp, char keyChar, out bool handled)
+        internal void ReportKeyDown(Key key, bool isRepeat, out bool handled)
         {
             handled = false;
             var control = Control.GetFocusedControl();
             if (control is null)
                 return;
-            var eventArgs = new KeyPressEventArgs(Keyboard.PrimaryDevice, timestamp, keyChar);
+            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
+
+            while (control is not null)
+            {
+                control.RaiseKeyDown(eventArgs);
+
+                handled = eventArgs.Handled;
+                if (handled)
+                    break;
+                control = control.Parent;
+            }
+        }
+
+        internal void ReportKeyUp(Key key, bool isRepeat, out bool handled)
+        {
+            handled = false;
+            var control = Control.GetFocusedControl();
+            if (control is null)
+                return;
+            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
+
+            while (control is not null)
+            {
+                control.RaiseKeyUp(eventArgs);
+
+                handled = eventArgs.Handled;
+                if (handled)
+                    break;
+                control = control.Parent;
+            }
+        }
+
+        internal void ReportTextInput(char keyChar, out bool handled)
+        {
+            handled = false;
+            var control = Control.GetFocusedControl();
+            if (control is null)
+                return;
+            var eventArgs = new KeyPressEventArgs(Keyboard.PrimaryDevice, keyChar);
 
             while (control is not null)
             {
@@ -183,33 +211,6 @@ namespace Alternet.UI
                     break;
                 control = control.Parent;
             }
-
-
-            /*
-
-            ReportKeyEvent(
-                UIElement.KeyPressEvent,
-                new KeyPressEventArgs(Keyboard.PrimaryDevice, timestamp, keyChar),
-                out handled);*/
-        }
-
-        internal void ReportKeyEvent(RoutedEvent @event, InputEventArgs eventArgs, out bool handled)
-        {
-            handled = false;
-
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
-                return;
-
-            var handler = ControlHandler.NativeControlToHandler(focusedNativeControl);
-            if (handler == null)
-                return;
-
-            eventArgs.RoutedEvent = @event;
-            if (handler.IsAttached)
-                handler.Control.RaiseEvent(eventArgs);
-
-            handled = eventArgs.Handled;
         }
 
         private Control GetControlUnderMouse()

@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// This class represents the provided framework-level implementation that is built on the
     /// core-level APIs that are defined by <see cref="UIElement"/>.
     /// </summary>
-    public class FrameworkElement : UIElement, IFrameworkElement
+    public class FrameworkElement : UIElement
     {
         /// <summary>
         ///     BindingGroup DependencyProperty

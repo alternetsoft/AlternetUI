@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <see cref="UIElement"/> is a base class for core level implementations building
     /// on elements and basic presentation characteristics.
     /// </summary>
-    public class UIElement : DependencyObject, IInputElement, IUIElement
+    public class UIElement : DependencyObject, IInputElement
     {
         /// <summary>
         ///     The DependencyProperty for the Focusable property.
@@ -95,24 +95,6 @@ namespace Alternet.UI
                 typeof(MouseEventHandler),
                 typeof(UIElement));
 
-        /// <summary>
-        ///     Alias to the Keyboard.KeyUpEvent.
-        /// </summary>
-        public static readonly RoutedEvent KeyUpEvent =
-            Keyboard.KeyUpEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Alias to the Keyboard.KeyDownEvent.
-        /// </summary>
-        public static readonly RoutedEvent KeyDownEvent =
-            Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
-
-        /*/// <summary>
-        ///     Alias to the Keyboard.KeyPressEvent.
-        /// </summary>
-        public static readonly RoutedEvent KeyPressEvent =
-            Keyboard.KeyPressEvent.AddOwner(typeof(UIElement));*/
-
         internal const int MAXELEMENTSINROUTE = 4096;
 
         // Used by ContentElement
@@ -183,15 +165,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Event reporting a key was pressed
-        /// </summary>
-        public event KeyEventHandler KeyDown
-        {
-            add { AddHandler(Keyboard.KeyDownEvent, value, false); }
-            remove { RemoveHandler(Keyboard.KeyDownEvent, value); }
-        }
-
-        /// <summary>
         ///     Event reporting the mouse button was pressed
         /// </summary>
         public event MouseEventHandler MouseDoubleClick
@@ -216,15 +189,6 @@ namespace Alternet.UI
         {
             add { AddHandler(UIElement.MouseLeftButtonUpEvent, value, false); }
             remove { RemoveHandler(UIElement.MouseLeftButtonUpEvent, value); }
-        }
-
-        /// <summary>
-        ///     Event reporting a key was released
-        /// </summary>
-        public event KeyEventHandler KeyUp
-        {
-            add { AddHandler(Keyboard.KeyUpEvent, value, false); }
-            remove { RemoveHandler(Keyboard.KeyUpEvent, value); }
         }
 
         /// <summary>
@@ -594,20 +558,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting a key was pressed
-        /// </summary>
-        protected virtual void OnKeyDown(KeyEventArgs e)
-        {
-        }
-
-        /// <summary>
-        ///     Virtual method reporting a key was released
-        /// </summary>
-        protected virtual void OnKeyUp(KeyEventArgs e)
-        {
-        }
-
-        /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
         protected virtual void OnMouseDown(MouseEventArgs e)
@@ -649,20 +599,6 @@ namespace Alternet.UI
         {
         }
 
-        /*/// <summary>
-        ///     Virtual method reporting the right mouse button was pressed
-        /// </summary>
-        protected virtual void OnPreviewMouseRightButtonDown(MouseEventArgs e)
-        {
-        }*/
-
-        /*/// <summary>
-        ///     Virtual method reporting a mouse move
-        /// </summary>
-        protected virtual void OnPreviewMouseMove(MouseEventArgs e)
-        {
-        }*/
-
         /// <summary>
         ///     Virtual method reporting a mouse move
         /// </summary>
@@ -677,39 +613,11 @@ namespace Alternet.UI
         {
         }
 
-        /*/// <summary>
-        ///     Virtual method reporting the right mouse button was released
-        /// </summary>
-        protected virtual void OnPreviewMouseRightButtonUp(MouseEventArgs e)
-        {
-        }*/
-
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
         protected virtual void OnMouseRightButtonUp(MouseEventArgs e)
         {
-        }
-
-        private static void OnKeyDownThunk(object sender, KeyEventArgs e)
-        {
-            if (!e.Handled)
-            {
-                (sender as UIElement)?.OnKeyDown(e);
-            }
-        }
-
-        /*private static void OnTextInputThunk(object sender, KeyPressEventArgs e)
-        {
-            if (!e.Handled)
-            {
-                (sender as UIElement)?.OnKeyPress(e);
-            }
-        }*/
-
-        private static void OnKeyUpThunk(object sender, KeyEventArgs e)
-        {
-            (sender as UIElement)?.OnKeyUp(e);
         }
 
         private static void CrackMouseButtonEventAndReRaiseEvent(
@@ -810,26 +718,12 @@ namespace Alternet.UI
             return newEvent;
         }
 
-        /*private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnPreviewMouseLeftButtonUp(e);
-        }*/
-
         private static void OnMouseLeftButtonUpThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnMouseLeftButtonUp(e);
         }
-
-        /*private static void OnPreviewMouseRightButtonDownThunk(object sender, MouseEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnPreviewMouseRightButtonDown(e);
-        }*/
 
         private static void OnMouseRightButtonDownThunk(object sender, MouseEventArgs e)
         {
@@ -838,13 +732,6 @@ namespace Alternet.UI
             (sender as UIElement)?.OnMouseRightButtonDown(e);
         }
 
-        /*private static void OnPreviewMouseRightButtonUpThunk(object sender, MouseEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnPreviewMouseRightButtonUp(e);
-        }*/
-
         private static void OnMouseRightButtonUpThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
@@ -852,28 +739,13 @@ namespace Alternet.UI
             (sender as UIElement)?.OnMouseRightButtonUp(e);
         }
 
-        /*private static void OnPreviewMouseWheelThunk(object sender, MouseEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnPreviewMouseWheel(e);
-        }*/
-
         private static void OnMouseWheelThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            // CommandManager.TranslateInput((IInputElement)sender, e);
             if (!e.Handled)
                 (sender as UIElement)?.OnMouseWheel(e);
         }
-
-        /*private static void OnPreviewMouseMoveThunk(object sender, MouseEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnPreviewMouseMove(e);
-        }*/
 
         private static void OnMouseMoveThunk(object sender, MouseEventArgs e)
         {
@@ -884,21 +756,6 @@ namespace Alternet.UI
 
         private static void RegisterEvents(Type type)
         {
-            EventManager.RegisterClassHandler(
-                type,
-                Mouse.MouseDoubleClickEvent,
-                new MouseEventHandler(UIElement.OnMouseDoubleClickThunk),
-                true);
-            EventManager.RegisterClassHandler(
-                type,
-                Mouse.MouseDownEvent,
-                new MouseEventHandler(UIElement.OnMouseDownThunk),
-                true);
-            EventManager.RegisterClassHandler(
-                type,
-                Mouse.MouseUpEvent,
-                new MouseEventHandler(UIElement.OnMouseUpThunk),
-                true);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.MouseLeftButtonDownEvent,
@@ -919,6 +776,22 @@ namespace Alternet.UI
                 UIElement.MouseRightButtonUpEvent,
                 new MouseEventHandler(UIElement.OnMouseRightButtonUpThunk),
                 false);
+
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseDoubleClickEvent,
+                new MouseEventHandler(UIElement.OnMouseDoubleClickThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseDownEvent,
+                new MouseEventHandler(UIElement.OnMouseDownThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseUpEvent,
+                new MouseEventHandler(UIElement.OnMouseUpThunk),
+                true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.MouseMoveEvent,
@@ -928,21 +801,6 @@ namespace Alternet.UI
                 type,
                 Mouse.MouseWheelEvent,
                 new MouseEventHandler(UIElement.OnMouseWheelThunk),
-                false);
-            /*EventManager.RegisterClassHandler(
-                type,
-                Keyboard.KeyPressEvent,
-                new KeyPressEventHandler(UIElement.OnTextInputThunk),
-                false);*/
-            EventManager.RegisterClassHandler(
-                type,
-                Keyboard.KeyDownEvent,
-                new KeyEventHandler(UIElement.OnKeyDownThunk),
-                false);
-            EventManager.RegisterClassHandler(
-                type,
-                Keyboard.KeyUpEvent,
-                new KeyEventHandler(UIElement.OnKeyUpThunk),
                 false);
         }
 

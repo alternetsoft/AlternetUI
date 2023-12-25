@@ -14,7 +14,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
     public partial class Control
-        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable,
+        : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
         IWin32Window, ITextProperty, IComponent
     {
         /// <summary>
@@ -81,6 +81,18 @@ namespace Alternet.UI
         /// Occurs when the contol gets focus.
         /// </summary>
         public event EventHandler? GotFocus;
+
+        /// <summary>
+        /// Occurs when a key is pressed while the control has focus.
+        /// </summary>
+        [Category("Key")]
+        public event KeyEventHandler? KeyDown;
+
+        /// <summary>
+        /// Occurs when a key is released while the control has focus.
+        /// </summary>
+        [Category("Key")]
+        public event KeyEventHandler? KeyUp;
 
         /// <summary>
         /// Occurs when the control lost focus.

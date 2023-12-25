@@ -10,17 +10,15 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Provides the base class for all input devices.
+    /// Provides the base class for all input devices.
     /// </summary>
     public abstract class InputDevice : DispatcherObject
     {
         /// <summary>
-        ///     Constructs an instance of the InputDevice class.
+        /// Constructs an instance of the <see cref="InputDevice"/> class.
         /// </summary>
         protected InputDevice()
         {
-            // Only we can create these.
-            // But perhaps HID devices can create these too? 
         }
     }
 }

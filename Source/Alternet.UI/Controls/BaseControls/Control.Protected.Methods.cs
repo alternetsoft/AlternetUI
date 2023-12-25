@@ -234,10 +234,22 @@ namespace Alternet.UI
             return new GenericControlHandler();
         }
 
-        /// <inheritdoc/>
-        protected override void OnKeyDown(KeyEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="KeyUp" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="KeyEventArgs" /> that contains the event data.</param>
+        protected virtual void OnKeyUp(KeyEventArgs e)
         {
-            base.OnKeyDown(e);
+            KeyUp?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="KeyDown" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="KeyEventArgs" /> that contains the event data.</param>
+        protected virtual void OnKeyDown(KeyEventArgs e)
+        {
+            KeyDown?.Invoke(this, e);
 #if DEBUG
             KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DebugUtils.ShowDeveloperTools);
 #endif

@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Event arguments.</param>
         /// <remarks>
-        /// You can use this method in the <see cref="UIElement.KeyDown"/> event handlers.
+        /// You can use this method in the <see cref="Control.KeyDown"/> event handlers.
         /// <see cref="AllowAdditionalKeys"/> specifies whether <see cref="HandleAdditionalKeys"/>
         /// is called automatically.
         /// </remarks>
