@@ -26,6 +26,7 @@ namespace Alternet.UI
         private readonly Key key;
         private readonly bool isRepeat;
         private readonly KeyStates keyStates;
+        private bool suppressKeyPress;
 
         /// <summary>
         /// Constructs an instance of the KeyEventArgs class.
@@ -64,7 +65,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the modifier flags for a <see cref="UIElement.KeyDown" /> event.
+        /// Gets the modifier flags for a <see cref="Control.KeyDown" /> event.
         /// The flags indicate which combination of CTRL, SHIFT, and ALT keys was pressed.
         /// </summary>
         /// <returns>A <see cref="Keys" /> value representing one or more modifier flags.</returns>
@@ -82,7 +83,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the keyboard code for a <see cref="UIElement.KeyDown"/> event.
+        /// Gets or sets a value indicating whether the key event should be passed on to
+        /// the underlying control.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the key event should not be sent
+        /// to the control; otherwise, <see langword="false" />.
+        /// </returns>
+        public bool SuppressKeyPress
+        {
+            get
+            {
+                return suppressKeyPress;
+            }
+            set
+            {
+                suppressKeyPress = value;
+                Handled = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the keyboard code for a <see cref="Control.KeyDown"/> event.
         /// </summary>
         /// <returns>
         /// A <see cref="Keys" /> value that is the key code for the event.
@@ -100,13 +122,13 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets the keyboard value for a <see cref="UIElement.KeyDown" /> event.</summary>
+        /// <summary>Gets the keyboard value for a <see cref="Control.KeyDown" /> event.</summary>
         /// <returns>The integer representation of the
         /// <see cref="KeyEventArgs.KeyCode" /> property.</returns>
         public int KeyValue => (int)(KeyData & Keys.KeyCode);
 
         /// <summary>
-        /// Gets the key data for a <see cref="UIElement.KeyDown"/> event.
+        /// Gets the key data for a <see cref="Control.KeyDown"/> event.
         /// </summary>
         /// <returns>
         /// A <see cref="Keys"/> representing
