@@ -202,6 +202,7 @@ namespace Alternet.UI
             AddAction("Log control info", LogControlInfo);
             AddAction("Log useful defines", LogUsefulDefines);
             AddAction("Log OS information", LogOSInformation);
+            AddAction("Log System Colors", ColorUtils.LogSystemColors);
             AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             AddAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
 
