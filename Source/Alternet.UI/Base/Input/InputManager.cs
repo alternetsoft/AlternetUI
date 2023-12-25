@@ -168,10 +168,29 @@ namespace Alternet.UI
 
         internal void ReportTextInput(long timestamp, char keyChar, out bool handled)
         {
+            handled = false;
+            var control = Control.GetFocusedControl();
+            if (control is null)
+                return;
+            var eventArgs = new KeyPressEventArgs(Keyboard.PrimaryDevice, timestamp, keyChar);
+
+            while (control is not null)
+            {
+                control.RaiseKeyPress(eventArgs);
+
+                handled = eventArgs.Handled;
+                if (handled)
+                    break;
+                control = control.Parent;
+            }
+
+
+            /*
+
             ReportKeyEvent(
                 UIElement.KeyPressEvent,
                 new KeyPressEventArgs(Keyboard.PrimaryDevice, timestamp, keyChar),
-                out handled);
+                out handled);*/
         }
 
         internal void ReportKeyEvent(RoutedEvent @event, InputEventArgs eventArgs, out bool handled)

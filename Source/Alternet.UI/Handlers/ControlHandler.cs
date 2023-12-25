@@ -318,7 +318,7 @@ namespace Alternet.UI
                 return null;
 
             var handler = NativeControlToHandler(focusedNativeControl);
-            if (handler == null)
+            if (handler == null || !handler.IsAttached)
                 return null;
 
             return handler.Control;

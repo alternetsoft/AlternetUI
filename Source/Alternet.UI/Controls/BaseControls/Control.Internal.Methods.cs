@@ -76,6 +76,12 @@ namespace Alternet.UI
             Invalidate();
         }
 
+        internal void RaiseKeyPress(KeyPressEventArgs e) => OnKeyPress(e);
+
+        internal void RaiseKeyDown(KeyEventArgs e) => OnKeyDown(e);
+
+        internal void RaiseKeyUp(KeyEventArgs e) => OnKeyUp(e);
+
         internal void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
 
         internal void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);

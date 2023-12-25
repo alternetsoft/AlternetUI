@@ -106,6 +106,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="KeyPress" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="KeyPressEventArgs" /> that contains the event data.</param>
+        protected virtual void OnKeyPress(KeyPressEventArgs e)
+        {
+            KeyPress?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Control.TextChanged" /> event.</summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]

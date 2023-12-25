@@ -107,11 +107,11 @@ namespace Alternet.UI
         public static readonly RoutedEvent KeyDownEvent =
             Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
 
-        /// <summary>
+        /*/// <summary>
         ///     Alias to the Keyboard.KeyPressEvent.
         /// </summary>
         public static readonly RoutedEvent KeyPressEvent =
-            Keyboard.KeyPressEvent.AddOwner(typeof(UIElement));
+            Keyboard.KeyPressEvent.AddOwner(typeof(UIElement));*/
 
         internal const int MAXELEMENTSINROUTE = 4096;
 
@@ -198,15 +198,6 @@ namespace Alternet.UI
         {
             add { AddHandler(Mouse.MouseDoubleClickEvent, value, false); }
             remove { RemoveHandler(Mouse.MouseDoubleClickEvent, value); }
-        }
-
-        /// <summary>
-        ///     Event reporting a key was pressed
-        /// </summary>
-        public event KeyPressEventHandler KeyPress
-        {
-            add { AddHandler(Keyboard.KeyPressEvent, value, false); }
-            remove { RemoveHandler(Keyboard.KeyPressEvent, value); }
         }
 
         /// <summary>
@@ -610,13 +601,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting a key was pressed
-        /// </summary>
-        protected virtual void OnKeyPress(KeyPressEventArgs e)
-        {
-        }
-
-        /// <summary>
         ///     Virtual method reporting a key was released
         /// </summary>
         protected virtual void OnKeyUp(KeyEventArgs e)
@@ -707,37 +691,20 @@ namespace Alternet.UI
         {
         }
 
-        /*private static void OnPreviewKeyDownThunk(object sender, KeyEventArgs e)
-        {
-            if (sender is UIElement uie)
-                uie.OnPreviewKeyDown(e);
-        }*/
-
         private static void OnKeyDownThunk(object sender, KeyEventArgs e)
         {
-            // CommandManager.TranslateInput((IInputElement)sender, e);
             if (!e.Handled)
             {
                 (sender as UIElement)?.OnKeyDown(e);
             }
         }
 
-        /*private static void OnPreviewTextInputThunk(object sender, KeyPressEventArgs e)
-        {
-            (sender as UIElement)?.OnPreviewTextInput(e);
-        }*/
-
-        private static void OnTextInputThunk(object sender, KeyPressEventArgs e)
+        /*private static void OnTextInputThunk(object sender, KeyPressEventArgs e)
         {
             if (!e.Handled)
             {
                 (sender as UIElement)?.OnKeyPress(e);
             }
-        }
-
-        /*private static void OnPreviewKeyUpThunk(object sender, KeyEventArgs e)
-        {
-            (sender as UIElement)?.OnPreviewKeyUp(e);
         }*/
 
         private static void OnKeyUpThunk(object sender, KeyEventArgs e)
@@ -962,21 +929,16 @@ namespace Alternet.UI
                 Mouse.MouseWheelEvent,
                 new MouseEventHandler(UIElement.OnMouseWheelThunk),
                 false);
-            EventManager.RegisterClassHandler(
+            /*EventManager.RegisterClassHandler(
                 type,
                 Keyboard.KeyPressEvent,
                 new KeyPressEventHandler(UIElement.OnTextInputThunk),
-                false);
+                false);*/
             EventManager.RegisterClassHandler(
                 type,
                 Keyboard.KeyDownEvent,
                 new KeyEventHandler(UIElement.OnKeyDownThunk),
                 false);
-            /*EventManager.RegisterClassHandler(
-                type,
-                Keyboard.PreviewKeyUpEvent,
-                new KeyEventHandler(UIElement.OnPreviewKeyUpThunk),
-                false);*/
             EventManager.RegisterClassHandler(
                 type,
                 Keyboard.KeyUpEvent,
@@ -996,10 +958,6 @@ namespace Alternet.UI
 
         private static void OnMouseDownThunk(object sender, MouseEventArgs e)
         {
-            // if (!e.Handled)
-            // {
-            //    CommandManager.TranslateInput((IInputElement)sender, e);
-            // }
             if (!e.Handled)
                 (sender as UIElement)?.OnMouseDown(e);
 
@@ -1125,8 +1083,6 @@ namespace Alternet.UI
             Delegate handler,
             bool handledEventsToo)
         {
-            /* VerifyAccess();*/
-
             if (routedEvent == null)
             {
                 throw new ArgumentNullException(nameof(routedEvent));
@@ -1186,8 +1142,6 @@ namespace Alternet.UI
         /// </param>
         public void RemoveHandler(RoutedEvent routedEvent, Delegate handler)
         {
-            /* VerifyAccess();*/
-
             if (routedEvent == null)
             {
                 throw new ArgumentNullException(nameof(routedEvent));

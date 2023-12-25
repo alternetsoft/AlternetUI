@@ -22,27 +22,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly RoutedEvent KeyDownEvent = EventManager.RegisterRoutedEvent("KeyDown", RoutingStrategy.Bubble, typeof(KeyEventHandler), typeof(Keyboard));
 
-        /// <summary>
-        ///     Adds a handler for the KeyDown attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddKeyDownHandler(DependencyObject element, KeyEventHandler handler)
-        {
-            UIElement.AddHandler(element, KeyDownEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the KeyDown attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveKeyDownHandler(DependencyObject element, KeyEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, KeyDownEvent, handler);
-        }
-
-        /// <summary>
+        /*/// <summary>
         ///     TextInput
         /// </summary>
         public static readonly RoutedEvent KeyPressEvent
@@ -50,127 +30,12 @@ namespace Alternet.UI
                 "KeyPress",
                 RoutingStrategy.Bubble,
                 typeof(KeyPressEventHandler),
-                typeof(Keyboard));
-
-        /// <summary>
-        ///     Adds a handler for the TextInput attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddKeyPressHandler(DependencyObject element, KeyPressEventHandler handler)
-        {
-            UIElement.AddHandler(element, KeyPressEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the TextInput attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveKeyPressHandler(DependencyObject element, KeyPressEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, KeyPressEvent, handler);
-        }
+                typeof(Keyboard));*/
 
         /// <summary>
         ///     KeyUp
         /// </summary>
         public static readonly RoutedEvent KeyUpEvent = EventManager.RegisterRoutedEvent("KeyUp", RoutingStrategy.Bubble, typeof(KeyEventHandler), typeof(Keyboard));
-
-        /// <summary>
-        ///     Adds a handler for the KeyUp attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddKeyUpHandler(DependencyObject element, KeyEventHandler handler)
-        {
-            UIElement.AddHandler(element, KeyUpEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the KeyUp attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void RemoveKeyUpHandler(DependencyObject element, KeyEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, KeyUpEvent, handler);
-        }
-
-        /// <summary>
-        ///     KeyboardInputProviderAcquireFocus
-        /// </summary>
-        public static readonly RoutedEvent KeyboardInputProviderAcquireFocusEvent = EventManager.RegisterRoutedEvent("KeyboardInputProviderAcquireFocus", RoutingStrategy.Bubble, typeof(KeyboardInputProviderAcquireFocusEventHandler), typeof(Keyboard));
-
-        /// <summary>
-        ///     Adds a handler for the KeyboardInputProviderAcquireFocus attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddKeyboardInputProviderAcquireFocusHandler(DependencyObject element, KeyboardInputProviderAcquireFocusEventHandler handler)
-        {
-            UIElement.AddHandler(element, KeyboardInputProviderAcquireFocusEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the KeyboardInputProviderAcquireFocus attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveKeyboardInputProviderAcquireFocusHandler(DependencyObject element, KeyboardInputProviderAcquireFocusEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, KeyboardInputProviderAcquireFocusEvent, handler);
-        }
-
-        /// <summary>
-        ///     GotKeyboardFocus
-        /// </summary>
-        public static readonly RoutedEvent GotKeyboardFocusEvent = EventManager.RegisterRoutedEvent("GotKeyboardFocus", RoutingStrategy.Bubble, typeof(KeyboardFocusChangedEventHandler), typeof(Keyboard));
-
-        /// <summary>
-        ///     Adds a handler for the GotKeyboardFocus attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddGotKeyboardFocusHandler(DependencyObject element, KeyboardFocusChangedEventHandler handler)
-        {
-            UIElement.AddHandler(element, GotKeyboardFocusEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the GotKeyboardFocus attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveGotKeyboardFocusHandler(DependencyObject element, KeyboardFocusChangedEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, GotKeyboardFocusEvent, handler);
-        }
-
-        /// <summary>
-        ///     LostKeyboardFocus
-        /// </summary>
-        public static readonly RoutedEvent LostKeyboardFocusEvent = EventManager.RegisterRoutedEvent("LostKeyboardFocus", RoutingStrategy.Bubble, typeof(KeyboardFocusChangedEventHandler), typeof(Keyboard));
-
-        /// <summary>
-        ///     Adds a handler for the LostKeyboardFocus attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddLostKeyboardFocusHandler(DependencyObject element, KeyboardFocusChangedEventHandler handler)
-        {
-            UIElement.AddHandler(element, LostKeyboardFocusEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the LostKeyboardFocus attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that removedto this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveLostKeyboardFocusHandler(DependencyObject element, KeyboardFocusChangedEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, LostKeyboardFocusEvent, handler);
-        }
 
         /// <summary>
         ///     The set of modifier keys currently pressed.
@@ -244,7 +109,7 @@ namespace Alternet.UI
             return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/);
         }
 
-        internal static bool IsFocusable(DependencyObject element)
+        /*internal static bool IsFocusable(DependencyObject element)
         {
             // This should really be its own property, but it is hard to do efficiently.
             if (element == null)
@@ -289,7 +154,7 @@ namespace Alternet.UI
             }
 
             return focusable;
-        }
+        }*/
     }
 }
 

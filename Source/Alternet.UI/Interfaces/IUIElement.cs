@@ -6,8 +6,6 @@ namespace Alternet.UI
 {
     internal interface IUIElement : /*DependencyObject,*/ IInputElement
     {
-        event KeyPressEventHandler KeyPress;
-
         event MouseEventHandler MouseDoubleClick;
 
         event EventHandler? LayoutUpdated;

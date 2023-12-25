@@ -10,14 +10,14 @@ using System.Security;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the method that will handle the <see cref="UIElement.KeyPress" /> event
+    /// Represents the method that will handle the <see cref="Control.KeyPress" /> event
     /// of a <see cref="Control" />.</summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">A <see cref="KeyPressEventArgs" /> that contains the event data.</param>
     public delegate void KeyPressEventHandler(object? sender, KeyPressEventArgs e);
 
     /// <summary>
-    /// This class is used in the <see cref="UIElement.KeyPress"/> event as EventArgs.
+    /// This class is used in the <see cref="Control.KeyPress"/> event as EventArgs.
     /// </summary>
     public class KeyPressEventArgs : KeyboardEventArgs
     {

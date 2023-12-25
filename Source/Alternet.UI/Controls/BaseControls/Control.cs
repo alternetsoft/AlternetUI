@@ -93,6 +93,11 @@ namespace Alternet.UI
         public event EventHandler? TextChanged;
 
         /// <summary>
+        /// Occurs when a character, space or backspace key is pressed while the control has focus.
+        /// </summary>
+        public event KeyPressEventHandler? KeyPress;
+
+        /// <summary>
         /// Occurs when the <see cref="CurrentState"/> property value changes.
         /// </summary>
         public event EventHandler? CurrentStateChanged;
