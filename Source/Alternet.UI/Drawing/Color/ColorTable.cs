@@ -27,15 +27,13 @@ namespace Alternet.Drawing
             return colors;
         }
 
-        private static void FillWithProperties(
-            Dictionary<string, Color> dictionary,
-            Type typeWithColors)
+        private static void FillWithProperties(Dictionary<string, Color> dictionary, Type type)
         {
-            foreach (PropertyInfo prop in typeWithColors.GetProperties(
+            foreach (var prop in type.GetFields(
                 BindingFlags.Public | BindingFlags.Static))
             {
-                if (prop.PropertyType == typeof(Color))
-                    dictionary[prop.Name] = (Color)prop.GetValue(null, null)!;
+                if (prop.FieldType == typeof(Color))
+                    dictionary[prop.Name] = (Color)prop.GetValue(null)!;
             }
         }
     }
