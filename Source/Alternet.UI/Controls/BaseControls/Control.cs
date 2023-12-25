@@ -83,6 +83,16 @@ namespace Alternet.UI
         public event EventHandler? GotFocus;
 
         /// <summary>
+        /// Occurs during a drag-and-drop operation and enables the drag source
+        /// to determine whether the drag-and-drop operation should be canceled.
+        /// </summary>
+        /// <remarks>
+        /// Currently this event is not called.
+        /// </remarks>
+        [Category("Drag Drop")]
+        public event QueryContinueDragEventHandler? QueryContinueDrag;
+
+        /// <summary>
         /// Occurs when a key is pressed while the control has focus.
         /// </summary>
         [Category("Key")]

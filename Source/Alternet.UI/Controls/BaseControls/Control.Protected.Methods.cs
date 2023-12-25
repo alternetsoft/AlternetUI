@@ -235,6 +235,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="QueryContinueDrag" /> event.</summary>
+        /// <param name="e">A <see cref="QueryContinueDragEventArgs" /> that
+        /// contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e)
+        {
+            QueryContinueDrag?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="KeyUp" /> event.
         /// </summary>
         /// <param name="e">A <see cref="KeyEventArgs" /> that contains the event data.</param>
