@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
@@ -227,6 +228,20 @@ namespace Alternet.Drawing
                 return null;
             var result = FindKnownColor(color.Value);
             return result;
+        }
+
+        /// <summary>
+        /// Logs all system colors.
+        /// </summary>
+        public static void LogSystemColors()
+        {
+            var type = typeof(SystemColors);
+            foreach (var prop in type.GetFields(
+                BindingFlags.Public | BindingFlags.Static))
+            {
+                if (prop.FieldType == typeof(Color))
+                    LogUtils.LogColor(prop.Name, (Color)prop.GetValue(null)!);
+            }
         }
 
         /// <summary>
