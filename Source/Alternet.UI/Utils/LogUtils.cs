@@ -267,6 +267,16 @@ namespace Alternet.UI
             AppUtils.ShellExecute(Application.LogFilePath);
         }
 
+        /// <summary>
+        /// Logs <see cref="IEnumerable"/>.
+        /// </summary>
+        /// <param name="items">Items to log.</param>
+        public static void LogRange(IEnumerable items)
+        {
+            foreach (var item in items)
+                Application.Log(item);
+        }
+
         internal static void LogAppDomainTargetFrameworkName()
         {
             Application.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
