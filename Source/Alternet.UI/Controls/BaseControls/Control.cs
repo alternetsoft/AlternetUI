@@ -701,6 +701,30 @@ namespace Alternet.UI
         public virtual bool IsFocusable => Handler.IsFocusable;
 
         /// <summary>
+        /// Gets the distance, in dips, between the right edge of the control and the left
+        /// edge of its container's client area.
+        /// </summary>
+        /// <returns>A value representing the distance, in dips, between the right edge of the
+        /// control and the left edge of its container's client area.</returns>
+        [Category("Layout")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public double Right => Bounds.Right;
+
+        /// <summary>
+        /// Gets the distance, in dips, between the bottom edge of the control and the top edge
+        /// of its container's client area.
+        /// </summary>
+        /// <returns>A value representing the distance, in dips, between the bottom edge of
+        /// the control and the top edge of its container's client area.</returns>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Category("Layout")]
+        public double Bottom => Bounds.Bottom;
+
+        /// <summary>
         /// Gets whether this control can have focus right now.
         /// </summary>
         /// <remarks>
