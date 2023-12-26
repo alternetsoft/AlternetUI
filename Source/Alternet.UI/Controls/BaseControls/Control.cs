@@ -342,6 +342,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the default foreground color of the control.
+        /// </summary>
+        /// <returns>
+        /// The default foreground <see cref="Color" /> of the control.
+        /// The default is <see cref="SystemColors.ControlText" />.
+        /// </returns>
+        public static Color DefaultForeColor => SystemColors.ControlText;
+
+        /// <summary>
+        /// Gets the default background color of the control.
+        /// </summary>
+        /// <returns>
+        /// The default background <see cref="Color" /> of the control.
+        /// The default is <see cref="SystemColors.Control" />.</returns>
+        public static Color DefaultBackColor => SystemColors.Control;
+
+        /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
         /// a pressed state.</summary>
         /// <returns>
