@@ -81,6 +81,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <paramref name="value"/> equals any item in the <paramref name="items"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the items.</typeparam>
+        /// <param name="value">Value to compare with <paramref name="items"/>.</param>
+        /// <param name="items">Items to compare with <paramref name="value"/>.</param>
+        /// <returns></returns>
+        public static bool EqualsRange<T>(T value, IEnumerable<T> items)
+        {
+            if(value is null)
+            {
+                foreach (T item in items)
+                {
+                    if (item is null)
+                        return true;
+                }
+
+                return false;
+            }
+
+            foreach (T item in items)
+            {
+                if (value.Equals(item))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Calls <paramref name="func"/> action for the each item of the
         /// <see cref="IEnumerableTree"/>.
         /// </summary>
