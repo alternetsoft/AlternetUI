@@ -41,6 +41,8 @@ namespace Alternet.UI
         private ImageSet? imgUnderline;
         private ImageSet? imgUndo;
         private ImageSet? imgRedo;
+        private ImageSet? imgSquarePlus;
+        private ImageSet? imgSquareMinus;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSvgImages"/> class.
@@ -117,6 +119,24 @@ namespace Alternet.UI
         {
             get => imgFileSave ??= Load(KnownSvgUrls.UrlImageFileSave);
             set => imgFileSave = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used as 'Plus Inside Square' image.
+        /// </summary>
+        public ImageSet ImgSquarePlus
+        {
+            get => imgSquarePlus ??= Load(KnownSvgUrls.UrlImageSquarePlus);
+            set => imgSquarePlus = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used as 'Minus Inside Square' image.
+        /// </summary>
+        public ImageSet ImgSquareMinus
+        {
+            get => imgSquareMinus ??= Load(KnownSvgUrls.UrlImageSquareMinus);
+            set => imgSquareMinus = value;
         }
 
         /// <summary>

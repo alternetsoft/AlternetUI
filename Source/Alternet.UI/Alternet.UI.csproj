@@ -91,6 +91,8 @@
     <None Remove="Resources\Svg\alternet-redo.svg" />
     <None Remove="Resources\Svg\alternet-rotate-right.svg" />
     <None Remove="Resources\Svg\alternet-square-check.svg" />
+    <None Remove="Resources\Svg\alternet-square-minus.svg" />
+    <None Remove="Resources\Svg\alternet-square-plus.svg" />
     <None Remove="Resources\Svg\alternet-underline.svg" />
     <None Remove="Resources\Svg\alternet-undo.svg" />
     <None Remove="Resources\Svg\alternet-xmark.svg" />
@@ -161,6 +163,8 @@
     <EmbeddedResource Include="Resources\Svg\alternet-file-open.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-folder-ellipsis.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-redo.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-square-minus.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-square-plus.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-undo.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-zoomin.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-zoomout.svg" />

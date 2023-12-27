@@ -29,6 +29,16 @@ namespace Alternet.UI
             GetImageUrl("alternet-file");
 
         /// <summary>
+        /// Gets or sets url used to load "Plus Inside Square" svg image.
+        /// </summary>
+        public static string UrlImageSquarePlus { get; set; } = GetImageUrl("alternet-square-plus");
+
+        /// <summary>
+        /// Gets or sets url used to load "Minus Inside Square" svg image.
+        /// </summary>
+        public static string UrlImageSquareMinus { get; set; } = GetImageUrl("alternet-square-minus");
+
+        /// <summary>
         /// Gets or sets url used to load "File|Save" svg image used in toolbars.
         /// </summary>
         public static string UrlImageFileSave { get; set; } =
