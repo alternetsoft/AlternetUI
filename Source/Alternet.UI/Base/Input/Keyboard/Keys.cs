@@ -10,10 +10,6 @@ namespace Alternet.UI
     [Flags]
     public enum Keys
     {
-        /// <summary>The bitmask to extract a key code from a key value.</summary>
-        KeyCode = 0xFFFF,
-        /// <summary>The bitmask to extract modifiers from a key value.</summary>
-        Modifiers = -65536,
         /// <summary>No key pressed.</summary>
         None = 0,
         /// <summary>The left mouse button.</summary>
@@ -392,11 +388,16 @@ namespace Alternet.UI
         Pa1 = 0xFD,
         /// <summary>The CLEAR key.</summary>
         OemClear = 0xFE,
+        
         /// <summary>The SHIFT modifier key.</summary>
         Shift = 0x10000,
         /// <summary>The CTRL modifier key.</summary>
         Control = 0x20000,
         /// <summary>The ALT modifier key.</summary>
         Alt = 0x40000,
+        /// <summary>The bitmask to extract a key code from a key value.</summary>
+        KeyCode = 0xFFFF,
+        /// <summary>The bitmask to extract modifiers from a key value.</summary>
+        Modifiers = -65536,
     }
 }

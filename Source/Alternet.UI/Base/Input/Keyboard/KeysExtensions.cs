@@ -483,373 +483,6 @@ namespace Alternet.UI
         };
 
         /// <summary>
-        /// Array with <see cref="Keys"/> to <see cref="Key"/> conversion data.
-        /// </summary>
-        public static Key[] KeysToKeyConversion = new[]
-        {
-            Key.None,
-            Key.None/*Keys.LButton*/,
-            Key.None/*Keys.RButton*/,
-            Key.None/*Keys.Cancel*/,
-            Key.None/*Keys.MButton*/,
-            Key.None/*Keys.XButton1*/,
-            Key.None/*Keys.XButton2*/,
-            Key.Back,
-            Key.Tab,
-            Key.None/*Keys.LineFeed*/,
-            Key.Clear,
-            Key.Return,
-            Key.Enter,
-            Key.Shift,
-            Key.Control,
-            Key.Menu,
-            Key.Pause,
-            Key.None/*Keys.Capital*/,
-            // The CAPS LOCK key.
-            Key.CapsLock,
-            // The IME Kana mode key.
-            Key.None/*Keys.KanaMode*/,
-            // The IME Hanguel mode key. (maintained for compatibility; use <see langword="HangulMode" />)
-            Key.None/*Keys.HanguelMode*/,
-            // The IME Hangul mode key.
-            Key.None/*Keys.HangulMode*/,
-            // The IME Junja mode key.
-            Key.None/*Keys.JunjaMode*/,
-            // The IME final mode key.
-            Key.None/*Keys.FinalMode*/,
-            // The IME Hanja mode key.
-            Key.None/*Keys.HanjaMode*/,
-            // The IME Kanji mode key.
-            Key.None/*Keys.KanjiMode*/,
-            // The ESC key.
-            Key.Escape,
-            // The IME convert key.
-            Key.None/*Keys.IMEConvert*/,
-            // The IME nonconvert key.
-            Key.None/*Keys.IMENonconvert*/,
-            // The IME accept key, replaces <see cref="System.Windows.Forms.Keys.IMEAceept" />.
-            Key.None/*Keys.IMEAccept*/,
-            // The IME accept key. Obsolete, use <see cref="F:System.Windows.Forms.Keys.IMEAccept" /> instead.
-            Key.None/*Keys.IMEAceept*/,
-            // The IME mode change key.
-            Key.None/*Keys.IMEModeChange*/,
-            // The SPACEBAR key.
-            Key.Space,
-            // The PAGE UP key.
-            Key.Prior,
-            // The PAGE UP key.
-            Key.PageUp,
-            // The PAGE DOWN key.
-            Key.Next,
-            // The PAGE DOWN key.
-            Key.PageDown,
-            // The END key.
-            Key.End,
-            // The HOME key.
-            Key.Home,
-            // The LEFT ARROW key.
-            Key.Left,
-            // The UP ARROW key.
-            Key.Up,
-            // The RIGHT ARROW key.
-            Key.Right,
-            // The DOWN ARROW key.
-            Key.Down,
-            // The SELECT key.
-            Key.None/*Keys.Select*/,
-            // The PRINT key.
-            Key.None/*Keys.Print*/,
-            // The EXECUTE key.
-            Key.None/*Keys.Execute*/,
-            // The PRINT SCREEN key.
-            Key.PrintScreen/*Keys.Snapshot*/,
-            // The PRINT SCREEN key.
-            Key.PrintScreen,
-            // The INS key.
-            Key.Insert,
-            // The DEL key.
-            Key.Delete,
-            // The HELP key.
-            Key.None/*Keys.Help*/,
-            // The 0 key.
-            Key.D0,
-            // The 1 key.
-            Key.D1,
-            // The 2 key.
-            Key.D2,
-            // The 3 key.
-            Key.D3,
-            // The 4 key.
-            Key.D4,
-            // The 5 key.
-            Key.D5,
-            // The 6 key.
-            Key.D6,
-            // The 7 key.
-            Key.D7,
-            // The 8 key.
-            Key.D8,
-            // The 9 key.
-            Key.D9,
-            // The A key.
-            Key.A,
-            // The B key.
-            Key.B,
-            // The C key.
-            Key.C,
-            // The D key.
-            Key.D,
-            // The E key.
-            Key.E,
-            // The F key.
-            Key.F,
-            // The G key.
-            Key.G,
-            // The H key.
-            Key.H,
-            // The I key.
-            Key.I,
-            // The J key.
-            Key.J,
-            // The K key.
-            Key.K,
-            // The L key.
-            Key.L,
-            // The M key.
-            Key.M,
-            // The N key.
-            Key.N,
-            // The O key.
-            Key.O,
-            // The P key.
-            Key.P,
-            // The Q key.
-            Key.Q,
-            // The R key.
-            Key.R,
-            // The S key.
-            Key.S,
-            // The T key.
-            Key.T,
-            // The U key.
-            Key.U,
-            // The V key.
-            Key.V,
-            // The W key.
-            Key.W,
-            // The X key.
-            Key.X,
-            // The Y key.
-            Key.Y,
-            // The Z key.
-            Key.Z,
-            // The left Windows logo key (Microsoft Natural Keyboard).
-            Key.Windows/*Keys.LWin*/,
-            // The right Windows logo key (Microsoft Natural Keyboard).
-            Key.Windows/*Key.RWin*/,
-            // The application key (Microsoft Natural Keyboard).
-            Key.None/*Keys.Apps*/,
-            // The computer sleep key.
-            Key.None/*Keys.Sleep*/,
-            // The 0 key on the numeric keypad.
-            Key.NumPad0,
-            // The 1 key on the numeric keypad.
-            Key.NumPad1,
-            // The 2 key on the numeric keypad.
-            Key.NumPad2,
-            // The 3 key on the numeric keypad.
-            Key.NumPad3,
-            // The 4 key on the numeric keypad.
-            Key.NumPad4,
-            // The 5 key on the numeric keypad.
-            Key.NumPad5,
-            // The 6 key on the numeric keypad.
-            Key.NumPad6,
-            // The 7 key on the numeric keypad.
-            Key.NumPad7,
-            // The 8 key on the numeric keypad.
-            Key.NumPad8,
-            // The 9 key on the numeric keypad.
-            Key.NumPad9,
-            // The multiply key.
-            Key.Asterisk/*Keys.Multiply*/,
-            // The add key.
-            Key.PlusSign/*Keys.Add*/,
-            // The separator key.
-            Key.None/*Keys.Separator*/,
-            // The subtract key.
-            Key.Minus/*Keys.Subtract*/,
-            // The decimal key.
-            Key.NumPadDot/*Keys.Decimal*/,
-            // The divide key.
-            Key.Slash/*Key.Divide*/,
-            // The F1 key.
-            Key.F1,
-            // The F2 key.
-            Key.F2,
-            // The F3 key.
-            Key.F3,
-            // The F4 key.
-            Key.F4,
-            // The F5 key.
-            Key.F5,
-            // The F6 key.
-            Key.F6,
-            // The F7 key.
-            Key.F7,
-            // The F8 key.
-            Key.F8,
-            // The F9 key.
-            Key.F9,
-            // The F10 key.
-            Key.F10,
-            // The F11 key.
-            Key.F11,
-            // The F12 key.
-            Key.F12,
-            // The F13 key.
-            Key.F13,
-            // The F14 key.
-            Key.F14,
-            // The F15 key.
-            Key.F15,
-            // The F16 key.
-            Key.F16,
-            // The F17 key.
-            Key.F17,
-            // The F18 key.
-            Key.F18,
-            // The F19 key.
-            Key.F19,
-            // The F20 key.
-            Key.F20,
-            // The F21 key.
-            Key.F21,
-            // The F22 key.
-            Key.F22,
-            // The F23 key.
-            Key.F23,
-            // The F24 key.
-            Key.F24,
-            // The NUM LOCK key.
-            Key.NumLock,
-            // The SCROLL LOCK key.
-            Key.ScrollLock,
-            // The left SHIFT key.
-            Key.Shift/*Keys.LShiftKey*/,
-            // The right SHIFT key.
-            Key.Shift/*RShiftKey*/,
-            // The left CTRL key.
-            Key.Control/*LControlKey*/,
-            // The right CTRL key.
-            Key.Control/*RControlKey*/,
-            // The left ALT key.
-            Key.Menu/*LMenu*/,
-            // The right ALT key.
-            Key.Menu/*RMenu*/,
-            // The browser back key (Windows 2000 or later).
-            Key.BrowserBack,
-            // The browser forward key (Windows 2000 or later).
-            Key.BrowserForward,
-            // The browser refresh key (Windows 2000 or later).
-            Key.BrowserRefresh,
-            // The browser stop key (Windows 2000 or later).
-            Key.BrowserStop,
-            // The browser search key (Windows 2000 or later).
-            Key.BrowserSearch,
-            // The browser favorites key (Windows 2000 or later).
-            Key.BrowserFavorites,
-            // The browser home key (Windows 2000 or later).
-            Key.BrowserHome,
-            // The volume mute key (Windows 2000 or later).
-            Key.VolumeMute,
-            // The volume down key (Windows 2000 or later).
-            Key.VolumeDown,
-            // The volume up key (Windows 2000 or later).
-            Key.VolumeUp,
-            // The media next track key (Windows 2000 or later).
-            Key.MediaNextTrack,
-            // The media previous track key (Windows 2000 or later).
-            Key.MediaPreviousTrack,
-            // The media Stop key (Windows 2000 or later).
-            Key.MediaStop,
-            // The media play pause key (Windows 2000 or later).
-            Key.MediaPlayPause,
-            // The launch mail key (Windows 2000 or later).
-            Key.LaunchMail,
-            // The select media key (Windows 2000 or later).
-            Key.SelectMedia,
-            // The start application one key (Windows 2000 or later).
-            Key.LaunchApplication1,
-            // The start application two key (Windows 2000 or later).
-            Key.LaunchApplication2,
-            // The OEM Semicolon key on a US standard keyboard (Windows 2000 or later).
-            Key.Semicolon/*Keys.OemSemicolon*/,
-            // The OEM 1 key.
-            Key.None/*Keys.Oem1*/,
-            // The OEM plus key on any country/region keyboard (Windows 2000 or later).
-            Key.PlusSign/*Key.Oemplus*/,
-            // The OEM comma key on any country/region keyboard (Windows 2000 or later).
-            Key.Comma/*Key.Oemcomma*/,
-            // The OEM minus key on any country/region keyboard (Windows 2000 or later).
-            Key.Minus/*Key.OemMinus*/,
-            // The OEM period key on any country/region keyboard (Windows 2000 or later).
-            Key.OemPeriod,
-            // The OEM question mark key on a US standard keyboard (Windows 2000 or later).
-            Key.QuestionMark/*Key.OemQuestion*/,
-            // The OEM 2 key.
-            Key.Slash/*Key.Oem2*/,
-            // The OEM tilde key on a US standard keyboard (Windows 2000 or later).
-            Key.Tilde/*Key.Oemtilde*/,
-            // The OEM 3 key.
-            Key.Backtick/*Key.Oem3*/,
-            // The OEM open bracket key on a US standard keyboard (Windows 2000 or later).
-            Key.OpenBracket/*Keys.OemOpenBrackets*/,
-            // The OEM 4 key.
-            Key.OpenBracket/*Key.Oem4*/,
-            // The OEM pipe key on a US standard keyboard (Windows 2000 or later).
-            Key.OemPipe,
-            // The OEM 5 key.
-            Key.None/*Key.Oem5*/,
-            // The OEM close bracket key on a US standard keyboard (Windows 2000 or later).
-            Key.CloseBracket/*Key.OemCloseBrackets*/,
-            // The OEM 6 key.
-            Key.CloseBracket/*Key.Oem6*/,
-            // The OEM singled/double quote key on a US standard keyboard (Windows 2000 or later).
-            Key.Quote/*Keys.OemQuotes*/,
-            // The OEM 7 key.
-            Key.Quote/*Key.Oem7*/,
-            // The OEM 8 key.
-            Key.None/*Key.Oem8*/,
-            // The OEM angle bracket or backslash key on the RT 102 key keyboard (Windows 2000 or later).
-            Key.Backslash/*Key.OemBackslash*/,
-            // The OEM 102 key.
-            Key.None/*Keys.Oem102*/,
-            // The PROCESS KEY key.
-            Key.None/*Key.ProcessKey*/,
-            // Used to pass Unicode characters as if they were keystrokes. The Packet key value is the low word of a 32-bit virtual-key value used for non-keyboard input methods.
-            Key.None/*Key.Packet*/,
-            // The ATTN key.
-            Key.None/*Key.Attn*/,
-            // The CRSEL key.
-            Key.None/*Key.Crsel*/,
-            // The EXSEL key.
-            Key.None/*Key.Exsel*/,
-            // The ERASE EOF key.
-            Key.None/*Key.EraseEof*/,
-            // The PLAY key.
-            Key.None/*Key.Play*/,
-            // The ZOOM key.
-            Key.None/*Key.Zoom*/,
-            // A constant reserved for future use.
-            Key.None/*Key.NoName*/,
-            // The PA1 key.
-            Key.None/*Key.Pa1*/,
-            // The CLEAR key.
-            Key.None/*Key.OemClear*/,
-        };
-
-        /// <summary>
         /// Converts <see cref="Keys"/> to <see cref="Key"/>.
         /// </summary>
         /// <param name="keys">Key information in <see cref="Keys"/> enum.</param>
@@ -857,10 +490,357 @@ namespace Alternet.UI
         public static Key ToKey(this Keys keys)
         {
             var ikey = GetKeyValue(keys);
-            if (ikey >= 0 && ikey <= (int)Keys.OemClear)
-                return KeysToKeyConversion[ikey];
-            else
+            if (ikey < 0 || ikey > Keys.OemClear)
                 return Key.None;
+            switch (ikey)
+            {
+                case Keys.None:
+                    return Key.None;
+                case Keys.LButton:
+                    return Key.None;
+                case Keys.RButton:
+                    return Key.None;
+                case Keys.Cancel:
+                    return Key.None;
+                case Keys.MButton:
+                    return Key.None;
+                case Keys.XButton1:
+                    return Key.None;
+                case Keys.XButton2:
+                    return Key.None;
+                case Keys.Back:
+                    return Key.Back;
+                case Keys.Tab:
+                    return Key.Tab;
+                case Keys.LineFeed:
+                    return Key.None;
+                case Keys.Clear:
+                    return Key.Clear;
+                case Keys.Return:
+                    return Key.Return;
+                case Keys.ShiftKey:
+                    return Key.Shift;
+                case Keys.ControlKey:
+                    return Key.Control;
+                case Keys.Menu:
+                    return Key.Menu;
+                case Keys.Pause:
+                    return Key.Pause;
+                case Keys.CapsLock:
+                    return Key.CapsLock;
+                case Keys.KanaMode:
+                    return Key.None;
+                case Keys.JunjaMode:
+                    return Key.None;
+                case Keys.FinalMode:
+                    return Key.None;
+                case Keys.HanjaMode:
+                    return Key.None;
+                case Keys.Escape:
+                    return Key.Escape;
+                case Keys.IMEConvert:
+                    return Key.None;
+                case Keys.IMENonconvert:
+                    return Key.None;
+                case Keys.IMEAccept:
+                    return Key.None;
+                case Keys.IMEModeChange:
+                    return Key.None;
+                case Keys.Space:
+                    return Key.Space;
+                case Keys.PageUp:
+                    return Key.PageUp;
+                case Keys.PageDown:
+                    return Key.PageDown;
+                case Keys.End:
+                    return Key.End;
+                case Keys.Home:
+                    return Key.Home;
+                case Keys.Left:
+                    return Key.Left;
+                case Keys.Up:
+                    return Key.Up;
+                case Keys.Right:
+                    return Key.Right;
+                case Keys.Down:
+                    return Key.Down;
+                case Keys.Select:
+                    return Key.None;
+                case Keys.Print:
+                    return Key.PrintScreen;
+                case Keys.Execute:
+                    return Key.None;
+                case Keys.PrintScreen:
+                    return Key.PrintScreen;
+                case Keys.Insert:
+                    return Key.Insert;
+                case Keys.Delete:
+                    return Key.Delete;
+                case Keys.Help:
+                    return Key.None;
+                case Keys.D0:
+                    return Key.D0;
+                case Keys.D1:
+                    return Key.D1;
+                case Keys.D2:
+                    return Key.D2;
+                case Keys.D3:
+                    return Key.D3;
+                case Keys.D4:
+                    return Key.D4;
+                case Keys.D5:
+                    return Key.D5;
+                case Keys.D6:
+                    return Key.D6;
+                case Keys.D7:
+                    return Key.D7;
+                case Keys.D8:
+                    return Key.D8;
+                case Keys.D9:
+                    return Key.D9;
+                case Keys.A:
+                    return Key.A;
+                case Keys.B:
+                    return Key.B;
+                case Keys.C:
+                    return Key.C;
+                case Keys.D:
+                    return Key.D;
+                case Keys.E:
+                    return Key.E;
+                case Keys.F:
+                    return Key.F;
+                case Keys.G:
+                    return Key.G;
+                case Keys.H:
+                    return Key.H;
+                case Keys.I:
+                    return Key.I;
+                case Keys.J:
+                    return Key.J;
+                case Keys.K:
+                    return Key.K;
+                case Keys.L:
+                    return Key.L;
+                case Keys.M:
+                    return Key.M;
+                case Keys.N:
+                    return Key.N;
+                case Keys.O:
+                    return Key.O;
+                case Keys.P:
+                    return Key.P;
+                case Keys.Q:
+                    return Key.Q;
+                case Keys.R:
+                    return Key.R;
+                case Keys.S:
+                    return Key.S;
+                case Keys.T:
+                    return Key.T;
+                case Keys.U:
+                    return Key.U;
+                case Keys.V:
+                    return Key.V;
+                case Keys.W:
+                    return Key.W;
+                case Keys.X:
+                    return Key.X;
+                case Keys.Y:
+                    return Key.Y;
+                case Keys.Z:
+                    return Key.Z;
+                case Keys.LWin:
+                    return Key.Windows;
+                case Keys.RWin:
+                    return Key.Windows;
+                case Keys.Apps:
+                    return Key.None;
+                case Keys.Sleep:
+                    return Key.None;
+                case Keys.NumPad0:
+                    return Key.NumPad0;
+                case Keys.NumPad1:
+                    return Key.NumPad1;
+                case Keys.NumPad2:
+                    return Key.NumPad2;
+                case Keys.NumPad3:
+                    return Key.NumPad3;
+                case Keys.NumPad4:
+                    return Key.NumPad4;
+                case Keys.NumPad5:
+                    return Key.NumPad5;
+                case Keys.NumPad6:
+                    return Key.NumPad6;
+                case Keys.NumPad7:
+                    return Key.NumPad7;
+                case Keys.NumPad8:
+                    return Key.NumPad8;
+                case Keys.NumPad9:
+                    return Key.NumPad9;
+                case Keys.Multiply:
+                    return Key.Asterisk;
+                case Keys.Add:
+                    return Key.PlusSign;
+                case Keys.Separator:
+                    return Key.None;
+                case Keys.Subtract:
+                    return Key.Minus;
+                case Keys.Decimal:
+                    return Key.NumPadDot;
+                case Keys.Divide:
+                    return Key.Slash;
+                case Keys.F1:
+                    return Key.F1;
+                case Keys.F2:
+                    return Key.F2;
+                case Keys.F3:
+                    return Key.F3;
+                case Keys.F4:
+                    return Key.F4;
+                case Keys.F5:
+                    return Key.F5;
+                case Keys.F6:
+                    return Key.F6;
+                case Keys.F7:
+                    return Key.F7;
+                case Keys.F8:
+                    return Key.F8;
+                case Keys.F9:
+                    return Key.F9;
+                case Keys.F10:
+                    return Key.F10;
+                case Keys.F11:
+                    return Key.F11;
+                case Keys.F12:
+                    return Key.F12;
+                case Keys.F13:
+                    return Key.F13;
+                case Keys.F14:
+                    return Key.F14;
+                case Keys.F15:
+                    return Key.F15;
+                case Keys.F16:
+                    return Key.F16;
+                case Keys.F17:
+                    return Key.F17;
+                case Keys.F18:
+                    return Key.F18;
+                case Keys.F19:
+                    return Key.F19;
+                case Keys.F20:
+                    return Key.F20;
+                case Keys.F21:
+                    return Key.F21;
+                case Keys.F22:
+                    return Key.F22;
+                case Keys.F23:
+                    return Key.F23;
+                case Keys.F24:
+                    return Key.F24;
+                case Keys.NumLock:
+                    return Key.NumLock;
+                case Keys.Scroll:
+                    return Key.ScrollLock;
+                case Keys.LShiftKey:
+                    return Key.Shift;
+                case Keys.RShiftKey:
+                    return Key.Shift;
+                case Keys.LControlKey:
+                    return Key.Control;
+                case Keys.RControlKey:
+                    return Key.Control;
+                case Keys.LMenu:
+                    return Key.Menu;
+                case Keys.RMenu:
+                    return Key.Menu;
+                case Keys.BrowserBack:
+                    return Key.BrowserBack;
+                case Keys.BrowserForward:
+                    return Key.BrowserForward;
+                case Keys.BrowserRefresh:
+                    return Key.BrowserRefresh;
+                case Keys.BrowserStop:
+                    return Key.BrowserStop;
+                case Keys.BrowserSearch:
+                    return Key.BrowserSearch;
+                case Keys.BrowserFavorites:
+                    return Key.BrowserFavorites;
+                case Keys.BrowserHome:
+                    return Key.BrowserHome;
+                case Keys.VolumeMute:
+                    return Key.VolumeMute;
+                case Keys.VolumeDown:
+                    return Key.VolumeDown;
+                case Keys.VolumeUp:
+                    return Key.VolumeUp;
+                case Keys.MediaNextTrack:
+                    return Key.MediaNextTrack;
+                case Keys.MediaPreviousTrack:
+                    return Key.MediaPreviousTrack;
+                case Keys.MediaStop:
+                    return Key.MediaStop;
+                case Keys.MediaPlayPause:
+                    return Key.MediaPlayPause;
+                case Keys.LaunchMail:
+                    return Key.LaunchMail;
+                case Keys.SelectMedia:
+                    return Key.SelectMedia;
+                case Keys.LaunchApplication1:
+                    return Key.LaunchApplication1;
+                case Keys.LaunchApplication2:
+                    return Key.LaunchApplication2;
+                case Keys.OemSemicolon:
+                    return Key.Semicolon;
+                case Keys.Oemplus:
+                    return Key.PlusSign;
+                case Keys.Oemcomma:
+                    return Key.Comma;
+                case Keys.OemMinus:
+                    return Key.Minus;
+                case Keys.OemPeriod:
+                    return Key.OemPeriod;
+                case Keys.OemQuestion:
+                    return Key.QuestionMark;
+                case Keys.Oemtilde:
+                    return Key.Tilde;
+                case Keys.OemOpenBrackets:
+                    return Key.OpenBracket;
+                case Keys.OemPipe:
+                    return Key.OemPipe;
+                case Keys.OemCloseBrackets:
+                    return Key.CloseBracket;
+                case Keys.OemQuotes:
+                    return Key.Quote;
+                case Keys.Oem8:
+                    return Key.None;
+                case Keys.OemBackslash:
+                    return Key.Backslash;
+                case Keys.ProcessKey:
+                    return Key.None;
+                case Keys.Packet:
+                    return Key.None;
+                case Keys.Attn:
+                    return Key.None;
+                case Keys.Crsel:
+                    return Key.None;
+                case Keys.Exsel:
+                    return Key.None;
+                case Keys.EraseEof:
+                    return Key.None;
+                case Keys.Play:
+                    return Key.None;
+                case Keys.Zoom:
+                    return Key.None;
+                case Keys.NoName:
+                    return Key.None;
+                case Keys.Pa1:
+                    return Key.None;
+                case Keys.OemClear:
+                    return Key.None;
+                default:
+                    return Key.None;
+            }
         }
 
         /// <summary>
@@ -942,6 +922,6 @@ namespace Alternet.UI
 
         /// <summary>Gets the keyboard value from <see cref="Keys"/>.</summary>
         /// <returns>The integer representation of the keyboard key without modifiers.</returns>
-        public static int GetKeyValue(Keys keys) => (int)(keys & Keys.KeyCode);
+        public static Keys GetKeyValue(Keys keys) => (keys & Keys.KeyCode);
     }
 }
