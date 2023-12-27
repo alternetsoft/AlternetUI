@@ -30,6 +30,8 @@ namespace Alternet.UI
         private static Cursor? sizingCursor;
         private static Cursor? waitCursor;
         private static Cursor? watchCursor;
+        private static Cursor? hSplitCursor;
+        private static Cursor? vSplitCursor;
         /*private static Cursor? rightArrowCursor;*/
         /*private static Cursor? bullseyeCursor;*/
         /*private static Cursor? magnifierCursor;*/
@@ -53,6 +55,44 @@ namespace Alternet.UI
             set
             {
                 noneCursor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the cursor that appears when the mouse is positioned over a horizontal
+        /// splitter bar.
+        /// </summary>
+        /// <returns>The <see cref="Cursor" /> that represents the cursor that appears when
+        /// the mouse is positioned over a horizontal splitter bar.</returns>
+        public static Cursor HSplit
+        {
+            get
+            {
+                return hSplitCursor ?? Cursors.SizeNS;
+            }
+
+            set
+            {
+                hSplitCursor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the cursor that appears when the mouse is positioned over a vertical
+        /// splitter bar.
+        /// </summary>
+        /// <returns>The <see cref="Cursor" /> that represents the cursor that appears
+        /// when the mouse is positioned over a vertical splitter bar.</returns>
+        public static Cursor VSplit
+        {
+            get
+            {
+                return vSplitCursor ?? Cursors.SizeWE;
+            }
+
+            set
+            {
+                vSplitCursor = value;
             }
         }
 
