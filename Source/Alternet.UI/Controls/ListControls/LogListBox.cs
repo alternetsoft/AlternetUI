@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class LogListBox : ListBox
     {
-        private ContextMenu? contextMenu;
+        private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;
         private MenuItem? menuItemShowDevTools;
 
@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// Gets context menu for the control.
         /// </summary>
         [Browsable(false)]
-        public ContextMenu ContextMenu
+        public ContextMenuStrip ContextMenu
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Alternet.UI
                 {
                     contextMenu = new();
                     InitContextMenu();
-                    MouseRightButtonDown += Control_ShowMenu;
+                    ContextMenuStrip = contextMenu;
                 }
 
                 return contextMenu;
@@ -187,11 +187,6 @@ namespace Alternet.UI
                 LogReplace(e.Message, e.MessagePrefix);
             else
                 Log(e.Message);
-        }
-
-        private void Control_ShowMenu(object? sender, MouseEventArgs e)
-        {
-            ShowPopupMenu(ContextMenu);
         }
     }
 }

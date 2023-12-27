@@ -211,6 +211,13 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnMouseRightButtonDown(MouseEventArgs e)
+        {
+            base.OnMouseRightButtonDown(e);
+            ShowPopupMenu(ContextMenuStrip);
+        }
+
         /// <summary>
         /// Creates a handler for the control.
         /// </summary>
