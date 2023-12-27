@@ -19,7 +19,42 @@ namespace Alternet.UI
     [DefaultProperty("Dock")]
     public class Splitter : Control
     {
-        public double DefaultWidth = 3;
+        /// <summary>
+        /// Gets or sets default splitter width.
+        /// </summary>
+        public static double DefaultWidth = 3;
+
+        private double minSize = 25;
+        private double minExtra = 25;
+        private PointD anchor = PointD.Empty;
+        private Control? splitTarget;
+        private double splitSize = -1;
+        private double splitterThickness = DefaultWidth;
+        private double initTargetSize;
+        private double lastDrawSplit = -1;
+        private double maxSize;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Splitter"/> class.
+        /// </summary>
+        public Splitter()
+        {
+            TabStop = false;
+            Size = (DefaultWidth, DefaultWidth);
+            Dock = DockStyle.Left;
+        }
+
+        /// <summary>
+        /// Occurs when the splitter control is in the process of moving.
+        /// </summary>
+        [Category("Behavior")]
+        public event SplitterEventHandler? SplitterMoving;
+
+        /// <summary>
+        /// Occurs when the splitter control is moved.
+        /// </summary>
+        [Category("Behavior")]
+        public event SplitterEventHandler? SplitterMoved;
 
         private enum DrawSplitBarKind
         {
@@ -28,34 +63,7 @@ namespace Alternet.UI
             End = 3,
         }
 
-        private double minSize = 25;
-        private double minExtra = 25;
-        private PointD anchor = PointD.Empty;
-        private Control? splitTarget;
-        private double splitSize = -1;
-        private double splitterThickness = 3;
-        private double initTargetSize;
-        private double lastDrawSplit = -1;
-        private double maxSize;
-
-        public Splitter()
-        {
-            TabStop = false;
-            Size = (DefaultWidth, DefaultWidth);
-            Dock = DockStyle.Left;
-        }
-
-        protected virtual Cursor DefaultCursor
-        {
-            get
-            {
-                if (Dock.IsTopOrBottom())
-                    return Cursors.SizeNS;
-                else
-                    return Cursors.SizeWE;
-            }
-        }
-
+        /// <inheritdoc/>
         [Localizable(true)]
         [DefaultValue(DockStyle.Left)]
         public override DockStyle Dock
@@ -81,7 +89,6 @@ namespace Alternet.UI
                 {
                     if (splitterThickness != -1)
                         Width = requestedSize;
-
                 }
 
                 Cursor = DefaultCursor;
@@ -91,7 +98,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether the splitter is horizontal.
         /// </summary>
-        private bool Horizontal => Dock.IsLeftOrRight();
+        [Browsable(false)]
+        public bool Horizontal => Dock.IsLeftOrRight();
 
         /// <summary>
         /// Gets or sets minimum size (in dips) of the remaining
@@ -108,6 +116,7 @@ namespace Alternet.UI
             {
                 return minExtra;
             }
+
             set
             {
                 if (value < 0) value = 0;
@@ -128,6 +137,7 @@ namespace Alternet.UI
             {
                 return minSize;
             }
+
             set
             {
                 if (value < 0) value = 0;
@@ -136,7 +146,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the position of the splitter. 
+        /// Gets or sets the position of the splitter.
         /// </summary>
         /// <remarks>
         /// If the splitter is not bound to a control, <see cref="SplitPosition"/> equals -1.
@@ -185,28 +195,31 @@ namespace Alternet.UI
                         bounds.Width = value;
                         break;
                 }
+
                 spd.target.Bounds = bounds;
                 Application.DoEvents();
                 var args = new SplitterEventArgs(
                     Left,
                     Top,
-                    (Left + bounds.Width / 2),
-                    (Top + bounds.Height / 2));
+                    Left + (bounds.Width / 2),
+                    Top + (bounds.Height / 2));
                 OnSplitterMoved(args);
             }
         }
 
         /// <summary>
-        /// Occurs when the splitter control is in the process of moving.
+        /// Gets default splitter cursor.
         /// </summary>
-        [Category("Behavior")]
-        public event SplitterEventHandler? SplitterMoving;
-
-        /// <summary>
-        /// Occurs when the splitter control is moved.
-        /// </summary>
-        [Category("Behavior")]
-        public event SplitterEventHandler? SplitterMoved;
+        protected virtual Cursor DefaultCursor
+        {
+            get
+            {
+                if (Dock.IsTopOrBottom())
+                    return Cursors.HSplit;
+                else
+                    return Cursors.VSplit;
+            }
+        }
 
         /// <devdoc>
         ///     Draws the splitter bar at the current location. Will automatically
