@@ -1113,9 +1113,13 @@ namespace Alternet.UI
         /// <param name="x">The X position in dips where the menu will appear.</param>
         /// <param name="y">The Y position in dips where the menu will appear.</param>
         /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
-        public virtual void ShowPopupMenu(Menu? menu, double x = -1, double y = -1)
+        public virtual void ShowPopupMenu(ContextMenu? menu, double x = -1, double y = -1)
         {
             if (menu is null || menu.Items.Count == 0)
+                return;
+            var e = new CancelEventArgs();
+            menu.RaiseOpening(e);
+            if (e.Cancel)
                 return;
             Handler.ShowPopupMenu(menu, x, y);
         }

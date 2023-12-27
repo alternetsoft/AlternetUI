@@ -34,6 +34,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Occurs when the control is opening.
+        /// </summary>
+        [Category("Action")]
+        public event CancelEventHandler? Opening;
+
         /// <inheritdoc cref="NonVisualControl.Left"/>
         [Browsable(false)]
         public override bool Visible { get => base.Visible; set => base.Visible = value; }
@@ -90,6 +96,20 @@ namespace Alternet.UI
                 pt = window.ScreenToClient(pt);
                 window.ShowPopupMenu(this, (int)pt.X, (int)pt.Y);
             }
+        }
+
+        internal void RaiseOpening(CancelEventArgs e)
+        {
+            OnOpening(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Opening" /> event.</summary>
+        /// <param name="e">A <see cref="CancelEventArgs" /> that contains
+        /// the event data.</param>
+        protected virtual void OnOpening(CancelEventArgs e)
+        {
+            Opening?.Invoke(this, e);
         }
 
         /// <inheritdoc/>
