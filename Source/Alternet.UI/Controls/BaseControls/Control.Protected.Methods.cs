@@ -212,14 +212,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets an <see cref="IControlHandlerFactory"/> to use when creating
-        /// new control handlers for this control.
-        /// </summary>
-        protected IControlHandlerFactory GetEffectiveControlHandlerHactory() =>
-            ControlHandlerFactory ??
-                Application.Current.VisualTheme.ControlHandlerFactory;
-
-        /// <summary>
         /// Creates a handler for the control.
         /// </summary>
         /// <remarks>

@@ -725,6 +725,45 @@ namespace Alternet.UI
         public double Bottom => Bounds.Bottom;
 
         /// <summary>
+        /// Gets control index in the <see cref="Children"/> of the container control.
+        /// </summary>
+        [Browsable(false)]
+        public int? IndexInParent
+        {
+            get
+            {
+                var index = Parent?.Children.IndexOf(this);
+                return index;
+            }
+        }
+
+        /// <summary>
+        /// Gets next visible sibling control.
+        /// </summary>
+        [Browsable(false)]
+        public Control? NextSibling
+        {
+            get
+            {
+                var index = IndexInParent;
+                if (index is null)
+                    return null;
+
+                var chi = Parent!.Children;
+                var count = chi.Count;
+
+                for (int i = index.Value + 1; i < count; i++)
+                {
+                    var child = chi[i];
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets whether this control can have focus right now.
         /// </summary>
         /// <remarks>
@@ -961,7 +1000,7 @@ namespace Alternet.UI
         /// </remarks>
         [Content]
         [Browsable(false)]
-        public virtual Collection<Control> Children
+        public virtual ControlCollection Children
         {
             get
             {

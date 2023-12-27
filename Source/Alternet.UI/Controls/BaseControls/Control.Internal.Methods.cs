@@ -76,6 +76,14 @@ namespace Alternet.UI
             Invalidate();
         }
 
+        /// <summary>
+        /// Gets an <see cref="IControlHandlerFactory"/> to use when creating
+        /// new control handlers for this control.
+        /// </summary>
+        internal IControlHandlerFactory GetEffectiveControlHandlerHactory() =>
+            ControlHandlerFactory ??
+                Application.Current.VisualTheme.ControlHandlerFactory;
+
         internal void RaiseKeyPress(KeyPressEventArgs e) => OnKeyPress(e);
 
         internal void RaiseKeyDown(KeyEventArgs e) => OnKeyDown(e);
