@@ -171,13 +171,13 @@ namespace Alternet.UI
                 splitSize = value;
                 DrawSplitBar(DrawSplitBarKind.End);
 
-                if (spd.target == null)
+                if (spd.Target == null)
                 {
                     splitSize = -1;
                     return;
                 }
 
-                var bounds = spd.target.Bounds;
+                var bounds = spd.Target.Bounds;
                 switch (Dock)
                 {
                     case DockStyle.Top:
@@ -196,7 +196,7 @@ namespace Alternet.UI
                         break;
                 }
 
-                spd.target.Bounds = bounds;
+                spd.Target.Bounds = bounds;
                 Application.DoEvents();
                 var args = new SplitterEventArgs(
                     Left,
@@ -204,6 +204,33 @@ namespace Alternet.UI
                     Left + (bounds.Width / 2),
                     Top + (bounds.Height / 2));
                 OnSplitterMoved(args);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override RectD Bounds
+        {
+            get
+            {
+                return base.Bounds;
+            }
+
+            set
+            {
+                if (Horizontal)
+                {
+                    if (value.Width < 1)
+                        value.Width = DefaultWidth;
+                    splitterThickness = value.Width;
+                }
+                else
+                {
+                    if (value.Height < 1)
+                        value.Height = DefaultWidth;
+                    splitterThickness = value.Height;
+                }
+
+                base.Bounds = value;
             }
         }
 
@@ -219,6 +246,91 @@ namespace Alternet.UI
                 else
                     return Cursors.VSplit;
             }
+        }
+
+        /// <summary>
+        /// Returns a string representation for this control.
+        /// </summary>
+        public override string ToString()
+        {
+            var s = base.ToString();
+            var sMinExtra = MinExtra.ToString(CultureInfo.CurrentCulture);
+            var sMinSize = MinSize.ToString(CultureInfo.CurrentCulture);
+            return $"{s}, MinExtra: {sMinExtra}, MinSize: {sMinSize}";
+        }
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (splitTarget != null && e.KeyCode == Keys.Escape)
+            {
+                SplitEnd(false);
+                e.Handled = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                var pos = e.GetPosition(this);
+                SplitBegin(pos.X, pos.Y);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (splitTarget != null)
+            {
+                var pos = e.GetPosition(this);
+                var x = pos.X + Left;
+                var y = pos.Y + Top;
+                var r = CalcSplitLine(GetSplitSize(pos.X, pos.Y), 0);
+                var xSplit = r.X;
+                var ySplit = r.Y;
+                OnSplitterMoving(new SplitterEventArgs(x, y, xSplit, ySplit));
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+            if (splitTarget != null)
+                SplitEnd(true);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="SplitterMoving" /> event. This event occurs while the splitter is
+        /// being moved by the user.
+        /// </summary>
+        /// <param name="e">A <see cref="SplitterEventArgs" /> that contains the event data.</param>
+        protected virtual void OnSplitterMoving(SplitterEventArgs e)
+        {
+            SplitterMoving?.Invoke(this, e);
+            if (splitTarget != null)
+            {
+                SplitMove(e.SplitX, e.SplitY);
+                ApplySplitPosition();
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="SplitterMoved" /> event.
+        /// This event occurs when the user finishes moving the splitter.
+        /// </summary>
+        /// <param name="e">A <see cref="SplitterEventArgs" /> that contains the event data.</param>
+        protected virtual void OnSplitterMoved(SplitterEventArgs e)
+        {
+            SplitterMoved?.Invoke(this, e);
+            if (splitTarget != null)
+                SplitMove(e.SplitX, e.SplitY);
         }
 
         /// <devdoc>
@@ -248,6 +360,7 @@ namespace Alternet.UI
                 {
                     DrawSplitHelper(lastDrawSplit);
                 }
+
                 lastDrawSplit = -1;
             }
         }
@@ -282,6 +395,7 @@ namespace Alternet.UI
                     r.X = bounds.X + bounds.Width - splitSize - r.Width;
                     break;
             }
+
             return r;
         }
 
@@ -317,7 +431,7 @@ namespace Alternet.UI
             if (parent is null)
                 return spd;
             var target = FindTarget();
-            spd.target = target;
+            spd.Target = target;
 
             if (target != null)
             {
@@ -352,8 +466,8 @@ namespace Alternet.UI
                     maxSize = clientSize.Width - dockWidth - minExtra;
                 else
                     maxSize = clientSize.Height - dockHeight - minExtra;
-                spd.dockWidth = dockWidth;
-                spd.dockHeight = dockHeight;
+                spd.DockWidth = dockWidth;
+                spd.DockHeight = dockHeight;
             }
 
             return spd;
@@ -365,20 +479,6 @@ namespace Alternet.UI
         /// <param name="splitSize"></param>
         private void DrawSplitHelper(double splitSize)
         {
-            /*
-            if (splitTarget == null)
-                return;
-
-            Rectangle r = CalcSplitLine(splitSize, 3);
-            IntPtr parentHandle = ParentInternal.Handle;
-            IntPtr dc = UnsafeNativeMethods.GetDCEx(new HandleRef(ParentInternal, parentHandle), NativeMethods.NullHandleRef, NativeMethods.DCX_CACHE | NativeMethods.DCX_LOCKWINDOWUPDATE);
-            IntPtr halftone = ControlPaint.CreateHalftoneHBRUSH();
-            IntPtr saveBrush = SafeNativeMethods.SelectObject(new HandleRef(ParentInternal, dc), new HandleRef(null, halftone));
-            SafeNativeMethods.PatBlt(new HandleRef(ParentInternal, dc), r.X, r.Y, r.Width, r.Height, NativeMethods.PATINVERT);
-            SafeNativeMethods.SelectObject(new HandleRef(ParentInternal, dc), new HandleRef(null, saveBrush));
-            SafeNativeMethods.DeleteObject(new HandleRef(null, halftone));
-            UnsafeNativeMethods.ReleaseDC(new HandleRef(ParentInternal, parentHandle), new HandleRef(null, dc));
-            */
         }
 
         /// <summary>
@@ -424,101 +524,19 @@ namespace Alternet.UI
             return Math.Max(Math.Min(size, maxSize), minSize);
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (splitTarget != null && e.KeyCode == Keys.Escape)
-            {
-                SplitEnd(false);
-                e.Handled = true;
-            }
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-            if (e.Button == MouseButtons.Left && e.Clicks == 1)
-            {
-                var pos = e.GetPosition(this);
-                SplitBegin(pos.X, pos.Y);
-            }
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-
-            if (splitTarget != null)
-            {
-                var pos = e.GetPosition(this);
-                var x = pos.X + Left;
-                var y = pos.Y + Top;
-                var r = CalcSplitLine(GetSplitSize(pos.X, pos.Y), 0);
-                var xSplit = r.X;
-                var ySplit = r.Y;
-                OnSplitterMoving(new SplitterEventArgs(x, y, xSplit, ySplit));
-            }
-        }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            base.OnMouseUp(e);
-            if (splitTarget != null)
-                SplitEnd(true);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="SplitterMoving" /> event. This event occurs while the splitter is
-        /// being moved by the user.
-        /// <param name="e">A <see cref="SplitterEventArgs" /> that contains the event data.</param>
-        protected virtual void OnSplitterMoving(SplitterEventArgs e)
-        {
-            SplitterMoving?.Invoke(this, e);
-            if (splitTarget != null)
-            {
-                SplitMove(e.SplitX, e.SplitY);
-                ApplySplitPosition();
-            }
-        }
-
-        /// <summary>
-        /// Raises the <see cref="SplitterMoved" /> event. 
-        /// This event occurs when the user finishes moving the splitter.
-        /// </summary>
-        /// <param name="e">A <see cref="SplitterEventArgs" /> that contains the event data.</param>
-        protected virtual void OnSplitterMoved(SplitterEventArgs e)
-        {
-            SplitterMoved?.Invoke(this, e);
-            if (splitTarget != null)
-                SplitMove(e.SplitX, e.SplitY);
-        }
-
         /// <summary>
         /// Begins the splitter moving.
         /// </summary>
         private void SplitBegin(double x, double y)
         {
             var spd = CalcSplitBounds();
-            if (spd.target != null && (minSize < maxSize))
+            if (spd.Target != null && (minSize < maxSize))
             {
                 anchor = new PointD(x, y);
-                splitTarget = spd.target;
+                splitTarget = spd.Target;
                 splitSize = GetSplitSize(x, y);
 
-                /*
-                IntSecurity.UnmanagedCode.Assert();
-                try
-                {
-                    if (splitterMessageFilter != null)
-                    {
-                        splitterMessageFilter = new SplitterMessageFilter(this);
-                    }
-                    Application.AddMessageFilter(splitterMessageFilter);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }*/
+                /* here we can hook to global Esc */
 
                 CaptureMouse();
                 DrawSplitBar(DrawSplitBarKind.Start);
@@ -534,25 +552,22 @@ namespace Alternet.UI
             splitTarget = null;
             ReleaseMouseCapture();
 
-            /*if (splitterMessageFilter != null)
-            {
-                Application.RemoveMessageFilter(splitterMessageFilter);
-                splitterMessageFilter = null;
-            }*/
+            /* here we can unhook to global Esc */
 
             if (accept)
             {
-                /*ApplySplitPosition();*/
+                /* no need to call ApplySplitPosition() as splitter is live */
             }
             else if (splitSize != initTargetSize)
             {
                 SplitPosition = initTargetSize;
             }
+
             anchor = PointD.Empty;
         }
 
         /// <summary>
-        /// Sets the split position to be the current split size. 
+        /// Sets the split position to be the current split size.
         /// </summary>
         private void ApplySplitPosition()
         {
@@ -572,50 +587,11 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file='doc\Splitter.uex' path='docs/doc[@for="Splitter.ToString"]/*' />
-        /// <devdoc>
-        ///     Returns a string representation for this control.
-        /// </devdoc>
-        /// <internalonly/>
-        public override string ToString()
-        {
-            var s = base.ToString();
-            var sMinExtra = MinExtra.ToString(CultureInfo.CurrentCulture);
-            var sMinSize = MinSize.ToString(CultureInfo.CurrentCulture);
-            return $"{s}, MinExtra: {sMinExtra}, MinSize: {sMinSize}";
-        }
-
-        public override RectD Bounds
-        {
-            get
-            {
-                return base.Bounds;
-            }
-
-            set
-            {
-                if (Horizontal)
-                {
-                    if (value.Width < 1)
-                        value.Width = DefaultWidth;
-                    splitterThickness = value.Width;
-                }
-                else
-                {
-                    if (value.Height < 1)
-                        value.Height = DefaultWidth;
-                    splitterThickness = value.Height;
-                }
-
-                base.Bounds = value;
-            }
-        }
-
         private class SplitData
         {
-            public double dockWidth = -1;
-            public double dockHeight = -1;
-            internal Control? target;
+            public double DockWidth = -1;
+            public double DockHeight = -1;
+            public Control? Target;
         }
     }
 }
