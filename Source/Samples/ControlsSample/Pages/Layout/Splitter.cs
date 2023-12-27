@@ -19,14 +19,14 @@ namespace Alternet.UI
     [DefaultProperty("Dock")]
     public class Splitter : Control
     {
+        public double DefaultWidth = 3;
+
         private enum DrawSplitBarKind
         {
             Start = 1,
             Move = 2,
             End = 3,
         }
-
-        private const double defaultWidth = 3;
 
         private double minSize = 25;
         private double minExtra = 25;
@@ -37,34 +37,22 @@ namespace Alternet.UI
         private double initTargetSize;
         private double lastDrawSplit = -1;
         private double maxSize;
-        private static readonly object EVENT_MOVING = new();
-        private static readonly object EVENT_MOVED = new();
 
         public Splitter()
         {
             TabStop = false;
+            Size = (DefaultWidth, DefaultWidth);
             Dock = DockStyle.Left;
-        }
-
-        protected virtual SizeD DefaultSize
-        {
-            get
-            {
-                return new SizeD(defaultWidth, defaultWidth);
-            }
         }
 
         protected virtual Cursor DefaultCursor
         {
             get
             {
-                return Cursors.Sizing;
-                /*
                 if (Dock.IsTopOrBottom())
-                    return Cursors.HSplit;
+                    return Cursors.SizeNS;
                 else
-                    return Cursors.VSplit;
-                */
+                    return Cursors.SizeWE;
             }
         }
 
@@ -95,6 +83,8 @@ namespace Alternet.UI
                         Width = requestedSize;
 
                 }
+
+                Cursor = DefaultCursor;
             }
         }
 
@@ -166,7 +156,7 @@ namespace Alternet.UI
             {
                 var spd = CalcSplitBounds();
 
-                value = MathUtils.ApplyMinMax(minSize, maxSize);
+                value = MathUtils.ApplyMinMax(value, minSize, maxSize);
 
                 splitSize = value;
                 DrawSplitBar(DrawSplitBarKind.End);
@@ -315,10 +305,10 @@ namespace Alternet.UI
                 return spd;
             var target = FindTarget();
             spd.target = target;
-            
+
             if (target != null)
             {
-                if(target.Dock.IsLeftOrRight())
+                if (target.Dock.IsLeftOrRight())
                     initTargetSize = target.Bounds.Width;
                 else
                     initTargetSize = target.Bounds.Height;
@@ -330,7 +320,7 @@ namespace Alternet.UI
                     Control ctl = children[i];
                     if (ctl != target)
                     {
-                        switch (((Control)ctl).Dock)
+                        switch (ctl.Dock)
                         {
                             case DockStyle.Left:
                             case DockStyle.Right:
@@ -385,34 +375,7 @@ namespace Alternet.UI
         /// </summary>
         private Control? FindTarget()
         {
-            var parent = Parent;
-            if (parent == null) return null;
-            var children = parent.Children;
-            int count = children.Count;
-            DockStyle dock = Dock;
-            for (int i = 0; i < count; i++)
-            {
-                var target = children[i];
-                if (target != this)
-                {
-                    switch (dock)
-                    {
-                        case DockStyle.Top:
-                            if (target.Bottom == Top) return (Control)target;
-                            break;
-                        case DockStyle.Bottom:
-                            if (target.Top == Bottom) return (Control)target;
-                            break;
-                        case DockStyle.Left:
-                            if (target.Right == Left) return (Control)target;
-                            break;
-                        case DockStyle.Right:
-                            if (target.Left == Right) return (Control)target;
-                            break;
-                    }
-                }
-            }
-            return null;
+            return NextSibling;
         }
 
         /// <summary>
@@ -501,6 +464,7 @@ namespace Alternet.UI
             if (splitTarget != null)
             {
                 SplitMove(e.SplitX, e.SplitY);
+                ApplySplitPosition();
             }
         }
 
@@ -556,7 +520,7 @@ namespace Alternet.UI
             DrawSplitBar(DrawSplitBarKind.End);
             splitTarget = null;
             ReleaseMouseCapture();
-            
+
             /*if (splitterMessageFilter != null)
             {
                 Application.RemoveMessageFilter(splitterMessageFilter);
@@ -565,7 +529,7 @@ namespace Alternet.UI
 
             if (accept)
             {
-                ApplySplitPosition();
+                /*ApplySplitPosition();*/
             }
             else if (splitSize != initTargetSize)
             {
@@ -602,32 +566,37 @@ namespace Alternet.UI
         /// <internalonly/>
         public override string ToString()
         {
-            string s = base.ToString();
-            string sMinExtra = MinExtra.ToString(CultureInfo.CurrentCulture);
-            string sMinSize = MinSize.ToString(CultureInfo.CurrentCulture);
+            var s = base.ToString();
+            var sMinExtra = MinExtra.ToString(CultureInfo.CurrentCulture);
+            var sMinSize = MinSize.ToString(CultureInfo.CurrentCulture);
             return $"{s}, MinExtra: {sMinExtra}, MinSize: {sMinSize}";
         }
 
-        /*protected override void SetBounds(int x, int y, int width, int height, BoundsSpecified specified)
+        public override RectD Bounds
         {
-            if (Horizontal)
+            get
             {
-                if (width < 1)
-                {
-                    width = 3;
-                }
-                splitterThickness = width;
+                return base.Bounds;
             }
-            else
+
+            set
             {
-                if (height < 1)
+                if (Horizontal)
                 {
-                    height = 3;
+                    if (value.Width < 1)
+                        value.Width = DefaultWidth;
+                    splitterThickness = value.Width;
                 }
-                splitterThickness = height;
+                else
+                {
+                    if (value.Height < 1)
+                        value.Height = DefaultWidth;
+                    splitterThickness = value.Height;
+                }
+
+                base.Bounds = value;
             }
-            base.SetBoundsCore(x, y, width, height, specified);
-        }*/
+        }
 
         private class SplitData
         {

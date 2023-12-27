@@ -26,30 +26,48 @@ namespace ControlsSample
             {
                 ListBox listBox = new()
                 {
-                    HasBorder = false,
                 };
 
-                Border border = new();
-
-                listBox.Parent = border;
                 listBox.Items.AddRange(items);
-                return border;
+                return listBox;
             }
 
-            var control1 = Create("Control 1", "Dock = Right");
-            var control2 = Create("Control 2", "Dock = Left");
-            var control3 = Create("Control 3", "Dock = Top");
-            var control4 = Create("Control 4", "Dock = Bottom");
-            var control5 = Create("Control 5", "Dock = Fill");
+            var cRight = Create("Control 1", "Dock = Right");
+            var cLeft = Create("Control 2", "Dock = Left");
+            var cTop = Create("Control 3", "Dock = Top");
+            var cBottom = Create("Control 4", "Dock = Bottom");
+            var cFill = Create("Control 5", "Dock = Fill");
             LayoutPanel layoutPanel = new();
 
-            LayoutPanel.SetDock(control1, DockStyle.Right);
-            LayoutPanel.SetDock(control2, DockStyle.Left);
-            LayoutPanel.SetDock(control3, DockStyle.Top);
-            LayoutPanel.SetDock(control4, DockStyle.Bottom);
-            LayoutPanel.SetDock(control5, DockStyle.Fill);
+            cRight.Dock = DockStyle.Right;
+            cLeft.Dock = DockStyle.Left;
+            cTop.Dock = DockStyle.Top;
+            cBottom.Dock = DockStyle.Bottom;
+            cFill.Dock = DockStyle.Fill;
 
-            Group(control5, control1, control2, control3, control4).Margin(5).Size(100).Parent(layoutPanel);
+            var sLeft = new Splitter
+            {
+                Dock = DockStyle.Left,
+            };
+
+            var sRight = new Splitter
+            {
+                Dock = DockStyle.Right,
+            };
+
+            var sTop = new Splitter
+            {
+                Dock = DockStyle.Top,
+            };
+
+            var sBottom = new Splitter
+            {
+                Dock = DockStyle.Bottom,
+            };
+
+            Group(cFill, cRight, cLeft, cTop, cBottom).Size(100);
+
+            Group(cFill, sRight, cRight, sLeft, cLeft, sTop, cTop, sBottom, cBottom).Parent(layoutPanel);
 
             layoutPanel.SuggestedHeight = 300;
             layoutPanel.Parent = this;
