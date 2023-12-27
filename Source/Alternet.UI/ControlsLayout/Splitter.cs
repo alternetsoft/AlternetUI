@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default splitter width.
         /// </summary>
-        public static double DefaultWidth = 3;
+        public static double DefaultWidth = 5;
 
         private double minSize = 25;
         private double minExtra = 25;
@@ -196,7 +196,13 @@ namespace Alternet.UI
                         break;
                 }
 
-                spd.Target.Bounds = bounds;
+                RectI boundsI = bounds.ToRect();
+                RectI oldBoundsI = spd.Target.Bounds.ToRect();
+
+                if (boundsI == oldBoundsI)
+                    return;
+
+                spd.Target.Bounds = boundsI;
                 Application.DoEvents();
                 var args = new SplitterEventArgs(
                     Left,

@@ -8,8 +8,9 @@ namespace ControlsSample
     {
         private SplittedTreeAndCards? pageContainer;
         private readonly LogListBox eventsControl;
-        private readonly SplitterPanel splitterPanel;
+        private readonly LayoutPanel splitterPanel;
         private readonly Control panel;
+        private Splitter splitter = new();
 
         static MainWindow()
         {
@@ -20,6 +21,7 @@ namespace ControlsSample
         {
             eventsControl = new()
             {
+                Dock = DockStyle.Bottom,
                 HasBorder = false,
                 Margin = (0, 10, 0, 0),
             };
@@ -79,15 +81,19 @@ namespace ControlsSample
             LogUtils.DebugLogVersion();
 
             splitterPanel.Parent = panel;
+            pageContainer.Dock = DockStyle.Fill;
+            splitter.Dock = DockStyle.Bottom;
             pageContainer.Parent = splitterPanel;
+            splitter.Parent = splitterPanel;
+            eventsControl.Height = 150;
             eventsControl.Parent = splitterPanel;
 
-            splitterPanel.SashGravity = 1.0;
+            // splitterPanel.SashGravity = 1.0;
 
-            // Split is called at the end. This is done because we need to be sure that
+            /*// Split is called at the end. This is done because we need to be sure that
             // used controls will not be recreated due to property changes.
-            pageContainer.SplitVerticalDip(140);
-            splitterPanel.SplitHorizontalDip(pageContainer, eventsControl, -150);
+            pageContainer.SplitVerticalDip(140);*/
+            /*splitterPanel.SplitHorizontalDip(pageContainer, eventsControl, -150);*/
             pageContainer.SelectedIndex = 0;
             pageContainer.TreeView.SetFocusIfPossible();
         }
@@ -175,9 +181,8 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>[] pages =
             [
-                new("Splitter", () => new SplitterPanelPage()),
+                new("Splitter", () => new LayoutPanelPage()),
                 new("Grid", () => new GridPage()),
-                new("LayoutPanel", () => new LayoutPanelPage()),
             ];
 
             return CreateCustomPage(pages);

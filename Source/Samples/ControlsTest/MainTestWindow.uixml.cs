@@ -42,26 +42,27 @@ namespace ControlsTest
 
             int CreateWebBrowserPages()
             {
+                int result = -1;
+
                 if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
                 {
                     PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
-                    return AddWebBrowserPage("Web Browser Edge");
+                    result = AddWebBrowserPage("Browser Edge");
                 }
 
                 if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
                 {
                     PanelWebBrowser.UseBackend = WebBrowserBackend.WebKit;
-                    return AddWebBrowserPage("Web Browser WebKit");
+                    result = AddWebBrowserPage("Browser WebKit");
                 }
 
-                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest) &&
-                    !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest))
                 {
                     PanelWebBrowser.UseBackend = WebBrowserBackend.IELatest;
-                    return AddWebBrowserPage("Web Browser IE");
+                    result = AddWebBrowserPage("Browser IE");
                 }
 
-                return -1;
+                return result;
             }
 
             mainPanel.Add("Sizer Test", new SizerTestPage());

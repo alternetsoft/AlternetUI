@@ -16,6 +16,11 @@ namespace Alternet.UI
     /// can be split into two programmatically, and unsplit either
     /// programmatically or via the user interface.
     /// </summary>
+    /// <remarks>
+    /// Please do not use <see cref="SplitterPanel"/>, it has prolems under Linux. It is better to use
+    /// <see cref="LayoutPanel"/> with <see cref="Splitter"/> control.
+    /// See <see cref="SplittedTreeAndCards"/> source code for the example.
+    /// </remarks>
     [ControlCategory("Containers")]
     public class SplitterPanel : Control
     {

@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements splitter panel with <see cref="TreeView"/> and <see cref="CardPanel"/>.
     /// </summary>
-    public class SplittedTreeAndCards : SplitterPanel
+    public class SplittedTreeAndCards : LayoutPanel
     {
         private readonly TreeView treeView = new()
         {
@@ -19,14 +19,23 @@ namespace Alternet.UI
         {
         };
 
+        private readonly Splitter splitter = new();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
         /// </summary>
         public SplittedTreeAndCards()
         {
-            treeView.SelectionChanged += PagesListBox_SelectionChanged;
-            treeView.Parent = this;
+            cardPanel.Dock = DockStyle.Fill;
             cardPanel.Parent = this;
+
+            splitter.Dock = DockStyle.Left;
+            splitter.Parent = this;
+
+            treeView.SelectionChanged += PagesListBox_SelectionChanged;
+            treeView.Dock = DockStyle.Left;
+            treeView.Width = DefaultSashPosition;
+            treeView.Parent = this;
         }
 
         /// <summary>
@@ -56,14 +65,14 @@ namespace Alternet.UI
         /// </summary>
         protected virtual double DefaultSashPosition => 140;
 
-        /// <summary>
+        /*/// <summary>
         /// Splits controls vertically.
         /// </summary>
         /// <param name="sashPosition">Sash position in dips.</param>
         public void SplitVerticalDip(double sashPosition = 0)
         {
             SplitVertical(TreeView, Cards, PixelFromDip(sashPosition));
-        }
+        }*/
 
         /// <summary>
         /// Sets debug background colors for the different parts of the control.
