@@ -1,5 +1,13 @@
 # 0.9.411 (work in progress)
 
+## 2023 December 27
+
+- Added Splitter (can see demo in ControlsSample - Layout - LayoutPanel).
+- Control keyboard handling speed up.
+- SystemColors made all colors non readonly.
+- Fixed string to color comversion for named colors.
+- Control: IndexInParent, NextSibling, Right, Bottom, DefaultForeColor, DefaultBackColor, QueryContinueDrag (dummy).
+
 ## 2023 December 24
 
 - Control.Scroll event.
