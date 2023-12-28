@@ -1394,7 +1394,6 @@ namespace Alternet::UI
 
     void Control::OnMouseCaptureLost(wxEvent& event)
     {
-        event.Skip();
         RaiseEvent(ControlEvent::MouseCaptureLost);
     }
 

@@ -327,6 +327,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnMouseCaptureLost(EventArgs e)
+        {
+            base.OnMouseCaptureLost(e);
+            if (splitTarget != null)
+                SplitEnd(true);
+        }
+
         /// <summary>
         /// Raises the <see cref="SplitterMoved" /> event.
         /// This event occurs when the user finishes moving the splitter.
