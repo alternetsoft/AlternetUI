@@ -145,32 +145,48 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='RectD'/>.
+        /// Gets or sets the x-coordinate of the upper-left corner of the rectangular
+        /// region defined by this <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly double Left => x;
+        public double Left
+        {
+            readonly get => x;
+            set => x = value;
+        }
 
         /// <summary>
-        /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='RectD'/>.
+        /// Gets or sets the y-coordinate of the upper-left corner of the rectangular
+        /// region defined by this <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly double Top => y;
+        public double Top
+        {
+            readonly get => y;
+            set => y = value;
+        }
 
         /// <summary>
         /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
         /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly double Right => x + width;
+        public double Right
+        {
+            readonly get => x + width;
+            set => x = value - width;
+        }
 
         /// <summary>
         /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
         /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly double Bottom => y + height;
+        public double Bottom
+        {
+            readonly get => y + height;
+            set => y = value - height;
+        }
 
         /// <summary>
         /// Tests whether this <see cref='RectD'/> has a <see cref='Width'/>
