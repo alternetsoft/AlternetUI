@@ -49,6 +49,7 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
+                Invalidate();
             }
         }
 

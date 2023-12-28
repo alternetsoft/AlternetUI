@@ -24,8 +24,11 @@ namespace PropertyGridSample
         void PictureBoxTest()
         {
             var control = GetSelectedControl<PictureBox>();
-            (control?.Background as SolidBrush)?.SetColor(Color.Red);
-            control?.Refresh();
+            if (control is null)
+                return;
+            control.Image = KnownSvgImages.GetForSize(Color.Red, 64).ImgAddChild.AsImage(64);
+            /*(control?.Background as SolidBrush)?.SetColor(Color.Red);
+            control?.Refresh();*/
         }
 
         void ReorderButtonsTest()
