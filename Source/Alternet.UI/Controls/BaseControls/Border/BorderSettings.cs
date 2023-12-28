@@ -272,6 +272,95 @@ namespace Alternet.UI
             IsUniformVerticalColor && IsUniformHorizontalColor;
 
         /// <summary>
+        /// Gets rectangle of the top border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static RectD GetTopLineRect(RectD rect, double width)
+        {
+            var point = rect.TopLeft;
+            var size = new SizeD(rect.Width, width);
+            return new RectD(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the bottom border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static RectD GetBottomLineRect(RectD rect, double width)
+        {
+            var point = new PointD(rect.Left, rect.Bottom - width);
+            var size = new SizeD(rect.Width, width);
+            return new RectD(point, size);
+        }
+
+        public static void DrawHorzLine(
+            Graphics dc,
+            Brush brush,
+            PointD point,
+            double length,
+            double width)
+        {
+            var rect = new RectD(point, new SizeD(length, width));
+            dc.FillRectangle(brush, rect);
+        }
+
+        public static void DrawVertLine(
+            Graphics dc,
+            Brush brush,
+            PointD point,
+            double length,
+            double width)
+        {
+            var rect = new RectD(point, new SizeD(width, length));
+            dc.FillRectangle(brush, rect);
+        }
+
+        /// <summary>
+        /// Draws rectangle border using <see cref="Graphics.FillRectangle"/>.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="brush">Brush to draw border.</param>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="borderWidth">Border width.</param>
+        public static void FillRectangleBorder(
+            Graphics dc,
+            Brush brush,
+            RectD rect,
+            double borderWidth)
+        {
+            dc.FillRectangle(brush, GetTopLineRect(rect, borderWidth));
+            dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth));
+            dc.FillRectangle(brush, GetLeftLineRect(rect, borderWidth));
+            dc.FillRectangle(brush, GetRightLineRect(rect, borderWidth));
+        }
+
+        /// <summary>
+        /// Gets rectangle of the left border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static RectD GetLeftLineRect(RectD rect, double width)
+        {
+            var point = rect.TopLeft;
+            var size = new SizeD(width, rect.Height);
+            return new RectD(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the right border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static RectD GetRightLineRect(RectD rect, double width)
+        {
+            var point = new PointD(rect.Right - width, rect.Top);
+            var size = new SizeD(width, rect.Height);
+            return new RectD(point, size);
+        }
+
+        /// <summary>
         /// <see cref="Paint"/> event handler implementation which draws design corners used
         /// to indicate control's bounds.
         /// </summary>
@@ -343,9 +432,7 @@ namespace Alternet.UI
         /// <param name="rect">Border rectangle.</param>
         public RectD GetTopRectangle(RectD rect)
         {
-            var point = rect.TopLeft;
-            var size = new SizeD(rect.Width, Top.Width);
-            return new RectD(point, size);
+            return GetTopLineRect(rect, Top.Width);
         }
 
         /// <summary>
@@ -354,9 +441,7 @@ namespace Alternet.UI
         /// <param name="rect">Border rectangle.</param>
         public RectD GetBottomRectangle(RectD rect)
         {
-            var point = new PointD(rect.Left, rect.Bottom - Bottom.Width);
-            var size = new SizeD(rect.Width, Bottom.Width);
-            return new RectD(point, size);
+            return GetBottomLineRect(rect, Bottom.Width);
         }
 
         /// <summary>
@@ -365,9 +450,7 @@ namespace Alternet.UI
         /// <param name="rect">Border rectangle.</param>
         public RectD GetLeftRectangle(RectD rect)
         {
-            var point = rect.TopLeft;
-            var size = new SizeD(Left.Width, rect.Height);
-            return new RectD(point, size);
+            return GetLeftLineRect(rect, Left.Width);
         }
 
         /// <summary>
@@ -376,9 +459,7 @@ namespace Alternet.UI
         /// <param name="rect">Border rectangle.</param>
         public RectD GetRightRectangle(RectD rect)
         {
-            var point = new PointD(rect.Right - Right.Width, rect.Top);
-            var size = new SizeD(Right.Width, rect.Height);
-            return new RectD(point, size);
+            return GetRightLineRect(rect, Right.Width);
         }
 
         /// <summary>
