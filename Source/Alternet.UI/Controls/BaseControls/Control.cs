@@ -1747,6 +1747,7 @@ namespace Alternet.UI
         [Category("Appearance")]
         [DefaultValue(null)]
         [Localizable(true)]
+        [Browsable(false)]
         public virtual Image? BackgroundImage
         {
             get
