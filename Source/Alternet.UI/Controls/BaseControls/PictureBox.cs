@@ -68,6 +68,7 @@ namespace Alternet.UI
         /// Gets <see cref="Graphics"/> for the <see cref="Image"/> on which
         /// you can paint.
         /// </summary>
+        [Browsable(false)]
         public Graphics? Canvas
         {
             get
@@ -203,6 +204,13 @@ namespace Alternet.UI
         {
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            Invalidate();
         }
 
         /// <inheritdoc/>
