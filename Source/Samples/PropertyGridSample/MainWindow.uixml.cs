@@ -22,16 +22,15 @@ namespace PropertyGridSample
         {
         };
 
-        private readonly VerticalStackPanel parentParent = new()
+        private readonly SplittedPanel parentParent = new()
         {
-            Padding = controlPadding,
         };
 
         private readonly Border controlPanelBorder = new()
         {
             BorderColor = Color.Red,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            VerticalAlignment = VerticalAlignment.Stretch,
             Padding = 0,
         };
 
@@ -112,7 +111,19 @@ namespace PropertyGridSample
 
             controlPanel.Parent = controlPanelBorder;
 
-            controlPanelBorder.Parent = parentParent;
+            parentParent.LeftPanel.Width = 15;
+            parentParent.RightPanel.Width = 15;
+            parentParent.TopPanel.Width = 15;
+            parentParent.BottomPanel.Width = 15;
+
+            var parentParentColor = SystemColors.Window;
+
+            parentParent.LeftPanel.BackColor = parentParentColor;
+            parentParent.RightPanel.BackColor = parentParentColor;
+            parentParent.TopPanel.BackColor = parentParentColor;
+            parentParent.BottomPanel.BackColor = parentParentColor;
+
+            controlPanelBorder.Parent = parentParent.FillPanel;
 
             panel.CenterNotebook.AddPage(parentParent, "Preview", true);
 

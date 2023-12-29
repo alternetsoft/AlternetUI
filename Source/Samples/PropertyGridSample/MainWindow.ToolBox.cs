@@ -89,6 +89,7 @@ namespace PropertyGridSample
                     typeof(VerticalStackPanel),
                     typeof(CardPanelHeader),
                     typeof(CardPanel),
+                    typeof(SplittedPanel),
                 ];
 
                 Type[] badParentTypes =
@@ -138,8 +139,8 @@ namespace PropertyGridSample
                 
                 foreach (Type type in result)
                 {
-                    if (type.Assembly != typeof(Control).Assembly)
-                        continue;
+                    /*if (type.Assembly != typeof(Control).Assembly)
+                        continue;*/
                     if (Array.IndexOf(badTypes, type) >= 0)
                         continue;
                     if (AssemblyUtils.TypeIsDescendant(type, badParentTypes))

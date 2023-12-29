@@ -113,6 +113,7 @@ namespace PropertyGridSample
             });
 
             Actions.Add(typeof(ContextMenu), InitContextMenu);
+            Actions.Add(typeof(SplittedPanel), InitSplittedPanel);
 
             Actions.Add(typeof(Label), (c) =>
             { 

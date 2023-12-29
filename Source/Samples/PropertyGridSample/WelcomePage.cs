@@ -12,6 +12,9 @@ namespace PropertyGridSample
 
         public WelcomePage()
         {
+            VerticalAlignment = VerticalAlignment.Stretch;
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+
             var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
 
             //Padding = new(10,0,0,0);
