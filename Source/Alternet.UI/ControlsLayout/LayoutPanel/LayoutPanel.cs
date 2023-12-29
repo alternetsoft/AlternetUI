@@ -20,6 +20,7 @@
         /// <summary>
         /// Gets or sets layout style of the child controls.
         /// </summary>
+        [Browsable(false)]
         public GenericLayoutStyle Layout
         {
             get
