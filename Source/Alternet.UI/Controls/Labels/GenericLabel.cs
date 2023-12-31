@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class GenericLabel : UserPaintControl
+    /// <summary>
+    /// Implements generic label control.
+    /// </summary>
+    public class GenericLabel : UserPaintControl
     {
         private string text = string.Empty;
 
+        /// <inheritdoc/>
         [DefaultValue("")]
         [Localizability(LocalizationCategory.Text)]
         public override string Text
