@@ -90,6 +90,7 @@ namespace PropertyGridSample
                     typeof(CardPanelHeader),
                     typeof(CardPanel),
                     typeof(SplittedPanel),
+                    typeof(SpeedButton),
                 ];
 
                 Type[] badParentTypes =

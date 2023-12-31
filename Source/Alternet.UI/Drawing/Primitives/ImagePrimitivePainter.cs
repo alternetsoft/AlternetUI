@@ -11,6 +11,8 @@ namespace Alternet.Drawing
     {
         public Image? Image;
 
+        public ImageSet? ImageSet;
+
         public PointD DestPoint;
 
         public SizeD? Size;
@@ -46,36 +48,38 @@ namespace Alternet.Drawing
 
         public void Draw(Control control, Graphics dc)
         {
-            if (Image.IsNullOrEmpty(Image) || !Visible)
+            var image = Image;
+
+            if (Image.IsNullOrEmpty(image) || !Visible)
                 return;
 
             if(Size is null)
             {
-                dc.DrawImage(Image, DestPoint);
+                dc.DrawImage(image, DestPoint);
                 return;
             }
 
             if (Stretch)
             {
                 if (SourceRect is null)
-                    dc.DrawImage(Image, DestRect);
+                    dc.DrawImage(image, DestRect);
                 else
-                    dc.DrawImage(Image, DestRect, SourceRect.Value);
+                    dc.DrawImage(image, DestRect, SourceRect.Value);
             }
             else
             {
                 if (CenterHorzOrVert)
                 {
-                    var imageRect = SourceRect ?? Image.BoundsDip(control);
+                    var imageRect = SourceRect ?? image.BoundsDip(control);
                     var destRect = DestRect;
                     var centeredRect = imageRect.CenterIn(destRect, CenterHorz, CenterVert);
                     if (SourceRect is null)
-                        dc.DrawImage(Image, centeredRect);
+                        dc.DrawImage(image, centeredRect);
                     else
-                        dc.DrawImage(Image, centeredRect, SourceRect.Value);
+                        dc.DrawImage(image, centeredRect, SourceRect.Value);
                 }
                 else
-                    dc.DrawImage(Image, DestPoint);
+                    dc.DrawImage(image, DestPoint);
             }
         }
     }

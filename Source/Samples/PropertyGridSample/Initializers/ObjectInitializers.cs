@@ -37,48 +37,33 @@ namespace PropertyGridSample
         private static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
         private static int newItemIndex = 0;
 
+        static void SetBackgrounds(Control control)
+        {
+            control.Backgrounds = new()
+            {
+                Normal = Color.PaleTurquoise.AsBrush,
+                Hovered = Color.IndianRed.AsBrush,
+                Disabled = Color.DarkGray.AsBrush,
+                Pressed = Color.Cornsilk.AsBrush,
+                Focused = Color.DarkOrange.AsBrush,
+            };
+        }
+
         static ObjectInitializers()
         {
+            Actions.Add(typeof(ContextMenu), InitContextMenu);
+            Actions.Add(typeof(SplittedPanel), InitSplittedPanel);
+            Actions.Add(typeof(ScrollViewer), InitScrollViewer);
+            Actions.Add(typeof(HorizontalStackPanel), InitStackPanel);
+            Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
+            Actions.Add(typeof(StackPanel), InitStackPanel);
+            Actions.Add(typeof(ScrollBar), InitScrollBar);
+            Actions.Add(typeof(SpeedButton), InitSpeedButton);
+            Actions.Add(typeof(PictureBox), InitPictureBox);
+
             const int defaultListHeight = 250;
             SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
 
-            static void SetBackgrounds(Control control)
-            {
-                control.Backgrounds = new()
-                {
-                    Normal = Color.PaleTurquoise.AsBrush,
-                    Hovered = Color.IndianRed.AsBrush,
-                    Disabled = Color.DarkGray.AsBrush,
-                    Pressed = Color.Cornsilk.AsBrush,
-                    Focused = Color.DarkOrange.AsBrush,
-                };
-            }
-
-            Actions.Add(typeof(PictureBox), (c) =>
-            {
-                PictureBox pictureBox = (c as PictureBox)!;
-                pictureBox.ImageStretch = false;
-                SetBackgrounds(pictureBox);
-                pictureBox.SuggestedSize = 150;
-                
-                pictureBox.Borders ??= new();
-                var border = BorderSettings.Default.Clone();
-                border.UniformCornerRadius = 15;
-                border.UniformRadiusIsPercent = true;
-                pictureBox.Borders.SetAll(border);
-
-                pictureBox.Image = DefaultImage;
-
-                var disabledImage = DefaultImage.ToGrayScale();
-                pictureBox.SetImage(disabledImage, GenericControlState.Disabled);
-
-                pictureBox.CurrentStateChanged += CurrentStateChanged;
-
-                static void CurrentStateChanged(object? sender, EventArgs e)
-                {
-                    Application.LogNameValue("PictureBox.CurrentState", (sender as PictureBox)?.CurrentState);
-                }
-            });
 
             Actions.Add(typeof(Slider), (c) =>
             {
@@ -112,21 +97,11 @@ namespace PropertyGridSample
                 }
             });
 
-            Actions.Add(typeof(ContextMenu), InitContextMenu);
-            Actions.Add(typeof(SplittedPanel), InitSplittedPanel);
-
             Actions.Add(typeof(Label), (c) =>
             { 
                 (c as Label)!.Text = "Label";
                 (c as Label)!.HorizontalAlignment = HorizontalAlignment.Left;
             });
-
-            Actions.Add(typeof(ScrollViewer), InitScrollViewer);
-            Actions.Add(typeof(HorizontalStackPanel), InitStackPanel);
-            Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
-            Actions.Add(typeof(StackPanel), InitStackPanel);
-
-            Actions.Add(typeof(ScrollBar), InitScrollBar);
 
             Actions.Add(typeof(StatusBar), (c) =>
             {

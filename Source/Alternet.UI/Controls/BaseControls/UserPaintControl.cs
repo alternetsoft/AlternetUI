@@ -186,6 +186,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="Caret"/> associated with this control.
         /// </summary>
+        [Browsable(false)]
         public Caret? Caret
         {
             get

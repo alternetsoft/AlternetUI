@@ -158,6 +158,28 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.PictureBox;
 
+        /// <summary>
+        /// Gets or sets the image that is displayed by <see cref="PictureBox"/>.
+        /// </summary>
+        internal ImageSet? ImageSet
+        {
+            get
+            {
+                return StateObjects?.ImageSets?.GetObjectOrNull(GenericControlState.Normal);
+            }
+
+            set
+            {
+                if (ImageSet == value)
+                    return;
+                StateObjects ??= new();
+                StateObjects.ImageSets ??= new();
+                StateObjects.ImageSets.Normal = value;
+                RaiseImageChanged(EventArgs.Empty);
+                Invalidate();
+            }
+        }
+
         [Browsable(false)]
         internal new Color? ForegroundColor
         {
@@ -224,6 +246,7 @@ namespace Alternet.UI
             var state = CurrentState;
 
             primitive.Image = StateObjects?.Images?.GetObjectOrNormal(state);
+            primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
             primitive.DestRect = rect;
             primitive.Draw(this, dc);
 
