@@ -2037,6 +2037,104 @@ namespace Alternet.UI
         public virtual ControlTypeId ControlKind => ControlTypeId.Control;
 
         /// <summary>
+        /// Gets or sets value indicating whether this control accepts
+        /// input or not (i.e. behaves like a static text) and so doesn't need focus.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool AcceptsFocus
+        {
+            get
+            {
+                var result = NativeControl?.AcceptsFocus;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (NativeControl is null)
+                    return;
+                NativeControl.AcceptsFocus = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating whether this control accepts
+        /// focus from keyboard or not.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        /// <returns>
+        /// Return false to indicate that while this control can,
+        /// in principle, have focus if the user clicks
+        /// it with the mouse, it shouldn't be included
+        /// in the TAB traversal chain when using the keyboard.
+        /// </returns>
+        [Browsable(false)]
+        public virtual bool AcceptsFocusFromKeyboard
+        {
+            get
+            {
+                var result = NativeControl?.AcceptsFocusFromKeyboard;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (NativeControl is null)
+                    return;
+                NativeControl.AcceptsFocusFromKeyboard = value;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether this control or one of its children accepts focus.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool AcceptsFocusRecursively
+        {
+            get
+            {
+                var result = NativeControl?.AcceptsFocusRecursively;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (NativeControl is null)
+                    return;
+                NativeControl.AcceptsFocusRecursively = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets all focus related properties (<see cref="AcceptsFocus"/>,
+        /// <see cref="AcceptsFocusFromKeyboard"/>, <see cref="AcceptsFocusRecursively"/>) in one call.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool AcceptsFocusAll
+        {
+            get
+            {
+                var result = NativeControl?.AcceptsFocusAll;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (NativeControl is null)
+                    return;
+                NativeControl.AcceptsFocusAll = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether <see cref="Idle"/> event is fired.
         /// </summary>
         [Browsable(false)]
