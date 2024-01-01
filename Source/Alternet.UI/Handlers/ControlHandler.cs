@@ -418,7 +418,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
-            Control.PerformDefaultControlLayout();
+            Control.PerformDefaultLayout(Control);
         }
 
         /// <summary>
@@ -431,9 +431,7 @@ namespace Alternet.UI
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
-            if (Control.HasChildren || HasVisualChildren)
-                return GetSpecifiedOrChildrenPreferredSize(availableSize);
-            return GetNativeControlSize(availableSize);
+            return UI.Control.GetPreferredSizeDefaultLayout(Control, availableSize);
         }
 
         /// <summary>
@@ -576,6 +574,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the size of the control specified in its
+        /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
+        /// properties or calculates preferred size from its children.
+        /// </summary>
+        public SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
+        {
+            var specifiedWidth = Control.SuggestedWidth;
+            var specifiedHeight = Control.SuggestedHeight;
+            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+                return new SizeD(specifiedWidth, specifiedHeight);
+
+            var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
+            var maxWidth = maxSize.Width;
+            var maxHeight = maxSize.Height;
+
+            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
+            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
+
+            return new SizeD(width, height);
+        }
+
+        /// <summary>
         /// Sets input focus to the control.
         /// </summary>
         /// <returns><see langword="true"/> if the input focus request was successful;
@@ -635,6 +655,17 @@ namespace Alternet.UI
 
         internal Graphics CreateGraphics() => CreateDrawingContext();
 
+        internal SizeD GetNativeControlSize(SizeD availableSize)
+        {
+            if (Control.IsDummy)
+                return SizeD.Empty;
+            var s = NativeControl?.GetPreferredSize(availableSize) ?? SizeD.Empty;
+            s += Control.Padding.Size;
+            return new SizeD(
+                double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
+                double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
+        }
+
         internal Graphics CreateDrawingContext()
         {
             var nativeControl = NativeControl;
@@ -676,28 +707,6 @@ namespace Alternet.UI
         protected virtual void OnIsVisualChildChanged()
         {
             DisposeNativeControl();
-        }
-
-        /// <summary>
-        /// Gets the size of the control specified in its
-        /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
-        /// properties or calculates preferred size from its children.
-        /// </summary>
-        protected SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
-        {
-            var specifiedWidth = Control.SuggestedWidth;
-            var specifiedHeight = Control.SuggestedHeight;
-            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
-                return new SizeD(specifiedWidth, specifiedHeight);
-
-            var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
-            var maxWidth = maxSize.Width;
-            var maxHeight = maxSize.Height;
-
-            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
-            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
-
-            return new SizeD(width, height);
         }
 
         /// <summary>
@@ -879,17 +888,6 @@ namespace Alternet.UI
 
             Control.Children.ItemRemoved += Children_ItemRemoved;
             VisualChildren.ItemRemoved += Children_ItemRemoved;
-        }
-
-        private protected SizeD GetNativeControlSize(SizeD availableSize)
-        {
-            if (Control.IsDummy)
-                return SizeD.Empty;
-            var s = NativeControl?.GetPreferredSize(availableSize) ?? SizeD.Empty;
-            s += Control.Padding.Size;
-            return new SizeD(
-                double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
-                double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
         }
 
         private protected virtual void OnNativeControlCreated()

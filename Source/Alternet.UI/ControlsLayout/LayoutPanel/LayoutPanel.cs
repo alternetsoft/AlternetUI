@@ -37,8 +37,8 @@
             }
         }
 
-        internal new NativeLayoutPanelHandler Handler =>
-            (NativeLayoutPanelHandler)base.Handler;
+        internal new LayoutPanelHandler Handler =>
+            (LayoutPanelHandler)base.Handler;
 
         /// <summary>
         /// Sets which control borders are docked to its parent control
@@ -165,7 +165,7 @@
         /// <inheritdoc />
         protected override ControlHandler CreateHandler()
         {
-            return new NativeLayoutPanelHandler();
+            return new LayoutPanelHandler();
         }
 
         /// <inheritdoc />

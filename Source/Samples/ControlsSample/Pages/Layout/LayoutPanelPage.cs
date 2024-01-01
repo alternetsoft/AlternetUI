@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace ControlsSample
 {
-    internal partial class LayoutPanelPage : Control
+    internal partial class LayoutPanelPage : StackPanel
     {
         static LayoutPanelPage()
         {
@@ -22,6 +22,15 @@ namespace ControlsSample
 
         public void Initialize()
         {
+            HorizontalStackPanel btnPanel = new();
+            btnPanel.Visible = false;
+
+            ComboBox comboBox = new();
+            comboBox.Parent = btnPanel;
+            comboBox.Margin = 5;
+
+            btnPanel.Parent = this;
+
             static Control Create(params string[] items)
             {
                 ListBox listBox = new()
@@ -38,6 +47,8 @@ namespace ControlsSample
             var cBottom = Create("Control 4", "Dock = Bottom");
             var cFill = Create("Control 5", "Dock = Fill");
             LayoutPanel layoutPanel = new();
+
+            comboBox.BindEnumProp(layoutPanel, nameof(LayoutPanel.Layout));
 
             cRight.Dock = DockStyle.Right;
             cLeft.Dock = DockStyle.Left;

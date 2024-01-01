@@ -14,6 +14,39 @@ namespace Alternet.UI
             Native.Control.NotifyCaptureLost();
         }
 
+        internal static void PerformDefaultLayout(Control container)
+        {
+            var childrenLayoutBounds = container.ChildrenLayoutBounds;
+            foreach (var control in container.Handler.AllChildrenIncludedInLayout)
+            {
+                var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
+
+                var horizontalPosition =
+                    AlignedLayout.AlignHorizontal(
+                        childrenLayoutBounds,
+                        control,
+                        preferredSize);
+                var verticalPosition =
+                    AlignedLayout.AlignVertical(
+                        childrenLayoutBounds,
+                        control,
+                        preferredSize);
+
+                control.Handler.Bounds = new RectD(
+                    horizontalPosition.Origin,
+                    verticalPosition.Origin,
+                    horizontalPosition.Size,
+                    verticalPosition.Size);
+            }
+        }
+
+        internal static SizeD GetPreferredSizeDefaultLayout(Control container, SizeD availableSize)
+        {
+            if (container.HasChildren || container.Handler.HasVisualChildren)
+                return container.Handler.GetSpecifiedOrChildrenPreferredSize(availableSize);
+            return container.Handler.GetNativeControlSize(availableSize);
+        }
+
         internal static Color GetClassDefaultAttributesBgColor(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
@@ -136,32 +169,6 @@ namespace Alternet.UI
 
         internal void RaiseChildRemoved(Control childControl) =>
             OnChildInserted(childControl);
-
-        internal void PerformDefaultControlLayout()
-        {
-            var childrenLayoutBounds = ChildrenLayoutBounds;
-            foreach (var control in Handler.AllChildrenIncludedInLayout)
-            {
-                var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
-
-                var horizontalPosition =
-                    AlignedLayout.AlignHorizontal(
-                        childrenLayoutBounds,
-                        control,
-                        preferredSize);
-                var verticalPosition =
-                    AlignedLayout.AlignVertical(
-                        childrenLayoutBounds,
-                        control,
-                        preferredSize);
-
-                control.Handler.Bounds = new RectD(
-                    horizontalPosition.Origin,
-                    verticalPosition.Origin,
-                    horizontalPosition.Size,
-                    verticalPosition.Size);
-            }
-        }
 
         internal void RaisePaint(PaintEventArgs e)
         {

@@ -22,8 +22,7 @@ namespace Alternet.UI
         Native,
 
         /// <summary>
-        /// Uses <see cref="LayoutPanel.GetDock"/> and <see cref="LayoutPanel.SetDock"/> setting
-        /// for layout of the children.
+        /// Uses <see cref="Control.Dock"/> setting for layout of the children.
         /// </summary>
         DockStyle,
 
@@ -41,10 +40,5 @@ namespace Alternet.UI
         /// Layout as <see cref="HorizontalStackPanel"/>.
         /// </summary>
         HorizontalStack,
-
-        /// <summary>
-        /// Layout as <see cref="Grid"/> control.
-        /// </summary>
-        Grid,
     }
 }
