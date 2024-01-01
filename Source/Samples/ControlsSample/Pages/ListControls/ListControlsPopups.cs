@@ -39,6 +39,7 @@ namespace ControlsSample
             showPopupListBoxButton.Parent = panel;
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
 
+            popupListBox.Parent = this;
             popupListBox.MainControl.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
             popupListBox.MainControl.MouseLeftButtonDown += PopupListBox_MouseLeftButtonDown;
             popupListBox.MainControl.SelectionChanged += PopupListBox_SelectionChanged;

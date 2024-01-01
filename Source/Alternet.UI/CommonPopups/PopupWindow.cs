@@ -186,7 +186,7 @@ namespace Alternet.UI
         {
             PopupOwner = control;
 
-            var posDip = control.ClientToScreen((0, 0));
+            var posDip = control.ClientToScreen(new PointD(0, 0));
             var szDip = control.Size;
             var sz = (0, szDip.Height);
 

@@ -18,6 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public Popup()
         {
+            IgnoreLayout = true;
             SetVisibleValue(false);
 
             Bounds = new RectD(0, 0, 100, 100);
