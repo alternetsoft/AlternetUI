@@ -1,5 +1,24 @@
 # 0.9.411 (work in progress)
 
+## 2024 January 1
+
+- Added SplittedPanel. Panel with top, bottom, left, right sub-panels and splitters.
+- Added SpeedButton control.
+- Cursors: HSplit, VSplit.
+- Control.ContextMenuStrip. You can assign here ContextMenu and it will be shown on mouse right-click.
+- ContextMenu: Opening, OnOpening.
+- Fixed Keys to Key convertion.
+- Fixed PictureBox.Image #76.
+- Fixed Control mouse capture lost handling.
+- RectD: Left, Top, Right, Bottom set methods.
+- DrawingUtils: new drawing methods (DrawVertLine, DrawHorzLine, FillRectangleBorder, etc.).
+- Fixed PictureBox Height not work #77.
+- Control: new focus related props (AcceptsFocus, AcceptsFocusFromKeyboard, AcceptsFocusRecursively, AcceptsFocusAll). 
+- GenericLabel control made public.
+- Fixed Graphics.GetClippingBox.
+- Control.IgnoreLayout property. If True control is not used in container layout.
+- LayoutPanel.Layout property now works.
+
 ## 2023 December 27
 
 - Added Splitter (can see demo in ControlsSample - Layout - LayoutPanel).
