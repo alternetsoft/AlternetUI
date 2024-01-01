@@ -96,6 +96,19 @@ namespace ControlsSample
             /*splitterPanel.SplitHorizontalDip(pageContainer, eventsControl, -150);*/
             pageContainer.SelectedIndex = 0;
             pageContainer.TreeView.SetFocusIfPossible();
+
+            this.SizeChanged += MainWindow_SizeChanged;
+            this.StateChanged += MainWindow_StateChanged;
+        }
+
+        private void MainWindow_StateChanged(object? sender, EventArgs e)
+        {
+            Application.Log($"State changed: {Size}, {this.State}");
+        }
+
+        private void MainWindow_SizeChanged(object? sender, EventArgs e)
+        {
+            Application.Log($"Size changed: {Size}, {this.State}");
         }
 
         Control CreateCustomPage(NameValue<Func<Control>>[] pages)
