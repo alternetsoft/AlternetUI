@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -231,6 +232,7 @@ namespace ControlsSample
             LogEvent(linkLabel.Url);
         }
 
+        [Browsable(false)]
         public string? LastEventMessage => eventsControl.LastLogMessage;
 
         public void LogEventSmart(string? message, string? prefix)
