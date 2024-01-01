@@ -13,7 +13,7 @@ namespace Alternet.UI
         public override void OnLayout()
         {
             if (Control.Layout == GenericLayoutStyle.Default)
-                LayoutDockStyle.Layout(Control, Control.ChildrenLayoutBounds);
+                LayoutPanel.PerformDockStyleLayout(Control);
         }
 
         internal override Native.Control CreateNativeControl()

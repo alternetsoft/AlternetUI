@@ -129,6 +129,11 @@
             return control.ExtendedProps.DistanceRight;
         }
 
+        internal static void PerformDockStyleLayout(Control control)
+        {
+            LayoutDockStyle.Layout(control, control.ChildrenLayoutBounds);
+        }
+
         internal static void SetDistanceBottom(Control control, double value)
         {
             if (control == null)

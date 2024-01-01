@@ -93,7 +93,7 @@ namespace Alternet.UI
             for (int i = children.Count - 1; i >= 0; i--)
             {
                 Control child = children[i];
-                if (!child.Visible)
+                if (!child.Visible || child.IgnoreLayout)
                     continue;
 
                 SizeD child_size = child.Bounds.Size;
