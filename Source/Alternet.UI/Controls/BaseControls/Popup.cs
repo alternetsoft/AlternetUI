@@ -158,6 +158,14 @@ namespace Alternet.UI
             Handler.SetSizeToContent(mode);
         }
 
+        /// <summary>
+        /// Popup the window (this will show it too).
+        /// </summary>
+        /// <param name="focusControl">If this is non-NULL, it will be kept focused
+        /// while this window is shown, otherwise this window itself will receive focus.
+        /// In any case, the
+        /// popup will disappear automatically if it loses focus because of a
+        /// user action.</param>
         public void DoPopup(Control? focusControl = null)
         {
             if (focusControl is null)
@@ -166,6 +174,9 @@ namespace Alternet.UI
                 Handler.NativeControl.DoPopup(focusControl.WxWidget);
         }
 
+        /// <summary>
+        /// Hide the popup window.
+        /// </summary>
         public void Dismiss()
         {
             Handler.NativeControl.Dismiss();
