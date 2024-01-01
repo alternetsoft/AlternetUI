@@ -226,7 +226,7 @@ namespace Alternet::UI
         DelayedValue<Control, Color> _foregroundColor;
         DelayedValue<Control, ScrollInfo> _verticalScrollBarInfo;
         DelayedValue<Control, ScrollInfo> _horizontalScrollBarInfo;
-        DelayedValue<Control, Rect> _bounds;
+        /*DelayedValue<Control, Rect> _bounds;*/
 
         DelayedValue<Control, Size> _minimumSize;
         DelayedValue<Control, Size> _maximumSize;

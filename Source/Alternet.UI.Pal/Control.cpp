@@ -136,8 +136,8 @@ namespace Alternet::UI
             }),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated,
                 &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
-            _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds,
-                &Control::ApplyBounds),
+            /*_bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds,
+                &Control::ApplyBounds),*/
             _foregroundColor(*this, Color(), &Control::IsWxWindowCreated,
                 &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
 
@@ -150,7 +150,7 @@ namespace Alternet::UI
                 &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
             _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
                 &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
-            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor,
+            _delayedValues({&_delayedFlags, /*&_bounds,*/ &_backgroundColor,
                 &_foregroundColor,&_horizontalScrollBarInfo,
                 &_verticalScrollBarInfo,&_minimumSize,&_maximumSize})
     {
@@ -1548,7 +1548,13 @@ namespace Alternet::UI
 
     Rect Control::GetBounds()
     {
-        return _bounds.Get();
+        return RetrieveBounds()/*_bounds.Get()*/;
+    }
+
+    void Control::SetBounds(const Rect& value)
+    {
+        ApplyBounds(value);
+        /*_bounds.Set(value);*/
     }
 
     void Control::SetBoundsEx(const Rect& value, int flags)
@@ -1561,11 +1567,6 @@ namespace Alternet::UI
     {
         auto wxWindow = GetWxWindow();
         wxWindow->RefreshRect(fromDip(rect, wxWindow), eraseBackground);
-    }
-
-    void Control::SetBounds(const Rect& value)
-    {
-        _bounds.Set(value);
     }
 
     bool Control::GetVisible()
