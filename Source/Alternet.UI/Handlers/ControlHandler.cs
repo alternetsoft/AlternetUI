@@ -244,7 +244,7 @@ namespace Alternet.UI
         /// collection included in layout (i.e. visible).
         /// </summary>
         public virtual IEnumerable<Control> AllChildrenIncludedInLayout
-            => AllChildren.Where(x => x.Visible);
+            => AllChildren.Where(x => x.Visible && !x.IgnoreLayout);
 
         /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.

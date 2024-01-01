@@ -404,6 +404,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether layout rules are ignored for this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IgnoreLayout { get; set; }
+
+        /// <summary>
         /// Gets or sets which control borders are docked to its parent control and determines
         /// how a control is resized with its parent.
         /// </summary>
