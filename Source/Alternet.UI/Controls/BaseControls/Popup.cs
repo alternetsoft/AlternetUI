@@ -158,6 +158,19 @@ namespace Alternet.UI
             Handler.SetSizeToContent(mode);
         }
 
+        public void DoPopup(Control? focusControl = null)
+        {
+            if (focusControl is null)
+                Handler.NativeControl.DoPopup(default);
+            else
+                Handler.NativeControl.DoPopup(focusControl.WxWidget);
+        }
+
+        public void Dismiss()
+        {
+            Handler.NativeControl.Dismiss();
+        }
+
         /*/// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.
         /// </summary>

@@ -11,6 +11,9 @@ namespace NativeApi.Api
         public bool IsTransient { get; set; }
         public bool PuContainsControls { get; set; }
 
+        public void DoPopup(IntPtr focus) { }
+        public void Dismiss() { }
+
         public void Position(PointI ptOrigin, SizeI sizePopup) { }
     }
 }

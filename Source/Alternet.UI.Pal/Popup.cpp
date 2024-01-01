@@ -87,6 +87,27 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    void Popup::DoPopup(void* focus)
+    {
+        auto p = GetWxTransientPopup();
+        if (p == nullptr)
+            return;
+        p->Popup((wxWindow*)focus);
+    }
+
+    void Popup::Dismiss()
+    {
+        auto p = GetWxTransientPopup();
+        if (p == nullptr)
+            return;
+        p->Dismiss();
+    }
+
+    wxPopupTransientWindow* Popup::GetWxTransientPopup()
+    {
+        return dynamic_cast<wxPopupTransientWindow*>(GetWxWindow());
+    }
+
     wxPopupWindow* Popup::GetWxPopup()
     {
         return dynamic_cast<wxPopupWindow*>(GetWxWindow());

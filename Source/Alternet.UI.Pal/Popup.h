@@ -20,6 +20,8 @@ namespace Alternet::UI
 
         wxPopupWindow* GetWxPopup();
 
+        wxPopupTransientWindow* GetWxTransientPopup();
+
         bool _isTransient = true;
         bool _puContainsControls = true;
 

@@ -222,7 +222,7 @@ namespace Alternet.UI
             /*Location = ptOrigin;*/
             SetSizeToContent();
             SetPositionInDips(ptOrigin, sizePopup);
-            Show();
+            DoPopup();
             FocusChildControl();
 
             /*Application.LogNameValueIf("Popup:", Location, LogDebugInfo && false);*/
