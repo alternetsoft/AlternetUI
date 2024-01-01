@@ -1334,7 +1334,7 @@ namespace Alternet.Drawing
         /// </returns>
         public RectD GetClippingBox()
         {
-            return GetClippingBox();
+            return dc.GetClippingBox();
         }
 
         /// <inheritdoc/>
