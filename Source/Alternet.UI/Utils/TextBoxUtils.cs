@@ -37,6 +37,34 @@ namespace Alternet.UI
         /// <summary>
         /// Shows 'Go To Line' dialog.
         /// </summary>
+        /// <param name="lines">Number of lines.</param>
+        /// <param name="line">Current line number.</param>
+        /// <param name="owner">Dialog owner.</param>
+        /// <returns></returns>
+        public static DialogResult ShowDialogGoToLine(
+            int lines,
+            ref int line,
+            Control? owner)
+        {
+            var lastLineNumber = lines;
+            var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
+            var result = DialogFactory.GetNumberFromUser(
+                null,
+                prompt,
+                CommonStrings.Default.WindowTitleGoToLine,
+                line + 1,
+                1,
+                lastLineNumber,
+                owner);
+            if (result is null)
+                return DialogResult.Cancel;
+            line = (int)result.Value - 1;
+            return DialogResult.OK;
+        }
+
+        /// <summary>
+        /// Shows 'Go To Line' dialog.
+        /// </summary>
         /// <remarks>
         /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
         /// interface.
