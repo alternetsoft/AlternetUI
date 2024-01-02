@@ -90,6 +90,7 @@ namespace PaintSample
             testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
             testMenu.Add("Make file grey...", DoMakeFileGray);
             testMenu.Add("Sample draw", DoDrawOnBitmap);
+            testMenu.Add("Rotate", DoRotate);
 
             helpMainMenu = new("_Help");
             menu.Add(helpMainMenu);
@@ -508,6 +509,14 @@ namespace PaintSample
             var greyBm = (Bitmap)image;
             greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
             Document.Bitmap = greyBm;
+        }
+
+        public void DoRotate()
+        {
+            var bitmap = Document.Bitmap;
+            GenericImage image = (GenericImage)bitmap;
+            var newImage = image.Rotate90(); 
+            Document.Bitmap = (Bitmap)newImage;
         }
 
         public unsafe void DoGenImageUseGetData()
