@@ -25,8 +25,6 @@ namespace PropertyGridSample
 
             button.Image = images.ImgOk.AsImage(32);
             button.DisabledImage = imagesDisabled.ImgOk.AsImage(32);
-
-            button.DisabledImage.Save(@"e:\aaa.png");
         }
     }
 }
