@@ -967,6 +967,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets child with the specified id.
+        /// </summary>
+        /// <param name="id">Child control id.</param>
+        public Control? FindChild(ObjectUniqueId? id)
+        {
+            if (id is null)
+                return null;
+            foreach (var item in Children)
+            {
+                if (item.UniqueId == id)
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Forces the control to apply layout logic to child controls.
         /// </summary>
         /// <remarks>
