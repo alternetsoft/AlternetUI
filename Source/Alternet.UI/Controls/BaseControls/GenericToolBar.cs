@@ -48,6 +48,21 @@ namespace Alternet.UI
         public static Thickness DefaultTextMargin { get; set; } = (4, 0, 4, 0);
 
         /// <summary>
+        /// Gets or sets default color of the separator item.
+        /// </summary>
+        public static Color DefaultSeparatorColor { get; set; } = SystemColors.GrayText;
+
+        /// <summary>
+        /// Gets or sets default width of the separator item.
+        /// </summary>
+        public static double DefaultSeparatorWidth { get; set; } = 1;
+
+        /// <summary>
+        /// Gets or sets default margin of the separator item.
+        /// </summary>
+        public static Thickness DefaultSeparatorMargin { get; set; } = (4, 4, 4, 4);
+
+        /// <summary>
         /// Adds toolbar item.
         /// </summary>
         /// <param name="text">Item text.</param>
@@ -81,8 +96,7 @@ namespace Alternet.UI
                 speedButton.DisabledImage = imageDisabled;
             }
 
-            if (BackgroundColor is not null)
-                speedButton.BackgroundColor = BackgroundColor;
+            UpdateItemProps(speedButton);
 
             speedButton.Click += action;
             panel.Children.Add(speedButton);
@@ -117,8 +131,7 @@ namespace Alternet.UI
                 Margin = DefaultTextMargin,
             };
 
-            if (BackgroundColor is not null)
-                label.BackgroundColor = BackgroundColor;
+            UpdateItemProps(label);
             label.Parent = panel;
             return label.UniqueId;
         }
@@ -127,7 +140,7 @@ namespace Alternet.UI
         /// Adds an empty space with the specified or default size.
         /// </summary>
         /// <param name="size">Optional spacer size.</param>
-        /// <returns></returns>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSpacer(double? size = null)
         {
             Panel control = new()
@@ -135,16 +148,31 @@ namespace Alternet.UI
                 SuggestedSize = size ?? DefaultSpacerSize,
             };
 
-            if (BackgroundColor is not null)
-                control.BackgroundColor = BackgroundColor;
+            UpdateItemProps(control);
 
             control.Parent = panel;
             return control.UniqueId;
         }
 
-        /*public virtual ObjectUniqueId AddSeparator()
+        /// <summary>
+        /// Adds separator item (vertical line).
+        /// </summary>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddSeparator()
         {
-        }*/
+            Border border = new()
+            {
+                BorderColor = DefaultSeparatorColor,
+                BorderWidth = (DefaultSeparatorWidth, 0, 0, 0),
+                SuggestedWidth = DefaultSeparatorWidth,
+                Margin = DefaultSeparatorMargin,
+            };
+
+            UpdateItemProps(border);
+
+            border.Parent = panel;
+            return border.UniqueId;
+        }
 
         /// <summary>
         /// Sets 'Visible' property of the item.
@@ -170,6 +198,58 @@ namespace Alternet.UI
             if (item is null)
                 return;
             item.Enabled = enabled;
+        }
+
+        /// <summary>
+        /// Gets drop down menu of the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual ContextMenu? GetToolDropDownMenu(ObjectUniqueId id)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return null;
+            return item.DropDownMenu;
+        }
+
+        /// <summary>
+        /// Gets location of the popup window for the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <returns>Popup window location in screen coordinates.</returns>
+        public PointD? GetToolPopupLocation(ObjectUniqueId toolId)
+        {
+            RectD toolRect = GetToolRect(toolId);
+            PointD pt = ClientToScreen(toolRect.BottomLeft);
+            return pt;
+        }
+
+        /// <summary>
+        /// Returns the specified tool rectangle in the toolbar.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <returns>Position and size of the tool in the toolbar in device-independent units
+        /// (1/96 inch).</returns>
+        public RectD GetToolRect(ObjectUniqueId toolId)
+        {
+            var item = FindTool(toolId);
+            if (item is null)
+                return RectD.Empty;
+            return item.Bounds;
+        }
+
+        /// <summary>
+        /// Sets drop down menu of the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="menu"><see cref="ContextMenu"/> to use as drop down menu.</param>
+        public virtual void SetToolDropDownMenu(ObjectUniqueId id, ContextMenu? menu)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.DropDownMenu = menu;
         }
 
         /// <summary>
@@ -290,6 +370,20 @@ namespace Alternet.UI
         public virtual Control? GetToolControl(ObjectUniqueId id)
         {
             return panel.FindChild(id);
+        }
+
+        /// <summary>
+        /// Updates common properties of the item control.
+        /// </summary>
+        /// <param name="control">Control which properties to update.</param>
+        /// <remarks>
+        /// This method is called when new item is added, it updates
+        /// <see cref="Control.BackgroundColor"/> and other properties.
+        /// </remarks>
+        protected virtual void UpdateItemProps(Control control)
+        {
+            if (BackgroundColor is not null)
+                control.BackgroundColor = BackgroundColor;
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)

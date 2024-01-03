@@ -40,6 +40,15 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonOpen,
                 ButtonClick);
 
+            ContextMenu? menu = new();
+
+            menu.Add("Item 1").ClickAction = ()=> { Application.Log("Item 1 clicked"); };
+            menu.Add("Item 2").ClickAction = () => { Application.Log("Item 2 clicked"); };
+
+            toolbar.SetToolDropDownMenu(buttonIdOpen, menu);
+
+            var separatorId = toolbar.AddSeparator();
+
             var buttonIdSave = toolbar.Add(
                 CommonStrings.Default.ButtonSave,
                 images.ImgFileSave,
@@ -62,14 +71,14 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonUndo,
                 ButtonClick);
 
-            var buttonIdRedo = toolbar.Add(
+            /*var buttonIdRedo = toolbar.Add(
                 CommonStrings.Default.ButtonRedo,
                 images.ImgRedo,
                 imagesDisabled.ImgRedo,
                 CommonStrings.Default.ButtonRedo,
                 ButtonClick);
 
-            /*var buttonIdBold = toolbar.Add(
+            var buttonIdBold = toolbar.Add(
                 CommonStrings.Default.ButtonBold,
                 images.ImgBold,
                 imagesDisabled.ImgBold,
