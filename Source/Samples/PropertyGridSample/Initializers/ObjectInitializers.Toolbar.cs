@@ -16,8 +16,6 @@ namespace PropertyGridSample
             if (control is not GenericToolBar toolbar)
                 return;
 
-            toolbar.BackColor = Color.FloralWhite;
-
             var imageSize = Toolbar.GetDefaultImageSize(toolbar);
 
             var normalColor = toolbar.GetSvgColor(KnownSvgColor.Normal);
