@@ -53,6 +53,28 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the disabled image that is displayed by <see cref="PictureBox"/>.
+        /// </summary>
+        public Image? DisabledImage
+        {
+            get
+            {
+                return StateObjects?.Images?.GetObjectOrNull(GenericControlState.Disabled);
+            }
+
+            set
+            {
+                if (DisabledImage == value)
+                    return;
+                StateObjects ??= new();
+                StateObjects.Images ??= new();
+                StateObjects.Images.Disabled = value;
+                RaiseImageChanged(EventArgs.Empty);
+                Invalidate();
+            }
+        }
+
         /// <inheritdoc cref="Control.Background"/>
         [Browsable(true)]
         public override Brush? Background
@@ -245,7 +267,9 @@ namespace Alternet.UI
             var primitive = Primitive;
             var state = CurrentState;
 
-            primitive.Image = StateObjects?.Images?.GetObjectOrNormal(state);
+            var image = StateObjects?.Images?.GetObjectOrNull(state);
+            image ??= Image;
+            primitive.Image = image;
             primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
             primitive.DestRect = rect;
             primitive.Draw(this, dc);
