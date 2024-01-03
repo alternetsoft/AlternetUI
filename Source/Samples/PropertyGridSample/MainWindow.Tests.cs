@@ -17,6 +17,37 @@ namespace PropertyGridSample
         public Collection<object> ItemsObject { get; set; } = NewCollection<object>();
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
+        
+        void TestGenericToolBarVisible()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            var childId = control.GetToolId(2);
+            var enabled = control.GetToolVisible(childId);
+            enabled = !enabled;
+            control.SetToolVisible(childId, enabled);
+        }
+
+        void TestGenericToolBarEnabled()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            var childId = control.GetToolId(2);
+            var enabled = control.GetToolEnabled(childId);
+            enabled = !enabled;
+            control.SetToolEnabled(childId, enabled);
+        }
+
+        void TestGenericToolBarDelete()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            var childId = control.GetToolId(1);
+            control.DeleteTool(childId);
+        }
 
 #pragma warning disable
         internal void RunTests()

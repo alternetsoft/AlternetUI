@@ -15,7 +15,18 @@ namespace PropertyGridSample
             if (control is not SpeedButton button)
                 return;
             button.Text = "speedButton";
-            button.Image = KnownSvgImages.GetForSize(SystemColors.ControlText, 32).ImgOk.AsImage(32);
+
+            var images = KnownSvgImages.GetForSize(
+                button.GetSvgColor(KnownSvgColor.Normal),
+                32);
+            var imagesDisabled = KnownSvgImages.GetForSize(
+                button.GetSvgColor(KnownSvgColor.Disabled),
+                32);
+
+            button.Image = images.ImgOk.AsImage(32);
+            button.DisabledImage = imagesDisabled.ImgOk.AsImage(32);
+
+            button.DisabledImage.Save(@"e:\aaa.png");
         }
     }
 }

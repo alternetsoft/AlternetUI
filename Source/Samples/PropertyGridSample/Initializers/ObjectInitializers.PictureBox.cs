@@ -25,8 +25,7 @@ namespace PropertyGridSample
 
             pictureBox.Image = DefaultImage;
 
-            var disabledImage = DefaultImage.ToGrayScale();
-            pictureBox.SetImage(disabledImage, GenericControlState.Disabled);
+            pictureBox.DisabledImage = DefaultImage.ToGrayScale();
 
             pictureBox.CurrentStateChanged += CurrentStateChanged;
             pictureBox.Click += PictureBox_Click;

@@ -45,6 +45,11 @@ namespace PropertyGridSample
 #if DEBUG
             PropertyGrid.AddSimpleAction<PictureBox>("Test", PictureBoxTest);
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
+
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Visible", TestGenericToolBarVisible);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Enabled", TestGenericToolBarEnabled);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Delete", TestGenericToolBarDelete);
+
 #endif
 
             void Fn()
@@ -91,6 +96,7 @@ namespace PropertyGridSample
                     typeof(CardPanel),
                     typeof(SplittedPanel),
                     typeof(SpeedButton),
+                    typeof(GenericToolBar),
                 ];
 
                 Type[] badParentTypes =
