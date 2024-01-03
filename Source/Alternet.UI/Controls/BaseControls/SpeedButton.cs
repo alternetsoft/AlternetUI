@@ -49,11 +49,24 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
+        /// </summary>
+        public ContextMenu? DropDownMenu { get; set; }
+
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
+            if (e.Handled)
+                return;
             RaiseClick(EventArgs.Empty);
+            if (DropDownMenu is null)
+                return;
+            e.Handled = true;
+            PointD pt = (0, Bounds.Height);
+            this.ShowPopupMenu(DropDownMenu, pt.X, pt.Y);
+            Invalidate();
         }
 
         private void OnClickAction(object? sender, EventArgs? e)
