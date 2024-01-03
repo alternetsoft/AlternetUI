@@ -38,6 +38,16 @@ namespace Alternet.UI
         public static double DefaultSize { get; set; } = 24;
 
         /// <summary>
+        /// Gets or sets default spacer item size.
+        /// </summary>
+        public static double DefaultSpacerSize { get; set; } = 4;
+
+        /// <summary>
+        /// Gets or sets default margin of the static text item.
+        /// </summary>
+        public static Thickness DefaultTextMargin { get; set; } = (4, 0, 4, 0);
+
+        /// <summary>
         /// Adds toolbar item.
         /// </summary>
         /// <param name="text">Item text.</param>
@@ -60,6 +70,7 @@ namespace Alternet.UI
 
             SpeedButton speedButton = new()
             {
+                Text = text ?? string.Empty,
                 Image = image,
                 ToolTip = toolTip,
                 SuggestedSize = itemSize,
@@ -78,6 +89,62 @@ namespace Alternet.UI
 
             return speedButton.UniqueId;
         }
+
+        /// <summary>
+        /// Adds existing control to the toolbar.
+        /// </summary>
+        /// <param name="control">Control to add.</param>
+        /// <remarks>
+        /// You can use this method to add <see cref="TextBox"/> or <see cref="ComboBox"/>
+        /// to the toolbar.
+        /// </remarks>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddControl(Control control)
+        {
+            control.Parent = panel;
+            return control.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds static text to the toolbar.
+        /// </summary>
+        /// <param name="text">Text string.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddText(string text)
+        {
+            GenericLabel label = new(text)
+            {
+                Margin = DefaultTextMargin,
+            };
+
+            if (BackgroundColor is not null)
+                label.BackgroundColor = BackgroundColor;
+            label.Parent = panel;
+            return label.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds an empty space with the specified or default size.
+        /// </summary>
+        /// <param name="size">Optional spacer size.</param>
+        /// <returns></returns>
+        public virtual ObjectUniqueId AddSpacer(double? size = null)
+        {
+            Panel control = new()
+            {
+                SuggestedSize = size ?? DefaultSpacerSize,
+            };
+
+            if (BackgroundColor is not null)
+                control.BackgroundColor = BackgroundColor;
+
+            control.Parent = panel;
+            return control.UniqueId;
+        }
+
+        /*public virtual ObjectUniqueId AddSeparator()
+        {
+        }*/
 
         /// <summary>
         /// Sets 'Visible' property of the item.
@@ -145,6 +212,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets item 'Text' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual string? GetToolText(ObjectUniqueId id)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return null;
+            return item.Text;
+        }
+
+        /// <summary>
+        /// Gets item 'ToolTip' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual string? GetToolShortHelp(ObjectUniqueId id)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return null;
+            return item.ToolTip;
+        }
+
+        /// <summary>
+        /// Sets item 'Text' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="text">New property value.</param>
+        public virtual void SetToolText(ObjectUniqueId id, string? text)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.Text = text ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Sets item 'ToolTip' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">New property value.</param>
+        public virtual void SetToolShortHelp(ObjectUniqueId id, string? value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ToolTip = value;
+        }
+
+        /// <summary>
         /// Gets total count of the items.
         /// </summary>
         /// <returns></returns>
@@ -161,6 +280,16 @@ namespace Alternet.UI
         public virtual ObjectUniqueId GetToolId(int index)
         {
             return panel.Children[index].UniqueId;
+        }
+
+        /// <summary>
+        /// Gets item control.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual Control? GetToolControl(ObjectUniqueId id)
+        {
+            return panel.FindChild(id);
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)

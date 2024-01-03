@@ -47,6 +47,14 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonSave,
                 ButtonClick);
 
+            toolbar.AddSpacer();
+
+            var idText = toolbar.AddText("text");
+
+            var textBox = new TextBox();
+
+            var idEdit = toolbar.AddControl(textBox);
+
             var buttonIdUndo = toolbar.Add(
                 CommonStrings.Default.ButtonUndo,
                 images.ImgUndo,
@@ -61,7 +69,7 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonRedo,
                 ButtonClick);
 
-            var buttonIdBold = toolbar.Add(
+            /*var buttonIdBold = toolbar.Add(
                 CommonStrings.Default.ButtonBold,
                 images.ImgBold,
                 imagesDisabled.ImgBold,
@@ -80,7 +88,7 @@ namespace PropertyGridSample
                 images.ImgUnderline,
                 imagesDisabled.ImgUnderline,
                 CommonStrings.Default.ButtonUnderline,
-                ButtonClick);
+                ButtonClick);*/
 
             void ButtonClick(object? sender, EventArgs e)
             {
