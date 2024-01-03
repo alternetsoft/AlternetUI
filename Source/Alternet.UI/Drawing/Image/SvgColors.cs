@@ -88,7 +88,7 @@ namespace Alternet.UI
             public SvgColorsDark()
             {
                 Normal = Color.White;
-                Disabled = Normal;
+                Disabled = SystemColors.GrayText;
                 Error = Normal;
                 Information = Normal;
                 Warning = Normal;
@@ -100,7 +100,7 @@ namespace Alternet.UI
             public SvgColorsWhite()
             {
                 Normal = Color.Black;
-                Disabled = Normal;
+                Disabled = SystemColors.GrayText;
                 Error = Normal;
                 Information = Normal;
                 Warning = Normal;
