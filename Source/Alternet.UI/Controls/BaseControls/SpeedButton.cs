@@ -25,8 +25,8 @@ namespace Alternet.UI
             Borders ??= new();
 
             var border = BorderSettings.Default.Clone();
-            border.UniformCornerRadius = 50;
             border.UniformRadiusIsPercent = true;
+            border.UniformCornerRadius = 25;
             Borders.SetObject(border, GenericControlState.Hovered);
             Borders.SetObject(border, GenericControlState.Pressed);
         }
