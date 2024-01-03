@@ -14,6 +14,22 @@ namespace Alternet.UI
     {
         private string text = string.Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericLabel"/> class.
+        /// </summary>
+        /// <param name="text">Value of the <see cref="Text"/> property.</param>
+        public GenericLabel(string text)
+        {
+            this.text = text ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericLabel"/> class.
+        /// </summary>
+        public GenericLabel()
+        {
+        }
+
         /// <inheritdoc/>
         [DefaultValue("")]
         [Localizability(LocalizationCategory.Text)]
@@ -28,7 +44,7 @@ namespace Alternet.UI
             {
                 if (text == value)
                     return;
-                text = value;
+                text = value ?? string.Empty;
                 Invalidate();
             }
         }
