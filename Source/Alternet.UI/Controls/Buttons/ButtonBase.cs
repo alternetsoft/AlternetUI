@@ -35,7 +35,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets <see cref="Action"/> which will be executed when
-        /// this <see cref="MenuItem"/> is clicked by the user.
+        /// this control is clicked by the user.
         /// </summary>
         [Browsable(false)]
         public Action? ClickAction
