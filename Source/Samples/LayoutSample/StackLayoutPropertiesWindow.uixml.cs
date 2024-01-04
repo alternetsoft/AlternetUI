@@ -20,6 +20,11 @@ namespace LayoutSample
             containerAlignmentControl = new AlignmentControl();
             containerStackPanel.Children.Add(containerAlignmentControl);
             containerAlignmentControl.Control = subjectGroupBox;
+
+            var buttonAlignmentControl = new AlignmentControl();
+            buttonAlignmentControl.Parent = buttonPanel;
+            buttonAlignmentControl.Control = subjectButton;
+
         }
 
         Thickness IncreaseThickness(Thickness value)
