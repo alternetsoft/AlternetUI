@@ -17,6 +17,16 @@ namespace Alternet.UI
             Orientation = StackPanelOrientation.Horizontal,
         };
 
+        private readonly StackPanel panel2 = new()
+        {
+            Orientation = StackPanelOrientation.Horizontal,
+        };
+
+        private readonly Grid panelParent = new()
+        {
+            RowCount = 1,
+        };
+
         private readonly double itemSize;
 
         /// <summary>
@@ -27,9 +37,18 @@ namespace Alternet.UI
             itemSize = DefaultSize;
             Height = DefaultSize;
             SuggestedHeight = DefaultSize;
-            panel.Parent = this;
+
+            panel.ColumnIndex = 0;
+            panel2.ColumnIndex = 1;
+
+            panelParent.AddStarColumn();
+            panelParent.AddAutoColumn();
+
+            panel.Parent = panelParent;
+            panel2.Parent = panelParent;
             TabStop = false;
             AcceptsFocusAll = false;
+            panelParent.Parent = this;
         }
 
         /// <summary>
@@ -213,7 +232,7 @@ namespace Alternet.UI
         /// <param name="visible">New property value.</param>
         public virtual void SetToolVisible(ObjectUniqueId id, bool visible)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return;
             item.Visible = visible;
@@ -226,10 +245,39 @@ namespace Alternet.UI
         /// <param name="enabled">New property value.</param>
         public virtual void SetToolEnabled(ObjectUniqueId id, bool enabled)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return;
             item.Enabled = enabled;
+        }
+
+        /// <summary>
+        /// Sets whether toolbar item is right aligned.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="isRight"><c>true</c> if item must be right aligned.</param>
+        public virtual void SetToolAlignRight(ObjectUniqueId id, bool isRight)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return;
+            if (isRight)
+                item.Parent = panel2;
+            else
+                item.Parent = panel;
+        }
+
+        /// <summary>
+        /// Gets whether item is right aligned.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual bool GetToolAlignRight(ObjectUniqueId id)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return false;
+            return item.Parent == panel2;
         }
 
         /// <summary>
@@ -265,10 +313,35 @@ namespace Alternet.UI
         /// (1/96 inch).</returns>
         public RectD GetToolRect(ObjectUniqueId toolId)
         {
-            var item = FindTool(toolId);
+            var item = GetToolControl(toolId);
             if (item is null)
                 return RectD.Empty;
             return item.Bounds;
+        }
+
+        /// <summary>
+        /// Sets the specified toolbar item Sticky property value.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="value">new Sticky property value.</param>
+        public void SetToolSticky(ObjectUniqueId toolId, bool value)
+        {
+            var item = FindTool(toolId);
+            if (item is null)
+                return;
+            item.Sticky = value;
+        }
+
+        /// <summary>
+        /// Gets the specified toolbar item Sticky property value.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        public bool GetToolSticky(ObjectUniqueId toolId)
+        {
+            var item = FindTool(toolId);
+            if (item is null)
+                return false;
+            return item.Sticky;
         }
 
         /// <summary>
@@ -291,7 +364,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool GetToolEnabled(ObjectUniqueId id)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return false;
             return item.Enabled;
@@ -304,7 +377,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool GetToolVisible(ObjectUniqueId id)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return false;
             return item.Visible;
@@ -316,7 +389,7 @@ namespace Alternet.UI
         /// <param name="id">Item id.</param>
         public virtual void DeleteTool(ObjectUniqueId id)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return;
             item.Parent = null;
@@ -330,7 +403,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual string? GetToolText(ObjectUniqueId id)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return null;
             return item.Text;
@@ -343,7 +416,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual string? GetToolShortHelp(ObjectUniqueId id)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return null;
             return item.ToolTip;
@@ -356,7 +429,7 @@ namespace Alternet.UI
         /// <param name="text">New property value.</param>
         public virtual void SetToolText(ObjectUniqueId id, string? text)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return;
             item.Text = text ?? string.Empty;
@@ -369,7 +442,7 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetToolShortHelp(ObjectUniqueId id, string? value)
         {
-            var item = FindTool(id);
+            var item = GetToolControl(id);
             if (item is null)
                 return;
             item.ToolTip = value;
@@ -401,7 +474,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Control? GetToolControl(ObjectUniqueId id)
         {
-            return panel.FindChild(id);
+            var result = panel.FindChild(id);
+            result ??= panel2.FindChild(id);
+            return result;
         }
 
         /// <summary>
@@ -425,7 +500,7 @@ namespace Alternet.UI
 
         private SpeedButton? FindTool(ObjectUniqueId id)
         {
-            var result = panel.FindChild(id) as SpeedButton;
+            var result = GetToolControl(id) as SpeedButton;
             return result;
         }
     }

@@ -69,6 +69,8 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonUndo,
                 ButtonClick);
 
+            toolbar.SetToolAlignRight(buttonIdUndo, true);
+
             /*var buttonIdRedo = toolbar.Add(
                 CommonStrings.Default.ButtonRedo,
                 images.ImgRedo,
