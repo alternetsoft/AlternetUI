@@ -14,6 +14,7 @@ namespace Alternet.UI
     public class SpeedButton : PictureBox
     {
         private Action? clickAction;
+        private bool sticky;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButton"/> class.
@@ -29,6 +30,45 @@ namespace Alternet.UI
             border.UniformCornerRadius = 25;
             Borders.SetObject(border, GenericControlState.Hovered);
             Borders.SetObject(border, GenericControlState.Pressed);
+        }
+
+        /// <summary>
+        /// Gets or sets whether control is sticky.
+        /// </summary>
+        /// <remarks>
+        /// When this property is true, control painted as pressed if it is not disabled.
+        /// </remarks>
+        public bool Sticky
+        {
+            get
+            {
+                return sticky;
+            }
+
+            set
+            {
+                if (sticky == value)
+                    return;
+                sticky = value;
+                Invalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override GenericControlState CurrentState
+        {
+            get
+            {
+                var result = base.CurrentState;
+                if (sticky)
+                {
+                    if (result == GenericControlState.Normal || result == GenericControlState.Focused)
+                        result = GenericControlState.Pressed;
+                }
+
+                return result;
+            }
         }
 
         /// <summary>
