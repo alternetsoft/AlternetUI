@@ -223,5 +223,27 @@ namespace Alternet.UI
             ColumnDefinitions.Add(result);
             return result;
         }
+
+        /// <summary>
+        /// Adds <see cref="RowDefinition"/> instance with <see cref="RowDefinition.Height"/>
+        /// equal to <see cref="GridLength.Star"/>.
+        /// </summary>
+        public RowDefinition AddStarRow()
+        {
+            var result = new RowDefinition { Height = new GridLength(1, GridUnitType.Star) };
+            RowDefinitions.Add(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds <see cref="ColumnDefinition"/> instance with <see cref="ColumnDefinition.Width"/>
+        /// equal to <see cref="GridLength.Star"/>.
+        /// </summary>
+        public ColumnDefinition AddStarColumn()
+        {
+            var result = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
+            ColumnDefinitions.Add(result);
+            return result;
+        }
     }
 }
