@@ -33,6 +33,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates all toolbar item kinds.
+        /// </summary>
+        protected enum ItemKind
+        {
+            /// <summary>
+            /// Item is button.
+            /// </summary>
+            Button,
+
+            /// <summary>
+            /// Item is separator.
+            /// </summary>
+            Separator,
+
+            /// <summary>
+            /// Item is spacer.
+            /// </summary>
+            Spacer,
+
+            /// <summary>
+            /// Item is control.
+            /// </summary>
+            Control,
+
+            /// <summary>
+            /// Item is static text.
+            /// </summary>
+            Text,
+        }
+
+        /// <summary>
         /// Gets or sets default item size in dips.
         /// </summary>
         public static double DefaultSize { get; set; } = 24;
@@ -96,7 +127,7 @@ namespace Alternet.UI
                 speedButton.DisabledImage = imageDisabled;
             }
 
-            UpdateItemProps(speedButton);
+            UpdateItemProps(speedButton, ItemKind.Button);
 
             speedButton.Click += action;
             panel.Children.Add(speedButton);
@@ -116,6 +147,7 @@ namespace Alternet.UI
         public virtual ObjectUniqueId AddControl(Control control)
         {
             control.Parent = panel;
+            UpdateItemProps(control, ItemKind.Control);
             return control.UniqueId;
         }
 
@@ -131,7 +163,7 @@ namespace Alternet.UI
                 Margin = DefaultTextMargin,
             };
 
-            UpdateItemProps(label);
+            UpdateItemProps(label, ItemKind.Text);
             label.Parent = panel;
             return label.UniqueId;
         }
@@ -148,7 +180,7 @@ namespace Alternet.UI
                 SuggestedSize = size ?? DefaultSpacerSize,
             };
 
-            UpdateItemProps(control);
+            UpdateItemProps(control, ItemKind.Spacer);
 
             control.Parent = panel;
             return control.UniqueId;
@@ -168,7 +200,7 @@ namespace Alternet.UI
                 Margin = DefaultSeparatorMargin,
             };
 
-            UpdateItemProps(border);
+            UpdateItemProps(border, ItemKind.Separator);
 
             border.Parent = panel;
             return border.UniqueId;
@@ -376,14 +408,19 @@ namespace Alternet.UI
         /// Updates common properties of the item control.
         /// </summary>
         /// <param name="control">Control which properties to update.</param>
+        /// <param name="itemKind">Item kind.</param>
         /// <remarks>
         /// This method is called when new item is added, it updates
         /// <see cref="Control.BackgroundColor"/> and other properties.
         /// </remarks>
-        protected virtual void UpdateItemProps(Control control)
+        protected virtual void UpdateItemProps(Control control, ItemKind itemKind)
         {
+            if (itemKind == ItemKind.Control)
+                return;
             if (BackgroundColor is not null)
                 control.BackgroundColor = BackgroundColor;
+            if(itemKind == ItemKind.Text)
+                control.VerticalAlignment = VerticalAlignment.Center;
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)
