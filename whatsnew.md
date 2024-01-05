@@ -1,5 +1,14 @@
 # 0.9.411 (work in progress)
 
+## 2024 January 5
+
+- Added GenericToolBar control. Demo is in PropertyGridSample.
+- MenuItem: Image, DisabledImage. Now it's possible to specify images in menus.
+- SpeedButton: Sticky, DropDownMenu, ClickAction.
+- Fixed SvgColors default Disabled color.
+- Grid: AddStarRow, AddStarColumn.
+- PictureBox.DisabledImage.
+
 ## 2024 January 1
 
 - Added SplittedPanel. Panel with top, bottom, left, right sub-panels and splitters.
