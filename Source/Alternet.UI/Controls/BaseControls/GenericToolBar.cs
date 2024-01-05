@@ -17,15 +17,14 @@ namespace Alternet.UI
             Orientation = StackPanelOrientation.Horizontal,
         };
 
-        private readonly StackPanel panel2 = new()
+        /*private readonly StackPanel panel2 = new()
         {
             Orientation = StackPanelOrientation.Horizontal,
         };
 
         private readonly Grid panelParent = new()
         {
-            RowCount = 1,
-        };
+        };*/
 
         private readonly double itemSize;
 
@@ -35,20 +34,23 @@ namespace Alternet.UI
         public GenericToolBar()
         {
             itemSize = DefaultSize;
-            Height = DefaultSize;
-            SuggestedHeight = DefaultSize;
 
             panel.ColumnIndex = 0;
-            panel2.ColumnIndex = 1;
+            /*panel2.ColumnIndex = 1;
 
             panelParent.AddStarColumn();
             panelParent.AddAutoColumn();
+            panelParent.AddAutoRow();*/
 
-            panel.Parent = panelParent;
-            panel2.Parent = panelParent;
+            panel.Parent = this;
+            /*panel2.Parent = panelParent;*/
             TabStop = false;
             AcceptsFocusAll = false;
-            panelParent.Parent = this;
+            /*panelParent.Parent = this;
+
+            panelParent.BackgroundColor = Color.Yellow;
+            panel.BackgroundColor = Color.Red;
+            panel2.BackgroundColor = Color.Yellow;*/
         }
 
         /// <summary>
@@ -113,6 +115,92 @@ namespace Alternet.UI
         public static Thickness DefaultSeparatorMargin { get; set; } = (4, 4, 4, 4);
 
         /// <summary>
+        /// Gets toolbar item size.
+        /// </summary>
+        public double ItemSize
+        {
+            get
+            {
+                return itemSize;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Font? Font
+        {
+            get
+            {
+                return base.Font;
+            }
+
+            set
+            {
+                base.Font = value;
+                SetChildrenFont(value, true);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get
+            {
+                return base.BackgroundColor;
+            }
+
+            set
+            {
+                base.BackgroundColor = value;
+                var items = GetChildren(true).Items;
+                foreach(var item in items)
+                {
+                    if (NeedUpdateBackColor(item))
+                        item.BackgroundColor = value;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Brush? Background
+        {
+            get
+            {
+                return base.Background;
+            }
+
+            set
+            {
+                base.Background = value;
+                var items = GetChildren(true).Items;
+                foreach (var item in items)
+                {
+                    if (NeedUpdateBackColor(item))
+                        item.Background = value;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? ForegroundColor
+        {
+            get
+            {
+                return base.ForegroundColor;
+            }
+
+            set
+            {
+                base.ForegroundColor = value;
+                var items = GetChildren(true).Items;
+                foreach (var item in items)
+                {
+                    if (NeedUpdateForeColor(item))
+                        item.ForegroundColor = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds toolbar item.
         /// </summary>
         /// <param name="text">Item text.</param>
@@ -132,8 +220,9 @@ namespace Alternet.UI
             {
                 Text = text ?? string.Empty,
                 ImageSet = imageSet,
-                ToolTip = toolTip,
+                ToolTip = toolTip ?? string.Empty,
                 SuggestedSize = itemSize,
+                VerticalAlignment = VerticalAlignment.Center,
             };
 
             if (imageSetDisabled is not null)
@@ -144,7 +233,9 @@ namespace Alternet.UI
             UpdateItemProps(speedButton, ItemKind.Button);
 
             speedButton.Click += action;
-            panel.Children.Add(speedButton);
+            speedButton.Parent = panel;
+
+            /*speedButton.BackgroundColor = Color.White;*/
 
             return speedButton.UniqueId;
         }
@@ -172,7 +263,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddText(string text)
         {
-            GenericLabel label = new(text)
+            Label label = new(text)
             {
                 Margin = DefaultTextMargin,
             };
@@ -246,7 +337,7 @@ namespace Alternet.UI
             item.Enabled = enabled;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Sets whether toolbar item is right aligned.
         /// </summary>
         /// <param name="id">Item id.</param>
@@ -260,7 +351,7 @@ namespace Alternet.UI
                 item.Parent = panel2;
             else
                 item.Parent = panel;
-        }
+        }*/
 
         /// <summary>
         /// Gets whether item is right aligned.
@@ -272,7 +363,7 @@ namespace Alternet.UI
             var item = GetToolControl(id);
             if (item is null)
                 return false;
-            return item.Parent == panel2;
+            return item.Parent != panel;
         }
 
         /// <summary>
@@ -470,7 +561,7 @@ namespace Alternet.UI
         public virtual Control? GetToolControl(ObjectUniqueId id)
         {
             var result = panel.FindChild(id);
-            result ??= panel2.FindChild(id);
+            /*result ??= panel2.FindChild(id);*/
             return result;
         }
 
@@ -491,6 +582,37 @@ namespace Alternet.UI
                 control.BackgroundColor = BackgroundColor;
             if(itemKind == ItemKind.Text)
                 control.VerticalAlignment = VerticalAlignment.Center;
+        }
+
+        /// <summary>
+        /// Gets whether child control background color need to be updated when
+        /// toolbar background color is changed.
+        /// </summary>
+        /// <param name="control">Control to check</param>
+        /// <returns></returns>
+        protected virtual bool NeedUpdateBackColor(Control control) => NeedUpdateForeColor(control);
+
+        /// <summary>
+        /// Gets whether child control foreground color need to be updated when
+        /// toolbar foreground color is changed.
+        /// </summary>
+        /// <param name="control">Control to check</param>
+        /// <returns></returns>
+        protected virtual bool NeedUpdateForeColor(Control control)
+        {
+            Type[] types = [
+                typeof(SpeedButton),
+                typeof(GenericLabel),
+                typeof(Label),
+                typeof(StackPanel),
+                typeof(Panel),
+                typeof(Grid),
+                typeof(Border),
+            ];
+
+            if (Array.IndexOf(types, control.GetType()) >= 0)
+                return true;
+            return false;
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)

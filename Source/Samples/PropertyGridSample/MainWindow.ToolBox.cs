@@ -50,7 +50,11 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Enabled", TestGenericToolBarEnabled);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Delete", TestGenericToolBarDelete);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Sticky", TestGenericToolBarSticky);
-
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Foreground Color", TestGenericToolBarForegroundColor);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background Color", TestGenericToolBarBackgroundColor);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Font", TestGenericToolBarFont);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background", TestGenericToolBarBackground);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Reset Background", TestGenericToolBarResetBackground);
 #endif
 
             void Fn()

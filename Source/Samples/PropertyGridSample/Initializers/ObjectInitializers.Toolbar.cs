@@ -70,7 +70,7 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonUndo,
                 ButtonClick);
 
-            toolbar.SetToolAlignRight(buttonIdUndo, true);
+            /*toolbar.SetToolAlignRight(buttonIdUndo, true);*/
 
             var buttonIdMoreItems = toolbar.Add(
                 CommonStrings.Default.ToolbarSeeMore,
@@ -79,7 +79,7 @@ namespace PropertyGridSample
                 CommonStrings.Default.ToolbarSeeMore,
                 ButtonClick);
 
-            toolbar.SetToolAlignRight(buttonIdMoreItems, true);
+            /*toolbar.SetToolAlignRight(buttonIdMoreItems, true);*/
 
             /*var buttonIdRedo = toolbar.Add(
                 CommonStrings.Default.ButtonRedo,

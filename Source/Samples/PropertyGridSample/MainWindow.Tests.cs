@@ -18,6 +18,49 @@ namespace PropertyGridSample
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
         
+        void TestGenericToolBarFont()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.Font = Control.DefaultFont.Scaled(2);
+        }
+
+        void TestGenericToolBarForegroundColor()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.ForegroundColor = Color.Red;
+        }
+
+        void TestGenericToolBarBackgroundColor()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.Background = null;
+            control.BackgroundColor = Color.DarkOliveGreen;
+        }
+
+        void TestGenericToolBarBackground()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.Background = Color.RebeccaPurple.AsBrush;
+            control.BackgroundColor = null;
+        }
+
+        void TestGenericToolBarResetBackground()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.Background = null;
+            control.BackgroundColor = null;
+        }
+
         void TestGenericToolBarVisible()
         {
             var control = GetSelectedControl<GenericToolBar>();
