@@ -54,6 +54,19 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
+        /// Creates an image with the given size and clears it if requested.
+        /// Does not create an alpha channel.
+        /// </summary>
+        /// <param name="size">Specifies the size of the image.</param>
+        /// <param name="clear">If true, initialize the image to black.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public GenericImage(SizeI size, bool clear = false)
+            : base(UI.Native.GenericImage.CreateImageWithSize(size.Width, size.Height, clear), true)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a file.
         /// </summary>
         /// <param name="fileName">Path to file.</param>
@@ -489,6 +502,33 @@ namespace Alternet.Drawing
                 {
                     action(ref *data, param);
                     data++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the alpha value for the each pixel.
+        /// </summary>
+        /// <param name="value">New alpha channel (transparency) value of the pixels.</param>
+        /// <remarks>
+        /// This function should only be called if the image has alpha channel data,
+        /// use <see cref="HasAlpha"/> to check for this.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public unsafe void SetAlpha(byte value)
+        {
+            var nalpha = GetNativeAlphaData();
+
+            byte* alpha = (byte*)nalpha;
+
+            var height = Height;
+            var width = Width;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    *alpha++ = value;
                 }
             }
         }
