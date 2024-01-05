@@ -1,0 +1,15 @@
+==========
+Material Design Icons from Google
+Latest icon fonts and optimized SVGs for material design icons.
+https://github.com/marella/material-design-icons
+==========
+Over 2900 Free SVG icons for popular brands. See them all on one page at SimpleIcons.org.
+https://github.com/simple-icons/simple-icons/tree/develop
+==========
+Fluent UI System Icons from Microsoft
+Fluent UI System Icons are a collection of familiar, friendly and modern icons from Microsoft.
+https://github.com/microsoft/fluentui-system-icons
+==========
+Font Awesome is the Internet's icon library and toolkit, used by millions of designers, developers, and content creators.
+https://github.com/FortAwesome/Font-Awesome
+==========
