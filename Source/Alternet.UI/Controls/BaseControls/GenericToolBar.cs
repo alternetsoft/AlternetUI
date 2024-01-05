@@ -128,22 +128,17 @@ namespace Alternet.UI
             string? toolTip,
             EventHandler? action = null)
         {
-            SizeI imageSize = Toolbar.GetDefaultImageSize(this);
-
-            var image = imageSet?.AsImage(imageSize);
-            var imageDisabled = imageSetDisabled?.AsImage(imageSize);
-
             SpeedButton speedButton = new()
             {
                 Text = text ?? string.Empty,
-                Image = image,
+                ImageSet = imageSet,
                 ToolTip = toolTip,
                 SuggestedSize = itemSize,
             };
 
-            if (imageDisabled is not null)
+            if (imageSetDisabled is not null)
             {
-                speedButton.DisabledImage = imageDisabled;
+                speedButton.DisabledImageSet = imageSetDisabled;
             }
 
             UpdateItemProps(speedButton, ItemKind.Button);

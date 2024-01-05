@@ -49,6 +49,7 @@ namespace Alternet.Drawing
         public void Draw(Control control, Graphics dc)
         {
             var image = Image;
+            image ??= ImageSet?.AsImage(ImageSet.DefaultSize);
 
             if (Image.IsNullOrEmpty(image) || !Visible)
                 return;

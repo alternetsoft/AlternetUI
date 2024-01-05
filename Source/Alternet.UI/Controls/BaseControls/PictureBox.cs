@@ -181,9 +181,9 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.PictureBox;
 
         /// <summary>
-        /// Gets or sets the image that is displayed by <see cref="PictureBox"/>.
+        /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
-        internal ImageSet? ImageSet
+        public ImageSet? ImageSet
         {
             get
             {
@@ -197,6 +197,28 @@ namespace Alternet.UI
                 StateObjects ??= new();
                 StateObjects.ImageSets ??= new();
                 StateObjects.ImageSets.Normal = value;
+                RaiseImageChanged(EventArgs.Empty);
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
+        /// </summary>
+        public ImageSet? DisabledImageSet
+        {
+            get
+            {
+                return StateObjects?.ImageSets?.GetObjectOrNull(GenericControlState.Disabled);
+            }
+
+            set
+            {
+                if (DisabledImageSet == value)
+                    return;
+                StateObjects ??= new();
+                StateObjects.ImageSets ??= new();
+                StateObjects.ImageSets.Disabled = value;
                 RaiseImageChanged(EventArgs.Empty);
                 Invalidate();
             }
@@ -316,15 +338,21 @@ namespace Alternet.UI
 
             public override SizeD GetPreferredSize(SizeD availableSize)
             {
-                if (Control.Image == null)
-                    return base.GetPreferredSize(availableSize);
-
                 var specifiedWidth = Control.SuggestedWidth;
                 var specifiedHeight = Control.SuggestedHeight;
                 if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                     return new SizeD(specifiedWidth, specifiedHeight);
 
-                return Control.Image.SizeDip(Control);
+                var image = Control.Image;
+                var imageSet = Control.ImageSet;
+
+                if (image is not null)
+                    return image.SizeDip(Control);
+
+                if (imageSet is not null)
+                    return Control.PixelToDip(imageSet.DefaultSize);
+
+                return base.GetPreferredSize(availableSize);
             }
 
             internal override Native.Control CreateNativeControl()

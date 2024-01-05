@@ -23,8 +23,8 @@ namespace PropertyGridSample
                 button.GetSvgColor(KnownSvgColor.Disabled),
                 32);
 
-            button.Image = images.ImgOk.AsImage(32);
-            button.DisabledImage = imagesDisabled.ImgOk.AsImage(32);
+            button.ImageSet = images.ImgOk;
+            button.DisabledImageSet = imagesDisabled.ImgOk;
         }
     }
 }
