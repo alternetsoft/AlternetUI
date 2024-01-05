@@ -63,14 +63,12 @@ namespace PropertyGridSample
 
             var idEdit = toolbar.AddControl(textBox);
 
-            var buttonIdUndo = toolbar.Add(
-                CommonStrings.Default.ButtonUndo,
-                images.ImgUndo,
-                imagesDisabled.ImgUndo,
-                CommonStrings.Default.ButtonUndo,
-                ButtonClick);
+            var itemPicture = toolbar.AddPicture(
+                images.ImgMessageBoxWarning,
+                imagesDisabled.ImgMessageBoxWarning,
+                "This is picture");
 
-            toolbar.SetToolAlignRight(buttonIdUndo, true);
+            toolbar.SetToolAlignRight(itemPicture, true);
 
             var buttonIdMoreItems = toolbar.Add(
                 CommonStrings.Default.ToolbarSeeMore,
@@ -109,7 +107,7 @@ namespace PropertyGridSample
                 CommonStrings.Default.ButtonUnderline,
                 ButtonClick);*/
 
-            void ButtonClick(object? sender, EventArgs e)
+            static void ButtonClick(object? sender, EventArgs e)
             {
                 if (sender is not SpeedButton button)
                     return;

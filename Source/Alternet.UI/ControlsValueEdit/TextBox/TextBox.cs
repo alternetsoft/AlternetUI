@@ -857,9 +857,9 @@ namespace Alternet.UI
             var newStyle = TextBox.CreateTextAttr();
             newStyle.Copy(fs);
             if (backColor is not null)
-                newStyle.SetBackgroundColor(backColor.Value);
+                newStyle.SetBackgroundColor(backColor);
             if (textColor is not null)
-                newStyle.SetTextColor(textColor.Value);
+                newStyle.SetTextColor(textColor);
             SetSelectionStyle(newStyle);
         }
 

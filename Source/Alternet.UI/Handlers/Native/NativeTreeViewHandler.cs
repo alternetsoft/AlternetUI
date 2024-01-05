@@ -283,7 +283,7 @@ namespace Alternet.UI
             if (color is null)
                 Native.WxTreeViewFactory.ResetItemBackgroundColor(NativeControl.WxWidget, p);
             else
-                Native.WxTreeViewFactory.SetItemBackgroundColor(NativeControl.WxWidget, p, color.Value);
+                Native.WxTreeViewFactory.SetItemBackgroundColor(NativeControl.WxWidget, p, color);
         }
 
         public override void SetItemTextColor(TreeViewItem item, Color? color)
@@ -294,7 +294,7 @@ namespace Alternet.UI
             if (color is null)
                 Native.WxTreeViewFactory.ResetItemTextColor(NativeControl.WxWidget, p);
             else
-                Native.WxTreeViewFactory.SetItemTextColor(NativeControl.WxWidget, p, color.Value);
+                Native.WxTreeViewFactory.SetItemTextColor(NativeControl.WxWidget, p, color);
         }
 
         public override void SetItemText(TreeViewItem item, string text)

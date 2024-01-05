@@ -1526,7 +1526,7 @@ namespace Alternet.UI
 
             set
             {
-                if (backgroundColor == value && value != null)
+                if (backgroundColor == value)
                     return;
                 backgroundColor = value;
 
@@ -1535,7 +1535,7 @@ namespace Alternet.UI
                     if (backgroundColor is null)
                         ResetBackgroundColor();
                     else
-                        NativeControl.BackgroundColor = backgroundColor.Value;
+                        NativeControl.BackgroundColor = backgroundColor;
                     Refresh();
                 }
             }
@@ -1594,7 +1594,7 @@ namespace Alternet.UI
                 if (result is null)
                     return RealForegroundColor;
                 else
-                    return result.Value;
+                    return result;
             }
 
             set
@@ -1616,7 +1616,7 @@ namespace Alternet.UI
                 if (result is null)
                     return RealBackgroundColor;
                 else
-                    return result.Value;
+                    return result;
             }
 
             set
@@ -1646,7 +1646,7 @@ namespace Alternet.UI
                     if (foregroundColor is null)
                         ResetForegroundColor();
                     else
-                        NativeControl.ForegroundColor = foregroundColor.Value;
+                        NativeControl.ForegroundColor = foregroundColor;
                     Invalidate();
                 }
             }

@@ -224,7 +224,7 @@ namespace Alternet.UI
                     dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
                 }
                 else
-                    dc.RoundedRectangle(color.Value.AsPen, brush, rect.InflatedBy(-1, -1), radius.Value);
+                    dc.RoundedRectangle(color.AsPen, brush, rect.InflatedBy(-1, -1), radius.Value);
                 return;
             }
 

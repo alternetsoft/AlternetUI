@@ -82,6 +82,11 @@ namespace Alternet.UI
             /// Item is static text.
             /// </summary>
             Text,
+
+            /// <summary>
+            /// Item is picture.
+            /// </summary>
+            Picture,
         }
 
         /// <summary>
@@ -241,6 +246,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds image to the toolbar.
+        /// </summary>
+        /// <param name="image">Normal image.</param>
+        /// <param name="imageDisabled">Disable image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddPicture(
+            ImageSet? image,
+            ImageSet? imageDisabled,
+            string? toolTip = default)
+        {
+            PictureBox picture = new()
+            {
+                AcceptsFocusAll = false,
+                ImageStretch = false,
+                ImageSet = image,
+                ToolTip = toolTip ?? string.Empty,
+                SuggestedSize = itemSize,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
+
+            if (imageDisabled is not null)
+            {
+                picture.DisabledImageSet = imageDisabled;
+            }
+
+            UpdateItemProps(picture, ItemKind.Picture);
+
+            picture.Parent = panel;
+
+            return picture.UniqueId;
+        }
+
+        /// <summary>
         /// Adds existing control to the toolbar.
         /// </summary>
         /// <param name="control">Control to add.</param>
@@ -263,9 +302,10 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddText(string text)
         {
-            Label label = new(text)
+            GenericLabel label = new(text)
             {
                 Margin = DefaultTextMargin,
+                VerticalAlignment = VerticalAlignment.Center,
             };
 
             UpdateItemProps(label, ItemKind.Text);
@@ -561,7 +601,6 @@ namespace Alternet.UI
         public virtual Control? GetToolControl(ObjectUniqueId id)
         {
             var result = panel.FindChild(id);
-            /*result ??= panel2.FindChild(id);*/
             return result;
         }
 
@@ -580,8 +619,6 @@ namespace Alternet.UI
                 return;
             if (BackgroundColor is not null)
                 control.BackgroundColor = BackgroundColor;
-            if(itemKind == ItemKind.Text)
-                control.VerticalAlignment = VerticalAlignment.Center;
         }
 
         /// <summary>
@@ -603,6 +640,7 @@ namespace Alternet.UI
             Type[] types = [
                 typeof(SpeedButton),
                 typeof(GenericLabel),
+                typeof(PictureBox),
                 typeof(Label),
                 typeof(StackPanel),
                 typeof(Panel),

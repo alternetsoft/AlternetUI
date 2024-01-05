@@ -250,7 +250,7 @@ namespace Alternet.UI
         public static void LogColor(string? title, Color? value)
         {
             if (value is not null)
-                value = ColorUtils.FindKnownColor(value.Value);
+                value = ColorUtils.FindKnownColor(value);
             title ??= "Color";
             Application.Log($"{title} = {value?.ToDebugString()}");
         }

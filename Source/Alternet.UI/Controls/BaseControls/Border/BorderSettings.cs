@@ -163,7 +163,7 @@ namespace Alternet.UI
             set
             {
                 value ??= Default.Color ?? BorderSideSettings.DefaultColor;
-                SetColors(value.Value, value.Value, value.Value, value.Value);
+                SetColors(value, value, value, value);
             }
         }
 

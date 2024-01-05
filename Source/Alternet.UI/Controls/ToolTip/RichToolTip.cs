@@ -35,11 +35,11 @@ namespace Alternet.UI
             var titleForegroundColor = DefaultTitleForegroundColor ?? platform.RichToolTipTitleForegroundColor;
 
             if (backgroundColor is not null)
-                SetBackgroundColor(backgroundColor.Value, backgroundColorEnd);
+                SetBackgroundColor(backgroundColor, backgroundColorEnd);
             if (foregroundColor is not null)
-                SetForegroundColor(foregroundColor.Value);
+                SetForegroundColor(foregroundColor);
             if (titleForegroundColor is not null)
-                SetTitleForegroundColor(titleForegroundColor.Value);
+                SetTitleForegroundColor(titleForegroundColor);
 
             IgnoreImages = DefaultIgnoreImages;
         }
@@ -137,7 +137,7 @@ namespace Alternet.UI
             if (endColor is null)
                 color2 = Color.Empty;
             else
-                color2 = endColor.Value;
+                color2 = endColor;
             Native.WxOtherFactory.RichToolTipSetBkColor(Handle, color, color2);
         }
 

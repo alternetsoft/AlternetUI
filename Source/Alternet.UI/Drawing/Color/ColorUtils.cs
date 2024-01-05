@@ -221,15 +221,6 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <inheritdoc cref="FindKnownColor(Color)"/>
-        public static Color? FindKnownColor(Color? color)
-        {
-            if (color is null)
-                return null;
-            var result = FindKnownColor(color.Value);
-            return result;
-        }
-
         /// <summary>
         /// Logs all system colors.
         /// </summary>
@@ -252,8 +243,10 @@ namespace Alternet.Drawing
         /// <c>true</c>, color is returned as is;
         /// otherwise list of known colors is searched for <paramref name="color"/> ARGB and
         /// and if it is found, <paramref name="color"/> is modified to become a known color.</returns>
-        public static Color FindKnownColor(Color color)
+        public static Color? FindKnownColor(Color? color)
         {
+            if (color is null)
+                return null;
             if (color.IsKnownColor || !color.IsOpaque)
                 return color;
             var result = KnownColorTable.ArgbToKnownColor(color.AsUInt());

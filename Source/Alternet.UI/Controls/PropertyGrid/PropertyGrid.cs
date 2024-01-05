@@ -3380,25 +3380,25 @@ namespace Alternet.UI
                     ResetColors();
 
                 if (colors.CaptionBackgroundColor is not null)
-                    CaptionBackgroundColor = colors.CaptionBackgroundColor.Value;
+                    CaptionBackgroundColor = colors.CaptionBackgroundColor;
                 if (colors.CaptionForegroundColor is not null)
-                    CaptionForegroundColor = colors.CaptionForegroundColor.Value;
+                    CaptionForegroundColor = colors.CaptionForegroundColor;
                 if (colors.CellDisabledTextColor is not null)
-                    CellDisabledTextColor = colors.CellDisabledTextColor.Value;
+                    CellDisabledTextColor = colors.CellDisabledTextColor;
                 if (colors.EmptySpaceColor is not null)
-                    EmptySpaceColor = colors.EmptySpaceColor.Value;
+                    EmptySpaceColor = colors.EmptySpaceColor;
                 if (colors.LineColor is not null)
-                    LineColor = colors.LineColor.Value;
+                    LineColor = colors.LineColor;
                 if (colors.MarginColor is not null)
-                    MarginColor = colors.MarginColor.Value;
+                    MarginColor = colors.MarginColor;
                 if (colors.SelectionBackgroundColor is not null)
-                    SelectionBackgroundColor = colors.SelectionBackgroundColor.Value;
+                    SelectionBackgroundColor = colors.SelectionBackgroundColor;
                 if (colors.SelectionForegroundColor is not null)
-                    SelectionForegroundColor = colors.SelectionForegroundColor.Value;
+                    SelectionForegroundColor = colors.SelectionForegroundColor;
                 if (colors.CellTextColor is not null)
-                    CellTextColor = colors.CellTextColor.Value;
+                    CellTextColor = colors.CellTextColor;
                 if (colors.CellBackgroundColor is not null)
-                    CellBackgroundColor = colors.CellBackgroundColor.Value;
+                    CellBackgroundColor = colors.CellBackgroundColor;
             }
             finally
             {

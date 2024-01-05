@@ -54,7 +54,7 @@ namespace Alternet.UI
                     if (color is null)
                         NativeControl.ResetBackgroundColor();
                     else
-                        NativeControl.BackgroundColor = color.Value;
+                        NativeControl.BackgroundColor = color;
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Alternet.UI
                     if (color is null)
                         NativeControl.ResetForegroundColor();
                     else
-                        NativeControl.ForegroundColor = color.Value;
+                        NativeControl.ForegroundColor = color;
                 }
             }
 

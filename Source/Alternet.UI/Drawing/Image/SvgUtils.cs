@@ -26,13 +26,13 @@ namespace Alternet.Drawing
         /// <exception cref="InvalidDataException">Error in svg data.</exception>
         internal static Stream ChangeFillColor(Stream stream, Color? color)
         {
-            if (color is null || color.Value.IsBlack)
+            if (color is null || color.IsBlack)
                 return stream;
 
             const string findText = "<svg";
 
             var s = StreamUtils.StringFromStream(stream);
-            var hexColor = color.Value.RGBHex;
+            var hexColor = color.RGBHex;
             var insertText = $" fill=\"{hexColor}\"";
             var index = s.IndexOf(findText);
             if (index < 0)

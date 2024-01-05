@@ -43,7 +43,7 @@ namespace Alternet.UI
                 if(value is null)
                     Native.Calendar.DateAttrSetTextColor(Handle, Color.Empty);
                 else
-                    Native.Calendar.DateAttrSetTextColor(Handle, value.Value);
+                    Native.Calendar.DateAttrSetTextColor(Handle, value);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
                 if (value is null)
                     Native.Calendar.DateAttrSetBackgroundColor(Handle, Color.Empty);
                 else
-                    Native.Calendar.DateAttrSetBackgroundColor(Handle, value.Value);
+                    Native.Calendar.DateAttrSetBackgroundColor(Handle, value);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Alternet.UI
                 if (value is null)
                     Native.Calendar.DateAttrSetBorderColor(Handle, Color.Empty);
                 else
-                    Native.Calendar.DateAttrSetBorderColor(Handle, value.Value);
+                    Native.Calendar.DateAttrSetBorderColor(Handle, value);
             }
         }
 
