@@ -82,8 +82,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width in pixels used to create the image.</param>
         /// <param name="height">The height in pixels used to create the image.</param>
-        public Bitmap(int width, int height)
-            : base(width, height)
+        /// <param name="depth">Specifies the depth of the bitmap.
+        /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
+        /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
+        /// If this parameter is omitted
+        /// (= -1), the display depth of the screen is used.</param>
+        public Bitmap(int width, int height, int depth = 32)
+            : base(width, height, depth)
         {
         }
 
@@ -99,8 +104,13 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class with the specified size.
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
-        public Bitmap(SizeI size)
-            : base(size)
+        /// <param name="depth">Specifies the depth of the bitmap.
+        /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
+        /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
+        /// If this parameter is omitted
+        /// (= -1), the display depth of the screen is used.</param>
+        public Bitmap(SizeI size, int depth = 32)
+            : base(size, -1)
         {
         }
 

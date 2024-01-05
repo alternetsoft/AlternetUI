@@ -38,7 +38,7 @@ int GetDepth();
 bool InitializeFromDipSize(int width, int height, double scale, int depth);
 bool LoadFromStream(void* stream);
 bool LoadSvgFromStream(void* stream, int width, int height, const Color& color);
-void Initialize(const SizeI& size);
+void Initialize(const SizeI& size, int depth);
 void InitializeFromImage(Image* source, const SizeI& size);
 void CopyFrom(Image* otherImage);
 bool SaveToStream(void* stream, const string& format);

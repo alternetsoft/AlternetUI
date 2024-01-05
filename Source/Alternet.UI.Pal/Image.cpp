@@ -272,7 +272,7 @@ namespace Alternet::UI
 		return image.SaveFile(wxStr(fileName));
 	}
 
-	void Image::Initialize(const Int32Size& size)
+	void Image::Initialize(const Int32Size& size, int depth)
 	{
 		if (size.Width == 0 || size.Height == 0)
 		{
@@ -280,7 +280,7 @@ namespace Alternet::UI
 		}
 		else
 		{
-			_bitmap = wxBitmap(size, 32);
+			_bitmap = wxBitmap(size, depth);
 		}
 	}
 

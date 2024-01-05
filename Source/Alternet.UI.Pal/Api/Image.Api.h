@@ -95,9 +95,9 @@ ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int wi
     return obj->LoadSvgFromStream(stream, width, height, color);
 }
 
-ALTERNET_UI_API void Image_Initialize_(Image* obj, SizeI size)
+ALTERNET_UI_API void Image_Initialize_(Image* obj, SizeI size, int depth)
 {
-    obj->Initialize(size);
+    obj->Initialize(size, depth);
 }
 
 ALTERNET_UI_API void Image_InitializeFromImage_(Image* obj, Image* source, SizeI size)

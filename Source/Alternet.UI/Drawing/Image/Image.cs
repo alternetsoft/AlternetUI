@@ -138,10 +138,15 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
-        internal Image(int width, int height)
+        /// <param name="depth">Specifies the depth of the bitmap.
+        /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
+        /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
+        /// If this parameter is omitted
+        /// (= -1), the display depth of the screen is used.</param>
+        internal Image(int width, int height, int depth = 32)
         {
             nativeImage = new UI.Native.Image();
-            NativeImage.Initialize((width, height));
+            NativeImage.Initialize((width, height), depth);
         }
 
         /// <summary>
@@ -151,9 +156,8 @@ namespace Alternet.Drawing
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
         internal Image(double width, double height)
+            : this((int)width, (int)height)
         {
-            nativeImage = new UI.Native.Image();
-            NativeImage.Initialize(((int)width, (int)height));
         }
 
         /// <summary>
@@ -161,10 +165,15 @@ namespace Alternet.Drawing
         /// with the specified size in device pixels.
         /// </summary>
         /// <param name="size">The size in device pixels used to create the image.</param>
-        internal Image(SizeI size)
+        /// <param name="depth">Specifies the depth of the bitmap.
+        /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
+        /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
+        /// If this parameter is omitted
+        /// (= -1), the display depth of the screen is used.</param>
+        internal Image(SizeI size, int depth = 32)
         {
             nativeImage = new UI.Native.Image();
-            NativeImage.Initialize(size);
+            NativeImage.Initialize(size, depth);
         }
 
         internal Image(ImageSet imageSet, SizeI size)

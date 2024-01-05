@@ -161,10 +161,10 @@ namespace Alternet.UI.Native
             return NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, color);
         }
         
-        public void Initialize(Alternet.Drawing.SizeI size)
+        public void Initialize(Alternet.Drawing.SizeI size, int depth)
         {
             CheckDisposed();
-            NativeApi.Image_Initialize_(NativePointer, size);
+            NativeApi.Image_Initialize_(NativePointer, size, depth);
         }
         
         public void InitializeFromImage(Image source, Alternet.Drawing.SizeI size)
@@ -326,7 +326,7 @@ namespace Alternet.UI.Native
             public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.SizeI size);
+            public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.SizeI size, int depth);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_InitializeFromImage_(IntPtr obj, IntPtr source, Alternet.Drawing.SizeI size);
