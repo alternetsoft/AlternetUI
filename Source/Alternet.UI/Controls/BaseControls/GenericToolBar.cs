@@ -337,7 +337,7 @@ namespace Alternet.UI
             item.Enabled = enabled;
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Sets whether toolbar item is right aligned.
         /// </summary>
         /// <param name="id">Item id.</param>
@@ -348,10 +348,10 @@ namespace Alternet.UI
             if (item is null)
                 return;
             if (isRight)
-                item.Parent = panel2;
+                item.HorizontalAlignment = HorizontalAlignment.Right;
             else
-                item.Parent = panel;
-        }*/
+                item.HorizontalAlignment = HorizontalAlignment.Left;
+        }
 
         /// <summary>
         /// Gets whether item is right aligned.
@@ -363,7 +363,7 @@ namespace Alternet.UI
             var item = GetToolControl(id);
             if (item is null)
                 return false;
-            return item.Parent != panel;
+            return item.HorizontalAlignment == HorizontalAlignment.Right;
         }
 
         /// <summary>

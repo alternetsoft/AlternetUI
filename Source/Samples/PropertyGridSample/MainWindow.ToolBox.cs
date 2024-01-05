@@ -74,6 +74,7 @@ namespace PropertyGridSample
                     typeof(PictureBox),
                     typeof(Label),
                     typeof(Button),
+                    typeof(GenericToolBar),
                     typeof(Calendar),
                     typeof(CheckBox),
                     typeof(ColorPicker),
@@ -101,7 +102,6 @@ namespace PropertyGridSample
                     typeof(CardPanel),
                     typeof(SplittedPanel),
                     typeof(SpeedButton),
-                    typeof(GenericToolBar),
                 ];
 
                 Type[] badParentTypes =
