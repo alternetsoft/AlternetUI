@@ -1142,6 +1142,97 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets children as <see cref="ControlSet"/>.
+        /// </summary>
+        /// <param name="recursive">Whether to get all children recurively.</param>
+        /// <returns></returns>
+        public virtual ControlSet GetChildren(bool recursive = false)
+        {
+            if (recursive)
+                return GetChildrenRecursive();
+            else
+                return ControlSet.New(Children);
+        }
+
+        /// <summary>
+        /// Gets children as <see cref="ControlSet"/>.
+        /// </summary>
+        /// <param name="recursive">Whether to get all children recurively.</param>
+        /// <returns></returns>
+        public virtual ControlSet GetChildren<T>(bool recursive = false)
+        {
+            ControlSet result;
+
+            if (recursive)
+                result = GetChildrenRecursive();
+            else
+            if (HasChildren)
+                result = ControlSet.New(Children);
+            else
+                result = ControlSet.Empty;
+
+            var limitedResult = new List<Control>();
+
+            foreach(var item in result.Items)
+            {
+                if (item is T)
+                    limitedResult.Add(item);
+            }
+
+            return ControlSet.New(limitedResult);
+        }
+
+        /// <summary>
+        /// Sets children font.
+        /// </summary>
+        /// <param name="font">New font value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenFont(Font? font, bool recursive = false)
+        {
+            GetChildren(recursive).Font(font);
+        }
+
+        /// <summary>
+        /// Sets children background color.
+        /// </summary>
+        /// <param name="color">New background color value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenBackgroundColor(Color? color, bool recursive = false)
+        {
+            GetChildren(recursive).BackgroundColor(color);
+        }
+
+        /// <summary>
+        /// Sets children background color.
+        /// </summary>
+        /// <param name="color">New background color value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenBackgroundColor<T>(Color? color, bool recursive = false)
+        {
+            GetChildren<T>(recursive).BackgroundColor(color);
+        }
+
+        /// <summary>
+        /// Sets children foreground color.
+        /// </summary>
+        /// <param name="color">New foreground color value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenForegroundColor(Color? color, bool recursive = false)
+        {
+            GetChildren(recursive).ForegroundColor(color);
+        }
+
+        /// <summary>
+        /// Sets children foreground color.
+        /// </summary>
+        /// <param name="color">New foreground color value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenForegroundColor<T>(Color? color, bool recursive = false)
+        {
+            GetChildren<T>(recursive).ForegroundColor(color);
+        }
+
+        /// <summary>
         /// Focuses the next control.
         /// </summary>
         /// <param name="forward"><see langword="true"/> to move forward in the

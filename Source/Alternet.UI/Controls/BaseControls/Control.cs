@@ -2024,6 +2024,7 @@ namespace Alternet.UI
         /// <returns>The <see cref="System.ComponentModel.ISite" /> associated
         /// with the <see cref="Control" />, if any.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [Browsable(false)]
         public ISite? Site
         {
             get => site;
