@@ -169,6 +169,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets font for all the controls in the set.
+        /// </summary>
+        /// <param name="value">New font.</param>
+        public ControlSet Font(Font? value)
+        {
+            foreach (var item in items)
+                item.Font = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets background color for all the controls in the set.
+        /// </summary>
+        /// <param name="value">New font.</param>
+        public ControlSet BackgroundColor(Color? value)
+        {
+            foreach (var item in items)
+                item.BackgroundColor = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets background color for all the controls in the set.
+        /// </summary>
+        /// <param name="value">New font.</param>
+        public ControlSet ForegroundColor(Color? value)
+        {
+            foreach (var item in items)
+                item.ForegroundColor = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="Control.Visible"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New property value.</param>
