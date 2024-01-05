@@ -39,6 +39,24 @@ namespace PropertyGridSample
 
         static void SetBackgrounds(Control control)
         {
+            if (SpeedButton.Defaults is null && false)
+            {
+                /* Sample of changing default speed button settings */
+
+                var border = BorderSettings.Default.Clone();
+                border.UniformRadiusIsPercent = true;
+                border.UniformCornerRadius = 25;
+                border.Color = Color.Red;
+
+                var defaultButton = new SpeedButton();
+                defaultButton.Borders!.SetObject(border, GenericControlState.Hovered);
+                defaultButton.Borders!.SetObject(border, GenericControlState.Pressed);
+                defaultButton.Backgrounds ??= new();
+                defaultButton.Backgrounds.SetObject(SystemColors.GrayText.AsBrush, GenericControlState.Hovered);
+                defaultButton.Backgrounds.SetObject(SystemColors.GrayText.AsBrush, GenericControlState.Pressed);
+                SpeedButton.Defaults = defaultButton;
+            }
+
             control.Backgrounds = new()
             {
                 Normal = Color.PaleTurquoise.AsBrush,

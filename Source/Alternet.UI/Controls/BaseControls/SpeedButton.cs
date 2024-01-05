@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class SpeedButton : PictureBox
     {
+        private static SpeedButton? defaults;
         private Action? clickAction;
         private bool sticky;
 
@@ -25,11 +26,40 @@ namespace Alternet.UI
             ImageStretch = false;
             Borders ??= new();
 
-            var border = BorderSettings.Default.Clone();
-            border.UniformRadiusIsPercent = true;
-            border.UniformCornerRadius = 25;
-            Borders.SetObject(border, GenericControlState.Hovered);
-            Borders.SetObject(border, GenericControlState.Pressed);
+            if(defaults is null || defaults.Borders is null)
+            {
+                var border = BorderSettings.Default.Clone();
+                border.UniformRadiusIsPercent = true;
+                border.UniformCornerRadius = 25;
+                Borders.SetObject(border, GenericControlState.Hovered);
+                Borders.SetObject(border, GenericControlState.Pressed);
+            }
+            else
+            {
+                Borders.Assign(defaults.Borders);
+                Backgrounds = defaults.Backgrounds;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default settings for the <see cref="SpeedButton"/>.
+        /// </summary>
+        /// <remarks>
+        /// Create instance of the <see cref="SpeedButton"/> and assign to this property.
+        /// You can specify border and background settings and all new <see cref="SpeedButton"/>
+        /// controls will inherit them.
+        /// </remarks>
+        public static SpeedButton? Defaults
+        {
+            get
+            {
+                return defaults;
+            }
+
+            set
+            {
+                defaults = value;
+            }
         }
 
         /// <summary>
