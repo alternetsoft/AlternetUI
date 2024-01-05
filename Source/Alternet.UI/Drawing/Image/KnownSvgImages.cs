@@ -25,6 +25,7 @@ namespace Alternet.UI
         private ImageSet? imgBrowserGo;
         private ImageSet? imgAdd;
         private ImageSet? imgMoreActions;
+        private ImageSet? imgMoreActionsHorz;
         private ImageSet? imgRemove;
         private ImageSet? imgOk;
         private ImageSet? imgCancel;
@@ -201,6 +202,15 @@ namespace Alternet.UI
         {
             get => imgMoreActions ??= Load(KnownSvgUrls.UrlImageMoreActions);
             set => imgMoreActions = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in horizontal "More Actions" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgMoreActionsHorz
+        {
+            get => imgMoreActionsHorz ??= Load(KnownSvgUrls.UrlImageMoreActionsHorz);
+            set => imgMoreActionsHorz = value;
         }
 
         /// <summary>

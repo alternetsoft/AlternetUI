@@ -179,6 +179,12 @@ namespace Alternet.UI
         public static string UrlImageMoreActions { get; set; } =
             GetImageUrl("alternet-ellipsis-vertical");
 
+        /// <summary>
+        /// Gets or sets url used to load svg image used in horizontal "More Actions" toolbar buttons.
+        /// </summary>
+        public static string UrlImageMoreActionsHorz { get; set; } =
+            GetImageUrl("alternet-ellipsis");
+
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
 }

@@ -165,5 +165,8 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string LoadingPleaseWait { get; set; } = "Loading. Please wait...";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ToolbarSeeMore { get; set; } = "See more";
     }
 }

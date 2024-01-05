@@ -59,6 +59,7 @@ namespace PropertyGridSample
             var idText = toolbar.AddText("text");
 
             var textBox = new TextBox();
+            textBox.SuggestedWidth = 100;
 
             var idEdit = toolbar.AddControl(textBox);
 
@@ -70,6 +71,15 @@ namespace PropertyGridSample
                 ButtonClick);
 
             toolbar.SetToolAlignRight(buttonIdUndo, true);
+
+            var buttonIdMoreItems = toolbar.Add(
+                CommonStrings.Default.ToolbarSeeMore,
+                images.ImgMoreActionsHorz,
+                imagesDisabled.ImgMoreActionsHorz,
+                CommonStrings.Default.ToolbarSeeMore,
+                ButtonClick);
+
+            toolbar.SetToolAlignRight(buttonIdMoreItems, true);
 
             /*var buttonIdRedo = toolbar.Add(
                 CommonStrings.Default.ButtonRedo,
