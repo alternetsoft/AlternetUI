@@ -33,6 +33,32 @@ namespace Alternet.UI
                     height + stackPanelPadding.Vertical);
             }
 
+            public void LayoutOld()
+            {
+                var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
+
+                double y = childrenLayoutBounds.Top;
+                foreach (var control in Handler.AllChildrenIncludedInLayout)
+                {
+                    var margin = control.Margin;
+                    var verticalMargin = margin.Vertical;
+
+                    var preferredSize = control.GetPreferredSizeLimited(
+                        new SizeD(
+                            childrenLayoutBounds.Width,
+                            childrenLayoutBounds.Height - y - verticalMargin));
+                    var alignedPosition =
+                        AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
+                    control.Handler.Bounds =
+                        new RectD(
+                            alignedPosition.Origin,
+                            y + margin.Top,
+                            alignedPosition.Size,
+                            preferredSize.Height);
+                    y += preferredSize.Height + verticalMargin;
+                }
+            }
+
             public override void Layout()
             {
                 var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
