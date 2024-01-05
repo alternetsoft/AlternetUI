@@ -84,7 +84,7 @@ namespace Alternet.UI
             if (position == null)
                 ShowUnder();
             else
-                ((NativeContextMenuHandler)Handler).Show(control, (PointD)position);
+                ((ContextMenuHandler)Handler).Show(control, (PointD)position);
 
             void ShowUnder()
             {

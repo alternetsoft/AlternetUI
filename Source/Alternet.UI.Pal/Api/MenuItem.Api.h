@@ -4,6 +4,7 @@
 
 #include "MenuItem.h"
 #include "Menu.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -62,6 +63,26 @@ ALTERNET_UI_API Menu* MenuItem_GetSubmenu_(MenuItem* obj)
 ALTERNET_UI_API void MenuItem_SetSubmenu_(MenuItem* obj, Menu* value)
 {
     obj->SetSubmenu(value);
+}
+
+ALTERNET_UI_API ImageSet* MenuItem_GetNormalImage_(MenuItem* obj)
+{
+    return obj->GetNormalImage();
+}
+
+ALTERNET_UI_API void MenuItem_SetNormalImage_(MenuItem* obj, ImageSet* value)
+{
+    obj->SetNormalImage(value);
+}
+
+ALTERNET_UI_API ImageSet* MenuItem_GetDisabledImage_(MenuItem* obj)
+{
+    return obj->GetDisabledImage();
+}
+
+ALTERNET_UI_API void MenuItem_SetDisabledImage_(MenuItem* obj, ImageSet* value)
+{
+    obj->SetDisabledImage(value);
 }
 
 ALTERNET_UI_API void MenuItem_SetShortcut_(MenuItem* obj, Key key, ModifierKeys modifierKeys)

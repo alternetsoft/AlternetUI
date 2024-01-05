@@ -18,7 +18,7 @@ namespace Alternet.UI
                 if (value == null)
                     NativeControl.DropDownMenu = null;
                 else
-                    NativeControl.DropDownMenu = ((NativeContextMenuHandler)value.Handler).NativeControl;
+                    NativeControl.DropDownMenu = ((ContextMenuHandler)value.Handler).NativeControl;
             }
         }
 

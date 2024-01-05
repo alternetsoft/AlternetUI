@@ -6,6 +6,54 @@
 
 namespace Alternet::UI
 {
+    ImageSet* MenuItem::GetNormalImage()
+    {
+        if (_normalImage == nullptr)
+            return nullptr;
+
+        _normalImage->AddRef();
+        return _normalImage;
+    }
+
+    void MenuItem::SetNormalImage(ImageSet* value)
+    {
+        if (_normalImage != nullptr)
+            _normalImage->Release();
+
+        _normalImage = value;
+
+        if (_normalImage != nullptr)
+            _normalImage->AddRef();
+
+        if (_menuItem == nullptr)
+            return;
+        _menuItem->SetBitmap(ImageSet::BitmapBundle(value));
+    }
+
+    ImageSet* MenuItem::GetDisabledImage()
+    {
+        if (_disabledImage == nullptr)
+            return nullptr;
+
+        _disabledImage->AddRef();
+        return _disabledImage;
+    }
+
+    void MenuItem::SetDisabledImage(ImageSet* value)
+    {
+        if (_disabledImage != nullptr)
+            _disabledImage->Release();
+
+        _disabledImage = value;
+
+        if (_disabledImage != nullptr)
+            _disabledImage->AddRef();
+
+        if (_menuItem == nullptr)
+            return;
+        _menuItem->SetDisabledBitmap(ImageSet::BitmapBundle(value));
+    }
+
     MenuItem::MenuItem() : _flags(MenuItemFlags::Enabled)
     {
         CreateWxMenuItem();
@@ -38,6 +86,16 @@ namespace Alternet::UI
 
         if (_accelerator != nullptr)
             _menuItem->SetAccel(_accelerator);
+
+        if (_normalImage != nullptr)
+        {
+            _menuItem->SetBitmap(ImageSet::BitmapBundle(_normalImage));
+        }
+
+        if (_disabledImage != nullptr)
+        {
+            _menuItem->SetDisabledBitmap(ImageSet::BitmapBundle(_disabledImage));
+        }
     }
 
     void MenuItem::UpdateWxWindowParent()

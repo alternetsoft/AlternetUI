@@ -20,6 +20,14 @@ void SetChecked(bool value);
 Menu* GetSubmenu();
 void SetSubmenu(Menu* value);
 
+
+ImageSet* GetNormalImage();
+void SetNormalImage(ImageSet* value);
+
+
+ImageSet* GetDisabledImage();
+void SetDisabledImage(ImageSet* value);
+
 void SetShortcut(Key key, ModifierKeys modifierKeys);
 public:
 enum class MenuItemEvent

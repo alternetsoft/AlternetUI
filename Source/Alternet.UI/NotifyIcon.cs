@@ -151,7 +151,7 @@ namespace Alternet.UI
                 if (value == null)
                     nativeNotifyIcon.Menu = null;
                 else
-                    nativeNotifyIcon.Menu = ((NativeContextMenuHandler)value.Handler).NativeControl;
+                    nativeNotifyIcon.Menu = ((ContextMenuHandler)value.Handler).NativeControl;
             }
         }
 

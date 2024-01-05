@@ -51,6 +51,8 @@ namespace Alternet.UI
         private bool preCommandEnabledValue = true;
         private bool isChecked;
         private Action? action;
+        private ImageSet? image;
+        private ImageSet? disabledImage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
@@ -145,6 +147,44 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
+
+        /// <summary>
+        /// Gets or sets image associated with the menu item.
+        /// </summary>
+        public ImageSet? Image
+        {
+            get
+            {
+                return image;
+            }
+
+            set
+            {
+                if (image == value)
+                    return;
+                image = value;
+                NativeControl.NormalImage = image?.NativeImageSet;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets disabled image associated with the menu item.
+        /// </summary>
+        public ImageSet? DisabledImage
+        {
+            get
+            {
+                return disabledImage;
+            }
+
+            set
+            {
+                if (disabledImage == value)
+                    return;
+                disabledImage = value;
+                NativeControl.DisabledImage = disabledImage?.NativeImageSet;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the shortcut keys associated with the
@@ -314,6 +354,10 @@ namespace Alternet.UI
         }
 
         internal override bool IsDummy => true;
+
+        internal new MenuItemHandler Handler => (MenuItemHandler)base.Handler;
+
+        internal new Native.MenuItem NativeControl => (Native.MenuItem)base.NativeControl;
 
         /// <summary>
         /// Implicit conversion operator from <see cref="string"/> to

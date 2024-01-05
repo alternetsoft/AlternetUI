@@ -286,7 +286,7 @@ namespace Alternet.UI
         private void ApplyMenu(object? sender, EventArgs e)
         {
             NativeControl.Menu =
-                (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl;
+                (Control.Menu?.Handler as MainMenuHandler)?.NativeControl;
         }
 
         private void ApplyToolbar(object? sender, EventArgs e)

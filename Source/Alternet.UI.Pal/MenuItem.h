@@ -12,6 +12,7 @@ namespace Alternet::UI
     {
 #include "Api/MenuItem.inc"
     public:
+
         struct RoleBasedOverrideData
         {
             wxMenu* parentMenuOverride = nullptr;
@@ -45,6 +46,8 @@ namespace Alternet::UI
         Key GetShortcutKey();
         ModifierKeys GetShortcutModifierKeys();
     protected:
+        ImageSet* _normalImage = nullptr;
+        ImageSet* _disabledImage = nullptr;
 
         void ShowCore() override;
 

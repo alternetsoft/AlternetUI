@@ -91,15 +91,15 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateMainMenuHandler(Control control) =>
-            new NativeMainMenuHandler();
+            new MainMenuHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateMenuItemHandler(Control control) =>
-            new NativeMenuItemHandler();
+            new MenuItemHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateContextMenuHandler(Control control) =>
-            new NativeContextMenuHandler();
+            new ContextMenuHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateToolbarHandler(Control control) =>

@@ -102,6 +102,42 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ImageSet? NormalImage
+        {
+            get
+            {
+                CheckDisposed();
+                var _nnn = NativeApi.MenuItem_GetNormalImage_(NativePointer);
+                var _mmm = NativeObject.GetFromNativePointer<ImageSet>(_nnn, p => new ImageSet(p));
+                ReleaseNativeObjectPointer(_nnn);
+                return _mmm;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.MenuItem_SetNormalImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public ImageSet? DisabledImage
+        {
+            get
+            {
+                CheckDisposed();
+                var _nnn = NativeApi.MenuItem_GetDisabledImage_(NativePointer);
+                var _mmm = NativeObject.GetFromNativePointer<ImageSet>(_nnn, p => new ImageSet(p));
+                ReleaseNativeObjectPointer(_nnn);
+                return _mmm;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.MenuItem_SetDisabledImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         public void SetShortcut(Key key, ModifierKeys modifierKeys)
         {
             CheckDisposed();
@@ -188,6 +224,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void MenuItem_SetSubmenu_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr MenuItem_GetNormalImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetNormalImage_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr MenuItem_GetDisabledImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetDisabledImage_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void MenuItem_SetShortcut_(IntPtr obj, Key key, ModifierKeys modifierKeys);

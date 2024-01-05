@@ -17,5 +17,9 @@ namespace NativeApi.Api
         public event EventHandler? Click { add => throw new Exception(); remove => throw new Exception(); }
 
         public Menu? Submenu { get => throw new Exception(); set => throw new Exception(); }
+
+        public ImageSet? NormalImage { get; set; }
+        public ImageSet? DisabledImage { get; set; }
+
     }
 }

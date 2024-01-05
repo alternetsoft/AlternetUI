@@ -4,7 +4,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeContextMenuHandler : NativeControlHandler<ContextMenu, Native.Menu>
+    internal class ContextMenuHandler : NativeControlHandler<ContextMenu, Native.Menu>
     {
         /// <summary>
         /// Displays the shortcut menu at the specified position.
@@ -55,7 +55,7 @@ namespace Alternet.UI
 
         private void InsertItem(MenuItem item, int index)
         {
-            if (item.Handler is not NativeMenuItemHandler handler)
+            if (item.Handler is not MenuItemHandler handler)
                 throw new InvalidOperationException();
 
             NativeControl.InsertItemAt(index, handler.NativeControl);

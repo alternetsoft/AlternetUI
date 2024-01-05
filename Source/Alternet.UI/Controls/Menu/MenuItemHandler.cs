@@ -3,7 +3,7 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class NativeMenuItemHandler : NativeControlHandler<MenuItem, Native.MenuItem>
+    internal class MenuItemHandler : NativeControlHandler<MenuItem, Native.MenuItem>
     {
         internal Native.Menu EnsureNativeSubmenuCreated()
         {
@@ -123,7 +123,7 @@ namespace Alternet.UI
 
         private void InsertItem(MenuItem item, int index)
         {
-            if (item.Handler is not NativeMenuItemHandler handler)
+            if (item.Handler is not MenuItemHandler handler)
                 throw new InvalidOperationException();
 
             EnsureNativeSubmenuCreated().InsertItemAt(index, handler.NativeControl);

@@ -52,15 +52,6 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
-            /*   ControlSet.New(
-                   statusAddButton,
-                   statusEditButton,
-                   showSizingGripButton,
-                   statusRemoveButton,
-                   statusClearButton,
-                   statusNullButton,
-                   statusRecreateButton).SuggestedWidthToMax();*/
-
             panelHeader.Add("Menu", menuPanel);
             panelHeader.Add("ToolBar", toolbarPanel);
             panelHeader.Add("StatusBar", statusPanel);
@@ -75,6 +66,15 @@ namespace MenuSample
             statusEditButton.Click += StatusEditButton_Click;
 
             eventsListBox.ContextMenu.Required();
+
+            var images = KnownSvgImages.GetForSize(GetSvgColor(KnownSvgColor.Normal), 16);
+            var imagesDisabled = KnownSvgImages.GetForSize(GetSvgColor(KnownSvgColor.Disabled), 16);
+
+            openMenuItem.Image = images.ImgFileOpen;
+            openMenuItem.Image = imagesDisabled.ImgFileOpen;
+
+            saveMenuItem.Image = images.ImgFileSave;
+            saveMenuItem.Image = imagesDisabled.ImgFileSave;
         }
 
         private void StatusAddButton_Click(object? sender, System.EventArgs e)
