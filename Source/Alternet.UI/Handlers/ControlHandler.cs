@@ -986,7 +986,7 @@ namespace Alternet.UI
         private void ApplyToolTip()
         {
             if (NativeControl != null)
-                NativeControl.ToolTip = Control.ToolTip;
+                NativeControl.ToolTip = Control.GetRealToolTip();
         }
 
         private void ApplyFont()

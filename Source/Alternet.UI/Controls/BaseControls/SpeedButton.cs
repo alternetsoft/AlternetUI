@@ -16,6 +16,9 @@ namespace Alternet.UI
         private static SpeedButton? defaults;
         private Action? clickAction;
         private bool sticky;
+        private ImageToText imageToText = ImageToText.Horizontal;
+        private bool textVisible = false;
+        private KeyInfo[]? keys;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButton"/> class.
@@ -84,6 +87,114 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the shortcut keys associated with the control.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="Keys" /> values. The default is <see cref="Keys.None" />.</returns>
+        [Localizable(true)]
+        [DefaultValue(Keys.None)]
+        [Browsable(false)]
+        public Keys ShortcutKeys
+        {
+            get
+            {
+                if (Shortcut is null)
+                    return Keys.None;
+                var result = Shortcut.Key.ToKeys(Shortcut.Modifiers);
+                return result;
+            }
+
+            set
+            {
+                var key = value.ToKey();
+                var modifiers = value.ToModifiers();
+                Shortcut = new(key, modifiers);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the shortcut key associated with
+        /// the control.
+        /// </summary>
+        public KeyGesture? Shortcut
+        {
+            get
+            {
+                if (keys is null || keys.Length == 0)
+                    return null;
+                return new(keys[0].Key, keys[0].Modifiers);
+            }
+
+            set
+            {
+                if (value is null)
+                    ShortcutKeyInfo = null;
+                else
+                    ShortcutKeyInfo = [new KeyInfo(value.Key, value.Modifiers)];
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the shortcut key associated with
+        /// the control.
+        /// </summary>
+        [Browsable(false)]
+        public KeyInfo[]? ShortcutKeyInfo
+        {
+            get
+            {
+                return keys;
+            }
+
+            set
+            {
+                if (keys == value)
+                    return;
+
+                keys = value;
+                var s = ToolTip;
+                ToolTip = null;
+                ToolTip = s;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to display text in the control.
+        /// </summary>
+        public bool TextVisible
+        {
+            get
+            {
+                return textVisible;
+            }
+
+            set
+            {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value which specifies display modes for
+        /// item image and text.
+        /// </summary>
+        public ImageToText ImageToText
+        {
+            get => imageToText;
+            set
+            {
+                if (imageToText == value)
+                    return;
+                imageToText = value;
+                if (ImageVisible && TextVisible)
+                    Invalidate();
+            }
+        }
+
         /// <inheritdoc/>
         [Browsable(false)]
         public override GenericControlState CurrentState
@@ -123,6 +234,25 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
         /// </summary>
         public ContextMenu? DropDownMenu { get; set; }
+
+        /// <inheritdoc/>
+        public override string? GetRealToolTip()
+        {
+            var s = ToolTip;
+
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return null;
+            }
+
+            var filteredKeys = KeyInfo.FilterBackendOs(keys);
+            if (filteredKeys is not null && filteredKeys.Length > 0)
+            {
+                s += $" ({filteredKeys[0]})";
+            }
+
+            return s;
+        }
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
