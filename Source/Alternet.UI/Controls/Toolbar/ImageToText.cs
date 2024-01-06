@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies display modes for toolbar item image and text.
     /// </summary>
-    public enum ToolbarImageToText
+    public enum ImageToText
     {
         /// <summary>
         /// Specifies horizontal layout.

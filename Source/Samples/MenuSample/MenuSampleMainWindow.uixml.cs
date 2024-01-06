@@ -39,10 +39,10 @@ namespace MenuSample
                 toolbar!.Items.IndexOf(dynamicToolbarItemsSeparator!);
             AddDynamicToolbarItem();
 
-            foreach (var value in Enum.GetValues(typeof(ToolbarImageToText)))
+            foreach (var value in Enum.GetValues(typeof(ImageToText)))
                 imageToTextDisplayModeComboBox.Items.Add(value!);
             imageToTextDisplayModeComboBox.SelectedItem = 
-                ToolbarImageToText.Horizontal;
+                ImageToText.Horizontal;
 
             this.Closing += MainWindow_Closing;
 
@@ -118,8 +118,8 @@ namespace MenuSample
             if(toolbar.IsVertical || toolbar.IsRight)
             {
                 imageToTextDisplayModeComboBox.SelectedItem = 
-                    ToolbarImageToText.Vertical;
-                toolbar.ImageToText = ToolbarImageToText.Vertical;
+                    ImageToText.Vertical;
+                toolbar.ImageToText = ImageToText.Vertical;
             }
         }
 
@@ -442,7 +442,7 @@ namespace MenuSample
 
         private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            toolbar!.ImageToText = (ToolbarImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
+            toolbar!.ImageToText = (ImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
         }
 
         private int GenItemIndex()

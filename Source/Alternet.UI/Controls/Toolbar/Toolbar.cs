@@ -153,7 +153,7 @@ namespace Alternet.UI
         /// Gets or sets a value which specifies display modes for
         /// toolbar item image and text.
         /// </summary>
-        public ToolbarImageToText ImageToText
+        public ImageToText ImageToText
         {
             get => Handler.ImageToText;
             set => Handler.ImageToText = value;
