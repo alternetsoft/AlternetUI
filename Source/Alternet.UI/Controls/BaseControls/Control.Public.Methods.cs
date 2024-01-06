@@ -657,17 +657,6 @@ namespace Alternet.UI
             Handler.CreateGraphics();
 
         /// <summary>
-        /// Invalidates the control and causes a paint message to be sent to
-        /// the control.
-        /// </summary>
-        public virtual void Invalidate() => Handler?.Invalidate();
-
-        /// <summary>
-        /// Causes the control to redraw the invalidated regions.
-        /// </summary>
-        public virtual void Update() => Handler?.Update();
-
-        /// <summary>
         /// Sets the specified bounds of the control to new location and size.
         /// </summary>
         /// <param name="newBounds">New location and size.</param>
@@ -725,6 +714,25 @@ namespace Alternet.UI
         {
             Invalidate();
             Update();
+        }
+
+        /// <summary>
+        /// Invalidates the control and causes a paint message to be sent to
+        /// the control.
+        /// </summary>
+        public virtual void Invalidate()
+        {
+            if (Parent != null || this is Window)
+                Handler?.Invalidate();
+        }
+
+        /// <summary>
+        /// Causes the control to redraw the invalidated regions.
+        /// </summary>
+        public virtual void Update()
+        {
+            if (Parent != null || this is Window)
+                Handler?.Update();
         }
 
         /// <summary>
