@@ -17,40 +17,20 @@ namespace Alternet.UI
             Orientation = StackPanelOrientation.Horizontal,
         };
 
-        /*private readonly StackPanel panel2 = new()
-        {
-            Orientation = StackPanelOrientation.Horizontal,
-        };
-
-        private readonly Grid panelParent = new()
-        {
-        };*/
-
-        private readonly double itemSize;
+        private double itemSize;
+        private bool textVisible = false;
+        private bool imageVisible = true;
+        private ImageToText imageToText = ImageToText.Horizontal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericToolBar"/> class.
         /// </summary>
         public GenericToolBar()
         {
-            itemSize = DefaultSize;
-
-            panel.ColumnIndex = 0;
-            /*panel2.ColumnIndex = 1;
-
-            panelParent.AddStarColumn();
-            panelParent.AddAutoColumn();
-            panelParent.AddAutoRow();*/
-
+            itemSize = Math.Max(DefaultSize, 24);
             panel.Parent = this;
-            /*panel2.Parent = panelParent;*/
             TabStop = false;
             AcceptsFocusAll = false;
-            /*panelParent.Parent = this;
-
-            panelParent.BackgroundColor = Color.Yellow;
-            panel.BackgroundColor = Color.Red;
-            panel2.BackgroundColor = Color.Yellow;*/
         }
 
         /// <summary>
@@ -120,6 +100,79 @@ namespace Alternet.UI
         public static Thickness DefaultSeparatorMargin { get; set; } = (4, 4, 4, 4);
 
         /// <summary>
+        /// Gets or sets a value which specifies display modes for
+        /// item image and text.
+        /// </summary>
+        public ImageToText ImageToText
+        {
+            get => imageToText;
+            set
+            {
+                if (imageToText == value)
+                    return;
+                imageToText = value;
+                if (!ImageVisible || !TextVisible)
+                    return;
+                foreach (var item in Items)
+                {
+                    if (item is SpeedButton speedButton)
+                        speedButton.ImageToText = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets items added to the control.
+        /// </summary>
+        public IReadOnlyList<Control> Items => panel.Children;
+
+        /// <summary>
+        /// Gets or sets whether to display text in the buttons.
+        /// </summary>
+        public bool TextVisible
+        {
+            get
+            {
+                return textVisible;
+            }
+
+            set
+            {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                foreach (var item in Items)
+                {
+                    if (item is SpeedButton speedButton)
+                        speedButton.TextVisible = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to display images in the buttons.
+        /// </summary>
+        public bool ImageVisible
+        {
+            get
+            {
+                return imageVisible;
+            }
+
+            set
+            {
+                if (imageVisible == value)
+                    return;
+                imageVisible = value;
+                foreach (var item in Items)
+                {
+                    if (item is SpeedButton speedButton)
+                        speedButton.ImageVisible = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets toolbar item size.
         /// </summary>
         public double ItemSize
@@ -127,6 +180,24 @@ namespace Alternet.UI
             get
             {
                 return itemSize;
+            }
+
+            set
+            {
+                if (itemSize < 24)
+                    itemSize = 24;
+                if (itemSize == value)
+                    return;
+                itemSize = value;
+
+                SuspendLayout();
+                foreach (var item in Items)
+                {
+                    if (item is SpeedButton || item is PictureBox)
+                        item.SuggestedSize = value;
+                }
+
+                ResumeLayout();
             }
         }
 
@@ -157,7 +228,7 @@ namespace Alternet.UI
             {
                 base.BackgroundColor = value;
                 var items = GetChildren(true).Items;
-                foreach(var item in items)
+                foreach(var item in Items)
                 {
                     if (NeedUpdateBackColor(item))
                         item.BackgroundColor = value;
@@ -206,7 +277,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds toolbar item.
+        /// Adds <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="imageSet">Item image.</param>
@@ -214,7 +285,7 @@ namespace Alternet.UI
         /// <param name="toolTip">Item tooltip.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId Add(
+        public virtual ObjectUniqueId AddSpeedButton(
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled,
@@ -223,6 +294,9 @@ namespace Alternet.UI
         {
             SpeedButton speedButton = new()
             {
+                ImageVisible = imageVisible,
+                TextVisible = textVisible,
+                ImageToText = imageToText,
                 Text = text ?? string.Empty,
                 ImageSet = imageSet,
                 ToolTip = toolTip ?? string.Empty,
@@ -240,13 +314,11 @@ namespace Alternet.UI
             speedButton.Click += action;
             speedButton.Parent = panel;
 
-            /*speedButton.BackgroundColor = Color.White;*/
-
             return speedButton.UniqueId;
         }
 
         /// <summary>
-        /// Adds image to the toolbar.
+        /// Adds <see cref="PictureBox"/> to the control.
         /// </summary>
         /// <param name="image">Normal image.</param>
         /// <param name="imageDisabled">Disable image.</param>
@@ -296,7 +368,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds static text to the toolbar.
+        /// Adds static text to the control.
         /// </summary>
         /// <param name="text">Text string.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
@@ -602,6 +674,45 @@ namespace Alternet.UI
         {
             var result = panel.FindChild(id);
             return result;
+        }
+
+        /// <summary>
+        /// Sets item 'Shortcut' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">New property value.</param>
+        public virtual void SetToolShortcut(ObjectUniqueId id, KeyInfo[]? value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ShortcutKeyInfo = value;
+        }
+
+        /// <summary>
+        /// Sets item 'Shortcut' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">New property value.</param>
+        public virtual void SetToolShortcut(ObjectUniqueId id, KeyGesture? value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.Shortcut = value;
+        }
+
+        /// <summary>
+        /// Sets item 'Shortcut' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">New property value.</param>
+        public virtual void SetToolShortcut(ObjectUniqueId id, Keys value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ShortcutKeys = value;
         }
 
         /// <summary>
