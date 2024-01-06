@@ -1163,6 +1163,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="ToolTip"/> value for use in the native control.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Override this method to customize tooltip. For example <see cref="SpeedButton"/>
+        /// overrides it to add shortcuts.
+        /// </remarks>
+        public virtual string? GetRealToolTip()
+        {
+            return ToolTip;
+        }
+
+        /// <summary>
         /// Gets children as <see cref="ControlSet"/>.
         /// </summary>
         /// <param name="recursive">Whether to get all children recurively.</param>
