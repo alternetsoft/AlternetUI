@@ -103,8 +103,11 @@ namespace Alternet.UI
         /// registered for the current backend OS.
         /// </summary>
         /// <param name="keys">Keys.</param>
-        public static KeyInfo[] FilterBackendOs(IEnumerable<KeyInfo> keys)
+        public static KeyInfo[] FilterBackendOs(IEnumerable<KeyInfo>? keys)
         {
+            if (keys is null)
+                return [];
+
             List<KeyInfo> result = [];
 
             foreach (var key in keys)
