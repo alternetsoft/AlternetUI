@@ -294,7 +294,6 @@ namespace Alternet.UI
             set
             {
                 base.BackgroundColor = value;
-                var items = GetChildren(true).Items;
                 foreach(var item in Items)
                 {
                     if (NeedUpdateBackColor(item))
@@ -385,6 +384,56 @@ namespace Alternet.UI
             speedButton.Parent = panel;
 
             return speedButton.UniqueId;
+        }
+
+        /// <summary>
+        /// Sets image of the item for the normal state.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value"><see cref="ImageSet"/> to use as item image.</param>
+        public virtual void SetToolImage(ObjectUniqueId id, ImageSet? value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ImageSet = value;
+        }
+
+        /// <summary>
+        /// Sets image of the item for the disabled state.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value"><see cref="ImageSet"/> to use as item image.</param>
+        public virtual void SetToolDisabledImage(ObjectUniqueId id, ImageSet? value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.DisabledImageSet = value;
+        }
+
+        /// <summary>
+        /// Gets image of the item for the normal state.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        public virtual ImageSet? GetToolImage(ObjectUniqueId id)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return null;
+            return item.ImageSet;
+        }
+
+        /// <summary>
+        /// Gets image of the item for the disabled state.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        public virtual ImageSet? GetToolDisabledImage(ObjectUniqueId id)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return null;
+            return item.DisabledImageSet;
         }
 
         /// <summary>
