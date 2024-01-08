@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <see cref="IsDarkBackground"/> property.
         /// </summary>
         /// <param name="knownSvgColor">Known svg color identifier.</param>
-        public Color GetSvgColor(KnownSvgColor knownSvgColor)
+        public virtual Color GetSvgColor(KnownSvgColor knownSvgColor)
         {
             return SvgColors.GetSvgColor(knownSvgColor, IsDarkBackground);
         }
@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
-        public IReadOnlyFontAndColor GetDefaultFontAndColor()
+        public virtual IReadOnlyFontAndColor GetDefaultFontAndColor()
         {
             return new FontAndColor.ControlDefaultFontAndColor(this);
         }
