@@ -377,6 +377,7 @@ namespace Alternet.UI
         /// Gets or sets the number of horizontal pixels between the buttons and
         /// the state images.
         /// </summary>
+        [Browsable(false)]
         public uint StateImageSpacing
         {
             get
@@ -393,6 +394,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the current control indentation.
         /// </summary>
+        [Browsable(false)]
         public uint Indentation
         {
             get
