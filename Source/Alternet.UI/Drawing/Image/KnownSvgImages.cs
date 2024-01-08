@@ -44,6 +44,12 @@ namespace Alternet.UI
         private ImageSet? imgRedo;
         private ImageSet? imgSquarePlus;
         private ImageSet? imgSquareMinus;
+        private ImageSet? imgYes;
+        private ImageSet? imgNo;
+        private ImageSet? imgAbort;
+        private ImageSet? imgRetry;
+        private ImageSet? imgIgnore;
+        private ImageSet? imgHelp;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSvgImages"/> class.
@@ -193,6 +199,60 @@ namespace Alternet.UI
         {
             get => imgAdd ??= Load(KnownSvgUrls.UrlImagePlus);
             set => imgAdd = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Yes" buttons.
+        /// </summary>
+        public ImageSet? ImgYes
+        {
+            get => imgYes ??= Load(KnownSvgUrls.UrlImageYes);
+            set => imgYes = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "No" buttons.
+        /// </summary>
+        public ImageSet? ImgNo
+        {
+            get => imgNo ??= Load(KnownSvgUrls.UrlImageNo);
+            set => imgNo = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Abort" buttons.
+        /// </summary>
+        public ImageSet? ImgAbort
+        {
+            get => imgAbort ??= LoadIfExists(KnownSvgUrls.UrlImageAbort);
+            set => imgAbort = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Retry" buttons.
+        /// </summary>
+        public ImageSet? ImgRetry
+        {
+            get => imgRetry ??= LoadIfExists(KnownSvgUrls.UrlImageRetry);
+            set => imgRetry = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Ignore" buttons.
+        /// </summary>
+        public ImageSet? ImgIgnore
+        {
+            get => imgIgnore ??= LoadIfExists(KnownSvgUrls.UrlImageIgnore);
+            set => imgIgnore = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Help" buttons.
+        /// </summary>
+        public ImageSet? ImgHelp
+        {
+            get => imgHelp ??= LoadIfExists(KnownSvgUrls.UrlImageHelp);
+            set => imgHelp = value;
         }
 
         /// <summary>
@@ -363,6 +423,13 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        private ImageSet? LoadIfExists(string? url)
+        {
+            if (url is null)
+                return null;
+            return AuiToolbar.LoadSvgImage(url, size, color);
         }
 
         private ImageSet Load(string url)

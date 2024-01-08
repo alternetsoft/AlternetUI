@@ -100,6 +100,73 @@ namespace Alternet.UI
         public static Thickness DefaultSeparatorMargin { get; set; } = (4, 4, 4, 4);
 
         /// <summary>
+        /// Gets or sets default image size.
+        /// </summary>
+        /// <remarks>
+        /// If this property is null, <see cref="Toolbar.GetDefaultImageSize(Control)"/> is used.
+        /// </remarks>
+        public static int? DefaultImageSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets default color of the images in the normal state.
+        /// </summary>
+        /// <remarks>
+        /// If this property is null, <see cref="Control.GetSvgColor(KnownSvgColor)"/> is used with
+        /// <see cref="KnownSvgColor.Normal"/> parameter.
+        /// </remarks>
+        public static Color? DefaultNormalImageColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets default color of the images in the disabled state.
+        /// </summary>
+        /// <remarks>
+        /// If this property is null, <see cref="Control.GetSvgColor(KnownSvgColor)"/> is used with
+        /// <see cref="KnownSvgColor.Disabled"/> parameter.
+        /// </remarks>
+        public static Color? DefaultDisabledImageColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets color of the images in the normal state.
+        /// </summary>
+        /// <remarks>
+        /// If this property is null, <see cref="DefaultNormalImageColor"/> is used.
+        /// </remarks>
+        [Browsable(false)]
+        public Color? NormalImageColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets color of the images in the disabled state.
+        /// </summary>
+        /// <remarks>
+        /// If this property is null, <see cref="DefaultDisabledImageColor"/> is used.
+        /// </remarks>
+        [Browsable(false)]
+        public Color? DisabledImageColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets image size.
+        /// </summary>
+        /// <remarks>
+        /// This property specifies size of the new images in the toolbar.
+        /// Existing items size is not changed. If this property is null,
+        /// <see cref="DefaultImageSize"/> is used.
+        /// </remarks>
+        [Browsable(false)]
+        public int? ImageSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="KnownSvgImages"/> for the normal state.
+        /// </summary>
+        [Browsable(false)]
+        public KnownSvgImages? NormalSvgImages { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="KnownSvgImages"/> for the disabled state.
+        /// </summary>
+        [Browsable(false)]
+        public KnownSvgImages? DisabledSvgImages { get; set; }
+
+        /// <summary>
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
@@ -285,21 +352,23 @@ namespace Alternet.UI
         /// <param name="toolTip">Item tooltip.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddSpeedButton(
+        public virtual ObjectUniqueId AddSpeedBtn(
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled,
-            string? toolTip,
+            string? toolTip = null,
             EventHandler? action = null)
         {
+            text ??= string.Empty;
+
             SpeedButton speedButton = new()
             {
                 ImageVisible = imageVisible,
                 TextVisible = textVisible,
                 ImageToText = imageToText,
-                Text = text ?? string.Empty,
+                Text = text,
                 ImageSet = imageSet,
-                ToolTip = toolTip ?? string.Empty,
+                ToolTip = toolTip ?? text,
                 SuggestedSize = itemSize,
                 VerticalAlignment = VerticalAlignment.Center,
             };
@@ -311,10 +380,90 @@ namespace Alternet.UI
 
             UpdateItemProps(speedButton, ItemKind.Button);
 
-            speedButton.Click += action;
+            if(action is not null)
+                speedButton.Click += action;
             speedButton.Parent = panel;
 
             return speedButton.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds known <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual ObjectUniqueId AddSpeedBtn(KnownButton button)
+        {
+            var strings = CommonStrings.Default;
+            var images = GetNormalSvgImages();
+            var disabled = GetDisabledSvgImages();
+
+            switch (button)
+            {
+                case KnownButton.OK:
+                default:
+                    return AddSpeedBtn(strings.ButtonOk, images.ImgOk, disabled.ImgOk);
+                case KnownButton.Cancel:
+                    return AddSpeedBtn(strings.ButtonCancel, images.ImgCancel, disabled.ImgCancel);
+                case KnownButton.Yes:
+                    return AddSpeedBtn(strings.ButtonYes, images.ImgYes, disabled.ImgYes);
+                case KnownButton.No:
+                    return AddSpeedBtn(strings.ButtonNo, images.ImgNo, disabled.ImgNo);
+                case KnownButton.Abort:
+                    return AddSpeedBtn(strings.ButtonAbort, images.ImgAbort, disabled.ImgAbort);
+                case KnownButton.Retry:
+                    return AddSpeedBtn(strings.ButtonRetry, images.ImgRetry, disabled.ImgRetry);
+                case KnownButton.Ignore:
+                    return AddSpeedBtn(strings.ButtonIgnore, images.ImgIgnore, disabled.ImgIgnore);
+                case KnownButton.Help:
+                    return AddSpeedBtn(strings.ButtonHelp, images.ImgHelp, disabled.ImgHelp);
+                case KnownButton.Add:
+                    return AddSpeedBtn(strings.ButtonAdd, images.ImgAdd, disabled.ImgAdd);
+                case KnownButton.Remove:
+                    return AddSpeedBtn(strings.ButtonRemove, images.ImgRemove, disabled.ImgRemove);
+                case KnownButton.Clear:
+                    return AddSpeedBtn(strings.ButtonClear, images.ImgRemoveAll, disabled.ImgRemoveAll);
+                case KnownButton.AddChild:
+                    return AddSpeedBtn(strings.ButtonAddChild, images.ImgAddChild, disabled.ImgAddChild);
+                case KnownButton.MoreItems:
+                    return AddSpeedBtn(
+                        strings.ToolbarSeeMore,
+                        images.ImgMoreActionsHorz,
+                        disabled.ImgMoreActionsHorz);
+            }
+        }
+
+        /// <summary>
+        /// Adds array of known <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual ObjectUniqueId[] AddSpeedBtn(params KnownButton[] buttons)
+        {
+            ObjectUniqueId[] result = new ObjectUniqueId[buttons.Length];
+            for(int i = 0; i < buttons.Length; i++)
+                result[i] = AddSpeedBtn(buttons[i]);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds known <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual ObjectUniqueId[] AddSpeedBtn(MessageBoxButtons button)
+        {
+            switch (button)
+            {
+                case MessageBoxButtons.OK:
+                    return [AddSpeedBtn(KnownButton.OK)];
+                case MessageBoxButtons.OKCancel:
+                    return AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+                case MessageBoxButtons.YesNoCancel:
+                    return AddSpeedBtn(KnownButton.Yes, KnownButton.No, KnownButton.Cancel);
+                case MessageBoxButtons.YesNo:
+                    return AddSpeedBtn(KnownButton.Yes, KnownButton.No);
+                case MessageBoxButtons.AbortRetryIgnore:
+                    return AddSpeedBtn(KnownButton.Abort, KnownButton.Retry, KnownButton.Ignore);
+                case MessageBoxButtons.RetryCancel:
+                    return AddSpeedBtn(KnownButton.Retry, KnownButton.Cancel);
+            }
+
+            return [];
         }
 
         /// <summary>
@@ -703,6 +852,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Set click action for the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">Action.</param>
+        public virtual void SetToolAction(ObjectUniqueId id, Action? value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ClickAction = value;
+        }
+
+        /// <summary>
+        /// Adds click event handler to the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">Event handler.</param>
+        public virtual void AddToolAction(ObjectUniqueId id, EventHandler? value)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return;
+            item.Click += value;
+        }
+
+        /// <summary>
+        /// Removes click event handler from the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">Event handler.</param>
+        public virtual void RemoveToolAction(ObjectUniqueId id, EventHandler? value)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return;
+            item.Click -= value;
+        }
+
+        /// <summary>
         /// Sets item 'Shortcut' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
@@ -739,6 +927,37 @@ namespace Alternet.UI
         /// <param name="control">Control to check</param>
         /// <returns></returns>
         protected virtual bool NeedUpdateBackColor(Control control) => NeedUpdateForeColor(control);
+
+        /// <summary>
+        /// Gets image size.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual int GetImageSize() =>
+            ImageSize ?? DefaultImageSize ?? Toolbar.GetDefaultImageSize(this).Width;
+
+        /// <summary>
+        /// Gets image color in the normal state.
+        /// </summary>
+        protected virtual Color GetNormalImageColor() =>
+            NormalImageColor ?? DefaultNormalImageColor ?? GetSvgColor(KnownSvgColor.Normal);
+
+        /// <summary>
+        /// Gets image color in the disabled state.
+        /// </summary>
+        protected virtual Color GetDisabledImageColor() =>
+            DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the normal state.
+        /// </summary>
+        protected virtual KnownSvgImages GetNormalSvgImages() =>
+            NormalSvgImages ??= KnownSvgImages.GetForSize(GetNormalImageColor(), GetImageSize());
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the disabled state.
+        /// </summary>
+        protected virtual KnownSvgImages GetDisabledSvgImages() =>
+            DisabledSvgImages ??= KnownSvgImages.GetForSize(GetDisabledImageColor(), GetImageSize());
 
         /// <summary>
         /// Gets whether child control foreground color need to be updated when

@@ -113,6 +113,36 @@ namespace Alternet.UI
         public static string UrlImageCancel { get; set; } = GetImageUrl("alternet-xmark");
 
         /// <summary>
+        /// Gets or sets url used to load svg image used in "Yes" buttons.
+        /// </summary>
+        public static string UrlImageYes { get; set; } = GetImageUrl("alternet-check");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "No" buttons.
+        /// </summary>
+        public static string UrlImageNo { get; set; } = GetImageUrl("alternet-xmark");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Abort" buttons.
+        /// </summary>
+        public static string? UrlImageAbort { get; set; }
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Retry" buttons.
+        /// </summary>
+        public static string? UrlImageRetry { get; set; }
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Ignore" buttons.
+        /// </summary>
+        public static string? UrlImageIgnore { get; set; }
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Help" buttons.
+        /// </summary>
+        public static string? UrlImageHelp { get; set; }
+
+        /// <summary>
         /// Gets or sets url used to load svg image used in "Add child" toolbar buttons.
         /// </summary>
         public static string UrlImageAddChild { get; set; } = GetImageUrl("alternet-add-child");

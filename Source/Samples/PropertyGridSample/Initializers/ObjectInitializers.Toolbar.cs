@@ -24,20 +24,18 @@ namespace PropertyGridSample
             var images = KnownSvgImages.GetForSize(normalColor, imageSize);
             var imagesDisabled = KnownSvgImages.GetForSize(disabledColor, imageSize);
 
-            var buttonIdNew = toolbar.AddSpeedButton(
+            var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
                 images.ImgFileNew,
-                imagesDisabled.ImgFileNew,
-                CommonStrings.Default.ButtonNew,
-                ButtonClick);
+                imagesDisabled.ImgFileNew);
+            toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
-            var buttonIdOpen = toolbar.AddSpeedButton(
+            var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
                 images.ImgFileOpen,
-                imagesDisabled.ImgFileOpen,
-                CommonStrings.Default.ButtonOpen,
-                ButtonClick);
+                imagesDisabled.ImgFileOpen);
+            toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
             ContextMenu? menu = new();
@@ -49,16 +47,16 @@ namespace PropertyGridSample
 
             var separatorId = toolbar.AddSeparator();
 
-            var buttonIdSave = toolbar.AddSpeedButton(
+            var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
                 images.ImgFileSave,
-                imagesDisabled.ImgFileSave,
-                CommonStrings.Default.ButtonSave,
-                ButtonClick);
+                imagesDisabled.ImgFileSave);
+            toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
 
             var idText = toolbar.AddText("text");
+            toolbar.AddToolAction(idText, ButtonClick);
 
             var textBox = new TextBox();
             textBox.SuggestedWidth = 100;
@@ -68,22 +66,17 @@ namespace PropertyGridSample
             var itemPicture = toolbar.AddPicture(
                 images.ImgMessageBoxWarning,
                 imagesDisabled.ImgMessageBoxWarning,
-                "This is picture");
-
+                "Picture");
+            toolbar.AddToolAction(itemPicture, ButtonClick);
             toolbar.SetToolAlignRight(itemPicture, true);
 
-            var buttonIdMoreItems = toolbar.AddSpeedButton(
-                CommonStrings.Default.ToolbarSeeMore,
-                images.ImgMoreActionsHorz,
-                imagesDisabled.ImgMoreActionsHorz,
-                CommonStrings.Default.ToolbarSeeMore,
-                ButtonClick);
-
+            var buttonIdMoreItems = toolbar.AddSpeedBtn(KnownButton.MoreItems);
+            toolbar.AddToolAction(buttonIdMoreItems, ButtonClick);
             toolbar.SetToolAlignRight(buttonIdMoreItems, true);
 
             static void ButtonClick(object? sender, EventArgs e)
             {
-                if (sender is not SpeedButton button)
+                if (sender is not Control button)
                     return;
                 Application.Log($"Button click: {button.ToolTip}");
             }
