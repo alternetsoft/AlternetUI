@@ -25,27 +25,27 @@ namespace Alternet.UI
         /// <summary>
         /// Normal svg color.
         /// </summary>
-        public Color Normal { get; set; }
+        public Color Normal { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Disabled svg color.
         /// </summary>
-        public Color Disabled { get; set; }
+        public Color Disabled { get; set; } = SystemColors.GrayText;
 
         /// <summary>
         /// Error svg color.
         /// </summary>
-        public Color Error { get; set; }
+        public Color Error { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Information svg color.
         /// </summary>
-        public Color Information { get; set; }
+        public Color Information { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Warning svg color.
         /// </summary>
-        public Color Warning { get; set; }
+        public Color Warning { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Gets known svg color for the specified <see cref="KnownSvgColor"/>.
