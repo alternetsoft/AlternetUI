@@ -103,6 +103,7 @@ namespace Alternet.UI
                 switch (dock)
                 {
                     case DockStyle.None:
+                        child.OnLayout();
                         break;
 
                     case DockStyle.Left:
