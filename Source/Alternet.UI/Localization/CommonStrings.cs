@@ -28,7 +28,19 @@ namespace Alternet.UI.Localization
         public string ButtonFind { get; set; } = "Find";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonFindNext { get; set; } = "Find Next";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonOptions { get; set; } = "Options";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonFindPrevious { get; set; } = "Find Previous";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonReplace { get; set; } = "Replace";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonReplaceAll { get; set; } = "Replace All";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonPrint { get; set; } = "Print";
@@ -74,6 +86,9 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonClear { get; set; } = "Clear";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonClose { get; set; } = "Close";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonCopy { get; set; } = "Copy";
@@ -162,13 +177,16 @@ namespace Alternet.UI.Localization
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string FindOptionWrap { get; set; } = "Wrap";
+        public string FindOptionWrap { get; set; } = "Wrap around";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string FindOptionEntireWord { get; set; } = "Entire Word";
+        public string FindOptionMatchCase { get; set; } = "Match case";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string FindOptionMatchCase { get; set; } = "Match Case";
+        public string FindOptionUseRegularExpressions { get; set; } = "Use regular expressions";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionMatchWholeWord { get; set; } = "Match whole word";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionHighlight { get; set; } = "Highlight";

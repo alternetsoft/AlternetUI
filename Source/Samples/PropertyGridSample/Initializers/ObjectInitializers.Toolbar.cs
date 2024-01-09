@@ -11,6 +11,43 @@ namespace PropertyGridSample
 {
     internal partial class ObjectInitializers
     {
+        public static void InitFindReplaceControl(object control)
+        {
+            if (control is not FindReplaceControl findReplace)
+                return;
+
+            findReplace.ClickFindNext += DoClickFindNext;
+            findReplace.ClickFindPrevious += DoClickFindPrevious;
+            findReplace.ClickReplace += DoClickReplace;
+            findReplace.ClickReplaceAll += DoClickReplaceAll;
+            findReplace.ClickClose += DoClickClose;
+
+            void DoClickFindNext(object? sender, EventArgs e)
+            {
+                Application.Log("ClickFindNext");
+            }
+
+            void DoClickFindPrevious(object? sender, EventArgs e)
+            {
+                Application.Log("ClickFindPrevious");
+            }
+
+            void DoClickReplace(object? sender, EventArgs e)
+            {
+                Application.Log("ClickReplace");
+            }
+
+            void DoClickReplaceAll(object? sender, EventArgs e)
+            {
+                Application.Log("ClickReplaceAll");
+            }
+
+            void DoClickClose(object? sender, EventArgs e)
+            {
+                Application.Log("ClickClose");
+            }
+        }
+
         public static void InitGenericToolBar(object control)
         {
             if (control is not GenericToolBar toolbar)

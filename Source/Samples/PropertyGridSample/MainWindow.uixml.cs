@@ -112,8 +112,9 @@ namespace PropertyGridSample
             controlPanel.Parent = controlPanelBorder;
 
             parentParent.LeftPanel.Width = 15;
+            parentParent.LeftVisible = false;
             parentParent.RightPanel.Width = 5;
-            parentParent.TopPanel.Width = 15;
+            parentParent.TopPanel.Width = 5;
             parentParent.BottomPanel.Width = 5;
 
             var parentParentColor = SystemColors.Window;

@@ -93,6 +93,7 @@ namespace PropertyGridSample
                     typeof(ProgressBar),
                     typeof(RadioButton),
                     typeof(RichTextBox),
+                    typeof(FindReplaceControl),
                     typeof(Slider),
                     typeof(ScrollBar),
                     typeof(StackPanel),

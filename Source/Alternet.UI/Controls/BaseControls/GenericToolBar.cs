@@ -44,6 +44,11 @@ namespace Alternet.UI
             Button,
 
             /// <summary>
+            /// Item is text only button.
+            /// </summary>
+            ButtonText,
+
+            /// <summary>
             /// Item is separator.
             /// </summary>
             Separator,
@@ -387,6 +392,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="action">Click action.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddTextBtn(
+            string? text,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            text ??= string.Empty;
+
+            SpeedButton speedButton = new()
+            {
+                ImageVisible = false,
+                TextVisible = true,
+                ToolTip = toolTip ?? string.Empty,
+                Text = text,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
+
+            UpdateItemProps(speedButton, ItemKind.ButtonText);
+
+            if (action is not null)
+                speedButton.Click += action;
+            speedButton.Parent = panel;
+
+            return speedButton.UniqueId;
+        }
+
+        /// <summary>
         /// Sets image of the item for the normal state.
         /// </summary>
         /// <param name="id">Item id.</param>
@@ -540,7 +577,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
             ImageSet? image,
-            ImageSet? imageDisabled,
+            ImageSet? imageDisabled = null,
             string? toolTip = default)
         {
             PictureBox picture = new()

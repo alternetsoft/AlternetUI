@@ -78,7 +78,8 @@ namespace PropertyGridSample
             Actions.Add(typeof(ScrollBar), InitScrollBar);
             Actions.Add(typeof(SpeedButton), InitSpeedButton);
             Actions.Add(typeof(PictureBox), InitPictureBox);
-            Actions.Add(typeof(GenericToolBar), InitGenericToolBar);            
+            Actions.Add(typeof(GenericToolBar), InitGenericToolBar);
+            Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
 
             const int defaultListHeight = 250;
             SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
