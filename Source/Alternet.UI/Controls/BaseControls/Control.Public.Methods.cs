@@ -1147,6 +1147,7 @@ namespace Alternet.UI
             if (e.Cancel)
                 return;
             Handler.ShowPopupMenu(menu, x, y);
+            menu.RaiseClosing(e);
         }
 
         /// <summary>

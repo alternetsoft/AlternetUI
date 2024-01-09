@@ -40,6 +40,12 @@ namespace Alternet.UI
         [Category("Action")]
         public event CancelEventHandler? Opening;
 
+        /// <summary>
+        /// Occurs when the control is closing.
+        /// </summary>
+        [Category("Action")]
+        public event EventHandler? Closing;
+
         /// <inheritdoc cref="NonVisualControl.Left"/>
         [Browsable(false)]
         public override bool Visible { get => base.Visible; set => base.Visible = value; }
@@ -84,7 +90,14 @@ namespace Alternet.UI
             if (position == null)
                 ShowUnder();
             else
+            {
+                var e = new CancelEventArgs();
+                RaiseOpening(e);
+                if (e.Cancel)
+                    return;
                 ((ContextMenuHandler)Handler).Show(control, (PointD)position);
+                RaiseClosing(EventArgs.Empty);
+            }
 
             void ShowUnder()
             {
@@ -96,6 +109,11 @@ namespace Alternet.UI
                 pt = window.ScreenToClient(pt);
                 window.ShowPopupMenu(this, (int)pt.X, (int)pt.Y);
             }
+        }
+
+        internal void RaiseClosing(EventArgs e)
+        {
+            OnClosing(e);
         }
 
         internal void RaiseOpening(CancelEventArgs e)
@@ -110,6 +128,15 @@ namespace Alternet.UI
         protected virtual void OnOpening(CancelEventArgs e)
         {
             Opening?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Closing" /> event.</summary>
+        /// <param name="e">A <see cref="EventArgs" /> that contains
+        /// the event data.</param>
+        protected virtual void OnClosing(EventArgs e)
+        {
+            Closing?.Invoke(this, e);
         }
 
         /// <inheritdoc/>
