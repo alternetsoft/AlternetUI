@@ -16,8 +16,6 @@ namespace Alternet.UI
         private static SpeedButton? defaults;
         private Action? clickAction;
         private bool sticky;
-        private ImageToText imageToText = ImageToText.Horizontal;
-        private bool textVisible = false;
         private KeyInfo[]? keys;
 
         /// <summary>
@@ -36,11 +34,13 @@ namespace Alternet.UI
                 border.UniformCornerRadius = 25;
                 Borders.SetObject(border, GenericControlState.Hovered);
                 Borders.SetObject(border, GenericControlState.Pressed);
+                Padding = 4;
             }
             else
             {
                 Borders.Assign(defaults.Borders);
                 Backgrounds = defaults.Backgrounds;
+                Padding = defaults.Padding;
             }
         }
 
@@ -173,42 +173,6 @@ namespace Alternet.UI
                 var s = ToolTip;
                 ToolTip = null;
                 ToolTip = s;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether to display text in the control.
-        /// </summary>
-        public bool TextVisible
-        {
-            get
-            {
-                return textVisible;
-            }
-
-            set
-            {
-                if (textVisible == value)
-                    return;
-                textVisible = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value which specifies display modes for
-        /// item image and text.
-        /// </summary>
-        public ImageToText ImageToText
-        {
-            get => imageToText;
-            set
-            {
-                if (imageToText == value)
-                    return;
-                imageToText = value;
-                if (ImageVisible && TextVisible)
-                    Invalidate();
             }
         }
 

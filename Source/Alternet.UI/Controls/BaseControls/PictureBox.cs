@@ -16,6 +16,9 @@ namespace Alternet.UI
     public class PictureBox : UserPaintControl, IValidatorReporter
     {
         private readonly ImagePrimitivePainter primitive = new();
+        private string text = string.Empty;
+        private bool textVisible = false;
+        private ImageToText imageToText = ImageToText.Horizontal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
@@ -30,6 +33,64 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Gets or sets whether to display text in the control.
+        /// </summary>
+        public bool TextVisible
+        {
+            get
+            {
+                return textVisible;
+            }
+
+            set
+            {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                primitive.Visible = !value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value which specifies display modes for
+        /// item image and text.
+        /// </summary>
+        public ImageToText ImageToText
+        {
+            get => imageToText;
+            set
+            {
+                if (imageToText == value)
+                    return;
+                imageToText = value;
+                if (ImageVisible && TextVisible)
+                    Invalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        [DefaultValue("")]
+        [Localizability(LocalizationCategory.Text)]
+        public override string Text
+        {
+            get
+            {
+                return text;
+            }
+
+            set
+            {
+                if (text == value)
+                    return;
+                text = value ?? string.Empty;
+                RaiseTextChanged(EventArgs.Empty);
+                if(TextVisible)
+                    Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the image that is displayed by <see cref="PictureBox"/>.
@@ -115,7 +176,7 @@ namespace Alternet.UI
                 if (primitive.CenterVert == value)
                     return;
                 primitive.CenterVert = value;
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -135,7 +196,7 @@ namespace Alternet.UI
                 if (primitive.CenterHorz == value)
                     return;
                 primitive.CenterHorz = value;
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -154,7 +215,7 @@ namespace Alternet.UI
                 if (primitive.Stretch == value)
                     return;
                 primitive.Stretch = value;
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -173,7 +234,8 @@ namespace Alternet.UI
                 if (primitive.Visible == value)
                     return;
                 primitive.Visible = value;
-                Refresh();
+                textVisible = !value;
+                Invalidate();
             }
         }
 
@@ -224,34 +286,6 @@ namespace Alternet.UI
             }
         }
 
-        [Browsable(false)]
-        internal new Color? ForegroundColor
-        {
-            get => null;
-            set { }
-        }
-
-        [Browsable(false)]
-        internal new LayoutDirection LayoutDirection
-        {
-            get => LayoutDirection.Default;
-            set { }
-        }
-
-        [Browsable(false)]
-        internal new bool IsBold
-        {
-            get => false;
-            set { }
-        }
-
-        [Browsable(false)]
-        internal new Font? Font
-        {
-            get => null;
-            set { }
-        }
-
         internal ImagePrimitivePainter Primitive => primitive;
 
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
@@ -289,12 +323,24 @@ namespace Alternet.UI
             var primitive = Primitive;
             var state = CurrentState;
 
-            var image = StateObjects?.Images?.GetObjectOrNull(state);
-            image ??= Image;
-            primitive.Image = image;
-            primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
-            primitive.DestRect = rect;
-            primitive.Draw(this, dc);
+            if (TextVisible)
+            {
+                dc.DrawText(
+                    Text ?? string.Empty,
+                    ChildrenLayoutBounds.Location,
+                    Font ?? UI.Control.DefaultFont,
+                    ForeColor,
+                    Color.Empty);
+            }
+            else
+            {
+                var image = StateObjects?.Images?.GetObjectOrNull(state);
+                image ??= Image;
+                primitive.Image = image;
+                primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
+                primitive.DestRect = rect;
+                primitive.Draw(this, dc);
+            }
 
             AfterPaint(dc, rect);
         }
@@ -327,6 +373,55 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
         }
 
+        /// <summary>
+        /// Gets size of the image and text.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SizeD GetImageAndTextSize()
+        {
+            var image = Image;
+            var imageSet = ImageSet;
+
+            SizeD imageSize = SizeD.Empty;
+            SizeD textSize = SizeD.Empty;
+
+            if (image is not null)
+                imageSize = image.SizeDip(this);
+            else
+            if (imageSet is not null)
+                imageSize = PixelToDip(imageSet.DefaultSize);
+
+            if (TextVisible)
+            {
+                textSize = GetTextPreferredSize();
+            }
+
+            SizeD result = SizeD.Empty;
+            if (ImageToText == ImageToText.Horizontal)
+            {
+                result.Width = imageSize.Width + textSize.Width;
+                result.Height = Math.Max(imageSize.Height, textSize.Height);
+            }
+            else
+            {
+                result.Height = imageSize.Height + textSize.Height;
+                result.Width = Math.Max(imageSize.Width, textSize.Width);
+            }
+
+            return result;
+
+            SizeD GetTextPreferredSize()
+            {
+                var text = Text;
+                if (text == null)
+                    return new SizeD();
+
+                using var dc = CreateDrawingContext();
+                var result = dc.GetTextExtent(text, Font ?? UI.Control.DefaultFont, this);
+                return result;
+            }
+        }
+
         internal class PictureBoxHandler : NativeControlHandler<PictureBox, Native.Panel>
         {
             protected override bool NeedsPaint => true;
@@ -343,14 +438,9 @@ namespace Alternet.UI
                 if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                     return new SizeD(specifiedWidth, specifiedHeight);
 
-                var image = Control.Image;
-                var imageSet = Control.ImageSet;
-
-                if (image is not null)
-                    return image.SizeDip(Control);
-
-                if (imageSet is not null)
-                    return Control.PixelToDip(imageSet.DefaultSize);
+                var result = Control.GetImageAndTextSize();
+                if (result != SizeD.Empty)
+                    return result + Control.Padding.Size;
 
                 return base.GetPreferredSize(availableSize);
             }
