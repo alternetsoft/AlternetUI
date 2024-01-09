@@ -21,12 +21,12 @@ namespace Alternet.UI
         {
         };
 
-        private readonly TextBox findEdit = new TextBox()
+        private readonly TextBox findEdit = new()
         {
             Margin = (2, 0, 2, 0),
         };
 
-        private readonly TextBox replaceEdit = new TextBox()
+        private readonly TextBox replaceEdit = new()
         {
             Margin = (2, 0, 2, 0),
         };
@@ -44,8 +44,16 @@ namespace Alternet.UI
         public FindReplaceControl()
         {
             menuItemMatchCase.Click += MenuItemMatchCase_Click;
+            menuItemMatchCase.Image = findToolBar.GetUnscaledNormalSvgImages().ImgFindMatchCase;
+            menuItemMatchCase.DisabledImage = findToolBar.GetUnscaledDisabledSvgImages().ImgFindMatchCase;
+
             menuItemMatchWholeWord.Click += MenuItemMatchWholeWord_Click;
+            menuItemMatchWholeWord.Image = findToolBar.GetUnscaledNormalSvgImages().ImgFindMatchFullWord;
+            menuItemMatchWholeWord.DisabledImage = findToolBar.GetUnscaledDisabledSvgImages().ImgFindMatchFullWord;
+
             menuItemUseRegularExpressions.Click += MenuItemUseRegularExpressions_Click;
+            menuItemUseRegularExpressions.Image = findToolBar.GetUnscaledNormalSvgImages().ImgRegularExpr;
+            menuItemUseRegularExpressions.DisabledImage = findToolBar.GetUnscaledDisabledSvgImages().ImgRegularExpr;
 
             optionsMenu.Add(menuItemMatchCase);
             optionsMenu.Add(menuItemMatchWholeWord);
@@ -103,7 +111,8 @@ namespace Alternet.UI
             replaceToolBar.SetToolShortcut(IdReplace, Keys.R | Keys.Alt);
             replaceToolBar.SetToolAlignRight(IdReplace, true);
 
-            replaceToolBar.AddSpacer(2);
+            var idSpacer = replaceToolBar.AddSpacer(4);
+            replaceToolBar.SetToolAlignRight(idSpacer, true);
             IdReplaceAll = replaceToolBar.AddTextBtn(
                 CommonStrings.Default.ButtonReplaceAll,
                 CommonStrings.Default.ButtonReplaceAll);

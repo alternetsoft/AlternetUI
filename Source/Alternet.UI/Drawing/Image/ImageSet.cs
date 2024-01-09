@@ -249,6 +249,11 @@ namespace Alternet.UI
         public Image AsImage(SizeI size) => new(this, size);
 
         /// <summary>
+        /// Gets first image with size equal to <see cref="DefaultSize"/>.
+        /// </summary>
+        public Image AsImage() => new(this, DefaultSize);
+
+        /// <summary>
         /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
         /// </summary>
         /// <remarks>
@@ -265,7 +270,7 @@ namespace Alternet.UI
         /// the given DPI scaling factor.
         /// </summary>
         /// <remarks>
-        /// Passing a size returned by this function to <see cref="AsImage"/> ensures that bitmap
+        /// Passing a size returned by this function to <see cref="AsImage(SizeI)"/> ensures that bitmap
         /// doesn't need to be rescaled, which typically significantly lowers its quality.
         /// </remarks>
         /// <remarks>

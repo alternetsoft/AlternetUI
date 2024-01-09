@@ -131,6 +131,16 @@ namespace Alternet.UI
         public static Color? DefaultDisabledImageColor { get; set; }
 
         /// <summary>
+        /// Gets or sets default hovered state colors for the items added with <see cref="AddTextBtn"/>.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultTextBtnHoveredColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets default pressed state colors for the items added with <see cref="AddTextBtn"/>.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultTextBtnPressedColors { get; set; }
+
+        /// <summary>
         /// Gets or sets color of the images in the normal state.
         /// </summary>
         /// <remarks>
@@ -413,6 +423,13 @@ namespace Alternet.UI
                 Text = text,
                 VerticalAlignment = VerticalAlignment.Center,
             };
+
+            var hoveredColors = DefaultTextBtnHoveredColors ?? FontAndColor.SystemColorHighlight;
+            var pressedColors = DefaultTextBtnPressedColors ?? FontAndColor.SystemColorActiveCaption;
+
+            speedButton.Borders!.Normal = speedButton.Borders.Hovered;
+            speedButton.SetStateColors(GenericControlState.Hovered, hoveredColors);
+            speedButton.SetStateColors(GenericControlState.Pressed, pressedColors);
 
             UpdateItemProps(speedButton, ItemKind.ButtonText);
 
@@ -1034,10 +1051,22 @@ namespace Alternet.UI
             NormalSvgImages ??= KnownSvgImages.GetForSize(GetNormalImageColor(), GetImageSize());
 
         /// <summary>
+        /// Gets unscaled <see cref="KnownSvgImages"/> for the normal state.
+        /// </summary>
+        public virtual KnownSvgImages GetUnscaledNormalSvgImages() =>
+            KnownSvgImages.GetForSize(GetNormalImageColor(), 16);
+
+        /// <summary>
         /// Gets <see cref="KnownSvgImages"/> for the disabled state.
         /// </summary>
         public virtual KnownSvgImages GetDisabledSvgImages() =>
             DisabledSvgImages ??= KnownSvgImages.GetForSize(GetDisabledImageColor(), GetImageSize());
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the disabled state.
+        /// </summary>
+        public virtual KnownSvgImages GetUnscaledDisabledSvgImages() =>
+            KnownSvgImages.GetForSize(GetDisabledImageColor(), 16);
 
         /// <summary>
         /// Updates common properties of the item control.

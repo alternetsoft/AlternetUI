@@ -325,11 +325,13 @@ namespace Alternet.UI
 
             if (TextVisible)
             {
+                var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+
                 dc.DrawText(
                     Text ?? string.Empty,
                     ChildrenLayoutBounds.Location,
                     Font ?? UI.Control.DefaultFont,
-                    ForeColor,
+                    color ?? ForeColor,
                     Color.Empty);
             }
             else

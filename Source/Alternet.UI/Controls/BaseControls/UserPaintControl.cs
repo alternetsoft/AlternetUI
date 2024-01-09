@@ -208,6 +208,24 @@ namespace Alternet.UI
         internal new Native.Panel NativeControl => (Native.Panel)base.NativeControl;
 
         /// <summary>
+        /// Sets <see cref="Control.StateObjects"/> colors and backgrounds for the state specified
+        /// in the <paramref name="state"/> parameter to the
+        /// colors from <paramref name="fontAndColor"/>.
+        /// </summary>
+        /// <param name="state">Affected control state.</param>
+        /// <param name="fontAndColor">Colors.</param>
+        public virtual void SetStateColors(GenericControlState state, IReadOnlyFontAndColor? fontAndColor)
+        {
+            if (fontAndColor is null)
+                return;
+            StateObjects ??= new();
+            StateObjects.Colors ??= new();
+            StateObjects.Backgrounds ??= new();
+            StateObjects.Colors.SetObject(fontAndColor, state);
+            StateObjects.Backgrounds.SetObject(fontAndColor.BackgroundColor?.AsBrush, state);
+        }
+
+        /// <summary>
         /// Draw default background.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
