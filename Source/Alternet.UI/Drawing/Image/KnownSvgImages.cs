@@ -55,6 +55,10 @@ namespace Alternet.UI
         private ImageSet? imgArrowDown;
         private ImageSet? imgArrowUp;
         private ImageSet? imgGear;
+        private ImageSet? imgRegularExpr;
+        private ImageSet? imgFindMatchCase;
+        private ImageSet? imgFindMatchFullWord;
+        private ImageSet? imgEmpty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSvgImages"/> class.
@@ -102,6 +106,42 @@ namespace Alternet.UI
         {
             get => imgAngleUp ??= Load(KnownSvgUrls.UrlImageAngleUp);
             set => imgAngleUp = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Use Regular Exprpressions' image.
+        /// </summary>
+        public ImageSet ImgRegularExpr
+        {
+            get => imgRegularExpr ??= Load(KnownSvgUrls.UrlImageRegularExpr);
+            set => imgRegularExpr = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Find Match Case' image.
+        /// </summary>
+        public ImageSet ImgFindMatchCase
+        {
+            get => imgFindMatchCase ??= Load(KnownSvgUrls.UrlImageFindMatchCase);
+            set => imgFindMatchCase = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Find Match Full Word' image.
+        /// </summary>
+        public ImageSet ImgFindMatchFullWord
+        {
+            get => imgFindMatchFullWord ??= Load(KnownSvgUrls.UrlImageFindMatchFullWord);
+            set => imgFindMatchFullWord = value;
+        }
+
+        /// <summary>
+        /// Gets or sets empty image.
+        /// </summary>
+        public ImageSet ImgEmprt
+        {
+            get => imgEmpty ??= Load(KnownSvgUrls.UrlImageEmpty);
+            set => imgEmpty = value;
         }
 
         /// <summary>
@@ -272,36 +312,36 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image that can be used in "Abort" buttons.
         /// </summary>
-        public ImageSet? ImgAbort
+        public ImageSet ImgAbort
         {
-            get => imgAbort ??= LoadIfExists(KnownSvgUrls.UrlImageAbort);
+            get => imgAbort ??= Load(KnownSvgUrls.UrlImageAbort);
             set => imgAbort = value;
         }
 
         /// <summary>
         /// Gets or sets image that can be used in "Retry" buttons.
         /// </summary>
-        public ImageSet? ImgRetry
+        public ImageSet ImgRetry
         {
-            get => imgRetry ??= LoadIfExists(KnownSvgUrls.UrlImageRetry);
+            get => imgRetry ??= Load(KnownSvgUrls.UrlImageRetry);
             set => imgRetry = value;
         }
 
         /// <summary>
         /// Gets or sets image that can be used in "Ignore" buttons.
         /// </summary>
-        public ImageSet? ImgIgnore
+        public ImageSet ImgIgnore
         {
-            get => imgIgnore ??= LoadIfExists(KnownSvgUrls.UrlImageIgnore);
+            get => imgIgnore ??= Load(KnownSvgUrls.UrlImageIgnore);
             set => imgIgnore = value;
         }
 
         /// <summary>
         /// Gets or sets image that can be used in "Help" buttons.
         /// </summary>
-        public ImageSet? ImgHelp
+        public ImageSet ImgHelp
         {
-            get => imgHelp ??= LoadIfExists(KnownSvgUrls.UrlImageHelp);
+            get => imgHelp ??= Load(KnownSvgUrls.UrlImageHelp);
             set => imgHelp = value;
         }
 

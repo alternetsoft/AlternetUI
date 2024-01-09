@@ -17,6 +17,11 @@ namespace Alternet.UI
             "embres:Alternet.UI.Resources.Svg.{0}.svg?assembly=Alternet.UI";
 
         /// <summary>
+        /// Gets or sets url used to load an empty svg image.
+        /// </summary>
+        public static string UrlImageEmpty { get; set; } = GetImageUrl("alternet-empty");
+
+        /// <summary>
         /// Gets or sets url used to load "Error" svg image used in MessageBox like dialogs.
         /// </summary>
         public static string UrlImageMessageBoxError { get; set; } =
@@ -125,22 +130,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load svg image used in "Abort" buttons.
         /// </summary>
-        public static string? UrlImageAbort { get; set; } = GetImageUrl("ban");
+        public static string UrlImageAbort { get; set; } = GetImageUrl("ban");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Retry" buttons.
         /// </summary>
-        public static string? UrlImageRetry { get; set; } = GetImageUrl("arrows-rotate");
+        public static string UrlImageRetry { get; set; } = GetImageUrl("arrows-rotate");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Ignore" buttons.
         /// </summary>
-        public static string? UrlImageIgnore { get; set; }
+        public static string UrlImageIgnore { get; set; } = GetImageUrl("alternet-empty"); /* !!!! */
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Help" buttons.
         /// </summary>
-        public static string? UrlImageHelp { get; set; } = GetImageUrl("alternet-question");
+        public static string UrlImageHelp { get; set; } = GetImageUrl("alternet-question");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Add child" toolbar buttons.
@@ -228,6 +233,21 @@ namespace Alternet.UI
         /// Gets or sets url used to load "Gear" svg image.
         /// </summary>
         public static string UrlImageGear { get; set; } = GetImageUrl("gear");
+
+        /// <summary>
+        /// Gets or sets url used to load "Use regular expressions" svg image.
+        /// </summary>
+        public static string UrlImageRegularExpr { get; set; } = GetImageUrl("alternet-regular-expr");
+
+        /// <summary>
+        /// Gets or sets url used to load "Find Match Case" svg image.
+        /// </summary>
+        public static string UrlImageFindMatchCase { get; set; } = GetImageUrl("alternet-match-case");
+
+        /// <summary>
+        /// Gets or sets url used to load "Find Match Full Word" svg image.
+        /// </summary>
+        public static string UrlImageFindMatchFullWord { get; set; } = GetImageUrl("alternet-match-full-word");
 
         /// <summary>
         /// Gets or sets url used to load "Arrow Down" svg image.

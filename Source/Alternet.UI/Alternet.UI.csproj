@@ -86,6 +86,7 @@
     <None Remove="Resources\Svg\alternet-circle-xmark.svg" />
     <None Remove="Resources\Svg\alternet-ellipsis-vertical.svg" />
     <None Remove="Resources\Svg\alternet-ellipsis.svg" />
+    <None Remove="Resources\Svg\alternet-empty.svg" />
     <None Remove="Resources\Svg\alternet-eraser.svg" />
     <None Remove="Resources\Svg\alternet-file-open.svg" />
     <None Remove="Resources\Svg\alternet-file.svg" />
@@ -93,10 +94,13 @@
     <None Remove="Resources\Svg\alternet-folder-ellipsis.svg" />
     <None Remove="Resources\Svg\alternet-house.svg" />
     <None Remove="Resources\Svg\alternet-italic.svg" />
+    <None Remove="Resources\Svg\alternet-match-case.svg" />
+    <None Remove="Resources\Svg\alternet-match-full-word.svg" />
     <None Remove="Resources\Svg\alternet-minus.svg" />
     <None Remove="Resources\Svg\alternet-plus.svg" />
     <None Remove="Resources\Svg\alternet-question.svg" />
     <None Remove="Resources\Svg\alternet-redo.svg" />
+    <None Remove="Resources\Svg\alternet-regular-expr.svg" />
     <None Remove="Resources\Svg\alternet-rotate-right.svg" />
     <None Remove="Resources\Svg\alternet-square-check.svg" />
     <None Remove="Resources\Svg\alternet-square-minus.svg" />
@@ -168,10 +172,14 @@
     <EmbeddedResource Include="Resources\Svg\alternet-circle-exclamation.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-circle-info.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-circle-xmark.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-empty.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-file-open.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-folder-ellipsis.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-match-case.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-match-full-word.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-question.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-redo.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-regular-expr.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-square-minus.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-square-plus.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-undo.svg" />
