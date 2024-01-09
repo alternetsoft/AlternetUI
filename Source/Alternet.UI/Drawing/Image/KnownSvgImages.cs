@@ -50,6 +50,11 @@ namespace Alternet.UI
         private ImageSet? imgRetry;
         private ImageSet? imgIgnore;
         private ImageSet? imgHelp;
+        private ImageSet? imgAngleDown;
+        private ImageSet? imgAngleUp;
+        private ImageSet? imgArrowDown;
+        private ImageSet? imgArrowUp;
+        private ImageSet? imgGear;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSvgImages"/> class.
@@ -71,6 +76,51 @@ namespace Alternet.UI
         /// Gets images size.
         /// </summary>
         public SizeI Size => size;
+
+        /// <summary>
+        /// Gets or sets 'Arrow Down' image.
+        /// </summary>
+        public ImageSet ImgArrowDown
+        {
+            get => imgArrowDown ??= Load(KnownSvgUrls.UrlImageArrowDown);
+            set => imgArrowDown = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Arrow Up' image.
+        /// </summary>
+        public ImageSet ImgArrowUp
+        {
+            get => imgArrowUp ??= Load(KnownSvgUrls.UrlImageArrowUp);
+            set => imgArrowUp = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angle Up' image.
+        /// </summary>
+        public ImageSet ImgAngleUp
+        {
+            get => imgAngleUp ??= Load(KnownSvgUrls.UrlImageAngleUp);
+            set => imgAngleUp = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angle Up' image.
+        /// </summary>
+        public ImageSet ImgAngleDown
+        {
+            get => imgAngleDown ??= Load(KnownSvgUrls.UrlImageAngleDown);
+            set => imgAngleDown = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Gear' image.
+        /// </summary>
+        public ImageSet ImgGear
+        {
+            get => imgGear ??= Load(KnownSvgUrls.UrlImageGear);
+            set => imgGear = value;
+        }
 
         /// <summary>
         /// Gets or sets image that can be used in "Back" toolbar buttons

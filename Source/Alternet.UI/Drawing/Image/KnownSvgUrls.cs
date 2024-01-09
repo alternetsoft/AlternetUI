@@ -140,7 +140,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load svg image used in "Help" buttons.
         /// </summary>
-        public static string? UrlImageHelp { get; set; }
+        public static string? UrlImageHelp { get; set; } = GetImageUrl("alternet-question");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Add child" toolbar buttons.
@@ -208,6 +208,31 @@ namespace Alternet.UI
         /// </summary>
         public static string UrlImageMoreActions { get; set; } =
             GetImageUrl("alternet-ellipsis-vertical");
+
+        /// <summary>
+        /// Gets or sets url used to load "Angle Down" svg image.
+        /// </summary>
+        public static string UrlImageAngleDown { get; set; } = GetImageUrl("alternet-angle-down");
+
+        /// <summary>
+        /// Gets or sets url used to load "Angle Up" svg image.
+        /// </summary>
+        public static string UrlImageAngleUp { get; set; } = GetImageUrl("alternet-angle-up");
+
+        /// <summary>
+        /// Gets or sets url used to load "Arrow Up" svg image.
+        /// </summary>
+        public static string UrlImageArrowUp { get; set; } = GetImageUrl("alternet-arrow-up");
+
+        /// <summary>
+        /// Gets or sets url used to load "Gear" svg image.
+        /// </summary>
+        public static string UrlImageGear { get; set; } = GetImageUrl("gear");
+
+        /// <summary>
+        /// Gets or sets url used to load "Arrow Down" svg image.
+        /// </summary>
+        public static string UrlImageArrowDown { get; set; } = GetImageUrl("alternet-arrow-down");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in horizontal "More Actions" toolbar buttons.
