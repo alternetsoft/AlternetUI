@@ -75,5 +75,45 @@ namespace Alternet.UI
         /// 'More items' button.
         /// </summary>
         MoreItems,
+
+        /// <summary>
+        /// 'New' button.
+        /// </summary>
+        New,
+
+        /// <summary>
+        /// 'Open' button.
+        /// </summary>
+        Open,
+
+        /// <summary>
+        /// 'Save' button.
+        /// </summary>
+        Save,
+
+        /// <summary>
+        /// 'Undo' button.
+        /// </summary>
+        Undo,
+
+        /// <summary>
+        /// 'Redo' button.
+        /// </summary>
+        Redo,
+
+        /// <summary>
+        /// 'Bold' button.
+        /// </summary>
+        Bold,
+
+        /// <summary>
+        /// 'Italic' button.
+        /// </summary>
+        Italic,
+
+        /// <summary>
+        /// 'Underline' button.
+        /// </summary>
+        Underline,
     }
 }

@@ -125,12 +125,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load svg image used in "Abort" buttons.
         /// </summary>
-        public static string? UrlImageAbort { get; set; }
+        public static string? UrlImageAbort { get; set; } = GetImageUrl("ban");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Retry" buttons.
         /// </summary>
-        public static string? UrlImageRetry { get; set; }
+        public static string? UrlImageRetry { get; set; } = GetImageUrl("arrows-rotate");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Ignore" buttons.

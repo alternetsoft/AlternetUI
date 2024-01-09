@@ -477,6 +477,22 @@ namespace Alternet.UI
                         strings.ToolbarSeeMore,
                         images.ImgMoreActionsHorz,
                         disabled.ImgMoreActionsHorz);
+                case KnownButton.New:
+                    return AddSpeedBtn(strings.ButtonNew, images.ImgFileNew, disabled.ImgFileNew);
+                case KnownButton.Open:
+                    return AddSpeedBtn(strings.ButtonOpen, images.ImgFileOpen, disabled.ImgFileOpen);
+                case KnownButton.Save:
+                    return AddSpeedBtn(strings.ButtonSave, images.ImgFileSave, disabled.ImgFileSave);
+                case KnownButton.Undo:
+                    return AddSpeedBtn(strings.ButtonUndo, images.ImgUndo, disabled.ImgUndo);
+                case KnownButton.Redo:
+                    return AddSpeedBtn(strings.ButtonRedo, images.ImgRedo, disabled.ImgRedo);
+                case KnownButton.Bold:
+                    return AddSpeedBtn(strings.ButtonBold, images.ImgBold, disabled.ImgBold);
+                case KnownButton.Italic:
+                    return AddSpeedBtn(strings.ButtonItalic, images.ImgItalic, disabled.ImgItalic);
+                case KnownButton.Underline:
+                    return AddSpeedBtn(strings.ButtonUnderline, images.ImgUnderline, disabled.ImgUnderline);
             }
         }
 
