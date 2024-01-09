@@ -45,6 +45,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default template for the shortcut when it is shown in the tooltip.
+        /// </summary>
+        /// <remarks>
+        /// Default value is "({0})".
+        /// </remarks>
+        public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
+
+        /// <summary>
         /// Gets or sets default settings for the <see cref="SpeedButton"/>.
         /// </summary>
         /// <remarks>
@@ -64,6 +72,15 @@ namespace Alternet.UI
                 defaults = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets template for the shortcut when it is shown in the tooltip.
+        /// </summary>
+        /// <remarks>
+        /// When this property is null (default), <see cref="DefaultShortcutToolTipTemplate"/>
+        /// is used to get the template.
+        /// </remarks>
+        public string? ShortcutToolTipTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets whether control is sticky.
@@ -240,10 +257,12 @@ namespace Alternet.UI
                 return null;
             }
 
+            var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
+
             var filteredKeys = KeyInfo.FilterBackendOs(keys);
             if (filteredKeys is not null && filteredKeys.Length > 0)
             {
-                s += $" ({filteredKeys[0]})";
+                s += " " + string.Format(template, filteredKeys[0]);
             }
 
             return s;
