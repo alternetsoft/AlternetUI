@@ -194,52 +194,6 @@ namespace Alternet.UI
         public IReadOnlyList<Control> Items => panel.Children;
 
         /// <summary>
-        /// Gets or sets whether to display text in the buttons.
-        /// </summary>
-        public bool TextVisible
-        {
-            get
-            {
-                return textVisible;
-            }
-
-            set
-            {
-                if (textVisible == value)
-                    return;
-                textVisible = value;
-                foreach (var item in Items)
-                {
-                    if (item is SpeedButton speedButton)
-                        speedButton.TextVisible = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether to display images in the buttons.
-        /// </summary>
-        public bool ImageVisible
-        {
-            get
-            {
-                return imageVisible;
-            }
-
-            set
-            {
-                if (imageVisible == value)
-                    return;
-                imageVisible = value;
-                foreach (var item in Items)
-                {
-                    if (item is SpeedButton speedButton)
-                        speedButton.ImageVisible = value;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets toolbar item size.
         /// </summary>
         public double ItemSize
@@ -338,6 +292,52 @@ namespace Alternet.UI
                 {
                     if (NeedUpdateForeColor(item))
                         item.ForegroundColor = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to display text in the buttons.
+        /// </summary>
+        internal bool TextVisible
+        {
+            get
+            {
+                return textVisible;
+            }
+
+            set
+            {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                foreach (var item in Items)
+                {
+                    if (item is SpeedButton speedButton)
+                        speedButton.TextVisible = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to display images in the buttons.
+        /// </summary>
+        internal bool ImageVisible
+        {
+            get
+            {
+                return imageVisible;
+            }
+
+            set
+            {
+                if (imageVisible == value)
+                    return;
+                imageVisible = value;
+                foreach (var item in Items)
+                {
+                    if (item is SpeedButton speedButton)
+                        speedButton.ImageVisible = value;
                 }
             }
         }
