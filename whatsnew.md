@@ -1,4 +1,24 @@
-# 0.9.411 (work in progress)
+# 0.9.412 (work in progress)
+
+## 2024 January 9
+
+- SpeedButton: Defaults, DisabledImageSet, ImageSet.
+- Bitmap new constructor parameter Depth.
+- GenericImage: SetAlpha(byte value), new constructor GenericImage(SizeI size, bool clear = false).
+- Control: GetChildren, SetChildrenFont, SetChildrenBackgroundColor, SetChildrenForegroundColor.
+- ControlSet: Font(Font? value), BackgroundColor(Color? value), ForegroundColor(Color? value).
+- StackPanel right aligns child if it's HorizontalAlignment = Right.
+- Color now is class, AsBrush, AsPen and GetAsPen(1) are cached.
+- SpeedButton: ShortcutKeys, Shortcut, ShortcutKeyInfo, TextVisible, ImageToText.
+- GenericToolBar: ImageToText, Items, TextVisible, ImageVisible, SetToolShortcut.
+- UserPaintControl.DropFownMenu, fixed Click event.
+- GenericToolBar: DefaultImageSize, DefaultNormalImageColor, DefaultDisabledImageColor, NormalImageColor, DisabledImageColor,
+ ImageSize, NormalSvgImages, NormalSvgImages, AddSpeedBtn, SetToolAction, AddToolAction, RemoveToolAction,
+SetToolImage, SetToolDisabledImage, GetToolImage, GetToolDisabledImage.
+- SpeedButton: DefaultShortcutToolTipTemplate, ShortcutToolTipTemplate.
+- ContextMenu.Closing event.
+
+# 0.9.411 (2024 January 5)
 
 ## 2024 January 5
 
