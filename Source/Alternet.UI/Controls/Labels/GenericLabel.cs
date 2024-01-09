@@ -45,6 +45,7 @@ namespace Alternet.UI
                 if (text == value)
                     return;
                 text = value ?? string.Empty;
+                RaiseTextChanged(EventArgs.Empty);
                 Invalidate();
             }
         }
