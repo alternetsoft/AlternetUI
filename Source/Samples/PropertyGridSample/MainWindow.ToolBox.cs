@@ -75,6 +75,7 @@ namespace PropertyGridSample
                     typeof(Label),
                     typeof(Button),
                     typeof(GenericToolBar),
+                    typeof(SplittedPanel),
                     typeof(Calendar),
                     typeof(CheckBox),
                     typeof(ColorPicker),
@@ -100,7 +101,6 @@ namespace PropertyGridSample
                     typeof(VerticalStackPanel),
                     typeof(CardPanelHeader),
                     typeof(CardPanel),
-                    typeof(SplittedPanel),
                     typeof(SpeedButton),
                 ];
 

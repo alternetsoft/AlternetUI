@@ -16,25 +16,17 @@ namespace PropertyGridSample
             if (control is not GenericToolBar toolbar)
                 return;
 
-            var imageSize = Toolbar.GetDefaultImageSize(toolbar);
-
-            var normalColor = toolbar.GetSvgColor(KnownSvgColor.Normal);
-            var disabledColor = toolbar.GetSvgColor(KnownSvgColor.Disabled);
-
-            var images = KnownSvgImages.GetForSize(normalColor, imageSize);
-            var imagesDisabled = KnownSvgImages.GetForSize(disabledColor, imageSize);
-
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
-                images.ImgFileNew,
-                imagesDisabled.ImgFileNew);
+                toolbar.GetNormalSvgImages().ImgFileNew,
+                toolbar.GetDisabledSvgImages().ImgFileNew);
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
             var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
-                images.ImgFileOpen,
-                imagesDisabled.ImgFileOpen);
+                toolbar.GetNormalSvgImages().ImgFileOpen,
+                toolbar.GetDisabledSvgImages().ImgFileOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
@@ -49,8 +41,8 @@ namespace PropertyGridSample
 
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                images.ImgFileSave,
-                imagesDisabled.ImgFileSave);
+                toolbar.GetNormalSvgImages().ImgFileSave,
+                toolbar.GetDisabledSvgImages().ImgFileSave);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
@@ -59,13 +51,15 @@ namespace PropertyGridSample
             toolbar.AddToolAction(idText, ButtonClick);
 
             var textBox = new TextBox();
+            textBox.HasBorder = false;
+            textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.SuggestedWidth = 100;
 
             var idEdit = toolbar.AddControl(textBox);
 
             var itemPicture = toolbar.AddPicture(
-                images.ImgMessageBoxWarning,
-                imagesDisabled.ImgMessageBoxWarning,
+                toolbar.GetNormalSvgImages().ImgMessageBoxWarning,
+                toolbar.GetDisabledSvgImages().ImgMessageBoxWarning,
                 "Picture");
             toolbar.AddToolAction(itemPicture, ButtonClick);
             toolbar.SetToolAlignRight(itemPicture, true);

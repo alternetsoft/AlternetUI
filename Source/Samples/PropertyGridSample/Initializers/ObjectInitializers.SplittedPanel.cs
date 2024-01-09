@@ -15,37 +15,36 @@ namespace PropertyGridSample
             if (control is not SplittedPanel panel)
                 return;
             panel.SuggestedSize = 200;
-            var backColor = Color.Cornsilk;
-            panel.FillPanel.BackColor = backColor;
-            panel.RightPanel.BackColor = backColor;
-            panel.LeftPanel.BackColor = backColor;
-            panel.TopPanel.BackColor = backColor;
-            panel.BottomPanel.BackColor = backColor;
 
-            Label LeftLabel = new("Left")
+            ListBox LeftLabel = new()
             {
                 Parent = panel.LeftPanel,
             };
+            LeftLabel.Add("Left");
 
-            Label RightLabel = new("Right")
+            ListBox RightLabel = new()
             {
                 Parent = panel.RightPanel,
             };
+            RightLabel.Add("Right");
 
-            Label TopLabel = new("Top")
-            {
-                Parent = panel.TopPanel,
-            };
+            GenericToolBar toolbar = new();
+            toolbar.Parent = panel.TopPanel;
+            InitGenericToolBar(toolbar);
+            panel.TopSplitter.Visible = false;
+            panel.TopPanel.Height = toolbar.ItemSize + 6;
 
-            Label BottomLabel = new("Bottom")
+            ListBox BottomLabel = new()
             {
                 Parent = panel.BottomPanel,
             };
+            BottomLabel.Add("Bottom");
 
-            Label FillLabel = new("Fill")
+            ListBox FillLabel = new()
             {
                 Parent = panel.FillPanel,
             };
+            FillLabel.Add("Fill");
         }
     }
 }

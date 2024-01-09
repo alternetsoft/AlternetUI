@@ -953,6 +953,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets image size taking into account <see cref="ImageSize"/>
+        /// and <see cref="DefaultImageSize"/> properties.
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetImageSize() =>
+            ImageSize ?? DefaultImageSize ?? Toolbar.GetDefaultImageSize(this).Width;
+
+        /// <summary>
+        /// Gets image color in the normal state taking into account <see cref="NormalImageColor"/>
+        /// and <see cref="DefaultNormalImageColor"/> properties.
+        /// </summary>
+        public virtual Color GetNormalImageColor() =>
+            NormalImageColor ?? DefaultNormalImageColor ?? GetSvgColor(KnownSvgColor.Normal);
+
+        /// <summary>
+        /// Gets image color in the disabled state  taking into account
+        /// <see cref="DisabledImageColor"/> and <see cref="DefaultDisabledImageColor"/> properties.
+        /// </summary>
+        public virtual Color GetDisabledImageColor() =>
+            DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the normal state.
+        /// </summary>
+        public virtual KnownSvgImages GetNormalSvgImages() =>
+            NormalSvgImages ??= KnownSvgImages.GetForSize(GetNormalImageColor(), GetImageSize());
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the disabled state.
+        /// </summary>
+        public virtual KnownSvgImages GetDisabledSvgImages() =>
+            DisabledSvgImages ??= KnownSvgImages.GetForSize(GetDisabledImageColor(), GetImageSize());
+
+        /// <summary>
         /// Updates common properties of the item control.
         /// </summary>
         /// <param name="control">Control which properties to update.</param>
@@ -976,37 +1010,6 @@ namespace Alternet.UI
         /// <param name="control">Control to check</param>
         /// <returns></returns>
         protected virtual bool NeedUpdateBackColor(Control control) => NeedUpdateForeColor(control);
-
-        /// <summary>
-        /// Gets image size.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual int GetImageSize() =>
-            ImageSize ?? DefaultImageSize ?? Toolbar.GetDefaultImageSize(this).Width;
-
-        /// <summary>
-        /// Gets image color in the normal state.
-        /// </summary>
-        protected virtual Color GetNormalImageColor() =>
-            NormalImageColor ?? DefaultNormalImageColor ?? GetSvgColor(KnownSvgColor.Normal);
-
-        /// <summary>
-        /// Gets image color in the disabled state.
-        /// </summary>
-        protected virtual Color GetDisabledImageColor() =>
-            DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
-
-        /// <summary>
-        /// Gets <see cref="KnownSvgImages"/> for the normal state.
-        /// </summary>
-        protected virtual KnownSvgImages GetNormalSvgImages() =>
-            NormalSvgImages ??= KnownSvgImages.GetForSize(GetNormalImageColor(), GetImageSize());
-
-        /// <summary>
-        /// Gets <see cref="KnownSvgImages"/> for the disabled state.
-        /// </summary>
-        protected virtual KnownSvgImages GetDisabledSvgImages() =>
-            DisabledSvgImages ??= KnownSvgImages.GetForSize(GetDisabledImageColor(), GetImageSize());
 
         /// <summary>
         /// Gets whether child control foreground color need to be updated when
