@@ -113,7 +113,7 @@ namespace Alternet.UI
         public static int? DefaultImageSize { get; set; }
 
         /// <summary>
-        /// Gets or sets default color of the images in the normal state.
+        /// Gets or sets default color of the SVG images in the normal state.
         /// </summary>
         /// <remarks>
         /// If this property is null, <see cref="Control.GetSvgColor(KnownSvgColor)"/> is used with
@@ -122,7 +122,7 @@ namespace Alternet.UI
         public static Color? DefaultNormalImageColor { get; set; }
 
         /// <summary>
-        /// Gets or sets default color of the images in the disabled state.
+        /// Gets or sets default color of the SVG images in the disabled state.
         /// </summary>
         /// <remarks>
         /// If this property is null, <see cref="Control.GetSvgColor(KnownSvgColor)"/> is used with
@@ -131,17 +131,7 @@ namespace Alternet.UI
         public static Color? DefaultDisabledImageColor { get; set; }
 
         /// <summary>
-        /// Gets or sets default hovered state colors for the items added with <see cref="AddTextBtn"/>.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultTextBtnHoveredColors { get; set; }
-
-        /// <summary>
-        /// Gets or sets default pressed state colors for the items added with <see cref="AddTextBtn"/>.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultTextBtnPressedColors { get; set; }
-
-        /// <summary>
-        /// Gets or sets color of the images in the normal state.
+        /// Gets or sets color of the SVG images in the normal state.
         /// </summary>
         /// <remarks>
         /// If this property is null, <see cref="DefaultNormalImageColor"/> is used.
@@ -150,7 +140,7 @@ namespace Alternet.UI
         public Color? NormalImageColor { get; set; }
 
         /// <summary>
-        /// Gets or sets color of the images in the disabled state.
+        /// Gets or sets color of the SVG images in the disabled state.
         /// </summary>
         /// <remarks>
         /// If this property is null, <see cref="DefaultDisabledImageColor"/> is used.
@@ -415,21 +405,12 @@ namespace Alternet.UI
         {
             text ??= string.Empty;
 
-            SpeedButton speedButton = new()
+            SpeedTextButton speedButton = new()
             {
-                ImageVisible = false,
-                TextVisible = true,
                 ToolTip = toolTip ?? string.Empty,
                 Text = text,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-
-            var hoveredColors = DefaultTextBtnHoveredColors ?? FontAndColor.SystemColorHighlight;
-            var pressedColors = DefaultTextBtnPressedColors ?? FontAndColor.SystemColorActiveCaption;
-
-            speedButton.Borders!.Normal = speedButton.Borders.Hovered;
-            speedButton.SetStateColors(GenericControlState.Hovered, hoveredColors);
-            speedButton.SetStateColors(GenericControlState.Pressed, pressedColors);
 
             UpdateItemProps(speedButton, ItemKind.ButtonText);
 
