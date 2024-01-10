@@ -14,7 +14,7 @@ namespace Alternet.UI
     public class BorderSideSettings : BaseObject, INotifyPropertyChanged
     {
 #pragma warning disable
-        public static Color DefaultColor = Color.Gray;
+        public static Color DefaultColor = SystemColors.GrayText;
 #pragma warning restore
 
         private Pen? pen;
