@@ -420,7 +420,7 @@ namespace Alternet.UI
             result.Click += StickyButton_Click;
             return result.UniqueId;
 
-            static void StickyButton_Click(object sender, EventArgs e)
+            static void StickyButton_Click(object? sender, EventArgs e)
             {
                 if (sender is not SpeedButton button)
                     return;

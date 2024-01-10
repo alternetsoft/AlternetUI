@@ -254,11 +254,11 @@ namespace Alternet.Drawing
                     InitializeHtmlSysColorTable();
                 }
 
-                htmlSysColorTable!.TryGetValue(htmlColor.ToLowerInvariant(), out c);
+                htmlSysColorTable!.TryGetValue(htmlColor.ToLowerInvariant(), out c!);
             }
 
             // resort to type converter which will handle named colors
-            if (c.IsEmpty)
+            if (c is null || c.IsEmpty)
             {
                 try
                 {

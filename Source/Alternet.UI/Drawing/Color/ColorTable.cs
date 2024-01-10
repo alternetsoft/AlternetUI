@@ -14,8 +14,12 @@ namespace Alternet.Drawing
 
         internal static Dictionary<string, Color> Colors => ColorConstants.Value;
 
-        internal static bool TryGetNamedColor(string name, out Color result) =>
-            Colors.TryGetValue(name, out result);
+        internal static bool TryGetNamedColor(string name, out Color result)
+        {
+            var found = Colors.TryGetValue(name, out result!);
+            result ??= Color.Empty;
+            return found;
+        }
 
         internal static bool IsKnownNamedColor(string name) => Colors.TryGetValue(name, out _);
 

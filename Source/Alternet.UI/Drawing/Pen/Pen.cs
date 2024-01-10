@@ -107,8 +107,8 @@ namespace Alternet.Drawing
             LineCap lineCap,
             LineJoin lineJoin,
             bool immutable)
-            : this(new UI.Native.Pen())
         {
+            NativePen = new UI.Native.Pen();
             this.color = color;
             this.width = width;
             this.dashStyle = dashStyle;
@@ -118,11 +118,6 @@ namespace Alternet.Drawing
             this.immutable = immutable;
 
             ReinitializeNativePen();
-        }
-
-        private Pen(UI.Native.Pen nativePen)
-        {
-            NativePen = nativePen;
         }
 
         /// <summary>

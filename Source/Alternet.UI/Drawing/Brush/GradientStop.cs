@@ -30,7 +30,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of the gradient stop.
         /// </summary>
-        public Color Color { get; set; }
+        public Color Color { get; set; } = Color.Empty;
 
         /// <summary>
         /// Gets the location of the gradient stop within the gradient vector.
