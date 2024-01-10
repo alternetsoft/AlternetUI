@@ -71,6 +71,8 @@ namespace PropertyGridSample
             if (control is not GenericToolBar toolbar)
                 return;
 
+            toolbar.Margin = (0, 0, 0, 4);
+
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
                 toolbar.GetNormalSvgImages().ImgFileNew,
@@ -106,7 +108,6 @@ namespace PropertyGridSample
             toolbar.AddToolAction(idText, ButtonClick);
 
             var textBox = new TextBox();
-            textBox.HasBorder = false;
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.SuggestedWidth = 100;
 
