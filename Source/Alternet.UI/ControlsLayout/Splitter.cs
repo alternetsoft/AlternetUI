@@ -96,6 +96,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets number of dips on which splitter needs to be moved in order to
+        /// update attached control size.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 10.
+        /// </remarks>
+        public int SizeDelta { get; set; } = 10;
+
+        /// <summary>
         /// Gets whether the splitter is horizontal.
         /// </summary>
         [Browsable(false)]
@@ -322,8 +331,8 @@ namespace Alternet.UI
             SplitterMoving?.Invoke(this, e);
             if (splitTarget != null)
             {
-                SplitMove(e.SplitX, e.SplitY);
-                ApplySplitPosition();
+                if(SplitMove(e.SplitX, e.SplitY))
+                    ApplySplitPosition();
             }
         }
 
@@ -591,14 +600,17 @@ namespace Alternet.UI
         /// <summary>
         /// Moves the splitter line to the splitSize for the mouse position (x, y).
         /// </summary>
-        private void SplitMove(double x, double y)
+        private bool SplitMove(double x, double y)
         {
             var size = GetSplitSize(x - Left + anchor.X, y - Top + anchor.Y);
-            if (splitSize != size)
+            if (Math.Abs(splitSize - size) > SizeDelta)
             {
                 splitSize = size;
                 DrawSplitBar(DrawSplitBarKind.Move);
+                return true;
             }
+            else
+                return false;
         }
 
         private class SplitData
