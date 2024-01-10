@@ -1923,6 +1923,7 @@ namespace Alternet::UI
     /*static*/ Control* Control::HitTest(const Point& screenPoint)
     {
 #if __WXOSX__
+        /*
         for (auto popupWindow : Popup::GetVisiblePopupWindows())
         {
             auto window = wxFindWindowAtPoint(popupWindow, fromDip(screenPoint, nullptr));
@@ -1936,6 +1937,7 @@ namespace Alternet::UI
                 return control;
             }
         }
+        */
 #endif
 
         auto window = wxFindWindowAtPoint(fromDip(screenPoint, nullptr));
