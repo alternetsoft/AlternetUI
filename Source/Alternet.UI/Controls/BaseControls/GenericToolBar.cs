@@ -44,6 +44,11 @@ namespace Alternet.UI
             Button,
 
             /// <summary>
+            /// Item is button.
+            /// </summary>
+            ButtonSticky,
+
+            /// <summary>
             /// Item is text only button.
             /// </summary>
             ButtonText,
@@ -83,6 +88,21 @@ namespace Alternet.UI
         /// Gets or sets default spacer item size.
         /// </summary>
         public static double DefaultSpacerSize { get; set; } = 4;
+
+        /// <summary>
+        /// Gets or sets default margin of the sticky button item.
+        /// </summary>
+        public static Thickness DefaultSpeedBtnMargin { get; set; } = 0;
+
+        /// <summary>
+        /// Gets or sets default margin of the sticky button item.
+        /// </summary>
+        public static Thickness DefaultStickyBtnMargin { get; set; } = (1, 0, 1, 0);
+
+        /// <summary>
+        /// Gets or sets default margin of the text button item.
+        /// </summary>
+        public static Thickness DefaultTextBtnMargin { get; set; } = (1, 0, 1, 0);
 
         /// <summary>
         /// Gets or sets default margin of the static text item.
@@ -363,32 +383,59 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
-            text ??= string.Empty;
+            var result = InternalAddSpeedBtn(
+                ItemKind.Button,
+                text,
+                imageSet,
+                imageSetDisabled,
+                toolTip,
+                action);
+            return result.UniqueId;
+        }
 
-            SpeedButton speedButton = new()
-            {
-                ImageVisible = imageVisible,
-                TextVisible = textVisible,
-                ImageToText = imageToText,
-                Text = text,
-                ImageSet = imageSet,
-                ToolTip = toolTip ?? text,
-                SuggestedSize = itemSize,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
+        /// <summary>
+        /// Adds sticky <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="imageSet">Item image.</param>
+        /// <param name="imageSetDisabled">Item disabled image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddStickyBtn(
+            string? text,
+            ImageSet? imageSet,
+            ImageSet? imageSetDisabled,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            var result = InternalAddSpeedBtn(
+                ItemKind.ButtonSticky,
+                text,
+                imageSet,
+                imageSetDisabled,
+                toolTip,
+                action);
+            result.Margin = DefaultStickyBtnMargin;
+            result.Click += StickyButton_Click;
+            return result.UniqueId;
 
-            if (imageSetDisabled is not null)
+            static void StickyButton_Click(object sender, EventArgs e)
             {
-                speedButton.DisabledImageSet = imageSetDisabled;
+                if (sender is not SpeedButton button)
+                    return;
+                button.Borders ??= new();
+                if(button.Sticky)
+                {
+                    button.Borders.Pressed?.SetWidth(2);
+                    button.Borders.Hovered?.SetWidth(2);
+                }
+                else
+                {
+                    button.Borders.Pressed?.SetWidth(1);
+                    button.Borders.Hovered?.SetWidth(1);
+                }
             }
-
-            UpdateItemProps(speedButton, ItemKind.Button);
-
-            if(action is not null)
-                speedButton.Click += action;
-            speedButton.Parent = panel;
-
-            return speedButton.UniqueId;
         }
 
         /// <summary>
@@ -410,6 +457,7 @@ namespace Alternet.UI
                 ToolTip = toolTip ?? string.Empty,
                 Text = text,
                 VerticalAlignment = VerticalAlignment.Center,
+                Margin = DefaultTextBtnMargin,
             };
 
             UpdateItemProps(speedButton, ItemKind.ButtonText);
@@ -780,6 +828,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Toggles the specified toolbar item Sticky property value.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        public void ToggleToolSticky(ObjectUniqueId toolId)
+        {
+            var item = FindTool(toolId);
+            if (item is null)
+                return;
+            item.Sticky = !item.Sticky;
+        }
+
+        /// <summary>
         /// Gets the specified toolbar item Sticky property value.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
@@ -1096,6 +1156,52 @@ namespace Alternet.UI
             if (Array.IndexOf(types, control.GetType()) >= 0)
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="itemKind">Item kind.</param>
+        /// <param name="imageSet">Item image.</param>
+        /// <param name="imageSetDisabled">Item disabled image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        protected virtual SpeedButton InternalAddSpeedBtn(
+            ItemKind itemKind,
+            string? text,
+            ImageSet? imageSet,
+            ImageSet? imageSetDisabled,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            text ??= string.Empty;
+
+            SpeedButton speedButton = new()
+            {
+                ImageVisible = imageVisible,
+                TextVisible = textVisible,
+                ImageToText = imageToText,
+                Text = text,
+                ImageSet = imageSet,
+                ToolTip = toolTip ?? text,
+                SuggestedSize = itemSize,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = DefaultSpeedBtnMargin,
+            };
+
+            if (imageSetDisabled is not null)
+            {
+                speedButton.DisabledImageSet = imageSetDisabled;
+            }
+
+            UpdateItemProps(speedButton, itemKind);
+
+            if (action is not null)
+                speedButton.Click += action;
+            speedButton.Parent = panel;
+
+            return speedButton;
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)
