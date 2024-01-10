@@ -22,6 +22,76 @@ namespace Alternet.UI
         public static KeyInfo RunTest { get; set; } = new(Key.T, ModifierKeys.ControlShift);
 
         /// <summary>
+        /// Defines keys for the <see cref="RichTextBox"/>.
+        /// </summary>
+        public static class FindReplaceControlKeys
+        {
+            /// <summary>
+            /// Gets or sets "Find Next" action keys.
+            /// </summary>
+            public static KeyInfo[] FindNext { get; set; } =
+            [
+                 new(Key.F3, ModifierKeys.None, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Find Previous" action keys.
+            /// </summary>
+            public static KeyInfo[] FindPrevious { get; set; } =
+            [
+                 new(Key.F3, ModifierKeys.Shift, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Replace" action keys.
+            /// </summary>
+            public static KeyInfo[] Replace { get; set; } =
+            [
+                 new(Key.R, ModifierKeys.Alt, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Replace All" action keys.
+            /// </summary>
+            public static KeyInfo[] ReplaceAll { get; set; } =
+            [
+                 new(Key.A, ModifierKeys.Alt, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Match Case" action keys.
+            /// </summary>
+            public static KeyInfo[] MatchCase { get; set; } =
+            [
+                 new(Key.C, ModifierKeys.Alt, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Match Whole Word" action keys.
+            /// </summary>
+            public static KeyInfo[] MatchWholeWord { get; set; } =
+            [
+                 new(Key.W, ModifierKeys.Alt, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Use Regular Expressions" action keys.
+            /// </summary>
+            public static KeyInfo[] UseRegularExpressions { get; set; } =
+            [
+                 new(Key.E, ModifierKeys.Alt, OperatingSystems.Any),
+            ];
+
+            /// <summary>
+            /// Gets or sets "Preserve Case" action keys.
+            /// </summary>
+            public static KeyInfo[] PreserveCase { get; set; } =
+            [
+                 new(Key.V, ModifierKeys.Alt, OperatingSystems.Any),
+            ];
+        }
+
+        /// <summary>
         /// Defines additional keys for the <see cref="RichTextBox"/>.
         /// </summary>
         public class RichEditKeys
