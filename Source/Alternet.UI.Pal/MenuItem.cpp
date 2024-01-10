@@ -51,7 +51,10 @@ namespace Alternet::UI
 
         if (_menuItem == nullptr)
             return;
+
+#ifdef __WXMSW__
         _menuItem->SetDisabledBitmap(ImageSet::BitmapBundle(value));
+#endif
     }
 
     MenuItem::MenuItem() : _flags(MenuItemFlags::Enabled)
@@ -92,10 +95,12 @@ namespace Alternet::UI
             _menuItem->SetBitmap(ImageSet::BitmapBundle(_normalImage));
         }
 
+#ifdef __WXMSW__
         if (_disabledImage != nullptr)
         {
             _menuItem->SetDisabledBitmap(ImageSet::BitmapBundle(_disabledImage));
         }
+#endif
     }
 
     void MenuItem::UpdateWxWindowParent()
