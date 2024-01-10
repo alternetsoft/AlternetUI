@@ -111,15 +111,33 @@ namespace Alternet.UI
                         HasBorder = false,
                     };
 
-                    logPage = BottomNotebook.AddPage(
-                        logControl,
-                        CommonStrings.Default.NotebookTabTitleOutput);
+                    if (LogControlUseNotebook)
+                    {
+                        logPage = BottomNotebook.AddPage(
+                            logControl,
+                            CommonStrings.Default.NotebookTabTitleOutput);
+                    }
+                    else
+                    {
+                        Manager.AddPane(logControl, BottomPane);
+                    }
+
                     logControl.ContextMenu.Required();
                 }
 
                 return logControl;
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="LogControl"/> is shown inside <see cref="BottomNotebook"/>.
+        /// </summary>
+        public bool LogControlUseNotebook { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets whether <see cref="LeftTreeView"/> is shown inside <see cref="LeftNotebook"/>.
+        /// </summary>
+        public bool LeftTreeViewUseNotebook { get; set; } = true;
 
         /// <summary>
         /// Gets <see cref="TreeView"/> control on the left pane.
@@ -139,9 +157,16 @@ namespace Alternet.UI
                     };
                     if (LeftTreeViewAsListBox)
                         leftTreeView.MakeAsListBox();
-                    leftTreeViewPage = LeftNotebook.AddPage(
-                        leftTreeView,
-                        CommonStrings.Default.NotebookTabTitleActivity);
+                    if (LeftTreeViewUseNotebook)
+                    {
+                        leftTreeViewPage = LeftNotebook.AddPage(
+                            leftTreeView,
+                            CommonStrings.Default.NotebookTabTitleActivity);
+                    }
+                    else
+                    {
+                        Manager.AddPane(leftTreeView, LeftPane);
+                    }
                 }
 
                 return leftTreeView;
