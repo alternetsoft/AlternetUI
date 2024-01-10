@@ -16,7 +16,7 @@ namespace PropertyGridSample
     {
         private static readonly Thickness controlPadding = new (15, 15, 15, 15);
 
-        internal readonly PanelAuiManager panel = new();
+        internal readonly SplittedPanelEx panel = new();
 
         private readonly Control controlPanel = new()
         {
@@ -88,6 +88,8 @@ namespace PropertyGridSample
             controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
             controlPanelBorder.Normal.DrawDefaultBorder = false;
 
+            /*panel.LogControlUseNotebook = false;
+            panel.LeftTreeViewUseNotebook = false;*/
             panel.BindApplicationLog();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
@@ -126,13 +128,15 @@ namespace PropertyGridSample
 
             controlPanelBorder.Parent = parentParent.FillPanel;
 
-            panel.CenterNotebook.AddPage(parentParent, "Preview", true);
+            /*panel.Manager.AddPane(parentParent, panel.CenterPane);*/
+            parentParent.Parent = panel.FillPanel;
 
+            /*CenterNotebook.AddPage(parentParent, "Preview", true);
             panel.CenterNotebook.SizeChanged += CenterNotebook_SizeChanged;
             panel.CenterNotebook.LayoutUpdated += CenterNotebook_LayoutUpdated;
-            panel.LeftTreeView.SizeChanged += LeftTreeView_SizeChanged;
+            panel.LeftTreeView.SizeChanged += LeftTreeView_SizeChanged;*/
 
-            panel.Manager.Update();
+            /*panel.Manager.Update();*/
 
             InitToolBox();
 

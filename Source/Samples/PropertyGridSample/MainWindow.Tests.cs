@@ -17,7 +17,78 @@ namespace PropertyGridSample
         public Collection<object> ItemsObject { get; set; } = NewCollection<object>();
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
-        
+
+        void InitSimpleTestActions()
+        {
+#if DEBUG
+            PropertyGrid.AddSimpleAction<PictureBox>("Test", PictureBoxTest);
+            PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
+
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Visible", TestGenericToolBarVisible);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Enabled", TestGenericToolBarEnabled);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Delete", TestGenericToolBarDelete);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Sticky", TestGenericToolBarSticky);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Foreground Color", TestGenericToolBarForegroundColor);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background Color", TestGenericToolBarBackgroundColor);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Font", TestGenericToolBarFont);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background", TestGenericToolBarBackground);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Reset Background", TestGenericToolBarResetBackground);
+
+            PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
+            PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);
+            PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
+            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);
+#endif
+        }
+
+        void TestMemoFindReplace(bool replace)
+        {
+            var control = GetSelectedControl<MultilineTextBox>();
+            if (control is null)
+                return;
+            var parentWindow = control.ParentWindow;
+            if (parentWindow is null)
+                return;
+
+            FindReplaceControl findReplace = new();
+            findReplace.ReplaceVisible = replace;
+            findReplace.IgnoreLayout = true;
+            findReplace.Size = findReplace.GetPreferredSize(parentWindow.ClientSize);
+            var left = (int)((parentWindow.ClientSize.Width - findReplace.Size.Width) / 2);
+            findReplace.Location = (left, 0);
+            findReplace.Parent = parentWindow;
+            findReplace.BringToFront();
+            findReplace.Show();
+        }
+
+        void TestMemoFind()
+        {
+            TestMemoFindReplace(false);
+        }
+
+        void TestMemoReplace()
+        {
+            TestMemoFindReplace(true);
+        }
+
+        void TestRichFindReplace(bool replace)
+        {
+            var control = GetSelectedControl<RichTextBox>();
+            if (control is null)
+                return;
+
+        }
+
+        void TestRichFind()
+        {
+            TestRichFindReplace(false);
+        }
+
+        void TestRichReplace()
+        {
+            TestRichFindReplace(true);
+        }
+
         void TestGenericToolBarFont()
         {
             var control = GetSelectedControl<GenericToolBar>();
@@ -124,6 +195,8 @@ namespace PropertyGridSample
 
         private void ControlPanel_DragStart(object? sender, DragStartEventArgs e)
         {
+/*
+
             if (e.DistanceIsLess)
                 return;
 
@@ -137,12 +210,13 @@ namespace PropertyGridSample
             var distance = MathUtils.GetDistance(e.MouseDownLocation, e.MouseClientLocation);
             Application.Log($"DragStart {e.MouseDownLocation} {e.MouseClientLocation} {!e.DistanceIsLess} {distance}");
             DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
+*/
         }
 
         private void ControlPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Source == controlPanel)
-                UpdatePropertyGrid(controlPanel);
+            /*if (e.Source == controlPanel)
+                UpdatePropertyGrid(controlPanel);*/
         }
 
         private void LogEvent(string name, bool logAlways = false)
