@@ -11,47 +11,47 @@ namespace Alternet::UI
 	{
 		struct SizeI_C
 		{
-			int Width = 0, Height = 0;
+			int Width, Height;
 		};
 
 		struct SizeD_C
 		{
-			double Width = 0, Height = 0;
+			double Width, Height;
 		};
 
 		struct PointI_C
 		{
-			int X = 0, Y = 0;
+			int X, Y;
 		};
 
 		struct PointD_C
 		{
-			double X = 0, Y = 0;
+			double X, Y;
 		};
 
 		struct RectI_C
 		{
-			int X = 0, Y = 0, Width = 0, Height = 0;
+			int X, Y, Width, Height;
 		};
 
 		struct RectD_C
 		{
-			double X = 0, Y = 0, Width = 0, Height = 0;
+			double X, Y, Width, Height;
 		};
 
 		struct Thickness_C
 		{
-			double Left = 0, Top = 0, Right = 0, Bottom = 0;
+			double Left, Top, Right, Bottom;
 		};
 
 		struct Color_C
 		{
-			uint8_t R = 0, G = 0, B = 0, A = 0, state = 0;
+			uint8_t R, G, B, A, state;
 		};
 
 		struct DateTime_C
 		{
-			int Year = 0, Month = 0, Day = 0, Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
+			int Year, Month, Day, Hour, Minute, Second, Millisecond;
 		};
 	}
 
@@ -59,6 +59,8 @@ namespace Alternet::UI
 	{
 		Int32Size()
 		{
+			Width = 0;
+			Height = 0;
 		}
 
 		Int32Size(const wxSize& s)
@@ -99,7 +101,11 @@ namespace Alternet::UI
 
 	struct Size	: SizeD_C
 	{
-		Size() {}
+		Size()
+		{
+			Width = 0;
+			Height = 0;
+		}
 
 		Size(double width, double height)
 		{
@@ -148,7 +154,11 @@ namespace Alternet::UI
 
 	struct Int32Point : PointI_C
 	{
-		Int32Point() {}
+		Int32Point()
+		{
+			X = 0;
+			Y = 0;
+		}
 
 		Int32Point(int x, int y)
 		{
@@ -188,7 +198,11 @@ namespace Alternet::UI
 
 	struct Point : PointD_C
 	{
-		Point() {}
+		Point()
+		{
+			X = 0;
+			Y = 0;
+		}
 
 		Point(double x, double y)
 		{
@@ -227,7 +241,13 @@ namespace Alternet::UI
 
 	struct Int32Rect : RectI_C
 	{
-		Int32Rect() {}
+		Int32Rect()
+		{
+			X = 0;
+			Y = 0;
+			Width = 0;
+			Height = 0;
+		}
 
 		Int32Rect(wxRect r)
 		{
@@ -288,7 +308,13 @@ namespace Alternet::UI
 
 	struct Rect : RectD_C
 	{
-		Rect() {}
+		Rect()
+		{
+			X = 0;
+			Y = 0;
+			Width = 0;
+			Height = 0;
+		}
 
 		Rect(double x, double y, double width, double height)
 		{
@@ -352,7 +378,13 @@ namespace Alternet::UI
 
 	struct Thickness : Thickness_C
 	{
-		Thickness() {}
+		Thickness()
+		{
+			Left = 0;
+			Top = 0;
+			Right = 0;
+			Bottom = 0;
+		}
 
 		Thickness(double left, double top, double right, double bottom)
 		{
@@ -457,7 +489,7 @@ namespace Alternet::UI
 	struct DateTime : DateTime_C
 	{
 		DateTime()
-			:DateTime(wxDateTime::Now())
+			: DateTime(wxDateTime::Now())
 		{
 		}
 
