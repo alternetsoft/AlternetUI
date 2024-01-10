@@ -11,16 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements main control of the Find and Replace dialogs.
     /// </summary>
-    public class FindReplaceControl : VerticalStackPanel
+    public class FindReplaceControl : GenericToolBarSet
     {
-        private readonly GenericToolBar findToolBar = new()
-        {
-        };
-
-        private readonly GenericToolBar replaceToolBar = new()
-        {
-        };
-
         private readonly TextBox findEdit = new()
         {
             Margin = (2, 0, 2, 0),
@@ -31,119 +23,92 @@ namespace Alternet.UI
             Margin = (2, 0, 2, 0),
         };
 
-        private readonly Panel separatorPanel = new()
-        {
-            SuggestedHeight = 4,
-        };
-
-        private readonly ContextMenu optionsMenu = new();
-        private readonly MenuItem menuItemMatchCase = new(CommonStrings.Default.FindOptionMatchCase);
-        private readonly MenuItem menuItemMatchWholeWord = new(CommonStrings.Default.FindOptionMatchWholeWord);
-        private readonly MenuItem menuItemUseRegularExpressions = new(CommonStrings.Default.FindOptionUseRegularExpressions);
-
         public FindReplaceControl()
         {
-            menuItemMatchCase.Click += MenuItemMatchCase_Click;
-            menuItemMatchCase.Image = findToolBar.GetUnscaledNormalSvgImages().ImgFindMatchCase;
-            menuItemMatchCase.DisabledImage = findToolBar.GetUnscaledDisabledSvgImages().ImgFindMatchCase;
+            ToolBarCount = 3;
 
-            menuItemMatchWholeWord.Click += MenuItemMatchWholeWord_Click;
-            menuItemMatchWholeWord.Image = findToolBar.GetUnscaledNormalSvgImages().ImgFindMatchFullWord;
-            menuItemMatchWholeWord.DisabledImage = findToolBar.GetUnscaledDisabledSvgImages().ImgFindMatchFullWord;
+            OptionsToolBar.AddPicture(null);
 
-            menuItemUseRegularExpressions.Click += MenuItemUseRegularExpressions_Click;
-            menuItemUseRegularExpressions.Image = findToolBar.GetUnscaledNormalSvgImages().ImgRegularExpr;
-            menuItemUseRegularExpressions.DisabledImage = findToolBar.GetUnscaledDisabledSvgImages().ImgRegularExpr;
+            IdMatchCase = OptionsToolBar.AddStickyBtn(
+                CommonStrings.Default.FindOptionMatchCase,
+                OptionsToolBar.GetNormalSvgImages().ImgFindMatchCase,
+                OptionsToolBar.GetDisabledSvgImages().ImgFindMatchCase,
+                null,
+                OnClickMatchCase);
+            OptionsToolBar.SetToolShortcut(IdMatchCase, KnownKeys.FindReplaceControlKeys.MatchCase);
 
-            optionsMenu.Add(menuItemMatchCase);
-            optionsMenu.Add(menuItemMatchWholeWord);
-            optionsMenu.Add(menuItemUseRegularExpressions);
+            IdMatchWholeWord = OptionsToolBar.AddStickyBtn(
+                CommonStrings.Default.FindOptionMatchWholeWord,
+                OptionsToolBar.GetNormalSvgImages().ImgFindMatchFullWord,
+                OptionsToolBar.GetDisabledSvgImages().ImgFindMatchFullWord,
+                null,
+                OnClickMatchWholeWord);
+            OptionsToolBar.SetToolShortcut(IdMatchWholeWord, KnownKeys.FindReplaceControlKeys.MatchWholeWord);
 
-            const string ToggleReplaceOptions = "Toggle replace options";
+            IdUseRegularExpressions = OptionsToolBar.AddStickyBtn(
+                CommonStrings.Default.FindOptionUseRegularExpressions,
+                OptionsToolBar.GetNormalSvgImages().ImgRegularExpr,
+                OptionsToolBar.GetDisabledSvgImages().ImgRegularExpr,
+                null,
+                OnClickUseRegularExpressions);
+            OptionsToolBar.SetToolShortcut(IdUseRegularExpressions, KnownKeys.FindReplaceControlKeys.UseRegularExpressions);
 
-            IdToggleReplaceOptions = findToolBar.AddSpeedBtn(
-                ToggleReplaceOptions,
-                findToolBar.GetNormalSvgImages().ImgAngleDown,
-                findToolBar.GetDisabledSvgImages().ImgAngleDown);
+            IdToggleReplaceOptions = FindToolBar.AddSpeedBtn(
+                CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
+                FindToolBar.GetNormalSvgImages().ImgAngleDown,
+                FindToolBar.GetDisabledSvgImages().ImgAngleDown);
 
             findEdit.SuggestedWidth = 150;
             findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
             replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;
             replaceEdit.SuggestedWidth = 150;
-            IdFindEdit = findToolBar.AddControl(findEdit);
+            IdFindEdit = FindToolBar.AddControl(findEdit);
 
-            IdFindNext = findToolBar.AddSpeedBtn(
+            IdFindNext = FindToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonFindNext,
-                findToolBar.GetNormalSvgImages().ImgArrowDown,
-                findToolBar.GetDisabledSvgImages().ImgArrowDown);
-            findToolBar.SetToolShortcut(IdFindNext, Keys.F3);
+                FindToolBar.GetNormalSvgImages().ImgArrowDown,
+                FindToolBar.GetDisabledSvgImages().ImgArrowDown);
+            FindToolBar.SetToolShortcut(IdFindNext, KnownKeys.FindReplaceControlKeys.FindNext);
 
-            IdFindPrevious = findToolBar.AddSpeedBtn(
+            IdFindPrevious = FindToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonFindPrevious,
-                findToolBar.GetNormalSvgImages().ImgArrowUp,
-                findToolBar.GetDisabledSvgImages().ImgArrowUp);
-            findToolBar.SetToolShortcut(IdFindPrevious, Keys.F3 | Keys.Shift);
+                FindToolBar.GetNormalSvgImages().ImgArrowUp,
+                FindToolBar.GetDisabledSvgImages().ImgArrowUp);
+            FindToolBar.SetToolShortcut(IdFindPrevious, KnownKeys.FindReplaceControlKeys.FindPrevious);
 
-            IdFindOptions = findToolBar.AddSpeedBtn(
-                CommonStrings.Default.ButtonOptions,
-                findToolBar.GetNormalSvgImages().ImgGear,
-                findToolBar.GetDisabledSvgImages().ImgGear);
-            findToolBar.SetToolAlignRight(IdFindOptions, true);
-            findToolBar.SetToolDropDownMenu(IdFindOptions, optionsMenu);            
-
-            IdFindClose = findToolBar.AddSpeedBtn(
+            IdFindClose = FindToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonClose,
-                findToolBar.GetNormalSvgImages().ImgCancel,
-                findToolBar.GetDisabledSvgImages().ImgCancel);
-            findToolBar.SetToolAlignRight(IdFindClose, true);
+                FindToolBar.GetNormalSvgImages().ImgCancel,
+                FindToolBar.GetDisabledSvgImages().ImgCancel);
 
-            findToolBar.Parent = this;
-            separatorPanel.Visible = false;
-            separatorPanel.Parent = this;
+            FindToolBar.Parent = this;
 
-            var idDummyImage = replaceToolBar.AddPicture(null);
+            ReplaceToolBar.AddPicture(null);
 
-            IdReplaceEdit = replaceToolBar.AddControl(replaceEdit);
+            IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
 
-            IdReplace = replaceToolBar.AddTextBtn(
+            IdReplace = ReplaceToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonReplace,
-                CommonStrings.Default.ButtonReplace);
-            replaceToolBar.SetToolShortcut(IdReplace, Keys.R | Keys.Alt);
-            replaceToolBar.SetToolAlignRight(IdReplace, true);
+                FindToolBar.GetNormalSvgImages().ImgReplace,
+                FindToolBar.GetDisabledSvgImages().ImgReplace);
+            ReplaceToolBar.SetToolShortcut(IdReplace, KnownKeys.FindReplaceControlKeys.Replace); 
 
-            var idSpacer = replaceToolBar.AddSpacer(4);
-            replaceToolBar.SetToolAlignRight(idSpacer, true);
-            IdReplaceAll = replaceToolBar.AddTextBtn(
+            IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonReplaceAll,
-                CommonStrings.Default.ButtonReplaceAll);
-            replaceToolBar.SetToolShortcut(IdReplaceAll, Keys.A | Keys.Alt);
-            replaceToolBar.SetToolAlignRight(IdReplaceAll, true);
+                FindToolBar.GetNormalSvgImages().ImgReplaceAll,
+                FindToolBar.GetDisabledSvgImages().ImgReplaceAll);
+            ReplaceToolBar.SetToolShortcut(IdReplaceAll, KnownKeys.FindReplaceControlKeys.ReplaceAll); 
 
-            replaceToolBar.Visible = false;
-            replaceToolBar.Parent = this;
+            ReplaceToolBar.Visible = false;
+            ReplaceToolBar.Parent = this;
 
-            findToolBar.AddToolAction(IdFindNext, OnClickFindNext);
-            findToolBar.AddToolAction(IdFindPrevious, OnClickFindPrevious);
-            findToolBar.AddToolAction(IdFindClose, OnClickClose);
-            findToolBar.AddToolAction(IdToggleReplaceOptions, OnClickToggleReplace);
+            FindToolBar.AddToolAction(IdFindNext, OnClickFindNext);
+            FindToolBar.AddToolAction(IdFindPrevious, OnClickFindPrevious);
+            FindToolBar.AddToolAction(IdFindClose, OnClickClose);
+            FindToolBar.AddToolAction(IdToggleReplaceOptions, OnClickToggleReplace);
 
-            replaceToolBar.AddToolAction(IdReplace, OnClickReplace);
-            replaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
-        }
-
-        private void MenuItemUseRegularExpressions_Click(object? sender, EventArgs e)
-        {
-            menuItemUseRegularExpressions.Checked = !menuItemUseRegularExpressions.Checked;
-        }
-
-        private void MenuItemMatchWholeWord_Click(object? sender, EventArgs e)
-        {
-            menuItemMatchWholeWord.Checked = !menuItemMatchWholeWord.Checked;
-        }
-
-        private void MenuItemMatchCase_Click(object? sender, EventArgs e)
-        {
-            menuItemMatchCase.Checked = !menuItemMatchCase.Checked;
+            ReplaceToolBar.AddToolAction(IdReplace, OnClickReplace);
+            ReplaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
         }
 
         public EventHandler? ClickFindNext;
@@ -156,25 +121,25 @@ namespace Alternet.UI
 
         public EventHandler? ClickClose;
 
-        [Browsable(false)]
-        public MenuItem MenuItemMatchCase => menuItemMatchCase;
+        public EventHandler? OptionMatchCaseChanged;
 
-        [Browsable(false)]
-        public MenuItem MenuItemMatchWholeWord => menuItemMatchWholeWord;
+        public EventHandler? OptionMatchWholeWordChanged;
 
-        [Browsable(false)]
-        public MenuItem MenuItemUseRegularExpressions => menuItemUseRegularExpressions;
+        public EventHandler? OptionUseRegularExpressionsChanged;
 
         public bool OptionMatchCase
         {
             get
             {
-                return MenuItemMatchCase.Checked;
+                return OptionsToolBar.GetToolSticky(IdMatchCase);
             }
 
             set
             {
-                MenuItemMatchCase.Checked = value;
+                if (OptionMatchCase == value)
+                    return;
+                OptionsToolBar.SetToolSticky(IdMatchCase, value);
+                OptionMatchCaseChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -182,12 +147,15 @@ namespace Alternet.UI
         {
             get
             {
-                return MenuItemMatchWholeWord.Checked;
+                return OptionsToolBar.GetToolSticky(IdMatchWholeWord);
             }
 
             set
             {
-                MenuItemMatchWholeWord.Checked = value;
+                if (OptionMatchWholeWord == value)
+                    return;
+                OptionsToolBar.SetToolSticky(IdMatchWholeWord, value);
+                OptionMatchWholeWordChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -195,50 +163,65 @@ namespace Alternet.UI
         {
             get
             {
-                return MenuItemUseRegularExpressions.Checked;
+                return OptionsToolBar.GetToolSticky(IdUseRegularExpressions);
             }
 
             set
             {
-                MenuItemUseRegularExpressions.Checked = value;
+                if (OptionUseRegularExpressions == value)
+                    return;
+                OptionsToolBar.SetToolSticky(IdUseRegularExpressions, value);
+                OptionUseRegularExpressionsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         [Browsable(false)]
-        public ContextMenu OptionsMenu => optionsMenu;
+        public ObjectUniqueId IdMatchCase { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdToggleReplaceOptions { get; set; }
+        public ObjectUniqueId IdMatchWholeWord { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdFindEdit { get; set; }
+        public ObjectUniqueId IdUseRegularExpressions { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdReplaceEdit { get; set; }
+        public ObjectUniqueId IdToggleReplaceOptions { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdFindNext { get; set; }
+        public ObjectUniqueId IdFindEdit { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdFindPrevious { get; set; }
+        public ObjectUniqueId IdReplaceEdit { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdFindOptions { get; set; }
+        public ObjectUniqueId IdFindNext { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdFindClose { get; set; }
+        public ObjectUniqueId IdFindPrevious { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdReplace { get; set; }
+        public ObjectUniqueId IdFindClose { get; }
 
         [Browsable(false)]
-        public ObjectUniqueId IdReplaceAll { get; set; }
+        public ObjectUniqueId IdReplace { get; }
+
+        [Browsable(false)]
+        public ObjectUniqueId IdReplaceAll { get; }
 
         [Browsable(false)]
         public TextBox FindEdit => findEdit;
 
         [Browsable(false)]
         public TextBox ReplaceEdit => replaceEdit;
+
+        [Browsable(false)]
+        public GenericToolBar FindToolBar => GetToolBar(0);
+
+        [Browsable(false)]
+        public GenericToolBar ReplaceToolBar => GetToolBar(1);
+
+        [Browsable(false)]
+        public GenericToolBar OptionsToolBar => GetToolBar(2);
 
         public double TextBoxWidth
         {
@@ -260,34 +243,47 @@ namespace Alternet.UI
         {
             get
             {
-                return replaceToolBar.Visible;
+                return ReplaceToolBar.Visible;
             }
 
             set
             {
                 if (value)
                 {
-                    separatorPanel.Visible = true;
-                    replaceToolBar.Visible = true;
-                    findToolBar.SetToolDisabledImage(
+                    ReplaceToolBar.Visible = true;
+                    FindToolBar.SetToolDisabledImage(
                         IdToggleReplaceOptions,
-                        findToolBar.GetDisabledSvgImages().ImgAngleUp);
-                    findToolBar.SetToolImage(
+                        FindToolBar.GetDisabledSvgImages().ImgAngleUp);
+                    FindToolBar.SetToolImage(
                         IdToggleReplaceOptions,
-                        findToolBar.GetNormalSvgImages().ImgAngleUp);
+                        FindToolBar.GetNormalSvgImages().ImgAngleUp);
                 }
                 else
                 {
-                    separatorPanel.Visible = false;
-                    replaceToolBar.Visible = false;
-                    findToolBar.SetToolDisabledImage(
+                    ReplaceToolBar.Visible = false;
+                    FindToolBar.SetToolDisabledImage(
                         IdToggleReplaceOptions,
-                        findToolBar.GetDisabledSvgImages().ImgAngleDown);
-                    findToolBar.SetToolImage(
+                        FindToolBar.GetDisabledSvgImages().ImgAngleDown);
+                    FindToolBar.SetToolImage(
                         IdToggleReplaceOptions,
-                        findToolBar.GetNormalSvgImages().ImgAngleDown);
+                        FindToolBar.GetNormalSvgImages().ImgAngleDown);
                 }
             }
+        }
+
+        private void OnClickUseRegularExpressions(object? sender, EventArgs e)
+        {
+            OptionUseRegularExpressions = !OptionUseRegularExpressions;
+        }
+
+        private void OnClickMatchWholeWord(object? sender, EventArgs e)
+        {
+            OptionMatchWholeWord = !OptionMatchWholeWord;
+        }
+
+        private void OnClickMatchCase(object? sender, EventArgs e)
+        {
+            OptionMatchCase = !OptionMatchCase;
         }
 
         private void OnClickFindNext(object? sender, EventArgs e)

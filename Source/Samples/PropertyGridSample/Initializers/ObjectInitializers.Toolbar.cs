@@ -21,6 +21,9 @@ namespace PropertyGridSample
             findReplace.ClickReplace += DoClickReplace;
             findReplace.ClickReplaceAll += DoClickReplaceAll;
             findReplace.ClickClose += DoClickClose;
+            findReplace.OptionMatchCaseChanged += DoOptionMatchCaseChanged;
+            findReplace.OptionMatchWholeWordChanged += DoOptionMatchWholeWordChanged;
+            findReplace.OptionUseRegularExpressionsChanged += DoOptionUseRegularExpressionsChanged;
 
             void DoClickFindNext(object? sender, EventArgs e)
             {
@@ -45,6 +48,21 @@ namespace PropertyGridSample
             void DoClickClose(object? sender, EventArgs e)
             {
                 Application.Log("ClickClose");
+            }
+
+            void DoOptionMatchCaseChanged(object? sender, EventArgs e)
+            {
+                Application.Log("MatchCase Changed");
+            }
+
+            void DoOptionMatchWholeWordChanged(object? sender, EventArgs e)
+            {
+                Application.Log("MatchWholeWord Changed");
+            }
+
+            void DoOptionUseRegularExpressionsChanged(object? sender, EventArgs e)
+            {
+                Application.Log("UseRegularExpressions Changed");
             }
         }
 

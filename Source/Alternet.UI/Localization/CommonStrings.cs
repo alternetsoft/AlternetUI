@@ -194,6 +194,10 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionBackwards { get; set; } = "Backwards";
 
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ToggleToSwitchBetweenFindReplace { get; set; } =
+            "Toggle to switch between find and replace modes";
+
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>

@@ -44,6 +44,16 @@ namespace Alternet.UI
         public static string UrlImageSquareMinus { get; set; } = GetImageUrl("alternet-square-minus");
 
         /// <summary>
+        /// Gets or sets url used to load "Replace" svg image.
+        /// </summary>
+        public static string UrlImageReplace { get; set; } = GetImageUrl("alternet-replace");
+
+        /// <summary>
+        /// Gets or sets url used to load "Replace All" svg image.
+        /// </summary>
+        public static string UrlImageReplaceAll { get; set; } = GetImageUrl("alternet-replace-all");
+
+        /// <summary>
         /// Gets or sets url used to load "File|Save" svg image used in toolbars.
         /// </summary>
         public static string UrlImageFileSave { get; set; } =

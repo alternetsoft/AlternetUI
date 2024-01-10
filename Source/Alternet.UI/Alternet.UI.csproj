@@ -101,6 +101,8 @@
     <None Remove="Resources\Svg\alternet-question.svg" />
     <None Remove="Resources\Svg\alternet-redo.svg" />
     <None Remove="Resources\Svg\alternet-regular-expr.svg" />
+    <None Remove="Resources\Svg\alternet-replace-all.svg" />
+    <None Remove="Resources\Svg\alternet-replace.svg" />
     <None Remove="Resources\Svg\alternet-rotate-right.svg" />
     <None Remove="Resources\Svg\alternet-square-check.svg" />
     <None Remove="Resources\Svg\alternet-square-minus.svg" />
@@ -180,6 +182,8 @@
     <EmbeddedResource Include="Resources\Svg\alternet-question.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-redo.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-regular-expr.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-replace-all.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-replace.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-square-minus.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-square-plus.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-undo.svg" />

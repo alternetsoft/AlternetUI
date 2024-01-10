@@ -59,6 +59,8 @@ namespace Alternet.UI
         private ImageSet? imgFindMatchCase;
         private ImageSet? imgFindMatchFullWord;
         private ImageSet? imgEmpty;
+        private ImageSet? imgReplace;
+        private ImageSet? imgReplaceAll;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSvgImages"/> class.
@@ -106,6 +108,24 @@ namespace Alternet.UI
         {
             get => imgAngleUp ??= Load(KnownSvgUrls.UrlImageAngleUp);
             set => imgAngleUp = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Replace' image.
+        /// </summary>
+        public ImageSet ImgReplace
+        {
+            get => imgReplace ??= Load(KnownSvgUrls.UrlImageReplace);
+            set => imgReplace = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Replace All' image.
+        /// </summary>
+        public ImageSet ImgReplaceAll
+        {
+            get => imgReplaceAll ??= Load(KnownSvgUrls.UrlImageReplaceAll);
+            set => imgReplaceAll = value;
         }
 
         /// <summary>
