@@ -27,22 +27,38 @@ namespace Alternet.UI
             ImageStretch = false;
             Borders ??= new();
 
-            if(defaults is null || defaults.Borders is null)
-            {
-                var border = BorderSettings.Default.Clone();
-                border.UniformRadiusIsPercent = true;
-                border.UniformCornerRadius = 25;
-                Borders.SetObject(border, GenericControlState.Hovered);
-                Borders.SetObject(border, GenericControlState.Pressed);
-                Padding = 4;
-            }
+            var defaultsButton = GetButtonDefaults();
+
+            if(defaultsButton is null)
+                InitBorderAndColors();
             else
-            {
-                Borders.Assign(defaults.Borders);
-                Backgrounds = defaults.Backgrounds;
-                Padding = defaults.Padding;
-            }
+                AssignBorderAndColors(defaultsButton);
         }
+
+        /// <summary>
+        /// Gets or sets default hovered state colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultHoveredColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets default pressed state colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultPressedColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets default hovered state colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultNormalColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets default hovered state colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultDisabledColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets default hovered state colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultFocusedColors { get; set; }
 
         /// <summary>
         /// Gets or sets default template for the shortcut when it is shown in the tooltip.
@@ -230,6 +246,93 @@ namespace Alternet.UI
             }
 
             return s;
+        }
+
+        /// <summary>
+        /// Assigns borders and colors from other <see cref="SpeedButton"/> instance.
+        /// </summary>
+        /// <param name="button"></param>
+        protected virtual void AssignBorderAndColors(SpeedButton button)
+        {
+            Borders ??= new();
+            Borders.Assign(button.Borders);
+            Backgrounds = button.Backgrounds;
+            StateObjects!.Colors = button.StateObjects?.Colors;
+            Padding = button.Padding;
+        }
+
+        /// <summary>
+        /// Initializes borders and colors with default settings.
+        /// </summary>
+        protected virtual void InitBorderAndColors()
+        {
+            var border = BorderSettings.Default.Clone();
+            border.UniformRadiusIsPercent = true;
+            border.UniformCornerRadius = 25;
+            Borders ??= new();
+            Borders.SetObject(border, GenericControlState.Hovered);
+            Borders.SetObject(border, GenericControlState.Pressed);
+            Padding = 4;
+            SetStateColors(GenericControlState.Normal, GetNormalColors());
+            SetStateColors(GenericControlState.Hovered, GetHoveredColors());
+            SetStateColors(GenericControlState.Pressed, GetPressedColors());
+            SetStateColors(GenericControlState.Disabled, GetDisabledColors());
+            SetStateColors(GenericControlState.Focused, GetFocusedColors());
+        }
+
+        /// <summary>
+        /// Gets control colors for the pressed state.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor? GetPressedColors()
+        {
+            return DefaultPressedColors;
+        }
+
+        /// <summary>
+        /// Gets control colors for the hovered state.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor? GetHoveredColors()
+        {
+            return DefaultHoveredColors;
+        }
+
+        /// <summary>
+        /// Gets control colors for the focused state.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor? GetFocusedColors()
+        {
+            return DefaultFocusedColors;
+        }
+
+        /// <summary>
+        /// Gets control colors for the disabled state.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor? GetDisabledColors()
+        {
+            return DefaultDisabledColors;
+        }
+
+        /// <summary>
+        /// Gets control colors for the normal state.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor? GetNormalColors()
+        {
+            return DefaultNormalColors;
+        }
+
+        /// <summary>
+        /// Gets default <see cref="SpeedButton"/> instance from which border and color
+        /// settings are assigned.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SpeedButton? GetButtonDefaults()
+        {
+            return defaults;
         }
 
         private void OnClickAction(object? sender, EventArgs? e)

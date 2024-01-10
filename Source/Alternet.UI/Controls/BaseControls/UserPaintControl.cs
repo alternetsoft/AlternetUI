@@ -216,13 +216,13 @@ namespace Alternet.UI
         /// <param name="fontAndColor">Colors.</param>
         public virtual void SetStateColors(GenericControlState state, IReadOnlyFontAndColor? fontAndColor)
         {
-            if (fontAndColor is null)
+            if (fontAndColor is null && StateObjects?.Colors is null && StateObjects?.Backgrounds is null)
                 return;
             StateObjects ??= new();
             StateObjects.Colors ??= new();
             StateObjects.Backgrounds ??= new();
             StateObjects.Colors.SetObject(fontAndColor, state);
-            StateObjects.Backgrounds.SetObject(fontAndColor.BackgroundColor?.AsBrush, state);
+            StateObjects.Backgrounds.SetObject(fontAndColor?.BackgroundColor?.AsBrush, state);
         }
 
         /// <summary>

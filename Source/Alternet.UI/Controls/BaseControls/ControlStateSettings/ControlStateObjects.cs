@@ -169,13 +169,24 @@ namespace Alternet.UI
         /// Assigns data for all states from the <paramref name="source"/>.
         /// </summary>
         /// <param name="source"></param>
-        public void Assign(ControlStateObjects<T> source)
+        public void Assign(ControlStateObjects<T>? source)
         {
-            Normal = source.Normal;
-            Hovered = source.Hovered;
-            Pressed = source.Pressed;
-            Disabled = source.Disabled;
-            Focused = source.Focused;
+            if(source is null)
+            {
+                Normal = default;
+                Hovered = default;
+                Pressed = default;
+                Disabled = default;
+                Focused = default;
+            }
+            else
+            {
+                Normal = source.Normal;
+                Hovered = source.Hovered;
+                Pressed = source.Pressed;
+                Disabled = source.Disabled;
+                Focused = source.Focused;
+            }
         }
 
         /// <summary>
