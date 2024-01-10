@@ -266,12 +266,17 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void InitBorderAndColors()
         {
-            var border = BorderSettings.Default.Clone();
-            border.UniformRadiusIsPercent = true;
-            border.UniformCornerRadius = 25;
             Borders ??= new();
-            Borders.SetObject(border, GenericControlState.Hovered);
-            Borders.SetObject(border, GenericControlState.Pressed);
+
+            var hoveredBorder = BorderSettings.Default.Clone();
+            hoveredBorder.UniformRadiusIsPercent = true;
+            hoveredBorder.UniformCornerRadius = 25;
+            Borders.SetObject(hoveredBorder, GenericControlState.Hovered);
+
+            var pressedBorder = hoveredBorder.Clone();
+
+            Borders.SetObject(pressedBorder, GenericControlState.Pressed);
+
             Padding = 4;
             SetStateColors(GenericControlState.Normal, GetNormalColors());
             SetStateColors(GenericControlState.Hovered, GetHoveredColors());
