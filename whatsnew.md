@@ -1,5 +1,19 @@
 # 0.9.412 (work in progress)
 
+## 2024 January 11
+
+- Add FindReplaceControl, SpeedTextButton controls.
+- Splitter.SizeDelta and resize speed improvement.
+- Fixed MenuItem.cpp SetDisabledBitmap under Linux.
+- GenericToolBar: DefaultSpeedBtnMargin, DefaultStickyBtnMargin, DefaultTextBtnMargin, AddStickyBtn, ToggleToolSticky.
+- Add GenericToolBarSet control. Impleements multiple toolbars in one control.
+- Fixed Color compare operator.
+- CardPanelHeader improved. Used SpeedButton instead of Label. Hover border is shown when mouse is over. TabClick event
+ is not fired if Tab is already selected.
+- Fixed CardPanelHeader painting Linux/Macos.
+- Splitter improved. Optionally draw background and foreground line in the center. New props: DefaultNormalColors, NormalColors.
+ Better painting under Linux.
+
 ## 2024 January 9
 
 - SpeedButton: Defaults, DisabledImageSet, ImageSet.
