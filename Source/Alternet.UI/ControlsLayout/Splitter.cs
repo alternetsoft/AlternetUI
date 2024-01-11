@@ -17,12 +17,18 @@ namespace Alternet.UI
     /// </summary>
     [DefaultEvent("SplitterMoved")]
     [DefaultProperty("Dock")]
-    public class Splitter : Control
+    public class Splitter : UserPaintControl
     {
         /// <summary>
         /// Gets or sets default splitter width.
         /// </summary>
         public static double DefaultWidth = 5;
+
+        /// <summary>
+        /// Gets or sets default splitter background and line color in the normal state.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultNormalColors;
+            /* = new FontAndColor(Color.Yellow, Color.Red); */
 
         private double minSize = 25;
         private double minExtra = 25;
@@ -61,6 +67,24 @@ namespace Alternet.UI
             Start = 1,
             Move = 2,
             End = 3,
+        }
+
+        /// <summary>
+        /// Gets or sets splitter background and line color in the normal state.
+        /// </summary>
+        public IReadOnlyFontAndColor? NormalColors
+        {
+            get
+            {
+                return StateObjects?.Colors?.Normal;
+            }
+
+            set
+            {
+                StateObjects ??= new();
+                StateObjects.Colors ??= new();
+                StateObjects.Colors.Normal = value;
+            }
         }
 
         /// <inheritdoc/>
@@ -356,6 +380,12 @@ namespace Alternet.UI
                 SplitMove(e.SplitX, e.SplitY);
         }
 
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return new SplitterHandler();
+        }
+
         /// <devdoc>
         ///     Draws the splitter bar at the current location. Will automatically
         ///     cleanup anyplace the splitter was drawn previously.
@@ -611,6 +641,45 @@ namespace Alternet.UI
             }
             else
                 return false;
+        }
+
+        internal class SplitterHandler : NativeControlHandler<Splitter, Native.Panel>
+        {
+            protected override bool NeedsPaint => true;
+
+            public override void OnPaint(Graphics drawingContext)
+            {
+                var colors = Control.NormalColors ?? Splitter.DefaultNormalColors;
+                var backColor = colors?.BackgroundColor ?? Color.LightGray;
+                var foreColor = colors?.ForegroundColor;
+                var rect = Control.DrawClientRectangle;
+
+                if (backColor is not null)
+                    drawingContext.FillRectangle(backColor.AsBrush, rect);
+
+                if (foreColor is null)
+                    return;
+
+                if (!Control.Horizontal)
+                {
+                    var horzLine = DrawingUtils.GetCenterLineHorz(rect);
+                    drawingContext.FillRectangle(foreColor.AsBrush, horzLine);
+                }
+                else
+                {
+                    var vertLine = DrawingUtils.GetCenterLineVert(rect);
+                    drawingContext.FillRectangle(foreColor.AsBrush, vertLine);
+                }
+            }
+
+            internal override Native.Control CreateNativeControl()
+            {
+                var result = new Native.Panel
+                {
+                    AcceptsFocusAll = false,
+                };
+                return result;
+            }
         }
 
         private class SplitData

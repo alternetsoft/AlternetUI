@@ -25,6 +25,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets rectangle of the horizontal center line of the rectangle.
+        /// </summary>
+        /// <param name="rect">Rectangle.</param>
+        /// <returns></returns>
+        public static RectD GetCenterLineHorz(RectD rect)
+        {
+            var size = new SizeD(rect.Width, 1);
+            var point = new PointD(rect.Left, (int)rect.Center.Y);
+            return new RectD(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the vertical center line of the rectangle.
+        /// </summary>
+        /// <param name="rect">Rectangle.</param>
+        /// <returns></returns>
+        public static RectD GetCenterLineVert(RectD rect)
+        {
+            var size = new SizeD(1, rect.Height);
+            var point = new PointD((int)rect.Center.X, rect.Top);
+            return new RectD(point, size);
+        }
+
+        /// <summary>
         /// Gets rectangle of the bottom border edge with the specified width.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
