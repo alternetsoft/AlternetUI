@@ -21,6 +21,11 @@ namespace Alternet.UI
     public class CardPanelHeader : Control, ITextProperty
     {
         /// <summary>
+        /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
+        /// </summary>
+        public static Func<SpeedButton>? CreateButton;
+
+        /// <summary>
         /// Gets or sets default border side width.
         /// </summary>
         /// <remarks>
@@ -41,7 +46,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the tab margin.
         /// </summary>
-        public static Thickness DefaultTabMargin = 3;
+        public static Thickness DefaultTabMargin = 1;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
@@ -64,14 +69,6 @@ namespace Alternet.UI
             Padding = DefaultBorderPadding,
             Margin = DefaultBorderMargin,
         };
-
-        /*private readonly GroupBox groupBox = new()
-        {
-            HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
-            VerticalAlignment = VerticalAlignment.Top,
-            Padding = DefaultBorderPadding,
-            Margin = DefaultBorderMargin,
-        };*/
 
         private bool useTabBold = DefaultUseTabBold;
         private bool useTabForegroundColor = DefaultUseTabForegroundColor;
@@ -121,7 +118,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
         /// </summary>
-        public static bool DefaultTabHasBorder { get; set; } = false;
+        public static bool DefaultTabHasBorder { get; set; } = true;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="UseTabBold"/> property.
@@ -147,12 +144,6 @@ namespace Alternet.UI
         /// Gets or sets default inactive tab colors.
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
-
-        /*/// <summary>
-        /// Gets <see cref="Border"/> control used as border.
-        /// </summary>
-        [Browsable(false)]
-        public Border Border => border;*/
 
         /// <summary>
         /// Gets or sets text of the first tab.
@@ -750,14 +741,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates header button control inherited from <see cref="CustomButton"/>.
+        /// Creates header button control inherited from <see cref="SpeedButton"/>.
         /// </summary>
         /// <remarks>
-        /// By default creates <see cref="CardPanelHeaderButton"/>
+        /// By default creates <see cref="SpeedButton"/>
         /// </remarks>
-        public virtual CustomButton CreateHeaderButton()
+        public virtual SpeedButton CreateHeaderButton()
         {
-            return CustomButton.CreateButton?.Invoke() ?? new CardPanelHeaderButton();
+            return CreateButton?.Invoke() ?? Fn();
+
+            static SpeedButton Fn()
+            {
+                var result = new SpeedButton();
+                result.TextVisible = true;
+                return result;
+            }
         }
 
         /// <summary>
@@ -856,9 +854,14 @@ namespace Alternet.UI
             if (colors is null)
                 return;
             if (UseTabForegroundColor && canForeground)
+            {
                 item.HeaderButton.ForegroundColor = colors.ForegroundColor;
+            }
+
             if (UseTabBackgroundColor && canBackground)
+            {
                 item.HeaderButton.BackgroundColor = colors.BackgroundColor;
+            }
         }
 
         private void UpdateTabs()
@@ -889,8 +892,10 @@ namespace Alternet.UI
             {
                 if(control == tab.HeaderButton || control.HasIndirectParent(tab.HeaderButton))
                 {
+                    var oldSelectedTab = SelectedTab;
                     SelectedTab = tab;
-                    TabClick?.Invoke(this, EventArgs.Empty);
+                    if(oldSelectedTab != SelectedTab)
+                        TabClick?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }

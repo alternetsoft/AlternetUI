@@ -14,12 +14,14 @@ namespace PropertyGridSample
 {
     internal partial class ObjectInitializers
     {
+        private const int defaultListHeight = 250;
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
             "Suspendisse tincidunt orci vitae arcu congue commodo. " +
             "Proin fermentum rhoncus dictum.\n";
 
         private static ImageLists? imageLists;
+        private static SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
 
         public static ImageLists LoadImageLists()
         {
@@ -80,10 +82,8 @@ namespace PropertyGridSample
             Actions.Add(typeof(PictureBox), InitPictureBox);
             Actions.Add(typeof(GenericToolBar), InitGenericToolBar);
             Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
-
-            const int defaultListHeight = 250;
-            SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
-
+            Actions.Add(typeof(CardPanel), InitCardPanel);
+            Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);
 
             Actions.Add(typeof(Slider), (c) =>
             {
@@ -127,28 +127,6 @@ namespace PropertyGridSample
             {
                 (c as StatusBar)!.Panels.Add(new("text1"));
                 (c as StatusBar)!.Panels.Add(new("text2"));
-            });
-
-            Actions.Add(typeof(CardPanel), (c) =>
-            {
-                var control = (c as CardPanel)!;
-                control.SuggestedSize = defaultListSize;
-                var panel = CreatePanelWithButtons("Card 1");
-                panel.AddLabel("Use SelectedCardIndex").Margin = 5;
-                panel.AddLabel("to change active card").Margin = 5;
-                control.Add("card 1", panel);
-                control.Add("card 2", CreatePanelWithButtons("Card 2"));
-                control.SelectCard(0);
-            });
-
-            Actions.Add(typeof(CardPanelHeader), (c) =>
-            {
-                var control = (c as CardPanelHeader)!;
-                control.SuggestedSize = defaultListSize;
-                control.UseTabBackgroundColor = true;
-                control.Add("tab 1");
-                control.Add("tab 2");
-                control.SelectFirstTab();
             });
 
             Actions.Add(typeof(RichTextBox), (c) =>
