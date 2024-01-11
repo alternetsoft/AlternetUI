@@ -285,7 +285,7 @@ namespace AuiManagerSample
             toolbar4.EnableTool(graphToolId, newEnabled);
         }
 
-        private void AddDefaultItems(ListControl control)
+        internal void AddDefaultItems(ListControl control)
         {
             control.Add("One");
             control.Add("Two");
