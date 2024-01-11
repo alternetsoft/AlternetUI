@@ -69,9 +69,6 @@ namespace Alternet.UI
             {
                 var platform = PlatformLinux;
 
-                platform.AllowButtonHasBorder = false;
-                platform.AllowButtonBackground = false;
-
                 var minMargin = new Thickness(3);
                 platform.Controls.RadioButton.MinMargin = minMargin;
                 platform.Controls.Button.MinMargin = minMargin;
@@ -98,7 +95,6 @@ namespace Alternet.UI
                 var platform = PlatformWindows;
 
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
-                platform.AllowButtonHasBorder = false;
                 platform.Controls.Button.MinMargin = 3;
             }
 
@@ -107,10 +103,6 @@ namespace Alternet.UI
                 var platform = PlatformMacOs;
 
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
-
-                platform.AllowButtonHasBorder = false;
-                platform.AllowButtonBackground = false;
-                platform.AllowButtonForeground = false;
 
                 platform.Controls.MultilineTextBox.HasBorderOnBlack = false;
                 platform.Controls.ListBox.HasBorderOnBlack = false;

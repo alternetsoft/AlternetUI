@@ -6,13 +6,25 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements multiple <see cref="GenericToolBar"/> controls.
+    /// </summary>
     public class GenericToolBarSet : VerticalStackPanel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericToolBarSet"/> class.
+        /// </summary>
         public GenericToolBarSet()
         {
             ToolBarCount = 1;
         }
 
+        /// <summary>
+        /// Gets or sets the number of toolbars.
+        /// </summary>
+        /// <remarks>
+        /// Minimal and default toolbar count is 1.
+        /// </remarks>
         public virtual int ToolBarCount
         {
             get
@@ -29,6 +41,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets toolbar with the specified index.
+        /// </summary>
+        /// <param name="index">Toolbar index.</param>
+        /// <returns></returns>
         public virtual GenericToolBar GetToolBar(int index)
         {
             if (ToolBarCount <= index)
@@ -36,6 +53,14 @@ namespace Alternet.UI
             return (GenericToolBar)Children[index];
         }
 
+        /// <summary>
+        /// Creates toolbar.
+        /// </summary>
+        /// <remarks>
+        /// Used when <see cref="ToolBarCount"/> property is changed
+        /// and new toolbars need to be created.
+        /// </remarks>
+        /// <returns></returns>
         protected virtual GenericToolBar CreateToolBar()
         {
             GenericToolBar result = new();

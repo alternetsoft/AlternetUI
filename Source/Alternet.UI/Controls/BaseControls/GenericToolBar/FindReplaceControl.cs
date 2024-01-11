@@ -23,6 +23,9 @@ namespace Alternet.UI
             Margin = (2, 0, 2, 0),
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
+        /// </summary>
         public FindReplaceControl()
         {
             ToolBarCount = 3;
@@ -91,13 +94,13 @@ namespace Alternet.UI
                 CommonStrings.Default.ButtonReplace,
                 FindToolBar.GetNormalSvgImages().ImgReplace,
                 FindToolBar.GetDisabledSvgImages().ImgReplace);
-            ReplaceToolBar.SetToolShortcut(IdReplace, KnownKeys.FindReplaceControlKeys.Replace); 
+            ReplaceToolBar.SetToolShortcut(IdReplace, KnownKeys.FindReplaceControlKeys.Replace);
 
             IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonReplaceAll,
                 FindToolBar.GetNormalSvgImages().ImgReplaceAll,
                 FindToolBar.GetDisabledSvgImages().ImgReplaceAll);
-            ReplaceToolBar.SetToolShortcut(IdReplaceAll, KnownKeys.FindReplaceControlKeys.ReplaceAll); 
+            ReplaceToolBar.SetToolShortcut(IdReplaceAll, KnownKeys.FindReplaceControlKeys.ReplaceAll);
 
             ReplaceToolBar.Visible = false;
             ReplaceToolBar.Parent = this;
@@ -111,22 +114,49 @@ namespace Alternet.UI
             ReplaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
         }
 
-        public EventHandler? ClickFindNext;
+        /// <summary>
+        /// Occurs when 'Find Next' button is clicked.
+        /// </summary>
+        public event EventHandler? ClickFindNext;
 
-        public EventHandler? ClickFindPrevious;
+        /// <summary>
+        /// Occurs when 'Find Previous' button is clicked.
+        /// </summary>
+        public event EventHandler? ClickFindPrevious;
 
-        public EventHandler? ClickReplace;
+        /// <summary>
+        /// Occurs when 'Replace' button is clicked.
+        /// </summary>
+        public event EventHandler? ClickReplace;
 
-        public EventHandler? ClickReplaceAll;
+        /// <summary>
+        /// Occurs when 'Replace All' button is clicked.
+        /// </summary>
+        public event EventHandler? ClickReplaceAll;
 
-        public EventHandler? ClickClose;
+        /// <summary>
+        /// Occurs when 'Close' button is clicked.
+        /// </summary>
+        public event EventHandler? ClickClose;
 
-        public EventHandler? OptionMatchCaseChanged;
+        /// <summary>
+        /// Occurs when option 'Match Case' is changed.
+        /// </summary>
+        public event EventHandler? OptionMatchCaseChanged;
 
-        public EventHandler? OptionMatchWholeWordChanged;
+        /// <summary>
+        /// Occurs when option 'Match Whole Word' is changed.
+        /// </summary>
+        public event EventHandler? OptionMatchWholeWordChanged;
 
-        public EventHandler? OptionUseRegularExpressionsChanged;
+        /// <summary>
+        /// Occurs when option 'Use Regular Expressions' is changed.
+        /// </summary>
+        public event EventHandler? OptionUseRegularExpressionsChanged;
 
+        /// <summary>
+        /// Gets or sets 'Match Case' option.
+        /// </summary>
         public bool OptionMatchCase
         {
             get
@@ -143,6 +173,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets 'Match Whole Word' option.
+        /// </summary>
         public bool OptionMatchWholeWord
         {
             get
@@ -159,6 +192,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets 'Use Regular Expressions' option.
+        /// </summary>
         public bool OptionUseRegularExpressions
         {
             get
@@ -175,54 +211,106 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets id of the 'Match Case' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdMatchCase { get; }
 
+        /// <summary>
+        /// Gets id of the 'Match Whole Word' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdMatchWholeWord { get; }
 
+        /// <summary>
+        /// Gets id of the 'Use Regular Expressions' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdUseRegularExpressions { get; }
 
+        /// <summary>
+        /// Gets id of the 'Toggle Replace Options' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdToggleReplaceOptions { get; }
 
+        /// <summary>
+        /// Gets id of the 'Find' editor.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdFindEdit { get; }
 
+        /// <summary>
+        /// Gets id of the 'Replace' editor.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdReplaceEdit { get; }
 
+        /// <summary>
+        /// Gets id of the 'Find Next' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdFindNext { get; }
 
+        /// <summary>
+        /// Gets id of the 'Find Previous' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdFindPrevious { get; }
 
+        /// <summary>
+        /// Gets id of the 'Close' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdFindClose { get; }
 
+        /// <summary>
+        /// Gets id of the 'Replace' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdReplace { get; }
 
+        /// <summary>
+        /// Gets id of the 'Replace All' button.
+        /// </summary>
         [Browsable(false)]
         public ObjectUniqueId IdReplaceAll { get; }
 
+        /// <summary>
+        /// Gets <see cref="TextBox"/> which allows to specify text to find.
+        /// </summary>
         [Browsable(false)]
         public TextBox FindEdit => findEdit;
 
+        /// <summary>
+        /// Gets <see cref="TextBox"/> which allows to specify text to replace.
+        /// </summary>
         [Browsable(false)]
         public TextBox ReplaceEdit => replaceEdit;
 
+        /// <summary>
+        /// Gets <see cref="GenericToolBar"/> with find buttons.
+        /// </summary>
         [Browsable(false)]
         public GenericToolBar FindToolBar => GetToolBar(0);
 
+        /// <summary>
+        /// Gets <see cref="GenericToolBar"/> with replace buttons.
+        /// </summary>
         [Browsable(false)]
         public GenericToolBar ReplaceToolBar => GetToolBar(1);
 
+        /// <summary>
+        /// Gets <see cref="GenericToolBar"/> with option buttons.
+        /// </summary>
         [Browsable(false)]
         public GenericToolBar OptionsToolBar => GetToolBar(2);
 
+        /// <summary>
+        /// Gets or sets width of <see cref="FindEdit"/> and <see cref="ReplaceEdit"/>
+        /// controls.
+        /// </summary>
         public double TextBoxWidth
         {
             get
@@ -239,6 +327,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether <see cref="ReplaceToolBar"/> is visible.
+        /// </summary>
         public bool ReplaceVisible
         {
             get
