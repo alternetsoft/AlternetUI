@@ -377,7 +377,7 @@ namespace Alternet.Drawing
         /// are equal; otherwise, <c>false</c>.</returns>
         public static bool operator ==(Color? left, Color? right)
         {
-            if (left is null && left is null)
+            if (left is null && right is null)
                 return true;
 
             if (left is null || right is null)
