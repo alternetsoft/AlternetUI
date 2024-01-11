@@ -256,6 +256,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="Color"/> and <see cref="RectD"/> values.
+        /// </summary>
+        /// <param name="title">Log label.</param>
+        /// <param name="value">Color value.</param>
+        /// <param name="rect">Rectangle value.</param>
+        public static void LogColorAndRect(Color? value, RectD rect, string? title = null)
+        {
+            if (value is not null)
+                value = ColorUtils.FindKnownColor(value);
+            title ??= "ColorAndRect";
+            Application.Log($"{title} = {value?.ToDebugString()}, {rect}");
+        }
+
+        /// <summary>
         /// Opens log file <see cref="Application.LogFilePath"/> in the default editor
         /// of the operating system.
         /// </summary>
