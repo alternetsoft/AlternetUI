@@ -38,7 +38,7 @@ namespace AuiManagerSample
         private readonly int pencilToolId;
         private readonly int graphToolId;
 
-        private readonly PopupListBox popupListBox = new();
+        /*private readonly PopupListBox popupListBox = new();*/
 
         static MainWindow()
         {
@@ -271,7 +271,7 @@ namespace AuiManagerSample
             toolbar4.OverflowClick += Toolbar4_OverflowClick;
             toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
-            popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
+            /*popupListBox.VisibleChanged += PopupListBox_VisibleChanged;*/
 
             disableImagesMenuItem.Click += DisableImagesMenuItem_Click;
         }
@@ -301,7 +301,7 @@ namespace AuiManagerSample
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
         {
-            if (popupListBox.MainControl.Items.Count == 0)
+            /*if (popupListBox.MainControl.Items.Count == 0)
             {
                 popupListBox.MainControl.SuggestedSize = new(150, 300);
                 AddDefaultItems(popupListBox.MainControl);
@@ -311,15 +311,15 @@ namespace AuiManagerSample
             RectD toolRect = toolbar4.GetToolRect(toolbar4.EventToolId);
             var pos = toolbar4.ClientToScreen(toolRect.Location);
             var sz = (0, toolRect.Height);
-            popupListBox.ShowPopup(pos, sz);
+            popupListBox.ShowPopup(pos, sz);*/
         }
 
         private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
         {
-            if (popupListBox.Visible)
+            /*if (popupListBox.Visible)
                 return;
             var resultItem = popupListBox.ResultItem ?? "<null>";
-            Application.Log($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
+            Application.Log($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");*/
         }
 
         private void Toolbar4_ToolCommand(object? sender, EventArgs e)
