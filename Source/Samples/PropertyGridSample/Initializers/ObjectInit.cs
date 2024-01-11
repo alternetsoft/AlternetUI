@@ -12,7 +12,7 @@ using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {
-    internal partial class ObjectInitializers
+    internal partial class ObjectInit
     {
         private const int defaultListHeight = 250;
         private const string LoremIpsum =
@@ -69,7 +69,7 @@ namespace PropertyGridSample
             };
         }
 
-        static ObjectInitializers()
+        static ObjectInit()
         {
             Actions.Add(typeof(ContextMenu), InitContextMenu);
             Actions.Add(typeof(SplittedPanel), InitSplittedPanel);

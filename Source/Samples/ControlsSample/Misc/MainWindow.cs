@@ -112,7 +112,7 @@ namespace ControlsSample
             Application.Log($"Size changed: {Size}, {this.State}");
         }
 
-        Control CreateCustomPage(NameValue<Func<Control>>[] pages)
+        Control CreateCustomPage(NameValue<Func<Control>>?[] pages)
         {
             GenericTabControl result = new()
             {
@@ -127,12 +127,19 @@ namespace ControlsSample
 
         Control CreateListControlsPage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<Control>>? popupNameValue;
+
+            if (!Application.IsWindowsOS)
+                popupNameValue = null;
+            else
+                popupNameValue = new("Popup", () => new ListControlsPopups());
+
+            NameValue<Func<Control>>?[] pages =
             [
                 new("List", () => new ListBoxPage()),
                 new("Checks", () => new CheckListBoxPage()),
                 new("Combo", () => new ComboBoxPage()),
-                new("Popup", () => new ListControlsPopups()),
+                popupNameValue,
             ];
 
             return CreateCustomPage(pages);

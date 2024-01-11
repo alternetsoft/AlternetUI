@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
-    internal partial class ObjectInitializers
+    internal partial class ObjectInit
     {
         public static void InitSpeedButton(object control)
         {

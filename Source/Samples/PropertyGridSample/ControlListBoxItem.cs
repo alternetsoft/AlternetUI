@@ -71,7 +71,7 @@ namespace PropertyGridSample
         public static object CreateInstance(Type type)
         {
             var instance = Activator.CreateInstance(type);
-            if (!ObjectInitializers.Actions.TryGetValue(
+            if (!ObjectInit.Actions.TryGetValue(
                 type,
                 out Action<Object>? action))
                 return instance!;

@@ -119,10 +119,13 @@ namespace Alternet.UI
         /// Adds new pages.
         /// </summary>
         /// <param name="pages">Collection of pages.</param>
-        public void AddRange(IEnumerable<NameValue<Func<Control>>> pages)
+        public void AddRange(IEnumerable<NameValue<Func<Control>>?> pages)
         {
             foreach (var page in pages)
-                Add(page);
+            {
+                if(page is not null)
+                    Add(page);
+            }
         }
 
         /// <summary>

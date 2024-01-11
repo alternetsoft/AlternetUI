@@ -373,7 +373,7 @@ namespace PropertyGridSample
         internal static Collection<T> NewCollection<T>()
         {
             var result = new Collection<T>();
-            ObjectInitializers.AddTenItems(result);
+            ObjectInit.AddTenItems(result);
 
             return result;
         }
