@@ -179,7 +179,8 @@ namespace CustomControlsSample
 
         private void OpenPopup()
         {
-            Popup.ShowPopup(this.Control);
+            if(Application.IsWindowsOS)
+                Popup.ShowPopup(this.Control);
         }
     }
 }
