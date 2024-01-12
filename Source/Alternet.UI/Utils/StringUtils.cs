@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -57,6 +58,28 @@ namespace Alternet.UI
             "\n\r",
             "\n",
         ];
+
+        /// <summary>
+        /// Gets whether string <paramref name="s"/> starts with one of the strings
+        /// specified in <paramref name="items"/> collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the item in the collection.</typeparam>
+        /// <param name="s">String to test.</param>
+        /// <param name="items">Collection.</param>
+        /// <returns></returns>
+        public static bool StartsWith<T>(string s, IEnumerable<T> items)
+        {
+            foreach(var item in items)
+            {
+                var value = item?.ToString();
+                if (value is null)
+                    continue;
+                if (s.StartsWith(value))
+                    return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using

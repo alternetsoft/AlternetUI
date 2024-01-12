@@ -66,6 +66,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs all fonts with fixed widths (<see cref="Font.IsFixedWidth"/> property is true).
+        /// </summary>
+        public static void LogFixedWidthFonts()
+        {
+            Application.LogBeginSection();
+            var items = FontFamily.FamiliesNamesAscending;
+            List<string> logged = [];
+            foreach(var item in items)
+            {
+                var font = new Font(item, 10);
+
+                if (StringUtils.StartsWith(font.Name, logged))
+                    continue;
+
+                if(font.IsFixedWidth && font.Style == FontStyle.Regular && !font.GdiVerticalFont)
+                {
+                    Application.Log(font.ToInfoString());
+                    logged.Add(font.Name);
+                }
+            }
+
+            Application.LogEndSection();
+        }
+
+        /// <summary>
         /// Logs <see cref="SystemSettings"/>.
         /// </summary>
         public static void Log()

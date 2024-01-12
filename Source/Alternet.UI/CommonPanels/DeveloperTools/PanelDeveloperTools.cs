@@ -198,6 +198,7 @@ namespace Alternet.UI
             AddAction("Log system settings", SystemSettings.Log);
             AddAction("Log font families", LogUtils.LogFontFamilies);
             AddAction("Log system fonts", SystemSettings.LogSystemFonts);
+            AddAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
             AddAction("Log display info", Display.Log);
             AddAction("Log control info", LogControlInfo);
             AddAction("Log useful defines", LogUsefulDefines);
