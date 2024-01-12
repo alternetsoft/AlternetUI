@@ -78,8 +78,8 @@ namespace PropertyGridSample
             items.Add("Height");
             items.Add("Left");
             items.Add("Top");
-            items.Add("SuggestedWidth");
-            items.Add("SuggestedHeight");
+            /*items.Add("SuggestedWidth");
+            items.Add("SuggestedHeight");*/
         }
 
         public PropertyGrid PropGrid => panel.PropGrid;

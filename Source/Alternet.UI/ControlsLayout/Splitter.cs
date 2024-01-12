@@ -25,10 +25,14 @@ namespace Alternet.UI
         public static double DefaultWidth = 5;
 
         /// <summary>
-        /// Gets or sets default splitter background and line color in the normal state.
+        /// Gets or sets default splitter background and line color for the light color scheme.
         /// </summary>
-        public static IReadOnlyFontAndColor? DefaultNormalColors;
-            /* = new FontAndColor(Color.Yellow, Color.Red); */
+        public static IReadOnlyFontAndColor? DefaultLightColors;
+
+        /// <summary>
+        /// Gets or sets default splitter background and line color for the dark color theme.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultDarkColors;
 
         private double minSize = 25;
         private double minExtra = 25;
@@ -70,8 +74,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets splitter background and line color in the normal state.
+        /// Gets or sets splitter background and line color when control state
+        /// is <see cref="GenericControlState.Normal"/>.
         /// </summary>
+        /// <remarks>
+        /// If this property is not assigned, <see cref="DefaultDarkColors"/>
+        /// and <see cref="DefaultLightColors"/> are used in order to get colors.
+        /// </remarks>
         public IReadOnlyFontAndColor? NormalColors
         {
             get
@@ -649,8 +658,20 @@ namespace Alternet.UI
 
             public override void OnPaint(Graphics drawingContext)
             {
-                var colors = Control.NormalColors ?? Splitter.DefaultNormalColors;
-                var backColor = colors?.BackgroundColor ?? Color.LightGray;
+                var colors = Control.NormalColors;
+                Color defaultColor;
+                if (Control.IsDarkBackground)
+                {
+                    colors ??= Splitter.DefaultDarkColors;
+                    defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
+                }
+                else
+                {
+                    colors ??= Splitter.DefaultLightColors;
+                    defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
+                }
+
+                var backColor = colors?.BackgroundColor ?? defaultColor;
                 var foreColor = colors?.ForegroundColor;
                 var rect = Control.DrawClientRectangle;
 
