@@ -78,8 +78,8 @@ namespace PropertyGridSample
             items.Add("Height");
             items.Add("Left");
             items.Add("Top");
-            items.Add("SuggestedWidth");
-            items.Add("SuggestedHeight");
+            /*items.Add("SuggestedWidth");
+            items.Add("SuggestedHeight");*/
         }
 
         public PropertyGrid PropGrid => panel.PropGrid;
@@ -158,19 +158,16 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
-
-            panel.ActionsControl.GotFocus += ActionsControl_GotFocus;
-            panel.ActionsControl.DisableRecreate();
         }
 
-        private void ActionsControl_GotFocus(object? sender, EventArgs e)
+        /*private void UpdateActions()
         {
             panel.RemoveActions();
             if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
                 return;
             var type = item.InstanceType;
             panel.AddActions(type);
-        }
+        }*/
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
@@ -270,7 +267,6 @@ namespace PropertyGridSample
                         if (control.Parent == null)
                         {
                             control.VerticalAlignment = VerticalAlignment.Top;
-                            // control.MinWidth = 100;
                             control.Parent = controlPanel;
                         }
 
@@ -286,14 +282,14 @@ namespace PropertyGridSample
                 {
                     SetBackground(SystemColors.Window);
                     InitDefaultPropertyGrid();
-                    //panel.RemoveActions();
+                    panel.RemoveActions();
                 }
                 else
                 {
                     SetBackground(SystemColors.Control);
                     PropGrid.SetProps(item.PropInstance, true);
-                    //panel.RemoveActions();
-                    //panel.AddActions(type);
+                    panel.RemoveActions();
+                    panel.AddActions(type);
                 }
             }
 

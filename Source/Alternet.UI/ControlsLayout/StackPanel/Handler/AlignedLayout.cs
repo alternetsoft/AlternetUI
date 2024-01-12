@@ -32,7 +32,9 @@ namespace Alternet.UI
             switch (alignment)
             {
                 case HorizontalAlignment.Left:
-                    return new AlignedPosition(layoutBounds.Left + childControl.Margin.Left, childPreferredSize.Width);
+                    return new AlignedPosition(
+                        layoutBounds.Left + childControl.Margin.Left,
+                        childPreferredSize.Width);
                 case HorizontalAlignment.Center:
                     return new AlignedPosition(
                         layoutBounds.Left +
@@ -62,7 +64,9 @@ namespace Alternet.UI
             switch (alignment)
             {
                 case VerticalAlignment.Top:
-                    return new AlignedPosition(layoutBounds.Top + control.Margin.Top, childPreferredSize.Height);
+                    return new AlignedPosition(
+                        layoutBounds.Top + control.Margin.Top,
+                        childPreferredSize.Height);
                 case VerticalAlignment.Center:
                     return new AlignedPosition(
                         layoutBounds.Top +

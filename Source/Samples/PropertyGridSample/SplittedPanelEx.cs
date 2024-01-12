@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -19,11 +20,14 @@ namespace Alternet.UI
 
         public SplittedPanelEx()
         {
+            rightPanelHeader.Margin = (0, 5, 0, 0);
+            rightPanelHeader.BorderWidth = 0;
+            rightPanelHeader.Parent = RightPanel;
+            rightPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             TopVisible = false;
-            LeftPanel.Width = 200;
-            RightPanel.Width = 350;
-            BottomPanel.Height = 150;
         }
+
+        public override Thickness DefaultPanelSize => (200, 5, 350, 150);
 
         /// <summary>
         /// Gets or sets whether <see cref="LeftTreeView"/> should look like <see cref="ListBox"/>.
@@ -45,9 +49,14 @@ namespace Alternet.UI
                 {
                     actionsControl = new()
                     {
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        Visible = false,
                         HasBorder = false,
+                        Parent = RightPanel,
                     };
                     actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
+                    rightPanelHeader.Add(CommonStrings.Default.NotebookTabTitleActions, actionsControl);
+                    rightPanelHeader.SelectFirstTab();
                 }
 
                 return actionsControl;
@@ -67,8 +76,13 @@ namespace Alternet.UI
                     propertyGrid = new()
                     {
                         HasBorder = false,
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        Visible = false,
                         Parent = RightPanel,
                     };
+
+                    rightPanelHeader.Add(CommonStrings.Default.WindowTitleProperties, propertyGrid);
+                    rightPanelHeader.SelectFirstTab();
                 }
 
                 return propertyGrid;
@@ -204,5 +218,7 @@ namespace Alternet.UI
                 item.Action();
             });
         }
+
+        protected override Control CreateRightPanel() => new VerticalStackPanel();
     }
 }

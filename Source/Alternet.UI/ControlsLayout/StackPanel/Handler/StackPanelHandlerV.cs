@@ -62,17 +62,38 @@ namespace Alternet.UI
             public override void Layout()
             {
                 var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
+                var items = Handler.AllChildrenIncludedInLayout;
+                var stretchedItem = items.LastOrDefault();
+                if(stretchedItem is not null)
+                {
+                    if (stretchedItem.VerticalAlignment != VerticalAlignment.Stretch)
+                        stretchedItem = null;
+                }
 
                 double y = childrenLayoutBounds.Top;
-                foreach (var control in Handler.AllChildrenIncludedInLayout)
+                foreach (var control in items)
+                {
+                    if (control == stretchedItem)
+                        continue;
+                    DoAlignControl(control);
+                }
+
+                if(stretchedItem is not null)
+                {
+                    DoAlignControl(stretchedItem, true);
+                }
+
+                void DoAlignControl(Control control, bool stretch = false)
                 {
                     var margin = control.Margin;
                     var verticalMargin = margin.Vertical;
 
-                    var preferredSize = control.GetPreferredSizeLimited(
-                        new SizeD(
+                    var freeSize = new SizeD(
                             childrenLayoutBounds.Width,
-                            childrenLayoutBounds.Height - y - verticalMargin));
+                            childrenLayoutBounds.Height - y - verticalMargin);
+                    var preferredSize = control.GetPreferredSizeLimited(freeSize);
+                    if (stretch)
+                        preferredSize.Height = Math.Max(preferredSize.Height, freeSize.Height);
                     var alignedPosition =
                         AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
                     control.Handler.Bounds =
