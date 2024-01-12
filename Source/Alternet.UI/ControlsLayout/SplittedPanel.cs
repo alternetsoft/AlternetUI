@@ -12,34 +12,11 @@ namespace Alternet.UI
     /// </summary>
     public class SplittedPanel : LayoutPanel
     {
-        private readonly Panel rightPanel = new()
-        {
-            Dock = DockStyle.Right,
-            Width = 50,
-        };
-
-        private readonly Panel leftPanel = new()
-        {
-            Dock = DockStyle.Left,
-            Width = 50,
-        };
-
-        private readonly Panel topPanel = new()
-        {
-            Dock = DockStyle.Top,
-            Height = 30,
-        };
-
-        private readonly Panel bottomPanel = new()
-        {
-            Dock = DockStyle.Bottom,
-            Height = 30,
-        };
-
-        private readonly Panel fillPanel = new()
-        {
-            Dock = DockStyle.Fill,
-        };
+        private readonly Control rightPanel;
+        private readonly Control leftPanel;
+        private readonly Control topPanel;
+        private readonly Control bottomPanel;
+        private readonly Control fillPanel;
 
         private readonly Splitter leftSplitter = new()
         {
@@ -66,6 +43,27 @@ namespace Alternet.UI
         /// </summary>
         public SplittedPanel()
         {
+            var panelSize = DefaultPanelSize;
+
+            rightPanel = CreateRightPanel();
+            rightPanel.Dock = DockStyle.Right;
+            rightPanel.Width = panelSize.Right;
+
+            leftPanel = CreateLeftPanel();
+            leftPanel.Dock = DockStyle.Left;
+            leftPanel.Width = panelSize.Left;
+
+            topPanel = CreateTopPanel();
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = panelSize.Top;
+
+            bottomPanel = CreateBottomPanel();
+            bottomPanel.Dock = DockStyle.Bottom;
+            bottomPanel.Height = panelSize.Bottom;
+
+            fillPanel = CreateCenterPanel();
+            fillPanel.Dock = DockStyle.Fill;
+
             SuspendLayout();
             FillPanel.Parent = this;
             RightSplitter.Parent = this;
@@ -83,31 +81,31 @@ namespace Alternet.UI
         /// Gets right sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Panel RightPanel => rightPanel;
+        public Control RightPanel => rightPanel;
 
         /// <summary>
         /// Gets left sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Panel LeftPanel => leftPanel;
+        public Control LeftPanel => leftPanel;
 
         /// <summary>
         /// Gets top sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Panel TopPanel => topPanel;
+        public Control TopPanel => topPanel;
 
         /// <summary>
         /// Gets bottom sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Panel BottomPanel => bottomPanel;
+        public Control BottomPanel => bottomPanel;
 
         /// <summary>
         /// Gets center sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Panel FillPanel => fillPanel;
+        public Control FillPanel => fillPanel;
 
         /// <summary>
         /// Gets left splitter.
@@ -136,7 +134,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether top panel is visible.
         /// </summary>
-        public bool TopVisible
+        public virtual bool TopVisible
         {
             get
             {
@@ -153,7 +151,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether bottom panel is visible.
         /// </summary>
-        public bool BottomVisible
+        public virtual bool BottomVisible
         {
             get
             {
@@ -170,7 +168,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether right panel is visible.
         /// </summary>
-        public bool RightVisible
+        public virtual bool RightVisible
         {
             get
             {
@@ -187,7 +185,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether left panel is visible.
         /// </summary>
-        public bool LeftVisible
+        public virtual bool LeftVisible
         {
             get
             {
@@ -200,5 +198,49 @@ namespace Alternet.UI
                 LeftSplitter.Visible = value;
             }
         }
+
+        /// <summary>
+        /// Gets default size of the left, top, right and bottom panels.
+        /// </summary>
+        public virtual Thickness DefaultPanelSize => (50, 30, 50, 30);
+
+        /// <summary>
+        /// Creates right panel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateRightPanel() => CreateAnyPanel();
+
+        /// <summary>
+        /// Creates left panel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateLeftPanel() => CreateAnyPanel();
+
+        /// <summary>
+        /// Creates top panel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateTopPanel() => CreateAnyPanel();
+
+        /// <summary>
+        /// Creates bottom panel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateBottomPanel() => CreateAnyPanel();
+
+        /// <summary>
+        /// Creates center panel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateCenterPanel() => CreateAnyPanel();
+
+        /// <summary>
+        /// Creates panel.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// By default used in all create panel methods.
+        /// </remarks>
+        protected virtual Control CreateAnyPanel() => new Panel();
     }
 }
