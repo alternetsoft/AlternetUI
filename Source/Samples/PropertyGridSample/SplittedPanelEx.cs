@@ -219,6 +219,11 @@ namespace Alternet.UI
             });
         }
 
-        protected override Control CreateRightPanel() => new VerticalStackPanel();
+        protected override Control CreateRightPanel()
+        {
+            var result = new VerticalStackPanel();
+            result.AllowStretch = true;
+            return result;
+        }
     }
 }

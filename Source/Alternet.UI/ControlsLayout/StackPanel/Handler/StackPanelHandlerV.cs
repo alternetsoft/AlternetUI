@@ -33,7 +33,7 @@ namespace Alternet.UI
                     height + stackPanelPadding.Vertical);
             }
 
-            public void LayoutOld()
+            /*public void LayoutOld()
             {
                 var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
 
@@ -57,17 +57,22 @@ namespace Alternet.UI
                             preferredSize.Height);
                     y += preferredSize.Height + verticalMargin;
                 }
-            }
+            }*/
 
             public override void Layout()
             {
                 var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
                 var items = Handler.AllChildrenIncludedInLayout;
-                var stretchedItem = items.LastOrDefault();
-                if(stretchedItem is not null)
+                Control? stretchedItem = null;
+
+                if (AllowStretch)
                 {
-                    if (stretchedItem.VerticalAlignment != VerticalAlignment.Stretch)
-                        stretchedItem = null;
+                    stretchedItem = items.LastOrDefault();
+                    if (stretchedItem is not null)
+                    {
+                        if (stretchedItem.VerticalAlignment != VerticalAlignment.Stretch)
+                            stretchedItem = null;
+                    }
                 }
 
                 double y = childrenLayoutBounds.Top;

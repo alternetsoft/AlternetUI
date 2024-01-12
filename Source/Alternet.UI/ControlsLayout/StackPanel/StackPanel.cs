@@ -10,11 +10,31 @@ namespace Alternet.UI
     public class StackPanel : Control
     {
         private StackPanelOrientation orientation;
+        private bool allowStretch;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Orientation"/> property changes.
         /// </summary>
         public event EventHandler? OrientationChanged;
+
+        /// <summary>
+        /// Gets or sets whether last child control can be stretched
+        /// if it's alignment property is set to Stretch.
+        /// </summary>
+        /// <remarks>
+        /// Currently this is implemented only for vertically aligned <see cref="StackPanel"/>.
+        /// </remarks>
+        public virtual bool AllowStretch
+        {
+            get => allowStretch;
+            set
+            {
+                if (allowStretch == value)
+                    return;
+                allowStretch = value;
+                PerformLayout(false);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value that indicates the dimension by which child

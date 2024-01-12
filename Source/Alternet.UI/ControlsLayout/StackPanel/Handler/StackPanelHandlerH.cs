@@ -34,7 +34,7 @@ namespace Alternet.UI
                     isNan ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
             }
 
-            public void LayoutOld()
+            /*public void LayoutOld()
             {
                 var controls = Handler.AllChildrenIncludedInLayout;
                 var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
@@ -59,7 +59,7 @@ namespace Alternet.UI
                             alignedPosition.Size);
                     x += preferredSize.Width + horizontalMargin;
                 }
-            }
+            }*/
 
             public override void Layout()
             {

@@ -16,6 +16,7 @@ namespace PropertyGridSample
             if (control is not FindReplaceControl findReplace)
                 return;
 
+            findReplace.ReplaceVisible = true;
             findReplace.ClickFindNext += DoClickFindNext;
             findReplace.ClickFindPrevious += DoClickFindPrevious;
             findReplace.ClickReplace += DoClickReplace;
