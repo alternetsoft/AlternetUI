@@ -21,6 +21,7 @@ namespace NativeApi.Api
         public void Initialize(GenericFontFamily genericFamily, string? familyName,
             double emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
+        public void InitializeWithDefaultMonoFont() => throw new Exception();
         public void InitializeFromFont(Font font) { }
 
         public static bool IsFamilyValid(string fontFamily) => throw new Exception();

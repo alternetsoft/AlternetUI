@@ -55,6 +55,7 @@ namespace Alternet.UI
         public static void LogSystemFonts()
         {
             Application.Log($"Default font: {Font.Default.ToInfoString()}");
+            Application.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
 
             var values = Enum.GetValues(typeof(SystemSettingsFont));
             foreach(var value in values)

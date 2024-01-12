@@ -368,8 +368,7 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font DefaultMono => defaultMonoFont ??=
-            SystemSettings.GetFont(SystemSettingsFont.AnsiFixed);
+        public static Font DefaultMono => defaultMonoFont ??= Font.CreateDefaultMonoFont();
 
         /// <summary>
         /// Gets the name of the font originally specified.
@@ -914,6 +913,15 @@ namespace Alternet.Drawing
             if (font is null)
                 return null;
             return new Font(font);
+        }
+
+        internal static Font CreateDefaultMonoFont()
+        {
+            var nativeFont = new UI.Native.Font();
+            nativeFont.InitializeWithDefaultMonoFont();
+            return new Font(nativeFont);
+
+            /*SystemSettings.GetFont(SystemSettingsFont.AnsiFixed)*/
         }
 
         internal static Font CreateDefaultFont()
