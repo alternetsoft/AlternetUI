@@ -15,6 +15,8 @@ namespace Alternet.UI
         private LogListBox? logControl;
         private ListBox? actionsControl;
 
+        private readonly CardPanelHeader rightPanelHeader = new();
+
         public SplittedPanelEx()
         {
             TopVisible = false;

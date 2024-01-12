@@ -22,15 +22,16 @@ namespace PropertyGridSample
         {
         };
 
-        private readonly SplittedPanel parentParent = new()
+        private readonly Panel parentParent = new()
         {
+            Padding = (5, 15, 5, 15),
         };
 
         private readonly Border controlPanelBorder = new()
         {
             BorderColor = Color.Red,
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            VerticalAlignment = VerticalAlignment.Stretch,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top,
             Padding = 0,
         };
 
@@ -113,30 +114,11 @@ namespace PropertyGridSample
 
             controlPanel.Parent = controlPanelBorder;
 
-            parentParent.LeftPanel.Width = 15;
-            parentParent.LeftVisible = false;
-            parentParent.RightPanel.Width = 5;
-            parentParent.TopPanel.Width = 5;
-            parentParent.BottomPanel.Width = 5;
-
             var parentParentColor = SystemColors.Window;
 
-            parentParent.LeftPanel.BackColor = parentParentColor;
-            parentParent.RightPanel.BackColor = parentParentColor;
-            parentParent.TopPanel.BackColor = parentParentColor;
-            parentParent.BottomPanel.BackColor = parentParentColor;
+            controlPanelBorder.Parent = parentParent;
 
-            controlPanelBorder.Parent = parentParent.FillPanel;
-
-            /*panel.Manager.AddPane(parentParent, panel.CenterPane);*/
             parentParent.Parent = panel.FillPanel;
-
-            /*CenterNotebook.AddPage(parentParent, "Preview", true);
-            panel.CenterNotebook.SizeChanged += CenterNotebook_SizeChanged;
-            panel.CenterNotebook.LayoutUpdated += CenterNotebook_LayoutUpdated;
-            panel.LeftTreeView.SizeChanged += LeftTreeView_SizeChanged;*/
-
-            /*panel.Manager.Update();*/
 
             InitToolBox();
 

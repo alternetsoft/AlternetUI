@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Possible values for SystemSettings.GetFont parameter.
+    /// Possible values for <see cref="SystemSettings.GetFont"/> parameter.
     /// </summary>
     /// <remarks>
     /// These values map 1:1 the native values supported by the Windows' GetStockObject function.
@@ -22,12 +22,12 @@ namespace Alternet.UI
         OemFixed = 10,
 
         /// <summary>
-        /// Windows fixed-pitch (monospaced) font.
+        /// Fixed-pitch (monospaced) font.
         /// </summary>
         AnsiFixed = 11,
 
         /// <summary>
-        /// Windows variable-pitch (proportional) font.
+        /// Variable-pitch (proportional) font.
         /// </summary>
         AnsiVar = 12,
 
