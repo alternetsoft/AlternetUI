@@ -23,6 +23,7 @@ namespace Alternet.UI
             rightPanelHeader.Margin = (0, 5, 0, 0);
             rightPanelHeader.BorderWidth = 0;
             rightPanelHeader.Parent = RightPanel;
+            rightPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             TopVisible = false;
         }
 
@@ -49,7 +50,7 @@ namespace Alternet.UI
                     actionsControl = new()
                     {
                         VerticalAlignment = VerticalAlignment.Stretch,
-                        MinHeight = 300,
+                        Visible = false,
                         HasBorder = false,
                         Parent = RightPanel,
                     };
@@ -76,7 +77,7 @@ namespace Alternet.UI
                     {
                         HasBorder = false,
                         VerticalAlignment = VerticalAlignment.Stretch,
-                        MinHeight = 300,
+                        Visible = false,
                         Parent = RightPanel,
                     };
 
