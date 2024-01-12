@@ -25,6 +25,7 @@ namespace Alternet.UI
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
         private static int groupIndexCounter;
         private static Font? defaultFont;
+        private static Font? defaultMonoFont;
 
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
@@ -382,6 +383,24 @@ namespace Alternet.UI
             {
                 defaultFont = value;
                 Native.Window.SetParkingWindowFont(value?.NativeFont);
+            }
+        }
+
+        /// <summary>
+        /// Gets the default fixed width font used for controls.
+        /// </summary>
+        /// <value>
+        /// The default <see cref="Font"/> for UI controls which require fixed width font.
+        /// The value returned will
+        /// vary depending on the user's operating system and the local settings
+        /// of their system.
+        /// </value>
+        public static Font DefaultMonoFont
+        {
+            get => defaultMonoFont ?? Font.DefaultMono;
+            set
+            {
+                defaultMonoFont = value;
             }
         }
 

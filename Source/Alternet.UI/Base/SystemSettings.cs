@@ -75,11 +75,6 @@ namespace Alternet.UI
             Application.Log($"IsUsingDarkBackground = {IsUsingDarkBackground}");
             Application.Log($"AppearanceName = {AppearanceName}");
 
-            foreach(SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
-            {
-                Application.Log($"HasFeature({item}) = {HasFeature(item)}");
-            }
-
             var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
             LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
             LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
@@ -87,9 +82,25 @@ namespace Alternet.UI
             Application.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
             Application.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
 
+            Application.LogSeparator();
+
+            foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
+            {
+                Application.Log($"HasFeature({item}) = {HasFeature(item)}");
+            }
+
+            Application.LogSeparator();
+
             foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
             {
                 Application.Log($"GetMetric({item}) = {GetMetric(item)}");
+            }
+
+            Application.LogSeparator();
+
+            foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
+            {
+                Application.Log($"GetFont({item}) = {GetFont(item)}");
             }
 
             Application.LogEndSection();

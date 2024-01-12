@@ -17,6 +17,7 @@ namespace Alternet.Drawing
     public sealed class Font : IDisposable, IEquatable<Font>
     {
         private static Font? defaultFont;
+        private static Font? defaultMonoFont;
 
         private bool isDisposed;
         private int? hashCode;
@@ -358,6 +359,17 @@ namespace Alternet.Drawing
         /// of their system.
         /// </value>
         public static Font Default => defaultFont ??= Font.CreateDefaultFont();
+
+        /// <summary>
+        /// Gets the default fixed width font used in the application.
+        /// </summary>
+        /// <value>
+        /// The default fixed width <see cref="Font"/> for the application. The value returned will
+        /// vary depending on the user's operating system and the local settings
+        /// of their system.
+        /// </value>
+        public static Font DefaultMono => defaultMonoFont ??=
+            SystemSettings.GetFont(SystemSettingsFont.AnsiFixed);
 
         /// <summary>
         /// Gets the name of the font originally specified.
