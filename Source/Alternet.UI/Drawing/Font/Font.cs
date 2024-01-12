@@ -917,11 +917,9 @@ namespace Alternet.Drawing
 
         internal static Font CreateDefaultMonoFont()
         {
-            var nativeFont = new UI.Native.Font();
-            nativeFont.InitializeWithDefaultMonoFont();
-            return new Font(nativeFont);
-
-            /*SystemSettings.GetFont(SystemSettingsFont.AnsiFixed)*/
+            var family = FontFamily.GenericMonospace;
+            var fontGenericMonospace = new Font(family, Default.SizeInPoints);
+            return fontGenericMonospace;
         }
 
         internal static Font CreateDefaultFont()
