@@ -33,6 +33,10 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Font", TestGenericToolBarFont);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background", TestGenericToolBarBackground);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Reset Background", TestGenericToolBarResetBackground);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Clear", TestGenericToolBarClear);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Add OK button", TestGenericToolBarAddOk);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
 
             PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
             PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);
@@ -172,6 +176,40 @@ namespace PropertyGridSample
             control.Background = Color.RebeccaPurple.AsBrush;
             control.BackgroundColor = null;
         }
+
+        void TestGenericToolBarClear()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.DeleteAll();
+        }
+
+        void TestGenericToolBarAddOk()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.AddSpeedBtn(KnownButton.OK);
+        }
+
+        void TestGenericToolBarAddCancel()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.AddSpeedBtn(KnownButton.Cancel);
+        }
+
+        void TestGenericToolBarReInit()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.DeleteAll();
+            ObjectInit.InitGenericToolBar(control);
+        }
+
 
         void TestGenericToolBarResetBackground()
         {
