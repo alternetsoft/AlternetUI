@@ -14,7 +14,7 @@ namespace PropertyGridSample
         {
             if (control is not SplittedPanel panel)
                 return;
-            panel.SuggestedSize = 200;
+            panel.SuggestedSize = 300;
 
             ListBox LeftLabel = new()
             {
