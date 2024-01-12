@@ -57,6 +57,10 @@ namespace Alternet.UI
             Application.Log($"Default font: {Font.Default.ToInfoString()}");
             Application.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
 
+            var family = FontFamily.GenericMonospace;
+            var fontGenericMonospace = new Font(family, 9);
+            Application.Log($"GenericMonospace: {fontGenericMonospace.ToInfoString()}");
+
             var values = Enum.GetValues(typeof(SystemSettingsFont));
             foreach(var value in values)
             {
@@ -73,18 +77,13 @@ namespace Alternet.UI
         {
             Application.LogBeginSection();
             var items = FontFamily.FamiliesNamesAscending;
-            List<string> logged = [];
             foreach(var item in items)
             {
                 var font = new Font(item, 10);
 
-                if (StringUtils.StartsWith(font.Name, logged))
-                    continue;
-
                 if(font.IsFixedWidth && font.Style == FontStyle.Regular && !font.GdiVerticalFont)
                 {
                     Application.Log(font.ToInfoString());
-                    logged.Add(font.Name);
                 }
             }
 
