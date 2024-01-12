@@ -54,6 +54,16 @@ namespace Alternet.UI
                 Control = handler.Control;
             }
 
+            public bool AllowStretch
+            {
+                get
+                {
+                    if (Control is StackPanel stackPanel)
+                        return stackPanel.AllowStretch;
+                    return true;
+                }
+            }
+
             public Control Control { get; }
 
             public ControlHandler Handler { get; }

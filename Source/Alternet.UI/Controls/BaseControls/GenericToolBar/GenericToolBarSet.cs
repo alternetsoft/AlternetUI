@@ -25,6 +25,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Minimal and default toolbar count is 1.
         /// </remarks>
+        [Browsable(false)]
         public virtual int ToolBarCount
         {
             get
