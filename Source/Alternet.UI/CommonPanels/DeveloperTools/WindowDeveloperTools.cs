@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
         private readonly PanelDeveloperTools panel = new()
         {
-            SuggestedSize = new(800, 600),
+            SuggestedSize = new(900, 700),
         };
 
         private bool logGotFocus;

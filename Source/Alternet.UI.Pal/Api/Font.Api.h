@@ -113,6 +113,11 @@ ALTERNET_UI_API void Font_InitializeWithDefaultFont_(Font* obj)
     obj->InitializeWithDefaultFont();
 }
 
+ALTERNET_UI_API void Font_InitializeWithDefaultMonoFont_(Font* obj)
+{
+    obj->InitializeWithDefaultMonoFont();
+}
+
 ALTERNET_UI_API void Font_InitializeFromFont_(Font* obj, Font* font)
 {
     obj->InitializeFromFont(font);
