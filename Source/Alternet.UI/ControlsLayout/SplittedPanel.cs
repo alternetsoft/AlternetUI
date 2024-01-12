@@ -78,6 +78,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="ControlSet"/> with all splitters.
+        /// </summary>
+        public ControlSet Splitters =>
+            ControlSet.New(leftSplitter, topSplitter, rightSplitter, bottomSplitter);
+
+        /// <summary>
         /// Gets right sub-panel.
         /// </summary>
         [Browsable(false)]
