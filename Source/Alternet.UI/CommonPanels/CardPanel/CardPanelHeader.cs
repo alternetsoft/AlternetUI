@@ -650,6 +650,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects the last tab if it exists.
+        /// </summary>
+        public virtual void SelectLastTab()
+        {
+            if (Tabs.Count > 0)
+                SelectedTab = Tabs[Tabs.Count - 1];
+        }
+
+        /// <summary>
         /// Sets width of all cards to value obtained with <see cref="GetMaxCardSize"/>.
         /// </summary>
         public virtual void CardsWidthToMax(WindowSizeToContentMode mode)
