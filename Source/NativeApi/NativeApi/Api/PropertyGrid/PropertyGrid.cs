@@ -11,6 +11,11 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_property_grid.html
     public partial class PropertyGrid : Control
     {
+        public PointI CalcScrolledPosition(PointI point) => default;
+        public PointI CalcUnscrolledPosition(PointI point) => default;
+        public int GetHitTestColumn(PointI point) => default;
+        public IntPtr GetHitTestProp(PointI point) => default;
+
         // https://docs.wxwidgets.org/3.2/classwx_colour_database.html
         public static IntPtr ColorDatabaseCreate() => default;
         public static void ColorDatabaseDelete(IntPtr handle) { }

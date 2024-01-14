@@ -35,6 +35,9 @@ namespace PropertyGridSample
             Padding = 0,
         };
 
+        private readonly ContextMenuStrip propGridContextMenu = new();
+        private readonly MenuItem resetMenu;
+
         private bool updatePropertyGrid = false;
 
         static MainWindow()
@@ -86,15 +89,19 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            resetMenu = propGridContextMenu.Add(CommonStrings.Default.ButtonReset);
+            resetMenu.Click += ResetMenu_Click;
+
+            propGridContextMenu.Opening += PropGridContextMenu_Opening;
+
             controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
             controlPanelBorder.Normal.DrawDefaultBorder = false;
 
-            /*panel.LogControlUseNotebook = false;
-            panel.LeftTreeViewUseNotebook = false;*/
             panel.BindApplicationLog();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
+            PropGrid.PropertyRightClick += PropGrid_PropertyRightClick;
             PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             PropertyGridSettings.Default = new(this);
             PropGrid.ProcessException += PropertyGrid_ProcessException;
@@ -158,6 +165,58 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
+        }
+
+        private void PropGrid_PropertyRightClick(object? sender, EventArgs e)
+        {
+            var selectedProp = PropGrid.GetSelection();
+            if (selectedProp == null)
+                return;
+            PropGrid.ShowPopupMenu(propGridContextMenu);
+        }
+
+        private bool CanResetProp(IPropertyGridItem? item)
+        {
+            if (item is null || item.PropInfo is null || item.Instance is null)
+                return false;
+            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
+            var value = item.PropInfo.GetValue(item.Instance);
+            return nullable && value is not null;
+        }
+
+        private void ResetProp(IPropertyGridItem? item)
+        {
+            if (item is null || item.PropInfo is null || item.Instance is null)
+                return;
+            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
+            var value = item.PropInfo.GetValue(item.Instance);
+            if (nullable && value is not null)
+            {
+                item.PropInfo.SetValue(item.Instance, null);
+                PropGrid.ReloadPropertyValue(item);
+            }
+        }
+
+        private void ResetMenu_Click(object? sender, EventArgs e)
+        {
+            var selectedProp = PropGrid.GetSelection();
+            Application.Log($"Reset: {selectedProp?.DefaultName}");
+            ResetProp(selectedProp);
+        }
+
+        private void PropGridContextMenu_Opening(object? sender, CancelEventArgs e)
+        {
+            var mousePos = Mouse.GetPosition(PropGrid);
+            var column = PropGrid.GetHitTestColumn(mousePos);
+            if (column != 0)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            var selectedProp = PropGrid.GetSelection();
+
+            resetMenu.Enabled = CanResetProp(selectedProp);
         }
 
         /*private void UpdateActions()

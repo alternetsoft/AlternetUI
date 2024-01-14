@@ -35,6 +35,10 @@ void SetCreateStyle(int64_t value);
 int64_t GetCreateStyleEx();
 void SetCreateStyleEx(int64_t value);
 
+void RefreshProperty(void* p);
+void* CreateColorProperty(const string& label, const string& name, const Color& value);
+void SetPropertyReadOnly(void* id, bool set, int flags);
+void SetPropertyValueUnspecified(void* id);
 void* AppendIn(void* id, void* newproperty);
 void BeginAddChildren(void* id);
 bool Collapse(void* id);
@@ -97,6 +101,10 @@ bool ChangePropertyValue(void* id, void* variant);
 void SetPropertyImage(void* id, ImageSet* bmp);
 void SetPropertyAttribute(void* id, const string& attrName, void* variant, int64_t argFlags);
 void SetPropertyAttributeAll(const string& attrName, void* variant);
+int GetSplitterPosition(uint32_t splitterIndex);
+int GetVerticalSpacing();
+bool IsEditorFocused();
+bool IsEditorsValueModified();
 bool IsAnyModified();
 void ResetColors();
 void ResetColumnSizes(bool enableAutoResizing);
@@ -178,10 +186,10 @@ static void SetBoolChoices(const string& trueChoice, const string& falseChoice);
 bool SetColumnProportion(uint32_t column, int proportion);
 int GetColumnProportion(uint32_t column);
 void Sort(int flags);
-void RefreshProperty(void* p);
-void* CreateColorProperty(const string& label, const string& name, const Color& value);
-void SetPropertyReadOnly(void* id, bool set, int flags);
-void SetPropertyValueUnspecified(void* id);
+PointI CalcScrolledPosition(const PointI& point);
+PointI CalcUnscrolledPosition(const PointI& point);
+int GetHitTestColumn(const PointI& point);
+void* GetHitTestProp(const PointI& point);
 static void* ColorDatabaseCreate();
 static void ColorDatabaseDelete(void* handle);
 static void ColorDatabaseSetGlobal(void* handle);
@@ -220,10 +228,6 @@ int GetMarginWidth();
 int GetRowHeight();
 Color GetSelectionBackgroundColor();
 Color GetSelectionForegroundColor();
-int GetSplitterPosition(uint32_t splitterIndex);
-int GetVerticalSpacing();
-bool IsEditorFocused();
-bool IsEditorsValueModified();
 public:
 enum class PropertyGridEvent
 {

@@ -1416,4 +1416,29 @@ namespace Alternet::UI
 	{
 		return wxStr(((wxColourDatabase*)handle)->FindName(color));
 	}
+
+	PointI PropertyGrid::CalcUnscrolledPosition(const PointI& point)
+	{
+		auto result = GetPropGrid()->CalcUnscrolledPosition(point);
+		return result;
+	}
+
+	PointI PropertyGrid::CalcScrolledPosition(const PointI& point)
+	{
+		auto result = GetPropGrid()->CalcScrolledPosition(point);
+		return result;
+	}
+
+	int PropertyGrid::GetHitTestColumn(const PointI& point)
+	{
+		auto result = GetPropGrid()->HitTest(point);
+		return result.GetColumn();
+	}
+
+	void* PropertyGrid::GetHitTestProp(const PointI& point)
+	{
+		auto result = GetPropGrid()->HitTest(point);
+		auto prop = result.GetProperty();
+		return prop;
+	}
 }

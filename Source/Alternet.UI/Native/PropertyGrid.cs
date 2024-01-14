@@ -148,6 +148,30 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void RefreshProperty(System.IntPtr p)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_RefreshProperty_(NativePointer, p);
+        }
+        
+        public System.IntPtr CreateColorProperty(string label, string name, Alternet.Drawing.Color value)
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, value);
+        }
+        
+        public void SetPropertyReadOnly(System.IntPtr id, bool set, int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyReadOnly_(NativePointer, id, set, flags);
+        }
+        
+        public void SetPropertyValueUnspecified(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueUnspecified_(NativePointer, id);
+        }
+        
         public System.IntPtr AppendIn(System.IntPtr id, System.IntPtr newproperty)
         {
             CheckDisposed();
@@ -517,6 +541,30 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, attrName, variant);
+        }
+        
+        public int GetSplitterPosition(uint splitterIndex)
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_GetSplitterPosition_(NativePointer, splitterIndex);
+        }
+        
+        public int GetVerticalSpacing()
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_GetVerticalSpacing_(NativePointer);
+        }
+        
+        public bool IsEditorFocused()
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_IsEditorFocused_(NativePointer);
+        }
+        
+        public bool IsEditorsValueModified()
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_IsEditorsValueModified_(NativePointer);
         }
         
         public bool IsAnyModified()
@@ -1001,28 +1049,28 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGrid_Sort_(NativePointer, flags);
         }
         
-        public void RefreshProperty(System.IntPtr p)
+        public Alternet.Drawing.PointI CalcScrolledPosition(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_RefreshProperty_(NativePointer, p);
+            return NativeApi.PropertyGrid_CalcScrolledPosition_(NativePointer, point);
         }
         
-        public System.IntPtr CreateColorProperty(string label, string name, Alternet.Drawing.Color value)
+        public Alternet.Drawing.PointI CalcUnscrolledPosition(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, value);
+            return NativeApi.PropertyGrid_CalcUnscrolledPosition_(NativePointer, point);
         }
         
-        public void SetPropertyReadOnly(System.IntPtr id, bool set, int flags)
+        public int GetHitTestColumn(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyReadOnly_(NativePointer, id, set, flags);
+            return NativeApi.PropertyGrid_GetHitTestColumn_(NativePointer, point);
         }
         
-        public void SetPropertyValueUnspecified(System.IntPtr id)
+        public System.IntPtr GetHitTestProp(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyValueUnspecified_(NativePointer, id);
+            return NativeApi.PropertyGrid_GetHitTestProp_(NativePointer, point);
         }
         
         public static System.IntPtr ColorDatabaseCreate()
@@ -1241,30 +1289,6 @@ namespace Alternet.UI.Native
             return NativeApi.PropertyGrid_GetSelectionForegroundColor_(NativePointer);
         }
         
-        public int GetSplitterPosition(uint splitterIndex)
-        {
-            CheckDisposed();
-            return NativeApi.PropertyGrid_GetSplitterPosition_(NativePointer, splitterIndex);
-        }
-        
-        public int GetVerticalSpacing()
-        {
-            CheckDisposed();
-            return NativeApi.PropertyGrid_GetVerticalSpacing_(NativePointer);
-        }
-        
-        public bool IsEditorFocused()
-        {
-            CheckDisposed();
-            return NativeApi.PropertyGrid_IsEditorFocused_(NativePointer);
-        }
-        
-        public bool IsEditorsValueModified()
-        {
-            CheckDisposed();
-            return NativeApi.PropertyGrid_IsEditorsValueModified_(NativePointer);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1456,6 +1480,18 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, string label, string name, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyReadOnly_(IntPtr obj, System.IntPtr id, bool set, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1640,6 +1676,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, string attrName, System.IntPtr variant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetSplitterPosition_(IntPtr obj, uint splitterIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetVerticalSpacing_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsEditorFocused_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsEditorsValueModified_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_IsAnyModified_(IntPtr obj);
@@ -1885,16 +1933,16 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_Sort_(IntPtr obj, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
+            public static extern Alternet.Drawing.PointI PropertyGrid_CalcScrolledPosition_(IntPtr obj, Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, string label, string name, NativeApiTypes.Color value);
+            public static extern Alternet.Drawing.PointI PropertyGrid_CalcUnscrolledPosition_(IntPtr obj, Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyReadOnly_(IntPtr obj, System.IntPtr id, bool set, int flags);
+            public static extern int PropertyGrid_GetHitTestColumn_(IntPtr obj, Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
+            public static extern System.IntPtr PropertyGrid_GetHitTestProp_(IntPtr obj, Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_ColorDatabaseCreate_();
@@ -2009,18 +2057,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color PropertyGrid_GetSelectionForegroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetSplitterPosition_(IntPtr obj, uint splitterIndex);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetVerticalSpacing_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsEditorFocused_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsEditorsValueModified_(IntPtr obj);
             
         }
     }
