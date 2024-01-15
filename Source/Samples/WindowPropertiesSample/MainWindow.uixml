@@ -14,12 +14,12 @@
       <!-- ========================= -->
       <HorizontalStackPanel Name="actionsPanel" HorizontalAlignment="Stretch">
 
-        <GroupBox Title="Window" Margin="5">
+        <GroupBox Title="Create" Margin="5">
           <StackPanel Padding="10" >
-            <Button Text="Create" Name="createAndShowWindowButton"
+            <Button Text="Create Window" Name="createAndShowWindowButton"
                 Click="CreateAndShowWindowButton_Click"
                 Margin="0,0,0,5" />
-            <Button Text="Create Modal" Name="createAndShowModalWindowButton"
+            <Button Text="Create Dialog" Name="createAndShowModalWindowButton"
                 Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
             <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click"
                 Text="Create Owned" Margin="0,0,0,5"/>
@@ -29,15 +29,19 @@
             <ComboBox IsEditable="false" Name="startLocationComboBox" Margin="0,0,0,5"/>
           </StackPanel>
         </GroupBox>
-        <GroupBox Title="Activation" HorizontalAlignment="Stretch"
-            Grid.ColumnSpan="2"  Margin="5">
-          <StackPanel Padding="10" HorizontalAlignment="Stretch" SuggestedWidth="400">
-            <Label Text="Active window title:" Margin="0,0,0,3"/>
-            <Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
-            <Label Name="isWindowActiveLabel" Margin="0,0,0,3"/>
-            <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
-          </StackPanel>
-        </GroupBox>
+        <VerticalStackPanel>
+          <GroupBox Title="Activation" HorizontalAlignment="Stretch"
+              Grid.ColumnSpan="2"  Margin="5">
+            <StackPanel Padding="10" HorizontalAlignment="Stretch" SuggestedWidth="400">
+              <Label Text="Active window title:" Margin="0,0,0,3"/>
+              <Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
+              <Label Name="isWindowActiveLabel" Margin="0,0,0,3"/>
+              <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+            </StackPanel>
+          </GroupBox>
+          <Button Text="Properties..." 
+                  Name="propertiesButton" Click="PropertiesButton_Click" Margin="0,5,0,5"/>
+        </VerticalStackPanel>
       </HorizontalStackPanel>
       <!-- ========================= -->
       <HorizontalStackPanel Name="settingsPanel" Visible="false">
@@ -84,7 +88,6 @@
               <Button Text="Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
             </HorizontalStackPanel>
             <Button Text="Clear Icon" Name="clearIconButton" Click="ClearIconButton_Click" Margin="0,0,0,5"/>
-            <Button Text="Properties..." Name="propertiesButton" Click="PropertiesButton_Click" Margin="0,0,0,5"/>
           </VerticalStackPanel>
       </HorizontalStackPanel>
 
@@ -116,8 +119,6 @@
               <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
                   Text="Size to Content" VerticalAlignment="Center"/>
             </HorizontalStackPanel>
-            <Button Text="Set Bounds Ex" Click="SetBoundsExButton_Click" Name="setBoundsExButton"
-                    Margin="0,0,0,10"/>
           </VerticalStackPanel>
         </GroupBox>
 
