@@ -75,6 +75,18 @@ namespace Alternet.UI
             return Font.FromInternal(font);
         }
 
+        internal void RaiseDeactivated()
+        {
+            Deactivated?.Invoke(this, EventArgs.Empty);
+            /*Application.DebugLog($"Deactivated {Name}");*/
+        }
+
+        internal void RaiseActivated()
+        {
+            Activated?.Invoke(this, EventArgs.Empty);
+            /*Application.DebugLog($"Activated {Name}");*/
+        }
+
         internal Color? GetDefaultAttributesBgColor()
         {
             CheckDisposed();

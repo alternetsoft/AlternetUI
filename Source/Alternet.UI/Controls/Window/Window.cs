@@ -158,26 +158,6 @@ namespace Alternet.UI
         public event EventHandler? HasTitleBarChanged;
 
         /// <summary>
-        /// Occurs when the window is activated in code or by the user.
-        /// </summary>
-        /// <remarks>
-        /// To activate a window at run time using code, call the <see cref="Activate"/> method.
-        /// You can use this event for
-        /// tasks such as updating the contents of the window based on changes made to the
-        /// window's data when the window was not activated.
-        /// </remarks>
-        public event EventHandler? Activated;
-
-        /// <summary>
-        /// Occurs when the window loses focus and is no longer the active window.
-        /// </summary>
-        /// <remarks>
-        /// You can use this event to perform tasks such as updating another window in
-        /// your application with data from the deactivated window.
-        /// </remarks>
-        public event EventHandler? Deactivated;
-
-        /// <summary>
         /// Gets the currently active window for this application.
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
@@ -910,18 +890,6 @@ namespace Alternet.UI
                 return null;
 
             return GetParentWindow(c.Parent);
-        }
-
-        internal void RaiseDeactivated()
-        {
-            Deactivated?.Invoke(this, EventArgs.Empty);
-            /*Application.DebugLog($"Deactivated {Name}");*/
-        }
-
-        internal void RaiseActivated()
-        {
-            Activated?.Invoke(this, EventArgs.Empty);
-            /*Application.DebugLog($"Activated {Name}");*/
         }
 
         internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);

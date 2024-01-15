@@ -162,11 +162,6 @@ ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
     return obj->GetModal();
 }
 
-ALTERNET_UI_API c_bool Window_GetIsActive_(Window* obj)
-{
-    return obj->GetIsActive();
-}
-
 ALTERNET_UI_API Window* Window_GetActiveWindow_()
 {
     return Window::GetActiveWindow();

@@ -84,6 +84,9 @@ namespace PropertyGridSample
             Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
             Actions.Add(typeof(CardPanel), InitCardPanel);
             Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);
+            Actions.Add(typeof(TextBox), InitTextBox);
+            Actions.Add(typeof(RichTextBox), InitRichTextBox);
+            Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
 
             Actions.Add(typeof(Slider), (c) =>
             {
@@ -127,19 +130,6 @@ namespace PropertyGridSample
             {
                 (c as StatusBar)!.Panels.Add(new("text1"));
                 (c as StatusBar)!.Panels.Add(new("text2"));
-            });
-
-            Actions.Add(typeof(RichTextBox), (c) =>
-            {
-                var control = (c as RichTextBox)!;
-                control.SuggestedSize = defaultListSize;
-            });
-
-            Actions.Add(typeof(MultilineTextBox), (c) =>
-            {
-                var control = (c as MultilineTextBox)!;
-                control.SuggestedSize = defaultListSize;
-                control.Text = LoremIpsum;
             });
 
             Actions.Add(typeof(Button), (c) =>
@@ -245,13 +235,6 @@ namespace PropertyGridSample
                 control.SuggestedWidth = 200;
             });
 
-            Actions.Add(typeof(TextBox), (c) =>
-            {
-                TextBox control = (c as TextBox)!;
-                control.Text = "some text";
-                control.SuggestedWidth = 200;
-            });
-
             Actions.Add(typeof(ColorPicker), (c) =>
             {
                 ColorPicker control = (c as ColorPicker)!;
@@ -261,7 +244,6 @@ namespace PropertyGridSample
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
-                //control.BackgroundColor = Color.Cornsilk;
             });
         }
 

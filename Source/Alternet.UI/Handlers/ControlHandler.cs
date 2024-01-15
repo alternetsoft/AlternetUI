@@ -838,6 +838,8 @@ namespace Alternet.UI
 
             if (NativeControl != null)
             {
+                NativeControl.Activated -= NativeControl_Activated;
+                NativeControl.Deactivated -= NativeControl_Deactivated;
                 NativeControl.Idle -= NativeControl_Idle;
                 NativeControl.Paint -= NativeControl_Paint;
                 NativeControl.VisibleChanged -= NativeControl_VisibleChanged;
@@ -901,6 +903,8 @@ namespace Alternet.UI
                 parent.PerformLayout();
             }
 
+            NativeControl.Activated += NativeControl_Activated;
+            NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.Paint += NativeControl_Paint;
             NativeControl.VisibleChanged += NativeControl_VisibleChanged;
             NativeControl.MouseEnter += NativeControl_MouseEnter;
@@ -927,6 +931,16 @@ namespace Alternet.UI
         {
             nativeControl.handler = null;
             nativeControl.Dispose();
+        }
+
+        private void NativeControl_Deactivated(object? sender, EventArgs e)
+        {
+            Control.RaiseDeactivated();
+        }
+
+        private void NativeControl_Activated(object? sender, EventArgs e)
+        {
+            Control.RaiseActivated();
         }
 
         private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)

@@ -45,6 +45,9 @@ int GetId();
 void SetId(int value);
 
 
+bool GetIsActive();
+
+
 bool GetIsHandleCreated();
 
 
@@ -147,6 +150,9 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+int GetScrollBarMaximum(ScrollBarOrientation orientation);
+int GetScrollBarEvtKind();
+int GetScrollBarEvtPosition();
 static Control* HitTest(const PointD& screenPoint);
 static Control* GetFocusedControl();
 static void NotifyCaptureLost();
@@ -192,9 +198,6 @@ void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int
 bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
-int GetScrollBarMaximum(ScrollBarOrientation orientation);
-int GetScrollBarEvtKind();
-int GetScrollBarEvtPosition();
 void RefreshRect(const RectD& rect, bool eraseBackground);
 void Raise();
 void Lower();
@@ -236,6 +239,8 @@ enum class ControlEvent
     VerticalScrollBarValueChanged,
     HorizontalScrollBarValueChanged,
     SizeChanged,
+    Activated,
+    Deactivated,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

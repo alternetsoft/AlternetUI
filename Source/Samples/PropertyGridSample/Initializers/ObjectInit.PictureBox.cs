@@ -29,6 +29,18 @@ namespace PropertyGridSample
 
             pictureBox.CurrentStateChanged += CurrentStateChanged;
             pictureBox.Click += PictureBox_Click;
+            pictureBox.Activated += PictureBox_Activated;
+            pictureBox.Deactivated += PictureBox_Deactivated;
+
+            static void PictureBox_Deactivated(object? sender, EventArgs e)
+            {
+                Application.Log("PictureBox Deactivated");
+            }
+
+            static void PictureBox_Activated(object? sender, EventArgs e)
+            {
+                Application.Log("PictureBox Activated");
+            }
 
             static void PictureBox_Click(object? sender, EventArgs e)
             {

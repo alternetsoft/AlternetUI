@@ -139,8 +139,6 @@ namespace Alternet.UI
             NativeControl.SizeChanged -= NativeControl_SizeChanged;
             NativeControl.LocationChanged -= NativeControl_LocationChanged;
             NativeControl.Closing -= NativeControl_Closing;
-            NativeControl.Activated -= NativeControl_Activated;
-            NativeControl.Deactivated -= NativeControl_Deactivated;
             NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
             Control.OwnerChanged -= ApplyOwner;
@@ -214,8 +212,6 @@ namespace Alternet.UI
             NativeControl.Closing += NativeControl_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
             NativeControl.LocationChanged += NativeControl_LocationChanged;
-            NativeControl.Activated += NativeControl_Activated;
-            NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.StateChanged += NativeControl_StateChanged;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
@@ -298,16 +294,6 @@ namespace Alternet.UI
         private void ApplyStatusBar(object? sender, EventArgs e)
         {
             Control.StatusBar?.RecreateWidget();
-        }
-
-        private void NativeControl_Deactivated(object? sender, EventArgs e)
-        {
-            Control.RaiseDeactivated();
-        }
-
-        private void NativeControl_Activated(object? sender, EventArgs e)
-        {
-            Control.RaiseActivated();
         }
 
         private void ApplyOwner(object? sender, EventArgs e)

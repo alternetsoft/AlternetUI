@@ -205,6 +205,7 @@ namespace Alternet::UI
             DestroyingWxWindow = 1 << 6,
             IsScrollable = 1 << 7,
             TabStop = 1 << 8,
+            Active = 1 << 9,
         };
 
         void SetRecreatingWxWindow(bool value);
@@ -275,6 +276,7 @@ namespace Alternet::UI
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
         void OnIdle(wxIdleEvent& event);
+        void OnActivate(wxActivateEvent& event);
 
         void OnScrollTop(wxScrollWinEvent& event);
         void OnScrollBottom(wxScrollWinEvent& event);

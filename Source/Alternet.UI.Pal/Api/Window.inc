@@ -60,9 +60,6 @@ void SetModalResult(ModalResult value);
 bool GetModal();
 
 
-bool GetIsActive();
-
-
 static Window* GetActiveWindow();
 
 
@@ -103,8 +100,6 @@ enum class WindowEvent
     SizeChanged,
     InputBindingCommandExecuted,
     LocationChanged,
-    Activated,
-    Deactivated,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

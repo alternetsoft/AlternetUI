@@ -63,7 +63,10 @@ namespace NativeApi.Api
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
         public event EventHandler? SizeChanged;
+        public event EventHandler Activated;
+        public event EventHandler Deactivated;
 
+        public bool IsActive { get; }
         public bool IsHandleCreated { get; }
         public bool IsWxWidgetCreated { get; }
 

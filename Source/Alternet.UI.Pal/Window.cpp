@@ -357,7 +357,6 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_MOVE, &Window::OnMove, this);
         wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
-        wxWindow->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
         wxWindow->Unbind(wxEVT_MENU, &Window::OnCommand, this);
@@ -570,7 +569,6 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_MOVE, &Window::OnMove, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
-        _frame->Bind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         _frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         _frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
         _frame->Bind(wxEVT_MENU, &Window::OnCommand, this);
@@ -815,11 +813,6 @@ namespace Alternet::UI
         delete (std::vector<Window*>*)array;
     }
 
-    bool Window::GetIsActive()
-    {
-        return _flags.IsSet(WindowFlags::Active);
-    }
-
     /*static*/ Window* Window::GetActiveWindow()
     {
         auto allFrames = Frame::GetAllFrames();
@@ -928,18 +921,6 @@ namespace Alternet::UI
 
         _flags.Set(WindowFlags::Resizable, value);
         ScheduleRecreateWxWindow();
-    }
-
-    void Window::OnActivate(wxActivateEvent& event)
-    {
-        event.Skip();
-        bool active = event.GetActive();
-        _flags.Set(WindowFlags::Active, active);
-        
-        if (active)
-            RaiseEvent(WindowEvent::Activated);
-        else
-            RaiseEvent(WindowEvent::Deactivated);
     }
 
     void Window::OnMaximize(wxMaximizeEvent& event)

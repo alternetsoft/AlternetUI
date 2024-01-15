@@ -121,6 +121,11 @@ ALTERNET_UI_API void Control_SetId_(Control* obj, int value)
     obj->SetId(value);
 }
 
+ALTERNET_UI_API c_bool Control_GetIsActive_(Control* obj)
+{
+    return obj->GetIsActive();
+}
+
 ALTERNET_UI_API c_bool Control_GetIsHandleCreated_(Control* obj)
 {
     return obj->GetIsHandleCreated();
@@ -346,6 +351,21 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
+{
+    return obj->GetScrollBarMaximum(orientation);
+}
+
+ALTERNET_UI_API int Control_GetScrollBarEvtKind_(Control* obj)
+{
+    return obj->GetScrollBarEvtKind();
+}
+
+ALTERNET_UI_API int Control_GetScrollBarEvtPosition_(Control* obj)
+{
+    return obj->GetScrollBarEvtPosition();
+}
+
 ALTERNET_UI_API Control* Control_HitTest_(PointD screenPoint)
 {
     return Control::HitTest(screenPoint);
@@ -569,21 +589,6 @@ ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientatio
 ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
 {
     return obj->GetScrollBarLargeChange(orientation);
-}
-
-ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
-{
-    return obj->GetScrollBarMaximum(orientation);
-}
-
-ALTERNET_UI_API int Control_GetScrollBarEvtKind_(Control* obj)
-{
-    return obj->GetScrollBarEvtKind();
-}
-
-ALTERNET_UI_API int Control_GetScrollBarEvtPosition_(Control* obj)
-{
-    return obj->GetScrollBarEvtPosition();
 }
 
 ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)

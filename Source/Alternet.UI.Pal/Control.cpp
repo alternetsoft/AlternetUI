@@ -425,6 +425,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
         wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
+        wxWindow->Unbind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
@@ -449,6 +450,23 @@ namespace Alternet::UI
 
         if (IsRecreatingWxWindow())
             SetRecreatingWxWindow(false);
+    }
+
+    bool Control::GetIsActive()
+    {
+        return _flags.IsSet(ControlFlags::Active);
+    }
+
+    void Control::OnActivate(wxActivateEvent& event)
+    {
+        event.Skip();
+        bool active = event.GetActive();
+        _flags.Set(ControlFlags::Active, active);
+
+        if (active)
+            RaiseEvent(ControlEvent::Activated);
+        else
+            RaiseEvent(ControlEvent::Deactivated);
     }
 
     bool Control::GetIsScrollable()
@@ -904,6 +922,7 @@ namespace Alternet::UI
         if (!GetTabStop())
             _wxWindow->DisableFocusFromKeyboard();
 
+        _wxWindow->Bind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
         //_wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);

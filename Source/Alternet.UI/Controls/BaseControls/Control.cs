@@ -79,6 +79,26 @@ namespace Alternet.UI
         public event ScrollEventHandler? Scroll;
 
         /// <summary>
+        /// Occurs when the window is activated in code or by the user.
+        /// </summary>
+        /// <remarks>
+        /// To activate a window at run time using code, call the <see cref="Activate"/> method.
+        /// You can use this event for
+        /// tasks such as updating the contents of the window based on changes made to the
+        /// window's data when the window was not activated.
+        /// </remarks>
+        public event EventHandler? Activated;
+
+        /// <summary>
+        /// Occurs when the window loses focus and is no longer the active window.
+        /// </summary>
+        /// <remarks>
+        /// You can use this event to perform tasks such as updating another window in
+        /// your application with data from the deactivated window.
+        /// </remarks>
+        public event EventHandler? Deactivated;
+
+        /// <summary>
         /// Occurs when the contol gets focus.
         /// </summary>
         public event EventHandler? GotFocus;
