@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// Gets or sets whether to draw debug related points for the owner draw controls.
         /// </summary>
 #if DEBUG
-        [Browsable(true)]
+        [Browsable(false)]
 #else
         [Browsable(false)]
 #endif
@@ -142,7 +142,7 @@ namespace Alternet.UI
         /// Gets or sets whether to draw debug related points for the owner draw controls.
         /// </summary>
 #if DEBUG
-        [Browsable(true)]
+        [Browsable(false)]
 #else
         [Browsable(false)]
 #endif
