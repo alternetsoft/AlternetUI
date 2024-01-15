@@ -1,5 +1,28 @@
 # 0.9.412 (work in progress)
 
+## 2024 January 15
+
+- Font.DefaultMono, Control.DefaultMonoFont.
+- SplittedPanel: Create side panels virtual methods, All panels are Control descendants, DefaultPanelSize virtual property,
+Splitters property.
+- Improved PropertyGridSample and other demos.
+- CardPanelHeader.SelectLastTab.
+- Vertically aligned StackPanel stretches last child control if child's VerticalAlignment = Stretch and
+ StackPanel.AllowStretch = true.
+- Fixed splitter color in Dark/Light schemes.
+- GenericToolBar.DeleteAl.
+- PropertyGrid: CalcScrolledPositionI, CalcScrolledPositionD, GetHitTestColumn, GetHitTestProp, CalcUnscrolledPositionI, 
+CalcUnscrolledPositionD.
+- Added Reset menu item in PropertyGridSample.
+- Activated, Deactivated events are now declared in the Control (previously in Window).
+- Fixed single control layout in the Window.
+- PropertyGrid improved Double property editor.
+- Control: Change to SuggestedSize, SuggestedWidth, SuggestedHeight calls Layout.
+- GenericLabel: Fixed painting when IsBold=true.
+- GenericToolbar: Fixed IsBold.
+- Control now invalidates when Enabled is changed. This fixed user controls drawing when Enabled is changed.
+- GenericLabel: Repainted with correct color when Enabled is changed. Better Layout (SuggestedSize is used for layout).
+
 ## 2024 January 11
 
 - Add FindReplaceControl, SpeedTextButton controls.
