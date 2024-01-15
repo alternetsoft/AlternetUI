@@ -8,8 +8,8 @@ namespace WindowPropertiesSample
     {
         private readonly CardPanelHeader panelHeader;
         /*private readonly PopupPropertyGrid popupSetBounds;*/
-        /*private readonly PopupPropertyGrid popupWindowProps;*/
         private readonly SetBoundsProperties setBoundsProperties;
+
         private TestWindow? testWindow;
 
         public MainWindow()
@@ -23,6 +23,8 @@ namespace WindowPropertiesSample
 
             stateComboBox.AddEnumValues<WindowState>();
             startLocationComboBox.AddEnumValues(WindowStartLocation.Default);
+            startLocationComboBox.Add("250, 250, 450, 450");
+            startLocationComboBox.Add("50,50,500,500");
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
@@ -43,8 +45,7 @@ namespace WindowPropertiesSample
             popupSetBounds.HideOnClick = false;
             popupSetBounds.HideOnDoubleClick = false;
             popupSetBounds.MainControl.SuggestedInitDefaults();
-
-            popupWindowProps = PopupPropertyGrid.CreatePropertiesPopup();*/
+            */
         }
 
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
@@ -57,8 +58,7 @@ namespace WindowPropertiesSample
         {
             if (testWindow is null)
                 return;
-            /*popupWindowProps.MainControl.SetProps(testWindow, true);
-            popupWindowProps.ShowPopup(propertiesButton);*/
+            WindowPropertyGrid.ShowDefault(null, testWindow);
         }
 
         private void SetBoundsExButton_Click(object? sender, EventArgs e)
@@ -106,6 +106,21 @@ namespace WindowPropertiesSample
 
         private void CreateWindowAndSetProperties()
         {
+            WindowStartLocation? sLocation = null;
+            var startLocationItem = startLocationComboBox.SelectedItem;
+
+            if (startLocationItem is WindowStartLocation)
+            {
+                sLocation = (WindowStartLocation)startLocationComboBox.SelectedItem!;
+            }
+
+            if (startLocationItem is string s)
+            {
+                var parsed = RectD.Parse(s);
+                Window.DefaultBounds = parsed;
+                sLocation = WindowStartLocation.Manual;
+            }
+
             testWindow = new TestWindow();
 
             if (setOwnerCheckBox.IsChecked)
@@ -125,8 +140,10 @@ namespace WindowPropertiesSample
             testWindow.HasBorder = hasBorderCheckBox.IsChecked;
             testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
 
-            testWindow.StartLocation = (WindowStartLocation)startLocationComboBox.SelectedItem!;
-            testWindow.Location = new PointD();
+            if(sLocation is not null)
+            {
+                testWindow.StartLocation = sLocation.Value;
+            }
 
             testWindow.EndInit();
 
@@ -212,7 +229,6 @@ namespace WindowPropertiesSample
                 setBoundsExButton,
                 propertiesButton).Enabled(haveTestWindow);
 
-            propertiesButton.Enabled = false;
             setBoundsExButton.Enabled = false;
 
             if (!haveTestWindow)

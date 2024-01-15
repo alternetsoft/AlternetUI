@@ -86,6 +86,7 @@ void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);
 void CloseOwnedWindowsArray(void* array);
+static void SetDefaultBounds(const RectD& bounds);
 static void SetParkingWindowFont(Font* font);
 void ShowModal();
 void Close();

@@ -170,6 +170,7 @@ namespace Alternet::UI
         IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 
+        inline static RectD _defaultBounds = RectD(0, 0, 0, 0);
         inline static FrameDisabler* _modalWindowDisabler = nullptr;
         inline static std::stack<Window*> _modalWindows;
 

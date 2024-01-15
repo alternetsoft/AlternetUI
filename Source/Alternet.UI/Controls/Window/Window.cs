@@ -16,6 +16,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public class Window : Control
     {
+        private static RectD defaultBounds = new(100, 100, 400, 400);
         private static int incFontSizeHighDpi = 2;
         private static int incFontSize = 0;
 
@@ -163,6 +164,23 @@ namespace Alternet.UI
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
         public static Window? ActiveWindow => NativeWindowHandler.ActiveWindow;
+
+        /// <summary>
+        /// Gets or sets default location and position of the window.
+        /// </summary>
+        public static RectD DefaultBounds
+        {
+            get
+            {
+                return defaultBounds;
+            }
+
+            set
+            {
+                defaultBounds = value;
+                Native.Window.SetDefaultBounds(defaultBounds);
+            }
+        }
 
         /// <summary>
         /// Gets or sets default control font size increment (in points) on high dpi displays (DPI greater than 96).
@@ -809,7 +827,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual RectD GetDefaultBounds()
         {
-            return new(100, 100, 400, 400);
+            return DefaultBounds;
         }
 
         /// <summary>

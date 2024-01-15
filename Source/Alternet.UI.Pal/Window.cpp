@@ -552,15 +552,32 @@ namespace Alternet::UI
         return CreateWxWindowCore(nullptr);
     }
 
+    void Window::SetDefaultBounds(const RectD& bounds)
+    {
+        _defaultBounds = bounds;
+    }
+
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();
 
+        wxPoint position = wxDefaultPosition;
+        wxSize size = wxDefaultSize;
+
+        auto bounds = _defaultBounds;
+
+        if (!bounds.IsEmpty())
+        {
+            wxRect rect(fromDip(bounds, nullptr));
+            position = wxPoint(rect.x, rect.y);
+            size = wxSize(rect.width, rect.height);
+        }
+
         _frame = new Frame(this, nullptr,
             wxID_ANY,
             "",
-            wxDefaultPosition,
-            wxDefaultSize,
+            position,
+            size,
             style);
 
         ApplyIcon(_frame);
