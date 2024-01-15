@@ -1006,6 +1006,7 @@ namespace Alternet.UI
                     return;
                 enabled = value;
                 RaiseEnabledChanged(EventArgs.Empty);
+                Invalidate();
             }
         }
 
