@@ -564,7 +564,10 @@ namespace Alternet::UI
         wxPoint position = wxDefaultPosition;
         wxSize size = wxDefaultSize;
 
-        auto bounds = _defaultBounds;
+        auto bounds = GetBounds();
+
+        if (bounds.IsEmpty())
+            bounds = _defaultBounds;
 
         if (!bounds.IsEmpty())
         {
