@@ -607,6 +607,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="LogMessage"/> event if <paramref name="condition"/>
+        /// is <c>true</c>.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <param name="condition">Log if <c>true</c>.</param>
+        public static void LogIf(object? obj, bool condition)
+        {
+            if (condition)
+                Log(obj);
+        }
+
+        /// <summary>
         /// Logs message with 'Warning' prefix.
         /// </summary>
         /// <param name="obj"></param>
