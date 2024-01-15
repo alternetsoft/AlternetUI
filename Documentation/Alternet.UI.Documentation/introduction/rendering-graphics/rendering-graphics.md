@@ -18,28 +18,28 @@ Refer to our [blog post](https://www.alternet-ui.com/blog/drawing-context-tutori
 ## Drawing Context Features
 
 Our [Drawing Sample](https://github.com/alternetsoft/alternet-ui-examples/tree/main/DrawingSample) illustrates the features AlterNET UI provides for rendering graphics.
-Below is a list of the features that <xref:Alternet.Drawing.DrawingContext> provides, grouped by category.
+Below is a list of the features that <xref:Alternet.Drawing.Graphics> provides, grouped by category.
 The screenshots are taken from the [Drawing Sample](https://github.com/alternetsoft/alternet-ui-examples/tree/main/DrawingSample).
 
 ### Geometric Shapes
 
-<xref:Alternet.Drawing.DrawingContext> class provides means to draw a variety of geometric shapes:
+<xref:Alternet.Drawing.Graphics> class provides means to draw a variety of geometric shapes:
 
 ![](images/drawing-sample-shapes.png)
 
-- Lines: <xref:Alternet.Drawing.DrawingContext.DrawLine%2A>, <xref:Alternet.Drawing.DrawingContext.DrawLines%2A>
-- Polygons: <xref:Alternet.Drawing.DrawingContext.DrawPolygon%2A>, <xref:Alternet.Drawing.DrawingContext.FillPolygon%2A>
-- Rectangles: <xref:Alternet.Drawing.DrawingContext.DrawRectangle%2A>, <xref:Alternet.Drawing.DrawingContext.FillRectangle%2A>,
-  <xref:Alternet.Drawing.DrawingContext.DrawRectangles%2A>, <xref:Alternet.Drawing.DrawingContext.FillRectangles%2A>
-- Rounded rectangles: <xref:Alternet.Drawing.DrawingContext.DrawRoundedRectangle%2A>, <xref:Alternet.Drawing.DrawingContext.FillRoundedRectangle%2A>
-- Circles and ellipses: <xref:Alternet.Drawing.DrawingContext.DrawCircle%2A>, <xref:Alternet.Drawing.DrawingContext.FillCircle%2A>,
-  <xref:Alternet.Drawing.DrawingContext.DrawEllipse%2A>, <xref:Alternet.Drawing.DrawingContext.FillEllipse%2A>
-- Curves: <xref:Alternet.Drawing.DrawingContext.DrawBezier%2A>, <xref:Alternet.Drawing.DrawingContext.DrawBeziers%2A>
-- Arcs and pies: <xref:Alternet.Drawing.DrawingContext.DrawArc%2A>, <xref:Alternet.Drawing.DrawingContext.DrawPie%2A>, <xref:Alternet.Drawing.DrawingContext.FillPie%2A>
+- Lines: <xref:Alternet.Drawing.Graphics.DrawLine%2A>, <xref:Alternet.Drawing.Graphics.DrawLines%2A>
+- Polygons: <xref:Alternet.Drawing.Graphics.DrawPolygon%2A>, <xref:Alternet.Drawing.Graphics.FillPolygon%2A>
+- Rectangles: <xref:Alternet.Drawing.Graphics.DrawRectangle%2A>, <xref:Alternet.Drawing.Graphics.FillRectangle%2A>,
+  <xref:Alternet.Drawing.Graphics.DrawRectangles%2A>, <xref:Alternet.Drawing.Graphics.FillRectangles%2A>
+- Rounded rectangles: <xref:Alternet.Drawing.Graphics.DrawRoundedRectangle%2A>, <xref:Alternet.Drawing.Graphics.FillRoundedRectangle%2A>
+- Circles and ellipses: <xref:Alternet.Drawing.Graphics.DrawCircle%2A>, <xref:Alternet.Drawing.Graphics.FillCircle%2A>,
+  <xref:Alternet.Drawing.Graphics.DrawEllipse%2A>, <xref:Alternet.Drawing.Graphics.FillEllipse%2A>
+- Curves: <xref:Alternet.Drawing.Graphics.DrawBezier%2A>, <xref:Alternet.Drawing.Graphics.DrawBeziers%2A>
+- Arcs and pies: <xref:Alternet.Drawing.Graphics.DrawArc%2A>, <xref:Alternet.Drawing.Graphics.DrawPie%2A>, <xref:Alternet.Drawing.Graphics.FillPie%2A>
 
 ### Text
 
-<xref:Alternet.Drawing.DrawingContext> allows to draw text with the specified <xref:Alternet.Drawing.Font>, bounds, and <xref:Alternet.Drawing.TextWrapping>, <xref:Alternet.Drawing.TextTrimming>,
+<xref:Alternet.Drawing.Graphics> allows to draw text with the specified <xref:Alternet.Drawing.Font>, bounds, and <xref:Alternet.Drawing.TextWrapping>, <xref:Alternet.Drawing.TextTrimming>,
 <xref:Alternet.Drawing.TextHorizontalAlignment> and <xref:Alternet.Drawing.TextVerticalAlignment>:
 
 ![](images/drawing-sample-text.png)
@@ -71,7 +71,7 @@ Below are the parts of the API responsible for different pen stroke styles:
 - Solid lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor that takes a
   <xref:Alternet.Drawing.Color> and line thickness value.
 - Dashed lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor that takes a
-  <xref:Alternet.Drawing.PenDashStyle>, or set the <xref:Alternet.Drawing.Pen.DashStyle%2A> property.
+  <xref:Alternet.Drawing.DashStyle>, or set the <xref:Alternet.Drawing.Pen.DashStyle%2A> property.
 - <xref:Alternet.Drawing.LineCap> and <xref:Alternet.Drawing.LineJoin> enumerations provide different line cap and line
   join styles.
 
@@ -95,30 +95,30 @@ Here are the types of segments supported by the <xref:Alternet.Drawing.GraphicsP
 
 ### Transforms
 
-<xref:Alternet.Drawing.TransformMatrix> provides a way to set geometric transform to a <xref:Alternet.Drawing.DrawingContext>:
+<xref:Alternet.Drawing.TransformMatrix> provides a way to set geometric transform to a <xref:Alternet.Drawing.Graphics>:
 
 ![](images/drawing-sample-transforms.png)
 
 The transforms can include translation, rotation, and scale (see the
 <xref:Alternet.Drawing.TransformMatrix.CreateTranslation%2A>, <xref:Alternet.Drawing.TransformMatrix.CreateRotation%2A>
 and <xref:Alternet.Drawing.TransformMatrix.CreateScale%2A> methods). Use the
-<xref:Alternet.Drawing.DrawingContext.Transform%2A> property of <xref:Alternet.Drawing.DrawingContext> to set the
+<xref:Alternet.Drawing.Graphics.Transform%2A> property of <xref:Alternet.Drawing.Graphics> to set the
 current transform. The transforms can be applied sequentially with a stack-like approach, using the
-<xref:Alternet.Drawing.DrawingContext.PushTransform%2A> and <xref:Alternet.Drawing.DrawingContext.Pop%2A> methods.
+<xref:Alternet.Drawing.Graphics.PushTransform%2A> and <xref:Alternet.Drawing.Graphics.Pop%2A> methods.
 
 ### Clip Regions
 
-<xref:Alternet.Drawing.Region> class provides a way to set clip region to a <xref:Alternet.Drawing.DrawingContext>:
+<xref:Alternet.Drawing.Region> class provides a way to set clip region to a <xref:Alternet.Drawing.Graphics>:
 
 ![](images/drawing-sample-clip.png)
 
-Use the <xref:Alternet.Drawing.DrawingContext.Clip%2A> property of <xref:Alternet.Drawing.DrawingContext> to set the
+Use the <xref:Alternet.Drawing.Graphics.Clip%2A> property of <xref:Alternet.Drawing.Graphics> to set the
 current clip region.
 
 ### Drawing Images
 
 <xref:Alternet.Drawing.Image> class encapsulate a graphical image.
-<xref:Alternet.Drawing.DrawingContext.DrawImage%2A> method overloads provide several ways of drawing images with a
-specified <xref:Alternet.Drawing.DrawingContext.InterpolationMode>:
+<xref:Alternet.Drawing.Graphics.DrawImage%2A> method overloads provide several ways of drawing images with a
+specified <xref:Alternet.Drawing.Graphics.InterpolationMode>:
 
 ![](images/drawing-sample-images.png)
