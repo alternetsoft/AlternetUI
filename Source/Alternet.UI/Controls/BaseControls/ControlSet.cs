@@ -180,6 +180,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Control.IsBold"/> for all the controls in the set.
+        /// </summary>
+        /// <param name="value">New value.</param>
+        public ControlSet IsBold(bool value)
+        {
+            foreach (var item in items)
+                item.IsBold = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets background color for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
