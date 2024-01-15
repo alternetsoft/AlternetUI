@@ -89,6 +89,9 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            Activated += MainWindow_Activated;
+            Deactivated += MainWindow_Deactivated;
+
             resetMenu = propGridContextMenu.Add(CommonStrings.Default.ButtonReset);
             resetMenu.Click += ResetMenu_Click;
 
@@ -165,6 +168,16 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
+        }
+
+        private void MainWindow_Deactivated(object? sender, EventArgs e)
+        {
+            Application.LogIf("Window Deactivated", false);
+        }
+
+        private void MainWindow_Activated(object? sender, EventArgs e)
+        {
+            Application.LogIf("Window Activated", false);
         }
 
         private void PropGrid_PropertyRightClick(object? sender, EventArgs e)
