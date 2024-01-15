@@ -3,6 +3,6 @@ set -euo pipefail
 pushd Install.Scripts
 pushd BuildAndRunSamples
 
-./BuildAndRun.ControlsSample.sh
+./BuildAndRun.ControlsSample.sh &
 popd
 popd
