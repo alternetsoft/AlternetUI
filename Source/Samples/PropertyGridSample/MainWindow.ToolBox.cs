@@ -59,7 +59,6 @@ namespace PropertyGridSample
                 [
                     typeof(Border),
                     typeof(PictureBox),
-                    typeof(Label),
                     typeof(Button),
                     typeof(GenericToolBar),
                     typeof(SplittedPanel),
@@ -70,6 +69,8 @@ namespace PropertyGridSample
                     typeof(DateTimePicker),
                     typeof(GroupBox),
                     typeof(HorizontalStackPanel),
+                    typeof(Label),
+                    typeof(GenericLabel),
                     typeof(LinkLabel),
                     typeof(ListBox),
                     typeof(ListView),

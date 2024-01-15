@@ -62,7 +62,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
 
         /// <summary>
-        /// Displays the shortcut menu at the specified position.
+        /// Displays the menu at the specified position.
         /// </summary>
         /// <param name="control">A <see cref="Control"/> that specifies the control with which
         /// this shortcut menu is associated.</param>

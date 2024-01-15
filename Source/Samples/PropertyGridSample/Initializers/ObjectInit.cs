@@ -84,6 +84,13 @@ namespace PropertyGridSample
             Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
             Actions.Add(typeof(CardPanel), InitCardPanel);
             Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);
+            Actions.Add(typeof(TextBox), InitTextBox);
+            Actions.Add(typeof(RichTextBox), InitRichTextBox);
+            Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
+            Actions.Add(typeof(GenericLabel), InitGenericLabel);
+            Actions.Add(typeof(Label), InitLabel);
+            Actions.Add(typeof(LinkLabel), InitLinkLabel);
+            Actions.Add(typeof(Button), InitButton);
 
             Actions.Add(typeof(Slider), (c) =>
             {
@@ -117,38 +124,10 @@ namespace PropertyGridSample
                 }
             });
 
-            Actions.Add(typeof(Label), (c) =>
-            { 
-                (c as Label)!.Text = "Label";
-                (c as Label)!.HorizontalAlignment = HorizontalAlignment.Left;
-            });
-
             Actions.Add(typeof(StatusBar), (c) =>
             {
                 (c as StatusBar)!.Panels.Add(new("text1"));
                 (c as StatusBar)!.Panels.Add(new("text2"));
-            });
-
-            Actions.Add(typeof(RichTextBox), (c) =>
-            {
-                var control = (c as RichTextBox)!;
-                control.SuggestedSize = defaultListSize;
-            });
-
-            Actions.Add(typeof(MultilineTextBox), (c) =>
-            {
-                var control = (c as MultilineTextBox)!;
-                control.SuggestedSize = defaultListSize;
-                control.Text = LoremIpsum;
-            });
-
-            Actions.Add(typeof(Button), (c) =>
-            {
-                var button = (c as Button)!;
-                button.Text = "Button";
-                button.StateImages = ButtonImages;
-                button.SuggestedHeight = 100;
-                button.HorizontalAlignment = HorizontalAlignment.Left;
             });
 
             Actions.Add(typeof(CheckBox), (c) =>
@@ -197,14 +176,6 @@ namespace PropertyGridSample
                 AddTenItems(checkListBox.Items);
             });
 
-            Actions.Add(typeof(LinkLabel), (c) =>
-            {
-                LinkLabel linkLabel = (c as LinkLabel)!;
-                var s = "https://www.google.com";
-                linkLabel.Text = "LinkLabel";
-                linkLabel.Url = s;
-            });
-
             Actions.Add(typeof(GroupBox), (c) =>
             {
                 GroupBox groupBox = (c as GroupBox)!;
@@ -245,13 +216,6 @@ namespace PropertyGridSample
                 control.SuggestedWidth = 200;
             });
 
-            Actions.Add(typeof(TextBox), (c) =>
-            {
-                TextBox control = (c as TextBox)!;
-                control.Text = "some text";
-                control.SuggestedWidth = 200;
-            });
-
             Actions.Add(typeof(ColorPicker), (c) =>
             {
                 ColorPicker control = (c as ColorPicker)!;
@@ -261,7 +225,6 @@ namespace PropertyGridSample
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
-                //control.BackgroundColor = Color.Cornsilk;
             });
         }
 

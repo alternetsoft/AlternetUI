@@ -162,11 +162,6 @@ ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
     return obj->GetModal();
 }
 
-ALTERNET_UI_API c_bool Window_GetIsActive_(Window* obj)
-{
-    return obj->GetIsActive();
-}
-
 ALTERNET_UI_API Window* Window_GetActiveWindow_()
 {
     return Window::GetActiveWindow();
@@ -240,6 +235,11 @@ ALTERNET_UI_API Window* Window_GetOwnedWindowsItemAt_(Window* obj, void* array, 
 ALTERNET_UI_API void Window_CloseOwnedWindowsArray_(Window* obj, void* array)
 {
     obj->CloseOwnedWindowsArray(array);
+}
+
+ALTERNET_UI_API void Window_SetDefaultBounds_(RectD bounds)
+{
+    Window::SetDefaultBounds(bounds);
 }
 
 ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)

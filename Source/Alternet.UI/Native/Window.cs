@@ -244,16 +244,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public bool IsActive
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetIsActive_(NativePointer);
-            }
-            
-        }
-        
         public static Window ActiveWindow
         {
             get
@@ -377,6 +367,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static void SetDefaultBounds(Alternet.Drawing.RectD bounds)
+        {
+            NativeApi.Window_SetDefaultBounds_(bounds);
+        }
+        
         public static void SetParkingWindowFont(Font? font)
         {
             NativeApi.Window_SetParkingWindowFont_(font?.NativePointer ?? IntPtr.Zero);
@@ -459,14 +454,6 @@ namespace Alternet.UI.Native
                 {
                     LocationChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
-                case NativeApi.WindowEvent.Activated:
-                {
-                    Activated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.WindowEvent.Deactivated:
-                {
-                    Deactivated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
@@ -476,8 +463,6 @@ namespace Alternet.UI.Native
         public event EventHandler? SizeChanged;
         public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
         public event EventHandler? LocationChanged;
-        public event EventHandler? Activated;
-        public event EventHandler? Deactivated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -494,8 +479,6 @@ namespace Alternet.UI.Native
                 SizeChanged,
                 InputBindingCommandExecuted,
                 LocationChanged,
-                Activated,
-                Deactivated,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -592,9 +575,6 @@ namespace Alternet.UI.Native
             public static extern bool Window_GetModal_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Window_GetIsActive_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_GetActiveWindow_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -638,6 +618,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_CloseOwnedWindowsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetDefaultBounds_(Alternet.Drawing.RectD bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetParkingWindowFont_(IntPtr font);

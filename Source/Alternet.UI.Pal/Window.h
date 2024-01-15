@@ -32,6 +32,11 @@ namespace Alternet::UI
         Window* GetWindow();
         
         void RemoveFrame();
+
+        bool Layout() override
+        {
+            return false;
+        }
     private:
         Window* _window;
         bool _frameRemoved = false;
@@ -104,7 +109,6 @@ namespace Alternet::UI
         void OnClose(wxCloseEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnMove(wxMoveEvent& event);
-        void OnActivate(wxActivateEvent& event);
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);
         void OnCommand(wxCommandEvent& event);
@@ -171,6 +175,7 @@ namespace Alternet::UI
         IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 
+        inline static RectD _defaultBounds = RectD(0, 0, 0, 0);
         inline static FrameDisabler* _modalWindowDisabler = nullptr;
         inline static std::stack<Window*> _modalWindows;
 

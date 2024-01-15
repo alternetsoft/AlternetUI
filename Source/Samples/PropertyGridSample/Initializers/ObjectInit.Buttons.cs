@@ -10,6 +10,16 @@ namespace PropertyGridSample
 {
     internal partial class ObjectInit
     {
+        public static void InitButton(object control)
+        {
+            if (control is not Button button)
+                return;
+            button.Text = "Button";
+            button.StateImages = ButtonImages;
+            button.SuggestedHeight = 100;
+            button.HorizontalAlignment = HorizontalAlignment.Left;
+        }
+
         public static void InitSpeedButton(object control)
         {
             if (control is not SpeedButton button)

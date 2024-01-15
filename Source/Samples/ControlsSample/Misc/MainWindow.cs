@@ -89,17 +89,16 @@ namespace ControlsSample
             eventsControl.Height = 150;
             eventsControl.Parent = splitterPanel;
 
-            // splitterPanel.SashGravity = 1.0;
-
-            /*// Split is called at the end. This is done because we need to be sure that
-            // used controls will not be recreated due to property changes.
-            pageContainer.SplitVerticalDip(140);*/
-            /*splitterPanel.SplitHorizontalDip(pageContainer, eventsControl, -150);*/
             pageContainer.SelectedIndex = 0;
             pageContainer.TreeView.SetFocusIfPossible();
 
-            this.SizeChanged += MainWindow_SizeChanged;
-            this.StateChanged += MainWindow_StateChanged;
+            var logSizeChanged = false;
+
+            if (logSizeChanged)
+            {
+                SizeChanged += MainWindow_SizeChanged;
+                StateChanged += MainWindow_StateChanged;
+            }
         }
 
         private void MainWindow_StateChanged(object? sender, EventArgs e)

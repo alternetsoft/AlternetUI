@@ -242,6 +242,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets reset method for the specified property.
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="propName"></param>
+        /// <returns></returns>
+        public static MethodInfo? GetResetPropMethod(object instance, string propName)
+        {
+            var methodName = "Reset" + propName;
+            var type = instance.GetType();
+            var result = type.GetMethod(methodName, []);
+            return result;
+        }
+
+        /// <summary>
         /// Gets whether specified type has declared events (events declared in the parent
         /// types are not counted).
         /// </summary>
@@ -579,6 +593,25 @@ namespace Alternet.UI
             var browsable = p.GetCustomAttribute(typeof(BrowsableAttribute)) as BrowsableAttribute;
             if (browsable is not null)
                 return browsable.Browsable;
+            return true;
+        }
+
+        /// <summary>
+        /// Gets default value of the property using <see cref="DefaultValueAttribute"/>.
+        /// </summary>
+        /// <param name="p">Property information.</param>
+        /// <param name="defValue">Default value of the property.</param>
+        /// <returns></returns>
+        public static bool GetDefaultValue(PropertyInfo p, out object? defValue)
+        {
+            var attr = p.GetCustomAttribute(typeof(DefaultValueAttribute));
+            if (attr is not DefaultValueAttribute defaultValueAttr)
+            {
+                defValue = null;
+                return false;
+            }
+
+            defValue = defaultValueAttr.Value;
             return true;
         }
 

@@ -7,7 +7,7 @@ private void OnTextInputKeyDown(object sender, KeyEventArgs e)
     }
 }
 
-private void OnTextInputButtonClick(object sender, RoutedEventArgs e)
+private void OnTextInputButtonClick(object sender, EventArgs e)
 {
     handle();
     e.Handled = true;

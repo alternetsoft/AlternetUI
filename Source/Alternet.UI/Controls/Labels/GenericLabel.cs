@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -56,6 +57,18 @@ namespace Alternet.UI
             return new LabelHandler();
         }
 
+        /// <summary>
+        /// Gets <see cref="Font"/> which is used to draw labels text.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Font GetLabelFont()
+        {
+            var result = Font ?? UI.Control.DefaultFont;
+            if (IsBold)
+                result = result.AsBold;
+            return result;
+        }
+
         internal class LabelHandler : ControlHandler<GenericLabel>
         {
             protected override bool NeedsPaint => true;
@@ -64,23 +77,42 @@ namespace Alternet.UI
             {
                 if (Control.Text != null)
                 {
+                    Color color;
+
+                    if (Control.Enabled)
+                        color = Control.ForeColor;
+                    else
+                        color = SystemColors.GrayText;
+
                     drawingContext.DrawText(
                         Control.Text,
                         Control.ChildrenLayoutBounds.Location,
-                        Control.Font ?? UI.Control.DefaultFont,
-                        Control.ForeColor,
+                        Control.GetLabelFont(),
+                        color,
                         Color.Empty);
                 }
             }
 
             public override SizeD GetPreferredSize(SizeD availableSize)
             {
-                var text = Control.Text;
-                if (text == null)
-                    return new SizeD();
+                var specifiedWidth = Control.SuggestedWidth;
+                var specifiedHeight = Control.SuggestedHeight;
 
-                using var dc = Control.CreateDrawingContext();
-                var result = dc.GetTextExtent(text, Control.Font ?? UI.Control.DefaultFont, Control);
+                SizeD result = SizeD.Empty;
+
+                var text = Control.Text;
+                if (text is not null)
+                {
+                    using var dc = Control.CreateDrawingContext();
+                    result = dc.GetTextExtent(text, Control.GetLabelFont(), Control);
+                }
+
+                if (!double.IsNaN(specifiedWidth))
+                    result.Width = Math.Max(result.Width, specifiedWidth);
+
+                if (!double.IsNaN(specifiedHeight))
+                    result.Height = Math.Max(result.Height, specifiedHeight);
+
                 return result + Control.Padding.Size;
             }
         }

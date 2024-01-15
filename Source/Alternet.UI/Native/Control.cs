@@ -189,6 +189,16 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsActive
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetIsActive_(NativePointer);
+            }
+            
+        }
+        
         public bool IsHandleCreated
         {
             get
@@ -565,6 +575,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int GetScrollBarMaximum(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
+        }
+        
+        public int GetScrollBarEvtKind()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarEvtKind_(NativePointer);
+        }
+        
+        public int GetScrollBarEvtPosition()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarEvtPosition_(NativePointer);
+        }
+        
         public static Control? HitTest(Alternet.Drawing.PointD screenPoint)
         {
             var _nnn = NativeApi.Control_HitTest_(screenPoint);
@@ -844,24 +872,6 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
         }
         
-        public int GetScrollBarMaximum(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
-        }
-        
-        public int GetScrollBarEvtKind()
-        {
-            CheckDisposed();
-            return NativeApi.Control_GetScrollBarEvtKind_(NativePointer);
-        }
-        
-        public int GetScrollBarEvtPosition()
-        {
-            CheckDisposed();
-            return NativeApi.Control_GetScrollBarEvtPosition_(NativePointer);
-        }
-        
         public void RefreshRect(Alternet.Drawing.RectD rect, bool eraseBackground)
         {
             CheckDisposed();
@@ -1080,6 +1090,14 @@ namespace Alternet.UI.Native
                 {
                     SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.Activated:
+                {
+                    Activated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.Deactivated:
+                {
+                    Deactivated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -1101,6 +1119,8 @@ namespace Alternet.UI.Native
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
         public event EventHandler? SizeChanged;
+        public event EventHandler? Activated;
+        public event EventHandler? Deactivated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -1129,6 +1149,8 @@ namespace Alternet.UI.Native
                 VerticalScrollBarValueChanged,
                 HorizontalScrollBarValueChanged,
                 SizeChanged,
+                Activated,
+                Deactivated,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1199,6 +1221,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetId_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsActive_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsHandleCreated_(IntPtr obj);
@@ -1336,6 +1361,15 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarEvtKind_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarEvtPosition_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_HitTest_(Alternet.Drawing.PointD screenPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1469,15 +1503,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarEvtKind_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarEvtPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_RefreshRect_(IntPtr obj, Alternet.Drawing.RectD rect, bool eraseBackground);

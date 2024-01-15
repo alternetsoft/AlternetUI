@@ -16,14 +16,8 @@ namespace Alternet.UI
         private LogListBox? logControl;
         private ListBox? actionsControl;
 
-        private readonly CardPanelHeader rightPanelHeader = new();
-
         public SplittedPanelEx()
         {
-            rightPanelHeader.Margin = (0, 5, 0, 0);
-            rightPanelHeader.BorderWidth = 0;
-            rightPanelHeader.Parent = RightPanel;
-            rightPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             TopVisible = false;
         }
 
@@ -55,13 +49,15 @@ namespace Alternet.UI
                         Parent = RightPanel,
                     };
                     actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
-                    rightPanelHeader.Add(CommonStrings.Default.NotebookTabTitleActions, actionsControl);
-                    rightPanelHeader.SelectFirstTab();
+                    RightPanel.Header.Add(CommonStrings.Default.NotebookTabTitleActions, actionsControl);
+                    RightPanel.Header.SelectFirstTab();
                 }
 
                 return actionsControl;
             }
         }
+
+        public new SideBarPanel RightPanel => (SideBarPanel)base.RightPanel;
 
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> which can be used to show properties.
@@ -81,8 +77,8 @@ namespace Alternet.UI
                         Parent = RightPanel,
                     };
 
-                    rightPanelHeader.Add(CommonStrings.Default.WindowTitleProperties, propertyGrid);
-                    rightPanelHeader.SelectFirstTab();
+                    RightPanel.Header.Add(CommonStrings.Default.WindowTitleProperties, propertyGrid);
+                    RightPanel.Header.SelectFirstTab();
                 }
 
                 return propertyGrid;
@@ -221,9 +217,7 @@ namespace Alternet.UI
 
         protected override Control CreateRightPanel()
         {
-            var result = new VerticalStackPanel();
-            result.AllowStretch = true;
-            return result;
+            return new SideBarPanel();
         }
     }
 }

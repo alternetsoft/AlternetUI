@@ -18,6 +18,12 @@ namespace PropertyGridSample
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
 
+#pragma warning disable
+        internal void RunTests()
+#pragma warning restore
+        {
+        }
+
         void InitSimpleTestActions()
         {
 #if DEBUG
@@ -33,6 +39,10 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Font", TestGenericToolBarFont);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background", TestGenericToolBarBackground);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Reset Background", TestGenericToolBarResetBackground);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Clear", TestGenericToolBarClear);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Add OK button", TestGenericToolBarAddOk);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
+            PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
 
             PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
             PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);
@@ -173,6 +183,40 @@ namespace PropertyGridSample
             control.BackgroundColor = null;
         }
 
+        void TestGenericToolBarClear()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.DeleteAll();
+        }
+
+        void TestGenericToolBarAddOk()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.AddSpeedBtn(KnownButton.OK);
+        }
+
+        void TestGenericToolBarAddCancel()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.AddSpeedBtn(KnownButton.Cancel);
+        }
+
+        void TestGenericToolBarReInit()
+        {
+            var control = GetSelectedControl<GenericToolBar>();
+            if (control is null)
+                return;
+            control.DeleteAll();
+            ObjectInit.InitGenericToolBar(control);
+        }
+
+
         void TestGenericToolBarResetBackground()
         {
             var control = GetSelectedControl<GenericToolBar>();
@@ -224,12 +268,6 @@ namespace PropertyGridSample
             control.DeleteTool(childId);
         }
 
-#pragma warning disable
-        internal void RunTests()
-#pragma warning restore
-        {
-        }
-
         internal void LogPropGridColors()
         {
             var color = panel.PropGrid.GetCurrentColors();
@@ -265,8 +303,8 @@ namespace PropertyGridSample
 
         private void ControlPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            /*if (e.Source == controlPanel)
-                UpdatePropertyGrid(controlPanel);*/
+            if (e.Source == parentParent && e.RightButton == MouseButtonState.Pressed)
+                UpdatePropertyGrid(controlPanelBorder);
         }
 
         private void LogEvent(string name, bool logAlways = false)

@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class Window : Control
     {
+        public static void SetDefaultBounds(RectD bounds) { }
+
         public static void SetParkingWindowFont(Font? font) { }
 
         [NativeEvent(cancellable: true)]
@@ -16,8 +18,6 @@ namespace NativeApi.Api
         public event EventHandler SizeChanged;
         public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
         public event EventHandler LocationChanged;
-        public event EventHandler Activated;
-        public event EventHandler Deactivated;
 
         public string Title { get; set; }
         public WindowStartLocation WindowStartLocation { get; set; }
@@ -38,7 +38,6 @@ namespace NativeApi.Api
         public void ShowModal() { }
         public void Close() { }
 
-        public bool IsActive { get; }
         public void Activate() { }
         public static Window ActiveWindow { get; }
         public Window[] OwnedWindows { get; }

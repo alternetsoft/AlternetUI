@@ -35,6 +35,9 @@ namespace PropertyGridSample
             Padding = 0,
         };
 
+        private readonly ContextMenuStrip propGridContextMenu = new();
+        private readonly MenuItem resetMenu;
+
         private bool updatePropertyGrid = false;
 
         static MainWindow()
@@ -86,15 +89,22 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            Activated += MainWindow_Activated;
+            Deactivated += MainWindow_Deactivated;
+
+            resetMenu = propGridContextMenu.Add(CommonStrings.Default.ButtonReset);
+            resetMenu.Click += ResetMenu_Click;
+
+            propGridContextMenu.Opening += PropGridContextMenu_Opening;
+
             controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
             controlPanelBorder.Normal.DrawDefaultBorder = false;
 
-            /*panel.LogControlUseNotebook = false;
-            panel.LeftTreeViewUseNotebook = false;*/
             panel.BindApplicationLog();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
+            PropGrid.PropertyRightClick += PropGrid_PropertyRightClick;
             PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             PropertyGridSettings.Default = new(this);
             PropGrid.ProcessException += PropertyGrid_ProcessException;
@@ -154,20 +164,92 @@ namespace PropertyGridSample
             ComponentDesigner.SafeDefault.PropertyChanged += Designer_PropertyChanged;
             ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
 
-            controlPanel.MouseDown += ControlPanel_MouseDown;
+            panel.FillPanel.MouseDown += ControlPanel_MouseDown;
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
         }
 
-        /*private void UpdateActions()
+        private void MainWindow_Deactivated(object? sender, EventArgs e)
         {
-            panel.RemoveActions();
-            if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
+            Application.LogIf("Window Deactivated", false);
+        }
+
+        private void MainWindow_Activated(object? sender, EventArgs e)
+        {
+            Application.LogIf("Window Activated", false);
+        }
+
+        private void PropGrid_PropertyRightClick(object? sender, EventArgs e)
+        {
+            var selectedProp = PropGrid.GetSelection();
+            if (selectedProp == null)
                 return;
-            var type = item.InstanceType;
-            panel.AddActions(type);
-        }*/
+            PropGrid.ShowPopupMenu(propGridContextMenu);
+        }
+
+        private bool CanResetProp(IPropertyGridItem? item)
+        {
+            if (item is null || item.PropInfo is null || item.Instance is null)
+                return false;
+            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
+            var value = item.PropInfo.GetValue(item.Instance);
+            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
+            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out _);
+            return hasDevaultAttr || resetMethod != null || (nullable && value is not null);
+        }
+
+        private void ResetProp(IPropertyGridItem? item)
+        {
+            if (item is null || item.PropInfo is null || item.Instance is null)
+                return;
+
+            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
+            if (resetMethod is not null)
+            {
+                resetMethod.Invoke(item.Instance, []);
+                PropGrid.ReloadPropertyValue(item);
+                return;
+            }
+            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out var defValue);
+            if (hasDevaultAttr)
+            {
+                item.PropInfo.SetValue(item.Instance, defValue);
+                PropGrid.ReloadPropertyValue(item);
+                return;
+            }
+
+            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
+            var value = item.PropInfo.GetValue(item.Instance);
+            if (nullable && value is not null)
+            {
+                item.PropInfo.SetValue(item.Instance, null);
+                PropGrid.ReloadPropertyValue(item);
+                return;
+            }
+        }
+
+        private void ResetMenu_Click(object? sender, EventArgs e)
+        {
+            var selectedProp = PropGrid.GetSelection();
+            Application.Log($"Reset: {selectedProp?.DefaultName}");
+            ResetProp(selectedProp);
+        }
+
+        private void PropGridContextMenu_Opening(object? sender, CancelEventArgs e)
+        {
+            var mousePos = Mouse.GetPosition(PropGrid);
+            var column = PropGrid.GetHitTestColumn(mousePos);
+            if (column != 0)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            var selectedProp = PropGrid.GetSelection();
+
+            resetMenu.Enabled = CanResetProp(selectedProp);
+        }
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {

@@ -60,9 +60,6 @@ void SetModalResult(ModalResult value);
 bool GetModal();
 
 
-bool GetIsActive();
-
-
 static Window* GetActiveWindow();
 
 
@@ -89,6 +86,7 @@ void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);
 void CloseOwnedWindowsArray(void* array);
+static void SetDefaultBounds(const RectD& bounds);
 static void SetParkingWindowFont(Font* font);
 void ShowModal();
 void Close();
@@ -103,8 +101,6 @@ enum class WindowEvent
     SizeChanged,
     InputBindingCommandExecuted,
     LocationChanged,
-    Activated,
-    Deactivated,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

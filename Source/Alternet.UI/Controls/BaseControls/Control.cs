@@ -61,6 +61,7 @@ namespace Alternet.UI
         private Cursor? cursor;
         private string? toolTip;
         private ObjectUniqueId? uniqueId;
+        private string? text;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -77,6 +78,26 @@ namespace Alternet.UI
         /// </summary>
         [Category("Action")]
         public event ScrollEventHandler? Scroll;
+
+        /// <summary>
+        /// Occurs when the window is activated in code or by the user.
+        /// </summary>
+        /// <remarks>
+        /// To activate a window at run time using code, call the <see cref="Window.Activate"/> method.
+        /// You can use this event for
+        /// tasks such as updating the contents of the window based on changes made to the
+        /// window's data when the window was not activated.
+        /// </remarks>
+        public event EventHandler? Activated;
+
+        /// <summary>
+        /// Occurs when the window loses focus and is no longer the active window.
+        /// </summary>
+        /// <remarks>
+        /// You can use this event to perform tasks such as updating another window in
+        /// your application with data from the deactivated window.
+        /// </remarks>
+        public event EventHandler? Deactivated;
 
         /// <summary>
         /// Occurs when the contol gets focus.
@@ -513,11 +534,12 @@ namespace Alternet.UI
         {
             get
             {
-                return string.Empty;
+                return text ?? string.Empty;
             }
 
             set
             {
+                text = value ?? string.Empty;
             }
         }
 
@@ -984,6 +1006,7 @@ namespace Alternet.UI
                     return;
                 enabled = value;
                 RaiseEnabledChanged(EventArgs.Empty);
+                Invalidate();
             }
         }
 
@@ -1210,6 +1233,7 @@ namespace Alternet.UI
                     return;
 
                 suggestedSize = value;
+                PerformLayout();
             }
         }
 
@@ -1536,6 +1560,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
+        [Browsable(false)]
         public virtual Color? BackgroundColor
         {
             get
@@ -1603,7 +1628,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        [Browsable(false)]
         public virtual Color ForeColor
         {
             get
@@ -1625,7 +1649,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        [Browsable(false)]
         public virtual Color BackColor
         {
             get
@@ -1647,6 +1670,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
+        [Browsable(false)]
         public virtual Color? ForegroundColor
         {
             get
@@ -1826,7 +1850,7 @@ namespace Alternet.UI
         /// Gets real font value.
         /// </summary>
         /// <remarks>
-        /// Returns font event if <see cref="Font"/> property is <c>null</c>.
+        /// Returns font even if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
         public virtual Font? RealFont => Font.FromInternal(NativeControl?.Font);
@@ -1848,7 +1872,7 @@ namespace Alternet.UI
                 NativeControl.IsBold = value;
                 Handler.RaiseLayoutChanged();
                 PerformLayout();
-                Refresh();
+                Invalidate();
             }
         }
 

@@ -2422,7 +2422,7 @@ namespace Alternet.UI
             string propName = propInfo.Name;
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
-            propValue ??= Color.Black;
+            propValue ??= Color.Empty;
             var prm = ConstructNewItemParams(instance, propInfo);
             var value = (Color)propValue;
             prop = CreateColorItemWithKind(label, name, value, prm);

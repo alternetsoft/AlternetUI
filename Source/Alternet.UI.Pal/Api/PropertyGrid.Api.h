@@ -89,6 +89,26 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
     obj->SetCreateStyleEx(value);
 }
 
+ALTERNET_UI_API void PropertyGrid_RefreshProperty_(PropertyGrid* obj, void* p)
+{
+    obj->RefreshProperty(p);
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value)
+{
+    return obj->CreateColorProperty(label, name, value);
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyReadOnly_(PropertyGrid* obj, void* id, c_bool set, int flags)
+{
+    obj->SetPropertyReadOnly(id, set, flags);
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyValueUnspecified_(PropertyGrid* obj, void* id)
+{
+    obj->SetPropertyValueUnspecified(id);
+}
+
 ALTERNET_UI_API void* PropertyGrid_AppendIn_(PropertyGrid* obj, void* id, void* newproperty)
 {
     return obj->AppendIn(id, newproperty);
@@ -397,6 +417,26 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttribute_(PropertyGrid* obj, void*
 ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, const char16_t* attrName, void* variant)
 {
     obj->SetPropertyAttributeAll(attrName, variant);
+}
+
+ALTERNET_UI_API int PropertyGrid_GetSplitterPosition_(PropertyGrid* obj, uint32_t splitterIndex)
+{
+    return obj->GetSplitterPosition(splitterIndex);
+}
+
+ALTERNET_UI_API int PropertyGrid_GetVerticalSpacing_(PropertyGrid* obj)
+{
+    return obj->GetVerticalSpacing();
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_IsEditorFocused_(PropertyGrid* obj)
+{
+    return obj->IsEditorFocused();
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_IsEditorsValueModified_(PropertyGrid* obj)
+{
+    return obj->IsEditorsValueModified();
 }
 
 ALTERNET_UI_API c_bool PropertyGrid_IsAnyModified_(PropertyGrid* obj)
@@ -804,24 +844,24 @@ ALTERNET_UI_API void PropertyGrid_Sort_(PropertyGrid* obj, int flags)
     obj->Sort(flags);
 }
 
-ALTERNET_UI_API void PropertyGrid_RefreshProperty_(PropertyGrid* obj, void* p)
+ALTERNET_UI_API PointI_C PropertyGrid_CalcScrolledPosition_(PropertyGrid* obj, PointI point)
 {
-    obj->RefreshProperty(p);
+    return obj->CalcScrolledPosition(point);
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value)
+ALTERNET_UI_API PointI_C PropertyGrid_CalcUnscrolledPosition_(PropertyGrid* obj, PointI point)
 {
-    return obj->CreateColorProperty(label, name, value);
+    return obj->CalcUnscrolledPosition(point);
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyReadOnly_(PropertyGrid* obj, void* id, c_bool set, int flags)
+ALTERNET_UI_API int PropertyGrid_GetHitTestColumn_(PropertyGrid* obj, PointI point)
 {
-    obj->SetPropertyReadOnly(id, set, flags);
+    return obj->GetHitTestColumn(point);
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyValueUnspecified_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void* PropertyGrid_GetHitTestProp_(PropertyGrid* obj, PointI point)
 {
-    obj->SetPropertyValueUnspecified(id);
+    return obj->GetHitTestProp(point);
 }
 
 ALTERNET_UI_API void* PropertyGrid_ColorDatabaseCreate_()
@@ -1012,26 +1052,6 @@ ALTERNET_UI_API Color_C PropertyGrid_GetSelectionBackgroundColor_(PropertyGrid* 
 ALTERNET_UI_API Color_C PropertyGrid_GetSelectionForegroundColor_(PropertyGrid* obj)
 {
     return obj->GetSelectionForegroundColor();
-}
-
-ALTERNET_UI_API int PropertyGrid_GetSplitterPosition_(PropertyGrid* obj, uint32_t splitterIndex)
-{
-    return obj->GetSplitterPosition(splitterIndex);
-}
-
-ALTERNET_UI_API int PropertyGrid_GetVerticalSpacing_(PropertyGrid* obj)
-{
-    return obj->GetVerticalSpacing();
-}
-
-ALTERNET_UI_API c_bool PropertyGrid_IsEditorFocused_(PropertyGrid* obj)
-{
-    return obj->IsEditorFocused();
-}
-
-ALTERNET_UI_API c_bool PropertyGrid_IsEditorsValueModified_(PropertyGrid* obj)
-{
-    return obj->IsEditorsValueModified();
 }
 
 ALTERNET_UI_API void PropertyGrid_SetEventCallback_(PropertyGrid::PropertyGridEventCallbackType callback)

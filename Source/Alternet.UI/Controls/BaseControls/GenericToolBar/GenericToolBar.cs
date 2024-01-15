@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -195,6 +196,7 @@ namespace Alternet.UI
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
+        [Browsable(false)]
         public ImageToText ImageToText
         {
             get => imageToText;
@@ -216,6 +218,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets items added to the control.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyList<Control> Items => panel.Children;
 
         /// <summary>
@@ -259,6 +262,23 @@ namespace Alternet.UI
             {
                 base.Font = value;
                 SetChildrenFont(value, true);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool IsBold
+        {
+            get
+            {
+                return base.IsBold;
+            }
+
+            set
+            {
+                if (IsBold == value)
+                    return;
+                base.IsBold = value;
+                GetChildren(true).IsBold(value);
             }
         }
 
@@ -894,6 +914,9 @@ namespace Alternet.UI
         /// Deletes items with the specified id.
         /// </summary>
         /// <param name="id">Item id.</param>
+        /// <remarks>
+        /// This method disposes tool control.
+        /// </remarks>
         public virtual void DeleteTool(ObjectUniqueId id)
         {
             var item = GetToolControl(id);
@@ -901,6 +924,31 @@ namespace Alternet.UI
                 return;
             item.Parent = null;
             item.Dispose();
+        }
+
+        /// <summary>
+        /// Deletes all items from the control.
+        /// </summary>
+        /// <remarks>
+        /// This method disposes tool controls.
+        /// </remarks>
+        public virtual void DeleteAll()
+        {
+            Stack<Control> controls = [];
+            controls.PushRange(Items);
+            SuspendLayout();
+            try
+            {
+                foreach (var control in controls)
+                {
+                    control.Parent = null;
+                    control.Dispose();
+                }
+            }
+            finally
+            {
+                ResumeLayout();
+            }
         }
 
         /// <summary>

@@ -3,21 +3,14 @@ This article explains the architecture of the input systems in AlteNET UI.
 
 ## Input API
  The primary input API exposure is found on the base element classes:
- <xref:Alternet.UI.UIElement> and
- <xref:Alternet.UI.FrameworkElement>. These
+ <xref:Alternet.UI.UIElement>, <xref:Alternet.UI.FrameworkElement> and <xref:Alternet.UI.Control>. These
  classes provide functionality for input events related to key presses, mouse
  buttons, mouse-wheel, mouse movement, focus management, and mouse capture, to
  name a few. By placing the input API on the base elements, rather than treating
  all input events as a service, the input architecture enables the input events
  to be sourced by a particular object in the UI and to support an event routing
  scheme whereby more than one element has an opportunity to handle an input
- event. Many input events have a pair of events associated with them. For
- example, the key-down event is associated with the
- <xref:Alternet.UI.Keyboard.KeyDownEvent> and
- <xref:Alternet.UI.Keyboard.PreviewKeyDownEvent> events. The difference in
- these events is in how they are routed to the target element. Preview events
- tunnel down the element tree from the root element to the target element.
- Bubbling events bubble up from the target element to the root element.
+ event. 
 
 ### Keyboard and Mouse Classes
  In addition to the input API on the base element classes, the
@@ -71,15 +64,6 @@ This article explains the architecture of the input systems in AlteNET UI.
  root of the element tree and works down, ending with the original source
  element. For more information about routed events, see [Routed Events](../routed-events/routed-events.md).
 
- AlterNET UI input events generally come in pairs that consist of a tunneling event and
- a bubbling event. Tunneling events are distinguished from bubbling events with
- the "Preview" prefix. For instance,
- <xref:Alternet.UI.Mouse.PreviewMouseMoveEvent> is the tunneling version of
- a mouse move event and <xref:Alternet.UI.Mouse.MouseMoveEvent> is the
- bubbling version of this event. This event pairing is a convention that is
- implemented at the element level and is not an inherent capability of the AlterNET UI
- event system.
-
 ## Handling Input Events
  To handle an element's input, an event handler must be associated with that
  particular event. In UIXML this is straightforward: you reference the name of
@@ -103,7 +87,7 @@ This article explains the architecture of the input systems in AlteNET UI.
  The first section of the example creates the
  <xref:Alternet.UI.StackPanel> and the
  <xref:Alternet.UI.Button> and attaches the event handler for the
- <xref:Alternet.UI.UIElement.KeyDown>.
+ <xref:Alternet.UI.Control.KeyDown>.
 
  [!code-xml[](./snippets/Input_OvwKeyboardExampleUIXML.uixml)]
 
@@ -153,19 +137,19 @@ This article explains the architecture of the input systems in AlteNET UI.
    [!code-csharp[](./snippets/Input_OvwMouseExampleLeaveHandler.cs)]
 
 ## Text Input
- The <xref:Alternet.UI.UIElement.TextInput> event enables you to listen
+ The <xref:Alternet.UI.Control.KeyPress> event enables you to listen
  for text input in a device-independent manner. The keyboard is the primary
  means of text input, but speech, handwriting, and other input devices can
  generate text input also.
 
  For keyboard input, AlterNET UI first sends the appropriate
- <xref:Alternet.UI.UIElement.KeyDown>/<xref:Alternet.UI.UIElement.KeyUp>
+ <xref:Alternet.UI.Control.KeyDown>/<xref:Alternet.UI.Control.KeyUp>
  events. If those events are not handled, and the key is textual (rather than a
  control key such as directional arrows or function keys), then a
- <xref:Alternet.UI.UIElement.TextInput> event is raised. There is not
+ <xref:Alternet.UI.Control.KeyPress> event is raised. There is not
  always a simple one-to-one mapping between
- <xref:Alternet.UI.UIElement.KeyDown>/<xref:Alternet.UI.UIElement.KeyUp>
- and <xref:Alternet.UI.UIElement.TextInput> events because multiple
+ <xref:Alternet.UI.Control.KeyDown>/<xref:Alternet.UI.Control.KeyUp>
+ and <xref:Alternet.UI.Control.KeyPress> events because multiple
  keystrokes can generate a single character of text input, and single keystrokes
  can generate multi-character strings. This is especially true for languages
  such as Chinese, Japanese, and Korean, which use Input Method Editors (IMEs) to
@@ -173,7 +157,7 @@ This article explains the architecture of the input systems in AlteNET UI.
 
  The following example defines a handler for the
  <xref:Alternet.UI.Control.Click> event and a handler
- for the <xref:Alternet.UI.UIElement.KeyDown> event.
+ for the <xref:Alternet.UI.Control.KeyDown> event.
 
  The first segment of code or markup creates the user interface.
 
@@ -189,10 +173,7 @@ This article explains the architecture of the input systems in AlteNET UI.
  <xref:Alternet.UI.StackPanel> receives the input regardless of
  which element has keyboard focus. The <xref:Alternet.UI.TextBox>
  control is notified first, and the `OnTextInputKeyDown` handler is called only
- if the <xref:Alternet.UI.TextBox> did not handle the input. If the
- <xref:Alternet.UI.UIElement.PreviewKeyDown> event is used instead of the
- <xref:Alternet.UI.UIElement.KeyDown> event, the `OnTextInputKeyDown` handler
- is called first.
+ if the <xref:Alternet.UI.TextBox> did not handle the input. 
 
 ## Mouse Position
  The AlterNET UI input API provides helpful information with regard to coordinate

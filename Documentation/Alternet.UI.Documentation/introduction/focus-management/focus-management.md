@@ -3,7 +3,7 @@
 AlterNET UI includes several API elements to control input focus.
 
 Keyboard focus refers to the object that is receiving keyboard input. The element with keyboard focus has
-<xref:Alternet.UI.Control.IsFocused> set to true. There can be only one element with keyboard focus on the entire desktop.
+<xref:Alternet.UI.Control.Focused> set to true. There can be only one element with keyboard focus on the entire desktop.
 
 Keyboard focus can be obtained through user interaction with the UI, such as tabbing to an element or clicking the mouse
 on certain elements. Keyboard focus can also be obtained programmatically by using the <xref:Alternet.UI.Control.SetFocus%2A> method.
@@ -19,5 +19,5 @@ When you change the focus by using the keyboard (TAB, SHIFT+TAB, and so on), by 
 <xref:Alternet.UI.Control.FocusNextControl%2A>
 methods focus events occur in the following order:
 
-- <xref:Alternet.UI.UIElement.GotFocus>
-- <xref:Alternet.UI.UIElement.LostFocus>
+- <xref:Alternet.UI.Control.GotFocus>
+- <xref:Alternet.UI.Control.LostFocus>

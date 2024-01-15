@@ -67,5 +67,118 @@ namespace Alternet.UI
         /// <param name="expand"></param>
         /// <returns></returns>
         public bool ExpandAll(bool expand) => NativeControl.ExpandAll(expand);
+
+        /// <summary>
+        /// Translates the logical coordinates to the device ones.
+        /// </summary>
+        /// <param name="point">Logical coordinates.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// For example, if a control is scrolled 10 pixels to the bottom, the device
+        /// coordinates of the origin are (0, 0) (as always), but the logical coordinates
+        /// are (0, 10) and so the call to CalcScrolledPosition(0, 10) will return 0 in y.
+        /// </remarks>
+        /// <remarks>
+        /// Coordinates are specified in pixels.
+        /// </remarks>
+        public PointI CalcScrolledPositionI(PointI point)
+        {
+            return NativeControl.CalcScrolledPosition(point);
+        }
+
+        /// <summary>
+        /// Translates the logical coordinates to the device ones.
+        /// </summary>
+        /// <param name="point">Logical coordinates.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// For example, if a control is scrolled 10 pixels to the bottom, the device
+        /// coordinates of the origin are (0, 0) (as always), but the logical coordinates
+        /// are (0, 10) and so the call to CalcScrolledPosition(0, 10) will return 0 in y.
+        /// </remarks>
+        /// <remarks>
+        /// Coordinates are specified in dips.
+        /// </remarks>
+        public PointD CalcScrolledPositionD(PointD point)
+        {
+            var pointI = PixelFromDip(point);
+            var result = NativeControl.CalcScrolledPosition(pointI);
+            var pointD = PixelToDip(result);
+            return pointD;
+        }
+
+        /// <summary>
+        /// Translates the device coordinates to the logical ones.
+        /// </summary>
+        /// <param name="point">Device coordinates.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// For example, if a control is scrolled 10 pixels to the bottom, the device
+        /// coordinates of the origin are (0, 0) (as always), but the logical coordinates
+        /// are (0, 10) and so the call to CalcUnscrolledPosition(0, 0) will return 10 in y.
+        /// </remarks>
+        /// <remarks>
+        /// Coordinates are specified in pixels.
+        /// </remarks>
+        public PointI CalcUnscrolledPositionI(PointI point)
+        {
+            return NativeControl.CalcUnscrolledPosition(point);
+        }
+
+        /// <summary>
+        /// Translates the device coordinates to the logical ones.
+        /// </summary>
+        /// <param name="point">Device coordinates.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// For example, if a control is scrolled 10 pixels to the bottom, the device
+        /// coordinates of the origin are (0, 0) (as always), but the logical coordinates
+        /// are (0, 10) and so the call to CalcUnscrolledPosition(0, 0) will return 10 in y.
+        /// </remarks>
+        /// <remarks>
+        /// Coordinates are specified in dips.
+        /// </remarks>
+        public PointD CalcUnscrolledPositionD(PointD point)
+        {
+            var pointI = PixelFromDip(point);
+            var result = NativeControl.CalcUnscrolledPosition(pointI);
+            var pointD = PixelToDip(result);
+            return pointD;
+        }
+
+        /// <summary>
+        /// Returns column information about arbitrary position in the grid.
+        /// </summary>
+        /// <param name="point">Coordinates in the control.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Coordinates in the virtual grid space. You may need to use
+        /// <see cref="CalcScrolledPositionD"/> for translating <see cref="PropertyGrid"/>
+        /// client coordinates into something this member function can use.
+        /// </remarks>
+        public int GetHitTestColumn(PointD point)
+        {
+            var pointI = PixelFromDip(point);
+            var result = NativeControl.GetHitTestColumn(pointI);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns property information about arbitrary position in the grid.
+        /// </summary>
+        /// <param name="point">Coordinates in the control.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Coordinates in the virtual grid space. You may need to use
+        /// <see cref="CalcScrolledPositionD"/> for translating <see cref="PropertyGrid"/>
+        /// client coordinates into something this member function can use.
+        /// </remarks>
+        public IPropertyGridItem? GetHitTestProp(PointD point)
+        {
+            var pointI = PixelFromDip(point);
+            var ptr = NativeControl.GetHitTestProp(pointI);
+            var item = PtrToItem(ptr);
+            return item;
+        }
     }
 }
