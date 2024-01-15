@@ -1164,6 +1164,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets <see cref="SuggestedHeight"/> property.
+        /// </summary>
+        public virtual void ResetSuggestedHeight()
+        {
+            SuggestedHeight = double.NaN;
+        }
+
+        /// <summary>
+        /// Resets <see cref="SuggestedWidth"/> property.
+        /// </summary>
+        public virtual void ResetSuggestedWidth()
+        {
+            SuggestedWidth = double.NaN;
+        }
+
+        /// <summary>
+        /// Resets <see cref="SuggestedSize"/> property.
+        /// </summary>
+        public virtual void ResetSuggestedSize()
+        {
+            SuggestedSize = SizeD.NaN;
+        }
+
+        /// <summary>
         /// Gets <see cref="ToolTip"/> value for use in the native control.
         /// </summary>
         /// <returns></returns>
