@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// Occurs when the window is activated in code or by the user.
         /// </summary>
         /// <remarks>
-        /// To activate a window at run time using code, call the <see cref="Activate"/> method.
+        /// To activate a window at run time using code, call the <see cref="Window.Activate"/> method.
         /// You can use this event for
         /// tasks such as updating the contents of the window based on changes made to the
         /// window's data when the window was not activated.
