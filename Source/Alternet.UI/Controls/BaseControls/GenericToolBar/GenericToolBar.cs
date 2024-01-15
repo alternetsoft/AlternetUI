@@ -196,6 +196,7 @@ namespace Alternet.UI
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
+        [Browsable(false)]
         public ImageToText ImageToText
         {
             get => imageToText;
@@ -217,6 +218,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets items added to the control.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyList<Control> Items => panel.Children;
 
         /// <summary>
@@ -260,6 +262,23 @@ namespace Alternet.UI
             {
                 base.Font = value;
                 SetChildrenFont(value, true);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool IsBold
+        {
+            get
+            {
+                return base.IsBold;
+            }
+
+            set
+            {
+                if (IsBold == value)
+                    return;
+                base.IsBold = value;
+                GetChildren(true).IsBold(value);
             }
         }
 
