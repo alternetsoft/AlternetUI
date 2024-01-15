@@ -61,6 +61,7 @@ namespace Alternet.UI
         private Cursor? cursor;
         private string? toolTip;
         private ObjectUniqueId? uniqueId;
+        private string? text;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -533,11 +534,12 @@ namespace Alternet.UI
         {
             get
             {
-                return string.Empty;
+                return text ?? string.Empty;
             }
 
             set
             {
+                text = value ?? string.Empty;
             }
         }
 
@@ -1230,6 +1232,7 @@ namespace Alternet.UI
                     return;
 
                 suggestedSize = value;
+                PerformLayout();
             }
         }
 
@@ -1846,7 +1849,7 @@ namespace Alternet.UI
         /// Gets real font value.
         /// </summary>
         /// <remarks>
-        /// Returns font event if <see cref="Font"/> property is <c>null</c>.
+        /// Returns font even if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
         public virtual Font? RealFont => Font.FromInternal(NativeControl?.Font);
@@ -1868,7 +1871,7 @@ namespace Alternet.UI
                 NativeControl.IsBold = value;
                 Handler.RaiseLayoutChanged();
                 PerformLayout();
-                Refresh();
+                Invalidate();
             }
         }
 
