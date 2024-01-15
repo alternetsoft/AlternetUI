@@ -56,6 +56,18 @@ namespace Alternet.UI
             return new LabelHandler();
         }
 
+        /// <summary>
+        /// Gets <see cref="Font"/> which is used to draw labels text.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Font GetLabelFont()
+        {
+            var result = Font ?? UI.Control.DefaultFont;
+            if (IsBold)
+                result = result.AsBold;
+            return result;
+        }
+
         internal class LabelHandler : ControlHandler<GenericLabel>
         {
             protected override bool NeedsPaint => true;
@@ -67,7 +79,7 @@ namespace Alternet.UI
                     drawingContext.DrawText(
                         Control.Text,
                         Control.ChildrenLayoutBounds.Location,
-                        Control.Font ?? UI.Control.DefaultFont,
+                        Control.GetLabelFont(),
                         Control.ForeColor,
                         Color.Empty);
                 }
@@ -80,7 +92,7 @@ namespace Alternet.UI
                     return new SizeD();
 
                 using var dc = Control.CreateDrawingContext();
-                var result = dc.GetTextExtent(text, Control.Font ?? UI.Control.DefaultFont, Control);
+                var result = dc.GetTextExtent(text, Control.GetLabelFont(), Control);
                 return result + Control.Padding.Size;
             }
         }
