@@ -164,7 +164,7 @@ namespace PropertyGridSample
             ComponentDesigner.SafeDefault.PropertyChanged += Designer_PropertyChanged;
             ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
 
-            controlPanel.MouseDown += ControlPanel_MouseDown;
+            panel.FillPanel.MouseDown += ControlPanel_MouseDown;
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
@@ -194,19 +194,38 @@ namespace PropertyGridSample
                 return false;
             var nullable = AssemblyUtils.GetNullable(item.PropInfo);
             var value = item.PropInfo.GetValue(item.Instance);
-            return nullable && value is not null;
+            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
+            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out _);
+            return hasDevaultAttr || resetMethod != null || (nullable && value is not null);
         }
 
         private void ResetProp(IPropertyGridItem? item)
         {
             if (item is null || item.PropInfo is null || item.Instance is null)
                 return;
+
+            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
+            if (resetMethod is not null)
+            {
+                resetMethod.Invoke(item.Instance, []);
+                PropGrid.ReloadPropertyValue(item);
+                return;
+            }
+            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out var defValue);
+            if (hasDevaultAttr)
+            {
+                item.PropInfo.SetValue(item.Instance, defValue);
+                PropGrid.ReloadPropertyValue(item);
+                return;
+            }
+
             var nullable = AssemblyUtils.GetNullable(item.PropInfo);
             var value = item.PropInfo.GetValue(item.Instance);
             if (nullable && value is not null)
             {
                 item.PropInfo.SetValue(item.Instance, null);
                 PropGrid.ReloadPropertyValue(item);
+                return;
             }
         }
 
@@ -231,15 +250,6 @@ namespace PropertyGridSample
 
             resetMenu.Enabled = CanResetProp(selectedProp);
         }
-
-        /*private void UpdateActions()
-        {
-            panel.RemoveActions();
-            if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
-                return;
-            var type = item.InstanceType;
-            panel.AddActions(type);
-        }*/
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {

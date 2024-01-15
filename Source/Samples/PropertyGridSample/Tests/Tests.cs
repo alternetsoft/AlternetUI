@@ -18,6 +18,12 @@ namespace PropertyGridSample
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
 
+#pragma warning disable
+        internal void RunTests()
+#pragma warning restore
+        {
+        }
+
         void InitSimpleTestActions()
         {
 #if DEBUG
@@ -262,12 +268,6 @@ namespace PropertyGridSample
             control.DeleteTool(childId);
         }
 
-#pragma warning disable
-        internal void RunTests()
-#pragma warning restore
-        {
-        }
-
         internal void LogPropGridColors()
         {
             var color = panel.PropGrid.GetCurrentColors();
@@ -303,8 +303,8 @@ namespace PropertyGridSample
 
         private void ControlPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            /*if (e.Source == controlPanel)
-                UpdatePropertyGrid(controlPanel);*/
+            if (e.Source == parentParent && e.RightButton == MouseButtonState.Pressed)
+                UpdatePropertyGrid(controlPanelBorder);
         }
 
         private void LogEvent(string name, bool logAlways = false)

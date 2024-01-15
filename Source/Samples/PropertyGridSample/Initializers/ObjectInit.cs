@@ -87,6 +87,10 @@ namespace PropertyGridSample
             Actions.Add(typeof(TextBox), InitTextBox);
             Actions.Add(typeof(RichTextBox), InitRichTextBox);
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
+            Actions.Add(typeof(GenericLabel), InitGenericLabel);
+            Actions.Add(typeof(Label), InitLabel);
+            Actions.Add(typeof(LinkLabel), InitLinkLabel);
+            Actions.Add(typeof(Button), InitButton);
 
             Actions.Add(typeof(Slider), (c) =>
             {
@@ -120,25 +124,10 @@ namespace PropertyGridSample
                 }
             });
 
-            Actions.Add(typeof(Label), (c) =>
-            { 
-                (c as Label)!.Text = "Label";
-                (c as Label)!.HorizontalAlignment = HorizontalAlignment.Left;
-            });
-
             Actions.Add(typeof(StatusBar), (c) =>
             {
                 (c as StatusBar)!.Panels.Add(new("text1"));
                 (c as StatusBar)!.Panels.Add(new("text2"));
-            });
-
-            Actions.Add(typeof(Button), (c) =>
-            {
-                var button = (c as Button)!;
-                button.Text = "Button";
-                button.StateImages = ButtonImages;
-                button.SuggestedHeight = 100;
-                button.HorizontalAlignment = HorizontalAlignment.Left;
             });
 
             Actions.Add(typeof(CheckBox), (c) =>
@@ -185,14 +174,6 @@ namespace PropertyGridSample
                 CheckListBox checkListBox = (c as CheckListBox)!;
                 checkListBox.SuggestedSize = defaultListHeight;
                 AddTenItems(checkListBox.Items);
-            });
-
-            Actions.Add(typeof(LinkLabel), (c) =>
-            {
-                LinkLabel linkLabel = (c as LinkLabel)!;
-                var s = "https://www.google.com";
-                linkLabel.Text = "LinkLabel";
-                linkLabel.Url = s;
             });
 
             Actions.Add(typeof(GroupBox), (c) =>
