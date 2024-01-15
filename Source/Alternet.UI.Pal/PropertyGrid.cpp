@@ -370,9 +370,32 @@ namespace Alternet::UI
 		return new wxIntProperty(wxStr(label), wxStr(name), (long)value);
 	}
 
+	class wxFloatProperty2 : public wxFloatProperty
+	{
+	public:
+		wxFloatProperty2(const wxString& label = wxPG_LABEL,
+			const wxString& name = wxPG_LABEL,
+			double value = 0.0)
+			:wxFloatProperty(label, name, value)
+		{
+		}
+
+		virtual wxString ValueToString(wxVariant& value, int argFlags = 0) const wxOVERRIDE;
+	};
+
+	wxString wxFloatProperty2::ValueToString(wxVariant& value, int argFlags) const
+	{
+		auto dbl = value.GetDouble();
+		if (wxIsNaN(dbl))
+			return "nan";
+
+		auto result = wxFloatProperty::ValueToString(value, argFlags);
+		return result;
+	}
+
 	void* PropertyGrid::CreateFloatProperty(const string& label, const string& name, double value)
 	{
-		return new wxFloatProperty(wxStr(label), wxStr(name), value);
+		return new wxFloatProperty2(wxStr(label), wxStr(name), value);
 	}
 
 	void* PropertyGrid::CreateUIntProperty(const string& label, const string& name, uint64_t value)
