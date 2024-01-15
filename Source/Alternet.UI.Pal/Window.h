@@ -32,6 +32,11 @@ namespace Alternet::UI
         Window* GetWindow();
         
         void RemoveFrame();
+
+        bool Layout() override
+        {
+            return false;
+        }
     private:
         Window* _window;
         bool _frameRemoved = false;
