@@ -584,6 +584,15 @@ namespace PaintSample
 
             Application.Log($"GetTextExtent: {measure}, {size}");
 
+            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
+
+            dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
+
+            var y = location.Y - descent + size.Height;
+            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
+
+            dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
+
             dc.DestroyClippingRegion();
             dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
             dc.DrawText(s, location, font, Color.Black, Color.Empty);
@@ -593,17 +602,6 @@ namespace PaintSample
             dc.DrawText(s, location, font, Color.Green, Color.Empty);
             dc.DestroyClippingRegion();
 
-            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
-
-
-            dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
-
-
-
-            var y = location.Y - descent + size.Height;
-            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
-
-            dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 
             /*var size1 = dc.MeasureText("x", Font.Default);
 
