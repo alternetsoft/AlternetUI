@@ -1,4 +1,9 @@
-# 0.9.412 (work in progress)
+
+# 0.9.500 (2024 January 15)
+
+Changed build number for the new beta release.
+
+# 0.9.412 (2024 January 15)
 
 ## 2024 January 15
 
