@@ -8,7 +8,8 @@
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 
-  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                       AllowStretch="true">
     <VerticalStackPanel Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Stretch">
 
       <!-- ========================= -->
@@ -39,14 +40,6 @@
               <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
             </StackPanel>
           </GroupBox>
-          <HorizontalStackPanel  Margin="0,5,0,5">
-            <Button Text="All Properties..."
-                    Name="propertiesButton" Click="PropertiesButton_Click"/>
-            <Button Text="Page 2"
-                    Name="buttonPage2" Click="Page2Button_Click"/>
-            <Button Text="Page 3"
-                    Name="buttonPage3" Click="Page3Button_Click"/>
-          </HorizontalStackPanel>
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <!-- ========================= -->
@@ -133,7 +126,19 @@
 
     </VerticalStackPanel>
 
-    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="5" VerticalAlignment="Stretch"/>
+
+    <HorizontalStackPanel  Margin="0,0,0,5">
+      <Button Text="All Properties..."
+              Name="propertiesButton" Click="PropertiesButton_Click"/>
+      <Button Text="Page 1"
+              Name="buttonPage1" Click="Page1Button_Click"/>
+      <Button Text="Page 2"
+              Name="buttonPage2" Click="Page2Button_Click"/>
+      <Button Text="Page 3"
+              Name="buttonPage3" Click="Page3Button_Click"/>
+    </HorizontalStackPanel>
+
+    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Stretch"/>
 
   </VerticalStackPanel>
 </Window>

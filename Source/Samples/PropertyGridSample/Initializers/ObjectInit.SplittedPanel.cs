@@ -45,6 +45,9 @@ namespace PropertyGridSample
                 Parent = panel.FillPanel,
             };
             FillLabel.Add("Fill");
+
+            panel.RightPanel.Width = 80;
+            panel.LeftPanel.Width = 80;
         }
     }
 }

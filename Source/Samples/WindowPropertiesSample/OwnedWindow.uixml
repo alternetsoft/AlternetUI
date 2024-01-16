@@ -2,9 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="WindowPropertiesSample.OwnedWindow"
         Title="OwnedWindow"
-		Width="100"
-		Height="100"
+		MinimumSize="300, 300"
 		IsToolWindow="True"
         xmlns:local="clr-namespace:WindowPropertiesSample;assembly=WindowPropertiesSample">
-	<Label Name="label"/>
+	<Label Name="label" Margin="10"/>
 </Window>
