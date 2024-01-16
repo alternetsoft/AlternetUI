@@ -546,6 +546,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <paramref name="task"/> which will be executed one time
+        /// when the application finished processing events and is
+        /// about to enter the idle state.
+        /// </summary>
+        /// <param name="task">Task action.</param>
+        public static void AddIdleTask(Action task)
+        {
+            AddIdleTask((object? param) => task());
+        }
+
+        /// <summary>
         /// Sets wxSystemOptions value.
         /// </summary>
         /// <param name="name">Option name.</param>
