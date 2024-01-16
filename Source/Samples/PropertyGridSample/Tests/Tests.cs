@@ -44,15 +44,17 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
 
-            PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
-            PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);
-            PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
-            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);
+            /*PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
+            PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);*/
+            /*PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
+            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);*/
 #endif
         }
 
         void TestMemoFindReplace(bool replace)
         {
+            /*->Replace(3, 8, "ABC");*/
+
             var control = GetSelectedControl<MultilineTextBox>();
             if (control is null)
                 return;

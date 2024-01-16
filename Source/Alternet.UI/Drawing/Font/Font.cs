@@ -141,12 +141,12 @@ namespace Alternet.Drawing
         /// the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
+        public Font(FontFamily family, double emSize, FontStyle style, System.Drawing.GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(family, emSize, style, unit, 1);
@@ -159,7 +159,7 @@ namespace Alternet.Drawing
         /// <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
         ///  GDI character set to use for the new font. Currently ignored.</param>
         /// <remarks>
@@ -170,7 +170,7 @@ namespace Alternet.Drawing
             FontFamily family,
             double emSize,
             FontStyle style,
-            GraphicsUnit unit,
+            System.Drawing.GraphicsUnit unit,
             byte gdiCharSet)
         {
             NativeFont = new UI.Native.Font();
@@ -184,7 +184,7 @@ namespace Alternet.Drawing
         /// <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
         ///  GDI character set to use for this font. Currently ignored.</param>
         /// <param name="gdiVerticalFont">A Boolean value indicating whether the new font is
@@ -198,7 +198,7 @@ namespace Alternet.Drawing
             FontFamily family,
             double emSize,
             FontStyle style,
-            GraphicsUnit unit,
+            System.Drawing.GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
         {
@@ -213,7 +213,7 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units specified by
         /// the <paramref name="unit" /> parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set
         /// to use for
         /// this font.  Currently ignored.</param>
@@ -225,7 +225,7 @@ namespace Alternet.Drawing
             string familyName,
             double emSize,
             FontStyle style,
-            GraphicsUnit unit,
+            System.Drawing.GraphicsUnit unit,
             byte gdiCharSet)
         {
             NativeFont = new UI.Native.Font();
@@ -240,7 +240,7 @@ namespace Alternet.Drawing
         /// the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character
         /// set to use
         /// for this font.  Currently ignored.</param>
@@ -255,7 +255,7 @@ namespace Alternet.Drawing
             string familyName,
             double emSize,
             FontStyle style,
-            GraphicsUnit unit,
+            System.Drawing.GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
         {
@@ -270,12 +270,12 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units
         /// specified by the <paramref name="unit" />
         /// parameter.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, float emSize, GraphicsUnit unit)
+        public Font(FontFamily family, float emSize, System.Drawing.GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(family, emSize, FontStyle.Regular, unit, 1);
@@ -301,12 +301,12 @@ namespace Alternet.Drawing
         /// by the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
+        public Font(string familyName, double emSize, FontStyle style, System.Drawing.GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(familyName, emSize, style, unit, 1);
@@ -320,12 +320,12 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units specified by
         /// the <paramref name="unit" />
         /// parameter.</param>
-        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, GraphicsUnit unit)
+        public Font(string familyName, double emSize, System.Drawing.GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(familyName, emSize, FontStyle.Regular, unit, 1);
@@ -342,7 +342,7 @@ namespace Alternet.Drawing
         public Font(string familyName, double emSize)
         {
             NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, FontStyle.Regular, GraphicsUnit.Point, 1);
+            Initialize(familyName, emSize, FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 1);
         }
 
         internal Font(UI.Native.Font nativeFont)
@@ -415,8 +415,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the unit of measure for this <see cref="Font" />.</summary>
-        /// <returns>A <see cref="GraphicsUnit" /> that represents the unit of measure for
-        /// this <see cref="Font" />.</returns>
+        /// <returns>A value that represents the unit of measure for this <see cref="Font" />.</returns>
         public GraphicsUnit Unit
         {
             get

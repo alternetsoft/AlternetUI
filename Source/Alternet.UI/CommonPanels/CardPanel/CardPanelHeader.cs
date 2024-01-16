@@ -584,8 +584,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets selected tab index or <c>null</c> if no tab is selected.
+        /// Gets or sets selected tab index.
         /// </summary>
+        /// <remarks>
+        /// Returns <c>null</c> if no tab is selected.
+        /// </remarks>
         [Browsable(false)]
         public int? SelectedTabIndex
         {
@@ -595,6 +598,13 @@ namespace Alternet.UI
                     return null;
                 var result = tabs.IndexOfOrNull(selectedTab);
                 return result;
+            }
+
+            set
+            {
+                if (value >= Tabs.Count || value < 0 || value is null)
+                    return;
+                SelectedTab = Tabs[value.Value];
             }
         }
 

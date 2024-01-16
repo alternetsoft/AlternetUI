@@ -39,8 +39,14 @@
               <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
             </StackPanel>
           </GroupBox>
-          <Button Text="Properties..." 
-                  Name="propertiesButton" Click="PropertiesButton_Click" Margin="0,5,0,5"/>
+          <HorizontalStackPanel  Margin="0,5,0,5">
+            <Button Text="All Properties..."
+                    Name="propertiesButton" Click="PropertiesButton_Click"/>
+            <Button Text="Page 2"
+                    Name="buttonPage2" Click="Page2Button_Click"/>
+            <Button Text="Page 3"
+                    Name="buttonPage3" Click="Page3Button_Click"/>
+          </HorizontalStackPanel>
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <!-- ========================= -->

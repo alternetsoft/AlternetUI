@@ -36,6 +36,16 @@ namespace WindowPropertiesSample
             eventsListBox.ContextMenu.Required();
         }
 
+        private void Page2Button_Click(object? sender, EventArgs e)
+        {
+            panelHeader.SelectedTabIndex = 1;
+        }
+
+        private void Page3Button_Click(object? sender, EventArgs e)
+        {
+            panelHeader.SelectedTabIndex = 2;
+        }
+
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
         {
             var rect = (setBoundsProperties.X, setBoundsProperties.Y, setBoundsProperties.Width, setBoundsProperties.Height);
