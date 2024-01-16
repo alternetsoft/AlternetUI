@@ -65,8 +65,8 @@ namespace ControlsTest
                 return result;
             }
 
-            mainPanel.Add("Sizer Test", new SizerTestPage());
             mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
+            mainPanel.Add("Sizer Test", new SizerTestPage());
             int webBrowserPageIndex = CreateWebBrowserPages();
 
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;

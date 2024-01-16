@@ -16,11 +16,20 @@ namespace CommonDialogsSample
             Icon = new("embres:CommonDialogsSample.Sample.ico");
             InitializeComponent();
 
-            InitEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);
-            InitEnumComboBox<MessageBoxDefaultButton>
-                (messageBoxDefaultButtonComboBox);
-            InitEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
-            InitEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
+            messageBoxButtonsComboBox.Add(MessageBoxButtons.OK);
+            messageBoxButtonsComboBox.Add(MessageBoxButtons.OKCancel);
+            messageBoxButtonsComboBox.Add(MessageBoxButtons.YesNoCancel);
+            messageBoxButtonsComboBox.Add(MessageBoxButtons.YesNo);
+            messageBoxButtonsComboBox.SelectedItem = MessageBoxButtons.OKCancel;
+
+            messageBoxIconComboBox.AddEnumValues(typeof(MessageBoxIcon), MessageBoxIcon.None);            
+            exceptionTypeComboBox.AddEnumValues(typeof(TestExceptionType), TestExceptionType.FileNotFoundException);
+
+            messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button1);
+            messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button2);
+            messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button3);
+            messageBoxDefaultButtonComboBox.SelectedItem = MessageBoxDefaultButton.Button1;
+
             this.ResumeLayout();
         }
 

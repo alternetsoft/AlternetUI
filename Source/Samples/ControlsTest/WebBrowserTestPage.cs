@@ -39,7 +39,7 @@ namespace ControlsTest
                 LogEvents = false,
                 DefaultRightPaneBestSize = new(150, 200),
                 DefaultRightPaneMinSize = new(150, 200),
-                Visible = false,
+                Visible = true,
                 Name = "PanelWebBrowser",
             };
 
@@ -258,8 +258,10 @@ namespace ControlsTest
                 return;
 
             scriptMessageHandlerAdded = WebBrowser.AddScriptMessageHandler("wx_msg");
-            if (!scriptMessageHandlerAdded)
-                Log("AddScriptMessageHandler not supported");
+            if (scriptMessageHandlerAdded)
+                Log($"{PageName}: AddScriptMessageHandler added");
+            else
+                Log($"{PageName}: AddScriptMessageHandler not supported");
             AddTestActions();
             if (rootPanel.IsIEBackend)
                 WebBrowser.DoCommand("IE.SetScriptErrorsSuppressed", "true");
