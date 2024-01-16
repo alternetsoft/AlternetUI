@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
