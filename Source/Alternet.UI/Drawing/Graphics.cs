@@ -950,8 +950,8 @@ namespace Alternet.Drawing
         /// Draws the specified portion of the image into the region defined by the specified
         /// <see cref="RectD"/>.
         /// </summary>
-        /// <param name="unit"><see cref="GraphicsUnit"/> used to draw the image.
-        /// Currently only <see cref="GraphicsUnit.Pixel"/> is allowed.</param>
+        /// <param name="unit">Units used to draw the image.
+        /// Currently only pixel unit is allowed.</param>
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw <paramref name="image"/>.</param>
         /// <param name="sourceRect">
