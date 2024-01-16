@@ -586,10 +586,16 @@ namespace PaintSample
 
             Application.Log($"GetTextExtent: {measure}, {size}");
 
-            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
+            RectD r1 = (location.X, location.Y, measure.Width, measure.Height);
+            RectD r2 = (location.X, location.Y, size.Width, size.Height);
+
+            /*dc.DrawRectangle(Color.DarkRed.AsPen, r1);*/
+            DrawingUtils.FillRectangleBorder(dc, Color.DarkRed.AsBrush, r1, 1);
+
             Log("1");
 
-            dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
+            /*dc.DrawRectangle(Color.Red.AsPen, r2);*/
+            DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
             Log("2");
 
             var y = location.Y - descent + size.Height;
