@@ -362,14 +362,16 @@ namespace PropertyGridSample
 
                 if (type == typeof(WelcomePage))
                 {
-                    SetBackground(SystemColors.Window);
                     InitDefaultPropertyGrid();
+                    PropGrid.Refresh();
+                    SetBackground(SystemColors.Window);
                     panel.RemoveActions();
                 }
                 else
                 {
-                    SetBackground(SystemColors.Control);
                     PropGrid.SetProps(item.PropInstance, true);
+                    PropGrid.Refresh();
+                    SetBackground(SystemColors.Control);
                     panel.RemoveActions();
                     panel.AddActions(type);
                 }
