@@ -567,6 +567,8 @@ namespace PaintSample
 
         public void DrawSample(Graphics dc, PointD location)
         {
+            dc.FillRectangle(Color.WhiteSmoke.AsBrush, (0, 0, 200, 200));
+
             Application.LogNameValue("dc.DPI", dc.GetDPI());
             Application.LogNameValue("window.DPI", GetDPI());
 
