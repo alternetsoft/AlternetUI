@@ -587,22 +587,33 @@ namespace PaintSample
             Application.Log($"GetTextExtent: {measure}, {size}");
 
             dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
+            Log("1");
 
             dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
+            Log("2");
 
             var y = location.Y - descent + size.Height;
             dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
+            Log("3");
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
+            Log("4");
 
             dc.DestroyClippingRegion();
+            Log("5");
             dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
+            Log("6");
             dc.DrawText(s, location, font, Color.Black, Color.Empty);
+            Log("7");
 
             dc.DestroyClippingRegion();
+            Log("8");
             dc.SetClippingRegion((location.X, location.Y, size.Width / 2, size.Height));
+            Log("9");
             dc.DrawText(s, location, font, Color.Green, Color.Empty);
+            Log("10");
             dc.DestroyClippingRegion();
+            Log("11");
 
 
             /*var size1 = dc.MeasureText("x", Font.Default);
