@@ -370,6 +370,7 @@ namespace PropertyGridSample
                 {
                     Application.AddIdleTask(() => {
                         PropGrid.SetProps(item.PropInstance, true);
+                        PropGrid.Refresh();
                     });
                     
                     SetBackground(SystemColors.Control);

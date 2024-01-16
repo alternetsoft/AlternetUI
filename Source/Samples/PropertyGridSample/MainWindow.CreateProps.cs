@@ -39,6 +39,7 @@ namespace PropertyGridSample
             finally
             {
                 PropGrid.EndUpdate();
+                PropGrid.Refresh();
             }
         }
 
