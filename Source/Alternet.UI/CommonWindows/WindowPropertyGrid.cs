@@ -72,7 +72,7 @@ namespace Alternet.UI
             return defaultWindow;
         }
 
-        private void WindowPropertyGrid_Disposed(object sender, EventArgs e)
+        private void WindowPropertyGrid_Disposed(object? sender, EventArgs e)
         {
             if (defaultWindow == this)
                 defaultWindow = null;

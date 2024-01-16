@@ -60,6 +60,20 @@ namespace Alternet.UI
         ];
 
         /// <summary>
+        /// Returns <see cref="IComparer{T}"/> which converts objects to strings using
+        /// <see cref="object.ToString"/> and uses
+        /// <see cref="string.Compare(string?, string?, StringComparison)"/> for comparing.
+        /// </summary>
+        public static IComparer<object> ComparerObjectUsingToString
+        {
+            get
+            {
+                comparerObjectUsingToString ??= new ComparerUsingToString<object>();
+                return comparerObjectUsingToString;
+            }
+        }
+
+        /// <summary>
         /// Gets whether string <paramref name="s"/> starts with one of the strings
         /// specified in <paramref name="items"/> collection.
         /// </summary>
@@ -79,20 +93,6 @@ namespace Alternet.UI
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Returns <see cref="IComparer{T}"/> which converts objects to strings using
-        /// <see cref="object.ToString"/> and uses
-        /// <see cref="string.Compare(string?, string?, StringComparison)"/> for comparing.
-        /// </summary>
-        public static IComparer<object> ComparerObjectUsingToString
-        {
-            get
-            {
-                comparerObjectUsingToString ??= new ComparerUsingToString<object>();
-                return comparerObjectUsingToString;
-            }
         }
 
         /// <summary>

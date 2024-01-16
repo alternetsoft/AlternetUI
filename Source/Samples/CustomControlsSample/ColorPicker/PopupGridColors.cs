@@ -10,10 +10,10 @@ namespace CustomControlsSample
 {
     public class PopupGridColors : PopupWindow
     {
-        public Color Value { get; set; }
+        public Color Value { get; set; } = Color.Empty;
 
-        private readonly Color[] colors = new[]
-        {
+        private readonly Color[] colors =
+        [
             Color.IndianRed,
             Color.LightSalmon,
             Color.Firebrick,
@@ -33,7 +33,7 @@ namespace CustomControlsSample
             Color.LightSlateGray,
             Color.DarkSlateGray,
             Color.Black
-        };
+        ];
 
         /// <inheritdoc/>
         protected override Control CreateMainControl()

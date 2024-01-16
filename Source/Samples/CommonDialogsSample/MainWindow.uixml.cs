@@ -40,7 +40,7 @@ namespace CommonDialogsSample
             FileNotFoundException,
         }
 
-        private void InitEnumComboBox<TEnum>(ComboBox comboBox)
+        internal void InitEnumComboBox<TEnum>(ComboBox comboBox)
         {
             comboBox.Items.Clear();
 
