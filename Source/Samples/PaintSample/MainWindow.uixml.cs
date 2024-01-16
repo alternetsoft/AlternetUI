@@ -579,8 +579,10 @@ namespace PaintSample
                 s,
                 font,
                 out double descent,
-                out double externalLeading,
+                out _,
                 null);
+
+            Application.Log($"GetTextExtent: {measure}, {size}");
 
             dc.DestroyClippingRegion();
             dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
@@ -603,14 +605,14 @@ namespace PaintSample
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 
-            var size1 = dc.MeasureText("x", Font.Default);
+            /*var size1 = dc.MeasureText("x", Font.Default);
 
             var size2 = dc.GetTextExtent(
                 "x",
                 Font.Default,
                 out _,
                 out _,
-                null);
+                null);*/
 
             // <param name="descent">Dimension from the baseline of the font to
             // the bottom of the descender (the size of the tail below the baseline).</param>
