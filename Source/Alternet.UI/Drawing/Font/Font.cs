@@ -141,7 +141,7 @@ namespace Alternet.Drawing
         /// the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
@@ -159,7 +159,7 @@ namespace Alternet.Drawing
         /// <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
         ///  GDI character set to use for the new font. Currently ignored.</param>
         /// <remarks>
@@ -184,7 +184,7 @@ namespace Alternet.Drawing
         /// <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
         ///  GDI character set to use for this font. Currently ignored.</param>
         /// <param name="gdiVerticalFont">A Boolean value indicating whether the new font is
@@ -213,7 +213,7 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units specified by
         /// the <paramref name="unit" /> parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set
         /// to use for
         /// this font.  Currently ignored.</param>
@@ -240,7 +240,7 @@ namespace Alternet.Drawing
         /// the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character
         /// set to use
         /// for this font.  Currently ignored.</param>
@@ -270,7 +270,7 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units
         /// specified by the <paramref name="unit" />
         /// parameter.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
@@ -301,7 +301,7 @@ namespace Alternet.Drawing
         /// by the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
@@ -320,7 +320,7 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units specified by
         /// the <paramref name="unit" />
         /// parameter.</param>
-        /// <param name="unit">The <see cref="System.Drawing.GraphicsUnit" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
@@ -415,8 +415,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the unit of measure for this <see cref="Font" />.</summary>
-        /// <returns>A <see cref="System.Drawing.GraphicsUnit" /> that represents the unit of measure for
-        /// this <see cref="Font" />.</returns>
+        /// <returns>A value that represents the unit of measure for this <see cref="Font" />.</returns>
         public GraphicsUnit Unit
         {
             get
