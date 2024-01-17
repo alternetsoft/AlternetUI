@@ -61,6 +61,9 @@ namespace Alternet.Drawing
 
         private protected override int GetHashCodeCore() => HashCode.Combine(HatchStyle, Color);
 
-        private protected override string ToStringCore() => $"HatchBrush ({HatchStyle}, {Color})";
+        private protected override string ToStringCore()
+        {
+            return $"HatchBrush ({HatchStyle}, {Color})";
+        }
     }
 }
