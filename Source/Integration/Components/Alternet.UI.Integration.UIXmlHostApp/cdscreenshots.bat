@@ -1,0 +1,1 @@
+cd C:\Users\Sergiy\AppData\Local\Temp\AlterNET.UIXMLPreviewer\

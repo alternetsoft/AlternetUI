@@ -17,3 +17,19 @@ Usage: --transport transport_spec --session-id sid --method method app
 --html-url - endpoint for HTML method to listen on, e. g. http://127.0.0.1:8081
 
 Example: --transport tcp-bson://127.0.0.1:30243/ --session-id 123 --method alternet-ui-remote MyApp.exe
+
+
+Working sample:
+
+--transport file:///e://AlternetUIApp1//MainWindow.uixml --html-url http://127.0.0.1:8081 --method html e:\AlternetUIApp1\bin\Debug\net6.0\AlternetUIApp1.dll
+
+
+
+C:\Documents and Settings\Sergiy\AppData\Local\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net6.0\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\AppData\Local\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net7.0\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\AppData\Local\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net462\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\AppData\Local\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net480\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\Local Settings\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net6.0\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\Local Settings\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net7.0\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\Local Settings\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net462\Alternet.UI.Integration.UIXmlHostApp.exe
+C:\Documents and Settings\Sergiy\Local Settings\Microsoft\VisualStudio\17.0_2de07248\Extensions\djsu3mpq.53s\UIXmlHostApp\net480\Alternet.UI.Integration.UIXmlHostApp.exe

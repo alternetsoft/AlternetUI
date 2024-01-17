@@ -14,7 +14,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                 if (logger == null)
                 {
                     logger = new LoggerConfiguration()
-                      .MinimumLevel.Debug()
                       .WriteTo.File(Path.Combine(ResourceLocator.LogsDirectory, @"UIXmlHostApp.log"), rollingInterval: RollingInterval.Day)
                       .CreateLogger();
                 }

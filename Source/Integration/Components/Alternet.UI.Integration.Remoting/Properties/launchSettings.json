@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Alternet.UI.Integration.Remoting": {
+      "commandName": "Project",
+      "commandLineArgs": "--transport file:///e://MainWindow.uixml --html-url http://127.0.0.1:8081 --method html e:/AlternetUIApp1/MyApp.exe"
+    }
+  }
+}

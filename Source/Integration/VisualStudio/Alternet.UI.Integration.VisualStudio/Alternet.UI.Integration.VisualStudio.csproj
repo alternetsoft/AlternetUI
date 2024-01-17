@@ -191,6 +191,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
+    <Content 
+	Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.*" 
+	Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.pdb">
+      <Link>UIXmlHostApp\net8.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
     <Content Include="AlternetUI.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
