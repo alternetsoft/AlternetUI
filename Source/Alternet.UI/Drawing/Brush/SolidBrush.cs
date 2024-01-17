@@ -67,6 +67,9 @@ namespace Alternet.Drawing
 
         private protected override int GetHashCodeCore() => Color.GetHashCode();
 
-        private protected override string ToStringCore() => $"SolidBrush ({Color})";
+        private protected override string ToStringCore()
+        {
+            return $"SolidBrush ({Color})";
+        }
     }
 }
