@@ -89,7 +89,10 @@ namespace PaintSample
             testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
             testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
             testMenu.Add("Make file grey...", DoMakeFileGray);
-            testMenu.Add("Sample draw", DoDrawOnBitmap);
+
+            if(!Application.IsLinuxOS)
+                testMenu.Add("Sample draw", DoDrawOnBitmap);
+
             testMenu.Add("Rotate", DoRotate);
 
             helpMainMenu = new("_Help");
@@ -592,35 +595,22 @@ namespace PaintSample
             /*dc.DrawRectangle(Color.DarkRed.AsPen, r1);*/
             DrawingUtils.FillRectangleBorder(dc, Color.DarkRed.AsBrush, r1, 1);
 
-            Log("1");
-
             /*dc.DrawRectangle(Color.Red.AsPen, r2);*/
             DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
-            Log("2");
 
             var y = location.Y - descent + size.Height;
             dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
-            Log("3");
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
-            Log("4");
 
             dc.DestroyClippingRegion();
-            Log("5");
             dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
-            Log("6");
             dc.DrawText(s, location, font, Color.Black, Color.Empty);
-            Log("7");
 
             dc.DestroyClippingRegion();
-            Log("8");
             dc.SetClippingRegion((location.X, location.Y, size.Width / 2, size.Height));
-            Log("9");
             dc.DrawText(s, location, font, Color.Green, Color.Empty);
-            Log("10");
             dc.DestroyClippingRegion();
-            Log("11");
-
 
             /*var size1 = dc.MeasureText("x", Font.Default);
 
