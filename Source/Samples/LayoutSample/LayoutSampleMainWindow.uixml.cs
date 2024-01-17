@@ -11,6 +11,8 @@ namespace LayoutSample
 
             InitializeComponent();
 
+            MinimumSize = (600, 600);
+
             SetSizeToContent();
 
             logListBox.ContextMenu.Required();

@@ -6,9 +6,14 @@
     public enum MessageBoxDefaultButton
     {
         /// <summary>
+        /// The first button on the message box is the default button.
+        /// </summary>
+        Button1,
+
+        /// <summary>
         /// The <see cref="MessageBox"/> box default button is OK.
         /// </summary>
-        OK,
+        OK = Button1,
 
         /// <summary>
         /// The <see cref="MessageBox"/> box default button is Cancel.
@@ -24,11 +29,6 @@
         /// The <see cref="MessageBox"/> box default button is No.
         /// </summary>
         No,
-
-        /// <summary>
-        /// The first button on the message box is the default button.
-        /// </summary>
-        Button1 = OK,
 
         /// <summary>
         /// The second button on the message box is the default button.

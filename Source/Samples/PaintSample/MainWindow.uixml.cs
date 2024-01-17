@@ -89,7 +89,10 @@ namespace PaintSample
             testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
             testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
             testMenu.Add("Make file grey...", DoMakeFileGray);
-            testMenu.Add("Sample draw", DoDrawOnBitmap);
+
+            if(!Application.IsLinuxOS)
+                testMenu.Add("Sample draw", DoDrawOnBitmap);
+
             testMenu.Add("Rotate", DoRotate);
 
             helpMainMenu = new("_Help");
@@ -567,6 +570,8 @@ namespace PaintSample
 
         public void DrawSample(Graphics dc, PointD location)
         {
+            dc.FillRectangle(Color.WhiteSmoke.AsBrush, (0, 0, 200, 200));
+
             Application.LogNameValue("dc.DPI", dc.GetDPI());
             Application.LogNameValue("window.DPI", GetDPI());
 
@@ -579,8 +584,24 @@ namespace PaintSample
                 s,
                 font,
                 out double descent,
-                out double externalLeading,
+                out _,
                 null);
+
+            Application.Log($"GetTextExtent: {measure}, {size}");
+
+            RectD r1 = (location.X, location.Y, measure.Width, measure.Height);
+            RectD r2 = (location.X, location.Y, size.Width, size.Height);
+
+            /*dc.DrawRectangle(Color.DarkRed.AsPen, r1);*/
+            DrawingUtils.FillRectangleBorder(dc, Color.DarkRed.AsBrush, r1, 1);
+
+            /*dc.DrawRectangle(Color.Red.AsPen, r2);*/
+            DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
+
+            var y = location.Y - descent + size.Height;
+            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
+
+            dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 
             dc.DestroyClippingRegion();
             dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
@@ -591,26 +612,14 @@ namespace PaintSample
             dc.DrawText(s, location, font, Color.Green, Color.Empty);
             dc.DestroyClippingRegion();
 
-            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
-
-
-            dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
-
-
-
-            var y = location.Y - descent + size.Height;
-            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
-
-            dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
-
-            var size1 = dc.MeasureText("x", Font.Default);
+            /*var size1 = dc.MeasureText("x", Font.Default);
 
             var size2 = dc.GetTextExtent(
                 "x",
                 Font.Default,
                 out _,
                 out _,
-                null);
+                null);*/
 
             // <param name="descent">Dimension from the baseline of the font to
             // the bottom of the descender (the size of the tail below the baseline).</param>

@@ -8,8 +8,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates possible reset color methods for <see cref="Control.ResetBackgroundColor"/>
-    /// and <see cref="Control.ResetForegroundColor"/>.
+    /// Enumerates possible reset color methods for
+    /// <see cref="Control.ResetBackgroundColor(ResetColorType)"/>
+    /// and <see cref="Control.ResetForegroundColor(ResetColorType)"/>.
     /// </summary>
     public enum ResetColorType
     {

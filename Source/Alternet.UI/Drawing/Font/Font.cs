@@ -487,7 +487,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return GetWithStyle(FontStyle.Underlined);
+                return GetWithStyle(FontStyle.Underline);
             }
         }
 
@@ -680,7 +680,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static int GetFontStyleArraySize()
         {
-            var a = FontStyle.Bold | FontStyle.Italic | FontStyle.Strikethrough | FontStyle.Underlined;
+            var a = FontStyle.Bold | FontStyle.Italic | FontStyle.Strikeout | FontStyle.Underline;
             return (int)a + 1;
         }
 

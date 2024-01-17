@@ -153,19 +153,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets foreground color to the default value.
+        /// </summary>
+        public virtual void ResetForegroundColor(ResetColorType method)
+        {
+            ResetColor(false, method);
+        }
+
+        /// <summary>
         /// Resets bacgkround color to the default value.
         /// </summary>
-        public virtual void ResetBackgroundColor(ResetColorType method = ResetColorType.Auto)
+        public virtual void ResetBackgroundColor(ResetColorType method)
         {
             ResetColor(true, method);
         }
 
         /// <summary>
+        /// Resets bacgkround color to the default value.
+        /// </summary>
+        public virtual void ResetBackgroundColor()
+        {
+            BackgroundColor = null;
+        }
+
+        /// <summary>
         /// Resets foreground color to the default value.
         /// </summary>
-        public virtual void ResetForegroundColor(ResetColorType method = ResetColorType.Auto)
+        public virtual void ResetForegroundColor()
         {
-            ResetColor(false, method);
+            ForegroundColor = null;
+        }
+
+        /// <summary>
+        /// Resets foreground color to the default value.
+        /// </summary>
+        public virtual void ResetForeColor()
+        {
+            ForegroundColor = null;
         }
 
         /// <summary>

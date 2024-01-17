@@ -29,11 +29,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Underlined text.
         /// </summary>
-        Underlined = 1 << 2,
+        Underline = 1 << 2,
 
         /// <summary>
         /// Text with a line through the middle.
         /// </summary>
-        Strikethrough = 1 << 3,
+        Strikeout = 1 << 3,
     }
 }

@@ -115,10 +115,12 @@ namespace Alternet.UI
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_Key(Key key)
+        private bool ValidateKey(Key key)
         {
             if (256 <= (int)key || (int)key <= 0)
-                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
+                return false;
+            return true;
+                /*throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));*/
         }
 
         /// <summary>
@@ -135,7 +137,8 @@ namespace Alternet.UI
         /// </summary>
         public bool IsKeyDown(Key key)
         {
-            Validate_Key(key);
+            if (!ValidateKey(key))
+                return false;
             return IsKeyDown_private(key);
         }
 
@@ -144,7 +147,8 @@ namespace Alternet.UI
         /// </summary>
         public bool IsKeyUp(Key key)
         {
-            Validate_Key(key);
+            if (!ValidateKey(key))
+                return false;
             return (!IsKeyDown_private(key));
         }
 
@@ -153,7 +157,8 @@ namespace Alternet.UI
         /// </summary>
         public bool IsKeyToggled(Key key)
         {
-            Validate_Key(key);
+            if (!ValidateKey(key))
+                return false;
             return ((GetKeyStatesFromSystem(key) & KeyStates.Toggled) == KeyStates.Toggled);
         }
 
@@ -162,7 +167,8 @@ namespace Alternet.UI
         /// </summary>
         public KeyStates GetKeyStates(Key key)
         {
-            Validate_Key(key);
+            if (!ValidateKey(key))
+                return KeyStates.None;
             return GetKeyStatesFromSystem(key);
         }
    }

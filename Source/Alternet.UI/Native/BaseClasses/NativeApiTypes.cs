@@ -19,11 +19,10 @@ namespace Alternet.UI.Native
 
             public Color(Alternet.Drawing.Color color)
             {
-                if (!color.IsEmpty)
-                {
-                    color.GetArgbValues(out A, out R, out G, out B);
-                    state = 1;
-                }
+                if (color is null || color.IsEmpty)
+                    return;
+                color.GetArgbValues(out A, out R, out G, out B);
+                state = 1;
             }
 
             public Color(byte r, byte g, byte b, byte a)

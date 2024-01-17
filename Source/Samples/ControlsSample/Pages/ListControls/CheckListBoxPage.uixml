@@ -26,15 +26,15 @@
                   Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
           <Button Text="Check Items: 2, 4" Name="checkItemAtIndices2And4Button"
                   Margin="0,3,0,0" Click="CheckItemAtIndices2And4Button_Click" />
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Margin="10,0,5,5">
           <Button Text="Uncheck All" Name="uncheckAllButton"
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
           <Button Text="Has Border" Name="hasBorderButton"
                   Margin="0,3,0,0" Click="HasBorderButton_Click" />
           <Button Text="Edit Items..."
                   Margin="0,3,0,3" Click="EditorButton_Click" />
-        </StackPanel>
-
-        <StackPanel Orientation="Vertical" Margin="10,0,5,5">
           <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
                     Margin="0,3,0,0" IsChecked="true"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>

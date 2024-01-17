@@ -36,6 +36,11 @@ namespace WindowPropertiesSample
             eventsListBox.ContextMenu.Required();
         }
 
+        private void Page1Button_Click(object? sender, EventArgs e)
+        {
+            panelHeader.SelectedTabIndex = 0;
+        }
+
         private void Page2Button_Click(object? sender, EventArgs e)
         {
             panelHeader.SelectedTabIndex = 1;

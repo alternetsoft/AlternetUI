@@ -2408,6 +2408,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override int EndUpdate()
+        {
+            var result = base.EndUpdate();
+            Invalidate();
+            return result;
+        }
+
         /// <summary>
         /// Creates <see cref="Color"/> property.
         /// </summary>

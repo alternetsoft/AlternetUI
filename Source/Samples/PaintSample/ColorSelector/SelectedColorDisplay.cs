@@ -5,7 +5,7 @@ namespace PaintSample
 {
     internal class SelectedColorDisplay : Control
     {
-        private Color selectedColor;
+        private Color selectedColor = Color.Empty;
 
         public SelectedColorDisplay()
         {
@@ -28,7 +28,7 @@ namespace PaintSample
             return (50, 50);
         }
 
-        Brush backgroundHatchBrush = new HatchBrush(BrushHatchStyle.BackwardDiagonal, Color.Gray);
+        private readonly Brush backgroundHatchBrush = new HatchBrush(BrushHatchStyle.BackwardDiagonal, Color.Gray);
 
         protected override void OnPaint(PaintEventArgs e)
         {

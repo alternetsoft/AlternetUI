@@ -68,14 +68,14 @@ namespace DrawingSample
 
         public bool Underlined
         {
-            get => GetFontStyle(FontStyle.Underlined);
-            set => SetFontStyle(FontStyle.Underlined, value);
+            get => GetFontStyle(FontStyle.Underline);
+            set => SetFontStyle(FontStyle.Underline, value);
         }
 
         public bool Strikethrough
         {
-            get => GetFontStyle(FontStyle.Strikethrough);
-            set => SetFontStyle(FontStyle.Strikethrough, value);
+            get => GetFontStyle(FontStyle.Strikeout);
+            set => SetFontStyle(FontStyle.Strikeout, value);
         }
 
         public string CustomFontFamilyName

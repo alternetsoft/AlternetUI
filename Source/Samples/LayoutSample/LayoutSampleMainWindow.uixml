@@ -2,12 +2,13 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.MainWindow"
         Title="Alternet UI Layout Sample" StartLocation="CenterScreen">
-  <StackPanel Padding="10" >
+  <StackPanel Padding="10" AllowStretch="true">
 	  <Button Text="Grid Layout Properties" Margin="0,0,0,10" Click="ShowGridLayoutPropertiesButton_Click" />
 	  <Button Text="Stack Layout Properties" Margin="0,0,0,10" Click="ShowStackLayoutPropertiesButton_Click" />
       <Button Text="Grid 10x10" Margin="0,0,0,10" Click="ShowGrid10x10Button_Click" />
       <Button Text="Scrolling" Margin="0,0,0,10" Click="ShowScrollingButton_Click" />
       <Button Text="Focus" Margin="0,0,0,10" Click="ShowFocusButton_Click" />
-      <LogListBox Name="logListBox" Margin="0,0,0,10" SuggestedSize="400,150"/>
+      <LogListBox Name="logListBox" Margin="0,0,0,10" SuggestedSize="400,150"
+                  VerticalAlignment="Stretch"/>
   </StackPanel>
 </Window>

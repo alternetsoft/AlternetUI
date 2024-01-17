@@ -24,14 +24,17 @@ namespace ControlsTest
 
         public SizerTestPage()
         {
+            panel.SuggestedSize = 400;
+            panel.Size = 400;
+
             SizeD size = new(100, 100);
 
             button1.Size = size;
             button2.Size = size;
             button3.Size = size;
 
-            button2.Location = new(150, 150);
-            button3.Location = new(300, 300);
+            button2.Location = new(100, 100);
+            button3.Location = new(200, 200);
 
             button1.Parent = panel;
             button2.Parent = panel;
