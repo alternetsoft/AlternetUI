@@ -69,11 +69,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
         /// </summary>
+        [Browsable(false)]
         public ContextMenu? DropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets the type of scroll bars displayed in the control.
         /// </summary>
+        [Browsable(false)]
         public RichTextBoxScrollBars ScrollBars
         {
             get

@@ -1560,6 +1560,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
+        [Browsable(false)]
         public virtual Color? BackgroundColor
         {
             get
@@ -1576,7 +1577,7 @@ namespace Alternet.UI
                 if (NativeControl is not null)
                 {
                     if (backgroundColor is null)
-                        ResetBackgroundColor();
+                        ResetBackgroundColor(ResetColorType.Auto);
                     else
                         NativeControl.BackgroundColor = backgroundColor;
                     Refresh();
@@ -1627,7 +1628,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color ForeColor
         {
             get
@@ -1649,7 +1650,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color BackColor
         {
             get
@@ -1671,6 +1672,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
+        [Browsable(false)]
         public virtual Color? ForegroundColor
         {
             get
@@ -1687,7 +1689,7 @@ namespace Alternet.UI
                 if (NativeControl is not null)
                 {
                     if (foregroundColor is null)
-                        ResetForegroundColor();
+                        ResetForegroundColor(ResetColorType.Auto);
                     else
                         NativeControl.ForegroundColor = foregroundColor;
                     Invalidate();
