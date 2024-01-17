@@ -116,20 +116,20 @@ namespace Alternet.UI
         /// <inheritdoc cref="Font.IsStrikethrough"/>
         public bool Strikethrough
         {
-            get => (Style & FontStyle.Strikethrough) != 0;
+            get => (Style & FontStyle.Strikeout) != 0;
             set
             {
-                Style = Font.ChangeFontStyle(Style, FontStyle.Strikethrough, value);
+                Style = Font.ChangeFontStyle(Style, FontStyle.Strikeout, value);
             }
         }
 
         /// <inheritdoc cref="Font.IsUnderlined"/>
         public bool Underlined
         {
-            get => (Style & FontStyle.Underlined) != 0;
+            get => (Style & FontStyle.Underline) != 0;
             set
             {
-                Style = Font.ChangeFontStyle(Style, FontStyle.Underlined, value);
+                Style = Font.ChangeFontStyle(Style, FontStyle.Underline, value);
             }
         }
 

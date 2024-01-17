@@ -509,8 +509,8 @@ namespace Alternet.UI
             else
                 SetFontWeight(FontWeight.Normal);
             SetFontItalic(fontStyle.HasFlag(FontStyle.Italic));
-            SetFontStrikethrough(fontStyle.HasFlag(FontStyle.Strikethrough));
-            SetFontUnderlined(fontStyle.HasFlag(FontStyle.Underlined));
+            SetFontStrikethrough(fontStyle.HasFlag(FontStyle.Strikeout));
+            SetFontUnderlined(fontStyle.HasFlag(FontStyle.Underline));
             return this;
         }
 
@@ -528,9 +528,9 @@ namespace Alternet.UI
             if (isItalic)
                 result |= FontStyle.Italic;
             if (isUnderlined)
-                result |= FontStyle.Underlined;
+                result |= FontStyle.Underline;
             if (isStrikeOut)
-                result |= FontStyle.Strikethrough;
+                result |= FontStyle.Strikeout;
             return result;
         }
 

@@ -26,7 +26,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Toggles <see cref="FontStyle.Underlined"/> style of the selection.
+        /// Toggles <see cref="FontStyle.Underline"/> style of the selection.
         /// </summary>
         public virtual void SelectionToggleUnderlined()
         {
@@ -34,7 +34,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Toggles <see cref="FontStyle.Strikethrough"/> style of the selection.
+        /// Toggles <see cref="FontStyle.Strikeout"/> style of the selection.
         /// </summary>
         public virtual void SelectionToggleStrikethrough()
         {

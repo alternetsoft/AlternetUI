@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="HelpEventArgs" /> class.</summary>
         /// <param name="mousePos">The coordinates of the mouse pointer.</param>
-        public HelpEventArgs(PointD mousePos)
+        public HelpEventArgs(PointD mousePos = default)
         {
             this.mousePos = mousePos;
         }

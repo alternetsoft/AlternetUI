@@ -882,21 +882,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Toggles <see cref="FontStyle.Underlined"/> style of the selection. If no text is selected,
+        /// Toggles <see cref="FontStyle.Underline"/> style of the selection. If no text is selected,
         /// style of the insertion point is changed.
         /// </summary>
         public virtual void SelectionToggleUnderline()
         {
-            SelectionToggleFontStyle(FontStyle.Underlined);
+            SelectionToggleFontStyle(FontStyle.Underline);
         }
 
         /// <summary>
-        /// Toggles <see cref="FontStyle.Strikethrough"/> style of the selection. If no text is
+        /// Toggles <see cref="FontStyle.Strikeout"/> style of the selection. If no text is
         /// selected, style of the insertion point is changed.
         /// </summary>
         public virtual void SelectionToggleStrikethrough()
         {
-            SelectionToggleFontStyle(FontStyle.Strikethrough);
+            SelectionToggleFontStyle(FontStyle.Strikeout);
         }
 
         /// <summary>
