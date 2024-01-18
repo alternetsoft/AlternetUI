@@ -1,7 +1,18 @@
 
+# 0.9.505 (work in progress)
+
+## 2024 January 18
+
+- Fixed exception when some keys pressed on Linux.
+- FontStyle made compatible with WinForms.
+- Fixed uixml preview in VS.
+- SystemInformation.WorkingArea.
+
 # 0.9.500 (2024 January 15)
 
 Changed build number for the new beta release.
+
+---
 
 # 0.9.412 (2024 January 15)
 
@@ -59,6 +70,8 @@ CalcUnscrolledPositionD.
 SetToolImage, SetToolDisabledImage, GetToolImage, GetToolDisabledImage.
 - SpeedButton: DefaultShortcutToolTipTemplate, ShortcutToolTipTemplate.
 - ContextMenu.Closing event.
+
+---
 
 # 0.9.411 (2024 January 5)
 
@@ -126,6 +139,8 @@ SetToolImage, SetToolDisabledImage, GetToolImage, GetToolDisabledImage.
 - Region: IsEmpty, IsOk, Clear(), Contains(Point), Contains(Rect), new constrcutor.
 - Renamed Rect, Size, Point. This rename is done to make drawing structures more compatible with WinForms and less confusing.
 Rect -> RectD, Point -> PointD, Size -> SizeD, Int32Rect -> RectI, Int32Size -> SizeI, Int32Point -> PointI.
+
+---
 
 # 0.9.410 (2023 December 15)
 
