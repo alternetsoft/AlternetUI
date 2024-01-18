@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// If the window you are closing is the last open window of your
         /// application, your application ends.
         /// The window is not disposed on <see cref="Close"/> is when you have
-        /// displayed the window using <see cref="Window.ShowModal()"/>.
+        /// displayed the window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call
         /// <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
@@ -131,7 +131,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new NativeWindow(1);
+            return new NativeWindow((int)Control.GetWindowKind());
         }
 
         protected override void OnDetach()

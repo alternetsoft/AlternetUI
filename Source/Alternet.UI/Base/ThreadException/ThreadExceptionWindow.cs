@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -12,7 +13,7 @@ namespace Alternet.UI
     ///  Implements a window that is displayed when an unhandled exception occurs in
     ///  a thread.
     /// </summary>
-    internal class ThreadExceptionWindow : Window
+    internal class ThreadExceptionWindow : DialogWindow
     {
         private readonly Exception exception;
         private TextBox? messageTextBox;
@@ -115,21 +116,10 @@ namespace Alternet.UI
         private static bool IsRunningUnderWindows()
         {
             return Application.IsWindowsOS;
-            /*
-#if NETCOREAPP
-            return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
-                System.Runtime.InteropServices.OSPlatform.Windows);
-#else
-            return false;
-#endif
-            */
         }
 
         private void InitializeControls()
         {
-            /*Cannot use UIXML in the Alternet.UI assembly itself,
-              so populate the controls from code.*/
-
             BeginInit();
 
             Width = IsRunningUnderWindows() ? 450 : 500;

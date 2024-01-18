@@ -1,6 +1,8 @@
-﻿namespace Alternet.UI
+﻿using Alternet.UI.Localization;
+
+namespace Alternet.UI
 {
-    internal class ThreadExceptionDetailsWindow : Window
+    internal class ThreadExceptionDetailsWindow : DialogWindow
     {
         public ThreadExceptionDetailsWindow(string details)
         {
@@ -10,7 +12,7 @@
         private void InitializeControls(string details)
         {
             BeginInit();
-            Title = "Exception Details";
+            Title = CommonStrings.Default.WindowTitleExceptionDetails;
             Padding = new Thickness(10);
             MinimizeEnabled = false;
             MaximizeEnabled = false;
@@ -31,7 +33,7 @@
 
             var closeButton = new Button
             {
-                Text = "&Close",
+                Text = CommonStrings.Default.ButtonClose,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 Margin = new Thickness(0, 10, 0, 0),
             };

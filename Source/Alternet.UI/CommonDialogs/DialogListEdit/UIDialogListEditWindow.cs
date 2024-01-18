@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory("Hidden")]
-    internal class UIDialogListEditWindow : UIDialogWindow
+    internal class UIDialogListEditWindow : DialogWindow
     {
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();

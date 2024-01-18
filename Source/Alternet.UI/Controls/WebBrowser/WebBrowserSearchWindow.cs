@@ -7,7 +7,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class WebBrowserSearchWindow : Window
+    internal class WebBrowserSearchWindow : DialogWindow
     {
         private readonly CheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
         private readonly CheckBox findEntireWordCheckBox = new(CommonStrings.Default.FindOptionMatchWholeWord);

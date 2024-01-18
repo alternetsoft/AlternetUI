@@ -9,7 +9,7 @@ namespace WindowPropertiesSample
         private readonly CardPanelHeader panelHeader;
         private readonly SetBoundsProperties setBoundsProperties;
 
-        private TestWindow? testWindow;
+        private Window? testWindow;
 
         public MainWindow()
         {
@@ -66,7 +66,7 @@ namespace WindowPropertiesSample
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
         {
-            CreateWindowAndSetProperties();
+            CreateWindowAndSetProperties(false);
 
             if (testWindow == null)
                 throw new InvalidOperationException();
@@ -79,19 +79,19 @@ namespace WindowPropertiesSample
 
         private void CreateAndShowModalWindowButton_Click(object sender, EventArgs e)
         {
-            CreateWindowAndSetProperties();
+            CreateWindowAndSetProperties(true);
 
-            if (testWindow == null)
+            if (testWindow is not DialogWindow dialogWindow)
                 throw new InvalidOperationException();
 
-            testWindow.ShowModal();
+            dialogWindow.ShowModal();
 
-            Application.Log("ModalResult: " + testWindow.ModalResult);
-            testWindow.Dispose();
+            Application.Log("ModalResult: " + dialogWindow.ModalResult);
+            dialogWindow.Dispose();
             OnWindowClosed();
         }
 
-        private void CreateWindowAndSetProperties()
+        private void CreateWindowAndSetProperties(bool isDialog)
         {
             WindowStartLocation? sLocation = null;
             var startLocationItem = startLocationComboBox.SelectedItem;
@@ -108,7 +108,13 @@ namespace WindowPropertiesSample
                 sLocation = WindowStartLocation.Manual;
             }
 
-            testWindow = new TestWindow();
+            if (isDialog)
+                testWindow = new DialogWindow();
+            else
+                testWindow = new Window()
+                {
+
+                };                    
 
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;

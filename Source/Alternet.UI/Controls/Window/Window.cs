@@ -601,6 +601,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this window is displayed modally.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool Modal
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="MainMenu"/> that is displayed in the window.
         /// </summary>
         /// <value>
@@ -626,41 +638,6 @@ namespace Alternet.UI
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this window is displayed modally.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool Modal
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeControl.Modal;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the modal result value, which is the value that is returned from the
-        /// <see cref="ShowModal()"/> method.
-        /// This property is set to <see cref="ModalResult.None"/> at the moment
-        /// <see cref="ShowModal()"/> is called.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ModalResult ModalResult
-        {
-            get
-            {
-                CheckDisposed();
-                return (ModalResult)NativeControl.ModalResult;
-            }
-
-            set
-            {
-                CheckDisposed();
-                NativeControl.ModalResult = (Native.ModalResult)value;
             }
         }
 
@@ -808,20 +785,6 @@ namespace Alternet.UI
         public virtual void Activate() => NativeControl.Activate();
 
         /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the
-        /// modal window is closed.
-        /// </summary>
-        /// <returns>
-        /// The return value is the value of the <see cref="ModalResult"/> property before
-        /// window closes.
-        /// </returns>
-        public virtual ModalResult ShowModal()
-        {
-            return ShowModal(Owner);
-        }
-
-        /// <summary>
         /// Gets default bounds assigned to the window.
         /// </summary>
         /// <returns></returns>
@@ -842,8 +805,8 @@ namespace Alternet.UI
         /// a parameter to your event handler.
         /// If the window you are closing is the last open window of your application,
         /// your application ends.
-        /// The window is not disposed on <see cref="Close"/> is when you have displayed the
-        /// window using <see cref="ShowModal()"/>.
+        /// The window is not disposed on <see cref="Close"/> when you have displayed the
+        /// window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
         public virtual void Close()
@@ -853,29 +816,6 @@ namespace Alternet.UI
             CheckDisposed();
 
             Handler.Close();
-        }
-
-        /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the
-        /// modal window is closed.
-        /// </summary>
-        /// <param name="owner">
-        /// A window that will own this window.
-        /// </param>
-        /// <returns>
-        /// The return value is the value of the <see cref="ModalResult"/> property before
-        /// window closes.
-        /// </returns>
-        public virtual ModalResult ShowModal(Window? owner)
-        {
-            CheckDisposed();
-
-            ModalResult = ModalResult.None;
-            Owner = owner;
-            NativeControl.ShowModal();
-
-            return ModalResult;
         }
 
         /// <summary>
@@ -909,6 +849,8 @@ namespace Alternet.UI
 
             return GetParentWindow(c.Parent);
         }
+
+        internal virtual WindowKind GetWindowKind() => WindowKind.Window;
 
         internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 
