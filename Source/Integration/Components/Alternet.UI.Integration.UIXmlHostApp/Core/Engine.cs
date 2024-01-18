@@ -1,6 +1,7 @@
 ﻿using Alternet.UI.Integration.Remoting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Alternet.UI.Integration.UIXmlHostApp.Remote
@@ -34,6 +35,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         {
             var e = (Exception)parameters["Exception"];
             Logger.Instance.Error(e.ToString());
+            Console.WriteLine(e.ToString());
+            Debug.WriteLine(e.ToString());
             transport.Send(new UpdateXamlResultMessage
             {
                 Error = (string)parameters["Message"],
@@ -86,6 +89,15 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         {
             if (obj is UpdateXamlMessage uixml)
             {
+                Logger.Instance.Information("========");
+                Logger.Instance.Information("OnTransportMessage");
+
+                Logger.Instance.Information($"Uixml: {uixml.Xaml}");
+                Logger.Instance.Information($"AssemblyPath: {uixml.AssemblyPath}");
+                Logger.Instance.Information($"OwnerWindowX: {uixml.OwnerWindowX}");
+                Logger.Instance.Information($"OwnerWindowY: {uixml.OwnerWindowY}");
+                Logger.Instance.Information("========");
+
                 previewerService.ProcessUixmlUpdate(
                     new Dictionary<string, object>
                     {

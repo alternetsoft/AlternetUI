@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Alternet.UI.Integration.UIXmlHostApp": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "--transport file:///e://AlternetUIApp1//MainWindow.uixml --html-url http://127.0.0.1:8081 --method html e:\\AlternetUIApp1\\bin\\Debug\\net6.0\\AlternetUIApp1.dll"
     }
   }
 }

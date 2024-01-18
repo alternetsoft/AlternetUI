@@ -56,7 +56,13 @@ namespace Alternet.UI.Integration
 
             wakeUpIdleTimer = new System.Threading.Timer(_ => application.WakeUpIdle(), null, 0, 200);
 
-            application.Run(new Window { IsToolWindow = true, StartLocation = WindowStartLocation.Manual, Location = new PointD(20000, 20000) });
+            application.Run(
+                new Window
+                {
+                    IsToolWindow = true,
+                    StartLocation = WindowStartLocation.Manual,
+                    Location = new PointD(20000, 20000),
+                });
         }
 
         public void ProcessUixmlUpdate(IDictionary<string, object> parameters)

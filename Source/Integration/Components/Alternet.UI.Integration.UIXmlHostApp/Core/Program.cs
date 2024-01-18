@@ -1,6 +1,7 @@
 ﻿using Alternet.UI.Integration.Remoting;
 using Alternet.UI.Integration.UIXmlHostApp.Remote;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -16,6 +17,14 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         [STAThread]
         public static void Main(string[] cmdline)
         {
+            Logger.Instance.Information("========");
+            Logger.Instance.Information("Parameters:");
+            foreach (var s in cmdline)
+            {
+                Logger.Instance.Information(s);
+            }
+            Logger.Instance.Information("========");
+
             //System.Windows.Forms.MessageBox.Show("Attach.");
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -69,7 +78,11 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         private static void Die(string error)
         {
             if (error != null)
+            {
                 Logger.Instance.Fatal(error);
+                Console.WriteLine(error);
+                Debug.WriteLine(error);
+            }
 
             Environment.Exit(1);
         }
@@ -154,6 +167,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Logger.Instance.Fatal(e.ExceptionObject.ToString());
+            Console.WriteLine(e.ExceptionObject.ToString());
+            Debug.WriteLine(e.ExceptionObject.ToString());
         }
 
         internal static class Methods

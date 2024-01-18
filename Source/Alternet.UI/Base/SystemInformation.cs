@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -35,5 +36,18 @@ namespace Alternet.UI
         /// The number of lines to scroll on a mouse wheel rotation, or -1 if the
         /// "One screen at a time" mouse option is selected.</returns>
         public static int MouseWheelScrollLines { get; set; } = 3;
+
+        /// <summary>
+        /// Gets the size, in dips, of the working area of the screen.
+        /// </summary>
+        /// <returns>A <see cref="RectD" /> that represents the size, in dips, of
+        /// the working area of the screen.</returns>
+        public static RectD WorkingArea
+        {
+            get
+            {
+                return Display.Primary.ClientAreaDip;
+            }
+        }
     }
 }
