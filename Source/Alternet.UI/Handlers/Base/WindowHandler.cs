@@ -10,9 +10,6 @@ namespace Alternet.UI
         /// </summary>
         public new Window Control => (Window)base.Control;
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
-
         /// <summary>
         /// Changes size of the window to fit the size of its content.
         /// </summary>

@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class Window : Control
     {
+        public static IntPtr CreateEx(int kind) => throw new Exception();
+
         public static void SetDefaultBounds(RectD bounds) { }
 
         public static void SetParkingWindowFont(Font? font) { }

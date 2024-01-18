@@ -946,4 +946,51 @@ namespace Alternet::UI
 
 	// ============================================
 
+	void* WxOtherFactory::FsWatcherCreate()
+	{
+		return new wxFileSystemWatcher();
+	}
+
+	void WxOtherFactory::FsWatcherDelete(void* handle)
+	{
+		delete (wxFileSystemWatcher*)handle;
+	}
+
+	bool WxOtherFactory::FsWatcherAdd(void* handle, const string& path, int events)
+	{
+		return ((wxFileSystemWatcher*)handle)->Add(wxStr(path), events);
+	}
+
+	bool WxOtherFactory::FsWatcherAddTree(
+		void* handle, const string& path, int events, const string& filter)
+	{
+		return ((wxFileSystemWatcher*)handle)->AddTree(wxStr(path), events, wxStr(filter));
+	}
+
+	int WxOtherFactory::FsWatcherGetWatchedPathsCount(void* handle)
+	{
+		return ((wxFileSystemWatcher*)handle)->GetWatchedPathsCount();
+	}
+	
+	bool WxOtherFactory::FsWatcherRemove(void* handle, const string& path)
+	{
+		return ((wxFileSystemWatcher*)handle)->Remove(wxStr(path));
+	}
+
+	bool WxOtherFactory::FsWatcherRemoveAll(void* handle)
+	{
+		return ((wxFileSystemWatcher*)handle)->RemoveAll();
+	}
+
+	bool WxOtherFactory::FsWatcherRemoveTree(void* handle, const string& path)
+	{
+		return ((wxFileSystemWatcher*)handle)->RemoveTree(wxStr(path));
+	}
+
+	void WxOtherFactory::FsWatcherSetOwner(void* handle, void* handler)
+	{
+		((wxFileSystemWatcher*)handle)->SetOwner((wxEvtHandler*)handler);
+	}
+
+	// ============================================
 }

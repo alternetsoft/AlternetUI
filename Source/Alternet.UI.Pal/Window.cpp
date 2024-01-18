@@ -93,6 +93,13 @@ namespace Alternet::UI
 
     // ------------
 
+    void* Window::CreateEx(int kind)
+    {
+        auto result = new Window();
+        result->_frameKind = kind;
+        return result;
+    }
+
     Window::Window():
         _flags(
             WindowFlags::ShowInTaskbar |
@@ -305,12 +312,16 @@ namespace Alternet::UI
     void* Window::GetWxStatusBar()
     {
         auto wxWindow = GetFrame();
+        if (wxWindow == nullptr)
+            return nullptr;
         return wxWindow->GetStatusBar();
     }
 
     void Window::SetWxStatusBar(void* value)
     {
         auto wxWindow = GetFrame();
+        if (wxWindow == nullptr)
+            return;
         wxWindow->SetStatusBar((wxStatusBar*)value);
         wxWindow->Layout();
         wxWindow->PostSizeEvent();
@@ -350,10 +361,11 @@ namespace Alternet::UI
     {
         Control::OnBeforeDestroyWxWindow();
 
-        auto wxWindow = GetFrame();
+        auto wxFrame = GetFrame();
+        if(wxFrame != nullptr)
+            wxFrame->RemoveFrame();
 
-        wxWindow->RemoveFrame();
-
+        auto wxWindow = GetWxWindow();
         wxWindow->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_MOVE, &Window::OnMove, this);
         wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
@@ -797,6 +809,8 @@ namespace Alternet::UI
         }
         else
         {
+            if (value == nullptr)
+                return;
             value->SetIcons(IconSet::IconBundle(_icon));
         }
     }
@@ -854,7 +868,7 @@ namespace Alternet::UI
 
     void Window::Activate()
     {
-        GetFrame()->SetFocus();
+        GetWxWindow()->SetFocus();
     }
 
     bool Window::GetAlwaysOnTop()

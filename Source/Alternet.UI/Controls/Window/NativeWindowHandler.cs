@@ -131,7 +131,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.Window();
+            return new NativeWindow(1);
         }
 
         protected override void OnDetach()
@@ -394,6 +394,19 @@ namespace Alternet.UI
         private void ApplyTitle(object? sender, EventArgs e)
         {
             NativeControl.Title = Control.Title;
+        }
+
+        private class NativeWindow : Native.Window
+        {
+            public NativeWindow(int kind)
+            {
+                SetNativePointer(NativeApi.Window_CreateEx_(kind));
+            }
+
+            public NativeWindow(IntPtr nativePointer)
+                : base(nativePointer)
+            {
+            }
         }
     }
 }

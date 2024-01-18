@@ -237,6 +237,11 @@ ALTERNET_UI_API void Window_CloseOwnedWindowsArray_(Window* obj, void* array)
     obj->CloseOwnedWindowsArray(array);
 }
 
+ALTERNET_UI_API void* Window_CreateEx_(int kind)
+{
+    return Window::CreateEx(kind);
+}
+
 ALTERNET_UI_API void Window_SetDefaultBounds_(RectD bounds)
 {
     Window::SetDefaultBounds(bounds);

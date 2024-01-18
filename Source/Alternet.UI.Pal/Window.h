@@ -8,12 +8,14 @@
 #include "Toolbar.h"
 #include "StatusBar.h"
 
+#include <wx/minifram.h>
+
 namespace Alternet::UI
 {
     class Window;
     class Button;
 
-    // Frame
+    // Frame =============================================
 
     class Frame : public wxFrame, public wxWidgetExtender
     {
@@ -46,7 +48,22 @@ namespace Alternet::UI
         BYREF_ONLY(Frame);
     };
 
-    // FrameDisabler
+    class MiniFrame : public wxMiniFrame, public wxWidgetExtender
+    {
+    public:
+        MiniFrame(wxWindow* parent,
+            wxWindowID id,
+            const wxString& title,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxCAPTION | wxCLIP_CHILDREN | wxRESIZE_BORDER,
+            const wxString& name = wxASCII_STR(wxFrameNameStr))
+            : wxMiniFrame(parent, id, title, pos, size, style,name)
+        {
+        }
+    };
+
+    // FrameDisabler =============================================
 
     class FrameDisabler
     {
@@ -61,7 +78,7 @@ namespace Alternet::UI
         BYREF_ONLY(FrameDisabler);
     };
 
-    // Window
+    // Window =============================================
 
     class Window : public Control
     {
@@ -97,6 +114,7 @@ namespace Alternet::UI
 
         Button* _acceptButton = nullptr;
         Button* _cancelButton = nullptr;
+        int _frameKind = 0;
 
         std::map<string, wxAcceleratorEntry> _acceleratorsByCommandIds;
 

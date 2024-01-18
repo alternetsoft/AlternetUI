@@ -367,6 +367,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static System.IntPtr CreateEx(int kind)
+        {
+            return NativeApi.Window_CreateEx_(kind);
+        }
+        
         public static void SetDefaultBounds(Alternet.Drawing.RectD bounds)
         {
             NativeApi.Window_SetDefaultBounds_(bounds);
@@ -618,6 +623,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_CloseOwnedWindowsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Window_CreateEx_(int kind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetDefaultBounds_(Alternet.Drawing.RectD bounds);

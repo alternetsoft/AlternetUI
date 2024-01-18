@@ -141,6 +141,51 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_MemorySet_(dest, fillByte, count);
         }
         
+        public static System.IntPtr FsWatcherCreate()
+        {
+            return NativeApi.WxOtherFactory_FsWatcherCreate_();
+        }
+        
+        public static void FsWatcherDelete(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_FsWatcherDelete_(handle);
+        }
+        
+        public static bool FsWatcherAdd(System.IntPtr handle, string path, int events)
+        {
+            return NativeApi.WxOtherFactory_FsWatcherAdd_(handle, path, events);
+        }
+        
+        public static bool FsWatcherAddTree(System.IntPtr handle, string path, int events, string filter)
+        {
+            return NativeApi.WxOtherFactory_FsWatcherAddTree_(handle, path, events, filter);
+        }
+        
+        public static int FsWatcherGetWatchedPathsCount(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_FsWatcherGetWatchedPathsCount_(handle);
+        }
+        
+        public static bool FsWatcherRemove(System.IntPtr handle, string path)
+        {
+            return NativeApi.WxOtherFactory_FsWatcherRemove_(handle, path);
+        }
+        
+        public static bool FsWatcherRemoveAll(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_FsWatcherRemoveAll_(handle);
+        }
+        
+        public static bool FsWatcherRemoveTree(System.IntPtr handle, string path)
+        {
+            return NativeApi.WxOtherFactory_FsWatcherRemoveTree_(handle, path);
+        }
+        
+        public static void FsWatcherSetOwner(System.IntPtr handle, System.IntPtr handler)
+        {
+            NativeApi.WxOtherFactory_FsWatcherSetOwner_(handle, handler);
+        }
+        
         public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz)
         {
             NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
@@ -636,6 +681,33 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_MemorySet_(System.IntPtr dest, int fillByte, ulong count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_FsWatcherCreate_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_FsWatcherDelete_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_FsWatcherAdd_(System.IntPtr handle, string path, int events);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_FsWatcherAddTree_(System.IntPtr handle, string path, int events, string filter);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxOtherFactory_FsWatcherGetWatchedPathsCount_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_FsWatcherRemove_(System.IntPtr handle, string path);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_FsWatcherRemoveAll_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_FsWatcherRemoveTree_(System.IntPtr handle, string path);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_FsWatcherSetOwner_(System.IntPtr handle, System.IntPtr handler);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz);
