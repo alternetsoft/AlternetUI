@@ -23,11 +23,16 @@ namespace Alternet.UI
             Margin = (2, 0, 2, 0),
         };
 
+        private IFindReplaceManager? manager;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
         /// </summary>
         public FindReplaceControl()
         {
+            replaceEdit.TextChanged += ReplaceEdit_TextChanged;
+            findEdit.TextChanged += FindEdit_TextChanged;
+
             ToolBarCount = 3;
 
             OptionsToolBar.AddPicture(null);
@@ -155,6 +160,28 @@ namespace Alternet.UI
         public event EventHandler? OptionUseRegularExpressionsChanged;
 
         /// <summary>
+        /// Gets or sets <see cref="IFindReplaceManager"/> instance.
+        /// </summary>
+        public IFindReplaceManager? Manager
+        {
+            get => manager;
+
+            set
+            {
+                if (manager == value)
+                    return;
+                manager = value;
+
+                if (manager is null)
+                    return;
+
+                OptionMatchCaseEnabled = manager.CanMatchCase;
+                OptionMatchWholeWordEnabled = manager.CanMatchWholeWord;
+                OptionUseRegularExpressionsEnabled = manager.CanUseRegularExpressions;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets 'Match Case' option.
         /// </summary>
         public bool OptionMatchCase
@@ -169,7 +196,26 @@ namespace Alternet.UI
                 if (OptionMatchCase == value)
                     return;
                 OptionsToolBar.SetToolSticky(IdMatchCase, value);
+                Manager?.SetMatchCase(value);
                 OptionMatchCaseChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Match Case' option is enabled.
+        /// </summary>
+        public bool OptionMatchCaseEnabled
+        {
+            get
+            {
+                return OptionsToolBar.GetToolEnabled(IdMatchCase);
+            }
+
+            set
+            {
+                if (OptionMatchCaseEnabled == value)
+                    return;
+                OptionsToolBar.SetToolEnabled(IdMatchCase, value);
             }
         }
 
@@ -188,7 +234,26 @@ namespace Alternet.UI
                 if (OptionMatchWholeWord == value)
                     return;
                 OptionsToolBar.SetToolSticky(IdMatchWholeWord, value);
+                Manager?.SetMatchWholeWord(value);
                 OptionMatchWholeWordChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Match Whole Word' option is enabled.
+        /// </summary>
+        public bool OptionMatchWholeWordEnabled
+        {
+            get
+            {
+                return OptionsToolBar.GetToolEnabled(IdMatchWholeWord);
+            }
+
+            set
+            {
+                if (OptionMatchWholeWordEnabled == value)
+                    return;
+                OptionsToolBar.SetToolEnabled(IdMatchWholeWord, value);
             }
         }
 
@@ -207,7 +272,42 @@ namespace Alternet.UI
                 if (OptionUseRegularExpressions == value)
                     return;
                 OptionsToolBar.SetToolSticky(IdUseRegularExpressions, value);
+                Manager?.SetUseRegularExpressions(value);
                 OptionUseRegularExpressionsChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Use Regular Expressions' option is enabled.
+        /// </summary>
+        public bool OptionUseRegularExpressionsEnabled
+        {
+            get
+            {
+                return OptionsToolBar.GetToolEnabled(IdUseRegularExpressions);
+            }
+
+            set
+            {
+                if (OptionUseRegularExpressionsEnabled == value)
+                    return;
+                OptionsToolBar.SetToolEnabled(IdUseRegularExpressions, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Close' button is visible.
+        /// </summary>
+        public bool CloseButtonVisible
+        {
+            get
+            {
+                return FindToolBar.GetToolVisible(IdFindClose);
+            }
+
+            set
+            {
+                FindToolBar.SetToolVisible(IdFindClose, value);
             }
         }
 
@@ -362,6 +462,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Creates <see cref="IFindReplaceManager"/> instance which logs all method calls.
+        /// </summary>
+        /// <returns></returns>
+        public IFindReplaceManager CreateLogger()
+        {
+            return new FindReplaceManagerLogger();
+        }
+
         private void OnClickUseRegularExpressions(object? sender, EventArgs e)
         {
             OptionUseRegularExpressions = !OptionUseRegularExpressions;
@@ -380,6 +489,7 @@ namespace Alternet.UI
         private void OnClickFindNext(object? sender, EventArgs e)
         {
             ClickFindNext?.Invoke(this, e);
+            Manager?.FindNext();
         }
 
         private void OnClickToggleReplace(object? sender, EventArgs e)
@@ -390,21 +500,115 @@ namespace Alternet.UI
         private void OnClickFindPrevious(object? sender, EventArgs e)
         {
             ClickFindPrevious?.Invoke(this, e);
+            Manager?.FindPrevious();
         }
 
         private void OnClickReplace(object? sender, EventArgs e)
         {
             ClickReplace?.Invoke(this, e);
+            Manager?.Replace();
         }
 
         private void OnClickReplaceAll(object? sender, EventArgs e)
         {
             ClickReplaceAll?.Invoke(this, e);
+            Manager?.Replace();
         }
 
         private void OnClickClose(object? sender, EventArgs e)
         {
             ClickClose?.Invoke(this, e);
+        }
+
+        private void FindEdit_TextChanged(object sender, EventArgs e)
+        {
+            Manager?.SetFindText(findEdit.Text);
+        }
+
+        private void ReplaceEdit_TextChanged(object sender, EventArgs e)
+        {
+            Manager?.SetReplaceText(replaceEdit.Text);
+        }
+
+        public interface IFindReplaceManager
+        {
+            bool CanMatchCase { get; }
+
+            bool CanMatchWholeWord { get; }
+
+            bool CanUseRegularExpressions { get; }
+
+            void SetMatchCase(bool value);
+
+            void SetMatchWholeWord(bool value);
+
+            void SetUseRegularExpressions(bool value);
+
+            void Replace();
+
+            void ReplaceAll();
+
+            void FindNext();
+
+            void FindPrevious();
+
+            void SetFindText(string text);
+
+            void SetReplaceText(string text);
+        }
+
+        internal class FindReplaceManagerLogger : IFindReplaceManager
+        {
+            public bool CanMatchCase => true;
+
+            public bool CanMatchWholeWord => true;
+
+            public bool CanUseRegularExpressions => true;
+
+            public void FindNext()
+            {
+                Application.Log("FindReplaceControl.FindNext");
+            }
+
+            public void FindPrevious()
+            {
+                Application.Log("FindReplaceControl.FindPrevious");
+            }
+
+            public void Replace()
+            {
+                Application.Log("FindReplaceControl.Replace");
+            }
+
+            public void ReplaceAll()
+            {
+                Application.Log("FindReplaceControl.ReplaceAll");
+            }
+
+            public void SetFindText(string text)
+            {
+                Application.Log($"FindReplaceControl.FindText = '{text}'");
+            }
+
+            public void SetMatchCase(bool value)
+            {
+                Application.Log($"FindReplaceControl.MatchCase = {value}");
+            }
+
+            public void SetMatchWholeWord(bool value)
+            {
+                Application.Log($"FindReplaceControl.MatchWholeWord = {value}");
+            }
+
+            public void SetReplaceText(string text)
+            {
+                Application.Log($"FindReplaceControl.ReplaceText = '{text}'");
+            }
+
+            public void SetUseRegularExpressions(bool value)
+            {
+                Application.Log($"FindReplaceControl.UseRegularExpressions = {value}");
+            }
         }
     }
 }
