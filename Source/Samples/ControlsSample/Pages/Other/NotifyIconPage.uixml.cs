@@ -38,9 +38,16 @@ namespace ControlsSample
 
             showToolTipButton.Click += ShowToolTipButton_Click;
             hideToolTipButton.Click += HideToolTipButton_Click;
+            resetTitleButton.Click += ResetTitleButton_Click;
+            showSimpleButton.Click += ShowSimpleButton_Click;
 
             GetColumnGroup(3, true).SuggestedWidthToMax();
 
+        }
+
+        private void ResetTitleButton_Click(object? sender, EventArgs e)
+        {
+            tooltipTitleTextBox.Text = string.Empty;
         }
 
         internal void LogColors()
@@ -61,6 +68,11 @@ namespace ControlsSample
                 tooltipPreview,
                 ToolTipKind,
                 ToolTipIcon);
+        }
+
+        private void ShowSimpleButton_Click(object? sender, EventArgs e)
+        {
+            RichToolTip.ShowSimple(tooltipMessageTextBox.Text, tooltipPreview);
         }
 
         private void HideToolTipButton_Click(object? sender, EventArgs e)

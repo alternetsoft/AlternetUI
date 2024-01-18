@@ -102,6 +102,28 @@ namespace Alternet.UI
         public bool IgnoreImages { get; set; }
 
         /// <summary>
+        /// Shows simple tooltip on the screen.
+        /// </summary>
+        /// <param name="message">Tooltip message.</param>
+        /// <param name="control">Control for which tooltip is shown.</param>
+        /// <param name="useSystemColorInfo">If <c>true</c>, sets tooltip colors
+        /// to <see cref="FontAndColor.SystemColorInfo"/>.</param>
+        public static void ShowSimple(string message, Control control, bool useSystemColorInfo = true)
+        {
+            RichToolTip toolTip = new(null, message);
+            RichToolTip.Default = toolTip;
+            toolTip.SetTipKind(RichToolTipKind.None);
+            if (useSystemColorInfo)
+            {
+                var colors = FontAndColor.SystemColorInfo;
+                toolTip.SetBackgroundColor(colors.BackgroundColor);
+                toolTip.SetForegroundColor(colors.ForegroundColor);
+            }
+
+            toolTip.Show(control);
+        }
+
+        /// <summary>
         /// Shows tooltip on the screen.
         /// </summary>
         /// <param name="title">Tooltip title.</param>
@@ -118,9 +140,17 @@ namespace Alternet.UI
         {
             Default = new(title, message);
             if (kind is not null)
+            {
                 Default.SetTipKind(kind.Value);
+            }
+
             if (icon is not null)
+            {
+                if (string.IsNullOrEmpty(title))
+                    icon = MessageBoxIcon.None;
                 Default.SetIcon(icon.Value);
+            }
+
             Default.Show(control);
         }
 
@@ -131,8 +161,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Background color.</param>
         /// <param name="endColor">Second background color.</param>
-        public void SetBackgroundColor(Color color, Color? endColor)
+        public void SetBackgroundColor(Color? color, Color? endColor = null)
         {
+            if (color is null)
+                return;
+
             Color color2;
             if (endColor is null)
                 color2 = Color.Empty;
@@ -148,8 +181,10 @@ namespace Alternet.UI
         /// <remarks>
         /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
         /// </remarks>
-        public void SetForegroundColor(Color color)
+        public void SetForegroundColor(Color? color)
         {
+            if (color is null)
+                return;
             Native.WxOtherFactory.RichToolTipSetFgColor(Handle, color);
         }
 
@@ -160,8 +195,10 @@ namespace Alternet.UI
         /// <remarks>
         /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
         /// </remarks>
-        public void SetTitleForegroundColor(Color color)
+        public void SetTitleForegroundColor(Color? color)
         {
+            if (color is null)
+                return;
             Native.WxOtherFactory.RichToolTipSetTitleFgColor(Handle, color);
         }
 

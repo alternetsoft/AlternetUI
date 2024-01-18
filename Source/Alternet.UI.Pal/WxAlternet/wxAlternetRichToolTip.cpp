@@ -105,27 +105,90 @@ public:
         const wxColour& titlefgColor) :
         m_timer(this)
     {
+        auto noTitle = title == wxEmptyString;
+        auto hasTitle = !noTitle;
+
         Create(parent, wxFRAME_SHAPED);
         if (Alternet::UI::Window::fontOverride.IsOk())
             SetFont(Alternet::UI::Window::fontOverride);
-
 
         // Move to the display where it will be shown,
         // so below calculations are based on the correct DPI.
         Move(GetTipPoint(), wxSIZE_ALLOW_MINUS_ONE);
 
         wxBoxSizer* const sizerTitle = new wxBoxSizer(wxHORIZONTAL);
-        if (icon.IsOk())
+        if (hasTitle && icon.IsOk())
         {
             sizerTitle->Add(new wxStaticBitmap(this, wxID_ANY, icon),
                 wxSizerFlags().Centre().Border(wxRIGHT));
         }
-        //else: Simply don't show any icon.
 
-        wxStaticText* const labelTitle = new wxStaticText(this, wxID_ANY, wxString());
-        labelTitle->SetLabelText(title);
+        wxBoxSizer* const sizerTop = new wxBoxSizer(wxVERTICAL);
 
-        wxFont titleFont(titleFont_);
+        if (hasTitle)
+        {
+            wxStaticText* const labelTitle = new wxStaticText(this, wxID_ANY, wxString());
+            labelTitle->SetLabelText(title);
+
+            TitleFontToControl(parent, labelTitle, titleFont_);
+
+            if (titlefgColor.IsOk())
+                labelTitle->SetForegroundColour(titlefgColor);
+
+            sizerTitle->Add(labelTitle, wxSizerFlags().Centre());
+
+            auto& sizerBorderFlags = wxSizerFlags().DoubleBorder(wxLEFT | wxRIGHT | wxTOP);
+
+            sizerTop->Add(sizerTitle, sizerBorderFlags);
+
+            // Use a spacer as we don't want to have a double border between the
+            // elements, just a simple one will do.
+            sizerTop->AddSpacer(wxSizerFlags::GetDefaultBorder());
+        }
+
+        wxAlternetTextSizerWrapper wrapper(this, fgColor);
+        wxSizer* sizerText = wrapper.CreateSizer(message, -1 /* No wrapping */);
+
+#ifdef HAVE_MSW_THEME
+        if (hasTitle && icon.IsOk() && UseTooltipTheme())
+        {
+            // Themed tooltips under MSW align the text with the title, not
+            // with the icon, so use a helper horizontal sizer in this case.
+            wxBoxSizer* const sizerTextIndent = new wxBoxSizer(wxHORIZONTAL);
+            sizerTextIndent->AddSpacer(icon.GetPreferredLogicalSizeFor(this).x);
+            sizerTextIndent->Add(sizerText,
+                wxSizerFlags().Border(wxLEFT).Centre());
+
+            sizerText = sizerTextIndent;
+        }
+#endif
+
+        auto border = wxLEFT | wxRIGHT | wxBOTTOM;
+        auto& sizerBorderFlags = wxSizerFlags().DoubleBorder(border);
+        if (noTitle)
+        {
+            border |= wxTOP;
+            sizerBorderFlags = wxSizerFlags().Border(border);
+        }
+
+        sizerTop->Add(sizerText, sizerBorderFlags.Centre());
+
+        SetSizer(sizerTop);
+
+        const int offsetY = SetTipShapeAndSize(tipKind, GetBestSize());
+        if (offsetY > 0)
+        {
+            // Offset our contents by the tip height to make it appear in the
+            // main rectangle.
+            sizerTop->PrependSpacer(offsetY);
+        }
+
+        Layout();
+    }
+
+    void TitleFontToControl(wxWindow* parent, wxWindow* labelTitle, wxFont titleFontA)
+    {
+        wxFont titleFont(titleFontA);
         if (!titleFont.IsOk())
         {
             // Determine the appropriate title font for the current platform.
@@ -164,50 +227,6 @@ public:
         }
 
         labelTitle->SetFont(titleFont);
-        sizerTitle->Add(labelTitle, wxSizerFlags().Centre());
-
-        wxBoxSizer* const sizerTop = new wxBoxSizer(wxVERTICAL);
-        sizerTop->Add(sizerTitle,
-            wxSizerFlags().DoubleBorder(wxLEFT | wxRIGHT | wxTOP));
-
-        // Use a spacer as we don't want to have a double border between the
-        // elements, just a simple one will do.
-        sizerTop->AddSpacer(wxSizerFlags::GetDefaultBorder());
-
-        wxAlternetTextSizerWrapper wrapper(this, fgColor);
-        wxSizer* sizerText = wrapper.CreateSizer(message, -1 /* No wrapping */);
-
-#ifdef HAVE_MSW_THEME
-        if (icon.IsOk() && UseTooltipTheme())
-        {
-            // Themed tooltips under MSW align the text with the title, not
-            // with the icon, so use a helper horizontal sizer in this case.
-            wxBoxSizer* const sizerTextIndent = new wxBoxSizer(wxHORIZONTAL);
-            sizerTextIndent->AddSpacer(icon.GetPreferredLogicalSizeFor(this).x);
-            sizerTextIndent->Add(sizerText,
-                wxSizerFlags().Border(wxLEFT).Centre());
-
-            sizerText = sizerTextIndent;
-        }
-#endif // HAVE_MSW_THEME
-        sizerTop->Add(sizerText,
-            wxSizerFlags().DoubleBorder(wxLEFT | wxRIGHT | wxBOTTOM)
-            .Centre());
-
-        SetSizer(sizerTop);
-
-        const int offsetY = SetTipShapeAndSize(tipKind, GetBestSize());
-        if (offsetY > 0)
-        {
-            // Offset our contents by the tip height to make it appear in the
-            // main rectangle.
-            sizerTop->PrependSpacer(offsetY);
-        }
-
-        if(fgColor.IsOk())
-            labelTitle->SetForegroundColour(titlefgColor);
-
-        Layout();
     }
 
     void SetBackgroundColours(wxColour colStart, wxColour colEnd)
