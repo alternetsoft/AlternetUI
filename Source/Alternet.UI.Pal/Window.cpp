@@ -690,6 +690,23 @@ namespace Alternet::UI
     void Window::SetModalResult(ModalResult value)
     {
         _modalResult = value;
+
+        auto dialog = GetDialog();
+
+        if (dialog == nullptr || !dialog->IsModal())
+            return;
+
+        if (_modalResult == ModalResult::Accepted)
+        {
+            dialog->EndModal(wxID_OK);
+            return;
+        }
+
+        if (_modalResult == ModalResult::Canceled)
+        {
+            dialog->EndModal(wxID_CANCEL);
+            return;
+        }
     }
 
     bool Window::GetModal()

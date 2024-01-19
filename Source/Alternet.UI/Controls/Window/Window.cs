@@ -566,7 +566,7 @@ namespace Alternet.UI
 
             set
             {
-                if (statusBar == value)
+                if (statusBar == value || GetWindowKind() == WindowKind.Dialog)
                     return;
                 if (value is not null)
                 {

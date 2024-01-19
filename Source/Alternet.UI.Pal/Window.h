@@ -189,7 +189,7 @@ namespace Alternet::UI
             HasTitleBar = 1 << 8,
             Active = 1 << 9,
             Modal = 1 << 10,
-            ModalLoopStopRequested = 1 << 11,
+            /*ModalLoopStopRequested = 1 << 11,*/
             ShownOnce = 1 << 12,
             SystemMenu = 1 << 13,
             PopupWindow = 1 << 14,
