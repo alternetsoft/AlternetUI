@@ -28,6 +28,8 @@ namespace Alternet.UI
                 OkButton.Parent = this;
                 CancelButton.Parent = this;
                 ApplyButton.Parent = this;
+                OkButton.Click += OkButton_Click;
+                CancelButton.Click += CancelButton_Click;
             }
             finally
             {
@@ -95,12 +97,37 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether 'Ok' and 'Cancel' buttons change
+        /// <see cref="DialogWindow.ModalResult"/> when they are clicked.
+        /// </summary>
+        public bool UseModalResult { get; set; }
+
         internal double SuggestedMinHeight
         {
             get
             {
                 return OkButton.Bounds.Height + OkButton.Margin.Vertical;
             }
+        }
+
+        private void ApplyModalResult(ModalResult modalResult)
+        {
+            if (!UseModalResult)
+                return;
+            if (ParentWindow is not DialogWindow dialog)
+                return;
+            dialog.ModalResult = modalResult;
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            ApplyModalResult(ModalResult.Canceled);
+        }
+
+        private void OkButton_Click(object sender, EventArgs e)
+        {
+            ApplyModalResult(ModalResult.Accepted);
         }
     }
 }
