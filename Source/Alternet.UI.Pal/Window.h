@@ -20,32 +20,32 @@ namespace Alternet::UI
     class Frame : public wxFrame, public wxWidgetExtender
     {
     public:
-        Frame(Window* window, wxWindow* parent,
+        Frame(wxWindow* parent,
             wxWindowID id,
             const wxString& title,
             const wxPoint& pos = wxDefaultPosition,
             const wxSize& size = wxDefaultSize,
             long style = wxDEFAULT_FRAME_STYLE,
             const wxString& name = wxASCII_STR(wxFrameNameStr));
-        virtual ~Frame();
+        /*virtual ~Frame();*/
 
-        static std::vector<Frame*> GetAllFrames();
+        /*static std::vector<wxTopLevelWindow*> GetAllFrames();*/
 
-        Window* GetWindow();
+        /*Window* GetWindow();*/
         
-        void RemoveFrame();
+        /*void RemoveFrame();*/
 
         bool Layout() override
         {
             return false;
         }
     private:
-        Window* _window;
+        /*Window* _window;
         bool _frameRemoved = false;
 
-        inline static std::vector<Frame*> _allFrames;
+        inline static std::vector<wxTopLevelWindow*> _allFrames;
 
-        BYREF_ONLY(Frame);
+        BYREF_ONLY(Frame);*/
     };
 
     class MiniFrame : public wxMiniFrame, public wxWidgetExtender
@@ -63,20 +63,34 @@ namespace Alternet::UI
         }
     };
 
-    // FrameDisabler =============================================
-
-    class FrameDisabler
+    class Dialog : public wxDialog, public wxWidgetExtender
     {
     public:
-        FrameDisabler(wxFrame* frameToSkip);
+        Dialog(wxWindow* parent, wxWindowID id,
+            const wxString& title,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxDEFAULT_DIALOG_STYLE,
+            const wxString& name = wxASCII_STR(wxDialogNameStr))
+            : wxDialog(parent, id, title, pos, size, style, name)
+        {
+        }
+    };
+
+    // FrameDisabler =============================================
+
+    /*class FrameDisabler
+    {
+    public:
+        FrameDisabler(wxTopLevelWindow* frameToSkip);
         virtual ~FrameDisabler();
 
     private:
 
-        std::vector<wxFrame*> _disabledFrames;
+        std::vector<wxTopLevelWindow*> _disabledFrames;
 
         BYREF_ONLY(FrameDisabler);
-    };
+    };*/
 
     // Window =============================================
 
@@ -84,6 +98,8 @@ namespace Alternet::UI
     {
 #include "Api/Window.inc"
     public:
+        Window(int kind);
+
         inline static wxFont fontOverride = wxNullFont;
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
@@ -95,8 +111,9 @@ namespace Alternet::UI
         void SetCancelButton(Button* button);
         Button* GetCancelButton();
 
+        wxTopLevelWindow* GetTopLevelWindow();
         Frame* GetFrame();
-
+        wxDialog* GetDialog();
     protected:
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
@@ -120,9 +137,9 @@ namespace Alternet::UI
 
         ModalResult _modalResult = ModalResult::None;
 
-        Frame* _frame = nullptr;
+        //Frame* _frame = nullptr;
 
-        void UpdateAcceleratorTable();
+        void UpdateAcceleratorTable(wxWindow* frame);
 
         void OnClose(wxCloseEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
@@ -146,7 +163,7 @@ namespace Alternet::UI
 
         long GetWindowStyle();
 
-        void ApplyIcon(Frame* value);
+        void ApplyIcon(wxTopLevelWindow* value);
 
         void ApplyDefaultLocation();
 
@@ -194,8 +211,8 @@ namespace Alternet::UI
         WindowState _lastState = WindowState::Normal;
 
         inline static RectD _defaultBounds = RectD(0, 0, 0, 0);
-        inline static FrameDisabler* _modalWindowDisabler = nullptr;
-        inline static std::stack<Window*> _modalWindows;
+        /*inline static FrameDisabler* _modalWindowDisabler = nullptr;*/
+        /*inline static std::stack<Window*> _modalWindows;*/
 
         WindowStartLocation _startLocation = WindowStartLocation::Default;
 

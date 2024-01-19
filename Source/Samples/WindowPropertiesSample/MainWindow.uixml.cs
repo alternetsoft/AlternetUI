@@ -66,7 +66,20 @@ namespace WindowPropertiesSample
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
         {
-            CreateWindowAndSetProperties(false);
+            CreateWindowAndSetProperties(typeof(Window));
+
+            if (testWindow == null)
+                throw new InvalidOperationException();
+
+            testWindow.Show();
+
+            UpdateWindowState();
+            UpdateControls();
+        }
+
+        private void CreateAndShowMiniFrameButton_Click(object sender, EventArgs e)
+        {
+            CreateWindowAndSetProperties(typeof(MiniFrameWindow));
 
             if (testWindow == null)
                 throw new InvalidOperationException();
@@ -79,7 +92,7 @@ namespace WindowPropertiesSample
 
         private void CreateAndShowModalWindowButton_Click(object sender, EventArgs e)
         {
-            CreateWindowAndSetProperties(true);
+            CreateWindowAndSetProperties(typeof(DialogWindow));
 
             if (testWindow is not DialogWindow dialogWindow)
                 throw new InvalidOperationException();
@@ -91,7 +104,7 @@ namespace WindowPropertiesSample
             OnWindowClosed();
         }
 
-        private void CreateWindowAndSetProperties(bool isDialog)
+        private void CreateWindowAndSetProperties(Type type)
         {
             WindowStartLocation? sLocation = null;
             var startLocationItem = startLocationComboBox.SelectedItem;
@@ -108,13 +121,7 @@ namespace WindowPropertiesSample
                 sLocation = WindowStartLocation.Manual;
             }
 
-            if (isDialog)
-                testWindow = new DialogWindow();
-            else
-                testWindow = new Window()
-                {
-
-                };                    
+            testWindow = (Window)Activator.CreateInstance(type)!;
 
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;
@@ -208,6 +215,7 @@ namespace WindowPropertiesSample
 
                 Group(
                     createAndShowWindowButton,
+                    createAndShowMiniFrameButton,
                     createAndShowModalWindowButton,
                     startLocationComboBox).Enabled(!haveTestWindow);
 

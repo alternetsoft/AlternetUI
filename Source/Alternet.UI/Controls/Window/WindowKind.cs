@@ -8,10 +8,10 @@ namespace Alternet.UI
 {
     internal enum WindowKind
     {
-        Window,
+        Window = 0,
 
-        Dialog,
+        Dialog = 1,
 
-        MiniFrame,
+        MiniFrame = 2,
     }
 }
