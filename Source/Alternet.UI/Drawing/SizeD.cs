@@ -52,6 +52,11 @@ namespace Alternet.Drawing
         public static readonly SizeD One = new(1d, 1d);
 
         /// <summary>
+        /// Gets <see cref="SizeD"/> with width and height equal to <see cref="double.PositiveInfinity"/>.
+        /// </summary>
+        public static readonly SizeD PositiveInfinity = new(double.PositiveInfinity, double.PositiveInfinity);
+
+        /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to
         /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>).
         /// </summary>
