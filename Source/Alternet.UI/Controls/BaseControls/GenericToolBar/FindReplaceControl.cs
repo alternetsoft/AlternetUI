@@ -23,7 +23,7 @@ namespace Alternet.UI
             Margin = (2, 0, 2, 0),
         };
 
-        private IFindReplaceManager? manager;
+        private IFindReplaceConnect? manager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
@@ -160,9 +160,80 @@ namespace Alternet.UI
         public event EventHandler? OptionUseRegularExpressionsChanged;
 
         /// <summary>
-        /// Gets or sets <see cref="IFindReplaceManager"/> instance.
+        /// Provides methods and properties for connection of the search/replace engine with
+        /// the <see cref="FindReplaceControl"/>.
         /// </summary>
-        public IFindReplaceManager? Manager
+        public interface IFindReplaceConnect
+        {
+            /// <summary>
+            /// Gets whether 'Match Case' option is supported.
+            /// </summary>
+            bool CanMatchCase { get; }
+
+            /// <summary>
+            /// Gets whether 'Match Whole Word' option is supported.
+            /// </summary>
+            bool CanMatchWholeWord { get; }
+
+            /// <summary>
+            /// Gets whether 'Use Regular Expressions' option is supported.
+            /// </summary>
+            bool CanUseRegularExpressions { get; }
+
+            /// <summary>
+            /// Updates value of the 'Match Case' option.
+            /// </summary>
+            /// <param name="value">New option value.</param>
+            void SetMatchCase(bool value);
+
+            /// <summary>
+            /// Updates value of the 'Match Whole Word' option.
+            /// </summary>
+            /// <param name="value">New option value.</param>
+            void SetMatchWholeWord(bool value);
+
+            /// <summary>
+            /// Updates value of the 'Use Regular Expressions' option.
+            /// </summary>
+            /// <param name="value">New option value.</param>
+            void SetUseRegularExpressions(bool value);
+
+            /// <summary>
+            /// Performs 'Replace' operation.
+            /// </summary>
+            void Replace();
+
+            /// <summary>
+            /// Performs 'Replace All' operation.
+            /// </summary>
+            void ReplaceAll();
+
+            /// <summary>
+            /// Performs 'Find Next' operation.
+            /// </summary>
+            void FindNext();
+
+            /// <summary>
+            /// Performs 'Find Previous' operation.
+            /// </summary>
+            void FindPrevious();
+
+            /// <summary>
+            /// Sets text to find.
+            /// </summary>
+            void SetFindText(string text);
+
+            /// <summary>
+            /// Sets text to replace.
+            /// </summary>
+            /// <param name="text"></param>
+            void SetReplaceText(string text);
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="IFindReplaceConnect"/> instance.
+        /// </summary>
+        public IFindReplaceConnect? Manager
         {
             get => manager;
 
@@ -463,10 +534,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates <see cref="IFindReplaceManager"/> instance which logs all method calls.
+        /// Creates <see cref="IFindReplaceConnect"/> instance which logs all method calls.
         /// </summary>
         /// <returns></returns>
-        public IFindReplaceManager CreateLogger()
+        public IFindReplaceConnect CreateLogger()
         {
             return new FindReplaceManagerLogger();
         }
@@ -520,44 +591,17 @@ namespace Alternet.UI
             ClickClose?.Invoke(this, e);
         }
 
-        private void FindEdit_TextChanged(object sender, EventArgs e)
+        private void FindEdit_TextChanged(object? sender, EventArgs e)
         {
             Manager?.SetFindText(findEdit.Text);
         }
 
-        private void ReplaceEdit_TextChanged(object sender, EventArgs e)
+        private void ReplaceEdit_TextChanged(object? sender, EventArgs e)
         {
             Manager?.SetReplaceText(replaceEdit.Text);
         }
 
-        public interface IFindReplaceManager
-        {
-            bool CanMatchCase { get; }
-
-            bool CanMatchWholeWord { get; }
-
-            bool CanUseRegularExpressions { get; }
-
-            void SetMatchCase(bool value);
-
-            void SetMatchWholeWord(bool value);
-
-            void SetUseRegularExpressions(bool value);
-
-            void Replace();
-
-            void ReplaceAll();
-
-            void FindNext();
-
-            void FindPrevious();
-
-            void SetFindText(string text);
-
-            void SetReplaceText(string text);
-        }
-
-        internal class FindReplaceManagerLogger : IFindReplaceManager
+        internal class FindReplaceManagerLogger : IFindReplaceConnect
         {
             public bool CanMatchCase => true;
 
