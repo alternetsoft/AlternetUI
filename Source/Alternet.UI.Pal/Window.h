@@ -165,7 +165,7 @@ namespace Alternet::UI
 
         void ApplyIcon(wxTopLevelWindow* value);
 
-        void ApplyDefaultLocation();
+        /*void ApplyDefaultLocation();*/
 
         std::vector<Window*> GetOwnedWindows();
 
@@ -190,7 +190,7 @@ namespace Alternet::UI
             Active = 1 << 9,
             Modal = 1 << 10,
             /*ModalLoopStopRequested = 1 << 11,*/
-            ShownOnce = 1 << 12,
+            /*ShownOnce = 1 << 12,*/
             SystemMenu = 1 << 13,
             PopupWindow = 1 << 14,
         };

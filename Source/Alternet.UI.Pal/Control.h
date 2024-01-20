@@ -18,7 +18,7 @@ namespace Alternet::UI
         }
     };
 
-    // wxDummyPanel
+    // wxDummyPanel ===========================================
 
     class wxDummyPanel : public wxPanel 
     {
@@ -43,7 +43,7 @@ namespace Alternet::UI
 
     class Window;
 
-    // wxWidgetExtender
+    // wxWidgetExtender ===========================================
 
     class wxWidgetExtender
     {
@@ -61,7 +61,7 @@ namespace Alternet::UI
         }
     };
   
-    // Control
+    // Control ===========================================
                                       
     class Control : public Object
     {
@@ -103,6 +103,10 @@ namespace Alternet::UI
         bool _acceptsFocus = true;
         bool _acceptsFocusFromKeyboard = true;
         bool _acceptsFocusRecursively = true;
+
+        virtual void ShowCore();
+        virtual void HideCore();
+        void ApplyVisible(bool value);
 
     protected:
         bool bindScrollEvents = true;
@@ -160,9 +164,6 @@ namespace Alternet::UI
         bool EventsSuspended() override;
 
         virtual void SetWxWindowParent(wxWindow* parent);
-
-        virtual void ShowCore();
-        virtual void HideCore();
 
         bool IsDestroyingWxWindow();
         bool IsRecreatingWxWindow();
@@ -259,7 +260,6 @@ namespace Alternet::UI
         void DestroyDropTarget();
 
         bool RetrieveVisible();
-        void ApplyVisible(bool value);
 
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);

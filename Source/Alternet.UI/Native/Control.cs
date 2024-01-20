@@ -575,6 +575,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
+        }
+        
         public int GetScrollBarMaximum(ScrollBarOrientation orientation)
         {
             CheckDisposed();
@@ -866,10 +872,10 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
         }
         
-        public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
+        public void CenterOnParent(int orientation)
         {
             CheckDisposed();
-            return NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
+            NativeApi.Control_CenterOnParent_(NativePointer, orientation);
         }
         
         public void RefreshRect(Alternet.Drawing.RectD rect, bool eraseBackground)
@@ -1361,6 +1367,9 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1502,7 +1511,7 @@ namespace Alternet.UI.Native
             public static extern int Control_GetScrollBarValue_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
+            public static extern void Control_CenterOnParent_(IntPtr obj, int orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_RefreshRect_(IntPtr obj, Alternet.Drawing.RectD rect, bool eraseBackground);

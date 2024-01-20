@@ -55,7 +55,7 @@ namespace Alternet.UI
         {
             CheckDisposed();
             var nativeOwner = owner == null ?
-                null : ((NativeWindowHandler)owner.Handler).NativeControl;
+                null : ((WindowHandler)owner.Handler).NativeControl;
             return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
     }

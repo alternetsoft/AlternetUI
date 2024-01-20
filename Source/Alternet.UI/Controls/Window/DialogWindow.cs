@@ -80,8 +80,9 @@ namespace Alternet.UI
             CheckDisposed();
 
             ModalResult = ModalResult.None;
-            Owner = owner;
-            NativeControl.ShowModal();
+
+            ApplyStartLocation(owner);
+            NativeControl.ShowModal(owner?.WxWidget ?? default);
 
             return ModalResult;
         }

@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
-        public static Window? ActiveWindow => NativeWindowHandler.ActiveWindow;
+        public static Window? ActiveWindow => WindowHandler.ActiveWindow;
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -566,8 +566,15 @@ namespace Alternet.UI
 
             set
             {
-                if (statusBar == value || GetWindowKind() == WindowKind.Dialog)
+                if (statusBar == value)
                     return;
+
+                if(GetWindowKind() == WindowKind.Dialog)
+                {
+                    statusBar = value;
+                    return;
+                }
+
                 if (value is not null)
                 {
                     if (value.IsDisposed)
@@ -633,6 +640,9 @@ namespace Alternet.UI
                 var oldValue = menu;
                 menu = value;
 
+                if (GetWindowKind() == WindowKind.Dialog)
+                    return;
+
                 oldValue?.SetParentInternal(null);
                 menu?.SetParentInternal(this);
 
@@ -690,6 +700,9 @@ namespace Alternet.UI
                 var oldValue = toolbar;
                 toolbar = value;
 
+                if (GetWindowKind() == WindowKind.Dialog)
+                    return;
+
                 oldValue?.SetParentInternal(null);
                 toolbar?.SetParentInternal(this);
 
@@ -708,10 +721,10 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
         /// <summary>
-        /// Gets a <see cref="NativeWindowHandler"/> associated with this class.
+        /// Gets a <see cref="WindowHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
+        internal new WindowHandler Handler => (WindowHandler)base.Handler;
 
         [Browsable(false)]
         internal new Native.Window NativeControl => (Native.Window)base.NativeControl;
@@ -765,14 +778,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Changes size of the window to fit the size of its content.
+        /// Shows window and focuses it.
         /// </summary>
-        /// <param name="mode">Specifies how a window will size itself to fit the size of
-        /// its content.</param>
-        public virtual void SetSizeToContent(
-            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
+        /// <param name="useIdle">Whether to use <see cref="Application.Idle"/>
+        /// event to show the window.</param>
+        public virtual void ShowAndFocus(bool useIdle = false)
         {
-            Handler.SetSizeToContent(mode);
+            if (useIdle)
+                Application.AddIdleTask(Fn);
+            else
+                Fn();
+
+            void Fn()
+            {
+                Show();
+                Raise();
+                if (CanFocus)
+                    SetFocus();
+            }
         }
 
         /// <summary>
@@ -837,7 +860,6 @@ namespace Alternet.UI
 
         internal static Window? GetParentWindow(DependencyObject dp)
         {
-            // For use instead of PresentationSource.CriticalFromVisual(focusScope).
             if (dp is Window w)
                 return w;
 
@@ -1026,6 +1048,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Applies <see cref="Window.StartLocation"/> to the location of the window.
+        /// </summary>
+        protected virtual void ApplyStartLocation(Control? owner)
+        {
+            RectD parentRect;
+
+            if (StartLocation == WindowStartLocation.CenterScreen)
+            {
+                parentRect = GetDisplay().ClientAreaDip;
+            }
+            else
+            if (StartLocation == WindowStartLocation.CenterOwner)
+            {
+                if (owner is null)
+                    parentRect = GetDisplay().ClientAreaDip;
+                else
+                    parentRect = new(owner.ClientToScreen((0, 0)), owner.ClientSize);
+            }
+            else
+                return;
+
+            var bounds = Bounds;
+            Bounds = bounds.CenterIn(parentRect);
+        }
+
+        /// <summary>
         /// Called when the value of the <see cref="StatusBar"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
@@ -1042,6 +1090,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler() => new NativeWindowHandler();
+        protected override ControlHandler CreateHandler() => new WindowHandler();
     }
 }

@@ -37,7 +37,7 @@ namespace NativeApi.Api
         public ModalResult ModalResult { get; set; }
         public bool Modal => default;
 
-        public void ShowModal() { }
+        public void ShowModal(IntPtr owner) { }
         public void Close() { }
 
         public void Activate() { }

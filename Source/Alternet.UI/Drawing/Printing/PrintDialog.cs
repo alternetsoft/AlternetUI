@@ -114,7 +114,7 @@ namespace Alternet.UI
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             var nativeOwner = owner == null
-                ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+                ? null : ((WindowHandler)owner.Handler).NativeControl;
             return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
     }

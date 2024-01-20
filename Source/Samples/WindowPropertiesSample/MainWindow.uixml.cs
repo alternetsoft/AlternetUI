@@ -20,9 +20,12 @@ namespace WindowPropertiesSample
             InitializeComponent();
 
             stateComboBox.AddEnumValues<WindowState>();
+            
             startLocationComboBox.AddEnumValues(WindowStartLocation.Default);
             startLocationComboBox.Add("250, 250, 450, 450");
-            startLocationComboBox.Add("50,50,500,500");
+            startLocationComboBox.Add("50, 50, 500, 500");
+            startLocationComboBox.SelectedItem = WindowStartLocation.CenterScreen;
+
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
@@ -67,27 +70,24 @@ namespace WindowPropertiesSample
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
         {
             CreateWindowAndSetProperties(typeof(Window));
+            ShowTestWindow();
+        }
 
+        private void ShowTestWindow()
+        {
             if (testWindow == null)
                 throw new InvalidOperationException();
 
             UpdateWindowState();
             UpdateControls();
 
-            testWindow.Show();
+            testWindow.ShowAndFocus(true);
         }
 
         private void CreateAndShowMiniFrameButton_Click(object sender, EventArgs e)
         {
             CreateWindowAndSetProperties(typeof(MiniFrameWindow));
-
-            if (testWindow == null)
-                throw new InvalidOperationException();
-
-            UpdateWindowState();
-            UpdateControls();
-
-            testWindow.Show();
+            ShowTestWindow();
         }
 
         private void CreateAndShowModalWindowButton_Click(object sender, EventArgs e)
@@ -97,14 +97,14 @@ namespace WindowPropertiesSample
             if (testWindow is not DialogWindow dialogWindow)
                 throw new InvalidOperationException();
 
-            dialogWindow.ShowModal();
+            dialogWindow.ShowModal(this);
 
             Application.Log("ModalResult: " + dialogWindow.ModalResult);
             dialogWindow.Dispose();
             OnWindowClosed();
         }
 
-        private void CreateWindowAndSetProperties(Type type)
+        private void CreateWindowAndSetProperties(Type type, Window? parent = null)
         {
             WindowStartLocation? sLocation = null;
             var startLocationItem = startLocationComboBox.SelectedItem;
@@ -122,6 +122,8 @@ namespace WindowPropertiesSample
             }
 
             testWindow = (Window)Activator.CreateInstance(type)!;
+            if (parent is not null)
+                testWindow.Parent = parent;
 
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;

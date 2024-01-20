@@ -89,7 +89,7 @@ void CloseOwnedWindowsArray(void* array);
 static void* CreateEx(int kind);
 static void SetDefaultBounds(const RectD& bounds);
 static void SetParkingWindowFont(Font* font);
-void ShowModal();
+void ShowModal(void* owner);
 void Close();
 void Activate();
 void AddInputBinding(const string& managedCommandId, Key key, ModifierKeys modifiers);

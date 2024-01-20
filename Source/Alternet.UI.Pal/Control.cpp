@@ -1122,6 +1122,11 @@ namespace Alternet::UI
         return GetWxWindow()->IsShown();
     }
 
+    void Control::CenterOnParent(int orientation)
+    {
+        GetWxWindow()->CenterOnParent(orientation);
+    }
+
     void Control::ApplyVisible(bool value)
     {
         if (value)

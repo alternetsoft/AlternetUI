@@ -150,6 +150,7 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
 int GetScrollBarEvtKind();
 int GetScrollBarEvtPosition();
@@ -197,7 +198,7 @@ void SetSizerAndFit(void* sizer, bool deleteOld);
 void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
 bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
-int GetScrollBarLargeChange(ScrollBarOrientation orientation);
+void CenterOnParent(int orientation);
 void RefreshRect(const RectD& rect, bool eraseBackground);
 void Raise();
 void Lower();

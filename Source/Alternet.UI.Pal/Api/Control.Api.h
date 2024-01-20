@@ -351,6 +351,11 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
+{
+    return obj->GetScrollBarLargeChange(orientation);
+}
+
 ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
 {
     return obj->GetScrollBarMaximum(orientation);
@@ -586,9 +591,9 @@ ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientatio
     return obj->GetScrollBarValue(orientation);
 }
 
-ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
+ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)
 {
-    return obj->GetScrollBarLargeChange(orientation);
+    obj->CenterOnParent(orientation);
 }
 
 ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)

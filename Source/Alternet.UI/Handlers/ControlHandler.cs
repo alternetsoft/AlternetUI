@@ -596,6 +596,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns a preferred size of control with an added padding.
+        /// </summary>
+        public SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
+        {
+            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
+        }
+
+        /// <summary>
         /// Sets input focus to the control.
         /// </summary>
         /// <returns><see langword="true"/> if the input focus request was successful;
@@ -707,14 +715,6 @@ namespace Alternet.UI
         protected virtual void OnIsVisualChildChanged()
         {
             DisposeNativeControl();
-        }
-
-        /// <summary>
-        /// Returns a preferred size of control with an added padding.
-        /// </summary>
-        protected SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
-        {
-            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
         }
 
         /// <summary>

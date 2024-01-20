@@ -388,6 +388,9 @@ namespace Alternet::UI
 
     void Window::ApplyBounds(const Rect& value)
     {
+        Control::ApplyBounds(value);
+
+        /*
         if (value.IsEmpty())
             return;
 
@@ -409,9 +412,10 @@ namespace Alternet::UI
         }
 
         wxWindow->Refresh();
+        */
     }
 
-    void Window::ApplyDefaultLocation()
+    /*void Window::ApplyDefaultLocation()
     {
         auto wxWindow = GetWxWindow();
 
@@ -428,7 +432,7 @@ namespace Alternet::UI
             wxWindow->CenterOnParent();
             break;
         }
-    }
+    }*/
 
     std::vector<Window*> Window::GetOwnedWindows()
     {
@@ -446,12 +450,6 @@ namespace Alternet::UI
 
     void Window::ShowCore()
     {
-        if (!_flags.IsSet(WindowFlags::ShownOnce))
-        {
-            _flags.Set(WindowFlags::ShownOnce, true);
-            ApplyDefaultLocation();
-        }
-
         bool hasHiddenOwner = GetParent() != nullptr && !GetParent()->GetVisible();
 
         if (!hasHiddenOwner)
@@ -714,7 +712,7 @@ namespace Alternet::UI
         return _flags.IsSet(WindowFlags::Modal);
     }
 
-    void Window::ShowModal()
+    void Window::ShowModal(void* owner)
     {
         while (IsRecreatingWxWindow())
         {

@@ -252,9 +252,9 @@ ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)
     Window::SetParkingWindowFont(font);
 }
 
-ALTERNET_UI_API void Window_ShowModal_(Window* obj)
+ALTERNET_UI_API void Window_ShowModal_(Window* obj, void* owner)
 {
-    obj->ShowModal();
+    obj->ShowModal(owner);
 }
 
 ALTERNET_UI_API void Window_Close_(Window* obj)
