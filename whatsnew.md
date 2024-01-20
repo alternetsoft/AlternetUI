@@ -1,6 +1,18 @@
 
 # 0.9.505 (work in progress)
 
+## 2024 January 20
+
+- RichToolTip improved: Fixed align when title is empty. Now it is possible to show simple tooltip like is done in ToolTip.
+ Added ShowSimple static method.
+- Modal windows are shown more correctly.
+- Added MiniFrameWindow, DialogWindow.
+- Activation of the application when modal form is visible is now OK.
+- When modal form is closed, previous window is activated OK.
+- ShowModal moved to DialogWindow.
+- Control: CenterOnParent, SetSizeToContent.
+- PanelOkCancelButtons.UseModalResult, SizeD.PositiveInfinity.
+
 ## 2024 January 18
 
 - Fixed exception when some keys pressed on Linux.
