@@ -149,17 +149,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Changes size of the window to fit the size of its content.
-        /// </summary>
-        /// <param name="mode">Specifies how a window will size itself to fit
-        /// the size of its content.</param>
-        public void SetSizeToContent(WindowSizeToContentMode mode =
-            WindowSizeToContentMode.WidthAndHeight)
-        {
-            Handler.SetSizeToContent(mode);
-        }
-
-        /// <summary>
         /// Popup the window (this will show it too).
         /// </summary>
         /// <param name="focusControl">If this is non-NULL, it will be kept focused
