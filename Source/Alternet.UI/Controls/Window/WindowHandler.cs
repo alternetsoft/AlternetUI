@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeWindowHandler : WindowHandler
+    internal class WindowHandler : ControlHandler
     {
         public static Window? ActiveWindow
         {
@@ -17,9 +17,14 @@ namespace Alternet.UI
 
                 var handler = NativeControlToHandler(activeWindow) ??
                     throw new InvalidOperationException();
-                return ((NativeWindowHandler)handler).Control;
+                return ((WindowHandler)handler).Control;
             }
         }
+
+        /// <summary>
+        /// Gets a <see cref="Window"/> this handler provides the implementation for.
+        /// </summary>
+        public new Window Control => (Window)base.Control;
 
         public new Native.Window NativeControl => (Native.Window)base.NativeControl!;
 
@@ -41,7 +46,7 @@ namespace Alternet.UI
             get
             {
                 return NativeControl.OwnedWindows.Select(
-                    x => ((NativeWindowHandler)(NativeControlToHandler(x) ??
+                    x => ((WindowHandler)(NativeControlToHandler(x) ??
                     throw new Exception())).Control).ToArray();
             }
         }
@@ -82,7 +87,7 @@ namespace Alternet.UI
         /// If the window you are closing is the last open window of your
         /// application, your application ends.
         /// The window is not disposed on <see cref="Close"/> is when you have
-        /// displayed the window using <see cref="Window.ShowModal()"/>.
+        /// displayed the window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call
         /// <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
@@ -97,41 +102,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override void SetSizeToContent(WindowSizeToContentMode mode)
-        {
-            if (mode == WindowSizeToContentMode.None)
-                return;
-
-            var newSize = GetChildrenMaxPreferredSizePadded(
-                new SizeD(double.PositiveInfinity, double.PositiveInfinity));
-            if (newSize != SizeD.Empty)
-            {
-                var currentSize = Control.ClientSize;
-                switch (mode)
-                {
-                    case WindowSizeToContentMode.Width:
-                        newSize.Height = currentSize.Height;
-                        break;
-                    case WindowSizeToContentMode.Height:
-                        newSize.Width = currentSize.Width;
-                        break;
-                    case WindowSizeToContentMode.WidthAndHeight:
-                        break;
-                    default:
-                        throw new Exception();
-                }
-
-                Control.ClientSize = newSize + new SizeD(1, 0);
-                Control.ClientSize = newSize;
-                Control.Refresh();
-                NativeControl.SendSizeEvent();
-            }
-        }
-
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.Window();
+            return new NativeWindow((int)Control.GetWindowKind());
         }
 
         protected override void OnDetach()
@@ -394,6 +367,19 @@ namespace Alternet.UI
         private void ApplyTitle(object? sender, EventArgs e)
         {
             NativeControl.Title = Control.Title;
+        }
+
+        private class NativeWindow : Native.Window
+        {
+            public NativeWindow(int kind)
+            {
+                SetNativePointer(NativeApi.Window_CreateEx_(kind));
+            }
+
+            public NativeWindow(IntPtr nativePointer)
+                : base(nativePointer)
+            {
+            }
         }
     }
 }

@@ -27,7 +27,7 @@
           <Label Text="Title" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipTitleLabel"/>
           <TextBox Text="Message Title" Name="tooltipTitleTextBox" Margin="0,0,0,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
-          <Button Text="Show ToolTip" Name="showToolTipButton" ColumnIndex="3" VerticalAlignment="Center"
+          <Button Text="Show" Name="showToolTipButton" ColumnIndex="3" VerticalAlignment="Center"
                   Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 
@@ -35,7 +35,7 @@
           <Label Text="Message" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipMessageLabel"/>
           <TextBox Text="This is sample text" Name="tooltipMessageTextBox" Margin="0,0,0,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
-          <Button Text="Hide ToolTip" Name="hideToolTipButton" ColumnIndex="3" VerticalAlignment="Center"
+          <Button Text="Hide" Name="hideToolTipButton" ColumnIndex="3" VerticalAlignment="Center"
                   Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 
@@ -43,12 +43,16 @@
           <Label Text="Tip Kind" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipKindLabel"/>
           <ComboBox Name="tooltipKindComboBox" Margin="0,0,0,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
+          <Button Text="Reset Title" Name="resetTitleButton" ColumnIndex="3" VerticalAlignment="Center"
+                  Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel Margin="0,5,0,0">
           <Label Text="Icon" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipIconLabel"/>
           <ComboBox Name="tooltipIconComboBox" Margin="0,0,0,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
+          <Button Text="Show Simple" Name="showSimpleButton" ColumnIndex="3" VerticalAlignment="Center"
+                  Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 
         <Control Margin="0,5,0,0" VerticalAlignment="Stretch" Name="tooltipPreview">

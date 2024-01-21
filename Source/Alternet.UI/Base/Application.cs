@@ -913,7 +913,7 @@ namespace Alternet.UI
             CheckDisposed();
             window.Show();
             nativeApplication.Run(
-                ((NativeWindowHandler)window.Handler).NativeControl);
+                ((WindowHandler)window.Handler).NativeControl);
             SynchronizationContext.Uninstall();
             this.window = null;
             terminating = true;

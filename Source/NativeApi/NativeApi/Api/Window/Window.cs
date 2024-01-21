@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class Window : Control
     {
+        public static IntPtr CreateEx(int kind) => throw new Exception();
+
         public static void SetDefaultBounds(RectD bounds) { }
 
         public static void SetParkingWindowFont(Font? font) { }
@@ -35,7 +37,7 @@ namespace NativeApi.Api
         public ModalResult ModalResult { get; set; }
         public bool Modal => default;
 
-        public void ShowModal() { }
+        public void ShowModal(IntPtr owner) { }
         public void Close() { }
 
         public void Activate() { }

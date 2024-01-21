@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>The <see cref="Window.Closing"/> event occurs just before a window is closed,
     /// either by the user, through the user interface (UI), or programmatically.</remarks>
-    public class WindowClosingEventArgs : CancelEventArgs
+    public class WindowClosingEventArgs : BaseCancelEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowClosingEventArgs"/> class.

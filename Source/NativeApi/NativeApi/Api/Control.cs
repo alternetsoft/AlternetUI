@@ -8,6 +8,8 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void CenterOnParent(int orientation) { }
+
         public void RefreshRect(RectD rect, bool eraseBackground = true) { }
 
         public void Raise() { }

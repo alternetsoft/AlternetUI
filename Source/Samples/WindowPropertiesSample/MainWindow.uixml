@@ -20,6 +20,9 @@
             <Button Text="Create Window" Name="createAndShowWindowButton"
                 Click="CreateAndShowWindowButton_Click"
                 Margin="0,0,0,5" />
+            <Button Text="Create Mini Frame" Name="createAndShowMiniFrameButton"
+                Click="CreateAndShowMiniFrameButton_Click"
+                Margin="0,0,0,5" />
             <Button Text="Create Dialog" Name="createAndShowModalWindowButton"
                 Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
             <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click"

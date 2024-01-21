@@ -14,12 +14,12 @@ namespace Alternet.UI
     internal class UIDialogCommon : DisposableObject
     {
         private string? title;
-        private Window? window;
+        private DialogWindow? window;
 
         /// <summary>
         /// Gets <see cref="Window"/> instance which implements dialog window.
         /// </summary>
-        public Window DialogWindow
+        public DialogWindow DialogWindow
         {
             get
             {
@@ -83,9 +83,9 @@ namespace Alternet.UI
         /// Creates <see cref="Window"/> instance which implements dialog window.
         /// </summary>
         /// <returns></returns>
-        protected virtual Window CreateDialogWindow()
+        protected virtual DialogWindow CreateDialogWindow()
         {
-            return new UIDialogWindow();
+            return new DialogWindow();
         }
 
         /// <inheritdoc/>

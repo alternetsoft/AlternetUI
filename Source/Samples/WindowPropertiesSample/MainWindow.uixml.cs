@@ -9,7 +9,7 @@ namespace WindowPropertiesSample
         private readonly CardPanelHeader panelHeader;
         private readonly SetBoundsProperties setBoundsProperties;
 
-        private TestWindow? testWindow;
+        private Window? testWindow;
 
         public MainWindow()
         {
@@ -20,9 +20,12 @@ namespace WindowPropertiesSample
             InitializeComponent();
 
             stateComboBox.AddEnumValues<WindowState>();
+            
             startLocationComboBox.AddEnumValues(WindowStartLocation.Default);
             startLocationComboBox.Add("250, 250, 450, 450");
-            startLocationComboBox.Add("50,50,500,500");
+            startLocationComboBox.Add("50, 50, 500, 500");
+            startLocationComboBox.SelectedItem = WindowStartLocation.CenterScreen;
+
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
@@ -66,32 +69,42 @@ namespace WindowPropertiesSample
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
         {
-            CreateWindowAndSetProperties();
+            CreateWindowAndSetProperties(typeof(Window));
+            ShowTestWindow();
+        }
 
+        private void ShowTestWindow()
+        {
             if (testWindow == null)
                 throw new InvalidOperationException();
 
-            testWindow.Show();
-
             UpdateWindowState();
             UpdateControls();
+
+            testWindow.ShowAndFocus(true);
+        }
+
+        private void CreateAndShowMiniFrameButton_Click(object sender, EventArgs e)
+        {
+            CreateWindowAndSetProperties(typeof(MiniFrameWindow));
+            ShowTestWindow();
         }
 
         private void CreateAndShowModalWindowButton_Click(object sender, EventArgs e)
         {
-            CreateWindowAndSetProperties();
+            CreateWindowAndSetProperties(typeof(DialogWindow));
 
-            if (testWindow == null)
+            if (testWindow is not DialogWindow dialogWindow)
                 throw new InvalidOperationException();
 
-            testWindow.ShowModal();
+            dialogWindow.ShowModal(this);
 
-            Application.Log("ModalResult: " + testWindow.ModalResult);
-            testWindow.Dispose();
+            Application.Log("ModalResult: " + dialogWindow.ModalResult);
+            dialogWindow.Dispose();
             OnWindowClosed();
         }
 
-        private void CreateWindowAndSetProperties()
+        private void CreateWindowAndSetProperties(Type type, Window? parent = null)
         {
             WindowStartLocation? sLocation = null;
             var startLocationItem = startLocationComboBox.SelectedItem;
@@ -108,12 +121,16 @@ namespace WindowPropertiesSample
                 sLocation = WindowStartLocation.Manual;
             }
 
-            testWindow = new TestWindow();
+            testWindow = (Window)Activator.CreateInstance(type)!;
+            if (parent is not null)
+                testWindow.Parent = parent;
 
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;
 
             testWindow.BeginInit();
+
+            testWindow.Title = "Test Window";
 
             testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
 
@@ -141,6 +158,38 @@ namespace WindowPropertiesSample
             testWindow.StateChanged += TestWindow_StateChanged;
             testWindow.SizeChanged += TestWindow_SizeChanged;
             testWindow.LocationChanged += TestWindow_LocationChanged;
+
+            VerticalStackPanel panel = new()
+            {
+                Padding = 10,
+                Parent = testWindow,
+                AllowStretch = true,
+            };
+
+            PanelOkCancelButtons buttons = new()
+            {
+                Parent = panel,
+                UseModalResult = true,
+            };
+
+            buttons.OkButton.Click += OkButton_Click;
+            buttons.CancelButton.Click += CancelButton_Click;
+
+            ListBox listBox = new()
+            {
+                Parent = panel,
+                VerticalAlignment = VerticalAlignment.Stretch,
+            };
+        }
+
+        private void OkButton_Click(object? sender, EventArgs e)
+        {
+            Application.Log("OK Clicked");
+        }
+
+        private void CancelButton_Click(object? sender, EventArgs e)
+        {
+            Application.Log("Cancel Clicked");
         }
 
         private void TestWindow_LocationChanged(object? sender, EventArgs e)
@@ -168,13 +217,16 @@ namespace WindowPropertiesSample
 
         private void UpdateActiveWindowInfoLabel()
         {
-            var title = ActiveWindow?.Title ?? "N/A";
-            activeWindowTitleLabel.Text = title;
+            Application.AddIdleTask(() =>
+            {
+                var title = ActiveWindow?.Title ?? "N/A";
+                activeWindowTitleLabel.Text = title;
 
-            if (testWindow != null)
-                isWindowActiveLabel.Text = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
-            else
-                isWindowActiveLabel.Text = string.Empty;
+                if (testWindow != null)
+                    isWindowActiveLabel.Text = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
+                else
+                    isWindowActiveLabel.Text = string.Empty;
+            });
         }
 
         private void TestWindow_Deactivated(object? sender, EventArgs e)
@@ -202,6 +254,7 @@ namespace WindowPropertiesSample
 
                 Group(
                     createAndShowWindowButton,
+                    createAndShowMiniFrameButton,
                     createAndShowModalWindowButton,
                     startLocationComboBox).Enabled(!haveTestWindow);
 

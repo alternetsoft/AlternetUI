@@ -13,5 +13,21 @@ namespace Alternet.UI
     /// </summary>
     public class BaseCancelEventArgs : CancelEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseCancelEventArgs"/> class.
+        /// </summary>
+        public BaseCancelEventArgs()
+                : base(cancel: false)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseCancelEventArgs"/> class.
+        /// </summary>
+        /// <param name="cancel"><c>true</c> to cancel the event; otherwise, <c>false</c>.</param>
+        public BaseCancelEventArgs(bool cancel)
+                : base(cancel)
+        {
+        }
     }
 }

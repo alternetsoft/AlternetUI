@@ -13,6 +13,7 @@
 #include <wx/private/richtooltip.h>
 #include <wx/generic/private/richtooltip.h>
 #include <wx/renderer.h>
+#include <wx/fswatcher.h>
 
 namespace Alternet::UI
 {

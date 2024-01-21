@@ -655,7 +655,7 @@ namespace Alternet.UI
             ValidateButtons(info.Buttons, info.DefaultButton);
 
             var nativeOwner = info.Owner == null ? null :
-                ((NativeWindowHandler)info.Owner.Handler).NativeControl;
+                ((WindowHandler)info.Owner.Handler).NativeControl;
             return (DialogResult)Native.MessageBox.Show(
                 nativeOwner,
                 info.Text?.ToString() ?? string.Empty,

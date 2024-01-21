@@ -207,7 +207,7 @@ namespace Alternet.UI
         {
             CheckDisposed();
             var nativeOwner = owner == null ?
-                null : ((NativeWindowHandler)owner.Handler).NativeControl;
+                null : ((WindowHandler)owner.Handler).NativeControl;
 
             var fontName = fontInfo.Name;
             var style = (UI.Native.FontStyle)fontInfo.Style;

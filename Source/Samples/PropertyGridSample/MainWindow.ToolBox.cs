@@ -120,7 +120,7 @@ namespace PropertyGridSample
                   typeof(AnimationPlayer),
                   typeof(PanelAuiManager),
                   typeof(PanelAuiManagerBase),
-                  typeof(UIDialogWindow),
+                  typeof(DialogWindow),
                   typeof(LogListBox),
                   typeof(SplitterPanel),// know how
                   typeof(Grid),// know how

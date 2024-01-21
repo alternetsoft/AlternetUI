@@ -131,6 +131,51 @@ ALTERNET_UI_API void* WxOtherFactory_MemorySet_(void* dest, int fillByte, uint64
     return WxOtherFactory::MemorySet(dest, fillByte, count);
 }
 
+ALTERNET_UI_API void* WxOtherFactory_FsWatcherCreate_()
+{
+    return WxOtherFactory::FsWatcherCreate();
+}
+
+ALTERNET_UI_API void WxOtherFactory_FsWatcherDelete_(void* handle)
+{
+    WxOtherFactory::FsWatcherDelete(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAdd_(void* handle, const char16_t* path, int events)
+{
+    return WxOtherFactory::FsWatcherAdd(handle, path, events);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAddTree_(void* handle, const char16_t* path, int events, const char16_t* filter)
+{
+    return WxOtherFactory::FsWatcherAddTree(handle, path, events, filter);
+}
+
+ALTERNET_UI_API int WxOtherFactory_FsWatcherGetWatchedPathsCount_(void* handle)
+{
+    return WxOtherFactory::FsWatcherGetWatchedPathsCount(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemove_(void* handle, const char16_t* path)
+{
+    return WxOtherFactory::FsWatcherRemove(handle, path);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveAll_(void* handle)
+{
+    return WxOtherFactory::FsWatcherRemoveAll(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveTree_(void* handle, const char16_t* path)
+{
+    return WxOtherFactory::FsWatcherRemoveTree(handle, path);
+}
+
+ALTERNET_UI_API void WxOtherFactory_FsWatcherSetOwner_(void* handle, void* handler)
+{
+    WxOtherFactory::FsWatcherSetOwner(handle, handler);
+}
+
 ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
     WxOtherFactory::TestPopupWindow(parent, pos, sz);

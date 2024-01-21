@@ -77,7 +77,7 @@ namespace Alternet.UI
             }
 
             var nativeOwner = owner == null
-                ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+                ? null : ((WindowHandler)owner.Handler).NativeControl;
             NativePrintPreviewDialog.ShowModal(nativeOwner);
         }
 

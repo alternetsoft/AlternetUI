@@ -44,10 +44,10 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
 
-            /*PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
-            PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);*/
-            /*PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
-            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);*/
+            PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
+            PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);
+            PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
+            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);
 #endif
         }
 
@@ -58,69 +58,27 @@ namespace PropertyGridSample
             var control = GetSelectedControl<MultilineTextBox>();
             if (control is null)
                 return;
-            var parentWindow = control.ParentWindow;
-            if (parentWindow is null)
-                return;
+
+            var parentWindow = new DialogWindow();
+            parentWindow.Disposed += ParentWindow_Disposed;
+            parentWindow.MinimizeEnabled = false;
+            parentWindow.MaximizeEnabled = false;
+            parentWindow.HasSystemMenu = false;
+            parentWindow.Title = "Search and Replace";
 
             FindReplaceControl findReplace = new();
-            findReplace.ClickFindNext += DoClickFindNext;
-            findReplace.ClickFindPrevious += DoClickFindPrevious;
-            findReplace.ClickReplace += DoClickReplace;
-            findReplace.ClickReplaceAll += DoClickReplaceAll;
-            findReplace.ClickClose += DoClickClose;
-            findReplace.OptionMatchCaseChanged += DoOptionMatchCaseChanged;
-            findReplace.OptionMatchWholeWordChanged += DoOptionMatchWholeWordChanged;
-            findReplace.OptionUseRegularExpressionsChanged += DoOptionUseRegularExpressionsChanged;
-
+            findReplace.Manager = findReplace.CreateLogger();
+            findReplace.CloseButtonVisible = false;
             findReplace.ReplaceVisible = replace;
-            findReplace.IgnoreLayout = true;
-            findReplace.Size = findReplace.GetPreferredSize(parentWindow.ClientSize);
-            var left = (int)((parentWindow.ClientSize.Width - findReplace.Size.Width) / 2);
-            findReplace.Location = (left, 0);
             findReplace.Parent = parentWindow;
-            findReplace.BringToFront();
-            findReplace.Show();
+            
+            parentWindow.SetSizeToContent(WindowSizeToContentMode.Height);
+            parentWindow.ShowModal();
 
-            void DoOptionMatchCaseChanged(object? sender, EventArgs e)
+            void ParentWindow_Disposed(object? sender, EventArgs e)
             {
-                Application.Log("MatchCase Changed");
+                Application.Log("FindReplace window disposed");
             }
-
-            void DoOptionMatchWholeWordChanged(object? sender, EventArgs e)
-            {
-                Application.Log("MatchWholeWord Changed");
-            }
-
-            void DoOptionUseRegularExpressionsChanged(object? sender, EventArgs e)
-            {
-                Application.Log("UseRegularExpressions Changed");
-            }
-
-            void DoClickFindNext(object? sender, EventArgs e)
-            {
-                Application.Log("ClickFindNext");
-            }
-
-            void DoClickFindPrevious(object? sender, EventArgs e)
-            {
-                Application.Log("ClickFindPrevious");
-            }
-
-            void DoClickReplace(object? sender, EventArgs e)
-            {
-                Application.Log("ClickReplace");
-            }
-
-            void DoClickReplaceAll(object? sender, EventArgs e)
-            {
-                Application.Log("ClickReplaceAll");
-            }
-
-            void DoClickClose(object? sender, EventArgs e)
-            {
-                Application.Log("ClickClose");
-            }
-
         }
 
         void TestMemoFind()

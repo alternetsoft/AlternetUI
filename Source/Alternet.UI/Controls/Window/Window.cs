@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
-        public static Window? ActiveWindow => NativeWindowHandler.ActiveWindow;
+        public static Window? ActiveWindow => WindowHandler.ActiveWindow;
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -568,6 +568,13 @@ namespace Alternet.UI
             {
                 if (statusBar == value)
                     return;
+
+                if(GetWindowKind() == WindowKind.Dialog)
+                {
+                    statusBar = value;
+                    return;
+                }
+
                 if (value is not null)
                 {
                     if (value.IsDisposed)
@@ -601,6 +608,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this window is displayed modally.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool Modal
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="MainMenu"/> that is displayed in the window.
         /// </summary>
         /// <value>
@@ -621,46 +640,14 @@ namespace Alternet.UI
                 var oldValue = menu;
                 menu = value;
 
+                if (GetWindowKind() == WindowKind.Dialog)
+                    return;
+
                 oldValue?.SetParentInternal(null);
                 menu?.SetParentInternal(this);
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this window is displayed modally.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool Modal
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeControl.Modal;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the modal result value, which is the value that is returned from the
-        /// <see cref="ShowModal()"/> method.
-        /// This property is set to <see cref="ModalResult.None"/> at the moment
-        /// <see cref="ShowModal()"/> is called.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ModalResult ModalResult
-        {
-            get
-            {
-                CheckDisposed();
-                return (ModalResult)NativeControl.ModalResult;
-            }
-
-            set
-            {
-                CheckDisposed();
-                NativeControl.ModalResult = (Native.ModalResult)value;
             }
         }
 
@@ -713,6 +700,9 @@ namespace Alternet.UI
                 var oldValue = toolbar;
                 toolbar = value;
 
+                if (GetWindowKind() == WindowKind.Dialog)
+                    return;
+
                 oldValue?.SetParentInternal(null);
                 toolbar?.SetParentInternal(this);
 
@@ -731,10 +721,10 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
         /// <summary>
-        /// Gets a <see cref="NativeWindowHandler"/> associated with this class.
+        /// Gets a <see cref="WindowHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
+        internal new WindowHandler Handler => (WindowHandler)base.Handler;
 
         [Browsable(false)]
         internal new Native.Window NativeControl => (Native.Window)base.NativeControl;
@@ -788,14 +778,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Changes size of the window to fit the size of its content.
+        /// Shows window and focuses it.
         /// </summary>
-        /// <param name="mode">Specifies how a window will size itself to fit the size of
-        /// its content.</param>
-        public virtual void SetSizeToContent(
-            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
+        /// <param name="useIdle">Whether to use <see cref="Application.Idle"/>
+        /// event to show the window.</param>
+        public virtual void ShowAndFocus(bool useIdle = false)
         {
-            Handler.SetSizeToContent(mode);
+            if (useIdle)
+                Application.AddIdleTask(Fn);
+            else
+                Fn();
+
+            void Fn()
+            {
+                Show();
+                Raise();
+                if (CanFocus)
+                    SetFocus();
+            }
         }
 
         /// <summary>
@@ -806,20 +806,6 @@ namespace Alternet.UI
         /// or it flashes the window caption if this is not the active application.
         /// </remarks>
         public virtual void Activate() => NativeControl.Activate();
-
-        /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the
-        /// modal window is closed.
-        /// </summary>
-        /// <returns>
-        /// The return value is the value of the <see cref="ModalResult"/> property before
-        /// window closes.
-        /// </returns>
-        public virtual ModalResult ShowModal()
-        {
-            return ShowModal(Owner);
-        }
 
         /// <summary>
         /// Gets default bounds assigned to the window.
@@ -842,8 +828,8 @@ namespace Alternet.UI
         /// a parameter to your event handler.
         /// If the window you are closing is the last open window of your application,
         /// your application ends.
-        /// The window is not disposed on <see cref="Close"/> is when you have displayed the
-        /// window using <see cref="ShowModal()"/>.
+        /// The window is not disposed on <see cref="Close"/> when you have displayed the
+        /// window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
         public virtual void Close()
@@ -853,29 +839,6 @@ namespace Alternet.UI
             CheckDisposed();
 
             Handler.Close();
-        }
-
-        /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the
-        /// modal window is closed.
-        /// </summary>
-        /// <param name="owner">
-        /// A window that will own this window.
-        /// </param>
-        /// <returns>
-        /// The return value is the value of the <see cref="ModalResult"/> property before
-        /// window closes.
-        /// </returns>
-        public virtual ModalResult ShowModal(Window? owner)
-        {
-            CheckDisposed();
-
-            ModalResult = ModalResult.None;
-            Owner = owner;
-            NativeControl.ShowModal();
-
-            return ModalResult;
         }
 
         /// <summary>
@@ -897,7 +860,6 @@ namespace Alternet.UI
 
         internal static Window? GetParentWindow(DependencyObject dp)
         {
-            // For use instead of PresentationSource.CriticalFromVisual(focusScope).
             if (dp is Window w)
                 return w;
 
@@ -909,6 +871,8 @@ namespace Alternet.UI
 
             return GetParentWindow(c.Parent);
         }
+
+        internal virtual WindowKind GetWindowKind() => WindowKind.Window;
 
         internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 
@@ -1084,6 +1048,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Applies <see cref="Window.StartLocation"/> to the location of the window.
+        /// </summary>
+        protected virtual void ApplyStartLocation(Control? owner)
+        {
+            RectD parentRect;
+
+            if (StartLocation == WindowStartLocation.CenterScreen)
+            {
+                parentRect = GetDisplay().ClientAreaDip;
+            }
+            else
+            if (StartLocation == WindowStartLocation.CenterOwner)
+            {
+                if (owner is null)
+                    parentRect = GetDisplay().ClientAreaDip;
+                else
+                    parentRect = new(owner.ClientToScreen((0, 0)), owner.ClientSize);
+            }
+            else
+                return;
+
+            var bounds = Bounds;
+            Bounds = bounds.CenterIn(parentRect);
+        }
+
+        /// <summary>
         /// Called when the value of the <see cref="StatusBar"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
@@ -1100,6 +1090,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler() => new NativeWindowHandler();
+        protected override ControlHandler CreateHandler() => new WindowHandler();
     }
 }

@@ -76,6 +76,19 @@ namespace Alternet.UI
         public virtual void Raise() => NativeControl.Raise();
 
         /// <summary>
+        /// Centers the window.
+        /// </summary>
+        /// <param name="direction">Specifies the direction for the centering.</param>
+        /// <remarks>
+        /// If the window is a top level one (i.e. doesn't have a parent), it will be
+        /// centered relative to the screen anyhow.
+        /// </remarks>
+        public virtual void CenterOnParent(GenericOrientation direction)
+        {
+            NativeControl.CenterOnParent((int)direction);
+        }
+
+        /// <summary>
         /// Sets the index of the child control in the <see cref="Children"/>.
         /// </summary>
         /// <param name="child">The item to search for.</param>
@@ -857,7 +870,42 @@ namespace Alternet.UI
         /// Gets <see cref="Display"/> where this control is shown.
         /// </summary>
         /// <returns></returns>
-        public Display GetDisplay() => new(this);
+        public virtual Display GetDisplay() => new(this);
+
+        /// <summary>
+        /// Changes size of the control to fit the size of its content.
+        /// </summary>
+        /// <param name="mode">Specifies how a control will size itself to fit the size of
+        /// its content.</param>
+        public virtual void SetSizeToContent(WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
+        {
+            if (mode == WindowSizeToContentMode.None)
+                return;
+
+            var newSize = Handler.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+            if (newSize != SizeD.Empty)
+            {
+                var currentSize = ClientSize;
+                switch (mode)
+                {
+                    case WindowSizeToContentMode.Width:
+                        newSize.Height = currentSize.Height;
+                        break;
+                    case WindowSizeToContentMode.Height:
+                        newSize.Width = currentSize.Width;
+                        break;
+                    case WindowSizeToContentMode.WidthAndHeight:
+                        break;
+                    default:
+                        throw new Exception();
+                }
+
+                ClientSize = newSize + new SizeD(1, 0);
+                ClientSize = newSize;
+                Refresh();
+                NativeControl.SendSizeEvent();
+            }
+        }
 
         /// <summary>
         /// This method calls SetSizer() and then updates the initial control size to the

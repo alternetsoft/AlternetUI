@@ -24,7 +24,6 @@
       <None Remove="OwnedWindow.uixml" />
       <None Remove="Resources\TestIcon1.ico" />
       <None Remove="Resources\TestIcon2.ico" />
-      <None Remove="TestWindow.uixml" />
     </ItemGroup>
 
     <ItemGroup>
