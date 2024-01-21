@@ -35,6 +35,14 @@ namespace PropertyGridSample
             }
         }
 
+        public bool DemoBackgroundIsWhite { get; set; } = false;
+
+        public bool DesignCorners
+        {
+            get;
+            set;
+        } = true;
+
         public bool ColorHasAlpha
         {
             get
