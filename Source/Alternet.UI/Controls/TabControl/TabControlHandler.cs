@@ -11,7 +11,7 @@ namespace Alternet.UI
     internal class TabControlHandler : ControlHandler
     {
         private bool skipChildrenInsertionCheck;
-        private bool skipLinuxFix;
+        /*private bool skipLinuxFix;*/
 
         /// <summary>
         /// Gets a <see cref="TabControl"/> this handler provides the implementation for.
@@ -97,11 +97,11 @@ namespace Alternet.UI
             {
                 var page = Control.Pages[selectedPageIndex];
 
-                if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
+                /*if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
                 {
                     page.Handler.Bounds = Control.ChildrenLayoutBounds;
                     skipLinuxFix = true;
-                }
+                }*/
 
                 page.Handler.OnLayout();
             }
@@ -122,6 +122,7 @@ namespace Alternet.UI
             var pageNativeControl = page.Handler.NativeControl
                 ?? throw new InvalidOperationException();
             NativeControl.InsertPage(index, pageNativeControl, page.Title);
+            NativeControl.SendSizeEvent();
             Control.PerformLayout();
         }
 
@@ -161,7 +162,7 @@ namespace Alternet.UI
 
         private void NativeControl_SelectedPageIndexChanged(object? sender, EventArgs e)
         {
-            skipLinuxFix = true;
+            /*skipLinuxFix = true;*/
             LayoutSelectedPage();
             Control.RaiseSelectedPageChanged(EventArgs.Empty);
         }
