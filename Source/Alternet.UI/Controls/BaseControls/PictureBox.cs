@@ -245,6 +245,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
+        [Browsable(false)]
         public ImageSet? ImageSet
         {
             get
@@ -267,6 +268,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
+        [Browsable(false)]
         public ImageSet? DisabledImageSet
         {
             get

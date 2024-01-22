@@ -93,6 +93,7 @@ namespace PropertyGridSample
                     typeof(SpeedButton),
                     typeof(ComboBoxAndLabel),
                     typeof(TextBoxAndLabel),
+                    typeof(SpeedTextButton),
                 ];
 
                 Type[] badParentTypes =
