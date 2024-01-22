@@ -97,10 +97,9 @@ namespace Alternet.UI
             {
                 var page = Control.Pages[selectedPageIndex];
 
-                /*if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
-                {
+                // if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
+                /*{
                     page.Handler.Bounds = Control.ChildrenLayoutBounds;
-                    skipLinuxFix = true;
                 }*/
 
                 page.Handler.OnLayout();

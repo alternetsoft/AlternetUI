@@ -16,6 +16,7 @@ namespace ControlsSample
             tabAlignmentComboBox.Items.Add("Top");
             tabAlignmentComboBox.Items.Add("Bottom");
             tabAlignmentComboBox.SelectedIndex = 0;
+            tabControl.SendSizeEvent();
         }
 
         private int GenItemIndex()
