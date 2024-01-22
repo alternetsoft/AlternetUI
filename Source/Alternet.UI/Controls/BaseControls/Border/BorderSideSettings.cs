@@ -115,7 +115,7 @@ namespace Alternet.UI
         {
             get
             {
-                brush ??= new SolidBrush(color);
+                brush ??= color.AsBrush;
                 return brush;
             }
         }
@@ -127,7 +127,7 @@ namespace Alternet.UI
         {
             get
             {
-                pen ??= new(color, Math.Max(1, width));
+                pen ??= color.GetAsPen(Math.Max(1, width));
                 return pen;
             }
         }

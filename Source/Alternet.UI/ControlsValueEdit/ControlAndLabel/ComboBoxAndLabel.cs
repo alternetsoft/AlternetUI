@@ -9,7 +9,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="UI.ComboBox"/> with attached <see cref="Label"/>.
     /// </summary>
-    public class ComboBoxAndLabel : ControlAndLabel
+    [ControlCategory("Editors")]
+    public partial class ComboBoxAndLabel : ControlAndLabel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
@@ -30,11 +31,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets main child control.
         /// </summary>
+        [Browsable(false)]
         public new ComboBox MainControl => (ComboBox)base.MainControl;
 
         /// <summary>
         /// Gets main child control, same as <see cref="MainControl"/>.
         /// </summary>
+        [Browsable(false)]
         public ComboBox ComboBox => (ComboBox)base.MainControl;
 
         /// <inheritdoc/>

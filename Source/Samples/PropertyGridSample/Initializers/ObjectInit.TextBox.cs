@@ -9,6 +9,29 @@ namespace PropertyGridSample
 {
     internal partial class ObjectInit
     {
+        public static void InitTextBoxAndLabel(object control)
+        {
+            if (control is not TextBoxAndLabel textBox)
+                return;
+            textBox.Text = "some text";
+            textBox.Label.Text = "Label";
+            textBox.TextBox.SuggestedWidth = 200;
+        }
+
+        public static void InitComboBoxAndLabel(object control)
+        {
+            if (control is not ComboBoxAndLabel textBox)
+                return;
+            textBox.Text = "item 1";
+            textBox.Label.Text = "Label";
+            textBox.ComboBox.SuggestedWidth = 200;
+            textBox.ComboBox.Add("item 1");
+            textBox.ComboBox.Add("item 2");
+            textBox.ComboBox.Add("item 3");
+            textBox.ComboBox.Add("item 4");
+            textBox.ComboBox.Add("item 5");
+        }
+
         public static void InitTextBox(object control)
         {
             if (control is not TextBox textBox)

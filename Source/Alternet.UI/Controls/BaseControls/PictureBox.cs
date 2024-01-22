@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public class PictureBox : UserPaintControl, IValidatorReporter
+    public partial class PictureBox : UserPaintControl, IValidatorReporter
     {
         private readonly ImagePrimitivePainter primitive = new();
         private string text = string.Empty;
@@ -245,6 +245,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
+        [Browsable(false)]
         public ImageSet? ImageSet
         {
             get
@@ -267,6 +268,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
+        [Browsable(false)]
         public ImageSet? DisabledImageSet
         {
             get

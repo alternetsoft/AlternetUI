@@ -91,12 +91,14 @@ namespace PropertyGridSample
                     typeof(CardPanelHeader),
                     typeof(CardPanel),
                     typeof(SpeedButton),
+                    typeof(ComboBoxAndLabel),
+                    typeof(TextBoxAndLabel),
+                    typeof(SpeedTextButton),
+                    typeof(GenericToolBarSet),
                 ];
 
                 Type[] badParentTypes =
                 [
-                  typeof(ComboBoxAndLabel),
-                  typeof(TextBoxAndLabel),
                   typeof(ControlAndLabel),
                   typeof(PopupWindow),
                   typeof(PanelAuiManager),
@@ -144,8 +146,8 @@ namespace PropertyGridSample
                         continue;*/
                     if (Array.IndexOf(badTypes, type) >= 0)
                         continue;
-                    if (AssemblyUtils.TypeIsDescendant(type, badParentTypes))
-                        continue;
+                    /*if (AssemblyUtils.TypeIsDescendant(type, badParentTypes))
+                        continue;*/
                     item = new(type)
                     {
                         HasTicks = true,

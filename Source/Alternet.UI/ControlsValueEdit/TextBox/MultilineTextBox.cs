@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements multiline text editor.
     /// </summary>
+    [ControlCategory("Common")]
     public class MultilineTextBox : TextBox
     {
         /// <summary>

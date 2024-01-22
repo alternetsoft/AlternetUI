@@ -15,6 +15,7 @@ namespace Alternet.UI
     /// by demand. If you need basic panel with <see cref="AuiManager"/>,
     /// use <see cref="PanelAuiManagerBase"/>.
     /// </remarks>
+    [ControlCategory("Hidden")]
     public class PanelAuiManager : PanelAuiManagerBase
     {
         private ListBox? actionsControl;

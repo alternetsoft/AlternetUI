@@ -55,8 +55,9 @@
                   Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 
-        <Control Margin="0,5,0,0" VerticalAlignment="Stretch" Name="tooltipPreview">
-          <Label Margin="5" Text="ToolTip will be shown here." HorizontalAlignment="Center"/>
+        <Control Margin="0,5,0,0" VerticalAlignment="Stretch" Name="tooltipPreview" MinHeight="200">
+          <GenericLabel Margin="5" Text="ToolTip will be shown here." HorizontalAlignment="Center"
+                 Name="toolTipLabel"/>
         </Control>
 
       </StackPanel>

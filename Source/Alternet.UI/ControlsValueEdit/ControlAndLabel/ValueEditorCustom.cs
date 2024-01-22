@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for the custom value editors.
     /// </summary>
+    [ControlCategory("Hidden")]
     public class ValueEditorCustom : TextBoxAndLabel
     {
         /// <summary>

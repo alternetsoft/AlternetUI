@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Imlements <see cref="sbyte"/> editor with validation.
     /// </summary>
+    [ControlCategory("Editors")]
     public class ValueEditorSByte : ValueEditorCustom
     {
         /// <summary>

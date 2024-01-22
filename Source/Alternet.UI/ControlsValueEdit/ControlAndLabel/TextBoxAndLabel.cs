@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="TextBox"/> with attached <see cref="Label"/>.
     /// </summary>
-    public class TextBoxAndLabel : ControlAndLabel
+    [ControlCategory("Editors")]
+    public partial class TextBoxAndLabel : ControlAndLabel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
@@ -39,11 +40,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets main child control.
         /// </summary>
+        [Browsable(false)]
         public new TextBox MainControl => (TextBox)base.MainControl;
 
         /// <summary>
         /// Gets main child control, same as <see cref="MainControl"/>.
         /// </summary>
+        [Browsable(false)]
         public TextBox TextBox => (TextBox)base.MainControl;
 
         /// <summary>

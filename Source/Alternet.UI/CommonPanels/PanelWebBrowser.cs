@@ -14,6 +14,7 @@ namespace Alternet.UI
     /// Implements panel with <see cref="WebBrowser"/> and <see cref="AuiToolbar"/> with
     /// web navigation buttons.
     /// </summary>
+    [ControlCategory("Panels")]
     public class PanelWebBrowser : PanelAuiManager
     {
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;

@@ -9,7 +9,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a standard horizontal scroll bar.
     /// </summary>
-    public class HScrollBar : ScrollBar
+    [ControlCategory("Common")]
+    public partial class HScrollBar : ScrollBar
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HScrollBar"/> class.

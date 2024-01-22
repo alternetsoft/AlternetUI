@@ -597,6 +597,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns toolbox category of the control.
+        /// </summary>
+        /// <param name="type">Type of the control.</param>
+        /// <returns></returns>
+        public static ControlCategoryAttribute? GetControlCategory(Type type)
+        {
+            var attr = type.GetCustomAttribute(typeof(ControlCategoryAttribute)) as ControlCategoryAttribute;
+            return attr;
+        }
+
+        /// <summary>
         /// Gets default value of the property using <see cref="DefaultValueAttribute"/>.
         /// </summary>
         /// <param name="p">Property information.</param>

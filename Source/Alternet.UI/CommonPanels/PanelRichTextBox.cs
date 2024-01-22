@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// Implements panel with <see cref="RichTextBox"/> and <see cref="AuiToolbar"/> with
     /// text edit buttons.
     /// </summary>
+    [ControlCategory("Panels")]
     public class PanelRichTextBox : PanelAuiManager
     {
         private RichTextBox? textBox;

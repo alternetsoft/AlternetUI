@@ -9,7 +9,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a standard vertical scroll bar.
     /// </summary>
-    public class VScrollBar : ScrollBar
+    [ControlCategory("Common")]
+    public partial class VScrollBar : ScrollBar
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HScrollBar"/> class.

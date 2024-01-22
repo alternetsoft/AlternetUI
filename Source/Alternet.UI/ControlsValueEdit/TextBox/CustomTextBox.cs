@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for text editors.
     /// </summary>
+    [ControlCategory("Hidden")]
     public abstract class CustomTextBox : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter
     {
         private StringSearch? search;

@@ -20,6 +20,24 @@ namespace PropertyGridSample
             findReplace.Manager = findReplace.CreateLogger();
         }
 
+        public static void InitGenericToolBarSet(object control)
+        {
+            if (control is not GenericToolBarSet toolbar)
+                return;
+
+            toolbar.ToolBarCount = 2;
+
+            var toolbar1 = toolbar.GetToolBar(0);
+            var toolbar2 = toolbar.GetToolBar(1);
+
+            toolbar1.AddSpeedBtn(KnownButton.New);
+            toolbar1.AddSpeedBtn(KnownButton.Open);
+            toolbar1.AddSpeedBtn(KnownButton.Save);
+
+            toolbar2.AddSpeedBtn(KnownButton.Undo);
+            toolbar2.AddSpeedBtn(KnownButton.Redo);
+        }
+
         public static void InitGenericToolBar(object control)
         {
             if (control is not GenericToolBar toolbar)

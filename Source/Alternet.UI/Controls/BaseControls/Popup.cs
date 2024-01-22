@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    public class Popup : Control
+    public partial class Popup : Control
     {
         /*private Window? owner;*/
 
@@ -146,17 +146,6 @@ namespace Alternet.UI
             var pos = PixelFromDip(ptOrigin);
             var sz = PixelFromDip(sizePopup);
             Handler.NativeControl.Position(pos, sz);
-        }
-
-        /// <summary>
-        /// Changes size of the window to fit the size of its content.
-        /// </summary>
-        /// <param name="mode">Specifies how a window will size itself to fit
-        /// the size of its content.</param>
-        public void SetSizeToContent(WindowSizeToContentMode mode =
-            WindowSizeToContentMode.WidthAndHeight)
-        {
-            Handler.SetSizeToContent(mode);
         }
 
         /// <summary>

@@ -87,6 +87,8 @@ namespace PropertyGridSample
 
         public PropertyGrid PropGrid => panel.PropGrid;
 
+        public Border ControlPanelBorder => controlPanelBorder;
+
         public MainWindow()
         {
             Activated += MainWindow_Activated;
@@ -336,8 +338,9 @@ namespace PropertyGridSample
                 {
                     parentParent.DoInsideLayout(() =>
                     {
-                        controlPanelBorder.HasBorder = item.HasTicks &&
-                            !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
+                        controlPanelBorder.HasBorder = PropertyGridSettings.Default!.DesignCorners
+                        && item.HasTicks
+                        && !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
 
                         if (control.Name == null)
                         {
@@ -383,6 +386,9 @@ namespace PropertyGridSample
 
             void SetBackground(Color color)
             {
+                if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
+                    color = Color.White;
+
                 parentParent.BackgroundColor = color;
                 controlPanelBorder.BackgroundColor = color;
                 controlPanel.BackgroundColor = color;

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 
 Console.WriteLine("Alternet.UI.RunCmd");
-Console.WriteLine("Copyright (c) 2023 AlterNET Software");
+Console.WriteLine("Copyright (c) 2023-2024 AlterNET Software");
 
 CommonProcs.ParseCmdLine(args);
 CommandLineArgs.Default.ParseArgs(args);

@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements multiple <see cref="GenericToolBar"/> controls.
     /// </summary>
+    [ControlCategory("MenusAndToolbars")]
     public class GenericToolBarSet : VerticalStackPanel
     {
         /// <summary>

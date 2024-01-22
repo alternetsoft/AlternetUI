@@ -20,6 +20,13 @@ namespace PropertyGridSample
             button.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
+        public static void InitSpeedTextButton(object control)
+        {
+            if (control is not SpeedTextButton button)
+                return;
+            button.Text = "Sample Text";
+        }
+
         public static void InitSpeedButton(object control)
         {
             if (control is not SpeedButton button)

@@ -43,6 +43,15 @@ namespace ControlsSample
 
             GetColumnGroup(3, true).SuggestedWidthToMax();
 
+            toolTipLabel.Click += ToolTipLabel_Click;
+        }
+
+        private void ToolTipLabel_Click(object? sender, EventArgs e)
+        {
+            Application.Log("ToolTipLabel_Click");
+            tooltipPreview.BackgroundColor = Color.White;
+            toolTipLabel.Text = string.Empty;
+            toolTipLabel.BackgroundColor = Color.White;
         }
 
         private void ResetTitleButton_Click(object? sender, EventArgs e)
