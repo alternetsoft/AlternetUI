@@ -94,6 +94,7 @@ namespace PropertyGridSample
                     typeof(ComboBoxAndLabel),
                     typeof(TextBoxAndLabel),
                     typeof(SpeedTextButton),
+                    typeof(GenericToolBarSet),
                 ];
 
                 Type[] badParentTypes =
