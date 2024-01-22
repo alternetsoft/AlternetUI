@@ -51,7 +51,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateTabControlHandler(Control control) =>
-            new NativeTabControlHandler();
+            new TabControlHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateGroupBoxHandler(Control control) =>
