@@ -899,6 +899,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether item is 'Enabled' and 'Visible'.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual bool GetToolEnabledAndVisible(ObjectUniqueId id)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return false;
+            return item.Enabled && item.Visible;
+        }
+
+        /// <summary>
         /// Gets item 'Visible' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
@@ -1151,6 +1164,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual KnownSvgImages GetDisabledSvgImages() =>
             DisabledSvgImages ??= KnownSvgImages.GetForSize(GetDisabledImageColor(), GetImageSize());
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the normal or disabled state depending
+        /// on the parameter value.
+        /// </summary>
+        /// <param name="enabled">Enabled or disabled images.</param>
+        /// <returns></returns>
+        public virtual KnownSvgImages GetSvgImages(bool enabled) =>
+            enabled ? GetNormalSvgImages() : GetDisabledSvgImages();
 
         /// <summary>
         /// Gets <see cref="KnownSvgImages"/> for the disabled state.

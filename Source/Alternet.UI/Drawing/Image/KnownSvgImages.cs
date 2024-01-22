@@ -535,6 +535,13 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Gets <see cref="ImgAngleUp"/> or <see cref="ImgAngleDown"/> image.
+        /// </summary>
+        /// <param name="up">Up or Down image.</param>
+        /// <returns></returns>
+        public ImageSet GetImgAngleUpDown(bool up) => up ? ImgAngleUp : ImgAngleDown;
+
         private ImageSet? LoadIfExists(string? url)
         {
             if (url is null)

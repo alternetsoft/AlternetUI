@@ -199,6 +199,12 @@ namespace Alternet.UI
             void SetUseRegularExpressions(bool value);
 
             /// <summary>
+            /// Notifies when visibility of replace options is changed.
+            /// </summary>
+            /// <param name="value">New option value.</param>
+            void SetReplaceVisible(bool value);
+
+            /// <summary>
             /// Performs 'Replace' operation.
             /// </summary>
             void Replace();
@@ -510,26 +516,16 @@ namespace Alternet.UI
 
             set
             {
-                if (value)
-                {
-                    ReplaceToolBar.Visible = true;
-                    FindToolBar.SetToolDisabledImage(
-                        IdToggleReplaceOptions,
-                        FindToolBar.GetDisabledSvgImages().ImgAngleUp);
-                    FindToolBar.SetToolImage(
-                        IdToggleReplaceOptions,
-                        FindToolBar.GetNormalSvgImages().ImgAngleUp);
-                }
-                else
-                {
-                    ReplaceToolBar.Visible = false;
-                    FindToolBar.SetToolDisabledImage(
-                        IdToggleReplaceOptions,
-                        FindToolBar.GetDisabledSvgImages().ImgAngleDown);
-                    FindToolBar.SetToolImage(
-                        IdToggleReplaceOptions,
-                        FindToolBar.GetNormalSvgImages().ImgAngleDown);
-                }
+                if (ReplaceVisible == value)
+                    return;
+                ReplaceToolBar.Visible = value;
+                FindToolBar.SetToolDisabledImage(
+                    IdToggleReplaceOptions,
+                    FindToolBar.GetSvgImages(false).GetImgAngleUpDown(value));
+                FindToolBar.SetToolImage(
+                    IdToggleReplaceOptions,
+                    FindToolBar.GetSvgImages(true).GetImgAngleUpDown(value));
+                Manager?.SetReplaceVisible(value);
             }
         }
 
@@ -652,6 +648,11 @@ namespace Alternet.UI
             public void SetUseRegularExpressions(bool value)
             {
                 Application.Log($"FindReplaceControl.UseRegularExpressions = {value}");
+            }
+
+            public void SetReplaceVisible(bool value)
+            {
+                Application.Log($"FindReplaceControl.ReplaceVisible = {value}");
             }
         }
     }
