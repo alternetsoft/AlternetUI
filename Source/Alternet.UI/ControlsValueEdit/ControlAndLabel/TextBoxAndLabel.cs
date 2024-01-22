@@ -39,11 +39,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets main child control.
         /// </summary>
+        [Browsable(false)]
         public new TextBox MainControl => (TextBox)base.MainControl;
 
         /// <summary>
         /// Gets main child control, same as <see cref="MainControl"/>.
         /// </summary>
+        [Browsable(false)]
         public TextBox TextBox => (TextBox)base.MainControl;
 
         /// <summary>

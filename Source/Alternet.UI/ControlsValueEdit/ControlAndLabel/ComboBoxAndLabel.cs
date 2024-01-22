@@ -30,11 +30,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets main child control.
         /// </summary>
+        [Browsable(false)]
         public new ComboBox MainControl => (ComboBox)base.MainControl;
 
         /// <summary>
         /// Gets main child control, same as <see cref="MainControl"/>.
         /// </summary>
+        [Browsable(false)]
         public ComboBox ComboBox => (ComboBox)base.MainControl;
 
         /// <inheritdoc/>

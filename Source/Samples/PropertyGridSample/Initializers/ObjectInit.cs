@@ -85,7 +85,9 @@ namespace PropertyGridSample
             Actions.Add(typeof(CardPanel), InitCardPanel);
             Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);
             Actions.Add(typeof(TextBox), InitTextBox);
+            Actions.Add(typeof(TextBoxAndLabel), InitTextBoxAndLabel);
             Actions.Add(typeof(RichTextBox), InitRichTextBox);
+            Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
             Actions.Add(typeof(GenericLabel), InitGenericLabel);
             Actions.Add(typeof(Label), InitLabel);

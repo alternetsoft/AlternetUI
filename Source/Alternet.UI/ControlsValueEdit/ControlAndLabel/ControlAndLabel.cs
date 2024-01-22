@@ -109,6 +109,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets attached <see cref="Label"/> control.
         /// </summary>
+        [Browsable(false)]
         public Control Label => label;
 
         /// <summary>
@@ -143,11 +144,13 @@ namespace Alternet.UI
         /// Gets attached <see cref="PictureBox"/> control which
         /// displays validation error information.
         /// </summary>
+        [Browsable(false)]
         public PictureBox ErrorPicture => errorPicture;
 
         /// <summary>
         /// Gets main child control.
         /// </summary>
+        [Browsable(false)]
         public Control MainControl => mainControl;
 
         Control IControlAndLabel.Label => Label;
