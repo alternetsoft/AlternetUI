@@ -10,14 +10,15 @@ namespace ControlsSample
     internal partial class ButtonPage : Control
     {
         private static readonly object[] ValidAlign =
-            new object[]
-            {
+            [
                     new ListControlItem("Default", GenericDirection.Default),
                     new ListControlItem("Left", GenericDirection.Left),
                     new ListControlItem("Top", GenericDirection.Top),
                     new ListControlItem("Right", GenericDirection.Right),
                     new ListControlItem("Bottom", GenericDirection.Bottom),
-            };
+            ];
+
+        private ControlStateImages? buttonImages;
 
         static ButtonPage()
         {
@@ -68,8 +69,8 @@ namespace ControlsSample
 
             comboBoxFontName.SelectedItemChanged += Button_Changed;
             comboBoxFontSize.SelectedItemChanged += Button_Changed;
-            comboBoxTextColor.SelectedItemChanged += Button_Changed;
-            comboBoxBackColor.SelectedItemChanged += Button_Changed;
+            comboBoxTextColor.SelectedItemChanged += Fore_Changed;
+            comboBoxBackColor.SelectedItemChanged += Back_Changed;
             textAlignComboBox.SelectedItemChanged += Button_Changed;
             imageAlignComboBox.SelectedItemChanged += Button_Changed;
             disabledCheckBox.CheckedChanged += Button_Changed;
@@ -157,7 +158,11 @@ namespace ControlsSample
                 button.BackgroundColor = color;
                 button.StateImages = ControlStateImages.Empty;
                 if (imageCheckBox.IsChecked)
-                    button.StateImages = ResourceLoader.ButtonImages;
+                {
+                    buttonImages ??= ResourceLoader.LoadButtonImages(button);
+                    button.StateImages = buttonImages;
+                }
+
                 ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
             });
@@ -183,6 +188,30 @@ namespace ControlsSample
         }
 
         private void Button_Changed(object? sender, EventArgs e)
+        {
+            ApplyAll();
+        }
+
+        internal bool TextIsDark()
+        {
+            var textColor = GetColor(comboBoxTextColor) ?? button.RealForegroundColor;
+            return textColor.IsDark();
+        }
+
+        internal bool BackIsDark()
+        {
+            var backColor = GetColor(comboBoxBackColor) ?? button.RealBackgroundColor;
+            return backColor.IsDark();
+        }
+
+        private void Back_Changed(object? sender, EventArgs e)
+        {
+            buttonImages = null;
+
+            ApplyAll();
+        }
+
+        private void Fore_Changed(object? sender, EventArgs e)
         {
             ApplyAll();
         }
