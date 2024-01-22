@@ -96,6 +96,7 @@ namespace Alternet.UI
         /// When this property is null (default), <see cref="DefaultShortcutToolTipTemplate"/>
         /// is used to get the template.
         /// </remarks>
+        [Browsable(false)]
         public string? ShortcutToolTipTemplate { get; set; }
 
         /// <summary>
@@ -150,6 +151,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating the shortcut key associated with
         /// the control.
         /// </summary>
+        [Browsable(false)]
         public KeyGesture? Shortcut
         {
             get
