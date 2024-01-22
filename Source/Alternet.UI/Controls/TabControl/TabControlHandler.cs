@@ -122,7 +122,9 @@ namespace Alternet.UI
             var pageNativeControl = page.Handler.NativeControl
                 ?? throw new InvalidOperationException();
             NativeControl.InsertPage(index, pageNativeControl, page.Title);
-            NativeControl.SendSizeEvent();
+
+            if(NativeControl.SelectedPageIndex < 0)
+                NativeControl.SelectedPageIndex = index;
             Control.PerformLayout();
         }
 
