@@ -10,9 +10,15 @@ namespace CustomControlsSample
     {
         private readonly List<TicTacToeCell> cells = [];
 
+        private static Grid grid = new()
+        {
+            Margin = 5,
+            Padding = 5,
+        };
+
         public TicTacToeControl()
         {
-            InitializeComponent();
+            grid.Parent = this;
             CreateCells();
             InitializeGame();
             SuggestedSize = new SizeD(50 * 3, 50 * 3);

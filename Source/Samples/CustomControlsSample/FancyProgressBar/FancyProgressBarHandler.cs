@@ -6,7 +6,7 @@ using System;
 
 namespace CustomControlsSample.Gauge
 {
-    public class GaugeHandler : ProgressBarHandler
+    public class FancyProgressBarHandler : ProgressBarHandler
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
 

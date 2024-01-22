@@ -6,7 +6,7 @@ using System;
 
 namespace CustomControlsSample
 {
-    public class KnobHandler : SliderHandler
+    public class FancySliderHandler : SliderHandler
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
         private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
