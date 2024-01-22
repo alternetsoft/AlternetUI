@@ -51,6 +51,12 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="Common"/>
         public string Other { get; set; } = "Other";
 
+        /// <inheritdoc cref="Common"/>
+        public string Panels { get; set; } = "Panels";
+
+        /// <inheritdoc cref="Common"/>
+        public string Editors { get; set; } = "Editors";
+
         /// <summary>
         /// Gets localized title for the specified category id.
         /// </summary>
@@ -74,6 +80,8 @@ namespace Alternet.UI.Localization
                     { nameof(Printing), (s) => Default.Printing },
                     { nameof(Dialogs), (s) => Default.Dialogs },
                     { nameof(Other), (s) => Default.Other },
+                    { nameof(Panels), (s) => Default.Panels },
+                    { nameof(Editors), (s) => Default.Editors },
                 };
 
             return titles;

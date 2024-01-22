@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public class PictureBox : UserPaintControl, IValidatorReporter
+    public partial class PictureBox : UserPaintControl, IValidatorReporter
     {
         private readonly ImagePrimitivePainter primitive = new();
         private string text = string.Empty;

@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements label control that looks like header.
     /// </summary>
+    [ControlCategory("Other")]
     public class HeaderLabel : Control
     {
         /// <summary>

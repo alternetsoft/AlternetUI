@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Panel with Ok, Cancel and Apply buttons.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory("Panels")]
     public class PanelOkCancelButtons : StackPanel
     {
         /// <summary>

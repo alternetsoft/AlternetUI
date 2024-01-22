@@ -34,6 +34,17 @@ namespace Alternet.UI
         public string CategoryId => categoryId;
 
         /// <summary>
+        /// Gets whether category is hidden.
+        /// </summary>
+        public bool IsHidden
+        {
+            get
+            {
+                return CategoryId.ToLower() == "hidden";
+            }
+        }
+
+        /// <summary>
         /// Gets the title of the category for the control that this attribute is
         /// bound to.
         /// </summary>

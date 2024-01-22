@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Imlements <see cref="ulong"/> editor with validation.
     /// </summary>
+    [ControlCategory("Editors")]
     public class ValueEditorUInt64 : ValueEditorCustom
     {
         /// <summary>

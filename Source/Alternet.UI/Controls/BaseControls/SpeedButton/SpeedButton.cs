@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements speed button control.
     /// </summary>
-    public class SpeedButton : PictureBox
+    [ControlCategory("Other")]
+    public partial class SpeedButton : PictureBox
     {
         private static SpeedButton? defaults;
         private Action? clickAction;

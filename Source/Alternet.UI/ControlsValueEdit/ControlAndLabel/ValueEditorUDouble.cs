@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Imlements unsigned <see cref="double"/> editor with validation.
     /// </summary>
+    [ControlCategory("Editors")]
     public class ValueEditorUDouble : ValueEditorCustom
     {
         /// <summary>

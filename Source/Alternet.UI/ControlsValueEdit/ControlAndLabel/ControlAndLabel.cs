@@ -13,7 +13,8 @@ namespace Alternet.UI
     /// <remarks> This is an abstract class. You can use <see cref="TextBoxAndLabel"/>,
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
     /// in order to implement your own custom labeled control.</remarks>
-    public abstract class ControlAndLabel : StackPanel, IControlAndLabel
+    [ControlCategory("Hidden")]
+    public abstract partial class ControlAndLabel : StackPanel, IControlAndLabel
     {
         /// <summary>
         /// Gets or sets default distance between control and label.

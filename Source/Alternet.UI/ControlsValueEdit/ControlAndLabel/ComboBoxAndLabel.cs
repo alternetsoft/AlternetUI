@@ -9,7 +9,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="UI.ComboBox"/> with attached <see cref="Label"/>.
     /// </summary>
-    public class ComboBoxAndLabel : ControlAndLabel
+    [ControlCategory("Editors")]
+    public partial class ComboBoxAndLabel : ControlAndLabel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.

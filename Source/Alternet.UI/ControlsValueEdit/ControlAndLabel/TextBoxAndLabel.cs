@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="TextBox"/> with attached <see cref="Label"/>.
     /// </summary>
-    public class TextBoxAndLabel : ControlAndLabel
+    [ControlCategory("Editors")]
+    public partial class TextBoxAndLabel : ControlAndLabel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.

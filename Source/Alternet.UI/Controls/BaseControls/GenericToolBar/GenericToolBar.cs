@@ -12,7 +12,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements generic toolbar control.
     /// </summary>
-    public class GenericToolBar : Control
+    [ControlCategory("MenusAndToolbars")]
+    public partial class GenericToolBar : Control
     {
         private readonly StackPanel panel = new()
         {

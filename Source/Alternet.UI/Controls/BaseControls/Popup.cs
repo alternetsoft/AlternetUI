@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    public class Popup : Control
+    public partial class Popup : Control
     {
         /*private Window? owner;*/
 

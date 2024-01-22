@@ -20,7 +20,9 @@ void Import()
     Emit.Import(typeof(System.Windows.Forms.ScrollBar), path);
 }
 
+#pragma warning disable
 void ShowIncompleteDocs()
+#pragma warning restore
 {
     var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
     SortedList<string, Type> list = [];
@@ -50,4 +52,24 @@ void ShowIncompleteDocs()
     }
 }
 
-ShowIncompleteDocs();
+void ShowControlCategory()
+{
+    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
+    SortedList<string, Type> list = [];
+    foreach (var control in controls)
+    {
+        var typeName = control.Name;
+        var category = AssemblyUtils.GetControlCategory(control);
+
+        if(category is null)
+            Console.WriteLine(typeName);
+        else
+        {
+            if (category.IsHidden)
+                continue;
+            Console.WriteLine($"{typeName}: {category.CategoryId}");
+        }            
+    }
+}
+
+ShowControlCategory();

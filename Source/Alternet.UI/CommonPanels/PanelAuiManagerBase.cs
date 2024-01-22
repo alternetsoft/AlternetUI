@@ -17,6 +17,7 @@ namespace Alternet.UI
     /// If you need advanced panel with different built-in panes and toolbars, use
     /// <see cref="PanelAuiManager"/>.
     /// </remarks>
+    [ControlCategory("Hidden")]
     public class PanelAuiManagerBase : LayoutPanel
     {
         private readonly AuiManager manager = new();

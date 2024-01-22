@@ -31,7 +31,8 @@ namespace Alternet.UI
     /// handler, and whenever the application data changes in size.It will adjust
     /// the view, object and page size according to the size of the window and the size of the data.
     /// </remarks>
-    public class ScrollBar : Control
+    [ControlCategory("Common")]
+    public partial class ScrollBar : Control
     {
         private int minimum;
         private int maximum = 100;
