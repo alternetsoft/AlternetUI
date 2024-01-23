@@ -203,6 +203,11 @@ namespace Alternet.UI
             actionsControl.RemoveAll();
         }
 
+        protected override Control CreateRightPanel()
+        {
+            return new SideBarPanel();
+        }
+
         private void Actions_MouseDoubleClick(object? sender, MouseEventArgs e)
         {
             var listBox = sender as ListBox;
@@ -213,11 +218,6 @@ namespace Alternet.UI
             {
                 item.Action();
             });
-        }
-
-        protected override Control CreateRightPanel()
-        {
-            return new SideBarPanel();
         }
     }
 }

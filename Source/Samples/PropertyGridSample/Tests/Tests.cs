@@ -44,8 +44,6 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
 
-            PropertyGrid.AddSimpleAction<RichTextBox>("Find", TestRichFind);
-            PropertyGrid.AddSimpleAction<RichTextBox>("Replace", TestRichReplace);
             PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
             PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);
 #endif
@@ -53,32 +51,11 @@ namespace PropertyGridSample
 
         void TestMemoFindReplace(bool replace)
         {
-            /*->Replace(3, 8, "ABC");*/
-
             var control = GetSelectedControl<MultilineTextBox>();
             if (control is null)
                 return;
-
-            var parentWindow = new DialogWindow();
-            parentWindow.Disposed += ParentWindow_Disposed;
-            parentWindow.MinimizeEnabled = false;
-            parentWindow.MaximizeEnabled = false;
-            parentWindow.HasSystemMenu = false;
-            parentWindow.Title = "Search and Replace";
-
-            FindReplaceControl findReplace = new();
-            findReplace.Manager = findReplace.CreateLogger();
-            findReplace.CloseButtonVisible = false;
-            findReplace.ReplaceVisible = replace;
-            findReplace.Parent = parentWindow;
-            
-            parentWindow.SetSizeToContent(WindowSizeToContentMode.Height);
-            parentWindow.ShowModal();
-
-            void ParentWindow_Disposed(object? sender, EventArgs e)
-            {
-                Application.Log("FindReplace window disposed");
-            }
+            var pair = FindReplaceControl.CreateInsideDialog(replace);
+            pair.Dialog.ShowModal();
         }
 
         void TestMemoFind()
