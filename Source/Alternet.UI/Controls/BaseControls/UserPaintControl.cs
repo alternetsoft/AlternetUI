@@ -244,7 +244,7 @@ namespace Alternet.UI
             if (radius is not null && brush is not null)
             {
                 var color = border?.Color;
-                if (border is null || color is null)
+                if (border is null || color is null || !HasBorder)
                 {
                     dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
                 }
