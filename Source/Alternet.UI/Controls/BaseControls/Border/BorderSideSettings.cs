@@ -111,25 +111,23 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Brush"/> which can be used to draw the border.
         /// </summary>
-        public Brush Brush
+        public Brush GetBrush(Color defaultColor)
         {
-            get
-            {
-                brush ??= color.AsBrush;
-                return brush;
-            }
+            var c = color ?? defaultColor;
+
+            brush ??= c.AsBrush;
+            return brush;
         }
 
         /// <summary>
         /// Gets <see cref="Pen"/> which can be used to draw the border.
         /// </summary>
-        public Pen Pen
+        public Pen GetPen(Color defaultColor)
         {
-            get
-            {
-                pen ??= color.GetAsPen(Math.Max(1, width));
-                return pen;
-            }
+            var c = color ?? defaultColor;
+
+            pen ??= c.GetAsPen(Math.Max(1, width));
+            return pen;
         }
 
         /// <summary>

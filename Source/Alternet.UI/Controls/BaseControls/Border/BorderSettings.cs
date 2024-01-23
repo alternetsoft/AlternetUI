@@ -307,25 +307,38 @@ namespace Alternet.UI
                 return;
             var dc = args.DrawingContext;
             var rect = args.Bounds;
+            var defaultColor = GetDefaultBorderColor(null);
+
             if (border.Top.Width > 0)
             {
-                DrawHorizontal(dc, border.Top.Brush, border.GetTopRectangle(rect));
+                DrawHorizontal(dc, border.Top.GetBrush(defaultColor), border.GetTopRectangle(rect));
             }
 
             if (border.Bottom.Width > 0)
             {
-                DrawHorizontal(dc, border.Bottom.Brush, border.GetBottomRectangle(rect));
+                DrawHorizontal(dc, border.Bottom.GetBrush(defaultColor), border.GetBottomRectangle(rect));
             }
 
             if (border.Left.Width > 0)
             {
-                DrawVertical(dc, border.Left.Brush, border.GetLeftRectangle(rect));
+                DrawVertical(dc, border.Left.GetBrush(defaultColor), border.GetLeftRectangle(rect));
             }
 
             if (border.Right.Width > 0)
             {
-                DrawVertical(dc, border.Right.Brush, border.GetRightRectangle(rect));
+                DrawVertical(dc, border.Right.GetBrush(defaultColor), border.GetRightRectangle(rect));
             }
+        }
+
+        /// <summary>
+        /// Gets default border color if no colors are specified for the border.
+        /// </summary>
+        /// <param name="control">Control which background color is checked to get whether
+        /// it is dark.</param>
+        /// <returns></returns>
+        public static Color GetDefaultBorderColor(Control? control)
+        {
+            return SystemColors.GrayText;
         }
 
         /// <summary>
@@ -398,9 +411,10 @@ namespace Alternet.UI
         /// <summary>
         /// Draws border in the specified rectangle of the drawing context.
         /// </summary>
+        /// <param name="control">Control in which drawing is performed.</param>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public virtual void Draw(Graphics dc, RectD rect)
+        public virtual void Draw(Control control, Graphics dc, RectD rect)
         {
             Paint?.Invoke(this, new PaintEventArgs(dc, rect));
 
@@ -408,31 +422,32 @@ namespace Alternet.UI
                 return;
 
             var radius = GetUniformCornerRadius(rect);
+            var defaultColor = GetDefaultBorderColor(control);
 
             if (radius != null)
             {
-                dc.DrawRoundedRectangle(Top.Pen, rect.InflatedBy(-1, -1), radius.Value);
+                dc.DrawRoundedRectangle(Top.GetPen(defaultColor), rect.InflatedBy(-1, -1), radius.Value);
                 return;
             }
 
             if (Top.Width > 0)
             {
-                dc.FillRectangle(Top.Brush, GetTopRectangle(rect));
+                dc.FillRectangle(Top.GetBrush(defaultColor), GetTopRectangle(rect));
             }
 
             if (Bottom.Width > 0)
             {
-                dc.FillRectangle(Bottom.Brush, GetBottomRectangle(rect));
+                dc.FillRectangle(Bottom.GetBrush(defaultColor), GetBottomRectangle(rect));
             }
 
             if (Left.Width > 0)
             {
-                dc.FillRectangle(Left.Brush, GetLeftRectangle(rect));
+                dc.FillRectangle(Left.GetBrush(defaultColor), GetLeftRectangle(rect));
             }
 
             if (Right.Width > 0)
             {
-                dc.FillRectangle(Right.Brush, GetRightRectangle(rect));
+                dc.FillRectangle(Right.GetBrush(defaultColor), GetRightRectangle(rect));
             }
         }
 
