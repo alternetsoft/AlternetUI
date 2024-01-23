@@ -28,6 +28,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="ModalResult"/> of the ESC key.
+        /// </summary>
+        /// <remarks>
+        /// Set this property to <see cref="ModalResult.Canceled"/> if you want to
+        /// close modal dialog when ESC key is pressed.
+        /// </remarks>
+        public virtual ModalResult EscModalResult { get; set; } = ModalResult.None;
+
+        /// <summary>
+        /// Gets or sets <see cref="ModalResult"/> of the ENTER key.
+        /// </summary>
+        /// <remarks>
+        /// Set this property to <see cref="ModalResult.Accepted"/> if you want to
+        /// close modal dialog when ENTER key is pressed.
+        /// </remarks>
+        public virtual ModalResult EnterModalResult { get; set; } = ModalResult.None;
+
+        /// <summary>
         /// Gets or sets the modal result value, which is the value that is returned from the
         /// <see cref="ShowModal()"/> method.
         /// This property is set to <see cref="ModalResult.None"/> at the moment
@@ -88,5 +106,25 @@ namespace Alternet.UI
         }
 
         internal override WindowKind GetWindowKind() => WindowKind.Dialog;
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (!Modal || e.Handled || e.ModifierKeys != UI.ModifierKeys.None)
+                return;
+
+            if(EscModalResult != ModalResult.None && e.Key == Key.Escape)
+            {
+                ModalResult = EscModalResult;
+                e.Handled = true;
+            }
+            else if (EnterModalResult != ModalResult.None && e.Key == Key.Enter)
+            {
+                ModalResult = EnterModalResult;
+                e.Handled = true;
+            }
+        }
     }
 }
