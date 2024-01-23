@@ -346,6 +346,16 @@ namespace Alternet.UI
             /// to determine whether <see cref="Parent"/> is changed for the first time.
             /// </remarks>
             ParentAssigned = 1,
+
+            /// <summary>
+            /// Indicates that start location was applied to the window.
+            /// </summary>
+            /// <remarks>
+            /// Start location is applied only once.
+            /// This flag is set after start location was applied.
+            /// This flag is used in <see cref="Window"/>.
+            /// </remarks>
+            StartLocationApplied = 2,
         }
 
         /// <summary>
@@ -619,7 +629,11 @@ namespace Alternet.UI
         /// Gets control flags.
         /// </summary>
         [Browsable(false)]
-        public ControlFlags StateFlags => stateFlags;
+        public ControlFlags StateFlags
+        {
+            get => stateFlags;
+            internal set => stateFlags = value;
+        }
 
         /// <summary>
         /// Executes assigned action immediately.

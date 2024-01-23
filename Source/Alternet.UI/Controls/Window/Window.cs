@@ -711,6 +711,31 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool Visible
+        {
+            get
+            {
+                return base.Visible;
+            }
+
+            set
+            {
+                if (Visible == value)
+                    return;
+                if (value)
+                {
+                    if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
+                    {
+                        StateFlags |= ControlFlags.StartLocationApplied;
+                        ApplyStartLocation(Owner);
+                    }
+                }
+
+                base.Visible = value;
+            }
+        }
+
         /// <summary>
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
@@ -1052,25 +1077,37 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ApplyStartLocation(Control? owner)
         {
-            RectD parentRect;
+            RectD displayRect = GetDisplay().ClientAreaDip;
+            RectD parentRect = RectD.Empty;
+            bool center = true;
 
             if (StartLocation == WindowStartLocation.CenterScreen)
             {
-                parentRect = GetDisplay().ClientAreaDip;
+                parentRect = displayRect;
             }
             else
             if (StartLocation == WindowStartLocation.CenterOwner)
             {
                 if (owner is null)
-                    parentRect = GetDisplay().ClientAreaDip;
+                    parentRect = displayRect;
                 else
                     parentRect = new(owner.ClientToScreen((0, 0)), owner.ClientSize);
             }
             else
-                return;
+                center = false;
 
             var bounds = Bounds;
-            Bounds = bounds.CenterIn(parentRect);
+
+            var newWidth = Math.Min(bounds.Width, displayRect.Width);
+            var newHeight = Math.Min(bounds.Height, displayRect.Height);
+
+            bounds.Width = newWidth;
+            bounds.Height = newHeight;
+
+            if (center)
+                bounds = bounds.CenterIn(parentRect);
+
+            Bounds = bounds;
         }
 
         /// <summary>
