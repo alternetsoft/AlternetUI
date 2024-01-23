@@ -141,6 +141,9 @@ namespace Alternet.UI.Localization
         public string WindowTitleExceptionDetails { get; set; } = "Exception Details";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSearchAndReplace { get; set; } = "Search and Replace";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleListEdit { get; set; } = "List Editor";
 
         /// <inheritdoc cref="ButtonOk"/>
