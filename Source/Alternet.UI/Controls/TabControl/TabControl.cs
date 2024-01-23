@@ -20,6 +20,7 @@ namespace Alternet.UI
         {
             if (Application.IsWindowsOS)
                 UserPaint = true;
+            Children.ItemInserted += Children_ItemInserted;
         }
 
         /// <summary>
@@ -27,6 +28,12 @@ namespace Alternet.UI
         /// </summary>
         [Category("Behavior")]
         public event EventHandler? SelectedPageChanged;
+
+        /// <summary>
+        /// Occurs when new page was added.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? PageAdded;
 
         // public event EventHandler<SelectedTabPageChangingEventArgs>? SelectedPageChanging;
 
@@ -168,6 +175,11 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateTabControlHandler(this);
+        }
+
+        private void Children_ItemInserted(object? sender, int index, Control item)
+        {
+            PageAdded?.Invoke(this, EventArgs.Empty);
         }
     }
 }

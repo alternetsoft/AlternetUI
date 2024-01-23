@@ -251,7 +251,8 @@ namespace Alternet.UI
         /// <param name="y">New vertical margin.</param>
         public void SetImageMargins(double x, double y)
         {
-            Handler.SetImageMargins(x, y);
+            if(Application.IsWindowsOS)
+                Handler.SetImageMargins(x, y);
         }
 
         /// <inheritdoc/>

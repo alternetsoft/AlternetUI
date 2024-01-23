@@ -9,6 +9,13 @@ namespace Alternet.UI.Documentation.Examples.ListView
         {
             InitializeComponent();
 
+            listView.Columns.Add(new("Name"));
+            listView.Columns.Add(new("Info"));
+
+            var imageLists = ResourceLoader.LoadImageLists();
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
+
             void AddItems(int count)
             {
                 int start = listView.Items.Count + 1;
@@ -17,7 +24,11 @@ namespace Alternet.UI.Documentation.Examples.ListView
                 try
                 {
                     for (int i = start; i < start + count; i++)
-                        listView.Items.Add(new ListViewItem(new[] { "Item " + i, "Some Info " + i }, i % 4));
+                    {
+                        var columns = new[] { "Item " + i, "Some Info " + i };
+                        var item = new ListViewItem(columns, i % 4);
+                        listView.Items.Add(item);
+                    }
                 }
                 finally
                 {
@@ -25,9 +36,6 @@ namespace Alternet.UI.Documentation.Examples.ListView
                 }
             }
 
-            var imageLists = ResourceLoader.LoadImageLists();
-            listView.SmallImageList = imageLists.Small;
-            listView.LargeImageList = imageLists.Large;
             AddItems(4);
             listView.SelectedIndex = 1;
         }
@@ -46,9 +54,8 @@ namespace Alternet.UI.Documentation.Examples.ListView
         #region ListViewEventHandler
         private void ListView_SelectionChanged(object? sender, EventArgs e)
         {
-            MessageBox.Show("ListView: SelectionChanged. SelectedIndex: " + listView.SelectedIndex.ToString(), string.Empty);
+            Application.Log($"ListView: SelectionChanged. SelectedIndex: {listView.SelectedIndex}");
         }
-
         #endregion    
     }
 }

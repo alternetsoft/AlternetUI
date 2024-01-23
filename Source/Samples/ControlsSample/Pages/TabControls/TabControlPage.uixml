@@ -5,6 +5,8 @@
   <StackPanel Orientation="Vertical" Padding="10">
     <Control >
       <TabControl Margin="5" Padding="5" Name="tabControl"
+                  PageAdded = "TabControl_PageAdded"
+                  SizeChanged = "TabControl_SizeChanged"
                   SelectedPageChanged="TabControl_SelectedPageChanged">
         <TabControl.Pages>
           <TabPage Title="Page 1" Padding="5" >

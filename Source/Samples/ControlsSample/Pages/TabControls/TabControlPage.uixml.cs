@@ -18,6 +18,20 @@ namespace ControlsSample
             tabAlignmentComboBox.SelectedIndex = 0;
         }
 
+        private void TabControl_PageAdded(object? sender, EventArgs e)
+        {
+            Application.Log("TabControl:PageAdded");
+        }
+
+        private void TabControl_SizeChanged(object? sender, EventArgs e)
+        {
+            Application.Log("TabControl:SizeChanged");
+        }
+
+        private void Children_ItemInserted(object? sender, int index, Control item)
+        {
+        }
+
         private int GenItemIndex()
         {
             newItemIndex++;

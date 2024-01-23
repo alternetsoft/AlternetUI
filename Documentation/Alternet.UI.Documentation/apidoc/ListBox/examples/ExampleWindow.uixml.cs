@@ -28,7 +28,7 @@ namespace Alternet.UI.Documentation.Examples.ListBox
         #region ListBoxEventHandler
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            MessageBox.Show("ListBox: SelectionChanged. SelectedIndex: " + listBox.SelectedIndex.ToString(), string.Empty);
+            Application.Log("ListBox: SelectionChanged. SelectedIndex: " + listBox.SelectedIndex.ToString());
         }
 
         #endregion    

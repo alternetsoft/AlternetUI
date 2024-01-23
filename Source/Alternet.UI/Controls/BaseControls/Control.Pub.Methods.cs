@@ -136,6 +136,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sends size event.
+        /// </summary>
+        public void SendSizeEvent()
+        {
+            NativeControl.SendSizeEvent();
+        }
+
+        /// <summary>
         /// Gets known svg color depending on the value of
         /// <see cref="IsDarkBackground"/> property.
         /// </summary>

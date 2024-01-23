@@ -11,8 +11,8 @@ namespace CustomControlsSample
         private readonly Data data = new();
         private readonly CustomColorPicker colorPicker;
         private readonly TicTacToeControl ticTacToe;
-        private readonly KnobControl knobControl;
-        private readonly GaugeControl gaugeControl;
+        private readonly FancySlider knobControl;
+        private readonly FancyProgressBar gaugeControl;
         private readonly ListBox logListBox;
 
         public MainWindow()
@@ -67,11 +67,11 @@ namespace CustomControlsSample
 
             BindingOperations.SetBinding(
                 gaugeControl, 
-                GaugeControl.ValueProperty, 
+                FancyProgressBar.ValueProperty, 
                 myBinding);
             BindingOperations.SetBinding(
                 knobControl,
-                KnobControl.ValueProperty,
+                FancySlider.ValueProperty,
                 myBinding);
             data.PropertyChanged += Data_PropertyChanged;
 

@@ -17,20 +17,26 @@ namespace ControlsSample
             return imageLists;
         }
 
-        private static ControlStateImages? buttonImages;
-
-        public static ControlStateImages ButtonImages => buttonImages ??= LoadButtonImages();
-
-        private static ControlStateImages LoadButtonImages()
+        internal static ControlStateImages LoadButtonImages(Control? control)
         {
-            static Image LoadImage(string stateName, bool disabled = false)
+            Image LoadImage(string stateName, bool disabled = false)
             {
                 Color? color = disabled ? SystemColors.GrayText : null;
 
+                if(control is not null)
+                {
+                    bool isDark = control.RealBackgroundColor.IsDark();
+
+                    if (disabled)
+                        color = SvgColors.GetSvgColor(KnownSvgColor.Disabled, isDark);
+                    else
+                        color = SvgColors.GetSvgColor(KnownSvgColor.Normal, isDark);
+                }
+
                 return Image.FromSvgUrl(
                     $"embres:ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.svg",
-                    24,
-                    24,
+                    16,
+                    16,
                     color);
             }
 

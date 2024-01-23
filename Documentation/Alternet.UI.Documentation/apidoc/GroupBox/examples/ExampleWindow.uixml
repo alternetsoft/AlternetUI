@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.GroupBox.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.GroupBox">
+        Title="Examples.GroupBox">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
     <GroupBox Name="groupBox" Margin="16" Title="Button Group">

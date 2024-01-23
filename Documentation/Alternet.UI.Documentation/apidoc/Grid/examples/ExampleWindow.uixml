@@ -1,9 +1,9 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.Grid.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.Grid">
+        Title="Examples.Grid">
     <!-- <CreateUixmlDeclaration> -->
-  <Grid Name="grid" Margin="16,16,16,246" Width="250">
+  <Grid Name="grid" Margin="16,16,16,246">
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
       <ColumnDefinition />

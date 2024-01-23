@@ -31,7 +31,10 @@ namespace Alternet.UI.Documentation.Examples.WebBrowser
 
         private void FindButton_Click(object sender, EventArgs e)
         {
-            int findResult = WebBrowser1.Find(FindTextBox.Text);
+            var prm = new WebBrowserFindParams();
+            prm.HighlightResult = true;
+
+            int findResult = WebBrowser1.Find(FindTextBox.Text, prm);
         }
 
         private void UrlTextBox_KeyDown(object sender, KeyEventArgs e)
