@@ -9,49 +9,49 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Examples", "02. Example
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Documentation", "01. Documentation", "{33CD307E-3DA9-460D-97EA-38798EA71408}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Button", "apidoc\Button\examples\Alternet.UI.Documentation.Examples.Button.csproj", "{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Button", "apidoc\Button\examples\Examples.Button.csproj", "{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.ComboBox", "apidoc\ComboBox\examples\Alternet.UI.Documentation.Examples.ComboBox.csproj", "{D726A170-F0C2-4CA7-A932-F26B6C07B9D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.ComboBox", "apidoc\ComboBox\examples\Examples.ComboBox.csproj", "{D726A170-F0C2-4CA7-A932-F26B6C07B9D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingContextTutorial", "tutorials\drawing-context\examples\DrawingContextTutorial\DrawingContextTutorial.csproj", "{A660A0A3-5946-4EEC-AB6C-3BFBE9B0A4B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.CheckBox", "apidoc\CheckBox\examples\Alternet.UI.Documentation.Examples.CheckBox.csproj", "{15FA9347-F19C-4C3B-8A8A-E527A7A09111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.CheckBox", "apidoc\CheckBox\examples\Examples.CheckBox.csproj", "{15FA9347-F19C-4C3B-8A8A-E527A7A09111}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.GroupBox", "apidoc\GroupBox\examples\Alternet.UI.Documentation.Examples.GroupBox.csproj", "{475FA9D8-8464-4671-973E-B192B1685099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.GroupBox", "apidoc\GroupBox\examples\Examples.GroupBox.csproj", "{475FA9D8-8464-4671-973E-B192B1685099}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.ListBox", "apidoc\ListBox\examples\Alternet.UI.Documentation.Examples.ListBox.csproj", "{A4A1B6CE-3496-4197-A0DA-C6123096E503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.ListBox", "apidoc\ListBox\examples\Examples.ListBox.csproj", "{A4A1B6CE-3496-4197-A0DA-C6123096E503}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.ListView", "apidoc\ListView\examples\Alternet.UI.Documentation.Examples.ListView.csproj", "{4255702D-57D9-4802-9B76-9B407FE41372}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.ListView", "apidoc\ListView\examples\Examples.ListView.csproj", "{4255702D-57D9-4802-9B76-9B407FE41372}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Label", "apidoc\Label\examples\Alternet.UI.Documentation.Examples.Label.csproj", "{6B292992-C7BE-4F84-A5B4-8A74794BA14D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Label", "apidoc\Label\examples\Examples.Label.csproj", "{6B292992-C7BE-4F84-A5B4-8A74794BA14D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.NumericUpDown", "apidoc\NumericUpDown\examples\Alternet.UI.Documentation.Examples.NumericUpDown.csproj", "{51689624-CC3E-4CAA-83CB-AE87399A8F5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.NumericUpDown", "apidoc\NumericUpDown\examples\Examples.NumericUpDown.csproj", "{51689624-CC3E-4CAA-83CB-AE87399A8F5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.ProgressBar", "apidoc\ProgressBar\examples\Alternet.UI.Documentation.Examples.ProgressBar.csproj", "{08140FF6-116B-482A-BCB3-EAD6C02573EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.ProgressBar", "apidoc\ProgressBar\examples\Examples.ProgressBar.csproj", "{08140FF6-116B-482A-BCB3-EAD6C02573EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.RadioButton", "apidoc\RadioButton\examples\Alternet.UI.Documentation.Examples.RadioButton.csproj", "{9A25F02A-F89D-48D6-AD0B-C4C094A7CC1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.RadioButton", "apidoc\RadioButton\examples\Examples.RadioButton.csproj", "{9A25F02A-F89D-48D6-AD0B-C4C094A7CC1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Slider", "apidoc\Slider\examples\Alternet.UI.Documentation.Examples.Slider.csproj", "{7D79ACB5-DD6F-4472-91FC-5754853FF113}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Slider", "apidoc\Slider\examples\Examples.Slider.csproj", "{7D79ACB5-DD6F-4472-91FC-5754853FF113}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.TabControl", "apidoc\TabControl\examples\Alternet.UI.Documentation.Examples.TabControl.csproj", "{EFE1544C-ECB1-4707-AEF8-C20887165394}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.TabControl", "apidoc\TabControl\examples\Examples.TabControl.csproj", "{EFE1544C-ECB1-4707-AEF8-C20887165394}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.TextBox", "apidoc\TextBox\examples\Alternet.UI.Documentation.Examples.TextBox.csproj", "{B1F6675F-BE60-4C26-9B57-38721DB93B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.TextBox", "apidoc\TextBox\examples\Examples.TextBox.csproj", "{B1F6675F-BE60-4C26-9B57-38721DB93B2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.TreeView", "apidoc\TreeView\examples\Alternet.UI.Documentation.Examples.TreeView.csproj", "{24DBAA35-C8C8-4374-AFDC-02828EF3738C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.TreeView", "apidoc\TreeView\examples\Examples.TreeView.csproj", "{24DBAA35-C8C8-4374-AFDC-02828EF3738C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Grid", "apidoc\Grid\examples\Alternet.UI.Documentation.Examples.Grid.csproj", "{E4A76A90-F39E-4C24-8269-DB00C461D766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Grid", "apidoc\Grid\examples\Examples.Grid.csproj", "{E4A76A90-F39E-4C24-8269-DB00C461D766}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Border", "apidoc\Border\examples\Alternet.UI.Documentation.Examples.Border.csproj", "{77F8A717-E427-4C7A-B0FF-B6FBEC18251C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Border", "apidoc\Border\examples\Examples.Border.csproj", "{77F8A717-E427-4C7A-B0FF-B6FBEC18251C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.StackPanel", "apidoc\StackPanel\examples\Alternet.UI.Documentation.Examples.StackPanel.csproj", "{F5385F33-2D1B-4156-97C9-E18E20C8A862}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.StackPanel", "apidoc\StackPanel\examples\Examples.StackPanel.csproj", "{F5385F33-2D1B-4156-97C9-E18E20C8A862}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Window", "apidoc\Window\examples\Alternet.UI.Documentation.Examples.Window.csproj", "{69D33647-2171-4D97-8B3E-4EC6854B0543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Window", "apidoc\Window\examples\Examples.Window.csproj", "{69D33647-2171-4D97-8B3E-4EC6854B0543}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Application", "apidoc\Application\examples\Alternet.UI.Documentation.Examples.Application.csproj", "{58E16B63-24FC-4C79-BA2B-5F14B954DDFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Application", "apidoc\Application\examples\Examples.Application.csproj", "{58E16B63-24FC-4C79-BA2B-5F14B954DDFB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.WebBrowser", "apidoc\WebBrowser\examples\Alternet.UI.Documentation.Examples.WebBrowser.csproj", "{D297B34D-78D3-474D-81A0-95DEBBB6AD59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.WebBrowser", "apidoc\WebBrowser\examples\Examples.WebBrowser.csproj", "{D297B34D-78D3-474D-81A0-95DEBBB6AD59}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.SplitterPanel", "apidoc\SplitterPanel\examples\Alternet.UI.Documentation.Examples.SplitterPanel.csproj", "{71879301-8B18-4CBF-9B60-78BF8FEEFFBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.SplitterPanel", "apidoc\SplitterPanel\examples\Examples.SplitterPanel.csproj", "{71879301-8B18-4CBF-9B60-78BF8FEEFFBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

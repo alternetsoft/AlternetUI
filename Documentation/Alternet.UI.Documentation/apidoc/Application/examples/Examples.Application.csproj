@@ -2,8 +2,9 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.*-beta*" />
+    <PackageReference Include="Alternet.UI" Version="0.9.503-beta" />
   </ItemGroup>
 </Project>

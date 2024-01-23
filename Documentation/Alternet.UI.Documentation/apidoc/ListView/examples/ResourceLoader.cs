@@ -21,17 +21,17 @@ namespace Alternet.UI.Documentation.Examples.ListView
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new SizeF(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new SizeD(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
-            var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("Alternet.UI.Documentation.Examples.ListView.Resources.ImageListIcons."));
+            var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("Examples.ListView.Resources.ImageListIcons."));
             var smallImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
             var largeImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Large.")).ToArray();
             if (smallImageResourceNames.Length != largeImageResourceNames.Length)
                 throw new Exception();
 
-            Image LoadImage(string name) => new Image(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
 
             for (int i = 0; i < smallImageResourceNames.Length; i++)
             {

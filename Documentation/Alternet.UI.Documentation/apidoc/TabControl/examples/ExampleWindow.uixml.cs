@@ -8,17 +8,20 @@ namespace Alternet.UI.Documentation.Examples.TabControl
         public MainWindow()
         {
             InitializeComponent();
+            TabControlExample1();
         }
 
         public void TabControlExample1()
         {
             #region TabControlCSharpCreation
             var tc = new Alternet.UI.TabControl();
-            tc.Pages.Add(new TabPage { Title = "Grid"});
-            tc.Pages.Add(new TabPage { Title = "Tree View" });
-            tc.Pages.Add(new TabPage { Title = "List View" });
-            tc.Pages.Add(new TabPage { Title = "List Box" });
-            tc.Pages.Add(new TabPage { Title = "Combo Box" });
+            tc.SuggestedSize = (250, 300);
+            tc.Pages.Add(new TabPage { Title = "Page 1"});
+            tc.Pages.Add(new TabPage { Title = "Page 2" });
+            tc.Pages.Add(new TabPage { Title = "Page 3" });
+            tc.Pages.Add(new TabPage { Title = "Page 4" });
+            tc.Pages.Add(new TabPage { Title = "Page 5" });
+            tc.Parent = mainPanel;
             #endregion
         }
     }

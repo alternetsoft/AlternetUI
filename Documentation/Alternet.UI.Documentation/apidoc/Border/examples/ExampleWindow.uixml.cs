@@ -8,7 +8,7 @@ namespace Alternet.UI.Documentation.Examples.Border
         public MainWindow()
         {
             InitializeComponent();
-            border.BorderBrush = Alternet.Drawing.Brushes.DarkGray;
+            border.BorderColor = Alternet.Drawing.Color.DarkGray;
             border.Background = Alternet.Drawing.Brushes.Khaki;
         }
 
@@ -16,7 +16,7 @@ namespace Alternet.UI.Documentation.Examples.Border
         {
             #region BorderCSharpCreation
             var Border = new Alternet.UI.Border();
-            Border.BorderBrush = Alternet.Drawing.Brushes.DarkGray;
+            Border.BorderColor = Alternet.Drawing.Color.DarkGray;
             Border.Background = Alternet.Drawing.Brushes.Khaki;
             #endregion
         }

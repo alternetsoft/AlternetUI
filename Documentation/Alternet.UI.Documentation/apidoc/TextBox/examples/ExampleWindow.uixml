@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.TextBox.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.TextBox">
+        Title="Examples.TextBox">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
     <TextBox Name="textBox" Text="Text 1.1" Margin="8" TextChanged="TextBox_TextChanged" />

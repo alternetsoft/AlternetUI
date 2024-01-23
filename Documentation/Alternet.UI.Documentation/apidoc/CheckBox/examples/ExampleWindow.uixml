@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.CheckBox.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.CheckBox">
+        Title="Examples.CheckBox">
   <StackPanel Orientation="Vertical">
     <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" />
     <!-- <CreateUixmlDeclaration> -->

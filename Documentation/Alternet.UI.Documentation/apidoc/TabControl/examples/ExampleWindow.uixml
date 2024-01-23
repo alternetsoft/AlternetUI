@@ -1,15 +1,15 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.TabControl.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.TabControl">
-  <StackPanel Orientation="Vertical">
+        Title="Examples.TabControl">
+  <StackPanel Orientation="Vertical" Name="mainPanel">
     <!-- <CreateUixmlDeclaration> -->
-    <TabControl Height="90" Name="tabControl" Margin="8">
-      <TabPage Title="Grid" Margin="8"/>
-      <TabPage Title="Tree View"/>
-      <TabPage Title="List View"/>
-      <TabPage Title="List Box"/>
-      <TabPage Title="Combo Box"/>
+    <TabControl SuggestedHeight="150" Name="tabControl" Margin="8">
+      <TabPage Title="Page 1"></TabPage>
+      <TabPage Title="Page 2"></TabPage>
+      <TabPage Title="Page 3"></TabPage>
+      <TabPage Title="Page 4"></TabPage>
+      <TabPage Title="Page 5"></TabPage>
     </TabControl>
     <!-- </CreateUixmlDeclaration> -->
 

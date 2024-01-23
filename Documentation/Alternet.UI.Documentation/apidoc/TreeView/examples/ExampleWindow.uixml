@@ -1,15 +1,10 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.TreeView.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.TreeView">
-  <StackPanel Orientation="Vertical">
+        Title="TreeView">
     <!-- <CreateUixmlDeclaration> -->
-    <GroupBox Title="Tree View">
-      <StackPanel Orientation="Horizontal" Margin="5">
-        <TreeView Width="300" Height="240" Name="treeView" SelectionChanged="TreeView_SelectionChanged" ExpandedChanged="TreeView_ExpandedChanged" />
-      </StackPanel>
-    </GroupBox>
+        <TreeView Width="300" Height="240" Name="treeView"
+                  SelectionChanged="TreeView_SelectionChanged"
+                  ExpandedChanged="TreeView_ExpandedChanged" />
     <!-- </CreateUixmlDeclaration> -->
-
-  </StackPanel>
 </Window>

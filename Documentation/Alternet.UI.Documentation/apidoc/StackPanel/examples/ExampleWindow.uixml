@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.StackPanel.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.StackPanel">
+        Title="Examples.StackPanel">
     <!-- <CreateUixmlDeclaration> -->
     <StackPanel Name="stackPanel" Margin="16,16,16,254" Orientation="Vertical">
       <Button Text="Add Item" Name="addItemButton" Margin="8"/>

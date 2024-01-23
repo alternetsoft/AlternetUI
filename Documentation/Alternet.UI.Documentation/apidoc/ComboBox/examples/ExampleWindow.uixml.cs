@@ -30,16 +30,13 @@ namespace Alternet.UI.Documentation.Examples.ComboBox
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
             var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
-            MessageBox.Show(text, string.Empty);
+            Application.Log(text);
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            int selectedIndex = comboBox.SelectedIndex.Value;
-            object selectedItem = comboBox.SelectedItem;
-
-            MessageBox.Show("Selected Item Text: " + selectedItem.ToString() + "\n" +
-                            "Index: " + selectedIndex.ToString(), string.Empty);
+            Application.Log($"Selected Item Text: {comboBox.SelectedItem}" + "\n" +
+                            $"Index: {comboBox.SelectedIndex}");
         }
         #endregion    
     }
