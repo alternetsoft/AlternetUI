@@ -297,13 +297,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual bool NeedsPaint => false;
 
-        /*/// <summary>
-        /// This property may be overridden by control handlers to indicate that
-        /// the native control creation is required
-        /// even if the control is a visual child. Default value is <c>false</c>.
-        /// </summary>
-        protected bool VisualChildNeedsNativeControl => false;*/
-
         private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
             Control.Parent is not TabControl; // todo
 
@@ -1143,21 +1136,6 @@ namespace Alternet.UI
             DisposeNativeControlCore(nativeControl);
         }
 
-        /*private void Control_BorderBrushChanged(object? sender, EventArgs? e)
-        {
-            ApplyBorderColor();
-        }
-
-        private void Control_BackgroundChanged(object? sender, EventArgs? e)
-        {
-            ApplyBackgroundColor();
-        }
-
-        private void Control_ForegroundChanged(object? sender, EventArgs? e)
-        {
-            ApplyForegroundColor();
-        }*/
-
         private void Control_VisibleChanged(object? sender, EventArgs e)
         {
             ApplyVisible();
@@ -1170,20 +1148,6 @@ namespace Alternet.UI
             ApplyEnabled();
         }
 
-        /*private Color GetBrushColor(Brush? brush)
-        {
-            if (brush == null)
-                return Color.Empty;
-            return brush.BrushColor;
-        }*/
-
-        /*private void ApplyBackgroundColor()
-        {
-            if (NativeControl != null)
-                NativeControl.BackgroundColor = GetBrushColor(Control.Background);
-            Invalidate();
-        }*/
-
         private void ApplyVisible()
         {
             if (NativeControl != null)
@@ -1195,20 +1159,6 @@ namespace Alternet.UI
             if (NativeControl != null)
                 NativeControl.Enabled = Control.Enabled;
         }
-
-        /*private void ApplyForegroundColor()
-        {
-            if (NativeControl != null && Control.Foreground != null)
-                NativeControl.ForegroundColor = GetBrushColor(Control.Foreground);
-            Invalidate();
-        }*/
-
-        /*private void ApplyBorderColor()
-        {
-            // if (NativeControl != null)
-            //    NativeControl.BorderColor = GetBrushColor(Control.BorderBrush);
-            Invalidate();
-        }*/
 
         private void TryInsertNativeControl(Control childControl)
         {
