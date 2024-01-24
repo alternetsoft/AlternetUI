@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.WebBrowser", "apid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.SplitterPanel", "apidoc\SplitterPanel\examples\Examples.SplitterPanel.csproj", "{71879301-8B18-4CBF-9B60-78BF8FEEFFBC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.ComboBoxAndLabel", "apidoc\ComboBoxAndLabel\examples\Examples.ComboBoxAndLabel.csproj", "{F4A86B88-4316-4E68-B9DA-CFA92A3EE5EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{71879301-8B18-4CBF-9B60-78BF8FEEFFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71879301-8B18-4CBF-9B60-78BF8FEEFFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71879301-8B18-4CBF-9B60-78BF8FEEFFBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A86B88-4316-4E68-B9DA-CFA92A3EE5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A86B88-4316-4E68-B9DA-CFA92A3EE5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A86B88-4316-4E68-B9DA-CFA92A3EE5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A86B88-4316-4E68-B9DA-CFA92A3EE5EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +165,7 @@ Global
 		{58E16B63-24FC-4C79-BA2B-5F14B954DDFB} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{D297B34D-78D3-474D-81A0-95DEBBB6AD59} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{71879301-8B18-4CBF-9B60-78BF8FEEFFBC} = {74977C1D-4C89-482A-AF1E-6024FB453117}
+		{F4A86B88-4316-4E68-B9DA-CFA92A3EE5EC} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85D8E652-2803-432F-B61C-02E2B3A618EC}
