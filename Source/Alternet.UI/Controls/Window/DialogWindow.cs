@@ -99,7 +99,7 @@ namespace Alternet.UI
 
             ModalResult = ModalResult.None;
 
-            ApplyStartLocation(owner);
+            ApplyStartLocationOnce(owner);
             NativeControl.ShowModal(owner?.WxWidget ?? default);
 
             return ModalResult;
