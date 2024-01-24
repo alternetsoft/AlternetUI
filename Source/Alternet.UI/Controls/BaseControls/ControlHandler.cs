@@ -831,6 +831,8 @@ namespace Alternet.UI
 
             if (NativeControl != null)
             {
+                NativeControl.HandleCreated -= NativeControl_HandleCreated;
+                NativeControl.HandleDestroyed -= NativeControl_HandleDestroyed;
                 NativeControl.Activated -= NativeControl_Activated;
                 NativeControl.Deactivated -= NativeControl_Deactivated;
                 NativeControl.Idle -= NativeControl_Idle;
@@ -896,6 +898,8 @@ namespace Alternet.UI
                 parent.PerformLayout();
             }
 
+            NativeControl.HandleCreated += NativeControl_HandleCreated;
+            NativeControl.HandleDestroyed += NativeControl_HandleDestroyed;
             NativeControl.Activated += NativeControl_Activated;
             NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.Paint += NativeControl_Paint;
@@ -929,6 +933,16 @@ namespace Alternet.UI
         private void NativeControl_Deactivated(object? sender, EventArgs e)
         {
             Control.RaiseDeactivated();
+        }
+
+        private void NativeControl_HandleCreated(object? sender, EventArgs e)
+        {
+            Control.RaiseHandleCreated();
+        }
+
+        private void NativeControl_HandleDestroyed(object? sender, EventArgs e)
+        {
+            Control.RaiseHandleDestroyed();
         }
 
         private void NativeControl_Activated(object? sender, EventArgs e)

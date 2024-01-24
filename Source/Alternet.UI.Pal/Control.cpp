@@ -991,6 +991,7 @@ namespace Alternet::UI
 
     void Control::OnWxWindowCreated()
     {
+        RaiseEvent(ControlEvent::HandleCreated);
     }
 
     void Control::OnBeforeDestroyWxWindow()
@@ -1001,6 +1002,7 @@ namespace Alternet::UI
 
     void Control::OnWxWindowDestroyed(wxWindow* window)
     {
+        RaiseEvent(ControlEvent::HandleDestroyed);
     }
 
     DelayedValues& Control::GetDelayedValues()

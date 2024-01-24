@@ -351,6 +351,26 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_SetSizerAndFit_(Control* obj, void* sizer, c_bool deleteOld)
+{
+    obj->SetSizerAndFit(sizer, deleteOld);
+}
+
+ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
+{
+    obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
+}
+
+ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
+{
+    return obj->IsScrollBarVisible(orientation);
+}
+
+ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
+{
+    return obj->GetScrollBarValue(orientation);
+}
+
 ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
 {
     return obj->GetScrollBarLargeChange(orientation);
@@ -569,26 +589,6 @@ ALTERNET_UI_API void* Control_GetSizer_(Control* obj)
 ALTERNET_UI_API void Control_SetSizer_(Control* obj, void* sizer, c_bool deleteOld)
 {
     obj->SetSizer(sizer, deleteOld);
-}
-
-ALTERNET_UI_API void Control_SetSizerAndFit_(Control* obj, void* sizer, c_bool deleteOld)
-{
-    obj->SetSizerAndFit(sizer, deleteOld);
-}
-
-ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
-{
-    obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
-}
-
-ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
-{
-    return obj->IsScrollBarVisible(orientation);
-}
-
-ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
-{
-    return obj->GetScrollBarValue(orientation);
 }
 
 ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)

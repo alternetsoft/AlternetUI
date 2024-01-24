@@ -84,6 +84,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the conrol's handle is created.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnHandleCreated(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the conrol's handle is destroyed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnHandleDestroyed(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Sets a specified <see cref="ControlStyles" /> flag to either <see langword="true" />
         /// or <see langword="false" />.</summary>
         /// <param name="flag">The <see cref="ControlStyles" /> bit to set.</param>

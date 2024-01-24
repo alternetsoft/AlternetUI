@@ -91,6 +91,16 @@ namespace Alternet.UI
         public event EventHandler? Activated;
 
         /// <summary>
+        /// Occurs when the control's handle is created.
+        /// </summary>
+        public event EventHandler? HandleCreated;
+
+        /// <summary>
+        /// Occurs when the control's handle is destroyed.
+        /// </summary>
+        public event EventHandler? HandleDestroyed;
+
+        /// <summary>
         /// Occurs when the window loses focus and is no longer the active window.
         /// </summary>
         /// <remarks>

@@ -111,6 +111,16 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            Application.AddIdleTask(() =>
+            {
+                PerformLayout();
+            });
+        }
+
         /// <summary>
         /// Raises the <see cref="TitleChanged"/> event and calls
         /// <see cref="OnTitleChanged(EventArgs)"/>.

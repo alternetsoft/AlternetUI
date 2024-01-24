@@ -81,6 +81,18 @@ namespace Alternet.UI
             /*Application.DebugLog($"Deactivated {Name}");*/
         }
 
+        internal void RaiseHandleCreated()
+        {
+            OnHandleCreated(EventArgs.Empty);
+            HandleCreated?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void RaiseHandleDestroyed()
+        {
+            OnHandleDestroyed(EventArgs.Empty);
+            HandleDestroyed?.Invoke(this, EventArgs.Empty);
+        }
+
         internal void RaiseActivated()
         {
             Activated?.Invoke(this, EventArgs.Empty);

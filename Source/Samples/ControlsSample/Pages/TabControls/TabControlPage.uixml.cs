@@ -16,6 +16,17 @@ namespace ControlsSample
             tabAlignmentComboBox.Items.Add("Top");
             tabAlignmentComboBox.Items.Add("Bottom");
             tabAlignmentComboBox.SelectedIndex = 0;
+            foreach(var page in tabControl.Pages)
+            {
+                page.VisibleChanged += Page_VisibleChanged;
+            }
+        }
+
+        private void Page_VisibleChanged(object? sender, EventArgs e)
+        {
+            if (sender is not TabPage tabPage)
+                return;
+            Application.Log($"TabPage '{tabPage.Title}' VisibleChanged: {tabPage.Visible}");
         }
 
         private void TabControl_PageAdded(object? sender, EventArgs e)
@@ -81,6 +92,7 @@ namespace ControlsSample
             {
                 Padding = 5,
             };
+            page.VisibleChanged += Page_VisibleChanged;
 
             VerticalStackPanel panel = new()
             {

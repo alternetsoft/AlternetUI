@@ -150,6 +150,10 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+void SetSizerAndFit(void* sizer, bool deleteOld);
+void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+bool IsScrollBarVisible(ScrollBarOrientation orientation);
+int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
 int GetScrollBarEvtKind();
@@ -194,10 +198,6 @@ void SetBoundsEx(const RectD& rect, int flags);
 void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);
-void SetSizerAndFit(void* sizer, bool deleteOld);
-void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
-bool IsScrollBarVisible(ScrollBarOrientation orientation);
-int GetScrollBarValue(ScrollBarOrientation orientation);
 void CenterOnParent(int orientation);
 void RefreshRect(const RectD& rect, bool eraseBackground);
 void Raise();
@@ -242,6 +242,8 @@ enum class ControlEvent
     SizeChanged,
     Activated,
     Deactivated,
+    HandleCreated,
+    HandleDestroyed,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
