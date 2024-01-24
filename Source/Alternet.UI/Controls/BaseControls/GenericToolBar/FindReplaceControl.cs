@@ -506,6 +506,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether keys specified in <see cref="KnownKeys.FindReplaceControlKeys"/>
+        /// are automatically handled.
+        /// </summary>
+        public bool WantKeys { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets whether <see cref="ReplaceToolBar"/> is visible.
         /// </summary>
         public bool ReplaceVisible
@@ -530,6 +536,59 @@ namespace Alternet.UI
             }
         }
 
+        private bool CanFindNext =>
+            FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindNext);
+
+        private bool CanFindPrevious =>
+            FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindPrevious);
+
+        private bool CanReplace =>
+            ReplaceVisible && ReplaceToolBar.GetToolEnabledAndVisible(IdReplace);
+
+        private bool CanReplaceAll =>
+            ReplaceVisible && ReplaceToolBar.GetToolEnabledAndVisible(IdReplaceAll);
+
+        private bool CanMatchCase =>
+            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdMatchCase);
+
+        private bool CanMatchWholeWord =>
+            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdMatchWholeWord);
+
+        private bool CanUseRegularExpressions =>
+            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdUseRegularExpressions);
+
+        /// <summary>
+        /// Creates <see cref="FindReplaceControl"/> inside <see cref="DialogWindow"/>.
+        /// </summary>
+        /// <param name="replace">true if replace options are visible.</param>
+        /// <returns></returns>
+        public static (DialogWindow Dialog, FindReplaceControl Control) CreateInsideDialog(
+            bool replace)
+        {
+            var parentWindow = new DialogWindow();
+            parentWindow.Disposed += ParentWindow_Disposed;
+            parentWindow.MinimizeEnabled = false;
+            parentWindow.MaximizeEnabled = false;
+            parentWindow.EscModalResult = ModalResult.Canceled;
+            parentWindow.HasSystemMenu = false;
+            parentWindow.Title = CommonStrings.Default.WindowTitleSearchAndReplace;
+
+            FindReplaceControl findReplace = new();
+            findReplace.Manager = findReplace.CreateLogger();
+            findReplace.CloseButtonVisible = false;
+            findReplace.ReplaceVisible = replace;
+            findReplace.Parent = parentWindow;
+
+            parentWindow.SetSizeToContent(WindowSizeToContentMode.Height);
+
+            return (parentWindow, findReplace);
+
+            void ParentWindow_Disposed(object? sender, EventArgs e)
+            {
+                Application.DebugLog("FindReplace window disposed");
+            }
+        }
+
         /// <summary>
         /// Creates <see cref="IFindReplaceConnect"/> instance which logs all method calls.
         /// </summary>
@@ -538,6 +597,64 @@ namespace Alternet.UI
         {
             return new FindReplaceManagerLogger();
         }
+
+        /// <summary>
+        /// Handles keys specified in <see cref="KnownKeys.FindReplaceControlKeys"/>.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>
+        /// You can use this method in the <see cref="Control.KeyDown"/> event handlers.
+        /// <see cref="WantKeys"/> specifies whether <see cref="HandleKeys"/>
+        /// is called automatically.
+        /// </remarks>
+        public virtual bool HandleKeys(KeyEventArgs e)
+        {
+            bool Run(KeyInfo[] keys, Action? action)
+            {
+                return KeyInfo.Run(keys, e, action);
+            }
+
+            if (CanFindNext && Run(KnownKeys.FindReplaceControlKeys.FindNext, OnClickFindNext))
+                return true;
+            if (CanFindPrevious && Run(KnownKeys.FindReplaceControlKeys.FindPrevious, OnClickFindPrevious))
+                return true;
+            if (CanReplace && Run(KnownKeys.FindReplaceControlKeys.Replace, OnClickReplace))
+                return true;
+            if (CanReplaceAll && Run(KnownKeys.FindReplaceControlKeys.ReplaceAll, OnClickReplaceAll))
+                return true;
+            if (CanMatchCase && Run(KnownKeys.FindReplaceControlKeys.MatchCase, OnClickMatchCase))
+                return true;
+            if (CanMatchWholeWord && Run(KnownKeys.FindReplaceControlKeys.MatchWholeWord, OnClickMatchWholeWord))
+                return true;
+            if (CanUseRegularExpressions && Run(KnownKeys.FindReplaceControlKeys.UseRegularExpressions, OnClickUseRegularExpressions))
+                return true;
+            return false;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (WantKeys)
+                HandleKeys(e);
+        }
+
+        private void OnClickUseRegularExpressions() => OnClickUseRegularExpressions(this, EventArgs.Empty);
+
+        private void OnClickMatchWholeWord() => OnClickMatchWholeWord(this, EventArgs.Empty);
+
+        private void OnClickMatchCase() => OnClickMatchCase(this, EventArgs.Empty);
+
+        private void OnClickFindNext() => OnClickFindNext(this, EventArgs.Empty);
+
+        private void OnClickToggleReplace() => OnClickToggleReplace(this, EventArgs.Empty);
+
+        private void OnClickFindPrevious() => OnClickFindPrevious(this, EventArgs.Empty);
+
+        private void OnClickReplace() => OnClickReplace(this, EventArgs.Empty);
+
+        private void OnClickReplaceAll() => OnClickReplaceAll(this, EventArgs.Empty);
+
+        private void OnClickClose() => OnClickClose(this, EventArgs.Empty);
 
         private void OnClickUseRegularExpressions(object? sender, EventArgs e)
         {
@@ -580,7 +697,7 @@ namespace Alternet.UI
         private void OnClickReplaceAll(object? sender, EventArgs e)
         {
             ClickReplaceAll?.Invoke(this, e);
-            Manager?.Replace();
+            Manager?.ReplaceAll();
         }
 
         private void OnClickClose(object? sender, EventArgs e)

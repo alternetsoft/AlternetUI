@@ -260,7 +260,7 @@ namespace Alternet.UI
 
             if (HasBorder)
             {
-                border?.Draw(dc, rect);
+                border?.Draw(this, dc, rect);
             }
         }
 
