@@ -75,6 +75,11 @@ namespace Alternet.UI
             return Font.FromInternal(font);
         }
 
+        internal void RaiseNativeSizeChanged()
+        {
+            OnNativeSizeChanged(EventArgs.Empty);
+        }
+
         internal void RaiseDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);

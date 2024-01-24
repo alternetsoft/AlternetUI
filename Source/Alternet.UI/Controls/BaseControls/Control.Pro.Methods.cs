@@ -93,6 +93,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the native conrol size is changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnNativeSizeChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the conrol's handle is destroyed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the

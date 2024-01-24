@@ -860,6 +860,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void NativeControlSizeChanged()
         {
+            Control.RaiseNativeSizeChanged();
         }
 
         /// <summary>

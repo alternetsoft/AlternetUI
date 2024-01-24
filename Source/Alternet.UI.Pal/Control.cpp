@@ -450,6 +450,7 @@ namespace Alternet::UI
 
         if (IsRecreatingWxWindow())
             SetRecreatingWxWindow(false);
+        RaiseEvent(ControlEvent::HandleDestroyed);
     }
 
     bool Control::GetIsActive()
@@ -957,6 +958,7 @@ namespace Alternet::UI
 
         for (auto child : _children)
             child->UpdateWxWindowParent();
+        RaiseEvent(ControlEvent::HandleCreated);
     }
 
     void Control::RecreateWindow() 
@@ -991,7 +993,6 @@ namespace Alternet::UI
 
     void Control::OnWxWindowCreated()
     {
-        RaiseEvent(ControlEvent::HandleCreated);
     }
 
     void Control::OnBeforeDestroyWxWindow()
@@ -1002,7 +1003,6 @@ namespace Alternet::UI
 
     void Control::OnWxWindowDestroyed(wxWindow* window)
     {
-        RaiseEvent(ControlEvent::HandleDestroyed);
     }
 
     DelayedValues& Control::GetDelayedValues()
