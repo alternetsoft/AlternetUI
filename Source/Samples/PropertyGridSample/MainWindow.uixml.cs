@@ -93,6 +93,7 @@ namespace PropertyGridSample
         {
             Activated += MainWindow_Activated;
             Deactivated += MainWindow_Deactivated;
+            SizeChanged += MainWindow_SizeChanged;
 
             resetMenu = propGridContextMenu.Add(CommonStrings.Default.ButtonReset);
             resetMenu.Click += ResetMenu_Click;
@@ -170,6 +171,11 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
+        }
+
+        private void MainWindow_SizeChanged(object? sender, EventArgs e)
+        {
+            Application.LogIf($"Window SizeChanged {Bounds}", false);
         }
 
         private void MainWindow_Deactivated(object? sender, EventArgs e)

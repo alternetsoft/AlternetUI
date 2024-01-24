@@ -337,7 +337,7 @@ namespace Alternet.UI
         private void NativeControl_SizeChanged(object? sender, EventArgs e)
         {
             Control.RaiseSizeChanged(EventArgs.Empty);
-            Control.PerformLayout();
+            Application.AddIdleTask(() => { Control.PerformLayout(); });
         }
 
         private void NativeControl_LocationChanged(object? sender, EventArgs e)

@@ -725,11 +725,7 @@ namespace Alternet.UI
                     return;
                 if (value)
                 {
-                    if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
-                    {
-                        StateFlags |= ControlFlags.StartLocationApplied;
-                        ApplyStartLocation(Owner);
-                    }
+                    ApplyStartLocationOnce(Owner);
                 }
 
                 base.Visible = value;
@@ -922,6 +918,15 @@ namespace Alternet.UI
 
             foreach (var child in children.AsEnumerable().Reverse())
                 child.EnsureHandlerCreated();
+        }
+
+        internal void ApplyStartLocationOnce(Control? owner)
+        {
+            if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
+            {
+                StateFlags |= ControlFlags.StartLocationApplied;
+                ApplyStartLocation(owner);
+            }
         }
 
         /// <summary>
