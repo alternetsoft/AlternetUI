@@ -105,7 +105,7 @@ namespace Alternet.UI
         /// Gets last item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? LastItem
+        public virtual object? LastItem
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// Gets first item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? FirstItem
+        public virtual object? FirstItem
         {
             get
             {
@@ -145,7 +145,7 @@ namespace Alternet.UI
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? LastRootItem
+        public virtual object? LastRootItem
         {
             get => LastItem;
             set => LastItem = value;
