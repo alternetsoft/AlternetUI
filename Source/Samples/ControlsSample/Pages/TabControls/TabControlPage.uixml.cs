@@ -22,6 +22,16 @@ namespace ControlsSample
             }
         }
 
+        private void TabControl_HandleCreated(object? sender, EventArgs e)
+        {
+            Application.LogIf("TabControl_HandleCreated", true);
+        }
+
+        private void TabControl_HandleDestroyed(object? sender, EventArgs e)
+        {
+            Application.LogIf("TabControl_HandleDestroyed", true);
+        }
+
         private void Page_VisibleChanged(object? sender, EventArgs e)
         {
             if (sender is not TabPage tabPage)

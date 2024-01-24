@@ -6,6 +6,8 @@
     <Control >
       <TabControl Margin="5" Padding="5" Name="tabControl"
                   PageAdded = "TabControl_PageAdded"
+                  HandleCreated = "TabControl_HandleCreated"
+                  HandleDestroyed = "TabControl_HandleDestroyed"                 
                   SizeChanged = "TabControl_SizeChanged"
                   SelectedPageChanged="TabControl_SelectedPageChanged">
         <TabControl.Pages>
