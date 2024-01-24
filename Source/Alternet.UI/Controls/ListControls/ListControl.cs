@@ -15,6 +15,7 @@ namespace Alternet.UI
     public abstract class ListControl : Control, IReadOnlyStrings
     {
         private StringSearch? search;
+        private Collection<object>? items;
 
         /// <summary>
         /// Gets or sets string search provider.
@@ -73,8 +74,19 @@ namespace Alternet.UI
         /// With this reference, you can add items, remove items, and obtain
         /// a count of the items in the collection.</remarks>
         [Content]
-        public Collection<object> Items { get; } =
-            new Collection<object> { ThrowOnNullAdd = true };
+        public virtual Collection<object> Items
+        {
+            get
+            {
+                return items ??= new Collection<object> { ThrowOnNullAdd = true };
+            }
+
+            set
+            {
+                Items.Clear();
+                Items.AddRange(value);
+            }
+        }
 
         /// <summary>
         /// Gets the number of elements actually contained in the <see cref="Items"/>

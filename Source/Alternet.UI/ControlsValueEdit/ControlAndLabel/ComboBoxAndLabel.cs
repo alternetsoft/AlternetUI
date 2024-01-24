@@ -67,6 +67,7 @@ namespace Alternet.UI
         public Collection<object> Items
         {
             get => ComboBox.Items;
+            set => ComboBox.Items = value;
         }
 
         /// <inheritdoc/>
