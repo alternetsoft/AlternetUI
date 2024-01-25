@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements rich text editor functionality.
     /// </summary>
-    [ControlCategory("Common")] 
+    [ControlCategory("Common")]
     public partial class RichTextBox : Control, IReadOnlyStrings, IRichTextBox
     {
         private bool hasBorder = true;
