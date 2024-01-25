@@ -1,0 +1,7 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="AnimationPlayer Example">
+  <VerticalStackPanel Name="mainPanel" Padding="20">
+  </VerticalStackPanel>
+</Window>

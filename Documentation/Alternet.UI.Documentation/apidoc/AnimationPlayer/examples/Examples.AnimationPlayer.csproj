@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="HourGlass.gif" />
+    <None Remove="Plant.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HourGlass.gif" />
+    <EmbeddedResource Include="Plant.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Alternet.UI" Version="0.9.503-beta" />
+  </ItemGroup>
+</Project>
