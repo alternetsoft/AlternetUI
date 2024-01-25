@@ -16,20 +16,37 @@ namespace ControlsSample
             tabAlignmentComboBox.Items.Add("Top");
             tabAlignmentComboBox.Items.Add("Bottom");
             tabAlignmentComboBox.SelectedIndex = 0;
+            foreach(var page in tabControl.Pages)
+            {
+                page.VisibleChanged += Page_VisibleChanged;
+            }
+        }
+
+        private void TabControl_HandleCreated(object? sender, EventArgs e)
+        {
+            Application.LogIf("TabControl_HandleCreated", false);
+        }
+
+        private void TabControl_HandleDestroyed(object? sender, EventArgs e)
+        {
+            Application.LogIf("TabControl_HandleDestroyed", false);
+        }
+
+        private void Page_VisibleChanged(object? sender, EventArgs e)
+        {
+            if (sender is not TabPage tabPage)
+                return;
+            Application.LogIf($"TabPage '{tabPage.Title}' VisibleChanged: {tabPage.Visible}", false);
         }
 
         private void TabControl_PageAdded(object? sender, EventArgs e)
         {
-            Application.Log("TabControl:PageAdded");
+            Application.LogIf("TabControl:PageAdded", false);
         }
 
         private void TabControl_SizeChanged(object? sender, EventArgs e)
         {
-            Application.Log("TabControl:SizeChanged");
-        }
-
-        private void Children_ItemInserted(object? sender, int index, Control item)
-        {
+            Application.LogIf("TabControl:SizeChanged", false);
         }
 
         private int GenItemIndex()
@@ -81,6 +98,7 @@ namespace ControlsSample
             {
                 Padding = 5,
             };
+            page.VisibleChanged += Page_VisibleChanged;
 
             VerticalStackPanel panel = new()
             {

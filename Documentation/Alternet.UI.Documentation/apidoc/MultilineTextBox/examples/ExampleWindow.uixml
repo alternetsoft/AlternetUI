@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="MultilineTextBox Example">
+  <LayoutPanel Name="mainPanel" Padding="10">
+    <!-- <CreateUixmlDeclaration> -->
+    <MultilineTextBox Name="textBox1" Dock="Fill" HasBorder="false" TextChanged="TextBox_TextChanged"/>
+    <!-- </CreateUixmlDeclaration> -->
+    <Splitter Dock="Bottom"/>
+  </LayoutPanel>
+</Window>

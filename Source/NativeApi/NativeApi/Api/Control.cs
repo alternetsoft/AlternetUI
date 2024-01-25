@@ -67,6 +67,8 @@ namespace NativeApi.Api
         public event EventHandler? SizeChanged;
         public event EventHandler Activated;
         public event EventHandler Deactivated;
+        public event EventHandler HandleCreated;
+        public event EventHandler HandleDestroyed;
 
         public bool IsActive { get; }
         public bool IsHandleCreated { get; }

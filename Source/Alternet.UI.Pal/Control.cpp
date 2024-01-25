@@ -450,6 +450,7 @@ namespace Alternet::UI
 
         if (IsRecreatingWxWindow())
             SetRecreatingWxWindow(false);
+        RaiseEvent(ControlEvent::HandleDestroyed);
     }
 
     bool Control::GetIsActive()
@@ -957,6 +958,7 @@ namespace Alternet::UI
 
         for (auto child : _children)
             child->UpdateWxWindowParent();
+        RaiseEvent(ControlEvent::HandleCreated);
     }
 
     void Control::RecreateWindow() 

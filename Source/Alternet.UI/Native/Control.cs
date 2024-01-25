@@ -575,6 +575,30 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SetSizerAndFit(System.IntPtr sizer, bool deleteOld)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetSizerAndFit_(NativePointer, sizer, deleteOld);
+        }
+        
+        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
+        }
+        
+        public bool IsScrollBarVisible(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            return NativeApi.Control_IsScrollBarVisible_(NativePointer, orientation);
+        }
+        
+        public int GetScrollBarValue(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
+        }
+        
         public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
         {
             CheckDisposed();
@@ -848,30 +872,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_SetSizer_(NativePointer, sizer, deleteOld);
         }
         
-        public void SetSizerAndFit(System.IntPtr sizer, bool deleteOld)
-        {
-            CheckDisposed();
-            NativeApi.Control_SetSizerAndFit_(NativePointer, sizer, deleteOld);
-        }
-        
-        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
-        {
-            CheckDisposed();
-            NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
-        }
-        
-        public bool IsScrollBarVisible(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            return NativeApi.Control_IsScrollBarVisible_(NativePointer, orientation);
-        }
-        
-        public int GetScrollBarValue(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            return NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
-        }
-        
         public void CenterOnParent(int orientation)
         {
             CheckDisposed();
@@ -1104,6 +1104,14 @@ namespace Alternet.UI.Native
                 {
                     Deactivated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.HandleCreated:
+                {
+                    HandleCreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.HandleDestroyed:
+                {
+                    HandleDestroyed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -1127,6 +1135,8 @@ namespace Alternet.UI.Native
         public event EventHandler? SizeChanged;
         public event EventHandler? Activated;
         public event EventHandler? Deactivated;
+        public event EventHandler? HandleCreated;
+        public event EventHandler? HandleDestroyed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -1157,6 +1167,8 @@ namespace Alternet.UI.Native
                 SizeChanged,
                 Activated,
                 Deactivated,
+                HandleCreated,
+                HandleDestroyed,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1367,6 +1379,18 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetSizerAndFit_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_IsScrollBarVisible_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarValue_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1497,18 +1521,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetSizer_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetSizerAndFit_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_IsScrollBarVisible_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarValue_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_CenterOnParent_(IntPtr obj, int orientation);

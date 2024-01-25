@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -39,6 +40,35 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public ComboBox ComboBox => (ComboBox)base.MainControl;
+
+        /// <inheritdoc cref="ComboBox.SelectedItem"/>
+        public object? SelectedItem
+        {
+            get => ComboBox.SelectedItem;
+            set => ComboBox.SelectedItem = value;
+        }
+
+        /// <inheritdoc cref="ComboBox.IsEditable"/>
+        public bool IsEditable
+        {
+            get => ComboBox.IsEditable;
+            set => ComboBox.IsEditable = value;
+        }
+
+        /// <inheritdoc cref="ComboBox.SelectedIndex"/>
+        public int? SelectedIndex
+        {
+            get => ComboBox.SelectedIndex;
+            set => ComboBox.SelectedIndex = value;
+        }
+
+        /// <inheritdoc cref="ListControl.Items"/>
+        [Content]
+        public Collection<object> Items
+        {
+            get => ComboBox.Items;
+            set => ComboBox.Items = value;
+        }
 
         /// <inheritdoc/>
         protected override Control CreateControl() => new ComboBox();

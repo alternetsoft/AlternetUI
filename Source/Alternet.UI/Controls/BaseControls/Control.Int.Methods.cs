@@ -75,10 +75,27 @@ namespace Alternet.UI
             return Font.FromInternal(font);
         }
 
+        internal void RaiseNativeSizeChanged()
+        {
+            OnNativeSizeChanged(EventArgs.Empty);
+        }
+
         internal void RaiseDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);
             /*Application.DebugLog($"Deactivated {Name}");*/
+        }
+
+        internal void RaiseHandleCreated()
+        {
+            OnHandleCreated(EventArgs.Empty);
+            HandleCreated?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void RaiseHandleDestroyed()
+        {
+            OnHandleDestroyed(EventArgs.Empty);
+            HandleDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
         internal void RaiseActivated()

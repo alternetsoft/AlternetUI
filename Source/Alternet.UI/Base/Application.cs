@@ -769,6 +769,17 @@ namespace Alternet.UI
             Log(msg);
         }
 
+        /// <inheritdoc cref="LogIf"/>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogIf(object? obj, bool condition)
+        {
+            if (condition)
+                Log(obj);
+        }
+
         /// <inheritdoc cref="LogReplace"/>
         /// <remarks>
         /// Works only if DEBUG conditional is defined.

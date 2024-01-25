@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="RichTextBox Example">
+  <LayoutPanel Name="mainPanel">
+    <!-- <CreateUixmlDeclaration> -->
+    <RichTextBox Name="richTextBox1" Dock="Fill" HasBorder="false"/>
+    <!-- </CreateUixmlDeclaration> -->
+    <Splitter Dock="Bottom"/>
+  </LayoutPanel>  
+</Window>

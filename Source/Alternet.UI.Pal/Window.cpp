@@ -535,10 +535,8 @@ namespace Alternet::UI
         if (GetMinimizeEnabled())
             style |= wxMINIMIZE_BOX;
 
-#ifndef __WXGTK__
         if (GetMaximizeEnabled())
             style |= wxMAXIMIZE_BOX;
-#endif
 
         if (GetCloseEnabled())
             style |= wxCLOSE_BOX;

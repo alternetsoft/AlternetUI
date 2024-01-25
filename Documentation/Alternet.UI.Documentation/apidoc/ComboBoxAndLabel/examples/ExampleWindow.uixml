@@ -1,0 +1,10 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="Example">
+  <VerticalStackPanel Name="mainPanel" Padding="10">
+    <!-- <CreateUixmlDeclaration> -->
+    <ComboBoxAndLabel Text="some value" Title="Short Label" Margin="5" Name="control1"/>
+    <!-- </CreateUixmlDeclaration> -->
+  </VerticalStackPanel>
+</Window>

@@ -15,6 +15,7 @@ namespace Alternet.UI
     public abstract class ListControl : Control, IReadOnlyStrings
     {
         private StringSearch? search;
+        private Collection<object>? items;
 
         /// <summary>
         /// Gets or sets string search provider.
@@ -73,8 +74,19 @@ namespace Alternet.UI
         /// With this reference, you can add items, remove items, and obtain
         /// a count of the items in the collection.</remarks>
         [Content]
-        public Collection<object> Items { get; } =
-            new Collection<object> { ThrowOnNullAdd = true };
+        public virtual Collection<object> Items
+        {
+            get
+            {
+                return items ??= new Collection<object> { ThrowOnNullAdd = true };
+            }
+
+            set
+            {
+                Items.Clear();
+                Items.AddRange(value);
+            }
+        }
 
         /// <summary>
         /// Gets the number of elements actually contained in the <see cref="Items"/>
@@ -93,7 +105,7 @@ namespace Alternet.UI
         /// Gets last item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? LastItem
+        public virtual object? LastItem
         {
             get
             {
@@ -113,7 +125,7 @@ namespace Alternet.UI
         /// Gets first item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? FirstItem
+        public virtual object? FirstItem
         {
             get
             {
@@ -133,7 +145,7 @@ namespace Alternet.UI
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? LastRootItem
+        public virtual object? LastRootItem
         {
             get => LastItem;
             set => LastItem = value;
