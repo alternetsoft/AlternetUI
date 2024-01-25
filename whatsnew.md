@@ -1,6 +1,18 @@
 
 # 0.9.505 (work in progress)
 
+## 2024 January 25
+
+- Border control painting improved.
+- Fixed: Use StartLocation only once.
+- Fixed #79 (PropertyGridSample resize problem).
+- Fixed TabControl resize problem on Linux.
+- Fixed Maximize Window problem on Linux. Returned window maximize button for Linux.
+- Control: HandleCreated, HandleDestroyed events.
+- ComboBoxAndLabel: SelectedItem, SelectedIndex, IsEditable, Items.
+- Added documentation samples for some of the controls.
+- ListControl, ComboBoxAndLabel: Items set method.
+
 ## 2024 January 23
 
 - Added SideBarPanel control. This control can be used in <see cref="SplittedPanel"/> side bars.
