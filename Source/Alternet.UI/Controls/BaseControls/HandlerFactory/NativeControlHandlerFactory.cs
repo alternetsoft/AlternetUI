@@ -11,7 +11,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreatePropertyGridHandler(Control control) =>
-            new NativePropertyGridHandler();
+            new PropertyGridHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateAuiNotebookHandler(Control control) =>

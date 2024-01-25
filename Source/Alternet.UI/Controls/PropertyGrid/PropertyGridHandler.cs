@@ -6,9 +6,9 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class NativePropertyGridHandler : ControlHandler<PropertyGrid>
+    internal class PropertyGridHandler : ControlHandler<PropertyGrid>
     {
-        public NativePropertyGridHandler()
+        public PropertyGridHandler()
             : base()
         {
         }
