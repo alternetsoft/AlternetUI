@@ -29,7 +29,7 @@ namespace ControlsSample
 
         private void TabControl_HandleDestroyed(object? sender, EventArgs e)
         {
-            Application.LogIf("TabControl_HandleDestroyed", true);
+            Application.LogIf("TabControl_HandleDestroyed", false);
         }
 
         private void Page_VisibleChanged(object? sender, EventArgs e)
@@ -41,16 +41,12 @@ namespace ControlsSample
 
         private void TabControl_PageAdded(object? sender, EventArgs e)
         {
-            Application.Log("TabControl:PageAdded");
+            Application.LogIf("TabControl:PageAdded", false);
         }
 
         private void TabControl_SizeChanged(object? sender, EventArgs e)
         {
-            Application.Log("TabControl:SizeChanged");
-        }
-
-        private void Children_ItemInserted(object? sender, int index, Control item)
-        {
+            Application.LogIf("TabControl:SizeChanged", false);
         }
 
         private int GenItemIndex()

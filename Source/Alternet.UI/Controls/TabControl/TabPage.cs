@@ -115,18 +115,18 @@ namespace Alternet.UI
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
-            Application.DebugLogIf($"TabPage '{Title}' OnVisibleChanged: {Visible}", true);
-            Application.AddIdleTask(() =>
-            {
-                PerformLayout();
-            });
+            /*Application.DebugLogIf($"TabPage '{Title}' OnVisibleChanged: {Visible}", true);*/
         }
 
         /// <inheritdoc/>
         protected override void OnNativeSizeChanged(EventArgs e)
         {
             base.OnNativeSizeChanged(e);
-            Application.DebugLogIf($"TabPage '{Title}' OnNativeSizeChanged: {Bounds}", true);
+            /*Application.DebugLogIf($"TabPage '{Title}' OnNativeSizeChanged: {Bounds}", true);*/
+            Application.AddIdleTask(() =>
+            {
+                PerformLayout(false);
+            });
         }
 
         /// <summary>
