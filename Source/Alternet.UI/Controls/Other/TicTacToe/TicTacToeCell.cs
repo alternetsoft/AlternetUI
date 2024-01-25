@@ -1,13 +1,11 @@
-﻿using Alternet.Drawing;
-using Alternet.UI;
-using System;
-using static CustomControlsSample.TicTacToeGame;
+﻿using System;
+using Alternet.Drawing;
 
-namespace CustomControlsSample
+namespace Alternet.UI
 {
-    public class TicTacToeCell : Control
+    internal class TicTacToeCell : Control
     {
-        private PlayerMark? mark;
+        private TicTacToeControl.PlayerMark? mark;
 
         private bool isWinningCell;
 
@@ -15,7 +13,7 @@ namespace CustomControlsSample
         {
         }
 
-        public PlayerMark? Mark
+        public TicTacToeControl.PlayerMark? Mark
         {
             get => mark;
 
@@ -54,7 +52,7 @@ namespace CustomControlsSample
             {
                 var bounds = Control.ClientRectangle;
                 var brush = GetBackgroundBrush();
-                if(brush !=null)
+                if(brush != null)
                     dc.FillRectangle(brush, bounds);
                 dc.DrawRectangle(Pens.Gray, bounds.InflatedBy(-3, -3));
 
@@ -66,12 +64,12 @@ namespace CustomControlsSample
                     var markSize = minBoundsSize * 0.7;
                     var markBounds = RectD.FromCenter(bounds.Center, new SizeD(markSize, markSize));
 
-                    if (mark == PlayerMark.X)
+                    if (mark == TicTacToeControl.PlayerMark.X)
                     {
                         dc.DrawLine(xPen, markBounds.TopLeft, markBounds.BottomRight);
                         dc.DrawLine(xPen, markBounds.BottomLeft, markBounds.TopRight);
                     }
-                    else if (mark == PlayerMark.O)
+                    else if (mark == TicTacToeControl.PlayerMark.O)
                     {
                         dc.DrawEllipse(oPen, markBounds);
                     }
@@ -133,7 +131,7 @@ namespace CustomControlsSample
                     return winningCellBrush;
 
                 if (Control.IsMouseOver)
-                    return CustomControlsColors.BackgroundHoveredBrush;
+                    return Brushes.LightYellow;
 
                 return null;
             }

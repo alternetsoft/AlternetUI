@@ -85,6 +85,16 @@ namespace Alternet.UI
         public event EventHandler<PropertyGridExceptionEventArgs>? ProcessException;
 
         /// <summary>
+        /// Occurs when new property item is created.
+        /// </summary>
+        /// <remarks>
+        /// Use this event to override default property item creation mechanism
+        /// used inside <see cref="SetProps"/> and similar methods where object's
+        /// <see cref="PropertyInfo"/> is converted to the <see cref="IPropertyGridItem"/>.
+        /// </remarks>
+        public event CreatePropertyEventHandler? PropertyCustomCreate;
+
+        /// <summary>
         /// Occurs when a property selection has been changed, either by user action
         /// or by indirect program function.
         /// </summary>
@@ -502,12 +512,12 @@ namespace Alternet.UI
         internal static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
             = PropertyGridCreateStyleEx.DefaultStyle;
 
-        internal new NativePropertyGridHandler Handler
+        internal new PropertyGridHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativePropertyGridHandler)base.Handler;
+                return (PropertyGridHandler)base.Handler;
             }
         }
 
@@ -1991,6 +2001,9 @@ namespace Alternet.UI
             object instance,
             PropertyInfo p)
         {
+            propName ??= p.Name;
+            label ??= propName;
+
             if (!p.CanRead)
                 return null;
             ParameterInfo[] paramInfo = p.GetIndexParameters();
@@ -1999,12 +2012,29 @@ namespace Alternet.UI
             if (!AssemblyUtils.GetBrowsable(p))
                 return null;
 
-            propName ??= p.Name;
+            if (PropertyCustomCreate is not null)
+            {
+                var args = new CreatePropertyEventArgs(label, propName, instance, p);
+                PropertyCustomCreate(this, args);
+                if (args.Handled)
+                {
+                    return args.PropertyItem;
+                }
+                else
+                {
+                    if(args.PropName is not null)
+                        propName = args.PropName;
+                    if(args.Label is not null)
+                        label = args.Label;
+                    p = args.PropInfo;
+                    instance = args.Instance;
+                }
+            }
+
             var propType = p.PropertyType;
             IPropertyGridItem? prop = null;
             var realType = AssemblyUtils.GetRealType(propType);
             TypeCode typeCode = Type.GetTypeCode(realType);
-            label ??= propName;
 
             if (realType.IsEnum)
                 prop = CreatePropertyAsEnum(label, propName, instance, p);

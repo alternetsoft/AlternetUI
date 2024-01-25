@@ -9,7 +9,7 @@ namespace CustomControlsSample
     internal partial class MainWindow : Window
     {
         private readonly Data data = new();
-        private readonly CustomColorPicker colorPicker;
+        private readonly SpeedColorButton colorPicker;
         private readonly TicTacToeControl ticTacToe;
         private readonly FancySlider knobControl;
         private readonly FancyProgressBar gaugeControl;
@@ -29,8 +29,11 @@ namespace CustomControlsSample
             {
                 Value = Color.Red,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Margin = new Thickness(0, 0, 0, 5)
+                SuggestedSize = 32,
+                Margin = (0,0,0,5),
             };
+
+            colorPicker.InitSolidBorder();
 
             ticTacToe = new()
             {

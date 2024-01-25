@@ -21,10 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="TicTacToe\TicTacToeControl.uixml" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 </Project>

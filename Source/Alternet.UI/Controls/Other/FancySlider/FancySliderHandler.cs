@@ -1,12 +1,12 @@
 ﻿#nullable disable
 
+using System;
 using Alternet.Drawing;
 using Alternet.UI;
-using System;
 
-namespace CustomControlsSample
+namespace Alternet.UI
 {
-    public class FancySliderHandler : SliderHandler
+    internal class FancySliderHandler : SliderHandler
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
         private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
@@ -33,14 +33,17 @@ namespace CustomControlsSample
 
             dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
 
+            var gradientStops1 = new[]
+            {
+                new GradientStop((Color)"#1B222C", 0),
+                new GradientStop((Color)"#80767E", 0.5),
+                new GradientStop((Color)"#0C1013", 1),
+            };
 
-            using var scaleGradientBrush = new LinearGradientBrush(new PointD(0, 0), new PointD(0, scaleBounds.Height),
-                new[]
-                {
-                        new GradientStop((Color)"#1B222C", 0),
-                        new GradientStop((Color)"#80767E", 0.5),
-                        new GradientStop((Color)"#0C1013", 1),
-                });
+            using var scaleGradientBrush = new LinearGradientBrush(
+                PointD.Empty,
+                new PointD(0, scaleBounds.Height),
+                gradientStops1);
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
 
@@ -53,13 +56,17 @@ namespace CustomControlsSample
             var knobPadding = largeTickLength * 0.5;
             var knobRadius = controlRadius - largeTickLength - knobPadding;
 
-            using var knobGradientBrush = new LinearGradientBrush(new PointD(0, 0), new PointD(knobRadius * 2, knobRadius * 2),
-                new[]
-                {
+            var gradientStops2 = new[]
+            {
                     new GradientStop((Color)"#A9A9A9", 0),
                     new GradientStop((Color)"#676767", 0.5),
                     new GradientStop((Color)"#353535", 1),
-                });
+            };
+
+            using var knobGradientBrush = new LinearGradientBrush(
+                PointD.Empty,
+                new PointD(knobRadius * 2, knobRadius * 2),
+                gradientStops2);
 
             dc.FillCircle(knobGradientBrush, center, knobRadius);
             dc.DrawCircle(knobBorderPen, center, knobRadius);
@@ -71,7 +78,7 @@ namespace CustomControlsSample
             var scaleRange = 360 - emptyScaleSectorAngle;
             var scaleEndAngle = scaleStartAngle + scaleRange;
 
-            var pointerAngle = MathUtil.MapRanges(
+            var pointerAngle = MathUtils.MapRanges(
                 Control.Value,
                 Control.Minimum,
                 Control.Maximum,
@@ -94,7 +101,12 @@ namespace CustomControlsSample
             void DrawTicks(Pen pen, double step, double tickLength)
             {
                 for (var angle = scaleStartAngle; angle <= scaleEndAngle; angle += step)
-                    dc.DrawLine(pen, GetScalePoint(angle, controlRadius - tickLength), GetScalePoint(angle, controlRadius));
+                {
+                    dc.DrawLine(
+                        pen,
+                        GetScalePoint(angle, controlRadius - tickLength),
+                        GetScalePoint(angle, controlRadius));
+                }
             }
 
             var largeTicksCount = 5;
@@ -139,7 +151,7 @@ namespace CustomControlsSample
         {
             var bounds = Control.ClientRectangle;
             var gaugePadding = 10;
-            return Math.Min(bounds.Width, bounds.Height) / 2 - gaugePadding;
+            return (Math.Min(bounds.Width, bounds.Height) / 2) - gaugePadding;
         }
 
         private PointD GetControlCenter()
@@ -185,7 +197,7 @@ namespace CustomControlsSample
             var location = e.GetPosition(Control);
 
             SetFocus();
-            if (MathUtil.IsPointInCircle(location, GetControlCenter(), GetControlRadius()))
+            if (MathUtils.IsPointInCircle(location, GetControlCenter(), GetControlRadius()))
             {
                 dragStartPosition = location;
                 dragging = true;
@@ -204,7 +216,7 @@ namespace CustomControlsSample
             int pos;
             int m;
             var delta = e.Delta;
-            if (0 < delta)
+            if (delta > 0)
             {
                 delta = 1;
                 pos = Control.Value;
@@ -214,7 +226,7 @@ namespace CustomControlsSample
                     pos = m;
                 Control.Value = pos;
             }
-            else if (0 > delta)
+            else if (delta < 0)
             {
                 delta = -1;
                 pos = Control.Value;

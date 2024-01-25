@@ -53,6 +53,8 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultAdditionalSpace = new(30, 30);
 
+        internal static Color DefaultUnderlineColorLight = Color.FromRgb(0, 80, 197);
+
         private static Thickness? defaultBorderWidth;
 
         private readonly Collection<CardPanelHeaderItem> tabs = [];

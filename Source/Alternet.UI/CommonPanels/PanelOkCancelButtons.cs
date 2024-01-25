@@ -120,12 +120,12 @@ namespace Alternet.UI
             dialog.ModalResult = modalResult;
         }
 
-        private void CancelButton_Click(object sender, EventArgs e)
+        private void CancelButton_Click(object? sender, EventArgs e)
         {
             ApplyModalResult(ModalResult.Canceled);
         }
 
-        private void OkButton_Click(object sender, EventArgs e)
+        private void OkButton_Click(object? sender, EventArgs e)
         {
             ApplyModalResult(ModalResult.Accepted);
         }

@@ -149,6 +149,7 @@ namespace PropertyGridSample
             PropGrid.ColDragging += PGColDragging;
             PropGrid.ColEndDrag += PGColEndDrag;
             PropGrid.ButtonClick += PropertyGrid_ButtonClick;
+            PropGrid.PropertyCustomCreate += PropGrid_PropertyCustomCreate;
 
             // Ctrl+Down moves to next property in PropertyGrid
             PropGrid.AddActionTrigger(
@@ -171,6 +172,12 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
+        }
+
+        private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
+        {
+            if (e.PropInfo.PropertyType != typeof(Color))
+                return;
         }
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)

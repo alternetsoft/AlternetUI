@@ -3,7 +3,7 @@ namespace Alternet.UI
     /// <summary>
     /// Control handler factories for all the stock visual themes.
     /// </summary>
-    public static class StockControlHandlerFactories
+    internal static class StockControlHandlerFactories
     {
         /// <summary>
         /// Gets a stock <see cref="IControlHandlerFactory"/> object.
