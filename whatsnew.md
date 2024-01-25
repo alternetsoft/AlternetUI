@@ -3,6 +3,7 @@
 
 ## 2024 January 25
 
+- FancyProgressBar and FancySlider controls.
 - Border control painting improved.
 - Fixed: Use StartLocation only once.
 - Fixed #79 (PropertyGridSample resize problem).
