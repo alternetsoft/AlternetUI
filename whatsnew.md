@@ -3,7 +3,8 @@
 
 ## 2024 January 25
 
-- FancyProgressBar and FancySlider controls.
+- Added SpeedColorButton, FancyProgressBar, FancySlider, TicTacToeControl controls.
+- Added PropertyGrid.PropertyCustomCreate event.
 - Border control painting improved.
 - Fixed: Use StartLocation only once.
 - Fixed #79 (PropertyGridSample resize problem).
