@@ -13,6 +13,28 @@ namespace Alternet.UI
     public static class MathUtils
     {
         /// <summary>
+        /// Gets squared distance between two points.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public static double GetDistanceSquared(PointD p1, PointD p2) =>
+            ((double)(p1.X - p2.X) * (double)(p1.X - p2.X))
+            + ((double)(p1.Y - p2.Y) * (double)(p1.Y - p2.Y));
+
+        /// <summary>
+        /// Gets whether point is in circle.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public static bool IsPointInCircle(PointD p, PointD center, double radius)
+        {
+            return GetDistanceSquared(p, center) <= radius * radius;
+        }
+
+        /// <summary>
         /// Calculates distance between two points.
         /// </summary>
         /// <param name="x1">X coordinate of the first point.</param>
@@ -271,5 +293,13 @@ namespace Alternet.UI
                 value = max.Value;
             return value;
         }
+
+        internal static double MapRanges(
+            double value,
+            double from1,
+            double to1,
+            double from2,
+            double to2) =>
+            ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
     }
 }

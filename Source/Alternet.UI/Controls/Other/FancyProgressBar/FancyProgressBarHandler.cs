@@ -1,12 +1,12 @@
 ﻿#nullable disable
 
+using System;
 using Alternet.Drawing;
 using Alternet.UI;
-using System;
 
-namespace CustomControlsSample.Gauge
+namespace Alternet.UI
 {
-    public class FancyProgressBarHandler : ProgressBarHandler
+    internal class FancyProgressBarHandler : ProgressBarHandler
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
 
@@ -38,18 +38,21 @@ namespace CustomControlsSample.Gauge
 
             dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
 
+            GradientStop[] gradientStops =
+            [
+                new GradientStop((Color)"#1B222C", 0),
+                new GradientStop((Color)"#80767E", 0.5),
+                new GradientStop((Color)"#0C1013", 1),
+            ];
 
             using var scaleGradientBrush =
-                new LinearGradientBrush(new PointD(0, 0), new PointD(0, scaleBounds.Height),
-                new[]
-                {
-                        new GradientStop((Color)"#1B222C", 0),
-                        new GradientStop((Color)"#80767E", 0.5),
-                        new GradientStop((Color)"#0C1013", 1),
-                });
+                new LinearGradientBrush(
+                    new PointD(0, 0),
+                    new PointD(0, scaleBounds.Height),
+                    gradientStops);
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
-            
+
             dc.DrawRectangle(gaugeBorderPen, gaugeBounds);
 
             dc.Clip = new Region(scaleBounds);
@@ -61,17 +64,22 @@ namespace CustomControlsSample.Gauge
                 int step = 10;
 
                 var y = bounds.Center.Y;
-                var minY = y - bounds.Height * 5;
+                var minY = y - (bounds.Height * 5);
 
-                var yStep = MathUtil.MapRanges(step, Control.Minimum, Control.Maximum, 0, minY);
+                var yStep = MathUtils.MapRanges(step, Control.Minimum, Control.Maximum, 0, minY);
 
                 y += offsetInSteps * yStep;
 
-                var shift = -MathUtil.MapRanges(Control.Value, Control.Minimum, Control.Maximum, 0, minY);
+                var shift = -MathUtils.MapRanges(
+                    Control.Value,
+                    Control.Minimum,
+                    Control.Maximum,
+                    0,
+                    minY);
 
                 for (int tickValue = Control.Minimum; tickValue <= Control.Maximum; tickValue += step)
                 {
-                    double value = tickValue + step * offsetInSteps;
+                    double value = tickValue + (step * offsetInSteps);
                     if (value > Control.Maximum)
                         break;
 
@@ -84,8 +92,8 @@ namespace CustomControlsSample.Gauge
                 }
             }
 
-            DrawTicks(scaleBounds.Left + scaleBounds.Width * 0.45, 0);
-            DrawTicks(scaleBounds.Left + scaleBounds.Width * 0.7, 0.5);
+            DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.45), 0);
+            DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.7), 0.5);
 
             var pointerLineStartPoint = new PointD(scaleBounds.Left, bounds.Center.Y);
             var pointerLineEndPoint = new PointD(scaleBounds.Right, bounds.Center.Y);

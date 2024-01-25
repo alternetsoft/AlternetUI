@@ -3,7 +3,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="VisualTheme"/> objects for all the stock visual themes.
     /// </summary>
-    public static class StockVisualThemes
+    internal static class StockVisualThemes
     {
         /// <summary>
         /// Gets a stock <see cref="VisualTheme"/> object.

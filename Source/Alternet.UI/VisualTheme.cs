@@ -4,7 +4,7 @@ namespace Alternet.UI
     /// Implements a visual theme. <see cref="ControlHandlerFactory"/> property is used to create handlers
     /// for the UI controls when the <see cref="VisualTheme"/> is applied.
     /// </summary>
-    public class VisualTheme
+    internal class VisualTheme
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VisualTheme"/> class.
