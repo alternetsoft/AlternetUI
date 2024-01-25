@@ -252,6 +252,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes solid border in the normal state.
+        /// Also border width in hovered and pressed states
+        /// is made larger than in the normal state.
+        /// </summary>
+        public virtual void InitSolidBorder()
+        {
+            Borders ??= new();
+            Borders.Normal = new(Borders.Hovered ?? BorderSettings.Default);
+            Borders.Disabled = Borders.Normal;
+            BorderSettings doubleBorder = new(Borders.Hovered ?? BorderSettings.Default);
+            doubleBorder.SetWidth(doubleBorder.Top.Width + 1);
+            Borders.Pressed = doubleBorder;
+            Borders.Hovered = doubleBorder;
+        }
+
+        /// <summary>
         /// Assigns borders and colors from other <see cref="SpeedButton"/> instance.
         /// </summary>
         /// <param name="button"></param>
