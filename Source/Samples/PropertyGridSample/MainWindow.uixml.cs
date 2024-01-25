@@ -176,8 +176,8 @@ namespace PropertyGridSample
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {
-            if (e.PropInfo.PropertyType == typeof(Color))
-                e.Label += "_";
+            if (e.PropInfo.PropertyType != typeof(Color))
+                return;
         }
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
