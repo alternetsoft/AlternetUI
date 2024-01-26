@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific
     /// <see cref="Toolbar"/> behavior and appearance.
     /// </summary>
-    public abstract class ToolbarHandler : ControlHandler
+    internal abstract class ToolbarHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="Toolbar"/> this handler provides the implementation for.

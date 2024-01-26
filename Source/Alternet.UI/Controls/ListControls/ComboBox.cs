@@ -45,7 +45,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public class ComboBox : ListControl
+    public partial class ComboBox : ListControl
     {
         /// <summary>
         /// Identifies the <see cref="SelectedItem"/> dependency property.
@@ -392,6 +392,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateComboBoxHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="SelectedItem"/> property changes.
         /// </summary>
@@ -399,12 +405,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateComboBoxHandler(this);
         }
 
         private static object CoerceSelectedItem(DependencyObject d, object value)

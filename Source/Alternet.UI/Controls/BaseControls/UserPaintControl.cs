@@ -281,6 +281,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return new UserPaintHandler();
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -308,12 +314,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return new UserPaintHandler();
         }
 
         private void SetScrollbars(bool horz, bool vert, bool always)

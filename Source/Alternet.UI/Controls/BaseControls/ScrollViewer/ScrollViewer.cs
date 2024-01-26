@@ -7,13 +7,13 @@ namespace Alternet.UI
     /// Represents a scrollable area that can contain other visible elements.
     /// </summary>
     [ControlCategory("Containers")]
-    public class ScrollViewer : Control
+    public partial class ScrollViewer : Control
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateScrollViewerHandler(this);
@@ -44,6 +44,12 @@ namespace Alternet.UI
                 return new Native.Panel();
             }
 
+            protected internal override void OnLayoutChanged()
+            {
+                base.OnLayoutChanged();
+                scrollInfoValid = false;
+            }
+
             protected override void OnAttach()
             {
                 scrollInfoValid = false;
@@ -65,12 +71,6 @@ namespace Alternet.UI
                     NativeControl_VerticalScrollBarValueChanged;
                 NativeControl.HorizontalScrollBarValueChanged -=
                     NativeControl_HorizontalScrollBarValueChanged;
-            }
-
-            protected override void OnLayoutChanged()
-            {
-                base.OnLayoutChanged();
-                scrollInfoValid = false;
             }
 
             private void LayoutCore()

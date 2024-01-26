@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Represents a button control.
     /// </summary>
     [ControlCategory("Common")]
-    public class Button : ButtonBase
+    public partial class Button : ButtonBase
     {
         /// <summary>
         /// Initializes a new <see cref="Button"/> instance.
@@ -142,19 +142,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ButtonHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new ButtonHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ButtonHandler)base.Handler;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/> is
         /// the default button. In a modal dialog,
         /// a user invokes the default button by pressing the ENTER key.
@@ -226,6 +213,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="ButtonHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new ButtonHandler Handler
+        {
+            get
+            {
+                return (ButtonHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
         /// Sets the position at which the image is displayed.
         /// </summary>
         /// <remarks>
@@ -256,7 +255,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateButtonHandler(this);
         }

@@ -26,7 +26,7 @@ namespace Alternet.UI
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
     [ControlCategory("Containers")]
-    public class GroupBox : Control
+    public partial class GroupBox : Control
     {
         private string? title = null;
 
@@ -88,6 +88,12 @@ namespace Alternet.UI
             return NativeControl.GetOtherBorderForSizer();
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Title"/> property changes.
         /// </summary>
@@ -95,12 +101,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnTitleChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
         }
 
         private void RaiseTitleChanged(EventArgs e)

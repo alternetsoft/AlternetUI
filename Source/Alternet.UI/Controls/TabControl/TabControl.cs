@@ -11,7 +11,7 @@ namespace Alternet.UI
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedPageChanged")]
     [ControlCategory("Containers")]
-    public class TabControl : Control
+    public partial class TabControl : Control
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -154,6 +154,12 @@ namespace Alternet.UI
             OnSelectedPageChanged(e);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateTabControlHandler(this);
+        }
+
         /// <summary>
         /// A virtual function that is called when the selection is changed. Default behavior
         /// is to raise a SelectedPageChangedEvent
@@ -169,12 +175,6 @@ namespace Alternet.UI
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateTabControlHandler(this);
         }
 
         private void Children_ItemInserted(object? sender, int index, Control item)

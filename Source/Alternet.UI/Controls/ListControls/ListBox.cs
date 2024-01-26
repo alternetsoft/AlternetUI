@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// collections that are used by the <see cref="ListBox"/>.
     /// </remarks>
     [ControlCategory("Common")]
-    public class ListBox : ListControl
+    public partial class ListBox : ListControl
     {
         private readonly HashSet<int> selectedIndices = [];
         private int ignoreSelectEvents = 0;
@@ -68,19 +68,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="SelectionMode"/> property changes.
         /// </summary>
         public event EventHandler? SelectionModeChanged;
-
-        /// <summary>
-        /// Gets a <see cref="ListBoxHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new ListBoxHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ListBoxHandler)base.Handler;
-            }
-        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ListBox;
@@ -398,6 +385,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="ListBoxHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new ListBoxHandler Handler
+        {
+            get
+            {
+                return (ListBoxHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
         /// Removes selected items from the <see cref="ListBox"/>.
         /// </summary>
         public void RemoveSelectedItems()
@@ -520,7 +519,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateListBoxHandler(this);
         }

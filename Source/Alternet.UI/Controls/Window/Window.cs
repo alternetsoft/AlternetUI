@@ -929,6 +929,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler() => new WindowHandler();
+
         /// <summary>
         /// Raises the <see cref="Closing"/> event and calls
         /// <see cref="OnClosing(WindowClosingEventArgs)"/>.
@@ -1130,8 +1133,5 @@ namespace Alternet.UI
         protected virtual void OnStateChanged(EventArgs e)
         {
         }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler() => new WindowHandler();
     }
 }

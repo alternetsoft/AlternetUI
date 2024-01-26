@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("MenusAndToolbars")]
-    public class ContextMenu : Menu
+    public partial class ContextMenu : Menu
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextMenu"/> class.
@@ -121,6 +121,13 @@ namespace Alternet.UI
             OnOpening(e);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateContextMenuHandler(this);
+        }
+
         /// <summary>
         /// Raises the <see cref="Opening" /> event.</summary>
         /// <param name="e">A <see cref="CancelEventArgs" /> that contains
@@ -137,13 +144,6 @@ namespace Alternet.UI
         protected virtual void OnClosing(EventArgs e)
         {
             Closing?.Invoke(this, e);
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateContextMenuHandler(this);
         }
     }
 }

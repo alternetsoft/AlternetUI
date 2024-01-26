@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides base functionality for implementing a specific <see cref="Slider"/> behavior and appearance.
     /// </summary>
-    public abstract class SliderHandler : ControlHandler
+    internal abstract class SliderHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="Slider"/> this handler provides the implementation for.
@@ -23,8 +23,5 @@ namespace Alternet.UI
         /// Gets or sets a value indicating how to display the tick marks on the slider.
         /// </summary>
         public abstract SliderTickStyle TickStyle { get; set; }
-
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

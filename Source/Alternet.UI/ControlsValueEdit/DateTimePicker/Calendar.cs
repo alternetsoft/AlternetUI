@@ -42,7 +42,7 @@ namespace Alternet.UI
     /// locale, and these styles have no effect on it.
     /// </remarks>
     [ControlCategory("Other")]
-    public class Calendar : CustomDateEdit
+    public partial class Calendar : CustomDateEdit
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Calendar"/> class.
@@ -576,6 +576,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return new NativeCalendarHandler();
+        }
+
+        /// <inheritdoc/>
         protected override void SetRange(DateTime min, DateTime max)
         {
             NativeControl.MinValue = min;
@@ -628,12 +634,6 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnSelectionChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeCalendarHandler();
         }
     }
 }

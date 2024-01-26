@@ -10,7 +10,7 @@ namespace Alternet.UI
         internal new FancySliderHandler Handler => (FancySliderHandler)base.Handler;
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new FancySliderHandler();
         }

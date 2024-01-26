@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// horizontally or vertically.
     /// </summary>
     [ControlCategory("Containers")]
-    public class StackPanel : Control
+    public partial class StackPanel : Control
     {
         private StackPanelOrientation orientation;
         private bool allowStretch;
@@ -59,6 +59,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.StackPanel;
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateStackPanelHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Orientation"/> property changes.
         /// </summary>
@@ -66,11 +72,5 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnOrientationChanged(EventArgs e) =>
             OrientationChanged?.Invoke(this, e);
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateStackPanelHandler(this);
-        }
     }
 }

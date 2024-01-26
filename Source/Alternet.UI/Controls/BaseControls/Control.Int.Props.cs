@@ -12,6 +12,19 @@ namespace Alternet.UI
     {
         internal static int ScreenShotCounter { get; set; } = 0;
 
+        /// <summary>
+        /// Gets a <see cref="ControlHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal virtual ControlHandler Handler
+        {
+            get
+            {
+                EnsureHandlerCreated();
+                return handler ?? throw new InvalidOperationException();
+            }
+        }
+
         internal bool ProcessUIUpdates
         {
             get

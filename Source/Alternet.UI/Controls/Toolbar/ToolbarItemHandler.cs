@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides base functionality for implementing a specific <see cref="ToolbarItem"/> behavior and appearance.
     /// </summary>
-    public abstract class ToolbarItemHandler : ControlHandler
+    internal abstract class ToolbarItemHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="ToolbarItem"/> this handler provides the implementation for.
@@ -23,8 +23,5 @@ namespace Alternet.UI
         /// Gets or sets a boolean value indicating whether this toolbar item is checkable.
         /// </summary>
         public abstract bool IsCheckable { get; set; }
-
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

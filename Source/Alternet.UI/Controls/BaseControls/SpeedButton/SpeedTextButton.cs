@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <see cref="SpeedButton"/> descendant which by default shows text and no image.
     /// </summary>
     [ControlCategory("Other")]
-    public class SpeedTextButton : SpeedButton
+    public partial class SpeedTextButton : SpeedButton
     {
         private static SpeedTextButton? defaults;
 

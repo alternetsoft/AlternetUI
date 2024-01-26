@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
     [ControlCategory("Other")]
-    public class ColorPicker : Control
+    public partial class ColorPicker : Control
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -69,7 +69,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateColorPickerHandler(this);

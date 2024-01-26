@@ -16,7 +16,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public class DateTimePicker : CustomDateEdit
+    public partial class DateTimePicker : CustomDateEdit
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -142,6 +142,13 @@ namespace Alternet.UI
             BindingOperations.SetBinding(this, DateTimePicker.ValueProperty, myBinding);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateDateTimePickerHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Value"/> property changes.
         /// </summary>
@@ -149,13 +156,6 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateDateTimePickerHandler(this);
         }
 
         /// <inheritdoc/>

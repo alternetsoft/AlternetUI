@@ -312,6 +312,12 @@ namespace Alternet.UI
             Application.Log($"Native ScrollBar: {position}, {thumbSize}, {range}, {pageSize}");
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return new ScrollBarHandler();
+        }
+
         /// <summary>
         /// Sets the native scrollbar properties.
         /// </summary>
@@ -358,12 +364,6 @@ namespace Alternet.UI
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return new ScrollBarHandler();
         }
 
         /// <summary>

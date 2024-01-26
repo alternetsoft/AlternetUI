@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="SpeedButton"/> for editing of the <see cref="Color"/> values.
     /// </summary>
-    public class SpeedColorButton : SpeedButton
+    public partial class SpeedColorButton : SpeedButton
     {
         /// <summary>
         /// Gets or sets default size of the color image.

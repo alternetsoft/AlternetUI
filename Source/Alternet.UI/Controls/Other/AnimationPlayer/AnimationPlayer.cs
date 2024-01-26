@@ -23,7 +23,7 @@ namespace Alternet.UI
     /// support all of them.
     /// </remarks>
     [ControlCategory("Other")]
-    public class AnimationPlayer : Control
+    public partial class AnimationPlayer : Control
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.AnimationPlayer;
@@ -187,7 +187,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new NativeAnimationControlHandler();
         }

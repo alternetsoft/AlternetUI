@@ -1072,6 +1072,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initiates invocation of layout changed nethods for this and
+        /// all parent controls.
+        /// </summary>
+        public void RaiseLayoutChanged()
+        {
+            var control = this;
+            while (control != null)
+            {
+                control.Handler.OnLayoutChanged();
+                control = control.Parent;
+            }
+        }
+
+        /// <summary>
         /// Forces the control to apply layout logic to child controls.
         /// </summary>
         /// <remarks>

@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Draws a border, background, or both around another control.
     /// </summary>
     [ControlCategory("Containers")]
-    public class Border : UserPaintControl
+    public partial class Border : UserPaintControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
@@ -241,6 +241,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateBorderHandler(this);
+        }
+
+        /// <inheritdoc/>
         protected override void DefaultPaint(Graphics dc, RectD rect)
         {
             BeforePaint(dc, rect);
@@ -263,12 +269,6 @@ namespace Alternet.UI
             base.OnCurrentStateChanged(e);
             if ((Borders?.HasOtherStates ?? false) || (Backgrounds?.HasOtherStates ?? false))
                 Refresh();
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateBorderHandler(this);
         }
 
         private void UpdatePadding()

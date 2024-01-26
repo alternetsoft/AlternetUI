@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// See <see cref="SplittedTreeAndCards"/> source code for the example.
     /// </remarks>
     [ControlCategory("Containers")]
-    public class SplitterPanel : Control
+    public partial class SplitterPanel : Control
     {
         /// <summary>
         /// Gets or sets whether to check sash size and make it at least equal to
@@ -798,6 +798,12 @@ namespace Alternet.UI
                 PerformChildsLayout();
         }
 
+        /// <inheritdoc />
+        internal override ControlHandler CreateHandler()
+        {
+            return new NativeSplitterPanelHandler();
+        }
+
         /// <summary>
         /// Called when the splitter sash is double clicked.
         /// </summary>
@@ -858,12 +864,6 @@ namespace Alternet.UI
         protected override void OnChildRemoved(Control childControl)
         {
             base.OnChildRemoved(childControl);
-        }
-
-        /// <inheritdoc />
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeSplitterPanelHandler();
         }
 
         private void PerformChildsLayout()

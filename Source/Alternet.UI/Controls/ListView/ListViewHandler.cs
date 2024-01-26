@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides base functionality for implementing a specific <see cref="ListView"/> behavior and appearance.
     /// </summary>
-    public abstract class ListViewHandler : ControlHandler
+    internal abstract class ListViewHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="ListView"/> this handler provides the implementation for.

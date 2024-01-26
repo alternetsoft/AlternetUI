@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// from mutually exclusive options.
     /// </remarks>
     [ControlCategory("Common")]
-    public class CheckBox : ButtonBase
+    public partial class CheckBox : ButtonBase
     {
         /// <summary>
         /// Identifies the <see cref="IsChecked"/> dependency property.
@@ -273,6 +273,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateCheckBoxHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="IsChecked"/> property changes.
         /// </summary>
@@ -280,12 +286,6 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateCheckBoxHandler(this);
         }
 
         /// <summary>

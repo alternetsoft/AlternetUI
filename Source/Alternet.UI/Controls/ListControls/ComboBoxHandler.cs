@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific
     /// <see cref="ComboBox"/> behavior and appearance.
     /// </summary>
-    public abstract class ComboBoxHandler : ControlHandler
+    internal abstract class ComboBoxHandler : ControlHandler
     {
         /// <summary>
         /// Returns <see cref="ComboBox"/> instance with which this handler
