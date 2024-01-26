@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="TextBoxAndLabel Example" Size="800,600">
+  <VerticalStackPanel Name="mainPanel" Padding="10">
+    <LogListBox SuggestedHeight="200" Margin="10" Name="logListBox"/>
+    <!-- <CreateUixmlDeclaration> -->
+    <TextBoxAndLabel Text="some value" Title="Short Label" Name="control1"
+                     TextChanged="TextBoxTextChanged" Margin="10"/>
+    <!-- </CreateUixmlDeclaration> -->
+  </VerticalStackPanel>
+</Window>
