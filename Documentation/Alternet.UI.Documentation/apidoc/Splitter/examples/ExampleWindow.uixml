@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="Splitter Example" Size="800,600" Padding="10">
+  <!-- <CreateUixmlDeclaration> -->
+  <LayoutPanel>
+    <Panel Dock="Fill" Name="fillPanel"/>
+    <Splitter Dock="Top"/>
+    <ListBox Dock="Top" MinHeight="200"/>
+  </LayoutPanel>
+  <!-- </CreateUixmlDeclaration> -->
+</Window>
