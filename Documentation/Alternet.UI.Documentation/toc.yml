@@ -1,2 +1,10 @@
-- name: Alternet UI Documentation
-  href: introduction/
+- name: Overview
+  href: https://www.alternet-ui.com/
+- name: How it works
+  href: https://www.alternet-ui.com/how-it-works
+- name: Documentation
+  href: https://docs.alternet-ui.com/
+- name: Blog
+  href: https://www.alternet-ui.com/blog
+- name: Forum
+  href: https://forum.alternet-ui.com
