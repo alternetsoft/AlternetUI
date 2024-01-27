@@ -28,7 +28,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public class RadioButton : ButtonBase
+    public partial class RadioButton : ButtonBase
     {
         private bool isChecked;
 
@@ -59,7 +59,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.RadioButton;
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateRadioButtonHandler(this);

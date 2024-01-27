@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Represents an individual item that is displayed within a menu.
     /// </summary>
     [ControlCategory("Hidden")]
-    public class MenuItem : Menu, ICommandSource
+    public partial class MenuItem : Menu, ICommandSource
     {
         /// <summary>
         /// Defines a <see cref="DependencyProperty"/> field for the
@@ -387,7 +387,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateMenuItemHandler(this);
         }

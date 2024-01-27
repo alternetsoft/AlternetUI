@@ -8,7 +8,7 @@
         internal new FancyProgressBarHandler Handler => (FancyProgressBarHandler)base.Handler;
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new FancyProgressBarHandler();
         }

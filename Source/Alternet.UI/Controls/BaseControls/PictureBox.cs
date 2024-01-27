@@ -309,6 +309,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
+        }
+
+        /// <inheritdoc/>
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -369,12 +375,6 @@ namespace Alternet.UI
             if (StateObjects.HasOtherBackgrounds || StateObjects.HasOtherImages
                 || StateObjects.HasOtherBorders)
                 Refresh();
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
         }
 
         /// <summary>

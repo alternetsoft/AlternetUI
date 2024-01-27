@@ -1035,19 +1035,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ControlHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlHandler Handler
-        {
-            get
-            {
-                EnsureHandlerCreated();
-                return handler ?? throw new InvalidOperationException();
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the control has a native window handle associated with it.
         /// </summary>
         /// <returns>
@@ -1896,7 +1883,7 @@ namespace Alternet.UI
                 if (IsBold == value)
                     return;
                 NativeControl.IsBold = value;
-                Handler.RaiseLayoutChanged();
+                RaiseLayoutChanged();
                 PerformLayout();
                 Invalidate();
             }

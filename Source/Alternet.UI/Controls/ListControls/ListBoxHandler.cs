@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific
     /// <see cref="ListBox"/> behavior and appearance.
     /// </summary>
-    public abstract class ListBoxHandler : ControlHandler
+    internal abstract class ListBoxHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="ListBox"/> this handler provides the

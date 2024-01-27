@@ -52,7 +52,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public class TreeView : Control
+    public partial class TreeView : Control
     {
         /// <summary>
         /// The set of flags that are closest to the defaults for the native control under Linux.
@@ -431,19 +431,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="TreeViewHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new TreeViewHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (TreeViewHandler)base.Handler;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether lines are drawn between tree
         /// items in the tree view control.
         /// </summary>
@@ -667,6 +654,18 @@ namespace Alternet.UI
         {
             get => Handler.AllowLabelEdit;
             set => Handler.AllowLabelEdit = value;
+        }
+
+        /// <summary>
+        /// Gets a <see cref="TreeViewHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new TreeViewHandler Handler
+        {
+            get
+            {
+                return (TreeViewHandler)base.Handler;
+            }
         }
 
         /// <summary>
@@ -1003,6 +1002,12 @@ namespace Alternet.UI
             ItemRemoved?.Invoke(this, e);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
+        }
+
         /// <summary>
         /// Called after a tree item is expanded.
         /// </summary>
@@ -1097,12 +1102,6 @@ namespace Alternet.UI
         /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
         protected virtual void OnSelectionChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
         }
 
         private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)

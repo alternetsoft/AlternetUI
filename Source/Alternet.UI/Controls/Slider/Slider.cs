@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public class Slider : Control
+    public partial class Slider : Control
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -113,19 +113,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="TickFrequency"/> property changes.
         /// </summary>
         public event EventHandler? TickFrequencyChanged;
-
-        /// <summary>
-        /// Gets a <see cref="SliderHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new SliderHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (SliderHandler)base.Handler;
-            }
-        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
@@ -301,6 +288,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="SliderHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new SliderHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (SliderHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the
         /// <see cref="FrameworkElement.DataContext"/>
         /// </summary>
@@ -455,7 +455,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateSliderHandler(this);
         }

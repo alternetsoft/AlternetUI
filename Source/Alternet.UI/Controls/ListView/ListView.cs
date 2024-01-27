@@ -24,7 +24,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public class ListView : Control
+    public partial class ListView : Control
     {
         private HashSet<long>? selectedIndices = null;
 
@@ -130,19 +130,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ListView;
-
-        /// <summary>
-        /// Gets a <see cref="ListViewHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new ListViewHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ListViewHandler)base.Handler;
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit the labels of items in the
@@ -585,6 +572,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a <see cref="ListViewHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new ListViewHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ListViewHandler)base.Handler;
+            }
+        }
+
         internal long NativeItemsCount
         {
             get
@@ -786,6 +786,12 @@ namespace Alternet.UI
             selectedIndices = null;
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateListViewHandler(this);
+        }
+
         /// <summary>
         /// Called when the user clicks a column header within the list view control.
         /// </summary>
@@ -817,12 +823,6 @@ namespace Alternet.UI
         /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
         protected virtual void OnSelectionChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateListViewHandler(this);
         }
 
         private void ClearSelectedCore()

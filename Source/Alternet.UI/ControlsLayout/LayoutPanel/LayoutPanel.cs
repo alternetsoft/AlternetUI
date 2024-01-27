@@ -10,7 +10,7 @@
     /// <see cref="Control.Bounds"/>.
     /// </remarks>
     [ControlCategory("Containers")]
-    public class LayoutPanel : Control
+    public partial class LayoutPanel : Control
     {
         private GenericLayoutStyle layout;
 
@@ -163,7 +163,7 @@
         }
 
         /// <inheritdoc />
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new LayoutPanelHandler();
         }

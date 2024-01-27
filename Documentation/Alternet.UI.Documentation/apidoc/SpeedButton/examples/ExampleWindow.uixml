@@ -1,0 +1,13 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.MainWindow"
+        Title="SpeedButton Example" Size="800,600">
+
+  <VerticalStackPanel Name="mainPanel">
+    <LogListBox SuggestedHeight="200" Name="logListBox"/>
+    <!-- <CreateUixmlDeclaration> -->
+    <SpeedButton Name="button1" Click="Button_Click" HorizontalAlignment="Center"
+                 ToolTip = "Some hint" Shortcut="Ctrl+O"/>
+    <!-- </CreateUixmlDeclaration> -->
+  </VerticalStackPanel>
+</Window>

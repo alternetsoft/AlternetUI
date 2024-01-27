@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public class ToolbarItem : NonVisualControl, ICommandSource
+    public partial class ToolbarItem : NonVisualControl, ICommandSource
     {
         /// <summary>
         /// Defines a <see cref="DependencyProperty"/> field for the
@@ -91,18 +91,6 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Checked"/> property changes.
         /// </summary>
         public event EventHandler? CheckedChanged;
-
-        /// <summary>
-        /// Gets a <see cref='ToolbarItemHandler'/> associated with this class.
-        /// </summary>
-        public new ToolbarItemHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ToolbarItemHandler)base.Handler;
-            }
-        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ToolbarItem;
@@ -247,6 +235,17 @@ namespace Alternet.UI
             set { SetValue(CommandProperty, value); }
         }
 
+        /// <summary>
+        /// Gets a <see cref='ToolbarItemHandler'/> associated with this class.
+        /// </summary>
+        internal new ToolbarItemHandler Handler
+        {
+            get
+            {
+                return (ToolbarItemHandler)base.Handler;
+            }
+        }
+
         internal override bool IsDummy => true;
 
         /// <inheritdoc />
@@ -276,7 +275,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateToolbarItemHandler(this);

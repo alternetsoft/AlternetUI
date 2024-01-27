@@ -1253,7 +1253,7 @@ namespace Alternet.UI
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CreateHandler/*'/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new WebBrowserHandler();
         }

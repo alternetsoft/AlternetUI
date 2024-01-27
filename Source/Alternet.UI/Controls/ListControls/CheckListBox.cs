@@ -43,19 +43,6 @@ namespace Alternet.UI
         /// </remarks>
         public event EventHandler? CheckedChanged;
 
-        /// <summary>
-        /// Gets a <see cref="CheckListBoxHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new CheckListBoxHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (CheckListBoxHandler)base.Handler;
-            }
-        }
-
         /// <inheritdoc/>
         public override bool HasBorder
         {
@@ -193,6 +180,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="CheckListBoxHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new CheckListBoxHandler Handler
+        {
+            get
+            {
+                return (CheckListBoxHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
         /// Removes checked items from the <see cref="CheckListBox"/>.
         /// </summary>
         public void RemoveCheckedItems()
@@ -282,6 +281,13 @@ namespace Alternet.UI
             CheckedChanged?.Invoke(this, e);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateCheckListBoxHandler(this);
+        }
+
         /// <summary>
         /// Called when the <see cref="CheckedIndex"/> property or the
         /// <see cref="CheckedIndices"/> collection has changed.
@@ -291,13 +297,6 @@ namespace Alternet.UI
         /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateCheckListBoxHandler(this);
         }
 
         /// <inheritdoc/>

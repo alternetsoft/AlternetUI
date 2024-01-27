@@ -4743,6 +4743,12 @@ namespace Alternet.UI
             return variant;
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
+        }
+
         /// <summary>
         /// Called after <see cref="IPropertyGridItem"/> created for the
         /// specified <paramref name="instance"/> and <paramref name="propInfo"/>.
@@ -5016,12 +5022,6 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnPropertySelected(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
         }
 
         private static IPropertyGridItem FuncCreatePropertyAsColor(

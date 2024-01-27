@@ -42,7 +42,7 @@ namespace Alternet.UI
 
         private void Control_OrientationChanged(object? sender, EventArgs e)
         {
-            RaiseLayoutChanged();
+            Control.RaiseLayoutChanged();
             layout = null;
         }
 

@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TControl">Type of the <see cref="Control"/>
     /// descendant</typeparam>
-    public abstract class ControlHandler<TControl> : ControlHandler
+    internal abstract class ControlHandler<TControl> : ControlHandler
         where TControl : Control
     {
         /// <summary>

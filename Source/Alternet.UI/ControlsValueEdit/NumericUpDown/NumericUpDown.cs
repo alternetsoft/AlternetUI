@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
     /// </remarks>
     [ControlCategory("Common")]
-    public class NumericUpDown : Control
+    public partial class NumericUpDown : Control
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -220,6 +220,13 @@ namespace Alternet.UI
                 Value = newValue;
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateNumericUpDownHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Value"/> property changes.
         /// </summary>
@@ -245,13 +252,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnMaximumChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateNumericUpDownHandler(this);
         }
 
         private static object CoerceValue(DependencyObject d, object value)

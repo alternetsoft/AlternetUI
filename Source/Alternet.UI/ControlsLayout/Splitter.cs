@@ -308,6 +308,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return new SplitterHandler();
+        }
+
+        /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -387,12 +393,6 @@ namespace Alternet.UI
             SplitterMoved?.Invoke(this, e);
             if (splitTarget != null)
                 SplitMove(e.SplitX, e.SplitY);
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return new SplitterHandler();
         }
 
         /// <devdoc>

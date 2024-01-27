@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Used with <see cref="AuiManager"/>.
     /// </summary>
     [ControlCategory("Containers")]
-    public class AuiNotebook : Control
+    public partial class AuiNotebook : Control
     {
         private readonly Collection<IAuiNotebookPage> pages = [];
 
@@ -698,7 +698,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateAuiNotebookHandler(this);
         }

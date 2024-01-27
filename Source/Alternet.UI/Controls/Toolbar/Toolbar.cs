@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Items")]
     [ControlCategory("MenusAndToolbars")]
-    public class Toolbar : NonVisualControl
+    public partial class Toolbar : NonVisualControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Toolbar"/> class.
@@ -312,7 +312,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
         }

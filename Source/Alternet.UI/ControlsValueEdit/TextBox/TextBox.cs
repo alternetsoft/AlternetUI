@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class TextBox : CustomTextBox, ISimpleRichTextBox
+    public partial class TextBox : CustomTextBox, ISimpleRichTextBox
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.
@@ -1571,17 +1571,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return new NativeTextBoxHandler();
+        }
+
+        /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
             if (Options.HasFlag(TextBoxOptions.DefaultValidation))
                 RunDefaultValidation();
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeTextBoxHandler();
         }
 
         private static object CoerceText(DependencyObject d, object value) =>

@@ -10,7 +10,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public class LinkLabel : Control
+    public partial class LinkLabel : Control
     {
         private string? text;
 
@@ -155,7 +155,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new NativeLinkLabelHandler();
         }

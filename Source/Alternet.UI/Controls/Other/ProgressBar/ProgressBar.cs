@@ -30,7 +30,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public class ProgressBar : Control
+    public partial class ProgressBar : Control
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -189,11 +189,10 @@ namespace Alternet.UI
         /// Gets a <see cref="ProgressBarHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        public new ProgressBarHandler Handler
+        internal new ProgressBarHandler Handler
         {
             get
             {
-                CheckDisposed();
                 return (ProgressBarHandler)base.Handler;
             }
         }
@@ -212,19 +211,19 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, e);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateProgressBarHandler(this);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Value"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateProgressBarHandler(this);
         }
 
         /// <summary>

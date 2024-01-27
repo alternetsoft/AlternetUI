@@ -172,16 +172,8 @@ namespace Alternet.UI
             Handler.NativeControl.Dismiss();
         }
 
-        /*/// <summary>
-        /// Called when the value of the <see cref="Owner"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnOwnerChanged(EventArgs e)
-        {
-        }*/
-
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler() => new PopupHandler();
+        internal override ControlHandler CreateHandler() => new PopupHandler();
 
         internal class PopupHandler : ControlHandler
         {

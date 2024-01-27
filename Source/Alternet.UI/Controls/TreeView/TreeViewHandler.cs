@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific
     /// <see cref="TreeView"/> behavior and appearance.
     /// </summary>
-    public abstract class TreeViewHandler : ControlHandler
+    internal abstract class TreeViewHandler : ControlHandler
     {
         /// <inheritdoc cref="TreeView.HasBorder"/>
         public abstract bool HasBorder { get; set; }

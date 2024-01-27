@@ -19,7 +19,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.MainMenu;
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateMainMenuHandler(this);
         }

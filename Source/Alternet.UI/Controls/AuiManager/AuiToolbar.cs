@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Dockable toolbar, managed by <see cref="AuiManager"/>.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public class AuiToolbar : Control
+    public partial class AuiToolbar : Control
     {
         /// <summary>
         /// Defines spacer width which is used in <see cref="AddSpacer"/>.
@@ -1323,6 +1323,12 @@ namespace Alternet.UI
             NativeControl.DoOnLeftDown(x, y);
         }
 
+        /// <inheritdoc/>
+        internal override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateAuiToolbarHandler(this);
+        }
+
         /// <summary>
         /// Called when the tool is clicked.
         /// </summary>
@@ -1375,12 +1381,6 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnBeginDrag(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateAuiToolbarHandler(this);
         }
 
         private int GenNewId()

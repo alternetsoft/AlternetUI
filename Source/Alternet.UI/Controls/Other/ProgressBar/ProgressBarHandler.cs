@@ -3,7 +3,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides base functionality for implementing a specific <see cref="ProgressBar"/> behavior and appearance.
     /// </summary>
-    public abstract class ProgressBarHandler : ControlHandler
+    internal abstract class ProgressBarHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="ProgressBar"/> this handler provides the implementation for.
@@ -21,8 +21,5 @@ namespace Alternet.UI
         /// </summary>
         /// <value>One of the <see cref="ProgressBarOrientation"/> values.</value>
         public abstract ProgressBarOrientation Orientation { get; set; }
-
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

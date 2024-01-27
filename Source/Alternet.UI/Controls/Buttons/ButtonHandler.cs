@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific
     /// <see cref="Button"/> behavior and appearance.
     /// </summary>
-    public abstract class ButtonHandler : ControlHandler
+    internal abstract class ButtonHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="Button"/> this handler provides the implementation for.

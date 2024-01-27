@@ -35,7 +35,7 @@ namespace Alternet.UI
             }
         }
 
-        protected override ControlHandler CreateHandler()
+        internal override ControlHandler CreateHandler()
         {
             return new CustomHandler();
         }
