@@ -260,6 +260,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets 'Hidden Text' option.
+        /// </summary>
+        public bool OptionHiddenText
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Search Up' option.
+        /// </summary>
+        public bool OptionSearchUp
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets 'Match Case' option.
         /// </summary>
         public bool OptionMatchCase
@@ -583,9 +601,9 @@ namespace Alternet.UI
 
             return (parentWindow, findReplace);
 
-            void ParentWindow_Disposed(object? sender, EventArgs e)
+            static void ParentWindow_Disposed(object? sender, EventArgs e)
             {
-                Application.DebugLog("FindReplace window disposed");
+                Application.DebugLogIf("FindReplace window disposed", false);
             }
         }
 
@@ -631,6 +649,50 @@ namespace Alternet.UI
             return false;
         }
 
+        /// <summary>
+        /// Toggles searching through hidden text on/off.
+        /// </summary>
+        public void ToggleHiddenText()
+        {
+            OptionHiddenText = !OptionHiddenText;
+        }
+
+        /// <summary>
+        /// Toggles case sensitive searching on/off.
+        /// </summary>
+        public void ToggleMatchCase()
+        {
+            OptionMatchCase = !OptionMatchCase;
+        }
+
+        /// <summary>
+        /// Toggles using regular expressions on/off.
+        /// </summary>
+        public void ToggleRegularExpressions()
+        {
+            OptionUseRegularExpressions = !OptionUseRegularExpressions;
+        }
+
+        /// <summary>
+        /// Toggles searching direction towards/backwards.
+        /// </summary>
+        public void ToggleSearchUp()
+        {
+            OptionSearchUp = !OptionSearchUp;
+        }
+
+        /// <summary>
+        /// Toggles searching for whole words on/off.
+        /// </summary>
+        public void ToggleWholeWord()
+        {
+            OptionMatchWholeWord = !OptionMatchWholeWord;
+        }
+
+        internal void OnClickToggleReplace() => OnClickToggleReplace(this, EventArgs.Empty);
+
+        internal void OnClickClose() => OnClickClose(this, EventArgs.Empty);
+
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -646,15 +708,11 @@ namespace Alternet.UI
 
         private void OnClickFindNext() => OnClickFindNext(this, EventArgs.Empty);
 
-        private void OnClickToggleReplace() => OnClickToggleReplace(this, EventArgs.Empty);
-
         private void OnClickFindPrevious() => OnClickFindPrevious(this, EventArgs.Empty);
 
         private void OnClickReplace() => OnClickReplace(this, EventArgs.Empty);
 
         private void OnClickReplaceAll() => OnClickReplaceAll(this, EventArgs.Empty);
-
-        private void OnClickClose() => OnClickClose(this, EventArgs.Empty);
 
         private void OnClickUseRegularExpressions(object? sender, EventArgs e)
         {
