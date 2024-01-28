@@ -47,7 +47,7 @@ namespace ExplorerUISample
             Closed+=MainWindow_Closed;
         }
 
-        private void MainWindow_Closed(object? sender, WindowClosedEventArgs e)
+        private void MainWindow_Closed(object? sender, EventArgs e)
         {
             Application.Current.Exit();
         }

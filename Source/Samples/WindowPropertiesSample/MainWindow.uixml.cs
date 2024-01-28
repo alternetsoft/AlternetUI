@@ -282,7 +282,7 @@ namespace WindowPropertiesSample
             }
         }
 
-        private void TestWindow_Closed(object? sender, WindowClosedEventArgs e)
+        private void TestWindow_Closed(object? sender, EventArgs e)
         {
             Application.Log("Closed");
 

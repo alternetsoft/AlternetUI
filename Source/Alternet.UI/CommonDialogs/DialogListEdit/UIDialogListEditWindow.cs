@@ -207,7 +207,7 @@ namespace Alternet.UI
             treeView.RemoveAll();
         }
 
-        private void UIDialogListEditWindow_Closed(object? sender, WindowClosedEventArgs e)
+        private void UIDialogListEditWindow_Closed(object? sender, EventArgs e)
         {
         }
 
