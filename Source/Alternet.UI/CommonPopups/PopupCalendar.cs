@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="Calendar"/> control.
     /// </summary>
-    public class PopupCalendar : PopupWindow
+    internal class PopupCalendar : PopupWindow
     {
         /// <summary>
         /// Gets or sets <see cref="Calendar"/> control used in the popup window.

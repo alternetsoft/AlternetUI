@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="PanelAuiManager"/> control.
     /// </summary>
-    public class PopupAuiManager : PopupWindow
+    internal class PopupAuiManager : PopupWindow
     {
         /// <summary>
         /// Gets or sets <see cref="PanelAuiManager"/> control used in the popup window.
