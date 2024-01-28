@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alternet Software")]
 [assembly: AssemblyProduct("AlternetUIAppTemplate")]
-[assembly: AssemblyCopyright("Copyright (c) Alternet Software 2021-2023")]
+[assembly: AssemblyCopyright("Copyright (c) Alternet Software 2021-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

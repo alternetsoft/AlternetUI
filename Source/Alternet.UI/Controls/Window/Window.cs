@@ -111,7 +111,7 @@ namespace Alternet.UI
         /// and to save information entered in the form or to update its parent window.
         /// </para>
         /// </remarks>
-        public event EventHandler<WindowClosedEventArgs>? Closed;
+        public event EventHandler? Closed;
 
         /// <summary>
         /// Occurs when the value of the <see cref="MaximizeEnabled"/> property changes.
@@ -983,12 +983,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="Closed"/> event and calls
-        /// <see cref="OnClosed(WindowClosedEventArgs)"/>.
+        /// <see cref="OnClosed(EventArgs)"/>.
         /// See <see cref="Closed"/> event description for more details.
         /// </summary>
-        /// <param name="e">An <see cref="WindowClosedEventArgs"/> that contains the event
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        protected virtual void OnClosed(WindowClosedEventArgs e) => Closed?.Invoke(this, e);
+        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
 
         /// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.

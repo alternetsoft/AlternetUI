@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="PictureBox"/> control.
     /// </summary>
-    public class PopupPictureBox : PopupWindow
+    internal class PopupPictureBox : PopupWindow
     {
         /// <summary>
         /// Gets or sets <see cref="PictureBox"/> control used in the popup window.
