@@ -1,6 +1,10 @@
 
 # 0.9.505 (work in progress)
 
+## 2024 January 27
+
+- Documentation is now built with the latest DocFx version.
+
 ## 2024 January 25
 
 - Added SpeedColorButton, FancyProgressBar, FancySlider, TicTacToeControl controls.
