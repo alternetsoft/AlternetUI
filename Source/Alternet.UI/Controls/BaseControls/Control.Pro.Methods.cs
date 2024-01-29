@@ -475,6 +475,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="HelpRequested" /> event.</summary>
+        /// <param name="e">A <see cref="HelpEventArgs" /> that
+        /// contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnHelpRequested(HelpEventArgs e)
+        {
+            if (HelpRequested != null)
+            {
+                HelpRequested(this, e);
+                e.Handled = true;
+            }
+
+            if (!e.Handled)
+                Parent?.OnHelpRequested(e);
+        }
+
+        /// <summary>
         /// Called when the enabled of the <see cref="Enabled"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the

@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// other windows and is often used to allow the user to make some choice
     /// or to answer a question.
     /// </summary>
-    public partial class DialogWindow : Window
+    public partial class DialogWindow : Form
     {
         /// <summary>
         /// Gets a value indicating whether this window is displayed modally.
