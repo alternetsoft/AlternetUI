@@ -6,53 +6,20 @@ namespace InputSample
 {
     public partial class KeyboardInputWindow : Window
     {
-        private const int KeyDownIndex = 0;
-        private const int KeyUpIndex = 1;
-        private const int TextInputIndex = 2;
-        private const int lbCount = 3;
-
         public KeyboardInputWindow()
         {
             InitializeComponent();
 
-            PlatformSpecificInitialize();
+            lb.BindApplicationLog();
+
+            checkBoxKeyPreview.BindBoolProp(this, nameof(KeyPreview));
+            checkBoxHandledInForm.BindBoolProp(this, nameof(HandledInForm));
+            checkBoxHandledInButton.BindBoolProp(this, nameof(HandledInButton));
+            checkBoxHandledInStackPanel.BindBoolProp(this, nameof(HandledInStackPanel));
+            checkBoxLogRepeated.BindBoolProp(this, nameof(LogRepeated));
 
             SetSizeToContent();
-
-            static object CreateItem() => string.Empty;
-
-            lbButton.Items.SetCount(lbCount, CreateItem);
-            lbStackPanel.Items.SetCount(lbCount, CreateItem);
-            lbWindow.Items.SetCount(lbCount, CreateItem);
-
-            ControlSet labels = new(
-                labelInfo,
-                labelWindow,
-                labelStackPanel,
-                labelButton);
-            labels.SuggestedWidthToMax();
             PerformLayout();
-            SetSizeToContent();
-        }
-
-        private void PlatformSpecificInitialize()
-        {
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            UpdateModifierKeys();
-            if (e.Key == Key.D && e.ModifierKeys == (Alternet.UI.ModifierKeys.Control | Alternet.UI.ModifierKeys.Shift))
-            {
-                e.Handled = true;
-                messageLabel.BackgroundColor =
-                    messageLabel.BackgroundColor != Color.Red ? Color.Red : Color.Green;
-            }
-        }
-
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            UpdateModifierKeys();
         }
 
         private void UpdateModifierKeys()
@@ -85,54 +52,106 @@ namespace InputSample
                 sMacOs = $"{sMacControl} {sMacCommand} {sMacOption}";
             }
 
-            var s = $"{sControl} {sShift} {sAlt} {sWindows} {sMacOs}";
-
+            var s = $"Modifiers: {sControl} {sShift} {sAlt} {sWindows} {sMacOs}".Trim();
+            
             buttonInfo.Text = s;
             buttonInfo.Refresh();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
-
         private void HelloButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello!", "Button Clicked");
+            Application.Log("Hello button clicked");
         }
 
-        int messageNumber;
+        public bool HandledInButton { get; set; } = false;
 
-        private void LogMessage(int index, ListBox lb, string m)
+        public bool HandledInForm { get; set; } = false;
+
+        public bool HandledInStackPanel { get; set; } = false;
+
+        public bool LogRepeated { get; set; } = false;
+
+        private void Window_TextInput(object sender, KeyPressEventArgs e)
         {
-            lb.Items[index] = m;
-            lb.Refresh();
+            LogTextInput(e, "Window", "KeyPress");
+            if (HandledInForm)
+                e.Handled = true;
         }
 
-        private void Window_TextInput(object sender, KeyPressEventArgs e) =>
-            LogTextInput(TextInputIndex, lbWindow, e, "Window", "KeyPress");
+        private void HelloButton_TextInput(object sender, KeyPressEventArgs e)
+        {
+            LogTextInput(e, "HelloButton", "KeyPress");
+            if (HandledInButton)
+                e.Handled = true;
+        }
 
-        private void LogKey(int index, ListBox lb, KeyEventArgs e, string objectName, string eventName) =>
-            LogMessage(index, lb, $"{++messageNumber} {eventName} [{e.Key}], Repeat: {e.IsRepeat}");
-        private void LogTextInput(int index, ListBox lb, KeyPressEventArgs e, string objectName, string eventName) =>
-            LogMessage(index, lb, $"{++messageNumber} {eventName} '{e.KeyChar}'");
+        private void StackPanel_TextInput(object sender, KeyPressEventArgs e)
+        {
+            LogTextInput(e, "StackPanel", "KeyPress");
+            if (HandledInStackPanel)
+                e.Handled = true;
+        }
 
-        private void HelloButton_KeyDown(object sender, KeyEventArgs e) =>
-            LogKey(KeyDownIndex, lbButton, e, "HelloButton", "KeyDown");
+        private void LogKey(KeyEventArgs e, string objectName, string eventName)
+        {
+            if (e.IsRepeat && !LogRepeated)
+                return;
 
-        private void StackPanel_KeyDown(object sender, KeyEventArgs e) =>
-            LogKey(KeyDownIndex, lbStackPanel, e, "StackPanel", "KeyDown");
+            Application.Log($"{objectName}.{eventName} [{e.Key}], ({e.ModifierKeys}), Repeat: {e.IsRepeat}");
+        }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e) =>
-            LogKey(KeyDownIndex, lbWindow, e, "Window", "KeyDown");
+        private void LogTextInput(KeyPressEventArgs e, string objectName, string eventName) =>
+            Application.Log($"{objectName}.{eventName} '{e.KeyChar}'");
 
-        private void HelloButton_KeyUp(object sender, KeyEventArgs e) =>
-            LogKey(KeyUpIndex, lbButton, e, "HelloButton", "KeyUp");
+        private void HelloButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            LogKey(e, "HelloButton", "KeyDown");
+            if (HandledInButton)
+                e.Handled = true;
+        }
 
-        private void StackPanel_KeyUp(object sender, KeyEventArgs e) =>
-            LogKey(KeyUpIndex, lbStackPanel, e, "StackPanel", "KeyUp");
+        private void StackPanel_KeyDown(object sender, KeyEventArgs e)
+        {
+            LogKey(e, "StackPanel", "KeyDown");
+            if (HandledInStackPanel)
+                e.Handled = true;
+        }
 
-        private void Window_KeyUp(object sender, KeyEventArgs e) =>
-            LogKey(KeyUpIndex, lbWindow, e, "Window", "KeyUp");
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateModifierKeys();
+            LogKey(e, "Window", "KeyDown");
+            if (e.Key == Key.D && e.ModifierKeys == Alternet.UI.ModifierKeys.ControlShift)
+            {
+                e.Handled = true;
+                messageLabel.BackgroundColor =
+                    messageLabel.BackgroundColor != Color.Red ? Color.Red : Color.Green;
+            }
+
+            if (HandledInForm)
+                e.Handled = true;
+        }
+
+        private void HelloButton_KeyUp(object sender, KeyEventArgs e)
+        {
+            LogKey(e, "HelloButton", "KeyUp");
+            if (HandledInButton)
+                e.Handled = true;
+        }
+
+        private void StackPanel_KeyUp(object sender, KeyEventArgs e)
+        {
+            LogKey(e, "StackPanel", "KeyUp");
+            if (HandledInStackPanel)
+                e.Handled = true;
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            UpdateModifierKeys();
+            LogKey(e, "Window", "KeyUp");
+            if (HandledInForm)
+                e.Handled = true;
+        }
     }
 }

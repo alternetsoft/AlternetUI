@@ -22,7 +22,7 @@ namespace Alternet.UI
     public class KeyEventArgs : KeyboardEventArgs
     {
         private readonly ModifierKeys modifiers;
-        private readonly Keys keyData;
+        private Keys? keyData;
         private readonly Key key;
         private readonly bool isRepeat;
         private readonly KeyStates keyStates;
@@ -41,13 +41,10 @@ namespace Alternet.UI
         public KeyEventArgs(KeyboardDevice keyboard, Key key, bool isRepeat)
             : base(keyboard)
         {
-            if (!Keyboard.IsValidKey(key))
-                throw new InvalidEnumArgumentException(nameof(key), (int)key, typeof(Key));
             this.key = key;
             this.isRepeat = isRepeat;
-            modifiers = KeyboardDevice.Modifiers;
             keyStates = this.KeyboardDevice.GetKeyStates(key);
-            keyData = key.ToKeys(modifiers);
+            modifiers = KeyboardDevice.Modifiers;
         }
 
         /// <summary>
@@ -133,7 +130,7 @@ namespace Alternet.UI
         /// with modifier flags that indicate which combination
         /// of CTRL, SHIFT, and ALT keys was pressed at the same time.
         /// </returns>
-        public Keys KeyData => keyData;
+        public Keys KeyData => keyData ??= key.ToKeys(modifiers);
 
         /// <summary>
         /// Gets a value indicating whether the ALT key was pressed.

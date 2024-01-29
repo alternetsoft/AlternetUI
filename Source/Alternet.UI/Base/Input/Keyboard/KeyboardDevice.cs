@@ -26,7 +26,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Gets the current state of the specified key from the device from the underlying system
+        ///     Gets the current state of the specified key from the device from
+        ///     the underlying system
         /// </summary>
         /// <param name="key">
         ///     Key to get the state of
@@ -37,7 +38,8 @@ namespace Alternet.UI
         protected abstract KeyStates GetKeyStatesFromSystem(Key key);
 
         /// <summary>
-        ///     Returns the set of modifier keys currently pressed as determined by querying our keyboard state cache
+        ///     Returns the set of modifier keys currently pressed as determined
+        ///     by querying our keyboard state cache
         /// </summary>
         public ModifierKeys Modifiers
         {
