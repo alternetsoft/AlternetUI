@@ -158,59 +158,44 @@ namespace Alternet.UI
 
         internal void ReportKeyDown(Key key, bool isRepeat, out bool handled)
         {
-            handled = false;
             var control = Control.GetFocusedControl();
             if (control is null)
-                return;
-            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
-
-            while (control is not null)
             {
-                control.RaiseKeyDown(eventArgs);
-
-                handled = eventArgs.Handled;
-                if (handled)
-                    break;
-                control = control.Parent;
+                handled = false;
+                return;
             }
+
+            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
+            control.RaiseKeyDown(eventArgs);
+            handled = eventArgs.Handled;
         }
 
         internal void ReportKeyUp(Key key, bool isRepeat, out bool handled)
         {
-            handled = false;
             var control = Control.GetFocusedControl();
             if (control is null)
-                return;
-            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
-
-            while (control is not null)
             {
-                control.RaiseKeyUp(eventArgs);
-
-                handled = eventArgs.Handled;
-                if (handled)
-                    break;
-                control = control.Parent;
+                handled = false;
+                return;
             }
+
+            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
+            control.RaiseKeyUp(eventArgs);
+            handled = eventArgs.Handled;
         }
 
         internal void ReportTextInput(char keyChar, out bool handled)
         {
-            handled = false;
             var control = Control.GetFocusedControl();
             if (control is null)
-                return;
-            var eventArgs = new KeyPressEventArgs(Keyboard.PrimaryDevice, keyChar);
-
-            while (control is not null)
             {
-                control.RaiseKeyPress(eventArgs);
-
-                handled = eventArgs.Handled;
-                if (handled)
-                    break;
-                control = control.Parent;
+                handled = false;
+                return;
             }
+
+            var eventArgs = new KeyPressEventArgs(Keyboard.PrimaryDevice, keyChar);
+            control.RaiseKeyPress(eventArgs);
+            handled = eventArgs.Handled;
         }
 
         private Control GetControlUnderMouse()

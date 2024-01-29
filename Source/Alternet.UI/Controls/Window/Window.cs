@@ -228,6 +228,21 @@ namespace Alternet.UI
         public virtual bool IsActive => NativeControl.IsActive;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the form will receive key events
+        /// before the event is passed to the control that has focus.</summary>
+        /// <returns>
+        ///   <see langword="true" /> if the form will receive all
+        ///   key events; <see langword="false" /> if the currently selected
+        ///   control on the form receives key events.
+        ///   The default is <see langword="false" />.</returns>
+        [DefaultValue(false)]
+        public bool KeyPreview
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.
         /// </summary>
         public virtual bool HasTitleBar

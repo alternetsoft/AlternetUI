@@ -234,6 +234,11 @@ namespace Alternet.UI
         public event EventHandler? MouseCaptureLost;
 
         /// <summary>
+        /// When implemented by a class, occurs when user requests help for a control
+        /// </summary>
+        public event HelpEventHandler? HelpRequested;
+
+        /// <summary>
         /// Occurs when the mouse pointer enters the control.
         /// </summary>
         public event EventHandler? MouseEnter;
