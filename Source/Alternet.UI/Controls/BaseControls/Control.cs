@@ -605,10 +605,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control, or one of its child
+        /// controls, currently has the input focus.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the control or one of its child controls
+        /// currently has the input focus; otherwise, <see langword="false" />.</returns>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool ContainsFocus
+        {
+            get
+            {
+                var focused = GetFocusedControl();
+                if (focused is null)
+                    return false;
+                if (focused == this)
+                    return true;
+                var result = focused.HasIndirectParent(this);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets unique id of this control.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId UniqueId
+        public virtual ObjectUniqueId UniqueId
         {
             get
             {
@@ -621,7 +645,7 @@ namespace Alternet.UI
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
-        public IFlagsAndAttributes FlagsAndAttributes
+        public virtual IFlagsAndAttributes FlagsAndAttributes
         {
             get
             {
