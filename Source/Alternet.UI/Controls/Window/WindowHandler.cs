@@ -306,7 +306,7 @@ namespace Alternet.UI
 
         private void ApplyAlwaysOnTop(object? sender, EventArgs e)
         {
-            NativeControl.AlwaysOnTop = Control.AlwaysOnTop;
+            NativeControl.AlwaysOnTop = Control.TopMost;
         }
 
         private void ApplyHasSystemMenu(object? sender, EventArgs e)

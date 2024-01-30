@@ -129,7 +129,7 @@ namespace Alternet.UI
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             StartLocation = WindowStartLocation.CenterScreen;
-            AlwaysOnTop = true;
+            TopMost = true;
 
             var mainGrid = new Grid();
             mainGrid.RowDefinitions.Add(
