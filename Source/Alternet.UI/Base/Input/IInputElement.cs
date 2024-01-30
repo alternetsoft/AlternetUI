@@ -37,57 +37,6 @@ namespace Alternet.UI
         void RemoveHandler(RoutedEvent routedEvent, Delegate handler);
 
         #endregion Events    
-
-        #region Input
-
-        // Mouse          
-
-        /// <summary>
-        ///     An event reporting the left mouse button was pressed.
-        /// </summary>
-        event MouseEventHandler MouseLeftButtonDown;
-
-        /// <summary>
-        ///     An event reporting the left mouse button was released.
-        /// </summary>
-        event MouseEventHandler MouseLeftButtonUp;
-
-        /// <summary>
-        ///     An event reporting the right mouse button was pressed.
-        /// </summary>
-        event MouseEventHandler MouseRightButtonDown;
-
-        /// <summary>
-        ///     An event reporting the right mouse button was released.
-        /// </summary>
-        event MouseEventHandler MouseRightButtonUp;
-
-        /// <summary>
-        ///     An event reporting a mouse button was pressed.
-        /// </summary>
-        event MouseEventHandler MouseDown;
-
-        /// <summary>
-        ///     An event reporting a mouse button was released.
-        /// </summary>
-        event MouseEventHandler MouseUp;
-
-        /// <summary>
-        ///     An event reporting a mouse move.
-        /// </summary>
-        event MouseEventHandler MouseMove;
-
-        /// <summary>
-        ///     An event reporting a mouse wheel rotation.
-        /// </summary>
-        event MouseEventHandler MouseWheel;
-
-        /// <summary>
-        ///     A property indicating if the element is enabled or not.
-        /// </summary>
-        bool IsEnabled { get; }
-
-        #endregion Input
     }
 }
 

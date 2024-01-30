@@ -105,13 +105,18 @@ namespace Alternet.UI
             get { return _primaryMouseDevice; }
         }
 
-        internal void ReportMouseMove(Control targetControl, long timestamp, out bool handled)
+        internal void ReportMouseMove(
+            Control targetControl,
+            long timestamp,
+            out bool handled)
         {
-            ReportMouseEvent(
-                targetControl,
-                UIElement.MouseMoveEvent,
-                new MouseEventArgs(Mouse.PrimaryDevice, timestamp),
-                out handled);
+            handled = false;
+            var control = targetControl ?? GetControlUnderMouse();
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, timestamp);
+            control.RaiseMouseMove(eventArgs);
         }
 
         internal void ReportMouseDown(
@@ -120,40 +125,59 @@ namespace Alternet.UI
             MouseButton changedButton,
             out bool handled)
         {
-            ReportMouseEvent(
-                targetControl,
-                UIElement.MouseDownEvent,
-                new MouseEventArgs(Mouse.PrimaryDevice, timestamp, changedButton),
-                out handled);
+            handled = false;
+            var control = targetControl ?? GetControlUnderMouse();
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, changedButton, timestamp);
+            control.RaiseMouseDown(eventArgs);
         }
 
-        internal void ReportMouseDoubleClick(Control targetControl, long timestamp, MouseButton changedButton, out bool handled)
+        internal void ReportMouseDoubleClick(
+            Control targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
         {
-            ReportMouseEvent(
-                targetControl,
-                UIElement.MouseDoubleClickEvent,
-                new MouseEventArgs(Mouse.PrimaryDevice, timestamp, changedButton),
-                out handled);
+            handled = false;
+            var control = targetControl ?? GetControlUnderMouse();
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, changedButton, timestamp);
+            control.RaiseMouseDoubleClick(eventArgs);
         }
 
-        internal void ReportMouseUp(Control targetControl, long timestamp, MouseButton changedButton, out bool handled)
+        internal void ReportMouseUp(
+            Control targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
         {
-            ReportMouseEvent(
-                targetControl,
-                UIElement.MouseUpEvent,
-                new MouseEventArgs(Mouse.PrimaryDevice, timestamp, changedButton),
-                out handled);
+            handled = false;
+            var control = targetControl ?? GetControlUnderMouse();
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, changedButton, timestamp);
+            control.RaiseMouseUp(eventArgs);
         }
 
-        internal void ReportMouseWheel(Control targetControl, long timestamp, int delta, out bool handled)
+        internal void ReportMouseWheel(
+            Control targetControl,
+            long timestamp,
+            int delta,
+            out bool handled)
         {
-            var args = new MouseEventArgs(Mouse.PrimaryDevice, timestamp);
-            args.Delta = delta;
-            ReportMouseEvent(
-                targetControl,
-                UIElement.MouseWheelEvent,
-                args,
-                out handled);
+            handled = false;
+            var control = targetControl ?? GetControlUnderMouse();
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, timestamp);
+            eventArgs.Delta = delta;
+            control.RaiseMouseWheel(eventArgs);
         }
 
         internal void ReportKeyDown(Key key, bool isRepeat, out bool handled)

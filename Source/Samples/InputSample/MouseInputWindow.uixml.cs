@@ -17,7 +17,13 @@ namespace InputSample
             SetSizeToContent();
 
             Application.Current.Idle += Current_Idle;
+
+            lb.BindApplicationLog();
+
+            logMoveCheckBox.BindBoolProp(this, nameof(MouseMoveLogged));
         }
+
+        public bool MouseMoveLogged { get; set; }
 
         const string MouseUncapturedLabel = "Press mouse button here to capture mouse.";
         const string MouseCapturedLabel = "Release mouse button anywhere to release the capture.";
@@ -58,14 +64,9 @@ namespace InputSample
         {
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
-
         private void HelloButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello!", "Button Clicked");
+            Application.Log("Hello Button Clicked");
         }
 
         private void MouseCaptureBorder_MouseDown(object sender, MouseEventArgs e)
@@ -84,75 +85,62 @@ namespace InputSample
 
         private void MouseCaptureBorder_MouseCaptureLost(object sender, EventArgs e)
         {
-            MessageBox.Show("Mouse capture was lost.");
+            Application.Log("Mouse capture was lost.");
         }
 
         private void MouseCaptureBorder_MouseEnter(object sender, EventArgs e)
         {
-            LogMessage(lbWindow, "MouseCaptureBorder_MouseEnter");
+            Application.Log("MouseCaptureBorder_MouseEnter");
         }
 
         private void MouseCaptureBorder_MouseLeave(object sender, EventArgs e)
         {
-            LogMessage(lbWindow, "MouseCaptureBorder_MouseLeave");
-        }
-
-        private void LogMessage(ListBox lb, string m)
-        {
-            var messageNumber = 0;
-
-            if (lb.Tag is not null)
-                messageNumber = (int)lb.Tag;
-
-            lb.Items.Add($"{++messageNumber} {m}");
-
-            lb.Tag = messageNumber;
-
-            lb.SelectedIndex = lb.Items.Count - 1;
-            lb.Refresh();
+            Application.Log("MouseCaptureBorder_MouseLeave");
         }
 
         private void LogMouseMove(
-            ListBox lb,
             MouseEventArgs e,
             string objectName,
             string eventName,
-            IInputElement element) =>
-            LogMessage(lb, $"{eventName} [{FormatPoint(e.GetPosition(element))}]");
+            object? element)
+        {
+            if (!MouseMoveLogged)
+                return;
+
+            var prefix = $"{ objectName }.{ eventName}";
+
+            Application.LogReplace($"{prefix} [{FormatPoint(e.GetPosition(element as Control))}]", prefix);
+        }
 
         private void LogMouseButton(
-            ListBox lb,
             MouseEventArgs e,
             string objectName,
             string eventName,
-            IInputElement element) =>
-            LogMessage(
-                lb,
-                $"{eventName} [{e.ChangedButton}, {FormatPoint(e.GetPosition(element))}]");
+            object? element) =>
+            Application.Log(
+                $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(e.GetPosition(element as Control))}]");
 
         private void LogMouseWheel(
-            ListBox lb,
             MouseEventArgs e,
             string objectName,
             string eventName,
-            IInputElement element) =>
-            LogMessage(
-                lb,
-                $"{eventName} [{e.Delta}, {FormatPoint(e.GetPosition(element))}]");
+            object? element) =>
+            Application.Log(
+                $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(e.GetPosition(element as Control))}]");
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) =>
-            LogMouseMove(lbButton, e, "HelloButton", "Move", (IInputElement)sender);
+            LogMouseMove(e, "HelloButton", "Move", (Control)sender);
 
         private void HelloButton_MouseDown(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbButton, e, "HelloButton", "Down", (IInputElement)sender);
+            LogMouseButton(e, "HelloButton", "Down", (Control)sender);
         
         private void HelloButton_MouseUp(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbButton, e, "HelloButton", "Up", (IInputElement)sender);
+            LogMouseButton(e, "HelloButton", "Up", (Control)sender);
 
         static string FormatPoint(PointD pt) => FormatPoint(new PointI((int)pt.X, (int)pt.Y));
         static string FormatPoint(PointI pt) => $"{pt.X}, {pt.Y}";
 
-        private void UpdateMousePositionLabel(Control control, PointD clientPosition)
+        /*internal void UpdateMousePositionLabel(Control control, PointD clientPosition)
         {
             var screenPosition = control.ClientToScreen(clientPosition);
             var devicePosition = control.ScreenToDevice(screenPosition);
@@ -164,33 +152,36 @@ namespace InputSample
 
             mousePositionLabel.Text = text;
             mousePositionLabel.Refresh();
+        }*/
+
+        private void GroupBox_MouseMove(object? sender, MouseEventArgs e)
+        {
+            LogMouseMove(e, "GroupBox", "Move", sender);
         }
 
-        private void StackPanel_MouseMove(object sender, MouseEventArgs e) =>
-            LogMouseMove(lbStackPanel, e, "StackPanel", "Move", (IInputElement)sender);
+        private void GroupBox_MouseDown(object? sender, MouseEventArgs e)
+        {
+            LogMouseButton(e, "GroupBox", "Down", sender);
+        }
 
-        private void StackPanel_MouseDown(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbStackPanel, e, "StackPanel", "Down", (IInputElement)sender);
+        private void GroupBox_MouseUp(object? sender, MouseEventArgs e)
+        {
+            LogMouseButton(e, "GroupBox", "Up", sender);
+        }
 
-        private void StackPanel_MouseUp(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbStackPanel, e, "StackPanel", "Up", (IInputElement)sender);
+        private void Window_MouseMove(object? sender, MouseEventArgs e) =>
+            LogMouseMove(e, "Window", "Move", sender);
 
-        private void Window_MouseMove(object sender, MouseEventArgs e) =>
-            LogMouseMove(lbWindow, e, "Window", "Move", (IInputElement)sender);
-
-        private void Window_MouseDown(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbWindow, e, "Window", "Down", (IInputElement)sender);
+        private void Window_MouseDown(object? sender, MouseEventArgs e) =>
+            LogMouseButton(e, "Window", "Down", sender);
 
         private void Window_MouseUp(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbWindow, e, "Window", "Up", (IInputElement)sender);
+            LogMouseButton(e, "Window", "Up", sender);
 
         private void Window_MouseDoubleClick(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbWindow, e, "Window", "DoubleClick", (IInputElement)sender);
-
-        private void Window_MouseLeftButtonDown(object sender, MouseEventArgs e) =>
-            LogMouseButton(lbWindow, e, "Window", "LeftBtnDown", (IInputElement)sender);
+            LogMouseButton(e, "Window", "DoubleClick", sender);
 
         private void Window_MouseWheel(object sender, MouseEventArgs e) =>
-            LogMouseWheel(lbWindow, e, "Window", "Wheel", (IInputElement)sender);
+            LogMouseWheel(e, "Window", "Wheel", sender);
     }
 }

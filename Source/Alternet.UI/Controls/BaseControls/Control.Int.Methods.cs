@@ -169,6 +169,49 @@ namespace Alternet.UI
             }
         }
 
+        internal void RaiseMouseMove(MouseEventArgs e)
+        {
+            OnMouseMove(e);
+        }
+
+        internal void RaiseMouseUp(MouseEventArgs e)
+        {
+            OnMouseUp(e);
+
+            if(e.ChangedButton == MouseButton.Left)
+            {
+                OnMouseLeftButtonUp(e);
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                OnMouseRightButtonUp(e);
+            }
+        }
+
+        internal void RaiseMouseDown(MouseEventArgs e)
+        {
+            OnMouseDown(e);
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                OnMouseLeftButtonDown(e);
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                OnMouseRightButtonDown(e);
+            }
+        }
+
+        internal void RaiseMouseWheel(MouseEventArgs e)
+        {
+            OnMouseWheel(e);
+        }
+
+        internal void RaiseMouseDoubleClick(MouseEventArgs e)
+        {
+            OnMouseDoubleClick(e);
+        }
+
         internal void RaiseKeyDown(KeyEventArgs e)
         {
             var control = this;

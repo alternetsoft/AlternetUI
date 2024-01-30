@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <param name="mouseClientLocation">The client coordinates of the mouse pointer
         /// in logical units (1/96th of an inch).</param>
         /// <param name="mouseDownLocation">Coordinates of the mouse pointer in the moment when
-        /// <see cref="UIElement.MouseDown"/> event was fired.</param>
+        /// <see cref="Control.MouseDown"/> event was fired.</param>
         /// <param name="mouseDownArgs"></param>
         /// <param name="mouseMoveArgs"></param>
         internal DragStartEventArgs(
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Distance calculated between current mouse pointer cordinates
         /// and coordinates in the moment when
-        /// <see cref="UIElement.MouseDown"/> event was fired. If distance is greater
+        /// <see cref="Control.MouseDown"/> event was fired. If distance is greater
         /// than <see cref="MinDragStartDistance"/>, drag operation can be started.
         /// </remarks>
         public static double MinDragStartDistance { get; set; } = 7;
@@ -57,7 +57,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets coordinates of the mouse pointer in the moment when
-        /// <see cref="UIElement.MouseDown"/> event was fired.
+        /// <see cref="Control.MouseDown"/> event was fired.
         /// </summary>
         /// <remarks>
         /// Coordinates of the mouse pointer are in logical units (1/96th of an inch).

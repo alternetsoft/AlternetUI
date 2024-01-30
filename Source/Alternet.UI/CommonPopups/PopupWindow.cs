@@ -263,7 +263,6 @@ namespace Alternet.UI
         {
             if (HideOnDoubleClick && e.ChangedButton == MouseButton.Left)
             {
-                e.Handled = true;
                 HidePopup(ModalResult.Accepted);
             }
         }
@@ -310,7 +309,6 @@ namespace Alternet.UI
         {
             if (HideOnClick)
             {
-                e.Handled = true;
                 HidePopup(ModalResult.Accepted);
             }
         }

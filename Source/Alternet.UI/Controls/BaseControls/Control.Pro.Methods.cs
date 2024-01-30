@@ -205,21 +205,25 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        /// <summary>
+        ///     Virtual method reporting the left mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
             IsMouseLeftButtonDown = true;
             RaiseCurrentStateChanged();
             Designer?.RaiseMouseLeftButtonDown(this, e);
+            MouseLeftButtonDown?.Invoke(this, e);
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
+        /// <summary>
+        ///     Virtual method reporting the left mouse button was released
+        /// </summary>
+        protected virtual void OnMouseLeftButtonUp(MouseEventArgs e)
         {
-            base.OnMouseLeftButtonUp(e);
             IsMouseLeftButtonDown = false;
             RaiseCurrentStateChanged();
+            MouseLeftButtonUp?.Invoke(this, e);
         }
 
         /// <summary>
@@ -252,10 +256,12 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseRightButtonDown(MouseEventArgs e)
+        /// <summary>
+        ///     Virtual method reporting the right mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseRightButtonDown(MouseEventArgs e)
         {
-            base.OnMouseRightButtonDown(e);
+            MouseRightButtonDown?.Invoke(this, e);
             ShowPopupMenu(ContextMenuStrip);
         }
 
@@ -423,22 +429,51 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseDown(MouseEventArgs e)
+        /// <summary>
+        ///     Virtual method reporting the mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
-            base.OnMouseDown(e);
-            if (e.LeftButton == MouseButtonState.Pressed && e.Source == this)
+            MouseDoubleClick?.Invoke(this, e);
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse wheel rotation
+        /// </summary>
+        protected virtual void OnMouseWheel(MouseEventArgs e)
+        {
+            MouseWheel?.Invoke(this, e);
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the right mouse button was released
+        /// </summary>
+        protected virtual void OnMouseRightButtonUp(MouseEventArgs e)
+        {
+            MouseRightButtonUp?.Invoke(this, e);
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseDown(MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 dragEventArgs = e;
                 dragEventMousePos = e.GetPosition(this);
             }
+
+            MouseDown?.Invoke(this, e);
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseMove(MouseEventArgs e)
+        /// <summary>
+        ///     Virtual method reporting a mouse move
+        /// </summary>
+        protected virtual void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-            if (dragEventArgs is null || e.Source != this)
+            MouseMove?.Invoke(this, e);
+            if (dragEventArgs is null)
                 return;
             var mousePos = e.GetPosition(this);
             var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
@@ -447,11 +482,13 @@ namespace Alternet.UI
                 dragEventArgs = null;
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseUp(MouseEventArgs e)
+        /// <summary>
+        ///     Virtual method reporting the mouse button was released
+        /// </summary>
+        protected virtual void OnMouseUp(MouseEventArgs e)
         {
-            base.OnMouseUp(e);
-            /*if (e.LeftButton == MouseButtonState.Released && e.Source == this)*/
+            MouseUp?.Invoke(this, e);
+            /*if (e.LeftButton == MouseButtonState.Released)*/
             dragEventArgs = null;
         }
 

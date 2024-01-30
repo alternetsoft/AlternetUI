@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <param name="timestamp">
         ///     The time when the input occurred. 
         /// </param>
-        public InputEventArgs(InputDevice inputDevice, long timestamp)
+        public InputEventArgs(InputDevice inputDevice, long timestamp = 0)
         {
             /* inputDevice parameter being null is valid*/
 	    /* timestamp parameter is valuetype, need not be checked */

@@ -3,9 +3,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
-
 using System;
+using System.Collections;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -19,25 +18,18 @@ namespace Alternet.UI
     ///     The MouseEventArgs class provides access to the logical
     ///     Mouse device for all derived event args.
     /// </summary>
-    public class MouseEventArgs : InputEventArgs
+    public class MouseEventArgs : BaseEventArgs
     {
+        private Control control;
+        private double? x;
+        private double? y;
+
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        /// <param name="mouse">
-        ///     The logical Mouse device associated with this event.
-        /// </param>
-        /// <param name="timestamp">
-        ///     The time when the input occurred.
-        /// </param>
-        /// <param name="button">
-        ///     The mouse button whose state is being described.
-        /// </param>
-        public MouseEventArgs(MouseDevice mouse, long timestamp, MouseButton button)
-            : base(mouse, timestamp)
+        internal MouseEventArgs(Control control, MouseButton button, long timestamp)
+            : this(control, timestamp)
         {
-            MouseButtonUtilities.Validate(button);
-
             ChangedButton = button;
             ClickCount = 1;
         }
@@ -45,20 +37,24 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        /// <param name="mouse">
-        ///     The logical Mouse device associated with this event.
-        /// </param>
-        /// <param name="timestamp">
-        ///     The time when the input occurred.
-        /// </param>
-        public MouseEventArgs(MouseDevice mouse, long timestamp)
-            : base(mouse, timestamp)
+        internal MouseEventArgs(Control control, long timestamp)
         {
-            if( mouse == null )
-            {
-                throw new System.ArgumentNullException("mouse");
-            }
+            
+            MouseDevice = Mouse.PrimaryDevice;
+            this.control = control;
+            Timestamp = timestamp;
         }
+
+        /// <summary>
+        /// Gets timestamp of the event.
+        /// </summary>
+        public long Timestamp { get; }
+
+        /// <summary>
+        ///     Read-only access to the logical mouse device associated with
+        ///     this event.
+        /// </summary>
+        public MouseDevice MouseDevice { get; }
 
         /// <summary>
         ///     Read-only access to the button being described.
@@ -92,6 +88,36 @@ namespace Alternet.UI
                     default:
                         return MouseButtons.None;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the x-coordinate of the mouse during the generating mouse event.
+        /// </summary>
+        /// <returns>The x-coordinate of the mouse, in dips.</returns>
+        public double X
+        {
+            get
+            {
+                if (x is null)
+                    UpdatePosition();
+                return x.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the y-coordinate of the mouse during the generating mouse event.
+        /// </summary>
+        /// <returns>
+        /// The y-coordinate of the mouse, in pixels.
+        /// </returns>
+        public double Y
+        {
+            get
+            {
+                if (y is null)
+                    UpdatePosition();
+                return y.Value;
             }
         }
 
@@ -149,15 +175,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Read-only access to the mouse device associated with this
-        ///     event.
-        /// </summary>
-        public MouseDevice MouseDevice
-        {
-            get {return (MouseDevice) this.Device;}
-        }
-
-        /// <summary>
         /// Gets a signed count of the number of detents the mouse wheel has rotated,
         /// multiplied by the WHEEL_DELTA constant. A detent is one notch of the
         /// mouse wheel.</summary>
@@ -175,9 +192,12 @@ namespace Alternet.UI
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
         /// </summary>
-        public PointD GetPosition(IInputElement relativeTo)
+        public PointD GetPosition(Control? relativeTo)
         {
-            return this.MouseDevice.GetPosition(relativeTo);
+            if (relativeTo is null)
+                return this.MouseDevice.GetScreenPosition();
+            else
+                return this.MouseDevice.GetPosition(relativeTo);
         }
 
         /// <summary>
@@ -234,21 +254,19 @@ namespace Alternet.UI
                 return this.MouseDevice.XButton2;
             }
         }
-        
+
         /// <summary>
-        ///     The mechanism used to call the type-specific handler on the
-        ///     target.
+        /// Gets the location of the mouse during the generating mouse event.
         /// </summary>
-        /// <param name="genericHandler">
-        ///     The generic handler to call in a type-specific way.
-        /// </param>
-        /// <param name="genericTarget">
-        ///     The target to call the handler on.
-        /// </param>
-        protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
+        /// <returns>A <see cref="PointD" /> that contains the x- and y- mouse
+        /// coordinates, in dips, relative to the upper-left corner of the control.</returns>
+        public PointD Location => new(X, Y);
+
+        internal void UpdatePosition()
         {
-            MouseEventHandler handler = (MouseEventHandler) genericHandler;
-            handler(genericTarget, this);
+            var position = GetPosition(control.ParentWindow);
+            x = position.X;
+            y = position.Y;
         }
     }
 }

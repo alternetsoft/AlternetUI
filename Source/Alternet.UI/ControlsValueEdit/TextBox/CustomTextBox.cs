@@ -452,7 +452,6 @@ namespace Alternet.UI
             {
                 if (sender is not PictureBox pictureBox)
                     return;
-                e.Handled = true;
 
                 pictureBox.HideToolTip();
 

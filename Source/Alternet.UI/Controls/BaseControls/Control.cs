@@ -91,6 +91,63 @@ namespace Alternet.UI
         public event EventHandler? Activated;
 
         /// <summary>
+        /// Occurs when the mouse pointer is moved over the control.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseMove;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and a
+        /// mouse button is pressed.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and a mouse button
+        /// is released.</summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseUp;
+
+        /// <summary>
+        /// Occurs when the mouse wheel moves while the control has focus.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseWheel;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and left
+        /// mouse button is pressed.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseLeftButtonDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and right
+        /// mouse button is pressed.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseRightButtonDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and right mouse button
+        /// is released.</summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseRightButtonUp;
+
+        /// <summary>
+        /// Occurs when the control is double clicked by the mouse.
+        /// </summary>
+        [Category("Action")]
+        public event MouseEventHandler? MouseDoubleClick;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and left mouse button
+        /// is released.</summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseLeftButtonUp;
+
+        /// <summary>
         /// Occurs when the control's handle is created.
         /// </summary>
         public event EventHandler? HandleCreated;
