@@ -13,19 +13,6 @@ namespace Alternet.UI
     public class UIElement : DependencyObject, IInputElement
     {
         /// <summary>
-        ///     The DependencyProperty for the Focusable property.
-        /// </summary>
-        [CommonDependencyProperty]
-        public static readonly DependencyProperty FocusableProperty =
-                DependencyProperty.Register(
-                        "Focusable",
-                        typeof(bool),
-                        typeof(UIElement),
-                        new UIPropertyMetadata(
-                                BooleanBoxes.FalseBox, // default value
-                                new PropertyChangedCallback(OnFocusableChanged)));
-
-        /// <summary>
         ///     Alias to the Mouse.MouseMoveEvent.
         /// </summary>
         public static readonly RoutedEvent MouseMoveEvent =
@@ -96,9 +83,6 @@ namespace Alternet.UI
                 typeof(UIElement));
 
         internal const int MAXELEMENTSINROUTE = 4096;
-
-        // Used by ContentElement
-        internal static readonly EventPrivateKey FocusableChangedKey = new();
 
         static UIElement()
         {
@@ -189,25 +173,6 @@ namespace Alternet.UI
         {
             add { AddHandler(UIElement.MouseLeftButtonUpEvent, value, false); }
             remove { RemoveHandler(UIElement.MouseLeftButtonUpEvent, value); }
-        }
-
-        /// <summary>
-        ///     FocusableChanged event
-        /// </summary>
-        internal event DependencyPropertyChangedEventHandler FocusableChanged
-        {
-            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
-            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
-        }
-
-        /// <summary>
-        ///     Gettor and Settor for Focusable Property
-        /// </summary>
-        [Browsable(false)]
-        internal bool Focusable
-        {
-            get { return (bool)GetValue(FocusableProperty); }
-            set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -802,16 +767,6 @@ namespace Alternet.UI
                 Mouse.MouseWheelEvent,
                 new MouseEventHandler(UIElement.OnMouseWheelThunk),
                 false);
-        }
-
-        private static void OnFocusableChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            UIElement uie = (UIElement)d;
-
-            // Raise the public changed event.
-            uie.RaiseDependencyPropertyChanged(FocusableChangedKey, e);
         }
 
         private static void OnMouseDownThunk(object sender, MouseEventArgs e)
