@@ -167,7 +167,7 @@ namespace Alternet.UI
                 if (value is null)
                     ShortcutKeyInfo = null;
                 else
-                    ShortcutKeyInfo = [new KeyInfo(value.Key, value.Modifiers)];
+                    ShortcutKeyInfo = new KeyInfo[] { new(value.Key, value.Modifiers) };
             }
         }
 

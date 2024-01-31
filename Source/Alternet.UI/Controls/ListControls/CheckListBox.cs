@@ -29,7 +29,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public class CheckListBox : ListBox
     {
-        private readonly HashSet<int> checkedIndices = [];
+        private readonly HashSet<int> checkedIndices = new();
 
         /// <summary>
         /// Occurs when the <see cref="CheckedIndex"/> property or the
@@ -141,10 +141,10 @@ namespace Alternet.UI
         {
             get
             {
-#pragma warning disable IDE0305
+#pragma warning disable
                 int[] sortedCopy =
                     CheckedIndices.OrderByDescending(i => i).ToArray();
-#pragma warning restore IDE0305
+#pragma warning restore
                 return sortedCopy;
             }
         }

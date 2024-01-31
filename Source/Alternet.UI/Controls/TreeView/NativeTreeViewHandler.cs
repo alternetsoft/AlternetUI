@@ -7,9 +7,7 @@ namespace Alternet.UI
 {
     internal class NativeTreeViewHandler : TreeViewHandler
     {
-        /*private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems = new();*/
-
-        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = [];
+        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
 
         private bool skipSetItemText;
 
@@ -455,7 +453,6 @@ namespace Alternet.UI
 
         private void NativeControl_ControlRecreated(object? sender, EventArgs e)
         {
-            // handlesByItems.Clear();
             itemsByHandles.Clear();
             ApplyItems();
             ApplySelection();
@@ -495,12 +492,6 @@ namespace Alternet.UI
 
         private IntPtr GetHandleFromItem(TreeViewItem item)
         {
-            /*
-            if (handlesByItems.TryGetValue(item, out IntPtr result))
-                return result;
-            return IntPtr.Zero;
-            */
-
             return item.Handle;
         }
 
@@ -585,8 +576,6 @@ namespace Alternet.UI
                             item.Parent?.IsExpanded ?? false);
 
             itemsByHandles.Add(handle, item);
-
-            // handlesByItems.Add(item, handle);
             item.Handle = handle;
         }
 
@@ -638,7 +627,7 @@ namespace Alternet.UI
                 }
 
                 var handle = GetHandleFromItem(parentItem);
-                parentItem.Handle = default; // handlesByItems.Remove(parentItem);
+                parentItem.Handle = default;
                 itemsByHandles.Remove(handle);
             }
         }

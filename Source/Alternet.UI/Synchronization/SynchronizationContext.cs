@@ -95,14 +95,15 @@ namespace Alternet.UI
             if (destinationThread == null || !destinationThread.IsAlive)
                 throw new InvalidAsynchronousStateException();
 
-            SynchronizationService.Invoke(d, [state]);
+            SynchronizationService.Invoke(d, new object?[] { state });
         }
 
         /// <summary>
         /// Copies the synchronization context.
         /// </summary>
         /// <returns>A copy of the synchronization context.</returns>
-        public override System.Threading.SynchronizationContext CreateCopy() => new SynchronizationContext(DestinationThread);
+        public override System.Threading.SynchronizationContext CreateCopy()
+            => new SynchronizationContext(DestinationThread);
 
         /// <summary>
         /// Dispatches an asynchronous message to a synchronization context.
@@ -114,7 +115,7 @@ namespace Alternet.UI
         /// </remarks>
         public override void Post(SendOrPostCallback d, object? state)
         {
-            SynchronizationService.BeginInvoke(d, [state]);
+            SynchronizationService.BeginInvoke(d, new object?[] { state });
         }
 
         /// <summary>
@@ -136,8 +137,10 @@ namespace Alternet.UI
             {
                 var currentContext = AsyncOperationManager.SynchronizationContext;
 
-                // Make sure we either have no sync context or that we have one of type SynchronizationContext
-                if (currentContext == null || currentContext.GetType() == typeof(System.Threading.SynchronizationContext))
+                // Make sure we either have no sync context or that we have
+                // one of type SynchronizationContext
+                if (currentContext == null
+                    || currentContext.GetType() == typeof(System.Threading.SynchronizationContext))
                 {
                     previousSynchronizationContext = currentContext;
                     AsyncOperationManager.SynchronizationContext = new SynchronizationContext();

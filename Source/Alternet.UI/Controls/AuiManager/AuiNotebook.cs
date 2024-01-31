@@ -16,7 +16,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class AuiNotebook : Control
     {
-        private readonly Collection<IAuiNotebookPage> pages = [];
+        private readonly Collection<IAuiNotebookPage> pages = new();
 
         /// <summary>
         /// Occurs when a page is about to be closed.

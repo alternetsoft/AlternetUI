@@ -30,7 +30,7 @@ namespace PropertyGridSample
             return imageLists;
         }
 
-        public static readonly Dictionary<Type, Action<Object>> Actions = [];
+        public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
         private const string ResPrefix =
             "embres:PropertyGridSample.Resources.";

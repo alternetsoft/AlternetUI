@@ -166,7 +166,7 @@ namespace Alternet.UI
             {
                 if (visualChildren == null)
                 {
-                    visualChildren = [];
+                    visualChildren = new();
                     visualChildren.ItemInserted += VisualChildren_ItemInserted;
                     visualChildren.ItemRemoved += VisualChildren_ItemRemoved;
                 }

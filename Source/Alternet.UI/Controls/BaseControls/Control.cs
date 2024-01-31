@@ -1166,7 +1166,7 @@ namespace Alternet.UI
             {
                 if (children == null)
                 {
-                    children = [];
+                    children = new();
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }
@@ -1822,7 +1822,7 @@ namespace Alternet.UI
                 if (value is null)
                     GroupIndexes = null;
                 else
-                    GroupIndexes = [value.Value];
+                    GroupIndexes = new int[] { value.Value };
             }
         }
 

@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     internal class AssemblyDescriptorResolver : IAssemblyDescriptorResolver
     {
-        private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = [];
+        private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = new();
 
         public IAssemblyDescriptor GetAssembly(string name)
         {

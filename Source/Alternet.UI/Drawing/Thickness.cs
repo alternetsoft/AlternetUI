@@ -315,14 +315,14 @@ namespace Alternet.UI
         public override readonly string ToString()
         {
             string[] names =
-            [
+            {
                 PropNameStrings.Default.Left,
                 PropNameStrings.Default.Top,
                 PropNameStrings.Default.Right,
                 PropNameStrings.Default.Bottom,
-            ];
+            };
 
-            double[] values = [left, top, right, bottom];
+            double[] values = { left, top, right, bottom };
 
             return StringUtils.ToString<double>(names, values);
         }

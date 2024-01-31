@@ -94,8 +94,8 @@ namespace ControlsSample
                 TextBoxTextAttrUnderlineType.Special,
                 Color.Red);
 
-            List<object> list =
-            [
+            object[] list =
+            {
                 "Text color is ",
                 taTextColorRed,
                 "red",
@@ -142,7 +142,7 @@ namespace ControlsSample
                 taDefault,
                 ".\n",
                 "\n",
-            ];
+            };
 
             // richEdit.AutoUrl = true;
 

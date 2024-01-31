@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     internal class PropertyGridTypeRegistry : IPropertyGridTypeRegistry
     {
-        private readonly AdvDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = [];
+        private readonly AdvDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = new();
         private readonly Type type;
         private IPropertyGridTypeRegistry? baseTypeRegistry;
         private List<(string, Action)>? simpleActions;
@@ -70,7 +70,7 @@ namespace Alternet.UI
 
         public void AddSimpleAction(string name, Action action)
         {
-            simpleActions ??= [];
+            simpleActions ??= new();
             simpleActions.Add((name, action));
         }
 

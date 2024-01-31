@@ -89,7 +89,7 @@ namespace Alternet.Drawing
 
                     if (obj == null)
                     {
-                        string[] array = text2.Split([listSeparator]);
+                        string[] array = text2.Split(listSeparator);
                         int[] array2 = new int[array.Length];
                         for (int i = 0; i < array2.Length; i++)
                         {

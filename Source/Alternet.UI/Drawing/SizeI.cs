@@ -313,8 +313,8 @@ namespace Alternet.Drawing
         /// </summary>
         public override readonly string ToString()
         {
-            string[] names = [PropNameStrings.Default.Width, PropNameStrings.Default.Height];
-            int[] values = [width, height];
+            string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
+            int[] values = { width, height };
 
             return StringUtils.ToString<int>(names, values);
         }

@@ -39,11 +39,11 @@ namespace Alternet.UI
             dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
 
             GradientStop[] gradientStops =
-            [
-                new GradientStop((Color)"#1B222C", 0),
-                new GradientStop((Color)"#80767E", 0.5),
-                new GradientStop((Color)"#0C1013", 1),
-            ];
+            {
+                new((Color)"#1B222C", 0),
+                new((Color)"#80767E", 0.5),
+                new((Color)"#0C1013", 1),
+            };
 
             using var scaleGradientBrush =
                 new LinearGradientBrush(

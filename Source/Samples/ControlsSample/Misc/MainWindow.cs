@@ -11,7 +11,7 @@ namespace ControlsSample
         private readonly LogListBox eventsControl;
         private readonly LayoutPanel splitterPanel;
         private readonly Control panel;
-        private Splitter splitter = new();
+        private readonly Splitter splitter = new();
 
         static MainWindow()
         {
@@ -134,12 +134,12 @@ namespace ControlsSample
                 popupNameValue = new("Popup", () => new ListControlsPopups());
 
             NameValue<Func<Control>>?[] pages =
-            [
+            {
                 new("List", () => new ListBoxPage()),
                 new("Checks", () => new CheckListBoxPage()),
                 new("Combo", () => new ComboBoxPage()),
                 popupNameValue,
-            ];
+            };
 
             return CreateCustomPage(pages);
         }
@@ -147,11 +147,11 @@ namespace ControlsSample
         Control CreateButtonsPage()
         {
             NameValue<Func<Control>>[] pages =
-            [
+            {
                 new("Button", () => new ButtonPage()),
                 new("Check", () => new CheckBoxesPage()),
                 new("Radio", () => new RadioButtonsPage()),
-            ];
+            };
 
             return CreateCustomPage(pages);
         }
@@ -159,10 +159,10 @@ namespace ControlsSample
         Control CreateSliderAndProgressPage()
         {
             NameValue<Func<Control>>[] pages =
-            [
+            {
                 new("Slider", () => new SliderPage()),
                 new("Progress", () => new ProgressBarPage()),
-            ];
+            };
 
             return CreateCustomPage(pages);
         }
@@ -170,7 +170,7 @@ namespace ControlsSample
         Control CreateTextInputPage()
         {
             NameValue<Func<Control>>[] pages =
-            [
+            {
                 new("Text", () => new TextInputPage()),
 
                 new("Numbers", () =>
@@ -192,7 +192,7 @@ namespace ControlsSample
                 {
                     return new TextOtherPage();
                 }),
-            ];
+            };
 
             return CreateCustomPage(pages);
         }
@@ -200,10 +200,10 @@ namespace ControlsSample
         Control CreateLayoutPage()
         {
             NameValue<Func<Control>>[] pages =
-            [
+            {
                 new("Splitter", () => new LayoutPanelPage()),
                 new("Grid", () => new GridPage()),
-            ];
+            };
 
             return CreateCustomPage(pages);
         }
@@ -211,10 +211,10 @@ namespace ControlsSample
         Control CreateDateTimePage()
         {
             NameValue<Func<Control>>[] pages =
-            [
+            {
                 new("DateTime", () => new DateTimePage()),
                 new("Calendar", () => new CalendarPage()),
-            ];
+            };
 
             return CreateCustomPage(pages);
         }

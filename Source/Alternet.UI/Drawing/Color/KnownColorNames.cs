@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     {
         // Names of all colors (in order of definition in the KnownColor enum).
         private static readonly string[] ColorNameTable =
-        [
+        {
             /*"System" colors, Part 1*/
             "ActiveBorder",
             "ActiveCaption",
@@ -192,7 +192,7 @@ namespace Alternet.Drawing
 
             // "Web" colors, Part 2
             "RebeccaPurple",
-        ];
+        };
 
         public static string KnownColorToName(KnownColor color)
         {

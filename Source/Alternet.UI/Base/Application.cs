@@ -72,7 +72,7 @@ namespace Alternet.UI
         private static bool logFileIsEnabled;
         private static Application? current;
 
-        private readonly List<Window> windows = [];
+        private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
 

@@ -334,8 +334,8 @@ namespace Alternet.Drawing
         /// <returns>A string that represents the current object.</returns>
         public override readonly string ToString()
         {
-            string[] names = [PropNameStrings.Default.X, PropNameStrings.Default.Y];
-            double[] values = [x, y];
+            string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
+            double[] values = { x, y };
 
             return StringUtils.ToString<double>(names, values);
         }

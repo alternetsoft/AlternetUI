@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static IEnumerable<string> InsertPrefix(IEnumerable<string> items, string prefix)
         {
-            List<string> result = [];
+            List<string> result = new();
             foreach (var item in items)
                 result.Add($"{prefix}{item}");
             return result;

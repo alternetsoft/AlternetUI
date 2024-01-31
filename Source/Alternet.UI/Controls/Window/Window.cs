@@ -751,7 +751,7 @@ namespace Alternet.UI
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings { get; } = [];
+        public virtual Collection<InputBinding> InputBindings { get; } = new();
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;

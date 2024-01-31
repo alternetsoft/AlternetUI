@@ -106,9 +106,9 @@ namespace Alternet.UI
         public static KeyInfo[] FilterBackendOs(IEnumerable<KeyInfo>? keys)
         {
             if (keys is null)
-                return [];
+                return Array.Empty<KeyInfo>();
 
-            List<KeyInfo> result = [];
+            List<KeyInfo> result = new();
 
             foreach (var key in keys)
             {

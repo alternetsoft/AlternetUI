@@ -517,7 +517,8 @@ namespace Alternet.Drawing
         /// </summary>
         public static IEnumerable<string> GetExtensionsForLoadSave()
         {
-            return [
+            string[] ext =
+            {
                 ".bmp",
                 ".png",
                 ".jpeg",
@@ -527,7 +528,9 @@ namespace Alternet.Drawing
                 ".tiff",
                 ".tga",
                 ".xpm",
-            ];
+            };
+
+            return ext;
         }
 
         /// <summary>
@@ -537,17 +540,18 @@ namespace Alternet.Drawing
         /// </summary>
         public static IEnumerable<string> GetExtensionsForLoad()
         {
-            IEnumerable<string> additionalExt = [
+            string[] ext =
+            {
                 ".gif",
                 ".ico",
                 ".cur",
                 ".iff",
                 ".ani",
-            ];
+            };
 
             var result = new List<string>();
             result.AddRange(GetExtensionsForLoadSave());
-            result.AddRange(additionalExt);
+            result.AddRange(ext);
             return result;
         }
 

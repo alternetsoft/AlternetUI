@@ -57,7 +57,7 @@ namespace Alternet.UI
 
         private static Thickness? defaultBorderWidth;
 
-        private readonly Collection<CardPanelHeaderItem> tabs = [];
+        private readonly Collection<CardPanelHeaderItem> tabs = new();
         private readonly StackPanel stackPanel = new()
         {
             Orientation = StackPanelOrientation.Horizontal,

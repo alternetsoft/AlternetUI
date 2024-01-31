@@ -162,15 +162,15 @@ namespace Alternet.UI
             item.Instance = this;
             item.PropInfo = AssemblyUtils.GetPropInfo(this, nameof(NameAsIndex));
 
-            List<IPropertyGridItem> list =
-            [
+            IPropertyGridItem[] list =
+            {
                 item,
                 propGrid.CreateProperty(this, nameof(SizeInPoints))!,
                 propGrid.CreateProperty(this, nameof(Bold))!,
                 propGrid.CreateProperty(this, nameof(Italic))!,
                 propGrid.CreateProperty(this, nameof(Strikethrough))!,
                 propGrid.CreateProperty(this, nameof(Underlined))!,
-            ];
+            };
 
             return list;
         }

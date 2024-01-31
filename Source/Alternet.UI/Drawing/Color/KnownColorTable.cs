@@ -30,7 +30,7 @@ namespace Alternet.Drawing
         /// All known color values (in order of definition in the <see cref="KnownColor"/>).
         /// </summary>
         public static readonly uint[] ColorValueTable =
-        [
+        {
             /*"not a known color"*/
             0,
 
@@ -255,7 +255,7 @@ namespace Alternet.Drawing
 
             // "Web" colors, Part 2
             0xFF663399,     // RebeccaPurple
-        ];
+        };
 
         /// <summary>
         /// All known color kinds (in order of definition in the <see cref="KnownColor"/> enum).

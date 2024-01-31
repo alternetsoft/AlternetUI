@@ -10,13 +10,13 @@ namespace ControlsSample
     internal partial class ButtonPage : Control
     {
         private static readonly object[] ValidAlign =
-            [
+        {
                     new ListControlItem("Default", GenericDirection.Default),
                     new ListControlItem("Left", GenericDirection.Left),
                     new ListControlItem("Top", GenericDirection.Top),
                     new ListControlItem("Right", GenericDirection.Right),
                     new ListControlItem("Bottom", GenericDirection.Bottom),
-            ];
+        };
 
         private ControlStateImages? buttonImages;
 

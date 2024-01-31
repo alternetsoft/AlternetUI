@@ -175,7 +175,7 @@ namespace Alternet.UI
         /// Adds an array of file names to the data object in the
         /// <see cref="DataFormats.Files"/> format.
         /// </summary>
-        public virtual void SetFiles(string[] value) =>
+        public virtual void SetFiles(params string[] value) =>
             SetData(DataFormats.Files, value);
 
         /// <summary>

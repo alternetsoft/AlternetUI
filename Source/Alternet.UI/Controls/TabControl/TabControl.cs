@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// <remarks>The order of tab pages in this collection reflects the order the tabs appear
         /// in the control.</remarks>
         [Content]
-        public Collection<TabPage> Pages { get; } = [];
+        public Collection<TabPage> Pages { get; } = new();
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Pages;

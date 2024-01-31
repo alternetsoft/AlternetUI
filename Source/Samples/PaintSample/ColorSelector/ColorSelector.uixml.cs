@@ -7,7 +7,7 @@ namespace PaintSample
     public partial class ColorSelector : VerticalStackPanel, ISelectedColors
     {
         private static readonly Color[] SwatchColors =
-        [
+        {
             Color.Black,
             Color.Blue,
             Color.Green,
@@ -18,9 +18,9 @@ namespace PaintSample
             Color.DarkGray,
             Color.LightGray,
             Color.White,
-        ];
+        };
 
-        private readonly List<ColorSwatch> swatches = [];
+        private readonly List<ColorSwatch> swatches = new();
         private readonly SelectedColorDisplay selectedColorDisplay = new();
 
         public ColorSelector()

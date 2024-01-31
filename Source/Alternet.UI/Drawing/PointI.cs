@@ -243,8 +243,8 @@ namespace Alternet.Drawing
         /// </summary>
         public override readonly string ToString()
         {
-            string[] names = [PropNameStrings.Default.X, PropNameStrings.Default.Y];
-            int[] values = [x, y];
+            string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
+            int[] values = { x, y };
 
             return StringUtils.ToString<int>(names, values);
         }

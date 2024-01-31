@@ -222,7 +222,7 @@ namespace PropertyGridSample
             var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
             if (resetMethod is not null)
             {
-                resetMethod.Invoke(item.Instance, []);
+                resetMethod.Invoke(item.Instance, Array.Empty<object?>());
                 PropGrid.ReloadPropertyValue(item);
                 return;
             }
