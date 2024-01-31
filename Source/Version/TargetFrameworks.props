@@ -10,11 +10,11 @@
 	<UITargetFrameworksWindows>net8.0;net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
 
 
-	<UITargetFrameworksLinux Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksLinux>
-	<UITargetFrameworksLinux Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksLinux>
-	
+	<UITargetFrameworksLinux Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksLinux>
 	<UITargetFrameworksMacOs Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksMacOs>
-	<UITargetFrameworksMacOs Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksMacOs>
+
+	<UITargetFrameworksLinux Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksLinux>
+	<UITargetFrameworksMacOs Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksMacOs>
 
     <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
   </PropertyGroup>
