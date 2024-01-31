@@ -2,8 +2,13 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <SamplesTargetFrameworksWindows>net8.0;net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
-    <SamplesTargetFrameworksLinux>net8.0;net7.0;net6.0</SamplesTargetFrameworksLinux>
-    <SamplesTargetFrameworksMacOs>net8.0;net7.0;net6.0</SamplesTargetFrameworksMacOs>
+
+	<UITargetFrameworksLinux Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksLinux>
+	<UITargetFrameworksMacOs Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksMacOs>
+
+	<UITargetFrameworksLinux Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksLinux>
+	<UITargetFrameworksMacOs Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksMacOs>	
+	
     <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   </PropertyGroup>
 
