@@ -16,10 +16,10 @@ namespace Alternet.UI
         private static readonly string MyLogFilePath =
             Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
 
-        private static readonly string[] StringSplitToArrayChars =
-        [
+        private static readonly string[] StringSplitToArrayChars = new string[]
+        {
             Environment.NewLine,
-        ];
+        };
 
         public static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
         private static bool cmdLineTest = false;
