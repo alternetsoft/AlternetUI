@@ -225,8 +225,8 @@
 		<CallTarget Targets="CopyArtefacts"/>
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Build ControlsSample" Importance="high" />
-		<CallTarget Targets="BuildControlsSample"/>
+		<Message Text="Exec Build ControlsSample" Importance="high" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+		<CallTarget Targets="BuildControlsSample" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 		<Message Text="Alternet.UI Installation done." Importance="high" />
   		<Message Text="========================" Importance="high" />
 		<CallTarget Targets="RunControlsSample"/>		
