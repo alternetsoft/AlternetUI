@@ -3,16 +3,22 @@
 
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
+
+    <PropertyGroup>
+	    <DotNetRunVersion Condition="'$(NoNet8)' == 'true'">net7.0</DotNetRunVersion>
+	    <DotNetRunVersion Condition="'$(NoNet8)' != 'true'">net8.0</DotNetRunVersion>
+    </PropertyGroup>
+ 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework $(DotNetRunVersion)</DotNetRunCmd>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework $(DotNetRunVersion)</DotNetRunCmd>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework $(DotNetRunVersion)</DotNetRunCmd>
     </PropertyGroup>
 
   <PropertyGroup>
