@@ -9,6 +9,8 @@
 - Window: AlwaysOnTop -> TopMost (as in WinForms).
 - Mouse events like in WinForms.
 - LangVersion = 10.0 for some projects.
+- Now it is possible to setup Alternet.UI without having Net 8.
+- Lowered LangVersion in csproj from 'latest' to 11.0.
 
 ## 2024 January 27
 
