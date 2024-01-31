@@ -162,12 +162,14 @@
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net6.0 --property NoNet8=true"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net6.0 --property NoNet8=true" Condition="'$(OnlyDebug)' != 'true'"/>
+			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net6.0 --property NoNet8=true"
+			Condition="'$(OnlyDebug)' != 'true'"/>
 
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net7.0 --property NoNet8=true"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net7.0 --property NoNet8=true" Condition="'$(OnlyDebug)' != 'true'"/>
+			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net7.0 --property NoNet8=true"
+			Condition="'$(OnlyDebug)' != 'true'"/>
 
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net8.0" Condition="'$(NoNet8)' != 'true'"/>
