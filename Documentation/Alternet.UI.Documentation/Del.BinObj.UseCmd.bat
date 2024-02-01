@@ -1,0 +1,5 @@
+del /s /q "bin\Debug\*.*"
+del /s /q "bin\Release\*.*"
+del /s /q "obj\Debug\*.*"
+del /s /q "obj\Release\*.*"
+del /s /q "obj\*.*"
