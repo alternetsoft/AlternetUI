@@ -39,6 +39,7 @@ namespace PropertyGridSample
         private readonly MenuItem resetMenu;
 
         private bool updatePropertyGrid = false;
+        private bool useIdle = false;
 
         static MainWindow()
         {
@@ -378,7 +379,11 @@ namespace PropertyGridSample
 
                 if (type == typeof(WelcomePage))
                 {
-                    Application.AddIdleTask(InitDefaultPropertyGrid);
+                    if (useIdle)
+                        Application.AddIdleTask(InitDefaultPropertyGrid);
+                    else
+                        InitDefaultPropertyGrid();
+                    useIdle = true;
                     SetBackground(SystemColors.Window);
                     panel.RemoveActions();
                 }
