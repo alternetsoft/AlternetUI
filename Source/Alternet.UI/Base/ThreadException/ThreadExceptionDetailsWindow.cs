@@ -17,7 +17,7 @@ namespace Alternet.UI
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             StartLocation = WindowStartLocation.CenterOwner;
-            AlwaysOnTop = true;
+            TopMost = true;
 
             var mainGrid = new Grid();
             mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });

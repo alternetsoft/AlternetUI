@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class KnownSvgImages
     {
-        private static readonly AdvDictionary<SizeI, List<KnownSvgImages>> Images = [];
+        private static readonly AdvDictionary<SizeI, List<KnownSvgImages>> Images = new();
 
         private readonly SizeI size;
         private readonly Color color;
@@ -518,7 +518,7 @@ namespace Alternet.UI
         /// </summary>
         public IEnumerable<ImageSet> GetAllImages()
         {
-            List<ImageSet> result = [];
+            List<ImageSet> result = new();
 
             var props = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
@@ -542,7 +542,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public ImageSet GetImgAngleUpDown(bool up) => up ? ImgAngleUp : ImgAngleDown;
 
-        private ImageSet? LoadIfExists(string? url)
+        internal ImageSet? LoadIfExists(string? url)
         {
             if (url is null)
                 return null;

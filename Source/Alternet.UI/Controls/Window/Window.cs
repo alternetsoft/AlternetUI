@@ -129,7 +129,7 @@ namespace Alternet.UI
         public event EventHandler? CloseEnabledChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="AlwaysOnTop"/> property changes.
+        /// Occurs when the value of the <see cref="TopMost"/> property changes.
         /// </summary>
         public event EventHandler? AlwaysOnTopChanged;
 
@@ -368,7 +368,7 @@ namespace Alternet.UI
         /// non-topmost windows and
         /// should stay above them, even when the window is deactivated.
         /// </summary>
-        public virtual bool AlwaysOnTop
+        public virtual bool TopMost
         {
             get => info.AlwaysOnTop;
 
@@ -751,7 +751,7 @@ namespace Alternet.UI
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings { get; } = [];
+        public virtual Collection<InputBinding> InputBindings { get; } = new();
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
@@ -886,7 +886,7 @@ namespace Alternet.UI
             StartLocation = WindowStartLocation.Manual;
             HasTitleBar = false;
             HasBorder = false;
-            AlwaysOnTop = true;
+            TopMost = true;
             CloseEnabled = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
@@ -973,7 +973,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the value of the <see cref="AlwaysOnTop"/> property changes.
+        /// Called when the value of the <see cref="TopMost"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnAlwaysOnTopChanged(EventArgs e)

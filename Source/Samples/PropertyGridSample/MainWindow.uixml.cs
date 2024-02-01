@@ -39,6 +39,7 @@ namespace PropertyGridSample
         private readonly MenuItem resetMenu;
 
         private bool updatePropertyGrid = false;
+        private bool useIdle = false;
 
         static MainWindow()
         {
@@ -222,7 +223,7 @@ namespace PropertyGridSample
             var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
             if (resetMethod is not null)
             {
-                resetMethod.Invoke(item.Instance, []);
+                resetMethod.Invoke(item.Instance, Array.Empty<object?>());
                 PropGrid.ReloadPropertyValue(item);
                 return;
             }
@@ -378,7 +379,11 @@ namespace PropertyGridSample
 
                 if (type == typeof(WelcomePage))
                 {
-                    Application.AddIdleTask(InitDefaultPropertyGrid);
+                    if (useIdle)
+                        Application.AddIdleTask(InitDefaultPropertyGrid);
+                    else
+                        InitDefaultPropertyGrid();
+                    useIdle = true;
                     SetBackground(SystemColors.Window);
                     panel.RemoveActions();
                 }

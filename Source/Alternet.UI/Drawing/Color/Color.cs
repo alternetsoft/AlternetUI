@@ -615,7 +615,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static IReadOnlyList<Color> GetKnownColors()
         {
-            List<Color> colors = [];
+            List<Color> colors = new();
 
             foreach (KnownColor knownColor in Enum.GetValues(typeof(KnownColor)))
             {
@@ -866,7 +866,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static IReadOnlyList<Color> GetKnownColors(params KnownColorCategory[] cats)
         {
-            List<Color> colors = [];
+            List<Color> colors = new();
 
             var items = ColorUtils.GetColorInfos();
 

@@ -52,12 +52,12 @@ namespace Alternet.UI
         /// which is assigned to <see cref="StringSplitToArrayChars"/> by default.
         /// </remarks>
         public static string[] StringSplitToArrayChars { get; set; } =
-        [
+        {
             Environment.NewLine,
             "\r\n",
             "\n\r",
             "\n",
-        ];
+        };
 
         /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using

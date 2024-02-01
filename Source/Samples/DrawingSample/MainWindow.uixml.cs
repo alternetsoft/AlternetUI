@@ -19,7 +19,7 @@ namespace DrawingSample
         private void InitializePages()
         {
             DrawingPage[] drawingPages =
-            [
+            {
                 new ShapesPage(),
                 new TextPage(),
                 new BrushesAndPensPage(),
@@ -27,7 +27,7 @@ namespace DrawingSample
                 new TransformsPage(),
                 new ClippingPage(),
                 new ImagesPage(this),
-            ];
+            };
 
             foreach (var page in drawingPages)
                 tabControl.Pages.Add(CreateTabPage(page));

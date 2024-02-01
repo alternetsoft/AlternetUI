@@ -9,8 +9,6 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        private protected override bool GetIsEnabled() => Enabled;
-
         private protected void SetVisibleValue(bool value) => visible = value;
 
         /// <summary>

@@ -7,19 +7,16 @@
         MouseDown="Window_MouseDown"
         MouseUp="Window_MouseUp"
         MouseDoubleClick="Window_MouseDoubleClick"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        MouseWheel="Window_MouseWheel"
+        MouseWheel="Window_MouseWheel" 
 		>
-  <Control>
-
     <VerticalStackPanel>
 
-
-      <GroupBox Margin="10" Padding="5">
+      <GroupBox Margin="10" Padding="5" Text="GroupBox"
+                    MouseMove="GroupBox_MouseMove"
+                    MouseDown="GroupBox_MouseDown"
+                    MouseUp="GroupBox_MouseUp"
+                >
         <StackPanel Orientation="Vertical"
-                    MouseMove="StackPanel_MouseMove"
-                    MouseDown="StackPanel_MouseDown"
-                    MouseUp="StackPanel_MouseUp"
                     Padding="5">
           <Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
                   MouseMove="HelloButton_MouseMove"
@@ -28,42 +25,27 @@
 				/>
           <Border Margin="10"
                   Name="mouseCaptureBorder"
-                  MouseDown="MouseCaptureBorder_MouseDown" MouseUp="MouseCaptureBorder_MouseUp" MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost"
-                  MouseEnter="MouseCaptureBorder_MouseEnter" MouseLeave="MouseCaptureBorder_MouseLeave">
-            <Label Margin="10" Name="mouseCaptureLabel" />
+                  MouseDown="MouseCaptureBorder_MouseDown"
+                  MouseUp="MouseCaptureBorder_MouseUp"
+                  MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost"
+                  MouseEnter="MouseCaptureBorder_MouseEnter"
+                  MouseLeave="MouseCaptureBorder_MouseLeave">
+            <Label Margin="10" Name="mouseCaptureLabel" VerticalAlignment="Center"
+                   />
           </Border>
-          <TextBox Text="Sample Text Box" Margin="10"/>
-
-          <Label Text="Mouse Buttons State:" Margin="5"/>
-
-          <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
-
-          <Label Name="mousePositionLabel" Margin="10" SuggestedHeight="30"/>
+          <TextBox Text="Sample Text Box" Margin="5"/>
 
           <HorizontalStackPanel>
-            <VerticalStackPanel>
-              <Label Text="Window:" Margin="5"/>
-              <ListBox Name="lbWindow" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200"
-                       MaxHeight="200" MinHeight="200"/>
-            </VerticalStackPanel>
-
-            <VerticalStackPanel>
-              <Label Text="StackPanel:" Margin="5"/>
-              <ListBox Name="lbStackPanel" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200"
-                       MaxHeight="200" MinHeight="200"/>
-            </VerticalStackPanel>
-
-            <VerticalStackPanel>
-              <Label Text="Button:" Margin="5"/>
-              <ListBox Name="lbButton" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200"
-                       MaxHeight="200" MinHeight="200"/>
-            </VerticalStackPanel>
+            <Label Text="Mouse Buttons:" Margin="5"/>
+            <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
           </HorizontalStackPanel>
+
+          <CheckBox Text="Log Mouse Move" Name="logMoveCheckBox"/>
+
+          <LogListBox Name="lb" Margin="5"  SuggestedHeight="200"/>
 
         </StackPanel>
       </GroupBox>
       
     </VerticalStackPanel>
-  </Control>
-
 </Window>

@@ -290,12 +290,9 @@ namespace Alternet.UI
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            if (e.Handled)
-                return;
             RaiseClick(EventArgs.Empty);
             if (DropDownMenu is null)
                 return;
-            e.Handled = true;
             PointD pt = (0, Bounds.Height);
             this.ShowPopupMenu(DropDownMenu, pt.X, pt.Y);
             Invalidate();

@@ -56,7 +56,7 @@ namespace PropertyGridSample
                 panel.LeftTreeView.Add(item);
 
                 Type[] limitedTypes =
-                [
+                {
                     typeof(Border),
                     typeof(PictureBox),
                     typeof(Button),
@@ -95,17 +95,17 @@ namespace PropertyGridSample
                     typeof(TextBoxAndLabel),
                     typeof(SpeedTextButton),
                     typeof(GenericToolBarSet),
-                ];
+                };
 
                 Type[] badParentTypes =
-                [
+                {
                   typeof(ControlAndLabel),
                   typeof(PopupWindow),
                   typeof(PanelAuiManager),
-                ];
+                };
 
                 Type[] badTypes =
-                [
+                {
                   typeof(PopupWindow),
                   typeof(ContextMenu), // added using other style
                   typeof(NonVisualControl), // has no sense to add
@@ -135,10 +135,11 @@ namespace PropertyGridSample
                   typeof(CheckListBox), // as empty items error
                   typeof(PanelWebBrowser),
                   typeof(TabControl), // pages are not shown. Why?
-                  typeof(Window),                
-                ];
+                  typeof(Window),
+                };
 
-                IEnumerable<Type> result = addLimitedControls ? limitedTypes : AssemblyUtils.GetTypeDescendants(typeof(Control));
+                IEnumerable<Type> result = addLimitedControls
+                    ? limitedTypes : AssemblyUtils.GetTypeDescendants(typeof(Control));
                 
                 foreach (Type type in result)
                 {

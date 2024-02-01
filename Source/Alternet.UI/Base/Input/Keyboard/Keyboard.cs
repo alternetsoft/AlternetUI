@@ -8,13 +8,8 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The Keyboard class represents the mouse device to the
-    ///     members of a context.
+    /// Represents the keyboard device.
     /// </summary>
-    /// <remarks>
-    ///     The static members of this class simply delegate to the primary
-    ///     keyboard device of the calling thread's input manager.
-    /// </remarks>
     public static class Keyboard
     {
         /// <summary>
@@ -88,53 +83,6 @@ namespace Alternet.UI
         {
             return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/);
         }
-
-        /*internal static bool IsFocusable(DependencyObject element)
-        {
-            // This should really be its own property, but it is hard to do efficiently.
-            if (element == null)
-            {
-                return false;
-            }
-
-            var c = element as Control;
-            if (c != null)
-            {
-                if (!c.Visible || !c.Enabled)
-                    return false;
-            }
-
-            // There are too many conflicting desires for whether or not
-            // an element is focusable.  We need to differentiate between
-            // a false default value, and the user specifying false
-            // explicitly.
-            bool hasModifiers = false;
-            BaseValueSourceInternal valueSource = element.GetValueSource(UIElement.FocusableProperty, null, out hasModifiers);
-            bool focusable = (bool) element.GetValue(UIElement.FocusableProperty);
-
-            if(!focusable && valueSource == BaseValueSourceInternal.Default && !hasModifiers)
-            {
-                // The Focusable property was not explicitly set to anything.
-                // The default value is generally false, but true in a few cases.
-
-                if(FocusManager.GetIsFocusScope(element))
-                {
-                    // Focus scopes are considered focusable, even if
-                    // the Focusable property is false.
-                    return true;
-                }
-                else if(c != null && c.Parent == null)
-                {
-                    if (Window.GetParentWindow(c) != null) // yezo
-                    {
-                        // A UIElements that is the root of a PresentationSource is considered focusable.
-                        return true;
-                    }
-                }
-            }
-
-            return focusable;
-        }*/
     }
 }
 

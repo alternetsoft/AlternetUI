@@ -251,7 +251,7 @@ namespace Alternet.UI
         {
             var methodName = "Reset" + propName;
             var type = instance.GetType();
-            var result = type.GetMethod(methodName, []);
+            var result = type.GetMethod(methodName, Array.Empty<Type>());
             return result;
         }
 
@@ -290,12 +290,12 @@ namespace Alternet.UI
             bool sort = false,
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
         {
-            List<EventInfo> result = [];
+            List<EventInfo> result = new();
 
             IList<EventInfo> props =
                 new List<EventInfo>(type.GetEvents(bindingFlags));
 
-            SortedList<string, EventInfo> addedNames = [];
+            SortedList<string, EventInfo> addedNames = new();
 
             foreach (var p in props)
             {
@@ -324,12 +324,12 @@ namespace Alternet.UI
             bool sort = false,
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
         {
-            List<PropertyInfo> result = [];
+            List<PropertyInfo> result = new();
 
             IList<PropertyInfo> props =
                 new List<PropertyInfo>(type.GetProperties(bindingFlags));
 
-            SortedList<string, PropertyInfo> addedNames = [];
+            SortedList<string, PropertyInfo> addedNames = new();
 
             foreach (var p in props)
             {
@@ -817,7 +817,7 @@ namespace Alternet.UI
             bool ascending = true,
             bool isPublic = true)
         {
-            List<Type> result = [];
+            List<Type> result = new();
 
             Assembly asm = type.Assembly;
 

@@ -72,8 +72,6 @@
         <CallTarget Targets="BuildNative_Windows_X86" Condition="'$(OnlyDebug)' != 'true'"/>
 
         <CallTarget Targets="BuildNative_Windows_X64" />
-
-		<!--;BuildNative_Windows_CleanupAfterBuild-->
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Unix" Condition="!$([MSBuild]::IsOsPlatform('Windows'))">

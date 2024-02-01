@@ -142,7 +142,7 @@ namespace PaintSample
 
             public Pen Pen { get; }
 
-            public List<PointD> Points { get; } = [];
+            public List<PointD> Points { get; } = new();
         }
     }
 }

@@ -138,7 +138,7 @@ namespace WindowPropertiesSample
             testWindow.MaximizeEnabled = maximizeEnabledCheckBox.IsChecked;
             testWindow.CloseEnabled = closeEnabledCheckBox.IsChecked;
 
-            testWindow.AlwaysOnTop = alwaysOnTopCheckBox.IsChecked;
+            testWindow.TopMost = alwaysOnTopCheckBox.IsChecked;
             testWindow.IsToolWindow = isToolWindowCheckBox.IsChecked;
             testWindow.Resizable = resizableCheckBox.IsChecked;
             testWindow.HasBorder = hasBorderCheckBox.IsChecked;
@@ -347,7 +347,7 @@ namespace WindowPropertiesSample
         private void AlwaysOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
-                testWindow.AlwaysOnTop = alwaysOnTopCheckBox.IsChecked;
+                testWindow.TopMost = alwaysOnTopCheckBox.IsChecked;
         }
 
         private void IsToolWindowCheckBox_CheckedChanged(object sender, EventArgs e)

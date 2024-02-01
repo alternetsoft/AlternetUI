@@ -136,7 +136,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            checkListBox.CheckItems([2]);
+            checkListBox.CheckItems(2);
         }
 
         private void UncheckAllButton_Click(object? sender, EventArgs e)
@@ -148,7 +148,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            checkListBox.CheckItems([2, 4]);
+            checkListBox.CheckItems(2, 4);
         }
     }
 }

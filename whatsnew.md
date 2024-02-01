@@ -1,6 +1,17 @@
 
 # 0.9.505 (work in progress)
 
+## 2024 January 31
+
+- Window.Closed event as in WinForms.
+- Control: ContainsFocus, HelpRequested, OnHelpRequested.
+- Window.KeyPreview.
+- Window: AlwaysOnTop -> TopMost (as in WinForms).
+- Mouse events like in WinForms.
+- LangVersion = 10.0 for some projects.
+- Now it is possible to setup Alternet.UI without having Net 8.
+- Lowered LangVersion in csproj from 'latest' to 11.0.
+
 ## 2024 January 27
 
 - Documentation is now built with the latest DocFx version.
@@ -50,6 +61,8 @@
 - FontStyle made compatible with WinForms.
 - Fixed uixml preview in VS.
 - SystemInformation.WorkingArea.
+
+---
 
 # 0.9.500 (2024 January 15)
 

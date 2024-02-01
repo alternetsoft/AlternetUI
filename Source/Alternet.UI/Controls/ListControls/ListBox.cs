@@ -26,7 +26,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class ListBox : ListControl
     {
-        private readonly HashSet<int> selectedIndices = [];
+        private readonly HashSet<int> selectedIndices = new();
         private int ignoreSelectEvents = 0;
 
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;

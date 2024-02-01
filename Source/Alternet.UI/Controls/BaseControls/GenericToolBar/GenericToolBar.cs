@@ -620,7 +620,7 @@ namespace Alternet.UI
             switch (button)
             {
                 case MessageBoxButtons.OK:
-                    return [AddSpeedBtn(KnownButton.OK)];
+                    return AddSpeedBtn(new KnownButton[] { KnownButton.OK });
                 case MessageBoxButtons.OKCancel:
                     return AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
                 case MessageBoxButtons.YesNoCancel:
@@ -633,7 +633,7 @@ namespace Alternet.UI
                     return AddSpeedBtn(KnownButton.Retry, KnownButton.Cancel);
             }
 
-            return [];
+            return Array.Empty<ObjectUniqueId>();
         }
 
         /// <summary>
@@ -949,7 +949,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DeleteAll()
         {
-            Stack<Control> controls = [];
+            Stack<Control> controls = new();
             controls.PushRange(Items);
             SuspendLayout();
             try
@@ -1214,7 +1214,8 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool NeedUpdateForeColor(Control control)
         {
-            Type[] types = [
+            Type[] types =
+            {
                 typeof(SpeedButton),
                 typeof(GenericLabel),
                 typeof(PictureBox),
@@ -1223,7 +1224,7 @@ namespace Alternet.UI
                 typeof(Panel),
                 typeof(Grid),
                 typeof(Border),
-            ];
+            };
 
             if (Array.IndexOf(types, control.GetType()) >= 0)
                 return true;

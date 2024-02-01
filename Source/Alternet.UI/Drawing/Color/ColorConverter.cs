@@ -161,7 +161,7 @@ namespace Alternet.Drawing
 
                         if (obj == null)
                         {
-                            string[] array = text2.Split([c]);
+                            string[] array = text2.Split(c);
                             int[] array2 = new int[array.Length];
                             for (int i = 0; i < array2.Length; i++)
                             {
@@ -313,48 +313,48 @@ namespace Alternet.Drawing
                     }
                     else if (color.A != 255)
                     {
-                        Type[] memberInfoTypes =
-                            [
+                        Type[] memberInfoTypes = new Type[]
+                        {
                                 typeof(int),
                                 typeof(int),
                                 typeof(int),
                                 typeof(int),
-                            ];
+                        };
                         memberInfo = typeof(Color).GetMethod(
                             "FromArgb",
                             types: memberInfoTypes);
-                        arguments =
-                        [
+                        arguments = new object[]
+                        {
                             color.A,
                             color.R,
                             color.G,
                             color.B,
-                        ];
+                        };
                     }
                     else if (color.IsNamedColor)
                     {
                         memberInfo = typeof(Color).GetMethod(
                             "FromName",
-                            [typeof(string)]);
-                        arguments = [color.Name];
+                            new Type[] { typeof(string) });
+                        arguments = new object[] { color.Name };
                     }
                     else
                     {
-                        Type[] memberInfoTypes2 =
-                            [
+                        Type[] memberInfoTypes2 = new Type[]
+                            {
                                 typeof(int),
                                 typeof(int),
                                 typeof(int),
-                            ];
+                            };
                         memberInfo = typeof(Color).GetMethod(
                             "FromArgb",
                             memberInfoTypes2);
-                        arguments =
-                        [
+                        arguments = new object[]
+                        {
                             color.R,
                             color.G,
                             color.B,
-                        ];
+                        };
                     }
 
                     if (memberInfo != null)
@@ -389,7 +389,7 @@ namespace Alternet.Drawing
                 {
                     if (ColorConverter.values == null)
                     {
-                        ArrayList arrayList = [];
+                        ArrayList arrayList = new();
                         arrayList.AddRange(ColorConverter.Colors.Values);
                         arrayList.AddRange(ColorConverter.SystemColors.Values);
                         int num = arrayList.Count;

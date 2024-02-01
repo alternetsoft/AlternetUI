@@ -5,7 +5,7 @@
       <OutputType>WinExe</OutputType>
       <Platforms>AnyCPU;x86;x64</Platforms>
       <ApplicationManifest>app.manifest</ApplicationManifest>
-      <LangVersion>latest</LangVersion>
+      <LangVersion>11.0</LangVersion>
       <Nullable>enable</Nullable>
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
     </PropertyGroup>

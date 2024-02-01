@@ -11,7 +11,7 @@ namespace DragAndDropSample
     public partial class MainWindow : Window
     {
         private static readonly string[] SupportedFormats =
-            [DataFormats.Text, DataFormats.Files, DataFormats.Bitmap];
+            { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap };
 
         private readonly Bitmap testBitmap;
 
@@ -136,10 +136,8 @@ namespace DragAndDropSample
 
             if (filesFormatCheckBox!.IsChecked)
                 result.SetFiles(
-                    [
-                        (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
-                        typeof(Application).Assembly.Location
-                    ]);
+                    (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
+                    typeof(Application).Assembly.Location);
 
             if (bitmapFormatCheckBox!.IsChecked)
                 result.SetBitmap(testBitmap);

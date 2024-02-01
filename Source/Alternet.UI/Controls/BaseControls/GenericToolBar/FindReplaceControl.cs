@@ -392,6 +392,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether 'Use Regular Expressions' option is visible.
+        /// </summary>
+        public bool OptionUseRegularExpressionsVisible
+        {
+            get
+            {
+                return OptionsToolBar.GetToolVisible(IdUseRegularExpressions);
+            }
+
+            set
+            {
+                if (OptionUseRegularExpressionsVisible == value)
+                    return;
+                OptionsToolBar.SetToolVisible(IdUseRegularExpressions, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether 'Close' button is visible.
         /// </summary>
         public bool CloseButtonVisible

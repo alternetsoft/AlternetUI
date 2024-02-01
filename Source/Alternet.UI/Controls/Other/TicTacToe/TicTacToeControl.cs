@@ -34,7 +34,7 @@ namespace Alternet.UI
             Padding = 5,
         };
 
-        private readonly List<TicTacToeCell> cells = [];
+        private readonly List<TicTacToeCell> cells = new();
         private bool gameOver;
         private PlayerMark currentPlayerMark;
 

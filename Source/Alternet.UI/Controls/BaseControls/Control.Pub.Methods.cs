@@ -287,7 +287,7 @@ namespace Alternet.UI
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return BeginInvoke(method, []);
+            return BeginInvoke(method, Array.Empty<object?>());
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Alternet.UI
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
-            return BeginInvoke(action, []);
+            return BeginInvoke(action, Array.Empty<object?>());
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Alternet.UI
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return Invoke(method, []);
+            return Invoke(method, Array.Empty<object?>());
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Alternet.UI
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
-            Invoke(action, []);
+            Invoke(action, Array.Empty<object?>());
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = [];
+            List<Control> result = new();
             foreach (var control in Children)
             {
                 if (control.MemberOfGroup(groupIndex))
@@ -474,7 +474,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = [];
+            List<Control> result = new();
             foreach (var control in Children)
             {
                 result.Add(control);
@@ -504,7 +504,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = [];
+            List<Control> result = new();
             foreach (var control in Children)
             {
                 if (control.ColumnIndex == columnIndex)
@@ -529,7 +529,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = [];
+            List<Control> result = new();
             foreach (var control in Children)
             {
                 if (control.RowIndex == rowIndex)
@@ -623,7 +623,7 @@ namespace Alternet.UI
         {
             if (HasChildren)
             {
-                List<Control> result = [];
+                List<Control> result = new();
                 foreach (var item in Children)
                 {
                     if (item.Visible)

@@ -58,16 +58,16 @@ namespace Alternet.UI
 
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
         private static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
-            TypeRegistry = [];
+            TypeRegistry = new();
 
         private static StaticStateFlags staticStateFlags;
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private static PropertyGridEditKindColor defaultEditKindColor =
             PropertyGridEditKindColor.ComboBox;
 
-        private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = [];
+        private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
         private readonly PropertyGridVariant variant = new();
-        private readonly HashSet<string> ignorePropNames = [];
+        private readonly HashSet<string> ignorePropNames = new();
 
         private int supressIgnoreProps;
 
@@ -991,7 +991,7 @@ namespace Alternet.UI
         /// </remarks>
         public static IPropertyGridChoices CreateChoicesOnce(Type enumType)
         {
-            choicesCache ??= [];
+            choicesCache ??= new();
             if (choicesCache.TryGetValue(enumType, out IPropertyGridChoices? result))
                 return result;
             result = CreateChoices(enumType);
@@ -2365,14 +2365,14 @@ namespace Alternet.UI
         /// properties will be sorted ascending dy name.</param>
         public virtual IEnumerable<IPropertyGridItem> CreateProps(object instance, bool sort = false)
         {
-            List<IPropertyGridItem> result = [];
+            List<IPropertyGridItem> result = new();
             Type myType = instance.GetType();
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
             IList<PropertyInfo> props =
                 new List<PropertyInfo>(myType.GetProperties(bindingFlags));
 
-            SortedList<string, PropertyInfo> addedNames = [];
+            SortedList<string, PropertyInfo> addedNames = new();
 
             foreach (PropertyInfo p in props)
             {
@@ -4175,7 +4175,7 @@ namespace Alternet.UI
             if (instance == null && propInfo == null)
                 return allItems;
 
-            List<IPropertyGridItem> result = [];
+            List<IPropertyGridItem> result = new();
 
             foreach (var item in allItems)
             {
@@ -4222,7 +4222,7 @@ namespace Alternet.UI
         /// </summary>
         public IEnumerable<IPropertyGridItem> GetCategories()
         {
-            List<IPropertyGridItem> result = [];
+            List<IPropertyGridItem> result = new();
             foreach (var item in Items)
             {
                 if (item.IsCategory)

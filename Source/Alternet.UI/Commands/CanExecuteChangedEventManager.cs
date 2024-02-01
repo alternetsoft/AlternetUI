@@ -109,7 +109,7 @@ namespace Alternet.UI
                 {
                     if (sink.IsInactive)
                     {
-                        toRemove ??= [];
+                        toRemove ??= new();
 
                         toRemove.Add(sink);
                     }
@@ -162,7 +162,7 @@ namespace Alternet.UI
             List<HandlerSink> list = (List<HandlerSink>)this[source];
             if (list == null)
             {
-                list = [];
+                list = new();
                 this[source] = list;
             }
 

@@ -136,14 +136,9 @@ namespace Alternet.UI
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
         /// </summary>
-        public PointD GetPosition(IInputElement relativeTo)
+        public PointD GetPosition(Control relativeTo)
         {
-            if (relativeTo is Control control)
-            {
-                return control.ScreenToClient(GetScreenPosition());
-            }
-
-            throw new InvalidOperationException();
+            return relativeTo.ScreenToClient(GetScreenPosition());
         }
     }
 }

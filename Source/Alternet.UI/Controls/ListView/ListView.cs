@@ -836,7 +836,7 @@ namespace Alternet.UI
                 return;
             if (selectedIndices == null)
             {
-                selectedIndices = [];
+                selectedIndices = new();
                 if (Handler is not NativeListViewHandler handler)
                     return;
                 var indices = handler.NativeControl.SelectedIndices;

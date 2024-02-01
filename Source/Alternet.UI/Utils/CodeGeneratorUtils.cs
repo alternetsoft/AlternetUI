@@ -57,7 +57,7 @@ namespace Alternet.UI
             if (!EventLogManager.IsEventLogged(eventId))
                 return null;
 
-            eventDelegates ??= [];
+            eventDelegates ??= new();
             if (eventDelegates.TryGetValue(eInfo, out var result))
                 return result;
 
@@ -150,7 +150,7 @@ namespace Alternet.UI
         /// <param name="value">Text string.</param>
         public static void EmitApplicationLog(ILGenerator il, string value)
         {
-            Type[] s_parameterTypes = [typeof(string)];
+            Type[] s_parameterTypes = new Type[] { typeof(string) };
             MethodInfo mi = typeof(CodeGeneratorUtils).GetMethod("Log", s_parameterTypes)!;
             EmitStringMethod(il, mi, value);
         }
@@ -177,7 +177,7 @@ namespace Alternet.UI
 
         internal static void EmitEventLog(ILGenerator il, string eventId, string value)
         {
-            Type[] s_parameterTypes = [typeof(string), typeof(string)];
+            Type[] s_parameterTypes = new Type[] { typeof(string), typeof(string) };
             MethodInfo mi = typeof(CodeGeneratorUtils).GetMethod("LogEvent", s_parameterTypes)!;
             il.Emit(OpCodes.Ldstr, eventId);
             il.Emit(OpCodes.Ldstr, value);
@@ -187,7 +187,7 @@ namespace Alternet.UI
         internal static void EmitWriteLine(ILGenerator il, string value)
         {
             const string ConsoleTypeFullName = "System.Console, System.Console";
-            Type[] s_parameterTypes = [typeof(string)];
+            Type[] s_parameterTypes = new Type[] { typeof(string) };
 
             // Emits the IL to call Console.WriteLine with a string.
             il.Emit(OpCodes.Ldstr, value);

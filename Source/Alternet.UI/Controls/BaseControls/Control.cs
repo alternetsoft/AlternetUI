@@ -91,6 +91,63 @@ namespace Alternet.UI
         public event EventHandler? Activated;
 
         /// <summary>
+        /// Occurs when the mouse pointer is moved over the control.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseMove;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and a
+        /// mouse button is pressed.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and a mouse button
+        /// is released.</summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseUp;
+
+        /// <summary>
+        /// Occurs when the mouse wheel moves while the control has focus.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseWheel;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and left
+        /// mouse button is pressed.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseLeftButtonDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and right
+        /// mouse button is pressed.
+        /// </summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseRightButtonDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and right mouse button
+        /// is released.</summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseRightButtonUp;
+
+        /// <summary>
+        /// Occurs when the control is double clicked by the mouse.
+        /// </summary>
+        [Category("Action")]
+        public event MouseEventHandler? MouseDoubleClick;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control and left mouse button
+        /// is released.</summary>
+        [Category("Mouse")]
+        public event MouseEventHandler? MouseLeftButtonUp;
+
+        /// <summary>
         /// Occurs when the control's handle is created.
         /// </summary>
         public event EventHandler? HandleCreated;
@@ -605,10 +662,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control, or one of its child
+        /// controls, currently has the input focus.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the control or one of its child controls
+        /// currently has the input focus; otherwise, <see langword="false" />.</returns>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool ContainsFocus
+        {
+            get
+            {
+                var focused = GetFocusedControl();
+                if (focused is null)
+                    return false;
+                if (focused == this)
+                    return true;
+                var result = focused.HasIndirectParent(this);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets unique id of this control.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId UniqueId
+        public virtual ObjectUniqueId UniqueId
         {
             get
             {
@@ -621,7 +702,7 @@ namespace Alternet.UI
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
-        public IFlagsAndAttributes FlagsAndAttributes
+        public virtual IFlagsAndAttributes FlagsAndAttributes
         {
             get
             {
@@ -1085,7 +1166,7 @@ namespace Alternet.UI
             {
                 if (children == null)
                 {
-                    children = [];
+                    children = new();
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }
@@ -1741,7 +1822,7 @@ namespace Alternet.UI
                 if (value is null)
                     GroupIndexes = null;
                 else
-                    GroupIndexes = [value.Value];
+                    GroupIndexes = new int[] { value.Value };
             }
         }
 

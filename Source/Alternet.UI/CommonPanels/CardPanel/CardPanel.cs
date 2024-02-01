@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// Gets pages with child controls.
         /// </summary>
         [Browsable(false)]
-        public Collection<CardPanelItem> Cards { get; } = [];
+        public Collection<CardPanelItem> Cards { get; } = new();
 
         /// <summary>
         /// Gets or sets selected card.

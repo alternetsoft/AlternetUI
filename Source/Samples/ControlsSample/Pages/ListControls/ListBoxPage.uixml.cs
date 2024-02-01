@@ -141,7 +141,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            listBox.SelectItems([2]);
+            listBox.SelectItems(2);
         }
 
         private void DeselectAllButton_Click(object? sender, EventArgs e)
@@ -153,7 +153,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            listBox.SelectItems([2, 4]);
+            listBox.SelectItems(2, 4);
         }
     }
 }

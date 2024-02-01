@@ -8,7 +8,7 @@ namespace DrawingSample
     internal sealed class ClippingPage : DrawingPage
     {
         private readonly Timer timer;
-        private readonly List<ClipAreaPart> clipAreaParts = [];
+        private readonly List<ClipAreaPart> clipAreaParts = new();
 
         private double x;
         private bool mouseDown;

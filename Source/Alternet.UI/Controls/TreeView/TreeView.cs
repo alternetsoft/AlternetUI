@@ -73,7 +73,7 @@ namespace Alternet.UI
         public const TreeViewCreateStyle DefaultCreateStyleWin =
             TreeViewCreateStyle.HasButtons | TreeViewCreateStyle.LinesAtRoot;
 
-        private readonly HashSet<TreeViewItem> selectedItems = [];
+        private readonly HashSet<TreeViewItem> selectedItems = new();
 
         private ImageList? imageList = null;
 

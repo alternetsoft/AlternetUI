@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         public const int DefaultSpacerWidth = 5;
 
-        private readonly Dictionary<int, ToolData> toolData = [];
+        private readonly Dictionary<int, ToolData> toolData = new();
         private int idCounter = 1;
         private int showingDropDown = 0;
 

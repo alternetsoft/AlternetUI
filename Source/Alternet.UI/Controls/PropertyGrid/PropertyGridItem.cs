@@ -104,7 +104,7 @@ namespace Alternet.UI
             {
                 if(children == null)
                 {
-                    children = [];
+                    children = new();
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }

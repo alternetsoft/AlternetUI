@@ -6,7 +6,7 @@
       <OutputType>WinExe</OutputType>
       <Platforms>AnyCPU;x64;x86</Platforms>
       <ApplicationManifest>app.manifest</ApplicationManifest>
-      <LangVersion>latest</LangVersion>
+      <LangVersion>11.0</LangVersion>
       <Nullable>enable</Nullable>
     </PropertyGroup>
 

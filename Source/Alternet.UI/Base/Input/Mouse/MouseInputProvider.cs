@@ -26,7 +26,7 @@ namespace Alternet.UI
                 (MouseButton)e.Data.changedButton,
                 out var handled);
             
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
@@ -36,7 +36,7 @@ namespace Alternet.UI
                 e.Data.timestamp,
                 e.Data.delta,
                 out var handled);
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         private void NativeMouse_MouseUp(object? sender, NativeEventArgs<MouseButtonEventData> e)
@@ -47,7 +47,7 @@ namespace Alternet.UI
                 (MouseButton)e.Data.changedButton,
                 out var handled);
             
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
@@ -57,7 +57,7 @@ namespace Alternet.UI
                 (MouseButton)e.Data.changedButton,
                 out var handled);
 
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         private void NativeMouse_MouseMove(object? sender, Native.NativeEventArgs<Native.MouseEventData> e)
@@ -67,7 +67,7 @@ namespace Alternet.UI
                 e.Data.timestamp,
                 out var handled);
             
-            e.Handled = handled;
+            e.Handled = false;
         }
 
         static Control? GetTargetControl(IntPtr targetControlPointer)

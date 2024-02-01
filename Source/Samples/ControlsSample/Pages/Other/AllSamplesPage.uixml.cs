@@ -18,7 +18,7 @@ namespace ControlsSample
             AddDefaultItems();
             view.SelectFirstItem();
 
-            Group([runButton, buildButton, buildUIButton, buildPalButton]).SuggestedWidthToMax();
+            Group(runButton, buildButton, buildUIButton, buildPalButton).SuggestedWidthToMax();
             deleteBinCheckBox.BindBoolProp(this, nameof(DeleteBin));
         }
 
@@ -37,9 +37,9 @@ namespace ControlsSample
         {
             var samplesFolder = CommonUtils.GetSamplesFolder();
             if (samplesFolder is null)
-                return [];
+                return Array.Empty<string>();
 
-            List<string> csproj = [];
+            List<string> csproj = new();
 
             static IEnumerable<string> EnumProjectsFast(string path)
             {
@@ -48,7 +48,7 @@ namespace ControlsSample
                     "*",
                     SearchOption.TopDirectoryOnly);
 
-                List<string> result = [];
+                List<string> result = new();
 
                 foreach (var dir in dirs)
                 {
@@ -216,7 +216,7 @@ namespace ControlsSample
 
         }
 
-        private static bool RunSample(
+        internal static bool RunSample(
             string filePath,
             string args,
             string? folder = null)
