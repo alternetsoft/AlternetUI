@@ -9,7 +9,7 @@
         MouseDoubleClick="Window_MouseDoubleClick"
         MouseWheel="Window_MouseWheel" 
 		>
-    <VerticalStackPanel>
+    <VerticalStackPanel BubbleMouse="true">
 
       <GroupBox Margin="10" Padding="5" Text="GroupBox"
                     MouseMove="GroupBox_MouseMove"
@@ -17,7 +17,7 @@
                     MouseUp="GroupBox_MouseUp"
                 >
         <StackPanel Orientation="Vertical"
-                    Padding="5">
+                    Padding="5" BubbleMouse="true">
           <Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
                   MouseMove="HelloButton_MouseMove"
                   MouseDown="HelloButton_MouseDown"
@@ -35,7 +35,7 @@
           </Border>
           <TextBox Text="Sample Text Box" Margin="5"/>
 
-          <HorizontalStackPanel>
+          <HorizontalStackPanel BubbleMouse="true">
             <Label Text="Mouse Buttons:" Margin="5"/>
             <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
           </HorizontalStackPanel>
