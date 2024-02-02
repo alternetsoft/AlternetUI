@@ -6,11 +6,11 @@
   	<BoolNoNet8>false</BoolNoNet8>
 	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
 
-	<SamplesFrameworksLinux Condition="$(BoolNoNet8)">net7.0;net6.0</SamplesFrameworksLinux>
-	<SamplesFrameworksMacOs Condition="$(BoolNoNet8)">net7.0;net6.0</SamplesFrameworksMacOs>
+	<SamplesTargetFrameworksLinux Condition="$(BoolNoNet8)">net7.0;net6.0</SamplesTargetFrameworksLinux>
+	<SamplesTargetFrameworksMacOs Condition="$(BoolNoNet8)">net7.0;net6.0</SamplesTargetFrameworksMacOs>
 
-	<SamplesFrameworksLinux Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</SamplesFrameworksLinux>
-	<SamplesFrameworksMacOs Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</SamplesFrameworksMacOs>	
+	<SamplesTargetFrameworksLinux Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</SamplesTargetFrameworksLinux>
+	<SamplesTargetFrameworksMacOs Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</SamplesTargetFrameworksMacOs>	
 	
     <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   </PropertyGroup>
