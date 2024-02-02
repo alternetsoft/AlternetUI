@@ -831,7 +831,7 @@ $(function () {
         return state;
       }
       selectTabs(queryStringTabs, container);
-      updateTabsQueryStringParam(state);
+      //!!!updateTabsQueryStringParam(state);
       notifyContentUpdated();
       return state;
     }
