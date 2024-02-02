@@ -3,10 +3,10 @@
 
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
+    <PropertyGroup>
   	<BoolNoNet8>false</BoolNoNet8>
 	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(BoolNoNet8)</BoolNoNet8>
 
-    <PropertyGroup>
 	    <DotNetRunSuffix Condition="$(NoNet8)">net7.0 --property NoNet8=true</DotNetRunSuffix>
 	    <DotNetRunSuffix Condition="!$(NoNet8)">net8.0</DotNetRunSuffix>
     </PropertyGroup>
