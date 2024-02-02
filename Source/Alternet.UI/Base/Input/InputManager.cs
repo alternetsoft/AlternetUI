@@ -105,13 +105,28 @@ namespace Alternet.UI
             get { return _primaryMouseDevice; }
         }
 
+        internal Control? GetMouseTargetControl(Control? control)
+        {
+            var result = control ?? GetControlUnderMouse();
+
+            while(result is not null)
+            {
+                if (result.BubbleMouse)
+                    result = result.Parent;
+                else
+                    return result;
+            }
+
+            return result;
+        }
+
         internal void ReportMouseMove(
             Control targetControl,
             long timestamp,
             out bool handled)
         {
             handled = false;
-            var control = targetControl ?? GetControlUnderMouse();
+            var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;
 
@@ -126,7 +141,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = targetControl ?? GetControlUnderMouse();
+            var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;
 
@@ -141,7 +156,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = targetControl ?? GetControlUnderMouse();
+            var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;
 
@@ -156,7 +171,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = targetControl ?? GetControlUnderMouse();
+            var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;
 
@@ -171,7 +186,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = targetControl ?? GetControlUnderMouse();
+            var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;
 
@@ -233,21 +248,6 @@ namespace Alternet.UI
                 return null;
 
             return handler.IsAttached ? handler.Control : null;
-        }
-
-        internal void ReportMouseEvent(
-            Control targetControl,
-            RoutedEvent @event,
-            InputEventArgs eventArgs,
-            out bool handled)
-        {
-            handled = false;
-            var control = targetControl ?? GetControlUnderMouse();
-            if (control == null)
-                return;
-            eventArgs.RoutedEvent = @event;
-            control.RaiseEvent(eventArgs);
-            handled = eventArgs.Handled;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PropertyGridSample
     {
         private static readonly Thickness controlPadding = new (15, 15, 15, 15);
 
-        internal readonly SplittedPanelEx panel = new();
+        internal readonly SplittedControlsPanel panel = new();
 
         private readonly Control controlPanel = new()
         {

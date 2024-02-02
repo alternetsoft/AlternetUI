@@ -172,10 +172,10 @@
 			Condition="'$(OnlyDebug)' != 'true'"/>
 
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net8.0" Condition="'$(NoNet8)' != 'true'"/>
+			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net8.0" Condition="!$(BoolNoNet8)"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net8.0"
-			Condition="'$(NoNet8)' != 'true' and '$(OnlyDebug)' != 'true'"
+			Condition="!$(BoolNoNet8) and '$(OnlyDebug)' != 'true'"
 			/>
 	</Target>
     <!-- ========================================== -->
@@ -225,11 +225,11 @@
 		<CallTarget Targets="CopyArtefacts"/>
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Build ControlsSample" Importance="high" Condition="'$(NoNet8)' != 'true'"/>
-		<CallTarget Targets="BuildControlsSample" Condition="'$(NoNet8)' != 'true'"/>
+		<Message Text="Exec Build ControlsSample" Importance="high" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+		<CallTarget Targets="BuildControlsSample" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 		<Message Text="Alternet.UI Installation done." Importance="high" />
   		<Message Text="========================" Importance="high" />
-		<CallTarget Targets="RunControlsSample" Condition="'$(NoNet8)' != 'true'"/>		
+		<CallTarget Targets="RunControlsSample" Condition="!$(BoolNoNet8)"/>		
 	<!-- ========================================== -->
     </Target>
 </Project>

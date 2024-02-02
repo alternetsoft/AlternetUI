@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "ImageSet.h"
 #include "Font.h"
+#include "DrawingContext.h"
 
 #include <wx/richtooltip.h>
 #include <wx/tooltip.h>            
@@ -22,7 +23,7 @@ namespace Alternet::UI
 #include "Api/WxOtherFactory.inc"
     public:
     
-    private:
+    private:    
     
     };
 }

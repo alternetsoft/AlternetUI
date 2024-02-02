@@ -1,39 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+   <!-- ====================================================== -->
+
     <PropertyGroup>
+	<NeedBuildTest>false</NeedBuildTest>
+	<NeedBuildTest Condition="'$(BuildTest)'!=''">$(BuildTest)</NeedBuildTest>
+
 	<UseLatestDocFx>false</UseLatestDocFx>
 	<UseLatestDocFx Condition="'$(LatestDocFx)'!=''">$(LatestDocFx)</UseLatestDocFx>
 
         <TargetFramework Condition="!$(UseLatestDocFx)">net462</TargetFramework>
         <TargetFramework Condition="$(UseLatestDocFx)">net6.0</TargetFramework>
 
-
-    <BuildDocumentationTN Condition="!$(UseLatestDocFx)">BuildDocumentation</BuildDocumentationTN>
-    <BuildDocumentationTN Condition="$(UseLatestDocFx)">BuildDocumentation2</BuildDocumentationTN>
-
+    	<BuildDocumentationTN Condition="!$(UseLatestDocFx)">BuildDocumentation</BuildDocumentationTN>
+	<BuildDocumentationTN Condition="$(UseLatestDocFx)">BuildDocumentation2</BuildDocumentationTN>
     </PropertyGroup>
+
     <PropertyGroup>
         <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
     </PropertyGroup>
+
     <ItemGroup>
         <Compile Remove="utils\**" />
         <Compile Remove="**\*.cs" />
         <EmbeddedResource Remove="utils\**" />
         <None Remove="utils\**" />
     </ItemGroup>
+
     <PropertyGroup>
         <DefaultItemExcludes>$(DefaultItemExcludes);**\examples\**\*; **\examples</DefaultItemExcludes>
     </PropertyGroup>
 
     <ItemGroup>
         <None Remove=".gitignore" />
-        <None Remove="Build.bat" />
-        <None Remove="Deploy.bat" />
+        <None Remove="*.bat" />
         <None Remove="log.txt" />
     </ItemGroup>
+
+<!--
     <ItemGroup>
-        <PackageReference Include="memberpage" Version="2.59.4" />
+        <PackageReference Include="memberpage" Version="2.59.4" Condition="!$(UseLatestDocFx)"/>
     </ItemGroup>
+-->
+
     <ItemGroup>
         <Folder Include="how-to-guides\debugging-with-alternet-ui-sources\images\" />
         <Folder Include="how-to-guides\using-uixml-previewer\images\" />
@@ -43,21 +52,31 @@
         <None Remove="site\**" />
         <None Remove="obj\**" />
     </ItemGroup>
+
+   <!-- ====================================================== -->
+
+<!--
     <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
         <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.59.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
-	
     </Target>
+
     <Target Name="RestoreDocFx" AfterTargets="Build" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4')">
         <Exec Command="dotnet restore $(ProjectDir)\utils\DocFXInstaller\DocFXInstaller.csproj" />
     </Target>
+
     <Target Name="BuildDocumentation" AfterTargets="Build"  Condition="!$(UseLatestDocFx)">
 	<Message Text="Build Documentation Old style" Importance="high" />
         <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4\tools\docfx.exe" />
     </Target>
+
+-->
+
     <Target Name="BuildDocumentation2" AfterTargets="Build" Condition="$(UseLatestDocFx)">
 	<Message Text="Build Documentation New style" Importance="high" />
-        <Exec Command="docfx docfxnew.json"/>
+        <Exec Command="docfx docfxnew.json" Condition="!$(NeedBuildTest)"/>
+        <Exec Command="docfx docfxtest.json" Condition="!$(NeedBuildTest)"/>
     </Target>
+
     <Target Name="SplitSitemap" AfterTargets="$(BuildDocumentationTN)">
         <Exec Command="dotnet build --property WarningLevel=0 &quot;$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\SitemapSplitter.csproj&quot;" />
         <Exec Command="&quot;$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\bin\Debug\net6.0\SitemapSplitter.exe&quot; split --SourceSiteMapPath=&quot;$(ProjectDir)\site\sitemap.xml&quot; --OutputDirectoryPath=&quot;$(ProjectDir)\site\&quot; --ConfigFilePath=&quot;$(ProjectDir)\SitemapSplitter.config.xml&quot;" />

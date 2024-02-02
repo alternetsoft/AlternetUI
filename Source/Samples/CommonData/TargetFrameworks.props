@@ -3,11 +3,14 @@
   <PropertyGroup>
     <SamplesTargetFrameworksWindows>net8.0;net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
 
-	<UITargetFrameworksLinux Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksLinux>
-	<UITargetFrameworksMacOs Condition="'$(NoNet8)' == 'true'">net7.0;net6.0</UITargetFrameworksMacOs>
+  	<BoolNoNet8>false</BoolNoNet8>
+	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
 
-	<UITargetFrameworksLinux Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksLinux>
-	<UITargetFrameworksMacOs Condition="'$(NoNet8)' != 'true'">net8.0;net7.0;net6.0</UITargetFrameworksMacOs>	
+	<SamplesTargetFrameworksLinux Condition="$(BoolNoNet8)">net7.0;net6.0</SamplesTargetFrameworksLinux>
+	<SamplesTargetFrameworksMacOs Condition="$(BoolNoNet8)">net7.0;net6.0</SamplesTargetFrameworksMacOs>
+
+	<SamplesTargetFrameworksLinux Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</SamplesTargetFrameworksLinux>
+	<SamplesTargetFrameworksMacOs Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</SamplesTargetFrameworksMacOs>	
 	
     <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   </PropertyGroup>

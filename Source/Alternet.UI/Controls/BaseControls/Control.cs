@@ -526,6 +526,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether mouse events are bubbled to parent control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool BubbleMouse { get; set; }
+
+        /// <summary>
         /// Gets or sets whether layout rules are ignored for this control.
         /// </summary>
         [Browsable(false)]

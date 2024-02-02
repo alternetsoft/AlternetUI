@@ -3,10 +3,12 @@
 
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
-
     <PropertyGroup>
-	    <DotNetRunSuffix Condition="'$(NoNet8)' == 'true'">net7.0 --property NoNet8=true</DotNetRunSuffix>
-	    <DotNetRunSuffix Condition="'$(NoNet8)' != 'true'">net8.0</DotNetRunSuffix>
+  	<BoolNoNet8>false</BoolNoNet8>
+	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
+
+	    <DotNetRunSuffix Condition="$(BoolNoNet8)">net7.0 --property NoNet8=true</DotNetRunSuffix>
+	    <DotNetRunSuffix Condition="!$(BoolNoNet8)">net8.0</DotNetRunSuffix>
     </PropertyGroup>
  
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
