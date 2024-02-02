@@ -91,14 +91,13 @@
     "disableGitFeatures": false,
     "globalMetadata": {
 	"_appLogoUrl":"https://www.alternet-ui.com/",
-      "_appLogoPath": "images/logo/logo.png",
+      "_appLogoPath": "images/logo/logo.svg",
       "_appFaviconPath": "images/logo/favicon.ico",
       "_disableContribution": true,
       "_enableNewTab": false,
-	"_appName": "AlterNET UI",
+	//"_appName": "AlterNET UI",
 	"_appTitle": "AlterNET UI Documentation",
       "_appFooter": "Copyright (c) 2021-2024 AlterNET Software",
-	"maxParallelism" : 1,
       "_enableSearch": true
     },
     "sitemap": {

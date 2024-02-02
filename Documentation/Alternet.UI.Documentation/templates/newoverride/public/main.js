@@ -3,6 +3,6 @@ export default {
 
 	start: () => {
 	    // Startup script goes here
-
+localStorage.setItem('theme', 'light');
 	},
 }

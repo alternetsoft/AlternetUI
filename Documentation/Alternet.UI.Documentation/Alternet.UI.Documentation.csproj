@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+   <!-- ====================================================== -->
+
     <PropertyGroup>
 	<NeedBuildTest>false</NeedBuildTest>
 	<NeedBuildTest Condition="'$(BuildTest)'!=''">$(BuildTest)</NeedBuildTest>
@@ -35,9 +37,11 @@
         <None Remove="log.txt" />
     </ItemGroup>
 
+<!--
     <ItemGroup>
         <PackageReference Include="memberpage" Version="2.59.4" Condition="!$(UseLatestDocFx)"/>
     </ItemGroup>
+-->
 
     <ItemGroup>
         <Folder Include="how-to-guides\debugging-with-alternet-ui-sources\images\" />
@@ -49,6 +53,9 @@
         <None Remove="obj\**" />
     </ItemGroup>
 
+   <!-- ====================================================== -->
+
+<!--
     <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
         <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.59.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
     </Target>
@@ -61,6 +68,8 @@
 	<Message Text="Build Documentation Old style" Importance="high" />
         <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4\tools\docfx.exe" />
     </Target>
+
+-->
 
     <Target Name="BuildDocumentation2" AfterTargets="Build" Condition="$(UseLatestDocFx)">
 	<Message Text="Build Documentation New style" Importance="high" />
