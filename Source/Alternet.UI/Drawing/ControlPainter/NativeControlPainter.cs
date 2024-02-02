@@ -12,6 +12,9 @@ namespace Alternet.Drawing
     /// </summary>
     public class NativeControlPainter : CustomControlPainter
     {
+        /// <summary>
+        /// Gets default instance of the <see cref="NativeControlPainter"/>.
+        /// </summary>
         public static NativeControlPainter Default = new();
 
         /// <summary>
@@ -162,11 +165,25 @@ namespace Alternet.Drawing
             Down,
         }
 
-        // Draw the header control button(used, for example, by wxListCtrl).
-        // Depending on platforms the flags parameter may support the
-        // wxCONTROL_SELECTED wxCONTROL_DISABLED and wxCONTROL_CURRENT bits.
-        // Returns the optimal width to contain the unabbreviated label text or bitmap,
-        // the sort arrow if present, and internal margins.
+        /// <summary>
+        /// Draws the header control button (used, for example, by <see cref="ListView"/> like
+        /// controls).
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <param name="sortArrow">Type of the sort icon.</param>
+        /// <param name="headerButtonParams">Button parameters.</param>
+        /// <returns>
+        /// The optimal width to contain the unabbreviated label text or bitmap,
+        /// the sort arrow if present, and internal margins.
+        /// </returns>
+        /// <remarks>
+        /// Depending on platforms the flags parameter may support the
+        /// <see cref="DrawFlags.Selected"/>, <see cref="DrawFlags.Disabled"/>
+        /// and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public int DrawHeaderButton(
             Control control,
             Graphics dc,
@@ -185,8 +202,25 @@ namespace Alternet.Drawing
                 default);
         }
 
-        // Draw the contents of a header control button (label, sort arrows, etc.)
-        // Normally only called by DrawHeaderButton.
+        /// <summary>
+        /// Draws the contents of a header control button (label, sort arrows, etc.).
+        /// Normally only called by <see cref="DrawHeaderButton"/>.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <param name="sortArrow">Type of the sort icon.</param>
+        /// <param name="headerButtonParams">Button parameters.</param>
+        /// <returns>
+        /// The optimal width to contain the unabbreviated label text
+        /// or bitmap, the sort arrow if present, and internal margins.
+        /// </returns>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Selected"/>, <see cref="DrawFlags.Disabled"/>
+        /// and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public int DrawHeaderButtonContents(
             Control control,
             Graphics dc,
@@ -205,7 +239,13 @@ namespace Alternet.Drawing
                 default);
         }
 
-        // draw the expanded/collapsed icon for a tree control item
+        /// <summary>
+        /// Draws the expanded/collapsed icon for a tree control item.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
         public void DrawTreeItemButton(
             Control control,
             Graphics dc,
@@ -220,8 +260,14 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw the border for sash window: this border must be such that the sash
-        // drawn by DrawSash() blends into it well
+        /// <summary>
+        /// Draws the border for sash window: this border must be such that the sash
+        /// drawn by <see cref="DrawSplitterSash"/> blends into it well.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
         public void DrawSplitterBorder(
             Control control,
             Graphics dc,
@@ -236,8 +282,17 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw a combobox dropdown button
-        // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
+        /// <summary>
+        /// Draws a combobox dropdown button.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public void DrawComboBoxDropButton(
             Control control,
             Graphics dc,
@@ -252,8 +307,17 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw a dropdown arrow
-        // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
+        /// <summary>
+        /// Draws a dropdown arrow.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public void DrawDropArrow(
             Control control,
             Graphics dc,
@@ -268,8 +332,18 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw check button
-        // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
+        /// <summary>
+        /// Draws check button.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Checked"/>, <see cref="DrawFlags.Undetermined"/>
+        /// and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public void DrawCheckBox(
             Control control,
             Graphics dc,
@@ -284,8 +358,17 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw check mark
-        // flags may use wxCONTROL_DISABLED
+        /// <summary>
+        /// Draws check mark.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Disabled"/>.
+        /// </remarks>
         public void DrawCheckMark(
             Control control,
             Graphics dc,
@@ -300,8 +383,18 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw blank button
-        // flags may use wxCONTROL_PRESSED, wxCONTROL_CURRENT and wxCONTROL_ISDEFAULT
+        /// <summary>
+        /// Draws blank button.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Pressed"/>, <see cref="DrawFlags.IsDefault"/>
+        /// and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public void DrawPushButton(
             Control control,
             Graphics dc,
@@ -316,8 +409,18 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw collapse button
-        // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
+        /// <summary>
+        /// Draws collapse button.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Checked"/>, <see cref="DrawFlags.Undetermined"/>
+        /// and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
         public void DrawCollapseButton(
             Control control,
             Graphics dc,
@@ -332,12 +435,21 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw rectangle indicating that an item in e.g. a list control
-        // has been selected or focused
-        // flags may use
-        // wxCONTROL_SELECTED (item is selected, e.g. draw background)
-        // wxCONTROL_CURRENT (item is the current item, e.g. dotted border)
-        // wxCONTROL_FOCUSED (the whole control has focus, e.g. blue background vs. grey otherwise)
+        /// <summary>
+        /// Draws rectangle indicating that an item in e.g. a list control
+        /// has been selected or focused.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Selected"/> (item is selected, e.g. draw background),
+        /// <see cref="DrawFlags.Focused"/> (the whole control has focus,
+        /// e.g. blue background vs. grey otherwise)
+        /// and <see cref="DrawFlags.Current"/> (item is the current item, e.g. dotted border).
+        /// </remarks>
         public void DrawItemSelectionRect(
             Control control,
             Graphics dc,
@@ -352,8 +464,16 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // draw the focus rectangle around the label contained in the given rect
-        // only wxCONTROL_SELECTED makes sense in flags here
+        /// <summary>
+        /// Draws the focus rectangle around the label contained in the given rect.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// Only <see cref="DrawFlags.Selected"/> makes sense in flags here.
+        /// </remarks>
         public void DrawFocusRect(
             Control control,
             Graphics dc,
@@ -368,7 +488,13 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // Draw a native wxChoice
+        /// <summary>
+        /// Draws a native choice control.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
         public void DrawChoice(
             Control control,
             Graphics dc,
@@ -383,7 +509,13 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // Draw a native wxComboBox
+        /// <summary>
+        /// Draws a native <see cref="ComboBox"/> frame.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
         public void DrawComboBox(
             Control control,
             Graphics dc,
@@ -398,7 +530,13 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // Draw a native wxTextCtrl frame
+        /// <summary>
+        /// Draws a native <see cref="TextBox"/> frame.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
         public void DrawTextCtrl(
             Control control,
             Graphics dc,
@@ -413,7 +551,13 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // Draw a native wxRadioButton bitmap
+        /// <summary>
+        /// Draws a native <see cref="RadioButton"/> bitmap.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
         public void DrawRadioBitmap(
             Control control,
             Graphics dc,
@@ -428,8 +572,18 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // Draw a gauge with native style like a wxGauge would display.
-        // wxCONTROL_SPECIAL flag must be used for drawing vertical gauges.
+        /// <summary>
+        /// Draws a gauge with native style.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <param name="value">Current value.</param>
+        /// <param name="max">Maximal value.</param>
+        /// <remarks>
+        /// <see cref="DrawFlags.Special"/> flag must be used for drawing vertical gauges.
+        /// </remarks>
         public void DrawGauge(
             Control control,
             Graphics dc,
@@ -448,7 +602,16 @@ namespace Alternet.Drawing
                 (int)flags);
         }
 
-        // Draw text using the appropriate color for normal and selected states.
+        /// <summary>
+        /// Draws text using the appropriate color for normal and selected states.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="align">Text alignment.</param>
+        /// <param name="ellipsizeMode">Text ellipsize mode.</param>
         public void DrawItemText(
             Control control,
             Graphics dc,
@@ -469,71 +632,128 @@ namespace Alternet.Drawing
                 (int)ellipsizeMode);
         }
 
-        // Returns the default size of a check box.
-        internal SizeI GetCheckBoxSize(Control control, DrawFlags flags = 0)
+        /// <summary>
+        /// Returns the default size of a check box in dips.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// The only acceptable flag is <see cref="DrawFlags.Cell"/> which means that just the
+        /// size of the checkbox itself is returned, without any margins that are
+        /// included by default.
+        /// </remarks>
+        public SizeD GetCheckBoxSize(Control control, DrawFlags flags = 0)
         {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetCheckBoxSize(
+            var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckBoxSize(
                 default,
                 control.WxWidget,
                 (int)flags);
+            return control.PixelToDip(result);
         }
 
-        // Returns the default size of a check mark.
-        internal SizeI GetCheckMarkSize(Control control)
+        /// <summary>
+        /// Returns the default size of a check mark in dips.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <returns></returns>
+        public SizeD GetCheckMarkSize(Control control)
         {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetCheckMarkSize(
+            var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckMarkSize(
                 default,
                 control.WxWidget);
+            return control.PixelToDip(result);
         }
 
-        // Returns the default size of a expander.
-        internal SizeI GetExpanderSize(Control control)
+        /// <summary>
+        /// Returns the default size of a expander in dips.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <returns></returns>
+        public SizeD GetExpanderSize(Control control)
         {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetExpanderSize(
+            var result = Alternet.UI.Native.WxOtherFactory.RendererGetExpanderSize(
                 default,
                 control.WxWidget);
+            return control.PixelToDip(result);
         }
 
-        // Returns the default height of a header button, either a fixed platform
-        // height if available, or a generic height based on the window's font.
-        internal int GetHeaderButtonHeight(Control control)
+        /// <summary>
+        /// Returns the default height of a header button in dips, either a fixed platform
+        /// height if available, or a generic height based on the window's font.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <returns></returns>
+        public double GetHeaderButtonHeight(Control control)
         {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
+            var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
                 default,
                 control.WxWidget);
+            return control.PixelToDip(result);
         }
 
-        // Returns the margin on left and right sides of header button's label
-        internal int GetHeaderButtonMargin(Control control)
+        /// <summary>
+        /// Returns the margin on left and right sides of header button's label in dips.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <returns></returns>
+        public double GetHeaderButtonMargin(Control control)
         {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
+            var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
                 default,
                 control.WxWidget);
+            return control.PixelToDip(result);
         }
 
-        // draw a (vertical) sash
-        internal void DrawSplitterSash(
-            Control control,
-            Graphics dcReal,
-            SizeI sizeReal,
-            int position,
-            int orientation,
-            DrawFlags flags = 0)
+        /// <summary>
+        /// Returns the default size of a collapse button in dips.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <returns></returns>
+        public SizeD GetCollapseButtonSize(Control control, Graphics dc)
         {
-        }
-
-        // Returns the default size of a collapse button
-        internal SizeI GetCollapseButtonSize(Control control, Graphics dc)
-        {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
+            var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
                 default,
                 control.WxWidget,
                 dc.NativeDrawingContext);
+            return control.PixelToDip(result);
         }
 
-        internal string GetVersion()
+        /// <summary>
+        /// Draw a (vertical) splitter sash.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <param name="size">Splitter sash size.</param>
+        /// <param name="position">Splitter position.</param>
+        /// <param name="orientation">Defines whether the sash should be vertical or
+        /// horizontal and how the position should be interpreted</param>
+        public void DrawSplitterSash(
+            Control control,
+            Graphics dc,
+            SizeD size,
+            double position,
+            GenericOrientation orientation,
+            DrawFlags flags = 0)
         {
-            return string.Empty;
+            Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterSash(
+                default,
+                control.WxWidget,
+                dc.NativeDrawingContext,
+                control.PixelFromDip(size),
+                control.PixelFromDip(position),
+                (int)orientation,
+                (int)flags);
+        }
+
+        /// <summary>
+        /// Gets version of the renderer.
+        /// </summary>
+        public string GetVersion()
+        {
+            return Alternet.UI.Native.WxOtherFactory.RendererGetVersion(default);
         }
     }
 }
