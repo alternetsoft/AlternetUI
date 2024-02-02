@@ -7,8 +7,8 @@
   	<BoolNoNet8>false</BoolNoNet8>
 	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(BoolNoNet8)</BoolNoNet8>
 
-	    <DotNetRunSuffix Condition="$(NoNet8)">net7.0 --property NoNet8=true</DotNetRunSuffix>
-	    <DotNetRunSuffix Condition="!$(NoNet8)">net8.0</DotNetRunSuffix>
+	    <DotNetRunSuffix Condition="$(BoolNoNet8)">net7.0 --property NoNet8=true</DotNetRunSuffix>
+	    <DotNetRunSuffix Condition="!$(BoolNoNet8)">net8.0</DotNetRunSuffix>
     </PropertyGroup>
  
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
