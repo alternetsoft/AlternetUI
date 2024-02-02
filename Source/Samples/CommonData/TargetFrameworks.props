@@ -4,7 +4,7 @@
     <SamplesTargetFrameworksWindows>net8.0;net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
 
   	<BoolNoNet8>false</BoolNoNet8>
-	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(BoolNoNet8)</BoolNoNet8>
+	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
 
 	<UITargetFrameworksLinux Condition="$(BoolNoNet8)">net7.0;net6.0</UITargetFrameworksLinux>
 	<UITargetFrameworksMacOs Condition="$(BoolNoNet8)">net7.0;net6.0</UITargetFrameworksMacOs>

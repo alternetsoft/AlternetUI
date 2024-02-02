@@ -6,7 +6,7 @@
   <PropertyGroup>
   
   	<BoolNoNet8>false</BoolNoNet8>
-	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(BoolNoNet8)</BoolNoNet8>
+	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
 
     <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
 	<TargetFramework48Version>net480</TargetFramework48Version>
