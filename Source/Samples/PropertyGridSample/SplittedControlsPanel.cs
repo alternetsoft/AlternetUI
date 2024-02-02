@@ -9,14 +9,14 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    public class SplittedPanelEx : SplittedPanel
+    public class SplittedControlsPanel : SplittedPanel
     {
         private TreeView? leftTreeView;
         private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
         private ListBox? actionsControl;
 
-        public SplittedPanelEx()
+        public SplittedControlsPanel()
         {
             TopVisible = false;
         }
