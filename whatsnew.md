@@ -1,6 +1,13 @@
 
 # 0.9.505 (work in progress)
 
+## 2024 February 2
+
+- Control.BubbleMouse.
+- NativeControlPainter class which allows to paint different control parts in the native OS style.
+- Fixed installation scripts errors introduced Jan 31.
+- Improved documentation web site look.
+
 ## 2024 January 31
 
 - Window.Closed event as in WinForms.
