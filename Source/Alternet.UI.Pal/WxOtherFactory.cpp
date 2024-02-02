@@ -752,71 +752,71 @@ namespace Alternet::UI
 		return wxRendererNative::Get().GetExpanderSize((wxWindow*)win);
 	}
 	
-	void WxOtherFactory::RendererDrawPushButton(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawPushButton(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawPushButton((wxWindow*)win, *(wxDC*) dc, rect, flags);
+		wxRendererNative::Get().DrawPushButton((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawCollapseButton(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawCollapseButton(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawCollapseButton((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawCollapseButton((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	Int32Size WxOtherFactory::RendererGetCollapseButtonSize(void* renderer, void* win, void* dc)
+	Int32Size WxOtherFactory::RendererGetCollapseButtonSize(void* renderer, void* win, DrawingContext* dc)
 	{
-		return wxRendererNative::Get().GetCollapseButtonSize((wxWindow*)win, *(wxDC*)dc);
+		return wxRendererNative::Get().GetCollapseButtonSize((wxWindow*)win, *dc->GetDC());
 	}
 
 	void WxOtherFactory::RendererDrawItemSelectionRect(void* renderer, void* win,
-		void* dc, const Int32Rect& rect,
+		DrawingContext* dc, const Int32Rect& rect,
 		int flags)
 	{
-		wxRendererNative::Get().DrawItemSelectionRect((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawItemSelectionRect((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawFocusRect(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawFocusRect(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawFocusRect((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawFocusRect((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawChoice(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawChoice(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawChoice((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawChoice((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawComboBox(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawComboBox(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawComboBox((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawComboBox((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawTextCtrl(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawTextCtrl(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawTextCtrl((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawTextCtrl((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawRadioBitmap(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawRadioBitmap(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawRadioBitmap((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawRadioBitmap((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawGauge(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawGauge(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int value,
 		int max, int flags)
 	{
-		wxRendererNative::Get().DrawGauge((wxWindow*)win, *(wxDC*)dc, rect, value, max,flags);
+		wxRendererNative::Get().DrawGauge((wxWindow*)win, *dc->GetDC(), rect, value, max,flags);
 	}
 
-	void WxOtherFactory::RendererDrawItemText(void* renderer, void* win, void* dc, const string& text,
+	void WxOtherFactory::RendererDrawItemText(void* renderer, void* win, DrawingContext* dc, const string& text,
 		const Int32Rect& rect, int align, int flags, int ellipsizeMode)
 	{
-		wxRendererNative::Get().DrawItemText((wxWindow*)win, *(wxDC*)dc, wxStr(text), rect, align,
+		wxRendererNative::Get().DrawItemText((wxWindow*)win, *dc->GetDC(), wxStr(text), rect, align,
 			flags,(wxEllipsizeMode) ellipsizeMode);
 	}
 
@@ -827,19 +827,19 @@ namespace Alternet::UI
 		return wxStr(result);
 	}
 
-	int WxOtherFactory::RendererDrawHeaderButton(void* renderer, void* win, void* dc,
+	int WxOtherFactory::RendererDrawHeaderButton(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect,
 		int flags, int sortArrow, void* headerButtonParams)
 	{
-		return wxRendererNative::Get().DrawHeaderButton((wxWindow*)win, *(wxDC*)dc, rect, flags,
+		return wxRendererNative::Get().DrawHeaderButton((wxWindow*)win, *dc->GetDC(), rect, flags,
 			(wxHeaderSortIconType)sortArrow, (wxHeaderButtonParams*) headerButtonParams);
 	}
 
 	int WxOtherFactory::RendererDrawHeaderButtonContents(void* renderer, void* win,
-		void* dc, const Int32Rect& rect,
+		DrawingContext* dc, const Int32Rect& rect,
 		int flags, int sortArrow, void* headerButtonParams)
 	{
-		return wxRendererNative::Get().DrawHeaderButtonContents((wxWindow*)win, *(wxDC*)dc, rect, flags,
+		return wxRendererNative::Get().DrawHeaderButtonContents((wxWindow*)win, *dc->GetDC(), rect, flags,
 			(wxHeaderSortIconType)sortArrow, (wxHeaderButtonParams*)headerButtonParams);
 	}
 
@@ -853,48 +853,48 @@ namespace Alternet::UI
 		return wxRendererNative::Get().GetHeaderButtonMargin((wxWindow*)win);
 	}
 
-	void WxOtherFactory::RendererDrawTreeItemButton(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawTreeItemButton(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawTreeItemButton((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawTreeItemButton((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawSplitterBorder(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawSplitterBorder(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawSplitterBorder((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawSplitterBorder((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawSplitterSash(void* renderer, void* win, void* dcReal,
+	void WxOtherFactory::RendererDrawSplitterSash(void* renderer, void* win, DrawingContext* dcReal,
 		const Int32Size& sizeReal,
 		int position, int orientation, int flags)
 	{
-		wxRendererNative::Get().DrawSplitterSash((wxWindow*)win, *(wxDC*)dcReal,
+		wxRendererNative::Get().DrawSplitterSash((wxWindow*)win, *dcReal->GetDC(),
 			sizeReal, position, (wxOrientation)orientation, flags);
 	}
 
-	void WxOtherFactory::RendererDrawComboBoxDropButton(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawComboBoxDropButton(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawComboBoxDropButton((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawComboBoxDropButton((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawDropArrow(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawDropArrow(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawDropArrow((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawDropArrow((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawCheckBox(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawCheckBox(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawCheckBox((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawCheckBox((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
-	void WxOtherFactory::RendererDrawCheckMark(void* renderer, void* win, void* dc,
+	void WxOtherFactory::RendererDrawCheckMark(void* renderer, void* win, DrawingContext* dc,
 		const Int32Rect& rect, int flags)
 	{
-		wxRendererNative::Get().DrawCheckMark((wxWindow*)win, *(wxDC*)dc, rect, flags);
+		wxRendererNative::Get().DrawCheckMark((wxWindow*)win, *dc->GetDC(), rect, flags);
 	}
 
 	Int32Size WxOtherFactory::RendererGetCheckBoxSize(void* renderer, void* win, int flags)

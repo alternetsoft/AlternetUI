@@ -30,7 +30,11 @@ namespace ControlsTest
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
 
-            dc.FillRectangle(Brushes.Gray, new RectD(50, 50, 250, 150));
+            NativeControlPainter.Default.DrawComboBox(
+                this,
+                dc,
+                (50, 50, 150, 100),
+                NativeControlPainter.DrawFlags.None);
         }
     }
 }
