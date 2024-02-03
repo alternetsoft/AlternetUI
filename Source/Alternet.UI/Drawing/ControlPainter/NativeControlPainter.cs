@@ -166,6 +166,107 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Defines possible controls parts to draw.
+        /// </summary>
+        public enum ControlPartKind
+        {
+            /// <summary>
+            /// Item is 'TreeItemButton'.
+            /// </summary>
+            TreeItemButton,
+
+            /// <summary>
+            /// Item is 'SplitterBorder'.
+            /// </summary>
+            SplitterBorder,
+
+            /// <summary>
+            /// Item is 'ComboBoxDropButton'.
+            /// </summary>
+            ComboBoxDropButton,
+
+            /// <summary>
+            /// Item is 'DropArrow'.
+            /// </summary>
+            DropArrow,
+
+            /// <summary>
+            /// Item is 'CheckBox'.
+            /// </summary>
+            CheckBox,
+
+            /// <summary>
+            /// Item is 'CheckMark'.
+            /// </summary>
+            CheckMark,
+
+            /// <summary>
+            /// Item is 'PushButton'.
+            /// </summary>
+            PushButton,
+
+            /// <summary>
+            /// Item is 'CollapseButton'.
+            /// </summary>
+            CollapseButton,
+
+            /// <summary>
+            /// Item is .
+            /// </summary>
+            ItemSelectionRect,
+
+            /// <summary>
+            /// Item is 'FocusRect'.
+            /// </summary>
+            FocusRect,
+
+            /// <summary>
+            /// Item is 'Choice'.
+            /// </summary>
+            Choice,
+
+            /// <summary>
+            /// Item is 'ComboBox'.
+            /// </summary>
+            ComboBox,
+
+            /// <summary>
+            /// Item is 'TextCtrl'.
+            /// </summary>
+            TextCtrl,
+
+            /// <summary>
+            /// Item is 'RadioBitmap'.
+            /// </summary>
+            RadioBitmap,
+
+            /// <summary>
+            /// Item is 'HeaderButton'.
+            /// </summary>
+            HeaderButton,
+
+            /// <summary>
+            /// Item is 'HeaderButtonContents'.
+            /// </summary>
+            HeaderButtonContents,
+
+            /// <summary>
+            /// Item is 'Gauge'.
+            /// </summary>
+            Gauge,
+
+            /// <summary>
+            /// Item is 'ItemText'.
+            /// </summary>
+            ItemText,
+
+            /// <summary>
+            /// Item is 'SplitterSash'.
+            /// </summary>
+            SplitterSash,
+        }
+
+        /// <summary>
         /// Draws the header control button (used, for example, by <see cref="ListView"/> like
         /// controls).
         /// </summary>
@@ -754,6 +855,172 @@ namespace Alternet.Drawing
         public string GetVersion()
         {
             return Alternet.UI.Native.WxOtherFactory.RendererGetVersion(default);
+        }
+
+        /// <summary>
+        /// Draws item specified with <paramref name="kind"/>.
+        /// </summary>
+        /// <param name="kind">Kind of the control part.</param>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <param name="prm">Item parameters.</param>
+        public int DrawItem(
+            ControlPartKind kind,
+            Control control,
+            Graphics dc,
+            RectD rect,
+            DrawFlags flags = 0,
+            DrawItemParams? prm = null)
+        {
+            switch (kind)
+            {
+                case ControlPartKind.TreeItemButton:
+                    DrawTreeItemButton(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.SplitterBorder:
+                    DrawSplitterBorder(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.ComboBoxDropButton:
+                    DrawComboBoxDropButton(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.DropArrow:
+                    DrawDropArrow(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.CheckBox:
+                    DrawCheckBox(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.CheckMark:
+                    DrawCheckMark(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.PushButton:
+                    DrawPushButton(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.CollapseButton:
+                    DrawCollapseButton(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.ItemSelectionRect:
+                    DrawItemSelectionRect(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.FocusRect:
+                    DrawFocusRect(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.Choice:
+                    DrawChoice(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.ComboBox:
+                    DrawComboBox(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.TextCtrl:
+                    DrawTextCtrl(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.RadioBitmap:
+                    DrawRadioBitmap(control, dc, rect, flags);
+                    return 0;
+                case ControlPartKind.HeaderButton:
+                    return DrawHeaderButton(
+                        control,
+                        dc,
+                        rect,
+                        flags,
+                        prm?.SortArrow ?? HeaderSortIconType.None,
+                        prm?.HeaderButtonParams);
+                case ControlPartKind.HeaderButtonContents:
+                    return DrawHeaderButtonContents(
+                        control,
+                        dc,
+                        rect,
+                        flags,
+                        prm?.SortArrow ?? HeaderSortIconType.None,
+                        prm?.HeaderButtonParams);
+                case ControlPartKind.Gauge:
+                    DrawGauge(
+                        control,
+                        dc,
+                        rect,
+                        prm?.GaugeValue ?? 0,
+                        prm?.GaugeMaxValue ?? 0,
+                        flags);
+                    return 0;
+                case ControlPartKind.ItemText:
+                    DrawItemText(
+                        control,
+                        dc,
+                        prm?.Text ?? string.Empty,
+                        rect,
+                        prm?.TextAlignment ?? GenericAlignment.Left | GenericAlignment.Top,
+                        flags,
+                        prm?.TextEllipsizeMode ?? TextEllipsizeType.End);
+                    return 0;
+                case ControlPartKind.SplitterSash:
+                    DrawSplitterSash(
+                        control,
+                        dc,
+                        prm?.SashSize ?? 0,
+                        prm?.SashPosition ?? 0,
+                        prm?.SashOrientation ?? GenericOrientation.Vertical,
+                        flags);
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+
+        /// <summary>
+        /// Defines additional parameters for the <see cref="DrawItem"/> method.
+        /// </summary>
+        public class DrawItemParams
+        {
+            /// <summary>
+            /// Gets or sets text alignment for the <see cref="DrawItemText"/>.
+            /// </summary>
+            public GenericAlignment TextAlignment = GenericAlignment.Left | GenericAlignment.Top;
+
+            /// <summary>
+            /// Gets or sets text for the <see cref="DrawItemText"/>.
+            /// </summary>
+            public string? Text = null;
+
+            /// <summary>
+            /// Gets or sets text ellipsize mode for the <see cref="DrawItemText"/>.
+            /// </summary>
+            public TextEllipsizeType TextEllipsizeMode = TextEllipsizeType.End;
+
+            /// <summary>
+            /// Gets or sets value for the <see cref="DrawGauge"/>.
+            /// </summary>
+            public int GaugeValue;
+
+            /// <summary>
+            /// Gets or sets max value for the <see cref="DrawGauge"/>.
+            /// </summary>
+            public int GaugeMaxValue;
+
+            /// <summary>
+            /// Gets or sets parameters for the <see cref="DrawHeaderButton"/>.
+            /// </summary>
+            public object? HeaderButtonParams;
+
+            /// <summary>
+            /// Gets or sets sort arrow for the <see cref="DrawHeaderButton"/>.
+            /// </summary>
+            public HeaderSortIconType SortArrow = HeaderSortIconType.None;
+
+            /// <summary>
+            /// Gets or sets sash size for the <see cref="DrawSplitterSash"/>.
+            /// </summary>
+            public SizeD SashSize;
+
+            /// <summary>
+            /// Gets or sets sash position for the <see cref="DrawSplitterSash"/>.
+            /// </summary>
+            public double SashPosition;
+
+            /// <summary>
+            /// Gets or sets sash orientation for the <see cref="DrawSplitterSash"/>.
+            /// </summary>
+            public GenericOrientation SashOrientation;
         }
     }
 }
