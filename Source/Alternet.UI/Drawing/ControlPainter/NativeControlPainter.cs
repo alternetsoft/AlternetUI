@@ -291,7 +291,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0,
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
-            object? headerButtonParams = null)
+            HeaderButtonParams? headerButtonParams = null)
         {
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButton(
                 default,
@@ -328,7 +328,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0,
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
-            object? headerButtonParams = null)
+            HeaderButtonParams? headerButtonParams = null)
         {
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButtonContents(
                 default,
@@ -968,6 +968,47 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Defines parameters for the <see cref="DrawHeaderButton"/>.
+        /// </summary>
+        public class HeaderButtonParams
+        {
+            /// <summary>
+            /// Gets or sets arrow color.
+            /// </summary>
+            public Color? ArrowColor;
+
+            /// <summary>
+            /// Gets or sets selection color.
+            /// </summary>
+            public Color? SelectionColor;
+
+            /// <summary>
+            /// Gets or sets label text.
+            /// </summary>
+            public string LabelText = string.Empty;
+
+            /// <summary>
+            /// Gets or sets label font.
+            /// </summary>
+            public Font? LabelFont;
+
+            /// <summary>
+            /// Gets or sets label color.
+            /// </summary>
+            public Color? LabelColor;
+
+            /// <summary>
+            /// Gets or sets label image.
+            /// </summary>
+            public Bitmap? LabelBitmap;
+
+            /// <summary>
+            /// Gets or sets label alignment.
+            /// </summary>
+            public GenericAlignment LabelAlignment;
+        }
+
+        /// <summary>
         /// Defines additional parameters for the <see cref="DrawItem"/> method.
         /// </summary>
         public class DrawItemParams
@@ -1000,7 +1041,7 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets parameters for the <see cref="DrawHeaderButton"/>.
             /// </summary>
-            public object? HeaderButtonParams;
+            public HeaderButtonParams? HeaderButtonParams;
 
             /// <summary>
             /// Gets or sets sort arrow for the <see cref="DrawHeaderButton"/>.
