@@ -96,6 +96,12 @@ namespace PropertyGridSample
             Actions.Add(typeof(Button), InitButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
 
+            Actions.Add(typeof(ControlPainterPreview), (c) =>
+            {
+                var control = (c as ControlPainterPreview)!;
+                control.SuggestedSize = 200;
+            });            
+
             Actions.Add(typeof(Slider), (c) =>
             {
                 Slider control = (c as Slider)!;
