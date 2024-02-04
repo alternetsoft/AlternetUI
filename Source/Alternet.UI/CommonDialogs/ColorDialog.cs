@@ -11,7 +11,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default <see cref="ColorDialog"/> instance.
         /// </summary>
-        public static ColorDialog Default = defaultDialog ?? new ColorDialog();
+        public static ColorDialog Default = defaultDialog ??= new ColorDialog();
 
         private static ColorDialog? defaultDialog;
 
