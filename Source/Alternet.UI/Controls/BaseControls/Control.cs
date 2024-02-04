@@ -1663,7 +1663,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color? BackgroundColor
         {
             get
@@ -1731,7 +1731,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        [Browsable(true)]
+        [Browsable(false)]
         public virtual Color ForeColor
         {
             get
@@ -1753,7 +1753,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        [Browsable(true)]
+        [Browsable(false)]
         public virtual Color BackColor
         {
             get
@@ -1775,7 +1775,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color? ForegroundColor
         {
             get
