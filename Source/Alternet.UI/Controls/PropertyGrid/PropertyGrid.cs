@@ -4190,6 +4190,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after <see cref="IPropertyGridItem"/> created for the
+        /// specified <paramref name="instance"/> and <paramref name="propInfo"/>.
+        /// </summary>
+        /// <param name="item">Property item.</param>
+        /// <param name="instance">Instance that contains the property.</param>
+        /// <param name="propInfo">Property info.</param>
+        /// <param name="prm">Property item create parameters.</param>
+        public virtual void OnPropertyCreated(
+            IPropertyGridItem item,
+            object instance,
+            PropertyInfo propInfo,
+            IPropertyGridNewItemParams? prm)
+        {
+            item.Instance = instance;
+            item.PropInfo = propInfo;
+            if (!propInfo.CanWrite)
+            {
+                if (prm is not null)
+                {
+                    if (prm.OnlyTextReadOnly is true)
+                        SetPropertyFlag(item, PropertyGridItemFlags.NoEditor, true);
+                    else
+                        SetPropertyReadOnly(item, true);
+                }
+                else
+                    SetPropertyReadOnly(item, true);
+            }
+
+            if (!item.IsFlags && AssemblyUtils.GetNullable(propInfo))
+            {
+                var value = propInfo.GetValue(instance);
+                if (value is null)
+                    SetPropertyValueUnspecified(item);
+            }
+        }
+
+        /// <summary>
         /// Reloads values of all <see cref="IPropertyGridItem"/> items collected with
         /// <see cref="GetItemsFiltered"/>.
         /// </summary>
@@ -4747,43 +4784,6 @@ namespace Alternet.UI
         internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
-        }
-
-        /// <summary>
-        /// Called after <see cref="IPropertyGridItem"/> created for the
-        /// specified <paramref name="instance"/> and <paramref name="propInfo"/>.
-        /// </summary>
-        /// <param name="item">Property item.</param>
-        /// <param name="instance">Instance that contains the property.</param>
-        /// <param name="propInfo">Property info.</param>
-        /// <param name="prm">Property item create parameters.</param>
-        protected virtual void OnPropertyCreated(
-            IPropertyGridItem item,
-            object instance,
-            PropertyInfo propInfo,
-            IPropertyGridNewItemParams? prm)
-        {
-            item.Instance = instance;
-            item.PropInfo = propInfo;
-            if (!propInfo.CanWrite)
-            {
-                if(prm is not null)
-                {
-                    if (prm.OnlyTextReadOnly is true)
-                        SetPropertyFlag(item, PropertyGridItemFlags.NoEditor, true);
-                    else
-                        SetPropertyReadOnly(item, true);
-                }
-                else
-                    SetPropertyReadOnly(item, true);
-            }
-
-            if (!item.IsFlags && AssemblyUtils.GetNullable(propInfo))
-            {
-                var value = propInfo.GetValue(instance);
-                if(value is null)
-                    SetPropertyValueUnspecified(item);
-            }
         }
 
         /// <summary>
