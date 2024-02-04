@@ -80,11 +80,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when exception is raised.
-        /// </summary>
-        public event EventHandler<PropertyGridExceptionEventArgs>? ProcessException;
-
-        /// <summary>
         /// Occurs when new property item is created.
         /// </summary>
         /// <remarks>
@@ -4257,7 +4252,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets all added property categories.
         /// </summary>
-        public IEnumerable<IPropertyGridItem> GetCategories()
+        public virtual IEnumerable<IPropertyGridItem> GetCategories()
         {
             List<IPropertyGridItem> result = new();
             foreach (var item in Items)
@@ -4273,7 +4268,7 @@ namespace Alternet.UI
         /// Gets parent of the property item.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public IPropertyGridItem? GetPropertyParent(IPropertyGridItem? prop)
+        public virtual IPropertyGridItem? GetPropertyParent(IPropertyGridItem? prop)
         {
             if (prop is null)
                 return null;
@@ -4285,7 +4280,7 @@ namespace Alternet.UI
         /// Gets first child of the property item.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public IPropertyGridItem? GetFirstChild(IPropertyGridItem? prop)
+        public virtual IPropertyGridItem? GetFirstChild(IPropertyGridItem? prop)
         {
             if (prop is null)
                 return null;
@@ -4297,7 +4292,7 @@ namespace Alternet.UI
         /// Gets category of the property item.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public IPropertyGridItem? GetPropertyCategory(IPropertyGridItem? prop)
+        public virtual IPropertyGridItem? GetPropertyCategory(IPropertyGridItem? prop)
         {
             if (prop is null)
                 return null;
@@ -4310,7 +4305,7 @@ namespace Alternet.UI
         /// <paramref name="flags"/>.
         /// </summary>
         /// <param name="flags">Filter flags.</param>
-        public IPropertyGridItem? GetFirst(PropertyGridIteratorFlags flags)
+        public virtual IPropertyGridItem? GetFirst(PropertyGridIteratorFlags flags)
         {
             var result = NativeControl.GetFirst((int)flags);
             return PtrToItem(result);
@@ -4321,7 +4316,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">Name of the property item.</param>
         /// <returns></returns>
-        public IPropertyGridItem? GetProperty(string? name)
+        public virtual IPropertyGridItem? GetProperty(string? name)
         {
             if (string.IsNullOrEmpty(name))
                 return null;
@@ -4334,7 +4329,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="label">label of the property item.</param>
         /// <returns></returns>
-        public IPropertyGridItem? GetPropertyByLabel(string? label)
+        public virtual IPropertyGridItem? GetPropertyByLabel(string? label)
         {
             if (string.IsNullOrEmpty(label))
                 return null;
@@ -4347,7 +4342,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">Name of the property item.</param>
         /// <returns></returns>
-        public IPropertyGridItem? GetPropertyByName(string? name)
+        public virtual IPropertyGridItem? GetPropertyByName(string? name)
         {
             if (string.IsNullOrEmpty(name))
                 return null;
@@ -4362,7 +4357,7 @@ namespace Alternet.UI
         /// <param name="name">Name of the property item.</param>
         /// <param name="subname">Subname of the property item.</param>
         /// <returns></returns>
-        public IPropertyGridItem? GetPropertyByNameAndSubName(string? name, string? subname)
+        public virtual IPropertyGridItem? GetPropertyByNameAndSubName(string? name, string? subname)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(subname))
                 return null;
@@ -4374,7 +4369,7 @@ namespace Alternet.UI
         /// Gets selected property item.
         /// </summary>
         /// <returns></returns>
-        public IPropertyGridItem? GetSelection()
+        public virtual IPropertyGridItem? GetSelection()
         {
             var result = NativeControl.GetSelection();
             return PtrToItem(result);
@@ -4388,7 +4383,7 @@ namespace Alternet.UI
         /// <param name="action">Action to execute.</param>
         /// <param name="prmValue">Value of the first parameter.</param>
         /// <param name="suspendUpdate">if <c>true</c>, updates will be suspended.</param>
-        public void DoActionOnProperties<T>(
+        public virtual void DoActionOnProperties<T>(
             IEnumerable<IPropertyGridItem> props,
             Action<IPropertyGridItem, T> action,
             T prmValue,
@@ -4416,7 +4411,7 @@ namespace Alternet.UI
         /// override default control settings to make it more usable and compatible.
         /// You can study it to get the idea for custom default initialization.
         /// </remarks>
-        public void SuggestedInitDefaults()
+        public virtual void SuggestedInitDefaults()
         {
             CenterSplitter();
             SetVerticalSpacing();
@@ -4437,7 +4432,7 @@ namespace Alternet.UI
         /// <param name="prmValue1">Value of the first parameter.</param>
         /// <param name="prmValue2">Value of the second parameter.</param>
         /// <param name="suspendUpdate">if <c>true</c>, updates will be suspended.</param>
-        public void DoActionOnProperties<T1, T2>(
+        public virtual void DoActionOnProperties<T1, T2>(
             IEnumerable<IPropertyGridItem> props,
             Action<IPropertyGridItem, T1, T2> action,
             T1 prmValue1,
@@ -4462,7 +4457,7 @@ namespace Alternet.UI
         /// Sets background color for all added property categories.
         /// </summary>
         /// <param name="color">Color value.</param>
-        public void SetCategoriesBackgroundColor(Color color)
+        public virtual void SetCategoriesBackgroundColor(Color color)
         {
             SetPropertiesBackgroundColor(GetCategories(), color);
         }
@@ -4472,7 +4467,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Color value.</param>
         /// <param name="items">Collection of the property items.</param>
-        public void SetPropertiesBackgroundColor(IEnumerable<IPropertyGridItem> items, Color color)
+        public virtual void SetPropertiesBackgroundColor(IEnumerable<IPropertyGridItem> items, Color color)
         {
             DoActionOnProperties<Color, bool>(items, SetPropertyBackgroundColor, color, false);
         }
@@ -4482,7 +4477,7 @@ namespace Alternet.UI
         /// to the external object (<see cref="IPropInfoAndInstance.Instance"/> and
         /// <see cref="IPropInfoAndInstance.PropInfo"/>) are not null.
         /// </summary>
-        public void ReloadPropertyValue(IPropertyGridItem item)
+        public virtual void ReloadPropertyValue(IPropertyGridItem item)
         {
             var p = item.PropInfo;
             var instance = item.Instance;
@@ -4632,12 +4627,6 @@ namespace Alternet.UI
         {
             NativeControl.DeleteProperty(prop.Handle);
             items.Remove(prop.Handle);
-        }
-
-        internal void RaiseProcessException(PropertyGridExceptionEventArgs e)
-        {
-            OnProcessException(e);
-            ProcessException?.Invoke(this, e);
         }
 
         internal void RaisePropertySelected(EventArgs e)
@@ -4983,35 +4972,6 @@ namespace Alternet.UI
                     return;
                 parentPropInfo?.SetValue(parentInstance, instance);
             }
-        }
-
-        /// <summary>
-        /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
-        /// event if exception was raised during execution.
-        /// </summary>
-        /// <param name="action"></param>
-        protected virtual void AvoidException(Action action)
-        {
-            try
-            {
-                action();
-            }
-            catch (Exception exception)
-            {
-                PropertyGridExceptionEventArgs data = new(exception);
-                RaiseProcessException(data);
-                if (data.ThrowIt)
-                    throw;
-            }
-        }
-
-        /// <summary>
-        /// Called when an exception need to be processed.
-        /// </summary>
-        /// <param name="e">An <see cref="PropertyGridExceptionEventArgs"/> that contains
-        /// the event data.</param>
-        protected virtual void OnProcessException(PropertyGridExceptionEventArgs e)
-        {
         }
 
         /// <summary>

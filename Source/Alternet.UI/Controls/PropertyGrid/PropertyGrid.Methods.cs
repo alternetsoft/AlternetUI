@@ -43,31 +43,31 @@ namespace Alternet.UI
         /// always work, even if its editor had invalid value in it.</param>
         /// <returns>Returns true if successful or if there was no selection. May fail if validation
         /// was enabled and active editor had invalid value.</returns>
-        public bool ClearSelection(bool validation) => NativeControl.ClearSelection(validation);
+        public virtual bool ClearSelection(bool validation) => NativeControl.ClearSelection(validation);
 
         /// <summary>
         /// Resets modified status of all properties.
         /// </summary>
-        public void ClearModifiedStatus() => NativeControl.ClearModifiedStatus();
+        public virtual void ClearModifiedStatus() => NativeControl.ClearModifiedStatus();
 
         /// <summary>
         /// Collapses all items that can be collapsed. This functions clears selection.
         /// </summary>
-        public bool CollapseAll() => NativeControl.CollapseAll();
+        public virtual bool CollapseAll() => NativeControl.CollapseAll();
 
         /// <summary>
         /// Returns true if all property grid data changes have been committed.
         /// </summary>
         /// <returns>Usually only returns false if value in active editor has been invalidated
         /// by a validator.</returns>
-        public bool EditorValidate() => NativeControl.EditorValidate();
+        public virtual bool EditorValidate() => NativeControl.EditorValidate();
 
         /// <summary>
         /// Expands all items that can be expanded. This functions clears selection.
         /// </summary>
         /// <param name="expand"></param>
         /// <returns></returns>
-        public bool ExpandAll(bool expand) => NativeControl.ExpandAll(expand);
+        public virtual bool ExpandAll(bool expand) => NativeControl.ExpandAll(expand);
 
         /// <summary>
         /// Translates the logical coordinates to the device ones.
@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Coordinates are specified in pixels.
         /// </remarks>
-        public PointI CalcScrolledPositionI(PointI point)
+        public virtual PointI CalcScrolledPositionI(PointI point)
         {
             return NativeControl.CalcScrolledPosition(point);
         }
@@ -100,7 +100,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Coordinates are specified in dips.
         /// </remarks>
-        public PointD CalcScrolledPositionD(PointD point)
+        public virtual PointD CalcScrolledPositionD(PointD point)
         {
             var pointI = PixelFromDip(point);
             var result = NativeControl.CalcScrolledPosition(pointI);
@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Coordinates are specified in pixels.
         /// </remarks>
-        public PointI CalcUnscrolledPositionI(PointI point)
+        public virtual PointI CalcUnscrolledPositionI(PointI point)
         {
             return NativeControl.CalcUnscrolledPosition(point);
         }
@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Coordinates are specified in dips.
         /// </remarks>
-        public PointD CalcUnscrolledPositionD(PointD point)
+        public virtual PointD CalcUnscrolledPositionD(PointD point)
         {
             var pointI = PixelFromDip(point);
             var result = NativeControl.CalcUnscrolledPosition(pointI);
@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// <see cref="CalcScrolledPositionD"/> for translating <see cref="PropertyGrid"/>
         /// client coordinates into something this member function can use.
         /// </remarks>
-        public int GetHitTestColumn(PointD point)
+        public virtual int GetHitTestColumn(PointD point)
         {
             var pointI = PixelFromDip(point);
             var result = NativeControl.GetHitTestColumn(pointI);
@@ -174,7 +174,7 @@ namespace Alternet.UI
         /// <see cref="CalcScrolledPositionD"/> for translating <see cref="PropertyGrid"/>
         /// client coordinates into something this member function can use.
         /// </remarks>
-        public IPropertyGridItem? GetHitTestProp(PointD point)
+        public virtual IPropertyGridItem? GetHitTestProp(PointD point)
         {
             var pointI = PixelFromDip(point);
             var ptr = NativeControl.GetHitTestProp(pointI);
@@ -191,7 +191,7 @@ namespace Alternet.UI
         /// Property can be reset if it is nullable, has <see cref="DefaultValueAttribute"/>
         /// specified or class has 'Reset(PropertyName)' method.
         /// </remarks>
-        public bool CanResetProp(IPropertyGridItem? item)
+        public virtual bool CanResetProp(IPropertyGridItem? item)
         {
             if (item is null || item.PropInfo is null || item.Instance is null)
                 return false;
@@ -210,7 +210,7 @@ namespace Alternet.UI
         /// Property can be reset if it is nullable, has <see cref="DefaultValueAttribute"/>
         /// specified or class has 'Reset(PropertyName)' method.
         /// </remarks>
-        public void ResetProp(IPropertyGridItem? item)
+        public virtual void ResetProp(IPropertyGridItem? item)
         {
             if (item is null || item.PropInfo is null || item.Instance is null)
                 return;
