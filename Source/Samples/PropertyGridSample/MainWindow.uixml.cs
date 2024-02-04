@@ -14,8 +14,6 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window
     {
-        private static readonly Thickness controlPadding = new (15, 15, 15, 15);
-
         internal readonly SplittedControlsPanel panel = new();
 
         private readonly Control controlPanel = new()
@@ -179,6 +177,41 @@ namespace PropertyGridSample
         {
             if (e.PropInfo.PropertyType != typeof(Color))
                 return;
+            e.PropertyItem = CreateColorItem(e);
+            e.Handled = true;
+
+            IPropertyGridItem CreateColorItem(CreatePropertyEventArgs e)
+            {
+                var color = e.PropInfo.GetValue(e.Instance, null) as Color;
+                string strValue;
+                if (color is null || !color.IsOk)
+                    strValue = string.Empty;
+                else
+                {
+                    if (color.IsNamedColor)
+                        strValue = color.Name;
+                    else
+                    if(PropGrid.ColorHasAlpha)
+                        strValue = $"({color.R}, {color.G}, {color.B}, {color.A})";
+                    else
+                        strValue = $"({color.R}, {color.G}, {color.B})";
+                }
+
+                var prm = PropertyGrid.GetNewItemParams(e.Instance.GetType(), e.PropInfo);
+                prm.EditKindString = PropertyGridEditKindString.Ellipsis;
+                prm.ButtonClick += Prm_ButtonClick;
+                prm = prm.Constructed;
+
+                var prop = PropGrid.CreateStringItemWithKind(e.Label, e.PropName, strValue, prm);
+
+                PropGrid.OnPropertyCreated(prop, e.Instance, e.PropInfo, prm);
+                return prop;
+
+                void Prm_ButtonClick(object? sender, EventArgs e)
+                {
+                    Application.Log("Color button click");
+                }
+            }
         }
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
