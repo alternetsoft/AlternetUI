@@ -291,6 +291,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
+        /// event if exception was raised during execution.
+        /// </summary>
+        /// <param name="action"></param>
+        public virtual void AvoidException(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception exception)
+            {
+                ControlExceptionEventArgs data = new(exception);
+                RaiseProcessException(data);
+                if (data.ThrowIt)
+                    throw;
+            }
+        }
+
+        /// <summary>
         /// Executes an action asynchronously on the thread that the control
         /// was created on.
         /// </summary>

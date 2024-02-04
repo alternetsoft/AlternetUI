@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    /// <summary>Provides data for the <see cref="PropertyGrid.ProcessException" /> event.</summary>
-    public sealed class PropertyGridExceptionEventArgs : EventArgs
+    /// <summary>Provides data for the <see cref="Control.ProcessException" /> event.</summary>
+    public sealed class ControlExceptionEventArgs : EventArgs
     {
         private readonly Exception exception;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyGridExceptionEventArgs" /> class.
+        /// Initializes a new instance of the <see cref="ControlExceptionEventArgs" /> class.
         /// </summary>
         /// <param name="errorException">The <see cref="Exception" /> that occurred.</param>
-        public PropertyGridExceptionEventArgs(Exception errorException)
+        public ControlExceptionEventArgs(Exception errorException)
         {
             exception = errorException ?? throw new ArgumentNullException(nameof(errorException));
         }

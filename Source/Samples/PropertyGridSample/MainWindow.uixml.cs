@@ -180,22 +180,42 @@ namespace PropertyGridSample
             e.PropertyItem = CreateColorItem(e);
             e.Handled = true;
 
-            IPropertyGridItem CreateColorItem(CreatePropertyEventArgs e)
+            string ColorToString(Color? color)
             {
-                var color = e.PropInfo.GetValue(e.Instance, null) as Color;
-                string strValue;
+                string result;
+
                 if (color is null || !color.IsOk)
-                    strValue = string.Empty;
+                    result = string.Empty;
                 else
                 {
                     if (color.IsNamedColor)
-                        strValue = color.Name;
+                        result = color.Name;
                     else
-                    if(PropGrid.ColorHasAlpha)
-                        strValue = $"({color.R}, {color.G}, {color.B}, {color.A})";
+                    if (PropGrid.ColorHasAlpha)
+                        result = $"({color.R}, {color.G}, {color.B}, {color.A})";
                     else
-                        strValue = $"({color.R}, {color.G}, {color.B})";
+                        result = $"({color.R}, {color.G}, {color.B})";
                 }
+
+                return result;
+            }
+
+            Color? ColorFromString(string? s)
+            {
+                if (string.IsNullOrWhiteSpace(s))
+                    return null;
+                Color? color = null;
+                PropGrid.AvoidException(() =>
+                {
+                    color = Color.Parse(s);
+                });
+                return color;
+            }
+
+            IPropertyGridItem CreateColorItem(CreatePropertyEventArgs e)
+            {
+                var color = e.PropInfo.GetValue(e.Instance, null) as Color;
+                string strValue = ColorToString(color);
 
                 var prm = PropertyGrid.GetNewItemParams(e.Instance.GetType(), e.PropInfo);
                 prm.EditKindString = PropertyGridEditKindString.Ellipsis;
@@ -209,7 +229,17 @@ namespace PropertyGridSample
 
                 void Prm_ButtonClick(object? sender, EventArgs e)
                 {
-                    Application.Log("Color button click");
+                    if (sender is not IPropertyGridItem item)
+                        return;
+                    var value = PropGrid.GetPropertyValueAsString(item);
+                    var color = ColorFromString(value);
+                    ColorDialog.Default.Color = color ?? Color.Black;
+                    if (ColorDialog.Default.ShowModal() != ModalResult.Accepted)
+                        return;
+                    var newValue = ColorToString(ColorDialog.Default.Color);
+                    if (newValue == value)
+                        return;
+                    PropGrid.SetPropertyValueAsStr(item, value);
                 }
             }
         }
@@ -308,7 +338,7 @@ namespace PropertyGridSample
                 updatePropertyGrid = true;
         }
 
-        private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
+        private void PropertyGrid_ProcessException(object? sender, ControlExceptionEventArgs e)
         {
             Application.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);

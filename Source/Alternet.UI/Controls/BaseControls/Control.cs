@@ -296,6 +296,11 @@ namespace Alternet.UI
         public event HelpEventHandler? HelpRequested;
 
         /// <summary>
+        /// Occurs when exception is raised inside <see cref="AvoidException"/>.
+        /// </summary>
+        public event EventHandler<ControlExceptionEventArgs>? ProcessException;
+
+        /// <summary>
         /// Occurs when the mouse pointer enters the control.
         /// </summary>
         public event EventHandler? MouseEnter;
