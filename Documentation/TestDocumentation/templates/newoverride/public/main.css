@@ -1,4 +1,4 @@
-a.nav-link.active
+a.nav-link:active
 {
 	font-weight: bold !important;
 	color: black !important; 

@@ -74,7 +74,7 @@
     <Target Name="BuildDocumentation2" AfterTargets="Build" Condition="$(UseLatestDocFx)">
 	<Message Text="Build Documentation New style" Importance="high" />
         <Exec Command="docfx docfxnew.json" Condition="!$(NeedBuildTest)"/>
-        <Exec Command="docfx docfxtest.json" Condition="!$(NeedBuildTest)"/>
+        <Exec Command="docfx docfxtest.json" Condition="$(NeedBuildTest)"/>
     </Target>
 
     <Target Name="SplitSitemap" AfterTargets="$(BuildDocumentationTN)">

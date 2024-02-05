@@ -29,7 +29,7 @@ values that specify the operations allowed by the source of the drag event and t
 ## Performing drag-and-drop
 
 Drag-and-drop operations always involve two components, the **drag source** and the **drop target**. To start a
-drag-and-drop operation, designate a control as the source and handle the <xref:Alternet.UI.UIElement.MouseDown>
+drag-and-drop operation, designate a control as the source and handle the <xref:Alternet.UI.Control.MouseDown>
 event. In the event handler, call the <xref:Alternet.UI.Control.DoDragDrop%2A> method providing the data associated
 with the drop and the a <xref:Alternet.UI.DragDropEffects> value.
 
@@ -64,13 +64,13 @@ private void textBox1_DragDrop(object sender, DragEventArgs e) =>
  All drag-and-drop operations begin with dragging. The functionality to enable data to be collected when dragging begins
  is implemented in the <xref:Alternet.UI.Control.DoDragDrop%2A> method.  
   
- In the following example, the <xref:Alternet.UI.UIElement.MouseDown> event is used to start the drag operation
+ In the following example, the <xref:Alternet.UI.Control.MouseDown> event is used to start the drag operation
  because it is the most intuitive (most drag-and-drop actions begin with the mouse button being pressed). However,
  remember that any event could be used to initiate a drag-and-drop procedure.  
   
 ### To start a drag operation  
   
-1. In the <xref:Alternet.UI.UIElement.MouseDown> event for the control where the drag will begin use the
+1. In the <xref:Alternet.UI.Control.MouseDown> event for the control where the drag will begin use the
    `DoDragDrop` method to set the data to be dragged and the allowed effect dragging will have. For more information,
    see <xref:Alternet.UI.DragEventArgs.Data%2A> and <xref:Alternet.UI.DragEventArgs.Effect%2A>.  
   
