@@ -88,8 +88,8 @@ namespace Alternet::UI
 
 	void wxAlternetColourProperty::Init(wxColour colour)
 	{
-		if (!colour.IsOk())
-			colour = *wxWHITE;
+		/*if (!colour.IsOk())
+			colour = *wxWHITE;*/
 		m_value = WXVARIANT(colour);
 		int ind = ColToInd(colour);
 		if (ind < 0)
@@ -192,7 +192,8 @@ namespace Alternet::UI
     {
         wxColourPropertyValue cpv;
 
-        cpv.Init(type, colour.IsOk() ? colour : *wxWHITE);
+        // cpv.Init(type, colour.IsOk() ? colour : *wxWHITE);
+        cpv.Init(type, colour);
 
         m_flags |= wxPG_PROP_STATIC_CHOICES; // Colour selection cannot be changed.
 
