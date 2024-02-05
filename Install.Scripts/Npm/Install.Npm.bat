@@ -1,0 +1,1 @@
+winget install OpenJS.NodeJS
