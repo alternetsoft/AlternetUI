@@ -4378,6 +4378,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts <see cref="Color"/> to <see cref="string"/> using
+        /// <see cref="ColorHasAlpha"/>, <see cref="DefaultColorFormatRGBA"/>,
+        /// <see cref="DefaultColorFormatRGB"/> properties
+        /// </summary>
+        /// <param name="color">Color to convert.</param>
+        /// <returns></returns>
+        public virtual string ColorToString(Color? color)
+        {
+            string result;
+
+            if (color is null || !color.IsOk)
+                result = string.Empty;
+            else
+            {
+                if (color.IsNamedColor)
+                    result = color.Name;
+                else
+                if (ColorHasAlpha)
+                {
+                    result = string.Format(
+                        DefaultColorFormatRGBA,
+                        color.R,
+                        color.G,
+                        color.B,
+                        color.A);
+                }
+                else
+                {
+                    result = string.Format(
+                        DefaultColorFormatRGB,
+                        color.R,
+                        color.G,
+                        color.B);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets selected property item.
         /// </summary>
         /// <returns></returns>

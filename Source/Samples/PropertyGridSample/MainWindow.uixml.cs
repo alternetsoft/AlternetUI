@@ -175,55 +175,12 @@ namespace PropertyGridSample
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {
+            /*
             if (e.PropInfo.PropertyType != typeof(Color))
                 return;
             e.PropertyItem = CreatePropertyAsColor(e.Label, e.PropName, e.Instance, e.PropInfo);
             e.Handled = true;
-        }
-
-        public virtual string ColorToString(Color? color)
-        {
-            string result;
-
-            if (color is null || !color.IsOk)
-                result = string.Empty;
-            else
-            {
-                if (color.IsNamedColor)
-                    result = color.Name;
-                else
-                if (PropGrid.ColorHasAlpha)
-                {
-                    result = string.Format(
-                        PropGrid.DefaultColorFormatRGBA,
-                        color.R,
-                        color.G,
-                        color.B,
-                        color.A);
-                }
-                else
-                {
-                    result = string.Format(
-                        PropGrid.DefaultColorFormatRGB,
-                        color.R,
-                        color.G,
-                        color.B);
-                }
-            }
-
-            return result;
-        }
-
-        public virtual Color? ColorFromString(string? s)
-        {
-            if (string.IsNullOrWhiteSpace(s))
-                return null;
-            Color? color = null;
-            PropGrid.AvoidException(() =>
-            {
-                color = Color.Parse(s);
-            });
-            return color;
+            */
         }
 
         public virtual IPropertyGridItem CreatePropertyAsColor(
@@ -236,7 +193,7 @@ namespace PropertyGridSample
             label ??= propName;
 
             var color = propInfo.GetValue(instance, null) as Color;
-            string strValue = ColorToString(color);
+            string strValue = PropGrid.ColorToString(color);
 
             var prm = PropertyGrid.GetNewItemParams(instance.GetType(), propInfo);
             prm.EditKindString = PropertyGridEditKindString.Ellipsis;
@@ -250,20 +207,28 @@ namespace PropertyGridSample
 
             void Prm_ButtonClick(object? sender, EventArgs e)
             {
-                if (sender is not IPropertyGridItem item)
-                    return;
-                var value = PropGrid.GetPropertyValueAsString(item);
-                var color = ColorFromString(value);
-                ColorDialog.Default.Color = color ?? Color.Black;
-                if (ColorDialog.Default.ShowModal() != ModalResult.Accepted)
-                    return;
-                var newValue = ColorToString(ColorDialog.Default.Color);
-                if (newValue == value)
-                    return;
-                Application.AddIdleTask(() =>
+                Application.AddIdleTask(Fn);
+
+                void Fn()
                 {
+                    if (sender is not IPropertyGridItem item)
+                        return;
+                    var value = PropGrid.GetPropertyValueAsString(item);
+                    Color? color = null;
+
+                    PropGrid.AvoidException(() =>
+                    {
+                        color = Color.Parse(value);
+                    });
+
+                    ColorDialog.Default.Color = color ?? Color.Black;
+                    if (ColorDialog.Default.ShowModal() != ModalResult.Accepted)
+                        return;
+                    var newValue = PropGrid.ColorToString(ColorDialog.Default.Color);
+                    if (newValue == value)
+                        return;
                     PropGrid.SetPropertyValueAsStr(item, newValue);
-                });
+                }
             }
         }
 

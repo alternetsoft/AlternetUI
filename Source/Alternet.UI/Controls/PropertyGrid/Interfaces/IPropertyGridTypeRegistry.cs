@@ -13,6 +13,16 @@ namespace Alternet.UI
     public interface IPropertyGridTypeRegistry
     {
         /// <summary>
+        /// Occurs when button is clicked in the property editor.
+        /// </summary>
+        event EventHandler? ButtonClick;
+
+        /// <summary>
+        /// Gets or sets whether property editor has ellipsis button.
+        /// </summary>
+        bool? HasEllipsis { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="IPropertyGridItem"/> create function.
         /// </summary>
         PropertyGridItemCreate? CreateFunc { get; set; }
@@ -66,5 +76,10 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>null</c> if no actions were added; list of actions otherwise.</returns>
         IEnumerable<(string, Action)>? GetSimpleActions();
+
+        /// <summary>
+        /// Raises <see cref="ButtonClick"/> event.
+        /// </summary>
+        void RaiseButtonClick(IPropertyGridItem item);
     }
 }
