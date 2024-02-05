@@ -468,6 +468,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when an exception need to be processed.
+        /// </summary>
+        /// <param name="e">An <see cref="ControlExceptionEventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnProcessException(ControlExceptionEventArgs e)
+        {
+        }
+
+        /// <summary>
         ///     Virtual method reporting a mouse move
         /// </summary>
         protected virtual void OnMouseMove(MouseEventArgs e)

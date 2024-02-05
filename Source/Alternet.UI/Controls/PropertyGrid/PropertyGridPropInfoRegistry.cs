@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -18,6 +19,14 @@ namespace Alternet.UI
             this.propInfo = propInfo;
             this.owner = owner;
         }
+
+        public NumberStyles? NumberStyles { get; set; }
+
+        public IFormatProvider? FormatProvider { get; set; }
+
+        public IObjectToString? Converter { get; set; }
+
+        public string? DefaultFormat { get; set; }
 
         public PropertyInfo PropInfo => propInfo;
 

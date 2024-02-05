@@ -82,7 +82,7 @@ namespace Alternet.Drawing
         /// the given destination type using the context.</summary>
         /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
         /// format context. </param>
-        /// <param name="destinationType">A <see cref="T:System.Type" /> that represents the
+        /// <param name="destinationType">A <see cref="System.Type" /> that represents the
         /// type to which you want to convert. </param>
         /// <returns>
         ///     <see langword="true" /> if this converter can perform the operation; otherwise,
@@ -99,12 +99,12 @@ namespace Alternet.Drawing
         /// <param name="context">A <see cref="TypeDescriptor" /> that provides a format context.
         /// You can use this object to get additional information about the environment from
         /// which this converter is being invoked. </param>
-        /// <param name="culture">A <see cref="T:System.Globalization.CultureInfo" /> that
+        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that
         /// specifies the culture to represent the color. </param>
         /// <param name="value">The object to convert. </param>
-        /// <returns>An <see cref="T:System.Object" /> representing the converted
+        /// <returns>An <see cref="object" /> representing the converted
         /// value.</returns>
-        /// <exception cref="T:System.ArgumentException">The conversion cannot be
+        /// <exception cref="System.ArgumentException">The conversion cannot be
         /// performed.</exception>
         public override object? ConvertFrom(
             ITypeDescriptorContext? context,
@@ -112,116 +112,9 @@ namespace Alternet.Drawing
             object value)
         {
             if (value is string text)
-            {
-                object? obj;
-                string text2 = text.Trim();
-                if (text2.Length == 0)
-                {
-                    obj = Color.Empty;
-                }
-                else
-                {
-                    obj = ColorConverter.GetNamedColor(text2);
-                    if (obj == null)
-                    {
-                        culture ??= CultureInfo.CurrentCulture;
-
-                        char c = culture.TextInfo.ListSeparator[0];
-                        bool flag = true;
-                        TypeConverter converter =
-                            TypeDescriptor.GetConverter(typeof(int));
-#pragma warning disable
-                        if (text2.IndexOf(c) == -1)
-#pragma warning restore
-                        {
-#pragma warning disable
-                            if (text2.Length >= 2 && (text2[0] == '\'' ||
-                                text2[0] == '"') && text2[0] == text2[text2.Length - 1])
-#pragma warning restore
-                            {
-#pragma warning disable
-                                string name = text2.Substring(1, text2.Length - 2);
-#pragma warning restore
-                                obj = Color.FromName(name);
-                                flag = false;
-                            }
-                            else if ((text2.Length == 7 && text2[0] == '#') ||
-                                (text2.Length == 8 && (text2.StartsWith("0x") ||
-                                text2.StartsWith("0X"))) ||
-                                (text2.Length == 8 && (text2.StartsWith("&h") ||
-                                text2.StartsWith("&H"))))
-                            {
-                                obj = Color.FromArgb(-16777216 |
-                                    (int)converter.ConvertFromString(
-                                        context,
-                                        culture,
-                                        text2)!);
-                            }
-                        }
-
-                        if (obj == null)
-                        {
-                            string[] array = text2.Split(c);
-                            int[] array2 = new int[array.Length];
-                            for (int i = 0; i < array2.Length; i++)
-                            {
-                                array2[i] = (int)converter.ConvertFromString(
-                                    context,
-                                    culture,
-                                    array[i])!;
-                            }
-
-                            switch (array2.Length)
-                            {
-                                case 1:
-                                    obj = Color.FromArgb(array2[0]);
-                                    break;
-                                case 3:
-                                    obj = Color.FromArgb(
-                                        array2[0],
-                                        array2[1],
-                                        array2[2]);
-                                    break;
-                                case 4:
-                                    obj = Color.FromArgb(
-                                        array2[0],
-                                        array2[1],
-                                        array2[2],
-                                        array2[3]);
-                                    break;
-                            }
-
-                            flag = true;
-                        }
-
-                        if (obj != null && flag)
-                        {
-                            int num = ((Color)obj).ToArgb();
-                            foreach (object? obj2 in ColorConverter.Colors.Values)
-                            {
-                                if (obj2 == null)
-                                    throw new InvalidOperationException();
-
-                                Color color = (Color)obj2;
-                                if (color.ToArgb() == num)
-                                {
-                                    obj = color;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if (obj == null)
-                    {
-                        throw new ArgumentException("Invalid Color:" + text2);
-                    }
-                }
-
-                return obj;
-            }
-
-            return base.ConvertFrom(context, culture, value);
+                return ColorFromString(context, culture, text);
+            else
+                return base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>Converts the specified object to another type. </summary>
@@ -229,14 +122,14 @@ namespace Alternet.Drawing
         /// additional information about the environment from which this converter is being invoked.
         /// Always check whether this value is <see langword="null" />. Also, properties on
         /// the context object may return <see langword="null" />. </param>
-        /// <param name="culture">A <see cref="T:System.Globalization.CultureInfo" /> that
+        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that
         /// specifies the culture to represent the color. </param>
         /// <param name="value">The object to convert. </param>
         /// <param name="destinationType">The type to convert the object to. </param>
-        /// <returns>An <see cref="T:System.Object" /> representing the converted value.</returns>
-        /// <exception cref="T:System.ArgumentNullException">
+        /// <returns>An <see cref="object" /> representing the converted value.</returns>
+        /// <exception cref="System.ArgumentNullException">
         ///         <paramref name="destinationType" /> is <see langword="null" />.</exception>
-        /// <exception cref="T:System.NotSupportedException">The conversion cannot be
+        /// <exception cref="System.NotSupportedException">The conversion cannot be
         /// performed.</exception>
         public override object? ConvertTo(
             ITypeDescriptorContext? context,
@@ -429,6 +322,129 @@ namespace Alternet.Drawing
             ITypeDescriptorContext? context)
         {
             return true;
+        }
+
+        /// <summary>
+        /// Converts <see cref="string"/> to <see cref="Color"/>.
+        /// </summary>
+        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
+        /// format context. You can use this object to get additional information about
+        /// the environment from which this converter is being invoked. </param>
+        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that
+        /// specifies the culture to represent the color. </param>
+        /// <param name="text">The string to convert.</param>
+        /// <returns></returns>
+        internal static Color? ColorFromString(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            string text)
+        {
+            object? obj;
+            string text2 = text.Trim();
+            if (text2.Length == 0)
+            {
+                obj = Color.Empty;
+            }
+            else
+            {
+                obj = ColorConverter.GetNamedColor(text2);
+                if (obj == null)
+                {
+                    culture ??= CultureInfo.CurrentCulture;
+
+                    char c = culture.TextInfo.ListSeparator[0];
+                    bool flag = true;
+                    TypeConverter converter =
+                        TypeDescriptor.GetConverter(typeof(int));
+#pragma warning disable
+                    if (text2.IndexOf(c) == -1)
+#pragma warning restore
+                    {
+#pragma warning disable
+                        if (text2.Length >= 2 && (text2[0] == '\'' ||
+                            text2[0] == '"') && text2[0] == text2[text2.Length - 1])
+#pragma warning restore
+                        {
+#pragma warning disable
+                            string name = text2.Substring(1, text2.Length - 2);
+#pragma warning restore
+                            obj = Color.FromName(name);
+                            flag = false;
+                        }
+                        else if ((text2.Length == 7 && text2[0] == '#') ||
+                            (text2.Length == 8 && (text2.StartsWith("0x") ||
+                            text2.StartsWith("0X"))) ||
+                            (text2.Length == 8 && (text2.StartsWith("&h") ||
+                            text2.StartsWith("&H"))))
+                        {
+                            obj = Color.FromArgb(-16777216 |
+                                (int)converter.ConvertFromString(
+                                    context,
+                                    culture,
+                                    text2)!);
+                        }
+                    }
+
+                    if (obj == null)
+                    {
+                        string[] array = text2.Split(c);
+                        int[] array2 = new int[array.Length];
+                        for (int i = 0; i < array2.Length; i++)
+                        {
+                            array2[i] = (int)converter.ConvertFromString(
+                                context,
+                                culture,
+                                array[i])!;
+                        }
+
+                        switch (array2.Length)
+                        {
+                            case 1:
+                                obj = Color.FromArgb(array2[0]);
+                                break;
+                            case 3:
+                                obj = Color.FromArgb(
+                                    array2[0],
+                                    array2[1],
+                                    array2[2]);
+                                break;
+                            case 4:
+                                obj = Color.FromArgb(
+                                    array2[0],
+                                    array2[1],
+                                    array2[2],
+                                    array2[3]);
+                                break;
+                        }
+
+                        flag = true;
+                    }
+
+                    if (obj != null && flag)
+                    {
+                        int num = ((Color)obj).ToArgb();
+                        foreach (object? obj2 in ColorConverter.Colors.Values)
+                        {
+                            if (obj2 == null)
+                                throw new InvalidOperationException();
+
+                            Color color = (Color)obj2;
+                            if (color.ToArgb() == num)
+                            {
+                                obj = color;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (obj == null)
+                {
+                    throw new ArgumentException("Invalid Color:" + text2);
+                }
+            }
+
+            return obj as Color;
         }
 
         internal static object? GetNamedColor(string name)

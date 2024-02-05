@@ -202,6 +202,12 @@ namespace Alternet.UI
             }
         }
 
+        internal void RaiseProcessException(ControlExceptionEventArgs e)
+        {
+            OnProcessException(e);
+            ProcessException?.Invoke(this, e);
+        }
+
         internal void RaiseMouseWheel(MouseEventArgs e)
         {
             OnMouseWheel(e);

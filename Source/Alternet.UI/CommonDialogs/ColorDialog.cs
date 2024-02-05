@@ -8,6 +8,13 @@ namespace Alternet.UI
     [ControlCategory("Dialogs")]
     public class ColorDialog : CommonDialog
     {
+        /// <summary>
+        /// Gets default <see cref="ColorDialog"/> instance.
+        /// </summary>
+        public static ColorDialog Default = defaultDialog ??= new ColorDialog();
+
+        private static ColorDialog? defaultDialog;
+
         private readonly Native.ColorDialog nativeDialog;
 
         /// <summary>

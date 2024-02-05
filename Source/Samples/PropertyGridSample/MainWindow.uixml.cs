@@ -14,8 +14,6 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window
     {
-        private static readonly Thickness controlPadding = new (15, 15, 15, 15);
-
         internal readonly SplittedControlsPanel panel = new();
 
         private readonly Control controlPanel = new()
@@ -177,8 +175,61 @@ namespace PropertyGridSample
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {
+            /*
             if (e.PropInfo.PropertyType != typeof(Color))
                 return;
+            e.PropertyItem = CreatePropertyAsColor(e.Label, e.PropName, e.Instance, e.PropInfo);
+            e.Handled = true;
+            */
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsColor(
+                    string? label,
+                    string? name,
+                    object instance,
+                    PropertyInfo propInfo)
+        {
+            string propName = propInfo.Name;
+            label ??= propName;
+
+            var color = propInfo.GetValue(instance, null) as Color;
+            string strValue = PropGrid.ColorToString(color);
+
+            var prm = PropertyGrid.GetNewItemParams(instance.GetType(), propInfo);
+            prm.EditKindString = PropertyGridEditKindString.Ellipsis;
+            prm.ButtonClick += Prm_ButtonClick;
+            prm = prm.Constructed;
+
+            var prop = PropGrid.CreateStringItemWithKind(label, propName, strValue, prm);
+
+            PropGrid.OnPropertyCreated(prop, instance, propInfo, prm);
+            return prop;
+
+            void Prm_ButtonClick(object? sender, EventArgs e)
+            {
+                Application.AddIdleTask(Fn);
+
+                void Fn()
+                {
+                    if (sender is not IPropertyGridItem item)
+                        return;
+                    var value = PropGrid.GetPropertyValueAsString(item);
+                    Color? color = null;
+
+                    PropGrid.AvoidException(() =>
+                    {
+                        color = Color.Parse(value);
+                    });
+
+                    ColorDialog.Default.Color = color ?? Color.Black;
+                    if (ColorDialog.Default.ShowModal() != ModalResult.Accepted)
+                        return;
+                    var newValue = PropGrid.ColorToString(ColorDialog.Default.Color);
+                    if (newValue == value)
+                        return;
+                    PropGrid.SetPropertyValueAsStr(item, newValue);
+                }
+            }
         }
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
@@ -204,52 +255,11 @@ namespace PropertyGridSample
             PropGrid.ShowPopupMenu(propGridContextMenu);
         }
 
-        private bool CanResetProp(IPropertyGridItem? item)
-        {
-            if (item is null || item.PropInfo is null || item.Instance is null)
-                return false;
-            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
-            var value = item.PropInfo.GetValue(item.Instance);
-            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
-            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out _);
-            return hasDevaultAttr || resetMethod != null || (nullable && value is not null);
-        }
-
-        private void ResetProp(IPropertyGridItem? item)
-        {
-            if (item is null || item.PropInfo is null || item.Instance is null)
-                return;
-
-            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
-            if (resetMethod is not null)
-            {
-                resetMethod.Invoke(item.Instance, Array.Empty<object?>());
-                PropGrid.ReloadPropertyValue(item);
-                return;
-            }
-            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out var defValue);
-            if (hasDevaultAttr)
-            {
-                item.PropInfo.SetValue(item.Instance, defValue);
-                PropGrid.ReloadPropertyValue(item);
-                return;
-            }
-
-            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
-            var value = item.PropInfo.GetValue(item.Instance);
-            if (nullable && value is not null)
-            {
-                item.PropInfo.SetValue(item.Instance, null);
-                PropGrid.ReloadPropertyValue(item);
-                return;
-            }
-        }
-
         private void ResetMenu_Click(object? sender, EventArgs e)
         {
             var selectedProp = PropGrid.GetSelection();
             Application.Log($"Reset: {selectedProp?.DefaultName}");
-            ResetProp(selectedProp);
+            PropGrid.ResetProp(selectedProp);
         }
 
         private void PropGridContextMenu_Opening(object? sender, CancelEventArgs e)
@@ -264,7 +274,7 @@ namespace PropertyGridSample
 
             var selectedProp = PropGrid.GetSelection();
 
-            resetMenu.Enabled = CanResetProp(selectedProp);
+            resetMenu.Enabled = PropGrid.CanResetProp(selectedProp);
         }
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
@@ -316,7 +326,7 @@ namespace PropertyGridSample
                 updatePropertyGrid = true;
         }
 
-        private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
+        private void PropertyGrid_ProcessException(object? sender, ControlExceptionEventArgs e)
         {
             Application.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);

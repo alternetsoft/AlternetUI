@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -18,6 +19,24 @@ namespace Alternet.UI
         {
             this.type = type;
         }
+
+        /// <summary>
+        /// Occurs when button is clicked in the property editor.
+        /// </summary>
+        public event EventHandler? ButtonClick;
+
+        /// <summary>
+        /// Gets or sets whether property editor has ellipsis button.
+        /// </summary>
+        public bool? HasEllipsis { get; set; }
+
+        public NumberStyles? NumberStyles { get; set; }
+
+        public IFormatProvider? FormatProvider { get; set; }
+
+        public IObjectToString? Converter { get; set; }
+
+        public string? DefaultFormat { get; set; }
 
         public IPropertyGridTypeRegistry? BaseTypeRegistry
         {
@@ -77,6 +96,14 @@ namespace Alternet.UI
         public IEnumerable<(string, Action)>? GetSimpleActions()
         {
             return simpleActions;
+        }
+
+        /// <summary>
+        /// Raises <see cref="ButtonClick"/> event.
+        /// </summary>
+        public void RaiseButtonClick(IPropertyGridItem item)
+        {
+            ButtonClick?.Invoke(item, EventArgs.Empty);
         }
 
         private class NullType

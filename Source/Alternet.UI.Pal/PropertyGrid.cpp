@@ -490,7 +490,7 @@ namespace Alternet::UI
 	{
 		wxColor wxc = value;
 		wxColourPropertyValue wxProp = wxColourPropertyValue(kind, wxc);
-		return new wxSystemColourProperty(wxStr(label), wxStr(name), wxProp);
+		return new wxAlternetSystemColourProperty(wxStr(label), wxStr(name), wxProp);
 	}
 
 	void* PropertyGrid::CreateCursorProperty(const string& label, const string& name, int value)

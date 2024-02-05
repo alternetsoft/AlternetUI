@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -24,6 +25,14 @@ namespace Alternet.UI
         }
 
         public event EventHandler? ButtonClick;
+
+        public NumberStyles? NumberStyles { get; set; }
+
+        public IFormatProvider? FormatProvider { get; set; }
+
+        public IObjectToString? Converter { get; set; }
+
+        public string? DefaultFormat { get; set; }
 
         public IPropertyGridChoices? Choices
         {
@@ -89,7 +98,15 @@ namespace Alternet.UI
             private bool? constructedHasEllipsis;
             private bool? constructedTextReadOnly;
             private bool? constructedOnlyTextReadOnly;
+            private NumberStyles? constructedNumberStyles;
+            private IFormatProvider? constructedFormatProvider;
+            private IObjectToString? constructedConverter;
+            private string? constructedDefaultFormat;
 
+            private bool loadedDefaultFormat;
+            private bool loadedFormatProvider;
+            private bool loadedConverter;
+            private bool loadedNumberStyles;
             private bool loadedLabel;
             private bool loadedIsNullable;
             private bool loadedEditKindColor;
@@ -162,6 +179,70 @@ namespace Alternet.UI
                         ref loadedLabel,
                         ref constructedLabel,
                         (r) => r?.NewItemParams?.Label);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public NumberStyles? NumberStyles
+            {
+                get
+                {
+                    var result = GetConstructedValue<NumberStyles?>(
+                        ref loadedNumberStyles,
+                        ref constructedNumberStyles,
+                        (r) => r?.NewItemParams?.NumberStyles);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public IFormatProvider? FormatProvider
+            {
+                get
+                {
+                    var result = GetConstructedValue<IFormatProvider?>(
+                        ref loadedFormatProvider,
+                        ref constructedFormatProvider,
+                        (r) => r?.NewItemParams?.FormatProvider);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public IObjectToString? Converter
+            {
+                get
+                {
+                    var result = GetConstructedValue<IObjectToString?>(
+                        ref loadedConverter,
+                        ref constructedConverter,
+                        (r) => r?.NewItemParams?.Converter);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public string? DefaultFormat
+            {
+                get
+                {
+                    var result = GetConstructedValue<string?>(
+                        ref loadedDefaultFormat,
+                        ref constructedDefaultFormat,
+                        (r) => r?.NewItemParams?.DefaultFormat);
                     return result;
                 }
 

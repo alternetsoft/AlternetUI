@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
@@ -602,11 +603,32 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a color from the specified string.
         /// </summary>
-        public static Color Parse(string s)
+        public static Color Parse(string? s)
         {
-            object? result = new ColorConverter().ConvertFromString(s);
+            return Parse(null, null, s) ?? Color.Empty;
+        }
+
+        /// <summary>
+        /// Converts <see cref="string"/> to <see cref="Color"/>.
+        /// </summary>
+        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
+        /// format context. You can use this object to get additional information about
+        /// the environment from which this converter is being invoked. </param>
+        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that
+        /// specifies the culture to represent the color. </param>
+        /// <param name="s">The string to convert.</param>
+        /// <returns></returns>
+        public static Color? Parse(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            string? s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return null;
+            var str = s!.Trim(' ', '(', ')');
+            object? result = ColorConverter.ColorFromString(context, culture, str);
             if (result == null)
-                return Color.Empty;
+                return null;
             return (Color)result;
         }
 

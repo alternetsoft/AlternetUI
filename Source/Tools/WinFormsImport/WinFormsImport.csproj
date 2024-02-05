@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Map\docfx.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Map\docfx.min.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
   </ItemGroup>
 

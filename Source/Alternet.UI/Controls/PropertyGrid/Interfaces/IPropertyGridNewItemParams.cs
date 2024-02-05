@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Defines customization parameters used when new <see cref="IPropertyGridItem"/>
     /// instances are created in <see cref="PropertyGrid"/>.
     /// </summary>
-    public interface IPropertyGridNewItemParams
+    public interface IPropertyGridNewItemParams : IObjectToStringOptions
     {
         /// <summary>
         /// Occurs when button is clicked in the property editor.

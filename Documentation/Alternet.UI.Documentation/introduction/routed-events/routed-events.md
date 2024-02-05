@@ -9,7 +9,8 @@ introduces how to create custom routed events.
 
 This topic assumes that you have basic knowledge of the common language runtime
 (CLR) and object-oriented programming, as well as the concept of how the
-relationships between AlterNET UI elements can be conceptualized as a tree. To follow the examples in this topic, you should also understand AlterNET UI applications or pages.
+relationships between AlterNET UI elements can be conceptualized as a tree. 
+To follow the examples in this topic, you should also understand AlterNET UI applications or pages.
 
 ## What Is a Routed Event?
 
@@ -32,26 +33,6 @@ event definition, but generally, the route travels from the source element and
 then "bubbles" upward through the element tree until it reaches the element tree
 root (typically a page or a window). This bubbling concept might be familiar to
 you if you have worked with the DHTML object model previously.
-
-Consider the following simple element tree:
-
-[!code-xml[](./snippets/GroupButton.uixml)]
-
-In this simplified element tree, the source of a
-<xref:Alternet.UI.Control.Click> event is one of the
-<xref:Alternet.UI.Button> elements, and whichever
-<xref:Alternet.UI.Button> was clicked is the first element that has
-the opportunity to handle the event. But if no handler is attached to the
-<xref:Alternet.UI.Button> acts on the event, then the event will
-bubble upwards to the <xref:Alternet.UI.Button> parent in the
-element tree, which is the <xref:Alternet.UI.StackPanel>.
-Potentially, the event bubbles to <xref:Alternet.UI.Border>, and
-then beyond to the page root of the element tree (not shown).
-
-In other words, the event route for this
-<xref:Alternet.UI.Control.Click> event is:
-
-Button-->StackPanel-->Border-->...
 
 ### Top-level Scenarios for Routed Events
 
@@ -94,20 +75,7 @@ including the registration and exposure of the <xref:Alternet.UI.RoutedEvent>
 identifier field and the `add` and `remove` implementations for the `Tap` CLR
 event.
 
-[!code-csharp[](./snippets/AddRemoveHandler.cs)]
-
-### Routed Event Handlers and UIXML
-
-To add a handler for an event using UIXML, you declare the event name as an
-attribute on the element that is an event listener. The value of the attribute
-is the name of your implemented handler method, which must exist in the partial
-class of the code-behind file.
-
-[!code-xml[](./snippets/SimplestSyntax.uixml)]
-
-The UIXML syntax for adding standard CLR event handlers is the same as for adding
-routed event handlers because you are really adding handlers to the CLR event
-wrapper, which has a routed event implementation underneath.
+[!code-csharp[](snippets/ExampleWindow.uixml.cs#CSharpCreation)]
 
 ## Routing Strategies
 
@@ -158,7 +126,8 @@ the event data for the event is perpetuated to each element in the route. One
 element could change something in the event data, and that change would be
 available to the next element in the route.
 
-Other than the routing aspect, routed events support a class-handling mechanism whereby the class can specify
+Other than the routing aspect, routed events support a class-handling mechanism whereby 
+the class can specify
 static methods that have the opportunity to handle routed events before any
 registered instance handlers can access them. This is very useful in the control
 design because your class can enforce event-driven class behaviors that
@@ -167,37 +136,32 @@ cannot be accidentally suppressed by handling an event on an instance.
 Each of the above considerations is discussed in a separate section of this
 topic.
 
-<a name="event_handing"></a>
-
 ## Adding and Implementing an Event Handler for a Routed Event
 
-To add an event handler in UIXML, you simply add the event name to an element as
-an attribute and set the attribute value as the name of the event handler that
-implements an appropriate delegate, as in the following example.
+To add a handler for an event using UIXML, you declare the event name as an
+attribute on the element that is an event listener. The value of the attribute
+is the name of your implemented handler method, which must exist in the partial
+class of the code-behind file.
 
-[!code-xml[](./snippets/SimplestSyntax.uixml)]
+```xml
+<SampleControl Tap="Control_Tap" Name="sampleControl2" />
+```
 
-`b1SetColor` is the name of the implemented handler that contains the code that
-handles the <xref:Alternet.UI.Control.Click> event.
-`b1SetColor` must have the same signature as the
+`Control_Tap` is the name of the implemented handler that contains the code that
+handles the event.
+
+[!code-csharp[](snippets/ExampleWindow.uixml.cs#CSharpCreation2)]
+
+`Control_Tap` must have the same signature as the
 <xref:Alternet.UI.RoutedEventHandler> delegate, which is the event handler
-delegate for the <xref:Alternet.UI.Control.Click>
-event. The first parameter of all routed event handler delegates specifies the
+delegate for the event. The first parameter of all routed event handler delegates specifies the
 element to which the event handler is added, and the second parameter specifies
 the data for the event.
-
-[!code-csharp[](./snippets/SimpleHandlerA.cs)]
 
 <xref:Alternet.UI.RoutedEventHandler> is the basic routed event handler
 delegate. For routed events that are specialized for certain controls or
 scenarios, the delegates to use for the routed event handlers also might become
-more specialized so that they can transmit specialized event data. For
-instance, in a common input scenario, you might handle a
-<xref:Alternet.UI.UIElement.MouseMove> routed event. Your handler should
-implement the <xref:Alternet.UI.MouseEventHandler> delegate. By using the most
-specific delegate, you can process the <xref:Alternet.UI.MouseEventArgs> in
-the handler and read the <xref:Alternet.UI.MouseEventArgs.LeftButton%2A> property,
-which contains the state of the left mouse button.
+more specialized so that they can transmit specialized event data. 
 
 Adding a handler for a routed event in an application that is created in code is
 straightforward. Routed event handlers can always be added through a helper
@@ -208,11 +172,11 @@ the handlers for routed events to be added by a language-specific event syntax,
 which is more intuitive syntax than the helper method. The following is an
 example usage of the helper method:
 
-[!code-csharp[](./snippets/AddHandlerCode.cs)]
+[!code-csharp[](snippets/ExampleWindow.uixml.cs#AddHandlerCode)]
 
 The next example shows the C# operator syntax:
 
-[!code-csharp[](./snippets/AddHandlerPlusEquals.cs)]
+[!code-csharp[](snippets/ExampleWindow.uixml.cs#AddHandlerPlusEquals)]
 
 ### The Concept of Handled
 
@@ -252,7 +216,9 @@ follows:
 - If a routed event is marked as handled, then it does not need to be handled
   again by other elements along that route.
 
-- If a routed event is not marked as handled, then other listeners that were earlier along the route have chosen either not to register a handler or the handlers that were registered chose not to manipulate the event data and set
+- If a routed event is not marked as handled, then other listeners that were 
+earlier along the route have chosen either not to register a handler or the 
+handlers that were registered chose not to manipulate the event data and set
   <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to `true`. (Or, it is, of
   course, possible that the current listener is the first point in the route.)
   Handlers on the current listener now have three possible courses of action:
@@ -274,10 +240,14 @@ follows:
 
 This conceptual design is reinforced by the routing behavior mentioned earlier:
 it is more difficult (although still possible in code or styles) to attach
-handlers for routed events that are invoked even if a previous handler along the route has already set <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to
+handlers for routed events that are invoked even if a previous handler 
+along the route has already set <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to
 `true`.
 
-In applications, it is quite common to just handle a bubbling routed event on the object that raised it, and not be concerned with the event's routing characteristics at all. However, it is still a good practice to mark the routed event as handled in the event data to prevent unanticipated side effects just
+In applications, it is quite common to just handle a bubbling routed event on 
+the object that raised it, and not be concerned with the event's routing 
+characteristics at all. However, it is still a good practice to mark the routed event 
+as handled in the event data to prevent unanticipated side effects just
 in case an element that is further up the element tree also has a handler
 attached for that same routed event.
 
@@ -291,7 +261,8 @@ attached to an instance of that class, whenever a routed event reaches an
 element instance in its route.
 
 Some AlterNET UI controls have inherent class handling for certain routed events. This
-might give the outward appearance that the routed event is not ever raised, but in reality, it is being class handled, and the routed event can potentially still
+might give the outward appearance that the routed event is not ever raised, 
+but in reality, it is being class handled, and the routed event can potentially still
 be handled by your instance handlers if you use certain techniques. Also, many
 base classes and controls expose virtual methods that can be used to override
 class handling behavior.
@@ -304,13 +275,3 @@ an arbitrary element. The element handling the event need not define or inherit
 the attached event, and neither the object potentially raising the event nor the
 destination handling instance must define or otherwise "own" that event as a
 class member.
-
-The AlterNET UI input system uses attached events extensively. However, nearly all of
-these attached events are forwarded through base elements. The input events then
-appear as equivalent non-attached routed events that are members of the base
-element class. For instance, the underlying attached event
-<xref:Alternet.UI.Mouse.MouseDownEvent> can
-more easily be handled on any given <xref:Alternet.UI.UIElement> by using
-<xref:Alternet.UI.UIElement.MouseDown> on that
-<xref:Alternet.UI.UIElement> rather than dealing with attached event syntax
-either in UIXML or code.

@@ -1,0 +1,21 @@
+a.nav-link[href="https://docs.alternet-ui.com/"]
+{
+	font-weight: bold !important;
+	color: black !important; 
+}
+
+a.nav-link
+{
+	color: black !important; 
+}
+
+html,
+body {
+  font-family: 'Segoe UI', Tahoma, Helvetica, sans-serif !important;
+  height: 100% !important;
+}
+
+
+div.dropdown > a[title="Change theme"] {
+  display:none !important;
+}

@@ -75,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Splitter", "apidoc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.TextBoxAndLabel", "apidoc\TextBoxAndLabel\examples\Examples.TextBoxAndLabel.csproj", "{08FEA597-DC7B-4503-9170-3369655DED42}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.RoutedEvents", "introduction\routed-events\snippets\Examples.RoutedEvents.csproj", "{06AAE698-BCFD-4BAD-B657-F487BDD67C92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,10 @@ Global
 		{08FEA597-DC7B-4503-9170-3369655DED42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08FEA597-DC7B-4503-9170-3369655DED42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08FEA597-DC7B-4503-9170-3369655DED42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AAE698-BCFD-4BAD-B657-F487BDD67C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AAE698-BCFD-4BAD-B657-F487BDD67C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AAE698-BCFD-4BAD-B657-F487BDD67C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AAE698-BCFD-4BAD-B657-F487BDD67C92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,6 +242,7 @@ Global
 		{2C16BEBA-AB7D-4D6D-A410-0691688222A3} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{E70A54AC-B32D-4D9B-8CFD-3A9E72A21A1E} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{08FEA597-DC7B-4503-9170-3369655DED42} = {74977C1D-4C89-482A-AF1E-6024FB453117}
+		{06AAE698-BCFD-4BAD-B657-F487BDD67C92} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85D8E652-2803-432F-B61C-02E2B3A618EC}

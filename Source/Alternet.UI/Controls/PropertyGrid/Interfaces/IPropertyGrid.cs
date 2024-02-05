@@ -12,8 +12,8 @@ namespace Alternet.UI
     /// <inheritdoc cref="PropertyGrid"/>
     public interface IPropertyGrid
     {
-        /// <inheritdoc cref="PropertyGrid.ProcessException"/>
-        event EventHandler<PropertyGridExceptionEventArgs>? ProcessException;
+        /// <inheritdoc cref="Control.ProcessException"/>
+        event EventHandler<ControlExceptionEventArgs>? ProcessException;
 
         /// <inheritdoc cref="PropertyGrid.PropertySelected"/>
         event EventHandler? PropertySelected;

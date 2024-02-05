@@ -162,7 +162,7 @@ namespace Alternet.UI
             controlsListBox?.SelectedAction?.Invoke();
         }
 
-        private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
+        private void PropertyGrid_ProcessException(object? sender, ControlExceptionEventArgs e)
         {
             Application.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);

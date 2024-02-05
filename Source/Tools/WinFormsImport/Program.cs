@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Reflection;
+using System.Text.Json;
 using Alternet.UI;
 using WinFormsImport;
 
@@ -52,7 +53,9 @@ void ShowIncompleteDocs()
     }
 }
 
+#pragma warning disable
 void ShowControlCategory()
+#pragma warning restore
 {
     var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
     SortedList<string, Type> list = [];
@@ -72,4 +75,13 @@ void ShowControlCategory()
     }
 }
 
-ShowControlCategory();
+void FindDocFxMethodName()
+{
+    var filename = Path.Combine(CommonUtils.GetAppFolder(), "Map", "docfx.min.js.map");
+
+    DocFxUnminimize tool = new(filename);
+
+    Console.WriteLine("updateTabsQueryStringParam: " + tool.GetMinName("updateTabsQueryStringParam"));
+}
+
+FindDocFxMethodName();

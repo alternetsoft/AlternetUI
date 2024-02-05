@@ -296,6 +296,11 @@ namespace Alternet.UI
         public event HelpEventHandler? HelpRequested;
 
         /// <summary>
+        /// Occurs when exception is raised inside <see cref="AvoidException"/>.
+        /// </summary>
+        public event EventHandler<ControlExceptionEventArgs>? ProcessException;
+
+        /// <summary>
         /// Occurs when the mouse pointer enters the control.
         /// </summary>
         public event EventHandler? MouseEnter;
@@ -1663,7 +1668,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color? BackgroundColor
         {
             get
@@ -1731,7 +1736,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        [Browsable(true)]
+        [Browsable(false)]
         public virtual Color ForeColor
         {
             get
@@ -1753,7 +1758,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        [Browsable(true)]
+        [Browsable(false)]
         public virtual Color BackColor
         {
             get
@@ -1775,7 +1780,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color? ForegroundColor
         {
             get

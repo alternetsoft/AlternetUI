@@ -14,7 +14,8 @@ namespace Alternet.UI
     /// Base class for text editors.
     /// </summary>
     [ControlCategory("Hidden")]
-    public abstract class CustomTextBox : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter
+    public abstract class CustomTextBox
+        : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions
     {
         private StringSearch? search;
         private int minLength;
@@ -83,10 +84,7 @@ namespace Alternet.UI
         /// </summary>
         public static ResetColorType DefaultResetErrorForegroundMethod { get; set; } = ResetColorType.Auto;
 
-        /// <summary>
-        /// Gets or sets a bitwise combination of <see cref="NumberStyles"/> values that indicates
-        /// the permitted format of <see cref="Control.Text"/>.
-        /// </summary>
+        /// <inheritdoc cref="IObjectToStringOptions.NumberStyles"/>
         /// <remarks>
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it if <see cref="TextBox"/> edits a number value or
@@ -95,10 +93,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual NumberStyles? NumberStyles { get; set; }
 
-        /// <summary>
-        /// Gets or sets an object that supplies culture-specific formatting information
-        /// about <see cref="Control.Text"/> property.
-        /// </summary>
+        /// <inheritdoc cref="IObjectToStringOptions.FormatProvider"/>
         /// <remarks>
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
@@ -106,15 +101,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual IFormatProvider? FormatProvider { get; set; }
 
-        /// <summary>
-        /// Gets or sets default format used in value to string convertion.
-        /// </summary>
+        /// <inheritdoc cref="IObjectToStringOptions.DefaultFormat"/>
         public virtual string? DefaultFormat { get; set; }
 
-        /// <summary>
-        /// Gets or sets <see cref="IObjectToString"/> provider which is used in
-        /// value to string convertion.
-        /// </summary>
+        /// <inheritdoc cref="IObjectToStringOptions.Converter"/>
         [Browsable(false)]
         public virtual IObjectToString? Converter { get; set; }
 
