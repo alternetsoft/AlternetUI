@@ -256,6 +256,18 @@ namespace Alternet.UI
         public bool ColorHasAlpha { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets default <see cref="Color"/> format when
+        /// <see cref="ColorHasAlpha"/> is <c>true</c>.
+        /// </summary>
+        public string DefaultColorFormatRGBA { get; set; } = "({0}, {1}, {2}, {3})";
+
+        /// <summary>
+        /// Gets or sets default <see cref="Color"/> format when
+        /// <see cref="ColorHasAlpha"/> is <c>false</c>.
+        /// </summary>
+        public string DefaultColorFormatRGB { get; set; } = "({0}, {1}, {2})";
+
+        /// <summary>
         /// Gets property value used in the event handler.
         /// </summary>
         [Browsable(false)]
