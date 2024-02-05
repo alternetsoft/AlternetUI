@@ -18,17 +18,16 @@ iconLinks: [
 
 localStorage.setItem('theme', 'light');
 
-window.addEventListener("load", (event) => {
+window.addEventListener("beforeunload", function (event) {
+   //your code goes here on location change 
+	console.log(window.location.href);
+});
 
-const testElements = document.getElementsByClassName("icons");
-const testForms = Array.prototype.filter.call(
-  testElements,
-  (testElement) => testElement.nodeName === "FORM",
-);
-testForms.forEach((element) => element.innerHTML='');
+window.addEventListener("load", (event) => {
 
 });
 
 
 	},
 }
+
