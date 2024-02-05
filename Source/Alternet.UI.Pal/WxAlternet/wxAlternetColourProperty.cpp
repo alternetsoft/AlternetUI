@@ -40,6 +40,8 @@ namespace Alternet::UI
 #define wxPG_PROP_HIDE_CUSTOM_COLOUR        wxPG_PROP_CLASS_SPECIFIC_2
 #define wxPG_PROP_COLOUR_HAS_ALPHA          wxPG_PROP_CLASS_SPECIFIC_3
 
+    const wxSize wxCOLOR_DEFAULT_IMAGE_SIZE = wxSize(-1, -1);
+
     wxArrayString wxAlternetColourProperty::KnownColorLabels = wxArrayString();
 	wxArrayInt wxAlternetColourProperty::KnownColorValues = wxArrayInt();
 	wxArrayULong wxAlternetColourProperty::KnownColorColors = wxArrayULong();
@@ -119,7 +121,7 @@ namespace Alternet::UI
 
 	wxSize wxAlternetColourProperty::OnMeasureImage(int) const
 	{
-		return wxPG_DEFAULT_IMAGE_SIZE;
+		return wxCOLOR_DEFAULT_IMAGE_SIZE;
 	}
 
     static const char* const gs_cp_es_syscolour_labels[] = {
@@ -475,7 +477,7 @@ namespace Alternet::UI
 
     wxSize wxAlternetSystemColourProperty::OnMeasureImage(int) const
     {
-        return wxPG_DEFAULT_IMAGE_SIZE;
+        return wxCOLOR_DEFAULT_IMAGE_SIZE;
     }
 
 
@@ -634,23 +636,30 @@ namespace Alternet::UI
                 }
             }
 
+            auto b = rect.width;
+            if (b > rect.height)
+                b = rect.height;
+            auto rect2 = wxRect(rect.x, rect.y, b, b);
+            auto rect3 = rect2.CenterIn(rect);
+
             if (gdc)
             {
                 gdc->SetBrush(col);
-                gdc->DrawRectangle(rect);
+                gdc->DrawRectangle(rect3);
                 delete gdc;
             }
             else
 #endif // wxPG_USE_GC_FOR_ALPHA
             {
                 dc.SetBrush(col);
-                dc.DrawRectangle(rect);
+                dc.DrawRectangle(rect3);
             }
         }
     }
 
 
-    bool wxAlternetSystemColourProperty::StringToValue(wxVariant& value, const wxString& text, int argFlags) const
+    bool wxAlternetSystemColourProperty::StringToValue(
+        wxVariant& value, const wxString& text, int argFlags) const
     {
         const int custIndex = GetCustomColourIndex();
         wxString custColName;
