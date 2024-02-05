@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -28,6 +29,14 @@ namespace Alternet.UI
         /// Gets or sets whether property editor has ellipsis button.
         /// </summary>
         public bool? HasEllipsis { get; set; }
+
+        public NumberStyles? NumberStyles { get; set; }
+
+        public IFormatProvider? FormatProvider { get; set; }
+
+        public IObjectToString? Converter { get; set; }
+
+        public string? DefaultFormat { get; set; }
 
         public IPropertyGridTypeRegistry? BaseTypeRegistry
         {

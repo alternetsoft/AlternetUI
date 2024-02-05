@@ -10,16 +10,22 @@ namespace Alternet.UI
     /// <summary>
     /// Contains <see cref="PropertyGrid"/> settings related to <see cref="Type"/>.
     /// </summary>
-    public interface IPropertyGridTypeRegistry
+    public interface IPropertyGridTypeRegistry : IObjectToStringOptions
     {
         /// <summary>
         /// Occurs when button is clicked in the property editor.
         /// </summary>
+        /// <remarks>
+        /// This property is not used.
+        /// </remarks>
         event EventHandler? ButtonClick;
 
         /// <summary>
         /// Gets or sets whether property editor has ellipsis button.
         /// </summary>
+        /// <remarks>
+        /// This property is not used.
+        /// </remarks>
         bool? HasEllipsis { get; set; }
 
         /// <summary>

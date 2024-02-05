@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/>.
     /// </summary>
-    public interface IPropertyGridPropInfoRegistry
+    public interface IPropertyGridPropInfoRegistry : IObjectToStringOptions
     {
         /// <summary>
         /// Gets or sets customization parameters used when new <see cref="IPropertyGridItem"/>
