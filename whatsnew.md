@@ -1,6 +1,16 @@
 
 # 0.9.505 (work in progress)
 
+## 2024 February 5
+
+- PropertyGrid: CanResetProp, ResetProp.
+- ColorDialog.Default.
+- Control: ProcessException event, AvoidException
+- Color.Parse improved: Now conversion is faster and doesn't create ColorConverter instance. Color surrounded with ( ) is 
+converted correctly. New Parse method with context and culture params.
+- PropertyGrid: Fixed color property paint. Now color image is square.
+- Updated documentation.
+
 ## 2024 February 2
 
 - Control.BubbleMouse.
