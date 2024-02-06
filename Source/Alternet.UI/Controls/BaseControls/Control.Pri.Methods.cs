@@ -11,7 +11,7 @@ namespace Alternet.UI
     {
         private protected void SetVisibleValue(bool value) => visible = value;
 
-        /// <summary>
+        /*/// <summary>
         /// Callback for changes to the Enabled property
         /// </summary>
         private static void OnEnabledPropertyChanged(
@@ -20,7 +20,7 @@ namespace Alternet.UI
         {
             Control control = (Control)d;
             control?.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
-        }
+        }*/
 
         private void CreateAndAttachHandler()
         {
@@ -32,11 +32,13 @@ namespace Alternet.UI
         private void Children_ItemInserted(object? sender, int index, Control item)
         {
             item.SetParentInternal(this);
+            Handler.Control_Children_ItemInserted(item);
         }
 
         private void Children_ItemRemoved(object? sender, int index, Control item)
         {
             item.SetParentInternal(null);
+            Handler.Control_Children_ItemRemoved(item);
         }
 
         private void ResetColor(bool isBackground, ResetColorType method = ResetColorType.Auto)
@@ -86,13 +88,14 @@ namespace Alternet.UI
         {
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
+            handler?.Control_EnabledChanged();
         }
 
-#pragma warning disable
+/*#pragma warning disable
         private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
 #pragma warning restore
         {
             RaiseEnabledChanged(EventArgs.Empty);
-        }
+        }*/
     }
 }

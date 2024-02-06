@@ -252,8 +252,8 @@ namespace Alternet.UI
         {
             get
             {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
+                if (nativeControl == null)
+                    return false;
 
                 return NativeControl.IsMouseCaptured;
             }
@@ -319,7 +319,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.GetDPI"/>
         public SizeD GetDPI()
         {
-            if (NativeControl == null)
+            if (nativeControl == null)
                 return SizeD.Empty;
             return NativeControl.GetDPI();
         }
@@ -363,7 +363,6 @@ namespace Alternet.UI
         /// </summary>
         public void Update()
         {
-            var nativeControl = NativeControl;
             if (nativeControl != null)
                 nativeControl.Update();
             else
@@ -379,7 +378,6 @@ namespace Alternet.UI
         /// </summary>
         public void Invalidate()
         {
-            var nativeControl = NativeControl;
             if (nativeControl != null)
                 nativeControl.Invalidate();
             else
@@ -601,8 +599,8 @@ namespace Alternet.UI
         /// </summary>
         public void FocusNextControl(bool forward, bool nested)
         {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
+            if (nativeControl == null)
+                return;
 
             NativeControl.FocusNextControl(forward, nested);
         }
@@ -611,6 +609,57 @@ namespace Alternet.UI
             Native.Control control)
         {
             return (ControlHandler?)control.handler;
+        }
+
+        internal void Control_VisibleChanged()
+        {
+            ApplyVisible();
+            if (NeedRelayoutParentOnVisibleChanged)
+                Control.Parent?.PerformLayout();
+        }
+
+        internal void Control_EnabledChanged()
+        {
+            ApplyEnabled();
+        }
+
+        internal void Control_VerticalAlignmentChanged()
+        {
+            Control.RaiseLayoutChanged();
+            Control.PerformLayout();
+        }
+
+        internal void Control_HorizontalAlignmentChanged()
+        {
+            Control.RaiseLayoutChanged();
+            Control.PerformLayout();
+        }
+
+        internal void Control_ToolTipChanged()
+        {
+            ApplyToolTip();
+        }
+
+        internal void Control_Children_ItemInserted(Control item)
+        {
+            RaiseChildInserted(item);
+            Control.RaiseLayoutChanged();
+            Control.PerformLayout();
+        }
+
+        internal void Control_Children_ItemRemoved(Control item)
+        {
+            RaiseChildRemoved(item);
+            Control.RaiseLayoutChanged();
+            Control.PerformLayout();
+        }
+
+        internal void Control_FontChanged()
+        {
+            ApplyFont();
+            Control.RaiseLayoutChanged();
+            Control.PerformLayout();
+            Control.Refresh();
         }
 
         internal IntPtr GetHandle()
@@ -650,6 +699,16 @@ namespace Alternet.UI
             return new SizeD(
                 double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
                 double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
+        }
+
+        internal void Control_MarginChanged()
+        {
+            Control.PerformLayout();
+        }
+
+        internal void Control_PaddingChanged()
+        {
+            Control.PerformLayout();
         }
 
         internal Graphics CreateDrawingContext()
@@ -800,17 +859,6 @@ namespace Alternet.UI
         protected virtual void OnDetach()
         {
             // todo: consider clearing the native control's children.
-            Control.MarginChanged -= Control_MarginChanged;
-            Control.PaddingChanged -= Control_PaddingChanged;
-            Control.FontChanged -= Control_FontChanged;
-            Control.VisibleChanged -= Control_VisibleChanged;
-            Control.EnabledChanged -= Control_EnabledChanged;
-            Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
-            Control.HorizontalAlignmentChanged -= Control_HorizontalAlignmentChanged;
-            Control.ToolTipChanged -= Control_ToolTipChanged;
-
-            Control.Children.ItemInserted -= Children_ItemInserted;
-            Control.Children.ItemRemoved -= Children_ItemRemoved;
 
             /*VisualChildren.Clear();*/
 
@@ -856,21 +904,6 @@ namespace Alternet.UI
             ApplyVisible();
             ApplyEnabled();
             ApplyChildren();
-
-            Control.MarginChanged += Control_MarginChanged;
-            Control.PaddingChanged += Control_PaddingChanged;
-            Control.FontChanged += Control_FontChanged;
-            Control.VisibleChanged += Control_VisibleChanged;
-            Control.EnabledChanged += Control_EnabledChanged;
-            Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
-            Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
-            Control.ToolTipChanged += Control_ToolTipChanged;
-
-            Control.Children.ItemInserted += Children_ItemInserted;
-            /*VisualChildren.ItemInserted += Children_ItemInserted;*/
-
-            Control.Children.ItemRemoved += Children_ItemRemoved;
-            /*VisualChildren.ItemRemoved += Children_ItemRemoved;*/
         }
 
         private protected virtual void OnNativeControlCreated()
@@ -985,11 +1018,6 @@ namespace Alternet.UI
             }
         }
 
-        private void Control_ToolTipChanged(object? sender, EventArgs e)
-        {
-            ApplyToolTip();
-        }
-
         private void ApplyToolTip()
         {
             if (NativeControl != null)
@@ -1002,14 +1030,6 @@ namespace Alternet.UI
                 NativeControl.Font = Control.Font?.NativeFont;
 
             Invalidate();
-        }
-
-        private void Control_FontChanged(object? sender, EventArgs e)
-        {
-            ApplyFont();
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-            Control.Refresh();
         }
 
         private void NativeControl_GotFocus(object? sender, EventArgs e)
@@ -1075,18 +1095,6 @@ namespace Alternet.UI
             OnChildRemoved(childControl);
         }
 
-        private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
-        {
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
-        private void Control_HorizontalAlignmentChanged(object? sender, EventArgs e)
-        {
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
         private void ApplyChildren()
         {
             if (!Control.HasChildren)
@@ -1134,18 +1142,6 @@ namespace Alternet.UI
             var nativeControl = (Native.Control)sender!;
             nativeControl.Destroyed -= NativeControl_Destroyed;
             DisposeNativeControlCore(nativeControl);
-        }
-
-        private void Control_VisibleChanged(object? sender, EventArgs e)
-        {
-            ApplyVisible();
-            if (NeedRelayoutParentOnVisibleChanged)
-                Control.Parent?.PerformLayout();
-        }
-
-        private void Control_EnabledChanged(object? sender, EventArgs e)
-        {
-            ApplyEnabled();
         }
 
         private void ApplyVisible()
@@ -1230,30 +1226,6 @@ namespace Alternet.UI
         private void NativeControl_MouseLeave(object? sender, EventArgs? e)
         {
             Control.RaiseMouseLeave();
-        }
-
-        private void Control_MarginChanged(object? sender, EventArgs? e)
-        {
-            Control.PerformLayout();
-        }
-
-        private void Control_PaddingChanged(object? sender, EventArgs? e)
-        {
-            Control.PerformLayout();
-        }
-
-        private void Children_ItemInserted(object? sender, int index, Control item)
-        {
-            RaiseChildInserted(item);
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
-        private void Children_ItemRemoved(object? sender, int index, Control item)
-        {
-            RaiseChildRemoved(item);
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
         }
 
         private void NativeControl_Paint(object? sender, System.EventArgs? e)

@@ -506,7 +506,6 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnToolTipChanged(EventArgs e)
         {
-            ToolTipChanged?.Invoke(this, e);
         }
 
         /// <summary>
