@@ -14,8 +14,8 @@ namespace Alternet.UI
     {
         private Control? control;
         private Native.Control? nativeControl;
-        private bool isVisualChild;
-        private Collection<Control>? visualChildren;
+        /*private bool isVisualChild;
+        private Collection<Control>? visualChildren;*/
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.DrawClientRectangle"/>
         public virtual RectD DrawClientRectangle => Control.DrawClientRectangle;
 
-        /// <summary>
+        /*/// <summary>
         /// Gets a value indicating whether the <see cref="Control"/> is contained in a
         /// <see cref="VisualChildren"/> collection.
         /// </summary>
@@ -154,9 +154,9 @@ namespace Alternet.UI
                 isVisualChild = value;
                 OnIsVisualChildChanged();
             }
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Gets the collection of visual child controls contained within
         /// the control.
         /// </summary>
@@ -173,7 +173,7 @@ namespace Alternet.UI
 
                 return visualChildren;
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control
@@ -212,15 +212,14 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets whether there are any items in the <see cref="VisualChildren"/> list.
         /// </summary>
         public virtual bool HasVisualChildren =>
-            visualChildren != null && VisualChildren.Count > 0;
+            visualChildren != null && VisualChildren.Count > 0;*/
 
         /// <summary>
         /// Gets the collection of all elements of <see cref="Control.Children"/>
-        /// and <see cref="VisualChildren"/> collections.
         /// </summary>
         public virtual IEnumerable<Control> AllChildren
         {
@@ -228,13 +227,13 @@ namespace Alternet.UI
             {
                 if (Control.HasChildren)
                 {
-                    if (HasVisualChildren)
-                        return VisualChildren.Concat(Control.Children);
+                    /*if (HasVisualChildren)
+                        return VisualChildren.Concat(Control.Children);*/
                     return Control.Children;
                 }
 
-                if (HasVisualChildren)
-                    return VisualChildren;
+                /*if (HasVisualChildren)
+                    return VisualChildren;*/
                 return Array.Empty<Control>();
             }
         }
@@ -695,13 +694,13 @@ namespace Alternet.UI
             NativeControl?.EndInit();
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Called when the value of the <see cref="IsVisualChild"/> property changes.
         /// </summary>
         protected virtual void OnIsVisualChildChanged()
         {
             DisposeNativeControl();
-        }
+        }*/
 
         /// <summary>
         /// Returns the size of the area which can fit all the children of this
@@ -779,7 +778,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Called when a <see cref="Control"/> is inserted into the
-        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
+        /// <see cref="Control.Children"/> collection.
         /// </summary>
         protected virtual void OnChildInserted(Control childControl)
         {
@@ -788,7 +787,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Called when a <see cref="Control"/> is removed from the
-        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collections.
+        /// <see cref="Control.Children"/> collections.
         /// </summary>
         protected virtual void OnChildRemoved(Control childControl)
         {
@@ -813,7 +812,7 @@ namespace Alternet.UI
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.Children.ItemRemoved -= Children_ItemRemoved;
 
-            VisualChildren.Clear();
+            /*VisualChildren.Clear();*/
 
             if (NativeControl != null)
             {
@@ -868,10 +867,10 @@ namespace Alternet.UI
             Control.ToolTipChanged += Control_ToolTipChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
-            VisualChildren.ItemInserted += Children_ItemInserted;
+            /*VisualChildren.ItemInserted += Children_ItemInserted;*/
 
             Control.Children.ItemRemoved += Children_ItemRemoved;
-            VisualChildren.ItemRemoved += Children_ItemRemoved;
+            /*VisualChildren.ItemRemoved += Children_ItemRemoved;*/
         }
 
         private protected virtual void OnNativeControlCreated()
@@ -1096,23 +1095,23 @@ namespace Alternet.UI
                 RaiseChildInserted(Control.Children[i]);
         }
 
-        private void VisualChildren_ItemInserted(object? sender, int index, Control item)
+        /*private void VisualChildren_ItemInserted(object? sender, int index, Control item)
         {
             item.SetParentInternal(Control);
             item.Handler.IsVisualChild = true;
 
             RaiseChildInserted(item);
             Control.PerformLayout();
-        }
+        }*/
 
-        private void VisualChildren_ItemRemoved(object? sender, int index, Control item)
+        /*private void VisualChildren_ItemRemoved(object? sender, int index, Control item)
         {
             item.SetParentInternal(null);
             item.Handler.IsVisualChild = false;
 
             RaiseChildRemoved(item);
             Control.PerformLayout();
-        }
+        }*/
 
         private void DisposeNativeControl()
         {
@@ -1262,9 +1261,9 @@ namespace Alternet.UI
             if (NativeControl == null)
                 return;
 
-            bool hasVisualChildren = HasVisualChildren;
+            /*bool hasVisualChildren = HasVisualChildren;*/
 
-            bool paint = hasVisualChildren || Control.UserPaint || NeedsPaint;
+            bool paint = /*hasVisualChildren ||*/ Control.UserPaint || NeedsPaint;
             if (!paint)
                 return;
 
@@ -1274,7 +1273,7 @@ namespace Alternet.UI
             if (Control.UserPaint)
                 Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
 
-            if (NeedsPaint || hasVisualChildren)
+            if (NeedsPaint /*|| hasVisualChildren*/)
                 PaintSelfAndVisualChildren(dc);
         }
 
@@ -1283,7 +1282,7 @@ namespace Alternet.UI
             if (NeedsPaint)
                 OnPaint(dc);
 
-            if (!HasVisualChildren)
+            /*if (!HasVisualChildren)
                 return;
             foreach (var visualChild in VisualChildren)
             {
@@ -1293,7 +1292,7 @@ namespace Alternet.UI
                     location.Y));
                 visualChild.Handler.PaintSelfAndVisualChildren(dc);
                 dc.Pop();
-            }
+            }*/
         }
     }
 }
