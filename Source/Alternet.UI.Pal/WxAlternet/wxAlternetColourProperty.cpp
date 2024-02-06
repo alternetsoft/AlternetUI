@@ -7,6 +7,7 @@
 #include <wx/variant.h>
 #include <wx/propgrid/propgriddefs.h>
 #include <wx/settings.h>
+#include <wx/dc.h>
 
 // Drawing ARGB on standard DC is supported by OSX and GTK3
 #if defined(__WXOSX__) || defined(__WXGTK3__)
