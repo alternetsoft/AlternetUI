@@ -43,59 +43,59 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             base.OnDetach();
-            NativeControl.ToolCommand -= NativeControl_ToolCommand;
-            NativeControl.ToolDropDown -= NativeControl_ToolDropDown;
-            NativeControl.BeginDrag -= NativeControl_BeginDrag;
-            NativeControl.ToolMiddleClick -= NativeControl_ToolMiddleClick;
-            NativeControl.OverflowClick -= NativeControl_OverflowClick;
-            NativeControl.ToolRightClick -= NativeControl_ToolRightClick;
+            NativeControl.ToolCommand = null;
+            NativeControl.ToolDropDown = null;
+            NativeControl.BeginDrag = null;
+            NativeControl.ToolMiddleClick = null;
+            NativeControl.OverflowClick = null;
+            NativeControl.ToolRightClick = null;
         }
 
         protected override void OnAttach()
         {
             base.OnAttach();
 
-            NativeControl.ToolCommand += NativeControl_ToolCommand;
-            NativeControl.ToolDropDown += NativeControl_ToolDropDown;
-            NativeControl.BeginDrag += NativeControl_BeginDrag;
-            NativeControl.ToolMiddleClick += NativeControl_ToolMiddleClick;
-            NativeControl.OverflowClick += NativeControl_OverflowClick;
-            NativeControl.ToolRightClick += NativeControl_ToolRightClick;
+            NativeControl.ToolCommand = NativeControl_ToolCommand;
+            NativeControl.ToolDropDown = NativeControl_ToolDropDown;
+            NativeControl.BeginDrag = NativeControl_BeginDrag;
+            NativeControl.ToolMiddleClick = NativeControl_ToolMiddleClick;
+            NativeControl.OverflowClick = NativeControl_OverflowClick;
+            NativeControl.ToolRightClick = NativeControl_ToolRightClick;
         }
 
-        private void NativeControl_ToolCommand(object? sender, EventArgs e)
+        private void NativeControl_ToolCommand()
         {
             Control.SetMouseCapture(false);
-            Control.RaiseToolCommand(e);
+            Control.RaiseToolCommand(EventArgs.Empty);
         }
 
-        private void NativeControl_ToolRightClick(object? sender, EventArgs e)
+        private void NativeControl_ToolRightClick()
         {
             Control.SetMouseCapture(false);
-            Control.RaiseToolRightClick(e);
+            Control.RaiseToolRightClick(EventArgs.Empty);
         }
 
-        private void NativeControl_OverflowClick(object? sender, EventArgs e)
+        private void NativeControl_OverflowClick()
         {
             Control.SetMouseCapture(false);
-            Control.RaiseOverflowClick(e);
+            Control.RaiseOverflowClick(EventArgs.Empty);
         }
 
-        private void NativeControl_ToolMiddleClick(object? sender, EventArgs e)
+        private void NativeControl_ToolMiddleClick()
         {
             Control.SetMouseCapture(false);
-            Control.RaiseToolMiddleClick(e);
+            Control.RaiseToolMiddleClick(EventArgs.Empty);
         }
 
-        private void NativeControl_BeginDrag(object? sender, EventArgs e)
+        private void NativeControl_BeginDrag()
         {
-            Control.RaiseBeginDrag(e);
+            Control.RaiseBeginDrag(EventArgs.Empty);
         }
 
-        private void NativeControl_ToolDropDown(object? sender, EventArgs e)
+        private void NativeControl_ToolDropDown()
         {
             Control.SetMouseCapture(false);
-            Control.RaiseToolDropDown(e);
+            Control.RaiseToolDropDown(EventArgs.Empty);
         }
 
         public class NativeAuiToolBar : Native.AuiToolBar

@@ -66,7 +66,7 @@ namespace Alternet.UI
 
             Control.ValueChanged += Control_ValueChanged;
 
-            NativeControl.ValueChanged += NativeControl_ValueChanged;
+            NativeControl.ValueChanged = NativeControl_ValueChanged;
         }
 
         protected override void OnDetach()
@@ -75,10 +75,10 @@ namespace Alternet.UI
 
             Control.ValueChanged -= Control_ValueChanged;
 
-            NativeControl.ValueChanged -= NativeControl_ValueChanged;
+            NativeControl.ValueChanged = null;
         }
 
-        private void NativeControl_ValueChanged(object? sender, EventArgs e)
+        private void NativeControl_ValueChanged()
         {
             Control.Value = NativeControl.Value;
         }

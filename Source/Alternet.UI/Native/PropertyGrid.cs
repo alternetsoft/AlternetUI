@@ -1313,11 +1313,11 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.PropertyGridEvent.Selected:
                 {
-                    Selected?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Selected?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.Changed:
                 {
-                    Changed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Changed?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.Changing:
                 {
@@ -1329,27 +1329,27 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.PropertyGridEvent.Highlighted:
                 {
-                    Highlighted?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Highlighted?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ButtonClick:
                 {
-                    ButtonClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ButtonClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.RightClick:
                 {
-                    RightClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    RightClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.DoubleClick:
                 {
-                    DoubleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DoubleClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ItemCollapsed:
                 {
-                    ItemCollapsed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ItemCollapsed?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ItemExpanded:
                 {
-                    ItemExpanded?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ItemExpanded?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.LabelEditBegin:
                 {
@@ -1377,30 +1377,30 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.PropertyGridEvent.ColDragging:
                 {
-                    ColDragging?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ColDragging?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ColEndDrag:
                 {
-                    ColEndDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ColEndDrag?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected PropertyGridEvent value: " + e);
             }
         }
         
-        public event EventHandler? Selected;
-        public event EventHandler? Changed;
+        public Action? Selected;
+        public Action? Changed;
         public event EventHandler<CancelEventArgs>? Changing;
-        public event EventHandler? Highlighted;
-        public event EventHandler? ButtonClick;
-        public event EventHandler? RightClick;
-        public event EventHandler? DoubleClick;
-        public event EventHandler? ItemCollapsed;
-        public event EventHandler? ItemExpanded;
+        public Action? Highlighted;
+        public Action? ButtonClick;
+        public Action? RightClick;
+        public Action? DoubleClick;
+        public Action? ItemCollapsed;
+        public Action? ItemExpanded;
         public event EventHandler<CancelEventArgs>? LabelEditBegin;
         public event EventHandler<CancelEventArgs>? LabelEditEnding;
         public event EventHandler<CancelEventArgs>? ColBeginDrag;
-        public event EventHandler? ColDragging;
-        public event EventHandler? ColEndDrag;
+        public Action? ColDragging;
+        public Action? ColEndDrag;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

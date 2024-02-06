@@ -27,7 +27,7 @@ namespace Alternet.UI
             Control.ShortcutChanged -= Control_ShortcutChanged;
             Control.RoleChanged -= Control_RoleChanged;
 
-            NativeControl.Click -= NativeControl_Click;
+            NativeControl.Click = null;
 
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
@@ -48,7 +48,7 @@ namespace Alternet.UI
             Control.ShortcutChanged += Control_ShortcutChanged;
             Control.RoleChanged += Control_RoleChanged;
 
-            NativeControl.Click += NativeControl_Click;
+            NativeControl.Click = NativeControl_Click;
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
@@ -129,10 +129,10 @@ namespace Alternet.UI
             EnsureNativeSubmenuCreated().InsertItemAt(index, handler.NativeControl);
         }
 
-        private void NativeControl_Click(object? sender, EventArgs e)
+        private void NativeControl_Click()
         {
             Control.Checked = NativeControl.Checked;
-            Control.RaiseClick(e);
+            Control.RaiseClick(EventArgs.Empty);
         }
 
         private void Control_TextChanged(object? sender, EventArgs e)

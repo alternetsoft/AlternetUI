@@ -405,17 +405,17 @@ namespace Alternet.UI
             protected override void OnDetach()
             {
                 base.OnDetach();
-                NativeControl.Scroll -= NativeControl_Scroll;
+                NativeControl.Scroll = null;
             }
 
             protected override void OnAttach()
             {
                 base.OnAttach();
                 Control.UpdateScrollInfo();
-                NativeControl.Scroll += NativeControl_Scroll;
+                NativeControl.Scroll = NativeControl_Scroll;
             }
 
-            private void NativeControl_Scroll(object? sender, EventArgs e)
+            private void NativeControl_Scroll()
             {
                 Control.RaiseScroll();
             }

@@ -370,11 +370,11 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ListViewEvent.ControlRecreated:
                 {
-                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ControlRecreated?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ListViewEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    SelectionChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ListViewEvent.CompareItemsForCustomSort:
                 {
@@ -400,8 +400,8 @@ namespace Alternet.UI.Native
             }
         }
         
-        public event EventHandler? ControlRecreated;
-        public event EventHandler? SelectionChanged;
+        public Action? ControlRecreated;
+        public Action? SelectionChanged;
         public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort;
         public event NativeEventHandler<ListViewColumnEventData>? ColumnClick;
         public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit;

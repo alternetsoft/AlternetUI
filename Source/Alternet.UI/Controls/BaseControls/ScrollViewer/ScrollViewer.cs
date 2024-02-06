@@ -57,9 +57,9 @@ namespace Alternet.UI
                 base.OnAttach();
 
                 NativeControl.IsScrollable = true;
-                NativeControl.VerticalScrollBarValueChanged +=
+                NativeControl.VerticalScrollBarValueChanged =
                     NativeControl_VerticalScrollBarValueChanged;
-                NativeControl.HorizontalScrollBarValueChanged +=
+                NativeControl.HorizontalScrollBarValueChanged =
                     NativeControl_HorizontalScrollBarValueChanged;
             }
 
@@ -67,10 +67,8 @@ namespace Alternet.UI
             {
                 base.OnDetach();
 
-                NativeControl.VerticalScrollBarValueChanged -=
-                    NativeControl_VerticalScrollBarValueChanged;
-                NativeControl.HorizontalScrollBarValueChanged -=
-                    NativeControl_HorizontalScrollBarValueChanged;
+                NativeControl.VerticalScrollBarValueChanged = null;
+                NativeControl.HorizontalScrollBarValueChanged = null;
             }
 
             private void LayoutCore()
@@ -154,7 +152,7 @@ namespace Alternet.UI
                 scrollInfoValid = true;
             }
 
-            private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
+            private void NativeControl_HorizontalScrollBarValueChanged()
             {
                 settingLayoutOffset = true;
                 LayoutOffset = new SizeD(
@@ -164,7 +162,7 @@ namespace Alternet.UI
                 settingLayoutOffset = false;
             }
 
-            private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
+            private void NativeControl_VerticalScrollBarValueChanged()
             {
                 settingLayoutOffset = true;
                 LayoutOffset = new SizeD(

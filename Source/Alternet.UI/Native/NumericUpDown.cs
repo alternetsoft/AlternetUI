@@ -108,13 +108,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.NumericUpDownEvent.ValueChanged:
                 {
-                    ValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ValueChanged?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected NumericUpDownEvent value: " + e);
             }
         }
         
-        public event EventHandler? ValueChanged;
+        public Action? ValueChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

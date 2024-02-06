@@ -104,7 +104,7 @@ namespace Alternet.UI
             InitializeStateImages();
 
             Control.TextChanged += Control_TextChanged;
-            NativeControl.Click += NativeControl_Click;
+            NativeControl.Click = NativeControl_Click;
         }
 
         protected override void OnDetach()
@@ -112,7 +112,7 @@ namespace Alternet.UI
             base.OnDetach();
 
             Control.TextChanged -= Control_TextChanged;
-            NativeControl.Click -= NativeControl_Click;
+            NativeControl.Click = null;
         }
 
         private void ApplyStateImages()
@@ -187,19 +187,13 @@ namespace Alternet.UI
             StateImages = images;
         }
 
-        private void NativeControl_Click(object? sender, System.EventArgs? e)
+        private void NativeControl_Click()
         {
-            if (e is null)
-                throw new ArgumentNullException(nameof(e));
-
-            Control.RaiseClick(e);
+            Control.RaiseClick(EventArgs.Empty);
         }
 
-        private void Control_TextChanged(object? sender, System.EventArgs? e)
+        private void Control_TextChanged(object? sender, EventArgs e)
         {
-            if (e is null)
-                throw new ArgumentNullException(nameof(e));
-
             NativeControl.Text = Control.Text;
         }
     }

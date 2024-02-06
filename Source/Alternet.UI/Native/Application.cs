@@ -340,68 +340,68 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ApplicationEvent.Idle:
                 {
-                    Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Idle?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.LogMessage:
                 {
-                    LogMessage?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    LogMessage?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.QueryEndSession:
                 {
-                    QueryEndSession?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    QueryEndSession?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.EndSession:
                 {
-                    EndSession?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    EndSession?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.ActivateApp:
                 {
-                    ActivateApp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ActivateApp?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.Hibernate:
                 {
-                    Hibernate?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Hibernate?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.DialupConnected:
                 {
-                    DialupConnected?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DialupConnected?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.DialupDisconnected:
                 {
-                    DialupDisconnected?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DialupDisconnected?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.ExceptionInMainLoop:
                 {
-                    ExceptionInMainLoop?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ExceptionInMainLoop?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.UnhandledException:
                 {
-                    UnhandledException?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    UnhandledException?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.FatalException:
                 {
-                    FatalException?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    FatalException?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ApplicationEvent.AssertFailure:
                 {
-                    AssertFailure?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    AssertFailure?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }
         
-        public event EventHandler? Idle;
-        public event EventHandler? LogMessage;
-        public event EventHandler? QueryEndSession;
-        public event EventHandler? EndSession;
-        public event EventHandler? ActivateApp;
-        public event EventHandler? Hibernate;
-        public event EventHandler? DialupConnected;
-        public event EventHandler? DialupDisconnected;
-        public event EventHandler? ExceptionInMainLoop;
-        public event EventHandler? UnhandledException;
-        public event EventHandler? FatalException;
-        public event EventHandler? AssertFailure;
+        public Action? Idle;
+        public Action? LogMessage;
+        public Action? QueryEndSession;
+        public Action? EndSession;
+        public Action? ActivateApp;
+        public Action? Hibernate;
+        public Action? DialupConnected;
+        public Action? DialupDisconnected;
+        public Action? ExceptionInMainLoop;
+        public Action? UnhandledException;
+        public Action? FatalException;
+        public Action? AssertFailure;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

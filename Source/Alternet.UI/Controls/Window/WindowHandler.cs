@@ -109,8 +109,9 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
-            NativeControl.SizeChanged -= NativeControl_SizeChanged;
-            NativeControl.LocationChanged -= NativeControl_LocationChanged;
+            NativeControl.SizeChanged = null;
+            NativeControl.LocationChanged = null;
+            NativeControl.StateChanged = null;
             NativeControl.Closing -= NativeControl_Closing;
             NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
@@ -183,9 +184,9 @@ namespace Alternet.UI
             Control.InputBindings.ItemRemoved += InputBindings_ItemRemoved;
 
             NativeControl.Closing += NativeControl_Closing;
-            NativeControl.SizeChanged += NativeControl_SizeChanged;
-            NativeControl.LocationChanged += NativeControl_LocationChanged;
-            NativeControl.StateChanged += NativeControl_StateChanged;
+            NativeControl.SizeChanged = NativeControl_SizeChanged;
+            NativeControl.LocationChanged = NativeControl_LocationChanged;
+            NativeControl.StateChanged = NativeControl_StateChanged;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
@@ -237,7 +238,7 @@ namespace Alternet.UI
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 
-        private void NativeControl_StateChanged(object? sender, EventArgs e)
+        private void NativeControl_StateChanged()
         {
             Control.State = (WindowState)NativeControl.State;
         }
@@ -334,13 +335,13 @@ namespace Alternet.UI
             NativeControl.HasTitleBar = Control.HasTitleBar;
         }
 
-        private void NativeControl_SizeChanged(object? sender, EventArgs e)
+        private void NativeControl_SizeChanged()
         {
             Control.RaiseSizeChanged(EventArgs.Empty);
             Application.AddIdleTask(() => { Control.PerformLayout(); });
         }
 
-        private void NativeControl_LocationChanged(object? sender, EventArgs e)
+        private void NativeControl_LocationChanged()
         {
             Control.RaiseLocationChanged(EventArgs.Empty);
         }

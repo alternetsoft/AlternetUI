@@ -8,9 +8,6 @@ namespace Alternet.UI
 
         public new Calendar Control => (Calendar)base.Control;
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
-
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Calendar();
@@ -20,46 +17,46 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
-            NativeControl.PageChanged += NativeControl_PageChanged;
-            NativeControl.WeekNumberClick += NativeControl_WeekNumberClick;
-            NativeControl.DayHeaderClick += NativeControl_DayHeaderClick;
-            NativeControl.DayDoubleClick += NativeControl_DayDoubleClick;
+            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
+            NativeControl.PageChanged = NativeControl_PageChanged;
+            NativeControl.WeekNumberClick = NativeControl_WeekNumberClick;
+            NativeControl.DayHeaderClick = NativeControl_DayHeaderClick;
+            NativeControl.DayDoubleClick = NativeControl_DayDoubleClick;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
-            NativeControl.PageChanged -= NativeControl_PageChanged;
-            NativeControl.WeekNumberClick -= NativeControl_WeekNumberClick;
-            NativeControl.DayHeaderClick -= NativeControl_DayHeaderClick;
-            NativeControl.DayDoubleClick -= NativeControl_DayDoubleClick;
+            NativeControl.SelectionChanged = null;
+            NativeControl.PageChanged = null;
+            NativeControl.WeekNumberClick = null;
+            NativeControl.DayHeaderClick = null;
+            NativeControl.DayDoubleClick = null;
         }
 
-        private void NativeControl_DayDoubleClick(object? sender, EventArgs e)
+        private void NativeControl_DayDoubleClick()
         {
-            Control.RaiseDayDoubleClick(e);
+            Control.RaiseDayDoubleClick(EventArgs.Empty);
         }
 
-        private void NativeControl_DayHeaderClick(object? sender, EventArgs e)
+        private void NativeControl_DayHeaderClick()
         {
-            Control.RaiseDayHeaderClick(e);
+            Control.RaiseDayHeaderClick(EventArgs.Empty);
         }
 
-        private void NativeControl_WeekNumberClick(object? sender, EventArgs e)
+        private void NativeControl_WeekNumberClick()
         {
-            Control.RaiseWeekNumberClick(e);
+            Control.RaiseWeekNumberClick(EventArgs.Empty);
         }
 
-        private void NativeControl_PageChanged(object? sender, EventArgs e)
+        private void NativeControl_PageChanged()
         {
-            Control.RaisePageChanged(e);
+            Control.RaisePageChanged(EventArgs.Empty);
         }
 
-        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectionChanged()
         {
-            Control.RaiseSelectionChanged(e);
+            Control.RaiseSelectionChanged(EventArgs.Empty);
         }
     }
 }

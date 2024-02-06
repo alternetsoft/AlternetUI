@@ -864,27 +864,25 @@ namespace Alternet.UI
 
             if (NativeControl != null)
             {
-                NativeControl.HandleCreated -= NativeControl_HandleCreated;
-                NativeControl.HandleDestroyed -= NativeControl_HandleDestroyed;
-                NativeControl.Activated -= NativeControl_Activated;
-                NativeControl.Deactivated -= NativeControl_Deactivated;
-                NativeControl.Idle -= NativeControl_Idle;
-                NativeControl.Paint -= NativeControl_Paint;
-                NativeControl.VisibleChanged -= NativeControl_VisibleChanged;
-                NativeControl.MouseEnter -= NativeControl_MouseEnter;
-                NativeControl.MouseLeave -= NativeControl_MouseLeave;
-                NativeControl.MouseCaptureLost -= NativeControl_MouseCaptureLost;
+                NativeControl.HandleCreated = null;
+                NativeControl.HandleDestroyed = null;
+                NativeControl.Activated = null;
+                NativeControl.Deactivated = null;
+                NativeControl.Idle = null;
+                NativeControl.Paint = null;
+                NativeControl.VisibleChanged = null;
+                NativeControl.MouseEnter = null;
+                NativeControl.MouseLeave = null;
+                NativeControl.MouseCaptureLost = null;
                 NativeControl.DragOver -= NativeControl_DragOver;
                 NativeControl.DragEnter -= NativeControl_DragEnter;
-                NativeControl.DragLeave -= NativeControl_DragLeave;
+                NativeControl.DragLeave = null;
                 NativeControl.DragDrop -= NativeControl_DragDrop;
-                NativeControl.GotFocus -= NativeControl_GotFocus;
-                NativeControl.LostFocus -= NativeControl_LostFocus;
-                NativeControl.SizeChanged -= NativeControl_SizeChanged;
-                NativeControl.VerticalScrollBarValueChanged -=
-                    NativeControl_VerticalScrollBarValueChanged;
-                NativeControl.HorizontalScrollBarValueChanged -=
-                    NativeControl_HorizontalScrollBarValueChanged;
+                NativeControl.GotFocus = null;
+                NativeControl.LostFocus = null;
+                NativeControl.SizeChanged = null;
+                NativeControl.VerticalScrollBarValueChanged = null;
+                NativeControl.HorizontalScrollBarValueChanged = null;
             }
         }
 
@@ -917,59 +915,59 @@ namespace Alternet.UI
                 parent.PerformLayout();
             }
 
-            NativeControl.HandleCreated += NativeControl_HandleCreated;
-            NativeControl.HandleDestroyed += NativeControl_HandleDestroyed;
-            NativeControl.Activated += NativeControl_Activated;
-            NativeControl.Deactivated += NativeControl_Deactivated;
-            NativeControl.Paint += NativeControl_Paint;
-            NativeControl.VisibleChanged += NativeControl_VisibleChanged;
-            NativeControl.MouseEnter += NativeControl_MouseEnter;
-            NativeControl.MouseLeave += NativeControl_MouseLeave;
-            NativeControl.MouseCaptureLost += NativeControl_MouseCaptureLost;
+            NativeControl.HandleCreated = NativeControl_HandleCreated;
+            NativeControl.HandleDestroyed = NativeControl_HandleDestroyed;
+            NativeControl.Activated = NativeControl_Activated;
+            NativeControl.Deactivated = NativeControl_Deactivated;
+            NativeControl.Paint = NativeControl_Paint;
+            NativeControl.VisibleChanged = NativeControl_VisibleChanged;
+            NativeControl.MouseEnter = NativeControl_MouseEnter;
+            NativeControl.MouseLeave = NativeControl_MouseLeave;
+            NativeControl.MouseCaptureLost = NativeControl_MouseCaptureLost;
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
-            NativeControl.DragLeave += NativeControl_DragLeave;
+            NativeControl.DragLeave = NativeControl_DragLeave;
             NativeControl.DragDrop += NativeControl_DragDrop;
-            NativeControl.GotFocus += NativeControl_GotFocus;
-            NativeControl.LostFocus += NativeControl_LostFocus;
-            NativeControl.SizeChanged += NativeControl_SizeChanged;
-            NativeControl.Idle += NativeControl_Idle;
-            NativeControl.VerticalScrollBarValueChanged +=
+            NativeControl.GotFocus = NativeControl_GotFocus;
+            NativeControl.LostFocus = NativeControl_LostFocus;
+            NativeControl.SizeChanged = NativeControl_SizeChanged;
+            NativeControl.Idle = NativeControl_Idle;
+            NativeControl.VerticalScrollBarValueChanged =
                 NativeControl_VerticalScrollBarValueChanged;
-            NativeControl.HorizontalScrollBarValueChanged +=
+            NativeControl.HorizontalScrollBarValueChanged =
                 NativeControl_HorizontalScrollBarValueChanged;
 #if DEBUG
             /*Debug.WriteLine($"{GetType()} {NativeControl.Id} {NativeControl.Name}");*/
 #endif
         }
 
-        private static void DisposeNativeControlCore(Native.Control nativeControl)
+        private static void DisposeNativeControlCore(Native.Control control)
         {
-            nativeControl.handler = null;
-            nativeControl.Dispose();
+            control.handler = null;
+            control.Dispose();
         }
 
-        private void NativeControl_Deactivated(object? sender, EventArgs e)
+        private void NativeControl_Deactivated()
         {
             Control.RaiseDeactivated();
         }
 
-        private void NativeControl_HandleCreated(object? sender, EventArgs e)
+        private void NativeControl_HandleCreated()
         {
             Control.RaiseHandleCreated();
         }
 
-        private void NativeControl_HandleDestroyed(object? sender, EventArgs e)
+        private void NativeControl_HandleDestroyed()
         {
             Control.RaiseHandleDestroyed();
         }
 
-        private void NativeControl_Activated(object? sender, EventArgs e)
+        private void NativeControl_Activated()
         {
             Control.RaiseActivated();
         }
 
-        private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
+        private void NativeControl_HorizontalScrollBarValueChanged()
         {
             var args = new ScrollEventArgs
             {
@@ -980,7 +978,7 @@ namespace Alternet.UI
             Control.RaiseScroll(args);
         }
 
-        private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
+        private void NativeControl_VerticalScrollBarValueChanged()
         {
             var args = new ScrollEventArgs
             {
@@ -991,12 +989,12 @@ namespace Alternet.UI
             Control.RaiseScroll(args);
         }
 
-        private void NativeControl_Idle(object? sender, EventArgs e)
+        private void NativeControl_Idle()
         {
             Control.RaiseIdle(EventArgs.Empty);
         }
 
-        private void NativeControl_SizeChanged(object? sender, EventArgs e)
+        private void NativeControl_SizeChanged()
         {
             NativeControlSizeChanged();
         }
@@ -1032,12 +1030,12 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        private void NativeControl_GotFocus(object? sender, EventArgs e)
+        private void NativeControl_GotFocus()
         {
             Control.RaiseGotFocus(EventArgs.Empty);
         }
 
-        private void NativeControl_LostFocus(object? sender, EventArgs e)
+        private void NativeControl_LostFocus()
         {
             Control.RaiseLostFocus(EventArgs.Empty);
         }
@@ -1075,10 +1073,10 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.DragEventData> e) =>
             RaiseDragAndDropEvent(e, ea => Control.RaiseDragDrop(ea));
 
-        private void NativeControl_DragLeave(object? sender, EventArgs e) =>
-            Control.RaiseDragLeave(e);
+        private void NativeControl_DragLeave() =>
+            Control.RaiseDragLeave(EventArgs.Empty);
 
-        private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)
+        private void NativeControl_MouseCaptureLost()
         {
             Control.RaiseMouseCaptureLost();
         }
@@ -1137,7 +1135,7 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeControl_Destroyed(object? sender, EventArgs e)
+        private void NativeControl_Destroyed(object? sender, CancelEventArgs e)
         {
             var nativeControl = (Native.Control)sender!;
             nativeControl.Destroyed -= NativeControl_Destroyed;
@@ -1196,7 +1194,7 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeControl_VisibleChanged(object? sender, EventArgs e)
+        private void NativeControl_VisibleChanged()
         {
             if (NativeControl != null)
             {
@@ -1218,17 +1216,17 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeControl_MouseEnter(object? sender, EventArgs? e)
+        private void NativeControl_MouseEnter()
         {
             Control.RaiseMouseEnter();
         }
 
-        private void NativeControl_MouseLeave(object? sender, EventArgs? e)
+        private void NativeControl_MouseLeave()
         {
             Control.RaiseMouseLeave();
         }
 
-        private void NativeControl_Paint(object? sender, System.EventArgs? e)
+        private void NativeControl_Paint()
         {
             if (NativeControl == null)
                 return;

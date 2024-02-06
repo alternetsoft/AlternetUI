@@ -46,7 +46,7 @@ namespace Alternet.UI
             Control.SelectionModeChanged += Control_SelectionModeChanged;
 
             Control.SelectionChanged += Control_SelectionChanged;
-            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
         }
 
         protected override void OnDetach()
@@ -57,12 +57,12 @@ namespace Alternet.UI
             Control.Items.CollectionChanged -= Items_CollectionChanged;
 
             Control.SelectionChanged -= Control_SelectionChanged;
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+            NativeControl.SelectionChanged = null;
 
             base.OnDetach();
         }
 
-        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectionChanged()
         {
             if (applyingSelection)
                 return;

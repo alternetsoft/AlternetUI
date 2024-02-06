@@ -63,13 +63,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ColorPickerEvent.ValueChanged:
                 {
-                    ValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ValueChanged?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ColorPickerEvent value: " + e);
             }
         }
         
-        public event EventHandler? ValueChanged;
+        public Action? ValueChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

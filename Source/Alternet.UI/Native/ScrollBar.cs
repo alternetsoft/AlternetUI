@@ -144,13 +144,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ScrollBarEvent.Scroll:
                 {
-                    Scroll?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Scroll?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ScrollBarEvent value: " + e);
             }
         }
         
-        public event EventHandler? Scroll;
+        public Action? Scroll;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

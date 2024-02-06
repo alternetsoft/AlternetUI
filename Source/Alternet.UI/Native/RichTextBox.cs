@@ -1577,23 +1577,23 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.RichTextBoxEvent.TextChanged:
                 {
-                    TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TextChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.RichTextBoxEvent.TextEnter:
                 {
-                    TextEnter?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TextEnter?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.RichTextBoxEvent.TextUrl:
                 {
-                    TextUrl?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TextUrl?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected RichTextBoxEvent value: " + e);
             }
         }
         
-        public event EventHandler? TextChanged;
-        public event EventHandler? TextEnter;
-        public event EventHandler? TextUrl;
+        public Action? TextChanged;
+        public Action? TextEnter;
+        public Action? TextUrl;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

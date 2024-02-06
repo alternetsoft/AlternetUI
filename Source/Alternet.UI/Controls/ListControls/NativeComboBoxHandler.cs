@@ -59,8 +59,8 @@ namespace Alternet.UI
             Control.TextChanged += Control_TextChanged;
             Control.SelectedItemChanged += Control_SelectedItemChanged;
 
-            NativeControl.SelectedItemChanged += NativeControl_SelectedItemChanged;
-            NativeControl.TextChanged += NativeControl_TextChanged;
+            NativeControl.SelectedItemChanged = NativeControl_SelectedItemChanged;
+            NativeControl.TextChanged = NativeControl_TextChanged;
         }
 
         protected override void OnDetach()
@@ -71,9 +71,10 @@ namespace Alternet.UI
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.IsEditableChanged -= Control_IsEditableChanged;
-
             Control.SelectedItemChanged -= Control_SelectedItemChanged;
-            NativeControl.SelectedItemChanged -= NativeControl_SelectedItemChanged;
+
+            NativeControl.SelectedItemChanged = null;
+            NativeControl.TextChanged = null;
 
             base.OnDetach();
         }
@@ -89,7 +90,7 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeControl_SelectedItemChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectedItemChanged()
         {
             ReceiveSelectedItem();
         }
@@ -107,7 +108,7 @@ namespace Alternet.UI
             ApplySelectedItem();
         }
 
-        private void NativeControl_TextChanged(object? sender, EventArgs e)
+        private void NativeControl_TextChanged()
         {
             ReceiveText();
         }

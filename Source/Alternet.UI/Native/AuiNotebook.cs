@@ -264,11 +264,11 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.AuiNotebookEvent.PageClosed:
                 {
-                    PageClosed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    PageClosed?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.PageChanged:
                 {
-                    PageChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    PageChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.PageChanging:
                 {
@@ -288,63 +288,63 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.AuiNotebookEvent.BeginDrag:
                 {
-                    BeginDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    BeginDrag?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.EndDrag:
                 {
-                    EndDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    EndDrag?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.DragMotion:
                 {
-                    DragMotion?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DragMotion?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.AllowTabDrop:
                 {
-                    AllowTabDrop?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    AllowTabDrop?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.DragDone:
                 {
-                    DragDone?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DragDone?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.TabMiddleMouseDown:
                 {
-                    TabMiddleMouseDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TabMiddleMouseDown?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.TabMiddleMouseUp:
                 {
-                    TabMiddleMouseUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TabMiddleMouseUp?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.TabRightMouseDown:
                 {
-                    TabRightMouseDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TabRightMouseDown?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.TabRightMouseUp:
                 {
-                    TabRightMouseUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    TabRightMouseUp?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiNotebookEvent.BgDclickMouse:
                 {
-                    BgDclickMouse?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    BgDclickMouse?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected AuiNotebookEvent value: " + e);
             }
         }
         
         public event EventHandler<CancelEventArgs>? PageClose;
-        public event EventHandler? PageClosed;
-        public event EventHandler? PageChanged;
+        public Action? PageClosed;
+        public Action? PageChanged;
         public event EventHandler<CancelEventArgs>? PageChanging;
         public event EventHandler<CancelEventArgs>? PageButton;
-        public event EventHandler? BeginDrag;
-        public event EventHandler? EndDrag;
-        public event EventHandler? DragMotion;
-        public event EventHandler? AllowTabDrop;
-        public event EventHandler? DragDone;
-        public event EventHandler? TabMiddleMouseDown;
-        public event EventHandler? TabMiddleMouseUp;
-        public event EventHandler? TabRightMouseDown;
-        public event EventHandler? TabRightMouseUp;
-        public event EventHandler? BgDclickMouse;
+        public Action? BeginDrag;
+        public Action? EndDrag;
+        public Action? DragMotion;
+        public Action? AllowTabDrop;
+        public Action? DragDone;
+        public Action? TabMiddleMouseDown;
+        public Action? TabMiddleMouseUp;
+        public Action? TabRightMouseDown;
+        public Action? TabRightMouseUp;
+        public Action? BgDclickMouse;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

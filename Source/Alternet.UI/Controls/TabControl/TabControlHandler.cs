@@ -62,7 +62,7 @@ namespace Alternet.UI
             Control.Pages.ItemRemoved += Pages_ItemRemoved;
             Control.Children.ItemInserted += Children_ItemInserted;
 
-            NativeControl.SelectedPageIndexChanged += NativeControl_SelectedPageIndexChanged;
+            NativeControl.SelectedPageIndexChanged = NativeControl_SelectedPageIndexChanged;
         }
 
         protected virtual void OnPageInserted(int index, TabPage page)
@@ -75,7 +75,7 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
-            NativeControl.SelectedPageIndexChanged -= NativeControl_SelectedPageIndexChanged;
+            NativeControl.SelectedPageIndexChanged = null;
             Control.Children.ItemInserted -= Children_ItemInserted;
 
             Control.Pages.ItemInserted -= Pages_ItemInserted;
@@ -158,9 +158,8 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeControl_SelectedPageIndexChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectedPageIndexChanged()
         {
-            /*skipLinuxFix = true;*/
             LayoutSelectedPage();
             Control.RaiseSelectedPageChanged(EventArgs.Empty);
         }

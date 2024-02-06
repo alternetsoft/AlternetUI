@@ -30,8 +30,8 @@ namespace Alternet.UI
         public NotifyIcon()
         {
             nativeNotifyIcon = new Native.NotifyIcon();
-            nativeNotifyIcon.Click += NativeNotifyIcon_Click;
-            nativeNotifyIcon.DoubleClick += NativeNotifyIcon_DoubleClick;
+            nativeNotifyIcon.Click = NativeNotifyIcon_Click;
+            nativeNotifyIcon.DoubleClick = NativeNotifyIcon_DoubleClick;
         }
 
         /// <summary>
@@ -224,8 +224,8 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    nativeNotifyIcon.Click -= NativeNotifyIcon_Click;
-                    nativeNotifyIcon.DoubleClick -= NativeNotifyIcon_DoubleClick;
+                    nativeNotifyIcon.Click = null;
+                    nativeNotifyIcon.DoubleClick = null;
                     nativeNotifyIcon.Dispose();
                     nativeNotifyIcon = null!;
                 }
@@ -234,12 +234,12 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeNotifyIcon_Click(object? sender, EventArgs e)
+        private void NativeNotifyIcon_Click()
         {
             OnClick(EventArgs.Empty);
         }
 
-        private void NativeNotifyIcon_DoubleClick(object? sender, EventArgs e)
+        private void NativeNotifyIcon_DoubleClick()
         {
             OnDoubleClick(EventArgs.Empty);
         }

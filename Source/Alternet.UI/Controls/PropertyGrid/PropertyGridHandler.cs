@@ -57,20 +57,20 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             base.OnDetach();
-            NativeControl.ButtonClick -= NativeControl_ButtonClick;
-            NativeControl.Selected -= NativeControl_Selected;
-            NativeControl.Changed -= NativeControl_Changed;
+            NativeControl.ButtonClick = null;
+            NativeControl.Selected = null;
+            NativeControl.Changed = null;
             NativeControl.Changing -= NativeControl_Changing;
-            NativeControl.Highlighted -= NativeControl_Highlighted;
-            NativeControl.RightClick -= NativeControl_RightClick;
-            NativeControl.DoubleClick -= NativeControl_DoubleClick;
-            NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
-            NativeControl.ItemExpanded -= NativeControl_ItemExpanded;
+            NativeControl.Highlighted = null;
+            NativeControl.RightClick = null;
+            NativeControl.DoubleClick = null;
+            NativeControl.ItemCollapsed = null;
+            NativeControl.ItemExpanded = null;
             NativeControl.LabelEditBegin -= NativeControl_LabelEditBegin;
             NativeControl.LabelEditEnding -= NativeControl_LabelEditEnding;
             NativeControl.ColBeginDrag -= NativeControl_ColBeginDrag;
-            NativeControl.ColDragging -= NativeControl_ColDragging;
-            NativeControl.ColEndDrag -= NativeControl_ColEndDrag;
+            NativeControl.ColDragging = null;
+            NativeControl.ColEndDrag = null;
         }
 
         protected override void OnAttach()
@@ -93,19 +93,19 @@ namespace Alternet.UI
             NativeControl.ColEndDrag += NativeControl_ColEndDrag;
         }
 
-        private void NativeControl_ButtonClick(object? sender, EventArgs e)
+        private void NativeControl_ButtonClick()
         {
-            Control.RaiseButtonClick(e);
+            Control.RaiseButtonClick(EventArgs.Empty);
         }
 
-        private void NativeControl_ColEndDrag(object? sender, EventArgs e)
+        private void NativeControl_ColEndDrag()
         {
-            Control.RaiseColEndDrag(e);
+            Control.RaiseColEndDrag(EventArgs.Empty);
         }
 
-        private void NativeControl_ColDragging(object? sender, EventArgs e)
+        private void NativeControl_ColDragging()
         {
-            Control.RaiseColDragging(e);
+            Control.RaiseColDragging(EventArgs.Empty);
         }
 
         private void NativeControl_ColBeginDrag(object? sender, CancelEventArgs e)
@@ -123,29 +123,29 @@ namespace Alternet.UI
             Control.RaiseLabelEditBegin(e);
         }
 
-        private void NativeControl_ItemExpanded(object? sender, EventArgs e)
+        private void NativeControl_ItemExpanded()
         {
-            Control.RaiseItemExpanded(e);
+            Control.RaiseItemExpanded(EventArgs.Empty);
         }
 
-        private void NativeControl_ItemCollapsed(object? sender, EventArgs e)
+        private void NativeControl_ItemCollapsed()
         {
-            Control.RaiseItemCollapsed(e);
+            Control.RaiseItemCollapsed(EventArgs.Empty);
         }
 
-        private void NativeControl_DoubleClick(object? sender, EventArgs e)
+        private void NativeControl_DoubleClick()
         {
-            Control.RaisePropertyDoubleClick(e);
+            Control.RaisePropertyDoubleClick(EventArgs.Empty);
         }
 
-        private void NativeControl_RightClick(object? sender, EventArgs e)
+        private void NativeControl_RightClick()
         {
-            Control.RaisePropertyRightClick(e);
+            Control.RaisePropertyRightClick(EventArgs.Empty);
         }
 
-        private void NativeControl_Highlighted(object? sender, EventArgs e)
+        private void NativeControl_Highlighted()
         {
-            Control.RaisePropertyHighlighted(e);
+            Control.RaisePropertyHighlighted(EventArgs.Empty);
         }
 
         private void NativeControl_Changing(object? sender, CancelEventArgs e)
@@ -153,14 +153,14 @@ namespace Alternet.UI
             Control.RaisePropertyChanging(e);
         }
 
-        private void NativeControl_Changed(object? sender, EventArgs e)
+        private void NativeControl_Changed()
         {
-            Control.RaisePropertyChanged(e);
+            Control.RaisePropertyChanged(EventArgs.Empty);
         }
 
-        private void NativeControl_Selected(object? sender, EventArgs e)
+        private void NativeControl_Selected()
         {
-            Control.RaisePropertySelected(e);
+            Control.RaisePropertySelected(EventArgs.Empty);
         }
 
         public class NativePropertyGrid : Native.PropertyGrid

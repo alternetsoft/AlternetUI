@@ -144,13 +144,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.DateTimePickerEvent.ValueChanged:
                 {
-                    ValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ValueChanged?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected DateTimePickerEvent value: " + e);
             }
         }
         
-        public event EventHandler? ValueChanged;
+        public Action? ValueChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

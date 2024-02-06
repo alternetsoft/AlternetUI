@@ -490,11 +490,11 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.TreeViewEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    SelectionChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.TreeViewEvent.ControlRecreated:
                 {
-                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ControlRecreated?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.TreeViewEvent.ItemExpanded:
                 {
@@ -530,8 +530,8 @@ namespace Alternet.UI.Native
             }
         }
         
-        public event EventHandler? SelectionChanged;
-        public event EventHandler? ControlRecreated;
+        public Action? SelectionChanged;
+        public Action? ControlRecreated;
         public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded;
         public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed;
         public event NativeEventHandler<TreeViewItemEventData>? ItemExpanding;
