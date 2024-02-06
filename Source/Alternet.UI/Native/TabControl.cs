@@ -112,7 +112,7 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.TabControlEvent.SelectedPageIndexChanged:
                 {
-                    SelectedPageIndexChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    SelectedPageIndexChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.TabControlEvent.SelectedPageIndexChanging:
                 {
@@ -123,7 +123,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public event EventHandler? SelectedPageIndexChanged;
+        public Action? SelectedPageIndexChanged;
         public event NativeEventHandler<TabPageSelectionEventData>? SelectedPageIndexChanging;
         
         [SuppressUnmanagedCodeSecurity]

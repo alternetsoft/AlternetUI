@@ -900,7 +900,7 @@ namespace Alternet.UI
         {
             get
             {
-                var index = Parent?.Children.IndexOf(this);
+                var index = Parent?.children?.IndexOf(this);
                 return index;
             }
         }
@@ -994,6 +994,8 @@ namespace Alternet.UI
                     return;
                 toolTip = value;
                 OnToolTipChanged(EventArgs.Empty);
+                ToolTipChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_ToolTipChanged();
             }
         }
 
@@ -1093,6 +1095,7 @@ namespace Alternet.UI
                 visible = value;
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_VisibleChanged();
                 if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
                 else
@@ -1142,7 +1145,8 @@ namespace Alternet.UI
         {
             get
             {
-                return (handler is not null) && handler.IsNativeControlCreated && NativeControl.IsHandleCreated;
+                return (handler is not null) && handler.IsNativeControlCreated
+                    && NativeControl.IsHandleCreated;
             }
         }
 
@@ -1508,6 +1512,7 @@ namespace Alternet.UI
 
                 OnMarginChanged(EventArgs.Empty);
                 MarginChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_MarginChanged();
             }
         }
 
@@ -1544,6 +1549,7 @@ namespace Alternet.UI
 
                 OnPaddingChanged(EventArgs.Empty);
                 PaddingChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_PaddingChanged();
             }
         }
 
@@ -1953,6 +1959,7 @@ namespace Alternet.UI
                 font = value;
                 OnFontChanged(EventArgs.Empty);
                 FontChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_FontChanged();
             }
         }
 
@@ -2020,6 +2027,7 @@ namespace Alternet.UI
 
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_VerticalAlignmentChanged();
             }
         }
 
@@ -2039,6 +2047,7 @@ namespace Alternet.UI
 
                 horizontalAlignment = value;
                 HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Control_HorizontalAlignmentChanged();
             }
         }
 

@@ -91,8 +91,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Called when a <see cref="Control"/> is inserted into
-        /// the <see cref="Control.Children"/> or
-        /// <see cref="ControlHandler.VisualChildren"/> collection.
+        /// the <see cref="Control.Children"/>.
         /// </summary>
         protected virtual void OnChildInserted(Control childControl)
         {
@@ -305,8 +304,8 @@ namespace Alternet.UI
             SuspendLayout();
             if (HasChildren)
                 Children.Clear();
-            if (Handler.HasVisualChildren)
-                Handler.VisualChildren.Clear();
+            /*if (Handler.HasVisualChildren)
+                Handler.VisualChildren.Clear();*/
             ResumeLayout(performLayout: false);
 
             // TODO
@@ -507,7 +506,6 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnToolTipChanged(EventArgs e)
         {
-            ToolTipChanged?.Invoke(this, e);
         }
 
         /// <summary>

@@ -403,13 +403,13 @@ namespace Alternet.UI
         {
             base.OnDetach();
             Control.TextChanged -= Control_TextChanged;
-            NativeControl.TextChanged -= NativeControl_TextChanged;
             Control.HasBorderChanged -= Control_HasBorderChanged;
             Control.MultilineChanged -= Control_MultilineChanged;
             Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
-            NativeControl.TextEnter -= NativeControl_TextEnter;
-            NativeControl.TextUrl -= NativeControl_TextUrl;
-            NativeControl.TextMaxLength -= NativeControl_TextMaxLength;
+            NativeControl.TextChanged = null;
+            NativeControl.TextEnter = null;
+            NativeControl.TextUrl = null;
+            NativeControl.TextMaxLength = null;
         }
 
         protected override void OnAttach()
@@ -424,26 +424,27 @@ namespace Alternet.UI
             Control.TextChanged += Control_TextChanged;
             Control.MultilineChanged += Control_MultilineChanged;
             Control.ReadOnlyChanged += Control_ReadOnlyChanged;
-            NativeControl.TextChanged += NativeControl_TextChanged;
-            NativeControl.TextEnter += NativeControl_TextEnter;
-            NativeControl.TextUrl += NativeControl_TextUrl;
-            NativeControl.TextMaxLength += NativeControl_TextMaxLength;
+
+            NativeControl.TextChanged = NativeControl_TextChanged;
+            NativeControl.TextEnter = NativeControl_TextEnter;
+            NativeControl.TextUrl = NativeControl_TextUrl;
+            NativeControl.TextMaxLength = NativeControl_TextMaxLength;
         }
 
-        private void NativeControl_TextMaxLength(object? sender, EventArgs e)
+        private void NativeControl_TextMaxLength()
         {
-            Control.OnTextMaxLength(e);
+            Control.OnTextMaxLength(EventArgs.Empty);
         }
 
-        private void NativeControl_TextUrl(object? sender, EventArgs e)
+        private void NativeControl_TextUrl()
         {
             var url = ReportedUrl;
             Control.OnTextUrl(new UrlEventArgs(url));
         }
 
-        private void NativeControl_TextEnter(object? sender, EventArgs e)
+        private void NativeControl_TextEnter()
         {
-            Control.OnEnterPressed(e);
+            Control.OnEnterPressed(EventArgs.Empty);
         }
 
         private void Control_ReadOnlyChanged(object? sender, EventArgs e)
@@ -471,7 +472,7 @@ namespace Alternet.UI
             NativeControl.EditControlOnly = !Control.HasBorder;
         }
 
-        private void NativeControl_TextChanged(object? sender, EventArgs e)
+        private void NativeControl_TextChanged()
         {
             handlingNativeControlTextChanged = true;
             try

@@ -28,7 +28,7 @@ namespace ApiGenerator.Api
             if (type.IsAbstract)
                 return type.IsSealed ? MemberVisibility.Private : MemberVisibility.Protected;
 
-            var ctor = type.GetConstructor(new Type[0]);
+            var ctor = type.GetConstructor(Array.Empty<Type>());
             if (ctor == null)
                 return MemberVisibility.Private;
 
@@ -79,8 +79,8 @@ namespace ApiGenerator.Api
             var values = (Enum.GetValues(enumType) ?? throw new Exception()).Cast<object>().ToArray();
             for (int i = 0; i < names.Length; i++)
             {
-                string? name = names[i];
-                object underlyingValue = Convert.ChangeType(values[i], Enum.GetUnderlyingType(values[i].GetType()));
+                object underlyingValue =
+                    Convert.ChangeType(values[i], Enum.GetUnderlyingType(values[i].GetType()));
                 yield return (names[i], underlyingValue);
             }
         }

@@ -1,4 +1,5 @@
 #include "wxAlternetColourProperty.h"
+#include <wx/dc.h>
 #include <wx/propgrid/propgrid.h>
 #include <wx/colourdata.h>
 #include <wx/colordlg.h>
@@ -6,6 +7,7 @@
 #include <wx/wxchar.h>
 #include <wx/variant.h>
 #include <wx/propgrid/propgriddefs.h>
+#include <wx/settings.h>
 
 // Drawing ARGB on standard DC is supported by OSX and GTK3
 #if defined(__WXOSX__) || defined(__WXGTK3__)
@@ -596,6 +598,12 @@ namespace Alternet::UI
     void wxAlternetSystemColourProperty::OnCustomPaint(wxDC& dc, const wxRect& rect,
         wxPGPaintData& paintdata)
     {
+        auto b = rect.width;
+        if (b > rect.height)
+            b = rect.height;
+        auto rect2 = wxRect(rect.x, rect.y, b, b);
+        auto rect3 = rect2.CenterIn(rect);
+
         wxColour col;
 
         if (paintdata.m_choiceItem >= 0 &&
@@ -636,12 +644,6 @@ namespace Alternet::UI
                     wxFAIL_MSG(wxS("Unknown wxDC kind"));
                 }
             }
-
-            auto b = rect.width;
-            if (b > rect.height)
-                b = rect.height;
-            auto rect2 = wxRect(rect.x, rect.y, b, b);
-            auto rect3 = rect2.CenterIn(rect);
 
             if (gdc)
             {

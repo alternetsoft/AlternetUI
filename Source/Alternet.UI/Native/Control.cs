@@ -1027,47 +1027,51 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ControlEvent.Idle:
                 {
-                    Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Idle?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Paint:
                 {
-                    Paint?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Paint?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseEnter:
                 {
-                    MouseEnter?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    MouseEnter?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseLeave:
                 {
-                    MouseLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    MouseLeave?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseClick:
                 {
-                    MouseClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    MouseClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.VisibleChanged:
                 {
-                    VisibleChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    VisibleChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseCaptureLost:
                 {
-                    MouseCaptureLost?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    MouseCaptureLost?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Destroyed:
                 {
-                    Destroyed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        Destroyed?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 case NativeApi.ControlEvent.GotFocus:
                 {
-                    GotFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    GotFocus?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.LostFocus:
                 {
-                    LostFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    LostFocus?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.DragLeave:
                 {
-                    DragLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DragLeave?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.DragDrop:
                 {
@@ -1086,57 +1090,57 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.ControlEvent.VerticalScrollBarValueChanged:
                 {
-                    VerticalScrollBarValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    VerticalScrollBarValueChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.HorizontalScrollBarValueChanged:
                 {
-                    HorizontalScrollBarValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    HorizontalScrollBarValueChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.SizeChanged:
                 {
-                    SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    SizeChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Activated:
                 {
-                    Activated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Activated?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Deactivated:
                 {
-                    Deactivated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Deactivated?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.HandleCreated:
                 {
-                    HandleCreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    HandleCreated?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.HandleDestroyed:
                 {
-                    HandleDestroyed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    HandleDestroyed?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
         
-        public event EventHandler? Idle;
-        public event EventHandler? Paint;
-        public event EventHandler? MouseEnter;
-        public event EventHandler? MouseLeave;
-        public event EventHandler? MouseClick;
-        public event EventHandler? VisibleChanged;
-        public event EventHandler? MouseCaptureLost;
-        public event EventHandler? Destroyed;
-        public event EventHandler? GotFocus;
-        public event EventHandler? LostFocus;
-        public event EventHandler? DragLeave;
+        public Action? Idle;
+        public Action? Paint;
+        public Action? MouseEnter;
+        public Action? MouseLeave;
+        public Action? MouseClick;
+        public Action? VisibleChanged;
+        public Action? MouseCaptureLost;
+        public event EventHandler<CancelEventArgs>? Destroyed;
+        public Action? GotFocus;
+        public Action? LostFocus;
+        public Action? DragLeave;
         public event NativeEventHandler<DragEventData>? DragDrop;
         public event NativeEventHandler<DragEventData>? DragOver;
         public event NativeEventHandler<DragEventData>? DragEnter;
-        public event EventHandler? VerticalScrollBarValueChanged;
-        public event EventHandler? HorizontalScrollBarValueChanged;
-        public event EventHandler? SizeChanged;
-        public event EventHandler? Activated;
-        public event EventHandler? Deactivated;
-        public event EventHandler? HandleCreated;
-        public event EventHandler? HandleDestroyed;
+        public Action? VerticalScrollBarValueChanged;
+        public Action? HorizontalScrollBarValueChanged;
+        public Action? SizeChanged;
+        public Action? Activated;
+        public Action? Deactivated;
+        public Action? HandleCreated;
+        public Action? HandleDestroyed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

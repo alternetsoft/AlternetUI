@@ -7,7 +7,7 @@ namespace Alternet.UI
     {
         /// <inheritdoc/>
         public ControlHandler CreateButtonHandler(Control control) =>
-            new GenericButtonHandler();
+            StockControlHandlerFactories.Native.CreateButtonHandler(control);
 
         /// <inheritdoc/>
         public ControlHandler CreateStackPanelHandler(Control control) =>
@@ -27,11 +27,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateTextBoxHandler(Control control) =>
-            new GenericTextBoxHandler();
+            StockControlHandlerFactories.Native.CreateTextBoxHandler(control);
 
         /// <inheritdoc/>
         public ControlHandler CreateCheckBoxHandler(Control control) =>
-            new GenericCheckBoxHandler();
+            StockControlHandlerFactories.Native.CreateCheckBoxHandler(control);
 
         /// <inheritdoc/>
         public ControlHandler CreateRadioButtonHandler(Control control) =>

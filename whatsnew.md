@@ -1,5 +1,21 @@
+# 0.9.505 (2024 February 6)
 
-# 0.9.505 (work in progress)
+## 2024 February 6
+
+- Controls: Speed up of create and destroy.
+- Controls: Speed up of event handling.
+- Fixed not found Pal library under some Linux versions.
+- Fixed compilation problem under Linux introduced Feb 5.
+
+## 2024 February 5
+
+- PropertyGrid: CanResetProp, ResetProp.
+- ColorDialog.Default.
+- Control: ProcessException event, AvoidException
+- Color.Parse improved: Now conversion is faster and doesn't create ColorConverter instance. Color surrounded with ( ) is 
+converted correctly. New Parse method with context and culture params.
+- PropertyGrid: Fixed color property paint. Now color image is square.
+- Updated documentation.
 
 ## 2024 February 2
 

@@ -138,13 +138,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.CheckBoxEvent.CheckedChanged:
                 {
-                    CheckedChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    CheckedChanged?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected CheckBoxEvent value: " + e);
             }
         }
         
-        public event EventHandler? CheckedChanged;
+        public Action? CheckedChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

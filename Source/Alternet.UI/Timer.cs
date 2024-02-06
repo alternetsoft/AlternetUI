@@ -20,7 +20,7 @@ namespace Alternet.UI
         public Timer()
         {
             nativeTimer = new Native.Timer();
-            nativeTimer.Tick += NativeTimer_Tick;
+            nativeTimer.Tick = NativeTimer_Tick;
         }
 
         /// <summary>
@@ -267,12 +267,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeResources()
         {
-            nativeTimer.Tick -= NativeTimer_Tick;
+            nativeTimer.Tick = null;
             nativeTimer.Dispose();
             nativeTimer = null!;
         }
 
-        private void NativeTimer_Tick(object? sender, EventArgs e)
+        private void NativeTimer_Tick()
         {
             if (!autoReset)
                 Stop();

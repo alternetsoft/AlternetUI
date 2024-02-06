@@ -31,10 +31,10 @@ namespace ApiGenerator.Managed
 
         protected abstract string GetApiClassTypeName(ContextualType type);
 
-#pragma warning disable CA1822
+#pragma warning disable
         protected string GetNullableDecoratedName(ContextualType type, string name) =>
             type.Nullability == Nullability.Nullable ? name + "?" : name;
-#pragma warning restore CA1822
+#pragma warning restore
 
         public string GetParameterTypeName(ParameterInfo parameter)
         {

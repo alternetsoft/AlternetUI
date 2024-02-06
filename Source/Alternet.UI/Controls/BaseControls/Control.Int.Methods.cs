@@ -42,7 +42,7 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeDefaultLayout(Control container, SizeD availableSize)
         {
-            if (container.HasChildren || container.Handler.HasVisualChildren)
+            if (container.HasChildren /*|| container.Handler.HasVisualChildren*/)
                 return container.Handler.GetSpecifiedOrChildrenPreferredSize(availableSize);
             return container.Handler.GetNativeControlSize(availableSize);
         }

@@ -21,7 +21,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Minimum = (int)Control.Minimum; // todo: support non-int values.
+            NativeControl.Minimum = (int)Control.Minimum;
             NativeControl.Maximum = (int)Control.Maximum;
             NativeControl.Value = (int)Control.Value;
 
@@ -29,7 +29,7 @@ namespace Alternet.UI
             Control.MaximumChanged += Control_MaximumChanged;
             Control.ValueChanged += Control_ValueChanged;
 
-            NativeControl.ValueChanged += NativeControl_ValueChanged;
+            NativeControl.ValueChanged = NativeControl_ValueChanged;
         }
 
         protected override void OnDetach()
@@ -40,10 +40,10 @@ namespace Alternet.UI
             Control.MaximumChanged -= Control_MaximumChanged;
             Control.ValueChanged -= Control_ValueChanged;
 
-            NativeControl.ValueChanged -= NativeControl_ValueChanged;
+            NativeControl.ValueChanged = null;
         }
 
-        private void NativeControl_ValueChanged(object? sender, EventArgs e)
+        private void NativeControl_ValueChanged()
         {
             Control.Value = NativeControl.Value;
         }

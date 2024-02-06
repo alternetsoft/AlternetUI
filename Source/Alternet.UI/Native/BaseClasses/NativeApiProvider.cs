@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -12,15 +13,42 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
     {
+        public const string NativeModuleNameNoExt = "Alternet.UI.Pal";
+
 #if NETCOREAPP
-        public const string NativeModuleName = "Alternet.UI.Pal";
+        public const string NativeModuleName = NativeModuleNameNoExt;
 #else
-        public const string NativeModuleName = "Alternet.UI.Pal.dll";
+        public const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
 #endif
 
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
         private static GCHandle caughtExceptionCallbackHandle;
+
+        private static string NativeModuleNameWithExt
+        {
+            get
+            {
+                var result = NativeModuleNameNoExt;
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    result = $"{result}.dll";
+                }
+                else
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    result = $"{result}.so";
+                }
+                else
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    result = $"{result}.dylib";
+                }
+
+                return result;
+            }
+        }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         public delegate void PInvokeCallbackActionType();
@@ -29,7 +57,13 @@ namespace Alternet.UI.Native
         {
             if (!initialized)
             {
+#if NETCOREAPP
+                NativeLibrary.SetDllImportResolver(
+                    typeof(NativeApiProvider).Assembly,
+                    ImportResolver);
+#else
                 WindowsNativeModulesLocator.SetNativeModulesDirectory();
+#endif
 
                 Debug.Assert(
                     !unhandledExceptionCallbackHandle.IsAllocated,
@@ -57,6 +91,27 @@ namespace Alternet.UI.Native
                 initialized = true;
             }
         }
+
+#if NETCOREAPP
+        private static IntPtr ImportResolver(
+            string libraryName,
+            Assembly assembly,
+            DllImportSearchPath? searchPath)
+        {
+            IntPtr libHandle = IntPtr.Zero;
+            if (libraryName == NativeModuleName)
+            {
+                var libraryFileName = FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
+                if (libraryFileName is null)
+                    return NativeLibrary.Load(libraryName);
+                var loaded = NativeLibrary.TryLoad(libraryFileName, out libHandle);
+                if (!loaded)
+                    return NativeLibrary.Load(libraryName);
+            }
+
+            return libHandle;
+        }
+#endif
 
         [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
         private static extern void SetExceptionCallback(

@@ -8,9 +8,7 @@ namespace Alternet.UI
     internal class NativeListViewHandler : ListViewHandler
     {
         private int receivingSelection = 0;
-
         private int applyingSelection = 0;
-
         private int clearing = 0;
 
         /// <inheritdoc/>
@@ -99,16 +97,6 @@ namespace Alternet.UI
                 itemIndex,
                 (Native.ListViewItemBoundsPortion)portion);
 
-        ///// <inheritdoc/>
-        // public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
-
-        ///// <inheritdoc/>
-        // public override ListViewSortMode SortMode
-        // {
-        //    get => (ListViewSortMode)NativeControl.SortMode;
-        //    set => NativeControl.SortMode = (Native.ListViewSortMode)value;
-        // }
-
         /// <inheritdoc/>
         public override void Clear()
         {
@@ -147,13 +135,9 @@ namespace Alternet.UI
             NativeControl.SetColumnTitle(columnIndex, title);
         }
 
-        // bool skipSetItemText;
-
         /// <inheritdoc/>
         public override void SetItemText(long itemIndex, long columnIndex, string text)
         {
-            /*if (skipSetItemText) return;*/
-
             NativeControl.SetItemText(itemIndex, columnIndex, text);
         }
 
@@ -193,14 +177,11 @@ namespace Alternet.UI
 
             Control.SelectionChanged += Control_SelectionChanged;
 
-            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
             NativeControl.ColumnClick += NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
-            NativeControl.ControlRecreated += NativeControl_ControlRecreated;
-
-            // NativeControl.CompareItemsForCustomSort +=
-            // NativeControl_CompareItemsForCustomSort;
+            NativeControl.ControlRecreated = NativeControl_ControlRecreated;
         }
 
         protected override void OnDetach()
@@ -216,18 +197,16 @@ namespace Alternet.UI
 
             Control.SelectionChanged -= Control_SelectionChanged;
 
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+            NativeControl.SelectionChanged = null;
             NativeControl.ColumnClick -= NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
-            NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
-
-            /*NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;*/
+            NativeControl.ControlRecreated = null;
 
             base.OnDetach();
         }
 
-        private void NativeControl_ControlRecreated(object? sender, EventArgs e)
+        private void NativeControl_ControlRecreated()
         {
             NativeControl.BeginUpdate();
             ApplyColumns();
@@ -235,22 +214,6 @@ namespace Alternet.UI
             ApplySelection();
             NativeControl.EndUpdate();
         }
-
-        /*private void NativeControl_CompareItemsForCustomSort(
-           object? sender,
-           Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
-        {
-            int result = 0;
-            if (CustomItemSortComparer != null)
-            {
-                var item1 = Control.Items[e.Data.item1Index];
-                var item2 = Control.Items[e.Data.item2Index];
-
-                result = CustomItemSortComparer.Compare(item1, item2);
-            }
-
-            e.Result = (IntPtr)result;
-        }*/
 
         private void NativeControl_BeforeItemLabelEdit(
             object? sender,
@@ -305,7 +268,7 @@ namespace Alternet.UI
             ApplyLargeImageList();
         }
 
-        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectionChanged()
         {
             if (applyingSelection > 0)
                 return;

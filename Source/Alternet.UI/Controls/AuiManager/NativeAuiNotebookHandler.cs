@@ -57,90 +57,90 @@ namespace Alternet.UI
         {
             base.OnDetach();
             NativeControl.PageClose -= NativeControl_PageClose;
-            NativeControl.PageClosed -= NativeControl_PageClosed;
-            NativeControl.PageChanged -= NativeControl_PageChanged;
+            NativeControl.PageClosed = null;
+            NativeControl.PageChanged = null;
             NativeControl.PageChanging -= NativeControl_PageChanging;
             NativeControl.PageButton -= NativeControl_PageButton;
-            NativeControl.BeginDrag -= NativeControl_BeginDrag;
-            NativeControl.EndDrag -= NativeControl_EndDrag;
-            NativeControl.DragMotion -= NativeControl_DragMotion;
-            NativeControl.AllowTabDrop -= NativeControl_AllowTabDrop;
-            NativeControl.DragDone -= NativeControl_DragDone;
-            NativeControl.TabMiddleMouseDown -= NativeControl_TabMiddleMouseDown;
-            NativeControl.TabMiddleMouseUp -= NativeControl_TabMiddleMouseUp;
-            NativeControl.TabRightMouseDown -= NativeControl_TabRightMouseDown;
-            NativeControl.TabRightMouseUp -= NativeControl_TabRightMouseUp;
-            NativeControl.BgDclickMouse -= NativeControl_BgDclickMouse;
+            NativeControl.BeginDrag = null;
+            NativeControl.EndDrag = null;
+            NativeControl.DragMotion = null;
+            NativeControl.AllowTabDrop = null;
+            NativeControl.DragDone = null;
+            NativeControl.TabMiddleMouseDown = null;
+            NativeControl.TabMiddleMouseUp = null;
+            NativeControl.TabRightMouseDown = null;
+            NativeControl.TabRightMouseUp = null;
+            NativeControl.BgDclickMouse = null;
         }
 
         protected override void OnAttach()
         {
             base.OnAttach();
             NativeControl.PageClose += NativeControl_PageClose;
-            NativeControl.PageClosed += NativeControl_PageClosed;
-            NativeControl.PageChanged += NativeControl_PageChanged;
+            NativeControl.PageClosed = NativeControl_PageClosed;
+            NativeControl.PageChanged = NativeControl_PageChanged;
             NativeControl.PageChanging += NativeControl_PageChanging;
             NativeControl.PageButton += NativeControl_PageButton;
-            NativeControl.BeginDrag += NativeControl_BeginDrag;
-            NativeControl.EndDrag += NativeControl_EndDrag;
-            NativeControl.DragMotion += NativeControl_DragMotion;
-            NativeControl.AllowTabDrop += NativeControl_AllowTabDrop;
-            NativeControl.DragDone += NativeControl_DragDone;
-            NativeControl.TabMiddleMouseDown += NativeControl_TabMiddleMouseDown;
-            NativeControl.TabMiddleMouseUp += NativeControl_TabMiddleMouseUp;
-            NativeControl.TabRightMouseDown += NativeControl_TabRightMouseDown;
-            NativeControl.TabRightMouseUp += NativeControl_TabRightMouseUp;
-            NativeControl.BgDclickMouse += NativeControl_BgDclickMouse;
+            NativeControl.BeginDrag = NativeControl_BeginDrag;
+            NativeControl.EndDrag = NativeControl_EndDrag;
+            NativeControl.DragMotion = NativeControl_DragMotion;
+            NativeControl.AllowTabDrop = NativeControl_AllowTabDrop;
+            NativeControl.DragDone = NativeControl_DragDone;
+            NativeControl.TabMiddleMouseDown = NativeControl_TabMiddleMouseDown;
+            NativeControl.TabMiddleMouseUp = NativeControl_TabMiddleMouseUp;
+            NativeControl.TabRightMouseDown = NativeControl_TabRightMouseDown;
+            NativeControl.TabRightMouseUp = NativeControl_TabRightMouseUp;
+            NativeControl.BgDclickMouse = NativeControl_BgDclickMouse;
         }
 
-        private void NativeControl_BgDclickMouse(object? sender, EventArgs e)
+        private void NativeControl_BgDclickMouse()
         {
-            Control.RaiseBgDoubleClick(e);
+            Control.RaiseBgDoubleClick(EventArgs.Empty);
         }
 
-        private void NativeControl_TabRightMouseUp(object? sender, EventArgs e)
+        private void NativeControl_TabRightMouseUp()
         {
-            Control.RaiseTabRightMouseUp(e);
+            Control.RaiseTabRightMouseUp(EventArgs.Empty);
         }
 
-        private void NativeControl_TabRightMouseDown(object? sender, EventArgs e)
+        private void NativeControl_TabRightMouseDown()
         {
-            Control.RaiseTabRightMouseDown(e);
+            Control.RaiseTabRightMouseDown(EventArgs.Empty);
         }
 
-        private void NativeControl_TabMiddleMouseUp(object? sender, EventArgs e)
+        private void NativeControl_TabMiddleMouseUp()
         {
-            Control.RaiseTabMiddleMouseUp(e);
+            Control.RaiseTabMiddleMouseUp(EventArgs.Empty);
         }
 
-        private void NativeControl_TabMiddleMouseDown(object? sender, EventArgs e)
+        private void NativeControl_TabMiddleMouseDown()
         {
-            Control.RaiseTabMiddleMouseDown(e);
+            Control.RaiseTabMiddleMouseDown(EventArgs.Empty);
         }
 
-        private void NativeControl_DragDone(object? sender, EventArgs e)
+        private void NativeControl_DragDone()
         {
-            Control.RaiseDragDone(e);
+            Control.RaiseDragDone(EventArgs.Empty);
         }
 
-        private void NativeControl_AllowTabDrop(object? sender, EventArgs e)
+        private void NativeControl_AllowTabDrop()
         {
-            Control.RaiseAllowTabDrop(e);
+            Control.RaiseAllowTabDrop(EventArgs.Empty);
         }
 
-        private void NativeControl_DragMotion(object? sender, EventArgs e)
+        private void NativeControl_DragMotion()
         {
-            Control.RaiseDragMotion(e);
+            Control.RaiseDragMotion(EventArgs.Empty);
         }
 
-        private void NativeControl_EndDrag(object? sender, EventArgs e)
+        private void NativeControl_EndDrag()
         {
-            Control.RaiseEndDrag(e);
+            Control.RaiseEndDrag(EventArgs.Empty);
         }
 
-        private void NativeControl_BeginDrag(object? sender, EventArgs e)
+        private void NativeControl_BeginDrag()
         {
-            Control.RaiseBeginDrag(e);
+            Control.RaiseBeginDrag(EventArgs.Empty);
         }
 
         private void NativeControl_PageButton(object? sender, CancelEventArgs e)
@@ -153,14 +153,14 @@ namespace Alternet.UI
             Control.RaisePageChanging(e);
         }
 
-        private void NativeControl_PageChanged(object? sender, EventArgs e)
+        private void NativeControl_PageChanged()
         {
-            Control.RaisePageChanged(e);
+            Control.RaisePageChanged(EventArgs.Empty);
         }
 
-        private void NativeControl_PageClosed(object? sender, EventArgs e)
+        private void NativeControl_PageClosed()
         {
-            Control.RaisePageClosed(e);
+            Control.RaisePageClosed(EventArgs.Empty);
         }
 
         private void NativeControl_PageClose(object? sender, CancelEventArgs e)

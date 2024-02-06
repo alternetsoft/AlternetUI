@@ -335,8 +335,8 @@ namespace Alternet.UI
             Control.SelectionModeChanged += Control_SelectionModeChanged;
 
             Control.SelectionChanged += Control_SelectionChanged;
-            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
-            NativeControl.ControlRecreated += NativeControl_ControlRecreated;
+            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
+            NativeControl.ControlRecreated = NativeControl_ControlRecreated;
             NativeControl.ItemExpanded += NativeControl_ItemExpanded;
             NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
             NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
@@ -353,8 +353,8 @@ namespace Alternet.UI
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
 
             Control.SelectionChanged -= Control_SelectionChanged;
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
-            NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
+            NativeControl.SelectionChanged = null;
+            NativeControl.ControlRecreated = null;
             NativeControl.ItemExpanded -= NativeControl_ItemExpanded;
             NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
             NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
@@ -451,7 +451,7 @@ namespace Alternet.UI
             Control.RaiseExpandedChanged(ea);
         }
 
-        private void NativeControl_ControlRecreated(object? sender, EventArgs e)
+        private void NativeControl_ControlRecreated()
         {
             itemsByHandles.Clear();
             ApplyItems();
@@ -463,7 +463,7 @@ namespace Alternet.UI
             ApplyImageList();
         }
 
-        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectionChanged()
         {
             if (applyingSelection)
                 return;

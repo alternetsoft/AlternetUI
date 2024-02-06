@@ -162,13 +162,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ToolbarItemEvent.Click:
                 {
-                    Click?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Click?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ToolbarItemEvent value: " + e);
             }
         }
         
-        public event EventHandler? Click;
+        public Action? Click;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

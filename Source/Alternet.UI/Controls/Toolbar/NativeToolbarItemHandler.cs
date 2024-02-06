@@ -41,7 +41,7 @@ namespace Alternet.UI
             Control.ImageChanged += Control_ImageChanged;
             Control.CheckedChanged += Control_CheckedChanged;
 
-            NativeControl.Click += NativeControl_Click;
+            NativeControl.Click = NativeControl_Click;
         }
 
         protected override void OnDetach()
@@ -52,7 +52,7 @@ namespace Alternet.UI
             Control.TextChanged -= Control_TextChanged;
             Control.ImageChanged -= Control_ImageChanged;
 
-            NativeControl.Click -= NativeControl_Click;
+            NativeControl.Click = null;
         }
 
         private void Control_ImageChanged(object? sender, EventArgs e)
@@ -82,10 +82,10 @@ namespace Alternet.UI
                 Control.DisabledImage?.NativeImageSet ?? null;
         }
 
-        private void NativeControl_Click(object? sender, EventArgs? e)
+        private void NativeControl_Click()
         {
             Control.Checked = NativeControl.Checked;
-            Control.RaiseClick(e ?? throw new ArgumentNullException(nameof(e)));
+            Control.RaiseClick(EventArgs.Empty);
         }
 
         private void Control_TextChanged(object? sender, EventArgs? e)

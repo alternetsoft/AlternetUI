@@ -139,9 +139,9 @@ using System.Security;");
             w.WriteLine();
         }
 
-#pragma warning disable CA1822
+#pragma warning disable
         string? GetBaseClass(Type type, Types types)
-#pragma warning restore CA1822
+#pragma warning restore
         {
             var baseType = type.BaseType;
             if (baseType == null)
@@ -490,7 +490,7 @@ using System.Security;");
                                 }
                                 else
                                     w.WriteLine(
-                                        $"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                                        $"{e.Name}?.Invoke(); return IntPtr.Zero;");
                             }
                         }
                     }
@@ -505,15 +505,31 @@ using System.Security;");
             {
                 string? argsType;
                 var dataType = MemberProvider.TryGetNativeEventDataType(e);
+                bool emitEvent;
                 if (dataType != null)
+                {
                     argsType = "NativeEventHandler<" + dataType.Name + ">";
+                    emitEvent = true;
+                }
                 else
                 {
                     var attribute = MemberProvider.GetEventAttribute(e);
-                    argsType = attribute.Cancellable ?
-                        "EventHandler<CancelEventArgs>" : "EventHandler";
+
+                    if (attribute.Cancellable)
+                    {
+                        argsType = "EventHandler<CancelEventArgs>";
+                        emitEvent = true;
+                    }
+                    else
+                    {
+                        argsType = "Action";
+                        emitEvent = false;
+                    }
                 }
-                w.WriteLine($"public event {argsType}? {e.Name};");
+
+                var eventStr = emitEvent ? "event " : "";
+
+                w.WriteLine($"public {eventStr}{argsType}? {e.Name};");
             }
         }
 
@@ -585,11 +601,9 @@ using System.Security;");
         static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ?
             "static " : "";
 
-#pragma warning disable CA1822
-#pragma warning disable IDE0060
+#pragma warning disable
         private string GetFinalCode(string code, Types types)
-#pragma warning restore IDE0060
-#pragma warning restore CA1822
+#pragma warning restore
         {
             var finalCode = new StringBuilder();
             finalCode.AppendLine(GeneratorUtils.HeaderText);

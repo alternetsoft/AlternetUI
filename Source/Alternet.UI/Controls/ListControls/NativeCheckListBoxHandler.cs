@@ -46,12 +46,11 @@ namespace Alternet.UI
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
-
             Control.SelectionChanged += Control_SelectionChanged;
-            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
-
             Control.CheckedChanged += Control_CheckedChanged;
-            NativeControl.CheckedChanged += NativeControl_CheckedChanged;
+
+            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
+            NativeControl.CheckedChanged = NativeControl_CheckedChanged;
         }
 
         protected override void OnDetach()
@@ -59,17 +58,16 @@ namespace Alternet.UI
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
-
             Control.SelectionChanged -= Control_SelectionChanged;
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
-
             Control.CheckedChanged -= Control_CheckedChanged;
-            NativeControl.CheckedChanged -= NativeControl_CheckedChanged;
+
+            NativeControl.SelectionChanged = null;
+            NativeControl.CheckedChanged = null;
 
             base.OnDetach();
         }
 
-        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectionChanged()
         {
             if (applyingSelection)
                 return;
@@ -90,7 +88,7 @@ namespace Alternet.UI
             ApplySelectionMode();
         }
 
-        private void NativeControl_CheckedChanged(object? sender, EventArgs e)
+        private void NativeControl_CheckedChanged()
         {
             if (applyingCheckedIndices)
                 return;

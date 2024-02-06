@@ -456,33 +456,33 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.CalendarEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    SelectionChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.PageChanged:
                 {
-                    PageChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    PageChanged?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.WeekNumberClick:
                 {
-                    WeekNumberClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    WeekNumberClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.DayHeaderClick:
                 {
-                    DayHeaderClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DayHeaderClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.DayDoubleClick:
                 {
-                    DayDoubleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DayDoubleClick?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected CalendarEvent value: " + e);
             }
         }
         
-        public event EventHandler? SelectionChanged;
-        public event EventHandler? PageChanged;
-        public event EventHandler? WeekNumberClick;
-        public event EventHandler? DayHeaderClick;
-        public event EventHandler? DayDoubleClick;
+        public Action? SelectionChanged;
+        public Action? PageChanged;
+        public Action? WeekNumberClick;
+        public Action? DayHeaderClick;
+        public Action? DayDoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

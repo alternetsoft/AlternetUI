@@ -143,18 +143,18 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.NotifyIconEvent.Click:
                 {
-                    Click?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Click?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.NotifyIconEvent.DoubleClick:
                 {
-                    DoubleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    DoubleClick?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected NotifyIconEvent value: " + e);
             }
         }
         
-        public event EventHandler? Click;
-        public event EventHandler? DoubleClick;
+        public Action? Click;
+        public Action? DoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

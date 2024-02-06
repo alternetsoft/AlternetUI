@@ -8,9 +8,6 @@ namespace Alternet.UI
 
         public new RichTextBox Control => (RichTextBox)base.Control;
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
-
         internal override Native.Control CreateNativeControl()
         {
             return new Native.RichTextBox();
@@ -19,33 +16,33 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-            NativeControl.TextChanged += NativeControl_TextChanged;
-            NativeControl.TextEnter += NativeControl_TextEnter;
-            NativeControl.TextUrl += NativeControl_TextUrl;
+            NativeControl.TextChanged = NativeControl_TextChanged;
+            NativeControl.TextEnter = NativeControl_TextEnter;
+            NativeControl.TextUrl = NativeControl_TextUrl;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
-            NativeControl.TextChanged -= NativeControl_TextChanged;
-            NativeControl.TextEnter -= NativeControl_TextEnter;
-            NativeControl.TextUrl -= NativeControl_TextUrl;
+            NativeControl.TextChanged = null;
+            NativeControl.TextEnter = null;
+            NativeControl.TextUrl = null;
         }
 
-        private void NativeControl_TextUrl(object? sender, EventArgs e)
+        private void NativeControl_TextUrl()
         {
             var url = NativeControl.ReportedUrl;
             Control.OnTextUrl(new UrlEventArgs(url));
         }
 
-        private void NativeControl_TextEnter(object? sender, EventArgs e)
+        private void NativeControl_TextEnter()
         {
-            Control.OnEnterPressed(e);
+            Control.OnEnterPressed(EventArgs.Empty);
         }
 
-        private void NativeControl_TextChanged(object? sender, EventArgs e)
+        private void NativeControl_TextChanged()
         {
-            Control.RaiseTextChanged(e);
+            Control.RaiseTextChanged(EventArgs.Empty);
         }
     }
 }

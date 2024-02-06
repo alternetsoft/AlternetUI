@@ -99,13 +99,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.TimerEvent.Tick:
                 {
-                    Tick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Tick?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected TimerEvent value: " + e);
             }
         }
         
-        public event EventHandler? Tick;
+        public Action? Tick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

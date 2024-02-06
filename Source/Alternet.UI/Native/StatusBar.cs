@@ -73,13 +73,13 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.StatusBarEvent.ControlRecreated:
                 {
-                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ControlRecreated?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected StatusBarEvent value: " + e);
             }
         }
         
-        public event EventHandler? ControlRecreated;
+        public Action? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

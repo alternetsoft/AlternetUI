@@ -504,38 +504,38 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.AuiToolBarEvent.ToolDropDown:
                 {
-                    ToolDropDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ToolDropDown?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiToolBarEvent.BeginDrag:
                 {
-                    BeginDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    BeginDrag?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiToolBarEvent.ToolMiddleClick:
                 {
-                    ToolMiddleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ToolMiddleClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiToolBarEvent.OverflowClick:
                 {
-                    OverflowClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    OverflowClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiToolBarEvent.ToolRightClick:
                 {
-                    ToolRightClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ToolRightClick?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.AuiToolBarEvent.ToolCommand:
                 {
-                    ToolCommand?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    ToolCommand?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected AuiToolBarEvent value: " + e);
             }
         }
         
-        public event EventHandler? ToolDropDown;
-        public event EventHandler? BeginDrag;
-        public event EventHandler? ToolMiddleClick;
-        public event EventHandler? OverflowClick;
-        public event EventHandler? ToolRightClick;
-        public event EventHandler? ToolCommand;
+        public Action? ToolDropDown;
+        public Action? BeginDrag;
+        public Action? ToolMiddleClick;
+        public Action? OverflowClick;
+        public Action? ToolRightClick;
+        public Action? ToolCommand;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

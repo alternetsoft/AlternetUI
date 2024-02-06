@@ -18,7 +18,7 @@ namespace Alternet.UI
 
             Control.TextChanged += Control_TextChanged;
             Control.CheckedChanged += Control_CheckedChanged;
-            NativeControl.CheckedChanged += NativeControl_CheckedChanged;
+            NativeControl.CheckedChanged = NativeControl_CheckedChanged;
         }
 
         protected override void OnDetach()
@@ -27,14 +27,14 @@ namespace Alternet.UI
 
             Control.TextChanged -= Control_TextChanged;
             Control.CheckedChanged -= Control_CheckedChanged;
-            NativeControl.CheckedChanged -= NativeControl_CheckedChanged;
+            NativeControl.CheckedChanged = null;
         }
 
         private void Control_CheckedChanged(object? sender, System.EventArgs? e)
         {
         }
 
-        private void NativeControl_CheckedChanged(object? sender, System.EventArgs? e)
+        private void NativeControl_CheckedChanged()
         {
             Control.RaiseCheckedChanged(EventArgs.Empty);
         }
