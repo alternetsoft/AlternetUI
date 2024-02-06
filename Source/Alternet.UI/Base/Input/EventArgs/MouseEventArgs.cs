@@ -20,9 +20,7 @@ namespace Alternet.UI
     /// </summary>
     public class MouseEventArgs : BaseEventArgs
     {
-        private Control control;
-        private double? x;
-        private double? y;
+        private PointD location;
 
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
@@ -39,10 +37,9 @@ namespace Alternet.UI
         /// </summary>
         internal MouseEventArgs(Control control, long timestamp)
         {
-            
             MouseDevice = Mouse.PrimaryDevice;
-            this.control = control;
             Timestamp = timestamp;
+            location = GetPosition(control);
         }
 
         /// <summary>
@@ -99,9 +96,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (x is null)
-                    UpdatePosition();
-                return x.Value;
+                return location.X;
             }
         }
 
@@ -115,9 +110,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (y is null)
-                    UpdatePosition();
-                return y.Value;
+                return location.Y;
             }
         }
 
@@ -260,13 +253,6 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A <see cref="PointD" /> that contains the x- and y- mouse
         /// coordinates, in dips, relative to the upper-left corner of the control.</returns>
-        public PointD Location => new(X, Y);
-
-        internal void UpdatePosition()
-        {
-            var position = GetPosition(control.ParentWindow);
-            x = position.X;
-            y = position.Y;
-        }
+        public PointD Location => location;
     }
 }
