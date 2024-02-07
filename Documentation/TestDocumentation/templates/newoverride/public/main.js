@@ -12,20 +12,30 @@ export default {
             if (!this.eventListenerList) this.eventListenerList = {};
             if (!this.eventListenerList[a]) this.eventListenerList[a] = [];
             this.eventListenerList[a].push(b);
-            console.log("addEventListener " + a + " " + b);
+            // console.log("addEventListener " + a + " " + b);
         };
 
         //==================================
 
-        window.addEventListener("beforeunload", function (event) {
-            console.log("beforeunload " + window.location.href);
-        });
+        var oldReplaceState = history.replaceState;
+
+        history.replaceState = (state, unused, url) =>
+        {
+            const test = location.protocol + "//" + location.host + location.pathname + "?tabs=";
+
+            if (url && url.startsWith(test))
+            {
+                return;
+            }
+
+            oldReplaceState(state, unused, url);
+        }
 
         //==================================
 
         const addKeyDown = (formElem, elem) => {
             if (formElem) {
-                console.log("keyDown added");
+                // console.log("keyDown added");
 
                 formElem.addEventListener('keydown', event => {
                     if (event.keyCode == 13 || event.key == "Enter") {
