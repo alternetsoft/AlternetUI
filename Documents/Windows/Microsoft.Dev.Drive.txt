@@ -1,0 +1,10 @@
+Set up a Dev Drive on Windows 11 | Microsoft Learn
+https://learn.microsoft.com/en-us/windows/dev-drive/
+
+Dev Drive for Performance Improvements in Visual Studio and Dev Boxes! - Visual Studio Blog (microsoft.com)
+https://devblogs.microsoft.com/visualstudio/devdrive/
+
+https://learn.microsoft.com/en-us/windows/dev-drive/#storing-package-cache-on-dev-drive
+
+
+
