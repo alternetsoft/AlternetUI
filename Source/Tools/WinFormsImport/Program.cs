@@ -81,7 +81,7 @@ void FindDocFxMethodName()
 
     DocFxUnminimize tool = new(filename);
 
-    Console.WriteLine("updateTabsQueryStringParam: " + tool.GetMinName("updateTabsQueryStringParam"));
+    Console.WriteLine("renderToc: " + tool.GetMinName("renderToc"));
 }
 
 FindDocFxMethodName();
