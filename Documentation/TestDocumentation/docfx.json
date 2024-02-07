@@ -38,6 +38,7 @@
     ],
     "globalMetadata": {
       "_appName": "mysite",
+	"_disableToc": false,
       "_appTitle": "mysite",
       "_enableSearch": true,
       "pdf": false
