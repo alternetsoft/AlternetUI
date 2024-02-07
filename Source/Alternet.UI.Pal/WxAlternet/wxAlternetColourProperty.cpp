@@ -90,8 +90,12 @@ namespace Alternet::UI
 
 	void wxAlternetColourProperty::Init(wxColour colour)
 	{
-		/*if (!colour.IsOk())
-			colour = *wxWHITE;*/
+        if (!colour.IsOk())
+        {
+            wxAlternetSystemColourProperty::Init(wxPG_COLOUR_UNSPECIFIED, colour);
+            return;
+        }
+
 		m_value = WXVARIANT(colour);
 		int ind = ColToInd(colour);
 		if (ind < 0)
@@ -190,12 +194,14 @@ namespace Alternet::UI
     wxPG_IMPLEMENT_PROPERTY_CLASS(wxAlternetSystemColourProperty, wxEnumProperty, Choice)
 
 
-        void wxAlternetSystemColourProperty::Init(int type, const wxColour& colour)
+    void wxAlternetSystemColourProperty::Init(int type, const wxColour& colour)
     {
         wxColourPropertyValue cpv;
 
-        // cpv.Init(type, colour.IsOk() ? colour : *wxWHITE);
-        cpv.Init(type, colour);
+        if (!colour.IsOk())
+            cpv = wxColourPropertyValue(wxPG_COLOUR_UNSPECIFIED, wxColour());
+        else
+            cpv.Init(type, colour);
 
         m_flags |= wxPG_PROP_STATIC_CHOICES; // Colour selection cannot be changed.
 
@@ -424,9 +430,10 @@ namespace Alternet::UI
         int index,
         int argFlags) const
     {
-
         if (index == wxNOT_FOUND)
         {
+            if (!col.IsOk())
+                return wxEmptyString;
 
             if ((argFlags & wxPG_FULL_VALUE) || (m_flags & wxPG_PROP_COLOUR_HAS_ALPHA))
             {

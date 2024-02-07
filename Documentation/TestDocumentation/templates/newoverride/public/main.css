@@ -19,3 +19,13 @@ body {
 div.dropdown > a[title="Change theme"] {
   display:none !important;
 }
+
+ul.navbar-nav
+{
+    margin: auto !important;
+}
+
+form.icons
+{
+	display:none !important;
+}
