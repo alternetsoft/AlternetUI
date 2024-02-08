@@ -19,12 +19,10 @@ export default {
 
         var oldReplaceState = history.replaceState;
 
-        history.replaceState = (state, unused, url) =>
-        {
+        history.replaceState = (state, unused, url) => {
             const test = location.protocol + "//" + location.host + location.pathname + "?tabs=";
 
-            if (url && url.startsWith(test))
-            {
+            if (url && url.startsWith(test)) {
                 return;
             }
 
@@ -33,35 +31,59 @@ export default {
 
         //==================================
 
+        const callEvent = (event, elem) => {
+            let eventList = elem.eventListenerList;
+
+            if (eventList) {
+                let evt = eventList["input"];
+
+                if (evt && evt.length > 0) {
+                    let mth = evt[0];
+                    if (mth) {
+
+                        if (typeof mth === 'function') {
+                            mth(event);
+                        }
+                        else
+                            mth.handleEvent(event);
+                    }
+                }
+            }
+        }
+
+        //==================================
+
         const addKeyDown = (formElem, elem) => {
+
+            formElem.addEventListener('input', function (event) {
+                const tocFilter = event.target.value.trim();
+                const isEmpty = !tocFilter || tocFilter == '';
+                if (isEmpty) {
+                    callEvent(event, event.target);
+                }
+            });
+
             if (formElem) {
-                // console.log("keyDown added");
 
                 formElem.addEventListener('keydown', event => {
-                    if (event.keyCode == 13 || event.key == "Enter") {
+
+                    const isEnter = event.keyCode == 13 || event.key == "Enter";
+                    const isEscape = event.keyCode == 27 || event.key == "Escape";
+
+                    // console.log(event.key + ' ' + event.keyCode);
+
+                    if (isEnter) {
                         event.preventDefault();
-
-                        let eventList = elem.eventListenerList;
-
-                        if (eventList) {
-                            let evt = eventList["input"];
-
-                            if (evt && evt.length > 0) {
-                                let mth = evt[0];
-                                if (mth) {
-
-                                    if (typeof mth === 'function')
-                                    {
-                                        mth(event);
-                                    }
-                                    else
-                                        mth.handleEvent(event);
-                                }
-                            }
-                        }
-
+                        callEvent(event, elem);
                         return false;
                     }
+                    else if (isEscape) {
+                        event.target.value = '';
+                        event.preventDefault();
+                        callEvent(event, elem);
+                        return false;
+                    }
+
                 });
             }
         }
