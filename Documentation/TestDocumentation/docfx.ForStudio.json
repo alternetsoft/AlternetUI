@@ -1,0 +1,47 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../../Source/Tools/Alternet.UI.Build.Test/",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern",
+	"templates/forstudio"
+    ],
+    "globalMetadata": {
+      "_appName": "mysite",
+	"_disableToc": false,
+      "_appTitle": "mysite",
+      "_enableSearch": true,
+      "pdf": false
+    }
+  }
+}

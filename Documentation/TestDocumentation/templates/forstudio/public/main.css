@@ -1,0 +1,39 @@
+header.border-bottom
+{
+	border-width:0 !important;
+}
+
+a.nav-link[href="https://docs.alternetsoft.com/"]
+{
+	font-weight: bold !important;
+}
+
+a.nav-link
+{
+	color: white !important; 
+}
+
+html,
+body {
+  font-family: 'Segoe UI', Tahoma, Helvetica, sans-serif !important;
+  height: 100% !important;
+}
+
+ul.navbar-nav
+{
+    margin: auto !important;
+}
+
+#autocollapse
+{
+	background-color: rgb(51,51,51) !important;
+}
+
+div.dropdown > a[title="Change theme"] {
+  display:none !important;
+}
+
+form.icons
+{
+	display:none !important;
+}
