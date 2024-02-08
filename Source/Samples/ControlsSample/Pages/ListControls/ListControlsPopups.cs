@@ -26,9 +26,9 @@ namespace ControlsSample
 
         private readonly PopupListBox popupListBox = new();
 
-        public RectD GetPossiblePopupRect()
+        static ListControlsPopups()
         {
-            return RectD.Empty;
+            PopupWindow.ModalPopups = true;
         }
 
         public ListControlsPopups()
@@ -39,7 +39,6 @@ namespace ControlsSample
             showPopupListBoxButton.Parent = panel;
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
 
-            popupListBox.Parent = this;
             popupListBox.MainControl.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
             popupListBox.MainControl.MouseLeftButtonDown += PopupListBox_MouseLeftButtonDown;
             popupListBox.MainControl.SelectionChanged += PopupListBox_SelectionChanged;

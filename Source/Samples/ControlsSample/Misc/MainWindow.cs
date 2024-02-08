@@ -128,10 +128,7 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>? popupNameValue;
 
-            if (!Application.IsWindowsOS)
-                popupNameValue = null;
-            else
-                popupNameValue = new("Popup", () => new ListControlsPopups());
+            popupNameValue = new("Popup", () => new ListControlsPopups());
 
             NameValue<Func<Control>>?[] pages =
             {
