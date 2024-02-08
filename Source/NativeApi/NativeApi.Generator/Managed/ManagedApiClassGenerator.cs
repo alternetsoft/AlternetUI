@@ -42,7 +42,7 @@ using System.Security;");
             var extendsClause = baseTypeName == null ? "" : " : " + baseTypeName;
             var abstractModifier = type.IsAbstract ? " abstract" : "";
 
-            w.WriteLine($"internal{abstractModifier} class {typeName}{extendsClause}");
+            w.WriteLine($"internal{abstractModifier} partial class {typeName}{extendsClause}");
             w.WriteLine("{");
             w.Indent++;
 
