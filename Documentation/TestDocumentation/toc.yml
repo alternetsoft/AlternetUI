@@ -1,18 +1,4 @@
-- name: HOME
-  href: https://www.alternetsoft.com/
-- name: PRODUCTS
-  href: https://www.alternetsoft.com/products/studio
-- name: DEMOS
-  href: https://www.alternetsoft.com/demos
-- name: DOWNLOAD
-  href: https://www.alternetsoft.com/download
-- name: BUY
-  href: https://www.alternetsoft.com/buy
-- name: BLOG
-  href: https://www.alternetsoft.com/blog
-- name: FORUM
-  href: https://forum.alternetsoft.com/
-- name: DOCUMENTATION
+- name: DOC1
   href: https://docs.alternetsoft.com/
-- name: ABOUT
-  href: https://www.alternetsoft.com/about
+- name: DOC2
+  href: https://docs.alternet-ui.com

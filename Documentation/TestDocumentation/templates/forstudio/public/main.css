@@ -3,14 +3,9 @@ header.border-bottom
 	border-width:0 !important;
 }
 
-a.nav-link[href="https://docs.alternetsoft.com/"]
+ul.navbar-nav > li.nav-item > a.nav-link[href="https://docs.alternetsoft.com/"]
 {
 	font-weight: bold !important;
-}
-
-a.nav-link
-{
-	color: white !important; 
 }
 
 html,
@@ -22,6 +17,11 @@ body {
 ul.navbar-nav
 {
     margin: auto !important;
+}
+
+ul.navbar-nav > li.nav-item > a.nav-link
+{
+	color: white !important;
 }
 
 #autocollapse

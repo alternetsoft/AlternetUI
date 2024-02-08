@@ -1,10 +1,9 @@
-a.nav-link[href="https://docs.alternet-ui.com/"]
+ul.navbar-nav > li.nav-item > a.nav-link[href="https://docs.alternet-ui.com/"]
 {
 	font-weight: bold !important;
-	color: black !important; 
 }
 
-a.nav-link
+ul.navbar-nav > li.nav-item > a.nav-link
 {
 	color: black !important; 
 }
