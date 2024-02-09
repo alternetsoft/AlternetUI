@@ -202,7 +202,7 @@ namespace Alternet.UI
         public event EventHandler? VisualThemeChanged;
 
         /// <summary>
-        /// Occurs when the application finishes processing and is
+        /// Occurs when the application finishes processing events and is
         /// about to enter the idle state.
         /// </summary>
         public event EventHandler? Idle;
