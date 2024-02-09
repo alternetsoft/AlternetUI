@@ -52,7 +52,6 @@ namespace Alternet.UI
                 HideOnDoubleClick = false,
                 HideOnDeactivate = false,
             };
-            popupWindowProps.Border.HasBorder = false;
             popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;

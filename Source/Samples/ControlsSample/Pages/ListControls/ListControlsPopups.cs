@@ -11,7 +11,6 @@ namespace ControlsSample
     internal class ListControlsPopups : Control
     {
         internal bool logMouseEvents = false;
-        internal string workInProgress = "Work in progress...";
 
         private readonly VerticalStackPanel panel = new()
         {
@@ -24,11 +23,23 @@ namespace ControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        private readonly Button showPopupCheckListBoxButton = new()
+        {
+            Text = "Show Popup CheckListBox",
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
+        private readonly CheckBox modalPopupsCheckBox = new()
+        {
+            Text = "Modal Popups",
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
         private readonly PopupListBox popupListBox = new();
+        private readonly PopupCheckListBox popupCheckListBox = new();
 
         static ListControlsPopups()
         {
-            PopupWindow.ModalPopups = true;
         }
 
         public ListControlsPopups()
@@ -36,16 +47,54 @@ namespace ControlsSample
         {
             Padding = 5;
             panel.Parent = this;
-            showPopupListBoxButton.Parent = panel;
-            showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
 
+            showPopupListBoxButton.Parent = panel;
+            showPopupCheckListBoxButton.Parent = panel;
+            modalPopupsCheckBox.Parent = panel;
+            modalPopupsCheckBox.BindBoolProp(this, nameof(ModalPopups));
+
+            panel.ChildrenSet.Margin(10);
+
+            showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
+            showPopupCheckListBoxButton.Click += ShowPopupCheckListBoxButton_Click;
+
+            popupListBox.AfterHide += PopupListBox_AfterHide;
+            popupCheckListBox.AfterHide += PopupCheckListBox_AfterHide;
+
+            // These events are handled only for logging purposes.
+            // They are normally not needed in order to work with popup windows
             popupListBox.MainControl.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
             popupListBox.MainControl.MouseLeftButtonDown += PopupListBox_MouseLeftButtonDown;
             popupListBox.MainControl.SelectionChanged += PopupListBox_SelectionChanged;
             popupListBox.MainControl.Click += PopupListBox_Click;
             popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
-            popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
 
+        }
+
+        public bool ModalPopups
+        {
+            get
+            {
+                return PopupWindow.ModalPopups;
+            }
+
+            set
+            {
+                PopupWindow.ModalPopups = value;
+            }
+        }
+
+        private void PopupCheckListBox_AfterHide(object? sender, EventArgs e)
+        {
+            var r = popupCheckListBox.PopupResult;
+            var ch = popupCheckListBox.MainControl.CheckedIndices.Count();
+            Application.Log($"CheckListBoxPopup AfterHide PopupResult: {r}, Checked: {ch}");
+        }
+
+        private void PopupListBox_AfterHide(object? sender, EventArgs e)
+        {
+            var resultItem = popupListBox.ResultItem ?? "<null>";
+            Application.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
         internal void LogPopupListBoxEvent(string eventName)
@@ -56,7 +105,8 @@ namespace ControlsSample
 
         internal void LogPopupListBoxMouseEvent(string eventName, MouseEventArgs e)
         {
-            var itemIndex = popupListBox.MainControl.HitTest(e.GetPosition(popupListBox.MainControl));
+            var itemIndex = popupListBox.MainControl.HitTest(
+                e.GetPosition(popupListBox.MainControl));
             var selectedItem = popupListBox.MainControl.Items[itemIndex];
             Application.Log($"Popup: {eventName}. Item: {selectedItem}");
         }
@@ -65,14 +115,6 @@ namespace ControlsSample
         {
             if(logMouseEvents)
                 LogPopupListBoxEvent("DoubleClick");
-        }
-
-        private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
-        {
-            if (popupListBox.Visible)
-                return;
-            var resultItem = popupListBox.ResultItem ?? "<null>";
-            Application.Log($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
         private void PopupListBox_SelectionChanged(object? sender, EventArgs e)
@@ -109,38 +151,31 @@ namespace ControlsSample
             control.Add("Eight");
             control.Add("Nine");
             control.Add("Ten");
+            control.Add("This is long item which occupies more space than other items");
         }
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
         {
-            var useDo = true;
-
-            if (useDo)
+            if (popupListBox.MainControl.Items.Count == 0)
             {
-                Do();
-                return;
+                popupListBox.Size = new(150, 300);
+                AddDefaultItems(popupListBox.MainControl);
+                popupListBox.MainControl.SelectFirstItem();
             }
+            popupListBox.ShowPopup(showPopupListBoxButton);
+        }
 
-            /*var posDip = showPopupListBoxButton.ClientToScreen((0, 0));
-            var pos = PixelFromDip(posDip);
-            var szDip = showPopupListBoxButton.Size;
-            var sz = PixelFromDip(szDip);
+        private void ShowPopupCheckListBoxButton_Click(object? sender, EventArgs e)
+        {
+            var control = popupCheckListBox.MainControl;
 
-            sz = (0, sz.Height);
-
-            Control.TestPopupWindow(this, pos , sz);*/
-
-            void Do()
+            if (control.Items.Count == 0)
             {
-                if (popupListBox.MainControl.Items.Count == 0)
-                {
-                    popupListBox.MainControl.SuggestedSize = new(150, 300);
-                    AddDefaultItems(popupListBox.MainControl);
-                    popupListBox.MainControl.SelectFirstItem();
-                }
-                Application.Log(" === ShowPopupButton_Click ===");
-                popupListBox.ShowPopup(showPopupListBoxButton);
+                popupCheckListBox.Size = new(150, 300);
+                AddDefaultItems(control);
+                control.SelectFirstItem();
             }
+            popupCheckListBox.ShowPopup(showPopupCheckListBoxButton);
         }
     }
 }
