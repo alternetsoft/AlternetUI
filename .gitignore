@@ -43,3 +43,5 @@ Source/Samples/CommonData/FrameworksOverride.props
 Source/Version/FrameworksOverride.props
 Source/Alternet.UI.Pal/Alternet.UI.Pal.aps
 Documentation/Alternet.UI.Documentation/Build.Result.txt
+*.nupkg
+*.snupkg

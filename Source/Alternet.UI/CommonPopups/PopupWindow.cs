@@ -12,16 +12,16 @@ namespace Alternet.UI
     /// The <see cref="PopupWindow"/> displays content in a separate window that floats
     /// over the current application window.
     /// </summary>
-    public class PopupWindow : Popup
+    public class PopupWindow : DialogWindow
     {
-/*        /// <summary>
-        /// Gets or sets whether to log popup window bounds.
-        /// </summary>
-#if DEBUG
-        public static bool LogDebugInfo = true;
-#else
-        public static bool LogDebugInfo = false;
-#endif*/
+        /*        /// <summary>
+                /// Gets or sets whether to log popup window bounds.
+                /// </summary>
+        #if DEBUG
+                public static bool LogDebugInfo = true;
+        #else
+                public static bool LogDebugInfo = false;
+        #endif*/
 
         private static readonly BorderSettings Settings = BorderSettings.Default.Clone();
         private readonly Border border = new();
@@ -34,13 +34,26 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
-            /*MakeAsPopup();*/
+            MakeAsPopup();
             border.Normal = Settings;
             border.Parent = this;
-            /*Deactivated += Popup_Deactivated;*/
+            Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += PopupWindow_Disposed;
+        }
+
+        /// <summary>
+        /// Gets or sets whether popups are shown using <see cref="DialogWindow.ShowModal()"/>
+        /// (true) or <see cref="Control.Show"/> (false).
+        /// </summary>
+        /// <remarks>
+        /// Under Linux popups are always shown as modal dialogs.
+        /// </remarks>
+        public static bool ModalPopups
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -190,13 +203,6 @@ namespace Alternet.UI
             var szDip = control.Size;
             var sz = (0, szDip.Height);
 
-            /*var bl = control.ClientRectangle.BottomLeft;
-            Application.LogNameValueIf("control.ClientRectangle.BottomLeft", bl, LogDebugInfo && log);
-            var blScreen = control.ClientToScreen(bl);
-            Application.LogNameValueIf("control.ClientToScreen", blScreen, LogDebugInfo && log);
-
-            Application.LogNameValueIf("ParentWindow:", control.ParentWindow?.Location, LogDebugInfo && log);*/
-
             control.BeginInvoke(() =>
             {
                 ShowPopup(posDip, sz);
@@ -219,13 +225,97 @@ namespace Alternet.UI
         public void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
-            /*Location = ptOrigin;*/
             SetSizeToContent();
             SetPositionInDips(ptOrigin, sizePopup);
-            DoPopup();
+            Show();
             FocusChildControl();
+            if (Application.IsLinuxOS || ModalPopups)
+            {
+                if (ShowModal() == ModalResult.Accepted)
+                    HidePopup(ModalResult.Accepted);
+                else
+                    HidePopup(ModalResult.Canceled);
+            }
+        }
 
-            /*Application.LogNameValueIf("Popup:", Location, LogDebugInfo && false);*/
+        /// <summary>
+        /// Move the popup window to the right position, i.e. such that it is entirely visible.
+        /// </summary>
+        /// <param name="ptOrigin">Must be given in screen coordinates.</param>
+        /// <param name="size">The size of the popup window.</param>
+        /// <remarks>
+        /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
+        /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
+        /// </remarks>
+        /// <remarks>
+        /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
+        /// device-inpependent units (1/96 inch).
+        /// </remarks>
+        public void SetPositionInDips(PointD ptOrigin, SizeD size)
+        {
+            // determine the position and size of the screen we clamp the popup to
+            PointD posScreen;
+            SizeD sizeScreen;
+            Display display;
+
+            int displayNum = Display.GetFromPoint(PixelFromDip(ptOrigin));
+            if (displayNum != -1)
+            {
+                display = new Display(displayNum);
+                RectD rectScreen = display.ClientAreaDip;
+                posScreen = rectScreen.Location;
+                sizeScreen = rectScreen.Size;
+            }
+            else // outside of any display?
+            {
+                // just use the primary one then
+                display = Display.Primary;
+                posScreen = PointD.Empty;
+                sizeScreen = display.ClientAreaDip.Size;
+            }
+
+            SizeD sizeSelf = display.PixelFromDip(Size);
+
+            // is there enough space to put the popup below the window (where we put it
+            // by default)?
+            double y = ptOrigin.Y + size.Height;
+            if (y + sizeSelf.Height > posScreen.Y + sizeScreen.Height)
+            {
+                // check if there is enough space above
+                if (ptOrigin.Y > sizeSelf.Height)
+                {
+                    // do position the control above the window
+                    y -= size.Height + sizeSelf.Height;
+                }
+
+                // else: not enough space below nor above, leave below
+            }
+
+            // now check left/right too
+            double x = ptOrigin.X;
+
+            if (Application.Current.LayoutDirection == LayoutDirection.RightToLeft)
+            {
+                // shift the window to the left instead of the right.
+                x -= size.Width;
+                x -= sizeSelf.Width;        // also shift it by window width.
+            }
+            else
+                x += size.Width;
+
+            if (x + sizeSelf.Width > posScreen.X + sizeScreen.Width)
+            {
+                // check if there is enough space to the left
+                if (ptOrigin.X > sizeSelf.Width)
+                {
+                    // do position the control to the left
+                    x -= size.Width + sizeSelf.Width;
+                }
+
+                // else: not enough space there either, leave in default position
+            }
+
+            Location = (x, y);
         }
 
         /// <summary>
@@ -240,7 +330,10 @@ namespace Alternet.UI
 
             BeginInvoke(() =>
             {
-                Hide();
+                if (Modal)
+                    ModalResult = result;
+                else
+                    Hide();
                 Application.DoEvents();
                 if (PopupOwner is not null && FocusPopupOwnerOnHide)
                 {
@@ -267,12 +360,12 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <inheritdoc/>
+        /// <inheritdoc/>
         protected override void OnClosing(WindowClosingEventArgs e)
         {
             e.Cancel = true;
             HidePopup(ModalResult.Canceled);
-        }*/
+        }
 
         /// <summary>
         /// Creates main control of the popup window.
@@ -315,7 +408,7 @@ namespace Alternet.UI
 
         private void PopupWindow_KeyDown(object? sender, KeyEventArgs e)
         {
-            if(HideOnEscape && e.Key == Key.Escape && e.ModifierKeys == UI.ModifierKeys.None)
+            if (HideOnEscape && e.Key == Key.Escape && e.ModifierKeys == UI.ModifierKeys.None)
             {
                 e.Handled = true;
                 HidePopup(ModalResult.Canceled);
