@@ -8,6 +8,11 @@ ul.navbar-nav > li.nav-item > a.nav-link
 	color: black !important; 
 }
 
+div.navbar > ul.navbar-nav
+{
+	margin:auto;
+}
+
 html,
 body {
   font-family: 'Segoe UI', Tahoma, Helvetica, sans-serif !important;
