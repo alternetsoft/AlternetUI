@@ -63,6 +63,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="Idle"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
+        protected virtual void OnIdle(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Raises the <see cref="Control.Resize" /> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
@@ -169,15 +178,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
         protected virtual void OnClick(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called when the application is in idle state.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        protected virtual void OnIdle(EventArgs e)
         {
         }
 
