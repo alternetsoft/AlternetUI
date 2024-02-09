@@ -11,9 +11,6 @@ namespace Alternet.UI
 
         public new LayoutPanel Control => (LayoutPanel)base.Control;
 
-        /*public override IEnumerable<Control> AllChildrenIncludedInLayout
-            => Enumerable.Empty<Control>();*/
-
         public StackPanelHandler.VerticalLayout VertLayout
         {
             get
