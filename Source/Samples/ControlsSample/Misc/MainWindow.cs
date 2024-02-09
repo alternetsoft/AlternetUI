@@ -20,6 +20,8 @@ namespace ControlsSample
 
         public MainWindow()
         {
+            SupressEsc = true;
+
             eventsControl = new()
             {
                 Dock = DockStyle.Bottom,

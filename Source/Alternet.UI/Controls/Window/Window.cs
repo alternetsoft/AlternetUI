@@ -261,6 +261,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to supress 'Esc' key.
+        /// </summary>
+        /// <remarks>
+        /// When 'Esc' key is not handled by the application, operating system beeps when it
+        /// is pressed. Set <c>true</c> to this property in order to handle 'Esc' key
+        /// so no sound will be played.
+        /// </remarks>
+        public bool SupressEsc { get; set; }
+
+        /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.
         /// </summary>
         public virtual bool HasTitleBar
@@ -1086,7 +1096,8 @@ namespace Alternet.UI
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            e.Handled = true;
+            if(e.Key == Key.Escape && SupressEsc)
+                e.Handled = true;
         }
 
         /// <summary>
