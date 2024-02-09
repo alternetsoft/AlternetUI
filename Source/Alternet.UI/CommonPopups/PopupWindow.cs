@@ -14,7 +14,8 @@ namespace Alternet.UI
     /// </summary>
     public class PopupWindow : DialogWindow
     {
-        private readonly VerticalStackPanel mainPanel = new();
+        private readonly LayoutPanel mainPanel = new();
+        private readonly GenericToolBar botttomToolBar = new();
         private ModalResult popupResult;
         private Control? mainControl;
 
@@ -24,6 +25,20 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
+            Padding = (5, 5, 5, 10);
+            var buttons = botttomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+            ButtonIdOk = buttons[0];
+            ButtonIdCancel = buttons[1];
+            botttomToolBar.SuspendLayout();
+            botttomToolBar.Padding = (5, 5, 0, 0);
+            botttomToolBar.MinHeight = botttomToolBar.ItemSize + botttomToolBar.Padding.Vertical;
+            botttomToolBar.SetToolAlignRight(ButtonIdOk, true);
+            botttomToolBar.SetToolAlignRight(ButtonIdCancel, true);
+            botttomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
+            botttomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
+            botttomToolBar.ResumeLayout();
+            botttomToolBar.Dock = DockStyle.Bottom;
+            botttomToolBar.Parent = mainPanel;
             ShowInTaskbar = false;
             StartLocation = WindowStartLocation.Manual;
             HasTitleBar = DefaultHasTitleBar;
@@ -32,7 +47,6 @@ namespace Alternet.UI
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             HasSystemMenu = false;
-            mainPanel.AllowStretch = true;
             mainPanel.Parent = this;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
@@ -52,6 +66,21 @@ namespace Alternet.UI
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets 'Ok' button id.
+        /// </summary>
+        public ObjectUniqueId ButtonIdOk { get; }
+
+        /// <summary>
+        /// Gets 'Cancel' button id.
+        /// </summary>
+        public ObjectUniqueId ButtonIdCancel { get; }
+
+        /// <summary>
+        /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
+        /// </summary>
+        public GenericToolBar BotttomToolBar => botttomToolBar;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
@@ -137,9 +166,7 @@ namespace Alternet.UI
                 {
                     mainControl = CreateMainControl();
                     mainControl.Dock = DockStyle.Fill;
-                    mainControl.VerticalAlignment = VerticalAlignment.Stretch;
-                    mainControl.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    mainControl.Parent = mainPanel;
+                    mainPanel.Children.Prepend(mainControl);
                     BindEvents(mainControl);
                 }
 
@@ -148,15 +175,18 @@ namespace Alternet.UI
 
             set
             {
-                if (mainControl == value || mainControl is null)
+                if (mainControl == value || value is null)
                     return;
-                UnbindEvents(mainControl);
+                if (mainControl is not null)
+                {
+                    UnbindEvents(mainControl);
+                    mainControl.Parent = null;
+                }
+
                 mainControl = value;
                 mainControl.Dock = DockStyle.Fill;
-                mainControl.VerticalAlignment = VerticalAlignment.Stretch;
-                mainControl.HorizontalAlignment = HorizontalAlignment.Stretch;
                 BindEvents(mainControl);
-                mainControl.Parent = mainPanel;
+                mainPanel.Children.Prepend(mainControl);
             }
         }
 
@@ -208,7 +238,7 @@ namespace Alternet.UI
         /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
         /// device-inpependent units (1/96 inch).
         /// </remarks>
-        public void ShowPopup(PointD ptOrigin, SizeD sizePopup)
+        public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
             SetSizeToContent();
@@ -362,8 +392,10 @@ namespace Alternet.UI
         /// Override to bind events to the main control of the popup window.
         /// </summary>
         /// <param name="control">Control which events are binded.</param>
-        protected virtual void BindEvents(Control control)
+        protected virtual void BindEvents(Control? control)
         {
+            if (control is null)
+                return;
             control.MouseDoubleClick += OnMainControlMouseDoubleClick;
             control.MouseLeftButtonUp += OnMainControlMouseLeftButtonUp;
         }
@@ -372,8 +404,10 @@ namespace Alternet.UI
         /// Override to unbind events to the main control of the popup window.
         /// </summary>
         /// <param name="control">Control which events are unbinded.</param>
-        protected virtual void UnbindEvents(Control control)
+        protected virtual void UnbindEvents(Control? control)
         {
+            if (control is null)
+                return;
             control.MouseDoubleClick -= OnMainControlMouseDoubleClick;
             control.MouseLeftButtonUp -= OnMainControlMouseLeftButtonUp;
         }
@@ -405,6 +439,16 @@ namespace Alternet.UI
                 e.Handled = true;
                 HidePopup(ModalResult.Accepted);
             }
+        }
+
+        private void OnOkButtonClick()
+        {
+            HidePopup(ModalResult.Accepted);
+        }
+
+        private void OnCancelButtonClick()
+        {
+            HidePopup(ModalResult.Canceled);
         }
 
         private void PopupWindow_Disposed(object? sender, EventArgs e)
