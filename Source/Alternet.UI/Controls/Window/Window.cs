@@ -35,6 +35,7 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
+            ProcessIdle = true;
             Bounds = GetDefaultBounds();
 
             if (Control.DefaultFont != Font.Default)
@@ -227,6 +228,23 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsActive => NativeControl.IsActive;
 
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override bool ProcessIdle
+        {
+            get
+            {
+                return base.ProcessIdle;
+            }
+
+            set
+            {
+                if (base.ProcessIdle == true)
+                    return;
+                base.ProcessIdle = true;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the form will receive key events
         /// before the event is passed to the control that has focus.</summary>
@@ -236,7 +254,7 @@ namespace Alternet.UI
         ///   control on the form receives key events.
         ///   The default is <see langword="false" />.</returns>
         [DefaultValue(false)]
-        public bool KeyPreview
+        public virtual bool KeyPreview
         {
             get;
             set;
@@ -877,23 +895,6 @@ namespace Alternet.UI
             Handler.Close();
         }
 
-        /// <summary>
-        /// Initializes <see cref="Window"/> properties so it looks like popup window.
-        /// </summary>
-        public virtual void MakeAsPopup()
-        {
-            ShowInTaskbar = false;
-            StartLocation = WindowStartLocation.Manual;
-            HasTitleBar = false;
-            HasBorder = false;
-            TopMost = true;
-            CloseEnabled = false;
-            MinimizeEnabled = false;
-            MaximizeEnabled = false;
-            Resizable = false;
-            HasSystemMenu = false;
-        }
-
         internal static Window? GetParentWindow(DependencyObject dp)
         {
             if (dp is Window w)
@@ -1069,6 +1070,16 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnHasBorderChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnIdle(EventArgs e)
+        {
+            if (NeedPerformLayout)
+            {
+                NeedPerformLayout = false;
+                PerformLayout();
+            }
         }
 
         /// <summary>

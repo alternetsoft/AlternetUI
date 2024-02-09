@@ -338,7 +338,9 @@ namespace Alternet.UI
         private void NativeControl_SizeChanged()
         {
             Control.RaiseSizeChanged(EventArgs.Empty);
-            Application.AddIdleTask(() => { Control.PerformLayout(); });
+            if(!Application.IsLinuxOS)
+                Control.PerformLayout();
+            Control.NeedPerformLayout = true;
         }
 
         private void NativeControl_LocationChanged()
