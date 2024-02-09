@@ -348,6 +348,17 @@ namespace Alternet.UI
         public event EventHandler? SizeChanged;
 
         /// <summary>
+        /// Occurs when the application finishes processing events and is
+        /// about to enter the idle state. This is the same as <see cref="Application.Idle"/>
+        /// but on the control level.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ProcessIdle"/> property to specify whether <see cref="Idle"/>
+        /// event is fired.
+        /// </remarks>
+        public event EventHandler? Idle;
+
+        /// <summary>
         /// Occurs when the control's size is changed.
         /// </summary>
         public event EventHandler? Resize;
@@ -400,13 +411,6 @@ namespace Alternet.UI
         /// Occurs when an object is dragged out of the control's bounds.
         /// </summary>
         public event EventHandler? DragLeave;
-
-        /// <summary>
-        /// Occurs when the application finishes processing and is
-        /// about to enter the idle state. This is the same as <see cref="Application.Idle"/>
-        /// but on the control level.
-        /// </summary>
-        public event EventHandler? Idle;
 
         /// <summary>
         /// Internal control flags.
