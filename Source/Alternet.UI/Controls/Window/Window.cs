@@ -1082,6 +1082,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            e.Handled = true;
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Icon"/> property changes.
         /// </summary>
