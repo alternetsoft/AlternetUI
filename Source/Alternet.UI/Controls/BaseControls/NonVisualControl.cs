@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="StatusBar"/> and other.
     /// </summary>
     [ControlCategory("Hidden")]
-    public class NonVisualControl : Control
+    public partial class NonVisualControl : Control
     {
         /// <summary>
         /// This property has no meaning in the <see cref="NonVisualControl"/> descendants.

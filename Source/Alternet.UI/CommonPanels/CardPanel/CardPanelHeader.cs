@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// on the card title.
     /// </remarks>
     [ControlCategory("Panels")]
-    public class CardPanelHeader : Control, ITextProperty
+    public partial class CardPanelHeader : Control, ITextProperty
     {
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.

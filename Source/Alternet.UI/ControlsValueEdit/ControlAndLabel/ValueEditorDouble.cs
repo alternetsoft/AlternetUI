@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Imlements <see cref="double"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public class ValueEditorDouble : ValueEditorCustom
+    public partial class ValueEditorDouble : ValueEditorCustom
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorDouble"/> class.

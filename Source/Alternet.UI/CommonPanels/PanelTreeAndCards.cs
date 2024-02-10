@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
     [ControlCategory("Panels")]
-    public class PanelTreeAndCards : PanelAuiManager
+    public partial class PanelTreeAndCards : PanelAuiManager
     {
         private readonly CardPanel cardPanel = new();
 

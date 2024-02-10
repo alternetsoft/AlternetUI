@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Imlements e-mail editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public class ValueEditorEMail : ValueEditorString
+    public partial class ValueEditorEMail : ValueEditorString
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorEMail"/> class.

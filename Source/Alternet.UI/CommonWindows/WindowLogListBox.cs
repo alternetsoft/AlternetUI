@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <see cref="Application.Log"/> method is automatically forwarded to the attached
     /// <see cref="ListBox"/>.
     /// </remarks>
-    public class WindowLogListBox : Window
+    public partial class WindowLogListBox : Window
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowLogListBox"/> class.

@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements splitter panel with <see cref="TreeView"/> and <see cref="CardPanel"/>.
     /// </summary>
-    public class SplittedTreeAndCards : LayoutPanel
+    public partial class SplittedTreeAndCards : LayoutPanel
     {
         private readonly TreeView treeView = new()
         {

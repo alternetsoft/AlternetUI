@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// It behaves like <see cref="TabControl"/> but has no tab titles.
     /// </remarks>
     [ControlCategory("Containers")]
-    public class CardPanel : Control
+    public partial class CardPanel : Control
     {
         private CardPanelItem? selectedCard;
 

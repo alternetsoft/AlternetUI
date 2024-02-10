@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// text edit buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public class PanelMultilineTextBox : PanelAuiManager
+    public partial class PanelMultilineTextBox : PanelAuiManager
     {
         private MultilineTextBox? textBox;
         private int buttonIdNew;

@@ -3,7 +3,7 @@
     /// <summary>
     /// <see cref="ProgressBar"/> with custom painted fancy look.
     /// </summary>
-    public class FancyProgressBar : ProgressBar
+    public partial class FancyProgressBar : ProgressBar
     {
         internal new FancyProgressBarHandler Handler => (FancyProgressBarHandler)base.Handler;
 

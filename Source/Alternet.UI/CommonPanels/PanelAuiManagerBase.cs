@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// <see cref="PanelAuiManager"/>.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public class PanelAuiManagerBase : LayoutPanel
+    public partial class PanelAuiManagerBase : LayoutPanel
     {
         private readonly AuiManager manager = new();
 

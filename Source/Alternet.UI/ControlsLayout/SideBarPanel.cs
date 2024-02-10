@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <remarks>
     /// This control can be used in <see cref="SplittedPanel"/> side bars.
     /// </remarks>
-    public class SideBarPanel : VerticalStackPanel
+    public partial class SideBarPanel : VerticalStackPanel
     {
         private readonly CardPanelHeader header = new()
         {

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements multiline text editor.
     /// </summary>
     [ControlCategory("Common")]
-    public class MultilineTextBox : TextBox
+    public partial class MultilineTextBox : TextBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MultilineTextBox"/> class.

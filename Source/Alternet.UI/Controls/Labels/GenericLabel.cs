@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements generic label control.
     /// </summary>
-    public class GenericLabel : UserPaintControl
+    public partial class GenericLabel : UserPaintControl
     {
         private string text = string.Empty;
 

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Imlements url editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public class ValueEditorUrl : ValueEditorString
+    public partial class ValueEditorUrl : ValueEditorString
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUrl"/> class.

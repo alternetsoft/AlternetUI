@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements panel with top, bottom, left, right sub-panels and splitters.
     /// </summary>
-    public class SplittedPanel : LayoutPanel
+    public partial class SplittedPanel : LayoutPanel
     {
         private readonly Control rightPanel;
         private readonly Control leftPanel;
