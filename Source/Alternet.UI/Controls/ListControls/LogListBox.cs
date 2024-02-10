@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with log and debug related functionality.
     /// </summary>
     [ControlCategory("Other")]
-    public class LogListBox : ListBox
+    public partial class LogListBox : ListBox
     {
         private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;

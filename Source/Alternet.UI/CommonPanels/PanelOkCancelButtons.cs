@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Panel with Ok, Cancel and Apply buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public class PanelOkCancelButtons : StackPanel
+    public partial class PanelOkCancelButtons : StackPanel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.

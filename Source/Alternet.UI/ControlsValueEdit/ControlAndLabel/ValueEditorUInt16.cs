@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Imlements <see cref="ushort"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public class ValueEditorUInt16 : TextBoxAndLabel
+    public partial class ValueEditorUInt16 : TextBoxAndLabel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUInt16"/> class.

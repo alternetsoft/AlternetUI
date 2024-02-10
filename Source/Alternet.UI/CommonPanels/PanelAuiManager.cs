@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// use <see cref="PanelAuiManagerBase"/>.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public class PanelAuiManager : PanelAuiManagerBase
+    public partial class PanelAuiManager : PanelAuiManagerBase
     {
         private ListBox? actionsControl;
         private AuiNotebook? leftNotebook;

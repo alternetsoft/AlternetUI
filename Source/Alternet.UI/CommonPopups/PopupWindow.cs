@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// The <see cref="PopupWindow"/> displays content in a separate window that floats
     /// over the current application window.
     /// </summary>
-    public class PopupWindow : DialogWindow
+    public partial class PopupWindow : DialogWindow
     {
         private readonly LayoutPanel mainPanel = new();
         private readonly GenericToolBar botttomToolBar = new();

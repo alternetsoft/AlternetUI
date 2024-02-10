@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Arranges child controls into a single line that can be oriented horizontally.
     /// </summary>
     [ControlCategory("Containers")]
-    public class HorizontalStackPanel : StackPanel
+    public partial class HorizontalStackPanel : StackPanel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HorizontalStackPanel"/> class.

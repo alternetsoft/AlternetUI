@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="CheckListBox"/> control.
     /// </summary>
-    public class PopupCheckListBox : PopupListBox
+    public partial class PopupCheckListBox : PopupListBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCheckListBox"/> class.

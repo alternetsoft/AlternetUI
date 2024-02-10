@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// text edit buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public class PanelRichTextBox : PanelAuiManager
+    public partial class PanelRichTextBox : PanelAuiManager
     {
         private RichTextBox? textBox;
         private int buttonIdNew;

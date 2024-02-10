@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <remarks>
     /// It is suitable for floating toolbars that must not take up too much screen area.
     /// </remarks>
-    public class MiniFrameWindow : Window
+    public partial class MiniFrameWindow : Window
     {
         internal override WindowKind GetWindowKind() => WindowKind.MiniFrame;
     }

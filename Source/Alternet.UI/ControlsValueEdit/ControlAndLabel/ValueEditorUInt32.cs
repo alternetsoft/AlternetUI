@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Imlements <see cref="uint"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public class ValueEditorUInt32 : ValueEditorCustom
+    public partial class ValueEditorUInt32 : ValueEditorCustom
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUInt32"/> class.

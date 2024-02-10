@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// web navigation buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public class PanelWebBrowser : PanelAuiManager
+    public partial class PanelWebBrowser : PanelAuiManager
     {
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
         private readonly WebBrowserFindParams findParams = new();

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Imlements <see cref="sbyte"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public class ValueEditorSByte : ValueEditorCustom
+    public partial class ValueEditorSByte : ValueEditorCustom
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.

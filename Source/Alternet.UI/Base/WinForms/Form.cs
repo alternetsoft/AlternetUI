@@ -3,7 +3,7 @@
     /// <summary>
     /// Defined in order to make library more compatible with the legacy code.
     /// </summary>
-    public class Form : Window
+    public partial class Form : Window
     {
     }
 }

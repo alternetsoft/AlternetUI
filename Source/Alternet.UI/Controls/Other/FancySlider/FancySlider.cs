@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="Slider"/> with custom painted fancy look.
     /// </summary>
-    public class FancySlider : Slider
+    public partial class FancySlider : Slider
     {
         internal new FancySliderHandler Handler => (FancySliderHandler)base.Handler;
 

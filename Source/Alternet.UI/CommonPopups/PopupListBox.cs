@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="ListBox"/> control.
     /// </summary>
-    public class PopupListBox : PopupWindow
+    public partial class PopupListBox : PopupWindow
     {
         private int? resultIndex;
 

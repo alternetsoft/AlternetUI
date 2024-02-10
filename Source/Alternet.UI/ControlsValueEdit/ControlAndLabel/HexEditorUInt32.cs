@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Imlements hexadecimal <see cref="uint"/> editor with validation.
     /// </summary>
-    public class HexEditorUInt32 : ValueEditorCustom
+    public partial class HexEditorUInt32 : ValueEditorCustom
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HexEditorUInt32"/> class.

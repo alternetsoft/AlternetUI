@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultEvent("SplitterMoved")]
     [DefaultProperty("Dock")]
-    public class Splitter : UserPaintControl
+    public partial class Splitter : UserPaintControl
     {
         /// <summary>
         /// Gets or sets default splitter width.

@@ -52,6 +52,37 @@ namespace WinFormsImport
             File.WriteAllText(filePath, Emit.Body);
         }
 
+        public static void EmitBrowsablePartial(Type type, string path)
+        {
+            if (type.IsNotPublic)
+                return;
+
+            if (type.Name.StartsWith("__"))
+                return;
+
+            Console.WriteLine(type.Name);
+
+            Body = string.Empty;
+
+            WriteLine($"namespace {type.Namespace}");
+            WriteLine("{");
+            BeginIndent();
+
+            WriteLine($"public partial class {type.Name}");
+            WriteLine("{");
+            BeginIndent();
+
+            WriteLine();
+
+            EndClass(type);
+            EndNameSpace(type);
+
+            string filePath = path + type.Name + ".Browsable.cs";
+
+            if(!File.Exists(filePath))
+                File.WriteAllText(filePath, Emit.Body);
+        }
+
         public static void WriteLine(string? s = null)
         {
             Echo((s ?? string.Empty) + Environment.NewLine);
