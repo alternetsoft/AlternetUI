@@ -22,6 +22,23 @@ void Import()
 }
 
 #pragma warning disable
+void CreateBrowsablePartials()
+#pragma warning restore
+{
+    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
+
+    var path = CommonUtils.GetSamplesFolder("Tools") + @"\..\..\Source\Alternet.UI\Controls\BrowsableProps\";
+    path = Path.GetFullPath(path);
+
+    Console.WriteLine(path);
+
+    foreach (var control in controls)
+    {
+        Emit.EmitBrowsablePartial(control, path);
+    }
+}
+
+#pragma warning disable
 void ShowIncompleteDocs()
 #pragma warning restore
 {
@@ -75,7 +92,9 @@ void ShowControlCategory()
     }
 }
 
+#pragma warning disable
 void FindDocFxMethodName()
+#pragma warning restore
 {
     var filename = Path.Combine(CommonUtils.GetAppFolder(), "Map", "docfx.min.js.map");
 
@@ -84,4 +103,4 @@ void FindDocFxMethodName()
     Console.WriteLine("renderToc: " + tool.GetMinName("renderToc"));
 }
 
-FindDocFxMethodName();
+CreateBrowsablePartials();
