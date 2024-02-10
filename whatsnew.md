@@ -1,3 +1,24 @@
+# 0.9.506 (work in progress)
+
+## 2024 February 10
+
+- Improved layout on form resize.
+- PopupWindow: Add Ok and Cancel buttons on bottom.
+- On Linux popup now uses ShowModal as in this case form is positioned in the center of the screen. 
+On some Linux systems window manager doesn't allow to position the form, so all popups will be centered. 
+Previously popup forms were shown in strange positions on some Linux systems.
+- PopupWindow.ModalPopups.
+- PopupWindow: System window border is used instead of Border control.
+- PopupWindow: By default popup is now resizable.
+- Improved PopupCheckListBox and added it's demo in ControlsSample.
+- MouseEventArgs: Fixed Location, X, Y values.
+- Documentation: search only when Enter key pressed (so now search in docs is much faster).
+- Add Source\Tests\UseLocalPackages project. This is an example on how to have nugets in local folder.
+- Control: Right, Bottom props set methods.
+- Window.SupressEsc.
+
+---
+
 # 0.9.505 (2024 February 6)
 
 ## 2024 February 6
