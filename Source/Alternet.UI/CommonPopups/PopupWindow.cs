@@ -14,17 +14,8 @@ namespace Alternet.UI
     /// </summary>
     public class PopupWindow : DialogWindow
     {
-        /*        /// <summary>
-                /// Gets or sets whether to log popup window bounds.
-                /// </summary>
-        #if DEBUG
-                public static bool LogDebugInfo = true;
-        #else
-                public static bool LogDebugInfo = false;
-        #endif*/
-
-        private static readonly BorderSettings Settings = BorderSettings.Default.Clone();
-        private readonly Border border = new();
+        private readonly LayoutPanel mainPanel = new();
+        private readonly GenericToolBar botttomToolBar = new();
         private ModalResult popupResult;
         private Control? mainControl;
 
@@ -34,9 +25,29 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
-            MakeAsPopup();
-            border.Normal = Settings;
-            border.Parent = this;
+            Padding = (5, 5, 5, 10);
+            var buttons = botttomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+            ButtonIdOk = buttons[0];
+            ButtonIdCancel = buttons[1];
+            botttomToolBar.SuspendLayout();
+            botttomToolBar.Padding = (5, 5, 0, 0);
+            botttomToolBar.MinHeight = botttomToolBar.ItemSize + botttomToolBar.Padding.Vertical;
+            botttomToolBar.SetToolAlignRight(ButtonIdOk, true);
+            botttomToolBar.SetToolAlignRight(ButtonIdCancel, true);
+            botttomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
+            botttomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
+            botttomToolBar.ResumeLayout();
+            botttomToolBar.Dock = DockStyle.Bottom;
+            botttomToolBar.Parent = mainPanel;
+            ShowInTaskbar = false;
+            StartLocation = WindowStartLocation.Manual;
+            HasTitleBar = DefaultHasTitleBar;
+            TopMost = true;
+            CloseEnabled = DefaultCloseEnabled;
+            MinimizeEnabled = false;
+            MaximizeEnabled = false;
+            HasSystemMenu = false;
+            mainPanel.Parent = this;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
@@ -57,30 +68,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets default border of the <see cref="PopupWindow"/>.
+        /// Gets 'Ok' button id.
         /// </summary>
-        [Browsable(false)]
-        public static BorderSettings DefaultBorder
-        {
-            get
-            {
-                return Settings;
-            }
-
-            set
-            {
-                if (value == null)
-                    Settings.Assign(BorderSettings.Default);
-                else
-                    Settings.Assign(value);
-            }
-        }
+        public ObjectUniqueId ButtonIdOk { get; }
 
         /// <summary>
-        /// Gets border of the <see cref="PopupWindow"/>.
+        /// Gets 'Cancel' button id.
         /// </summary>
-        [Browsable(false)]
-        public Border Border => border;
+        public ObjectUniqueId ButtonIdCancel { get; }
+
+        /// <summary>
+        /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
+        /// </summary>
+        public GenericToolBar BotttomToolBar => botttomToolBar;
+
+        /// <summary>
+        /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
+        /// </summary>
+        public virtual bool DefaultHasTitleBar => false;
+
+        /// <summary>
+        /// Gets default value of the <see cref="Window.CloseEnabled"/> property.
+        /// </summary>
+        public virtual bool DefaultCloseEnabled => false;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
@@ -155,7 +165,8 @@ namespace Alternet.UI
                 if (mainControl == null)
                 {
                     mainControl = CreateMainControl();
-                    mainControl.Parent = this.Border;
+                    mainControl.Dock = DockStyle.Fill;
+                    mainPanel.Children.Prepend(mainControl);
                     BindEvents(mainControl);
                 }
 
@@ -164,25 +175,30 @@ namespace Alternet.UI
 
             set
             {
-                if (mainControl == value || mainControl is null)
+                if (mainControl == value || value is null)
                     return;
-                UnbindEvents(mainControl);
+                if (mainControl is not null)
+                {
+                    UnbindEvents(mainControl);
+                    mainControl.Parent = null;
+                }
+
                 mainControl = value;
+                mainControl.Dock = DockStyle.Fill;
                 BindEvents(mainControl);
-                mainControl.Parent = Border;
+                mainPanel.Children.Prepend(mainControl);
             }
         }
 
         /// <summary>
-        /// Focuses first child control of the <see cref="Border"/>.
+        /// Focuses <see cref="MainControl"/>.
         /// </summary>
-        public virtual void FocusChildControl()
+        public virtual void FocusMainControl()
         {
-            if (Border.HasChildren)
+            if (mainControl is not null)
             {
-                var child = Border.Children[0];
-                if (child.IsFocusable)
-                    child.SetFocus();
+                if (mainControl.IsFocusable)
+                    mainControl.SetFocus();
             }
             else
             {
@@ -222,13 +238,13 @@ namespace Alternet.UI
         /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
         /// device-inpependent units (1/96 inch).
         /// </remarks>
-        public void ShowPopup(PointD ptOrigin, SizeD sizePopup)
+        public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
             SetSizeToContent();
             SetPositionInDips(ptOrigin, sizePopup);
             Show();
-            FocusChildControl();
+            FocusMainControl();
             if (Application.IsLinuxOS || ModalPopups)
             {
                 if (ShowModal() == ModalResult.Accepted)
@@ -236,6 +252,34 @@ namespace Alternet.UI
                 else
                     HidePopup(ModalResult.Canceled);
             }
+        }
+
+        /// <summary>
+        /// Hides popup window.
+        /// </summary>
+        /// <param name="result">New <see cref="PopupResult"/> value.</param>
+        public virtual void HidePopup(ModalResult result)
+        {
+            if (!Visible)
+                return;
+            PopupResult = result;
+
+            BeginInvoke(() =>
+            {
+                if (Modal)
+                    ModalResult = result;
+                else
+                    Hide();
+                Application.DoEvents();
+                if (PopupOwner is not null && FocusPopupOwnerOnHide)
+                {
+                    PopupOwner.ParentWindow?.Activate();
+                    if (PopupOwner.CanAcceptFocus)
+                        PopupOwner.SetFocus();
+                }
+
+                PopupOwner = null;
+            });
         }
 
         /// <summary>
@@ -251,7 +295,7 @@ namespace Alternet.UI
         /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
         /// device-inpependent units (1/96 inch).
         /// </remarks>
-        public void SetPositionInDips(PointD ptOrigin, SizeD size)
+        internal void SetPositionInDips(PointD ptOrigin, SizeD size)
         {
             // determine the position and size of the screen we clamp the popup to
             PointD posScreen;
@@ -319,34 +363,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Hides popup window.
-        /// </summary>
-        /// <param name="result">New <see cref="PopupResult"/> value.</param>
-        public virtual void HidePopup(ModalResult result)
-        {
-            if (!Visible)
-                return;
-            PopupResult = result;
-
-            BeginInvoke(() =>
-            {
-                if (Modal)
-                    ModalResult = result;
-                else
-                    Hide();
-                Application.DoEvents();
-                if (PopupOwner is not null && FocusPopupOwnerOnHide)
-                {
-                    PopupOwner.ParentWindow?.Activate();
-                    if (PopupOwner.CanAcceptFocus)
-                        PopupOwner.SetFocus();
-                }
-
-                PopupOwner = null;
-            });
-        }
-
-        /// <summary>
         /// Default implementation of the left mouse button double click event
         /// for the main control of the popup window.
         /// </summary>
@@ -376,8 +392,10 @@ namespace Alternet.UI
         /// Override to bind events to the main control of the popup window.
         /// </summary>
         /// <param name="control">Control which events are binded.</param>
-        protected virtual void BindEvents(Control control)
+        protected virtual void BindEvents(Control? control)
         {
+            if (control is null)
+                return;
             control.MouseDoubleClick += OnMainControlMouseDoubleClick;
             control.MouseLeftButtonUp += OnMainControlMouseLeftButtonUp;
         }
@@ -386,8 +404,10 @@ namespace Alternet.UI
         /// Override to unbind events to the main control of the popup window.
         /// </summary>
         /// <param name="control">Control which events are unbinded.</param>
-        protected virtual void UnbindEvents(Control control)
+        protected virtual void UnbindEvents(Control? control)
         {
+            if (control is null)
+                return;
             control.MouseDoubleClick -= OnMainControlMouseDoubleClick;
             control.MouseLeftButtonUp -= OnMainControlMouseLeftButtonUp;
         }
@@ -419,6 +439,16 @@ namespace Alternet.UI
                 e.Handled = true;
                 HidePopup(ModalResult.Accepted);
             }
+        }
+
+        private void OnOkButtonClick()
+        {
+            HidePopup(ModalResult.Accepted);
+        }
+
+        private void OnCancelButtonClick()
+        {
+            HidePopup(ModalResult.Canceled);
         }
 
         private void PopupWindow_Disposed(object? sender, EventArgs e)

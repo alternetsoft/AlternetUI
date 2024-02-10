@@ -10,8 +10,17 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="CheckListBox"/> control.
     /// </summary>
-    internal class PopupCheckListBox : PopupListBox
+    public class PopupCheckListBox : PopupListBox
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupCheckListBox"/> class.
+        /// </summary>
+        public PopupCheckListBox()
+        {
+            this.HideOnClick = false;
+            this.HideOnDoubleClick = true;
+        }
+
         /// <summary>
         /// Gets or sets <see cref="CheckListBox"/> control used in the popup window.
         /// </summary>
@@ -28,6 +37,7 @@ namespace Alternet.UI
             return new CheckListBox()
             {
                 HasBorder = false,
+                Margin = 5,
             };
         }
     }

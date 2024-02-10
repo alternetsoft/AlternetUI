@@ -12,6 +12,8 @@ namespace Alternet.UI
     {
         internal static int ScreenShotCounter { get; set; } = 0;
 
+        internal bool NeedPerformLayout { get; set; }
+
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>

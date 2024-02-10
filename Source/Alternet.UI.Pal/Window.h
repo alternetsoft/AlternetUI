@@ -61,6 +61,10 @@ namespace Alternet::UI
             : wxMiniFrame(parent, id, title, pos, size, style,name)
         {
         }
+        bool Layout() override
+        {
+            return false;
+        }
     };
 
     class Dialog : public wxDialog, public wxWidgetExtender
@@ -74,6 +78,10 @@ namespace Alternet::UI
             const wxString& name = wxASCII_STR(wxDialogNameStr))
             : wxDialog(parent, id, title, pos, size, style, name)
         {
+        }
+        bool Layout() override
+        {
+            return false;
         }
     };
 
