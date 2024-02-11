@@ -922,10 +922,6 @@ namespace Alternet.UI
                     case WindowSizeToContentMode.Height:
                         newSize.Width = currentSize.Width;
                         break;
-                    case WindowSizeToContentMode.WidthAndHeight:
-                        break;
-                    default:
-                        throw new Exception();
                 }
 
                 ClientSize = newSize + new SizeD(1, 0);
