@@ -4,6 +4,7 @@
         "**/obj": true
     },
     "files.associations": {
+        "*.uixml": "xml",
         "functional": "cpp",
         "string": "cpp",
         "thread": "cpp",
