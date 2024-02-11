@@ -81,6 +81,22 @@ The application will start and display its window:
 > For information and tutorials on general C# development and debugging with Visual Studio Code, see the
 > [corresponding MSDN article](https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code).
 
+### Uixml Syntax Highlight
+
+In order to have syntax highlight in uixml, you need:
+
+- Create '.vscode' subfolder in you project folder.
+- Create there 'settings.json' file.
+- Edit 'settings.json' and add there 'files.associations' section:
+
+```json
+{
+	"files.associations": {
+	    "*.uixml": "xml",
+	}
+}
+```
+
 ### Add Button to the Window
 
 1. In `MainWindow.uixml`, add the following markup:
