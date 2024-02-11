@@ -1,10 +1,6 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// ModifierKeysConverter : Converts a Modifier string to the *Type* that
-// the string represents and vice-versa.
 
 using System;
 using System.ComponentModel;
@@ -16,50 +12,21 @@ namespace Alternet.UI
     /// Converter class for converting between a string and the
     /// <see cref="ModifierKeys"/>.
     /// </summary>
-    /// <ExternalAPI/> 
     public class ModifierKeysConverter : TypeConverter
     {
-        /// <inheritdoc/>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext context,
-            Type sourceType)
-        {
-            // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        private const char ModifierDelimiter = '+';
 
-        /// <inheritdoc/>
-        public override bool CanConvertTo(
-            ITypeDescriptorContext context,
-            Type destinationType)
-        {
-            // We can convert to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to
-                // string only for known type
-                if (context != null && context.Instance != null &&
-                    context.Instance is ModifierKeys)
-                {
-                    return (IsDefinedModifierKeys((ModifierKeys)context.Instance));
-                }
-            }
-            return false;
-        }
+        private static readonly ModifierKeys ModifierKeysFlag =
+            ModifierKeys.Windows | ModifierKeys.Shift |
+            ModifierKeys.Alt | ModifierKeys.Control;
 
-        /// <inheritdoc/>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
+        /// <summary>
+        ///     Check for Valid enum, as any int can be casted to the enum.
+        /// </summary>
+        public static bool IsDefinedModifierKeys(ModifierKeys modifierKeys)
         {
-            if (source is string)
-                return FromString((string)source);
-            throw GetConvertFromException(source);
+            return modifierKeys == ModifierKeys.None ||
+                (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0);
         }
 
         /// <summary>
@@ -80,11 +47,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="modifiers">Key modifiers.</param>
         /// <param name="forUser">Result string is for user or not.</param>
-        /// <returns>A <see cref="string"/> representation of <see cref="ModifierKeys"/> value.</returns>
-        /// <exception cref="InvalidEnumArgumentException"></exception>
+        /// <returns>A <see cref="string"/> representation
+        /// of <see cref="ModifierKeys"/> value.</returns>
         public static string ToString(ModifierKeys modifiers, bool forUser = false)
         {
-            string strModifiers = "";
+            string strModifiers = string.Empty;
 
             Add(ModifierKeys.Control);
             Add(ModifierKeys.Alt);
@@ -98,7 +65,7 @@ namespace Alternet.UI
                 if ((modifiers & key) == key)
                 {
                     if (strModifiers.Length > 0)
-                        strModifiers += Modifier_Delimiter;
+                        strModifiers += ModifierDelimiter;
 
                     strModifiers += MatchModifiers(key, forUser);
                 }
@@ -106,14 +73,63 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool CanConvertFrom(
+            ITypeDescriptorContext? context,
+            Type sourceType)
+        {
+            // We can only handle string.
+            if (sourceType == typeof(string))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool CanConvertTo(
+            ITypeDescriptorContext? context,
+            Type? destinationType)
+        {
+            // We can convert to a string.
+            if (destinationType == typeof(string))
+            {
+                // When invoked by the serialization engine we can convert to
+                // string only for known type
+                if (context?.Instance is ModifierKeys keys)
+                {
+                    return IsDefinedModifierKeys(keys);
+                }
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override object ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object source)
+        {
+            if (source is string v)
+                return FromString(v);
+            throw GetConvertFromException(source);
+        }
+
+        /// <inheritdoc/>
         public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
             Type destinationType)
         {
             if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
+                throw new ArgumentNullException(nameof(destinationType));
+
+            if (value is null)
+                return string.Empty;
 
             if (destinationType == typeof(string))
             {
@@ -122,12 +138,38 @@ namespace Alternet.UI
                 if (!IsDefinedModifierKeys(modifiers))
                 {
                     throw new InvalidEnumArgumentException(
-                        "value", (int)modifiers, typeof(ModifierKeys));
+                        nameof(value), (int)modifiers, typeof(ModifierKeys));
                 }
                 else
                     return ToString(modifiers);
             }
+
             throw GetConvertToException(value, destinationType);
+        }
+
+        internal static string MatchModifiers(ModifierKeys modifierKeys, bool forUser = false)
+        {
+            string modifiers = string.Empty;
+            switch (modifierKeys)
+            {
+                case ModifierKeys.Control:
+                    if (forUser && Application.IsMacOS)
+                        modifiers = StringUtils.MacCommandKeyTitle;
+                    else
+                        modifiers = "Ctrl";
+                    break;
+                case ModifierKeys.Shift:
+                    modifiers = "Shift";
+                    break;
+                case ModifierKeys.Alt:
+                    modifiers = "Alt";
+                    break;
+                case ModifierKeys.Windows:
+                    modifiers = "Windows";
+                    break;
+            }
+
+            return modifiers;
         }
 
         private static ModifierKeys GetModifierKeys(
@@ -137,15 +179,16 @@ namespace Alternet.UI
             ModifierKeys modifiers = ModifierKeys.None;
             if (modifiersToken.Length != 0)
             {
-                int offset = 0;
+                int offset;
                 do
                 {
-                    offset = modifiersToken.IndexOf(Modifier_Delimiter);
-                    string token = (offset < 0) ? modifiersToken : modifiersToken.Substring(0, offset);
+                    offset = modifiersToken.IndexOf(ModifierDelimiter);
+                    string token = (offset < 0)
+                        ? modifiersToken : modifiersToken.Substring(0, offset);
                     token = token.Trim();
                     token = token.ToUpper(culture);
 
-                    if (token == String.Empty)
+                    if (token == string.Empty)
                         break;
 
                     switch (token)
@@ -169,51 +212,15 @@ namespace Alternet.UI
                             break;
 
                         default:
-                            throw new NotSupportedException(SR.Get(SRID.Unsupported_Modifier, token));
+                            throw new NotSupportedException(
+                                SR.Get(SRID.Unsupported_Modifier, token));
                     }
 
                     modifiersToken = modifiersToken.Substring(offset + 1);
-                } while (offset != -1);
+                }
+                while (offset != -1);
             }
-            return modifiers;
-        }
 
-        /// <summary>
-        ///     Check for Valid enum, as any int can be casted to the enum.
-        /// </summary>
-        public static bool IsDefinedModifierKeys(ModifierKeys modifierKeys)
-        {
-            return (modifierKeys == ModifierKeys.None ||
-                (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
-        }
-
-        private const char Modifier_Delimiter = '+';
-
-        private static ModifierKeys ModifierKeysFlag =
-            ModifierKeys.Windows | ModifierKeys.Shift |
-            ModifierKeys.Alt | ModifierKeys.Control;
-
-        internal static string MatchModifiers(ModifierKeys modifierKeys, bool forUser = false)
-        {
-            string modifiers = String.Empty;
-            switch (modifierKeys)
-            {
-                case ModifierKeys.Control:
-                    if (forUser && Application.IsMacOS)
-                        modifiers = StringUtils.MacCommandKeyTitle;
-                    else
-                        modifiers = "Ctrl";
-                    break;
-                case ModifierKeys.Shift:
-                    modifiers = "Shift";
-                    break;
-                case ModifierKeys.Alt:
-                    modifiers = "Alt";
-                    break;
-                case ModifierKeys.Windows:
-                    modifiers = "Windows";
-                    break;
-            }
             return modifiers;
         }
     }

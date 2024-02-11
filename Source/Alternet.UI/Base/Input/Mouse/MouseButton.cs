@@ -1,8 +1,6 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 
 #if ALTERNET_UI_INTEGRATION_REMOTING
 namespace Alternet.UI.Integration.Remoting
@@ -23,7 +21,7 @@ namespace Alternet.UI
         ///    The left mouse button.
         /// </summary>
         Left,
-        
+
         /// <summary>
         ///    The middle mouse button.
         /// </summary>
@@ -33,7 +31,7 @@ namespace Alternet.UI
         ///    The right mouse button.
         /// </summary>
         Right,
-        
+
         /// <summary>
         ///    The fourth mouse button.
         /// </summary>
@@ -42,7 +40,7 @@ namespace Alternet.UI
         /// <summary>
         ///    The fifth mouse button.
         /// </summary>
-        XButton2
+        XButton2,
     }
 
 #if !ALTERNET_UI_INTEGRATION_REMOTING
@@ -50,19 +48,22 @@ namespace Alternet.UI
     /// <summary>
     ///     Utility class for MouseButton
     /// </summary>
+#pragma warning disable
     internal sealed class MouseButtonUtilities
+#pragma warning restore
     {
         /// <summary>
         ///     Private placeholder constructor
         /// </summary>
         /// <remarks>
         ///     There is present to supress the autogeneration of a public one, which
-        ///     triggers an FxCop violation, as this is an internal class that is never instantiated
+        ///     triggers an FxCop violation, as this is an internal class that is
+        ///     never instantiated
         /// </remarks>
         private MouseButtonUtilities()
         {
         }
-        
+
         /// <summary>
         ///     Ensures MouseButton is set to a valid value.
         /// </summary>
@@ -73,7 +74,7 @@ namespace Alternet.UI
         [FriendAccessAllowed]
         internal static void Validate(MouseButton button)
         {
-            switch(button)
+            switch (button)
             {
                 case MouseButton.Left:
                 case MouseButton.Middle:
@@ -82,10 +83,12 @@ namespace Alternet.UI
                 case MouseButton.XButton2:
                     break;
                 default:
-                    throw new  System.ComponentModel.InvalidEnumArgumentException("button", (int)button, typeof(MouseButton));
+                    throw new System.ComponentModel.InvalidEnumArgumentException(
+                        "button",
+                        (int)button,
+                        typeof(MouseButton));
             }
         }
     }
 #endif
 }
-

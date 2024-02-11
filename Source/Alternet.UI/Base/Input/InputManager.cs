@@ -1,16 +1,11 @@
-#nullable disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using System.Security;
-using System;
 using System.Diagnostics;
-using Alternet.UI.Threading;
+using System.Security;
+using System.Threading;
 using Alternet.Drawing;
+using Alternet.UI.Threading;
 
 namespace Alternet.UI
 {
@@ -20,8 +15,15 @@ namespace Alternet.UI
     /// </summary>
     public sealed class InputManager : DispatcherObject
     {
-        private KeyboardDevice _primaryKeyboardDevice;
-        private MouseDevice _primaryMouseDevice;
+        private readonly KeyboardDevice primaryKeyboardDevice;
+        private readonly MouseDevice primaryMouseDevice;
+
+        private InputManager()
+        {
+            CheckSTARequirement();
+            primaryKeyboardDevice = new NativeKeyboardDevice(this);
+            primaryMouseDevice = new NativeMouseDevice(this);
+        }
 
         /// <summary>
         ///     Return the input manager associated with the current context.
@@ -34,11 +36,28 @@ namespace Alternet.UI
             }
         }
 
-        ///<summary>
+        /// <summary>
+        ///     Read-only access to the primary keyboard device.
+        /// </summary>
+        public KeyboardDevice PrimaryKeyboardDevice
+        {
+            get { return primaryKeyboardDevice; }
+        }
+
+        /// <summary>
+        ///     Read-only access to the primary mouse device.
+        /// </summary>
+        public MouseDevice PrimaryMouseDevice
+        {
+            get { return primaryMouseDevice; }
+        }
+
+        /// <summary>
         ///     Internal implementation of InputManager.Current.
         ///     Critical but not TAS - for internal's to use.
-        ///     Only exists for perf. The link demand check was causing perf in some XAF scenarios.
-        ///</summary>
+        ///     Only exists for perf. The link demand check
+        ///     was causing perf in some XAF scenarios.
+        /// </summary>
         internal static InputManager UnsecureCurrent
         {
             [FriendAccessAllowed]
@@ -48,17 +67,146 @@ namespace Alternet.UI
             }
         }
 
-        ///<summary>
+        internal Control? GetMouseTargetControl(Control? control)
+        {
+            var result = control ?? GetControlUnderMouse();
+
+            while (result is not null)
+            {
+                if (result.BubbleMouse)
+                    result = result.Parent;
+                else
+                    return result;
+            }
+
+            return result;
+        }
+
+        internal void ReportMouseMove(
+            Control? targetControl,
+            long timestamp,
+            out bool handled)
+        {
+            handled = false;
+            var control = GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, targetControl!, timestamp);
+            control.RaiseMouseMove(eventArgs);
+        }
+
+        internal void ReportMouseDown(
+            Control? targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
+        {
+            handled = false;
+            var control = GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            control.RaiseMouseDown(eventArgs);
+        }
+
+        internal void ReportMouseDoubleClick(
+            Control? targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
+        {
+            handled = false;
+            var control = GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            control.RaiseMouseDoubleClick(eventArgs);
+        }
+
+        internal void ReportMouseUp(
+            Control? targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
+        {
+            handled = false;
+            var control = GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            control.RaiseMouseUp(eventArgs);
+        }
+
+        internal void ReportMouseWheel(
+            Control? targetControl,
+            long timestamp,
+            int delta,
+            out bool handled)
+        {
+            handled = false;
+            var control = GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(control, targetControl!, timestamp);
+            eventArgs.Delta = delta;
+            control.RaiseMouseWheel(eventArgs);
+        }
+
+        internal void ReportKeyDown(Key key, bool isRepeat, out bool handled)
+        {
+            var control = Control.GetFocusedControl();
+            if (control is null)
+            {
+                handled = false;
+                return;
+            }
+
+            var eventArgs = new KeyEventArgs(control, key, isRepeat);
+            control.RaiseKeyDown(eventArgs);
+            handled = eventArgs.Handled;
+        }
+
+        internal void ReportKeyUp(Key key, bool isRepeat, out bool handled)
+        {
+            var control = Control.GetFocusedControl();
+            if (control is null)
+            {
+                handled = false;
+                return;
+            }
+
+            var eventArgs = new KeyEventArgs(control, key, isRepeat);
+            control.RaiseKeyUp(eventArgs);
+            handled = eventArgs.Handled;
+        }
+
+        internal void ReportTextInput(char keyChar, out bool handled)
+        {
+            var control = Control.GetFocusedControl();
+            if (control is null)
+            {
+                handled = false;
+                return;
+            }
+
+            var eventArgs = new KeyPressEventArgs(control, keyChar);
+            control.RaiseKeyPress(eventArgs);
+            handled = eventArgs.Handled;
+        }
+
+        /// <summary>
         ///     Implementation of InputManager.Current
-        ///</summary>
+        /// </summary>
         private static InputManager GetCurrentInputManagerImpl()
         {
-            InputManager inputManager = null;
-
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
-            inputManager = dispatcher.InputManager as InputManager;
 
-            if (inputManager == null)
+            if (dispatcher.InputManager is not InputManager inputManager)
             {
                 inputManager = new InputManager();
                 dispatcher.InputManager = inputManager;
@@ -82,162 +230,7 @@ namespace Alternet.UI
             }
         }
 
-        private InputManager()
-        {
-            CheckSTARequirement();
-            _primaryKeyboardDevice = new NativeKeyboardDevice(this);
-            _primaryMouseDevice = new NativeMouseDevice(this);
-        }
-
-        /// <summary>
-        ///     Read-only access to the primary keyboard device.
-        /// </summary>
-        public KeyboardDevice PrimaryKeyboardDevice
-        {
-            get { return _primaryKeyboardDevice; }
-        }
-
-        /// <summary>
-        ///     Read-only access to the primary mouse device.
-        /// </summary>
-        public MouseDevice PrimaryMouseDevice
-        {
-            get { return _primaryMouseDevice; }
-        }
-
-        internal Control? GetMouseTargetControl(Control? control)
-        {
-            var result = control ?? GetControlUnderMouse();
-
-            while(result is not null)
-            {
-                if (result.BubbleMouse)
-                    result = result.Parent;
-                else
-                    return result;
-            }
-
-            return result;
-        }
-
-        internal void ReportMouseMove(
-            Control targetControl,
-            long timestamp,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(control, timestamp);
-            control.RaiseMouseMove(eventArgs);
-        }
-
-        internal void ReportMouseDown(
-            Control targetControl,
-            long timestamp,
-            MouseButton changedButton,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(control, changedButton, timestamp);
-            control.RaiseMouseDown(eventArgs);
-        }
-
-        internal void ReportMouseDoubleClick(
-            Control targetControl,
-            long timestamp,
-            MouseButton changedButton,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(control, changedButton, timestamp);
-            control.RaiseMouseDoubleClick(eventArgs);
-        }
-
-        internal void ReportMouseUp(
-            Control targetControl,
-            long timestamp,
-            MouseButton changedButton,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(control, changedButton, timestamp);
-            control.RaiseMouseUp(eventArgs);
-        }
-
-        internal void ReportMouseWheel(
-            Control targetControl,
-            long timestamp,
-            int delta,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(control, timestamp);
-            eventArgs.Delta = delta;
-            control.RaiseMouseWheel(eventArgs);
-        }
-
-        internal void ReportKeyDown(Key key, bool isRepeat, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
-            control.RaiseKeyDown(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        internal void ReportKeyUp(Key key, bool isRepeat, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, key, isRepeat);
-            control.RaiseKeyUp(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        internal void ReportTextInput(char keyChar, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyPressEventArgs(Keyboard.PrimaryDevice, keyChar);
-            control.RaiseKeyPress(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        private Control GetControlUnderMouse()
+        private Control? GetControlUnderMouse()
         {
             var controlUnderMouse = Native.Control.HitTest(PrimaryMouseDevice.GetScreenPosition());
             if (controlUnderMouse == null)
@@ -251,4 +244,3 @@ namespace Alternet.UI
         }
     }
 }
-

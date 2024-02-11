@@ -1,8 +1,6 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 
 #if !ALTERNET_UI_INTEGRATION_REMOTING
 using Alternet.UI.Markup;
@@ -695,7 +693,6 @@ namespace Alternet.UI
         /// </summary>
         Menu = 133,
 
-
         /// <summary>
         ///  The '!' (33, 0x21) key.
         /// </summary>
@@ -779,7 +776,7 @@ namespace Alternet.UI
         /// <summary>
         ///  The '_' (95, 0x5F) key.
         /// </summary>
-        LowLine = 150, 
+        LowLine = 150,
 
         /// <summary>
         ///  The '{', 123, 0x7B) key.
