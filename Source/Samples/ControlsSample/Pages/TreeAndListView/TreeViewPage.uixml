@@ -134,6 +134,11 @@
         </VerticalStackPanel>
         <!-- ========================= -->
 
+        <VerticalStackPanel Name="stackPanel4" Visible="false" Padding="0,5,0,0">
+          <Button Text="Show TreeView Popup" Margin="10"
+                  Name="showPopupButton" Click="ShowPopupButton_Click"/>
+        </VerticalStackPanel>
+        <!-- ========================= -->
       </VerticalStackPanel>
     </HorizontalStackPanel>
   </Control>
