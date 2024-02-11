@@ -56,6 +56,7 @@ bool SetRange(bool useMinValue, bool useMaxValue);
 void SetHolidayColors(const Color& colorFg, const Color& colorBg);
 Color GetHolidayColorFg();
 Color GetHolidayColorBg();
+int HitTest(const PointI& point);
 void SetHeaderColors(const Color& colorFg, const Color& colorBg);
 Color GetHeaderColorFg();
 Color GetHeaderColorBg();

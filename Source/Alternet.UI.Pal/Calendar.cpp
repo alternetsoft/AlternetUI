@@ -296,6 +296,11 @@ namespace Alternet::UI
         return GetCalendar()->GetDate();
     }
 
+    int Calendar::HitTest(const PointI& point)
+    {
+        return GetCalendar()->HitTest(point);
+    }
+
     void Calendar::SetValue(const DateTime& value)
     {
         GetCalendar()->SetDate(value);
