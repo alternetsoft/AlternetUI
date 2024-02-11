@@ -87,7 +87,7 @@ namespace ControlsSample
         private void PopupCheckListBox_AfterHide(object? sender, EventArgs e)
         {
             var r = popupCheckListBox.PopupResult;
-            var ch = popupCheckListBox.MainControl.CheckedIndices.Count();
+            var ch = popupCheckListBox.MainControl.CheckedIndices.Count;
             Application.Log($"CheckListBoxPopup AfterHide PopupResult: {r}, Checked: {ch}");
         }
 

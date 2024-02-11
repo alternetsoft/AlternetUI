@@ -8,10 +8,15 @@ namespace ControlsSample
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
+        private readonly StackPanel mainPanel = new()
+        {
+            Orientation = StackPanelOrientation.Vertical,
+            Padding = 10,
+        };
 
         public CalendarPage()
         {
-            InitializeComponent();
+            mainPanel.Parent = this;
 
             calendar.SelectionChanged += Calendar_SelectionChanged;
             calendar.PageChanged += Calendar_PageChanged;
