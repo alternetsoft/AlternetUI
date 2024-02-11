@@ -242,12 +242,14 @@ namespace Alternet.UI
         /// Gets or sets method which is used to clear error state
         /// if error backround color is used for reporting it.
         /// </summary>
+        [Browsable(false)]
         public ResetColorType? ResetErrorBackgroundMethod { get; set; }
 
         /// <summary>
         /// Gets or sets method which is used to clear error state
         /// if error foreground color is used for reporting it.
         /// </summary>
+        [Browsable(false)]
         public ResetColorType? ResetErrorForegroundMethod { get; set; }
 
         /// <summary>

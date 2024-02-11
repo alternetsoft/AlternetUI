@@ -138,12 +138,14 @@ namespace Alternet.UI
         /// <remarks>
         /// Use <see cref="AutoUrl"/> in order to highlight and underline urls.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool AutoUrlOpen { get; set; } = DefaultAutoUrlOpen;
 
         /// <summary>
         /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
+        [Browsable(false)]
         public virtual ModifierKeys? AutoUrlModifiers { get; set; }
 
         /// <summary>
@@ -613,6 +615,7 @@ namespace Alternet.UI
         /// <remarks>
         /// <see cref="TextUrl"/> event is fired when url is clicked.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool AutoUrl
         {
             get
@@ -641,6 +644,7 @@ namespace Alternet.UI
         /// what can be displayed in it under Windows but not under Linux.
         /// Currently not implemented for the other platforms.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool HideVertScrollbar
         {
             get
