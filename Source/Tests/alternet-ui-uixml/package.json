@@ -1,0 +1,25 @@
+{
+  "name": "alternet-ui-uixml",
+  "displayName": "Alternet.UI.Uixml",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.86.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "uixml",
+      "aliases": ["Alternet.Uixml", "uixml"],
+      "extensions": ["uixml"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "uixml",
+      "scopeName": "source.xml",
+      "path": "./syntaxes/uixml.tmLanguage.json"
+    }]
+  }
+}
