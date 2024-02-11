@@ -15,7 +15,7 @@ namespace Alternet.UI
     public partial class PopupWindow : DialogWindow
     {
         private readonly LayoutPanel mainPanel = new();
-        private readonly GenericToolBar botttomToolBar = new();
+        private readonly GenericToolBar bottomToolBar = new();
         private ModalResult popupResult;
         private Control? mainControl;
 
@@ -26,19 +26,19 @@ namespace Alternet.UI
             : base()
         {
             Padding = DefaultPadding;
-            var buttons = botttomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+            var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
             ButtonIdOk = buttons[0];
             ButtonIdCancel = buttons[1];
-            botttomToolBar.SuspendLayout();
-            botttomToolBar.Padding = DefaultBotttomToolBarPadding;
-            botttomToolBar.MinHeight = botttomToolBar.ItemSize + botttomToolBar.Padding.Vertical;
-            botttomToolBar.SetToolAlignRight(ButtonIdOk, true);
-            botttomToolBar.SetToolAlignRight(ButtonIdCancel, true);
-            botttomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
-            botttomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
-            botttomToolBar.ResumeLayout();
-            botttomToolBar.Dock = DockStyle.Bottom;
-            botttomToolBar.Parent = mainPanel;
+            bottomToolBar.SuspendLayout();
+            bottomToolBar.Padding = DefaultBotttomToolBarPadding;
+            bottomToolBar.MinHeight = bottomToolBar.ItemSize + bottomToolBar.Padding.Vertical;
+            bottomToolBar.SetToolAlignRight(ButtonIdOk, true);
+            bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
+            bottomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
+            bottomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
+            bottomToolBar.ResumeLayout();
+            bottomToolBar.Dock = DockStyle.Bottom;
+            bottomToolBar.Parent = mainPanel;
             ShowInTaskbar = false;
             StartLocation = WindowStartLocation.Manual;
             HasTitleBar = DefaultHasTitleBar;
@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
         /// </summary>
-        public GenericToolBar BotttomToolBar => botttomToolBar;
+        public GenericToolBar BottomToolBar => bottomToolBar;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
@@ -238,7 +238,7 @@ namespace Alternet.UI
             var ms = size ?? MainControl.Size;
 
             var clientHeight =
-                ms.Height + (BotttomToolBar.MinHeight ?? 0) + Padding.Vertical;
+                ms.Height + (BottomToolBar.MinHeight ?? 0) + Padding.Vertical;
             var clientWidth = ms.Width + Padding.Horizontal;
             var newSize = (clientWidth, clientHeight);
             ClientSize = newSize + new SizeD(1, 0);
