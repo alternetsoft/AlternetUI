@@ -52,6 +52,7 @@ namespace Alternet.UI
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += PopupWindow_Disposed;
+            HideOnDeactivate = !Application.IsLinuxOS;
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user clicks mouse outside it or if it loses focus in any other way.
         /// </summary>
-        public bool HideOnDeactivate { get; set; } = true;
+        public bool HideOnDeactivate { get; set; }
 
         /// <summary>
         /// Gets or sets the popup result value, which is updated when popup is closed.
@@ -280,6 +281,7 @@ namespace Alternet.UI
         public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
+            SetClientSizeTo(MainControl.Size);
             SetPositionInDips(ptOrigin, sizePopup);
             Show();
             FocusMainControl();
@@ -502,7 +504,7 @@ namespace Alternet.UI
 
         private void Popup_Deactivated(object? sender, EventArgs e)
         {
-            if (HideOnDeactivate && Visible)
+            if (HideOnDeactivate && Visible && !Modal)
                 HidePopup(ModalResult.Canceled);
         }
     }

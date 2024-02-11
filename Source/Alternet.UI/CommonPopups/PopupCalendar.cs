@@ -23,7 +23,6 @@ namespace Alternet.UI
             HideOnDoubleClick = true;
             MainControl.Required();
             MainControl.MinimumSize = MainControl.Size;
-            SetClientSizeTo(MainControl.Size);
         }
 
         /// <summary>

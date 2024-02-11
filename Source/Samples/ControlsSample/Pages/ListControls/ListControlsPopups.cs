@@ -158,7 +158,6 @@ namespace ControlsSample
         {
             if (popupListBox.MainControl.Items.Count == 0)
             {
-                popupListBox.Size = new(150, 300);
                 AddDefaultItems(popupListBox.MainControl);
                 popupListBox.MainControl.SelectFirstItem();
             }
@@ -171,7 +170,6 @@ namespace ControlsSample
 
             if (control.Items.Count == 0)
             {
-                popupCheckListBox.Size = new(150, 300);
                 AddDefaultItems(control);
                 control.SelectFirstItem();
             }
