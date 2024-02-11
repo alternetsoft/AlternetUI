@@ -170,6 +170,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs before native debug message needs to be displayed.
+        /// </summary>
+        public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
+
+        /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
         /// </summary>
         /// <remarks>
@@ -1146,7 +1151,17 @@ namespace Alternet.UI
 
         private void NativeApplication_LogMessage()
         {
-            Log(this.EventArgString);
+            var s = this.EventArgString;
+
+            if(BeforeNativeLogMessage is not null)
+            {
+                LogMessageEventArgs e = new(s);
+                BeforeNativeLogMessage(Application.Current, e);
+                if (e.Cancel)
+                    return;
+            }
+
+            Log(s);
         }
 
         private void CheckDisposed()
