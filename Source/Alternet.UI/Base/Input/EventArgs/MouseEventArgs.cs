@@ -1,8 +1,3 @@
-#nullable disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Collections;
 using Alternet.Drawing;
@@ -20,13 +15,19 @@ namespace Alternet.UI
     /// </summary>
     public class MouseEventArgs : BaseEventArgs
     {
+        private readonly Control currentTarget;
+        private readonly Control originalTarget;
         private PointD location;
 
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        internal MouseEventArgs(Control control, MouseButton button, long timestamp)
-            : this(control, timestamp)
+        internal MouseEventArgs(
+            Control currentTarget,
+            Control originalTarget,
+            MouseButton button,
+            long timestamp)
+            : this(currentTarget, originalTarget, timestamp)
         {
             ChangedButton = button;
             ClickCount = 1;
@@ -35,12 +36,24 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        internal MouseEventArgs(Control control, long timestamp)
+        internal MouseEventArgs(Control currentTarget, Control originalTarget, long timestamp)
         {
+            this.currentTarget = currentTarget;
+            this.originalTarget = originalTarget;
             MouseDevice = Mouse.PrimaryDevice;
             Timestamp = timestamp;
-            location = GetPosition(control);
+            location = GetPosition(currentTarget);
         }
+
+        /// <summary>
+        /// Gets current target control for the event.
+        /// </summary>
+        public Control CurrentTarget => currentTarget;
+
+        /// <summary>
+        /// Gets original target control for the event.
+        /// </summary>
+        public Control OriginalTarget => originalTarget;
 
         /// <summary>
         /// Gets timestamp of the event.
@@ -182,22 +195,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Calculates the position of the mouse relative to
-        ///     a particular element.
-        /// </summary>
-        public PointD GetPosition(Control? relativeTo)
-        {
-            if (relativeTo is null)
-                return this.MouseDevice.GetScreenPosition();
-            else
-                return this.MouseDevice.GetPosition(relativeTo);
-        }
-
-        /// <summary>
         ///     The state of the left button.
         /// </summary>
         public MouseButtonState LeftButton
-        { 
+        {
             get
             {
                 return this.MouseDevice.LeftButton;
@@ -208,7 +209,7 @@ namespace Alternet.UI
         ///     The state of the right button.
         /// </summary>
         public MouseButtonState RightButton
-        { 
+        {
             get
             {
                 return this.MouseDevice.RightButton;
@@ -219,7 +220,7 @@ namespace Alternet.UI
         ///     The state of the middle button.
         /// </summary>
         public MouseButtonState MiddleButton
-        { 
+        {
             get
             {
                 return this.MouseDevice.MiddleButton;
@@ -230,7 +231,7 @@ namespace Alternet.UI
         ///     The state of the first extended button.
         /// </summary>
         public MouseButtonState XButton1
-        { 
+        {
             get
             {
                 return this.MouseDevice.XButton1;
@@ -241,7 +242,7 @@ namespace Alternet.UI
         ///     The state of the second extended button.
         /// </summary>
         public MouseButtonState XButton2
-        { 
+        {
             get
             {
                 return this.MouseDevice.XButton2;
@@ -254,5 +255,17 @@ namespace Alternet.UI
         /// <returns>A <see cref="PointD" /> that contains the x- and y- mouse
         /// coordinates, in dips, relative to the upper-left corner of the control.</returns>
         public PointD Location => location;
+
+        /// <summary>
+        ///     Calculates the position of the mouse relative to
+        ///     a particular element.
+        /// </summary>
+        public PointD GetPosition(Control? relativeTo)
+        {
+            if (relativeTo is null)
+                return this.MouseDevice.GetScreenPosition();
+            else
+                return this.MouseDevice.GetPosition(relativeTo);
+        }
     }
 }
