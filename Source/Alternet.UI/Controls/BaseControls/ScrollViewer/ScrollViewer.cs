@@ -74,7 +74,7 @@ namespace Alternet.UI
             private void LayoutCore()
             {
                 var childrenLayoutBounds = Control.ChildrenLayoutBounds;
-                foreach (var control in AllChildrenIncludedInLayout)
+                foreach (var control in Control.AllChildrenInLayout)
                 {
                     var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
                     var unboundedPreferredSize =

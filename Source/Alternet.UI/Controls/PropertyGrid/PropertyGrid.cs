@@ -243,6 +243,10 @@ namespace Alternet.UI
         /// </summary>
         public ICollection<string> IgnorePropNames => ignorePropNames;
 
+        /// <inheritdoc/>
+        public override IReadOnlyList<Control> AllChildrenInLayout
+            => Array.Empty<Control>();
+
         /// <summary>
         /// Gets or sets whether boolean properties will be shown as checkboxes.
         /// Default is <c>true</c>.

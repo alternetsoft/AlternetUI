@@ -2044,6 +2044,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Control.Children"/> or an empty array if there are no
+        /// child controls.
+        /// </summary>
+        /// <remarks>
+        /// This method doesn't allocate memory if there are no children.
+        /// </remarks>
+        [Browsable(false)]
+        public IReadOnlyList<Control> AllChildren
+        {
+            get
+            {
+                if (HasChildren)
+                    return Children;
+
+                return Array.Empty<Control>();
+            }
+        }
+
+        /// <summary>
+        /// Gets all child controls which are visible and included in the layout.
+        /// </summary>
+        /// <remarks>
+        /// This method uses <see cref="AllChildren"/>, <see cref="Control.Visible"/>
+        /// and <see cref="Control.IgnoreLayout"/> properties.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual IReadOnlyList<Control> AllChildrenInLayout
+        {
+            get
+            {
+                var controls = AllChildren;
+                var all = true;
+
+                foreach (var control in controls)
+                {
+                    if (!control.Visible || control.IgnoreLayout)
+                    {
+                        all = false;
+                        break;
+                    }
+                }
+
+                if (all)
+                    return controls;
+
+                List<Control> result = new();
+
+                foreach (var control in controls)
+                {
+                    if (control.Visible && !control.IgnoreLayout)
+                        result.Add(control);
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the horizontal alignment applied to this control when
         /// it is positioned within a parent control.
         /// </summary>

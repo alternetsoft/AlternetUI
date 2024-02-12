@@ -18,7 +18,7 @@ namespace Alternet.UI
 
                 double width = 0;
                 double maxHeight = 0;
-                foreach (var control in Handler.AllChildrenIncludedInLayout)
+                foreach (var control in Control.AllChildrenInLayout)
                 {
                     var margin = control.Margin;
                     var preferredSize = control.GetPreferredSizeLimited(
@@ -63,7 +63,7 @@ namespace Alternet.UI
 
             public override void Layout()
             {
-                var controls = Handler.AllChildrenIncludedInLayout;
+                var controls = Control.AllChildrenInLayout;
                 var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
 
                 double x = 0;

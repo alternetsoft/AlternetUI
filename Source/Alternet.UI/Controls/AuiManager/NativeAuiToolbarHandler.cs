@@ -25,9 +25,6 @@ namespace Alternet.UI
             }
         }
 
-        public override IEnumerable<Control> AllChildrenIncludedInLayout
-            => Enumerable.Empty<Control>();
-
         public new Native.AuiToolBar NativeControl =>
             (Native.AuiToolBar)base.NativeControl!;
 

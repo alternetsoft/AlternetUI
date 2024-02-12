@@ -35,18 +35,6 @@ namespace Alternet.UI
         [Category("Behavior")]
         public event EventHandler? PageAdded;
 
-        // public event EventHandler<SelectedTabPageChangingEventArgs>? SelectedPageChanging;
-
-        // public void RaiseSelectedPageChanging(SelectedTabPageChangingEventArgs e)
-        // {
-        //    OnSelectedPageChanging(e);
-        //    SelectedPageChanging?.Invoke(this, e);
-        // }
-
-        // protected virtual void OnSelectedPageChanging(SelectedTabPageChangingEventArgs e)
-        // {
-        // }
-
         /// <summary>
         /// Gets or sets the area of the control (for example, along the top) where
         /// the tabs are aligned.

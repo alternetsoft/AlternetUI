@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Alternet.UI
 {
-    internal class NativeSplitterPanelHandler : ControlHandler
+    internal class SplitterPanelHandler : ControlHandler
     {
         public new Native.SplitterPanel NativeControl =>
             (Native.SplitterPanel)base.NativeControl!;
@@ -124,9 +124,6 @@ namespace Alternet.UI
                 return NativeControl.SashSize;
             }
         }
-
-        public override IEnumerable<Control> AllChildrenIncludedInLayout
-            => Enumerable.Empty<Control>();
 
         public new SplitterPanel Control => (SplitterPanel)base.Control;
 

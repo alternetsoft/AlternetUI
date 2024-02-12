@@ -84,17 +84,13 @@ namespace Alternet.UI
 
         private static void LayoutDockedChildren(Control parent, RectD space)
         {
-            if (!parent.HasChildren)
-                return;
-            var children = parent.Children;
+            var children = parent.AllChildrenInLayout;
 
             // Deal with docking; go through in reverse, MS docs say that
             // lowest Z-order is closest to edge
             for (int i = children.Count - 1; i >= 0; i--)
             {
                 Control child = children[i];
-                if (!child.Visible || child.IgnoreLayout)
-                    continue;
 
                 SizeD child_size = child.Bounds.Size;
                 DockStyle dock = LayoutPanel.GetDock(child);

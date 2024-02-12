@@ -78,6 +78,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override IReadOnlyList<Control> AllChildrenInLayout
+            => Array.Empty<Control>();
+
         /// <summary>
         /// Gets id of the tool passed in the event handler.
         /// </summary>

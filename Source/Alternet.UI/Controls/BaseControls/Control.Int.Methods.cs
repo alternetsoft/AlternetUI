@@ -17,7 +17,7 @@ namespace Alternet.UI
         internal static void PerformDefaultLayout(Control container)
         {
             var childrenLayoutBounds = container.ChildrenLayoutBounds;
-            foreach (var control in container.Handler.AllChildrenIncludedInLayout)
+            foreach (var control in container.AllChildrenInLayout)
             {
                 var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
 
