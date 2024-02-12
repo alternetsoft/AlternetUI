@@ -14,8 +14,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupWindow : DialogWindow
     {
-        private readonly LayoutPanel mainPanel = new();
-        private readonly GenericToolBar botttomToolBar = new();
+        private readonly VerticalStackPanel mainPanel = new();
+        private readonly GenericToolBar bottomToolBar = new();
         private ModalResult popupResult;
         private Control? mainControl;
 
@@ -25,34 +25,47 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
-            Padding = (5, 5, 5, 10);
-            var buttons = botttomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
-            ButtonIdOk = buttons[0];
-            ButtonIdCancel = buttons[1];
-            botttomToolBar.SuspendLayout();
-            botttomToolBar.Padding = (5, 5, 0, 0);
-            botttomToolBar.MinHeight = botttomToolBar.ItemSize + botttomToolBar.Padding.Vertical;
-            botttomToolBar.SetToolAlignRight(ButtonIdOk, true);
-            botttomToolBar.SetToolAlignRight(ButtonIdCancel, true);
-            botttomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
-            botttomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
-            botttomToolBar.ResumeLayout();
-            botttomToolBar.Dock = DockStyle.Bottom;
-            botttomToolBar.Parent = mainPanel;
+            MinimizeEnabled = DefaultMinimizeEnabled;
+            MaximizeEnabled = DefaultMaximizeEnabled;
             ShowInTaskbar = false;
             StartLocation = WindowStartLocation.Manual;
             HasTitleBar = DefaultHasTitleBar;
-            TopMost = true;
+            TopMost = DefaultTopMost;
             CloseEnabled = DefaultCloseEnabled;
-            MinimizeEnabled = false;
-            MaximizeEnabled = false;
             HasSystemMenu = false;
+
+            mainPanel.AllowStretch = true;
             mainPanel.Parent = this;
+            Padding = DefaultPadding;
+            var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+            ButtonIdOk = buttons[0];
+            ButtonIdCancel = buttons[1];
+            bottomToolBar.SuspendLayout();
+            bottomToolBar.Padding = DefaultBotttomToolBarPadding;
+            bottomToolBar.MinHeight = bottomToolBar.ItemSize + bottomToolBar.Padding.Vertical;
+            bottomToolBar.SetToolAlignRight(ButtonIdOk, true);
+            bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
+            bottomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
+            bottomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
+            bottomToolBar.VerticalAlignment = VerticalAlignment.Bottom;
+            bottomToolBar.ResumeLayout();
+            bottomToolBar.Parent = mainPanel;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += PopupWindow_Disposed;
+            HideOnDeactivate = !Application.IsLinuxOS;
         }
+
+        /// <summary>
+        /// Gets or sets default bottom toolbar padding.
+        /// </summary>
+        public static Thickness DefaultBotttomToolBarPadding { get; set; } = (5, 5, 0, 0);
+
+        /// <summary>
+        /// Gets or sets default popup window padding.
+        /// </summary>
+        public static Thickness DefaultPadding { get; set; } = (5, 5, 5, 10);
 
         /// <summary>
         /// Gets or sets whether popups are shown using <see cref="DialogWindow.ShowModal()"/>
@@ -78,9 +91,24 @@ namespace Alternet.UI
         public ObjectUniqueId ButtonIdCancel { get; }
 
         /// <summary>
+        /// Gets main panel (parent of the main control).
+        /// </summary>
+        public Control MainPanel => mainPanel;
+
+        /// <summary>
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
         /// </summary>
-        public GenericToolBar BotttomToolBar => botttomToolBar;
+        public GenericToolBar BottomToolBar => bottomToolBar;
+
+        /// <summary>
+        /// Gets default value of the <see cref="Window.MinimizeEnabled"/> property.
+        /// </summary>
+        public virtual bool DefaultMinimizeEnabled => false;
+
+        /// <summary>
+        /// Gets default value of the <see cref="Window.MaximizeEnabled"/> property.
+        /// </summary>
+        public virtual bool DefaultMaximizeEnabled => false;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
@@ -88,9 +116,19 @@ namespace Alternet.UI
         public virtual bool DefaultHasTitleBar => false;
 
         /// <summary>
+        /// Gets default value of the <see cref="Window.TopMost"/> property.
+        /// </summary>
+        public virtual bool DefaultTopMost => true;
+
+        /// <summary>
         /// Gets default value of the <see cref="Window.CloseEnabled"/> property.
         /// </summary>
         public virtual bool DefaultCloseEnabled => false;
+
+        /// <summary>
+        /// Gets whether popup window was already shown at least one time.
+        /// </summary>
+        public bool WasShown { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
@@ -133,7 +171,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user clicks mouse outside it or if it loses focus in any other way.
         /// </summary>
-        public bool HideOnDeactivate { get; set; } = true;
+        public bool HideOnDeactivate { get; set; }
 
         /// <summary>
         /// Gets or sets the popup result value, which is updated when popup is closed.
@@ -158,15 +196,15 @@ namespace Alternet.UI
         /// Gets or sets main control used in the popup window.
         /// </summary>
         [Browsable(false)]
-        protected Control MainControl
+        public Control MainControl
         {
             get
             {
                 if (mainControl == null)
                 {
                     mainControl = CreateMainControl();
-                    mainControl.Dock = DockStyle.Fill;
-                    mainPanel.Children.Prepend(mainControl);
+                    mainControl.VerticalAlignment = VerticalAlignment.Stretch;
+                    mainControl.Parent = mainPanel;
                     BindEvents(mainControl);
                 }
 
@@ -184,9 +222,9 @@ namespace Alternet.UI
                 }
 
                 mainControl = value;
-                mainControl.Dock = DockStyle.Fill;
+                mainControl.VerticalAlignment = VerticalAlignment.Stretch;
                 BindEvents(mainControl);
-                mainPanel.Children.Prepend(mainControl);
+                mainControl.Parent = mainPanel;
             }
         }
 
@@ -208,10 +246,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets client size to the specified value.
+        /// </summary>
+        /// <param name="size">New client size.</param>
+        public virtual void SetClientSizeTo(SizeD? size = null)
+        {
+            var toolHeight = BottomToolBar.Visible ? (BottomToolBar.MinHeight ?? 0) : 0;
+
+            var ms = size ?? MainControl.Size;
+
+            var clientHeight =
+                ms.Height + toolHeight + Padding.Vertical;
+            var clientWidth = ms.Width + Padding.Horizontal;
+            var newSize = (clientWidth, clientHeight);
+            ClientSize = newSize + new SizeD(1, 0);
+            ClientSize = newSize;
+            Refresh();
+            NativeControl.SendSizeEvent();
+        }
+
+        /// <summary>
         /// Shows popup under bottom left corner of the specified control.
         /// </summary>
         /// <param name="control">Control.</param>
-        public void ShowPopup(Control control)
+        public virtual void ShowPopup(Control control)
         {
             PopupOwner = control;
 
@@ -241,9 +299,16 @@ namespace Alternet.UI
         public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
-            SetSizeToContent();
+
+            if (!WasShown)
+            {
+                SetClientSizeTo(MainControl.Size);
+            }
+
             SetPositionInDips(ptOrigin, sizePopup);
+            BeforeShowPopup();
             Show();
+            WasShown = true;
             FocusMainControl();
             if (Application.IsLinuxOS || ModalPopups)
             {
@@ -413,6 +478,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called before popup is shown.
+        /// </summary>
+        protected virtual void BeforeShowPopup()
+        {
+        }
+
+        /// <summary>
         /// Default implementation of the left mouse button up event
         /// for the popup control.
         /// </summary>
@@ -420,11 +492,18 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnMainControlMouseLeftButtonUp(object? sender, MouseEventArgs e)
         {
-            if (HideOnClick)
+            if (HideOnClick && HideOnClickPoint(e.Location))
             {
                 HidePopup(ModalResult.Accepted);
             }
         }
+
+        /// <summary>
+        /// Gets whether mouse click on the specified point in the control closes popup window.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <returns></returns>
+        protected virtual bool HideOnClickPoint(PointD point) => true;
 
         private void PopupWindow_KeyDown(object? sender, KeyEventArgs e)
         {
@@ -457,7 +536,7 @@ namespace Alternet.UI
 
         private void Popup_Deactivated(object? sender, EventArgs e)
         {
-            if (HideOnDeactivate && Visible)
+            if (HideOnDeactivate && Visible && !Modal)
                 HidePopup(ModalResult.Canceled);
         }
     }

@@ -1,22 +1,8 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//
-//      ModifierKeysValueSerializer : Serializes a Modifier to and from a string.
-//
-// Features:
-//
-//
-//
-// 
-
-using System.ComponentModel;    // for TypeConverter
-
+using System.ComponentModel;
 
 using Alternet.UI.Markup;
 
@@ -25,7 +11,6 @@ namespace Alternet.UI
     /// <summary>
     /// Key Converter class for converting between a string and the Type of a Modifiers
     /// </summary>
-    /// <ExternalAPI/> 
     public class ModifierKeysValueSerializer : ValueSerializer
     {
         /// <summary>
@@ -34,8 +19,7 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        /// <ExternalAPI/> 
-        public override bool CanConvertFromString(string value, IValueSerializerContext context) 
+        public override bool CanConvertFromString(string value, IValueSerializerContext context)
         {
             return true;
         }
@@ -46,11 +30,10 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        /// <ExternalAPI/> 
-        public override bool CanConvertToString(object value, IValueSerializerContext context) 
+        public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
-            return (value is ModifierKeys)
-                && ModifierKeysConverter.IsDefinedModifierKeys((ModifierKeys)value);
+            return (value is ModifierKeys keys)
+                && ModifierKeysConverter.IsDefinedModifierKeys(keys);
         }
 
         /// <summary>
@@ -59,7 +42,7 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override object ConvertFromString(string value, IValueSerializerContext context) 
+        public override object? ConvertFromString(string value, IValueSerializerContext context)
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
             if (converter != null)
@@ -74,7 +57,7 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override string ConvertToString(object value, IValueSerializerContext context) 
+        public override string? ConvertToString(object value, IValueSerializerContext context)
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
             if (converter != null)

@@ -9,6 +9,18 @@ namespace PropertyGridSample
 {
     internal partial class ObjectInit
     {
+        public static void InitSideBarPanel(object c)
+        {
+            if (c is not SideBarPanel control)
+                return;
+            control.SuggestedSize = defaultListSize;
+            var tab1 = CreatePanelWithButtons("Tab 1");
+            var tab2 = CreatePanelWithButtons("Tab 2");
+            control.Add("Tab 1", tab1);
+            control.Add("Tab 2", tab2);
+            control.SelectTab(0);
+        }
+
         public static void InitCardPanel(object c)
         {
             if (c is not CardPanel control)

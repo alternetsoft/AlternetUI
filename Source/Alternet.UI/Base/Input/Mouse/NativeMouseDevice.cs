@@ -1,13 +1,12 @@
-
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
-using System.Collections;
-using System.Security;
-using System.Runtime.InteropServices;
 using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Security;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -18,18 +17,13 @@ namespace Alternet.UI
     /// </summary>
     internal sealed class NativeMouseDevice : MouseDevice
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="inputManager">
-        /// </param>
-        internal NativeMouseDevice(InputManager inputManager)
-            : base(inputManager)
+        internal NativeMouseDevice()
         {
         }
 
         /// <summary>
-        ///     Gets the current state of the specified button from the device from the underlying system
+        ///     Gets the current state of the specified button from
+        ///     the device from the underlying system.
         /// </summary>
         /// <param name="mouseButton">
         ///     The mouse button to get the state of
@@ -39,7 +33,8 @@ namespace Alternet.UI
         /// </returns>
         internal override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
         {
-            return (MouseButtonState)Application.Current.NativeMouse.GetButtonState((Native.MouseButton)mouseButton);
+            return (MouseButtonState)Application.Current.NativeMouse.GetButtonState(
+                (Native.MouseButton)mouseButton);
         }
 
         internal override PointD GetScreenPositionFromSystem()

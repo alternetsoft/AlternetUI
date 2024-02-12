@@ -96,6 +96,10 @@ namespace Alternet::UI
 
         wxWindow* window;
 
+#ifdef __WXOSX__
+        _useGeneric = true;
+#endif
+
         if (_useGeneric)
         {
             window = new wxGenericCalendarCtrl2(parent,
@@ -294,6 +298,11 @@ namespace Alternet::UI
     DateTime Calendar::GetValue()
     {
         return GetCalendar()->GetDate();
+    }
+
+    int Calendar::HitTest(const PointI& point)
+    {
+        return GetCalendar()->HitTest(point);
     }
 
     void Calendar::SetValue(const DateTime& value)

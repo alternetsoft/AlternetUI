@@ -40,6 +40,8 @@ namespace NativeApi.Api
         public Color GetHolidayColorFg() => default;
         public Color GetHolidayColorBg() => default;
 
+        public int HitTest(PointI point) => default;
+
         public void SetHeaderColors(Color colorFg, Color colorBg) { }
 
         public Color GetHeaderColorFg() => default;

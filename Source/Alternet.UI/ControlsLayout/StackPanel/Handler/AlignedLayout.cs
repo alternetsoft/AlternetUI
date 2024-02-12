@@ -38,7 +38,8 @@ namespace Alternet.UI
                 case HorizontalAlignment.Center:
                     return new AlignedPosition(
                         layoutBounds.Left +
-                        ((layoutBounds.Width - (childPreferredSize.Width + childControl.Margin.Horizontal)) / 2) +
+                        ((layoutBounds.Width
+                        - (childPreferredSize.Width + childControl.Margin.Horizontal)) / 2) +
                         childControl.Margin.Left,
                         childPreferredSize.Width);
                 case HorizontalAlignment.Right:
@@ -70,7 +71,8 @@ namespace Alternet.UI
                 case VerticalAlignment.Center:
                     return new AlignedPosition(
                         layoutBounds.Top +
-                        ((layoutBounds.Height - (childPreferredSize.Height + control.Margin.Vertical)) / 2) +
+                        ((layoutBounds.Height
+                        - (childPreferredSize.Height + control.Margin.Vertical)) / 2) +
                         control.Margin.Top,
                         childPreferredSize.Height);
                 case VerticalAlignment.Bottom:

@@ -1,11 +1,5 @@
-#nullable disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-
 using System;
-using System.Security; 
+using System.Security;
 
 namespace Alternet.UI
 {
@@ -21,25 +15,25 @@ namespace Alternet.UI
     /// </summary>
     public class KeyPressEventArgs : KeyboardEventArgs
     {
-        private char keyChar;
+        private readonly char keyChar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
         /// </summary>
-        public KeyPressEventArgs(KeyboardDevice keyboard, char keyChar)
-            : base(keyboard)
+        internal KeyPressEventArgs(
+            Control originalTarget,
+            char keyChar)
+            : base(originalTarget)
         {
             this.keyChar = keyChar;
         }
 
         /// <summary>
-        ///     The Key referenced by the event, if the key is not being 
-        ///     handled specially.
+        ///     The Key referenced by the event.
         /// </summary>
         public char KeyChar
         {
-            get {return keyChar;}
+            get { return keyChar; }
         }
     }
 }
-

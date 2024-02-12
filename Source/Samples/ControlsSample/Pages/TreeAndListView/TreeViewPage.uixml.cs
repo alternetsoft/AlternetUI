@@ -10,6 +10,7 @@ namespace ControlsSample
     internal partial class TreeViewPage : Control
     {
         private readonly CardPanelHeader panelHeader = new();
+        private readonly PopupTreeView popupTreeView = new();
         private int supressExpandEvents = 0;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
@@ -26,6 +27,7 @@ namespace ControlsSample
                 panelHeader.Add("Actions", stackPanel1);
                 panelHeader.Add("Settings", stackPanel2);
                 panelHeader.Add("Events", stackPanel3);
+                panelHeader.Add("Popup", stackPanel4);
                 pageControl.Children.Insert(0, panelHeader);
                 panelHeader.SelectedTab = panelHeader.Tabs[0];
 
@@ -37,15 +39,30 @@ namespace ControlsSample
                 treeView.ImageList = ResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
                 SetCustomColors();
+
+                popupTreeView.MainControl.ImageList = ResourceLoader.LoadImageLists().Small;
+                AddItems(popupTreeView.MainControl, 10);
+                popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }
         }
 
-        private void TreeView_MouseLeftButtonUp(object sender, MouseEventArgs e)
+        private void PopupTreeView_AfterHide(object? sender, EventArgs e)
+        {
+            var resultItem = popupTreeView.MainControl.SelectedItem?.Text ?? "<null>";
+            Application.Log($"AfterHide PopupResult: {popupTreeView.PopupResult}, Item: {resultItem}");
+        }
+
+        private void ShowPopupButton_Click(object? sender, EventArgs e)
+        {
+            popupTreeView.ShowPopup(showPopupButton);
+        }
+
+        private void TreeView_MouseLeftButtonUp(object? sender, MouseEventArgs e)
         {
             /*site?.LogEvent($"TreeView: MouseLeftButtonUp");*/
         }
 
-        private void TreeView_MouseUp(object sender, MouseEventArgs e)
+        private void TreeView_MouseUp(object? sender, MouseEventArgs e)
         {
             /*site?.LogEvent($"TreeView: MouseUp");*/
         }
@@ -64,12 +81,12 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
-            AddItems(10);
+            AddItems(treeView, 10);
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            AddItems(1000);
+            AddItems(treeView, 1000);
         }
 
         private int GenItemIndex()
@@ -78,7 +95,7 @@ namespace ControlsSample
             return newItemIndex;
         }
 
-        private void AddItems(int count)
+        private void AddItems(TreeView tree, int count)
         {
             treeView.BeginUpdate();
             try
@@ -108,7 +125,7 @@ namespace ControlsSample
                         }
                     }
 
-                    treeView.Items.Add(item);
+                    tree.Items.Add(item);
                 }
             }
             finally

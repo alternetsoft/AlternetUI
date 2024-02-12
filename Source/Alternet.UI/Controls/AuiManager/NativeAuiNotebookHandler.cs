@@ -13,9 +13,6 @@ namespace Alternet.UI
         {
         }
 
-        public override IEnumerable<Control> AllChildrenIncludedInLayout
-            => Enumerable.Empty<Control>();
-
         public new Native.AuiNotebook NativeControl =>
             (Native.AuiNotebook)base.NativeControl!;
 

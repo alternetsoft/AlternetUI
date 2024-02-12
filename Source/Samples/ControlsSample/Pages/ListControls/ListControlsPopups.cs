@@ -69,6 +69,8 @@ namespace ControlsSample
             popupListBox.MainControl.Click += PopupListBox_Click;
             popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
 
+            Group(showPopupListBoxButton, showPopupCheckListBoxButton).SuggestedWidthToMax();
+
         }
 
         public bool ModalPopups
@@ -87,7 +89,7 @@ namespace ControlsSample
         private void PopupCheckListBox_AfterHide(object? sender, EventArgs e)
         {
             var r = popupCheckListBox.PopupResult;
-            var ch = popupCheckListBox.MainControl.CheckedIndices.Count();
+            var ch = popupCheckListBox.MainControl.CheckedIndices.Count;
             Application.Log($"CheckListBoxPopup AfterHide PopupResult: {r}, Checked: {ch}");
         }
 
@@ -158,7 +160,6 @@ namespace ControlsSample
         {
             if (popupListBox.MainControl.Items.Count == 0)
             {
-                popupListBox.Size = new(150, 300);
                 AddDefaultItems(popupListBox.MainControl);
                 popupListBox.MainControl.SelectFirstItem();
             }
@@ -171,7 +172,6 @@ namespace ControlsSample
 
             if (control.Items.Count == 0)
             {
-                popupCheckListBox.Size = new(150, 300);
                 AddDefaultItems(control);
                 control.SelectFirstItem();
             }

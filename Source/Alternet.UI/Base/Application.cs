@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly OperatingSystems BackendOS;
 
-        internal const int BuildCounter = 5;
+        internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();
@@ -168,6 +168,11 @@ namespace Alternet.UI
             Initialized = true;
             Window.UpdateDefaultFont();
         }
+
+        /// <summary>
+        /// Occurs before native debug message needs to be displayed.
+        /// </summary>
+        public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
@@ -1146,7 +1151,17 @@ namespace Alternet.UI
 
         private void NativeApplication_LogMessage()
         {
-            Log(this.EventArgString);
+            var s = this.EventArgString;
+
+            if(BeforeNativeLogMessage is not null)
+            {
+                LogMessageEventArgs e = new(s);
+                BeforeNativeLogMessage(Application.Current, e);
+                if (e.Cancel)
+                    return;
+            }
+
+            Log(s);
         }
 
         private void CheckDisposed()

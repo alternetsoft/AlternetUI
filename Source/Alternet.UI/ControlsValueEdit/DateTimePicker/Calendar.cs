@@ -44,6 +44,19 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class Calendar : CustomDateEdit
     {
+        static Calendar()
+        {
+            Application.BeforeNativeLogMessage += Application_BeforeNativeLogMessage;
+
+            static void Application_BeforeNativeLogMessage(object? sender, LogMessageEventArgs e)
+            {
+                const string s1 = "'MonthCal_SetDayState'";
+
+                if (e.Message?.Contains(s1) ?? false)
+                    e.Cancel = true;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Calendar"/> class.
         /// </summary>
@@ -78,6 +91,47 @@ namespace Alternet.UI
         /// Occurs when a day was double clicked in the calendar.
         /// </summary>
         public event EventHandler? DayDoubleClick;
+
+        /// <summary>
+        /// Possible return values from <see cref="HitTest"/>.
+        /// </summary>
+        public enum HitTestResult
+        {
+            /// <summary>
+            /// Hit outside of anything.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Hit on the header (weekdays).
+            /// </summary>
+            Header,
+
+            /// <summary>
+            /// Hit on a day in the calendar.
+            /// </summary>
+            Day,
+
+            /// <summary>
+            /// Hit on next month arrow (in alternate month selector mode).
+            /// </summary>
+            IncMonth,
+
+            /// <summary>
+            /// Hit on previous month arrow (in alternate month selector mode).
+            /// </summary>
+            DecMonth,
+
+            /// <summary>
+            /// Hit on surrounding week of previous/next month (if shown).
+            /// </summary>
+            SurroundingWeek,
+
+            /// <summary>
+            /// Hit on week of the year number (if shown).
+            /// </summary>
+            Week,
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for the marked days.
@@ -437,7 +491,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="mark"><c>true</c> to mark the day, <c>false</c> to unmark it.</param>
-        public void Mark(int day, bool mark = true) => NativeControl.Mark(day, mark);
+        public virtual void Mark(int day, bool mark = true) => NativeControl.Mark(day, mark);
 
         /// <summary>
         /// Clears any attributes associated with the given day.
@@ -447,7 +501,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public void ResetAttr(int day) => NativeControl.ResetAttr(day);
+        public virtual void ResetAttr(int day) => NativeControl.ResetAttr(day);
 
         /// <summary>
         /// Marks the specified day as being a holiday in the current month.
@@ -457,7 +511,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public void SetHoliday(int day) => NativeControl.SetHoliday(day);
+        public virtual void SetHoliday(int day) => NativeControl.SetHoliday(day);
 
         /// <summary>
         /// Sets values for <see cref="HighlightColorBg"/> and
@@ -469,7 +523,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public void SetHighlightColors(Color colorFg, Color colorBg)
+        public virtual void SetHighlightColors(Color colorFg, Color colorBg)
         {
             NativeControl.SetHighlightColors(colorFg, colorBg);
         }
@@ -484,7 +538,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public void SetHolidayColors(Color colorFg, Color colorBg)
+        public virtual void SetHolidayColors(Color colorFg, Color colorBg)
         {
             NativeControl.SetHolidayColors(colorFg, colorBg);
         }
@@ -499,7 +553,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public void SetHeaderColors(Color colorFg, Color colorBg)
+        public virtual void SetHeaderColors(Color colorFg, Color colorBg)
         {
             NativeControl.SetHeaderColors(colorFg, colorBg);
         }
@@ -507,16 +561,35 @@ namespace Alternet.UI
         /// <summary>
         /// Changes <see cref="Value"/> property to the today date.
         /// </summary>
-        public void SelectToday()
+        public virtual void SelectToday()
         {
             Value = DateTime.Now.Date;
         }
 
         /// <summary>
-        /// Returns the <see cref="ICalendarDateAttr"/> attributes for the given day or <c>null</c>.
+        /// Returns one of <see cref="HitTestResult"/> constants.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Not implemented on Linux currently.
+        /// </remarks>
+        public HitTestResult HitTest(PointD point)
+        {
+            if (Application.IsLinuxOS)
+                return HitTestResult.None;
+
+            var pointi = PixelFromDip(point);
+            var result = NativeControl.HitTest(pointi);
+            return (HitTestResult)result;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="ICalendarDateAttr"/> attributes for the
+        /// given day or <c>null</c>.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
-        public ICalendarDateAttr? GetAttr(int day)
+        public virtual ICalendarDateAttr? GetAttr(int day)
         {
             var result = NativeControl.GetAttr(day);
             if (result == default)
@@ -529,7 +602,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
-        public void SetAttr(int day, ICalendarDateAttr? dateAttr)
+        public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
         {
             if (dateAttr is null)
                 NativeControl.ResetAttr(day);

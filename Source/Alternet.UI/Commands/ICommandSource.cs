@@ -29,10 +29,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     An element that an implementor may wish to target as the destination for the command.
+        ///     An element that an implementor may wish to target as the destination
+        ///     for the command.
         ///     The property may be implemented as read-write if desired.
         /// </summary>
-        IInputElement? CommandTarget
+        object? CommandTarget
         {
             get;
         }

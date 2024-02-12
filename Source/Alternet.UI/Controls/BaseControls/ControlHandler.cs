@@ -212,39 +212,6 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <summary>
-        /// Gets whether there are any items in the <see cref="VisualChildren"/> list.
-        /// </summary>
-        public virtual bool HasVisualChildren =>
-            visualChildren != null && VisualChildren.Count > 0;*/
-
-        /// <summary>
-        /// Gets the collection of all elements of <see cref="Control.Children"/>
-        /// </summary>
-        public virtual IEnumerable<Control> AllChildren
-        {
-            get
-            {
-                if (Control.HasChildren)
-                {
-                    /*if (HasVisualChildren)
-                        return VisualChildren.Concat(Control.Children);*/
-                    return Control.Children;
-                }
-
-                /*if (HasVisualChildren)
-                    return VisualChildren;*/
-                return Array.Empty<Control>();
-            }
-        }
-
-        /// <summary>
-        /// Gets the collection of all elements of <see cref="AllChildren"/>
-        /// collection included in layout (i.e. visible).
-        /// </summary>
-        public virtual IEnumerable<Control> AllChildrenIncludedInLayout
-            => AllChildren.Where(x => x.Visible && !x.IgnoreLayout);
-
         /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
@@ -785,7 +752,7 @@ namespace Alternet.UI
             double maxWidth = 0;
             double maxHeight = 0;
 
-            foreach (var control in AllChildrenIncludedInLayout)
+            foreach (var control in Control.AllChildrenInLayout)
             {
                 var preferredSize =
                     control.GetPreferredSize(availableSize) + control.Margin.Size;
@@ -1218,12 +1185,14 @@ namespace Alternet.UI
 
         private void NativeControl_MouseEnter()
         {
-            Control.RaiseMouseEnter();
+            var currentTarget = InputManager.GetMouseTargetControl(Control);
+            currentTarget?.RaiseMouseEnter();
         }
 
         private void NativeControl_MouseLeave()
         {
-            Control.RaiseMouseLeave();
+            var currentTarget = InputManager.GetMouseTargetControl(Control);
+            currentTarget?.RaiseMouseLeave();
         }
 
         private void NativeControl_Paint()

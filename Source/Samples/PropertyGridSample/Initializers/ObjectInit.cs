@@ -95,6 +95,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
             Actions.Add(typeof(Button), InitButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
+            Actions.Add(typeof(SideBarPanel), InitSideBarPanel);            
 
             Actions.Add(typeof(ControlPainterPreview), (c) =>
             {

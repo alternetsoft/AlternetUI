@@ -25,7 +25,10 @@ namespace Alternet.UI.Native
         private static GCHandle unhandledExceptionCallbackHandle;
         private static GCHandle caughtExceptionCallbackHandle;
 
-        private static string NativeModuleNameWithExt
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        public delegate void PInvokeCallbackActionType();
+
+        internal static string NativeModuleNameWithExt
         {
             get
             {
@@ -49,9 +52,6 @@ namespace Alternet.UI.Native
                 return result;
             }
         }
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-        public delegate void PInvokeCallbackActionType();
 
         public static void Initialize()
         {

@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// Dependency property for <see cref="CommandTarget"/>.
         /// </summary>
         public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(InputBinding));
+            DependencyProperty.Register("CommandTarget", typeof(object), typeof(InputBinding));
 
         /// <summary>
         /// Dependency property for <see cref="Command"/> property.
@@ -103,11 +103,11 @@ namespace Alternet.UI
         /// <summary>
         /// Where the command should be raised.
         /// </summary>
-        public IInputElement CommandTarget
+        public object? CommandTarget
         {
             get
             {
-                return (IInputElement)GetValue(CommandTargetProperty);
+                return GetValue(CommandTargetProperty);
             }
 
             set

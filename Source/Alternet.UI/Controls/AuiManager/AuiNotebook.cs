@@ -170,6 +170,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IReadOnlyList<Control> AllChildrenInLayout
+            => Array.Empty<Control>();
+
+        /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.AuiNotebook;
 
         internal new NativeAuiNotebookHandler Handler

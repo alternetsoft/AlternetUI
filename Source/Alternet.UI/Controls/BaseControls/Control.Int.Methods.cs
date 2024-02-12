@@ -17,7 +17,7 @@ namespace Alternet.UI
         internal static void PerformDefaultLayout(Control container)
         {
             var childrenLayoutBounds = container.ChildrenLayoutBounds;
-            foreach (var control in container.Handler.AllChildrenIncludedInLayout)
+            foreach (var control in container.AllChildrenInLayout)
             {
                 var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
 
@@ -224,6 +224,7 @@ namespace Alternet.UI
             var form = ParentWindow;
             if (form is not null && form.KeyPreview)
             {
+                e.CurrentTarget = form;
                 form.OnKeyDown(e);
                 if (e.Handled)
                     return;
@@ -233,6 +234,7 @@ namespace Alternet.UI
 
             while (control is not null && control != form)
             {
+                e.CurrentTarget = control;
                 control.OnKeyDown(e);
 
                 if (e.Handled)
@@ -247,6 +249,7 @@ namespace Alternet.UI
             var form = ParentWindow;
             if (form is not null && form.KeyPreview)
             {
+                e.CurrentTarget = form;
                 form.OnKeyUp(e);
                 if (e.Handled)
                     return;
@@ -256,6 +259,7 @@ namespace Alternet.UI
 
             while (control is not null && control != form)
             {
+                e.CurrentTarget = control;
                 control.OnKeyUp(e);
                 if (e.Handled)
                     return;

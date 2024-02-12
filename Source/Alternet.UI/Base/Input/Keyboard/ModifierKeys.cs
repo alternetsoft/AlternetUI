@@ -1,4 +1,3 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -37,7 +36,7 @@ namespace Alternet.UI
         /// The "Alt" key on Windows and Linux or "Option" key on macOS.
         /// </summary>
         Alt = 1 << 0,
-        
+
         /// <summary>
         /// A "Control" key on Windows and Linux or "Command" key on macOS.
         /// </summary>
@@ -49,7 +48,8 @@ namespace Alternet.UI
         Shift = 1 << 2,
 
         /// <summary>
-        /// The Microsoft "Windows" key on Windows or "Control" key on macOS or "Meta" key on Linux.
+        /// The Microsoft "Windows" key on Windows or "Control"
+        /// key on macOS or "Meta" key on Linux.
         /// </summary>
         Windows = 1 << 3,
 

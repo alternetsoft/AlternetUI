@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the log events.
     /// </summary>
-    public class LogMessageEventArgs : BaseEventArgs
+    public class LogMessageEventArgs : BaseCancelEventArgs
     {
         private readonly string? prefix;
         private readonly bool replaceLast;

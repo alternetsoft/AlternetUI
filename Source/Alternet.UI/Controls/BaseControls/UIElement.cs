@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <see cref="UIElement"/> is a base class for core level implementations building
     /// on elements and basic presentation characteristics.
     /// </summary>
-    public class UIElement : DependencyObject, IInputElement
+    public class UIElement : DependencyObject
     {
         internal const int MAXELEMENTSINROUTE = 4096;
 

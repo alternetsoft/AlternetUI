@@ -39,9 +39,6 @@ namespace Alternet.UI
             }
         }
 
-        public override IEnumerable<Control> AllChildrenIncludedInLayout
-            => Enumerable.Empty<Control>();
-
         public new Native.PropertyGrid NativeControl =>
             (Native.PropertyGrid)base.NativeControl!;
 

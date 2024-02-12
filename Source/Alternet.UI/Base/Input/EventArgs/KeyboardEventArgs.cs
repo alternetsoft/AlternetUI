@@ -3,28 +3,40 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The KeyboardEventArgs class provides access to the logical
-    ///     pointer device for all derived event args.
+    /// Base class for the keyboard event arguments.
     /// </summary>
-    /// <ExternalAPI/> 
     public class KeyboardEventArgs : HandledEventArgs
     {
+        private readonly Control originalTarget;
+        private Control currentTarget;
+
         /// <summary>
         ///     Initializes a new instance of the KeyboardEventArgs class.
         /// </summary>
-        /// <param name="keyboard">
-        ///     The logical keyboard device associated with this event.
-        /// </param>
-        public KeyboardEventArgs(KeyboardDevice keyboard)
+        internal KeyboardEventArgs(Control originalTarget)
         {
-            KeyboardDevice = keyboard;
+            this.originalTarget = originalTarget;
+            this.currentTarget = originalTarget;
+            KeyboardDevice = Keyboard.PrimaryDevice;
         }
 
         /// <summary>
-        ///     Read-only access to the logical keyboard device associated with
-        ///     this event.
+        /// Gets current target control for the event.
+        /// </summary>
+        public Control CurrentTarget
+        {
+            get => currentTarget;
+            internal set => currentTarget = value;
+        }
+
+        /// <summary>
+        /// Gets original target control for the event.
+        /// </summary>
+        public Control OriginalTarget => originalTarget;
+
+        /// <summary>
+        /// Gets logical keyboard device associated with this event.
         /// </summary>
         public KeyboardDevice KeyboardDevice { get; }
     }
 }
-

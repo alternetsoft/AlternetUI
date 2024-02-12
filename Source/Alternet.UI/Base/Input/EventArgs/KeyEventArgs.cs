@@ -1,12 +1,10 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
 using System;
 using System.ComponentModel;
-using System.Security; 
+using System.Security;
 
 namespace Alternet.UI
 {
@@ -22,24 +20,25 @@ namespace Alternet.UI
     public class KeyEventArgs : KeyboardEventArgs
     {
         private readonly ModifierKeys modifiers;
-        private Keys? keyData;
         private readonly Key key;
         private readonly bool isRepeat;
         private readonly KeyStates keyStates;
+        private Keys? keyData;
         private bool suppressKeyPress;
 
         /// <summary>
         /// Constructs an instance of the KeyEventArgs class.
         /// </summary>
-        /// <param name="keyboard">
-        /// The logical keyboard device associated with this event.
-        /// </param>
         /// <param name="key">
         /// The key referenced by the event.
         /// </param>
         /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
-        public KeyEventArgs(KeyboardDevice keyboard, Key key, bool isRepeat)
-            : base(keyboard)
+        /// <param name="originalTarget"></param>
+        internal KeyEventArgs(
+            Control originalTarget,
+            Key key,
+            bool isRepeat)
+            : base(originalTarget)
         {
             this.key = key;
             this.isRepeat = isRepeat;
@@ -90,6 +89,7 @@ namespace Alternet.UI
             {
                 return suppressKeyPress;
             }
+
             set
             {
                 suppressKeyPress = value;
@@ -112,6 +112,7 @@ namespace Alternet.UI
                 {
                     return Keys.None;
                 }
+
                 return keys;
             }
         }
@@ -197,4 +198,3 @@ namespace Alternet.UI
         public bool IsToggled => keyStates == KeyStates.Toggled;
     }
 }
-

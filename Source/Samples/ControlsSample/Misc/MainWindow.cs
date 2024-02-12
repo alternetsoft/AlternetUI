@@ -213,6 +213,7 @@ namespace ControlsSample
             {
                 new("DateTime", () => new DateTimePage()),
                 new("Calendar", () => new CalendarPage()),
+                new("Popup", () => new DateTimePopups()),
             };
 
             return CreateCustomPage(pages);

@@ -243,6 +243,12 @@ namespace Alternet.UI.Native
             return NativeApi.Calendar_GetHolidayColorBg_(NativePointer);
         }
         
+        public int HitTest(Alternet.Drawing.PointI point)
+        {
+            CheckDisposed();
+            return NativeApi.Calendar_HitTest_(NativePointer, point);
+        }
+        
         public void SetHeaderColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
@@ -596,6 +602,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Calendar_GetHolidayColorBg_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Calendar_HitTest_(IntPtr obj, Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Calendar_SetHeaderColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);

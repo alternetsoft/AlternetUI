@@ -163,6 +163,11 @@ ALTERNET_UI_API Color_C Calendar_GetHolidayColorBg_(Calendar* obj)
     return obj->GetHolidayColorBg();
 }
 
+ALTERNET_UI_API int Calendar_HitTest_(Calendar* obj, PointI point)
+{
+    return obj->HitTest(point);
+}
+
 ALTERNET_UI_API void Calendar_SetHeaderColors_(Calendar* obj, Color colorFg, Color colorBg)
 {
     obj->SetHeaderColors(colorFg, colorBg);

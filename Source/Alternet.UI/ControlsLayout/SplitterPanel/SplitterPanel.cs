@@ -112,6 +112,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IReadOnlyList<Control> AllChildrenInLayout
+            => Array.Empty<Control>();
+
+        /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.SplitterPanel;
 
         /// <summary>
@@ -456,8 +460,8 @@ namespace Alternet.UI
             }
         }
 
-        internal new NativeSplitterPanelHandler Handler =>
-            (NativeSplitterPanelHandler)base.Handler;
+        internal new SplitterPanelHandler Handler =>
+            (SplitterPanelHandler)base.Handler;
 
         /// <summary>
         /// Sets minimal value for the sash size in dips (1/96 inch).
@@ -801,7 +805,7 @@ namespace Alternet.UI
         /// <inheritdoc />
         internal override ControlHandler CreateHandler()
         {
-            return new NativeSplitterPanelHandler();
+            return new SplitterPanelHandler();
         }
 
         /// <summary>

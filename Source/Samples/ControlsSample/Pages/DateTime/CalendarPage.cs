@@ -8,10 +8,19 @@ namespace ControlsSample
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
+        private readonly StackPanel mainPanel = new()
+        {
+            Orientation = StackPanelOrientation.Vertical,
+            Padding = 10,
+        };
+
+        static CalendarPage()
+        {
+        }
 
         public CalendarPage()
         {
-            InitializeComponent();
+            mainPanel.Parent = this;
 
             calendar.SelectionChanged += Calendar_SelectionChanged;
             calendar.PageChanged += Calendar_PageChanged;
@@ -78,6 +87,7 @@ namespace ControlsSample
             useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(Button.Enabled));
 
             calendar.Parent = mainPanel;
+            calendar.RecreateWindow();
             calendar.PerformLayout();
 
             useGenericCheckBox.CheckedChanged += Generic_CheckedChanged;
@@ -114,6 +124,7 @@ namespace ControlsSample
                 if (calendar.UseGeneric)
                     calendar.BackgroundColor = SystemColors.Window;
             }
+
         }
 
         private void RangeAnyDate_Click()

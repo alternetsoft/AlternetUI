@@ -1,4 +1,3 @@
-#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -12,6 +11,18 @@ namespace Alternet.UI
     /// </summary>
     public static class Keyboard
     {
+        /// <summary>
+        ///     The primary keyboard device.
+        /// </summary>
+        public static KeyboardDevice PrimaryDevice
+        {
+            get
+            {
+                KeyboardDevice keyboardDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
+                return keyboardDevice;
+            }
+        }
+
         /// <summary>
         ///     The set of modifier keys currently pressed.
         /// </summary>
@@ -66,23 +77,10 @@ namespace Alternet.UI
             return Keyboard.PrimaryDevice.GetKeyStates(key);
         }
 
-        /// <summary>
-        ///     The primary keyboard device.
-        /// </summary>
-        public static KeyboardDevice PrimaryDevice
-        {
-            get
-            {
-                KeyboardDevice keyboardDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
-                return keyboardDevice;
-            }
-        }
-
         // Check for Valid enum, as any int can be casted to the enum.
         internal static bool IsValidKey(Key key)
         {
-            return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/);
+            return (int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/;
         }
     }
 }
-

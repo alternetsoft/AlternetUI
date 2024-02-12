@@ -2,11 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-
-using Alternet.Drawing;
 using System;
 using System.Security;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -21,183 +19,22 @@ namespace Alternet.UI
     public static class Mouse
     {
         /// <summary>
-        ///     MouseMove
+        ///     The number of units the mouse wheel should be rotated to scroll one line.
         /// </summary>
-        public static readonly RoutedEvent MouseMoveEvent = EventManager.RegisterRoutedEvent("MouseMove", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseMove attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseMoveHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseMoveEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseMove attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that removedto this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseMoveHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseMoveEvent, handler);
-        }
-
-        /// <summary>
-        ///     MouseDown
-        /// </summary>
-        public static readonly RoutedEvent MouseDownEvent
-            = EventManager.RegisterRoutedEvent("MouseDown", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseDown attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseDownHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseDownEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseDown attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseDownHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseDownEvent, handler);
-        }
-
-        /// <summary>
-        ///     MouseDoubleClick
-        /// </summary>
-        public static readonly RoutedEvent MouseDoubleClickEvent
-            = EventManager.RegisterRoutedEvent("MouseDoubleClick", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseDoubleClick attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseDoubleClickHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseDoubleClickEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseDoubleClick attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseDoubleClickHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseDoubleClickEvent, handler);
-        }
-
-        /// <summary>
-        ///     MouseUp
-        /// </summary>
-        public static readonly RoutedEvent MouseUpEvent
-            = EventManager.RegisterRoutedEvent("MouseUp", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseUp attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseUpHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseUpEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseUp attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseUpHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseUpEvent, handler);
-        }
-
-        /// <summary>
-        ///     MouseWheel
-        /// </summary>
-        public static readonly RoutedEvent MouseWheelEvent
-            = EventManager.RegisterRoutedEvent("MouseWheel", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseWheel attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseWheelHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseWheelEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseWheel attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseWheelHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseWheelEvent, handler);
-        }
-
-        /// <summary>
-        ///     MouseEnter
-        /// </summary>
-        public static readonly RoutedEvent MouseEnterEvent = EventManager.RegisterRoutedEvent("MouseEnter", RoutingStrategy.Direct, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseEnter attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseEnterHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseEnterEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseEnter attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseEnterHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseEnterEvent, handler);
-        }
-
-        /// <summary>
-        ///     MouseLeave
-        /// </summary>
-        public static readonly RoutedEvent MouseLeaveEvent = EventManager.RegisterRoutedEvent("MouseLeave", RoutingStrategy.Direct, typeof(MouseEventHandler), typeof(Mouse));
-
-        /// <summary>
-        ///     Adds a handler for the MouseLeave attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseLeaveHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, MouseLeaveEvent, handler);
-        }
-
-        /// <summary>
-        ///     Removes a handler for the MouseLeave attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseLeaveHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, MouseLeaveEvent, handler);
-        }
+        /// <remarks>
+        ///     The delta was set to 120 to allow Microsoft or other vendors to
+        ///     build finer-resolution wheels in the future, including perhaps
+        ///     a freely-rotating wheel with no notches. The expectation is
+        ///     that such a device would send more messages per rotation, but
+        ///     with a smaller value in each message. To support this
+        ///     possibility, you should either add the incoming delta values
+        ///     until MouseWheelDeltaForOneLine amount is reached (so for a
+        ///     delta-rotation you get the same response), or scroll partial
+        ///     lines in response to the more frequent messages. You could also
+        ///     choose your scroll granularity and accumulate deltas until it
+        ///     is reached.
+        /// </remarks>
+        public const int MouseWheelDeltaForOneLine = 120;
 
         /// <summary>
         ///     The state of the left button.
@@ -218,6 +55,21 @@ namespace Alternet.UI
             get
             {
                 return Mouse.PrimaryDevice.RightButton;
+            }
+        }
+
+        /// <summary>
+        ///     The primary mouse device.
+        /// </summary>
+        public static MouseDevice PrimaryDevice
+        {
+            get
+            {
+                MouseDevice mouseDevice;
+
+                // there is a link demand on the Current property
+                mouseDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+                return mouseDevice;
             }
         }
 
@@ -261,38 +113,6 @@ namespace Alternet.UI
         public static PointD GetPosition(Control relativeTo)
         {
             return Mouse.PrimaryDevice.GetPosition(relativeTo);
-        }
-
-        /// <summary>
-        ///     The number of units the mouse wheel should be rotated to scroll one line.
-        /// </summary>
-        /// <remarks>
-        ///     The delta was set to 120 to allow Microsoft or other vendors to
-        ///     build finer-resolution wheels in the future, including perhaps
-        ///     a freely-rotating wheel with no notches. The expectation is
-        ///     that such a device would send more messages per rotation, but
-        ///     with a smaller value in each message. To support this
-        ///     possibility, you should either add the incoming delta values
-        ///     until MouseWheelDeltaForOneLine amount is reached (so for a
-        ///     delta-rotation you get the same response), or scroll partial
-        ///     lines in response to the more frequent messages. You could also
-        ///     choose your scroll granularity and accumulate deltas until it
-        ///     is reached.
-        /// </remarks>
-        public const int MouseWheelDeltaForOneLine = 120;
-
-        /// <summary>
-        ///     The primary mouse device.
-        /// </summary>
-        public static MouseDevice PrimaryDevice
-        {
-            get
-            {
-                MouseDevice mouseDevice;
-                //there is a link demand on the Current property
-                mouseDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
-                return mouseDevice;
-            }
         }
     }
 }

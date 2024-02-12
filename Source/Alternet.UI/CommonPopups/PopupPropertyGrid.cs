@@ -11,11 +11,22 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="PropertyGrid"/> control.
     /// </summary>
-    internal class PopupPropertyGrid : PopupWindow
+    public class PopupPropertyGrid : PopupWindow
     {
         static PopupPropertyGrid()
         {
             PropertyGrid.RegisterCollectionEditors();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupPropertyGrid"/> class.
+        /// </summary>
+        public PopupPropertyGrid()
+        {
+            HideOnEnter = false;
+            HideOnClick = false;
+            HideOnDoubleClick = false;
+            HideOnDeactivate = false;
         }
 
         /// <summary>
@@ -47,17 +58,14 @@ namespace Alternet.UI
                 Resizable = true,
                 CloseEnabled = true,
                 TopMost = true,
-                HideOnEnter = false,
-                HideOnClick = false,
-                HideOnDoubleClick = false,
-                HideOnDeactivate = false,
             };
+
             popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             popupWindowProps.AfterHide += PopupWindowProps_AfterHide;
-            popupWindowProps.MainControl.SuggestedSize = (400, 300);
-            popupWindowProps.SetSizeToContent();
+            popupWindowProps.Size = (400, 300);
+            popupWindowProps.BottomToolBar.Visible = false;
             return popupWindowProps;
 
             static void PopupWindowProps_AfterHide(object? sender, EventArgs e)

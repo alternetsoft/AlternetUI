@@ -13,6 +13,7 @@ namespace ControlsSample
     {
         private readonly ValueEditorUInt32 minLengthEdit = new("Min Length", 0);
         private readonly ValueEditorUInt32 maxLengthEdit = new("Max Length", 0);
+        private PopupPropertyGrid? popup;
 
         static TextInputPage()
         {
@@ -56,6 +57,13 @@ namespace ControlsSample
             Idle += TextInputPage_Idle;
         }
 
+        private void ShowProperties_Click(object? sender, EventArgs e)
+        {
+            popup ??= PopupPropertyGrid.CreatePropertiesPopup();
+            popup.MainControl.SetProps(textBox, true);
+            popup.ShowPopup(showPropertiesButton);
+        }
+        
         private void TextInputPage_Idle(object? sender, EventArgs e)
         {
             if (tab1.Visible)
