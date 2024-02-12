@@ -26,6 +26,7 @@ namespace Alternet.UI
             HideOnEnter = false;
             HideOnClick = false;
             HideOnDoubleClick = false;
+            HideOnDeactivate = false;
         }
 
         /// <summary>
@@ -57,13 +58,12 @@ namespace Alternet.UI
                 Resizable = true,
                 CloseEnabled = true,
                 TopMost = true,
-                HideOnDeactivate = false,
             };
             popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             popupWindowProps.AfterHide += PopupWindowProps_AfterHide;
-            popupWindowProps.MainControl.SuggestedSize = (400, 300);
+            popupWindowProps.Size = (400, 300);
             popupWindowProps.BottomToolBar.Visible = false;
             return popupWindowProps;
 

@@ -34,33 +34,6 @@ namespace Alternet.UI
                     isNan ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
             }
 
-            /*public void LayoutOld()
-            {
-                var controls = Handler.AllChildrenIncludedInLayout;
-                var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
-
-                double x = 0;
-                foreach (var control in controls)
-                {
-                    var margin = control.Margin;
-                    var horizontalMargin = margin.Horizontal;
-
-                    var preferredSize = control.GetPreferredSizeLimited(
-                        new SizeD(
-                            childrenLayoutBounds.Width - x - horizontalMargin,
-                            childrenLayoutBounds.Height));
-                    var alignedPosition =
-                        AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
-                    control.Handler.Bounds =
-                        new RectD(
-                            childrenLayoutBounds.Left + x + margin.Left,
-                            alignedPosition.Origin,
-                            preferredSize.Width,
-                            alignedPosition.Size);
-                    x += preferredSize.Width + horizontalMargin;
-                }
-            }*/
-
             public override void Layout()
             {
                 var controls = Control.AllChildrenInLayout;

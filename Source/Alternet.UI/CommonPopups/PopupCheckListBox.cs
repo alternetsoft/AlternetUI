@@ -37,7 +37,6 @@ namespace Alternet.UI
             return new CheckListBox()
             {
                 HasBorder = false,
-                Margin = 5,
             };
         }
     }

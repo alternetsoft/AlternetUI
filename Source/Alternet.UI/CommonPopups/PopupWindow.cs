@@ -14,10 +14,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupWindow : DialogWindow
     {
-        private readonly LayoutPanel mainPanel = new();
+        private readonly VerticalStackPanel mainPanel = new();
         private readonly GenericToolBar bottomToolBar = new();
         private ModalResult popupResult;
         private Control? mainControl;
+        private bool wasShown;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupWindow"/> class.
@@ -25,6 +26,8 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
+            mainPanel.AllowStretch = true;
+            mainPanel.Parent = this;
             Padding = DefaultPadding;
             var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
             ButtonIdOk = buttons[0];
@@ -36,8 +39,8 @@ namespace Alternet.UI
             bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
             bottomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
             bottomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
+            bottomToolBar.VerticalAlignment = VerticalAlignment.Bottom;
             bottomToolBar.ResumeLayout();
-            bottomToolBar.Dock = DockStyle.Bottom;
             bottomToolBar.Parent = mainPanel;
             ShowInTaskbar = false;
             StartLocation = WindowStartLocation.Manual;
@@ -47,7 +50,6 @@ namespace Alternet.UI
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             HasSystemMenu = false;
-            mainPanel.Parent = this;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
@@ -181,8 +183,8 @@ namespace Alternet.UI
                 if (mainControl == null)
                 {
                     mainControl = CreateMainControl();
-                    mainControl.Dock = DefaultMainControlDock;
-                    mainPanel.Children.Prepend(mainControl);
+                    mainControl.VerticalAlignment = VerticalAlignment.Stretch;
+                    mainControl.Parent = mainPanel;
                     BindEvents(mainControl);
                 }
 
@@ -200,17 +202,11 @@ namespace Alternet.UI
                 }
 
                 mainControl = value;
-                mainControl.Dock = DefaultMainControlDock;
+                mainControl.VerticalAlignment = VerticalAlignment.Stretch;
                 BindEvents(mainControl);
-                mainPanel.Children.Prepend(mainControl);
+                mainControl.Parent = mainPanel;
             }
         }
-
-        /// <summary>
-        /// Gets default value of the main control's <see cref="Control.Dock"/> property.
-        /// </summary>
-        [Browsable(false)]
-        protected virtual DockStyle DefaultMainControlDock => DockStyle.Fill;
 
         /// <summary>
         /// Focuses <see cref="MainControl"/>.
@@ -235,10 +231,12 @@ namespace Alternet.UI
         /// <param name="size">New client size.</param>
         public virtual void SetClientSizeTo(SizeD? size = null)
         {
+            var toolHeight = BottomToolBar.Visible ? (BottomToolBar.MinHeight ?? 0) : 0;
+
             var ms = size ?? MainControl.Size;
 
             var clientHeight =
-                ms.Height + (BottomToolBar.MinHeight ?? 0) + Padding.Vertical;
+                ms.Height + toolHeight + Padding.Vertical;
             var clientWidth = ms.Width + Padding.Horizontal;
             var newSize = (clientWidth, clientHeight);
             ClientSize = newSize + new SizeD(1, 0);
@@ -281,7 +279,13 @@ namespace Alternet.UI
         public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
             PopupResult = ModalResult.None;
-            SetClientSizeTo(MainControl.Size);
+
+            if (!wasShown)
+            {
+                SetClientSizeTo(MainControl.Size);
+                wasShown = true;
+            }
+
             SetPositionInDips(ptOrigin, sizePopup);
             Show();
             FocusMainControl();

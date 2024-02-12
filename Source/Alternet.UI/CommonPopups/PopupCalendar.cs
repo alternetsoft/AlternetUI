@@ -18,11 +18,8 @@ namespace Alternet.UI
         /// </summary>
         public PopupCalendar()
         {
-            Resizable = false;
             HideOnClick = false;
             HideOnDoubleClick = true;
-            MainControl.Required();
-            MainControl.MinimumSize = MainControl.Size;
         }
 
         /// <summary>
@@ -34,9 +31,6 @@ namespace Alternet.UI
             get => (Calendar)base.MainControl;
             set => base.MainControl = value;
         }
-
-        /// <inheritdoc/>
-        protected override DockStyle DefaultMainControlDock => DockStyle.None;
 
         /// <inheritdoc/>
         protected override Control CreateMainControl()

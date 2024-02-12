@@ -69,6 +69,8 @@ namespace ControlsSample
             popupListBox.MainControl.Click += PopupListBox_Click;
             popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
 
+            Group(showPopupListBoxButton, showPopupCheckListBoxButton).SuggestedWidthToMax();
+
         }
 
         public bool ModalPopups

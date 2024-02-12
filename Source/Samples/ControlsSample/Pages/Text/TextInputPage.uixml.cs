@@ -60,7 +60,7 @@ namespace ControlsSample
         private void ShowProperties_Click(object? sender, EventArgs e)
         {
             popup ??= PopupPropertyGrid.CreatePropertiesPopup();
-            popup.MainControl.SetProps(textBox);
+            popup.MainControl.SetProps(textBox, true);
             popup.ShowPopup(showPropertiesButton);
         }
         

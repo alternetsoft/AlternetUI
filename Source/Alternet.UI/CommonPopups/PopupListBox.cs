@@ -20,13 +20,13 @@ namespace Alternet.UI
         /// </summary>
         public PopupListBox()
         {
-            MainControl.MinimumSize = DefaultMinimumSize;
+            MinimumSize = DefaultMinimumSize;
         }
 
         /// <summary>
         /// Gets or sets default minimum size of the listbox popup main control.
         /// </summary>
-        public static SizeD DefaultMinimumSize { get; set; } = (150, 300);
+        public static SizeD DefaultMinimumSize { get; set; } = (200, 300);
 
         /// <summary>
         /// Gets or sets <see cref="ListBox"/> control used in the popup window.
