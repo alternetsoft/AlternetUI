@@ -46,11 +46,10 @@ namespace Alternet.UI
                         VerticalAlignment = VerticalAlignment.Stretch,
                         Visible = false,
                         HasBorder = false,
-                        Parent = RightPanel,
                     };
                     actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
-                    RightPanel.Header.Add(CommonStrings.Default.NotebookTabTitleActions, actionsControl);
-                    RightPanel.Header.SelectFirstTab();
+                    RightPanel.Add(CommonStrings.Default.NotebookTabTitleActions, actionsControl);
+                    RightPanel.SelectFirstTab();
                 }
 
                 return actionsControl;

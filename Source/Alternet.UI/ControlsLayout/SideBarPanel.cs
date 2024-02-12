@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -16,7 +17,7 @@ namespace Alternet.UI
     {
         private readonly CardPanelHeader header = new()
         {
-            Margin = (0, 5, 0, 0),
+            Padding = (0, 5, 0, 0),
             BorderWidth = 0,
             UpdateCardsMode = WindowSizeToContentMode.None,
         };
@@ -26,9 +27,11 @@ namespace Alternet.UI
         /// </summary>
         public SideBarPanel()
         {
+            BackgroundColor = SystemColors.Window;
             AllowStretch = true;
             header.VerticalAlignment = VerticalAlignment.Top;
             header.Parent = this;
+            header.BackgroundColor = SystemColors.ButtonFace;
         }
 
         /// <summary>
@@ -65,6 +68,40 @@ namespace Alternet.UI
                 else
                     header.VerticalAlignment = VerticalAlignment.Top;
             }
+        }
+
+        /// <summary>
+        /// Adds new tab.
+        /// </summary>
+        /// <param name="title">Tab title.</param>
+        /// <param name="control">Tab control.</param>
+        /// <returns>Index of the added tab.</returns>
+        public int Add(string title, Control? control)
+        {
+            if (control is not null)
+            {
+                control.Visible = false;
+                control.Parent = this;
+            }
+
+            var result = Header.Add(title, control);
+            return result;
+        }
+
+        /// <summary>
+        /// Selects first tab.
+        /// </summary>
+        public void SelectFirstTab()
+        {
+            Header.SelectFirstTab();
+        }
+
+        /// <summary>
+        /// Selects first tab.
+        /// </summary>
+        public void SelectTab(int index)
+        {
+            Header.SelectedTabIndex = index;
         }
     }
 }
