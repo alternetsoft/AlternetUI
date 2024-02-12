@@ -59,6 +59,7 @@ namespace Alternet.UI
                 CloseEnabled = true,
                 TopMost = true,
             };
+
             popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;

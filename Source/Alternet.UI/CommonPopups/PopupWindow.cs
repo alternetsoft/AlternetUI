@@ -26,6 +26,15 @@ namespace Alternet.UI
         public PopupWindow()
             : base()
         {
+            MinimizeEnabled = DefaultMinimizeEnabled;
+            MaximizeEnabled = DefaultMaximizeEnabled;
+            ShowInTaskbar = false;
+            StartLocation = WindowStartLocation.Manual;
+            HasTitleBar = DefaultHasTitleBar;
+            TopMost = DefaultTopMost;
+            CloseEnabled = DefaultCloseEnabled;
+            HasSystemMenu = false;
+
             mainPanel.AllowStretch = true;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
@@ -42,14 +51,6 @@ namespace Alternet.UI
             bottomToolBar.VerticalAlignment = VerticalAlignment.Bottom;
             bottomToolBar.ResumeLayout();
             bottomToolBar.Parent = mainPanel;
-            ShowInTaskbar = false;
-            StartLocation = WindowStartLocation.Manual;
-            HasTitleBar = DefaultHasTitleBar;
-            TopMost = true;
-            CloseEnabled = DefaultCloseEnabled;
-            MinimizeEnabled = false;
-            MaximizeEnabled = false;
-            HasSystemMenu = false;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
@@ -101,9 +102,24 @@ namespace Alternet.UI
         public GenericToolBar BottomToolBar => bottomToolBar;
 
         /// <summary>
+        /// Gets default value of the <see cref="Window.MinimizeEnabled"/> property.
+        /// </summary>
+        public virtual bool DefaultMinimizeEnabled => false;
+
+        /// <summary>
+        /// Gets default value of the <see cref="Window.MaximizeEnabled"/> property.
+        /// </summary>
+        public virtual bool DefaultMaximizeEnabled => false;
+
+        /// <summary>
         /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
         /// </summary>
         public virtual bool DefaultHasTitleBar => false;
+
+        /// <summary>
+        /// Gets default value of the <see cref="Window.TopMost"/> property.
+        /// </summary>
+        public virtual bool DefaultTopMost => true;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.CloseEnabled"/> property.
