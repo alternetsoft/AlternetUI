@@ -44,7 +44,7 @@ namespace Alternet.UI
         public static readonly DependencyProperty CommandTargetProperty =
             DependencyProperty.Register(
                 "CommandTarget",
-                typeof(IInputElement),
+                typeof(object),
                 typeof(ToolbarItem),
                 new PropertyMetadata(null));
 
@@ -222,9 +222,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IInputElement? CommandTarget
+        public object CommandTarget
         {
-            get { return (IInputElement?)GetValue(CommandTargetProperty); }
+            get { return GetValue(CommandTargetProperty); }
             set { SetValue(CommandTargetProperty, value); }
         }
 
