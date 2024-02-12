@@ -10,8 +10,7 @@ namespace Alternet.UI
 {
     internal sealed class NativeKeyboardDevice : KeyboardDevice
     {
-        internal NativeKeyboardDevice(InputManager inputManager)
-            : base(inputManager)
+        internal NativeKeyboardDevice()
         {
         }
 

@@ -15,14 +15,18 @@ namespace Alternet.UI
     /// </summary>
     public sealed class InputManager : DispatcherObject
     {
-        private readonly KeyboardDevice primaryKeyboardDevice;
-        private readonly MouseDevice primaryMouseDevice;
+        private static readonly KeyboardDevice KeyboardDevice;
+        private static readonly MouseDevice MouseDevice;
+
+        static InputManager()
+        {
+            KeyboardDevice = new NativeKeyboardDevice();
+            MouseDevice = new NativeMouseDevice();
+        }
 
         private InputManager()
         {
             CheckSTARequirement();
-            primaryKeyboardDevice = new NativeKeyboardDevice(this);
-            primaryMouseDevice = new NativeMouseDevice(this);
         }
 
         /// <summary>
@@ -41,7 +45,7 @@ namespace Alternet.UI
         /// </summary>
         public KeyboardDevice PrimaryKeyboardDevice
         {
-            get { return primaryKeyboardDevice; }
+            get { return KeyboardDevice; }
         }
 
         /// <summary>
@@ -49,7 +53,7 @@ namespace Alternet.UI
         /// </summary>
         public MouseDevice PrimaryMouseDevice
         {
-            get { return primaryMouseDevice; }
+            get { return MouseDevice; }
         }
 
         /// <summary>
@@ -67,7 +71,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Control? GetMouseTargetControl(Control? control)
+        internal static Control? GetMouseTargetControl(Control? control)
         {
             var result = control ?? GetControlUnderMouse();
 
@@ -215,6 +219,19 @@ namespace Alternet.UI
             return inputManager;
         }
 
+        private static Control? GetControlUnderMouse()
+        {
+            var controlUnderMouse = Native.Control.HitTest(MouseDevice.GetScreenPosition());
+            if (controlUnderMouse == null)
+                return null;
+
+            var handler = ControlHandler.NativeControlToHandler(controlUnderMouse);
+            if (handler == null)
+                return null;
+
+            return handler.IsAttached ? handler.Control : null;
+        }
+
         private void CheckSTARequirement()
         {
             if (!Application.IsWindowsOS)
@@ -228,19 +245,6 @@ namespace Alternet.UI
             {
                 throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
             }
-        }
-
-        private Control? GetControlUnderMouse()
-        {
-            var controlUnderMouse = Native.Control.HitTest(PrimaryMouseDevice.GetScreenPosition());
-            if (controlUnderMouse == null)
-                return null;
-
-            var handler = ControlHandler.NativeControlToHandler(controlUnderMouse);
-            if (handler == null)
-                return null;
-
-            return handler.IsAttached ? handler.Control : null;
         }
     }
 }

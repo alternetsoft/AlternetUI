@@ -17,18 +17,13 @@ namespace Alternet.UI
     /// </summary>
     internal sealed class NativeMouseDevice : MouseDevice
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="inputManager">
-        /// </param>
-        internal NativeMouseDevice(InputManager inputManager)
-            : base(inputManager)
+        internal NativeMouseDevice()
         {
         }
 
         /// <summary>
-        ///     Gets the current state of the specified button from the device from the underlying system
+        ///     Gets the current state of the specified button from
+        ///     the device from the underlying system.
         /// </summary>
         /// <param name="mouseButton">
         ///     The mouse button to get the state of
@@ -38,7 +33,8 @@ namespace Alternet.UI
         /// </returns>
         internal override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
         {
-            return (MouseButtonState)Application.Current.NativeMouse.GetButtonState((Native.MouseButton)mouseButton);
+            return (MouseButtonState)Application.Current.NativeMouse.GetButtonState(
+                (Native.MouseButton)mouseButton);
         }
 
         internal override PointD GetScreenPositionFromSystem()

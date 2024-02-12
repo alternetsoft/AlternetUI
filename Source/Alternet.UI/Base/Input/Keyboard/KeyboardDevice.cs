@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        protected KeyboardDevice(InputManager inputManager)
+        protected KeyboardDevice()
         {
         }
 

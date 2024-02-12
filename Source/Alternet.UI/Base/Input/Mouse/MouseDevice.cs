@@ -27,7 +27,7 @@ namespace Alternet.UI
     /// </summary>
     public abstract class MouseDevice : InputDevice
     {
-        internal MouseDevice(InputManager inputManager)
+        internal MouseDevice()
         {
         }
 
