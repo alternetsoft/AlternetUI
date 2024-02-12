@@ -59,53 +59,109 @@ namespace Alternet.UI
                 stretchedSize = lBounds.Height - stretchedSize;
 
                 double y = 0;
-                bool hasBottom = false;
+                double h = 0;
+                int bottomCount = 0;
 
                 foreach (var control in items)
                 {
                     if (control.VerticalAlignment == VerticalAlignment.Bottom)
                     {
-                        hasBottom = true;
+                        bottomCount++;
                         continue;
                     }
 
-                    if (AllowStretch && control.VerticalAlignment == VerticalAlignment.Stretch)
-                        DoAlignControl(control, true);
-                    else
-                        DoAlignControl(control);
+                    DoAlignControl(control);
                 }
 
-                if (hasBottom)
+                if (bottomCount > 0)
                 {
-                    foreach (var control in items)
+                    for (int i = items.Count - 1; i >= 0; i--)
                     {
+                        var control = items[i];
                         if (control.VerticalAlignment != VerticalAlignment.Bottom)
                             continue;
                         DoAlignControl(control);
+                        bottomCount--;
+                        if (bottomCount == 0)
+                            break;
                     }
                 }
 
-                void DoAlignControl(Control control, bool stretch = false)
+                void DoAlignControl(Control control)
                 {
+                    var stretch = control.VerticalAlignment == VerticalAlignment.Stretch
+                        && AllowStretch;
+
+                    bool bottom = control.VerticalAlignment == VerticalAlignment.Bottom;
+
                     var margin = control.Margin;
                     var vertMargin = margin.Vertical;
 
                     var freeSize = new SizeD(
                         lBounds.Width,
-                        lBounds.Height - y - vertMargin);
+                        lBounds.Height - y - vertMargin - h);
                     var preferSize = control.GetPreferredSizeLimited(freeSize);
                     if (stretch)
                         preferSize.Height = stretchedSize;
                     var alignedPos = AlignedLayout.AlignHorizontal(lBounds, control, preferSize);
-                    control.Handler.Bounds =
-                        new RectD(
-                            alignedPos.Origin,
-                            lBounds.Top + y + margin.Top,
-                            alignedPos.Size,
-                            preferSize.Height);
-                    y += preferSize.Height + vertMargin;
+                    if(bottom)
+                    {
+                        control.Handler.Bounds =
+                            new RectD(
+                                alignedPos.Origin,
+                                lBounds.Bottom - h - margin.Bottom - preferSize.Height,
+                                alignedPos.Size,
+                                preferSize.Height);
+                        h += preferSize.Height + vertMargin;
+                    }
+                    else
+                    {
+                        control.Handler.Bounds =
+                            new RectD(
+                                alignedPos.Origin,
+                                lBounds.Top + y + margin.Top,
+                                alignedPos.Size,
+                                preferSize.Height);
+                        y += preferSize.Height + vertMargin;
+                    }
                 }
             }
         }
     }
 }
+
+
+/*
+                    var margin = control.Margin;
+                    var horizontalMargin = margin.Horizontal;
+
+                    var preferredSize = control.GetPreferredSizeLimited(
+                        new SizeD(
+                            childrenLayoutBounds.Width - x - horizontalMargin - w,
+                            childrenLayoutBounds.Height));
+                    var alignedPosition =
+                        AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
+
+                    bool isRight = control.HorizontalAlignment == HorizontalAlignment.Right;
+
+                    if(isRight)
+                    {
+                        control.Handler.Bounds =
+                            new RectD(
+                                childrenLayoutBounds.Right - w - margin.Right - preferredSize.Width,
+                                alignedPosition.Origin,
+                                preferredSize.Width,
+                                alignedPosition.Size);
+                        w += preferredSize.Width + horizontalMargin;
+                    }
+                    else
+                    {
+                        control.Handler.Bounds =
+                            new RectD(
+                                childrenLayoutBounds.Left + x + margin.Left,
+                                alignedPosition.Origin,
+                                preferredSize.Width,
+                                alignedPosition.Size);
+                        x += preferredSize.Width + horizontalMargin;
+                    }
+*/

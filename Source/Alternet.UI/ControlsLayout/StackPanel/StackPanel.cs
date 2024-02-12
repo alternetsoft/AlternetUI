@@ -56,6 +56,26 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether <see cref="Orientation"/> is horizontal.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsHorizontal
+        {
+            get => Orientation == StackPanelOrientation.Horizontal;
+            set => Orientation = StackPanelOrientation.Horizontal;
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="Orientation"/> is vertical.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsVertical
+        {
+            get => Orientation == StackPanelOrientation.Vertical;
+            set => Orientation = StackPanelOrientation.Vertical;
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.StackPanel;
 
