@@ -27,6 +27,7 @@ namespace Alternet.UI
         public SideBarPanel()
         {
             AllowStretch = true;
+            header.VerticalAlignment = VerticalAlignment.Top;
             header.Parent = this;
         }
 
@@ -34,5 +35,36 @@ namespace Alternet.UI
         /// Gets attached header control.
         /// </summary>
         public CardPanelHeader Header => header;
+
+        /// <summary>
+        /// Gets or sets the area of the control (for example, along the top) where
+        /// the tabs are aligned.
+        /// </summary>
+        /// <value>One of the <see cref="TabAlignment"/> values. The default is
+        /// <see cref="TabAlignment.Top"/>.</value>
+        /// <remarks>
+        /// Currently only <see cref="TabAlignment.Top"/> and <see cref="TabAlignment.Bottom"/>
+        /// alignment is supported.
+        /// </remarks>
+        public TabAlignment TabAlignment
+        {
+            get
+            {
+                if (header.VerticalAlignment == VerticalAlignment.Bottom)
+                    return TabAlignment.Bottom;
+                else
+                    return TabAlignment.Top;
+            }
+
+            set
+            {
+                if (TabAlignment == value)
+                    return;
+                if (value == TabAlignment.Bottom)
+                    header.VerticalAlignment = VerticalAlignment.Bottom;
+                else
+                    header.VerticalAlignment = VerticalAlignment.Top;
+            }
+        }
     }
 }
