@@ -96,6 +96,10 @@ namespace Alternet::UI
 
         wxWindow* window;
 
+#ifdef __WXOSX__
+        _useGeneric = true;
+#endif
+
         if (_useGeneric)
         {
             window = new wxGenericCalendarCtrl2(parent,
