@@ -4,7 +4,7 @@ namespace Alternet.UI
 {
     internal class KeyboardInputProvider : IDisposable
     {
-        Native.Keyboard nativeKeyboard;
+        private readonly Native.Keyboard nativeKeyboard;
         private bool isDisposed;
 
         public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
@@ -13,6 +13,27 @@ namespace Alternet.UI
             nativeKeyboard.KeyDown += NativeKeyboard_KeyDown;
             nativeKeyboard.KeyUp += NativeKeyboard_KeyUp;
             nativeKeyboard.TextInput += NativeKeyboard_TextInput;
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!isDisposed)
+            {
+                if (disposing)
+                {
+                    nativeKeyboard.KeyDown -= NativeKeyboard_KeyDown;
+                    nativeKeyboard.KeyUp -= NativeKeyboard_KeyUp;
+                    nativeKeyboard.TextInput -= NativeKeyboard_TextInput;
+                }
+
+                isDisposed = true;
+            }
         }
 
         private void NativeKeyboard_TextInput(
@@ -46,28 +67,5 @@ namespace Alternet.UI
                 out var handled);
             e.Handled = handled;
         }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    nativeKeyboard.KeyDown -= NativeKeyboard_KeyDown;
-                    nativeKeyboard.KeyUp -= NativeKeyboard_KeyUp;
-                    nativeKeyboard.TextInput -= NativeKeyboard_TextInput;
-                }
-
-                isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
     }
 }
-
-

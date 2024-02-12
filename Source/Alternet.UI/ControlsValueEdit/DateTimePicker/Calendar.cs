@@ -48,7 +48,7 @@ namespace Alternet.UI
         {
             Application.BeforeNativeLogMessage += Application_BeforeNativeLogMessage;
 
-            void Application_BeforeNativeLogMessage(object? sender, LogMessageEventArgs e)
+            static void Application_BeforeNativeLogMessage(object? sender, LogMessageEventArgs e)
             {
                 const string s1 = "'MonthCal_SetDayState'";
 
