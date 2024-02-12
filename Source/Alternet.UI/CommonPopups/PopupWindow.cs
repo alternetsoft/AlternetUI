@@ -303,12 +303,12 @@ namespace Alternet.UI
             if (!WasShown)
             {
                 SetClientSizeTo(MainControl.Size);
-                WasShown = true;
             }
 
             SetPositionInDips(ptOrigin, sizePopup);
             BeforeShowPopup();
             Show();
+            WasShown = true;
             FocusMainControl();
             if (Application.IsLinuxOS || ModalPopups)
             {
@@ -317,13 +317,6 @@ namespace Alternet.UI
                 else
                     HidePopup(ModalResult.Canceled);
             }
-        }
-
-        /// <summary>
-        /// Called before popup is shown.
-        /// </summary>
-        protected virtual void BeforeShowPopup()
-        {
         }
 
         /// <summary>
@@ -482,6 +475,13 @@ namespace Alternet.UI
                 return;
             control.MouseDoubleClick -= OnMainControlMouseDoubleClick;
             control.MouseLeftButtonUp -= OnMainControlMouseLeftButtonUp;
+        }
+
+        /// <summary>
+        /// Called before popup is shown.
+        /// </summary>
+        protected virtual void BeforeShowPopup()
+        {
         }
 
         /// <summary>

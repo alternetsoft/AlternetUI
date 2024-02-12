@@ -14,6 +14,10 @@ namespace ControlsSample
             Padding = 10,
         };
 
+        static CalendarPage()
+        {
+        }
+
         public CalendarPage()
         {
             mainPanel.Parent = this;
@@ -83,6 +87,7 @@ namespace ControlsSample
             useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(Button.Enabled));
 
             calendar.Parent = mainPanel;
+            calendar.RecreateWindow();
             calendar.PerformLayout();
 
             useGenericCheckBox.CheckedChanged += Generic_CheckedChanged;
@@ -119,6 +124,7 @@ namespace ControlsSample
                 if (calendar.UseGeneric)
                     calendar.BackgroundColor = SystemColors.Window;
             }
+
         }
 
         private void RangeAnyDate_Click()

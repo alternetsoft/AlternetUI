@@ -20,6 +20,9 @@ namespace Alternet.UI
         {
             HideOnClick = false;
             HideOnDoubleClick = true;
+            MainControl.RecreateWindow();
+            MainControl.PerformLayout();
+            MainControl.BackgroundColor = SystemColors.Window;
         }
 
         /// <summary>
@@ -30,15 +33,6 @@ namespace Alternet.UI
         {
             get => (Calendar)base.MainControl;
             set => base.MainControl = value;
-        }
-
-        /// <inheritdoc/>
-        protected override void BeforeShowPopup()
-        {
-            if (Application.IsMacOS && !WasShown)
-            {
-                NativeControl.RecreateWindow();
-            }
         }
 
         /// <inheritdoc/>
