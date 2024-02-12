@@ -18,7 +18,6 @@ namespace Alternet.UI
         private readonly GenericToolBar bottomToolBar = new();
         private ModalResult popupResult;
         private Control? mainControl;
-        private bool wasShown;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupWindow"/> class.
@@ -125,6 +124,11 @@ namespace Alternet.UI
         /// Gets default value of the <see cref="Window.CloseEnabled"/> property.
         /// </summary>
         public virtual bool DefaultCloseEnabled => false;
+
+        /// <summary>
+        /// Gets whether popup window was already shown at least one time.
+        /// </summary>
+        public bool WasShown { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
@@ -296,13 +300,14 @@ namespace Alternet.UI
         {
             PopupResult = ModalResult.None;
 
-            if (!wasShown)
+            if (!WasShown)
             {
                 SetClientSizeTo(MainControl.Size);
-                wasShown = true;
+                WasShown = true;
             }
 
             SetPositionInDips(ptOrigin, sizePopup);
+            BeforeShowPopup();
             Show();
             FocusMainControl();
             if (Application.IsLinuxOS || ModalPopups)
@@ -312,6 +317,13 @@ namespace Alternet.UI
                 else
                     HidePopup(ModalResult.Canceled);
             }
+        }
+
+        /// <summary>
+        /// Called before popup is shown.
+        /// </summary>
+        protected virtual void BeforeShowPopup()
+        {
         }
 
         /// <summary>

@@ -33,6 +33,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void BeforeShowPopup()
+        {
+            if (Application.IsMacOS && !WasShown)
+            {
+                NativeControl.RecreateWindow();
+            }
+        }
+
+        /// <inheritdoc/>
         protected override Control CreateMainControl()
         {
             return new Calendar()
