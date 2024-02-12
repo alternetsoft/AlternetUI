@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly OperatingSystems BackendOS;
 
-        internal const int BuildCounter = 5;
+        internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();

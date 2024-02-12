@@ -165,8 +165,8 @@ namespace Alternet.UI
                             return string.Empty;
 
                         string strBinding = string.Empty;
-                        string strKey = (string)KeyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
-                        if (strKey != string.Empty)
+                        string? strKey = KeyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
+                        if (!string.IsNullOrEmpty(strKey))
                         {
                             strBinding += ModifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
                             if (strBinding != string.Empty)
