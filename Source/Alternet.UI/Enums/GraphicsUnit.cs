@@ -1,6 +1,5 @@
-﻿namespace Alternet.UI
+﻿namespace Alternet.Drawing
 {
-/*
     /// <summary>
     /// Specifies the unit of measure for the data.
     /// </summary>
@@ -48,5 +47,4 @@
         /// </summary>
         Dip,
     }
-*/
 }

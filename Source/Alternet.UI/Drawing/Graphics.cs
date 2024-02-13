@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Internal.ComponentModel;
