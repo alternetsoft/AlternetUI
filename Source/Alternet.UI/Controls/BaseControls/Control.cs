@@ -316,6 +316,11 @@ namespace Alternet.UI
         public event EventHandler<BaseEventArgs<Control>>? ChildRemoved;
 
         /// <summary>
+        /// Occurs when the child control's <see cref="Visible"/> property is changed.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? ChildVisibleChanged;
+
+        /// <summary>
         /// Occurs when the child control is added to this control.
         /// </summary>
         public event EventHandler<BaseEventArgs<Control>>? ChildInserted;
@@ -1117,6 +1122,7 @@ namespace Alternet.UI
                 visible = value;
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
+                Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
                 Handler.Control_VisibleChanged();
                 if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
