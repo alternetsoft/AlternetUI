@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
@@ -146,7 +145,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, double emSize, FontStyle style, System.Drawing.GraphicsUnit unit)
+        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(family, emSize, style, unit, 1);
@@ -170,7 +169,7 @@ namespace Alternet.Drawing
             FontFamily family,
             double emSize,
             FontStyle style,
-            System.Drawing.GraphicsUnit unit,
+            GraphicsUnit unit,
             byte gdiCharSet)
         {
             NativeFont = new UI.Native.Font();
@@ -198,7 +197,7 @@ namespace Alternet.Drawing
             FontFamily family,
             double emSize,
             FontStyle style,
-            System.Drawing.GraphicsUnit unit,
+            GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
         {
@@ -225,7 +224,7 @@ namespace Alternet.Drawing
             string familyName,
             double emSize,
             FontStyle style,
-            System.Drawing.GraphicsUnit unit,
+            GraphicsUnit unit,
             byte gdiCharSet)
         {
             NativeFont = new UI.Native.Font();
@@ -255,7 +254,7 @@ namespace Alternet.Drawing
             string familyName,
             double emSize,
             FontStyle style,
-            System.Drawing.GraphicsUnit unit,
+            GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
         {
@@ -275,7 +274,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, float emSize, System.Drawing.GraphicsUnit unit)
+        public Font(FontFamily family, float emSize, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(family, emSize, FontStyle.Regular, unit, 1);
@@ -306,7 +305,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, FontStyle style, System.Drawing.GraphicsUnit unit)
+        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(familyName, emSize, style, unit, 1);
@@ -325,7 +324,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, System.Drawing.GraphicsUnit unit)
+        public Font(string familyName, double emSize, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
             Initialize(familyName, emSize, FontStyle.Regular, unit, 1);
@@ -342,7 +341,7 @@ namespace Alternet.Drawing
         public Font(string familyName, double emSize)
         {
             NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 1);
+            Initialize(familyName, emSize, FontStyle.Regular, GraphicsUnit.Point, 1);
         }
 
         internal Font(UI.Native.Font nativeFont)

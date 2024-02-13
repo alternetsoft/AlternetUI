@@ -375,7 +375,7 @@ namespace Alternet.UI
                 posScreen = rectScreen.Location;
                 sizeScreen = rectScreen.Size;
             }
-            else // outside of any display?
+            else
             {
                 // just use the primary one then
                 display = Display.Primary;
