@@ -1,5 +1,18 @@
 # 0.9.506 (work in progress)
 
+## 2024 February 12
+
+- Control: AllChildren, AllChildrenInLayout.
+- SideBarPanel.TabAlignment.
+- StackPanel: Improved aligment. Now child's VerticalAlignment property (Stretched, Top and Bottom) 
+can be used to specify vertical alignment. For the example see SideBarPanel control.
+Previously all childs were aligned to top.
+- StackPanel: IsVertical, IsHorizontal.
+- Improved popup windows behavior on MacOs.
+- Control: MouseEnter, MouseLeave now use BubbleMouse.
+- PropertyGridSample: Add SideBarPanel demo.
+- Updated used Nuget packages #85.
+
 ## 2024 February 11
 
 - PopupWindow: Improved behavior, fixed bugs.
