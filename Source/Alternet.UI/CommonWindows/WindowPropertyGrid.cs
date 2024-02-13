@@ -21,7 +21,6 @@ namespace Alternet.UI
 
         private readonly VerticalStackPanel panel = new()
         {
-            AllowStretch = true,
         };
 
         static WindowPropertyGrid()
@@ -36,6 +35,7 @@ namespace Alternet.UI
         {
             Size = (800, 600);
             panel.Parent = this;
+            propGrid.VerticalAlignment = VerticalAlignment.Fill;
             propGrid.Parent = panel;
             propGrid.SuggestedInitDefaults();
             propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue

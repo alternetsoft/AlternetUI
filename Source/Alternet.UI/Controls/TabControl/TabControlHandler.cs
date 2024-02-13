@@ -30,20 +30,25 @@ namespace Alternet.UI
         internal new Native.TabControl NativeControl =>
             (Native.TabControl)base.NativeControl!;
 
-        public override SizeD GetPreferredSize(SizeD availableSize)
-        {
-            return NativeControl.GetTotalPreferredSizeFromPageSize(
-                GetSpecifiedOrChildrenPreferredSize(availableSize));
-        }
-
-        public override void OnLayout()
-        {
-            LayoutSelectedPage();
-        }
-
         internal override Native.Control CreateNativeControl()
         {
             return new Native.TabControl();
+        }
+
+        internal void LayoutSelectedPage()
+        {
+            var selectedPageIndex = NativeControl.SelectedPageIndex;
+            if (selectedPageIndex >= 0)
+            {
+                var page = Control.Pages[selectedPageIndex];
+
+                // if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
+                /*{
+                    page.Handler.Bounds = Control.ChildrenLayoutBounds;
+                }*/
+
+                page.OnLayout();
+            }
         }
 
         protected virtual void OnPageRemoved(int index, TabPage page)
@@ -88,22 +93,6 @@ namespace Alternet.UI
         {
             base.NativeControlSizeChanged();
             LayoutSelectedPage();
-        }
-
-        private void LayoutSelectedPage()
-        {
-            var selectedPageIndex = NativeControl.SelectedPageIndex;
-            if (selectedPageIndex >= 0)
-            {
-                var page = Control.Pages[selectedPageIndex];
-
-                // if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
-                /*{
-                    page.Handler.Bounds = Control.ChildrenLayoutBounds;
-                }*/
-
-                page.Handler.OnLayout();
-            }
         }
 
         private void InsertPage(int index, TabPage page)

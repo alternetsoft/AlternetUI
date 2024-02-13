@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -86,6 +87,18 @@ namespace Alternet.UI
         public int GetOtherBorderForSizer()
         {
             return NativeControl.GetOtherBorderForSizer();
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            // Ensure the group box label is included in the size.
+            var nativeControlSize = Handler.GetNativeControlSize(availableSize);
+            var calculatedSize = base.GetPreferredSize(availableSize);
+
+            return new SizeD(
+                Math.Max(nativeControlSize.Width, calculatedSize.Width),
+                Math.Max(nativeControlSize.Height, calculatedSize.Height));
         }
 
         /// <inheritdoc/>

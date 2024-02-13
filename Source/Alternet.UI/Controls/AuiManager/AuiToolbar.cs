@@ -627,6 +627,11 @@ namespace Alternet.UI
                 return false;
         }
 
+        /// <inheritdoc/>
+        public override void OnLayout()
+        {
+        }
+
         /// <summary>
         /// Set whether the specified toolbar item has a drop down button.
         /// </summary>

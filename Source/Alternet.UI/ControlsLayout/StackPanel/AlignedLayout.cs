@@ -5,7 +5,7 @@ namespace Alternet.UI
 {
     internal class AlignedLayout
     {
-        public static AlignedPosition AlignHorizontal(
+        /*public static AlignedPosition AlignHorizontal(
             RectD layoutBounds,
             Control childControl,
             SizeD childPreferredSize) => AlignHorizontal(
@@ -21,7 +21,7 @@ namespace Alternet.UI
                 layoutBounds,
                 childControl,
                 childPreferredSize,
-                childControl.VerticalAlignment);
+                childControl.VerticalAlignment);*/
 
         public static AlignedPosition AlignHorizontal(
             RectD layoutBounds,
@@ -48,11 +48,10 @@ namespace Alternet.UI
                         childControl.Margin.Right - childPreferredSize.Width,
                         childPreferredSize.Width);
                 case HorizontalAlignment.Stretch:
+                default:
                     return new AlignedPosition(
                         layoutBounds.Left + childControl.Margin.Left,
                         layoutBounds.Width - childControl.Margin.Horizontal);
-                default:
-                    throw new InvalidOperationException();
             }
         }
 
@@ -80,11 +79,10 @@ namespace Alternet.UI
                         layoutBounds.Bottom - control.Margin.Bottom - childPreferredSize.Height,
                         childPreferredSize.Height);
                 case VerticalAlignment.Stretch:
+                default:
                     return new AlignedPosition(
                         layoutBounds.Top + control.Margin.Top,
                         layoutBounds.Height - control.Margin.Vertical);
-                default:
-                    throw new InvalidOperationException();
             }
         }
 

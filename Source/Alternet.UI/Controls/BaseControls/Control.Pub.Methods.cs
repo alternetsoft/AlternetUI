@@ -1136,19 +1136,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
-        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
-        {
-            return Handler.GetPreferredSize(availableSize);
-        }
-
-        /// <summary>
         /// Sets bounds of the control using <paramref name="rect"/> and <paramref name="flags"/>.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
@@ -1477,7 +1464,46 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
-            Handler?.OnLayout();
+            switch (Layout ?? GetDefaultLayout())
+            {
+                case LayoutStyle.Dock:
+                    LayoutPanel.PerformDockStyleLayout(this);
+                    break;
+                case LayoutStyle.Basic:
+                    UI.Control.PerformDefaultLayout(this);
+                    break;
+                case LayoutStyle.Vertical:
+                    StackPanel.LayoutVerticalStackPanel(this);
+                    break;
+                case LayoutStyle.Horizontal:
+                    StackPanel.LayoutHorizontalStackPanel(this);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the size of a rectangular area into which a control can
+        /// be fitted, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="availableSize">The available space that a parent element
+        /// can allocate a child control.</param>
+        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
+        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        public virtual SizeD GetPreferredSize(SizeD availableSize)
+        {
+            switch (Layout ?? GetDefaultLayout())
+            {
+                case LayoutStyle.Dock:
+                case LayoutStyle.None:
+                default:
+                    return GetPreferredSizeDefaultLayout(this, availableSize);
+                case LayoutStyle.Basic:
+                    return UI.Control.GetPreferredSizeDefaultLayout(this, availableSize);
+                case LayoutStyle.Vertical:
+                    return StackPanel.GetPreferredSizeVerticalStackPanel(this, availableSize);
+                case LayoutStyle.Horizontal:
+                    return StackPanel.GetPreferredSizeHorizontalStackPanel(this, availableSize);
+            }
         }
 
         /// <summary>

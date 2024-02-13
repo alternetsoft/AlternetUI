@@ -13,12 +13,6 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="StackPanel"/> control.
-        /// </summary>
-        ControlHandler CreateStackPanelHandler(Control control);
-
-        /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
         /// <see cref="Border"/> control.
         /// </summary>
         ControlHandler CreateBorderHandler(Control control);
@@ -28,12 +22,6 @@ namespace Alternet.UI
         /// <see cref="PictureBox"/>control.
         /// </summary>
         ControlHandler CreatePictureBoxHandler(Control control);
-
-        /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="Label"/> control.
-        /// </summary>
-        ControlHandler CreateLabelHandler(Control control);
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for

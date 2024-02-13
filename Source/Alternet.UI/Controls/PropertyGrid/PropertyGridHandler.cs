@@ -42,10 +42,6 @@ namespace Alternet.UI
         public new Native.PropertyGrid NativeControl =>
             (Native.PropertyGrid)base.NativeControl!;
 
-        public override void OnLayout()
-        {
-        }
-
         internal override Native.Control CreateNativeControl()
         {
             return new NativePropertyGrid(PropertyGrid.DefaultCreateStyle);

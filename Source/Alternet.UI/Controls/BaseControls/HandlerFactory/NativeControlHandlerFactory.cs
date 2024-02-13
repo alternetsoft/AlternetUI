@@ -22,10 +22,6 @@ namespace Alternet.UI
             new NativeButtonHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateStackPanelHandler(Control control) =>
-            new StackPanelHandler();
-
-        /// <inheritdoc/>
         public ControlHandler CreateBorderHandler(Control control) =>
             new Border.BorderHandler();
 

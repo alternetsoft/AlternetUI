@@ -61,12 +61,13 @@ namespace Alternet.UI
         private readonly StackPanel stackPanel = new()
         {
             Orientation = StackPanelOrientation.Horizontal,
+            Dock = DockStyle.Fill,
         };
 
         private readonly Border control = new()
         {
-            HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
-            VerticalAlignment = VerticalAlignment.Top,
+            HorizontalAlignment = UI.HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
+            VerticalAlignment = UI.VerticalAlignment.Top,
             BorderWidth = DefaultBorderWidth,
             Padding = DefaultBorderPadding,
             Margin = DefaultBorderMargin,
@@ -173,6 +174,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tabs.
         /// </summary>
+        [DefaultValue(null)]
         public HorizontalAlignment TabHorizontalAlignment
         {
             get
@@ -241,6 +243,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tab group.
         /// </summary>
+        [DefaultValue(null)]
         public HorizontalAlignment TabGroupHorizontalAlignment
         {
             get
@@ -257,6 +260,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="VerticalAlignment"/> of the tabs.
         /// </summary>
+        [DefaultValue(null)]
         public VerticalAlignment TabVerticalAlignment
         {
             get
@@ -273,6 +277,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="VerticalAlignment"/> of the tab group.
         /// </summary>
+        [DefaultValue(null)]
         public VerticalAlignment TabGroupVerticalAlignment
         {
             get
@@ -745,7 +750,7 @@ namespace Alternet.UI
             control.Text = text;
             control.Margin = DefaultTabMargin;
             control.HasBorder = TabHasBorder;
-            control.HorizontalAlignment = HorizontalAlignment.Center;
+            control.HorizontalAlignment = UI.HorizontalAlignment.Center;
             control.Parent = stackPanel;
             control.Click += Item_Click;
 

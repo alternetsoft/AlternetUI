@@ -1,4 +1,4 @@
-﻿using Alternet.UI;
+﻿using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -8,6 +8,12 @@ namespace Alternet.UI
     public partial class FancySlider : Slider
     {
         internal new FancySliderHandler Handler => (FancySliderHandler)base.Handler;
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            return new SizeD(100, 100);
+        }
 
         /// <inheritdoc/>
         internal override ControlHandler CreateHandler()

@@ -27,5 +27,7 @@ namespace Alternet.UI
         /// Stretch control horizontally within a parent's layout slot.
         /// </summary>
         Stretch = 3,
+
+        Fill = 4,
     }
 }

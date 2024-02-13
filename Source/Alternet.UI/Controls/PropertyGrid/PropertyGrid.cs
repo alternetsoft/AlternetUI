@@ -1343,6 +1343,11 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc/>
+        public override void OnLayout()
+        {
+        }
+
         /// <summary>
         /// Creates <see cref="double"/> property.
         /// </summary>

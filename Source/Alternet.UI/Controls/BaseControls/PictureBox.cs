@@ -309,6 +309,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+                return new SizeD(specifiedWidth, specifiedHeight);
+
+            var result = GetImageAndTextSize();
+            if (result != SizeD.Empty)
+                return result + Padding.Size;
+
+            return base.GetPreferredSize(availableSize);
+        }
+
+        /// <inheritdoc/>
         internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
@@ -433,20 +448,6 @@ namespace Alternet.UI
             public override void OnPaint(Graphics drawingContext)
             {
                 Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
-            }
-
-            public override SizeD GetPreferredSize(SizeD availableSize)
-            {
-                var specifiedWidth = Control.SuggestedWidth;
-                var specifiedHeight = Control.SuggestedHeight;
-                if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
-                    return new SizeD(specifiedWidth, specifiedHeight);
-
-                var result = Control.GetImageAndTextSize();
-                if (result != SizeD.Empty)
-                    return result + Control.Padding.Size;
-
-                return base.GetPreferredSize(availableSize);
             }
 
             internal override Native.Control CreateNativeControl()

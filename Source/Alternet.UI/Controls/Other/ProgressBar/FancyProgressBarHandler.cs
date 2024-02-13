@@ -24,11 +24,6 @@ namespace Alternet.UI
 
         protected override bool NeedsPaint => true;
 
-        public override SizeD GetPreferredSize(SizeD availableSize)
-        {
-            return new SizeD(200, 100);
-        }
-
         public override void OnPaint(Graphics dc)
         {
             var bounds = Control.ClientRectangle;

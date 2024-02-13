@@ -433,7 +433,7 @@ namespace Alternet.UI
         {
             picture.Image = KnownSvgImages.GetWarningImage(
                 picture.GetSvgColor(KnownSvgColor.Error));
-            picture.VerticalAlignment = VerticalAlignment.Center;
+            picture.VerticalAlignment = UI.VerticalAlignment.Center;
             picture.ImageVisible = false;
             picture.ImageStretch = false;
             picture.TabStop = false;

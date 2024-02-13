@@ -93,13 +93,13 @@ namespace Alternet.UI
                 Control child = children[i];
 
                 SizeD child_size = child.Bounds.Size;
-                DockStyle dock = LayoutPanel.GetDock(child);
-                bool autoSize = LayoutPanel.GetAutoSize(child);
+                DockStyle dock = child.Dock;
+                bool autoSize = false;
 
                 switch (dock)
                 {
                     case DockStyle.None:
-                        child.OnLayout();
+                        /*child.OnLayout();*/
                         break;
 
                     case DockStyle.Left:

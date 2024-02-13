@@ -542,6 +542,23 @@ namespace Alternet.UI
             NativeControl.SetMeasuringFont(font.NativeFont);
         }
 
+        /// <inheritdoc/>
+        public override void OnLayout()
+        {
+            if (!HasChildren)
+                return;
+            var children = Children;
+
+            for (int i = children.Count - 1; i >= 0; i--)
+            {
+                Control child = children[i];
+                if (!child.Visible)
+                    continue;
+
+                child.OnLayout();
+            }
+        }
+
         /// <summary>
         /// Sets the font for drawing unselected tab labels.
         /// </summary>

@@ -434,14 +434,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the layout direction for the current locale or <see cref="LayoutDirection.Default"/>
+        /// Gets the layout direction for the current locale or <see cref="LangDirection.Default"/>
         /// if it's unknown.
         /// </summary>
-        public virtual LayoutDirection LayoutDirection
+        public virtual LangDirection LangDirection
         {
             get
             {
-                return (LayoutDirection)nativeApplication.GetLayoutDirection();
+                return (LangDirection)nativeApplication.GetLayoutDirection();
             }
         }
 

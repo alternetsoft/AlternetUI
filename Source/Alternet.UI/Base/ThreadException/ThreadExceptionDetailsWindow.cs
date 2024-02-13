@@ -34,7 +34,7 @@ namespace Alternet.UI
             var closeButton = new Button
             {
                 Text = CommonStrings.Default.ButtonClose,
-                HorizontalAlignment = HorizontalAlignment.Right,
+                HorizontalAlignment = UI.HorizontalAlignment.Right,
                 Margin = new Thickness(0, 10, 0, 0),
             };
             closeButton.Click += (o, e) => Close();

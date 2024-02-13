@@ -14,8 +14,6 @@
 
         internal AnchorStyles Anchor { get; set; }
 
-        internal DockStyle Dock { get; set; }
-
         internal bool AutoSize { get; set; }
     }
 }

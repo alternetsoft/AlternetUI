@@ -478,7 +478,7 @@ namespace Alternet.UI
             {
                 ToolTip = toolTip ?? string.Empty,
                 Text = text,
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = UI.VerticalAlignment.Center,
                 Margin = DefaultTextBtnMargin,
             };
 
@@ -655,7 +655,7 @@ namespace Alternet.UI
                 ImageSet = image,
                 ToolTip = toolTip ?? string.Empty,
                 SuggestedSize = itemSize,
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = UI.VerticalAlignment.Center,
             };
 
             if (imageDisabled is not null)
@@ -696,7 +696,7 @@ namespace Alternet.UI
             GenericLabel label = new(text)
             {
                 Margin = DefaultTextMargin,
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = UI.VerticalAlignment.Center,
             };
 
             UpdateItemProps(label, ItemKind.Text);
@@ -779,9 +779,9 @@ namespace Alternet.UI
             if (item is null)
                 return;
             if (isRight)
-                item.HorizontalAlignment = HorizontalAlignment.Right;
+                item.HorizontalAlignment = UI.HorizontalAlignment.Right;
             else
-                item.HorizontalAlignment = HorizontalAlignment.Left;
+                item.HorizontalAlignment = UI.HorizontalAlignment.Left;
         }
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Alternet.UI
             var item = GetToolControl(id);
             if (item is null)
                 return false;
-            return item.HorizontalAlignment == HorizontalAlignment.Right;
+            return item.HorizontalAlignment == UI.HorizontalAlignment.Right;
         }
 
         /// <summary>
@@ -1259,7 +1259,7 @@ namespace Alternet.UI
                 ImageSet = imageSet,
                 ToolTip = toolTip ?? text,
                 SuggestedSize = itemSize,
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = UI.VerticalAlignment.Center,
                 Margin = DefaultSpeedBtnMargin,
             };
 

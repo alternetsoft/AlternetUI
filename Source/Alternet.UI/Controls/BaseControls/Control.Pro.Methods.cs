@@ -353,6 +353,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default layout in case when <see cref="Layout"/> property
+        /// is null.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// This method returns <see cref="LayoutStyle.Basic"/> in <see cref="Control"/>.
+        /// </remarks>
+        protected virtual LayoutStyle GetDefaultLayout()
+        {
+            return LayoutStyle.Basic;
+        }
+
+        /// <summary>
         /// Called after a new control handler is attached.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
