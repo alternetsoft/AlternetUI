@@ -12,9 +12,9 @@ namespace MenuSample
         private readonly int dynamicToolbarItemsSeparatorIndex;
         private readonly CardPanelHeader panelHeader = new();
         private int newItemIndex = 0;
-        Toolbar? toolbar;
-        ToolbarItem? dynamicToolbarItemsSeparator;
-        ToolbarItem? checkableToolbarItem;
+        ToolBar? toolbar;
+        ToolBarItem? dynamicToolbarItemsSeparator;
+        ToolBarItem? checkableToolbarItem;
         private readonly bool IsDebugBackground = false;
 
         static MainWindow()
@@ -137,22 +137,22 @@ namespace MenuSample
 
         private void InitToolbar()
         {
-            toolbar = Toolbar;
+            toolbar = ToolBar;
 
-            var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
+            var calendarToolbarItem = new ToolBarItem("Calendar", ToolbarItem_Click)
             {
                 ToolTip = "Calendar Toolbar Item",
                 Image = ImageSet.FromUrl($"{ResPrefix}Calendar16.png")
             };
 
-            var photoToolbarItem = new ToolbarItem("Photo", ToolbarItem_Click)
+            var photoToolbarItem = new ToolBarItem("Photo", ToolbarItem_Click)
             {
                 ToolTip = "Photo Toolbar Item",
                 Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
             };
 
             checkableToolbarItem =
-                new ToolbarItem("Pencil", ToggleToolbarItem_Click)
+                new ToolBarItem("Pencil", ToggleToolbarItem_Click)
                 {
                     ToolTip = "Pencil Toolbar Item",
                     IsCheckable = true,
@@ -161,12 +161,12 @@ namespace MenuSample
 
             toolbar?.Items.Add(calendarToolbarItem);
             toolbar?.Items.Add(photoToolbarItem);
-            toolbar?.Items.Add(new ToolbarItem("-"));
+            toolbar?.Items.Add(new ToolBarItem("-"));
             toolbar?.Items.Add(checkableToolbarItem);
-            toolbar?.Items.Add(new ToolbarItem("-"));
+            toolbar?.Items.Add(new ToolBarItem("-"));
 
             var graphDropDownToolbarItem =
-                new ToolbarItem("Graph", ToolbarItem_Click)
+                new ToolBarItem("Graph", ToolbarItem_Click)
                 {
                     ToolTip = "Graph Toolbar Item",
                     Image = ImageSet.FromUrl($"{ResPrefix}LineGraph16.png")
@@ -187,7 +187,7 @@ namespace MenuSample
 
             toolbar?.Items.Add(graphDropDownToolbarItem);
 
-            dynamicToolbarItemsSeparator = new ToolbarItem("-");
+            dynamicToolbarItemsSeparator = new ToolBarItem("-");
             toolbar?.Items.Add(dynamicToolbarItemsSeparator);
 
             Application.Current.LogMessage += Current_LogMessage;
@@ -335,12 +335,12 @@ namespace MenuSample
 
         private void ToolbarItem_Click(object? sender, EventArgs e)
         {
-            LogEvent("Toolbar item clicked: " + ((ToolbarItem)sender!).Text);
+            LogEvent("Toolbar item clicked: " + ((ToolBarItem)sender!).Text);
         }
 
         private void ToggleToolbarItem_Click(object? sender, EventArgs e)
         {
-            ToolbarItem? item = sender as ToolbarItem;
+            ToolBarItem? item = sender as ToolBarItem;
             LogEvent($"Toggle toolbar item clicked: {item?.Text}. Is checked: {item?.Checked}");
         }
 
@@ -370,7 +370,7 @@ namespace MenuSample
             int number = GenItemIndex();
 
             string text = "Item " + number;
-            var item = new ToolbarItem(text)
+            var item = new ToolBarItem(text)
             {
                 Image = toolbar!.Items[0].Image,
                 ToolTip = text + " Description"

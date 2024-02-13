@@ -22,7 +22,7 @@ namespace Alternet.UI
 
         private readonly WindowInfo info = new();
         private string title = string.Empty;
-        private Toolbar? toolbar = null;
+        private ToolBar? toolbar = null;
         private StatusBar? statusBar = null;
         private IconSet? icon = null;
         private MainMenu? menu = null;
@@ -53,9 +53,9 @@ namespace Alternet.UI
         public event EventHandler? IconChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Toolbar"/> property changes.
+        /// Occurs when the value of the <see cref="ToolBar"/> property changes.
         /// </summary>
-        public event EventHandler? ToolbarChanged;
+        public event EventHandler? ToolBarChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="StatusBar"/> property changes.
@@ -722,16 +722,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Toolbar"/> that is displayed in the window.
+        /// Gets or sets the <see cref="ToolBar"/> that is displayed in the window.
         /// </summary>
         /// <value>
-        /// A <see cref="Toolbar"/> that represents the toolbar to display in the window.
+        /// A <see cref="ToolBar"/> that represents the toolbar to display in the window.
         /// </value>
         /// <remarks>
         /// You can use this property to switch between complete toolbar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual Toolbar? Toolbar
+        public virtual ToolBar? ToolBar
         {
             get => toolbar;
 
@@ -749,8 +749,8 @@ namespace Alternet.UI
                 oldValue?.SetParentInternal(null);
                 toolbar?.SetParentInternal(this);
 
-                OnToolbarChanged(EventArgs.Empty);
-                ToolbarChanged?.Invoke(this, EventArgs.Empty);
+                OnToolBarChanged(EventArgs.Empty);
+                ToolBarChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -804,8 +804,8 @@ namespace Alternet.UI
                 if (Menu != null)
                     yield return Menu;
 
-                if (Toolbar != null)
-                    yield return Toolbar;
+                if (ToolBar != null)
+                    yield return ToolBar;
 
                 if (StatusBar != null)
                     yield return StatusBar;
@@ -1117,10 +1117,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the value of the <see cref="Toolbar"/> property changes.
+        /// Called when the value of the <see cref="ToolBar"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnToolbarChanged(EventArgs e)
+        protected virtual void OnToolBarChanged(EventArgs e)
         {
         }
 

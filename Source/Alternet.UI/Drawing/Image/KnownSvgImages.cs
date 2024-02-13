@@ -507,7 +507,7 @@ namespace Alternet.UI
         /// <param name="color">Image color.</param>
         public static Image? GetWarningImage(Color color, int? size = null)
         {
-            size ??= Toolbar.GetDefaultImageSize().Width;
+            size ??= ToolBar.GetDefaultImageSize().Width;
             var imageSet = GetForSize(color, size.Value).ImgMessageBoxWarning;
             var image = imageSet.AsImage(size.Value);
             return image;

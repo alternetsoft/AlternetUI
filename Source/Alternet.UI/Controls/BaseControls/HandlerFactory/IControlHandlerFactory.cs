@@ -133,7 +133,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="Toolbar"/> control.
+        /// <see cref="ToolBar"/> control.
         /// </summary>
         ControlHandler CreateToolbarHandler(Control control);
 
@@ -157,7 +157,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="ToolbarItem"/> control.
+        /// <see cref="ToolBarItem"/> control.
         /// </summary>
         ControlHandler CreateToolbarItemHandler(Control control);
 

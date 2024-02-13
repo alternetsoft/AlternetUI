@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// Gets or sets default image size.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="Toolbar.GetDefaultImageSize(Control)"/> is used.
+        /// If this property is null, <see cref="ToolBar.GetDefaultImageSize(Control)"/> is used.
         /// </remarks>
         public static int? DefaultImageSize { get; set; }
 
@@ -1132,7 +1132,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         public virtual int GetImageSize() =>
-            ImageSize ?? DefaultImageSize ?? Toolbar.GetDefaultImageSize(this).Width;
+            ImageSize ?? DefaultImageSize ?? ToolBar.GetDefaultImageSize(this).Width;
 
         /// <summary>
         /// Gets image color in the normal state taking into account <see cref="NormalImageColor"/>

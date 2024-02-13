@@ -114,9 +114,9 @@ namespace PropertyGridSample
                   typeof(StatusBarPanel), // part of other control
                   typeof(MenuItem), // part of other control
                   typeof(TabPage), // part of other control
-                  typeof(ToolbarItem), // part of other control
+                  typeof(ToolBarItem), // part of other control
 
-                  typeof(Toolbar), // can create some modal window? or add child window 
+                  typeof(ToolBar), // can create some modal window? or add child window 
                   typeof(WebBrowser),
                   //typeof(Popup), // button with popup like ContextMenu
                   typeof(AuiNotebook),

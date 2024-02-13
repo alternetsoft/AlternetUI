@@ -45,10 +45,10 @@
       </MenuItem>
     </MainMenu>
   </Window.Menu>
-  <Window.Toolbar>
-    <Toolbar NoDivider="true">
-    </Toolbar>
-  </Window.Toolbar>
+  <Window.ToolBar>
+    <ToolBar NoDivider="true">
+    </ToolBar>
+  </Window.ToolBar>
   <Window.StatusBar>
     <StatusBar>
       <StatusBarPanel Text="Ready" />
@@ -59,7 +59,7 @@
 
   <VerticalStackPanel Name="mainGrid">
 
-    <Border Grid.Column="1" Grid.Row="1" BorderWidth="0,1,0,0">
+    <Border Grid.Column="1" Grid.Row="1" BorderWidth="0,0,0,0">
 
       <StackPanel Orientation="Vertical" Name="mainPanel" Margin="5" VerticalAlignment="Top">
         <!-- ========================= -->

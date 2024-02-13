@@ -9,10 +9,10 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
-    /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
+    /// <see cref="ToolBar"/> as it is deprecated and has limited functionality.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public partial class ToolbarItem : NonVisualControl, ICommandSource
+    public partial class ToolBarItem : NonVisualControl, ICommandSource
     {
         /// <summary>
         /// Defines a <see cref="DependencyProperty"/> field for the
@@ -22,7 +22,7 @@ namespace Alternet.UI
             DependencyProperty.Register(
                 "Command",
                 typeof(ICommand),
-                typeof(ToolbarItem),
+                typeof(ToolBarItem),
                 new FrameworkPropertyMetadata(
                     null, new PropertyChangedCallback(OnCommandChanged)));
 
@@ -34,7 +34,7 @@ namespace Alternet.UI
             DependencyProperty.Register(
                 "CommandParameter",
                 typeof(object),
-                typeof(ToolbarItem),
+                typeof(ToolBarItem),
                 new PropertyMetadata(null));
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Alternet.UI
             DependencyProperty.Register(
                 "CommandTarget",
                 typeof(object),
-                typeof(ToolbarItem),
+                typeof(ToolBarItem),
                 new PropertyMetadata(null));
 
         private string text = string.Empty;
@@ -55,27 +55,27 @@ namespace Alternet.UI
         private bool preCommandEnabledValue = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolbarItem'/> class.
+        /// Initializes a new instance of the <see cref='ToolBarItem'/> class.
         /// </summary>
-        public ToolbarItem()
+        public ToolBarItem()
             : this(string.Empty, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolbarItem'/> class
+        /// Initializes a new instance of the <see cref='ToolBarItem'/> class
         /// with the specified text for the toolbar item.
         /// </summary>
-        public ToolbarItem(string text)
+        public ToolBarItem(string text)
             : this(text, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolbarItem'/> class
+        /// Initializes a new instance of the <see cref='ToolBarItem'/> class
         /// with a specified properties for the toolbar item.
         /// </summary>
-        public ToolbarItem(string text, EventHandler? onClick)
+        public ToolBarItem(string text, EventHandler? onClick)
         {
             this.Text = text;
             if (onClick != null)
@@ -236,13 +236,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref='ToolbarItemHandler'/> associated with this class.
+        /// Gets a <see cref='ToolBarItemHandler'/> associated with this class.
         /// </summary>
-        internal new ToolbarItemHandler Handler
+        internal new ToolBarItemHandler Handler
         {
             get
             {
-                return (ToolbarItemHandler)base.Handler;
+                return (ToolBarItemHandler)base.Handler;
             }
         }
 
@@ -262,7 +262,7 @@ namespace Alternet.UI
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(Text))
-                return base.ToString() ?? nameof(ToolbarItem);
+                return base.ToString() ?? nameof(ToolBarItem);
             else
                 return Text;
         }
@@ -294,7 +294,7 @@ namespace Alternet.UI
             DependencyObject d,
             DependencyPropertyChangedEventArgs e)
         {
-           ToolbarItem b = (ToolbarItem)d;
+           ToolBarItem b = (ToolBarItem)d;
            b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
         }
 

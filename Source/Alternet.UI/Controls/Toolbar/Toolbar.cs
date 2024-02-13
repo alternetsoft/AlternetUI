@@ -11,16 +11,16 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
-    /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
+    /// <see cref="ToolBar"/> as it is deprecated and has limited functionality.
     /// </remarks>
     [DefaultProperty("Items")]
     [ControlCategory("MenusAndToolbars")]
-    public partial class Toolbar : NonVisualControl
+    public partial class ToolBar : NonVisualControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Toolbar"/> class.
+        /// Initializes a new instance of the <see cref="ToolBar"/> class.
         /// </summary>
-        public Toolbar()
+        public ToolBar()
         {
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
@@ -227,17 +227,17 @@ namespace Alternet.UI
         /// with the menu.
         /// </summary>
         [Content]
-        public Collection<ToolbarItem> Items { get; } = new() { ThrowOnNullAdd = true };
+        public Collection<ToolBarItem> Items { get; } = new() { ThrowOnNullAdd = true };
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
 
-        internal new ToolbarHandler Handler
+        internal new ToolBarHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (ToolbarHandler)base.Handler;
+                return (ToolBarHandler)base.Handler;
             }
         }
 
@@ -317,14 +317,14 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
         }
 
-        private void Items_ItemInserted(object? sender, int index, ToolbarItem item)
+        private void Items_ItemInserted(object? sender, int index, ToolBarItem item)
         {
             // This is required for data binding inheritance. ???
             // This commented out as added additional dummy toolbar items
             // Children.Add(e.Item);
         }
 
-        private void Items_ItemRemoved(object? sender, int index, ToolbarItem item)
+        private void Items_ItemRemoved(object? sender, int index, ToolBarItem item)
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);

@@ -103,11 +103,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateToolbarHandler(Control control) =>
-            new NativeToolbarHandler();
+            new ToolBarHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateToolbarItemHandler(Control control) =>
-            new NativeToolbarItemHandler();
+            new ToolBarItemHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateColorPickerHandler(Control control) =>
