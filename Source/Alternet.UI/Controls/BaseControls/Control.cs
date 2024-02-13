@@ -311,6 +311,16 @@ namespace Alternet.UI
         public event EventHandler? MouseLeave;
 
         /// <summary>
+        /// Occurs when the child control is removed from this control.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? ChildRemoved;
+
+        /// <summary>
+        /// Occurs when the child control is added to this control.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? ChildInserted;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
         public event EventHandler? EnabledChanged;

@@ -308,11 +308,17 @@ namespace Alternet.UI
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
-        internal void RaiseChildInserted(Control childControl) =>
+        internal void RaiseChildInserted(Control childControl)
+        {
             OnChildInserted(childControl);
+            ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
+        }
 
-        internal void RaiseChildRemoved(Control childControl) =>
+        internal void RaiseChildRemoved(Control childControl)
+        {
             OnChildInserted(childControl);
+            ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
+        }
 
         internal void RaisePaint(PaintEventArgs e)
         {
