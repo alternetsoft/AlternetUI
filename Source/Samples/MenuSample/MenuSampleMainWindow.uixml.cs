@@ -77,22 +77,24 @@ namespace MenuSample
             saveMenuItem.Image = imagesDisabled.ImgFileSave;
         }
 
+        private StatusBar? GetStatusBar() => StatusBar as StatusBar;
+
         private void StatusAddButton_Click(object? sender, System.EventArgs e)
         {
             StatusBar ??= new();
-            StatusBar?.Add($"Panel {GenItemIndex()}");
+            GetStatusBar()?.Add($"Panel {GenItemIndex()}");
         }
 
         private void StatusRemoveButton_Click(object? sender, System.EventArgs e)
         {
-            StatusBar?.Panels.RemoveLast();
+            GetStatusBar()?.Panels.RemoveLast();
         }
 
         private void StatusRecreateButton_Click(object? sender, EventArgs e)
         {
-            StatusBar = new();
-            StatusBar?.Add($"Panel {GenItemIndex()}");
-            StatusBar?.Add($"Panel {GenItemIndex()}");
+            StatusBar = new StatusBar();
+            GetStatusBar()?.Add($"Panel {GenItemIndex()}");
+            GetStatusBar()?.Add($"Panel {GenItemIndex()}");
         }
 
         private void StatusNullButton_Click(object? sender, EventArgs e)
@@ -103,12 +105,12 @@ namespace MenuSample
         private void StatusEditButton_Click(object? sender, EventArgs e)
         {
             StatusBar ??= new();
-            DialogFactory.EditItemsWithListEditor(StatusBar);
+            DialogFactory.EditItemsWithListEditor(GetStatusBar());
         }
 
         private void StatusClearButton_Click(object? sender, EventArgs e)
         {
-            StatusBar?.Panels.Clear();
+            GetStatusBar()?.Panels.Clear();
         }
 
         private void ImageTextVertical()
@@ -453,8 +455,10 @@ namespace MenuSample
 
         private void ShowSizingGripButton_Click(object? sender, EventArgs e)
         {
-            if (StatusBar != null)
-                StatusBar.SizingGripVisible = !StatusBar.SizingGripVisible;
+            var s = GetStatusBar();
+
+            if (s != null)
+                s.SizingGripVisible = !s.SizingGripVisible;
         }
     }
 }

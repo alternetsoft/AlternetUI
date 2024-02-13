@@ -22,8 +22,8 @@ namespace Alternet.UI
 
         private readonly WindowInfo info = new();
         private string title = string.Empty;
-        private ToolBar? toolbar = null;
-        private StatusBar? statusBar = null;
+        private Control? toolbar = null;
+        private FrameworkElement? statusBar = null;
         private IconSet? icon = null;
         private MainMenu? menu = null;
         private Window? owner;
@@ -603,7 +603,7 @@ namespace Alternet.UI
         /// You can use this property to switch between complete status bar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual StatusBar? StatusBar
+        public virtual FrameworkElement? StatusBar
         {
             get => statusBar;
 
@@ -618,11 +618,11 @@ namespace Alternet.UI
                     return;
                 }
 
-                if (value is not null)
+                if (value is StatusBar asStatusBar)
                 {
                     if (value.IsDisposed)
                         throw new ObjectDisposedException(nameof(StatusBar));
-                    if (value.Window is not null && value.Window != this)
+                    if (asStatusBar.Window is not null && asStatusBar.Window != this)
                     {
                         throw new ArgumentException(
                             "Object is already attached to the window",
@@ -630,17 +630,17 @@ namespace Alternet.UI
                     }
                 }
 
-                if (statusBar is not null)
+                if (statusBar is StatusBar asStatusBar2)
                 {
-                    statusBar.Window = null;
+                    asStatusBar2.Window = null;
                     var oldHandle = Handler.NativeControl.WxStatusBar;
                     if (oldHandle != default)
                         Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
                 }
 
                 statusBar = value;
-                if (statusBar is not null)
-                    statusBar.Window = this;
+                if (statusBar is StatusBar asStatusBar3)
+                    asStatusBar3.Window = this;
                 else
                     Handler.NativeControl.WxStatusBar = default;
 

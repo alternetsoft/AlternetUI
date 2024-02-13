@@ -175,8 +175,10 @@ namespace Alternet.UI
         /// Edits <see cref="StatusBar.Panels"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static bool? EditItemsWithListEditor(StatusBar control) =>
-            EditPropertyWithListEditor(control, nameof(StatusBar.Panels));
+        public static bool? EditItemsWithListEditor(StatusBar? control)
+        {
+            return EditPropertyWithListEditor(control, nameof(StatusBar.Panels));
+        }
 
         /// <summary>
         /// Edits <see cref="TreeView.Items"/> with list editor.

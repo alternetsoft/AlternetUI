@@ -267,7 +267,7 @@ namespace Alternet.UI
 
         private void ApplyStatusBar(object? sender, EventArgs e)
         {
-            Control.StatusBar?.RecreateWidget();
+            (Control.StatusBar as StatusBar)?.RecreateWidget();
         }
 
         private void ApplyOwner(object? sender, EventArgs e)
