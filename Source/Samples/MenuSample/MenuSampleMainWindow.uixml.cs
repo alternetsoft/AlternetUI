@@ -137,7 +137,7 @@ namespace MenuSample
 
         private void InitToolbar()
         {
-            toolbar = ToolBar;
+            toolbar = (ToolBar as ToolBar) ?? new();
 
             var calendarToolbarItem = new ToolBarItem("Calendar", ToolbarItem_Click)
             {

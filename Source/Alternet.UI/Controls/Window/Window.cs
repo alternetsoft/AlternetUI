@@ -722,7 +722,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ToolBar"/> that is displayed in the window.
+        /// Gets or sets the toolbar that is displayed in the window.
         /// </summary>
         /// <value>
         /// A <see cref="ToolBar"/> that represents the toolbar to display in the window.
@@ -731,7 +731,7 @@ namespace Alternet.UI
         /// You can use this property to switch between complete toolbar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual ToolBar? ToolBar
+        public virtual Control? ToolBar
         {
             get => toolbar;
 
@@ -741,7 +741,7 @@ namespace Alternet.UI
                     return;
 
                 var oldValue = toolbar;
-                toolbar = value;
+                toolbar = value as ToolBar;
 
                 if (GetWindowKind() == WindowKind.Dialog)
                     return;
