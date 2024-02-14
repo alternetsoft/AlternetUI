@@ -62,6 +62,8 @@ namespace Alternet.UI
         private string? toolTip;
         private ObjectUniqueId? uniqueId;
         private string? text;
+        private DockStyle dock;
+        private LayoutStyle? layout;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -311,6 +313,21 @@ namespace Alternet.UI
         public event EventHandler? MouseLeave;
 
         /// <summary>
+        /// Occurs when the child control is removed from this control.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? ChildRemoved;
+
+        /// <summary>
+        /// Occurs when the child control's <see cref="Visible"/> property is changed.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? ChildVisibleChanged;
+
+        /// <summary>
+        /// Occurs when the child control is added to this control.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? ChildInserted;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
         public event EventHandler? EnabledChanged;
@@ -535,6 +552,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets layout style of the child controls.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual LayoutStyle? Layout
+        {
+            get
+            {
+                return layout;
+            }
+
+            set
+            {
+                if (layout == value)
+                    return;
+                layout = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether mouse events are bubbled to parent control.
         /// </summary>
         [Browsable(false)]
@@ -560,27 +597,19 @@ namespace Alternet.UI
         [Localizable(true)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [DefaultValue(DockStyle.None)]
-        [Browsable(false)]
         public virtual DockStyle Dock
         {
             get
             {
-                return LayoutPanel.GetDock(this);
+                return dock;
             }
 
             set
             {
-                if (value != Dock)
+                if (value != dock)
                 {
-                    SuspendLayout();
-                    try
-                    {
-                        LayoutPanel.SetDock(this, value);
-                    }
-                    finally
-                    {
-                        ResumeLayout();
-                    }
+                    dock = value;
+                    PerformLayout();
                 }
             }
         }
@@ -1107,6 +1136,7 @@ namespace Alternet.UI
                 visible = value;
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
+                Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
                 Handler.Control_VisibleChanged();
                 if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
@@ -2028,7 +2058,7 @@ namespace Alternet.UI
         /// is positioned within a parent control.
         /// </summary>
         /// <value>A vertical alignment setting. The default is
-        /// <see cref="VerticalAlignment.Stretch"/>.</value>
+        /// <c>null</c>.</value>
         public virtual VerticalAlignment VerticalAlignment
         {
             get => verticalAlignment;
@@ -2106,7 +2136,7 @@ namespace Alternet.UI
         /// it is positioned within a parent control.
         /// </summary>
         /// <value>A horizontal alignment setting. The default is
-        /// <see cref="HorizontalAlignment.Stretch"/>.</value>
+        /// <c>null</c>.</value>
         public virtual HorizontalAlignment HorizontalAlignment
         {
             get => horizontalAlignment;
@@ -2222,26 +2252,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the layout direction for this control.
+        /// Gets or sets the language direction for this control.
         /// </summary>
         /// <remarks>
-        /// Note that <see cref="LayoutDirection.Default"/> is returned if layout direction
+        /// Note that <see cref="LangDirection.Default"/> is returned if layout direction
         /// is not supported.
         /// </remarks>
-        public virtual LayoutDirection LayoutDirection
+        [Browsable(false)]
+        public virtual LangDirection LangDirection
         {
             get
             {
                 var control = NativeControl;
                 if (control is null)
-                    return LayoutDirection.Default;
+                    return LangDirection.Default;
 
-                return (LayoutDirection)control.LayoutDirection;
+                return (LangDirection)control.LayoutDirection;
             }
 
             set
             {
-                if (value == LayoutDirection.Default)
+                if (value == LangDirection.Default)
                     return;
                 var control = NativeControl;
                 if (control is null)

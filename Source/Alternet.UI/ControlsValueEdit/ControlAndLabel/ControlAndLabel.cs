@@ -43,12 +43,12 @@ namespace Alternet.UI
         {
             label = CreateLabel();
             label.Margin = new Thickness(0, 0, DefaultControlLabelDistance, 0);
-            label.VerticalAlignment = VerticalAlignment.Center;
+            label.VerticalAlignment = UI.VerticalAlignment.Center;
 
             Orientation = StackPanelOrientation.Horizontal;
             label.Parent = this;
             mainControl = CreateControl();
-            mainControl.VerticalAlignment = VerticalAlignment.Center;
+            mainControl.VerticalAlignment = UI.VerticalAlignment.Center;
             mainControl.Parent = this;
             TextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;

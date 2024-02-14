@@ -34,7 +34,6 @@
       <None Remove="SampleImages\love-text-free-png-image.png" />
       <None Remove="SampleImages\love-text-free-png-image_64x64.ico" />
       <None Remove="SampleImages\penguin-love-couple.svg" />
-      <None Remove="Toolbar\Toolbar.uixml" />
       <None Remove="Tools\AirbrushToolOptionsControl.uixml" />
       <None Remove="Tools\PenLikeToolOptionsControl.uixml" />
     </ItemGroup>

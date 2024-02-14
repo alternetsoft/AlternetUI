@@ -23,8 +23,8 @@ namespace Alternet.UI
             try
             {
                 Orientation = StackPanelOrientation.Horizontal;
-                HorizontalAlignment = HorizontalAlignment.Right;
-                VerticalAlignment = VerticalAlignment.Center;
+                HorizontalAlignment = UI.HorizontalAlignment.Right;
+                VerticalAlignment = UI.VerticalAlignment.Center;
                 OkButton.Parent = this;
                 CancelButton.Parent = this;
                 ApplyButton.Parent = this;
@@ -50,8 +50,8 @@ namespace Alternet.UI
         {
             Text = CommonStrings.Default.ButtonOk,
             Margin = DefaultButtonMargin,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = UI.VerticalAlignment.Center,
+            HorizontalAlignment = UI.HorizontalAlignment.Right,
             IsDefault = true,
         };
 
@@ -63,8 +63,8 @@ namespace Alternet.UI
         {
             Text = CommonStrings.Default.ButtonCancel,
             Margin = DefaultButtonMargin,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = UI.VerticalAlignment.Center,
+            HorizontalAlignment = UI.HorizontalAlignment.Right,
             IsCancel = true,
         };
 
@@ -76,8 +76,8 @@ namespace Alternet.UI
         {
             Margin = DefaultButtonMargin,
             Text = CommonStrings.Default.ButtonApply,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = UI.VerticalAlignment.Center,
+            HorizontalAlignment = UI.HorizontalAlignment.Right,
             Visible = false,
         };
 

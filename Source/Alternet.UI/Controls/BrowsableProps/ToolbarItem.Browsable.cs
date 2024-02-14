@@ -1,6 +1,6 @@
 namespace Alternet.UI
 {
-    public partial class ToolbarItem
+    public partial class ToolBarItem
     {
     }
 }

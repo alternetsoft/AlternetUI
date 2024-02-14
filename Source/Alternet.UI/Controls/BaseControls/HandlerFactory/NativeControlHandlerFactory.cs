@@ -22,20 +22,12 @@ namespace Alternet.UI
             new NativeButtonHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateStackPanelHandler(Control control) =>
-            new StackPanelHandler();
-
-        /// <inheritdoc/>
         public ControlHandler CreateBorderHandler(Control control) =>
             new Border.BorderHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreatePictureBoxHandler(Control control) =>
             new PictureBox.PictureBoxHandler();
-
-        /// <inheritdoc/>
-        public ControlHandler CreateLabelHandler(Control control) =>
-            new NativeLabelHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateTextBoxHandler(Control control) =>
@@ -55,7 +47,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateGroupBoxHandler(Control control) =>
-            new NativeGroupBoxHandler();
+            new GroupBoxHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateProgressBarHandler(Control control) =>
@@ -103,11 +95,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateToolbarHandler(Control control) =>
-            new NativeToolbarHandler();
+            new ToolBarHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateToolbarItemHandler(Control control) =>
-            new NativeToolbarItemHandler();
+            new ToolBarItemHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateColorPickerHandler(Control control) =>

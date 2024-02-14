@@ -20,7 +20,7 @@ dockable windows as either docked or floating.
   
 A status bar is divided into panels to display information using the <xref:Alternet.UI.StatusBar.Panels> property.
 The <xref:Alternet.UI.StatusBar> control allows you to create status bar panels by adding
-<xref:Alternet.UI.StatusBarPanel> objects to a <xref:Alternet.UI.Toolbar.Items%2A> collection. Each
+<xref:Alternet.UI.StatusBarPanel> objects to a <xref:Alternet.UI.StatusBar.Items%2A> collection. Each
 <xref:Alternet.UI.StatusBarPanel> object should have <xref:Alternet.UI.StatusBarPanel.Text> assigned to be
 displayed in the status bar.
 

@@ -97,7 +97,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         internal override ControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateLabelHandler(this);
+            return new NativeLabelHandler();
         }
     }
 }

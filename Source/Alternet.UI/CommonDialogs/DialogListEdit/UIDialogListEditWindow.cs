@@ -59,7 +59,7 @@ namespace Alternet.UI
 
             treeView.SelectionChanged += TreeView_SelectionChanged;
 
-            panel.Layout = GenericLayoutStyle.Native;
+            panel.Layout = LayoutStyle.None;
             Children.Add(panel);
             manager.SetManagedWindow(panel);
             manager.SetDefaultSplitterSashProps();

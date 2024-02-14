@@ -288,8 +288,8 @@ namespace Alternet.UI
             Borders ??= new();
 
             var hoveredBorder = BorderSettings.Default.Clone();
-            hoveredBorder.UniformRadiusIsPercent = true;
-            hoveredBorder.UniformCornerRadius = 25;
+            hoveredBorder.UniformRadiusIsPercent = false;
+            hoveredBorder.UniformCornerRadius = 3;
             Borders.SetObject(hoveredBorder, GenericControlState.Hovered);
 
             var pressedBorder = hoveredBorder.Clone();

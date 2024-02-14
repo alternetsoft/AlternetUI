@@ -25,7 +25,8 @@ namespace Alternet.UI
         /// </summary>
         public PictureBox()
         {
-            BehaviorOptions = ControlOptions.DrawDefaultBackground | ControlOptions.DrawDefaultBorder
+            BehaviorOptions = ControlOptions.DrawDefaultBackground
+                | ControlOptions.DrawDefaultBorder
                 | ControlOptions.RefreshOnCurrentState;
         }
 
@@ -288,6 +289,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override Thickness Padding
+        {
+            get => base.Padding;
+            set
+            {
+                if (Padding == value)
+                    return;
+                base.Padding = value;
+                Invalidate();
+            }
+        }
+
         internal ImagePrimitivePainter Primitive => primitive;
 
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
@@ -306,6 +320,21 @@ namespace Alternet.UI
         {
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+                return new SizeD(specifiedWidth, specifiedHeight);
+
+            var result = GetImageAndTextSize();
+            if (result != SizeD.Empty)
+                return result + Padding.Size;
+
+            return base.GetPreferredSize(availableSize);
         }
 
         /// <inheritdoc/>
@@ -334,10 +363,19 @@ namespace Alternet.UI
             if (TextVisible)
             {
                 var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+                var origin = rect.Location;
+
+                if (CenterHorz || CenterVert)
+                {
+                    var textSize = GetTextPreferredSize();
+                    var textRect = new RectD(rect.Location, textSize);
+                    var alignedRect = textRect.CenterIn(rect, CenterHorz, CenterVert);
+                    origin = alignedRect.Location;
+                }
 
                 dc.DrawText(
                     Text ?? string.Empty,
-                    ChildrenLayoutBounds.Location,
+                    origin,
                     Font ?? UI.Control.DefaultFont,
                     color ?? ForeColor,
                     Color.Empty);
@@ -348,7 +386,8 @@ namespace Alternet.UI
                 image ??= Image;
                 primitive.Image = image;
                 primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
-                primitive.DestRect = rect;
+                primitive.DestRect =
+                    (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
                 primitive.Draw(this, dc);
             }
 
@@ -413,17 +452,21 @@ namespace Alternet.UI
             }
 
             return result;
+        }
 
-            SizeD GetTextPreferredSize()
-            {
-                var text = Text;
-                if (text == null)
-                    return new SizeD();
+        /// <summary>
+        /// Gets size of the text.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SizeD GetTextPreferredSize()
+        {
+            var text = Text;
+            if (text == null)
+                return new SizeD();
 
-                using var dc = CreateDrawingContext();
-                var result = dc.GetTextExtent(text, Font ?? UI.Control.DefaultFont, this);
-                return result;
-            }
+            using var dc = CreateDrawingContext();
+            var result = dc.GetTextExtent(text, Font ?? UI.Control.DefaultFont, this);
+            return result;
         }
 
         internal class PictureBoxHandler : NativeControlHandler<PictureBox, Native.Panel>
@@ -433,20 +476,6 @@ namespace Alternet.UI
             public override void OnPaint(Graphics drawingContext)
             {
                 Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
-            }
-
-            public override SizeD GetPreferredSize(SizeD availableSize)
-            {
-                var specifiedWidth = Control.SuggestedWidth;
-                var specifiedHeight = Control.SuggestedHeight;
-                if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
-                    return new SizeD(specifiedWidth, specifiedHeight);
-
-                var result = Control.GetImageAndTextSize();
-                if (result != SizeD.Empty)
-                    return result + Control.Padding.Size;
-
-                return base.GetPreferredSize(availableSize);
             }
 
             internal override Native.Control CreateNativeControl()

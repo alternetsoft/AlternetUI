@@ -1,7 +1,8 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Used to describe how a control is positioned or stretched vertically within a parent's layout slot.
+    /// Used to describe how a control is positioned or stretched
+    /// vertically within a parent's layout slot.
     /// </summary>
     /// <remarks>
     /// See <see cref="Control.VerticalAlignment"/> for more details.
@@ -27,5 +28,11 @@ namespace Alternet.UI
         /// Stretch control vertically within a parent's layout slot.
         /// </summary>
         Stretch = 3,
+
+        /// <summary>
+        /// Stretch control vertically within a remaining empty space
+        /// which is not occupied by other sibling controls.
+        /// </summary>
+        Fill = 4,
     }
 }

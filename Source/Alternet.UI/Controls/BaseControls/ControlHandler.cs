@@ -370,28 +370,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the handler should reposition the child controls of the
-        /// control it is attached to.
-        /// </summary>
-        public virtual void OnLayout()
-        {
-            Control.PerformDefaultLayout(Control);
-        }
-
-        /// <summary>
-        /// Retrieves the size of a rectangular area into which the control can
-        /// be fitted, in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
-        /// <returns>A <see cref="SizeD"/> representing the width and height of
-        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
-        {
-            return UI.Control.GetPreferredSizeDefaultLayout(Control, availableSize);
-        }
-
-        /// <summary>
         /// Maintains performance while performing slow operations on a control
         /// by preventing the control from
         /// drawing until the <see cref="EndUpdate"/> method is called.

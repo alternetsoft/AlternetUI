@@ -161,7 +161,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="Toolbar.GetDefaultImageSize(double)"/>
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBar.GetDefaultImageSize(double)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
@@ -174,7 +174,7 @@ namespace Alternet.UI
         /// If provided, svg fill color is changed to the specified value.</param>
         public static ImageSet FromSvgUrlForToolbar(string url, Control control, Color? color = null)
         {
-            var imageSize = Toolbar.GetDefaultImageSize(control);
+            var imageSize = ToolBar.GetDefaultImageSize(control);
             var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
             return result;
         }

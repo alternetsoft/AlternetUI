@@ -17,22 +17,27 @@ namespace Alternet.UI
         internal static void PerformDefaultLayout(Control container)
         {
             var childrenLayoutBounds = container.ChildrenLayoutBounds;
-            foreach (var control in container.AllChildrenInLayout)
+
+            var childs = container.AllChildrenInLayout;
+
+            foreach (var control in childs)
             {
                 var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
 
                 var horizontalPosition =
-                    AlignedLayout.AlignHorizontal(
+                    LayoutFactory.AlignHorizontal(
                         childrenLayoutBounds,
                         control,
-                        preferredSize);
+                        preferredSize,
+                        control.HorizontalAlignment);
                 var verticalPosition =
-                    AlignedLayout.AlignVertical(
+                    LayoutFactory.AlignVertical(
                         childrenLayoutBounds,
                         control,
-                        preferredSize);
+                        preferredSize,
+                        control.VerticalAlignment);
 
-                control.Handler.Bounds = new RectD(
+                control.Bounds = new RectD(
                     horizontalPosition.Origin,
                     verticalPosition.Origin,
                     horizontalPosition.Size,
@@ -42,7 +47,7 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeDefaultLayout(Control container, SizeD availableSize)
         {
-            if (container.HasChildren /*|| container.Handler.HasVisualChildren*/)
+            if (container.HasChildren)
                 return container.Handler.GetSpecifiedOrChildrenPreferredSize(availableSize);
             return container.Handler.GetNativeControlSize(availableSize);
         }
@@ -308,11 +313,17 @@ namespace Alternet.UI
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
-        internal void RaiseChildInserted(Control childControl) =>
+        internal void RaiseChildInserted(Control childControl)
+        {
             OnChildInserted(childControl);
+            ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
+        }
 
-        internal void RaiseChildRemoved(Control childControl) =>
+        internal void RaiseChildRemoved(Control childControl)
+        {
             OnChildInserted(childControl);
+            ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
+        }
 
         internal void RaisePaint(PaintEventArgs e)
         {

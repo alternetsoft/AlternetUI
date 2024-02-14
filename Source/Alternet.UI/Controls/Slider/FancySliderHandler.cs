@@ -116,11 +116,6 @@ namespace Alternet.UI
             DrawTicks(largeTickPen, scaleRange / largeTicksCount, largeTickLength);
         }
 
-        public override SizeD GetPreferredSize(SizeD availableSize)
-        {
-            return new SizeD(100, 100);
-        }
-
         protected override void OnAttach()
         {
             base.OnAttach();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -89,6 +90,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            // Ensure the group box label is included in the size.
+            var nativeControlSize = Handler.GetNativeControlSize(availableSize);
+            var calculatedSize = base.GetPreferredSize(availableSize);
+
+            return new SizeD(
+                Math.Max(nativeControlSize.Width, calculatedSize.Width),
+                Math.Max(nativeControlSize.Height, calculatedSize.Height));
+        }
+
+        /// <inheritdoc/>
         internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
@@ -105,9 +118,6 @@ namespace Alternet.UI
 
         private void RaiseTitleChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnTitleChanged(e);
             TitleChanged?.Invoke(this, e);
         }

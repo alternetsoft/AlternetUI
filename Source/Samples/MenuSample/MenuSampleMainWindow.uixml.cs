@@ -12,9 +12,9 @@ namespace MenuSample
         private readonly int dynamicToolbarItemsSeparatorIndex;
         private readonly CardPanelHeader panelHeader = new();
         private int newItemIndex = 0;
-        Toolbar? toolbar;
-        ToolbarItem? dynamicToolbarItemsSeparator;
-        ToolbarItem? checkableToolbarItem;
+        ToolBar? toolbar;
+        ToolBarItem? dynamicToolbarItemsSeparator;
+        ToolBarItem? checkableToolbarItem;
         private readonly bool IsDebugBackground = false;
 
         static MainWindow()
@@ -52,6 +52,12 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
+            panelHeader.BackColor = SystemColors.Window;
+            panelHeader.Orientation = StackPanelOrientation.Vertical;
+            panelHeader.TabPadding = (5, 10, 5, 10);
+            panelHeader.TabMargin = (5, 10, 5, 10);
+            panelHeader.TabHorizontalAlignment = HorizontalAlignment.Stretch;
+            panelHeader.TabGroupHorizontalAlignment = HorizontalAlignment.Stretch;
             panelHeader.Add("Menu", menuPanel);
             panelHeader.Add("ToolBar", toolbarPanel);
             panelHeader.Add("StatusBar", statusPanel);
@@ -77,22 +83,24 @@ namespace MenuSample
             saveMenuItem.Image = imagesDisabled.ImgFileSave;
         }
 
+        private StatusBar? GetStatusBar() => StatusBar as StatusBar;
+
         private void StatusAddButton_Click(object? sender, System.EventArgs e)
         {
             StatusBar ??= new();
-            StatusBar?.Add($"Panel {GenItemIndex()}");
+            GetStatusBar()?.Add($"Panel {GenItemIndex()}");
         }
 
         private void StatusRemoveButton_Click(object? sender, System.EventArgs e)
         {
-            StatusBar?.Panels.RemoveLast();
+            GetStatusBar()?.Panels.RemoveLast();
         }
 
         private void StatusRecreateButton_Click(object? sender, EventArgs e)
         {
-            StatusBar = new();
-            StatusBar?.Add($"Panel {GenItemIndex()}");
-            StatusBar?.Add($"Panel {GenItemIndex()}");
+            StatusBar = new StatusBar();
+            GetStatusBar()?.Add($"Panel {GenItemIndex()}");
+            GetStatusBar()?.Add($"Panel {GenItemIndex()}");
         }
 
         private void StatusNullButton_Click(object? sender, EventArgs e)
@@ -103,12 +111,12 @@ namespace MenuSample
         private void StatusEditButton_Click(object? sender, EventArgs e)
         {
             StatusBar ??= new();
-            DialogFactory.EditItemsWithListEditor(StatusBar);
+            DialogFactory.EditItemsWithListEditor(GetStatusBar());
         }
 
         private void StatusClearButton_Click(object? sender, EventArgs e)
         {
-            StatusBar?.Panels.Clear();
+            GetStatusBar()?.Panels.Clear();
         }
 
         private void ImageTextVertical()
@@ -137,22 +145,22 @@ namespace MenuSample
 
         private void InitToolbar()
         {
-            toolbar = Toolbar;
+            toolbar = (ToolBar as ToolBar) ?? new();
 
-            var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
+            var calendarToolbarItem = new ToolBarItem("Calendar", ToolbarItem_Click)
             {
                 ToolTip = "Calendar Toolbar Item",
                 Image = ImageSet.FromUrl($"{ResPrefix}Calendar16.png")
             };
 
-            var photoToolbarItem = new ToolbarItem("Photo", ToolbarItem_Click)
+            var photoToolbarItem = new ToolBarItem("Photo", ToolbarItem_Click)
             {
                 ToolTip = "Photo Toolbar Item",
                 Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
             };
 
             checkableToolbarItem =
-                new ToolbarItem("Pencil", ToggleToolbarItem_Click)
+                new ToolBarItem("Pencil", ToggleToolbarItem_Click)
                 {
                     ToolTip = "Pencil Toolbar Item",
                     IsCheckable = true,
@@ -161,12 +169,12 @@ namespace MenuSample
 
             toolbar?.Items.Add(calendarToolbarItem);
             toolbar?.Items.Add(photoToolbarItem);
-            toolbar?.Items.Add(new ToolbarItem("-"));
+            toolbar?.Items.Add(new ToolBarItem("-"));
             toolbar?.Items.Add(checkableToolbarItem);
-            toolbar?.Items.Add(new ToolbarItem("-"));
+            toolbar?.Items.Add(new ToolBarItem("-"));
 
             var graphDropDownToolbarItem =
-                new ToolbarItem("Graph", ToolbarItem_Click)
+                new ToolBarItem("Graph", ToolbarItem_Click)
                 {
                     ToolTip = "Graph Toolbar Item",
                     Image = ImageSet.FromUrl($"{ResPrefix}LineGraph16.png")
@@ -187,7 +195,7 @@ namespace MenuSample
 
             toolbar?.Items.Add(graphDropDownToolbarItem);
 
-            dynamicToolbarItemsSeparator = new ToolbarItem("-");
+            dynamicToolbarItemsSeparator = new ToolBarItem("-");
             toolbar?.Items.Add(dynamicToolbarItemsSeparator);
 
             Application.Current.LogMessage += Current_LogMessage;
@@ -335,12 +343,12 @@ namespace MenuSample
 
         private void ToolbarItem_Click(object? sender, EventArgs e)
         {
-            LogEvent("Toolbar item clicked: " + ((ToolbarItem)sender!).Text);
+            LogEvent("Toolbar item clicked: " + ((ToolBarItem)sender!).Text);
         }
 
         private void ToggleToolbarItem_Click(object? sender, EventArgs e)
         {
-            ToolbarItem? item = sender as ToolbarItem;
+            ToolBarItem? item = sender as ToolBarItem;
             LogEvent($"Toggle toolbar item clicked: {item?.Text}. Is checked: {item?.Checked}");
         }
 
@@ -370,7 +378,7 @@ namespace MenuSample
             int number = GenItemIndex();
 
             string text = "Item " + number;
-            var item = new ToolbarItem(text)
+            var item = new ToolBarItem(text)
             {
                 Image = toolbar!.Items[0].Image,
                 ToolTip = text + " Description"
@@ -453,8 +461,10 @@ namespace MenuSample
 
         private void ShowSizingGripButton_Click(object? sender, EventArgs e)
         {
-            if (StatusBar != null)
-                StatusBar.SizingGripVisible = !StatusBar.SizingGripVisible;
+            var s = GetStatusBar();
+
+            if (s != null)
+                s.SizingGripVisible = !s.SizingGripVisible;
         }
     }
 }

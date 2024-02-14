@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Control SubstituteControl(Control control)
         {
-            var parent = new Control();
+            var parent = new SubsControl();
             control.Parent = parent;
             control = parent;
             return control;
@@ -1136,19 +1136,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
-        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
-        {
-            return Handler.GetPreferredSize(availableSize);
-        }
-
-        /// <summary>
         /// Sets bounds of the control using <paramref name="rect"/> and <paramref name="flags"/>.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
@@ -1329,7 +1316,7 @@ namespace Alternet.UI
 
             var limitedResult = new List<Control>();
 
-            foreach(var item in result.Items)
+            foreach (var item in result.Items)
             {
                 if (item is T)
                     limitedResult.Add(item);
@@ -1477,7 +1464,46 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
-            Handler?.OnLayout();
+            switch (Layout ?? GetDefaultLayout())
+            {
+                case LayoutStyle.Dock:
+                    LayoutPanel.LayoutDockedChildren(this);
+                    break;
+                case LayoutStyle.Basic:
+                    UI.Control.PerformDefaultLayout(this);
+                    break;
+                case LayoutStyle.Vertical:
+                    StackPanel.LayoutVerticalStackPanel(this);
+                    break;
+                case LayoutStyle.Horizontal:
+                    StackPanel.LayoutHorizontalStackPanel(this);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the size of a rectangular area into which a control can
+        /// be fitted, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="availableSize">The available space that a parent element
+        /// can allocate a child control.</param>
+        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
+        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        public virtual SizeD GetPreferredSize(SizeD availableSize)
+        {
+            switch (Layout ?? GetDefaultLayout())
+            {
+                case LayoutStyle.Dock:
+                case LayoutStyle.None:
+                default:
+                    return GetPreferredSizeDefaultLayout(this, availableSize);
+                case LayoutStyle.Basic:
+                    return UI.Control.GetPreferredSizeDefaultLayout(this, availableSize);
+                case LayoutStyle.Vertical:
+                    return StackPanel.GetPreferredSizeVerticalStackPanel(this, availableSize);
+                case LayoutStyle.Horizontal:
+                    return StackPanel.GetPreferredSizeHorizontalStackPanel(this, availableSize);
+            }
         }
 
         /// <summary>
@@ -1939,6 +1965,38 @@ namespace Alternet.UI
             Native.ScrollBarOrientation orientation = isVertical
                 ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarMaximum(orientation);
+        }
+
+        private class SubsControl : Control
+        {
+            public SubsControl()
+            {
+            }
+
+            internal override ControlHandler CreateHandler()
+            {
+                return new SubsControlHandler();
+            }
+
+            public class SubsControlHandler : ControlHandler
+            {
+                protected override void OnAttach()
+                {
+                    base.OnAttach();
+                    NativeControl.SizeChanged = NativeSizeChanged;
+                }
+
+                protected override void OnDetach()
+                {
+                    NativeControl.SizeChanged = null;
+                    base.OnDetach();
+                }
+
+                private void NativeSizeChanged()
+                {
+                    Application.AddIdleTask(Control.OnLayout);
+                }
+            }
         }
     }
 }

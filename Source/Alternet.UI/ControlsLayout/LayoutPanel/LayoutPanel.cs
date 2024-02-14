@@ -1,105 +1,21 @@
-﻿namespace Alternet.UI
+﻿using Alternet.Drawing;
+
+namespace Alternet.UI
 {
     /// <summary>
     /// Arranges child controls using different methods.
     /// </summary>
     /// <remarks>
     /// Currently only default layout method is implemeted.
-    /// Use <see cref="SetDock"/> to specify child controls dock style.
+    /// Use <see cref="Control.Dock"/> to specify child controls dock style.
     /// If it dock style is not specified, controls are positioned absolutely using
     /// <see cref="Control.Bounds"/>.
     /// </remarks>
     [ControlCategory("Containers")]
     public partial class LayoutPanel : Control
     {
-        private GenericLayoutStyle layout;
-
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;
-
-        /// <summary>
-        /// Gets or sets layout style of the child controls.
-        /// </summary>
-        [Browsable(false)]
-        public GenericLayoutStyle Layout
-        {
-            get
-            {
-                return layout;
-            }
-
-            set
-            {
-                if (layout == value)
-                    return;
-                layout = value;
-                PerformLayout();
-            }
-        }
-
-        internal new LayoutPanelHandler Handler =>
-            (LayoutPanelHandler)base.Handler;
-
-        /// <summary>
-        /// Sets which control borders are docked to its parent control
-        /// and determines how a control is resized with its parent.
-        /// </summary>
-        /// <param name="control">Control instance for which property
-        /// value is set.</param>
-        /// <param name="value">New Dock property value</param>
-        public static void SetDock(Control control, DockStyle value)
-        {
-            if (control == null)
-                return;
-            control.ExtendedProps.Dock = value;
-        }
-
-        /// <summary>
-        /// Gets which control borders are docked to its parent control
-        /// and determines how a control is resized with its parent.
-        /// </summary>
-        /// <param name="control">Control instance for which property
-        /// value is returned.</param>
-        public static DockStyle GetDock(Control control)
-        {
-            if (control == null || !control.HasExtendedProps)
-                return DockStyle.None;
-            return control.ExtendedProps.Dock;
-        }
-
-        /// <summary>
-        /// Sets a value that indicates whether the control
-        /// resizes based on its contents.
-        /// </summary>
-        /// <param name="control">Control instance for which property
-        /// value is set.</param>
-        /// <param name="value">New value for the AutoSize property</param>
-        public static void SetAutoSize(Control control, bool value)
-        {
-            if (control == null)
-                return;
-            control.ExtendedProps.AutoSize = value;
-        }
-
-        /// <summary>
-        /// Gets a value that indicates whether the control
-        /// resizes based on its contents.
-        /// </summary>
-        /// <param name="control">Control instance for which property
-        /// value is returned.</param>
-        /// <returns>true if auto sizing is enabled; otherwise, false.</returns>
-        public static bool GetAutoSize(Control control)
-        {
-            if (control == null || !control.HasExtendedProps)
-                return true;
-            return control.ExtendedProps.AutoSize;
-        }
-
-        /// <inheritdoc />
-        public override void OnLayout()
-        {
-            base.OnLayout();
-        }
 
         internal static void SetAnchor(Control control, AnchorStyles value)
         {
@@ -129,11 +45,6 @@
             return control.ExtendedProps.DistanceRight;
         }
 
-        internal static void PerformDockStyleLayout(Control control)
-        {
-            LayoutDockStyle.Layout(control, control.ChildrenLayoutBounds);
-        }
-
         internal static void SetDistanceBottom(Control control, double value)
         {
             if (control == null)
@@ -155,6 +66,34 @@
             control.ExtendedProps.AutoSizeMode = value;
         }
 
+        /// <summary>
+        /// Sets a value that indicates whether the control
+        /// resizes based on its contents.
+        /// </summary>
+        /// <param name="control">Control instance for which property
+        /// value is set.</param>
+        /// <param name="value">New value for the AutoSize property</param>
+        internal static void SetAutoSize(Control control, bool value)
+        {
+            if (control == null)
+                return;
+            control.ExtendedProps.AutoSize = value;
+        }
+
+        /// <summary>
+        /// Gets a value that indicates whether the control
+        /// resizes based on its contents.
+        /// </summary>
+        /// <param name="control">Control instance for which property
+        /// value is returned.</param>
+        /// <returns>true if auto sizing is enabled; otherwise, false.</returns>
+        internal static bool GetAutoSize(Control control)
+        {
+            if (control == null || !control.HasExtendedProps)
+                return true;
+            return control.ExtendedProps.AutoSize;
+        }
+
         internal static AutoSizeMode GetAutoSizeMode(Control control)
         {
             if (control == null || !control.HasExtendedProps)
@@ -162,22 +101,116 @@
             return control.ExtendedProps.AutoSizeMode;
         }
 
-        /// <inheritdoc />
-        internal override ControlHandler CreateHandler()
+        internal static void LayoutDockedChildren(Control parent)
         {
-            return new LayoutPanelHandler();
+            var space = parent.ChildrenLayoutBounds;
+            var children = parent.AllChildrenInLayout;
+
+            // Deal with docking; go through in reverse, MS docs say that
+            // lowest Z-order is closest to edge
+            for (int i = children.Count - 1; i >= 0; i--)
+            {
+                Control child = children[i];
+
+                SizeD child_size = child.Bounds.Size;
+                DockStyle dock = child.Dock;
+                bool autoSize = false;
+
+                switch (dock)
+                {
+                    case DockStyle.None:
+                        /*child.OnLayout();*/
+                        break;
+
+                    case DockStyle.Left:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(child_size.Width, space.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Y,
+                            child_size.Width,
+                            space.Height,
+                            BoundsSpecified.All);
+                        space.X += child_size.Width;
+                        space.Width -= child_size.Width;
+                        break;
+
+                    case DockStyle.Top:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(space.Width, child_size.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Y,
+                            space.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
+                        space.Y += child_size.Height;
+                        space.Height -= child_size.Height;
+                        break;
+
+                    case DockStyle.Right:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(child_size.Width, space.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Right - child_size.Width,
+                            space.Y,
+                            child_size.Width,
+                            space.Height,
+                            BoundsSpecified.All);
+                        space.Width -= child_size.Width;
+                        break;
+
+                    case DockStyle.Bottom:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(space.Width, child_size.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Bottom - child_size.Height,
+                            space.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
+                        space.Height -= child_size.Height;
+                        break;
+
+                    case DockStyle.Fill:
+                        child_size = new SizeD(space.Width, space.Height);
+                        if (autoSize)
+                            child_size = child.GetPreferredSizeLimited(child_size);
+                        child.SetBounds(
+                            space.Left,
+                            space.Top,
+                            child_size.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
+                        break;
+                }
+            }
         }
 
-        /// <inheritdoc />
-        protected override void OnChildInserted(Control childControl)
+        /// <inheritdoc/>
+        protected override LayoutStyle GetDefaultLayout()
         {
-            base.OnChildInserted(childControl);
-        }
-
-        /// <inheritdoc />
-        protected override void OnChildRemoved(Control childControl)
-        {
-            base.OnChildRemoved(childControl);
+            return LayoutStyle.Dock;
         }
     }
 }

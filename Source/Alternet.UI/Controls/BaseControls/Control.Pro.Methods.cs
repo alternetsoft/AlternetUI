@@ -63,7 +63,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="Idle"/> event.
+        /// Called when when the application finishes processing events and is
+        /// about to enter the idle state.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
@@ -107,6 +108,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when a <see cref="Control"/> is removed from the
+        /// <see cref="Control.Children"/> collections.
+        /// </summary>
+        protected virtual void OnChildRemoved(Control childControl)
+        {
+        }
+
+        /// <summary>
         /// Called when the conrol's handle is created.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
@@ -144,14 +153,6 @@ namespace Alternet.UI
         protected void SetStyle(ControlStyles flag, bool value)
         {
             controlStyle = value ? (controlStyle | flag) : (controlStyle & ~flag);
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the
-        /// <see cref="Control.Children"/> collections.
-        /// </summary>
-        protected virtual void OnChildRemoved(Control childControl)
-        {
         }
 
         /// <summary>
@@ -349,6 +350,19 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnPaint(PaintEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Gets default layout in case when <see cref="Layout"/> property
+        /// is null.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// This method returns <see cref="LayoutStyle.Basic"/> in <see cref="Control"/>.
+        /// </remarks>
+        protected virtual LayoutStyle GetDefaultLayout()
+        {
+            return LayoutStyle.Basic;
         }
 
         /// <summary>

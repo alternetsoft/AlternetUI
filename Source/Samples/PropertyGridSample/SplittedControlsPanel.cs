@@ -43,7 +43,7 @@ namespace Alternet.UI
                 {
                     actionsControl = new()
                     {
-                        VerticalAlignment = VerticalAlignment.Stretch,
+                        VerticalAlignment = UI.VerticalAlignment.Fill,
                         Visible = false,
                         HasBorder = false,
                     };
@@ -71,12 +71,14 @@ namespace Alternet.UI
                     propertyGrid = new()
                     {
                         HasBorder = false,
-                        VerticalAlignment = VerticalAlignment.Stretch,
+                        VerticalAlignment = UI.VerticalAlignment.Fill,
                         Visible = false,
                         Parent = RightPanel,
                     };
 
-                    RightPanel.Header.Add(CommonStrings.Default.WindowTitleProperties, propertyGrid);
+                    RightPanel.Header.Add(
+                        CommonStrings.Default.WindowTitleProperties,
+                        propertyGrid);
                     RightPanel.Header.SelectFirstTab();
                 }
 
@@ -99,6 +101,8 @@ namespace Alternet.UI
                         Parent = LeftPanel,
                         HasBorder = false,
                         FullRowSelect = true,
+                        HorizontalAlignment = UI.HorizontalAlignment.Fill,
+                        VerticalAlignment = UI.VerticalAlignment.Fill,
                     };
                     if (LeftTreeViewAsListBox)
                         leftTreeView.MakeAsListBox();

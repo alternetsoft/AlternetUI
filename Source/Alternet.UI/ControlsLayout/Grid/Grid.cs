@@ -497,8 +497,18 @@ namespace Alternet.UI
         {
             var preferredSize = control.GetPreferredSize(bounds.Size);
 
-            var horizontalPosition = AlignedLayout.AlignHorizontal(bounds, control, preferredSize);
-            var verticalPosition = AlignedLayout.AlignVertical(bounds, control, preferredSize);
+            var horizontalPosition =
+                LayoutFactory.AlignHorizontal(
+                    bounds,
+                    control,
+                    preferredSize,
+                    control.HorizontalAlignment);
+            var verticalPosition =
+                LayoutFactory.AlignVertical(
+                    bounds,
+                    control,
+                    preferredSize,
+                    control.VerticalAlignment);
 
             control.Handler.Bounds = new RectD(
                 horizontalPosition.Origin,

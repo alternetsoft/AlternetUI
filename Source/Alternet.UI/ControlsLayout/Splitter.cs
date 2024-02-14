@@ -245,7 +245,8 @@ namespace Alternet.UI
                     return;
 
                 spd.Target.Bounds = boundsI;
-                Application.DoEvents();
+                /*Application.DoEvents();*/
+                Parent?.Refresh();
                 var args = new SplitterEventArgs(
                     Left,
                     Top,

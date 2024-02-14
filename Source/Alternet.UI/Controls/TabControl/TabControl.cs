@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -132,10 +133,23 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.TabControl? NativeControl => Handler.NativeControl as Native.TabControl;
+        internal new Native.TabControl NativeControl => (Native.TabControl)Handler.NativeControl;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
+
+        /// <inheritdoc />
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            return NativeControl.GetTotalPreferredSizeFromPageSize(
+                Handler.GetSpecifiedOrChildrenPreferredSize(availableSize));
+        }
+
+        /// <inheritdoc />
+        public override void OnLayout()
+        {
+            Handler.LayoutSelectedPage();
+        }
 
         internal void RaiseSelectedPageChanged(EventArgs e)
         {

@@ -1,60 +1,143 @@
 using System;
-using System.Collections.Generic;
-using Alternet.Drawing;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Provides base functionality for implementing a specific
-    /// <see cref="Toolbar"/> behavior and appearance.
-    /// </summary>
-    internal abstract class ToolbarHandler : ControlHandler
+    internal class ToolBarHandler : ControlHandler
     {
-        /// <summary>
-        /// Gets a <see cref="Toolbar"/> this handler provides the implementation for.
-        /// </summary>
-        public new Toolbar Control => (Toolbar)base.Control;
+        private readonly bool mainToolbar = false;
+
+        public ToolBarHandler(bool mainToolbar = true)
+            : base()
+        {
+            this.mainToolbar = mainToolbar;
+        }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar item
-        /// text is visible.
+        /// Gets a <see cref="ToolBar"/> this handler provides the implementation for.
         /// </summary>
-        public abstract bool ItemTextVisible { get; set; }
+        public new ToolBar Control => (ToolBar)base.Control;
 
-        /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar item
-        /// images are visible.
-        /// </summary>
-        public abstract bool ItemImagesVisible { get; set; }
+        public new Native.Toolbar NativeControl => (Native.Toolbar)base.NativeControl!;
 
-        /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar has
-        /// horizontal gray line which divides it from other controls.
-        /// </summary>
-        public abstract bool NoDivider { get; set; }
+        public bool NoDivider
+        {
+            get => NativeControl.NoDivider;
+            set => NativeControl.NoDivider = value;
+        }
 
-        /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar
-        /// is positioned vertically.
-        /// </summary>
-        public abstract bool IsVertical { get; set; }
+        public bool IsVertical
+        {
+            get => NativeControl.IsVertical;
+            set => NativeControl.IsVertical = value;
+        }
 
-        /// <inheritdoc cref="Toolbar.IsBottom"/>
-        public abstract bool IsBottom { get; set; }
+        public bool IsBottom
+        {
+            get
+            {
+                return NativeControl.IsBottom;
+            }
 
-        /// <inheritdoc cref="Toolbar.IsRight"/>
-        public abstract bool IsRight { get; set; }
+            set
+            {
+                NativeControl.IsBottom = value;
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets a value which specifies display modes for toolbar item
-        /// image and text.
-        /// </summary>
-        public abstract ImageToText ImageToText { get; set; }
+        public bool IsRight
+        {
+            get
+            {
+                return NativeControl.IsRight;
+            }
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
+            set
+            {
+                NativeControl.IsRight = value;
+            }
+        }
 
-        /// <inheritdoc cref="Toolbar.Realize"/>
-        public abstract void Realize();
+        public bool ItemTextVisible
+        {
+            get => NativeControl.ItemTextVisible;
+            set => NativeControl.ItemTextVisible = value;
+        }
+
+        public bool ItemImagesVisible
+        {
+            get => NativeControl.ItemImagesVisible;
+            set => NativeControl.ItemImagesVisible = value;
+        }
+
+        public ImageToText ImageToText
+        {
+            get => (ImageToText)NativeControl.ImageToTextDisplayMode;
+            set => NativeControl.ImageToTextDisplayMode = (Native.ToolbarItemImageToTextDisplayMode)value;
+        }
+
+        public void Realize()
+        {
+            NativeControl.Realize();
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new NativeToolbar(mainToolbar);
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.Items.ItemInserted -= Items_ItemInserted;
+            Control.Items.ItemRemoved -= Items_ItemRemoved;
+        }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            ApplyItems();
+
+            Control.Items.ItemInserted += Items_ItemInserted;
+            Control.Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        private void ApplyItems()
+        {
+            for (var i = 0; i < Control.Items.Count; i++)
+                InsertItem(Control.Items[i], i);
+        }
+
+        private void InsertItem(ToolBarItem item, int index)
+        {
+            var handler = item.Handler as ToolBarItemHandler ??
+                throw new InvalidOperationException();
+            NativeControl.InsertItemAt(index, handler.NativeControl);
+        }
+
+        private void Items_ItemInserted(object? sender, int index, ToolBarItem item)
+        {
+            InsertItem(item, index);
+        }
+
+        private void Items_ItemRemoved(object? sender, int index, ToolBarItem item)
+        {
+            NativeControl.RemoveItemAt(index);
+        }
+
+        private class NativeToolbar : Native.Toolbar
+        {
+            public NativeToolbar(bool mainToolbar)
+            {
+                SetNativePointer(NativeApi.Toolbar_CreateEx_(mainToolbar));
+            }
+
+            public NativeToolbar(IntPtr nativePointer)
+                : base(nativePointer)
+            {
+            }
+        }
     }
 }

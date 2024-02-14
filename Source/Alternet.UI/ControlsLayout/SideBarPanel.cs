@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <remarks>
     /// This control can be used in <see cref="SplittedPanel"/> side bars.
     /// </remarks>
-    public partial class SideBarPanel : VerticalStackPanel
+    public partial class SideBarPanel : Control
     {
         private readonly CardPanelHeader header = new()
         {
@@ -27,9 +27,9 @@ namespace Alternet.UI
         /// </summary>
         public SideBarPanel()
         {
+            Layout = LayoutStyle.Vertical;
             BackgroundColor = SystemColors.Window;
-            AllowStretch = true;
-            header.VerticalAlignment = VerticalAlignment.Top;
+            header.VerticalAlignment = UI.VerticalAlignment.Top;
             header.Parent = this;
             header.BackgroundColor = SystemColors.ButtonFace;
         }
@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (header.VerticalAlignment == VerticalAlignment.Bottom)
+                if (header.VerticalAlignment == UI.VerticalAlignment.Bottom)
                     return TabAlignment.Bottom;
                 else
                     return TabAlignment.Top;
@@ -64,9 +64,9 @@ namespace Alternet.UI
                 if (TabAlignment == value)
                     return;
                 if (value == TabAlignment.Bottom)
-                    header.VerticalAlignment = VerticalAlignment.Bottom;
+                    header.VerticalAlignment = UI.VerticalAlignment.Bottom;
                 else
-                    header.VerticalAlignment = VerticalAlignment.Top;
+                    header.VerticalAlignment = UI.VerticalAlignment.Top;
             }
         }
 
@@ -81,6 +81,8 @@ namespace Alternet.UI
             if (control is not null)
             {
                 control.Visible = false;
+                control.VerticalAlignment = VerticalAlignment.Fill;
+                control.HorizontalAlignment = HorizontalAlignment.Fill;
                 control.Parent = this;
             }
 

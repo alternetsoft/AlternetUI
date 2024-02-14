@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -247,6 +248,10 @@ namespace Alternet.UI
         /// <remarks>
         /// By default used in all create panel methods.
         /// </remarks>
-        protected virtual Control CreateAnyPanel() => new Panel();
+        protected virtual Control CreateAnyPanel()
+        {
+            var result = new Panel();
+            return result;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Alternet.UI
         private readonly BorderSideSettings right = new();
         private readonly BorderSideSettings bottom = new();
         private double? uniformCornerRadius;
-        private bool? uniformRadiusIsPercent = true;
+        private bool? uniformRadiusIsPercent = false;
         private BorderCornerRadius? topLeftRadius;
         private BorderCornerRadius? topRightRadius;
         private BorderCornerRadius? bottomRightRadius;

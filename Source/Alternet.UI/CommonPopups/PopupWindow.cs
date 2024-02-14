@@ -34,7 +34,6 @@ namespace Alternet.UI
             CloseEnabled = DefaultCloseEnabled;
             HasSystemMenu = false;
 
-            mainPanel.AllowStretch = true;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
             var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
@@ -47,7 +46,7 @@ namespace Alternet.UI
             bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
             bottomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
             bottomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
-            bottomToolBar.VerticalAlignment = VerticalAlignment.Bottom;
+            bottomToolBar.VerticalAlignment = UI.VerticalAlignment.Bottom;
             bottomToolBar.ResumeLayout();
             bottomToolBar.Parent = mainPanel;
             Deactivated += Popup_Deactivated;
@@ -203,7 +202,7 @@ namespace Alternet.UI
                 if (mainControl == null)
                 {
                     mainControl = CreateMainControl();
-                    mainControl.VerticalAlignment = VerticalAlignment.Stretch;
+                    mainControl.VerticalAlignment = UI.VerticalAlignment.Fill;
                     mainControl.Parent = mainPanel;
                     BindEvents(mainControl);
                 }
@@ -222,7 +221,7 @@ namespace Alternet.UI
                 }
 
                 mainControl = value;
-                mainControl.VerticalAlignment = VerticalAlignment.Stretch;
+                mainControl.VerticalAlignment = UI.VerticalAlignment.Fill;
                 BindEvents(mainControl);
                 mainControl.Parent = mainPanel;
             }
@@ -403,7 +402,7 @@ namespace Alternet.UI
             // now check left/right too
             double x = ptOrigin.X;
 
-            if (Application.Current.LayoutDirection == LayoutDirection.RightToLeft)
+            if (Application.Current.LangDirection == LangDirection.RightToLeft)
             {
                 // shift the window to the left instead of the right.
                 x -= size.Width;

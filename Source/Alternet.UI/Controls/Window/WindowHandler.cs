@@ -130,7 +130,7 @@ namespace Alternet.UI
             Control.StateChanged -= ApplyState;
             Control.IconChanged -= ApplyIcon;
             Control.MenuChanged -= ApplyMenu;
-            Control.ToolbarChanged -= ApplyToolbar;
+            Control.ToolBarChanged -= ApplyToolbar;
             Control.StatusBarChanged -= ApplyStatusBar;
 
             Control.InputBindings.ItemInserted -= InputBindings_ItemInserted;
@@ -177,7 +177,7 @@ namespace Alternet.UI
             Control.StateChanged += ApplyState;
             Control.IconChanged += ApplyIcon;
             Control.MenuChanged += ApplyMenu;
-            Control.ToolbarChanged += ApplyToolbar;
+            Control.ToolBarChanged += ApplyToolbar;
             Control.StatusBarChanged += ApplyStatusBar;
 
             Control.InputBindings.ItemInserted += InputBindings_ItemInserted;
@@ -262,12 +262,12 @@ namespace Alternet.UI
         private void ApplyToolbar(object? sender, EventArgs e)
         {
             NativeControl.Toolbar =
-                (Control.Toolbar?.Handler as NativeToolbarHandler)?.NativeControl;
+                (Control.ToolBar?.Handler as ToolBarHandler)?.NativeControl;
         }
 
         private void ApplyStatusBar(object? sender, EventArgs e)
         {
-            Control.StatusBar?.RecreateWidget();
+            (Control.StatusBar as StatusBar)?.RecreateWidget();
         }
 
         private void ApplyOwner(object? sender, EventArgs e)

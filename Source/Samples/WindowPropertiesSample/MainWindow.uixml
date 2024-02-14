@@ -8,9 +8,8 @@
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 
-  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                       AllowStretch="true">
-    <VerticalStackPanel Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <VerticalStackPanel Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Fill">
 
       <!-- ========================= -->
       <HorizontalStackPanel Name="actionsPanel" HorizontalAlignment="Stretch">

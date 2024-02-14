@@ -9,11 +9,47 @@ namespace ExplorerUISample
 {
     partial class MainWindow : Window
     {
+        private readonly SplittedPanel mainPanel = new()
+        {
+            RightVisible = false,
+            TopVisible = false,
+        };
+        private readonly TreeView treeView = new()
+        {
+            HasBorder = false,
+        };
+        private readonly ListView listView = new()
+        {
+            View = ListViewView.Details,
+            HasBorder = false,
+        };
+        private readonly Button button = new("Show progress")
+        {
+            Padding = 10,
+            ClickAction = () =>
+            {
+                var progressWindow = new ProgressWindow();
+                progressWindow.Show();
+            },
+        };
+
         public MainWindow()
         {
             Icon = new("embres:ExplorerUISample.Sample.ico");
 
             InitializeComponent();
+
+            mainPanel.Parent = this;
+            mainPanel.LeftPanel.Width = 200;
+            mainPanel.BottomPanel.Height = 100;
+            button.Parent = mainPanel.BottomPanel;
+            button.HorizontalAlignment = HorizontalAlignment.Left;
+            button.VerticalAlignment = VerticalAlignment.Top;
+            treeView.Parent = mainPanel.LeftPanel;
+            listView.Parent = mainPanel.FillPanel;
+            listView.Columns.Add(new ListViewColumn("Name"));
+            listView.Columns.Add(new ListViewColumn("Size"));
+            listView.Columns.Add(new ListViewColumn("Modified"));
 
             var date = System.DateTime.Now.ToShortDateString();
             listView.Items.Add(new ListViewItem(
@@ -52,12 +88,6 @@ namespace ExplorerUISample
             Application.Current.Exit();
         }
         
-        private void ShowProgress_Click(object sender, EventArgs e)
-        {
-            var progressWindow = new ProgressWindow();
-            progressWindow.Show();
-        }
-
         private static ImageList LoadImageList()
         {
             var smallImageList = new ImageList();

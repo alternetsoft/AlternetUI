@@ -1,27 +1,101 @@
 using System;
-using System.Collections.Generic;
-using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="ToolbarItem"/> behavior and appearance.
-    /// </summary>
-    internal abstract class ToolbarItemHandler : ControlHandler
+    internal class ToolBarItemHandler : ControlHandler
     {
-        /// <summary>
-        /// Gets a <see cref="ToolbarItem"/> this handler provides the implementation for.
-        /// </summary>
-        public new ToolbarItem Control => (ToolbarItem)base.Control;
+        private Menu? dropDownMenu;
 
         /// <summary>
-        /// Gets or sets a menu used as this toolbar item drop-down.
+        /// Gets a <see cref="ToolBarItem"/> this handler provides the implementation for.
         /// </summary>
-        public abstract Menu? DropDownMenu { get; set; }
+        public new ToolBarItem Control => (ToolBarItem)base.Control;
 
-        /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar item is checkable.
-        /// </summary>
-        public abstract bool IsCheckable { get; set; }
+        public new Native.ToolbarItem NativeControl => (Native.ToolbarItem)base.NativeControl!;
+
+        public Menu? DropDownMenu
+        {
+            get => dropDownMenu;
+            set
+            {
+                dropDownMenu = value;
+
+                if (value == null)
+                    NativeControl.DropDownMenu = null;
+                else
+                    NativeControl.DropDownMenu = ((ContextMenuHandler)value.Handler).NativeControl;
+            }
+        }
+
+        public bool IsCheckable { get => NativeControl.IsCheckable; set => NativeControl.IsCheckable = value; }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.ToolbarItem();
+        }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            ApplyText();
+            ApplyChecked();
+            ApplyImage();
+
+            Control.TextChanged += Control_TextChanged;
+            Control.ImageChanged += Control_ImageChanged;
+            Control.CheckedChanged += Control_CheckedChanged;
+
+            NativeControl.Click = NativeControl_Click;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.CheckedChanged -= Control_CheckedChanged;
+            Control.TextChanged -= Control_TextChanged;
+            Control.ImageChanged -= Control_ImageChanged;
+
+            NativeControl.Click = null;
+        }
+
+        private void Control_ImageChanged(object? sender, EventArgs e)
+        {
+            ApplyImage();
+        }
+
+        private void Control_CheckedChanged(object? sender, EventArgs e)
+        {
+            ApplyChecked();
+        }
+
+        private void ApplyText()
+        {
+            NativeControl.Text = Control.Text;
+        }
+
+        private void ApplyChecked()
+        {
+            NativeControl.Checked = Control.Checked;
+        }
+
+        private void ApplyImage()
+        {
+            NativeControl.Image = Control.Image?.NativeImageSet ?? null;
+            NativeControl.DisabledImage =
+                Control.DisabledImage?.NativeImageSet ?? null;
+        }
+
+        private void NativeControl_Click()
+        {
+            Control.Checked = NativeControl.Checked;
+            Control.RaiseClick(EventArgs.Empty);
+        }
+
+        private void Control_TextChanged(object? sender, EventArgs? e)
+        {
+            ApplyText();
+        }
     }
 }

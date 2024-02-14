@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -96,7 +97,8 @@ namespace Alternet.UI
             if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
                 return;
 
-            Manager.AddPane(Control.SubstituteControl(TextBox), CenterPane);
+            var control = TextBox;
+            Manager.AddPane(control, CenterPane);
             Manager.AddPane(Toolbar, ToolbarPane);
 
             Manager.Update();

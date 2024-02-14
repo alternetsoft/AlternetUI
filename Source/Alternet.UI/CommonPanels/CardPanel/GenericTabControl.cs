@@ -19,7 +19,6 @@ namespace Alternet.UI
     {
         private readonly CardPanel cardPanel = new();
         private readonly CardPanelHeader cardPanelHeader = new();
-        private readonly StackPanel stackPanel = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericTabControl"/> class.
@@ -27,30 +26,30 @@ namespace Alternet.UI
         public GenericTabControl()
             : base()
         {
-            stackPanel.Orientation = StackPanelOrientation.Vertical;
-            stackPanel.Parent = this;
-            cardPanelHeader.Parent = stackPanel;
-            cardPanel.Parent = stackPanel;
-            cardPanel.VerticalAlignment = VerticalAlignment.Stretch;
+            Layout = LayoutStyle.Vertical;
+            cardPanelHeader.Parent = this;
+            cardPanel.Parent = this;
+            cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
+            cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
             cardPanelHeader.CardPanel = cardPanel;
         }
 
         /// <summary>
-        /// Gets or sets how the tabs are aligned.
+        /// Gets or sets how the tabs and content are aligned.
         /// </summary>
         public bool IsVertical
         {
             get
             {
-                return stackPanel.Orientation == StackPanelOrientation.Vertical;
+                return Layout == LayoutStyle.Vertical;
             }
 
             set
             {
                 if(value)
-                    stackPanel.Orientation = StackPanelOrientation.Vertical;
+                    Layout = LayoutStyle.Vertical;
                 else
-                    stackPanel.Orientation = StackPanelOrientation.Horizontal;
+                    Layout = LayoutStyle.Horizontal;
             }
         }
 

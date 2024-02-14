@@ -144,7 +144,7 @@ namespace Alternet.UI
 
             var buttonsGrid = CreateButtonsGrid();
             Grid.SetRow(buttonsGrid, 1);
-            buttonsGrid.VerticalAlignment = VerticalAlignment.Bottom;
+            buttonsGrid.VerticalAlignment = UI.VerticalAlignment.Bottom;
             mainGrid.Children.Add(buttonsGrid);
 
             EndInit();
@@ -162,8 +162,8 @@ namespace Alternet.UI
 
                 var errorImagePictureBox = new PictureBox
                 {
-                    VerticalAlignment = VerticalAlignment.Top,
-                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = UI.VerticalAlignment.Top,
+                    HorizontalAlignment = UI.HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
                     Image = LoadImage(
                         "Alternet.UI.Application.ThreadException.Resources.ErrorImage.png"),

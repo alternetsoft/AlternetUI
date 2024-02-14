@@ -29,6 +29,7 @@ namespace WindowPropertiesSample
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
+            panelHeader.BackColor = SystemColors.Window;
             panelHeader.Add("Actions", actionsPanel);
             panelHeader.Add("Settings", settingsPanel);
             panelHeader.Add("Bounds", boundsPanel);
@@ -163,7 +164,6 @@ namespace WindowPropertiesSample
             {
                 Padding = 10,
                 Parent = testWindow,
-                AllowStretch = true,
             };
 
             PanelOkCancelButtons buttons = new()
@@ -178,7 +178,7 @@ namespace WindowPropertiesSample
             ListBox listBox = new()
             {
                 Parent = panel,
-                VerticalAlignment = VerticalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Fill,
             };
         }
 

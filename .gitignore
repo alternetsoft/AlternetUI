@@ -45,3 +45,4 @@ Source/Alternet.UI.Pal/Alternet.UI.Pal.aps
 Documentation/Alternet.UI.Documentation/Build.Result.txt
 *.nupkg
 *.snupkg
+node_modules

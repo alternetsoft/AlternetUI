@@ -210,7 +210,7 @@ namespace CommonDialogsSample
         {
             set
             {
-                StatusBar?.SetText(value);
+                (StatusBar as StatusBar)?.SetText(value);
             }
         }
 

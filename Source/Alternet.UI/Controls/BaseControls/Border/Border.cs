@@ -290,14 +290,6 @@ namespace Alternet.UI
             {
                 Control.DefaultPaint(dc, DrawClientRectangle);
             }
-
-            public override SizeD GetPreferredSize(SizeD availableSize)
-            {
-                return base.GetPreferredSize(availableSize) +
-                    new SizeD(
-                        Control.BorderWidth.Horizontal,
-                        Control.BorderWidth.Vertical);
-            }
         }
     }
 }

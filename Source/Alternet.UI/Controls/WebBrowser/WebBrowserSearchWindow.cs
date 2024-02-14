@@ -66,7 +66,7 @@ namespace Alternet.UI
             HorizontalStackPanel buttonPanel = new()
             {
                 Parent = findPanel,
-                HorizontalAlignment = HorizontalAlignment.Right,
+                HorizontalAlignment = UI.HorizontalAlignment.Right,
             };
 
             ControlSet buttons = new(findButton, findClearButton, closeButton);
