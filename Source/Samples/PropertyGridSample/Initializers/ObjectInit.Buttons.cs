@@ -27,6 +27,15 @@ namespace PropertyGridSample
             button.Text = "Sample Text";
         }
 
+        public static void InitSpeedColorButton(object control)
+        {
+            if (control is not SpeedColorButton button)
+                return;
+            button.SuggestedSize = 64;
+            button.ColorImageSize = 56;
+            button.Value = Color.Red;
+        }
+
         public static void InitSpeedButton(object control)
         {
             if (control is not SpeedButton button)
