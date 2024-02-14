@@ -64,7 +64,7 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            control.ColumnIndex = value;
+            control.columnIndex = value;
             OnCellAttachedPropertyChanged(control);
         }
 
@@ -77,8 +77,15 @@ namespace Alternet.UI
         /// <param name="col">The 0-based column index to set.</param>
         public static void SetRowColumn(Control control, int row, int col)
         {
-            SetRow(control, row);
-            SetColumn(control, col);
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+            if (row < 0)
+                throw new ArgumentOutOfRangeException(nameof(row));
+            if (col < 0)
+                throw new ArgumentOutOfRangeException(nameof(col));
+            control.rowIndex = row;
+            control.columnIndex = col;
+            OnCellAttachedPropertyChanged(control);
         }
 
         /// <summary>
@@ -91,10 +98,7 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-            if (control.ColumnIndex is null)
-                return 0;
-            else
-                return control.ColumnIndex.Value;
+            return control.columnIndex;
         }
 
         /// <summary>
@@ -110,7 +114,7 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            control.RowIndex = value;
+            control.rowIndex = value;
             OnCellAttachedPropertyChanged(control);
         }
 
@@ -123,10 +127,7 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-            if (control.RowIndex is null)
-                return 0;
-            else
-                return control.RowIndex.Value;
+            return control.rowIndex;
         }
 
         /// <summary>
@@ -140,10 +141,7 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-            if (control.HasExtendedProps)
-                return control.ExtendedProps.GridRowSpan;
-            else
-                return 1;
+            return control.rowSpan;
         }
 
         /// <summary>
@@ -157,13 +155,10 @@ namespace Alternet.UI
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
-
-            if (value < 0)
+            if (value < 1)
                 throw new ArgumentOutOfRangeException(nameof(value));
 
-            /*controlRowSpans[control] = value;*/
-
-            control.ExtendedProps.GridRowSpan = value;
+            control.rowSpan = value;
             OnCellAttachedPropertyChanged(control);
         }
 
@@ -178,10 +173,7 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-            if (control.HasExtendedProps)
-                return control.ExtendedProps.GridColumnSpan;
-            else
-                return 1;
+            return control.columnSpan;
         }
 
         /// <summary>
@@ -195,15 +187,15 @@ namespace Alternet.UI
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
-
-            if (value < 0)
+            if (value < 1)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            control.ExtendedProps.GridColumnSpan = value;
+            control.columnSpan = value;
             OnCellAttachedPropertyChanged(control);
         }
 
         /// <summary>
-        /// Adds <see cref="RowDefinition"/> instance with <see cref="RowDefinition.Height"/> equal to
+        /// Adds <see cref="RowDefinition"/> instance with
+        /// <see cref="RowDefinition.Height"/> equal to
         /// <see cref="GridLength.Auto"/>.
         /// </summary>
         public RowDefinition AddAutoRow()
@@ -214,7 +206,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds <see cref="ColumnDefinition"/> instance with <see cref="ColumnDefinition.Width"/>
+        /// Adds <see cref="ColumnDefinition"/> instance
+        /// with <see cref="ColumnDefinition.Width"/>
         /// equal to <see cref="GridLength.Auto"/>.
         /// </summary>
         public ColumnDefinition AddAutoColumn()
