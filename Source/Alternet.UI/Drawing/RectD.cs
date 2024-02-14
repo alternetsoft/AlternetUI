@@ -534,6 +534,68 @@ namespace Alternet.Drawing
         public readonly RectI ToRect() => RectI.Truncate(this);
 
         /// <summary>
+        /// Gets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to return <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double GetLocation(bool vert)
+        {
+            if (vert)
+                return y;
+            else
+                return x;
+        }
+
+        /// <summary>
+        /// Sets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to set <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <param name="value">New location value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetLocation(bool vert, double value)
+        {
+            if (vert)
+                y = value;
+            else
+                x = value;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Width"/> or <see cref="Height"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to return <see cref="Width"/>
+        /// or <see cref="Height"/>.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double GetSize(bool vert)
+        {
+            if (vert)
+                return height;
+            else
+                return width;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Width"/> or <see cref="Height"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to set <see cref="Width"/>
+        /// or <see cref="Height"/>.</param>
+        /// <returns></returns>
+        /// <param name="value">New size value.</param>
+        public void SetSize(bool vert, double value)
+        {
+            if (vert)
+                height = value;
+            else
+                width = value;
+        }
+
+        /// <summary>
         /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

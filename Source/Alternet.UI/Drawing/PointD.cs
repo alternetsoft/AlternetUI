@@ -255,6 +255,36 @@ namespace Alternet.Drawing
         public readonly bool Equals(PointD other) => this == other;
 
         /// <summary>
+        /// Gets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to return <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double GetLocation(bool vert)
+        {
+            if (vert)
+                return y;
+            else
+                return x;
+        }
+
+        /// <summary>
+        /// Sets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to set <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <param name="value">New location value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetLocation(bool vert, double value)
+        {
+            if (vert)
+                y = value;
+            else
+                x = value;
+        }
+
+        /// <summary>
         /// Translates this <see cref='PointD'/> by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
