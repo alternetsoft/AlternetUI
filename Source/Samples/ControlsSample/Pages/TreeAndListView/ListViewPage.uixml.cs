@@ -45,11 +45,12 @@ namespace ControlsSample
                 hasBorderButton);
             buttons.SuggestedWidthToMax();
 
+            panelHeader.BackColor = SystemColors.Window;
             panelHeader.Add("Actions", stackPanel1);
             panelHeader.Add("Settings", stackPanel2);
             panelHeader.Add("Events", stackPanel3);
-            tabControlPanel.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            tabControlPanel.Children.Prepend(panelHeader);
+            panelHeader.SelectFirstTab();
 
             var imageLists = ResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;

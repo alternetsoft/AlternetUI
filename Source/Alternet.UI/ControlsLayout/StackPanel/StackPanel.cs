@@ -257,7 +257,7 @@ namespace Alternet.UI
                     lBounds.Height - y - vertMargin - h);
                 var preferSize = control.GetPreferredSizeLimited(freeSize);
                 if (stretch)
-                    preferSize.Height = stretchedSize;
+                    preferSize.Height = stretchedSize - vertMargin;
                 var alignedPos = AlignedLayout.AlignHorizontal(
                     lBounds,
                     control,

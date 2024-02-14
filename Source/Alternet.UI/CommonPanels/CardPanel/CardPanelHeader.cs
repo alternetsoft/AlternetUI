@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// <remarks>
         /// <see cref="DefaultBorderWidth"/> by default is calculated dynamically using this field.
         /// </remarks>
-        public static double DefaultBorderSideWidth = 1;
+        public static double DefaultBorderSideWidth = 0;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderPadding"/> property.
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderMargin"/> property.
         /// </summary>
-        public static Thickness DefaultBorderMargin = new (0, 0, 0, 5);
+        public static Thickness DefaultBorderMargin = new (0, 0, 0, 0);
 
         /// <summary>
         /// Gets or sets default value for the tab margin.
@@ -66,7 +66,8 @@ namespace Alternet.UI
 
         private readonly Border control = new()
         {
-            HorizontalAlignment = UI.HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
+            // do not change HorizontalAlignment, horizontal line must be on full width
+            HorizontalAlignment = UI.HorizontalAlignment.Stretch,
             VerticalAlignment = UI.VerticalAlignment.Top,
             BorderWidth = DefaultBorderWidth,
             Padding = DefaultBorderPadding,
@@ -774,9 +775,11 @@ namespace Alternet.UI
         /// </remarks>
         public virtual SpeedButton CreateHeaderButton()
         {
-            return CreateButton?.Invoke() ?? Fn();
+            var result = CreateButton?.Invoke() ?? Fn();
+            result.BackgroundColor = BackgroundColor;
+            return result;
 
-            static SpeedButton Fn()
+            SpeedButton Fn()
             {
                 var result = new SpeedButton();
                 result.TextVisible = true;

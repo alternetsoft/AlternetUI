@@ -23,13 +23,19 @@ namespace ControlsSample
 
             void Init()
             {
+                Group(
+                    ensureLastItemVisibleButton,
+                    scrollLastItemIntoViewButton,
+                    focusLastItemButton,
+                    modifyLastItemButton).SuggestedWidthToMax();
 
+                panelHeader.BackColor = SystemColors.Window;
                 panelHeader.Add("Actions", stackPanel1);
                 panelHeader.Add("Settings", stackPanel2);
                 panelHeader.Add("Events", stackPanel3);
                 panelHeader.Add("Popup", stackPanel4);
-                pageControl.Children.Insert(0, panelHeader);
-                panelHeader.SelectedTab = panelHeader.Tabs[0];
+                pageControl.Children.Prepend(panelHeader);
+                panelHeader.SelectFirstTab();
 
                 treeView.Items.ItemInserted += Items_ItemInserted;
                 treeView.Items.ItemRemoved += Items_ItemRemoved;

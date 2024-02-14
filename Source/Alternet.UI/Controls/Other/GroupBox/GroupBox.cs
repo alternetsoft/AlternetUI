@@ -118,9 +118,6 @@ namespace Alternet.UI
 
         private void RaiseTitleChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnTitleChanged(e);
             TitleChanged?.Invoke(this, e);
         }

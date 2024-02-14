@@ -24,28 +24,28 @@
             <Button RowIndex="0" ColumnIndex="1"
                     Text="Remove" Name="removeItemButton"
                     Click="RemoveItemButton_Click" />
-            
+
             <Button RowIndex="1" ColumnIndex="0"
                     Text="Add 1000" Name="addManyItemsButton" Margin="0,3,0,0"
                     Click="AddManyItemsButton_Click" />
             <Button RowIndex="1" ColumnIndex="1"
                     Text="Clear" Margin="0,3,0,0"
                   Name="clearButton" Click="ClearItemsButton_Click"/>
-            
+
             <Button RowIndex="2" ColumnIndex="0"
                     Text="Expand All" Name="expandAllButton" Margin="0,3,0,0"
                     Click="ExpandAllButton_Click" />
             <Button RowIndex="2" ColumnIndex="1"
                     Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0"
                     Click="CollapseAllButton_Click" />
-            
+
             <Button RowIndex="3" ColumnIndex="0"
                     Text="Expand" Name="expandAllChildrenButton" Margin="0,3,0,0"
-                    Click="ExpandAllChildrenButton_Click" />            
+                    Click="ExpandAllChildrenButton_Click" />
             <Button RowIndex="3" ColumnIndex="1"
                     Text="Collapse" Name="collapseAllChildrenButton" Margin="0,3,0,0"
                     Click="CollapseAllChildrenButton_Click" />
-            
+
             <Button RowIndex="4" ColumnIndex="0"
                     Text="Edit Label"
                     Name="beginSelectedLabelEditingButton" Margin="0,3,0,0"
@@ -55,29 +55,23 @@
                     Click="EditorButton_Click"/>
           </Grid>
 
-          <GroupBox  Padding="5" Margin="0,5,0,0">
-            <VerticalStackPanel>
-              <Label Text="Last Item" Margin="0,0,0,10"/>
+          <Control  Padding="5" Margin="0,10,0,0" Layout="Vertical">
+            <Label Text="Last Item:" Margin="0,0,0,10"/>
 
-              <Grid RowCount="2" ColumnCount="2">
-                <Button RowIndex="0" ColumnIndex="0"
-                  Text="Make Visible" Name="ensureLastItemVisibleButton"
-                        Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
-                <Button RowIndex="0" ColumnIndex="1"
-                  Text="To View" Name="scrollLastItemIntoViewButton"
-                        Margin="0,0,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+            <Control Layout="Horizontal" Margin="5,0,0,0">
+              <Button Text="Make Visible" Name="ensureLastItemVisibleButton"
+                      Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
+              <Button Text="To View" Name="scrollLastItemIntoViewButton"
+                      Margin="0,0,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+            </Control>
 
-                <Button RowIndex="1" ColumnIndex="0"
-                  Text="Focus" Name="focusLastItemButton" Margin="0,3,0,0"
+            <Control Layout="Horizontal" Margin="5,3,0,0">
+              <Button Text="Focus" Name="focusLastItemButton" 
                         Click="FocusLastItemButton_Click" />
-                <Button RowIndex="1" ColumnIndex="1"
-                  Text="Modify" Name="modifyLastItemButton" Margin="0,3,0,0"
-                        Click="ModifyLastItemButton_Click" />
-              </Grid>
-
-            </VerticalStackPanel>
-          </GroupBox>
-
+              <Button Text="Modify" Name="modifyLastItemButton"
+                      Click="ModifyLastItemButton_Click" />
+            </Control>
+          </Control>
 
         </VerticalStackPanel>
 

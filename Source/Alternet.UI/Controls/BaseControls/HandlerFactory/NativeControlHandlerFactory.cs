@@ -30,10 +30,6 @@ namespace Alternet.UI
             new PictureBox.PictureBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateLabelHandler(Control control) =>
-            new NativeLabelHandler();
-
-        /// <inheritdoc/>
         public ControlHandler CreateTextBoxHandler(Control control) =>
             new NativeTextBoxHandler();
 
@@ -51,7 +47,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateGroupBoxHandler(Control control) =>
-            new NativeGroupBoxHandler();
+            new GroupBoxHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateProgressBarHandler(Control control) =>

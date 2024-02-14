@@ -3,7 +3,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeGroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>
+    internal class GroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>
     {
         internal override Native.Control CreateNativeControl()
         {

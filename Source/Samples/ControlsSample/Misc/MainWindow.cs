@@ -117,7 +117,10 @@ namespace ControlsSample
         {
             GenericTabControl result = new()
             {
+                Padding = (5, 0, 5, 0),
             };
+
+            result.Header.BackColor = SystemColors.Window;
 
             result.AddRange(pages);
             result.SelectFirstTab();
