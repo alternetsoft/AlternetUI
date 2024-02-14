@@ -102,6 +102,18 @@ namespace Alternet.UI
         public readonly SizeD Size => new(Horizontal, Vertical);
 
         /// <summary>
+        /// Gets <see cref="Left"/> and <see cref="Top"/> as <see cref="SizeD"/>.
+        /// </summary>
+        [Browsable(false)]
+        public readonly SizeD LeftTop => new(Left, Top);
+
+        /// <summary>
+        /// Gets <see cref="Right"/> and <see cref="Bottom"/> as <see cref="SizeD"/>.
+        /// </summary>
+        [Browsable(false)]
+        public readonly SizeD RightBottom => new(Right, Bottom);
+
+        /// <summary>
         /// Gets the combined padding for the right and left edges.
         /// </summary>
         /// <value>Gets the sum, of the <see cref="Left"/> and
