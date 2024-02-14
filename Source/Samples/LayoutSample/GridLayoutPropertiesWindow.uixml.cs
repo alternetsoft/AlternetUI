@@ -1,4 +1,5 @@
 using System;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace LayoutSample
@@ -15,11 +16,13 @@ namespace LayoutSample
         {
             InitializeComponent();
 
+            panelHeader.BackColor = SystemColors.Window;
+            panelHeader.Margin = (0, 0, 0, 10);
             panelHeader.Add("Grid", gridStackPanel);
             panelHeader.Add("Container", containerStackPanel);
             panelHeader.Add("Button", buttonStackPanel);
-            pageControl.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            pageControl.Children.Prepend(panelHeader);
+            panelHeader.SelectFirstTab();
 
             subjectColumnWidthControl = new ();
             subjectRowHeightControl = new();

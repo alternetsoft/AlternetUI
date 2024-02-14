@@ -1,4 +1,5 @@
 using System;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace LayoutSample
@@ -12,10 +13,12 @@ namespace LayoutSample
         {
             InitializeComponent();
 
+            panelHeader.BackColor = SystemColors.Window;
             panelHeader.Add("Container", containerStackPanel);
             panelHeader.Add("Button", buttonPanel);
-            tabControlPanel.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            panelHeader.Margin = (0, 0, 0, 10);
+            tabControlPanel.Children.Prepend(panelHeader);
+            panelHeader.SelectFirstTab();
 
             containerAlignmentControl = new AlignmentControl();
             containerStackPanel.Children.Add(containerAlignmentControl);
