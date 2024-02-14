@@ -1,4 +1,57 @@
-# 0.9.506 (work in progress)
+# 0.9.506 (2024 February 14)
+
+## 2024 February 14
+
+### Layout improvement:
+
+Added Control.Layout property. Now it is possible to specify layout method for any control. 
+Old way:
+
+```xml
+<GroupBox Padding="5" Margin="0,5,0,0">
+	<VerticalStackPanel>
+		<Label Text="Last Item" Margin="0,0,0,10"/>
+		<Button Text="To View" Click="ScrollLastItemIntoViewButton_Click"/>
+	</VerticalStackPanel>
+</GroupBox>
+```
+
+New way:
+
+```xml
+<GroupBox Layout="Vertical" Padding="5" Margin="0,5,0,0">
+	<Label Text="Last Item" Margin="0,0,0,10"/>
+	<Button Text="To View" Click="ScrollLastItemIntoViewButton_Click"/>
+</GroupBox>
+```
+
+So we do not need to add extra StackPanel or other containers, we can just specify 
+Layout="Vertical" in the parent control in order to change default layout style.
+
+Currently these layouts are implemented: None, Dock, Basic, Vertical, Horizontal.
+
+- None: No layout. Use Bounds and Size properties to move/resize child controls.
+- Basic: Default layout for the Control. VerticalAlignment, HorizontalAlignment and SuggestedSize properties 
+are used to layout the child controls.
+- Vertical, Horizontal: StackPanel like alignment. Also opposite bound can be aligned via
+VerticalAlignment and HorizontalAlignment properties.
+- Dock: Control.Dock property is used to align the child controls.
+
+Control.GetDefaultLayout() virtual method returns default layout in the control. 
+For example, Control returns LayoutStyle.Basic, VerticalStackPanel returns LayoutStyle.Vertical.
+It allows to specify used layout in case when Layout property is null (by default).
+
+Element 'Fill' was added to VerticalAlignment and HorizontalAlignment enums. It allows to
+layout the child control so it will occupy the remaining empty space of the container.
+
+### Other improvements and changes:
+
+- Renamed Toolbar -> ToolBar, Window.Toolbar -> Window.ToolBar.
+- Control: ChildRemoved, ChildInserted, ChildVisibleChanged events.
+- Window: ToolBar property is now Control.
+- Window: StatusBar property is now FrameworkElement.
+- LayoutDirection enum and property were renamed to LangDirection.
+- Splitter: Now works faster.
 
 ## 2024 February 12
 
