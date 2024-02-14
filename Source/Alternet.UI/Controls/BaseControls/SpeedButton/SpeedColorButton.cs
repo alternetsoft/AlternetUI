@@ -26,9 +26,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to show <see cref="ColorDialog"/> when
+        /// button is clicked.
+        /// </summary>
+        public virtual bool ShowDialog { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets size of the color image.
         /// </summary>
-        public SizeI ColorImageSize
+        public virtual SizeI ColorImageSize
         {
             get => colorImageSize;
             set
@@ -37,13 +43,14 @@ namespace Alternet.UI
                     return;
                 colorImageSize = value;
                 UpdateImage();
+                Invalidate();
             }
         }
 
         /// <summary>
         /// Gets or sets selected color.
         /// </summary>
-        public Color Value
+        public virtual Color Value
         {
             get
             {
@@ -64,6 +71,8 @@ namespace Alternet.UI
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
+            if (!ShowDialog)
+                return;
             colorDialog ??= new ColorDialog();
             colorDialog.Color = Value;
             if (colorDialog.ShowModal() != ModalResult.Accepted)
