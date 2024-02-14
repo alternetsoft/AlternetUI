@@ -32,7 +32,8 @@ namespace DrawingSample
 
         public BrushesAndPensPage()
         {
-            includedShapeTypes = new ShapeType[] { AllShapeTypes.Rectangle, AllShapeTypes.Ellipse };
+            includedShapeTypes =
+                new ShapeType[] { AllShapeTypes.Rectangle, AllShapeTypes.Ellipse };
         }
 
         public enum BrushType
@@ -87,7 +88,8 @@ namespace DrawingSample
             IncludedShapes = shapes.ToArray();
         }
 
-        private bool IsShapeIncluded(BrushesAndPensPage.ShapeType shape) => IncludedShapes.Contains(shape);
+        private bool IsShapeIncluded(BrushesAndPensPage.ShapeType shape)
+            => IncludedShapes.Contains(shape);
 
         public int ShapeCount
         {
@@ -174,6 +176,11 @@ namespace DrawingSample
         public static ShapeTypes AllShapeTypes { get; } = new ShapeTypes(
                 new ShapeType(CreateRectangle),
                 new ShapeType(CreateEllipse));
+
+        public override void OnActivated()
+        {
+            Update();
+        }
 
         public override void Draw(Graphics dc, RectD bounds)
         {
