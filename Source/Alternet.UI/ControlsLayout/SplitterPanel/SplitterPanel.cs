@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// See <see cref="SplittedTreeAndCards"/> source code for the example.
     /// </remarks>
     [ControlCategory("Containers")]
-    public partial class SplitterPanel : Control
+    internal partial class SplitterPanel : Control
     {
         /// <summary>
         /// Gets or sets whether to check sash size and make it at least equal to
