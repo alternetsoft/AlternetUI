@@ -785,6 +785,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets whether toolbar item is aligned to the center.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="isCenter"><c>true</c> if item must be aligned to the center.</param>
+        public virtual void SetToolAlignCenter(ObjectUniqueId id, bool isCenter)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return;
+            if (isCenter)
+                item.HorizontalAlignment = UI.HorizontalAlignment.Center;
+            else
+                item.HorizontalAlignment = UI.HorizontalAlignment.Left;
+        }
+
+        /// <summary>
         /// Gets whether item is right aligned.
         /// </summary>
         /// <param name="id">Item id.</param>
