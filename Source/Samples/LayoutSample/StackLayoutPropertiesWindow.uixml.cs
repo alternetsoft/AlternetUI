@@ -7,7 +7,7 @@ namespace LayoutSample
     public partial class StackLayoutPropertiesWindow : Window
     {
         private readonly CardPanelHeader panelHeader = new();
-        private AlignmentControl containerAlignmentControl;
+        private readonly AlignmentControl containerAlignmentControl;
 
         public StackLayoutPropertiesWindow()
         {

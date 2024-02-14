@@ -52,6 +52,12 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
+            panelHeader.BackColor = SystemColors.Window;
+            panelHeader.Orientation = StackPanelOrientation.Vertical;
+            panelHeader.TabPadding = (5, 10, 5, 10);
+            panelHeader.TabMargin = (5, 10, 5, 10);
+            panelHeader.TabHorizontalAlignment = HorizontalAlignment.Stretch;
+            panelHeader.TabGroupHorizontalAlignment = HorizontalAlignment.Stretch;
             panelHeader.Add("Menu", menuPanel);
             panelHeader.Add("ToolBar", toolbarPanel);
             panelHeader.Add("StatusBar", statusPanel);

@@ -38,8 +38,8 @@ namespace PaintSample
 
         private readonly string? baseTitle;
 
-        private CommandButton? undoButton;
-        private CommandButton? redoButton;
+        private SpeedButton? undoButton;
+        private SpeedButton? redoButton;
 
         public MainWindow()
         {
@@ -120,6 +120,7 @@ namespace PaintSample
             Icon = new("embres:PaintSample.Sample.ico");
 
             border = new();
+            border.BorderColor = Splitter.DefaultBackColor;
             mainGrid.Children.Add(border);
             Alternet.UI.Grid.SetRowColumn(border, 1, 0);
 
@@ -156,6 +157,27 @@ namespace PaintSample
             UpdateControls();
 
             PerformLayout();
+        }
+
+        internal static Image LoadToolImage(Tool tool)
+        {
+            var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(
+                "PaintSample.Resources.ToolIcons."
+                + tool.GetType().Name.Replace("Tool", "") + ".png");
+#pragma warning disable
+            if (stream == null)
+                throw new InvalidOperationException();
+#pragma warning restore
+
+            return new Bitmap(stream);
+        }
+
+        internal static Image LoadCommandImage(string imageName)
+        {
+            var s = "PaintSample.Resources.CommandIcons." + imageName + ".png";
+            var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(s)
+                ?? throw new InvalidOperationException();
+            return new Bitmap(stream);
         }
 
         void UpdateTitle()
@@ -241,18 +263,37 @@ namespace PaintSample
 
         private void InitializeCommandButtons()
         {
-            undoButton = new("Undo")
+            const int imageSize = 32;
+
+            undoButton = new()
             {
-                ToolTip = "Undo"
+                ToolTip = "Undo",
             };
+
+            var normalColor = undoButton.GetSvgColor(KnownSvgColor.Normal);
+            var disabledColor = undoButton.GetSvgColor(KnownSvgColor.Disabled);
+
+            undoButton.ImageSet = KnownSvgImages.GetForSize(normalColor, imageSize).ImgUndo;
+
+            var hoveredBorder = undoButton.Borders?.Hovered;
+            if(hoveredBorder is not null)
+            {
+                hoveredBorder.UniformRadiusIsPercent = true;
+                hoveredBorder.UniformCornerRadius = 50;
+            }
+            undoButton.DisabledImageSet = KnownSvgImages.GetForSize(disabledColor, imageSize).ImgUndo;
             undoButton.Click += UndoButton_Click;
             toolbar.CommandButtons.Add(undoButton);
 
-            redoButton = new("Redo")
+            redoButton = new()
             {
-                ToolTip = "Redo"
+                ToolTip = "Redo",
             };
+
+            redoButton.ImageSet = KnownSvgImages.GetForSize(normalColor, imageSize).ImgRedo;
+            redoButton.DisabledImageSet = KnownSvgImages.GetForSize(disabledColor, imageSize).ImgRedo;
             redoButton.Click += RedoButton_Click;
+            redoButton.Borders?.SetObject(hoveredBorder, GenericControlState.Hovered);
             toolbar.CommandButtons.Add(redoButton);
         }
 

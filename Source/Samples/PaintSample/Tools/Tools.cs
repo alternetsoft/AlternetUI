@@ -41,7 +41,7 @@ namespace PaintSample
 
         private Tool? currentTool;
 
-        public Tool CurrentTool
+        public Tool? CurrentTool
         {
             get => currentTool ?? throw new InvalidOperationException();
 
@@ -50,13 +50,11 @@ namespace PaintSample
                 if (currentTool == value)
                     return;
 
-                if (currentTool != null)
-                    currentTool.Deactivate();
+                currentTool?.Deactivate();
 
                 currentTool = value;
 
-                if (currentTool != null)
-                    currentTool.Activate(canvasControl);
+                currentTool?.Activate(canvasControl);
 
                 CurrentToolChanged?.Invoke(this, EventArgs.Empty);
             }
