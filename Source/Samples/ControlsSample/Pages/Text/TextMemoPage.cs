@@ -50,16 +50,16 @@ namespace ControlsSample
 
             Idle += TextInputPage_Idle;
 
-            memoPanel.PropGrid.ApplyFlags |= PropertyGridApplyFlags.SetValueAndReload;
+            /*memoPanel.PropGrid.ApplyFlags |= PropertyGridApplyFlags.SetValueAndReload;
+            memoPanel.PropGrid.SetProps(properties, true);*/
 
-            memoPanel.PropGrid.SetProps(properties, true);
             memoPanel.Parent = this;
             memoPanel.TextBox.Text = multilineDemoText;
             memoPanel.TextBox.SetInsertionPoint(0);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdNew, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdOpen, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdSave, false);
-            memoPanel.PropGrid.SuggestedInitDefaults();
+            /*memoPanel.PropGrid.SuggestedInitDefaults();*/
             memoPanel.RightNotebook.PageChanged += RightNotebook_PageChanged;
             memoPanel.ActionsControl.Required();
             memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);

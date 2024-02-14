@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Control SubstituteControl(Control control)
         {
-            var parent = new Control();
+            var parent = new SubsControl();
             control.Parent = parent;
             control = parent;
             return control;
@@ -1316,7 +1316,7 @@ namespace Alternet.UI
 
             var limitedResult = new List<Control>();
 
-            foreach(var item in result.Items)
+            foreach (var item in result.Items)
             {
                 if (item is T)
                     limitedResult.Add(item);
@@ -1965,6 +1965,38 @@ namespace Alternet.UI
             Native.ScrollBarOrientation orientation = isVertical
                 ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarMaximum(orientation);
+        }
+
+        private class SubsControl : Control
+        {
+            public SubsControl()
+            {
+            }
+
+            internal override ControlHandler CreateHandler()
+            {
+                return new SubsControlHandler();
+            }
+
+            public class SubsControlHandler : ControlHandler
+            {
+                protected override void OnAttach()
+                {
+                    base.OnAttach();
+                    NativeControl.SizeChanged = NativeSizeChanged;
+                }
+
+                protected override void OnDetach()
+                {
+                    NativeControl.SizeChanged = null;
+                    base.OnDetach();
+                }
+
+                private void NativeSizeChanged()
+                {
+                    Application.AddIdleTask(Control.OnLayout);
+                }
+            }
         }
     }
 }
