@@ -25,13 +25,13 @@ namespace Alternet.UI
                 var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
 
                 var horizontalPosition =
-                    AlignedLayout.AlignHorizontal(
+                    LayoutFactory.AlignHorizontal(
                         childrenLayoutBounds,
                         control,
                         preferredSize,
                         control.HorizontalAlignment);
                 var verticalPosition =
-                    AlignedLayout.AlignVertical(
+                    LayoutFactory.AlignVertical(
                         childrenLayoutBounds,
                         control,
                         preferredSize,

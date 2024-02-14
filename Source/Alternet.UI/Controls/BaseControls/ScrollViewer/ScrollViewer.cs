@@ -59,13 +59,13 @@ namespace Alternet.UI
                 }
 
                 var horizontalPosition =
-                    AlignedLayout.AlignHorizontal(
+                    LayoutFactory.AlignHorizontal(
                         childrenLayoutBounds,
                         control,
                         boundedPreferredSize,
                         horizontalAlignment);
                 var verticalPosition =
-                    AlignedLayout.AlignVertical(
+                    LayoutFactory.AlignVertical(
                         childrenLayoutBounds,
                         control,
                         boundedPreferredSize,

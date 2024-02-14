@@ -498,13 +498,13 @@ namespace Alternet.UI
             var preferredSize = control.GetPreferredSize(bounds.Size);
 
             var horizontalPosition =
-                AlignedLayout.AlignHorizontal(
+                LayoutFactory.AlignHorizontal(
                     bounds,
                     control,
                     preferredSize,
                     control.HorizontalAlignment);
             var verticalPosition =
-                AlignedLayout.AlignVertical(
+                LayoutFactory.AlignVertical(
                     bounds,
                     control,
                     preferredSize,

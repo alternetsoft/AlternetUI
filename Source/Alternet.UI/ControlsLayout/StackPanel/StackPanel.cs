@@ -150,7 +150,7 @@ namespace Alternet.UI
                         childrenLayoutBounds.Width - x - horizontalMargin - w,
                         childrenLayoutBounds.Height));
                 var alignedPosition =
-                    AlignedLayout.AlignVertical(
+                    LayoutFactory.AlignVertical(
                         childrenLayoutBounds,
                         control,
                         preferredSize,
@@ -258,7 +258,7 @@ namespace Alternet.UI
                 var preferSize = control.GetPreferredSizeLimited(freeSize);
                 if (stretch)
                     preferSize.Height = stretchedSize - vertMargin;
-                var alignedPos = AlignedLayout.AlignHorizontal(
+                var alignedPos = LayoutFactory.AlignHorizontal(
                     lBounds,
                     control,
                     preferSize,

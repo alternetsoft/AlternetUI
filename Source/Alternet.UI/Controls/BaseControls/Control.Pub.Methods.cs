@@ -1467,7 +1467,7 @@ namespace Alternet.UI
             switch (Layout ?? GetDefaultLayout())
             {
                 case LayoutStyle.Dock:
-                    LayoutPanel.PerformDockStyleLayout(this);
+                    LayoutPanel.LayoutDockedChildren(this);
                     break;
                 case LayoutStyle.Basic:
                     UI.Control.PerformDefaultLayout(this);

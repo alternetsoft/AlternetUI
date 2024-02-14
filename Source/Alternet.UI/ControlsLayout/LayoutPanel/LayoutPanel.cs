@@ -45,11 +45,6 @@ namespace Alternet.UI
             return control.ExtendedProps.DistanceRight;
         }
 
-        internal static void PerformDockStyleLayout(Control control)
-        {
-            LayoutDockStyle.Layout(control, control.ChildrenLayoutBounds);
-        }
-
         internal static void SetDistanceBottom(Control control, double value)
         {
             if (control == null)
@@ -104,6 +99,112 @@ namespace Alternet.UI
             if (control == null || !control.HasExtendedProps)
                 return AutoSizeMode.GrowOnly;
             return control.ExtendedProps.AutoSizeMode;
+        }
+
+        internal static void LayoutDockedChildren(Control parent)
+        {
+            var space = parent.ChildrenLayoutBounds;
+            var children = parent.AllChildrenInLayout;
+
+            // Deal with docking; go through in reverse, MS docs say that
+            // lowest Z-order is closest to edge
+            for (int i = children.Count - 1; i >= 0; i--)
+            {
+                Control child = children[i];
+
+                SizeD child_size = child.Bounds.Size;
+                DockStyle dock = child.Dock;
+                bool autoSize = false;
+
+                switch (dock)
+                {
+                    case DockStyle.None:
+                        /*child.OnLayout();*/
+                        break;
+
+                    case DockStyle.Left:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(child_size.Width, space.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Y,
+                            child_size.Width,
+                            space.Height,
+                            BoundsSpecified.All);
+                        space.X += child_size.Width;
+                        space.Width -= child_size.Width;
+                        break;
+
+                    case DockStyle.Top:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(space.Width, child_size.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Y,
+                            space.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
+                        space.Y += child_size.Height;
+                        space.Height -= child_size.Height;
+                        break;
+
+                    case DockStyle.Right:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(child_size.Width, space.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Right - child_size.Width,
+                            space.Y,
+                            child_size.Width,
+                            space.Height,
+                            BoundsSpecified.All);
+                        space.Width -= child_size.Width;
+                        break;
+
+                    case DockStyle.Bottom:
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSizeLimited(
+                                    new SizeD(space.Width, child_size.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Bottom - child_size.Height,
+                            space.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
+                        space.Height -= child_size.Height;
+                        break;
+
+                    case DockStyle.Fill:
+                        child_size = new SizeD(space.Width, space.Height);
+                        if (autoSize)
+                            child_size = child.GetPreferredSizeLimited(child_size);
+                        child.SetBounds(
+                            space.Left,
+                            space.Top,
+                            child_size.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
+                        break;
+                }
+            }
         }
 
         /// <inheritdoc/>
