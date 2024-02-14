@@ -1464,6 +1464,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
+            if(GlobalOnLayout is not null)
+            {
+                var e = new HandledEventArgs();
+                GlobalOnLayout(this, e);
+                if (e.Handled)
+                    return;
+            }
+
             switch (Layout ?? GetDefaultLayout())
             {
                 case LayoutStyle.Dock:
@@ -1491,6 +1499,13 @@ namespace Alternet.UI
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
+            if(GlobalGetPreferredSize is not null)
+            {
+                var e = new HandledEventArgs<SizeD>(availableSize);
+                if (e.Handled)
+                    return e.Value;
+            }
+
             switch (Layout ?? GetDefaultLayout())
             {
                 case LayoutStyle.Dock:

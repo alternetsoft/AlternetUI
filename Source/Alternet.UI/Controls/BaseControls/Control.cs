@@ -76,6 +76,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs inside <see cref="Control.GetPreferredSize"/> method.
+        /// </summary>
+        /// <remarks>
+        /// If default <see cref="Control.GetPreferredSize"/> call is not needed,
+        /// set <see cref="HandledEventArgs.Handled"/>
+        /// property to <c>true</c>.
+        /// </remarks>
+        public static event EventHandler<HandledEventArgs<SizeD>>? GlobalGetPreferredSize;
+
+        /// <summary>
+        /// Occurs when the the control should reposition its child controls.
+        /// </summary>
+        /// <remarks>
+        /// If default layout is not needed, set <see cref="HandledEventArgs.Handled"/>
+        /// property to <c>true</c>.
+        /// </remarks>
+        public static event EventHandler<HandledEventArgs>? GlobalOnLayout;
+
+        /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
         /// </summary>
         [Category("Action")]
