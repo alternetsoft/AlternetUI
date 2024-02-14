@@ -49,6 +49,11 @@ namespace Alternet.UI
         public static Thickness DefaultTabMargin = 1;
 
         /// <summary>
+        /// Gets or sets default value for the tab padding.
+        /// </summary>
+        public static Thickness DefaultTabPadding = 3;
+
+        /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
         /// </summary>
         public static SizeD DefaultAdditionalSpace = new(30, 30);
@@ -58,11 +63,6 @@ namespace Alternet.UI
         private static Thickness? defaultBorderWidth;
 
         private readonly Collection<CardPanelHeaderItem> tabs = new();
-        private readonly StackPanel stackPanel = new()
-        {
-            Orientation = StackPanelOrientation.Horizontal,
-            Dock = DockStyle.Fill,
-        };
 
         private readonly Border control = new()
         {
@@ -74,6 +74,8 @@ namespace Alternet.UI
             Margin = DefaultBorderMargin,
         };
 
+        private Thickness? tabMargin;
+        private Thickness? tabPadding;
         private bool useTabBold = DefaultUseTabBold;
         private bool useTabForegroundColor = DefaultUseTabForegroundColor;
         private bool useTabBackgroundColor = DefaultUseTabBackgroundColor;
@@ -83,17 +85,18 @@ namespace Alternet.UI
         private CardPanel? cardPanel;
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
+        private HorizontalAlignment tabHorizontalAlignment = HorizontalAlignment.Left;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
         /// </summary>
         public CardPanelHeader()
         {
+            control.Layout = LayoutStyle.Horizontal;
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
             control.Parent = this;
-            stackPanel.Parent = control;
         }
 
         /// <summary>
@@ -150,6 +153,36 @@ namespace Alternet.UI
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
 
         /// <summary>
+        /// Gets or sets individual tab margin.
+        /// </summary>
+        public Thickness? TabMargin
+        {
+            get => tabMargin;
+            set
+            {
+                if(tabMargin == value)
+                    return;
+                tabMargin = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets individual tab padding.
+        /// </summary>
+        public Thickness? TabPadding
+        {
+            get => tabPadding;
+            set
+            {
+                if (tabPadding == value)
+                    return;
+                tabPadding = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets text of the first tab.
         /// </summary>
         [Browsable(false)]
@@ -175,17 +208,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tabs.
         /// </summary>
-        [DefaultValue(null)]
         public HorizontalAlignment TabHorizontalAlignment
         {
             get
             {
-                return stackPanel.HorizontalAlignment;
+                return tabHorizontalAlignment;
             }
 
             set
             {
-                stackPanel.HorizontalAlignment = value;
+                if (tabHorizontalAlignment == value)
+                    return;
+                tabHorizontalAlignment = value;
+                UpdateTabs();
             }
         }
 
@@ -244,7 +279,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tab group.
         /// </summary>
-        [DefaultValue(null)]
         public HorizontalAlignment TabGroupHorizontalAlignment
         {
             get
@@ -261,24 +295,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="VerticalAlignment"/> of the tabs.
         /// </summary>
-        [DefaultValue(null)]
         public VerticalAlignment TabVerticalAlignment
         {
             get
             {
-                return stackPanel.VerticalAlignment;
+                return control.VerticalAlignment;
             }
 
             set
             {
-                stackPanel.VerticalAlignment = value;
+                control.VerticalAlignment = value;
             }
         }
 
         /// <summary>
         /// Gets or sets <see cref="VerticalAlignment"/> of the tab group.
         /// </summary>
-        [DefaultValue(null)]
         public VerticalAlignment TabGroupVerticalAlignment
         {
             get
@@ -298,9 +330,15 @@ namespace Alternet.UI
         /// </summary>
         public StackPanelOrientation Orientation
         {
-            get => stackPanel.Orientation;
+            get => control.Layout == LayoutStyle.Vertical ? StackPanelOrientation.Vertical : StackPanelOrientation.Horizontal;
 
-            set => stackPanel.Orientation = value;
+            set
+            {
+                if (value == StackPanelOrientation.Vertical)
+                    control.Layout = LayoutStyle.Vertical;
+                else
+                    control.Layout = LayoutStyle.Horizontal;
+            }
         }
 
         /// <summary>
@@ -746,16 +784,17 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Add(string text, Control? cardControl = null)
         {
-            var control = CreateHeaderButton();
+            var button = CreateHeaderButton();
 
-            control.Text = text;
-            control.Margin = DefaultTabMargin;
-            control.HasBorder = TabHasBorder;
-            control.HorizontalAlignment = UI.HorizontalAlignment.Center;
-            control.Parent = stackPanel;
-            control.Click += Item_Click;
+            button.Text = text;
+            button.Margin = TabMargin ?? DefaultTabMargin;
+            button.Padding = TabPadding ?? DefaultTabPadding;
+            button.HasBorder = TabHasBorder;
+            button.HorizontalAlignment = UI.HorizontalAlignment.Center;
+            button.Parent = control;
+            button.Click += Item_Click;
 
-            var item = new CardPanelHeaderItem(control)
+            var item = new CardPanelHeaderItem(button)
             {
                 CardControl = cardControl,
             };
@@ -891,17 +930,25 @@ namespace Alternet.UI
             {
                 item.HeaderButton.BackgroundColor = colors.BackgroundColor;
             }
+
+            item.HeaderButton.Margin = TabMargin ?? DefaultTabMargin;
+            item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
+            item.HeaderButton.HorizontalAlignment = TabHorizontalAlignment;
         }
 
         private void UpdateTabs()
         {
-            foreach (var item in Tabs)
+            DoInsideLayout(Fn);
+
+            void Fn()
             {
-                item.HeaderButton.HasBorder = tabHasBorder;
-                UpdateTab(item);
+                foreach (var item in Tabs)
+                {
+                    item.HeaderButton.HasBorder = tabHasBorder;
+                    UpdateTab(item);
+                }
             }
 
-            PerformLayout();
             Refresh();
         }
 
