@@ -1,3 +1,4 @@
+using System;
 using Alternet.UI;
 
 namespace Alternet.UI.Templates.Application.Window
