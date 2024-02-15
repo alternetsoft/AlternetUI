@@ -1,6 +1,24 @@
-# 0.9.506 (2024 February 14)
+# 0.9.507 (in development)
 
 ## 2024 February 15
+
+### GenericLabel improvement:
+
+- Can optionally draw Image next to text.
+- Can align text.
+- Can be painted in different fore and back colors when hovered or has other states.
+- Background and border is optionally painted.
+- Color? TextBackColor.
+- bool ImageVisible.
+- int MnemonicCharIndex.
+- GenericAlignment TextAlignment.
+- string? TextPrefix.
+- string? TextSuffix.
+- event ImageChanged.
+- Image and DisabledImage properties.
+- Made not focusable by default.
+
+### Other:
 
 - PictureBox: Padding now is used to specify offsets for the image.
 - PictureBox: CenterHorz and CenterVert used when Text is painted.
@@ -19,6 +37,16 @@
 - MinMasterTemplate: Add uixml support.
 - Add Tests\CustomControlInUixml sample project.
 - FindReplaceControl: Use ComboBox instead TextBox as find/replace controls.
+- FindReplaceControl: Add find scope editor.
+- GenericTabControl.TabAlignment, SelectTab.
+- SideBarPanel is now derived from GenericTabControl.
+- Font: Fixed AsBold and AsUnderlined. Previosly original font style was completely ignored. Now Bold/Underlined style 
+is added to the original font style. For example if font is italic, AsBold property will return both italic and bold font.
+- Graphics.DrawLabel.
+
+---
+
+# 0.9.506 (2024 February 14)
 
 ## 2024 February 14
 
