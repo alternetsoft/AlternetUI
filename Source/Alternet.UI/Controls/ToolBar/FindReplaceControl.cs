@@ -14,13 +14,13 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class FindReplaceControl : GenericToolBarSet
     {
-        private readonly TextBox findEdit = new()
+        private readonly ComboBox findEdit = new()
         {
             Margin = (2, 0, 2, 0),
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        private readonly TextBox replaceEdit = new()
+        private readonly ComboBox replaceEdit = new()
         {
             Margin = (2, 0, 2, 0),
             VerticalAlignment = VerticalAlignment.Center,
@@ -70,8 +70,8 @@ namespace Alternet.UI
                 FindToolBar.GetDisabledSvgImages().ImgAngleDown);
 
             findEdit.SuggestedWidth = 150;
-            findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
-            replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;
+            /*findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
+            replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;*/
             replaceEdit.SuggestedWidth = 150;
             IdFindEdit = FindToolBar.AddControl(findEdit);
 
@@ -499,13 +499,13 @@ namespace Alternet.UI
         /// Gets <see cref="TextBox"/> which allows to specify text to find.
         /// </summary>
         [Browsable(false)]
-        public TextBox FindEdit => findEdit;
+        public ComboBox FindEdit => findEdit;
 
         /// <summary>
         /// Gets <see cref="TextBox"/> which allows to specify text to replace.
         /// </summary>
         [Browsable(false)]
-        public TextBox ReplaceEdit => replaceEdit;
+        public ComboBox ReplaceEdit => replaceEdit;
 
         /// <summary>
         /// Gets <see cref="GenericToolBar"/> with find buttons.
