@@ -14,6 +14,12 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class FindReplaceControl : GenericToolBarSet
     {
+        private readonly ComboBox scopeEdit = new()
+        {
+            Margin = (2, 0, 2, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
         private readonly ComboBox findEdit = new()
         {
             Margin = (2, 0, 2, 0),
@@ -26,6 +32,21 @@ namespace Alternet.UI
             VerticalAlignment = VerticalAlignment.Center,
         };
 
+        private readonly ListControlItem scopeCurrentDocument = new()
+        {
+            Text = CommonStrings.Default.FindScopeCurrentDocument,
+        };
+
+        private readonly ListControlItem scopeAllOpenDocuments = new()
+        {
+            Text = CommonStrings.Default.FindScopeAllOpenDocuments,
+        };
+
+        private readonly ListControlItem scopeCurrentProject = new()
+        {
+            Text = CommonStrings.Default.FindScopeCurrentProject,
+        };
+
         private IFindReplaceConnect? manager;
 
         /// <summary>
@@ -33,6 +54,12 @@ namespace Alternet.UI
         /// </summary>
         public FindReplaceControl()
         {
+            scopeEdit.IsEditable = false;
+            scopeEdit.Add(scopeCurrentDocument);
+            scopeEdit.Add(scopeAllOpenDocuments);
+            scopeEdit.Add(scopeCurrentProject);
+            scopeEdit.SelectedItem = scopeCurrentDocument;
+
             replaceEdit.TextChanged += ReplaceEdit_TextChanged;
             findEdit.TextChanged += FindEdit_TextChanged;
 
@@ -64,6 +91,8 @@ namespace Alternet.UI
                 OnClickUseRegularExpressions);
             OptionsToolBar.SetToolShortcut(IdUseRegularExpressions, KnownKeys.FindReplaceControlKeys.UseRegularExpressions);
 
+            IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
+
             IdToggleReplaceOptions = FindToolBar.AddSpeedBtn(
                 CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
                 FindToolBar.GetNormalSvgImages().ImgAngleDown,
@@ -91,6 +120,7 @@ namespace Alternet.UI
                 CommonStrings.Default.ButtonClose,
                 FindToolBar.GetNormalSvgImages().ImgCancel,
                 FindToolBar.GetDisabledSvgImages().ImgCancel);
+            FindToolBar.SetToolAlignRight(IdFindClose, true);
 
             FindToolBar.Parent = this;
 
@@ -262,6 +292,21 @@ namespace Alternet.UI
                 OptionUseRegularExpressionsEnabled = manager.CanUseRegularExpressions;
             }
         }
+
+        /// <summary>
+        /// Gets 'Current Document' item in the <see cref="ScopeEdit"/>.
+        /// </summary>
+        public ListControlItem ScopeItemCurrentDocument => scopeCurrentDocument;
+
+        /// <summary>
+        /// Gets 'All Open Documents' item in the <see cref="ScopeEdit"/>.
+        /// </summary>
+        public ListControlItem ScopeItemAllOpenDocuments => scopeAllOpenDocuments;
+
+        /// <summary>
+        /// Gets 'Current Project' item in the <see cref="ScopeEdit"/>.
+        /// </summary>
+        public ListControlItem ScopeItemCurrentProject => scopeCurrentProject;
 
         /// <summary>
         /// Gets or sets 'Hidden Text' option.
@@ -460,6 +505,12 @@ namespace Alternet.UI
         public ObjectUniqueId IdFindEdit { get; }
 
         /// <summary>
+        /// Gets id of the 'Scope' editor.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId IdScopeEdit { get; }
+
+        /// <summary>
         /// Gets id of the 'Replace' editor.
         /// </summary>
         [Browsable(false)]
@@ -496,13 +547,19 @@ namespace Alternet.UI
         public ObjectUniqueId IdReplaceAll { get; }
 
         /// <summary>
-        /// Gets <see cref="TextBox"/> which allows to specify text to find.
+        /// Gets <see cref="ComboBox"/> which allows to specify text to find.
         /// </summary>
         [Browsable(false)]
         public ComboBox FindEdit => findEdit;
 
         /// <summary>
-        /// Gets <see cref="TextBox"/> which allows to specify text to replace.
+        /// Gets <see cref="ComboBox"/> which allows to specify text to find.
+        /// </summary>
+        [Browsable(false)]
+        public ComboBox ScopeEdit => scopeEdit;
+
+        /// <summary>
+        /// Gets <see cref="ComboBox"/> which allows to specify text to replace.
         /// </summary>
         [Browsable(false)]
         public ComboBox ReplaceEdit => replaceEdit;
