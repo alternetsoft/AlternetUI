@@ -4,5 +4,5 @@ SCRIPT_HOME=$(cd "$(dirname "$0")"; pwd -P)
 
 echo =====================
 
-dotnet run --framework net8.0
+dotnet run
 

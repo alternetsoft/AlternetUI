@@ -1,0 +1,9 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="MinMaster.MainWindow"
+        Title="Alternet UI MinMaster Sample" StartLocation="CenterScreen"
+        Size="800,600" Layout="Vertical">
+
+	<Label Text="This is sample label with 6" Margin="10" />
+	<LogListBox Margin="10" VerticalAlignment="Fill" Name="logControl"/>
+</Window>
