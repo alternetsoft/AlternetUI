@@ -10,6 +10,84 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Called when the control should
+        /// reposition its child controls.
+        /// </summary>
+        /// <remarks>
+        /// This is a default implementation which is called from
+        /// <see cref="Control.OnLayout"/>.
+        /// </remarks>
+        /// <param name="container">Container control which childs will be processed.</param>
+        /// <param name="layout">Layout style to use.</param>
+        public static void DefaultOnLayout(Control container, LayoutStyle layout)
+        {
+            if (GlobalOnLayout is not null)
+            {
+                var e = new HandledEventArgs();
+                GlobalOnLayout(container, e);
+                if (e.Handled)
+                    return;
+            }
+
+            switch (layout)
+            {
+                case LayoutStyle.Dock:
+                    LayoutPanel.LayoutDockedChildren(container);
+                    break;
+                case LayoutStyle.Basic:
+                    UI.Control.PerformDefaultLayout(container);
+                    break;
+                case LayoutStyle.Vertical:
+                    StackPanel.LayoutVerticalStackPanel(container);
+                    break;
+                case LayoutStyle.Horizontal:
+                    StackPanel.LayoutHorizontalStackPanel(container);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the size of a rectangular area into which a control can
+        /// be fitted, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="availableSize">The available space that a parent element
+        /// can allocate a child control.</param>
+        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
+        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        /// <remarks>
+        /// This is a default implementation which is called from
+        /// <see cref="Control.GetPreferredSize"/>.
+        /// </remarks>
+        /// <param name="container">Container control which childs will be processed.</param>
+        /// <param name="layout">Layout style to use.</param>
+        public static SizeD DefaultGetPreferredSize(
+            Control container,
+            SizeD availableSize,
+            LayoutStyle layout)
+        {
+            if (GlobalGetPreferredSize is not null)
+            {
+                var e = new HandledEventArgs<SizeD>(availableSize);
+                if (e.Handled)
+                    return e.Value;
+            }
+
+            switch (layout)
+            {
+                case LayoutStyle.Dock:
+                case LayoutStyle.None:
+                default:
+                    return GetPreferredSizeDefaultLayout(container, availableSize);
+                case LayoutStyle.Basic:
+                    return UI.Control.GetPreferredSizeDefaultLayout(container, availableSize);
+                case LayoutStyle.Vertical:
+                    return StackPanel.GetPreferredSizeVerticalStackPanel(container, availableSize);
+                case LayoutStyle.Horizontal:
+                    return StackPanel.GetPreferredSizeHorizontalStackPanel(container, availableSize);
+            }
+        }
+
+        /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
         /// <param name="controlType">Type of the control.</param>
@@ -1464,21 +1542,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
-            switch (Layout ?? GetDefaultLayout())
-            {
-                case LayoutStyle.Dock:
-                    LayoutPanel.LayoutDockedChildren(this);
-                    break;
-                case LayoutStyle.Basic:
-                    UI.Control.PerformDefaultLayout(this);
-                    break;
-                case LayoutStyle.Vertical:
-                    StackPanel.LayoutVerticalStackPanel(this);
-                    break;
-                case LayoutStyle.Horizontal:
-                    StackPanel.LayoutHorizontalStackPanel(this);
-                    break;
-            }
+            DefaultOnLayout(this, Layout ?? GetDefaultLayout());
         }
 
         /// <summary>
@@ -1491,19 +1555,10 @@ namespace Alternet.UI
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
-            switch (Layout ?? GetDefaultLayout())
-            {
-                case LayoutStyle.Dock:
-                case LayoutStyle.None:
-                default:
-                    return GetPreferredSizeDefaultLayout(this, availableSize);
-                case LayoutStyle.Basic:
-                    return UI.Control.GetPreferredSizeDefaultLayout(this, availableSize);
-                case LayoutStyle.Vertical:
-                    return StackPanel.GetPreferredSizeVerticalStackPanel(this, availableSize);
-                case LayoutStyle.Horizontal:
-                    return StackPanel.GetPreferredSizeHorizontalStackPanel(this, availableSize);
-            }
+            return DefaultGetPreferredSize(
+                this,
+                availableSize,
+                Layout ?? GetDefaultLayout());
         }
 
         /// <summary>

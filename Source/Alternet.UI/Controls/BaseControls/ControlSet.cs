@@ -402,21 +402,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="ControlAndLabel.LabelColumnIndex"/> property for all
-        /// the controls in the set.
-        /// </summary>
-        public ControlSet LabelColumnIndex(int value)
-        {
-            foreach (var item in Items)
-            {
-                if (item is IControlAndLabel control)
-                    control.Label.ColumnIndex = value;
-            }
-
-            return this;
-        }
-
-        /// <summary>
         /// Sets <see cref="ControlAndLabel.InnerSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>

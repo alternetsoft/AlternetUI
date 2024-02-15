@@ -383,6 +383,38 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="Width"/> or <see cref="Height"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to return <see cref="Width"/>
+        /// or <see cref="Height"/>.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double GetSize(bool vert)
+        {
+            if (vert)
+                return height;
+            else
+                return width;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Width"/> or <see cref="Height"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to set <see cref="Width"/>
+        /// or <see cref="Height"/>.</param>
+        /// <returns></returns>
+        /// <param name="value">New size value.</param>
+        public void SetSize(bool vert, double value)
+        {
+            if (vert)
+                height = value;
+            else
+                width = value;
+        }
+
+        /// <summary>
         /// Gets size with applied minimal and maximal limitations.
         /// </summary>
         /// <param name="min">Minimal width and height.</param>

@@ -1,6 +1,6 @@
 namespace Alternet.UI
 {
-    public partial class SplitterPanel
+    internal partial class SplitterPanel
     {
     }
 }

@@ -17,11 +17,13 @@ namespace Alternet.UI
         private readonly TextBox findEdit = new()
         {
             Margin = (2, 0, 2, 0),
+            VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly TextBox replaceEdit = new()
         {
             Margin = (2, 0, 2, 0),
+            VerticalAlignment = VerticalAlignment.Center,
         };
 
         private IFindReplaceConnect? manager;
@@ -118,6 +120,8 @@ namespace Alternet.UI
 
             ReplaceToolBar.AddToolAction(IdReplace, OnClickReplace);
             ReplaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
+
+            ItemSize = 32;
         }
 
         /// <summary>

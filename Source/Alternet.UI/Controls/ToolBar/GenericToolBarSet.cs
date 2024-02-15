@@ -10,15 +10,26 @@ namespace Alternet.UI
     /// Implements multiple <see cref="GenericToolBar"/> controls.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class GenericToolBarSet : VerticalStackPanel
+    public partial class GenericToolBarSet : Control
     {
+        /// <summary>
+        /// Gets or sets default distance (in dips) between toolbars.
+        /// </summary>
+        public static double DefaultToolBarDistance = 2;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericToolBarSet"/> class.
         /// </summary>
         public GenericToolBarSet()
         {
+            Layout = LayoutStyle.Vertical;
             ToolBarCount = 1;
         }
+
+        /// <summary>
+        /// Gets or sets distance (in dips) between toolbars.
+        /// </summary>
+        public virtual double? ToolBarDistance { get; set; }
 
         /// <summary>
         /// Gets or sets the number of toolbars.
@@ -41,6 +52,42 @@ namespace Alternet.UI
                     return;
                 Children.SetCount(value, CreateToolBar);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="GenericToolBar.ItemSize"/> for the child toolbars.
+        /// </summary>
+        public virtual double ItemSize
+        {
+            get
+            {
+                return this[0].ItemSize;
+            }
+
+            set
+            {
+                if (ItemSize == value)
+                    return;
+
+                DoInsideLayout(() =>
+                {
+                    for (int i = 0; i < ToolBarCount; i++)
+                    {
+                        this[i].ItemSize = value;
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets toolbar at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the toolbar
+        /// to get.</param>
+        /// <returns>The toolbar at the specified index.</returns>
+        public GenericToolBar this[int index]
+        {
+            get => GetToolBar(index);
         }
 
         /// <summary>
@@ -68,7 +115,7 @@ namespace Alternet.UI
             GenericToolBar result = new();
             if(Children.Count > 0)
             {
-                result.Margin = (0, 4, 0, 0);
+                result.Margin = (0, ToolBarDistance ?? DefaultToolBarDistance, 0, 0);
             }
 
             return result;

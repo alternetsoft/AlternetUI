@@ -26,16 +26,21 @@ namespace PropertyGridSample
                 return;
 
             toolbar.ToolBarCount = 2;
+            toolbar.SuggestedWidth = 300;
 
             var toolbar1 = toolbar.GetToolBar(0);
             var toolbar2 = toolbar.GetToolBar(1);
 
             toolbar1.AddSpeedBtn(KnownButton.New);
             toolbar1.AddSpeedBtn(KnownButton.Open);
-            toolbar1.AddSpeedBtn(KnownButton.Save);
+            
+            var toolSave = toolbar1.AddSpeedBtn(KnownButton.Save);
+            toolbar1.SetToolAlignRight(toolSave, true);
 
-            toolbar2.AddSpeedBtn(KnownButton.Undo);
-            toolbar2.AddSpeedBtn(KnownButton.Redo);
+            var toolUndo = toolbar2.AddSpeedBtn(KnownButton.Undo);
+            toolbar2.SetToolAlignCenter(toolUndo, true);
+            var toolRedo = toolbar2.AddSpeedBtn(KnownButton.Redo);
+            toolbar2.SetToolAlignCenter(toolRedo, true);
         }
 
         public static void InitGenericToolBar(object control)

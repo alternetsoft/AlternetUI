@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
+        <AlternetUIBuildTaskAllPlatformsPath>$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\bin\Debug\</AlternetUIBuildTaskAllPlatformsPath>
+    </PropertyGroup>
+
+    <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" />
+    <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
+
   <ItemGroup Condition="false">
-    <PackageReference Include="Alternet.UI" Version="0.9.404-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.9.505-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists($(AlternetUIPath))">

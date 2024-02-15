@@ -125,6 +125,7 @@ namespace Alternet.UI
             double w = 0;
 
             Stack<Control> rightControls = new();
+            List<(Control Control, double Top, SizeD Size)>? centerControls = null;
 
             foreach (var control in controls)
             {
@@ -138,6 +139,29 @@ namespace Alternet.UI
             foreach (var control in rightControls)
             {
                 DoAlignControl(control);
+            }
+
+            if (centerControls is not null)
+                AlignCenterControls();
+
+            void AlignCenterControls()
+            {
+                double totalWidth = 0;
+                foreach(var item in centerControls)
+                    totalWidth += item.Size.Width;
+                var offset = (childrenLayoutBounds.Width - totalWidth) / 2;
+
+                foreach (var item in centerControls)
+                {
+                    var margin = item.Control.Margin;
+                    item.Control.Bounds =
+                        new RectD(
+                            childrenLayoutBounds.Left + margin.Left + offset,
+                            item.Top,
+                            item.Size.Width,
+                            item.Size.Height);
+                    offset += item.Size.Width + margin.Horizontal;
+                }
             }
 
             void DoAlignControl(Control control)
@@ -156,27 +180,37 @@ namespace Alternet.UI
                         preferredSize,
                         control.VerticalAlignment);
 
-                bool isRight = control.HorizontalAlignment == UI.HorizontalAlignment.Right;
-
-                if (isRight)
+                switch (control.HorizontalAlignment)
                 {
-                    control.Handler.Bounds =
-                        new RectD(
-                            childrenLayoutBounds.Right - w - margin.Right - preferredSize.Width,
+                    case HorizontalAlignment.Left:
+                    case HorizontalAlignment.Fill:
+                    case HorizontalAlignment.Stretch:
+                    default:
+                        control.Bounds =
+                            new RectD(
+                                childrenLayoutBounds.Left + x + margin.Left,
+                                alignedPosition.Origin,
+                                preferredSize.Width,
+                                alignedPosition.Size);
+                        x += preferredSize.Width + horizontalMargin;
+                        break;
+                    case HorizontalAlignment.Center:
+                        centerControls ??= new();
+                        var item = (
+                            control,
                             alignedPosition.Origin,
-                            preferredSize.Width,
-                            alignedPosition.Size);
-                    w += preferredSize.Width + horizontalMargin;
-                }
-                else
-                {
-                    control.Handler.Bounds =
-                        new RectD(
-                            childrenLayoutBounds.Left + x + margin.Left,
-                            alignedPosition.Origin,
-                            preferredSize.Width,
-                            alignedPosition.Size);
-                    x += preferredSize.Width + horizontalMargin;
+                            (preferredSize.Width, alignedPosition.Size));
+                        centerControls.Add(item);
+                        break;
+                    case HorizontalAlignment.Right:
+                        control.Bounds =
+                            new RectD(
+                                childrenLayoutBounds.Right - w - margin.Right - preferredSize.Width,
+                                alignedPosition.Origin,
+                                preferredSize.Width,
+                                alignedPosition.Size);
+                        w += preferredSize.Width + horizontalMargin;
+                        break;
                 }
             }
         }

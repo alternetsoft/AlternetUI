@@ -2,10 +2,6 @@
 {
     internal class ControlExtendedProps
     {
-        public int GridColumnSpan { get; set; } = 1;
-
-        public int GridRowSpan { get; set; } = 1;
-
         internal double DistanceRight { get; set; }
 
         internal double DistanceBottom { get; set; }

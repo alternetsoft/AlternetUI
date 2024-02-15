@@ -1,2 +1,2 @@
 ECHO ====================
-dotnet build --framework net8.0
+dotnet build

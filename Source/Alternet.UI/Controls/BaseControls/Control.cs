@@ -22,6 +22,11 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
 
+        internal int rowIndex;
+        internal int columnIndex;
+        internal int columnSpan = 1;
+        internal int rowSpan = 1;
+
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
         private static int groupIndexCounter;
         private static Font? defaultFont;
@@ -74,6 +79,25 @@ namespace Alternet.UI
             defaults.RaiseInitDefaults(this);
             Designer?.RaiseCreated(this);
         }
+
+        /// <summary>
+        /// Occurs inside <see cref="Control.GetPreferredSize"/> method.
+        /// </summary>
+        /// <remarks>
+        /// If default <see cref="Control.GetPreferredSize"/> call is not needed,
+        /// set <see cref="HandledEventArgs.Handled"/>
+        /// property to <c>true</c>.
+        /// </remarks>
+        public static event EventHandler<HandledEventArgs<SizeD>>? GlobalGetPreferredSize;
+
+        /// <summary>
+        /// Occurs when the the control should reposition its child controls.
+        /// </summary>
+        /// <remarks>
+        /// If default layout is not needed, set <see cref="HandledEventArgs.Handled"/>
+        /// property to <c>true</c>.
+        /// </remarks>
+        public static event EventHandler<HandledEventArgs>? GlobalOnLayout;
 
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
@@ -1905,13 +1929,57 @@ namespace Alternet.UI
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
         /// by the <see cref="Grid"/> control.
         /// </summary>
-        public virtual int? ColumnIndex { get; set; }
+        /// <remarks>
+        /// Currently this property works only in <see cref="Grid"/> container.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual int ColumnIndex
+        {
+            get => columnIndex;
+            set => Grid.SetColumn(this, value);
+        }
 
         /// <summary>
         /// Gets or sets row index which is used in <see cref="GetRowGroup"/> and
         /// by the <see cref="Grid"/> control.
         /// </summary>
-        public virtual int? RowIndex { get; set; }
+        /// <remarks>
+        /// Currently this property works only in <see cref="Grid"/> container.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual int RowIndex
+        {
+            get => rowIndex;
+            set => Grid.SetRow(this, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates the total number of columns
+        /// this control's content spans within a container.
+        /// </summary>
+        /// <remarks>
+        /// Currently this property works only in <see cref="Grid"/> container.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual int ColumnSpan
+        {
+            get => columnSpan;
+            set => Grid.SetColumnSpan(this, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates the total number of rows
+        /// this control's content spans within a container.
+        /// </summary>
+        /// <remarks>
+        /// Currently this property works only in <see cref="Grid"/> container.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual int RowSpan
+        {
+            get => rowSpan;
+            set => Grid.SetRowSpan(this, value);
+        }
 
         /// <summary>
         /// Gets or sets the background brush for the control.
