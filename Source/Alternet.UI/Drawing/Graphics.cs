@@ -1241,15 +1241,54 @@ namespace Alternet.Drawing
         /// <summary>
         /// Draws text with the specified font, background and foreground colors.
         /// </summary>
-        /// <param name="text">Text to draw.</param>
         /// <param name="location">Location used to draw the text.</param>
+        /// <param name="text">Text to draw.</param>
         /// <param name="font">Font used to draw the text.</param>
         /// <param name="foreColor">Foreground color of the text.</param>
         /// <param name="backColor">Background color of the text.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor)
+        public void DrawText(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor)
         {
             dc.DrawText(text, location, font.NativeFont, foreColor, backColor);
+        }
+
+        /// <summary>
+        /// Draws text with the specified font, background and foreground colors,
+        /// optional image, alignment and underlined mnemonic character.
+        /// </summary>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text.</param>
+        /// <param name="image">Optional image.</param>
+        /// <param name="rect">Rectangle in which drawing is performed.</param>
+        /// <param name="alignment">Alignment of the text.</param>
+        /// <param name="indexAccel">Index of underlined mnemonic character</param>
+        /// <returns>The bounding rectangle.</returns>
+        public RectD DrawLabel(
+            string text,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            Image? image,
+            RectD rect,
+            GenericAlignment alignment = GenericAlignment.TopLeft,
+            int indexAccel = -1)
+        {
+            return dc.DrawLabel(
+                text,
+                font.NativeFont,
+                foreColor,
+                backColor,
+                image?.NativeImage,
+                rect,
+                (int)alignment,
+                indexAccel);
         }
 
         /// <summary>

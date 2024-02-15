@@ -73,6 +73,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.RectD DrawLabel(string text, Font font, Alternet.Drawing.Color foreColor, Alternet.Drawing.Color backColor, Image? image, Alternet.Drawing.RectD rect, int alignment, int indexAccel)
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_DrawLabel_(NativePointer, text, font.NativePointer, foreColor, backColor, image?.NativePointer ?? IntPtr.Zero, rect, alignment, indexAccel);
+        }
+        
         public void DestroyClippingRegion()
         {
             CheckDisposed();
@@ -402,6 +408,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, InterpolationMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectD DrawingContext_DrawLabel_(IntPtr obj, string text, IntPtr font, NativeApiTypes.Color foreColor, NativeApiTypes.Color backColor, IntPtr image, Alternet.Drawing.RectD rect, int alignment, int indexAccel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DestroyClippingRegion_(IntPtr obj);

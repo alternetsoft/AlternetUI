@@ -12,6 +12,7 @@ void SetClip(Region* value);
 InterpolationMode GetInterpolationMode();
 void SetInterpolationMode(InterpolationMode value);
 
+RectD DrawLabel(const string& text, Font* font, const Color& foreColor, const Color& backColor, Image* image, const RectD& rect, int alignment, int indexAccel);
 void DestroyClippingRegion();
 void SetClippingRegion(const RectD& rect);
 RectD GetClippingBox();

@@ -945,6 +945,64 @@ namespace Alternet::UI
         }
     }
 
+    RectD DrawingContext::DrawLabel(const string& text,
+        Font* font, const Color& foreColor, const Color& backColor, Image* image,
+        const RectD& rect, int alignment, int indexAccel)
+    {
+        bool useBackColor = !backColor.IsEmpty();
+
+        UseDC();
+
+        auto window = DrawingContext::GetWindow(_dc);
+        auto backMode = _dc->GetBackgroundMode();
+
+        if (useBackColor)
+            _dc->SetBackgroundMode(wxBRUSHSTYLE_SOLID);
+        else
+            _dc->SetBackgroundMode(wxBRUSHSTYLE_TRANSPARENT);
+
+        auto& oldTextForeground = _dc->GetTextForeground();
+        _dc->SetTextForeground(foreColor);
+
+        auto& oldFont = _dc->GetFont();
+        _dc->SetFont(font->GetWxFont());
+
+        auto wRect = fromDip(rect, window);
+        wxRect rectBounding;
+        wxBitmap bitmap = wxNullBitmap;
+
+        if (image != nullptr)
+            bitmap = image->GetBitmap();
+
+        if (useBackColor)
+        {
+            auto& oldTextBackground = _dc->GetTextBackground();
+            _dc->SetTextBackground(backColor);
+            _dc->DrawLabel(wxStr(text),
+                bitmap,
+                wRect,
+                alignment,
+                indexAccel,
+                &rectBounding);
+            _dc->SetTextBackground(oldTextBackground);
+        }
+        else
+        {
+            _dc->DrawLabel(wxStr(text),
+                bitmap,
+                wRect,
+                alignment,
+                indexAccel,
+                &rectBounding);
+        }
+
+        _dc->SetTextForeground(oldTextForeground);
+        _dc->SetFont(oldFont);
+
+        _dc->SetBackgroundMode(backMode);
+        return rectBounding;
+    }
+
     void DrawingContext::DrawText(const string& text, const Point& location, Font* font,
         const Color& foreColor, const Color& backColor)
     {
