@@ -48,6 +48,9 @@ namespace Alternet.UI
         };
 
         private IFindReplaceConnect? manager;
+        private bool canFindInCurrentDocument = true;
+        private bool canFindInAllOpenDocuments = true;
+        private bool canFindInCurrentProject = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
@@ -55,10 +58,7 @@ namespace Alternet.UI
         public FindReplaceControl()
         {
             scopeEdit.IsEditable = false;
-            scopeEdit.Add(scopeCurrentDocument);
-            scopeEdit.Add(scopeAllOpenDocuments);
-            scopeEdit.Add(scopeCurrentProject);
-            scopeEdit.SelectedItem = scopeCurrentDocument;
+            UpdateFindScope();
 
             replaceEdit.TextChanged += ReplaceEdit_TextChanged;
             findEdit.TextChanged += FindEdit_TextChanged;
@@ -269,6 +269,63 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="text"></param>
             void SetReplaceText(string text);
+        }
+
+        /// <summary>
+        /// Get or sets whether 'Current Document' find scope is available.
+        /// </summary>
+        public bool CanFindInCurrentDocument
+        {
+            get
+            {
+                return canFindInCurrentDocument;
+            }
+
+            set
+            {
+                if (canFindInCurrentDocument == value)
+                    return;
+                canFindInCurrentDocument = value;
+                UpdateFindScope();
+            }
+        }
+
+        /// <summary>
+        /// Get or sets whether 'All Open Documents' find scope is available.
+        /// </summary>
+        public bool CanFindInAllOpenDocuments
+        {
+            get
+            {
+                return canFindInAllOpenDocuments;
+            }
+
+            set
+            {
+                if (canFindInAllOpenDocuments == value)
+                    return;
+                canFindInAllOpenDocuments = value;
+                UpdateFindScope();
+            }
+        }
+
+        /// <summary>
+        /// Get or sets whether 'Current Project' find scope is available.
+        /// </summary>
+        public bool CanFindInCurrentProject
+        {
+            get
+            {
+                return canFindInCurrentProject;
+            }
+
+            set
+            {
+                if (canFindInCurrentProject == value)
+                    return;
+                canFindInCurrentProject = value;
+                UpdateFindScope();
+            }
         }
 
         /// <summary>
@@ -850,6 +907,40 @@ namespace Alternet.UI
         private void ReplaceEdit_TextChanged(object? sender, EventArgs e)
         {
             Manager?.SetReplaceText(replaceEdit.Text);
+        }
+
+        private void UpdateFindScope()
+        {
+            void AddOrRemove(object item, bool add)
+            {
+                if (add)
+                {
+                    if (scopeEdit.Items.IndexOf(item) < 0)
+                        scopeEdit.Items.Add(item);
+                }
+                else
+                    scopeEdit.Items.Remove(item);
+            }
+
+            var selected = false;
+
+            void SelectIf(object? item, bool select)
+            {
+                if (select && !selected)
+                {
+                    scopeEdit.SelectedItem = item;
+                    selected = true;
+                }
+            }
+
+            AddOrRemove(scopeCurrentDocument, CanFindInCurrentDocument);
+            AddOrRemove(scopeAllOpenDocuments, CanFindInAllOpenDocuments);
+            AddOrRemove(scopeCurrentProject, CanFindInCurrentProject);
+
+            SelectIf(scopeCurrentDocument, CanFindInCurrentDocument);
+            SelectIf(scopeAllOpenDocuments, CanFindInAllOpenDocuments);
+            SelectIf(scopeCurrentProject, CanFindInCurrentProject);
+            SelectIf(null, true);
         }
 
         internal class FindReplaceManagerLogger : IFindReplaceConnect
