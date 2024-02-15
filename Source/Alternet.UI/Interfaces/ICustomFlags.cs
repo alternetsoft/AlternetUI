@@ -12,6 +12,13 @@ namespace Alternet.UI
     public interface ICustomFlags
     {
         /// <summary>
+        /// Calls <see cref="HasFlag"/> and <see cref="SetFlag"/>.
+        /// </summary>
+        /// <param name="name">Flag name.</param>
+        /// <returns></returns>
+        bool this[string name] { get; set; }
+
+        /// <summary>
         /// Flag with <paramref name="name"/> was added.
         /// </summary>
         /// <param name="name">Flag name.</param>

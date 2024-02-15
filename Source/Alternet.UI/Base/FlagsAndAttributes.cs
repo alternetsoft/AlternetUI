@@ -8,6 +8,18 @@ namespace Alternet.UI
 {
     internal class FlagsAndAttributes : AdvDictionary<string, object>, IFlagsAndAttributes
     {
+        bool ICustomFlags.this[string name]
+        {
+            get => HasFlag(name);
+            set => SetFlag(name, value);
+        }
+
+        object? ICustomAttributes.this[string name]
+        {
+            get => GetAttribute(name);
+            set => SetAttribute(name, value);
+        }
+
         public bool HasFlag(string name) => HasAttribute(name);
 
         public void AddFlag(string name) => TryAdd(name, AssemblyUtils.True);
