@@ -1,0 +1,15 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="CustomControlInUixml.MainWindow"
+        xmlns:local="clr-namespace:CustomControlInUixml"
+        Title="CustomControlInUixml">
+  <VerticalStackPanel Name="mainPanel">
+
+    <Label Text="Here is custom control with uixml:" Margin="10"/>
+
+    <local:CustomControl SomeProp="SomeValue" Margin="10" />
+
+    <Label Text="Here it is again:" Margin="10"/>
+
+  </VerticalStackPanel>
+</Window>

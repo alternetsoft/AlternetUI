@@ -1,0 +1,1 @@
+This is an example of how to create custom control with uixml.

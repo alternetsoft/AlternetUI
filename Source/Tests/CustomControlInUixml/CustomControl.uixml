@@ -1,0 +1,13 @@
+<Control xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="CustomControlInUixml.CustomControl"
+         xmlns:local="clr-namespace:CustomControlInUixml"
+         >
+
+  <Border>
+    <VerticalStackPanel Margin="10">
+      <Label Name="label1" Text="This is label" Margin="10"/>
+      <Button Text="OK" Click="Button1_Click" Name="button1" Margin="10"/>
+    </VerticalStackPanel>
+  </Border>
+</Control>
