@@ -6,27 +6,36 @@ namespace NativeApi.Api
 {
     public class DrawingContext
     {
+        public RectD DrawLabel(string text, Font font,
+            Color foreColor, Color backColor, Image? image, RectD rect,
+            int alignment /*= wxALIGN_LEFT | wxALIGN_TOP*/,
+            int indexAccel = -1) => default;
+
         public void DestroyClippingRegion() { }
 
         public void SetClippingRegion(RectD rect) { }
 
         public RectD GetClippingBox() => default;
 
-        public void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor) { }
+        public void DrawText(string text, PointD location, Font font,
+            Color foreColor, Color backColor) { }
 
         public SizeD GetDpi() => default;
 
         protected DrawingContext() { }
 
-        public static void ImageFromDrawingContext(Image image, int width, int height, DrawingContext dc) { }
+        public static void ImageFromDrawingContext(Image image, int width,
+            int height, DrawingContext dc) { }
 
-        public static void ImageFromGenericImageDC(Image image, IntPtr source, DrawingContext dc) { }
+        public static void ImageFromGenericImageDC(Image image, IntPtr source,
+            DrawingContext dc) { }
 
         // Fills the widths array with the widths from the beginning of text
         // to the corresponding character of text.
         // The generic version simply builds a running total of the widths of each character
         // using GetTextExtent(), however if the various platforms have a native API function
-        // that is faster or more accurate than the generic implementation then it should be used instead.
+        // that is faster or more accurate than the generic implementation then it should be
+        // used instead.
         public void GetPartialTextExtents(string text, double[]	widths, Font font, IntPtr control) { }
 
         //X wxDouble* width,
@@ -36,8 +45,10 @@ namespace NativeApi.Api
         //text The text string to measure.
         //width Variable to store the total calculated width of the text.
         //height Variable to store the total calculated height of the text.
-        //descent Variable to store the dimension from the baseline of the font to the bottom of the descender.
-        //externalLeading Any extra vertical space added to the font by the font designer (usually is zero).
+        //descent Variable to store the dimension from the baseline of the font to the bottom
+        //of the descender.
+        //externalLeading Any extra vertical space added to the font by the font designer
+        //(usually is zero).
         //Gets the dimensions of the string using the currently selected font.
         //This function only works with single-line strings.
         public RectD GetTextExtent(string text, Font font, IntPtr control) => default;
@@ -45,8 +56,10 @@ namespace NativeApi.Api
         //text The text string to measure.
         //width Variable to store the total calculated width of the text.
         //height Variable to store the total calculated height of the text.
-        //descent Variable to store the dimension from the baseline of the font to the bottom of the descender.
-        //externalLeading Any extra vertical space added to the font by the font designer (usually is zero).
+        //descent Variable to store the dimension from the baseline of the font to the
+        //bottom of the descender.
+        //externalLeading Any extra vertical space added to the font by the font designer
+        //(usually is zero).
         //Gets the dimensions of the string using the currently selected font.
         //This function only works with single-line strings.
         public SizeD GetTextExtentSimple(string text, Font font, IntPtr control) => default;
@@ -59,7 +72,8 @@ namespace NativeApi.Api
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
-        public void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius) { }
+        public void RoundedRectangle(Pen pen, Brush brush, RectD rectangle,
+            double cornerRadius) { }
         public void Rectangle(Pen pen, Brush brush, RectD rectangle) { }
         public void Ellipse(Pen pen, Brush brush, RectD rectangle) { }
         public void Path(Pen pen, Brush brush, GraphicsPath path) { }
@@ -99,7 +113,8 @@ namespace NativeApi.Api
 
         public void DrawImageAtRect(Image image, RectD destinationRect) => throw new Exception();
 
-        public void DrawImagePortionAtRect(Image image, RectD destinationRect, RectD sourceRect) { }
+        public void DrawImagePortionAtRect(Image image, RectD destinationRect,
+            RectD sourceRect) { }
 
         public void Push() => throw new Exception();
 

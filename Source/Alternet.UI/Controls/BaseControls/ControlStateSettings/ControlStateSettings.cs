@@ -64,6 +64,12 @@ namespace Alternet.UI
         public bool HasOtherImages => Images?.HasOtherStates ?? false;
 
         /// <summary>
+        /// Gets whether <see cref="Colors"/> has settings not only for
+        /// <see cref="GenericControlState.Normal"/> control state.
+        /// </summary>
+        public bool HasOtherColors => Colors?.HasOtherStates ?? false;
+
+        /// <summary>
         /// Gets whether <see cref="Backgrounds"/> has settings not only for
         /// <see cref="GenericControlState.Normal"/> control state.
         /// </summary>

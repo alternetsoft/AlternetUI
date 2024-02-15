@@ -45,6 +45,11 @@ ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, I
     obj->SetInterpolationMode(value);
 }
 
+ALTERNET_UI_API RectD_C DrawingContext_DrawLabel_(DrawingContext* obj, const char16_t* text, Font* font, Color foreColor, Color backColor, Image* image, RectD rect, int alignment, int indexAccel)
+{
+    return obj->DrawLabel(text, font, foreColor, backColor, image, rect, alignment, indexAccel);
+}
+
 ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
 {
     obj->DestroyClippingRegion();

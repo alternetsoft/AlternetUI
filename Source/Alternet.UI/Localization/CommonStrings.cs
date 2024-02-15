@@ -204,6 +204,15 @@ namespace Alternet.UI.Localization
         public string FindOptionBackwards { get; set; } = "Backwards";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string FindScopeCurrentDocument { get; set; } = "Current Document";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindScopeAllOpenDocuments { get; set; } = "All Open Documents";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindScopeCurrentProject { get; set; } = "Current Project";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ToggleToSwitchBetweenFindReplace { get; set; } =
             "Toggle to switch between find and replace modes";
 

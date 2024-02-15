@@ -27,11 +27,44 @@ namespace Alternet.UI
             : base()
         {
             Layout = LayoutStyle.Vertical;
+            cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
+            cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             cardPanelHeader.Parent = this;
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
             cardPanelHeader.CardPanel = cardPanel;
+        }
+
+        /// <summary>
+        /// Gets or sets the area of the control (for example, along the top) where
+        /// the tabs are aligned.
+        /// </summary>
+        /// <value>One of the <see cref="TabAlignment"/> values. The default is
+        /// <see cref="TabAlignment.Top"/>.</value>
+        /// <remarks>
+        /// Currently only <see cref="TabAlignment.Top"/> and <see cref="TabAlignment.Bottom"/>
+        /// alignment is supported.
+        /// </remarks>
+        public TabAlignment TabAlignment
+        {
+            get
+            {
+                if (Header.VerticalAlignment == UI.VerticalAlignment.Bottom)
+                    return TabAlignment.Bottom;
+                else
+                    return TabAlignment.Top;
+            }
+
+            set
+            {
+                if (TabAlignment == value)
+                    return;
+                if (value == TabAlignment.Bottom)
+                    Header.VerticalAlignment = UI.VerticalAlignment.Bottom;
+                else
+                    Header.VerticalAlignment = UI.VerticalAlignment.Top;
+            }
         }
 
         /// <summary>
@@ -133,6 +166,14 @@ namespace Alternet.UI
         public virtual void SelectFirstTab()
         {
             Header.SelectFirstTab();
+        }
+
+        /// <summary>
+        /// Selects tab with the specified index.
+        /// </summary>
+        public void SelectTab(int index)
+        {
+            Header.SelectedTabIndex = index;
         }
 
         /// <summary>
