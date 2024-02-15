@@ -1,5 +1,25 @@
 # 0.9.506 (2024 February 14)
 
+## 2024 February 15
+
+- PictureBox: Padding now is used to specify offsets for the image.
+- PictureBox: CenterHorz and CenterVert used when Text is painted.
+- Thickness: LeftTop, RightBottom.
+- CardPanelHeader: DefaultTabPadding, TabMargin, TabPadding.
+- GenericToolBar.SetToolAlignCenter.
+- GenericToolBar: ItemSize, DefaultToolBarDistance, ToolBarDistance.
+- StackPanel: Horizontally aligned StackPanel can have centered items (item's HorizontalAlignment = Center). See demo in PropertyGridDemo for GenericToolBarSet control.
+- SpeedColorButton.ShowDialog.
+- PropertyGridSample: Add SpeedColorButton demo.
+- PointD, RectD: GetLocation(bool).
+- RectD, SizeD: GetSize(bool).
+- Control: DefaultOnLayout, DefaultGetPreferredSize.
+- Control: ColumnSpan, RowSpan.
+- Control: GlobalGetPreferredSize, GlobalOnLayout static events.
+- MinMasterTemplate: Add uixml support.
+- Add Tests\CustomControlInUixml sample project.
+- FindReplaceControl: Use ComboBox instead TextBox as find/replace controls.
+
 ## 2024 February 14
 
 ### Layout improvement:
