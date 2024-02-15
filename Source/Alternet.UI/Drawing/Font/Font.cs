@@ -469,24 +469,32 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns bold version of the font.
         /// </summary>
+        /// <remarks>
+        /// Bold style is added to the original font style. For example if font is italic,
+        /// this property will return both italic and bold font.
+        /// </remarks>
         [Browsable(false)]
         public Font AsBold
         {
             get
             {
-                return GetWithStyle(FontStyle.Bold);
+                return GetWithStyle(Style | FontStyle.Bold);
             }
         }
 
         /// <summary>
         /// Returns underlined version of the font.
         /// </summary>
+        /// <remarks>
+        /// Underlined style is added to the original font style. For example if font is italic,
+        /// this property will return both italic and underlined font.
+        /// </remarks>
         [Browsable(false)]
         public Font AsUnderlined
         {
             get
             {
-                return GetWithStyle(FontStyle.Underline);
+                return GetWithStyle(Style | FontStyle.Underline);
             }
         }
 
