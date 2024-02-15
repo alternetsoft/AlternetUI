@@ -15,13 +15,41 @@ namespace PropertyGridSample
                 return;
             label.Text = "GenericLabel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
+            label.ForegroundColor = Color.Sienna;
+            label.TextBackColor = Color.Aqua;
+            label.MnemonicCharIndex = 3;
+            label.ImageVisible = true;
+            label.TextAlignment = GenericAlignment.Center;
+            label.IsBold = true;
+            label.Image = DefaultImage;
+            label.DisabledImage = DefaultImage.ToGrayScale();
+            label.SuggestedSize = (250, 300);
+            label.TextPrefix = " ";
+            label.TextSuffix = " ";
+
+            label.Borders ??= new();
+            var border = BorderSettings.Default.Clone();
+            border.UniformCornerRadius = 15;
+            border.UniformRadiusIsPercent = true;
+            var doubleBorder = border.Clone();
+            doubleBorder.Width = 10;
+
+            label.Borders.SetAll(border);
+            label.Borders.SetObject(doubleBorder, GenericControlState.Hovered);
+
+            var colors = new FontAndColor(Color.Red, Color.Yellow, Control.DefaultFont.AsUnderlined);
+
+            label.StateObjects ??= new();
+            label.StateObjects.Colors ??= new();
+            label.StateObjects.Colors.SetObject(colors, GenericControlState.Hovered);
+            SetBackgrounds(label);
         }
 
         public static void InitLabel(object control)
         {
             if (control is not Label label)
                 return;
-            label.Text = "Label";
+            label.Text = "La&bel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
         }
 

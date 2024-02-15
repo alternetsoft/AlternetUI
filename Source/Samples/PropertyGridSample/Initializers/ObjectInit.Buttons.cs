@@ -14,7 +14,7 @@ namespace PropertyGridSample
         {
             if (control is not Button button)
                 return;
-            button.Text = "Button";
+            button.Text = "Butt&on";
             button.StateImages = ButtonImages;
             button.SuggestedHeight = 100;
             button.HorizontalAlignment = HorizontalAlignment.Left;
