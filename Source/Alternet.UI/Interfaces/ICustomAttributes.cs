@@ -12,6 +12,13 @@ namespace Alternet.UI
     public interface ICustomAttributes
     {
         /// <summary>
+        /// Calls <see cref="SetAttribute"/> and <see cref="GetAttribute"/>.
+        /// </summary>
+        /// <param name="name">Attribute name.</param>
+        /// <returns></returns>
+        object? this[string name] { get; set; }
+
+        /// <summary>
         /// Attribute with <paramref name="name"/> was added.
         /// </summary>
         /// <param name="name">Attribute name.</param>
