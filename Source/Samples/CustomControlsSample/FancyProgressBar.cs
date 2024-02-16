@@ -1,4 +1,5 @@
-﻿using Alternet.Drawing;
+﻿using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -35,10 +36,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return new GenericControlHandler();
-        }
+        protected override HandlerType GetRequiredHandlerType() => HandlerType.Generic;
 
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
@@ -81,11 +79,11 @@ namespace Alternet.UI
                 var y = bounds.Center.Y;
                 var minY = y - (bounds.Height * 5);
 
-                var yStep = MathUtils.MapRanges(step, Minimum, Maximum, 0, minY);
+                var yStep = MapRanges(step, Minimum, Maximum, 0, minY);
 
                 y += offsetInSteps * yStep;
 
-                var shift = -MathUtils.MapRanges(
+                var shift = -MapRanges(
                     Value,
                     Minimum,
                     Maximum,
@@ -122,6 +120,14 @@ namespace Alternet.UI
             dc.DrawLine(pointerPen1, pointerLineStartPoint, pointerLineEndPoint);
             dc.DrawLine(pointerPen2, pointerLineStartPoint, pointerLineEndPoint);
         }
+
+        internal static double MapRanges(
+            double value,
+            double from1,
+            double to1,
+            double from2,
+            double to2) =>
+            ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
 
         private void Control_ValueChanged(object? sender, EventArgs e)
         {

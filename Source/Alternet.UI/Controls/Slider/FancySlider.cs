@@ -97,7 +97,7 @@ namespace Alternet.UI
             var scaleRange = 360 - emptyScaleSectorAngle;
             var scaleEndAngle = scaleStartAngle + scaleRange;
 
-            var pointerAngle = MathUtils.MapRanges(
+            var pointerAngle = MapRanges(
                 Value,
                 Minimum,
                 Maximum,
@@ -134,5 +134,13 @@ namespace Alternet.UI
             DrawTicks(smallTickPen, scaleRange / smallTicksCount, smallTickLength);
             DrawTicks(largeTickPen, scaleRange / largeTicksCount, largeTickLength);
         }
+
+        internal static double MapRanges(
+            double value,
+            double from1,
+            double to1,
+            double from2,
+            double to2) =>
+            ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
     }
 }
