@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// set <see cref="HandledEventArgs.Handled"/>
         /// property to <c>true</c>.
         /// </remarks>
-        public static event EventHandler<HandledEventArgs<SizeD>>? GlobalGetPreferredSize;
+        public static event EventHandler<DefaultPreferredSizeEventArgs>? GlobalGetPreferredSize;
 
         /// <summary>
         /// Occurs when the the control should reposition its child controls.
