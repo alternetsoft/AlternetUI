@@ -10,9 +10,6 @@ namespace EmployeeFormSample
 {
     public partial class MainWindow : Window
     {
-/*
-        private readonly CardPanelHeader panelHeader = new();
-*/
         public MainWindow()
         {
             Icon = new("embres:EmployeeFormSample.Sample.ico");
@@ -63,8 +60,6 @@ namespace EmployeeFormSample
             evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
 
-            LayoutUpdated += MainWindow_LayoutUpdated;
-
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
             LayoutFactory.AdjustTextBoxesHeight(this);
@@ -96,10 +91,6 @@ namespace EmployeeFormSample
 
             this.SetSizeToContent();
         }
-
-        private void MainWindow_LayoutUpdated(object? sender, EventArgs e)
-        {
-        }        
 
         private void PopulateComboBoxes()
         {

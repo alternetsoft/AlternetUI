@@ -76,7 +76,6 @@ namespace ControlsTest
             {
                 mainPanel.SizeChanged += Log_SizeChanged;
                 mainPanel.CardPanel.SizeChanged += Log_SizeChanged;
-                mainPanel.CardPanel.LayoutUpdated += Log_LayoutUpdated;
             }
 
             mainPanel.Name = "mainPanel";
@@ -105,11 +104,6 @@ namespace ControlsTest
             LogSizeEvent(sender, "SizeChanged");
         }
 
-        private void Log_LayoutUpdated(object? sender, EventArgs e)
-        {
-            // LogSizeEvent(sender, "LayoutUpdated");
-        }
-
         private int AddWebBrowserPage(string title)
         {
             Control Fn()
@@ -121,7 +115,6 @@ namespace ControlsTest
 
                 result.Name = result.GetType().Name;
 
-                result.LayoutUpdated += Log_LayoutUpdated;
                 result.SizeChanged += Log_SizeChanged;
 
                 if (disableResize)
