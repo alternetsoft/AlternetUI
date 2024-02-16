@@ -14,7 +14,6 @@ namespace ControlsSample
         public AllSamplesPage()
         {
             InitializeComponent();
-            view.MakeAsListBox();
             AddDefaultItems();
             view.SelectFirstItem();
 
@@ -94,13 +93,12 @@ namespace ControlsSample
             }
         }
 
-        private class CsProjItem : TreeViewItem
+        private class CsProjItem : ListControlItem
         {
             public CsProjItem(string path, int imageIndex, int index)
             {
                 CsProjPath = path;
                 Text = index + ". " + Path.GetFileNameWithoutExtension(path);
-                ImageIndex = imageIndex;
             }
 
             public string CsProjPath { get; set; }
