@@ -15,5 +15,14 @@ namespace Alternet.UI
     /// </remarks>
     public interface IFlagsAndAttributes : ICustomFlags, ICustomAttributes
     {
+        /// <summary>
+        /// Gets custom flags provider.
+        /// </summary>
+        ICustomFlags Flags { get; }
+
+        /// <summary>
+        /// Gets custom attributes provider.
+        /// </summary>
+        ICustomAttributes Attr { get; }
     }
 }
