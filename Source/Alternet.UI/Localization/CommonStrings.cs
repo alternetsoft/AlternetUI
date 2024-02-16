@@ -213,6 +213,9 @@ namespace Alternet.UI.Localization
         public string FindScopeCurrentProject { get; set; } = "Current Project";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string FindScopeSelectionOnly { get; set; } = "Selection Only";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ToggleToSwitchBetweenFindReplace { get; set; } =
             "Toggle to switch between find and replace modes";
 

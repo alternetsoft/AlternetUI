@@ -47,10 +47,16 @@ namespace Alternet.UI
             Text = CommonStrings.Default.FindScopeCurrentProject,
         };
 
+        private readonly ListControlItem scopeSelectionOnly = new()
+        {
+            Text = CommonStrings.Default.FindScopeSelectionOnly,
+        };
+
         private IFindReplaceConnect? manager;
         private bool canFindInCurrentDocument = true;
         private bool canFindInAllOpenDocuments = true;
         private bool canFindInCurrentProject = true;
+        private bool canFindInSelectionOnly = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
@@ -324,6 +330,25 @@ namespace Alternet.UI
                 if (canFindInCurrentProject == value)
                     return;
                 canFindInCurrentProject = value;
+                UpdateFindScope();
+            }
+        }
+
+        /// <summary>
+        /// Get or sets whether 'Current Project' find scope is available.
+        /// </summary>
+        public bool CanFindInSelectionOnly
+        {
+            get
+            {
+                return canFindInSelectionOnly;
+            }
+
+            set
+            {
+                if (canFindInSelectionOnly == value)
+                    return;
+                canFindInSelectionOnly = value;
                 UpdateFindScope();
             }
         }
@@ -936,10 +961,12 @@ namespace Alternet.UI
             AddOrRemove(scopeCurrentDocument, CanFindInCurrentDocument);
             AddOrRemove(scopeAllOpenDocuments, CanFindInAllOpenDocuments);
             AddOrRemove(scopeCurrentProject, CanFindInCurrentProject);
+            AddOrRemove(scopeSelectionOnly, CanFindInSelectionOnly);
 
             SelectIf(scopeCurrentDocument, CanFindInCurrentDocument);
             SelectIf(scopeAllOpenDocuments, CanFindInAllOpenDocuments);
             SelectIf(scopeCurrentProject, CanFindInCurrentProject);
+            SelectIf(scopeSelectionOnly, CanFindInSelectionOnly);
             SelectIf(null, true);
         }
 
