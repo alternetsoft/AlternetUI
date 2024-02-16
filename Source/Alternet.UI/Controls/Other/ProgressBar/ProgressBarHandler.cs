@@ -16,6 +16,8 @@ namespace Alternet.UI
             NativeControl.Minimum = Control.Minimum;
             NativeControl.Maximum = Control.Maximum;
             NativeControl.Value = Control.Value;
+            NativeControl.Orientation = (Native.ProgressBarOrientation)Control.Orientation;
+            NativeControl.IsIndeterminate = Control.IsIndeterminate;
 
             Control.MinimumChanged += Control_MinimumChanged;
             Control.MaximumChanged += Control_MaximumChanged;

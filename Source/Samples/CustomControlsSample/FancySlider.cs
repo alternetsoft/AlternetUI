@@ -1,4 +1,5 @@
-﻿using Alternet.Drawing;
+﻿using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -14,19 +15,28 @@ namespace Alternet.UI
         private readonly Pen smallTickPen = new((Color)"#FFFFFF", 2);
         private readonly Pen knobPointerPen1 = new((Color)"#FC4154", 3);
         private readonly Pen knobPointerPen2 = new((Color)"#FF827D", 1);
+        private bool dragging = false;
+        private PointD dragStartPosition;
 
-        internal new FancySliderHandler Handler => (FancySliderHandler)base.Handler;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FancySlider"/> class.
+        /// </summary>
+        public FancySlider()
+        {
+            UserPaint = true;
+            ValueChanged += Control_ValueChanged;
+        }
+
+        /// <inheritdoc/>
+        public override SliderOrientation Orientation { get; set; }
+
+        /// <inheritdoc/>
+        public override SliderTickStyle TickStyle { get; set; }
 
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
             return new SizeD(100, 100);
-        }
-
-        /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return new FancySliderHandler();
         }
 
         internal double GetControlRadius()
@@ -39,6 +49,97 @@ namespace Alternet.UI
         internal PointD GetControlCenter()
         {
             return ClientRectangle.Center;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            Refresh();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            Refresh();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                var location = e.GetPosition(this);
+                int opos = Value;
+                int pos = opos;
+                var delta = dragStartPosition.Y - location.Y;
+                pos += (int)delta;
+                int min = Minimum;
+                int max = Maximum;
+                if (pos < min) pos = min;
+                if (pos > max) pos = max;
+                if (pos != opos)
+                {
+                    Value = pos;
+                    dragStartPosition = location;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            CaptureMouse();
+
+            var location = e.GetPosition(this);
+
+            SetFocus();
+            if (MathUtils.IsPointInCircle(
+                location,
+                GetControlCenter(),
+                GetControlRadius()))
+            {
+                dragStartPosition = location;
+                dragging = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
+        {
+            ReleaseMouseCapture();
+
+            dragging = false;
+        }
+
+        /// <inheritdoc/>
+        protected override HandlerType GetRequiredHandlerType() => HandlerType.Generic;
+
+        /// <inheritdoc/>
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            int pos;
+            int m;
+            var delta = e.Delta;
+            if (delta > 0)
+            {
+                delta = 1;
+                pos = Value;
+                pos += delta;
+                m = Maximum;
+                if (pos > m)
+                    pos = m;
+                Value = pos;
+            }
+            else if (delta < 0)
+            {
+                delta = -1;
+                pos = Value;
+                pos += delta;
+                m = Minimum;
+                if (pos < m)
+                    pos = m;
+                Value = pos;
+            }
         }
 
         /// <inheritdoc/>
@@ -135,12 +236,17 @@ namespace Alternet.UI
             DrawTicks(largeTickPen, scaleRange / largeTicksCount, largeTickLength);
         }
 
-        internal static double MapRanges(
+        private static double MapRanges(
             double value,
             double from1,
             double to1,
             double from2,
             double to2) =>
             ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
+
+        private void Control_ValueChanged(object? sender, EventArgs e)
+        {
+            Refresh();
+        }
     }
 }

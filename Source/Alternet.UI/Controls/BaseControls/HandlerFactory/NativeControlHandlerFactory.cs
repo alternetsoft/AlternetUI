@@ -47,7 +47,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateSliderHandler(Control control) =>
-            new NativeSliderHandler();
+            new SliderHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateNumericUpDownHandler(Control control) =>

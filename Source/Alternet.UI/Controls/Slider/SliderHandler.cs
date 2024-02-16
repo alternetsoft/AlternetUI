@@ -1,27 +1,100 @@
 using System;
-using System.Collections.Generic;
-using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="Slider"/> behavior and appearance.
-    /// </summary>
-    internal abstract class SliderHandler : ControlHandler
+    internal class SliderHandler : ControlHandler<Slider>
     {
-        /// <summary>
-        /// Gets a <see cref="Slider"/> this handler provides the implementation for.
-        /// </summary>
-        public new Slider Control => (Slider)base.Control;
+        public new Native.Slider NativeControl => (Native.Slider)base.NativeControl!;
 
-        /// <summary>
-        /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
-        /// </summary>
-        public abstract SliderOrientation Orientation { get; set; }
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.Slider();
+        }
 
-        /// <summary>
-        /// Gets or sets a value indicating how to display the tick marks on the slider.
-        /// </summary>
-        public abstract SliderTickStyle TickStyle { get; set; }
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            NativeControl.Minimum = Control.Minimum;
+            NativeControl.Maximum = Control.Maximum;
+            NativeControl.Value = Control.Value;
+            NativeControl.SmallChange = Control.SmallChange;
+            NativeControl.LargeChange = Control.LargeChange;
+            NativeControl.TickFrequency = Control.TickFrequency;
+            NativeControl.Orientation = (Native.SliderOrientation)Control.Orientation;
+            NativeControl.TickStyle = (Native.SliderTickStyle)Control.TickStyle;
+
+            Control.MinimumChanged += Control_MinimumChanged;
+            Control.MaximumChanged += Control_MaximumChanged;
+            Control.ValueChanged += Control_ValueChanged;
+            Control.SmallChangeChanged += Control_SmallChangeChanged;
+            Control.LargeChangeChanged += Control_LargeChangeChanged;
+            Control.TickFrequencyChanged += Control_TickFrequencyChanged;
+            Control.OrientationChanged += Control_OrientationChanged;
+            Control.TickStyleChanged += Control_TickStyleChanged;
+
+            NativeControl.ValueChanged = NativeControl_ValueChanged;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.MinimumChanged -= Control_MinimumChanged;
+            Control.MaximumChanged -= Control_MaximumChanged;
+            Control.ValueChanged -= Control_ValueChanged;
+            Control.SmallChangeChanged -= Control_SmallChangeChanged;
+            Control.LargeChangeChanged -= Control_LargeChangeChanged;
+            Control.TickFrequencyChanged -= Control_TickFrequencyChanged;
+            Control.OrientationChanged -= Control_OrientationChanged;
+            Control.TickStyleChanged -= Control_TickStyleChanged;
+
+            NativeControl.ValueChanged = null;
+        }
+
+        private void Control_TickStyleChanged(object? sender, EventArgs e)
+        {
+            NativeControl.TickStyle = (Native.SliderTickStyle)Control.TickStyle;
+        }
+
+        private void Control_OrientationChanged(object? sender, EventArgs e)
+        {
+            NativeControl.Orientation = (Native.SliderOrientation)Control.Orientation;
+        }
+
+        private void NativeControl_ValueChanged()
+        {
+            Control.Value = NativeControl.Value;
+        }
+
+        private void Control_ValueChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.Value = Control.Value;
+        }
+
+        private void Control_SmallChangeChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.SmallChange = Control.SmallChange;
+        }
+
+        private void Control_LargeChangeChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.LargeChange = Control.LargeChange;
+        }
+
+        private void Control_TickFrequencyChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.TickFrequency = Control.TickFrequency;
+        }
+
+        private void Control_MaximumChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.Maximum = Control.Maximum;
+        }
+
+        private void Control_MinimumChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.Minimum = Control.Minimum;
+        }
     }
 }
