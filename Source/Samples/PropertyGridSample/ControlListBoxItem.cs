@@ -80,16 +80,25 @@ namespace PropertyGridSample
             return instance!;
         }
 
-        public bool Equals(ControlListBoxItem? other)
+        public override bool Equals(object? obj)
         {
-            if (other is null)
+            if (obj is not ControlListBoxItem item)
                 return false;
-            return type == other.type;
+            return EqualsInternal(item);
         }
+
+        public bool Equals(ControlListBoxItem? other) => EqualsInternal(other);
 
         public int CompareTo(ControlListBoxItem? other)
         {
             return string.Compare(type.Name, other?.type.Name);
+        }
+
+        private bool EqualsInternal(ControlListBoxItem? other)
+        {
+            if (other is null)
+                return false;
+            return type == other.type;
         }
     }
 }

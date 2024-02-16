@@ -481,6 +481,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether child control ignores layout.
+        /// </summary>
+        /// <param name="control"></param>
+        protected virtual bool ChildIgnoresLayout(Control control)
+        {
+            return !control.Visible || control.IgnoreLayout;
+        }
+
+        /// <summary>
         /// Called when an exception need to be processed.
         /// </summary>
         /// <param name="e">An <see cref="ControlExceptionEventArgs"/> that contains

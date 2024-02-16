@@ -101,11 +101,11 @@ namespace Alternet.UI
             return control.ExtendedProps.AutoSizeMode;
         }
 
-        internal static void LayoutDockedChildren(Control parent)
+        internal static void LayoutDockedChildren(
+            Control parent,
+            RectD space,
+            IReadOnlyList<Control> children)
         {
-            var space = parent.ChildrenLayoutBounds;
-            var children = parent.AllChildrenInLayout;
-
             // Deal with docking; go through in reverse, MS docs say that
             // lowest Z-order is closest to edge
             for (int i = children.Count - 1; i >= 0; i--)

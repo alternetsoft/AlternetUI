@@ -14,12 +14,11 @@ namespace Alternet.UI
             Native.Control.NotifyCaptureLost();
         }
 
-        internal static void PerformDefaultLayout(Control container)
+        internal static void PerformDefaultLayout(
+            Control container,
+            RectD childrenLayoutBounds,
+            IReadOnlyList<Control> childs)
         {
-            var childrenLayoutBounds = container.ChildrenLayoutBounds;
-
-            var childs = container.AllChildrenInLayout;
-
             foreach (var control in childs)
             {
                 var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
