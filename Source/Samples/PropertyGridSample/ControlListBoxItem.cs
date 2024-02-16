@@ -87,6 +87,11 @@ namespace PropertyGridSample
             return EqualsInternal(item);
         }
 
+        public override int GetHashCode()
+        {
+            return type.GetHashCode();
+        }
+
         public bool Equals(ControlListBoxItem? other) => EqualsInternal(other);
 
         public int CompareTo(ControlListBoxItem? other)

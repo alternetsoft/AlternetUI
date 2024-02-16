@@ -102,7 +102,19 @@ namespace PropertyGridSample
             {
                 var control = (c as ControlPainterPreview)!;
                 control.SuggestedSize = 200;
-            });            
+            });
+
+            Actions.Add(typeof(SaveFileDialog), (c) =>
+            {
+                var control = (c as SaveFileDialog)!;
+                control.Title = "Some title";
+            });
+
+            Actions.Add(typeof(OpenFileDialog), (c) =>
+            {
+                var control = (c as OpenFileDialog)!;
+                control.Title = "Some title";
+            });
 
             Actions.Add(typeof(Slider), (c) =>
             {
