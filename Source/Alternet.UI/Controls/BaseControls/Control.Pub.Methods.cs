@@ -41,18 +41,34 @@ namespace Alternet.UI
                 }
             }
 
+            var number = LayoutPanel.LayoutDockedChildren(container, space, items);
+
+            void UpdateItems()
+            {
+                if (number == 0 || number == items.Count)
+                    return;
+                var newItems = new List<Control>();
+                foreach(var item in items)
+                {
+                    if (item.Dock == DockStyle.None)
+                        newItems.Add(item);
+                }
+
+                items = newItems;
+            }
+
             switch (layout)
             {
-                case LayoutStyle.Dock:
-                    LayoutPanel.LayoutDockedChildren(container, space, items);
-                    break;
                 case LayoutStyle.Basic:
+                    UpdateItems();
                     UI.Control.PerformDefaultLayout(container, space, items);
                     break;
                 case LayoutStyle.Vertical:
+                    UpdateItems();
                     StackPanel.LayoutVerticalStackPanel(container, space, items);
                     break;
                 case LayoutStyle.Horizontal:
+                    UpdateItems();
                     StackPanel.LayoutHorizontalStackPanel(container, space, items);
                     break;
             }
@@ -1554,6 +1570,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
+            if(CustomLayout is not null)
+            {
+                var e = new HandledEventArgs();
+                CustomLayout(this, e);
+                if (e.Handled)
+                    return;
+            }
+
             DefaultOnLayout(
                 this,
                 Layout ?? GetDefaultLayout(),

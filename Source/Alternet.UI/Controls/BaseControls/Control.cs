@@ -162,6 +162,10 @@ namespace Alternet.UI
         public event MouseEventHandler? MouseRightButtonUp;
 
         /// <summary>
+        /// Occurs when the control needs to layout its children.</summary>
+        public event EventHandler<HandledEventArgs>? CustomLayout;
+
+        /// <summary>
         /// Occurs when the control is double clicked by the mouse.
         /// </summary>
         [Category("Action")]
@@ -776,7 +780,26 @@ namespace Alternet.UI
             {
                 return flagsAndAttributes ??= Factory.CreateFlagsAndAttributes();
             }
+
+            set
+            {
+                flagsAndAttributes = value;
+            }
         }
+
+        /// <summary>
+        /// Gets custom flags provider associated with the control.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomFlags CustomFlags => FlagsAndAttributes.Flags;
+
+        /// <summary>
+        /// Gets custom attributes provider associated with the control.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomAttributes CustomAttr => FlagsAndAttributes.Attr;
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
