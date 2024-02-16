@@ -127,6 +127,7 @@ namespace Alternet.UI
         /// navigation take place, you should call Navigate in response to the key events
         /// for Tab and Shift-Tab.
         /// </remarks>
+        [Browsable(false)]
         public bool WantChars
         {
             get

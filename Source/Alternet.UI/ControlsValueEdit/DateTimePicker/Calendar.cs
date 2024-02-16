@@ -64,6 +64,7 @@ namespace Alternet.UI
         {
             if (Application.IsWindowsOS)
                 UserPaint = true;
+            BackgroundColor = SystemColors.Window;
         }
 
         /// <summary>
