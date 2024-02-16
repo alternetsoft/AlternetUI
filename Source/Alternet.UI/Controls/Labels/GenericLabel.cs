@@ -11,15 +11,16 @@ namespace Alternet.UI
     /// <summary>
     /// Implements generic label control.
     /// </summary>
-    public partial class GenericLabel : UserPaintControl
+    public partial class GenericLabel : GraphicControl
     {
         private string text = string.Empty;
         private Color? textBackColor;
         private bool imageVisible = true;
-        private int mnemonicCharIndex = -1;
+        private int? mnemonicCharIndex = null;
         private GenericAlignment alignment = GenericAlignment.TopLeft;
         private string? textPrefix;
         private string? textSuffix;
+        private string? textFormat;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
@@ -65,6 +66,32 @@ namespace Alternet.UI
                 if (textPrefix == value)
                     return;
                 textPrefix = value;
+                PerformLayout();
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text format.
+        /// </summary>
+        /// <remarks>
+        /// This property is used to format text with
+        /// <see cref="string.Format(string, object)"/> before
+        /// it is displayed. Sample of the format: Hello, {0}.
+        /// </remarks>
+        public virtual string? TextFormat
+        {
+            get
+            {
+                return textFormat;
+            }
+
+            set
+            {
+                if (textFormat == value)
+                    return;
+                textFormat = value;
+                PerformLayout();
                 Invalidate();
             }
         }
@@ -88,6 +115,7 @@ namespace Alternet.UI
                 if (textSuffix == value)
                     return;
                 textSuffix = value;
+                PerformLayout();
                 Invalidate();
             }
         }
@@ -155,7 +183,7 @@ namespace Alternet.UI
         /// By default equals -1.
         /// </remarks>
         [DefaultValue(null)]
-        public virtual int MnemonicCharIndex
+        public virtual int? MnemonicCharIndex
         {
             get
             {
@@ -190,6 +218,7 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
+                PerformLayout();
                 Invalidate();
             }
         }
@@ -212,6 +241,7 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Disabled = value;
                 RaiseImageChanged(EventArgs.Empty);
+                PerformLayout();
                 Invalidate();
             }
         }
@@ -232,6 +262,7 @@ namespace Alternet.UI
                     return;
                 text = value ?? string.Empty;
                 RaiseTextChanged(EventArgs.Empty);
+                PerformLayout();
                 Invalidate();
             }
         }
@@ -251,6 +282,7 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
+                PerformLayout();
                 Invalidate();
             }
         }
@@ -275,8 +307,8 @@ namespace Alternet.UI
 
             SizeD result = 0;
 
-            var text = Text;
-            if (text is not null)
+            var text = GetFormattedText();
+            if (!string.IsNullOrEmpty(text))
             {
                 using var dc = CreateDrawingContext();
                 result = dc.GetTextExtent(text, GetLabelFont(GenericControlState.Normal), this);
@@ -289,12 +321,6 @@ namespace Alternet.UI
                 result.Height = Math.Max(result.Height, specifiedHeight);
 
             return result + Padding.Size;
-        }
-
-        /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return new LabelHandler();
         }
 
         /// <summary>
@@ -365,6 +391,31 @@ namespace Alternet.UI
             return color;
         }
 
+        /// <summary>
+        /// Gets formatted text with <see cref="TextSuffix"/> and <see cref="TextPrefix"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetFormattedText()
+        {
+            var result = $"{TextPrefix}{Text}{TextSuffix}" ?? string.Empty;
+            if (textFormat is not null)
+                result = string.Format(textFormat, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets mnemonic char index from <see cref="MnemonicCharIndex"/> or -1.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// You can override this method in order to provide additional functionality.
+        /// </remarks>
+        protected virtual int GetMnemonicCharIndex()
+        {
+            var result = MnemonicCharIndex ?? -1;
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override void DefaultPaint(Graphics dc, RectD rect)
         {
@@ -382,7 +433,7 @@ namespace Alternet.UI
                 var image = StateObjects?.Images?.GetObjectOrNull(state);
                 image ??= Image;
                 var imageOverride = ImageVisible ? image : null;
-                var textOverride = $"{TextPrefix}{Text}{TextSuffix}";
+                var textOverride = GetFormattedText();
 
                 dc.DrawLabel(
                     textOverride,
@@ -392,29 +443,10 @@ namespace Alternet.UI
                     imageOverride,
                     paddedRect,
                     TextAlignment,
-                    MnemonicCharIndex);
+                    GetMnemonicCharIndex());
             }
 
             AfterPaint(dc, rect);
-        }
-
-        internal class LabelHandler : ControlHandler<GenericLabel>
-        {
-            protected override bool NeedsPaint => true;
-
-            public override void OnPaint(Graphics drawingContext)
-            {
-                Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
-            }
-
-            internal override Native.Control CreateNativeControl()
-            {
-                var result = new Native.Panel
-                {
-                    AcceptsFocusAll = false,
-                };
-                return result;
-            }
         }
     }
 }
