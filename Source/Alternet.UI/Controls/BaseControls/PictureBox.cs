@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public partial class PictureBox : UserPaintControl, IValidatorReporter
+    public partial class PictureBox : GraphicControl, IValidatorReporter
     {
         private readonly ImagePrimitivePainter primitive = new();
         private string text = string.Empty;
@@ -340,12 +340,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
-        }
-
-        /// <inheritdoc/>
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -469,25 +463,6 @@ namespace Alternet.UI
             using var dc = CreateDrawingContext();
             var result = dc.GetTextExtent(text, Font ?? UI.Control.DefaultFont, this);
             return result;
-        }
-
-        internal class PictureBoxHandler : NativeControlHandler<PictureBox, Native.Panel>
-        {
-            protected override bool NeedsPaint => true;
-
-            public override void OnPaint(Graphics drawingContext)
-            {
-                Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
-            }
-
-            internal override Native.Control CreateNativeControl()
-            {
-                var result = new Native.Panel
-                {
-                    AcceptsFocusAll = false,
-                };
-                return result;
-            }
         }
     }
 }

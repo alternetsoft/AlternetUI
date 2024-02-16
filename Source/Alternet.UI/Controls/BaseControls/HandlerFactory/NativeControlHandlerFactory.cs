@@ -22,14 +22,6 @@ namespace Alternet.UI
             new NativeButtonHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateBorderHandler(Control control) =>
-            new Border.BorderHandler();
-
-        /// <inheritdoc/>
-        public ControlHandler CreatePictureBoxHandler(Control control) =>
-            new PictureBox.PictureBoxHandler();
-
-        /// <inheritdoc/>
         public ControlHandler CreateTextBoxHandler(Control control) =>
             new NativeTextBoxHandler();
 

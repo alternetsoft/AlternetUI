@@ -327,9 +327,6 @@ namespace Alternet.UI
 
         internal void RaisePaint(PaintEventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnPaint(e);
             Paint?.Invoke(this, e);
         }
