@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultEvent("SplitterMoved")]
     [DefaultProperty("Dock")]
-    public partial class Splitter : UserPaintControl
+    public partial class Splitter : GraphicControl
     {
         /// <summary>
         /// Gets or sets default splitter width.
@@ -306,12 +306,6 @@ namespace Alternet.UI
             var sMinExtra = MinExtra.ToString(CultureInfo.CurrentCulture);
             var sMinSize = MinSize.ToString(CultureInfo.CurrentCulture);
             return $"{s}, MinExtra: {sMinExtra}, MinSize: {sMinSize}";
-        }
-
-        /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return new SplitterHandler();
         }
 
         /// <inheritdoc/>
@@ -653,54 +647,40 @@ namespace Alternet.UI
                 return false;
         }
 
-        internal class SplitterHandler : NativeControlHandler<Splitter, Native.Panel>
+        /// <inheritdoc/>
+        protected override void DefaultPaint(Graphics dc, RectD rect)
         {
-            protected override bool NeedsPaint => true;
-
-            public override void OnPaint(Graphics drawingContext)
+            var colors = NormalColors;
+            Color defaultColor;
+            if (IsDarkBackground)
             {
-                var colors = Control.NormalColors;
-                Color defaultColor;
-                if (Control.IsDarkBackground)
-                {
-                    colors ??= Splitter.DefaultDarkColors;
-                    defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
-                }
-                else
-                {
-                    colors ??= Splitter.DefaultLightColors;
-                    defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
-                }
-
-                var backColor = colors?.BackgroundColor ?? defaultColor;
-                var foreColor = colors?.ForegroundColor;
-                var rect = Control.DrawClientRectangle;
-
-                if (backColor is not null)
-                    drawingContext.FillRectangle(backColor.AsBrush, rect);
-
-                if (foreColor is null)
-                    return;
-
-                if (!Control.Horizontal)
-                {
-                    var horzLine = DrawingUtils.GetCenterLineHorz(rect);
-                    drawingContext.FillRectangle(foreColor.AsBrush, horzLine);
-                }
-                else
-                {
-                    var vertLine = DrawingUtils.GetCenterLineVert(rect);
-                    drawingContext.FillRectangle(foreColor.AsBrush, vertLine);
-                }
+                colors ??= DefaultDarkColors;
+                defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
+            }
+            else
+            {
+                colors ??= DefaultLightColors;
+                defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
             }
 
-            internal override Native.Control CreateNativeControl()
+            var backColor = colors?.BackgroundColor ?? defaultColor;
+            var foreColor = colors?.ForegroundColor;
+
+            if (backColor is not null)
+                dc.FillRectangle(backColor.AsBrush, rect);
+
+            if (foreColor is null)
+                return;
+
+            if (!Horizontal)
             {
-                var result = new Native.Panel
-                {
-                    AcceptsFocusAll = false,
-                };
-                return result;
+                var horzLine = DrawingUtils.GetCenterLineHorz(rect);
+                dc.FillRectangle(foreColor.AsBrush, horzLine);
+            }
+            else
+            {
+                var vertLine = DrawingUtils.GetCenterLineVert(rect);
+                dc.FillRectangle(foreColor.AsBrush, vertLine);
             }
         }
 

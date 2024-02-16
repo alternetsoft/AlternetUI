@@ -68,10 +68,6 @@ namespace Alternet.UI
         /// </summary>
         internal static readonly EventPrivateKey DataContextChangedKey = new();
 
-        // Optimization, to avoid calling FromSystemType too often
-        /*private static readonly new DependencyObjectType DType =
-            DependencyObjectType.FromSystemTypeInternal(typeof(FrameworkElement));*/
-
         private static readonly UncommonField<DependencyObject> InheritanceContextField = new();
 
         private InternalFlags internalFlags = 0;
@@ -231,10 +227,6 @@ namespace Alternet.UI
         {
             get
             {
-                /*Debug.Assert((uint)InternalFlags.InheritanceBehavior0 == 0x08);
-                Debug.Assert((uint)InternalFlags.InheritanceBehavior1 == 0x10);
-                Debug.Assert((uint)InternalFlags.InheritanceBehavior2 == 0x20);*/
-
                 const uint inheritanceBehaviorMask =
                     (uint)InternalFlags.InheritanceBehavior0 +
                     (uint)InternalFlags.InheritanceBehavior1 +
@@ -246,10 +238,6 @@ namespace Alternet.UI
 
             set
             {
-                /*Debug.Assert((uint)InternalFlags.InheritanceBehavior0 == 0x08);
-                Debug.Assert((uint)InternalFlags.InheritanceBehavior1 == 0x10);
-                Debug.Assert((uint)InternalFlags.InheritanceBehavior2 == 0x20);*/
-
                 const uint inheritanceBehaviorMask =
                     (uint)InternalFlags.InheritanceBehavior0 +
                     (uint)InternalFlags.InheritanceBehavior1 +
@@ -313,7 +301,7 @@ namespace Alternet.UI
         public FrameworkElement? TryFindElement(string name)
         {
             if (name is null)
-                throw new ArgumentNullException(nameof(name));
+                return null;
 
             if (Name == name)
                 return this;
@@ -685,25 +673,6 @@ namespace Alternet.UI
         /// </summary>
         internal virtual void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent)
         {
-            // This API is only here for compatability with the old
-            // behavior.  Note that FrameworkElement does not have
-            // this virtual, so why do we need it here?
-
-            // Synchronize ForceInherit properties
-            // if (_parent != null && _parent is ContentElement)
-            // {
-            //    UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
-            // }
-            // else if (oldParent is ContentElement)
-            // {
-            //    UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
-            // }
-
-            // Synchronize ReverseInheritProperty Flags
-            //
-            // NOTE: do this AFTER synchronizing force-inherited flags, since
-            // they often effect focusability and such.
-            // this.SynchronizeReverseInheritPropertyFlags(oldParent, false);
         }
 
         // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
@@ -729,14 +698,6 @@ namespace Alternet.UI
 
                 fo.SetShouldLookupImplicitStyles();
             }
-
-            // Invalidate ResourceReference properties
-            // if (HasResourceReference)
-            // {
-            //    // This operation may cause a style change and hence should be done before the call to
-            //    // InvalidateTreeDependents as it relies on the HasStyleChanged flag
-            //    TreeWalkHelper.OnResourcesChanged(this, ResourcesChangeInfo.TreeChangeInfo, false);
-            // }
 
             // If parent is a FrameworkElement
             // This is also an operation that could change the style
@@ -812,16 +773,6 @@ namespace Alternet.UI
 
             if (parentTreeState.TopmostCollapsedParentNode == null)
             {
-                //// There is no ancestor node with Visibility=Collapsed.
-                ////  See if "fe" is the root of a collapsed subtree.
-                // if (Visibility == Visibility.Collapsed)
-                // {
-                //    // This is indeed the root of a collapsed subtree.
-                //    //  remember this information as we proceed on the tree walk.
-                //    parentTreeState.TopmostCollapsedParentNode = this;
-                //    // Yes, this FE node is in a visibility collapsed subtree.
-                //    InVisibilityCollapsedTree = true;
-                // }
             }
             else
             {
@@ -832,41 +783,9 @@ namespace Alternet.UI
 
             try
             {
-                // Style property is a special case of a non-inherited property that needs
-                // invalidation for parent changes. Invalidate StyleProperty if it hasn't been
-                // locally set because local value takes precedence over implicit references
-                // if (IsInitialized && !HasLocalStyle && (this != parentTreeState.Root))
-                // {
-                //    UpdateStyleProperty();
-                // }
-
-                // Style selfStyle = null;
-                // Style selfThemeStyle = null;
-                // DependencyObject templatedParent = null;
-
-                // int childIndex = -1;
-                // ChildRecord childRecord = new ChildRecord();
-                // bool isChildRecordValid = false;
-
-                // selfStyle = Style;
-                // selfThemeStyle = ThemeStyle;
-                // templatedParent = TemplatedParent;
-                // childIndex = TemplateChildIndex;
-
-                // StyleProperty could have changed during invalidation of
-                // ResourceReferenceExpressions if it
-                // were locally set or during the invalidation of unresolved implicitly
-                // referenced style
-                // bool hasStyleChanged = HasStyleChanged;
-
-                // Fetch selfStyle, hasStyleChanged and childIndex for the current node
-                // FrameworkElement.GetTemplatedParentChildRecord(templatedParent, childIndex,
-                // out childRecord, out isChildRecordValid);
-
-                // FrameworkContentElement parentFCE;
                 bool hasParent = FrameworkElement.GetFrameworkParent(
                     this,
-                    out FrameworkElement parentFE/*, out parentFCE*/);
+                    out FrameworkElement parentFE);
 
                 DependencyObject? parent = null;
                 InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
@@ -877,12 +796,6 @@ namespace Alternet.UI
                         parent = parentFE;
                         parentInheritanceBehavior = parentFE.InheritanceBehavior;
                     }
-
-                    // else
-                    // {
-                    //    parent = parentFCE;
-                    //    parentInheritanceBehavior = parentFCE.InheritanceBehavior;
-                    // }
                 }
 
                 if (!TreeWalkHelper.SkipNext(InheritanceBehavior) &&
@@ -927,90 +840,6 @@ namespace Alternet.UI
             // invalid during a VisualTreeChanged event
             // VisualDiagnostics.VerifyVisualTreeChange(this);
             base.OnPropertyChanged(e);
-
-            if (e.IsAValueChange || e.IsASubPropertyChange)
-            {
-                // Try to fire the Loaded event on the root of the tree
-                // because for this case the OnParentChanged will not
-                // have a chance to fire the Loaded event.
-                //
-                // if (dp != null && dp.OwnerType == typeof(PresentationSource)
-                // && dp.Name == "RootSource")
-                // {
-                //    TryFireInitialized();
-                // }
-
-                // if (dp == FrameworkElement.NameProperty &&
-                //    EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral,
-                //    EventTrace.Level.Verbose))
-                // {
-                //    EventTrace.EventProvider.TraceEvent(EventTrace.Event.PerfElementIDName,
-                //    EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
-                //            PerfService.GetPerfElementID(this), GetType().Name, GetValue(dp));
-                // }
-
-                //
-                // Invalidation propagation for Styles
-                //
-
-                // Regardless of metadata, the Style/Template/DefaultStyleKey properties are
-                // never a trigger drivers
-                // if (dp != StyleProperty && dp != Control.TemplateProperty && dp
-                // != DefaultStyleKeyProperty)
-                {
-                    // Note even properties on non-container nodes within a template could be
-                    // driving a trigger
-                    // if (TemplatedParent != null)
-                    // {
-                    //    FrameworkElement feTemplatedParent = TemplatedParent as FrameworkElement;
-
-                    // FrameworkTemplate frameworkTemplate = feTemplatedParent.TemplateInternal;
-                    //    if (frameworkTemplate != null)
-                    //    {
-                    //        StyleHelper.OnTriggerSourcePropertyInvalidated(null,
-                    //        frameworkTemplate, TemplatedParent, dp, e, false
-                    //        /*invalidateOnlyContainer*/,
-                    //            ref frameworkTemplate.TriggerSourceRecordFromChildIndex,
-                    //            ref frameworkTemplate.PropertyTriggersWithActions,
-                    //            TemplateChildIndex /*sourceChildIndex*/);
-                    //    }
-                    // }
-
-                    // Do not validate Style during an invalidation if the Style was
-                    // never used before (dependents do not need invalidation)
-                    // if (Style != null)
-                    // {
-                    //    StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp,
-                    //    e, true /*invalidateOnlyContainer*/,
-                    //        ref Style.TriggerSourceRecordFromChildIndex,
-                    //        ref Style.PropertyTriggersWithActions, 0 /*sourceChildIndex*/);
-                    // Style can
-                    //        only have triggers that are driven by properties on the container
-                    // }
-
-                    // Do not validate Template during an invalidation if the Template was
-                    // never used before (dependents do not need invalidation)
-                    // if (TemplateInternal != null)
-                    // {
-                    //    StyleHelper.OnTriggerSourcePropertyInvalidated(null, TemplateInternal,
-                    //    this, dp, e, !HasTemplateGeneratedSubTree /*invalidateOnlyContainer*/,
-                    //        ref TemplateInternal.TriggerSourceRecordFromChildIndex,
-                    //        ref TemplateInternal.PropertyTriggersWithActions, 0
-                    //        /*sourceChildIndex*/); // These are driven by the container
-                    // }
-
-                    // There may be container dependents in the ThemeStyle. Invalidate them.
-                    // if (ThemeStyle != null && Style != ThemeStyle)
-                    // {
-                    //    StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this,
-                    //    dp, e, true /*invalidateOnlyContainer*/,
-                    //        ref ThemeStyle.TriggerSourceRecordFromChildIndex,
-                    //        ref ThemeStyle.PropertyTriggersWithActions, 0 /*sourceChildIndex*/);
-                    // ThemeStyle can only have triggers that are driven by properties
-                    // on the container
-                    // }
-                }
-            }
 
             // Invalidation propagation for Groups and Inheritance
 
@@ -1088,75 +917,6 @@ namespace Alternet.UI
                         if (this is Control c)
                             c.Invalidate();
                     }
-
-                    ////
-                    //// Layout invalidation
-                    ////
-
-                    //// Skip if we're traversing an Visibility=Collapsed subtree while
-                    ////  in the middle of an invalidation storm due to ancestor change
-                    // if (!(AncestorChangeInProgress && InVisibilityCollapsedTree))
-                    // {
-                    //    UIElement layoutParent = null;
-
-                    // bool affectsParentMeasure = fmetadata.AffectsParentMeasure;
-                    //    bool affectsParentArrange = fmetadata.AffectsParentArrange;
-                    //    bool affectsMeasure = fmetadata.AffectsMeasure;
-                    //    bool affectsArrange = fmetadata.AffectsArrange;
-                    //    if (affectsMeasure || affectsArrange || affectsParentArrange ||
-                    //    affectsParentMeasure)
-                    //    {
-
-                    // // Locate nearest Layout parent
-                    //        for (Visual v = VisualTreeHelper.GetParent(this) as Visual;
-                    //             v != null;
-                    //             v = VisualTreeHelper.GetParent(v) as Visual)
-                    //        {
-                    //            layoutParent = v as UIElement;
-                    //            if (layoutParent != null)
-                    //            {
-                    //                //let incrementally-updating FrameworkElements to mark
-                    //                the vicinity of the affected child
-                    //                //to perform partial update.
-                    //                if (FrameworkElement.DType.IsInstanceOfType(layoutParent))
-                    //                    ((FrameworkElement)layoutParent).
-                    //                    ParentLayoutInvalidated(this);
-                    //                if (affectsParentMeasure)
-                    //                {
-                    //                    layoutParent.InvalidateMeasure();
-                    //                }
-                    //                if (affectsParentArrange)
-                    //                {
-                    //                    layoutParent.InvalidateArrange();
-                    //                }
-                    //                break;
-                    //            }
-                    //        }
-                    //    }
-                    //    if (fmetadata.AffectsMeasure)
-                    //    {
-                    //        // Need to complete workaround ...
-                    //        // this is a test to see if we understand the source of the
-                    //        duplicate renders -- WM_SIZE
-                    //        // is handled by Window by setting Width & Height, even though
-                    //        the HwndSource will also
-                    //        // handle WM_SIZE and perform a relayout
-                    //        if (!BypassLayoutPolicies || !((dp == WidthProperty) ||
-                    //        (dp == HeightProperty)))
-                    //        {
-                    //            InvalidateMeasure();
-                    //        }
-                    //    }
-                    //    if (fmetadata.AffectsArrange)
-                    //    {
-                    //        InvalidateArrange();
-                    //    }
-                    //    if (fmetadata.AffectsRender &&
-                    //        (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender))
-                    //    {
-                    //        InvalidateVisual();
-                    //    }
-                    // }
                 }
             }
         }

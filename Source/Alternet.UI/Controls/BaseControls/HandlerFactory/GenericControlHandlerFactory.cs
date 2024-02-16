@@ -10,14 +10,6 @@ namespace Alternet.UI
             StockControlHandlerFactories.Native.CreateButtonHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateBorderHandler(Control control) =>
-            new Border.BorderHandler();
-
-        /// <inheritdoc/>
-        public ControlHandler CreatePictureBoxHandler(Control control) =>
-            StockControlHandlerFactories.Native.CreatePictureBoxHandler(control);
-
-        /// <inheritdoc/>
         public ControlHandler CreateTextBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateTextBoxHandler(control);
 

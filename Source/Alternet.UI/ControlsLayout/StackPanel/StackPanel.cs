@@ -116,11 +116,11 @@ namespace Alternet.UI
             return new SizeD(newWidth, height + padding.Vertical);
         }
 
-        internal static void LayoutHorizontalStackPanel(Control container)
+        internal static void LayoutHorizontalStackPanel(
+            Control container,
+            RectD childrenLayoutBounds,
+            IReadOnlyList<Control> controls)
         {
-            var controls = container.AllChildrenInLayout;
-            var childrenLayoutBounds = container.ChildrenLayoutBounds;
-
             double x = 0;
             double w = 0;
 
@@ -215,19 +215,23 @@ namespace Alternet.UI
             }
         }
 
-        internal static void LayoutStackPanel(Control container, bool isVertical)
+        internal static void LayoutStackPanel(
+            Control container,
+            bool isVertical,
+            RectD space,
+            IReadOnlyList<Control> items)
         {
             if (isVertical)
-                StackPanel.LayoutVerticalStackPanel(container);
+                StackPanel.LayoutVerticalStackPanel(container, space, items);
             else
-                StackPanel.LayoutHorizontalStackPanel(container);
+                StackPanel.LayoutHorizontalStackPanel(container, space, items);
         }
 
-        internal static void LayoutVerticalStackPanel(Control container)
+        internal static void LayoutVerticalStackPanel(
+            Control container,
+            RectD lBounds,
+            IReadOnlyList<Control> items)
         {
-            var lBounds = container.ChildrenLayoutBounds;
-            var items = container.AllChildrenInLayout;
-
             double stretchedSize = 0;
 
             if (items.Count > 0)

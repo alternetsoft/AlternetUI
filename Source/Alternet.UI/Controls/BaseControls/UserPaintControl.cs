@@ -127,6 +127,7 @@ namespace Alternet.UI
         /// navigation take place, you should call Navigate in response to the key events
         /// for Tab and Shift-Tab.
         /// </remarks>
+        [Browsable(false)]
         public bool WantChars
         {
             get
@@ -281,12 +282,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return new UserPaintHandler();
-        }
-
-        /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -311,6 +306,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+            DefaultPaint(e.DrawingContext, e.Bounds);
         }
 
         private void SetScrollbars(bool horz, bool vert, bool always)
@@ -318,19 +314,6 @@ namespace Alternet.UI
             NativeControl.ShowHorzScrollBar = horz;
             NativeControl.ShowVertScrollBar = vert;
             NativeControl.ScrollBarAlwaysVisible = always;
-        }
-
-        private class UserPaintHandler : NativeControlHandler<UserPaintControl, Native.Panel>
-        {
-            protected override bool NeedsPaint => true;
-
-            public override void OnPaint(Graphics dc)
-            {
-                var r = DrawClientRectangle;
-                Control.BeforePaint(dc, r);
-                Control.DefaultPaint(dc, r);
-                Control.AfterPaint(dc, r);
-            }
         }
     }
 }

@@ -47,7 +47,6 @@ namespace PropertyGridSample
             void Fn()
             {
                 bool logAddedControls = false;
-                bool addLimitedControls = true;
 
                 ControlListBoxItem item = new(typeof(WelcomePage))
                 {
@@ -100,66 +99,31 @@ namespace PropertyGridSample
                     typeof(ControlPainterPreview),
                 };
 
-                Type[] badParentTypes =
-                {
-                  typeof(ControlAndLabel),
-                  typeof(PopupWindow),
-                  typeof(PanelAuiManager),
-                };
-
-                Type[] badTypes =
-                {
-                  typeof(PopupWindow),
-                  typeof(ContextMenu), // added using other style
-                  typeof(NonVisualControl), // has no sense to add
-                  typeof(StatusBarPanel), // part of other control
-                  typeof(MenuItem), // part of other control
-                  typeof(TabPage), // part of other control
-                  typeof(ToolBarItem), // part of other control
-
-                  typeof(ToolBar), // can create some modal window? or add child window 
-                  typeof(WebBrowser),
-                  typeof(AuiNotebook),
-                  typeof(AuiToolbar),
-                  typeof(AnimationPlayer),
-                  typeof(PanelAuiManager),
-                  typeof(PanelAuiManagerBase),
-                  typeof(DialogWindow),
-                  typeof(LogListBox),
-                  typeof(Grid),// know how
-                  typeof(ScrollViewer),
-                  typeof(LayoutPanel),// know how
-                  typeof(UserPaintControl),// know how
-                  typeof(MainMenu),// can create some modal window? or add child window 
-                  typeof(StatusBar),// can create some modal window? or add child window 
-                  typeof(PropertyGrid),
-                  typeof(CheckListBox), // as empty items error
-                  typeof(PanelWebBrowser),
-                  typeof(TabControl), // pages are not shown. Why?
-                  typeof(Window),
-                };
-
-                IEnumerable<Type> result = addLimitedControls
-                    ? limitedTypes : AssemblyUtils.GetTypeDescendants(typeof(Control));
+                List<ControlListBoxItem> items = new();
                 
-                foreach (Type type in result)
+                foreach (Type type in limitedTypes)
                 {
-                    /*if (type.Assembly != typeof(Control).Assembly)
-                        continue;*/
-                    if (Array.IndexOf(badTypes, type) >= 0)
-                        continue;
-                    /*if (AssemblyUtils.TypeIsDescendant(type, badParentTypes))
-                        continue;*/
                     item = new(type)
                     {
                         HasTicks = true,
                         HasMargins = true,
                     };
 
-                    panel.LeftTreeView.Add(item);
                     if (logAddedControls)
                         Application.Log($"typeof({type.Name}),");
+                    items.Add(item);
                 }
+
+                items.Add(CreateDialogItem<ColorDialog>());
+                items.Add(CreateDialogItem<OpenFileDialog>());
+                items.Add(CreateDialogItem<SaveFileDialog>());
+                items.Add(CreateDialogItem<SelectDirectoryDialog>());
+                items.Add(CreateDialogItem<FontDialog>());
+
+                items.Sort();
+
+                foreach (var elem in items)
+                    panel.LeftTreeView.Add(elem);
 
                 item = new(typeof(SettingsControl))
                 {
@@ -168,13 +132,6 @@ namespace PropertyGridSample
                     Text = "Demo Options",
                 };
                 panel.LeftTreeView.Add(item);
-
-                AddDialog<ColorDialog>();
-                AddDialog<OpenFileDialog>();
-                AddDialog<SaveFileDialog>();
-                AddDialog<SelectDirectoryDialog>();
-                AddDialog<FontDialog>();
-                /*AddContextMenu<ContextMenu>();*/
             }
 
             panel.LeftTreeView.DoInsideUpdate(() => { Fn(); });
@@ -185,7 +142,7 @@ namespace PropertyGridSample
             panel.LeftTreeView.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
         }
 
-        private void AddDialog<T>()
+        private ControlListBoxItem CreateDialogItem<T>()
             where T : CommonDialog
         {
             var dialog = (T)ControlListBoxItem.CreateInstance(typeof(T))!;
@@ -199,7 +156,7 @@ namespace PropertyGridSample
                 EventInstance = new object(),
                 HasMargins = true,
             };
-            panel.LeftTreeView.Add(item);
+            return item;
         }
 
         internal void AddContextMenu<T>()

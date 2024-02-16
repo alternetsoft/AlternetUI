@@ -7,7 +7,8 @@ using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    internal class ControlListBoxItem : TreeViewItem
+    internal class ControlListBoxItem
+        : TreeViewItem, IEquatable<ControlListBoxItem>, IComparable<ControlListBoxItem>
     {
         private object? instance;
         private object? propInstance;
@@ -77,6 +78,32 @@ namespace PropertyGridSample
                 return instance!;
             action(instance!);
             return instance!;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not ControlListBoxItem item)
+                return false;
+            return EqualsInternal(item);
+        }
+
+        public override int GetHashCode()
+        {
+            return type.GetHashCode();
+        }
+
+        public bool Equals(ControlListBoxItem? other) => EqualsInternal(other);
+
+        public int CompareTo(ControlListBoxItem? other)
+        {
+            return string.Compare(type.Name, other?.type.Name);
+        }
+
+        private bool EqualsInternal(ControlListBoxItem? other)
+        {
+            if (other is null)
+                return false;
+            return type == other.type;
         }
     }
 }

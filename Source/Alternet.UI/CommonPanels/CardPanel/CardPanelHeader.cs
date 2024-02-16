@@ -21,6 +21,11 @@ namespace Alternet.UI
     public partial class CardPanelHeader : Control, ITextProperty
     {
         /// <summary>
+        /// Gets or sets default minimal tab size.
+        /// </summary>
+        public static SizeD DefaultMinTabSize = (0, 0);
+
+        /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
         /// </summary>
         public static Func<SpeedButton>? CreateButton;
@@ -816,6 +821,8 @@ namespace Alternet.UI
         {
             var result = CreateButton?.Invoke() ?? Fn();
             result.BackgroundColor = BackgroundColor;
+            if (result.MinimumSize.IsEmpty)
+                result.MinimumSize = DefaultMinTabSize;
             return result;
 
             SpeedButton Fn()

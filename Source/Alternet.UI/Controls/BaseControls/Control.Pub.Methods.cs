@@ -19,29 +19,41 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="container">Container control which childs will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
-        public static void DefaultOnLayout(Control container, LayoutStyle layout)
+        /// <param name="space">Rectangle in which layout is performed.</param>
+        /// <param name="items">List of controls to layout.</param>
+        public static void DefaultOnLayout(
+            Control container,
+            LayoutStyle layout,
+            RectD space,
+            IReadOnlyList<Control> items)
         {
             if (GlobalOnLayout is not null)
             {
-                var e = new HandledEventArgs();
+                var e = new DefaultLayoutEventArgs(container, layout, space, items);
                 GlobalOnLayout(container, e);
                 if (e.Handled)
                     return;
+                else
+                {
+                    layout = e.Layout;
+                    space = e.Bounds;
+                    items = e.Children;
+                }
             }
 
             switch (layout)
             {
                 case LayoutStyle.Dock:
-                    LayoutPanel.LayoutDockedChildren(container);
+                    LayoutPanel.LayoutDockedChildren(container, space, items);
                     break;
                 case LayoutStyle.Basic:
-                    UI.Control.PerformDefaultLayout(container);
+                    UI.Control.PerformDefaultLayout(container, space, items);
                     break;
                 case LayoutStyle.Vertical:
-                    StackPanel.LayoutVerticalStackPanel(container);
+                    StackPanel.LayoutVerticalStackPanel(container, space, items);
                     break;
                 case LayoutStyle.Horizontal:
-                    StackPanel.LayoutHorizontalStackPanel(container);
+                    StackPanel.LayoutHorizontalStackPanel(container, space, items);
                     break;
             }
         }
@@ -1542,7 +1554,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
-            DefaultOnLayout(this, Layout ?? GetDefaultLayout());
+            DefaultOnLayout(
+                this,
+                Layout ?? GetDefaultLayout(),
+                ChildrenLayoutBounds,
+                AllChildrenInLayout);
         }
 
         /// <summary>

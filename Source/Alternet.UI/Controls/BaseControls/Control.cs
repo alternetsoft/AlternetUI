@@ -97,7 +97,7 @@ namespace Alternet.UI
         /// If default layout is not needed, set <see cref="HandledEventArgs.Handled"/>
         /// property to <c>true</c>.
         /// </remarks>
-        public static event EventHandler<HandledEventArgs>? GlobalOnLayout;
+        public static event EventHandler<DefaultLayoutEventArgs>? GlobalOnLayout;
 
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
@@ -2177,7 +2177,7 @@ namespace Alternet.UI
 
                 foreach (var control in controls)
                 {
-                    if (!control.Visible || control.IgnoreLayout)
+                    if (ChildIgnoresLayout(control))
                     {
                         all = false;
                         break;
@@ -2191,7 +2191,7 @@ namespace Alternet.UI
 
                 foreach (var control in controls)
                 {
-                    if (control.Visible && !control.IgnoreLayout)
+                    if (!ChildIgnoresLayout(control))
                         result.Add(control);
                 }
 

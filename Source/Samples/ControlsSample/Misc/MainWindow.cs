@@ -79,7 +79,7 @@ namespace ControlsSample
                 AddPage("Animation", CreateAnimationPage);
 
             if (CommonUtils.GetSamplesFolder() is not null)
-                AddPage("Other", CreateAllSamplesPage);
+                AddPage("Other", CreateOtherPage);
 
             LogUtils.DebugLogVersion();
 
@@ -164,6 +164,16 @@ namespace ControlsSample
             {
                 new("Slider", () => new SliderPage()),
                 new("Progress", () => new ProgressBarPage()),
+            };
+
+            return CreateCustomPage(pages);
+        }
+
+        Control CreateOtherPage()
+        {
+            NameValue<Func<Control>>[] pages =
+            {
+                new("External Samples", CreateAllSamplesPage),
             };
 
             return CreateCustomPage(pages);

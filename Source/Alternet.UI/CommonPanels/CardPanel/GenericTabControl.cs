@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -101,21 +102,6 @@ namespace Alternet.UI
         /// <summary>
         /// Adds new page.
         /// </summary>
-        /// <param name="title">Page title.</param>
-        /// <param name="fnCreate">Function which creates the control.</param>
-        /// <returns>
-        /// Created page index.
-        /// </returns>
-        public int Add(string title, Func<Control> fnCreate)
-        {
-            var cardIndex = cardPanel.Add(title, fnCreate);
-            Header.Add(title, cardPanel[cardIndex].UniqueId);
-            return cardIndex;
-        }
-
-        /// <summary>
-        /// Adds new page.
-        /// </summary>
         /// <param name="page">Page title and control.</param>
         /// <returns>
         /// Created page index.
@@ -174,6 +160,21 @@ namespace Alternet.UI
         public void SelectTab(int index)
         {
             Header.SelectedTabIndex = index;
+        }
+
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="fnCreate">Function which creates the control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public int Add(string title, Func<Control> fnCreate)
+        {
+            var cardIndex = cardPanel.Add(title, fnCreate);
+            Header.Add(title, cardPanel[cardIndex].UniqueId);
+            return cardIndex;
         }
 
         /// <summary>

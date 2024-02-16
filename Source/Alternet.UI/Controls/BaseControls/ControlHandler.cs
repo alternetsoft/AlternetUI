@@ -255,14 +255,6 @@ namespace Alternet.UI
 
         internal bool NativeControlCreated => nativeControl != null;
 
-        /// <summary>
-        /// This property may be overridden by control handlers to indicate that
-        /// the handler needs
-        /// <see cref="OnPaint(Graphics)"/> to be called. Default value
-        /// is <c>false</c>.
-        /// </summary>
-        protected virtual bool NeedsPaint => false;
-
         private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
             Control.Parent is not TabControl; // todo
 
@@ -352,21 +344,6 @@ namespace Alternet.UI
                 var parent = TryFindClosestParentWithNativeControl();
                 parent?.Invalidate();
             }
-        }
-
-        /// <summary>
-        /// This property may be overridden by control handlers to paint the
-        /// control visual representation.
-        /// </summary>
-        /// <remarks>
-        /// <see cref="NeedsPaint"/> for this handler should return <c>true</c> in
-        /// order for <see cref="OnPaint(Graphics)"/>
-        /// to be called.
-        /// </remarks>
-        /// <param name="drawingContext">The <see cref="Graphics"/> to paint
-        /// on.</param>
-        public virtual void OnPaint(Graphics drawingContext)
-        {
         }
 
         /// <summary>
@@ -1178,10 +1155,7 @@ namespace Alternet.UI
             if (NativeControl == null)
                 return;
 
-            /*bool hasVisualChildren = HasVisualChildren;*/
-
-            bool paint = /*hasVisualChildren ||*/ Control.UserPaint || NeedsPaint;
-            if (!paint)
+            if (!Control.UserPaint)
                 return;
 
             using var dc =
@@ -1189,27 +1163,6 @@ namespace Alternet.UI
 
             if (Control.UserPaint)
                 Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
-
-            if (NeedsPaint /*|| hasVisualChildren*/)
-                PaintSelfAndVisualChildren(dc);
-        }
-
-        private void PaintSelfAndVisualChildren(Graphics dc)
-        {
-            if (NeedsPaint)
-                OnPaint(dc);
-
-            /*if (!HasVisualChildren)
-                return;
-            foreach (var visualChild in VisualChildren)
-            {
-                var location = visualChild.Handler.Bounds.Location;
-                dc.PushTransform(TransformMatrix.CreateTranslation(
-                    location.X,
-                    location.Y));
-                visualChild.Handler.PaintSelfAndVisualChildren(dc);
-                dc.Pop();
-            }*/
         }
     }
 }

@@ -23,7 +23,7 @@ namespace PropertyGridSample
             label.IsBold = true;
             label.Image = DefaultImage;
             label.DisabledImage = DefaultImage.ToGrayScale();
-            label.SuggestedSize = (250, 300);
+            label.SuggestedSize = (300, 300);
             label.TextPrefix = " ";
             label.TextSuffix = " ";
 

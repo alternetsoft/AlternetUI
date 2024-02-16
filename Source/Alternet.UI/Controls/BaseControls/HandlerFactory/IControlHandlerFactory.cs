@@ -1,7 +1,8 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents an interface that can be implemented by classes providing creating <see cref="ControlHandler"/> instances for specified controls.
+    /// Represents an interface that can be implemented by classes providing
+    /// creating <see cref="ControlHandler"/> instances for specified controls.
     /// </summary>
     internal interface IControlHandlerFactory
     {
@@ -10,18 +11,6 @@ namespace Alternet.UI
         /// <see cref="Button"/> control.
         /// </summary>
         ControlHandler CreateButtonHandler(Control control);
-
-        /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="Border"/> control.
-        /// </summary>
-        ControlHandler CreateBorderHandler(Control control);
-
-        /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="PictureBox"/>control.
-        /// </summary>
-        ControlHandler CreatePictureBoxHandler(Control control);
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for

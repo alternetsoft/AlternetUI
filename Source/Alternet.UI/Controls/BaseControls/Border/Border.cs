@@ -241,12 +241,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateBorderHandler(this);
-        }
-
-        /// <inheritdoc/>
         protected override void DefaultPaint(Graphics dc, RectD rect)
         {
             BeforePaint(dc, rect);
@@ -280,16 +274,6 @@ namespace Alternet.UI
         private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             Refresh();
-        }
-
-        internal class BorderHandler : ControlHandler<Border>
-        {
-            protected override bool NeedsPaint => true;
-
-            public override void OnPaint(Graphics dc)
-            {
-                Control.DefaultPaint(dc, DrawClientRectangle);
-            }
         }
     }
 }
