@@ -8,7 +8,7 @@ namespace MenuSample
 {
     public partial class MainWindow : Window
     {
-        private const string ResPrefix = "embres:MenuSample.Resources.Icons.Small.";
+        private const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Small.";
         private readonly int dynamicToolbarItemsSeparatorIndex;
         private readonly CardPanelHeader panelHeader = new();
         private int newItemIndex = 0;
@@ -23,7 +23,7 @@ namespace MenuSample
 
         public MainWindow()
         {
-            Icon = new("embres:MenuSample.Sample.ico");
+            Icon = Application.DefaultIcon;
             InitializeComponent();
             eventsListBox.BindApplicationLog();
             InitToolbar();

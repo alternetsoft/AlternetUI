@@ -61,6 +61,14 @@
       <None Remove="Resources\Svg\xmark.svg" />
       <None Remove="Resources\TestIcon1.ico" />
       <None Remove="Resources\TestIcon2.ico" />
+      <None Remove="Resources\ToolBarPng\Large\Calendar32.png" />
+      <None Remove="Resources\ToolBarPng\Large\LineGraph32.png" />
+      <None Remove="Resources\ToolBarPng\Large\Pencil32.png" />
+      <None Remove="Resources\ToolBarPng\Large\Photo32.png" />
+      <None Remove="Resources\ToolBarPng\Small\Calendar16.png" />
+      <None Remove="Resources\ToolBarPng\Small\LineGraph16.png" />
+      <None Remove="Resources\ToolBarPng\Small\Pencil16.png" />
+      <None Remove="Resources\ToolBarPng\Small\Photo16.png" />
       <None Remove="runsample.bat" />
       <None Remove="runsample.sh" />
       <None Remove="WebBrowserPage.uixml" />
@@ -120,6 +128,14 @@
       </EmbeddedResource>
       <EmbeddedResource Include="Resources\TestIcon1.ico" />
       <EmbeddedResource Include="Resources\TestIcon2.ico" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\Calendar32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\LineGraph32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\Pencil32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\Photo32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\Calendar16.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\LineGraph16.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\Pencil16.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\Photo16.png" />
     </ItemGroup>
 
   <ItemGroup>

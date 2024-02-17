@@ -40,6 +40,9 @@ namespace ControlsSample
             Add("Data Binding", () => new DataBindingSample.DataBindingWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
             Add("Drawing Sample", () => new DrawingSample.MainWindow());
+            Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
+            Add("Mouse Input", () => new InputSample.MouseInputWindow());
+            Add("Menu Sample", () => new MenuSample.MainWindow());
         }
 
         private void RunButton_Click(object? sender, EventArgs e)
