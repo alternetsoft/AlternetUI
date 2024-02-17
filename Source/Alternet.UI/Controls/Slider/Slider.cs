@@ -80,6 +80,8 @@ namespace Alternet.UI
         private int smallChange = 1;
         private int largeChange = 5;
         private int tickFrequency = 1;
+        private SliderOrientation orientation;
+        private SliderTickStyle tickStyle;
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property of a slider changes,
@@ -93,6 +95,16 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Minimum"/> property changes.
         /// </summary>
         public event EventHandler? MinimumChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Orientation"/> property changes.
+        /// </summary>
+        public event EventHandler? OrientationChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="TickStyle"/> property changes.
+        /// </summary>
+        public event EventHandler? TickStyleChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Maximum"/> property changes.
@@ -130,10 +142,16 @@ namespace Alternet.UI
         /// from bottom to top as the
         /// <see cref="Value"/> increases.
         /// </remarks>
-        public SliderOrientation Orientation
+        public virtual SliderOrientation Orientation
         {
-            get => Handler.Orientation;
-            set => Handler.Orientation = value;
+            get => orientation;
+            set
+            {
+                if (orientation == value)
+                    return;
+                orientation = value;
+                OrientationChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -143,10 +161,16 @@ namespace Alternet.UI
         /// One of the <see cref="SliderTickStyle"/> values. The default is
         /// <see cref="SliderTickStyle.BottomRight"/>.
         /// </value>
-        public SliderTickStyle TickStyle
+        public virtual SliderTickStyle TickStyle
         {
-            get => Handler.TickStyle;
-            set => Handler.TickStyle = value;
+            get => tickStyle;
+            set
+            {
+                if (tickStyle == value)
+                    return;
+                tickStyle = value;
+                TickStyleChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -157,7 +181,7 @@ namespace Alternet.UI
         /// <see cref="Maximum"/> range. The default value is 0.</value>
         /// <remarks>The <see cref="Value"/> property contains the number that represents
         /// the current position of the scroll box on the slider.</remarks>
-        public int Value
+        public virtual int Value
         {
             get { return (int)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
@@ -177,7 +201,7 @@ namespace Alternet.UI
         /// the <see cref="Value"/> property
         /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
-        public int Minimum
+        public virtual int Minimum
         {
             get { return (int)GetValue(MinimumProperty); }
             set { SetValue(MinimumProperty, value); }
@@ -197,7 +221,7 @@ namespace Alternet.UI
         /// <see cref="Value"/> property
         /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
-        public int Maximum
+        public virtual int Maximum
         {
             get { return (int)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
@@ -209,7 +233,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A numeric value. The default value is 1.</value>
         /// <exception cref="ArgumentException">The assigned value is less than 0.</exception>
-        public int SmallChange
+        public virtual int SmallChange
         {
             get
             {
@@ -238,7 +262,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A numeric value. The default is 5.</value>
         /// <exception cref="ArgumentException">The assigned value is less than 0.</exception>
-        public int LargeChange
+        public virtual int LargeChange
         {
             get
             {
@@ -268,7 +292,7 @@ namespace Alternet.UI
         /// Gets or sets a value that specifies the delta between ticks drawn on the control.
         /// </summary>
         /// <value>The numeric value representing the delta between ticks. The default is 1.</value>
-        public int TickFrequency
+        public virtual int TickFrequency
         {
             get
             {
@@ -288,24 +312,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="SliderHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal new SliderHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (SliderHandler)base.Handler;
-            }
-        }
-
-        /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the
         /// <see cref="FrameworkElement.DataContext"/>
         /// </summary>
         /// <param name="propName">Property name.</param>
-        public void BindValue(string propName)
+        public virtual void BindValue(string propName)
         {
             Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
             BindingOperations.SetBinding(this, Slider.ValueProperty, myBinding);
@@ -317,7 +328,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Availability: only available for the Windows, Linux ports.
         /// </remarks>
-        public void ClearTicks()
+        public virtual void ClearTicks()
         {
             if(Application.IsWindowsOS || Application.IsLinuxOS)
                 (Handler.NativeControl as Native.Slider)?.ClearTicks();
@@ -328,7 +339,7 @@ namespace Alternet.UI
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        public void RaiseValueChanged(EventArgs e)
+        public virtual void RaiseValueChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));

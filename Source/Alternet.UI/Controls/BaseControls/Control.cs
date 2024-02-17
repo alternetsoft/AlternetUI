@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// set <see cref="HandledEventArgs.Handled"/>
         /// property to <c>true</c>.
         /// </remarks>
-        public static event EventHandler<HandledEventArgs<SizeD>>? GlobalGetPreferredSize;
+        public static event EventHandler<DefaultPreferredSizeEventArgs>? GlobalGetPreferredSize;
 
         /// <summary>
         /// Occurs when the the control should reposition its child controls.
@@ -160,6 +160,10 @@ namespace Alternet.UI
         /// is released.</summary>
         [Category("Mouse")]
         public event MouseEventHandler? MouseRightButtonUp;
+
+        /// <summary>
+        /// Occurs when the control needs to layout its children.</summary>
+        public event EventHandler<HandledEventArgs>? CustomLayout;
 
         /// <summary>
         /// Occurs when the control is double clicked by the mouse.
@@ -776,7 +780,26 @@ namespace Alternet.UI
             {
                 return flagsAndAttributes ??= Factory.CreateFlagsAndAttributes();
             }
+
+            set
+            {
+                flagsAndAttributes = value;
+            }
         }
+
+        /// <summary>
+        /// Gets custom flags provider associated with the control.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomFlags CustomFlags => FlagsAndAttributes.Flags;
+
+        /// <summary>
+        /// Gets custom attributes provider associated with the control.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomAttributes CustomAttr => FlagsAndAttributes.Attr;
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in

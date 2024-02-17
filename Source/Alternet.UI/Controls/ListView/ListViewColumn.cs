@@ -99,10 +99,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="ListViewItem.Tag"/>
-        [Browsable(false)]
-        public object? Tag { get; set; }
-
         /// <summary>
         /// Gets or sets the fixed width of the column, in device-independent units (1/96th inch
         /// per unit).

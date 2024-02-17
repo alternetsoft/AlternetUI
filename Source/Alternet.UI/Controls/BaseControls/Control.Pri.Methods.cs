@@ -11,20 +11,13 @@ namespace Alternet.UI
     {
         private protected void SetVisibleValue(bool value) => visible = value;
 
-        /*/// <summary>
-        /// Callback for changes to the Enabled property
-        /// </summary>
-        private static void OnEnabledPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            Control control = (Control)d;
-            control?.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
-        }*/
-
         private void CreateAndAttachHandler()
         {
-            handler = CreateHandler();
+            if (GetRequiredHandlerType() == HandlerType.Native)
+                handler = CreateHandler();
+            else
+                handler = new GenericControlHandler();
+
             handler?.Attach(this);
             OnHandlerAttached(EventArgs.Empty);
         }

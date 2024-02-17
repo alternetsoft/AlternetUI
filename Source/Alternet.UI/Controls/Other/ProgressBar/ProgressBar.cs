@@ -48,8 +48,10 @@ namespace Alternet.UI
                             true,
                             UpdateSourceTrigger.PropertyChanged));
 
+        private bool isIndeterminate;
         private int minimum;
         private int maximum = 100;
+        private ProgressBarOrientation orientation;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Value"/> property changes.
@@ -62,9 +64,19 @@ namespace Alternet.UI
         public event EventHandler? MinimumChanged;
 
         /// <summary>
+        /// Occurs when the value of the <see cref="Orientation"/> property changes.
+        /// </summary>
+        public event EventHandler? OrientationChanged;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Maximum"/> property changes.
         /// </summary>
         public event EventHandler? MaximumChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Maximum"/> property changes.
+        /// </summary>
+        public event EventHandler? IsIndeterminateChanged;
 
         /// <summary>
         /// Gets or sets whether the <see cref="ProgressBar"/> shows actual values or generic,
@@ -75,10 +87,16 @@ namespace Alternet.UI
         /// true if the <see
         /// cref="ProgressBar"/> shows generic progress. The default is
         /// <see langword="false"/>.</value>
-        public bool IsIndeterminate
+        public virtual bool IsIndeterminate
         {
-            get => Handler.IsIndeterminate;
-            set => Handler.IsIndeterminate = value;
+            get => isIndeterminate;
+            set
+            {
+                if (isIndeterminate == value)
+                    return;
+                isIndeterminate = value;
+                IsIndeterminateChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -86,10 +104,16 @@ namespace Alternet.UI
         /// progress bar.
         /// </summary>
         /// <value>One of the <see cref="ProgressBarOrientation"/> values.</value>
-        public ProgressBarOrientation Orientation
+        public virtual ProgressBarOrientation Orientation
         {
-            get => Handler.Orientation;
-            set => Handler.Orientation = value;
+            get => orientation;
+            set
+            {
+                if (orientation == value)
+                    return;
+                orientation = value;
+                OrientationChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -106,7 +130,7 @@ namespace Alternet.UI
         /// property or the value specified is less than the value of the <see cref="Minimum"/>
         /// property.
         /// </exception>
-        public int Value
+        public virtual int Value
         {
             get { return (int)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
@@ -130,7 +154,7 @@ namespace Alternet.UI
         ///  the <see cref="Value"/> property
         ///  is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
-        public int Minimum
+        public virtual int Minimum
         {
             get
             {
@@ -168,7 +192,7 @@ namespace Alternet.UI
         ///  value, the <see cref="Value"/> property
         ///  value is set equal to the <see cref="Maximum"/> value.
         /// </remarks>
-        public int Maximum
+        public virtual int Maximum
         {
             get
             {
@@ -186,27 +210,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ProgressBarHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal new ProgressBarHandler Handler
-        {
-            get
-            {
-                return (ProgressBarHandler)base.Handler;
-            }
-        }
-
-        /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
         }

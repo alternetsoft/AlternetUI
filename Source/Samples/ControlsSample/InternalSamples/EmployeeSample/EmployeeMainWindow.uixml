@@ -1,6 +1,6 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="EmployeeFormSample.MainWindow"
+        x:Class="EmployeeFormSample.EmployeeWindow"
 		Title="Alternet UI Employee Details Form"
 		StartLocation="CenterScreen">
   <Control Padding="10">

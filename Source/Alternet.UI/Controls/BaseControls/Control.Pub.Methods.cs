@@ -27,32 +27,37 @@ namespace Alternet.UI
             RectD space,
             IReadOnlyList<Control> items)
         {
-            if (GlobalOnLayout is not null)
+            var number = LayoutPanel.LayoutDockedChildren(
+                container,
+                ref space,
+                items);
+
+            void UpdateItems()
             {
-                var e = new DefaultLayoutEventArgs(container, layout, space, items);
-                GlobalOnLayout(container, e);
-                if (e.Handled)
+                if (number == 0 || number == items.Count)
                     return;
-                else
+                var newItems = new List<Control>();
+                foreach(var item in items)
                 {
-                    layout = e.Layout;
-                    space = e.Bounds;
-                    items = e.Children;
+                    if (item.Dock == DockStyle.None)
+                        newItems.Add(item);
                 }
+
+                items = newItems;
             }
 
             switch (layout)
             {
-                case LayoutStyle.Dock:
-                    LayoutPanel.LayoutDockedChildren(container, space, items);
-                    break;
                 case LayoutStyle.Basic:
+                    UpdateItems();
                     UI.Control.PerformDefaultLayout(container, space, items);
                     break;
                 case LayoutStyle.Vertical:
+                    UpdateItems();
                     StackPanel.LayoutVerticalStackPanel(container, space, items);
                     break;
                 case LayoutStyle.Horizontal:
+                    UpdateItems();
                     StackPanel.LayoutHorizontalStackPanel(container, space, items);
                     break;
             }
@@ -77,13 +82,6 @@ namespace Alternet.UI
             SizeD availableSize,
             LayoutStyle layout)
         {
-            if (GlobalGetPreferredSize is not null)
-            {
-                var e = new HandledEventArgs<SizeD>(availableSize);
-                if (e.Handled)
-                    return e.Value;
-            }
-
             switch (layout)
             {
                 case LayoutStyle.Dock:
@@ -1554,11 +1552,37 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
+            if (CustomLayout is not null)
+            {
+                var e = new HandledEventArgs();
+                CustomLayout(this, e);
+                if (e.Handled)
+                    return;
+            }
+
+            var layoutType = Layout ?? GetDefaultLayout();
+            var space = ChildrenLayoutBounds;
+            var items = AllChildrenInLayout;
+
+            if (GlobalOnLayout is not null)
+            {
+                var e = new DefaultLayoutEventArgs(this, layoutType, space, items);
+                GlobalOnLayout(this, e);
+                if (e.Handled)
+                    return;
+                else
+                {
+                    layoutType = e.Layout;
+                    space = e.Bounds;
+                    items = e.Children;
+                }
+            }
+
             DefaultOnLayout(
                 this,
-                Layout ?? GetDefaultLayout(),
-                ChildrenLayoutBounds,
-                AllChildrenInLayout);
+                layoutType,
+                space,
+                items);
         }
 
         /// <summary>
@@ -1571,10 +1595,19 @@ namespace Alternet.UI
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
+            var layoutType = Layout ?? GetDefaultLayout();
+
+            if (GlobalGetPreferredSize is not null)
+            {
+                var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
+                if (e.Handled && e.PreferredSize != SizeD.MinusOne)
+                    return e.PreferredSize;
+            }
+
             return DefaultGetPreferredSize(
                 this,
                 availableSize,
-                Layout ?? GetDefaultLayout());
+                layoutType);
         }
 
         /// <summary>

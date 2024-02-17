@@ -14,7 +14,6 @@ set -euo pipefail
 ./BuildAndRun.ExplorerUISample.sh
 ./BuildAndRun.HelloWorldSample.sh
 ./BuildAndRun.InputSample.sh
-./BuildAndRun.LayoutSample.sh
 ./BuildAndRun.MenuSample.sh
 ./BuildAndRun.PaintSample.sh
 ./BuildAndRun.PrintingSample.sh

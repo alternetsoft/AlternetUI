@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class FlagsAndAttributes : AdvDictionary<string, object>, IFlagsAndAttributes
+    internal class FlagsAndAttributes
+        : AdvDictionary<string, object>, IFlagsAndAttributes, ICustomFlags, ICustomAttributes
     {
+        public ICustomFlags Flags => this;
+
+        public ICustomAttributes Attr => this;
+
         bool ICustomFlags.this[string name]
         {
             get => HasFlag(name);
@@ -50,6 +55,13 @@ namespace Alternet.UI
         public bool RemoveAttribute(string name)
         {
             return Remove(name);
+        }
+
+        public void SetAttribute<T>(string name, T? value)
+        {
+            RemoveAttribute(name);
+            if (value is not null)
+                this[name] = value;
         }
 
         public void SetAttribute(string name, object? value)

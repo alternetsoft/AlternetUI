@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.
         /// </summary>
-        public string Text
+        public virtual string Text
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// See more details in <see cref="StatusBar.SetStatusWidths"/> on how to define
         /// automatically resizable panels.
         /// </remarks>
-        public int Width
+        public virtual int Width
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets style of the status bar panel.
         /// </summary>
-        public StatusBarPanelStyle Style
+        public virtual StatusBarPanelStyle Style
         {
             get
             {
@@ -117,14 +117,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="ListViewItem.Tag"/>
-        [Browsable(false)]
-        public object? Tag { get; set; }
-
         /// <summary>
         /// Creates copy of this <see cref="StatusBarPanel"/>.
         /// </summary>
-        public StatusBarPanel Clone()
+        public virtual StatusBarPanel Clone()
         {
             var result = new StatusBarPanel();
             result.Assign(this);
@@ -135,7 +131,7 @@ namespace Alternet.UI
         /// Assigns properties from another <see cref="StatusBarPanel"/>.
         /// </summary>
         /// <param name="item">Source of the properties to assign.</param>
-        public void Assign(StatusBarPanel item)
+        public virtual void Assign(StatusBarPanel item)
         {
             text = item.Text;
             width = item.Width;

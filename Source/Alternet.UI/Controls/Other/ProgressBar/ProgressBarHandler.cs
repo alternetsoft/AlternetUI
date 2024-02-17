@@ -1,25 +1,65 @@
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="ProgressBar"/> behavior and appearance.
-    /// </summary>
-    internal abstract class ProgressBarHandler : ControlHandler
+    internal class ProgressBarHandler : ControlHandler<ProgressBar>
     {
-        /// <summary>
-        /// Gets a <see cref="ProgressBar"/> this handler provides the implementation for.
-        /// </summary>
-        public new ProgressBar Control => (ProgressBar)base.Control;
+        public new Native.ProgressBar NativeControl => (Native.ProgressBar)base.NativeControl!;
 
-        /// <summary>
-        /// Gets or sets whether the <see cref="ProgressBar"/> shows actual values or generic, continuous progress
-        /// feedback.
-        /// </summary>
-        public abstract bool IsIndeterminate { get; set; }
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.ProgressBar();
+        }
 
-        /// <summary>
-        /// Gets or sets a value indicating the horizontal or vertical orientation of the progress bar.
-        /// </summary>
-        /// <value>One of the <see cref="ProgressBarOrientation"/> values.</value>
-        public abstract ProgressBarOrientation Orientation { get; set; }
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            NativeControl.Minimum = Control.Minimum;
+            NativeControl.Maximum = Control.Maximum;
+            NativeControl.Value = Control.Value;
+            NativeControl.Orientation = (Native.ProgressBarOrientation)Control.Orientation;
+            NativeControl.IsIndeterminate = Control.IsIndeterminate;
+
+            Control.MinimumChanged += Control_MinimumChanged;
+            Control.MaximumChanged += Control_MaximumChanged;
+            Control.ValueChanged += Control_ValueChanged;
+            Control.OrientationChanged += Control_OrientationChanged;
+            Control.IsIndeterminateChanged += Control_IsIndeterminateChanged;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.MinimumChanged -= Control_MinimumChanged;
+            Control.MaximumChanged -= Control_MaximumChanged;
+            Control.ValueChanged -= Control_ValueChanged;
+            Control.OrientationChanged -= Control_OrientationChanged;
+            Control.IsIndeterminateChanged -= Control_IsIndeterminateChanged;
+        }
+
+        private void Control_IsIndeterminateChanged(object? sender, EventArgs e)
+        {
+            NativeControl.IsIndeterminate = Control.IsIndeterminate;
+        }
+
+        private void Control_OrientationChanged(object? sender, EventArgs e)
+        {
+            NativeControl.Orientation = (Native.ProgressBarOrientation)Control.Orientation;
+        }
+
+        private void Control_ValueChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.Value = Control.Value;
+        }
+
+        private void Control_MaximumChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.Maximum = Control.Maximum;
+        }
+
+        private void Control_MinimumChanged(object? sender, System.EventArgs e)
+        {
+            NativeControl.Minimum = Control.Minimum;
+        }
     }
 }

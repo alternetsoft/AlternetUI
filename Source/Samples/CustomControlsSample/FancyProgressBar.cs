@@ -1,4 +1,5 @@
-﻿using Alternet.Drawing;
+﻿using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -8,16 +9,34 @@ namespace Alternet.UI
     public partial class FancyProgressBar : ProgressBar
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
-
         private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
-
         private readonly Font font = Font.Default;
-
         private readonly Pen pointerPen1 = new((Color)"#FC4154", 3);
-
         private readonly Pen pointerPen2 = new((Color)"#FF827D", 1);
 
-        internal new FancyProgressBarHandler Handler => (FancyProgressBarHandler)base.Handler;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FancyProgressBar"/> class.
+        /// </summary>
+        public FancyProgressBar()
+        {
+            UserPaint = true;
+            ValueChanged += Control_ValueChanged;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsIndeterminate { get; set; }
+
+        /// <inheritdoc/>
+        public override ProgressBarOrientation Orientation { get; set; }
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            return new SizeD(200, 100);
+        }
+
+        /// <inheritdoc/>
+        protected override HandlerType GetRequiredHandlerType() => HandlerType.Generic;
 
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
@@ -60,11 +79,11 @@ namespace Alternet.UI
                 var y = bounds.Center.Y;
                 var minY = y - (bounds.Height * 5);
 
-                var yStep = MathUtils.MapRanges(step, Minimum, Maximum, 0, minY);
+                var yStep = MapRanges(step, Minimum, Maximum, 0, minY);
 
                 y += offsetInSteps * yStep;
 
-                var shift = -MathUtils.MapRanges(
+                var shift = -MapRanges(
                     Value,
                     Minimum,
                     Maximum,
@@ -102,42 +121,17 @@ namespace Alternet.UI
             dc.DrawLine(pointerPen2, pointerLineStartPoint, pointerLineEndPoint);
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        internal static double MapRanges(
+            double value,
+            double from1,
+            double to1,
+            double from2,
+            double to2) =>
+            ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
+
+        private void Control_ValueChanged(object? sender, EventArgs e)
         {
-            return new SizeD(200, 100);
-        }
-
-        /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
-        {
-            return new FancyProgressBarHandler();
-        }
-
-        internal class FancyProgressBarHandler : ProgressBarHandler
-        {
-            public override bool IsIndeterminate { get; set; }
-
-            public override ProgressBarOrientation Orientation { get; set; }
-
-            protected override void OnAttach()
-            {
-                base.OnAttach();
-                Control.UserPaint = true;
-                Control.ValueChanged += Control_ValueChanged;
-            }
-
-            protected override void OnDetach()
-            {
-                Control.ValueChanged -= Control_ValueChanged;
-
-                base.OnDetach();
-            }
-
-            private void Control_ValueChanged(object sender, EventArgs e)
-            {
-                Control.Refresh();
-            }
+            Refresh();
         }
     }
 }

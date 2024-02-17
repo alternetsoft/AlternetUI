@@ -101,12 +101,16 @@ namespace Alternet.UI
             return control.ExtendedProps.AutoSizeMode;
         }
 
+        // On return, 'bounds' has an empty space left after docking the controls to sides
+        // of the container (fill controls are not counted).
         internal static int LayoutDockedChildren(
             Control parent,
-            RectD space,
+            ref RectD bounds,
             IReadOnlyList<Control> children)
         {
             var result = 0;
+
+            var space = bounds;
 
             // Deal with docking; go through in reverse, MS docs say that
             // lowest Z-order is closest to edge
@@ -229,6 +233,7 @@ namespace Alternet.UI
                 }
             }
 
+            bounds = space;
             return result;
         }
 

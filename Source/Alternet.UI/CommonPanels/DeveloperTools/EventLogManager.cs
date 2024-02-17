@@ -54,8 +54,8 @@ namespace Alternet.UI
                         continue;
                     var isBinded = EventLogManager.IsEventLogged(type, item);
                     var prop = eventGrid.CreateBoolItem(item.Name, null, isBinded);
-                    prop.FlagsAndAttributes.SetAttribute("InstanceType", type);
-                    prop.FlagsAndAttributes.SetAttribute("EventInfo", item);
+                    prop.FlagsAndAttributes.Attr["InstanceType"] = type;
+                    prop.FlagsAndAttributes.Attr["EventInfo"] = item;
                     prop.PropertyChanged += Event_PropertyChanged;
                     eventGrid.Add(prop);
                 }
@@ -66,8 +66,8 @@ namespace Alternet.UI
         {
             if (sender is not IPropertyGridItem item)
                 return;
-            var type = item.FlagsAndAttributes.GetAttribute<Type?>("InstanceType");
-            var eventInfo = item.FlagsAndAttributes.GetAttribute<EventInfo?>("EventInfo");
+            var type = item.FlagsAndAttributes.Attr.GetAttribute<Type?>("InstanceType");
+            var eventInfo = item.FlagsAndAttributes.Attr.GetAttribute<EventInfo?>("EventInfo");
             var value = item.Owner.GetPropertyValueAsBool(item);
             EventLogManager.SetEventLogged(type, eventInfo, value);
         }

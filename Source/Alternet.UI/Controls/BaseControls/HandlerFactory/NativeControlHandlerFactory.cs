@@ -43,11 +43,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateProgressBarHandler(Control control) =>
-            new NativeProgressBarHandler();
+            new ProgressBarHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateSliderHandler(Control control) =>
-            new NativeSliderHandler();
+            new SliderHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreateNumericUpDownHandler(Control control) =>
