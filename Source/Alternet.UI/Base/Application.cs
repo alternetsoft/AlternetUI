@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -71,6 +72,7 @@ namespace Alternet.UI
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
+        private static IconSet? icon;
 
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -222,6 +224,29 @@ namespace Alternet.UI
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static bool DebugWriteLine { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets default icon for the application.
+        /// </summary>
+        /// <remarks>
+        /// By default it returns icon of the the first <see cref="Window"/>.
+        /// You can assing <see cref="IconSet"/> here to override default behavior.
+        /// If you assing <c>null</c>, this property will again return icon of
+        /// the the first <see cref="Window"/>. Change to this property doesn't
+        /// update the icon of the the first <see cref="Window"/>.
+        /// </remarks>
+        public static IconSet? DefaultIcon
+        {
+            get
+            {
+                return icon ?? Application.FirstWindow()?.Icon;
+            }
+
+            set
+            {
+                icon = value;
+            }
+        }
 
         /// <summary>
         /// Gets whether application was initialized;
