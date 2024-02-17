@@ -1600,8 +1600,8 @@ namespace Alternet.UI
             if (GlobalGetPreferredSize is not null)
             {
                 var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
-                if (e.Handled && e.PreferredSize != SizeD.MinusOne)
-                    return e.PreferredSize;
+                if (e.Handled && e.Result != SizeD.MinusOne)
+                    return e.Result;
             }
 
             return DefaultGetPreferredSize(
