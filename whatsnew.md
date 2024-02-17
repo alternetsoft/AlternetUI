@@ -1,5 +1,19 @@
 # 0.9.507 (in development)
 
+## 2024 February 16
+
+- IFlagsAndAttributes: this[string name], Flags, Attr.
+- #82 PropertyGridSample: sort components (A to Z).
+- Add GraphicControl. This is UserPaintControl descendant. By default GraphicControl is not focusable.
+- GenericLabel: TextFormat, bug fixes.
+- Improved Samples.
+- CardPanelHeader.DefaultMinTabSize.
+- Control: CustomLayout event, CustomFlags, CustomAttr.
+- Control: Dock property is used in all layouts. For example you can if some child of the StackPanel
+has Dock=DockStyle.Right, it will be aligned right. All other align rules are applied after docking child controls.
+An example is added to LayoutSample/StackPanel.
+- Moved sample controls back to demo (FancySlider, FancyProgressBar, TikTacToe). 
+
 ## 2024 February 15
 
 ### GenericLabel improvement:
