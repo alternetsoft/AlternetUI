@@ -37,6 +37,7 @@ namespace ControlsSample
             Add("Common Dialogs", () => new CommonDialogsWindow());
             Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());
             Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
+            Add("Paint Sample", () => new PaintSample.MainWindow());            
             Add("Data Binding", () => new DataBindingSample.DataBindingWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
             Add("Drawing Sample", () => new DrawingSample.MainWindow());

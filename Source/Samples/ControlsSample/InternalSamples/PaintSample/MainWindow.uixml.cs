@@ -117,7 +117,7 @@ namespace PaintSample
                 Height = new GridLength()
             });
 
-            Icon = new("embres:PaintSample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             border = new();
             border.BorderColor = Splitter.DefaultBackColor;
@@ -162,21 +162,13 @@ namespace PaintSample
         internal static Image LoadToolImage(Tool tool)
         {
             var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(
-                "PaintSample.Resources.ToolIcons."
+                "ControlsSample.Resources.ToolIcons."
                 + tool.GetType().Name.Replace("Tool", "") + ".png");
 #pragma warning disable
             if (stream == null)
                 throw new InvalidOperationException();
 #pragma warning restore
 
-            return new Bitmap(stream);
-        }
-
-        internal static Image LoadCommandImage(string imageName)
-        {
-            var s = "PaintSample.Resources.CommandIcons." + imageName + ".png";
-            var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(s)
-                ?? throw new InvalidOperationException();
             return new Bitmap(stream);
         }
 
