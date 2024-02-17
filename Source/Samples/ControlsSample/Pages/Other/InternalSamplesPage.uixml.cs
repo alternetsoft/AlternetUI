@@ -43,6 +43,8 @@ namespace ControlsSample
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Menu Sample", () => new MenuSample.MainWindow());
+            Add("Printing Sample", () => new PrintingSample.MainWindow());
+            Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());            
         }
 
         private void RunButton_Click(object? sender, EventArgs e)

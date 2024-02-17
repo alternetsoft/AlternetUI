@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "PrintingSample": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

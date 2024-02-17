@@ -45,11 +45,14 @@
       <None Remove="Resources\ButtonImages\ButtonImageHovered.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageNormal.svg" />
       <None Remove="Resources\ButtonImages\ButtonImagePressed.svg" />
-      <None Remove="Resources\EmployeePhoto.jpg" />
+      <None Remove="Resources\Document_16x.png" />
+      <None Remove="Resources\FolderClosed_16x.png" />
       <None Remove="Resources\icon-48x48.png" />
       <None Remove="Resources\Leaves.jpg" />
       <None Remove="Resources\logo-128x128.png" />
       <None Remove="Resources\Logo.png" />
+      <None Remove="Resources\ReportImage_16x.png" />
+      <None Remove="Resources\Report_16x.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
       <None Remove="Resources\Svg\arrow-left.svg" />
       <None Remove="Resources\Svg\arrow-right.svg" />
@@ -110,7 +113,9 @@
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.svg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.svg" />
+      <EmbeddedResource Include="Resources\ExplorerUISample\Document_16x.png" />
       <EmbeddedResource Include="Resources\EmployeePhoto.jpg" />
+      <EmbeddedResource Include="Resources\ExplorerUISample\FolderClosed_16x.png" />
       <EmbeddedResource Include="Resources\icon-48x48.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />
@@ -126,6 +131,8 @@
       <EmbeddedResource Include="Resources\Logo16x16.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
+      <EmbeddedResource Include="Resources\ExplorerUISample\ReportImage_16x.png" />
+      <EmbeddedResource Include="Resources\ExplorerUISample\Report_16x.png" />
       <EmbeddedResource Include="Resources\TestIcon1.ico" />
       <EmbeddedResource Include="Resources\TestIcon2.ico" />
       <EmbeddedResource Include="Resources\ToolBarPng\Large\Calendar32.png" />

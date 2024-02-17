@@ -35,7 +35,7 @@ namespace ExplorerUISample
 
         public MainWindow()
         {
-            Icon = new("embres:ExplorerUISample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             InitializeComponent();
 
@@ -80,22 +80,19 @@ namespace ExplorerUISample
             listView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
             listView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
-            Closed+=MainWindow_Closed;
         }
 
-        private void MainWindow_Closed(object? sender, EventArgs e)
-        {
-            Application.Current.Exit();
-        }
-        
         private static ImageList LoadImageList()
         {
             var smallImageList = new ImageList();
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
-            var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("ExplorerUISample.Resources.")).ToArray();
-            Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            var allImageResourceNames =
+                allResourceNames.Where(x => x.StartsWith("ControlsSample.Resources.ExplorerUISample.")).ToArray();
+
+            Image LoadImage(string name) =>
+                new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
 
             foreach (var name in allImageResourceNames)
                 smallImageList.Images.Add(LoadImage(name));

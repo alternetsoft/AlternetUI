@@ -125,9 +125,11 @@ namespace Alternet.Drawing
         /// the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
-        internal Image(Stream stream)
+        internal Image(Stream? stream)
         {
             nativeImage = new UI.Native.Image();
+            if (stream is null)
+                return;
             using var inputStream = new UI.Native.InputStream(stream);
             NativeImage.LoadFromStream(inputStream);
         }

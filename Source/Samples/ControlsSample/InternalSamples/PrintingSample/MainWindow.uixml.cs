@@ -11,7 +11,7 @@ namespace PrintingSample
 
         public MainWindow()
         {
-            Icon = new("embres:PrintingSample.Sample.ico");
+            Icon = Application.DefaultIcon;
             InitializeComponent();
             DrawingArea.UserPaint = true;
 
