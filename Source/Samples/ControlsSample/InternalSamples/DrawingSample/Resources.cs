@@ -6,7 +6,7 @@ namespace DrawingSample
 {
     internal static class Resources
     {
-        const string ResourceNamePrefix = "DrawingSample.Resources.";
+        const string ResourceNamePrefix = "ControlsSample.Resources.";
 
         public static readonly Image LogoImage = new Bitmap(typeof(TransformsPage).Assembly.GetManifestResourceStream(
             ResourceNamePrefix + "Logo.png") ?? throw new Exception());

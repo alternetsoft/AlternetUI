@@ -151,7 +151,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void LogExceptionIfDebug(Exception e)
         {
-            LogExceptionIfDebug(e);
+            LogException(e);
         }
 
         /// <summary>

@@ -13,6 +13,45 @@ namespace Alternet.UI
     public static class MathUtils
     {
         /// <summary>
+        /// Gets <see cref="Math.PI"/> divided by 180.
+        /// </summary>
+        public const double DegToRad = Math.PI / 180;
+
+        /// <summary>
+        /// Gets point on circle.
+        /// </summary>
+        /// <param name="center">Circle center.</param>
+        /// <param name="radius">Circle radius.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns></returns>
+        public static PointD GetPointOnCircle(PointD center, double radius, double angle)
+        {
+            return new(
+                center.X + (radius * Math.Cos(angle * DegToRad)),
+                center.Y + (radius * Math.Sin(angle * DegToRad)));
+        }
+
+        /// <summary>
+        /// Maps value from range specified by
+        /// (<paramref name="fromLow"/>, <paramref name="fromHigh"/>)
+        /// to range specified by
+        /// (<paramref name="toLow"/>, <paramref name="toHigh"/>).
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="fromLow"></param>
+        /// <param name="fromHigh"></param>
+        /// <param name="toLow"></param>
+        /// <param name="toHigh"></param>
+        /// <returns></returns>
+        public static double MapRanges(
+            double value,
+            double fromLow,
+            double fromHigh,
+            double toLow,
+            double toHigh) =>
+            ((value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow)) + toLow;
+
+        /// <summary>
         /// Gets squared distance between two points.
         /// </summary>
         /// <param name="p1"></param>

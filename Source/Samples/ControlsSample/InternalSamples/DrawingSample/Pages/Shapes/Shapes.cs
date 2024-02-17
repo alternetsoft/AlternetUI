@@ -1,12 +1,13 @@
 ﻿using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
+using Alternet.UI;
 
 namespace DrawingSample
 {
     internal class Shapes
     {
-        ShapesPage page;
+        private readonly ShapesPage page;
 
         public Shapes(ShapesPage page)
         {

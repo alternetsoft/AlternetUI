@@ -224,12 +224,26 @@ namespace DrawingSample
 
                 y += textHeight + 20;
 
-                var c = new Skybrud.Colors.RgbColor(color.R, color.G, color.B).Lighten(lighten).ToRgb();
-                color = Color.FromArgb(c.R, c.G, c.B);
+                color = Lighten(color, lighten);
             }
 
             if (TextWidthLimitEnabled)
                 dc.DrawLine(textWidthLimitPen, new PointD(TextWidthLimit + x, bounds.Top), new PointD(TextWidthLimit + x, bounds.Bottom));
+        }
+
+        //The amount of lightness (specified in percent) that should be added to the color.
+        public static Color Lighten(Color color, float percent)
+        {
+            HSVValue hsv = (RGBValue)color;
+
+            double val = hsv.Value + (double)(percent / 100f);
+
+            RGBValue result = new HSVValue(
+                hsv.Hue,
+                hsv.Saturation,
+                Math.Max(0.0, val));
+
+            return Color.FromArgb(color.A, result);
         }
 
         protected override Control CreateSettingsControl()

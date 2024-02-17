@@ -38,7 +38,8 @@ namespace ControlsSample
             Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());
             Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
             Add("Data Binding", () => new DataBindingSample.DataBindingWindow());
-            Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());            
+            Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
+            Add("Drawing Sample", () => new DrawingSample.MainWindow());
         }
 
         private void RunButton_Click(object? sender, EventArgs e)

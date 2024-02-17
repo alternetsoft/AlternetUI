@@ -8,7 +8,7 @@ namespace DrawingSample
 {
     internal sealed class BrushesAndPensPage : DrawingPage
     {
-        private BrushType brush = BrushType.RadialGradient;
+        private BrushType brush = BrushType.LinearGradient;
 
         private ShapeType[] includedShapeTypes;
 
@@ -235,7 +235,11 @@ namespace DrawingSample
             Canvas?.Invalidate();
         }
 
-        private IEnumerable<Shape> CreateShapes(Random random, RectD bounds, Brush fill, Pen stroke)
+        private IEnumerable<Shape> CreateShapes(
+            Random random,
+            RectD bounds,
+            Brush fill,
+            Pen stroke)
         {
             if (includedShapeTypes.Length == 0)
                 yield break;
@@ -246,30 +250,30 @@ namespace DrawingSample
 
         private Pen CreateStrokePen()
         {
-            var c = new Skybrud.Colors.HslColor(
+            RGBValue c = new HSVValue(
                 MathUtils.MapRanges(penColorHue, 0, 10, 0, 1),
                 1,
-                0.3).ToRgb();
+                0.3);
 
-            return new Pen(Color.FromArgb(c.R, c.G, c.B), penWidth, penDashStyle, lineCap, lineJoin);
+            return new Pen(c, penWidth, penDashStyle, lineCap, lineJoin);
         }
 
         private Brush CreateFillBrush()
         {
-            var c = new Skybrud.Colors.HslColor(
+            RGBValue c = new HSVValue(
                 MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1),
                 1,
-                0.7).ToRgb();
+                0.7);
 
-            var c1 = new Skybrud.Colors.HslColor(
+            RGBValue c1 = new HSVValue(
                 MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1) - 0.3,
                 1,
-                0.7).ToRgb();
+                0.7);
 
-            var c2 = new Skybrud.Colors.HslColor(
+            RGBValue c2 = new HSVValue(
                 MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1) - 0.8,
                 1,
-                0.7).ToRgb();
+                0.7);
 
             return brush switch
             {

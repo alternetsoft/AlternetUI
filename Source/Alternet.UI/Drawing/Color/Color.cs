@@ -504,6 +504,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref="Color"/> structure from the four ARGB
+        /// component (alpha, red, green, and blue) values.
+        /// </summary>
+        /// <param name="alpha">The alpha component.</param>
+        /// <returns>The <see cref="Color"/> that this method creates.</returns>
+        /// <remarks>To create an opaque color, set alpha to 255. To create
+        /// a semitransparent color, set alpha to any value from 1 through 254.
+        /// </remarks>
+        /// <param name="rgb">RGB component</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color FromArgb(byte alpha, RGBValue rgb)
+        {
+            return FromArgb(alpha, rgb.R, rgb.G, rgb.B);
+        }
+
+        /// <summary>
         /// Creates an opaque <see cref="Color"/> structure from the four ARGB
         /// components (255, <paramref name="red"/>, <paramref name="green"/>,
         /// and <paramref name="blue"/>) values.

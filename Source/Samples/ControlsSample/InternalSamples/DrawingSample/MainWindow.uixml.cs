@@ -10,7 +10,7 @@ namespace DrawingSample
 
         public MainWindow()
         {
-            Icon = new("embres:DrawingSample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             InitializeComponent();
             InitializePages();
