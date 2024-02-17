@@ -8,16 +8,16 @@ using Alternet.Base.Collections;
 
 namespace EmployeeFormSample
 {
-    public partial class MainWindow : Window
+    public partial class EmployeeWindow : Window
     {
-        public MainWindow()
+        public EmployeeWindow()
         {
-            Icon = new("embres:EmployeeFormSample.Sample.ico");
+            Icon = new("embres:ControlsSample.Sample.ico");
 
             InitializeComponent();
 
             employeeFoto.Image = Image.FromUrl(
-                "embres:EmployeeFormSample.Resources.EmployeePhoto.jpg");
+                "embres:ControlsSample.Resources.EmployeePhoto.jpg");
 
             PopulateComboBoxes();
 

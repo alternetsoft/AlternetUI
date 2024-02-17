@@ -8,7 +8,6 @@ call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% ExplorerUISample 
 call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% DrawingSample %2 %3
 call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% CustomControlsSample %2 %3
 call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% DataBindingSample %2 %3
-call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% LayoutSample %2 %3
 call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% InputSample %2 %3
 call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% PaintSample %2 %3
 call "%SCRIPT_HOME%\MSW.BuildAndRunSample.bat" %SAMPLE_FOLDER% EmployeeFormSample %2 %3

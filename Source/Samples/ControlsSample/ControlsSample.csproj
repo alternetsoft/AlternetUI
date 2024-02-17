@@ -33,6 +33,9 @@
       <None Remove="Html\SampleArchive\Images\panda2.jpg" />
       <None Remove="Html\SampleArchive\root.html" />
       <None Remove="Html\SampleArchive\Styles\default.css" />
+      <None Remove="InternalSamples\EmployeeSample\EmployeeMainWindow.uixml" />
+      <None Remove="Pages\Layout\Controls\AlignmentControl.uixml" />
+      <None Remove="Pages\Layout\Controls\GridLengthControl.uixml" />
       <None Remove="Resources\Animation\Alternet.gif" />
       <None Remove="Resources\Animation\HourGlass.gif" />
       <None Remove="Resources\Animation\Spinner.gif" />
@@ -42,6 +45,7 @@
       <None Remove="Resources\ButtonImages\ButtonImageHovered.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageNormal.svg" />
       <None Remove="Resources\ButtonImages\ButtonImagePressed.svg" />
+      <None Remove="Resources\EmployeePhoto.jpg" />
       <None Remove="Resources\icon-48x48.png" />
       <None Remove="Resources\logo-128x128.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
@@ -94,6 +98,7 @@
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.svg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.svg" />
+      <EmbeddedResource Include="Resources\EmployeePhoto.jpg" />
       <EmbeddedResource Include="Resources\icon-48x48.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />

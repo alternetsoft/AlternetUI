@@ -57,6 +57,13 @@ namespace Alternet.UI
             return Remove(name);
         }
 
+        public void SetAttribute<T>(string name, T? value)
+        {
+            RemoveAttribute(name);
+            if (value is not null)
+                this[name] = value;
+        }
+
         public void SetAttribute(string name, object? value)
         {
             RemoveAttribute(name);

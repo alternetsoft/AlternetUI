@@ -39,6 +39,13 @@ namespace Alternet.UI
         void SetAttribute(string name, object? value);
 
         /// <summary>
+        /// Sets attribute value.
+        /// </summary>
+        /// <param name="name">Attribute name.</param>
+        /// <param name="value">Attribute value.</param>
+        void SetAttribute<T>(string name, T value);
+
+        /// <summary>
         /// Gets attribute value. Returns <c>null</c> if there is no such attribute.
         /// </summary>
         /// <param name="name">Attribute name.</param>

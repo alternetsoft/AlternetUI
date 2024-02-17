@@ -16,7 +16,7 @@ namespace LayoutSample
             InitializeComponent();
 
             imageControl.Zoom = 2;
-            imageControl.Image = Image.FromUrl("embres:LayoutSample.Resources.logo.png");
+            imageControl.Image = Image.FromUrl("embres:ControlsSample.Resources.logo-128x128.png");
             imageScrollViewer.Children.Add(imageControl);
 
             InitializeComboBoxes();

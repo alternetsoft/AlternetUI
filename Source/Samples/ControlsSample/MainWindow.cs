@@ -78,8 +78,7 @@ namespace ControlsSample
             if (!Application.IsLinuxOS)
                 AddPage("Animation", CreateAnimationPage);
 
-            if (CommonUtils.GetSamplesFolder() is not null)
-                AddPage("Other", CreateOtherPage);
+            AddPage("Samples", CreateOtherPage);
 
             LogUtils.DebugLogVersion();
 
@@ -173,7 +172,8 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>[] pages =
             {
-                new("External Samples", CreateAllSamplesPage),
+                new("Internal", CreateInternalSamplesPage),
+                new("External", CreateAllSamplesPage),
             };
 
             return CreateCustomPage(pages);
@@ -215,6 +215,7 @@ namespace ControlsSample
             {
                 new("Splitter", () => new LayoutPanelPage()),
                 new("Grid", () => new GridPage()),
+                new("Other", () => new LayoutMainWindow()),                
             };
 
             return CreateCustomPage(pages);
@@ -240,6 +241,7 @@ namespace ControlsSample
         Control CreateNotifyIconPage() => new NotifyIconPage();
         Control CreateWebBrowserPage() => new WebBrowserPage();
         Control CreateAllSamplesPage() => new AllSamplesPage();
+        Control CreateInternalSamplesPage() => new InternalSamplesPage();
         Control CreateWelcomePage() => new WelcomePage();
 
         private void LinkLabel_LinkClicked(

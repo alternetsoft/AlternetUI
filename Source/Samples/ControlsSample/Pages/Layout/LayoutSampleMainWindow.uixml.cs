@@ -1,21 +1,18 @@
 using System;
 using Alternet.UI;
+using LayoutSample;
 
-namespace LayoutSample
+namespace ControlsSample
 {
-    public partial class MainWindow : Window
+    public partial class LayoutMainWindow : Control
     {
-        public MainWindow()
+        public LayoutMainWindow()
         {
-            Icon = new("embres:LayoutSample.Sample.ico");
-
             InitializeComponent();
 
             MinimumSize = (600, 600);
 
             SetSizeToContent();
-
-            logListBox.ContextMenu.Required();
         }
 
         private void ShowGrid10x10Button_Click(object? sender, EventArgs e)

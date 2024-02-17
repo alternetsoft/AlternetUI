@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="ListControl"/> descendants. This class has both <see cref="Text"/>
     /// and <see cref="Value"/>.
     /// </summary>
-    public class ListControlItem : BaseControlItem
+    public partial class ListControlItem : BaseControlItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
@@ -49,7 +49,7 @@ namespace Alternet.UI
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets user data.
+        /// Gets or sets user data. This is different from <see cref="BaseControlItem.Tag"/>.
         /// </summary>
         public object? Value { get; set; }
 

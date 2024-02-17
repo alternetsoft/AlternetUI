@@ -145,22 +145,6 @@ namespace Alternet.UI
         public long? Index { get; internal set; }
 
         /// <summary>
-        /// Gets or sets an object that contains data to associate with the item.
-        /// </summary>
-        /// <value>An object that contains information that is associated
-        /// with the item.</value>
-        /// <remarks>
-        /// The <see cref="Tag"/> property can be used to store any object
-        /// that you want to associate with an item.
-        /// Although you can store any item, the <see cref="Tag"/> property
-        /// is typically used to store string information
-        /// about the item, such as a unique identifier or the index position
-        /// of the item's data in a database.
-        /// </remarks>
-        [Browsable(false)]
-        public object? Tag { get; set; }
-
-        /// <summary>
         /// Gets or sets the text of the item.
         /// </summary>
         /// <value>The text to display for the item.</value>
@@ -172,7 +156,7 @@ namespace Alternet.UI
         /// In other views, the property specifies the text displayed together
         /// with an optional image to form a visual representation of the item.
         /// </remarks>
-        public string Text
+        public virtual string Text
         {
             get
             {
@@ -225,7 +209,7 @@ namespace Alternet.UI
         /// image will be displayed regardless of the value of the
         /// <see cref="ListView.View"/> property of the <see cref="ListView"/> control.
         /// </remarks>
-        public int? ImageIndex
+        public virtual int? ImageIndex
         {
             get
             {
