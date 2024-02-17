@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace CustomControlsSample
 {
-    internal partial class MainWindow : Window
+    internal partial class CustomControlsWindow : Window
     {
         private readonly Data data = new();
         private readonly SpeedColorButton colorPicker;
@@ -15,11 +15,11 @@ namespace CustomControlsSample
         private readonly FancyProgressBar gaugeControl;
         private readonly ListBox logListBox;
 
-        public MainWindow()
+        public CustomControlsWindow()
         {
             Name = "MainWindow";
 
-            Icon = new("embres:CustomControlsSample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             DataContext = data;
 
