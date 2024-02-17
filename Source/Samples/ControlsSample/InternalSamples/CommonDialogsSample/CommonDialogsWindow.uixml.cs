@@ -3,17 +3,17 @@ using System.IO;
 using Alternet.Drawing;
 using Alternet.UI;
 
-namespace CommonDialogsSample
+namespace ControlsSample
 {
-    public partial class MainWindow : Window
+    public partial class CommonDialogsWindow : Window
     {
         private const string CustomTitle = @"Custom Title";
         private FontInfo fontInfo = Control.DefaultFont;
 
-        public MainWindow()
+        public CommonDialogsWindow()
         {
             this.SuspendLayout();
-            Icon = new("embres:CommonDialogsSample.Sample.ico");
+            Icon = Application.DefaultIcon;
             InitializeComponent();
 
             messageBoxButtonsComboBox.Add(MessageBoxButtons.OK);

@@ -12,7 +12,8 @@ namespace WindowPropertiesSample
 
         private static Stream LoadImage(string name)
         {
-            return typeof(Icons).Assembly.GetManifestResourceStream("WindowPropertiesSample.Resources." + name) ?? throw new Exception();
+            return
+                typeof(Icons).Assembly.GetManifestResourceStream("ControlsSample.Resources." + name) ?? throw new Exception();
         }
     }
 }

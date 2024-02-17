@@ -34,6 +34,9 @@ namespace ControlsSample
             }
 
             Add("Employee Form", ()=> new EmployeeFormSample.EmployeeWindow());
+            Add("Common Dialogs", () => new CommonDialogsWindow());
+            Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());
+            
         }
 
         private void RunButton_Click(object? sender, EventArgs e)

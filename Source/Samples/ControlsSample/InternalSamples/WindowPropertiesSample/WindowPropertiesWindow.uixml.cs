@@ -4,18 +4,18 @@ using Alternet.UI;
 
 namespace WindowPropertiesSample
 {
-    public partial class MainWindow : Window
+    public partial class WindowPropertiesWindow : Window
     {
         private readonly CardPanelHeader panelHeader;
         private readonly SetBoundsProperties setBoundsProperties;
 
         private Window? testWindow;
 
-        public MainWindow()
+        public WindowPropertiesWindow()
         {
             panelHeader = new();
             setBoundsProperties = new(this);
-            Icon = new("embres:WindowPropertiesSample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             InitializeComponent();
 
@@ -472,9 +472,9 @@ namespace WindowPropertiesSample
                 (WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
         }
 
-        public class SetBoundsProperties : BaseChildObject<MainWindow>
+        public class SetBoundsProperties : BaseChildObject<Window>
         {
-            public SetBoundsProperties(MainWindow owner)
+            public SetBoundsProperties(Window owner)
                 : base(owner)
             {
             }

@@ -13,6 +13,7 @@
 has Dock=DockStyle.Right, it will be aligned right. All other align rules are applied after docking child controls.
 An example is added to LayoutSample/StackPanel.
 - Moved sample controls back to demo (FancySlider, FancyProgressBar, TikTacToe). 
+- BaseControlItem: Tag, FlagsAndAttributes, FlagsAndAttributes, CustomAttr.
 
 ## 2024 February 15
 
