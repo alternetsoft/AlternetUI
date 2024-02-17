@@ -1,6 +1,6 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="DataBindingSample.MainWindow"
+        x:Class="DataBindingSample.DataBindingWindow"
         Title="Alternet UI Data Binding Sample"
 		StartLocation="CenterScreen" MinWidth="750" MinHeight="600">
 	<StackPanel Orientation="Vertical" Padding="10" Margin="10">

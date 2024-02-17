@@ -1,6 +1,6 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="DragAndDropSample.MainWindow"
+        x:Class="DragAndDropSample.DragAndDropWindow"
         Title="Alternet.UI Drag and Drop Sample" StartLocation="CenterScreen"
         MinWidth="800" MinHeight="700">
   <Control Padding="10">

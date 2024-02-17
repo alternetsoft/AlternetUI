@@ -8,16 +8,16 @@ using System.Text;
 
 namespace DragAndDropSample
 {
-    public partial class MainWindow : Window
+    public partial class DragAndDropWindow : Window
     {
         private static readonly string[] SupportedFormats =
             { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap };
 
         private readonly Bitmap testBitmap;
 
-        public MainWindow()
+        public DragAndDropWindow()
         {
-            Icon = new("embres:DragAndDropSample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             InitializeComponent();
 

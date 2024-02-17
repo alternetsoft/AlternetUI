@@ -4,11 +4,11 @@ using Alternet.UI;
 
 namespace DataBindingSample
 {
-    public partial class MainWindow : Window
+    public partial class DataBindingWindow : Window
     {
-        public MainWindow()
+        public DataBindingWindow()
         {
-            Icon = new("embres:DataBindingSample.Sample.ico");
+            Icon = Application.DefaultIcon;
 
             InitializeComponent();
 
