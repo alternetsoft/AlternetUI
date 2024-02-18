@@ -324,6 +324,21 @@ namespace Alternet.Drawing
             Color.FromRgb(rgb.R, rgb.G, rgb.B);
 
         /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='Brush'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Brush(Color color) => color.AsBrush;
+
+        /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='Pen'/>.
+        /// </summary>
+        /// <remarks>
+        /// Pen width is set to 1 dip (1/96 inch).
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Pen(Color color) => color.AsPen;
+
+        /// <summary>
         /// Converts the specified <see cref='System.Drawing.Color'/> to a <see cref='Color'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
