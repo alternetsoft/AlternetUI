@@ -33,7 +33,7 @@ namespace PropertyGridSample
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
         private const string ResPrefix =
-            "embres:PropertyGridSample.Resources.";
+            "embres:ControlsSample.Resources.";
         private const string ResPrefixImage = $"{ResPrefix}logo-128x128.png";
 
         private static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
@@ -261,7 +261,7 @@ namespace PropertyGridSample
             static Image LoadImage(string stateName) =>
                 new Bitmap(
                     Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                        $"PropertyGridSample.Resources.ButtonImages.ButtonImage{stateName}.png")
+                        $"ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.png")
                     ?? throw new Exception());
 
             var normal = LoadImage("Normal");
@@ -520,7 +520,7 @@ namespace PropertyGridSample
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
             var allImageResourceNames =
-                allResourceNames.Where(x => x.StartsWith("PropertyGridSample.Resources.ImageListIcons."));
+                allResourceNames.Where(x => x.StartsWith("ControlsSample.Resources.ImageListIcons."));
             var smallImageResourceNames =
                 allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
             var largeImageResourceNames =

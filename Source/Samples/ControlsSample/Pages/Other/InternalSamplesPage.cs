@@ -11,9 +11,33 @@ namespace ControlsSample
 {
     internal partial class InternalSamplesPage : Control
     {
+        private readonly ListBox view = new()
+        {
+            SuggestedWidth = 350,
+            SuggestedHeight = 400,
+        };
+
+        private readonly VerticalStackPanel buttonPanel = new()
+        {
+            Margin = (10, 0, 0, 0),
+            Padding = 5,
+        };
+
+        private readonly Button runButton = new()
+        {
+            Text = "Run Sample",
+            Margin = (0,0,0,5),
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
         public InternalSamplesPage()
         {
-            InitializeComponent();
+            view.Parent = this;
+            buttonPanel.Parent = this;
+            runButton.Parent = buttonPanel;
+            runButton.Click += RunButton_Click;
+            Layout = LayoutStyle.Horizontal;
+            Padding = 10;
             AddDefaultItems();
             view.SelectFirstItem();
         }
@@ -33,6 +57,7 @@ namespace ControlsSample
                 }
             }
 
+            Add("Property Grid", () => new PropertyGridSample.MainWindow());
             Add("Employee Form", ()=> new EmployeeFormSample.EmployeeWindow());
             Add("Common Dialogs", () => new CommonDialogsWindow());
             Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());

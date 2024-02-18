@@ -52,7 +52,7 @@ namespace PropertyGridSample
             r.EndBold();
             r.NewLine();
 
-            var logoImage = Image.FromUrl("embres:PropertyGridSample.Resources.logo-128x128.png");
+            var logoImage = Image.FromUrl("embres:ControlsSample.Resources.logo-128x128.png");
             r.WriteImage(logoImage);
 
             r.NewLine();
