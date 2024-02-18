@@ -195,7 +195,6 @@ namespace Alternet.UI
                 var control = card.Control;
                 control.Parent = this;
                 control.Visible = true;
-                PerformLayout();
             }
             finally
             {

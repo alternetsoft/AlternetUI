@@ -27,13 +27,20 @@ namespace Alternet.UI
         public GenericTabControl()
             : base()
         {
+            cardPanelHeader.UserPaint = true;
+            cardPanelHeader.Paint += Header_Paint;
+            UserPaint = true;
+
             Layout = LayoutStyle.Vertical;
+            cardPanelHeader.TabHasBorder = false;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
             cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             cardPanelHeader.Parent = this;
+            cardPanel.Margin = 1;
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
+            Padding = 0;
             cardPanelHeader.CardPanel = cardPanel;
         }
 
@@ -77,6 +84,8 @@ namespace Alternet.UI
 
                     if (isVertical)
                     {
+                        cardPanelHeader.HorizontalAlignment = UI.HorizontalAlignment.Stretch;
+
                         Layout = LayoutStyle.Vertical;
                         Header.Layout = LayoutStyle.Horizontal;
                         if (value == TabAlignment.Bottom)
@@ -86,6 +95,8 @@ namespace Alternet.UI
                     }
                     else
                     {
+                        cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Stretch;
+
                         Layout = LayoutStyle.Horizontal;
                         Header.Layout = LayoutStyle.Vertical;
                         if (value == TabAlignment.Right)
@@ -204,7 +215,9 @@ namespace Alternet.UI
         public int Add(string title, Func<Control> fnCreate)
         {
             var cardIndex = cardPanel.Add(title, fnCreate);
-            Header.Add(title, cardPanel[cardIndex].UniqueId);
+            var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
+            if (headerTabIndex == 0)
+                SelectFirstTab();
             return cardIndex;
         }
 
@@ -224,6 +237,52 @@ namespace Alternet.UI
             if(headerTabIndex == 0)
                 SelectFirstTab();
             return cardIndex;
+        }
+
+        /// <summary>
+        /// Gets interior border color.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Color GetInteriorBorderColor()
+        {
+            var color = Borders?.GetObjectOrNull(GenericControlState.Normal)?.Color;
+
+            if(color is null)
+            {
+                if (IsDarkBackground)
+                {
+                    color = Color.FromRgb(61, 61, 61);
+                }
+                else
+                {
+                    color = Color.FromRgb(204, 206, 219);
+                }
+            }
+
+            return color;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            var r = Header.Bounds;
+            r.Size += Header.Margin.Size;
+            DrawTabControlInterior(
+                e.Graphics,
+                ClientRectangle,
+                r,
+                GetInteriorBorderColor(),
+                TabAlignment);
+        }
+
+        private void Header_Paint(object? sender, PaintEventArgs e)
+        {
+            DrawTabsInterior(
+                Header,
+                e.DrawingContext,
+                e.Bounds,
+                GetInteriorBorderColor(),
+                TabAlignment);
         }
     }
 }

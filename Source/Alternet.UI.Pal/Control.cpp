@@ -917,7 +917,7 @@ namespace Alternet::UI
         if (GetUserPaint())
         {
             _wxWindow->SetDoubleBuffered(true);
-            _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
+            //_wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
         }
 
         if (!GetTabStop())
@@ -1395,7 +1395,7 @@ namespace Alternet::UI
     {
         event.Skip();
 
-        if (GetUserPaint())
+        /*if (GetUserPaint())
         {
             wxPaintDC dc(GetWxWindow());
             
@@ -1408,7 +1408,7 @@ namespace Alternet::UI
             
             dc.SetBackground(wxBrush(color));
             dc.Clear();
-        }
+        }*/
 
         RaiseEvent(ControlEvent::Paint);
     }

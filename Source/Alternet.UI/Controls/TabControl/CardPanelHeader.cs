@@ -71,7 +71,6 @@ namespace Alternet.UI
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
-            Padding = 1;
         }
 
         /// <summary>
