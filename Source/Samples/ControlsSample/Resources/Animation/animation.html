@@ -1,0 +1,16 @@
+<button onclick="play()">Play</button>
+<button onclick="stop()">Stop</button>
+
+<image src="HourGlassInFile.gif" id="anim"/><br/><hr/>
+
+<script>
+
+var el = document.getElementById('anim');
+function play() {
+	el.removeAttribute('style');
+}
+function stop() {
+	el.style.display = 'none'
+}
+
+</script>
