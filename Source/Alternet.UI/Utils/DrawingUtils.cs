@@ -118,6 +118,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws rectangle border using <see cref="Graphics.FillRectangle"/>.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="brush">Brush to draw border.</param>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="borderWidth">Border width.</param>
+        public static void FillRectangleBorder(
+            Graphics dc,
+            Brush brush,
+            RectD rect,
+            Thickness borderWidth)
+        {
+            if(borderWidth.Top > 0)
+                dc.FillRectangle(brush, GetTopLineRect(rect, borderWidth.Top));
+            if (borderWidth.Bottom > 0)
+                dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth.Bottom));
+            if (borderWidth.Left > 0)
+                dc.FillRectangle(brush, GetLeftLineRect(rect, borderWidth.Left));
+            if (borderWidth.Right > 0)
+                dc.FillRectangle(brush, GetRightLineRect(rect, borderWidth.Right));
+        }
+
+        /// <summary>
+        /// Draws rectangles border using <see cref="Graphics.FillRectangle"/>.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="brush">Brush to draw border.</param>
+        /// <param name="rects">Border rectangles.</param>
+        /// <param name="borders">Border width.</param>
+        public static void FillRectanglesBorder(
+            Graphics dc,
+            Brush brush,
+            RectD[] rects,
+            Thickness[] borders)
+        {
+            for (int i = 0; i < rects.Length; i++)
+            {
+                FillRectangleBorder(dc, brush, rects[i], borders[i]);
+            }
+        }
+
+        /// <summary>
         /// Gets rectangle of the left border edge with the specified width.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
