@@ -69,7 +69,7 @@ namespace Alternet.UI
 
         private readonly Collection<CardPanelHeaderItem> tabs = new();
 
-        private readonly Border control = new()
+        private readonly Border border = new()
         {
             // do not change HorizontalAlignment, horizontal line must be on full width
             HorizontalAlignment = UI.HorizontalAlignment.Stretch,
@@ -97,11 +97,11 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
-            control.Layout = LayoutStyle.Horizontal;
+            border.Layout = LayoutStyle.Horizontal;
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
-            control.Parent = this;
+            border.Parent = this;
         }
 
         /// <summary>
@@ -156,6 +156,11 @@ namespace Alternet.UI
         /// Gets or sets default inactive tab colors.
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
+
+        /// <summary>
+        /// Gets inner border control.
+        /// </summary>
+        public Border Border => border;
 
         /// <summary>
         /// Gets or sets individual tab margin.
@@ -234,12 +239,12 @@ namespace Alternet.UI
         {
             get
             {
-                return control.BorderWidth;
+                return border.BorderWidth;
             }
 
             set
             {
-                control.BorderWidth = value;
+                border.BorderWidth = value;
                 PerformLayout();
                 Refresh();
             }
@@ -252,12 +257,12 @@ namespace Alternet.UI
         {
             get
             {
-                return control.Padding;
+                return border.Padding;
             }
 
             set
             {
-                control.Padding = value;
+                border.Padding = value;
                 PerformLayout();
                 Refresh();
             }
@@ -270,12 +275,12 @@ namespace Alternet.UI
         {
             get
             {
-                return control.Margin;
+                return border.Margin;
             }
 
             set
             {
-                control.Margin = value;
+                border.Margin = value;
                 PerformLayout();
                 Refresh();
             }
@@ -288,12 +293,12 @@ namespace Alternet.UI
         {
             get
             {
-                return control.HorizontalAlignment;
+                return border.HorizontalAlignment;
             }
 
             set
             {
-                control.HorizontalAlignment = value;
+                border.HorizontalAlignment = value;
             }
         }
 
@@ -304,12 +309,12 @@ namespace Alternet.UI
         {
             get
             {
-                return control.VerticalAlignment;
+                return border.VerticalAlignment;
             }
 
             set
             {
-                control.VerticalAlignment = value;
+                border.VerticalAlignment = value;
             }
         }
 
@@ -320,12 +325,12 @@ namespace Alternet.UI
         {
             get
             {
-                return control.VerticalAlignment;
+                return border.VerticalAlignment;
             }
 
             set
             {
-                control.VerticalAlignment = value;
+                border.VerticalAlignment = value;
             }
         }
 
@@ -335,14 +340,14 @@ namespace Alternet.UI
         /// </summary>
         public StackPanelOrientation Orientation
         {
-            get => control.Layout == LayoutStyle.Vertical ? StackPanelOrientation.Vertical : StackPanelOrientation.Horizontal;
+            get => border.Layout == LayoutStyle.Vertical ? StackPanelOrientation.Vertical : StackPanelOrientation.Horizontal;
 
             set
             {
                 if (value == StackPanelOrientation.Vertical)
-                    control.Layout = LayoutStyle.Vertical;
+                    border.Layout = LayoutStyle.Vertical;
                 else
-                    control.Layout = LayoutStyle.Horizontal;
+                    border.Layout = LayoutStyle.Horizontal;
             }
         }
 
@@ -585,7 +590,7 @@ namespace Alternet.UI
             set
             {
                 base.BackgroundColor = value;
-                control.BackgroundColor = value;
+                border.BackgroundColor = value;
             }
         }
 
@@ -597,7 +602,7 @@ namespace Alternet.UI
             set
             {
                 base.ForegroundColor = value;
-                control.ForegroundColor = value;
+                border.ForegroundColor = value;
             }
         }
 
@@ -796,7 +801,7 @@ namespace Alternet.UI
             button.Padding = TabPadding ?? DefaultTabPadding;
             button.HasBorder = TabHasBorder;
             button.HorizontalAlignment = UI.HorizontalAlignment.Center;
-            button.Parent = control;
+            button.Parent = border;
             button.Click += Item_Click;
 
             var item = new CardPanelHeaderItem(button)

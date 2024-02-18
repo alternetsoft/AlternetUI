@@ -189,7 +189,9 @@ namespace Alternet.UI
         {
             control ??= new();
             var cardIndex = cardPanel.Add(title, control);
-            Header.Add(title, cardPanel[cardIndex].UniqueId);
+            var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
+            if(headerTabIndex == 0)
+                SelectFirstTab();
             return cardIndex;
         }
     }
