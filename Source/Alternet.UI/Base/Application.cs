@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -67,7 +68,7 @@ namespace Alternet.UI
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
-        private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();
+        private static readonly ConcurrentQueue<(Action<object?>, object?)> IdleTasks = new();
         private static Queue<string>? logQueue;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
@@ -678,6 +679,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="Log"/> method with <paramref name="obj"/> parameter
+        /// when application becomes idle.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <remarks>
+        /// This method is thread safe and can be called from non-ui threads.
+        /// </remarks>
+        public static void IdleLog(object? obj)
+        {
+            AddIdleTask(() =>
+            {
+                Log(obj);
+            });
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
@@ -1159,10 +1176,10 @@ namespace Alternet.UI
 
         private void NativeApplication_Idle()
         {
-            if (IdleTasks.Count > 0 && Application.current?.Windows.Count > 0)
+            if (!IdleTasks.IsEmpty && Application.current?.Windows.Count > 0)
             {
-                var task = IdleTasks.Dequeue();
-                task.Item1(task.Item2);
+                if(IdleTasks.TryDequeue(out var task))
+                    task.Item1(task.Item2);
             }
 
             Idle?.Invoke(this, EventArgs.Empty);
