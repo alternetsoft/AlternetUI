@@ -51,20 +51,51 @@ namespace Alternet.UI
         {
             get
             {
-                if (Header.VerticalAlignment == UI.VerticalAlignment.Bottom)
-                    return TabAlignment.Bottom;
+                if(Layout == LayoutStyle.Vertical)
+                {
+                    if (Header.VerticalAlignment == UI.VerticalAlignment.Bottom)
+                        return TabAlignment.Bottom;
+                    else
+                        return TabAlignment.Top;
+                }
                 else
-                    return TabAlignment.Top;
+                {
+                    if (Header.HorizontalAlignment == UI.HorizontalAlignment.Right)
+                        return TabAlignment.Right;
+                    else
+                        return TabAlignment.Left;
+                }
             }
 
             set
             {
                 if (TabAlignment == value)
                     return;
-                if (value == TabAlignment.Bottom)
-                    Header.VerticalAlignment = UI.VerticalAlignment.Bottom;
-                else
-                    Header.VerticalAlignment = UI.VerticalAlignment.Top;
+                DoInsideLayout(() =>
+                {
+                    var isVertical = value == TabAlignment.Top || value == TabAlignment.Bottom;
+
+                    if (isVertical)
+                    {
+                        Layout = LayoutStyle.Vertical;
+                        Header.Layout = LayoutStyle.Horizontal;
+                        if (value == TabAlignment.Bottom)
+                            Header.VerticalAlignment = UI.VerticalAlignment.Bottom;
+                        else
+                            Header.VerticalAlignment = UI.VerticalAlignment.Top;
+                    }
+                    else
+                    {
+                        Layout = LayoutStyle.Horizontal;
+                        Header.Layout = LayoutStyle.Vertical;
+                        if (value == TabAlignment.Right)
+                            Header.HorizontalAlignment = UI.HorizontalAlignment.Right;
+                        else
+                            Header.HorizontalAlignment = UI.HorizontalAlignment.Left;
+                    }
+                });
+                Invalidate();
+                Header.Invalidate();
             }
         }
 
