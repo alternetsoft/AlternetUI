@@ -445,11 +445,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref='RectD'/> with the specified location and size.
+        /// Creates a new <see cref='RectD'/> using
+        /// (<paramref name="left"/>, <paramref name="top"/>) and
+        /// (<paramref name="right"/>, <paramref name="bottom"/>) points.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD FromLTRB(double left, double top, double right, double bottom) =>
             new(left, top, right - left, bottom - top);
+
+        /// <summary>
+        /// Creates a new <see cref='RectD'/> specified by two points.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RectD FromLTRB(PointD leftTop, PointD rightBottom) =>
+            new(
+                leftTop.X,
+                leftTop.Y,
+                rightBottom.X - leftTop.X,
+                rightBottom.Y - leftTop.Y);
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined
