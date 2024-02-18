@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -66,11 +68,12 @@ namespace Alternet.UI
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
-        private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();
+        private static readonly ConcurrentQueue<(Action<object?>, object?)> IdleTasks = new();
         private static Queue<string>? logQueue;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
+        private static IconSet? icon;
 
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -222,6 +225,29 @@ namespace Alternet.UI
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static bool DebugWriteLine { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets default icon for the application.
+        /// </summary>
+        /// <remarks>
+        /// By default it returns icon of the the first <see cref="Window"/>.
+        /// You can assing <see cref="IconSet"/> here to override default behavior.
+        /// If you assing <c>null</c>, this property will again return icon of
+        /// the the first <see cref="Window"/>. Change to this property doesn't
+        /// update the icon of the the first <see cref="Window"/>.
+        /// </remarks>
+        public static IconSet? DefaultIcon
+        {
+            get
+            {
+                return icon ?? Application.FirstWindow()?.Icon;
+            }
+
+            set
+            {
+                icon = value;
+            }
+        }
 
         /// <summary>
         /// Gets whether application was initialized;
@@ -650,6 +676,22 @@ namespace Alternet.UI
         public static void LogError(object? obj)
         {
             Log($"Error: {obj}");
+        }
+
+        /// <summary>
+        /// Calls <see cref="Log"/> method with <paramref name="obj"/> parameter
+        /// when application becomes idle.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <remarks>
+        /// This method is thread safe and can be called from non-ui threads.
+        /// </remarks>
+        public static void IdleLog(object? obj)
+        {
+            AddIdleTask(() =>
+            {
+                Log(obj);
+            });
         }
 
         /// <summary>
@@ -1134,10 +1176,10 @@ namespace Alternet.UI
 
         private void NativeApplication_Idle()
         {
-            if (IdleTasks.Count > 0 && Application.current?.Windows.Count > 0)
+            if (!IdleTasks.IsEmpty && Application.current?.Windows.Count > 0)
             {
-                var task = IdleTasks.Dequeue();
-                task.Item1(task.Item2);
+                if(IdleTasks.TryDequeue(out var task))
+                    task.Item1(task.Item2);
             }
 
             Idle?.Invoke(this, EventArgs.Empty);

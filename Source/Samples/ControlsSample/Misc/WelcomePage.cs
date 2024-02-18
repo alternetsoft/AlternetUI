@@ -23,6 +23,8 @@ namespace ControlsSample
             richText.Parent = this;
             var r = richText;
 
+            r.TextUrl += RichTextBox_TextUrl;
+
             r.SetDefaultStyle(TextBox.CreateTextAttr());
 
             r.BeginUpdate();
@@ -64,11 +66,27 @@ namespace ControlsSample
             r.WriteText("    ");
             r.WriteUrl(urlStyle, docsUrl, "Documentation");
 
+            r.NewLine();
+            r.WriteUrl(urlStyle, "PropertyGrid", "Run Property Grid Demo");
+
             r.EndSuppressUndo();
             r.EndUpdate();
             r.ReadOnly = true;
             r.AutoUrlOpen = true;
             r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
+        }
+
+        private void RichTextBox_TextUrl(object? sender, UrlEventArgs e)
+        {
+            if(e.Url == "PropertyGrid")
+            {
+                e.Cancel = true;
+                Application.AddIdleTask(() =>
+                {
+                    var form = new PropertyGridSample.MainWindow();
+                    form.Show();
+                });
+            }
         }
     }
 }

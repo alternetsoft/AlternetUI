@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "DataBindingSample": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

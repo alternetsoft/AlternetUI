@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ThreadingSample": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

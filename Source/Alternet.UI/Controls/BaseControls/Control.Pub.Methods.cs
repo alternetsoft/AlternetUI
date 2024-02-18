@@ -37,7 +37,7 @@ namespace Alternet.UI
                 if (number == 0 || number == items.Count)
                     return;
                 var newItems = new List<Control>();
-                foreach(var item in items)
+                foreach (var item in items)
                 {
                     if (item.Dock == DockStyle.None)
                         newItems.Add(item);
@@ -405,6 +405,26 @@ namespace Alternet.UI
         /// <param name="action">An action to execute.</param>
         /// <returns>An <see cref="IAsyncResult"/> that represents the result
         /// of the operation.</returns>
+        /// <remarks>
+        /// You can call this method from another non-ui thread with action
+        /// which can perform operation on ui controls.
+        /// </remarks>
+        /// <example>
+        /// private void StartCounterThread1()
+        /// {
+        ///    var thread1 = new Thread(() =>
+        ///    {
+        ///      for (int i = 0; ; i++)
+        ///      {
+        ///          BeginInvoke(() => beginInvokeCounterLabel.Text = i.ToString());
+        ///          Thread.Sleep(1000);
+        ///       }
+        ///    })
+        ///    { IsBackground = true };
+        ///
+        ///    thread1.Start();
+        /// }
+        /// </example>
         public virtual IAsyncResult BeginInvoke(Action action)
         {
             if (action == null)
@@ -1600,8 +1620,8 @@ namespace Alternet.UI
             if (GlobalGetPreferredSize is not null)
             {
                 var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
-                if (e.Handled && e.PreferredSize != SizeD.MinusOne)
-                    return e.PreferredSize;
+                if (e.Handled && e.Result != SizeD.MinusOne)
+                    return e.Result;
             }
 
             return DefaultGetPreferredSize(

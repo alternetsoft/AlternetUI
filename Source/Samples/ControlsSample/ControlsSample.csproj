@@ -8,6 +8,7 @@
       <LangVersion>11.0</LangVersion>
       <Nullable>enable</Nullable>
       <UseStyleCop>false</UseStyleCop>
+      <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>                 
 
   <ItemGroup>
@@ -45,9 +46,14 @@
       <None Remove="Resources\ButtonImages\ButtonImageHovered.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageNormal.svg" />
       <None Remove="Resources\ButtonImages\ButtonImagePressed.svg" />
-      <None Remove="Resources\EmployeePhoto.jpg" />
+      <None Remove="Resources\Document_16x.png" />
+      <None Remove="Resources\FolderClosed_16x.png" />
       <None Remove="Resources\icon-48x48.png" />
+      <None Remove="Resources\Leaves.jpg" />
       <None Remove="Resources\logo-128x128.png" />
+      <None Remove="Resources\Logo.png" />
+      <None Remove="Resources\ReportImage_16x.png" />
+      <None Remove="Resources\Report_16x.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
       <None Remove="Resources\Svg\arrow-left.svg" />
       <None Remove="Resources\Svg\arrow-right.svg" />
@@ -57,8 +63,44 @@
       <None Remove="Resources\Svg\plus.svg" />
       <None Remove="Resources\Svg\search.svg" />
       <None Remove="Resources\Svg\xmark.svg" />
+      <None Remove="Resources\TestIcon1.ico" />
+      <None Remove="Resources\TestIcon2.ico" />
+      <None Remove="Resources\ToolBarPng\Large\Calendar32.png" />
+      <None Remove="Resources\ToolBarPng\Large\LineGraph32.png" />
+      <None Remove="Resources\ToolBarPng\Large\Pencil32.png" />
+      <None Remove="Resources\ToolBarPng\Large\Photo32.png" />
+      <None Remove="Resources\ToolBarPng\Small\Calendar16.png" />
+      <None Remove="Resources\ToolBarPng\Small\LineGraph16.png" />
+      <None Remove="Resources\ToolBarPng\Small\Pencil16.png" />
+      <None Remove="Resources\ToolBarPng\Small\Photo16.png" />
+      <None Remove="Resources\ToolIcons\Airbrush.png" />
+      <None Remove="Resources\ToolIcons\Eraser.png" />
+      <None Remove="Resources\ToolIcons\FloodFill.png" />
+      <None Remove="Resources\ToolIcons\Pen.png" />
       <None Remove="runsample.bat" />
       <None Remove="runsample.sh" />
+      <None Remove="SampleImages\cursor.png" />
+      <None Remove="SampleImages\horse.bmp" />
+      <None Remove="SampleImages\horse.cur" />
+      <None Remove="SampleImages\horse.gif" />
+      <None Remove="SampleImages\horse.ico" />
+      <None Remove="SampleImages\horse.jpg" />
+      <None Remove="SampleImages\horse.pcx" />
+      <None Remove="SampleImages\horse.png" />
+      <None Remove="SampleImages\horse.pnm" />
+      <None Remove="SampleImages\horse.svg" />
+      <None Remove="SampleImages\horse.tga" />
+      <None Remove="SampleImages\horse.tif" />
+      <None Remove="SampleImages\horse.xpm" />
+      <None Remove="SampleImages\horse3.ani" />
+      <None Remove="SampleImages\horse_ag.pnm" />
+      <None Remove="SampleImages\horse_rg.pnm" />
+      <None Remove="SampleImages\love-text-free-png-image.png" />
+      <None Remove="SampleImages\love-text-free-png-image_64x64.ico" />
+      <None Remove="SampleImages\penguin-love-couple.svg" />
+      <None Remove="SampleImages\smile.xbm" />
+      <None Remove="SampleImages\smile.xpm" />
+      <None Remove="SampleImages\toucan.png" />
       <None Remove="WebBrowserPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
@@ -98,7 +140,9 @@
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.svg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.svg" />
+      <EmbeddedResource Include="Resources\ExplorerUISample\Document_16x.png" />
       <EmbeddedResource Include="Resources\EmployeePhoto.jpg" />
+      <EmbeddedResource Include="Resources\ExplorerUISample\FolderClosed_16x.png" />
       <EmbeddedResource Include="Resources\icon-48x48.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />
@@ -108,10 +152,28 @@
       <EmbeddedResource Include="Resources\ImageListIcons\Small\LineGraph16.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Small\Pencil16.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Small\Photo16.png" />
+      <EmbeddedResource Include="Resources\Leaves.jpg" />
       <EmbeddedResource Include="Resources\logo-128x128.png" />
+      <EmbeddedResource Include="Resources\Logo.png" />
       <EmbeddedResource Include="Resources\Logo16x16.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
+      <EmbeddedResource Include="Resources\ExplorerUISample\ReportImage_16x.png" />
+      <EmbeddedResource Include="Resources\ExplorerUISample\Report_16x.png" />
+      <EmbeddedResource Include="Resources\TestIcon1.ico" />
+      <EmbeddedResource Include="Resources\TestIcon2.ico" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\Calendar32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\LineGraph32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\Pencil32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Large\Photo32.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\Calendar16.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\LineGraph16.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\Pencil16.png" />
+      <EmbeddedResource Include="Resources\ToolBarPng\Small\Photo16.png" />
+      <EmbeddedResource Include="Resources\ToolIcons\Airbrush.png" />
+      <EmbeddedResource Include="Resources\ToolIcons\Eraser.png" />
+      <EmbeddedResource Include="Resources\ToolIcons\FloodFill.png" />
+      <EmbeddedResource Include="Resources\ToolIcons\Pen.png" />
     </ItemGroup>
 
   <ItemGroup>
@@ -137,6 +199,72 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SamplePandaPdf.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\cursor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.pcx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.pnm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.tif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse.xpm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse3.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse_ag.pnm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\horse_rg.pnm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\love-text-free-png-image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\love-text-free-png-image_64x64.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\penguin-love-couple.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\smile.xbm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\smile.xpm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleImages\toucan.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

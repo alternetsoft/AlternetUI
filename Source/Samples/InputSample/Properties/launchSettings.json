@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "InputSample": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

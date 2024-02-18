@@ -795,6 +795,26 @@ namespace Alternet.UI
         public ICustomFlags CustomFlags => FlagsAndAttributes.Flags;
 
         /// <summary>
+        /// Gets or sets cached data for the layout engine.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? LayoutData
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets additional properties which are layout specific.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? LayoutProps
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets custom attributes provider associated with the control.
         /// You can store any custom data here.
         /// </summary>

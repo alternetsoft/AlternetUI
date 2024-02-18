@@ -16,12 +16,12 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="DefaultPreferredSizeEventArgs"/> class.
         /// </summary>
         /// <param name="layout">Layout style to use.</param>
-        /// <param name="availableSize"></param>
+        /// <param name="availableSize">Available size for the layout.</param>
         public DefaultPreferredSizeEventArgs(LayoutStyle layout, SizeD availableSize)
         {
             Layout = layout;
             AvailableSize = availableSize;
-            PreferredSize = SizeD.MinusOne;
+            Result = SizeD.MinusOne;
         }
 
         /// <summary>
@@ -38,6 +38,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets preferred size (a result of event execution).
         /// </summary>
-        public SizeD PreferredSize { get; set; }
+        public SizeD Result { get; set; }
     }
 }
