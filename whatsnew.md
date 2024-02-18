@@ -1,5 +1,16 @@
 # 0.9.507 (in development)
 
+## 2024 February 18
+
+- <u>**Integrated all other samples to ControlsSample**</u>.
+- Application: DefaultIcon, IdleLog.
+- Control: LayoutData, LayoutProps.
+- Threading sample (ControlsSample/InternalSamples/ThreadingSample) improved. Added correct thread cancellation when form is closed.
+- Hidden AuiManager sample. Currently we can't suggest to use AuiManager and other Aui* controls. 
+After testing it's features and functionality, we found that it works badly under Linux and MacOs. 
+Also there are some limitations in the Aui* controls which are critical. Currently we suggest to use:
+SplittedPanel as a container for sidebars, SideBarPanel as a simple tabcontrol for sidebars, GenericToolBar as a toolbar.
+
 ## 2024 February 16
 
 - IFlagsAndAttributes: this[string name], Flags, Attr.
@@ -9,7 +20,7 @@
 - Improved Samples.
 - CardPanelHeader.DefaultMinTabSize.
 - Control: CustomLayout event, CustomFlags, CustomAttr.
-- Control: Dock property is used in all layouts. For example you can if some child of the StackPanel
+- Control: <u>Dock property is used in all layouts.</u> For example you can if some child of the StackPanel
 has Dock=DockStyle.Right, it will be aligned right. All other align rules are applied after docking child controls.
 An example is added to LayoutSample/StackPanel.
 - Moved sample controls back to demo (FancySlider, FancyProgressBar, TikTacToe). 
