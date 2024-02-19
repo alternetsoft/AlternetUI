@@ -21,6 +21,8 @@ namespace Alternet.UI
         private readonly CardPanel cardPanel = new();
         private readonly CardPanelHeader cardPanelHeader = new();
         private bool hasInteriorBorder = true;
+        private TabSizeMode sizeMode = TabSizeMode.Normal;
+        private TabAppearance tabAppearance = TabAppearance.Normal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericTabControl"/> class.
@@ -43,6 +45,62 @@ namespace Alternet.UI
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
             base.Padding = 0;
             cardPanelHeader.CardPanel = cardPanel;
+        }
+
+        /// <summary>
+        /// Gets or sets the way that the control's tabs are sized.
+        /// </summary>
+        /// <returns>One of the <see cref="TabSizeMode" /> values.
+        /// The default is <see langword="Normal" />.</returns>
+        /// <remarks>
+        /// This property was added for compatibility and currently doesn't change
+        /// control behavior.
+        /// </remarks>
+        [Category("Behavior")]
+        [DefaultValue(TabSizeMode.Normal)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        public virtual TabSizeMode SizeMode
+        {
+            get
+            {
+                return sizeMode;
+            }
+
+            set
+            {
+                if (sizeMode == value)
+                    return;
+                sizeMode = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the visual appearance of the control's tabs.
+        /// </summary>
+        /// <returns>One of the <see cref="TabAppearance" /> values.
+        /// The default is <see langword="Normal" />.</returns>
+        /// <remarks>
+        /// This property was added for compatibility and currently doesn't change
+        /// control behavior.
+        /// </remarks>
+        [Category("Behavior")]
+        [Localizable(true)]
+        [DefaultValue(TabAppearance.Normal)]
+        public TabAppearance Appearance
+        {
+            get
+            {
+                return tabAppearance;
+            }
+
+            set
+            {
+                if (tabAppearance == value)
+                    return;
+                tabAppearance = value;
+                PerformLayout();
+            }
         }
 
         /// <summary>
