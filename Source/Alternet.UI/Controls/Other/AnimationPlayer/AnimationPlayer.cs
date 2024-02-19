@@ -27,6 +27,11 @@ namespace Alternet.UI
     public partial class AnimationPlayer : Control, IAnimationPlayer
     {
         /// <summary>
+        /// Gets or sets type of the default driver used inside the <see cref="AnimationPlayer"/>.
+        /// </summary>
+        public static KnownDriver DefaultDriver = KnownDriver.Generic;
+
+        /// <summary>
         /// Gets or sets function which creates animation player driver used in
         /// the <see cref="AnimationPlayer"/>.
         /// </summary>
@@ -50,6 +55,27 @@ namespace Alternet.UI
 
             driver = fn();
             driver.Control.Parent = this;
+        }
+
+        /// <summary>
+        /// Enumerates known <see cref="AnimationPlayer"/> drivers.
+        /// </summary>
+        public enum KnownDriver
+        {
+            /// <summary>
+            /// Native control is used inside the <see cref="AnimationPlayer"/>.
+            /// </summary>
+            Native,
+
+            /// <summary>
+            /// Generic control is used inside the <see cref="AnimationPlayer"/>.
+            /// </summary>
+            Generic,
+
+            /// <summary>
+            /// <see cref="WebBrowser"/> control is used inside the <see cref="AnimationPlayer"/>.
+            /// </summary>
+            WebBrowser,
         }
 
         Control IAnimationPlayer.Control { get => this; }
@@ -110,7 +136,19 @@ namespace Alternet.UI
         /// <returns></returns>
         public static IAnimationPlayer CreateDefaultPlayerDriver()
         {
-            return new NativeAnimationPlayer();
+            switch (DefaultDriver)
+            {
+                case KnownDriver.Native:
+                    return new NativeAnimationPlayer();
+                case KnownDriver.Generic:
+                    var result = new NativeAnimationPlayer();
+                    result.UseGeneric = true;
+                    return result;
+                case KnownDriver.WebBrowser:
+                default:
+                    throw new NotImplementedException(
+                        "KnownDriver.WebBrowser is not currently supported.");
+            }
         }
 
         /// <summary>
