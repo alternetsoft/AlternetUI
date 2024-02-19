@@ -7,7 +7,7 @@ using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    public class ControlPainterPreview : UserPaintControl
+    public class ControlPainterPreview : UserControl
     {
         private NativeControlPainter.ControlPartKind kind
             = NativeControlPainter.ControlPartKind.PushButton;

@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Parent class for all owner draw controls.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class UserPaintControl : Control
+    public partial class UserControl : Control
     {
         private bool hasBorder = true; // !! to border settings
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
@@ -24,9 +24,9 @@ namespace Alternet.UI
 #endif
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserPaintControl"/> class.
+        /// Initializes a new instance of the <see cref="UserControl"/> class.
         /// </summary>
-        public UserPaintControl()
+        public UserControl()
             : base()
         {
             UserPaint = true;
@@ -294,7 +294,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default painting method of the <see cref="UserPaintControl"/>
+        /// Default painting method of the <see cref="UserControl"/>
         /// and its descendants.
         /// </summary>
         /// <param name="dc">Drawing Context.</param>

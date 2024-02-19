@@ -1,8 +1,52 @@
 #include "AnimationControl.h"
+#include "GenericImage.h"
 
 namespace Alternet::UI
 {
-	AnimationControl::AnimationControl()
+    int AnimationControl::GetDelay(uint32_t i)
+    {
+        auto ani = GetAnimation();
+        if(ani == nullptr)
+            return 0;
+
+        return ani->GetAnimation().GetDelay(i);
+    }
+
+    uint32_t AnimationControl::GetFrameCount()
+    {
+        auto ani = GetAnimation();
+        if (ani == nullptr)
+            return 0;
+
+        return ani->GetAnimation().GetFrameCount();
+    }
+
+    SizeI AnimationControl::GetSize()
+    {
+        return GetAnimation()->GetSize();
+    }
+
+    bool AnimationControl::IsOk()
+    {
+        auto ani = GetAnimation();
+        if (ani == nullptr)
+            return false;
+
+        return ani->GetAnimation().IsOk();
+    }
+
+    void* AnimationControl::GetFrame(uint32_t i)
+    {
+        auto ani = GetAnimation();
+        if (ani == nullptr)
+            return nullptr;
+
+        auto image = ani->GetAnimation().GetFrame(i);
+
+        return new GenericImage(image);
+    }
+
+    AnimationControl::AnimationControl()
 	{
 
 	}
@@ -10,6 +54,16 @@ namespace Alternet::UI
 	AnimationControl::~AnimationControl()
 	{
 	}
+
+    wxGenericAnimationCtrl* AnimationControl::GetGenericAnimation()
+    {
+        return dynamic_cast<wxGenericAnimationCtrl*>(GetWxWindow());
+    }
+
+    wxAnimationCtrl* AnimationControl::GetCtrlAnimation()
+    {
+        return dynamic_cast<wxAnimationCtrl*>(GetWxWindow());
+    }
 
     wxAnimationCtrlBase* AnimationControl::GetAnimation()
     {
@@ -103,7 +157,7 @@ namespace Alternet::UI
 
     wxWindow* AnimationControl::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = wxAC_DEFAULT_STYLE;
+        long style = wxAC_DEFAULT_STYLE /* || wxAC_NO_AUTORESIZE */;
 
         wxWindow* control;
 

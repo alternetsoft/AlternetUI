@@ -23,7 +23,9 @@ namespace ControlsSample
         internal static readonly string AnimationAlternet = $"{ResPrefix}Alternet.gif";
         internal static readonly string AnimationCustom = "Open animation file (*.gif; *.ani)...";
 
-        private readonly AnimationPlayer animation = new();            
+        private readonly AnimationPlayer animation = new();
+        private readonly Button showFrameButton = new();
+        private PopupPictureBox popup = new();
         
         private readonly ComboBox selectComboBox = new()
         {
@@ -35,8 +37,9 @@ namespace ControlsSample
             Padding = 10;
             var defaultAnimationUrl = AnimationPlant;
 
+
             animation.Parent = this;
-            animation.UseGeneric = true;
+            animation.UseGeneric = false;
             animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
             animation.Play();
 
@@ -52,9 +55,25 @@ namespace ControlsSample
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
 
             var buttonPanel = AddHorizontalStackPanel();
-            buttonPanel.AddButton("Play", animation.Play);
+            buttonPanel.AddButton("Play", () => { animation.Play(); });
             buttonPanel.AddButton("Stop", animation.Stop);
+            buttonPanel.AddButton("Info", ShowInfo);
+            showFrameButton = buttonPanel.AddButton("Show frame 0", ShowFrame);
             buttonPanel.ChildrenSet.Margin(5).SuggestedWidthToMax();
+        }
+
+        private void ShowFrame()
+        {
+            var image = animation.GetFrame(0);
+            popup.MainControl.Image = (Image)image;
+            popup.ShowPopup(showFrameButton);
+        }
+
+        private void ShowInfo()
+        {
+            Application.Log($"Animation.IsOk: {animation.IsOk}");
+            Application.Log($"Animation.FrameCount: {animation.FrameCount}");
+            Application.Log($"Animation.FrameDelay[0]: {animation.GetDelay(0)}");
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)

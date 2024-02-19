@@ -27,5 +27,7 @@ namespace Alternet::UI
 
     private:
         wxAnimationCtrlBase* GetAnimation();
+        wxGenericAnimationCtrl* GetGenericAnimation();
+        wxAnimationCtrl* GetCtrlAnimation();
     };
 }

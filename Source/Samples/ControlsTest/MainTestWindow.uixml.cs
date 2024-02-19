@@ -46,20 +46,17 @@ namespace ControlsTest
 
                 if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
                 {
-                    PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
-                    result = AddWebBrowserPage("Browser Edge");
+                    result = AddWebBrowserPage("Browser Edge", WebBrowserBackend.Edge);
                 }
 
                 if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
                 {
-                    PanelWebBrowser.UseBackend = WebBrowserBackend.WebKit;
-                    result = AddWebBrowserPage("Browser WebKit");
+                    result = AddWebBrowserPage("Browser WebKit", WebBrowserBackend.WebKit);
                 }
 
                 if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest))
                 {
-                    PanelWebBrowser.UseBackend = WebBrowserBackend.IELatest;
-                    result = AddWebBrowserPage("Browser IE");
+                    result = AddWebBrowserPage("Browser IE", WebBrowserBackend.IELatest);
                 }
 
                 return result;
@@ -104,10 +101,12 @@ namespace ControlsTest
             LogSizeEvent(sender, "SizeChanged");
         }
 
-        private int AddWebBrowserPage(string title)
+        private int AddWebBrowserPage(string title, WebBrowserBackend backend)
         {
             Control Fn()
             {
+                PanelWebBrowser.UseBackend = backend;
+
                 var result = new WebBrowserTestPage
                 {
                     PageName = title,

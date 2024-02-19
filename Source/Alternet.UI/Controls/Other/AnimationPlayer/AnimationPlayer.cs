@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -23,10 +24,45 @@ namespace Alternet.UI
     /// support all of them.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class AnimationPlayer : Control
+    public partial class AnimationPlayer : Control, IAnimationPlayer
     {
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.AnimationPlayer;
+        /// <summary>
+        /// Gets or sets function which creates animation player driver used in
+        /// the <see cref="AnimationPlayer"/>.
+        /// </summary>
+        /// <remarks>
+        /// If this field is <c>null</c>, <see cref="CreateDefaultPlayerDriver"/>
+        /// is used to create animation player driver.
+        /// </remarks>
+        public static Func<IAnimationPlayer>? CreatePlayerDriver;
+
+        private readonly IAnimationPlayer driver;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
+        /// </summary>
+        public AnimationPlayer()
+        {
+            VerticalAlignment = VerticalAlignment.Top;
+            HorizontalAlignment = HorizontalAlignment.Left;
+
+            var fn = CreatePlayerDriver ?? CreateDefaultPlayerDriver;
+
+            driver = fn();
+            driver.Control.Parent = this;
+        }
+
+        Control IAnimationPlayer.Control { get => this; }
+
+        /// <summary>
+        /// Gets the number of frames for this animation.
+        /// </summary>
+        /// <returns></returns>
+        [Browsable(false)]
+        public virtual uint FrameCount
+        {
+            get => driver.FrameCount;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use generic calendar or native calendar.
@@ -35,30 +71,47 @@ namespace Alternet.UI
         /// Default value under Linux is <c>true</c> (native version is not working),
         /// on other platfroms - <c>false</c>.
         /// </remarks>
-        public bool UseGeneric
+        public virtual bool UseGeneric
         {
             get
             {
-                return NativeControl.UseGeneric;
+                return driver.UseGeneric;
             }
 
             set
             {
-                NativeControl.UseGeneric = value;
+                driver.UseGeneric = value;
             }
         }
 
+        /// <summary>
+        /// Gets the size of the animation in pixels.
+        /// </summary>
+        /// <returns></returns>
         [Browsable(false)]
-        internal new NativeAnimationControlHandler Handler
+        public virtual SizeI AnimationSize
         {
-            get
-            {
-                CheckDisposed();
-                return (NativeAnimationControlHandler)base.Handler;
-            }
+            get => driver.AnimationSize;
         }
 
-        internal new Native.AnimationControl NativeControl => Handler.NativeControl;
+        /// <summary>
+        /// Returns true if animation data is present.
+        /// </summary>
+        /// <returns></returns>
+        [Browsable(false)]
+        public virtual bool IsOk
+        {
+            get => driver.IsOk;
+        }
+
+        /// <summary>
+        /// Creates default native animation player driver.
+        /// </summary>
+        /// <returns></returns>
+        public static IAnimationPlayer CreateDefaultPlayerDriver()
+        {
+            return new NativeAnimationPlayer();
+        }
 
         /// <summary>
         /// Starts playing the animation.
@@ -69,22 +122,9 @@ namespace Alternet.UI
         /// has an infinite delay time) and always start from the first frame even if
         /// you stopped it while some other frame was displayed.
         /// </remarks>
-        public virtual bool PlayFn()
+        public virtual bool Play()
         {
-            return NativeControl.Play();
-        }
-
-        /// <summary>
-        /// Starts playing the animation.
-        /// </summary>
-        /// <remarks>
-        /// The animation is always played in loop mode (unless the last frame of the animation
-        /// has an infinite delay time) and always start from the first frame even if
-        /// you stopped it while some other frame was displayed.
-        /// </remarks>
-        public virtual void Play()
-        {
-            NativeControl.Play();
+            return driver.Play();
         }
 
         /// <summary>
@@ -97,7 +137,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Stop()
         {
-            NativeControl.Stop();
+            driver.Stop();
         }
 
         /// <summary>
@@ -106,7 +146,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the animation is being played; <c>false</c> otherwise.</returns>
         public virtual bool IsPlaying()
         {
-            return NativeControl.IsPlaying();
+            return driver.IsPlaying();
         }
 
         /// <summary>
@@ -120,14 +160,15 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any)
         {
-            return NativeControl.LoadFile(filename, (int)type);
+            return driver.LoadFile(filename, type);
         }
 
         /// <summary>
         /// Loads the animation from the given stream.
         /// </summary>
         /// <param name="stream">The stream to use to load the animation.
-        /// Under Linux may be any kind of stream; under other platforms this must be a seekable stream.
+        /// Under Linux may be any kind of stream; under other platforms this must be
+        /// a seekable stream.
         /// </param>
         /// <param name="type">One of the <see cref="AnimationType"/> values;
         /// <see cref="AnimationType.Any"/>
@@ -136,8 +177,27 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
         {
-            using var inputStream = new UI.Native.InputStream(stream);
-            return NativeControl.Load(inputStream, (int)type);
+            return driver.Load(stream, type);
+        }
+
+        /// <summary>
+        /// Gets the delay (in milliseconds) for the specified frame.
+        /// </summary>
+        /// <param name="i">Frame index.</param>
+        /// <returns></returns>
+        public virtual int GetDelay(uint i)
+        {
+            return driver.GetDelay(i);
+        }
+
+        /// <summary>
+        /// Returns the specified frame as a <see cref="GenericImage"/>.
+        /// </summary>
+        /// <param name="i">Frame index.</param>
+        /// <returns></returns>
+        public virtual GenericImage GetFrame(uint i)
+        {
+            return driver.GetFrame(i);
         }
 
         /// <summary>
@@ -160,7 +220,7 @@ namespace Alternet.UI
         public virtual bool LoadFromUrl(string url, AnimationType type = AnimationType.Any)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
-            return Load(stream, type);
+            return driver.Load(stream, type);
         }
 
         /// <summary>
@@ -183,13 +243,121 @@ namespace Alternet.UI
         /// <param name="bitmap"></param>
         public virtual void SetInactiveBitmap(ImageSet? bitmap)
         {
-            NativeControl.SetInactiveBitmap(bitmap?.NativeImageSet);
+            driver.SetInactiveBitmap(bitmap);
         }
 
-        /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal class NativeAnimationPlayer : Control, IAnimationPlayer
         {
-            return new NativeAnimationControlHandler();
+            public NativeAnimationPlayer()
+            {
+            }
+
+            Control IAnimationPlayer.Control { get => this; }
+
+            public override ControlTypeId ControlKind => ControlTypeId.AnimationPlayer;
+
+            [Browsable(false)]
+            public virtual uint FrameCount
+            {
+                get => NativeControl.GetFrameCount();
+            }
+
+            public virtual bool UseGeneric
+            {
+                get
+                {
+                    return NativeControl.UseGeneric;
+                }
+
+                set
+                {
+                    NativeControl.UseGeneric = value;
+                }
+            }
+
+            [Browsable(false)]
+            public virtual SizeI AnimationSize
+            {
+                get => NativeControl.GetSize();
+            }
+
+            [Browsable(false)]
+            public virtual bool IsOk
+            {
+                get => NativeControl.IsOk();
+            }
+
+            [Browsable(false)]
+            internal new NativeAnimationControlHandler Handler
+            {
+                get
+                {
+                    CheckDisposed();
+                    return (NativeAnimationControlHandler)base.Handler;
+                }
+            }
+
+            internal new Native.AnimationControl NativeControl => Handler.NativeControl;
+
+            public virtual bool Play()
+            {
+                return NativeControl.Play();
+            }
+
+            public virtual void Stop()
+            {
+                NativeControl.Stop();
+            }
+
+            public virtual bool IsPlaying()
+            {
+                return NativeControl.IsPlaying();
+            }
+
+            public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any)
+            {
+                return NativeControl.LoadFile(filename, (int)type);
+            }
+
+            public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
+            {
+                using var inputStream = new UI.Native.InputStream(stream);
+                return NativeControl.Load(inputStream, (int)type);
+            }
+
+            public virtual int GetDelay(uint i)
+            {
+                return NativeControl.GetDelay(i);
+            }
+
+            public virtual GenericImage GetFrame(uint i)
+            {
+                var ptr = NativeControl.GetFrame(i);
+                var result = new GenericImage(ptr);
+                return result;
+            }
+
+            public override SizeD GetPreferredSize(SizeD availableSize)
+            {
+                if (IsOk)
+                {
+                    var size = AnimationSize;
+                    var sizeDips = PixelToDip(size);
+                    return sizeDips;
+                }
+
+                return base.GetPreferredSize(availableSize);
+            }
+
+            public virtual void SetInactiveBitmap(ImageSet? bitmap)
+            {
+                NativeControl.SetInactiveBitmap(bitmap?.NativeImageSet);
+            }
+
+            internal override ControlHandler CreateHandler()
+            {
+                return new NativeAnimationControlHandler();
+            }
         }
     }
 }

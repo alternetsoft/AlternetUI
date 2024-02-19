@@ -80,53 +80,99 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether 'Ok' button is visible.
+        /// </summary>
+        public bool ShowOkButton
+        {
+            get
+            {
+                return GetButtonVisible(ButtonIdOk);
+            }
+
+            set
+            {
+                if (ShowOkButton == value)
+                    return;
+                SetButtonVisible(ButtonIdOk, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Cancel' button is visible.
+        /// </summary>
+        public bool ShowCancelButton
+        {
+            get
+            {
+                return GetButtonVisible(ButtonIdCancel);
+            }
+
+            set
+            {
+                if (ShowCancelButton == value)
+                    return;
+                SetButtonVisible(ButtonIdCancel, value);
+            }
+        }
+
+        /// <summary>
         /// Gets 'Ok' button id.
         /// </summary>
+        [Browsable(false)]
         public ObjectUniqueId ButtonIdOk { get; }
 
         /// <summary>
         /// Gets 'Cancel' button id.
         /// </summary>
+        [Browsable(false)]
         public ObjectUniqueId ButtonIdCancel { get; }
 
         /// <summary>
         /// Gets main panel (parent of the main control).
         /// </summary>
+        [Browsable(false)]
         public Control MainPanel => mainPanel;
 
         /// <summary>
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
         /// </summary>
+        [Browsable(false)]
         public GenericToolBar BottomToolBar => bottomToolBar;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.MinimizeEnabled"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual bool DefaultMinimizeEnabled => false;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.MaximizeEnabled"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual bool DefaultMaximizeEnabled => false;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual bool DefaultHasTitleBar => false;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.TopMost"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual bool DefaultTopMost => true;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.CloseEnabled"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual bool DefaultCloseEnabled => false;
 
         /// <summary>
         /// Gets whether popup window was already shown at least one time.
         /// </summary>
+        [Browsable(false)]
         public bool WasShown { get; set; } = false;
 
         /// <summary>
@@ -146,31 +192,31 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to focus <see cref="PopupOwner"/> control when popup is closed.
         /// </summary>
-        public bool FocusPopupOwnerOnHide { get; set; } = true;
+        public virtual bool FocusPopupOwnerOnHide { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user presses "Enter" key.
         /// </summary>
-        public bool HideOnEnter { get; set; } = true;
+        public virtual bool HideOnEnter { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user double clicks left mouse button.
         /// </summary>
-        public bool HideOnDoubleClick { get; set; } = true;
+        public virtual bool HideOnDoubleClick { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user clicks left mouse button.
         /// </summary>
-        public bool HideOnClick { get; set; } = true;
+        public virtual bool HideOnClick { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user clicks mouse outside it or if it loses focus in any other way.
         /// </summary>
-        public bool HideOnDeactivate { get; set; }
+        public virtual bool HideOnDeactivate { get; set; }
 
         /// <summary>
         /// Gets or sets the popup result value, which is updated when popup is closed.
@@ -195,7 +241,7 @@ namespace Alternet.UI
         /// Gets or sets main control used in the popup window.
         /// </summary>
         [Browsable(false)]
-        public Control MainControl
+        public virtual Control MainControl
         {
             get
             {
@@ -225,6 +271,26 @@ namespace Alternet.UI
                 BindEvents(mainControl);
                 mainControl.Parent = mainPanel;
             }
+        }
+
+        /// <summary>
+        /// Gets whether specified toolbar button is visible.
+        /// </summary>
+        /// <param name="buttonId">Button id.</param>
+        /// <returns></returns>
+        public virtual bool GetButtonVisible(ObjectUniqueId buttonId)
+        {
+            return BottomToolBar.GetToolVisible(buttonId) && BottomToolBar.Visible;
+        }
+
+        /// <summary>
+        /// Sets whether specified toolbar button is visible.
+        /// </summary>
+        /// <param name="buttonId">Button id.</param>
+        /// <param name="visible">Button visible state.</param>
+        public virtual void SetButtonVisible(ObjectUniqueId buttonId, bool visible)
+        {
+            BottomToolBar.SetToolVisible(buttonId, visible);
         }
 
         /// <summary>
@@ -359,7 +425,7 @@ namespace Alternet.UI
         /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
         /// device-inpependent units (1/96 inch).
         /// </remarks>
-        internal void SetPositionInDips(PointD ptOrigin, SizeD size)
+        internal virtual void SetPositionInDips(PointD ptOrigin, SizeD size)
         {
             // determine the position and size of the screen we clamp the popup to
             PointD posScreen;
