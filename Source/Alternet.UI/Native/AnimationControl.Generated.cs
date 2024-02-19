@@ -38,6 +38,36 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int GetDelay(uint i)
+        {
+            CheckDisposed();
+            return NativeApi.AnimationControl_GetDelay_(NativePointer, i);
+        }
+        
+        public System.IntPtr GetFrame(uint i)
+        {
+            CheckDisposed();
+            return NativeApi.AnimationControl_GetFrame_(NativePointer, i);
+        }
+        
+        public uint GetFrameCount()
+        {
+            CheckDisposed();
+            return NativeApi.AnimationControl_GetFrameCount_(NativePointer);
+        }
+        
+        public Alternet.Drawing.SizeI GetSize()
+        {
+            CheckDisposed();
+            return NativeApi.AnimationControl_GetSize_(NativePointer);
+        }
+        
+        public bool IsOk()
+        {
+            CheckDisposed();
+            return NativeApi.AnimationControl_IsOk_(NativePointer);
+        }
+        
         public bool Play()
         {
             CheckDisposed();
@@ -88,6 +118,21 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AnimationControl_SetUseGeneric_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AnimationControl_GetDelay_(IntPtr obj, uint i);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AnimationControl_GetFrame_(IntPtr obj, uint i);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint AnimationControl_GetFrameCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.SizeI AnimationControl_GetSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AnimationControl_IsOk_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool AnimationControl_Play_(IntPtr obj);

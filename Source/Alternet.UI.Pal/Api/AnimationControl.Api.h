@@ -25,6 +25,31 @@ ALTERNET_UI_API void AnimationControl_SetUseGeneric_(AnimationControl* obj, c_bo
     obj->SetUseGeneric(value);
 }
 
+ALTERNET_UI_API int AnimationControl_GetDelay_(AnimationControl* obj, uint32_t i)
+{
+    return obj->GetDelay(i);
+}
+
+ALTERNET_UI_API void* AnimationControl_GetFrame_(AnimationControl* obj, uint32_t i)
+{
+    return obj->GetFrame(i);
+}
+
+ALTERNET_UI_API uint32_t AnimationControl_GetFrameCount_(AnimationControl* obj)
+{
+    return obj->GetFrameCount();
+}
+
+ALTERNET_UI_API SizeI_C AnimationControl_GetSize_(AnimationControl* obj)
+{
+    return obj->GetSize();
+}
+
+ALTERNET_UI_API c_bool AnimationControl_IsOk_(AnimationControl* obj)
+{
+    return obj->IsOk();
+}
+
 ALTERNET_UI_API c_bool AnimationControl_Play_(AnimationControl* obj)
 {
     return obj->Play();

@@ -4,6 +4,11 @@ public:
 bool GetUseGeneric();
 void SetUseGeneric(bool value);
 
+int GetDelay(uint32_t i);
+void* GetFrame(uint32_t i);
+uint32_t GetFrameCount();
+SizeI GetSize();
+bool IsOk();
 bool Play();
 void Stop();
 bool IsPlaying();
