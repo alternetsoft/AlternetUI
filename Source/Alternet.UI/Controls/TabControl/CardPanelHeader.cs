@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the tab padding.
         /// </summary>
-        public static Thickness DefaultTabPadding = 3;
+        public static Thickness DefaultTabPadding = 4;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
