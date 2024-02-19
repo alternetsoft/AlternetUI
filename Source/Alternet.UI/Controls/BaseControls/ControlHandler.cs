@@ -1161,8 +1161,7 @@ namespace Alternet.UI
             using var dc =
                 new Graphics(NativeControl.OpenPaintDrawingContext());
 
-            if (Control.UserPaint)
-                Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
+            Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
         }
     }
 }

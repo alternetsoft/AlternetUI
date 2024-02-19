@@ -22,14 +22,41 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the drawing context used to paint.
         /// </summary>
-        /// <value>The <see cref="DrawingContext"/> object used to paint.
-        /// The <see cref="DrawingContext"/> object provides methods for drawing objects on the display device.</value>
+        /// <value>The <see cref="Graphics"/> object used to paint.
+        /// The <see cref="Graphics"/> object provides methods for drawing objects
+        /// on the display or other device.</value>
+        /// <remarks>
+        /// This is the same as <see cref="Graphics"/> property.
+        /// </remarks>
         public Graphics DrawingContext { get; }
 
         /// <summary>
         /// Gets the rectangle in which to paint.
         /// </summary>
         /// <value>The <see cref="RectD"/> in which to paint.</value>
+        /// <remarks>
+        /// This is the same as <see cref="ClipRectangle"/> property.
+        /// </remarks>
         public RectD Bounds { get; }
+
+        /// <summary>Gets the rectangle in which to paint.</summary>
+        /// <returns>The <see cref="RectD" /> in which to paint.</returns>
+        /// <remarks>
+        /// This is the same as <see cref="Bounds"/> property.
+        /// </remarks>
+        public RectD ClipRectangle => Bounds;
+
+        /// <summary>
+        /// Gets the graphics used to paint.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Graphics" /> object used to paint.
+        /// The <see cref="Graphics" /> object provides methods for drawing objects
+        /// on the display or other device.
+        /// </returns>
+        /// <remarks>
+        /// This is the same as <see cref="DrawingContext"/> property.
+        /// </remarks>
+        public Graphics Graphics => DrawingContext;
     }
 }

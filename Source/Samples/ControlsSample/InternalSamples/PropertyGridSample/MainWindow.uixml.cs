@@ -86,6 +86,7 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            Padding = 5;
             Activated += MainWindow_Activated;
             Deactivated += MainWindow_Deactivated;
             SizeChanged += MainWindow_SizeChanged;

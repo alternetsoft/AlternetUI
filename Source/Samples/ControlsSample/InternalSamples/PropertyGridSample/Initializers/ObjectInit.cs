@@ -96,7 +96,8 @@ namespace PropertyGridSample
             Actions.Add(typeof(Button), InitButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
-            Actions.Add(typeof(SideBarPanel), InitSideBarPanel);            
+            Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
+            Actions.Add(typeof(GenericTabControl), InitGenericTabControl);
 
             Actions.Add(typeof(ControlPainterPreview), (c) =>
             {
@@ -140,7 +141,19 @@ namespace PropertyGridSample
                 border.SuggestedSize = defaultListSize;
                 SetBackgrounds(border);
 
+                border.Layout = LayoutStyle.None;
+                Button button = new();
+                button.Location = (10, 10);
+                button.Text = "Click me";
+                button.Parent = border;
+                button.Click += Button_Click;
+
                 border.CurrentStateChanged += Border_CurrentStateChanged;
+
+                static void Button_Click(object? sender, EventArgs e)
+                {
+                    Application.Log("Button in Border clicked.");
+                }
 
                 static void Border_CurrentStateChanged(object? sender, EventArgs e)
                 {
@@ -323,9 +336,15 @@ namespace PropertyGridSample
                     Margin = 5,
                 };
                 panel.Children.Add(button);
+                button.Click += Button_Click;
             }
 
             return panel;
+
+            static void Button_Click(object? sender, EventArgs e)
+            {
+                Application.Log($"Button '{(sender as Button)?.Text}' Click");
+            }
         }
 
         internal static void AddTenItems(IList items)

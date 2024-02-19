@@ -31,32 +31,15 @@ namespace Alternet.UI
         public static Func<SpeedButton>? CreateButton;
 
         /// <summary>
-        /// Gets or sets default border side width.
-        /// </summary>
-        /// <remarks>
-        /// <see cref="DefaultBorderWidth"/> by default is calculated dynamically using this field.
-        /// </remarks>
-        public static double DefaultBorderSideWidth = 0;
-
-        /// <summary>
-        /// Gets or sets default value of the <see cref="BorderPadding"/> property.
-        /// </summary>
-        public static Thickness DefaultBorderPadding = 3;
-
-        /// <summary>
-        /// Gets or sets default value of the <see cref="BorderMargin"/> property.
-        /// </summary>
-        public static Thickness DefaultBorderMargin = new (0, 0, 0, 0);
-
-        /// <summary>
         /// Gets or sets default value for the tab margin.
         /// </summary>
+        // Do not change it from 1, as current tab interior border will be painted badly.
         public static Thickness DefaultTabMargin = 1;
 
         /// <summary>
         /// Gets or sets default value for the tab padding.
         /// </summary>
-        public static Thickness DefaultTabPadding = 3;
+        public static Thickness DefaultTabPadding = 4;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
@@ -65,19 +48,7 @@ namespace Alternet.UI
 
         internal static Color DefaultUnderlineColorLight = Color.FromRgb(0, 80, 197);
 
-        private static Thickness? defaultBorderWidth;
-
         private readonly Collection<CardPanelHeaderItem> tabs = new();
-
-        private readonly Border control = new()
-        {
-            // do not change HorizontalAlignment, horizontal line must be on full width
-            HorizontalAlignment = UI.HorizontalAlignment.Stretch,
-            VerticalAlignment = UI.VerticalAlignment.Top,
-            BorderWidth = DefaultBorderWidth,
-            Padding = DefaultBorderPadding,
-            Margin = DefaultBorderMargin,
-        };
 
         private Thickness? tabMargin;
         private Thickness? tabPadding;
@@ -97,35 +68,16 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
-            control.Layout = LayoutStyle.Horizontal;
+            Layout = LayoutStyle.Horizontal;
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
-            control.Parent = this;
         }
 
         /// <summary>
         /// Occurs when the tab is clicked.
         /// </summary>
         public event EventHandler? TabClick;
-
-        /// <summary>
-        /// Gets or sets default value of the border width.
-        /// </summary>
-        public static Thickness DefaultBorderWidth
-        {
-            get
-            {
-                if (defaultBorderWidth is null)
-                    return new(0, 0, 0, DefaultBorderSideWidth);
-                return defaultBorderWidth.Value;
-            }
-
-            set
-            {
-                defaultBorderWidth = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
@@ -226,123 +178,6 @@ namespace Alternet.UI
                     return;
                 tabHorizontalAlignment = value;
                 UpdateTabs();
-            }
-        }
-
-        /// <inheritdoc cref="Border.BorderWidth"/>
-        public Thickness BorderWidth
-        {
-            get
-            {
-                return control.BorderWidth;
-            }
-
-            set
-            {
-                control.BorderWidth = value;
-                PerformLayout();
-                Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets border padding.
-        /// </summary>
-        public Thickness BorderPadding
-        {
-            get
-            {
-                return control.Padding;
-            }
-
-            set
-            {
-                control.Padding = value;
-                PerformLayout();
-                Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets border margin.
-        /// </summary>
-        public Thickness BorderMargin
-        {
-            get
-            {
-                return control.Margin;
-            }
-
-            set
-            {
-                control.Margin = value;
-                PerformLayout();
-                Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="HorizontalAlignment"/> of the tab group.
-        /// </summary>
-        public HorizontalAlignment TabGroupHorizontalAlignment
-        {
-            get
-            {
-                return control.HorizontalAlignment;
-            }
-
-            set
-            {
-                control.HorizontalAlignment = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="VerticalAlignment"/> of the tabs.
-        /// </summary>
-        public VerticalAlignment TabVerticalAlignment
-        {
-            get
-            {
-                return control.VerticalAlignment;
-            }
-
-            set
-            {
-                control.VerticalAlignment = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="VerticalAlignment"/> of the tab group.
-        /// </summary>
-        public VerticalAlignment TabGroupVerticalAlignment
-        {
-            get
-            {
-                return control.VerticalAlignment;
-            }
-
-            set
-            {
-                control.VerticalAlignment = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value that indicates the dimension by which header
-        /// buttons are stacked.
-        /// </summary>
-        public StackPanelOrientation Orientation
-        {
-            get => control.Layout == LayoutStyle.Vertical ? StackPanelOrientation.Vertical : StackPanelOrientation.Horizontal;
-
-            set
-            {
-                if (value == StackPanelOrientation.Vertical)
-                    control.Layout = LayoutStyle.Vertical;
-                else
-                    control.Layout = LayoutStyle.Horizontal;
             }
         }
 
@@ -578,30 +413,6 @@ namespace Alternet.UI
             WindowSizeToContentMode.WidthAndHeight;
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor
-        {
-            get => base.BackgroundColor;
-
-            set
-            {
-                base.BackgroundColor = value;
-                control.BackgroundColor = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override Color? ForegroundColor
-        {
-            get => base.ForegroundColor;
-
-            set
-            {
-                base.ForegroundColor = value;
-                control.ForegroundColor = value;
-            }
-        }
-
-        /// <inheritdoc/>
         [Browsable(false)]
         public override bool IsBold
         {
@@ -631,6 +442,7 @@ namespace Alternet.UI
 
                 if (UpdateCardsVisible) SetCardsVisible();
                 CardsWidthToMax(UpdateCardsMode);
+                Invalidate();
             }
         }
 
@@ -796,7 +608,7 @@ namespace Alternet.UI
             button.Padding = TabPadding ?? DefaultTabPadding;
             button.HasBorder = TabHasBorder;
             button.HorizontalAlignment = UI.HorizontalAlignment.Center;
-            button.Parent = control;
+            button.Parent = this;
             button.Click += Item_Click;
 
             var item = new CardPanelHeaderItem(button)

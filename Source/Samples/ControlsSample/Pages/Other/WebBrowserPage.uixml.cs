@@ -13,6 +13,9 @@ namespace ControlsSample
         private const string SItemGoogle = "Google Search";
         private const string SItemPDF = "PDF Document";
         private const string SItemImage = "View Image";
+        private const string SItemMP3 = "Audio MP3";
+        private const string SItemWAV = "Audio WAV";
+        private const string SItemGIF = "Animated GIF";
 
         private static string? headerText;
 
@@ -61,6 +64,9 @@ namespace ControlsSample
                 webBrowser.Backend != WebBrowserBackend.IELatest)
                 UrlTextBox.Items.Add(SItemPDF);
             UrlTextBox.Items.Add(SItemImage);
+            UrlTextBox.Items.Add(SItemMP3);
+            UrlTextBox.Items.Add(SItemWAV);
+            UrlTextBox.Items.Add(SItemGIF);
         }
 
         private static string GetPandaFileName()
@@ -173,6 +179,24 @@ namespace ControlsSample
             {
                 s = WebBrowser.PrepareFileUrl(PathUtils.GetAppFolder() +
                     "Resources/SamplePandaPdf.pdf");
+            }
+
+            if (s == SItemMP3)
+            {
+                s = WebBrowser.PrepareFileUrl(PathUtils.GetAppFolder() +
+                    "Resources/Sounds/Mp3/sounds.html");
+            }
+
+            if (s == SItemWAV)
+            {
+                s = WebBrowser.PrepareFileUrl(PathUtils.GetAppFolder() +
+                    "Resources/Sounds/Wav/sounds.html");
+            }
+
+            if (s == SItemGIF)
+            {
+                s = WebBrowser.PrepareFileUrl(PathUtils.GetAppFolder() +
+                    "Resources/Animation/animation.html");
             }
 
             if (s == "g" || s == "SItemGoogle")

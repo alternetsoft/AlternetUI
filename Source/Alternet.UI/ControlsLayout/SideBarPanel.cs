@@ -21,8 +21,6 @@ namespace Alternet.UI
         /// </summary>
         public SideBarPanel()
         {
-            Header.Padding = (0, 5, 0, 0);
-            Header.BorderWidth = 0;
             BackgroundColor = SystemColors.Window;
             Header.BackgroundColor = SystemColors.ButtonFace;
         }

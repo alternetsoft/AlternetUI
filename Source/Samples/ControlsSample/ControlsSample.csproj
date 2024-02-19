@@ -38,7 +38,9 @@
       <None Remove="Pages\Layout\Controls\AlignmentControl.uixml" />
       <None Remove="Pages\Layout\Controls\GridLengthControl.uixml" />
       <None Remove="Resources\Animation\Alternet.gif" />
+      <None Remove="Resources\Animation\animation.html" />
       <None Remove="Resources\Animation\HourGlass.gif" />
+      <None Remove="Resources\Animation\HourGlassInFile.gif" />
       <None Remove="Resources\Animation\Spinner.gif" />
       <None Remove="Resources\ButtonImages\ButtonImageDisabled.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageFocused.png" />
@@ -55,6 +57,16 @@
       <None Remove="Resources\ReportImage_16x.png" />
       <None Remove="Resources\Report_16x.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
+      <None Remove="Resources\Sounds\Mp3\button-124476.mp3" />
+      <None Remove="Resources\Sounds\Mp3\notification-sound-7062.mp3" />
+      <None Remove="Resources\Sounds\Mp3\notifications-sound-127856.mp3" />
+      <None Remove="Resources\Sounds\Mp3\sounds.html" />
+      <None Remove="Resources\Sounds\Mp3\tap-notification-180637.mp3" />
+      <None Remove="Resources\Sounds\Wav\button-124476.wav" />
+      <None Remove="Resources\Sounds\Wav\notification-sound-7062.wav" />
+      <None Remove="Resources\Sounds\Wav\notifications-sound-127856.wav" />
+      <None Remove="Resources\Sounds\Wav\sounds.html" />
+      <None Remove="Resources\Sounds\Wav\tap-notification-180637.wav" />
       <None Remove="Resources\Svg\arrow-left.svg" />
       <None Remove="Resources\Svg\arrow-right.svg" />
       <None Remove="Resources\Svg\arrow-rotate-right.svg" />
@@ -198,7 +210,43 @@
     <Content Include="Html\SampleArchive\Styles\default.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Animation\animation.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Animation\HourGlassInFile.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\SamplePandaPdf.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Mp3\button-124476.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Mp3\notification-sound-7062.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Mp3\notifications-sound-127856.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Mp3\sounds.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Mp3\tap-notification-180637.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Wav\button-124476.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Wav\notification-sound-7062.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Wav\notifications-sound-127856.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Wav\sounds.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Wav\tap-notification-180637.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SampleImages\cursor.png">
@@ -329,5 +377,9 @@
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="NewCode\" />
     </ItemGroup>
 </Project>

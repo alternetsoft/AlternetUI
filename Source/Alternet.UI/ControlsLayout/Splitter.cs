@@ -355,6 +355,43 @@ namespace Alternet.UI
                 SplitEnd(true);
         }
 
+        /// <inheritdoc/>
+        protected override void DefaultPaint(Graphics dc, RectD rect)
+        {
+            var colors = NormalColors;
+            Color defaultColor;
+            if (IsDarkBackground)
+            {
+                colors ??= DefaultDarkColors;
+                defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
+            }
+            else
+            {
+                colors ??= DefaultLightColors;
+                defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
+            }
+
+            var backColor = colors?.BackgroundColor ?? defaultColor;
+            var foreColor = colors?.ForegroundColor;
+
+            if (backColor is not null)
+                dc.FillRectangle(backColor.AsBrush, rect);
+
+            if (foreColor is null)
+                return;
+
+            if (!Horizontal)
+            {
+                var horzLine = DrawingUtils.GetCenterLineHorz(rect);
+                dc.FillRectangle(foreColor.AsBrush, horzLine);
+            }
+            else
+            {
+                var vertLine = DrawingUtils.GetCenterLineVert(rect);
+                dc.FillRectangle(foreColor.AsBrush, vertLine);
+            }
+        }
+
         /// <summary>
         /// Raises the <see cref="SplitterMoving" /> event. This event occurs while the splitter is
         /// being moved by the user.
@@ -645,43 +682,6 @@ namespace Alternet.UI
             }
             else
                 return false;
-        }
-
-        /// <inheritdoc/>
-        protected override void DefaultPaint(Graphics dc, RectD rect)
-        {
-            var colors = NormalColors;
-            Color defaultColor;
-            if (IsDarkBackground)
-            {
-                colors ??= DefaultDarkColors;
-                defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
-            }
-            else
-            {
-                colors ??= DefaultLightColors;
-                defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
-            }
-
-            var backColor = colors?.BackgroundColor ?? defaultColor;
-            var foreColor = colors?.ForegroundColor;
-
-            if (backColor is not null)
-                dc.FillRectangle(backColor.AsBrush, rect);
-
-            if (foreColor is null)
-                return;
-
-            if (!Horizontal)
-            {
-                var horzLine = DrawingUtils.GetCenterLineHorz(rect);
-                dc.FillRectangle(foreColor.AsBrush, horzLine);
-            }
-            else
-            {
-                var vertLine = DrawingUtils.GetCenterLineVert(rect);
-                dc.FillRectangle(foreColor.AsBrush, vertLine);
-            }
         }
 
         private class SplitData
