@@ -7,7 +7,8 @@ namespace Alternet.UI.Versioning
 {
     internal static class MasterVersionBuildNumberSetter
     {
-        private static Regex informationalVersionRegex = new Regex(@"^\d+\.\d+\.(?<build1>\d+) \(\d+\.\d+\ \w+ build (?<build2>\d+)\)$");
+        private static readonly Regex informationalVersionRegex
+            = new(@"^\d+\.\d+\.(?<build1>\d+) \(\d+\.\d+\ \w+ build (?<build2>\d+)\)$");
 
         public static void SetBuildNumber(Repository repository, int buildNumber)
         {

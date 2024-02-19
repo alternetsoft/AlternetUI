@@ -6,15 +6,15 @@ namespace DrawingSample
 {
     internal sealed class TransformsPage : DrawingPage
     {
-        private static readonly Pen frameShadowDarkPen = new Pen(Color.DarkGoldenrod, 3);
+        private static readonly Pen frameShadowDarkPen = new(Color.DarkGoldenrod, 3);
 
-        private static readonly Pen frameShadowLightPen = new Pen(Color.Wheat, 3);
+        private static readonly Pen frameShadowLightPen = new(Color.Wheat, 3);
 
-        private static readonly Pen canvasFramePen = new Pen(Color.MistyRose, 3);
+        private static readonly Pen canvasFramePen = new(Color.MistyRose, 3);
 
-        private static readonly Pen outerCirclePen = new Pen(Color.DarkRed, 3);
+        private static readonly Pen outerCirclePen = new(Color.DarkRed, 3);
 
-        private static readonly Font canvasTestFont = new Font(FontFamily.GenericMonospace, 10);
+        /*private static readonly Font canvasTestFont = new(FontFamily.GenericMonospace, 10);*/
 
         private int translationX;
 

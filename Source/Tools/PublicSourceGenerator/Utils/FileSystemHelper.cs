@@ -13,7 +13,7 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
 
             Directory.CreateDirectory(path);
             var directoryInfo = new DirectoryInfo(path);
-            directoryInfo.Attributes = directoryInfo.Attributes | FileAttributes.NotContentIndexed;
+            directoryInfo.Attributes |= FileAttributes.NotContentIndexed;
         }
 
         public static void DeleteDirectory(string path)
@@ -41,13 +41,14 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
 
         public static string GetRelativePath(string filePath, string directoryPath)
         {
-            Uri pathUri = new Uri(filePath);
+            Uri pathUri = new(filePath);
             // Folders must end in a slash
             if (!directoryPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {
                 directoryPath += Path.DirectorySeparatorChar;
             }
-            Uri folderUri = new Uri(directoryPath);
+
+            Uri folderUri = new (directoryPath);
             return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
         }
 

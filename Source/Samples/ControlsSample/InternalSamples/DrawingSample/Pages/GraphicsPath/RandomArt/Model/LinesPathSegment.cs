@@ -6,7 +6,7 @@ namespace DrawingSample.RandomArt
 {
     internal class LinesPathSegment : PathSegment
     {
-        private List<PointD> points = new List<PointD>();
+        private readonly List<PointD> points = new();
 
         public LinesPathSegment(PointD start) : base(start)
         {

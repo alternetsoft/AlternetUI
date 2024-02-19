@@ -13,10 +13,12 @@ namespace Alternet.UI.Build.Tasks
 
         private const string LogSubcategory = "Alternet.UI.UIXml.CodeGeneration";
 
+#pragma warning disable
         private static readonly string[] StringSplitToArrayChars =
         {
             Environment.NewLine,
         };
+#pragma warning restore
 
         public static void LogToFile(string s)
         {

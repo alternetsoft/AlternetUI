@@ -6,7 +6,7 @@ namespace Alternet.UI.VersionTool
 {
     public partial class MainWindow : Window
     {
-        private Repository repository;
+        private readonly Repository repository;
 
         public MainWindow()
         {

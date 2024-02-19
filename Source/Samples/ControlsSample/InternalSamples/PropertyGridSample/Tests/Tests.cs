@@ -76,12 +76,12 @@ namespace PropertyGridSample
 
         }
 
-        void TestRichFind()
+        internal void TestRichFind()
         {
             TestRichFindReplace(false);
         }
 
-        void TestRichReplace()
+        internal void TestRichReplace()
         {
             TestRichFindReplace(true);
         }
@@ -211,7 +211,7 @@ namespace PropertyGridSample
             (color as PropertyGridColors)?.LogToFile();
         }
 
-        private static IDataObject GetDataObject()
+        internal static IDataObject GetDataObject()
         {
             var result = new DataObject();
             result.SetData(DataFormats.Text, "Test data string.");

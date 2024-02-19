@@ -40,7 +40,7 @@ namespace Alternet.UI
         {
             get
             {
-                return CategoryId.ToLower() == "hidden";
+                return CategoryId.Equals("hidden", StringComparison.OrdinalIgnoreCase);
             }
         }
 

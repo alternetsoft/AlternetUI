@@ -8,10 +8,12 @@ namespace ThreadingSample
     public partial class MainWindow : Window
     {
         private static int globalCounter;
-        private int counter;
+
+        private readonly int counter;
+        private readonly CancellationTokenSource tokenSource;
+
         private Thread? thread1;
         private Thread? thread2;
-        private CancellationTokenSource tokenSource;
 
         public MainWindow()
         {

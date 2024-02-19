@@ -6,7 +6,7 @@ namespace DrawingSample
 {
     internal sealed class ShapesPage : DrawingPage
     {
-        private Shapes shapes;
+        private readonly Shapes shapes;
 
         public ShapesPage()
         {

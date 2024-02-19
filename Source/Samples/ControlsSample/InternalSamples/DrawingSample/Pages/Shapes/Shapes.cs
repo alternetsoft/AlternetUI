@@ -16,7 +16,8 @@ namespace DrawingSample
 
         Pen StrokePen => page.StrokePen;
         Brush FillBrush => page.FillBrush;
-        Brush BackgroundBrush => page.BackgroundBrush;
+        
+        internal Brush BackgroundBrush => page.BackgroundBrush;
 
         public void DrawLine(Graphics dc, RectD bounds)
         {
