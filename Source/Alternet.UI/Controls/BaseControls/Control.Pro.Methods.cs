@@ -242,6 +242,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Paints the background of the control.
+        /// </summary>
+        /// <param name="e">A <see cref="PaintEventArgs" /> that contains information
+        /// about the control to paint.</param>
+        /// <remarks>
+        /// Currently this method is provided for the compatibility and is not called.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnPaintBackground(PaintEventArgs e)
+        {
+        }
+
+        /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
         protected virtual void OnMouseRightButtonDown(MouseEventArgs e)

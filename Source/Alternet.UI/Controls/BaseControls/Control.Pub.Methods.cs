@@ -1304,6 +1304,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets input focus to the control.
+        /// </summary>
+        /// <returns>
+        ///   <see langword="true" /> if the input focus request was successful;
+        ///   otherwise, <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// Same as <see cref="SetFocus"/>.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public bool Focus() => SetFocus();
+
+        /// <summary>
         /// Sets input focus to the control if it can accept it.
         /// </summary>
         public virtual bool SetFocusIfPossible()

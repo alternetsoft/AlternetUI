@@ -1300,6 +1300,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="Children"/>.
+        /// </summary>
+        [Browsable(false)]
+        public ControlCollection Controls => Children;
+
+        /// <summary>
         /// Gets whether there are any items in the <see cref="Children"/> list.
         /// </summary>
         [Browsable(false)]
