@@ -34,7 +34,8 @@ namespace PropertyGridSample
         };
 
         private readonly ContextMenuStrip propGridContextMenu = new();
-        private readonly MenuItem resetMenu;
+        private MenuItem? resetMenu;
+        private readonly StatusBar statusBar = new();
 
         private bool updatePropertyGrid = false;
         private bool useIdle = false;
@@ -86,88 +87,97 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
-            Padding = 5;
-            Activated += MainWindow_Activated;
-            Deactivated += MainWindow_Deactivated;
-            SizeChanged += MainWindow_SizeChanged;
+            DoInsideLayout(Fn);
 
-            resetMenu = propGridContextMenu.Add(CommonStrings.Default.ButtonReset);
-            resetMenu.Click += ResetMenu_Click;
+            void Fn()
+            {
 
-            propGridContextMenu.Opening += PropGridContextMenu_Opening;
+                Title = "Alternet UI PropertyGrid Sample";
+                Size = (900, 700);
+                StartLocation = WindowStartLocation.CenterScreen;
+                StatusBar = statusBar;
+                statusBar.Text = "Ready";
+                Padding = 5;
+                Activated += MainWindow_Activated;
+                Deactivated += MainWindow_Deactivated;
+                SizeChanged += MainWindow_SizeChanged;
 
-            controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
-            controlPanelBorder.Normal.DrawDefaultBorder = false;
+                resetMenu = propGridContextMenu.Add(CommonStrings.Default.ButtonReset);
+                resetMenu.Click += ResetMenu_Click;
 
-            panel.BindApplicationLog();
+                propGridContextMenu.Opening += PropGridContextMenu_Opening;
 
-            PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
-                | PropertyGridApplyFlags.ReloadAfterSetValue;
-            PropGrid.PropertyRightClick += PropGrid_PropertyRightClick;
-            PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
-            PropertyGridSettings.Default = new(this);
-            PropGrid.ProcessException += PropertyGrid_ProcessException;
-            InitIgnorePropNames(PropGrid.IgnorePropNames);
-            PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+                controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
+                controlPanelBorder.Normal.DrawDefaultBorder = false;
 
-            Icon = Application.DefaultIcon;
+                panel.BindApplicationLog();
 
-            InitializeComponent();
+                PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
+                    | PropertyGridApplyFlags.ReloadAfterSetValue;
+                PropGrid.PropertyRightClick += PropGrid_PropertyRightClick;
+                PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
+                PropertyGridSettings.Default = new(this);
+                PropGrid.ProcessException += PropertyGrid_ProcessException;
+                InitIgnorePropNames(PropGrid.IgnorePropNames);
+                PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
-            Children.Add(panel);
+                Icon = Application.DefaultIcon;
 
-            panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
-            panel.LogControl.Required();
-            panel.PropGrid.Required();
-            panel.ActionsControl.Required();
+                Children.Add(panel);
 
-            controlPanel.Parent = controlPanelBorder;
+                panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
+                panel.LogControl.Required();
+                panel.PropGrid.Required();
+                panel.ActionsControl.Required();
 
-            var parentParentColor = SystemColors.Window;
+                controlPanel.Parent = controlPanelBorder;
 
-            controlPanelBorder.Parent = parentParent;
+                var parentParentColor = SystemColors.Window;
 
-            parentParent.Parent = panel.FillPanel;
+                controlPanelBorder.Parent = parentParent;
 
-            InitToolBox();
+                parentParent.Parent = panel.FillPanel;
 
-            PropGrid.PropertySelected += PGPropertySelected;
-            PropGrid.PropertyChanged += PGPropertyChanged;
-            PropGrid.PropertyChanging += PGPropertyChanging;
-            PropGrid.PropertyHighlighted += PGPropertyHighlighted;
-            PropGrid.PropertyRightClick += PGPropertyRightClick;
-            PropGrid.PropertyDoubleClick += PGPropertyDoubleClick;
-            PropGrid.ItemCollapsed += PGItemCollapsed;
-            PropGrid.ItemExpanded += PGItemExpanded;
-            PropGrid.LabelEditBegin += PGLabelEditBegin;
-            PropGrid.LabelEditEnding += PGLabelEditEnding;
-            PropGrid.ColBeginDrag += PGColBeginDrag;
-            PropGrid.ColDragging += PGColDragging;
-            PropGrid.ColEndDrag += PGColEndDrag;
-            PropGrid.ButtonClick += PropertyGrid_ButtonClick;
-            PropGrid.PropertyCustomCreate += PropGrid_PropertyCustomCreate;
+                InitToolBox();
 
-            // Ctrl+Down moves to next property in PropertyGrid
-            PropGrid.AddActionTrigger(
-                PropertyGridKeyboardAction.ActionNextProperty,
-                Key.DownArrow,
-                Alternet.UI.ModifierKeys.Control);
+                PropGrid.PropertySelected += PGPropertySelected;
+                PropGrid.PropertyChanged += PGPropertyChanged;
+                PropGrid.PropertyChanging += PGPropertyChanging;
+                PropGrid.PropertyHighlighted += PGPropertyHighlighted;
+                PropGrid.PropertyRightClick += PGPropertyRightClick;
+                PropGrid.PropertyDoubleClick += PGPropertyDoubleClick;
+                PropGrid.ItemCollapsed += PGItemCollapsed;
+                PropGrid.ItemExpanded += PGItemExpanded;
+                PropGrid.LabelEditBegin += PGLabelEditBegin;
+                PropGrid.LabelEditEnding += PGLabelEditEnding;
+                PropGrid.ColBeginDrag += PGColBeginDrag;
+                PropGrid.ColDragging += PGColDragging;
+                PropGrid.ColEndDrag += PGColEndDrag;
+                PropGrid.ButtonClick += PropertyGrid_ButtonClick;
+                PropGrid.PropertyCustomCreate += PropGrid_PropertyCustomCreate;
 
-            panel.PropGrid.SuggestedInitDefaults();
+                // Ctrl+Down moves to next property in PropertyGrid
+                PropGrid.AddActionTrigger(
+                    PropertyGridKeyboardAction.ActionNextProperty,
+                    Key.DownArrow,
+                    Alternet.UI.ModifierKeys.Control);
 
-            panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
+                panel.PropGrid.SuggestedInitDefaults();
 
-            Application.Current.Idle += ApplicationIdle;
-            RunTests();
+                panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
 
-            ComponentDesigner.InitDefault();
-            ComponentDesigner.SafeDefault.PropertyChanged += Designer_PropertyChanged;
-            ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
+                Application.Current.Idle += ApplicationIdle;
+                RunTests();
 
-            panel.FillPanel.MouseDown += ControlPanel_MouseDown;
-            controlPanel.DragStart += ControlPanel_DragStart;
+                ComponentDesigner.InitDefault();
+                ComponentDesigner.SafeDefault.PropertyChanged += Designer_PropertyChanged;
+                ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
 
-            panel.WriteWelcomeLogMessages();
+                panel.FillPanel.MouseDown += ControlPanel_MouseDown;
+                controlPanel.DragStart += ControlPanel_DragStart;
+
+                panel.WriteWelcomeLogMessages();
+            }
         }
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
@@ -271,7 +281,7 @@ namespace PropertyGridSample
 
             var selectedProp = PropGrid.GetSelection();
 
-            resetMenu.Enabled = PropGrid.CanResetProp(selectedProp);
+            resetMenu?.SetEnabled(PropGrid.CanResetProp(selectedProp));
         }
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
@@ -297,7 +307,7 @@ namespace PropertyGridSample
 
         private void LeftTreeView_SizeChanged(object? sender, EventArgs e)
         {
-            if(LogSize)
+            if (LogSize)
                 Application.Log("LeftTreeView_SizeChanged");
         }
 
@@ -319,7 +329,7 @@ namespace PropertyGridSample
             var type = item?.InstanceType;
             if (type == typeof(WelcomePage))
                 return;
-            if(item?.Instance == e.Instance || e.Instance is null)
+            if (item?.Instance == e.Instance || e.Instance is null)
                 updatePropertyGrid = true;
         }
 
@@ -336,7 +346,7 @@ namespace PropertyGridSample
 
         internal void UpdatePropertyGrid(object? instance = null)
         {
-            if(instance != null)
+            if (instance != null)
             {
                 if (PropGrid.FirstItemInstance == instance)
                     return;
@@ -396,11 +406,12 @@ namespace PropertyGridSample
                 }
                 else
                 {
-                    Application.AddIdleTask(() => {
+                    Application.AddIdleTask(() =>
+                    {
                         PropGrid.SetProps(item.PropInstance, true);
                         PropGrid.Refresh();
                     });
-                    
+
                     SetBackground(SystemColors.Control);
                     panel.RemoveActions();
                     panel.AddActions(type);
