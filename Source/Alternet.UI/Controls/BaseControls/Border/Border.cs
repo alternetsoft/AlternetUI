@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Draws a border, background, or both around another control.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class Border : UserPaintControl
+    public partial class Border : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.

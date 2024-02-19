@@ -9,7 +9,7 @@ using Alternet.UI;
 
 namespace ControlsTest
 {
-    public class CustomDrawControl : UserPaintControl
+    public class CustomDrawControl : UserControl
     {
         public CustomDrawControl()
             : base()
