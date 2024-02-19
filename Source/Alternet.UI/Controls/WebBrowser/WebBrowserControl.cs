@@ -614,7 +614,7 @@ namespace Alternet.UI
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/LoadUrlOrSearch/*'/>
-        public void LoadUrlOrSearch(string url)
+        public void LoadUrlOrSearch(string? url)
         {
             if (url == null)
             {

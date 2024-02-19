@@ -229,6 +229,51 @@ namespace ControlsTest
             WebBrowser.NavigateToStream(stream);
         }
 
+        internal string? GetControlsSamplePath()
+        {
+            var samplesFolder = CommonUtils.GetSamplesFolder();
+
+            if (samplesFolder is null)
+                return null;
+
+            var result = Path.Combine(samplesFolder, "ControlsSample");
+
+            return result;
+        }
+
+        internal string? PrepareControlsSampleUrl(string suffix)
+        {
+            var path = GetControlsSamplePath();
+            if (path is null)
+                return null;
+            var s = WebBrowser.PrepareFileUrl(Path.Combine(path, suffix));
+            return s;
+        }
+
+        internal void DoTestOpenPageAnimation()
+        {
+            var s = PrepareControlsSampleUrl("Resources/Animation/animation.html");
+            WebBrowser.LoadUrlOrSearch(s);
+        }
+
+        internal void DoTestOpenPageImage()
+        {
+            var s = PrepareControlsSampleUrl("Html/SampleArchive/Images/panda1.jpg");
+            WebBrowser.LoadUrlOrSearch(s);
+        }
+
+        internal void DoTestOpenPageMP3()
+        {
+            var s = PrepareControlsSampleUrl("Resources/Sounds/Mp3/sounds.html");
+            WebBrowser.LoadUrlOrSearch(s);
+        }
+
+        internal void DoTestOpenPageWav()
+        {
+            var s = PrepareControlsSampleUrl("Resources/Sounds/Wav/sounds.html");
+            WebBrowser.LoadUrlOrSearch(s);
+        }
+
         internal void TestMapping()
         {
             if (WebBrowser.Backend != WebBrowserBackend.Edge)
