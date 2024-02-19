@@ -1,5 +1,15 @@
 # 0.9.507 (in development)
 
+## 2024 February 19
+
+- <u>**GenericTabControl.HasInteriorBorder.**</u>.
+- Color implicit operator to Brush and Pen.
+- PaintEventArgs: Graphics, ClipRectangle.
+- Rect.FromLTRB(PointD leftTop, PointD rightBottom).
+- DrawingUtils: FillRectangleBorder, FillRectanglesBorder.
+- <u>**WebBrowser sample impoved**</u> (Samples\ControlsSample\Pages\Other\WebBrowserPage.uixml.cs). 
+Added three sample pages to combobox url: Animated GIF player, MP3 player, WAV player. 
+
 ## 2024 February 18
 
 - <u>**Integrated all other samples to ControlsSample**</u>.
