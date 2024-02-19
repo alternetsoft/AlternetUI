@@ -33,6 +33,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the tab margin.
         /// </summary>
+        // Do not change it from 1, as current tab interior border will be painted badly.
         public static Thickness DefaultTabMargin = 1;
 
         /// <summary>

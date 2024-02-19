@@ -20,6 +20,7 @@ namespace Alternet.UI
     {
         private readonly CardPanel cardPanel = new();
         private readonly CardPanelHeader cardPanelHeader = new();
+        private bool hasInteriorBorder = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericTabControl"/> class.
@@ -31,7 +32,7 @@ namespace Alternet.UI
             cardPanelHeader.Paint += Header_Paint;
             UserPaint = true;
 
-            Layout = LayoutStyle.Vertical;
+            base.Layout = LayoutStyle.Vertical;
             cardPanelHeader.TabHasBorder = false;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
             cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
@@ -40,8 +41,24 @@ namespace Alternet.UI
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
-            Padding = 0;
+            base.Padding = 0;
             cardPanelHeader.CardPanel = cardPanel;
+        }
+
+        /// <summary>
+        /// Gets or sets whether tab interior border is visible.
+        /// </summary>
+        public virtual bool HasInteriorBorder
+        {
+            get => hasInteriorBorder;
+
+            set
+            {
+                if (hasInteriorBorder == value)
+                    return;
+                hasInteriorBorder = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -54,7 +71,7 @@ namespace Alternet.UI
         /// Currently only <see cref="TabAlignment.Top"/> and <see cref="TabAlignment.Bottom"/>
         /// alignment is supported.
         /// </remarks>
-        public TabAlignment TabAlignment
+        public virtual TabAlignment TabAlignment
         {
             get
             {
@@ -86,7 +103,7 @@ namespace Alternet.UI
                     {
                         cardPanelHeader.HorizontalAlignment = UI.HorizontalAlignment.Stretch;
 
-                        Layout = LayoutStyle.Vertical;
+                        base.Layout = LayoutStyle.Vertical;
                         Header.Layout = LayoutStyle.Horizontal;
                         if (value == TabAlignment.Bottom)
                             Header.VerticalAlignment = UI.VerticalAlignment.Bottom;
@@ -97,7 +114,7 @@ namespace Alternet.UI
                     {
                         cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Stretch;
 
-                        Layout = LayoutStyle.Horizontal;
+                        base.Layout = LayoutStyle.Horizontal;
                         Header.Layout = LayoutStyle.Vertical;
                         if (value == TabAlignment.Right)
                             Header.HorizontalAlignment = UI.HorizontalAlignment.Right;
@@ -113,19 +130,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets how the tabs and content are aligned.
         /// </summary>
-        public bool IsVertical
+        [Browsable(false)]
+        public virtual bool IsVertical
         {
             get
             {
-                return Layout == LayoutStyle.Vertical;
+                return TabAlignment == TabAlignment.Top || TabAlignment == TabAlignment.Bottom;
             }
 
             set
             {
                 if(value)
-                    Layout = LayoutStyle.Vertical;
+                    TabAlignment = TabAlignment.Top;
                 else
-                    Layout = LayoutStyle.Horizontal;
+                    TabAlignment = TabAlignment.Left;
             }
         }
 
@@ -148,7 +166,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(NameValue<Control> page)
+        public virtual int Add(NameValue<Control> page)
         {
             return Add(page.Name, page.Value);
         }
@@ -160,7 +178,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(NameValue<Func<Control>> page)
+        public virtual int Add(NameValue<Func<Control>> page)
         {
             return Add(page.Name, page.Value);
         }
@@ -169,7 +187,7 @@ namespace Alternet.UI
         /// Adds new pages.
         /// </summary>
         /// <param name="pages">Collection of pages.</param>
-        public void AddRange(IEnumerable<NameValue<Control>> pages)
+        public virtual void AddRange(IEnumerable<NameValue<Control>> pages)
         {
             foreach(var page in pages)
                 Add(page);
@@ -179,7 +197,7 @@ namespace Alternet.UI
         /// Adds new pages.
         /// </summary>
         /// <param name="pages">Collection of pages.</param>
-        public void AddRange(IEnumerable<NameValue<Func<Control>>?> pages)
+        public virtual void AddRange(IEnumerable<NameValue<Func<Control>>?> pages)
         {
             foreach (var page in pages)
             {
@@ -199,7 +217,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects tab with the specified index.
         /// </summary>
-        public void SelectTab(int index)
+        public virtual void SelectTab(int index)
         {
             Header.SelectedTabIndex = index;
         }
@@ -212,7 +230,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(string title, Func<Control> fnCreate)
+        public virtual int Add(string title, Func<Control> fnCreate)
         {
             var cardIndex = cardPanel.Add(title, fnCreate);
             var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
@@ -265,6 +283,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (!hasInteriorBorder)
+                return;
             var r = Header.Bounds;
             r.Size += Header.Margin.Size;
             DrawTabControlInterior(
@@ -277,6 +297,8 @@ namespace Alternet.UI
 
         private void Header_Paint(object? sender, PaintEventArgs e)
         {
+            if (!hasInteriorBorder)
+                return;
             DrawTabsInterior(
                 Header,
                 e.DrawingContext,
