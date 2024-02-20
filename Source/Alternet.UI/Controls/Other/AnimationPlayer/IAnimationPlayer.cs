@@ -13,9 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public interface IAnimationPlayer
     {
-        /// <inheritdoc cref="AnimationPlayer.UseGeneric"/>
-        bool UseGeneric { get; set; }
-
         /// <summary>
         /// Gets associated control.
         /// </summary>

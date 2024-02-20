@@ -32,20 +32,23 @@ namespace ControlsSample
             Margin = 5,
         };
 
+        static AnimationPage()
+        {
+            AnimationPlayer.DefaultDriver = AnimationPlayer.KnownDriver.Generic;
+        }
+
         public AnimationPage()
         {
             Padding = 10;
-            var defaultAnimationUrl = AnimationPlant;
-
+            var defaultAnimationUrl = AnimationHourGlass;;
 
             animation.Parent = this;
-            animation.UseGeneric = false;
             animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
             animation.Play();
 
             selectComboBox.IsEditable = false;
-            selectComboBox.Add(AnimationPlant);
             selectComboBox.Add(AnimationHourGlass);
+            selectComboBox.Add(AnimationPlant);
             selectComboBox.Add(AnimationSpinner);
             selectComboBox.Add(AnimationAlternet);
             selectComboBox.Add(AnimationCustom);
