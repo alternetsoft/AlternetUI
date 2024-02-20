@@ -88,6 +88,29 @@ namespace Alternet.UI
                         tabAlignment,
                         tabIndex,
                         tabCount);
+
+            DrawLines();
+
+            void DrawLines()
+            {
+                if (tabCount < 3)
+                    return;
+
+                for (int i = 0; i < tabCount - 1; i++)
+                {
+                    if (i == tabIndex || i == (tabIndex - 1))
+                        continue;
+
+                    var tab = control.Tabs[i];
+                    var rect = tab.HeaderButton.Bounds;
+                    PointD startPoint = (rect.Right + 1, rect.Top);
+                    var height = Math.Min(rect.Height - 4, 12);
+                    SizeD size = (1, height);
+                    RectD drawRect = (startPoint, size);
+                    var centeredRect = drawRect.CenterIn(rect, false, true);
+                    DrawingUtils.DrawVertLine(dc, brush, centeredRect.Location, height, 1);
+                }
+            }
         }
 
         internal static void DrawTabsInterior(
