@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Provides access to the color and other settings of the art provider for the
     /// <see cref="AuiToolbar"/>.
     /// </summary>
-    public interface IAuiToolbarArt : IDisposableObject
+    internal interface IAuiToolbarArt : IDisposableObject
     {
         /// <summary>
         /// Gets or sets text orientation.

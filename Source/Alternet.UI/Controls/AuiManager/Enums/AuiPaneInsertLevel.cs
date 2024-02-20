@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies insert position in <see cref="AuiManager.InsertPane"/>
     /// </summary>
-    public enum AuiPaneInsertLevel
+    internal enum AuiPaneInsertLevel
     {
         /// <summary>
         /// Insert position is Pane.

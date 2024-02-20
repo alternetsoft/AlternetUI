@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// These are the possible art settings for <see cref="AuiToolbar"/>.
     /// </summary>
-    public enum AuiToolBarArtSetting
+    internal enum AuiToolBarArtSetting
     {
         /// <summary>
         /// Toolbar separator size.

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies <see cref="IAuiPaneInfo"/> pane dock position.
     /// </summary>
-    public enum AuiManagerDock
+    internal enum AuiManagerDock
     {
         /// <summary>
         /// Clears the pane dock position.

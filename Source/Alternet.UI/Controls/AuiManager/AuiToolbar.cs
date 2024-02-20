@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Dockable toolbar, managed by <see cref="AuiManager"/>.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class AuiToolbar : Control
+    internal partial class AuiToolbar : Control
     {
         /// <summary>
         /// Defines spacer width which is used in <see cref="AddSpacer"/>.
@@ -239,23 +239,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the associated art provider.
-        /// </summary>
-        public IAuiToolbarArt ArtProvider
-        {
-            get
-            {
-                var result = NativeControl.GetArtProvider();
-                return new AuiToolbarArt(result, false);
-            }
-
-            set
-            {
-                NativeControl.SetArtProvider(value.Handle);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets whether toolbar gripper is visible.
         /// </summary>
         public bool GripperVisible
@@ -273,6 +256,23 @@ namespace Alternet.UI
             {
                 CheckDisposed();
                 return (NativeAuiToolbarHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the associated art provider.
+        /// </summary>
+        internal IAuiToolbarArt ArtProvider
+        {
+            get
+            {
+                var result = NativeControl.GetArtProvider();
+                return new AuiToolbarArt(result, false);
+            }
+
+            set
+            {
+                NativeControl.SetArtProvider(value.Handle);
             }
         }
 

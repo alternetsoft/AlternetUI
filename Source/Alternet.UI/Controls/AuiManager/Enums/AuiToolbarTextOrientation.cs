@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines possible text orientations for <see cref="AuiToolbar"/> items.
     /// </summary>
-    public enum AuiToolbarTextOrientation
+    internal enum AuiToolbarTextOrientation
     {
         /// <summary>
         /// Text in toolbar items is left aligned, currently unused/unimplemented.

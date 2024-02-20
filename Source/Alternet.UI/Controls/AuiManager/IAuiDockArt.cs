@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Provides access to the color and other settings of the art provider for the
     /// <see cref="AuiManager"/>.
     /// </summary>
-    public interface IAuiDockArt : IDisposableObject
+    internal interface IAuiDockArt : IDisposableObject
     {
         /// <summary>
         /// Gets the color of a certain setting.

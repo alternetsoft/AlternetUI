@@ -7,30 +7,18 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
-        private readonly bool disableResize = false;
         private readonly PanelTreeAndCards mainPanel;
 
         static MainTestWindow()
         {
-            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
             Test.DoTests();
         }
 
         public MainTestWindow()
         {
-            mainPanel = new(InitPanel);
-
-            if (disableResize)
-            {
-                this.Resizable = false;
-                this.MaximizeEnabled = false;
-                this.MinimizeEnabled = false;
-                mainPanel.RightPane.Resizable(false).DockFixed(true).Fixed();
-                mainPanel.BottomPane.Resizable(false);
-                mainPanel.CenterPane.DockFixed(true).Fixed();
-                mainPanel.LeftPane.Resizable(false).DockFixed(true)
-                    .MaxSizeDip(mainPanel.DefaultRightPaneBestSize).Fixed();
-            }
+            mainPanel = new();
+            mainPanel.LeftTreeViewAsListBox = true;
+            mainPanel.RightPanel.MinWidth = 150;
 
             Icon = new("embres:ControlsTest.Sample.ico");
 
@@ -63,17 +51,9 @@ namespace ControlsTest
             }
 
             mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
-            mainPanel.Add("Sizer Test", new SizerTestPage());
             int webBrowserPageIndex = CreateWebBrowserPages();
 
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
-            mainPanel.Manager.Update();
-
-            if (!disableResize)
-            {
-                mainPanel.SizeChanged += Log_SizeChanged;
-                mainPanel.CardPanel.SizeChanged += Log_SizeChanged;
-            }
 
             mainPanel.Name = "mainPanel";
             Name = "MainTestWindow";
@@ -82,18 +62,11 @@ namespace ControlsTest
 
         internal PanelTreeAndCards MainPanel => mainPanel;
 
-        private void InitPanel(PanelAuiManager panel)
-        {
-            panel.LeftTreeViewAsListBox = true;
-            panel.DefaultRightPaneMinSize = new(150, 150);
-            panel.DefaultRightPaneBestSize = new(150, 150);
-        }
-
         private void LogSizeEvent(object? sender, string evName)
         {
             var control = sender as Control;
             var name = control?.Name ?? control?.GetType().Name;
-            Application.Log($"{evName}: {name}, Bounds: {control!.Bounds}");
+            Application.LogIf($"{evName}: {name}, Bounds: {control!.Bounds}", false);
         }
 
         private void Log_SizeChanged(object? sender, EventArgs e)
@@ -115,11 +88,6 @@ namespace ControlsTest
                 result.Name = result.GetType().Name;
 
                 result.SizeChanged += Log_SizeChanged;
-
-                if (disableResize)
-                {
-                    result.PanelWebBrowser.RightPane.Resizable(false);
-                }
 
                 return result;
             }

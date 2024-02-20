@@ -67,36 +67,6 @@ namespace Alternet.UI
         public static int DefaultMinToolbarImageSize { get; set; } = 16;
 
         /// <summary>
-        /// Gets <see cref="LogControl"/> page index in the <see cref="BottomNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiNotebookPage? LogPage => logPage;
-
-        /// <summary>
-        /// Gets <see cref="LeftTreeView"/> page index in the <see cref="LeftNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiNotebookPage? LeftTreeViewPage => leftTreeViewPage;
-
-        /// <summary>
-        /// Gets <see cref="PropGrid"/> page index in the <see cref="RightNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiNotebookPage? PropGridPage => propGridPage;
-
-        /// <summary>
-        /// Gets <see cref="ActionsControl"/> page index in the <see cref="RightNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiNotebookPage? ActionsPage => actionsPage;
-
-        /// <summary>
-        /// Gets <see cref="EventGrid"/> page index in the <see cref="RightNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiNotebookPage? EventGridPage => eventGridPage;
-
-        /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
         /// </summary>
         [Browsable(false)]
@@ -230,189 +200,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="AuiNotebook"/> control which is located on the left pane.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebook LeftNotebook
-        {
-            get
-            {
-                if (leftNotebook == null)
-                {
-                    leftNotebook = new();
-                    if (LeftNotebookDefaultCreateStyle is not null)
-                        leftNotebook.CreateStyle = LeftNotebookDefaultCreateStyle.Value;
-                    Manager.AddPane(leftNotebook, LeftPane);
-                }
-
-                return leftNotebook;
-            }
-        }
-
-        /// <summary>
-        /// Gets <see cref="AuiNotebook"/> control which is located on the right pane.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebook RightNotebook
-        {
-            get
-            {
-                if (rightNotebook == null)
-                {
-                    rightNotebook = new();
-                    if (RightNotebookDefaultCreateStyle is not null)
-                        rightNotebook.CreateStyle = RightNotebookDefaultCreateStyle.Value;
-                    Manager.AddPane(rightNotebook, RightPane);
-                }
-
-                return rightNotebook;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets default create style for the <see cref="LeftNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebookCreateStyle? LeftNotebookDefaultCreateStyle { get; set; }
-
-        /// <summary>
-        /// Gets or sets default create style for the <see cref="BottomNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebookCreateStyle? BottomNotebookDefaultCreateStyle { get; set; }
-
-        /// <summary>
-        /// Gets or sets default create style for the <see cref="CenterNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebookCreateStyle? CenterNotebookDefaultCreateStyle { get; set; }
-
-        /// <summary>
-        /// Gets or sets default create style for the <see cref="RightNotebook"/>.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebookCreateStyle? RightNotebookDefaultCreateStyle { get; set; }
-
-        /// <summary>
-        /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebook CenterNotebook
-        {
-            get
-            {
-                if (centerNotebook == null)
-                {
-                    centerNotebook = new();
-                    if (CenterNotebookDefaultCreateStyle is not null)
-                        centerNotebook.CreateStyle = CenterNotebookDefaultCreateStyle.Value;
-                    Manager.AddPane(centerNotebook, CenterPane);
-                }
-
-                return centerNotebook;
-            }
-        }
-
-        /// <summary>
-        /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
-        /// </summary>
-        [Browsable(false)]
-        public AuiNotebook BottomNotebook
-        {
-            get
-            {
-                if (bottomNotebook == null)
-                {
-                    bottomNotebook = new();
-                    if (BottomNotebookDefaultCreateStyle is not null)
-                        BottomNotebook.CreateStyle = BottomNotebookDefaultCreateStyle.Value;
-                    Manager.AddPane(bottomNotebook, BottomPane);
-                }
-
-                return bottomNotebook;
-            }
-        }
-
-        /// <summary>
-        /// Gets <see cref="AuiToolbar"/> located on the top of the control.
-        /// </summary>
-        [Browsable(false)]
-        public AuiToolbar Toolbar
-        {
-            get
-            {
-                toolbar ??= new()
-                {
-                    CreateStyle = DefaultToolbarStyle,
-                    /*ToolBitmapSizeInPixels = GetToolBitmapSize(),*/
-                };
-
-                return toolbar;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets default toolbar style.
-        /// </summary>
-        public AuiToolbarCreateStyle DefaultToolbarStyle
-        {
-            get => defaultToolbarStyle;
-            set => defaultToolbarStyle = value;
-        }
-
-        /// <summary>
-        /// Gets the top pane with the <see cref="AuiToolbar"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiPaneInfo ToolbarPane
-        {
-            get
-            {
-                toolbarPane ??= CreateToolbarPane();
-                return toolbarPane;
-            }
-        }
-
-        /// <summary>
-        /// Gets the left pane.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiPaneInfo LeftPane
-        {
-            get
-            {
-                leftPane ??= CreateLeftPane();
-                return leftPane;
-            }
-        }
-
-        /// <summary>
-        /// Gets the right pane.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiPaneInfo RightPane
-        {
-            get
-            {
-                rightPane ??= CreateRightPane();
-                return rightPane;
-            }
-        }
-
-        /// <summary>
-        /// Gets the center pane.
-        /// </summary>
-        [Browsable(false)]
-        public IAuiPaneInfo CenterPane
-        {
-            get
-            {
-                centerPane ??= CreateCenterPane();
-                return centerPane;
-            }
-        }
-
-        /// <summary>
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
@@ -468,15 +255,228 @@ namespace Alternet.UI
         public virtual SizeD DefaultBottomPaneMinSize { get; set; } = (200, 150);
 
         /// <summary>
+        /// Gets or sets default create style for the <see cref="LeftNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebookCreateStyle? LeftNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="BottomNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebookCreateStyle? BottomNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="CenterNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebookCreateStyle? CenterNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="RightNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebookCreateStyle? RightNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets <see cref="AuiToolbar"/> located on the top of the control.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiToolbar Toolbar
+        {
+            get
+            {
+                toolbar ??= new()
+                {
+                    CreateStyle = DefaultToolbarStyle,
+                    /*ToolBitmapSizeInPixels = GetToolBitmapSize(),*/
+                };
+
+                return toolbar;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default toolbar style.
+        /// </summary>
+        internal AuiToolbarCreateStyle DefaultToolbarStyle
+        {
+            get => defaultToolbarStyle;
+            set => defaultToolbarStyle = value;
+        }
+
+        /// <summary>
+        /// Gets the top pane with the <see cref="AuiToolbar"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiPaneInfo ToolbarPane
+        {
+            get
+            {
+                toolbarPane ??= CreateToolbarPane();
+                return toolbarPane;
+            }
+        }
+
+        /// <summary>
+        /// Gets the left pane.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiPaneInfo LeftPane
+        {
+            get
+            {
+                leftPane ??= CreateLeftPane();
+                return leftPane;
+            }
+        }
+
+        /// <summary>
+        /// Gets the right pane.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiPaneInfo RightPane
+        {
+            get
+            {
+                rightPane ??= CreateRightPane();
+                return rightPane;
+            }
+        }
+
+        /// <summary>
+        /// Gets the center pane.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiPaneInfo CenterPane
+        {
+            get
+            {
+                centerPane ??= CreateCenterPane();
+                return centerPane;
+            }
+        }
+
+        /// <summary>
         /// Gets the bottom pane.
         /// </summary>
         [Browsable(false)]
-        public IAuiPaneInfo BottomPane
+        internal IAuiPaneInfo BottomPane
         {
             get
             {
                 bottomPane ??= CreateBottomPane();
                 return bottomPane;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="LogControl"/> page index in the <see cref="BottomNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiNotebookPage? LogPage => logPage;
+
+        /// <summary>
+        /// Gets <see cref="LeftTreeView"/> page index in the <see cref="LeftNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiNotebookPage? LeftTreeViewPage => leftTreeViewPage;
+
+        /// <summary>
+        /// Gets <see cref="PropGrid"/> page index in the <see cref="RightNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiNotebookPage? PropGridPage => propGridPage;
+
+        /// <summary>
+        /// Gets <see cref="ActionsControl"/> page index in the <see cref="RightNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiNotebookPage? ActionsPage => actionsPage;
+
+        /// <summary>
+        /// Gets <see cref="EventGrid"/> page index in the <see cref="RightNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        internal IAuiNotebookPage? EventGridPage => eventGridPage;
+
+        /// <summary>
+        /// Gets <see cref="AuiNotebook"/> control which is located on the left pane.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebook LeftNotebook
+        {
+            get
+            {
+                if (leftNotebook == null)
+                {
+                    leftNotebook = new();
+                    if (LeftNotebookDefaultCreateStyle is not null)
+                        leftNotebook.CreateStyle = LeftNotebookDefaultCreateStyle.Value;
+                    Manager.AddPane(leftNotebook, LeftPane);
+                }
+
+                return leftNotebook;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebook CenterNotebook
+        {
+            get
+            {
+                if (centerNotebook == null)
+                {
+                    centerNotebook = new();
+                    if (CenterNotebookDefaultCreateStyle is not null)
+                        centerNotebook.CreateStyle = CenterNotebookDefaultCreateStyle.Value;
+                    Manager.AddPane(centerNotebook, CenterPane);
+                }
+
+                return centerNotebook;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebook BottomNotebook
+        {
+            get
+            {
+                if (bottomNotebook == null)
+                {
+                    bottomNotebook = new();
+                    if (BottomNotebookDefaultCreateStyle is not null)
+                        BottomNotebook.CreateStyle = BottomNotebookDefaultCreateStyle.Value;
+                    Manager.AddPane(bottomNotebook, BottomPane);
+                }
+
+                return bottomNotebook;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="AuiNotebook"/> control which is located on the right pane.
+        /// </summary>
+        [Browsable(false)]
+        internal AuiNotebook RightNotebook
+        {
+            get
+            {
+                if (rightNotebook == null)
+                {
+                    rightNotebook = new();
+                    if (RightNotebookDefaultCreateStyle is not null)
+                        rightNotebook.CreateStyle = RightNotebookDefaultCreateStyle.Value;
+                    Manager.AddPane(rightNotebook, RightPane);
+                }
+
+                return rightNotebook;
             }
         }
 
@@ -521,6 +521,16 @@ namespace Alternet.UI
 
             ActionsControl.Required();
             actionsControl?.Add(item);
+        }
+
+        /// <summary>
+        /// Sets tool enabled state for the toolbar.
+        /// </summary>
+        /// <param name="buttonId">Id of the tool.</param>
+        /// <param name="value">New enabled state.</param>
+        public virtual void EnableTool(int buttonId, bool value)
+        {
+            Toolbar.EnableTool(buttonId, value);
         }
 
         /// <summary>
@@ -582,7 +592,7 @@ namespace Alternet.UI
         /// Creates left pane and assigns its properties.
         /// </summary>
         /// <returns></returns>
-        protected virtual IAuiPaneInfo CreateLeftPane()
+        internal virtual IAuiPaneInfo CreateLeftPane()
         {
             var result = Manager.CreatePaneInfo();
             result.Name(nameof(leftPane)).Left()
@@ -598,7 +608,7 @@ namespace Alternet.UI
         /// Creates left pane and assigns its properties.
         /// </summary>
         /// <returns></returns>
-        protected virtual IAuiPaneInfo CreateToolbarPane()
+        internal virtual IAuiPaneInfo CreateToolbarPane()
         {
             var result = Manager.CreatePaneInfo();
             result.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
@@ -611,7 +621,7 @@ namespace Alternet.UI
         /// Creates center pane and assigns its properties.
         /// </summary>
         /// <returns></returns>
-        protected virtual IAuiPaneInfo CreateCenterPane()
+        internal virtual IAuiPaneInfo CreateCenterPane()
         {
             var result = Manager.CreatePaneInfo();
             result.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
@@ -622,7 +632,7 @@ namespace Alternet.UI
         /// Creates bottom pane and assigns its properties.
         /// </summary>
         /// <returns></returns>
-        protected virtual IAuiPaneInfo CreateBottomPane()
+        internal virtual IAuiPaneInfo CreateBottomPane()
         {
             var result = Manager.CreatePaneInfo();
             result.Name(nameof(bottomPane)).Bottom()
@@ -639,7 +649,7 @@ namespace Alternet.UI
         /// Creates right pane and assigns its properties.
         /// </summary>
         /// <returns></returns>
-        protected virtual IAuiPaneInfo CreateRightPane()
+        internal virtual IAuiPaneInfo CreateRightPane()
         {
             var result = Manager.CreatePaneInfo();
             result.Name(nameof(rightPane)).Right().PaneBorder(false)

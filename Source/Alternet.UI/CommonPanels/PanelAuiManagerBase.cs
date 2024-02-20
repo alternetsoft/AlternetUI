@@ -37,11 +37,11 @@ namespace Alternet.UI
         /// Gets docking manager.
         /// </summary>
         [Browsable(false)]
-        public AuiManager Manager => manager;
+        internal AuiManager Manager => manager;
 
         /// <summary>
         /// Override to provide custom options to the <see cref="Manager"/>.
         /// </summary>
-        protected virtual AuiManagerOption DefaultManagerOptions => AuiManagerOption.Default;
+        internal virtual AuiManagerOption DefaultManagerOptions => AuiManagerOption.Default;
     }
 }

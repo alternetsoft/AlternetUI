@@ -11,18 +11,9 @@ namespace Alternet.UI
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
     [ControlCategory("Panels")]
-    public partial class PanelTreeAndCards : PanelAuiManager
+    public partial class PanelTreeAndCards : SplittedControlsPanel
     {
         private readonly CardPanel cardPanel = new();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
-        /// </summary>
-        public PanelTreeAndCards(Action<PanelAuiManager>? initAction = null)
-            : base(initAction)
-        {
-            Initialize();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
@@ -30,7 +21,10 @@ namespace Alternet.UI
         public PanelTreeAndCards()
             : base()
         {
-            Initialize();
+            RightVisible = false;
+            LeftTreeView.Required();
+            cardPanel.Parent = FillPanel;
+            LeftTreeView.SelectionChanged += LeftTreeView_SelectionChanged;
         }
 
         /// <summary>
@@ -68,15 +62,6 @@ namespace Alternet.UI
             var item = LeftTreeView.Add(title);
             item.Tag = index;
             return index;
-        }
-
-        private void Initialize()
-        {
-            LeftTreeView.Required();
-            Manager.AddPane(cardPanel, CenterPane);
-
-            LeftTreeView.SelectionChanged += LeftTreeView_SelectionChanged;
-            Manager.Update();
         }
 
         private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)

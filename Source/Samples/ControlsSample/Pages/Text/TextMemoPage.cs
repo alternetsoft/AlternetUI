@@ -56,23 +56,23 @@ namespace ControlsSample
             memoPanel.Parent = this;
             memoPanel.TextBox.Text = multilineDemoText;
             memoPanel.TextBox.SetInsertionPoint(0);
-            memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdNew, false);
-            memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdOpen, false);
-            memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdSave, false);
+            memoPanel.EnableTool(memoPanel.ButtonIdNew, false);
+            memoPanel.EnableTool(memoPanel.ButtonIdOpen, false);
+            memoPanel.EnableTool(memoPanel.ButtonIdSave, false);
             /*memoPanel.PropGrid.SuggestedInitDefaults();*/
-            memoPanel.RightNotebook.PageChanged += RightNotebook_PageChanged;
+            /*memoPanel.RightNotebook.PageChanged += RightNotebook_PageChanged;*/
             memoPanel.ActionsControl.Required();
             memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);
         }
 
-        private void RightNotebook_PageChanged(object? sender, EventArgs e)
+        /*private void RightNotebook_PageChanged(object? sender, EventArgs e)
         {
             if(memoPanel.RightNotebook.EventSelection == memoPanel.PropGridPage?.Index)
             {
                 memoPanel.PropGrid.CenterSplitter();
                 memoPanel.RightNotebook.PageChanged -= RightNotebook_PageChanged;
             }
-        }
+        }*/
 
         internal void AddTestIdleTasks()
         {
