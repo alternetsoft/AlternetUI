@@ -114,12 +114,12 @@ namespace ControlsSample
 
         Control CreateCustomPage(NameValue<Func<Control>>?[] pages)
         {
-            GenericTabControl result = new()
+            TabControl result = new()
             {
                 Margin = 10,
             };
 
-            result.Contents.Padding = 5;
+            result.ContentPadding = 5;
 
             result.AddRange(pages);
             return result;

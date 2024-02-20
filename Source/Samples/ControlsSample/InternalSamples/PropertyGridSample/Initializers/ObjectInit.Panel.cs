@@ -11,7 +11,7 @@ namespace PropertyGridSample
     {
         public static void InitGenericTabControl(object control)
         {
-            if (control is not GenericTabControl tabControl)
+            if (control is not TabControl tabControl)
                 return;
 
             tabControl.SuggestedSize = (300, 300);

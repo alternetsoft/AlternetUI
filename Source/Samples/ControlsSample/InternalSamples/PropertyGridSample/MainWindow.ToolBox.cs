@@ -70,7 +70,7 @@ namespace PropertyGridSample
                     typeof(HorizontalStackPanel),
                     typeof(Label),
                     typeof(GenericLabel),
-                    typeof(GenericTabControl),
+                    typeof(TabControl),
                     typeof(LinkLabel),
                     typeof(ListBox),
                     typeof(ListView),

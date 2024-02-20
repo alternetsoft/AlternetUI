@@ -73,13 +73,12 @@ namespace Alternet.UI
                         HasBorder = false,
                         VerticalAlignment = UI.VerticalAlignment.Fill,
                         Visible = false,
-                        Parent = RightPanel,
                     };
 
-                    RightPanel.Header.Add(
+                    RightPanel.Add(
                         CommonStrings.Default.WindowTitleProperties,
                         propertyGrid);
-                    RightPanel.Header.SelectFirstTab();
+                    RightPanel.SelectFirstTab();
                 }
 
                 return propertyGrid;

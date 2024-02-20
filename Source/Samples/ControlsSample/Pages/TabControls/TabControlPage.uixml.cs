@@ -8,45 +8,36 @@ namespace ControlsSample
 {
     internal partial class TabControlPage : Control
     {
-        private int newItemIndex = 3;
+        private readonly TabControl tabControl = new()
+        {
+            Margin = 5,
+        };
+
+        private int newItemIndex;
 
         public TabControlPage()
         {
-            InitializeComponent();
-            tabAlignmentComboBox.Items.Add("Top");
-            tabAlignmentComboBox.Items.Add("Bottom");
-            tabAlignmentComboBox.SelectedIndex = 0;
-            foreach(var page in tabControl.Pages)
+            DoInsideLayout(Fn);
+
+            void Fn()
             {
-                page.VisibleChanged += Page_VisibleChanged;
+                tabControl.Parent = this;
+                tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
+                InitializeComponent();
+
+                InsertPage();
+                InsertPage();
+                InsertPage();
+
+                tabAlignmentComboBox.AddEnumValues(TabAlignment.Top);
+                tabAlignmentComboBox.SelectedItemChanged +=
+                    TabAlignmentComboBox_SelectedItemChanged;
             }
         }
 
-        private void TabControl_HandleCreated(object? sender, EventArgs e)
+        private void TabControl_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            Application.LogIf("TabControl_HandleCreated", false);
-        }
-
-        private void TabControl_HandleDestroyed(object? sender, EventArgs e)
-        {
-            Application.LogIf("TabControl_HandleDestroyed", false);
-        }
-
-        private void Page_VisibleChanged(object? sender, EventArgs e)
-        {
-            if (sender is not TabPage tabPage)
-                return;
-            Application.LogIf($"TabPage '{tabPage.Title}' VisibleChanged: {tabPage.Visible}", false);
-        }
-
-        private void TabControl_PageAdded(object? sender, EventArgs e)
-        {
-            Application.LogIf("TabControl:PageAdded", false);
-        }
-
-        private void TabControl_SizeChanged(object? sender, EventArgs e)
-        {
-            Application.LogIf("TabControl:SizeChanged", false);
+            Application.Log("TabControl SelectedIndexChanged");
         }
 
         private int GenItemIndex()
@@ -55,38 +46,29 @@ namespace ControlsSample
             return newItemIndex;
         }
 
-        private void ModifyFirstPageTitleButton_Click(
-            object? sender, 
-            EventArgs e)
+        private void ModifyPageTitleButton_Click(object? sender, EventArgs e)
         {
-            if (!tabControl.Pages.Any())
-                return;
-
-            tabControl.Pages.First().Title += "X";
+            var index = tabControl.SelectedIndex;
+            tabControl.SetTitle(index, tabControl.GetTitle(index) + "X");
         }
 
-        private void InsertLastPageSiblingButton_Click(
-            object? sender,
-            System.EventArgs e)
+        private void InsertLastPageSiblingButton_Click(object? sender, EventArgs e)
         {
-            if (!tabControl.Pages.Any())
+            if (tabControl.TabCount == 0)
+            {
+                InsertPage();
                 return;
+            }
 
-            var lastPage = tabControl.Pages.Last();
-
-            InsertPage(lastPage.Index);
+            InsertPage(tabControl.TabCount - 1);
         }
 
-        private void RemoveSelectedPageButton_Click(object sender, System.EventArgs e)
+        private void RemoveSelectedPageButton_Click(object? sender, EventArgs e)
         {
-            var selectedPage = tabControl.SelectedPage;
-            if (selectedPage == null)
-                return;
-
-            tabControl.Pages.Remove(selectedPage);
+            tabControl.RemoveAt(tabControl.SelectedIndex);
         }
 
-        private void AppendPageButton_Click(object sender, System.EventArgs e)
+        private void AppendPageButton_Click(object? sender, EventArgs e)
         {
             InsertPage();
         }
@@ -94,11 +76,10 @@ namespace ControlsSample
         private void InsertPage(int? index = null)
         {
             var s = "Page " + GenItemIndex();
-            var page = new TabPage(s) 
+            Control page = new() 
             {
                 Padding = 5,
             };
-            page.VisibleChanged += Page_VisibleChanged;
 
             VerticalStackPanel panel = new()
             {
@@ -108,7 +89,7 @@ namespace ControlsSample
 
             page.Children.Add(panel);
 
-            for (int i=1; i<4; i++)
+            for (int i=1; i < 4; i++)
             {
                 var button = new Button()
                 {
@@ -118,28 +99,29 @@ namespace ControlsSample
                 };
                 panel.Children.Add(button);
             }
+
+            page.Disposed += Page_Disposed;
+
             if(index == null)
-                tabControl.Pages.Add(page);
+                tabControl.Add(s, page);
             else
-                tabControl.Pages.Insert(index.Value, page);
+                tabControl.Insert(index.Value, s, page);
         }
 
-        private void ClearPagesButton_Click(object sender, System.EventArgs e)
+        private void Page_Disposed(object? sender, EventArgs e)
         {
-            tabControl.Pages.Clear();
+            Application.Log("Page Disposed");
         }
 
-        private void TabControl_SelectedPageChanged(object sender, EventArgs e)
+        private void ClearPagesButton_Click(object? sender, EventArgs e)
         {
-            Application.Log($"SelectedPageChanged");
+            tabControl.RemoveAll();
         }
 
-        private void TabAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
+        private void TabAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if ((string)tabAlignmentComboBox.SelectedItem! == "Top")
-                tabControl.TabAlignment = TabAlignment.Top;
-            if ((string)tabAlignmentComboBox.SelectedItem! == "Bottom")
-                tabControl.TabAlignment = TabAlignment.Bottom;
+            if(tabAlignmentComboBox.SelectedItem is TabAlignment tabAlignment)
+                tabControl.TabAlignment = tabAlignment;
         }
     }
 }

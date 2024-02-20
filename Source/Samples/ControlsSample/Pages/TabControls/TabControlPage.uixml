@@ -1,52 +1,19 @@
 ﻿<Control x:Class="ControlsSample.TabControlPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
-  <StackPanel Orientation="Vertical" Padding="10">
-    <Control >
-      <TabControl Name="tabControl"
-                  PageAdded = "TabControl_PageAdded"
-                  HandleCreated = "TabControl_HandleCreated"
-                  HandleDestroyed = "TabControl_HandleDestroyed"                 
-                  SizeChanged = "TabControl_SizeChanged"
-                  SelectedPageChanged="TabControl_SelectedPageChanged"
-                  Margin="5" Padding="5" >
-        <TabControl.Pages>
-          <TabPage Title="Page 1" Padding="5" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Padding="5"  >
-              <Button Text="Page 1 Button 1" Margin="5"/>
-              <Button Text="Page 1 Button 2" Margin="5"/>
-              <Button Text="Page 1 Button 3" Margin="5"/>
-            </StackPanel>
-          </TabPage>
-          <TabPage Title="Page 2" Padding="5" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Padding="5"  >
-              <Button Text="Page 2 Button 1" Margin="5"/>
-              <Button Text="Page 2 Button 2" Margin="5"/>
-              <Button Text="Page 2 Button 3" Margin="5"/>
-            </StackPanel>
-          </TabPage>
-          <TabPage Title="Page 3" Padding="5" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Padding="5" >
-              <Button Text="Page 3 Button 1" Margin="5"/>
-              <Button Text="Page 3 Button 2" Margin="5"/>
-              <Button Text="Page 3 Button 3" Margin="5"/>
-            </StackPanel>
-          </TabPage>
-        </TabControl.Pages>
-      </TabControl>
-    </Control>
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
+         Layout="Vertical" Padding="10" >
 
     <HorizontalStackPanel  HorizontalAlignment="Left" Margin="0,10,0,0">
       <VerticalStackPanel>
         <Button
-          Text="Modify First Page Title"
+          Text="Modify Selected Page Title"
           Margin="5"
-          Name="modifyFirstPageTitleButton"
-          Click="ModifyFirstPageTitleButton_Click" />
+          Name="modifyPageTitleButton"
+          Click="ModifyPageTitleButton_Click" />
 
         <Button
-          Text="Insert Last Page Sibling"
+          Text="Insert Before Last Page"
           Margin="5"
           Name="InsertLastPageSiblingButton"
           Click="InsertLastPageSiblingButton_Click" />
@@ -60,7 +27,7 @@
 
       <VerticalStackPanel>
         <Button
-          Text="Append Page"
+          Text="Add Page"
           Margin="5"
           Name="appendPageButton"
           Click="AppendPageButton_Click" />
@@ -70,18 +37,14 @@
           Margin="5"
           Name="clearPagesButton"
           Click="ClearPagesButton_Click" />
-
       </VerticalStackPanel>
 
-      <VerticalStackPanel Visible="false">
+      <VerticalStackPanel Visible="true">
         <StackPanel Orientation="Horizontal" Margin="5">
           <Label Text="Tabs:" VerticalAlignment="Center"/>
-          <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0"
-                    SelectedItemChanged="TabAlignmentComboBox_SelectedItemChanged"/>
+          <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0"/>
         </StackPanel>
-
       </VerticalStackPanel>
 
     </HorizontalStackPanel>
-  </StackPanel>
 </Control>
