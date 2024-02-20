@@ -25,7 +25,7 @@ namespace ControlsSample
 
         private readonly AnimationPlayer animation = new();
         private readonly Button showFrameButton = new();
-        private PopupPictureBox popup = new();
+        private readonly PopupPictureBox popup = new();
         
         private readonly ComboBox selectComboBox = new()
         {
