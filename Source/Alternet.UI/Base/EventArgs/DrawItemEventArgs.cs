@@ -138,16 +138,5 @@ namespace Alternet.UI
             Graphics.FillRectangle(brush, rect);
             brush.Dispose();
         }
-
-        /*/// <summary>Draws a focus rectangle within the bounds specified in the
-        /// constructor.</summary>
-        public virtual void DrawFocusRectangle()
-        {
-            if ((state & DrawItemState.Focus) == DrawItemState.Focus
-                && (state & DrawItemState.NoFocusRect) != DrawItemState.NoFocusRect)
-            {
-                ControlPaint.DrawFocusRectangle(Graphics, rect, ForeColor, BackColor);
-            }
-        }*/
     }
 }
