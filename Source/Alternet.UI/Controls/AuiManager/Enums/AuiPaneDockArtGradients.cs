@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// These are the possible gradient dock art settings for panes
     /// managed by the <see cref="AuiManager"/>.
     /// </summary>
-    public enum AuiPaneDockArtGradients
+    internal enum AuiPaneDockArtGradients
     {
         /// <summary>
         /// No gradient on the captions, in other words a solid color.

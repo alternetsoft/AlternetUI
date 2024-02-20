@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Customization styles of <see cref="AuiManager"/>.
     /// </summary>
     [Flags]
-    public enum AuiManagerOption
+    internal enum AuiManagerOption
     {
         /// <summary>
         /// Allow a pane to be undocked to take the form of a mini frame.

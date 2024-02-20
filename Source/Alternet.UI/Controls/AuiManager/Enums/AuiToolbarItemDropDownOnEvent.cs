@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Specifies when to show a drop down menu assiciated with
     /// <see cref="AuiToolbar"/> item.
     /// </summary>
-    public enum AuiToolbarItemDropDownOnEvent
+    internal enum AuiToolbarItemDropDownOnEvent
     {
         /// <summary>
         /// Do not show drop down menu.

@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// this case explicit positioning of the items is allowed,
     /// and items can optionally span more than one row and/or column.
     /// </summary>
-    public interface IGridBagSizer : IFlexGridSizer
+    internal interface IGridBagSizer : IFlexGridSizer
     {
         /// <summary>
         /// Gets or sets the size used for cells in the grid with no item.

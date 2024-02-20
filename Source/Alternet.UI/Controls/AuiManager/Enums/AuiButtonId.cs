@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// These are the possible pane button identifiers in <see cref="AuiNotebook"/>
     /// and <see cref="AuiToolbar"/>
     /// </summary>
-    public enum AuiButtonId
+    internal enum AuiButtonId
     {
         /// <summary>
         /// Shows a close button on the pane.

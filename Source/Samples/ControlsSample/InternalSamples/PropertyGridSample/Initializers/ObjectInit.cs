@@ -228,15 +228,6 @@ namespace PropertyGridSample
                 control.SuggestedSize = defaultListHeight;
             });
 
-            Actions.Add(typeof(AuiNotebook), (c) =>
-            {
-                AuiNotebook control = (c as AuiNotebook)!;
-                control.SuggestedHeight = defaultListHeight;
-                InsertPage(control);
-                InsertPage(control);
-                InsertPage(control);
-            });
-
             Actions.Add(typeof(ProgressBar), (c) =>
             {
                 ProgressBar control = (c as ProgressBar)!;
@@ -279,19 +270,6 @@ namespace PropertyGridSample
                 Disabled = disabled,
                 Focused = LoadImage("Focused"),
             };
-        }
-
-        private static void InsertPage(AuiNotebook tabControl)
-        {
-            var s = "Page " + LogUtils.GenNewId();
-            var page = new Control()
-            {
-                Padding = 5,
-            };
-
-            var panel = CreatePanelWithButtons(s);
-            page.Children.Add(panel);
-            tabControl.AddPage(page, s, true);
         }
 
         private static StackPanel CreatePanelWithButtons(string s)

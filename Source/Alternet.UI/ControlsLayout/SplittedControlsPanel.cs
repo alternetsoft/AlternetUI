@@ -9,6 +9,9 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Descendant of <see cref="SplittedPanel"/> control with additional features.
+    /// </summary>
     public class SplittedControlsPanel : SplittedPanel
     {
         private TreeView? leftTreeView;
@@ -16,11 +19,15 @@ namespace Alternet.UI
         private LogListBox? logControl;
         private ListBox? actionsControl;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SplittedControlsPanel"/> class.
+        /// </summary>
         public SplittedControlsPanel()
         {
             TopVisible = false;
         }
 
+        /// <inheritdoc/>
         public override Thickness DefaultPanelSize => (200, 5, 350, 150);
 
         /// <summary>
@@ -56,6 +63,8 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="SplittedPanel.RightPanel"/>
+        [Browsable(false)]
         public new SideBarPanel RightPanel => (SideBarPanel)base.RightPanel;
 
         /// <summary>
@@ -172,7 +181,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Writes some debug related welcome messages to the log if called in the debug environment.
+        /// Writes some debug related welcome messages to the log if called in the
+        /// debug environment.
         /// </summary>
         [Conditional("DEBUG")]
         public virtual void WriteWelcomeLogMessages()
@@ -205,6 +215,7 @@ namespace Alternet.UI
             actionsControl.RemoveAll();
         }
 
+        /// <inheritdoc/>
         protected override Control CreateRightPanel()
         {
             return new SideBarPanel();

@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// in one column having the same width, but all rows or all columns are not
     /// necessarily the same height or width as in the <see cref="IGridSizer"/>.
     /// </summary>
-    public interface IFlexGridSizer : IGridSizer
+    internal interface IFlexGridSizer : IGridSizer
     {
         /// <summary>
         /// Gets or sets whether the sizer flexibly resizes its columns, rows, or both(default).

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines grow mode for the <see cref="IFlexGridSizer"/>.
     /// </summary>
-    public enum FlexSizerGrowMode
+    internal enum FlexSizerGrowMode
     {
         /// <summary>
         /// Sizer doesn't grow its elements at all in the non-flexible direction.

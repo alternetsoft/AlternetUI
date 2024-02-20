@@ -44,8 +44,6 @@ namespace PropertyGridSample
         {
             InitSampleLocalization();
 
-            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
-
             // Registers known collection property editors.
             PropertyGrid.RegisterCollectionEditors();
         }

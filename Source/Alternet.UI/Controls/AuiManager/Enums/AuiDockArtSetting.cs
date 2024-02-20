@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// These are the possible <see cref="IAuiDockArt"/> metric settings.
     /// </summary>
-    public enum AuiDockArtSetting
+    internal enum AuiDockArtSetting
     {
         /// <summary>
         /// Customizes the sash size.

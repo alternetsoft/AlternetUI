@@ -26,7 +26,7 @@ namespace Alternet.UI
     /// can be used to avoid flicker, by modifying more than one pane at a time,
     /// and then "committing" all of the changes at once by calling <see cref="Update"/>.
     /// </remarks>
-    public class AuiManager : BaseComponent, IDisposable
+    internal class AuiManager : BaseComponent, IDisposable
     {
         private Control? managedControl;
         private IntPtr handle;
@@ -48,9 +48,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets container in which toolbars and sidebars will be created.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetManagedWindow"/> to assign this property.
+        /// </remarks>
+        public Control? ManagedControl
+        {
+            get => managedControl;
+        }
+
+        /// <summary>
         /// Gets or sets the associated art provider.
         /// </summary>
-        public IAuiDockArt ArtProvider
+        internal IAuiDockArt ArtProvider
         {
             get
             {
@@ -62,17 +73,6 @@ namespace Alternet.UI
             {
                 Native.AuiManager.SetArtProvider(handle, value.Handle);
             }
-        }
-
-        /// <summary>
-        /// Gets container in which toolbars and sidebars will be created.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="SetManagedWindow"/> to assign this property.
-        /// </remarks>
-        public Control? ManagedControl
-        {
-            get => managedControl;
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// rather simple basic geometry, typically in a row or a column or several hierarchies
     /// of either.
     /// </summary>
-    public interface IBoxSizer : ISizer
+    internal interface IBoxSizer : ISizer
     {
         /// <summary>
         /// Returns the orientation of the box sizer.

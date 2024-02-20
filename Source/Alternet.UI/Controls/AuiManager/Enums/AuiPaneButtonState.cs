@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="AuiToolbar"/>.
     /// </summary>
     [Flags]
-    public enum AuiPaneButtonState
+    internal enum AuiPaneButtonState
     {
         /// <summary>
         /// Normal button state.

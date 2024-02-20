@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to the <see cref="AuiNotebook"/> page properties and methods.
     /// </summary>
-    public interface IAuiNotebookPage
+    internal interface IAuiNotebookPage
     {
         /// <summary>
         /// Gets the zero-based index of the page within the <see cref="AuiNotebook"/> control,

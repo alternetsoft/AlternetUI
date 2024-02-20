@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Default implementation of the <see cref="ISizerFactory"/> interface.
     /// </summary>
-    public class SizerFactory : ISizerFactory
+    internal class SizerFactory : ISizerFactory
     {
         private readonly bool disposeHandle;
 

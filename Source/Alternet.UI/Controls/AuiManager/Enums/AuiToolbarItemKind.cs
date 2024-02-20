@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines <see cref="AuiToolbar"/> item kind.
     /// </summary>
-    public enum AuiToolbarItemKind
+    internal enum AuiToolbarItemKind
     {
         /// <summary>
         /// Toolbar item is separator.

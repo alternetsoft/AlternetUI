@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to specify <see cref="SizerFlag"/> in the convenient way.
     /// </summary>
-    public interface ISizerFlags : IDisposableObject
+    internal interface ISizerFlags : IDisposableObject
     {
         /// <summary>
         /// Gets the border used by default in <see cref="Border(GenericDirection)"/> method.

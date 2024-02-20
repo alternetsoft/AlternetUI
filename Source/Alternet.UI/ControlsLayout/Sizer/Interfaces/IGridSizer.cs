@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// the width of each field is the width of the widest child, the height of
     /// each field is the height of the tallest child.
     /// </summary>
-    public interface IGridSizer : ISizer
+    internal interface IGridSizer : ISizer
     {
         /// <summary>
         /// Gets or sets the number of columns that has been specified for the sizer.
