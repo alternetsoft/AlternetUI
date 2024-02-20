@@ -5,7 +5,7 @@ namespace LayoutSample
 {
     public partial class Grid10x10Window : Window
     {
-        private Grid? grid;
+        private readonly Grid? grid;
 
         public Grid10x10Window()
         {

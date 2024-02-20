@@ -54,8 +54,8 @@ namespace DrawingSample
         private void Canvas_Paint(object? sender, PaintEventArgs e)
         {
             var b = e.Bounds;
-            Draw(e.DrawingContext, e.Bounds);
-            e.DrawingContext.DrawRectangle(Pens.LightGray, b);
+            Draw(e.DrawingContext, b);
+            /*e.DrawingContext.DrawRectangle(Pens.LightGray, b);*/
         }
     }
 }

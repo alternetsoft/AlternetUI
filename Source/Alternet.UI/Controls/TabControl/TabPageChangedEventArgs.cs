@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the selected tab change routed events.
     /// </summary>
-    public class TabPageChangedEventArgs : EventArgs
+    public class TabPageChangedEventArgs : BaseEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabPageChangedEventArgs"/> class.

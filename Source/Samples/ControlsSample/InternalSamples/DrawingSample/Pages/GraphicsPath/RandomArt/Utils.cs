@@ -9,7 +9,7 @@ namespace DrawingSample.RandomArt
 {
     internal static class Utils
     {
-        public static Vector2 GetVector(PointD point) => new Vector2((float)point.X, (float)point.Y);
+        public static Vector2 GetVector(PointD point) => new((float)point.X, (float)point.Y);
 
         public static bool IsDistanceGreaterOrEqual(PointD p1, PointD p2, double distanceThreshold)
         {

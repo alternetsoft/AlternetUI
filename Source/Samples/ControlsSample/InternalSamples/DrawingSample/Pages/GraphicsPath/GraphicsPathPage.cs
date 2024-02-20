@@ -7,7 +7,7 @@ namespace DrawingSample
 {
     internal sealed class GraphicsPathPage : DrawingPage
     {
-        private RandomArt.Model randomArtModel = new RandomArt.Model();
+        private readonly RandomArt.Model randomArtModel = new();
 
         private RandomArt.RandomArtController? randomArtController;
 

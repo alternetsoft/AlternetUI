@@ -65,6 +65,6 @@ namespace Alternet.UI.Versioning
             return new Version(version.Major, version.Minor, buildNumber, 0);
         }
 
-        public ProductVersion WithType(VersionType value) => new ProductVersion(Major, Minor, value);
+        public ProductVersion WithType(VersionType value) => new(Major, Minor, value);
     }
 }

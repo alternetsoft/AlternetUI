@@ -3,7 +3,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class GenericTabControl
+    public partial class TabControl
     {
         internal static void DrawTabControlInterior(
             Graphics dc,

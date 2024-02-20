@@ -32,7 +32,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="TabControl"/> control.
+        /// <see cref="NativeTabControl"/> control.
         /// </summary>
         ControlHandler CreateTabControlHandler(Control control);
 

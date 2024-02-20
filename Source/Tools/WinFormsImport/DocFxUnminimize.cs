@@ -10,17 +10,18 @@ namespace WinFormsImport
 {
     internal class DocFxUnminimize
     {
-        DocFxSchema? schema;
+        private readonly DocFxSchema? schema;
         public string[]? splittedMappings;
 
         public class DocFxSchema
         {
+#pragma warning disable
             public int version { get; set; }
             public string[]? sources { get; set; }
             public string[]? sourcesContent { get; set; }
             public string? mappings { get; set; }
             public string[]? names { get; set; }
-
+#pragma warning restore
         }
 
         public DocFxUnminimize(string filename)
@@ -34,8 +35,7 @@ namespace WinFormsImport
         {
             if (schema is null || schema.names is null)
                 return null;
-            if (splittedMappings is null)
-                splittedMappings = schema.mappings?.Split(',');
+            splittedMappings ??= schema.mappings?.Split(',');
             for(int i = 0; i < schema.names.Length; i++)
             {
                 if (schema.names[i] == name)

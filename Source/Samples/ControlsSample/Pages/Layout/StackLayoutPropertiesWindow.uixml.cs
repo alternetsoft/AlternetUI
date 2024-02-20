@@ -63,7 +63,7 @@ namespace LayoutSample
             buttonAlignmentControl.Control = subjectButton;
         }
 
-        private void DockedEdit_SelectedItemChanged(object sender, EventArgs e)
+        private void DockedEdit_SelectedItemChanged(object? sender, EventArgs e)
         {
             if (dockedEdit.SelectedItem is not DockStyle dockStyle)
                 return;

@@ -14,9 +14,9 @@ namespace Alternet.UI
         private readonly int index;
         private readonly RectD rect;
         private readonly DrawItemState state;
-        private Color backColor;
-        private Color foreColor;
-        private Font font;
+        private readonly Color backColor;
+        private readonly Color foreColor;
+        private readonly Font font;
 
         /// <summary>Initializes a new instance of the <see cref="DrawItemEventArgs" /> class
         /// for the specified control with the specified font, state, surface to draw on,
@@ -138,16 +138,5 @@ namespace Alternet.UI
             Graphics.FillRectangle(brush, rect);
             brush.Dispose();
         }
-
-        /*/// <summary>Draws a focus rectangle within the bounds specified in the
-        /// constructor.</summary>
-        public virtual void DrawFocusRectangle()
-        {
-            if ((state & DrawItemState.Focus) == DrawItemState.Focus
-                && (state & DrawItemState.NoFocusRect) != DrawItemState.NoFocusRect)
-            {
-                ControlPaint.DrawFocusRectangle(Graphics, rect, ForeColor, BackColor);
-            }
-        }*/
     }
 }

@@ -6,12 +6,11 @@ namespace DrawingSample
 {
     internal sealed class ImagesPage : DrawingPage
     {
-        private Image image;
-        private Control control;
+        private readonly Image image;
+        private readonly Control control;
+        private readonly Pen dashPen = new(Color.Black, 2, DashStyle.Dash);
 
         private RectD magnifiedRect;
-
-        private Pen dashPen = new Pen(Color.Black, 2, DashStyle.Dash);
 
         private InterpolationMode interpolationMode = InterpolationMode.None;
 

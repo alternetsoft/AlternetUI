@@ -6,11 +6,11 @@ namespace ApiGenerator.Api
 {
     internal class SyntheticMethodInfo : MethodInfo
     {
-        private Type? declaringType;
-        private string name;
+        private readonly Type? declaringType;
+        private readonly string name;
         private readonly bool isStatic;
-        private SyntheticParameterInfo[] parameters;
-        private Type returnType;
+        private readonly SyntheticParameterInfo[] parameters;
+        private readonly Type returnType;
 
         public SyntheticMethodInfo(Type? declaringType, string name, bool isStatic, SyntheticParameterInfo[] parameters, Type returnType)
         {
@@ -55,7 +55,7 @@ namespace ApiGenerator.Api
 
         public override object[] GetCustomAttributes(bool inherit)
         {
-            return new object[0];
+            return Array.Empty<object>();
         }
 
         public override object[] GetCustomAttributes(Type attributeType, bool inherit)

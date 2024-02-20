@@ -97,7 +97,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
-            Actions.Add(typeof(GenericTabControl), InitGenericTabControl);
+            Actions.Add(typeof(TabControl), InitGenericTabControl);
 
             Actions.Add(typeof(ControlPainterPreview), (c) =>
             {
@@ -228,15 +228,6 @@ namespace PropertyGridSample
                 control.SuggestedSize = defaultListHeight;
             });
 
-            Actions.Add(typeof(TabControl), (c) =>
-            {
-                TabControl control = (c as TabControl)!;
-                control.SuggestedSize = defaultListHeight;
-                InsertPage(control, null);
-                InsertPage(control, null);
-                InsertPage(control, null);
-            });
-
             Actions.Add(typeof(AuiNotebook), (c) =>
             {
                 AuiNotebook control = (c as AuiNotebook)!;
@@ -288,23 +279,6 @@ namespace PropertyGridSample
                 Disabled = disabled,
                 Focused = LoadImage("Focused"),
             };
-        }
-
-        private static void InsertPage(TabControl tabControl, int? index = null)
-        {
-            var s = "Page " + LogUtils.GenNewId();
-            var page = new TabPage(s)
-            {
-                Padding = 5,
-            };
-
-            var panel = CreatePanelWithButtons(s);
-            page.Children.Add(panel);
-
-            if (index == null)
-                tabControl.Pages.Add(page);
-            else
-                tabControl.Pages.Insert(index.Value, page);
         }
 
         private static void InsertPage(AuiNotebook tabControl)

@@ -88,7 +88,7 @@ namespace Alternet.UI
             ParseArgs(args);
         }
 
-        private Dictionary<string, string> m_args = new Dictionary<string, string>();
-        static readonly CommandLineArgs m_instance = new CommandLineArgs();
+        private readonly Dictionary<string, string> m_args = new();
+        static readonly CommandLineArgs m_instance = new();
     }
 }

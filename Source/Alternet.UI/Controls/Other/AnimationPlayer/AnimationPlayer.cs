@@ -27,6 +27,11 @@ namespace Alternet.UI
     public partial class AnimationPlayer : Control, IAnimationPlayer
     {
         /// <summary>
+        /// Gets or sets type of the default driver used inside the <see cref="AnimationPlayer"/>.
+        /// </summary>
+        public static KnownDriver DefaultDriver = KnownDriver.Generic;
+
+        /// <summary>
         /// Gets or sets function which creates animation player driver used in
         /// the <see cref="AnimationPlayer"/>.
         /// </summary>
@@ -52,6 +57,27 @@ namespace Alternet.UI
             driver.Control.Parent = this;
         }
 
+        /// <summary>
+        /// Enumerates known <see cref="AnimationPlayer"/> drivers.
+        /// </summary>
+        public enum KnownDriver
+        {
+            /// <summary>
+            /// Native control is used inside the <see cref="AnimationPlayer"/>.
+            /// </summary>
+            Native,
+
+            /// <summary>
+            /// Generic control is used inside the <see cref="AnimationPlayer"/>.
+            /// </summary>
+            Generic,
+
+            /// <summary>
+            /// <see cref="WebBrowser"/> control is used inside the <see cref="AnimationPlayer"/>.
+            /// </summary>
+            WebBrowser,
+        }
+
         Control IAnimationPlayer.Control { get => this; }
 
         /// <summary>
@@ -62,26 +88,6 @@ namespace Alternet.UI
         public virtual uint FrameCount
         {
             get => driver.FrameCount;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to use generic calendar or native calendar.
-        /// </summary>
-        /// <remarks>
-        /// Default value under Linux is <c>true</c> (native version is not working),
-        /// on other platfroms - <c>false</c>.
-        /// </remarks>
-        public virtual bool UseGeneric
-        {
-            get
-            {
-                return driver.UseGeneric;
-            }
-
-            set
-            {
-                driver.UseGeneric = value;
-            }
         }
 
         /// <summary>
@@ -110,7 +116,19 @@ namespace Alternet.UI
         /// <returns></returns>
         public static IAnimationPlayer CreateDefaultPlayerDriver()
         {
-            return new NativeAnimationPlayer();
+            switch (DefaultDriver)
+            {
+                case KnownDriver.Native:
+                    return new NativeAnimationPlayer();
+                case KnownDriver.Generic:
+                    var result = new NativeAnimationPlayer();
+                    result.UseGeneric = true;
+                    return result;
+                case KnownDriver.WebBrowser:
+                default:
+                    throw new NotImplementedException(
+                        "KnownDriver.WebBrowser is not currently supported.");
+            }
         }
 
         /// <summary>

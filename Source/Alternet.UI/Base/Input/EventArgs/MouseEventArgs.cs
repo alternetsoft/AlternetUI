@@ -13,7 +13,7 @@ namespace Alternet.UI
     ///     The MouseEventArgs class provides access to the logical
     ///     Mouse device for all derived event args.
     /// </summary>
-    public class MouseEventArgs : BaseEventArgs
+    public class MouseEventArgs : HandledEventArgs
     {
         private readonly Control currentTarget;
         private readonly Control originalTarget;

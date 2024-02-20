@@ -1,8 +1,0 @@
-﻿<Window x:Class="DrawingSample.MainWindow"
-        xmlns="http://schemas.alternetsoft.com/ui/2021"
-        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample"
-        Title="Alternet UI Drawing Sample"
-        Width="960" Height="700" StartLocation="CenterScreen">
-    <TabControl Name="tabControl" SelectedPageChanged="TabControl_SelectedPageChanged" />
-</Window>

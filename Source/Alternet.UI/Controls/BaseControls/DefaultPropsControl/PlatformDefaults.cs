@@ -56,27 +56,6 @@ namespace Alternet.UI
             Application.IsWindowsOS ? 3 : 2;
 
         /// <summary>
-        /// Gets or sets whether <see cref="Button.HasBorder"/> is used
-        /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
-        /// and other places.
-        /// </summary>
-        public bool AllowButtonHasBorder { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets whether background color of <see cref="Button"/> control is used
-        /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
-        /// and other places.
-        /// </summary>
-        public bool AllowButtonBackground { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets whether foreground color of <see cref="Button"/> control is used
-        /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
-        /// and other places.
-        /// </summary>
-        public bool AllowButtonForeground { get; set; } = true;
-
-        /// <summary>
         /// Gets or sets minimum splitter sash size in dips (1/96 inch).
         /// </summary>
         public int MinSplitterSashSize { get; set; } = 7;

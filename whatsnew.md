@@ -1,5 +1,30 @@
 # 0.9.507 (in development)
 
+## 2024 February 20
+
+- GenericTabControl -> TabControl.
+- Now TabControl works fine under Linux.
+- UserPaintControl -> UserControl as in WinForms.
+- WinForms compatibility related improvements.
+- Fixed: PictureBox/SpeedButton layout.
+- PopupPictureBox made public.
+- PopupWindow: ShowOkButton, ShowCancelButton.
+
+### AnimationPlayer improved:
+
+- Now it is possible to connect custom animation provider using CreatePlayerDriver function.
+- Demo improved (show info, show frame buttons).
+- New props: FrameCount, AnimationSize, IsOk.
+- New methods: GetDelay, GetFrame.
+- IAnimationPlayer interface.
+
+### CardPanelHeader improved:
+
+- event EventHandler? ButtonSizeChanged.
+- CardPanelHeaderItem? GetTab(int? index).
+- bool RemoveAt(int? index).
+- int Insert(int? index, string text, ObjectUniqueId cardId).
+
 ## 2024 February 19
 
 - <u>**GenericTabControl.HasInteriorBorder.**</u>.

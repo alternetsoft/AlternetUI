@@ -11,7 +11,7 @@ namespace Alternet.UI.Versioning
 {
     class XmlPatcher
     {
-        bool omitXmlDeclaration;
+        private readonly bool omitXmlDeclaration;
 
         public XmlPatcher(bool omitXmlDeclaration)
         {
@@ -49,15 +49,15 @@ namespace Alternet.UI.Versioning
 
             element.SetAttributeValue(attributeName, newValue);
 
-            using (var writer = XmlWriter.Create(
+            using var writer = XmlWriter.Create(
                 filePath,
                 new XmlWriterSettings
                 {
                     OmitXmlDeclaration = omitXmlDeclaration,
                     Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: !omitXmlDeclaration),
                     Indent = true
-                }))
-                document.Save(writer);
+                });
+            document.Save(writer);
         }
     }
 }
