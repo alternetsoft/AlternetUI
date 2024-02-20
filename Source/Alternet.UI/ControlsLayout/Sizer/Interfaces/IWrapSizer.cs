@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// So a wrap sizer has a primary orientation for adding items, and adds lines as needed
     /// in the secondary direction.
     /// </summary>
-    public interface IWrapSizer : IBoxSizer
+    internal interface IWrapSizer : IBoxSizer
     {
     }
 }

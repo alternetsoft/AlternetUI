@@ -51,7 +51,7 @@ namespace ControlsTest
             }
 
             mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
-            int webBrowserPageIndex = CreateWebBrowserPages();
+            CreateWebBrowserPages();
 
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
 

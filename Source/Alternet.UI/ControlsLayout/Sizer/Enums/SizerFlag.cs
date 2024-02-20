@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Enumerates flags which customize <see cref="ISizer"/> behavior and appearance.
     /// </summary>
     [Flags]
-    public enum SizerFlag
+    internal enum SizerFlag
     {
         /// <summary>
         /// Border width will be applied to the left side of the sizer item.

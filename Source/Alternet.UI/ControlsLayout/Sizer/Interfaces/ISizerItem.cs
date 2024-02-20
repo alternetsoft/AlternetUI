@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to the individual <see cref="ISizer"/> item.
     /// </summary>
-    public interface ISizerItem : IDisposableObject
+    internal interface ISizerItem : IDisposableObject
     {
         /// <summary>
         /// Gets whether item is shown.

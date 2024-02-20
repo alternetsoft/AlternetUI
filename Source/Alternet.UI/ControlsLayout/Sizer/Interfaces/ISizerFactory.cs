@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Creates different <see cref="ISizer"/> implementations.
     /// </summary>
-    public interface ISizerFactory
+    internal interface ISizerFactory
     {
         /// <summary>
         /// Creates default <see cref="ISizerFlags"/> implementation.

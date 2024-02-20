@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides methods and properties used for laying out sub-controls in a control.
     /// </summary>
-    public interface ISizer : IDisposableObject
+    internal interface ISizer : IDisposableObject
     {
         /// <summary>
         /// Does the actual calculation of children's minimal sizes.
