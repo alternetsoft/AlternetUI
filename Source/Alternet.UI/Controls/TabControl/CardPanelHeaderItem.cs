@@ -15,7 +15,12 @@ namespace Alternet.UI
         private Control? cardControl;
         private ObjectUniqueId? cardUniqueId;
 
-        internal CardPanelHeaderItem(SpeedButton headerControl)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CardPanelHeaderItem"/> class.
+        /// </summary>
+        /// <param name="headerControl">Control to use as <see cref="HeaderButton"/>
+        /// property value.</param>
+        public CardPanelHeaderItem(SpeedButton headerControl)
         {
             this.headerControl = headerControl;
         }
@@ -23,12 +28,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets associated header control.
         /// </summary>
-        public SpeedButton HeaderButton => headerControl;
+        public virtual SpeedButton HeaderButton => headerControl;
 
         /// <summary>
         /// Gets or sets associated card control.
         /// </summary>
-        public Control? CardControl
+        public virtual Control? CardControl
         {
             get => cardControl;
             set => cardControl = value;
@@ -37,10 +42,26 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets associated <see cref="CardPanelItem"/> unique id.
         /// </summary>
-        public ObjectUniqueId? CardUniqueId
+        public virtual ObjectUniqueId? CardUniqueId
         {
             get => cardUniqueId;
             set => cardUniqueId = value;
+        }
+
+        /// <summary>
+        /// Gets or sets text property of the <see cref="HeaderButton"/>.
+        /// </summary>
+        public virtual string? Text
+        {
+            get
+            {
+                return HeaderButton?.Text;
+            }
+
+            set
+            {
+                HeaderButton?.SetText(value);
+            }
         }
     }
 }
