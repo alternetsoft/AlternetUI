@@ -255,9 +255,6 @@ namespace Alternet.UI
 
         internal bool NativeControlCreated => nativeControl != null;
 
-        private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
-            Control.Parent is not TabControl; // todo
-
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
@@ -536,8 +533,7 @@ namespace Alternet.UI
         internal void Control_VisibleChanged()
         {
             ApplyVisible();
-            if (NeedRelayoutParentOnVisibleChanged)
-                Control.Parent?.PerformLayout();
+            Control.Parent?.PerformLayout();
         }
 
         internal void Control_EnabledChanged()
