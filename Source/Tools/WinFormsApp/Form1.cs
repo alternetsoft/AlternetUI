@@ -11,38 +11,17 @@ namespace WinFormsApp
         {
             InitializeComponent();
 
-            listBox.Dock = DockStyle.Fill;
-            this.Controls.Add(listBox);
-
-            var panelLeft = new Panel();
-            panelLeft.Dock = DockStyle.Left;
-            panelLeft.Width = 35;
-            this.Controls.Add(panelLeft);
-
-            labelForm.Text = "label";
-            labelForm.Dock = DockStyle.Top;
-            this.Controls.Add(labelForm);
-
-            var panelTop = new Panel();
-            panelTop.Dock = DockStyle.Top;
-            panelTop.Height = 30;
-            this.Controls.Add(panelTop);
+            listBox.Dock = DockStyle.Bottom;
+            listBox.Height = 200;
+            Controls.Add(listBox);
 
             KeyDown += Form1_KeyDown;
-            listBox.MouseMove += ListBox_MouseMove;
+            tabControl1.MouseMove += ListBox_MouseMove;
             KeyPreview = true;
             listBox.Items.Add($"DoubleClickTime: {SystemInformation.DoubleClickTime}");
             listBox.Items.Add($"MouseWheelScrollLines: {SystemInformation.MouseWheelScrollLines}");
 
-            MouseMove += Form1_MouseMove;
-
             StatusStrip bar = new();
-        }
-
-        private void Form1_MouseMove(object? sender, MouseEventArgs e)
-        {
-            labelForm.Text = $"{e.X}:{e.Y}, {e.Location}";
-            labelForm.Refresh();
         }
 
         private void ListBox_MouseMove(object? sender, MouseEventArgs e)
@@ -53,6 +32,11 @@ namespace WinFormsApp
         private void Form1_KeyDown(object? sender, KeyEventArgs e)
         {
             listBox.Items.Add(e.KeyData.ToString());
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            listBox.Items.Add(tabControl1.DisplayRectangle.ToString());
         }
     }
 }

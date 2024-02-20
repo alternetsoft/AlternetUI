@@ -261,6 +261,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the display area of the control's tab pages.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RectD" /> that represents the display area
+        /// of the tab pages.
+        /// </returns>
+        /// <remarks>
+        /// <see cref="ContentPadding"/> is not included in the result. This function
+        /// returns client area of the control, except tab header buttons area.
+        /// </remarks>
+        public virtual RectD DisplayRectangle
+        {
+            get
+            {
+                var result = Contents.Bounds;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets how the tabs and content are aligned.
         /// </summary>
         [Browsable(false)]
