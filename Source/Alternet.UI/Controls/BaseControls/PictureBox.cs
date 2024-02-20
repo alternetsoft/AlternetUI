@@ -51,7 +51,7 @@ namespace Alternet.UI
                     return;
                 textVisible = value;
                 primitive.Visible = !value;
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -68,7 +68,9 @@ namespace Alternet.UI
                     return;
                 imageToText = value;
                 if (ImageVisible && TextVisible)
-                    Invalidate();
+                {
+                    PerformLayoutAndInvalidate();
+                }
             }
         }
 
@@ -88,8 +90,10 @@ namespace Alternet.UI
                     return;
                 text = value ?? string.Empty;
                 RaiseTextChanged(EventArgs.Empty);
-                if(TextVisible)
-                    Invalidate();
+                if (TextVisible)
+                {
+                    PerformLayoutAndInvalidate();
+                }
             }
         }
 
@@ -112,7 +116,8 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
-                Invalidate();
+                if(ImageVisible)
+                    PerformLayoutAndInvalidate();
             }
         }
 
@@ -134,7 +139,8 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Disabled = value;
                 RaiseImageChanged(EventArgs.Empty);
-                Invalidate();
+                if (ImageVisible && !Enabled)
+                    PerformLayoutAndInvalidate();
             }
         }
 

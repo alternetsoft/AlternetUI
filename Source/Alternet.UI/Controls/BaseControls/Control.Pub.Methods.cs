@@ -364,6 +364,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
+        /// </summary>
+        public virtual void PerformLayoutAndInvalidate()
+        {
+            PerformLayout();
+            Invalidate();
+        }
+
+        /// <summary>
         /// Sets value of the <see cref="Text"/> property.
         /// </summary>
         /// <param name="value">New value of the <see cref="Text"/> property.</param>
