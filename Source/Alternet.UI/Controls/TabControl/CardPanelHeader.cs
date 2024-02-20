@@ -75,6 +75,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when size of any button is changed.
+        /// </summary>
+        public event EventHandler? ButtonSizeChanged;
+
+        /// <summary>
         /// Occurs when the tab is clicked.
         /// </summary>
         public event EventHandler? TabClick;
@@ -112,7 +117,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets individual tab margin.
         /// </summary>
-        public Thickness? TabMargin
+        public virtual Thickness? TabMargin
         {
             get => tabMargin;
             set
@@ -127,7 +132,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets individual tab padding.
         /// </summary>
-        public Thickness? TabPadding
+        public virtual Thickness? TabPadding
         {
             get => tabPadding;
             set
@@ -165,7 +170,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tabs.
         /// </summary>
-        public HorizontalAlignment TabHorizontalAlignment
+        public virtual HorizontalAlignment TabHorizontalAlignment
         {
             get
             {
@@ -184,7 +189,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether to set bold style for the title of active tab.
         /// </summary>
-        public bool UseTabBold
+        public virtual bool UseTabBold
         {
             get
             {
@@ -203,7 +208,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to set foreground color for the active tab.
         /// </summary>
-        public bool UseTabForegroundColor
+        public virtual bool UseTabForegroundColor
         {
             get
             {
@@ -222,7 +227,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to set background color for the active tab.
         /// </summary>
-        public bool UseTabBackgroundColor
+        public virtual bool UseTabBackgroundColor
         {
             get
             {
@@ -242,7 +247,7 @@ namespace Alternet.UI
         /// Gets or sets attached <see cref="CardPanel"/>
         /// </summary>
         [Browsable(false)]
-        public CardPanel? CardPanel
+        public virtual CardPanel? CardPanel
         {
             get => cardPanel;
 
@@ -263,7 +268,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether tabs have border.
         /// </summary>
-        public bool TabHasBorder
+        public virtual bool TabHasBorder
         {
             get
             {
@@ -283,7 +288,7 @@ namespace Alternet.UI
         /// Gets or sets active tab colors.
         /// </summary>
         [Browsable(false)]
-        public IReadOnlyFontAndColor? ActiveTabColors
+        public virtual IReadOnlyFontAndColor? ActiveTabColors
         {
             get
             {
@@ -303,7 +308,7 @@ namespace Alternet.UI
         /// Gets or sets inactive tab colors.
         /// </summary>
         [Browsable(false)]
-        public IReadOnlyFontAndColor? InactiveTabColors
+        public virtual IReadOnlyFontAndColor? InactiveTabColors
         {
             get
             {
@@ -322,7 +327,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color of the active tab.
         /// </summary>
-        public Color? BackgroundColorActiveTab
+        public virtual Color? BackgroundColorActiveTab
         {
             get
             {
@@ -338,7 +343,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color of the inactive tab.
         /// </summary>
-        public Color? BackgroundColorInactiveTab
+        public virtual Color? BackgroundColorInactiveTab
         {
             get
             {
@@ -354,7 +359,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets foreground color of the active tab.
         /// </summary>
-        public Color? ForegroundColorActiveTab
+        public virtual Color? ForegroundColorActiveTab
         {
             get
             {
@@ -370,7 +375,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets foreground color of the inactive tab.
         /// </summary>
-        public Color? ForegroundColorInactiveTab
+        public virtual Color? ForegroundColorInactiveTab
         {
             get
             {
@@ -388,7 +393,7 @@ namespace Alternet.UI
         /// <see cref="UpdateCardsMode"/> is not <see cref="WindowSizeToContentMode.None"/>.
         /// </summary>
         [Browsable(false)]
-        public SizeD AdditionalSpace
+        public virtual SizeD AdditionalSpace
         {
             get
             {
@@ -427,7 +432,7 @@ namespace Alternet.UI
         /// Gets selected tab.
         /// </summary>
         [Browsable(false)]
-        public CardPanelHeaderItem? SelectedTab
+        public virtual CardPanelHeaderItem? SelectedTab
         {
             get => selectedTab;
             set
@@ -453,7 +458,7 @@ namespace Alternet.UI
         /// Returns <c>null</c> if no tab is selected.
         /// </remarks>
         [Browsable(false)]
-        public int? SelectedTabIndex
+        public virtual int? SelectedTabIndex
         {
             get
             {
@@ -465,9 +470,15 @@ namespace Alternet.UI
 
             set
             {
-                if (value >= Tabs.Count || value < 0 || value is null)
+                if(Tabs.Count == 0)
+                {
+                    SelectedTab = null;
                     return;
-                SelectedTab = Tabs[value.Value];
+                }
+
+                var newValue = value ?? 0;
+                newValue = MathUtils.ApplyMinMax(newValue, 0, Tabs.Count - 1);
+                SelectedTab = Tabs[newValue];
             }
         }
 
@@ -476,6 +487,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetCardsVisible()
         {
+            if (tabs.Count == 0)
+                return;
+
             foreach (var tab in tabs)
             {
                 if (SelectedTab == tab)
@@ -523,6 +537,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets item with the specified index.
+        /// </summary>
+        /// <param name="index">Index of the item.</param>
+        /// <returns></returns>
+        public virtual CardPanelHeaderItem? GetTab(int? index)
+        {
+            if (index is null || index < 0 || index > tabs.Count)
+                return null;
+            var result = Tabs[index.Value];
+            return result;
+        }
+
+        /// <summary>
+        /// Removes item at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the item</param>
+        /// <returns></returns>
+        public virtual bool RemoveAt(int? index)
+        {
+            var item = GetTab(index);
+            if (item is null)
+                return false;
+            DoInsideLayout(() =>
+            {
+                item.HeaderButton.Parent = null;
+                tabs.RemoveAt(index!.Value);
+            });
+            Invalidate();
+            return true;
+        }
+
+        /// <summary>
         /// Selects the last tab if it exists.
         /// </summary>
         public virtual void SelectLastTab()
@@ -536,7 +582,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CardsWidthToMax(WindowSizeToContentMode mode)
         {
-            if (mode == WindowSizeToContentMode.None)
+            if (mode == WindowSizeToContentMode.None || tabs.Count == 0)
                 return;
 
             var parent = GetCardsParent();
@@ -568,7 +614,7 @@ namespace Alternet.UI
                     maxSize.Width + additionalSpace.Width,
                     parent.Bounds.Width);
                 var newHeight = Math.Max(
-                    maxSize.Height + this.Bounds.Height + this.Margin.Vertical + additionalSpace.Height,
+                    maxSize.Height + Bounds.Height + Margin.Vertical + additionalSpace.Height,
                     parent.Bounds.Height);
 
                 switch (mode)
@@ -592,6 +638,77 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Inserts new item to the control at the specified position.
+        /// </summary>
+        /// <param name="index">Item position.</param>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardControl">Associated card control.</param>
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Insert(int? index, string text, Control? cardControl = null)
+        {
+            var button = CreateHeaderButton();
+
+            button.Text = text;
+            button.SizeChanged += Button_SizeChanged;
+            button.Margin = TabMargin ?? DefaultTabMargin;
+            button.Padding = TabPadding ?? DefaultTabPadding;
+            button.HasBorder = TabHasBorder;
+            button.HorizontalAlignment = UI.HorizontalAlignment.Center;
+            Children.Insert(index ?? Children.Count, button);
+            button.Parent = this;
+            button.Click += Item_Click;
+
+            var item = new CardPanelHeaderItem(button)
+            {
+                CardControl = cardControl,
+            };
+
+            if (index is null)
+                tabs.Add(item);
+            else
+                tabs.Insert(index.Value, item);
+
+            UpdateTab(item);
+
+            if (index is null)
+                return tabs.Count - 1;
+            else
+                return index.Value;
+        }
+
+        /// <summary>
+        /// Adds new item to the control.
+        /// </summary>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardId">Associated card unique id.</param>
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Add(string text, ObjectUniqueId cardId)
+        {
+            return Insert(null, text, cardId);
+        }
+
+        /// <summary>
+        /// Inserts new item to the control at the specified position.
+        /// </summary>
+        /// <param name="index">Item position.</param>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardId">Associated card unique id.</param>
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Insert(int? index, string text, ObjectUniqueId cardId)
+        {
+            var realIndex = Insert(index, text);
+            var item = tabs[realIndex];
+            item.CardUniqueId = cardId;
+            return realIndex;
+        }
+
+        /// <summary>
         /// Adds new item to the control.
         /// </summary>
         /// <param name="text">Item title.</param>
@@ -601,26 +718,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Add(string text, Control? cardControl = null)
         {
-            var button = CreateHeaderButton();
-
-            button.Text = text;
-            button.Margin = TabMargin ?? DefaultTabMargin;
-            button.Padding = TabPadding ?? DefaultTabPadding;
-            button.HasBorder = TabHasBorder;
-            button.HorizontalAlignment = UI.HorizontalAlignment.Center;
-            button.Parent = this;
-            button.Click += Item_Click;
-
-            var item = new CardPanelHeaderItem(button)
-            {
-                CardControl = cardControl,
-            };
-
-            tabs.Add(item);
-
-            UpdateTab(item);
-
-            return tabs.Count - 1;
+            return Insert(null, text, cardControl);
         }
 
         /// <summary>
@@ -643,22 +741,6 @@ namespace Alternet.UI
                 result.TextVisible = true;
                 return result;
             }
-        }
-
-        /// <summary>
-        /// Adds new item to the control.
-        /// </summary>
-        /// <param name="text">Item title.</param>
-        /// <param name="cardId">Associated card unique id.</param>
-        /// <returns>
-        /// Created item index.
-        /// </returns>
-        public virtual int Add(string text, ObjectUniqueId cardId)
-        {
-            var index = Add(text);
-            var item = tabs[index];
-            item.CardUniqueId = cardId;
-            return index;
         }
 
         /// <summary>
@@ -694,6 +776,11 @@ namespace Alternet.UI
             return result;
         }
 
+        private void Button_SizeChanged(object? sender, EventArgs e)
+        {
+            ButtonSizeChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         private IReadOnlyFontAndColor GetColors(bool isActive)
         {
             if (isActive)
@@ -725,9 +812,11 @@ namespace Alternet.UI
 
         private void UpdateTab(CardPanelHeaderItem item)
         {
-            var platform = AllPlatformDefaults.PlatformCurrent;
-            var canForeground = platform.AllowButtonForeground;
-            var canBackground = platform.AllowButtonBackground;
+            if (item is null)
+                return;
+
+            var canForeground = true;
+            var canBackground = true;
             var useBold = !canForeground && !canBackground;
 
             var isSelected = item == selectedTab;
