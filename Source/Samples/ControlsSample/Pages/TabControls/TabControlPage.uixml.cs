@@ -8,6 +8,9 @@ namespace ControlsSample
 {
     internal partial class TabControlPage : Control
     {
+        private const string ResPrefixSmall = "embres:ControlsSample.Resources.ToolBarPng.Small.";
+        private const string ResPrefixLarge = "embres:ControlsSample.Resources.ToolBarPng.Large.";
+
         private readonly TabControl tabControl = new()
         {
             Margin = 5,
@@ -32,6 +35,23 @@ namespace ControlsSample
                 tabAlignmentComboBox.AddEnumValues(TabAlignment.Top);
                 tabAlignmentComboBox.SelectedItemChanged +=
                     TabAlignmentComboBox_SelectedItemChanged;
+
+                ImageSet image;
+                ImageSet svgImage;
+
+                if(GetDPI().Width <= 96)
+                {
+                    image = ImageSet.FromUrl($"{ResPrefixSmall}Calendar16.png");
+                    svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 16).ImgGear;
+                }
+                else
+                {
+                    image = ImageSet.FromUrl($"{ResPrefixLarge}Calendar32.png");
+                    svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 32).ImgGear;
+                }
+
+                tabControl.SetTabImage(2, image);
+                tabControl.SetTabImage(0, svgImage);
             }
         }
 

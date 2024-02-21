@@ -512,6 +512,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets images for the tab.
+        /// </summary>
+        /// <param name="index">The index of the tab page.</param>
+        /// <param name="image">Tab image.</param>
+        /// <param name="disabledImage">Tab image in the disabled state.</param>
+        public virtual void SetTabImage(int? index, Image? image, Image? disabledImage = null)
+        {
+            var item = Header.GetTab(index);
+            if (item is null)
+                return;
+            item.Image = image;
+            item.DisabledImage = disabledImage;
+        }
+
+        /// <summary>
+        /// Sets images for the tab.
+        /// </summary>
+        /// <param name="index">The index of the tab page.</param>
+        /// <param name="image">Tab image.</param>
+        /// <param name="disabledImage">Tab image in the disabled state.</param>
+        public virtual void SetTabImage(int? index, ImageSet? image, ImageSet? disabledImage = null)
+        {
+            var item = Header.GetTab(index);
+            if (item is null)
+                return;
+            item.ImageSet = image;
+            item.DisabledImageSet = disabledImage;
+        }
+
+        /// <summary>
         /// Gets tab page at the specified index.
         /// </summary>
         /// <param name="index"></param>
