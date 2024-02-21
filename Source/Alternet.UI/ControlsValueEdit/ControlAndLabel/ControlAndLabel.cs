@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
     /// in order to implement your own custom labeled control.</remarks>
     [ControlCategory("Hidden")]
-    public abstract partial class ControlAndLabel : StackPanel, IControlAndLabel
+    public abstract partial class ControlAndLabel : Control, IControlAndLabel
     {
         /// <summary>
         /// Gets or sets default distance between control and label.
@@ -45,7 +45,7 @@ namespace Alternet.UI
             label.Margin = new Thickness(0, 0, DefaultControlLabelDistance, 0);
             label.VerticalAlignment = UI.VerticalAlignment.Center;
 
-            Orientation = StackPanelOrientation.Horizontal;
+            Layout = LayoutStyle.Horizontal;
             label.Parent = this;
             mainControl = CreateControl();
             mainControl.VerticalAlignment = UI.VerticalAlignment.Center;
