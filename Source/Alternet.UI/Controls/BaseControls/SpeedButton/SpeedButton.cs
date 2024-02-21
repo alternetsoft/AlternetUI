@@ -15,6 +15,11 @@ namespace Alternet.UI
     public partial class SpeedButton : GraphicControl
     {
         /// <summary>
+        /// Gets or sets default image and label distance in the <see cref="SpeedButton"/>.
+        /// </summary>
+        public static double DefaultImageLabelDistance = 4;
+
+        /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls.
         /// </summary>
@@ -27,10 +32,17 @@ namespace Alternet.UI
             HorizontalAlignment = HorizontalAlignment.Center,
         };
 
+        private readonly Control spacer = new()
+        {
+            SuggestedSize = DefaultImageLabelDistance,
+            Visible = false,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+        };
+
         private readonly GenericLabel label = new()
         {
             Visible = false,
-            Margin = (2, 0, 0, 0),
             VerticalAlignment = VerticalAlignment.Center,
             HorizontalAlignment = HorizontalAlignment.Center,
         };
@@ -113,6 +125,7 @@ namespace Alternet.UI
             Layout = LayoutStyle.Horizontal;
             picture.Parent = this;
             picture.BubbleMouse = true;
+            spacer.Parent = this;
             label.Visible = false;
             label.Parent = this;
             label.BubbleMouse = true;
@@ -144,7 +157,11 @@ namespace Alternet.UI
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                PerformLayoutAndInvalidate();
+                PerformLayoutAndInvalidate(() =>
+                {
+                    Label.Visible = value;
+                    spacer.Visible = Label.Visible && PictureBox.Visible;
+                });
             }
         }
 
@@ -185,7 +202,11 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
-                PerformLayoutAndInvalidate();
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.Visible = value;
+                    spacer.Visible = Label.Visible && PictureBox.Visible;
+                });
             }
         }
 

@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// </summary>
         public static SizeI DefaultColorImageSize = 24;
 
-        private Color color = Color.Black;
+        private Color? color = Color.Black;
         private SizeI colorImageSize = DefaultColorImageSize;
         private ColorDialog? colorDialog;
 
@@ -22,8 +22,24 @@ namespace Alternet.UI
         /// </summary>
         public SpeedColorButton()
         {
+            TextVisible = true;
             UpdateImage();
         }
+
+        /// <summary>
+        /// Occurs when <see cref="Value"/> property is changed.
+        /// </summary>
+        public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// </summary>
+        public event EventHandler<ValueConvertEventArgs<string?, Color?>>? StringToColor;
+
+        /// <summary>
+        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// </summary>
+        public event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToString;
 
         /// <summary>
         /// Gets or sets whether to show <see cref="ColorDialog"/> when
@@ -50,7 +66,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected color.
         /// </summary>
-        public virtual Color Value
+        public virtual Color? Value
         {
             get
             {
@@ -62,8 +78,38 @@ namespace Alternet.UI
                 if (color == value)
                     return;
                 color = value;
+                base.Text = InternalAsString() ?? string.Empty;
+                ValueChanged?.Invoke(this, EventArgs.Empty);
                 UpdateImage();
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Value"/> as <see cref="string"/>.
+        /// </summary>
+        [Browsable(false)]
+        public new string? Text
+        {
+            get
+            {
+                return InternalAsString();
+            }
+
+            set
+            {
+                if (StringToColor is not null)
+                {
+                    var e = new ValueConvertEventArgs<string?, Color?>(value);
+                    StringToColor(null, e);
+                    if (e.Handled)
+                    {
+                        Value = e.Result;
+                        return;
+                    }
+                }
+
+                Value = Color.Parse(value);
             }
         }
 
@@ -74,7 +120,8 @@ namespace Alternet.UI
             if (!ShowDialog)
                 return;
             colorDialog ??= new ColorDialog();
-            colorDialog.Color = Value;
+            if(Value is not null)
+                colorDialog.Color = Value;
             if (colorDialog.ShowModal() != ModalResult.Accepted)
                 return;
             Value = colorDialog.Color;
@@ -86,7 +133,25 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateImage()
         {
-            Image = (Bitmap)color.AsImage(colorImageSize);
+            if (color is null)
+                Image = null;
+            else
+            {
+                Image = (Bitmap)color.AsImage(colorImageSize);
+            }
+        }
+
+        private string? InternalAsString()
+        {
+            if (ColorToString is not null)
+            {
+                var e = new ValueConvertEventArgs<Color?, string?>(Value);
+                ColorToString(null, e);
+                if (e.Handled)
+                    return e.Result;
+            }
+
+            return Value?.ToDisplayString();
         }
     }
 }
