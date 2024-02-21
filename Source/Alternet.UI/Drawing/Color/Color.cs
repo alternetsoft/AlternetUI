@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -98,6 +96,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<string?, Color?>>? StringToColor;
+
+        /// <summary>
+        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToString;
+
+        /// <summary>
+        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToDisplayString;
+
+        /// <summary>
         /// Gets the red component value of this <see cref="Color"/> structure.
         /// </summary>
         /// <value>The red component value of this <see cref="Color"/>.</value>
@@ -186,6 +199,11 @@ namespace Alternet.Drawing
         public bool IsOk => state != 0;
 
         /// <summary>
+        /// Gets <see cref="A"/> as hex <see cref="string"/>.
+        /// </summary>
+        public string AHex => A.ToString("X2");
+
+        /// <summary>
         /// Gets <see cref="R"/> as hex <see cref="string"/>.
         /// </summary>
         public string RHex => R.ToString("X2");
@@ -204,6 +222,36 @@ namespace Alternet.Drawing
         /// Gets RGB as hex <see cref="string"/> in the format #RRGGBB.
         /// </summary>
         public string RGBHex => $"#{RHex}{GHex}{BHex}";
+
+        /// <summary>
+        /// Gets RGB as web <see cref="string"/> in the format "rgb({R},{G},{B})".
+        /// Fo example for the black color it will return "rgb(0,0,0)".
+        /// </summary>
+        public string RGBWeb => $"rgb({R},{G},{B})";
+
+        /// <summary>
+        /// If color is opaque returns <see cref="RGBWeb"/>; otherwise
+        /// returns "rgba({R},{G},{B}, {alpha})" string.
+        /// </summary>
+        /// <remarks>
+        /// The alpha parameter in the result is a number between 0.0 (fully transparent)
+        /// and 1.0 (not transparent at all).
+        /// </remarks>
+        public string ARGBWeb
+        {
+            get
+            {
+                if (IsOpaque)
+                    return RGBWeb;
+
+                double a = A;
+                a /= 255;
+
+                var s = a.ToString("0.##");
+
+                return $"rgba({R},{G},{B}, {s})";
+            }
+        }
 
         /// <summary>
         /// Gets <c>true</c> if this color is black.
@@ -376,11 +424,39 @@ namespace Alternet.Drawing
             new(color.R, color.G, color.B);
 
         /// <summary>
+        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// to <see cref="Color"/>. Tuple values define RGB of the color.
+        /// </summary>
+        /// <param name="d">New color value.</param>
+        /// <remarks>
+        /// This operator uses
+        /// <see cref="Color.FromRgb(byte, byte, byte)"/> internally.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Color((byte, byte, byte) d) =>
+            Color.FromRgb(d.Item1, d.Item2, d.Item3);
+
+        /// <summary>
+        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// to <see cref="Color"/>. Tuple values define ARGB of the color.
+        /// </summary>
+        /// <param name="d">New color value.</param>
+        /// <remarks>
+        /// This operator uses
+        /// <see cref="Color.FromArgb(byte, byte, byte, byte)"/> internally.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Color((byte, byte, byte, byte) d) =>
+            Color.FromArgb(d.Item1, d.Item2, d.Item3, d.Item4);
+
+        /// <summary>
         /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Color(string s)
-            => Color.Parse(s);
+        {
+            return Color.Parse(s);
+        }
 
         /// <summary>
         /// Tests whether two specified <see cref="Color"/> structures are equivalent.
@@ -637,6 +713,14 @@ namespace Alternet.Drawing
         /// </summary>
         public static Color Parse(string? s)
         {
+            if(StringToColor is not null)
+            {
+                var e = new ValueConvertEventArgs<string?, Color?>(s);
+                StringToColor(null, e);
+                if (e.Handled)
+                    return e.Result ?? Color.Empty;
+            }
+
             return Parse(null, null, s) ?? Color.Empty;
         }
 
@@ -1177,11 +1261,52 @@ namespace Alternet.Drawing
         /// component names and their values, even if the ARGB value matches the ARGB
         /// value of a predefined color.
         /// </remarks>
-        public override string ToString() =>
-            IsNamedColor ? $"{nameof(Color)} [{Name}]" :
-            (state & StateValueMask) != 0 ?
-            $"{nameof(Color)} [A={A}, R={R}, G={G}, B={B}]" :
-            $"{nameof(Color)} [Empty]";
+        /// <remarks>
+        /// You can handle <see cref="ColorToString"/> in order to provide custom
+        /// color to string convertion.
+        /// </remarks>
+        public override string? ToString()
+        {
+            if (ColorToString is not null)
+            {
+                var e = new ValueConvertEventArgs<Color?, string?>(this);
+                ColorToString(null, e);
+                if (e.Handled)
+                    return e.Result;
+            }
+
+            var result = IsNamedColor ? $"{nameof(Color)} [{Name}]" :
+                (state & StateValueMask) != 0 ?
+                $"{nameof(Color)} [A={A}, R={R}, G={G}, B={B}]" :
+                $"{nameof(Color)} [Empty]";
+            return result;
+        }
+
+        /// <summary>
+        /// Converts this color to display string.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// You can handle <see cref="ColorToDisplayString"/> in order to provide custom
+        /// color to display string convertion.
+        /// </remarks>
+        public string? ToDisplayString()
+        {
+            if (ColorToDisplayString is not null)
+            {
+                var e = new ValueConvertEventArgs<Color?, string?>(this);
+                ColorToDisplayString(null, e);
+                if (e.Handled)
+                    return e.Result;
+            }
+
+            if (IsNamedColor)
+                return Name;
+            if (IsOk)
+                return ARGBWeb;
+            else
+                return string.Empty;
+        }
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
