@@ -23,11 +23,12 @@ namespace Alternet.UI
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls.
         /// </summary>
-        public static ControlColorAndStyle DefaultColorAndStyle = new();
+        public static ControlColorAndStyle DefaultTheme = new();
 
         private readonly PictureBox picture = new()
         {
             ImageStretch = false,
+            Visible = false,
             VerticalAlignment = VerticalAlignment.Center,
             HorizontalAlignment = HorizontalAlignment.Center,
         };
@@ -52,6 +53,7 @@ namespace Alternet.UI
         private KeyInfo[]? keys;
         private bool textVisible = false;
         private bool imageVisible = true;
+        private bool useDefaultTheme = true;
 
         static SpeedButton()
         {
@@ -60,33 +62,43 @@ namespace Alternet.UI
 
             void InitSchemeLight()
             {
-                DefaultColorAndStyle.Light.Borders =
-                    CreateBorders(Color.FromRgb(214, 214, 214));
-                DefaultColorAndStyle.Light.Colors = CreateColorsDark();
+                DefaultTheme.Light.Borders =
+                    CreateBorders((0, 108, 190));
+                DefaultTheme.Light.Colors = CreateColorsLight();
+                DefaultTheme.Light.Backgrounds = DefaultTheme.Light.Colors;
             }
 
             void InitSchemeDark()
             {
-                DefaultColorAndStyle.Dark.Borders =
-                    CreateBorders(Color.FromRgb(112, 112, 112));
-                DefaultColorAndStyle.Dark.Colors = CreateColorsDark();
+                DefaultTheme.Dark.Borders =
+                    CreateBorders((112, 112, 112));
+                DefaultTheme.Dark.Colors = CreateColorsDark();
+                DefaultTheme.Dark.Backgrounds = DefaultTheme.Dark.Colors;
+            }
+
+            ControlStateColors CreateColorsLight()
+            {
+                AllStateColors colors = new()
+                {
+                    HoveredForeColor = (0, 0, 0),
+                    HoveredBackColor = (201, 222, 245),
+
+                    PressedForeColor = (0, 0, 0),
+                    PressedBackColor = (201 - 10, 222 - 10, 245 - 10),
+                };
+
+                return colors.AllStates;
             }
 
             ControlStateColors CreateColorsDark()
             {
                 AllStateColors colors = new()
                 {
-                    NormalForeColor = Color.FromRgb(214, 214, 214),
-                    NormalBackColor = Color.FromRgb(31, 31, 31),
+                    HoveredForeColor = (250, 250, 250),
+                    HoveredBackColor = (61, 61, 61),
 
-                    DisabledForeColor = Color.FromRgb(109, 109, 109),
-                    DisabledBackColor = Color.FromRgb(31, 31, 31),
-
-                    HoveredForeColor = Color.FromRgb(250, 250, 250),
-                    HoveredBackColor = Color.FromRgb(61, 61, 61),
-
-                    PressedForeColor = Color.FromRgb(214, 214, 214),
-                    PressedBackColor = Color.FromRgb(34, 34, 34),
+                    PressedForeColor = (214, 214, 214),
+                    PressedBackColor = (34, 34, 34),
                 };
 
                 return colors.AllStates;
@@ -143,6 +155,22 @@ namespace Alternet.UI
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
 
         /// <summary>
+        /// Gets or sets whether to use <see cref="DefaultTheme"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool UseDefaultTheme
+        {
+            get => useDefaultTheme;
+            set
+            {
+                if (useDefaultTheme == value)
+                    return;
+                useDefaultTheme = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to display text in the control.
         /// </summary>
         public virtual bool TextVisible
@@ -157,11 +185,7 @@ namespace Alternet.UI
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    Label.Visible = value;
-                    spacer.Visible = Label.Visible && PictureBox.Visible;
-                });
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -170,16 +194,19 @@ namespace Alternet.UI
         {
             get
             {
+                bool hasImage = (Image is not null) || (ImageSet is not null);
+                var img = ImageVisible && hasImage;
+
                 if (TextVisible)
                 {
-                    if (ImageVisible)
+                    if (img)
                         return Children;
                     else
                         return new Control[] { Label };
                 }
                 else
                 {
-                    if (ImageVisible)
+                    if (img)
                         return new Control[] { PictureBox };
                     else
                         return Array.Empty<Control>();
@@ -202,11 +229,7 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    PictureBox.Visible = value;
-                    spacer.Visible = Label.Visible && PictureBox.Visible;
-                });
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -281,7 +304,10 @@ namespace Alternet.UI
 
             set
             {
-                PictureBox.Image = value;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.Image = value;
+                });
             }
         }
 
@@ -319,7 +345,10 @@ namespace Alternet.UI
 
             set
             {
-                PictureBox.DisabledImage = value;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.DisabledImage = value;
+                });
             }
         }
 
@@ -336,7 +365,10 @@ namespace Alternet.UI
 
             set
             {
-                PictureBox.DisabledImageSet = value;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.DisabledImageSet = value;
+                });
             }
         }
 
@@ -353,7 +385,10 @@ namespace Alternet.UI
 
             set
             {
-                PictureBox.ImageSet = value;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.ImageSet = value;
+                });
             }
         }
 
@@ -522,12 +557,28 @@ namespace Alternet.UI
             DrawDefaultBackground(dc, rect);
             if(ImageVisible)
                 PictureBox.DrawDefaultImage(dc, PictureBox.Bounds);
-            if(TextVisible)
-                Label.DrawDefaultText(dc, Label.Bounds);
+            if (TextVisible)
+            {
+                var state = CurrentState;
+                var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+                if(foreColor is null)
+                {
+                    var theme = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
+                    foreColor ??= theme?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+                }
+
+                Label.DrawDefaultText(dc, Label.Bounds, foreColor);
+            }
         }
 
         /// <inheritdoc/>
-        protected override ControlColorAndStyle? GetDefaultColorAndStyle() => DefaultColorAndStyle;
+        protected override ControlColorAndStyle? GetDefaultTheme()
+        {
+            if (UseDefaultTheme)
+                return DefaultTheme;
+            else
+                return null;
+        }
 
         private void OnClickAction(object? sender, EventArgs? e)
         {

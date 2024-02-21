@@ -50,8 +50,8 @@ namespace ControlsSample
                     svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 32).ImgGear;
                 }
 
-                tabControl.SetTabImage(2, image);
-                tabControl.SetTabImage(0, svgImage);
+                tabControl.SetTabImage(0, image);
+                tabControl.SetTabImage(2, svgImage);
             }
         }
 

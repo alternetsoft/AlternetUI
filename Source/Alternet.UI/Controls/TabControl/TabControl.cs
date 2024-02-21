@@ -36,6 +36,7 @@ namespace Alternet.UI
 
             base.Layout = LayoutStyle.Vertical;
             cardPanelHeader.TabHasBorder = false;
+            cardPanelHeader.UseTabDefaultTheme = false;
             cardPanelHeader.TabClick += CardPanelHeader_TabClick;
             cardPanelHeader.ButtonSizeChanged += CardPanelHeader_ButtonSizeChanged;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;

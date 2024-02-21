@@ -297,8 +297,16 @@ namespace Alternet.UI
         /// Draws text in the default style.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="font">Text font.</param>
+        /// <param name="backColor">Background color of the text.</param>
         /// <param name="rect">Rectangle to draw in.</param>
-        public virtual void DrawDefaultText(Graphics dc, RectD rect)
+        public virtual void DrawDefaultText(
+            Graphics dc,
+            RectD rect,
+            Color? foreColor = null,
+            Color? backColor = null,
+            Font? font = null)
         {
             var state = CurrentState;
             var paddedRect = (
@@ -314,9 +322,9 @@ namespace Alternet.UI
 
                 dc.DrawLabel(
                     textOverride,
-                    GetLabelFont(state),
-                    GetLabelForeColor(state),
-                    GetLabelBackColor(state),
+                    font ?? GetLabelFont(state),
+                    foreColor ?? GetLabelForeColor(state),
+                    backColor ?? GetLabelBackColor(state),
                     imageOverride,
                     paddedRect,
                     TextAlignment,

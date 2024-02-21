@@ -177,7 +177,7 @@ namespace Alternet.UI
             if (overrideValue is not null)
                 return overrideValue;
 
-            var result = GetDefaultColorAndStyle()?.DarkOrLight(IsDarkBackground);
+            var result = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
             return result?.Backgrounds?.GetObjectOrNull(state);
         }
 
@@ -198,7 +198,7 @@ namespace Alternet.UI
             if (overrideValue is not null)
                 return overrideValue;
 
-            var result = GetDefaultColorAndStyle()?.DarkOrLight(IsDarkBackground);
+            var result = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
             return result?.Borders?.GetObjectOrNull(state);
         }
 
@@ -250,7 +250,7 @@ namespace Alternet.UI
         /// Gets default color and style settings.
         /// </summary>
         /// <returns></returns>
-        protected virtual ControlColorAndStyle? GetDefaultColorAndStyle() => null;
+        protected virtual ControlColorAndStyle? GetDefaultTheme() => null;
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
