@@ -346,7 +346,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to display text in the buttons.
         /// </summary>
-        internal bool TextVisible
+        public bool TextVisible
         {
             get
             {
@@ -369,7 +369,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to display images in the buttons.
         /// </summary>
-        internal bool ImageVisible
+        public bool ImageVisible
         {
             get
             {
