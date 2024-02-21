@@ -7,7 +7,6 @@
 
 using System;
 using Alternet.Drawing;
-using Alternet.UI.Media;
 
 namespace Alternet.UI
 {

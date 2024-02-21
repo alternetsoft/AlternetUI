@@ -14,7 +14,6 @@
 //
 
 using Alternet.Drawing;
-using Alternet.UI.Media;
 using System;
 using System.Diagnostics;
 
