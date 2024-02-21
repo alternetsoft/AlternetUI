@@ -18,11 +18,6 @@ namespace Alternet.UI
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
         private Caret? caret;
 
-#if DEBUG
-        private bool drawDebugPointsBefore;
-        private bool drawDebugPointsAfter;
-#endif
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
         /// </summary>
@@ -32,39 +27,14 @@ namespace Alternet.UI
             UserPaint = true;
         }
 
+        /// <summary>
+        /// Gets or sets different behavior and visualization options.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlRefreshOptions RefreshOptions { get; set; }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.UserPaintControl;
-
-        /// <summary>
-        /// Gets or sets whether to draw debug related points for the owner draw controls.
-        /// </summary>
-#if DEBUG
-        [Browsable(false)]
-#else
-        [Browsable(false)]
-#endif
-        public bool DrawDebugPointsBefore
-        {
-            get
-            {
-#if DEBUG
-                return drawDebugPointsBefore;
-#else
-                return false;
-#endif
-            }
-
-            set
-            {
-#if DEBUG
-                if (drawDebugPointsBefore == value)
-                    return;
-                drawDebugPointsBefore = value;
-                Refresh();
-#else
-#endif
-            }
-        }
 
         /// <summary>
         /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
@@ -142,37 +112,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to draw debug related points for the owner draw controls.
-        /// </summary>
-#if DEBUG
-        [Browsable(false)]
-#else
-        [Browsable(false)]
-#endif
-        public bool DrawDebugPointsAfter
-        {
-            get
-            {
-#if DEBUG
-                return drawDebugPointsAfter;
-#else
-                return false;
-#endif
-            }
-
-            set
-            {
-#if DEBUG
-                if (drawDebugPointsAfter == value)
-                    return;
-                drawDebugPointsAfter = value;
-                Refresh();
-#else
-#endif
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         public bool HasBorder
@@ -217,15 +156,50 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Affected control state.</param>
         /// <param name="fontAndColor">Colors.</param>
-        public virtual void SetStateColors(GenericControlState state, IReadOnlyFontAndColor? fontAndColor)
+        public virtual void SetStateColors(
+            GenericControlState state,
+            IReadOnlyFontAndColor? fontAndColor)
         {
-            if (fontAndColor is null && StateObjects?.Colors is null && StateObjects?.Backgrounds is null)
+            if (fontAndColor is null && StateObjects?.Colors is null
+                && StateObjects?.Backgrounds is null)
                 return;
             StateObjects ??= new();
             StateObjects.Colors ??= new();
             StateObjects.Backgrounds ??= new();
             StateObjects.Colors.SetObject(fontAndColor, state);
             StateObjects.Backgrounds.SetObject(fontAndColor?.BackgroundColor?.AsBrush, state);
+        }
+
+        /// <inheritdoc/>
+        public override Brush? GetBackground(GenericControlState state)
+        {
+            var overrideValue = Backgrounds?.GetObjectOrNull(state);
+            if (overrideValue is not null)
+                return overrideValue;
+
+            var result = GetDefaultColorAndStyle()?.DarkOrLight(IsDarkBackground);
+            return result?.Backgrounds?.GetObjectOrNull(state);
+        }
+
+        /// <summary>
+        /// Default painting method of the <see cref="UserControl"/>
+        /// and its descendants.
+        /// </summary>
+        /// <param name="dc">Drawing Context.</param>
+        /// <param name="rect">Rectangle to draw in.</param>
+        public virtual void DefaultPaint(Graphics dc, RectD rect)
+        {
+        }
+
+        /// <inheritdoc/>
+        public override BorderSettings? GetBorderSettings(GenericControlState state)
+        {
+            var overrideValue = Borders?.GetObjectOrNull(state);
+            if (overrideValue is not null)
+                return overrideValue;
+
+            var result = GetDefaultColorAndStyle()?.DarkOrLight(IsDarkBackground);
+            return result?.Borders?.GetObjectOrNull(state);
         }
 
         /// <summary>
@@ -238,7 +212,7 @@ namespace Alternet.UI
             var state = CurrentState;
             var brush = GetBackground(state);
 
-            var border = Borders?.GetObjectOrNormal(state);
+            var border = GetBorderSettings(state);
 
             var radius = border?.GetUniformCornerRadius(rect);
 
@@ -250,7 +224,14 @@ namespace Alternet.UI
                     dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
                 }
                 else
-                    dc.RoundedRectangle(color.AsPen, brush, rect.InflatedBy(-1, -1), radius.Value);
+                {
+                    dc.RoundedRectangle(
+                        color.AsPen,
+                        brush,
+                        rect.InflatedBy(-1, -1),
+                        radius.Value);
+                }
+
                 return;
             }
 
@@ -265,21 +246,11 @@ namespace Alternet.UI
             }
         }
 
-        internal virtual void BeforePaint(Graphics dc, RectD rect)
-        {
-#if DEBUG
-            if (DrawDebugPointsBefore)
-                dc.DrawDebugPoints(rect, Pens.Yellow);
-#endif
-        }
-
-        internal virtual void AfterPaint(Graphics dc, RectD rect)
-        {
-#if DEBUG
-            if (DrawDebugPointsAfter)
-                dc.DrawDebugPoints(rect);
-#endif
-        }
+        /// <summary>
+        /// Gets default color and style settings.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ControlColorAndStyle? GetDefaultColorAndStyle() => null;
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
@@ -293,20 +264,41 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        /// <summary>
-        /// Default painting method of the <see cref="UserControl"/>
-        /// and its descendants.
-        /// </summary>
-        /// <param name="dc">Drawing Context.</param>
-        /// <param name="rect">Rectangle to draw in.</param>
-        protected virtual void DefaultPaint(Graphics dc, RectD rect)
-        {
-        }
-
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             DefaultPaint(e.DrawingContext, e.Bounds);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnCurrentStateChanged(EventArgs e)
+        {
+            base.OnCurrentStateChanged(e);
+
+            var options = RefreshOptions;
+
+            if (options.HasFlag(ControlRefreshOptions.RefreshOnState))
+            {
+                Refresh();
+                return;
+            }
+
+            var data = StateObjects;
+            if (data is null)
+                return;
+
+            bool RefreshOnBorder() => options.HasFlag(ControlRefreshOptions.RefreshOnBorder) &&
+                data.HasOtherBorders;
+            bool RefreshOnImage() => options.HasFlag(ControlRefreshOptions.RefreshOnImage) &&
+                data.HasOtherImages;
+            bool RefreshOnColor() => options.HasFlag(ControlRefreshOptions.RefreshOnColor) &&
+                data.HasOtherColors;
+            bool RefreshOnBackground() => options.HasFlag(ControlRefreshOptions.RefreshOnBackground) &&
+                data.HasOtherBackgrounds;
+
+            if (RefreshOnBorder() || RefreshOnImage() || RefreshOnBackground()
+                || RefreshOnColor())
+                Refresh();
         }
 
         private void SetScrollbars(bool horz, bool vert, bool always)

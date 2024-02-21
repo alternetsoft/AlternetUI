@@ -216,6 +216,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the border settings for specified state of the control.
+        /// </summary>
+        public virtual BorderSettings? GetBorderSettings(GenericControlState state)
+        {
+            return Borders?.GetObjectOrNormal(state);
+        }
+
+        /// <summary>
         /// Gets the foreground brush for specified state of the control.
         /// </summary>
         public virtual Brush? GetForeground(GenericControlState state)

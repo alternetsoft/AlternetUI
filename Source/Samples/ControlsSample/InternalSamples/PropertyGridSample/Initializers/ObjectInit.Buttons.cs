@@ -41,6 +41,7 @@ namespace PropertyGridSample
             if (control is not SpeedButton button)
                 return;
             button.Text = "speedButton";
+            button.TextVisible = true;
 
             var images = KnownSvgImages.GetForSize(
                 button.GetSvgColor(KnownSvgColor.Normal),

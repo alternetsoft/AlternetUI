@@ -698,12 +698,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets different behavior and visualization options.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlOptions BehaviorOptions { get; set; }
-
-        /// <summary>
         /// Gets or sets the cursor that the control should normally display.
         /// </summary>
         /// <remarks>

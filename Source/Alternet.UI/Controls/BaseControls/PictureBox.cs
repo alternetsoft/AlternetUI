@@ -16,18 +16,16 @@ namespace Alternet.UI
     public partial class PictureBox : GraphicControl, IValidatorReporter
     {
         private readonly ImagePrimitivePainter primitive = new();
-        private string text = string.Empty;
         private bool textVisible = false;
-        private ImageToText imageToText = ImageToText.Horizontal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
         /// </summary>
         public PictureBox()
         {
-            BehaviorOptions = ControlOptions.DrawDefaultBackground
-                | ControlOptions.DrawDefaultBorder
-                | ControlOptions.RefreshOnCurrentState;
+            RefreshOptions = ControlRefreshOptions.RefreshOnBorder
+                | ControlRefreshOptions.RefreshOnBackground
+                | ControlRefreshOptions.RefreshOnImage;
         }
 
         /// <summary>
@@ -50,27 +48,7 @@ namespace Alternet.UI
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                primitive.Visible = !value;
                 PerformLayoutAndInvalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value which specifies display modes for
-        /// item image and text.
-        /// </summary>
-        public virtual ImageToText ImageToText
-        {
-            get => imageToText;
-            set
-            {
-                if (imageToText == value)
-                    return;
-                imageToText = value;
-                if (ImageVisible && TextVisible)
-                {
-                    PerformLayoutAndInvalidate();
-                }
             }
         }
 
@@ -81,19 +59,17 @@ namespace Alternet.UI
         {
             get
             {
-                return text;
+                return base.Text;
             }
 
             set
             {
-                if (text == value)
+                if (base.Text == value)
                     return;
-                text = value ?? string.Empty;
+                base.Text = value;
                 RaiseTextChanged(EventArgs.Empty);
-                if (TextVisible)
-                {
+                if (!ImageVisible)
                     PerformLayoutAndInvalidate();
-                }
             }
         }
 
@@ -243,8 +219,7 @@ namespace Alternet.UI
                 if (primitive.Visible == value)
                     return;
                 primitive.Visible = value;
-                textVisible = !value;
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -346,24 +321,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnSizeChanged(EventArgs e)
+        public override void DefaultPaint(Graphics dc, RectD rect)
         {
-            base.OnSizeChanged(e);
-            Invalidate();
-        }
-
-        /// <inheritdoc/>
-        protected override void DefaultPaint(Graphics dc, RectD rect)
-        {
-            BeforePaint(dc, rect);
-
             DrawDefaultBackground(dc, rect);
-
-            var primitive = Primitive;
-            var state = CurrentState;
 
             if (TextVisible)
             {
+                var state = CurrentState;
+
                 var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
                 var origin = rect.Location;
 
@@ -384,16 +349,27 @@ namespace Alternet.UI
             }
             else
             {
-                var image = StateObjects?.Images?.GetObjectOrNull(state);
-                image ??= Image;
-                primitive.Image = image;
-                primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
-                primitive.DestRect =
-                    (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
-                primitive.Draw(this, dc);
+                DrawDefaultImage(dc, rect);
             }
+        }
 
-            AfterPaint(dc, rect);
+        /// <summary>
+        /// Paints image in the default style.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect"></param>
+        public virtual void DrawDefaultImage(Graphics dc, RectD rect)
+        {
+            var primitive = Primitive;
+            var state = CurrentState;
+
+            var image = StateObjects?.Images?.GetObjectOrNull(state);
+            image ??= Image;
+            primitive.Image = image;
+            primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
+            primitive.DestRect =
+                (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
+            primitive.Draw(this, dc);
         }
 
         /// <summary>
@@ -406,16 +382,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnCurrentStateChanged(EventArgs e)
+        protected override void OnSizeChanged(EventArgs e)
         {
-            base.OnCurrentStateChanged(e);
-
-            if (StateObjects is null)
-                return;
-
-            if (StateObjects.HasOtherBackgrounds || StateObjects.HasOtherImages
-                || StateObjects.HasOtherBorders)
-                Refresh();
+            base.OnSizeChanged(e);
+            Invalidate();
         }
 
         /// <summary>
@@ -424,33 +394,22 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SizeD GetImageAndTextSize()
         {
+            SizeD result = SizeD.Empty;
+
             var image = Image;
             var imageSet = ImageSet;
 
-            SizeD imageSize = SizeD.Empty;
-            SizeD textSize = SizeD.Empty;
-
-            if (image is not null)
-                imageSize = image.SizeDip(this);
-            else
-            if (imageSet is not null)
-                imageSize = PixelToDip(imageSet.DefaultSize);
-
             if (TextVisible)
             {
-                textSize = GetTextPreferredSize();
-            }
-
-            SizeD result = SizeD.Empty;
-            if (ImageToText == ImageToText.Horizontal)
-            {
-                result.Width = imageSize.Width + textSize.Width;
-                result.Height = Math.Max(imageSize.Height, textSize.Height);
+                result = GetTextPreferredSize();
             }
             else
             {
-                result.Height = imageSize.Height + textSize.Height;
-                result.Width = Math.Max(imageSize.Width, textSize.Width);
+                if (image is not null)
+                    result = image.SizeDip(this);
+                else
+                if (imageSet is not null)
+                    result = PixelToDip(imageSet.DefaultSize);
             }
 
             return result;

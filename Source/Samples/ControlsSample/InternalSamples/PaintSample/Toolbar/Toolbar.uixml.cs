@@ -49,10 +49,7 @@ namespace PaintSample
                     ToolTip = tool.Name,
                 };
                 button.Image = MainWindow.LoadToolImage(tool);
-                button.ImageStretch = true;
                 button.Padding = 5;
-                button.CenterHorz = true;
-                button.CenterVert = true;
                 button.SuggestedSize = 32;
                 button.FlagsAndAttributes.SetAttribute("Tool", tool);
 
