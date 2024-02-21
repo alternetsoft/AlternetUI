@@ -244,7 +244,7 @@ namespace Alternet.UI
         /// <see cref="IsDarkBackground"/> property.
         /// </summary>
         /// <param name="knownSvgColor">Known svg color identifier.</param>
-        public virtual Color GetSvgColor(KnownSvgColor knownSvgColor)
+        public virtual Color GetSvgColor(KnownSvgColor knownSvgColor = KnownSvgColor.Normal)
         {
             return SvgColors.GetSvgColor(knownSvgColor, IsDarkBackground);
         }
@@ -374,9 +374,12 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
-        public virtual void PerformLayoutAndInvalidate()
+        public virtual void PerformLayoutAndInvalidate(Action? action = null)
         {
-            PerformLayout();
+            if (action is null)
+                PerformLayout();
+            else
+                DoInsideLayout(action);
             Invalidate();
         }
 
