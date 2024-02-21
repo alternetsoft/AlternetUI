@@ -356,6 +356,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="IFindReplaceConnect"/> instance.
         /// </summary>
+        [Browsable(false)]
         public IFindReplaceConnect? Manager
         {
             get => manager;
@@ -378,16 +379,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets 'Current Document' item in the <see cref="ScopeEdit"/>.
         /// </summary>
+        [Browsable(false)]
         public ListControlItem ScopeItemCurrentDocument => scopeCurrentDocument;
 
         /// <summary>
         /// Gets 'All Open Documents' item in the <see cref="ScopeEdit"/>.
         /// </summary>
+        [Browsable(false)]
         public ListControlItem ScopeItemAllOpenDocuments => scopeAllOpenDocuments;
 
         /// <summary>
         /// Gets 'Current Project' item in the <see cref="ScopeEdit"/>.
         /// </summary>
+        [Browsable(false)]
         public ListControlItem ScopeItemCurrentProject => scopeCurrentProject;
 
         /// <summary>
@@ -668,6 +672,7 @@ namespace Alternet.UI
         /// Gets or sets width of <see cref="FindEdit"/> and <see cref="ReplaceEdit"/>
         /// controls.
         /// </summary>
+        [Browsable(false)]
         public double TextBoxWidth
         {
             get
