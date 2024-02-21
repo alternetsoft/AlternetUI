@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets empty image.
         /// </summary>
-        public ImageSet ImgEmprt
+        public ImageSet ImgEmpty
         {
             get => imgEmpty ??= Load(KnownSvgUrls.UrlImageEmpty);
             set => imgEmpty = value;
