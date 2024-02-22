@@ -2,14 +2,13 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="WindowPropertiesSample.WindowPropertiesWindow"
 		Title="Alternet UI Window Properties Sample"
-		Width="900"
+		Width="900" Layout="Vertical"
 		Height="700"
         StartLocation="CenterScreen"
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 
-  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-    <VerticalStackPanel Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Fill">
+    <TabControl Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Fill">
 
       <!-- ========================= -->
       <HorizontalStackPanel Name="actionsPanel" HorizontalAlignment="Stretch">
@@ -126,8 +125,7 @@
       </HorizontalStackPanel>
       <!-- ========================= -->
 
-    </VerticalStackPanel>
-
+    </TabControl>
 
     <HorizontalStackPanel  Margin="0,0,0,5">
       <Button Text="All Properties..."
@@ -140,7 +138,6 @@
               Name="buttonPage3" Click="Page3Button_Click"/>
     </HorizontalStackPanel>
 
-    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Stretch"/>
+    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Fill"/>
 
-  </VerticalStackPanel>
 </Window>

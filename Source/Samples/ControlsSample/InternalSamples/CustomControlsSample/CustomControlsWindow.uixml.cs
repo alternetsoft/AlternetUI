@@ -29,11 +29,11 @@ namespace CustomControlsSample
             {
                 Value = Color.Red,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                SuggestedSize = 32,
+                MinimumSize = 32,
                 Margin = (0,0,0,5),
             };
 
-            colorPicker.InitSolidBorder();
+            /*colorPicker.InitSolidBorder();*/
 
             ticTacToe = new()
             {

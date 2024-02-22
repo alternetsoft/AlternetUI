@@ -10,7 +10,6 @@ namespace MenuSample
     {
         private const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Small.";
         private readonly int dynamicToolbarItemsSeparatorIndex;
-        private readonly CardPanelHeader panelHeader = new();
         private int newItemIndex = 0;
         ToolBar? toolbar;
         ToolBarItem? dynamicToolbarItemsSeparator;
@@ -25,6 +24,7 @@ namespace MenuSample
         {
             Icon = Application.DefaultIcon;
             InitializeComponent();
+
             eventsListBox.BindApplicationLog();
             InitToolbar();
 
@@ -41,7 +41,7 @@ namespace MenuSample
 
             foreach (var value in Enum.GetValues(typeof(ImageToText)))
                 imageToTextDisplayModeComboBox.Items.Add(value!);
-            imageToTextDisplayModeComboBox.SelectedItem = 
+            imageToTextDisplayModeComboBox.SelectedItem =
                 ImageToText.Horizontal;
 
             this.Closing += MainWindow_Closing;
@@ -52,16 +52,10 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
-            panelHeader.BackColor = SystemColors.Window;
-            panelHeader.Layout = LayoutStyle.Vertical;
-            panelHeader.TabPadding = (5, 10, 5, 10);
-            panelHeader.TabMargin = (5, 10, 5, 10);
-            panelHeader.TabHorizontalAlignment = HorizontalAlignment.Stretch;
-            panelHeader.Add("Menu", menuPanel);
-            panelHeader.Add("ToolBar", toolbarPanel);
-            panelHeader.Add("StatusBar", statusPanel);
-            mainPanel.Children.Prepend(panelHeader);
-            panelHeader.SelectFirstTab();
+            mainPanel.Add("Menu", menuPanel);
+            mainPanel.Add("ToolBar", toolbarPanel);
+            mainPanel.Add("StatusBar", statusPanel);
+            mainPanel.TabAlignment = TabAlignment.Left;
 
             statusClearButton.Click += StatusClearButton_Click;
             statusNullButton.Click += StatusNullButton_Click;
@@ -81,7 +75,6 @@ namespace MenuSample
             saveMenuItem.Image = images.ImgFileSave;
             saveMenuItem.Image = imagesDisabled.ImgFileSave;
         }
-
         private StatusBar? GetStatusBar() => StatusBar as StatusBar;
 
         private void StatusAddButton_Click(object? sender, System.EventArgs e)
@@ -122,9 +115,9 @@ namespace MenuSample
         {
             if (toolbar == null)
                 return;
-            if(toolbar.IsVertical || toolbar.IsRight)
+            if (toolbar.IsVertical || toolbar.IsRight)
             {
-                imageToTextDisplayModeComboBox.SelectedItem = 
+                imageToTextDisplayModeComboBox.SelectedItem =
                     ImageToText.Vertical;
                 toolbar.ImageToText = ImageToText.Vertical;
             }
@@ -287,7 +280,7 @@ namespace MenuSample
         {
             toggleExitEnabledMenuItem.Text =
                 (exitMenuItem.Enabled ? "Disable" : "Enable") + " Exit Menu Item";
-            toggleSeparatorMenuItem.Text = separatorMenuItem.Text == "-" ? 
+            toggleSeparatorMenuItem.Text = separatorMenuItem.Text == "-" ?
                 "Separator item to normal" : "Normal item to separator";
         }
 
@@ -434,7 +427,7 @@ namespace MenuSample
         }
 
         private void ShowToolbarImagesCheckBox_CheckedChanged(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             if (toolbar != null)

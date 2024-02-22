@@ -41,9 +41,9 @@
                             Click="SelectTextRangeButton_Click"/>
                     <Button Text="Get Text Selection" Name="getTextSelectionButton" 
                             Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
-                    <Button Text="Items[2] = 'hello'"
+                    <Button Text="Items[2] = 'hello'" Name="buttonItemsEqHello"
                             Margin="0,3,0,0" Click="SetItem_Click"/>
-                    <Button Text="Edit Items..."
+                    <Button Text="Edit Items..." Name="buttonEditItems"
                           Margin="0,3,0,0" Click="Editor_Click"/>
                 </VerticalStackPanel>
 

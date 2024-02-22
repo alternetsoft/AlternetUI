@@ -6,8 +6,6 @@ namespace LayoutSample
 {
     public partial class GridLayoutPropertiesWindow : Window
     {
-        private readonly CardPanelHeader panelHeader = new();
-
         private readonly AlignmentControl containerAlignmentControl;
         private readonly GridLengthControl subjectColumnWidthControl;
         private readonly GridLengthControl subjectRowHeightControl;
@@ -16,13 +14,9 @@ namespace LayoutSample
         {
             InitializeComponent();
 
-            panelHeader.BackColor = SystemColors.Window;
-            panelHeader.Margin = (0, 0, 0, 10);
-            panelHeader.Add("Grid", gridStackPanel);
-            panelHeader.Add("Container", containerStackPanel);
-            panelHeader.Add("Button", buttonStackPanel);
-            pageControl.Children.Prepend(panelHeader);
-            panelHeader.SelectFirstTab();
+            pageControl.Add("Grid", gridStackPanel);
+            pageControl.Add("Container", containerStackPanel);
+            pageControl.Add("Button", buttonStackPanel);
 
             subjectColumnWidthControl = new ();
             subjectRowHeightControl = new();

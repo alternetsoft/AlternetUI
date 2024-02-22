@@ -18,11 +18,11 @@
                   ColumnClick="ListView_ColumnClick"
                           />
       <!-- ========================= -->
-      <StackPanel Margin="10,0,0,0" Padding="5" Name="tabControlPanel"
+      <TabControl Margin="10,0,0,0" Padding="5" Name="tabControlPanel"
                   VerticalAlignment="Stretch">
 
         <!-- ========================= -->
-        <StackPanel Orientation="Vertical" Padding="0,5,0,0"
+        <StackPanel Orientation="Vertical" Padding="10"
                       VerticalAlignment="Stretch" Name="stackPanel1">
 
           <HorizontalStackPanel>
@@ -87,7 +87,8 @@
         </StackPanel>
         <!-- ========================= -->
 
-        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2" Visible="false" Padding="0,5,0,0">
+        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2"
+                            Visible="false" Padding="10">
           <CheckBox Text="Multiple Selection"
                     Name="allowMultipleSelectionCheckBox"
                     IsChecked="True" Margin="0,5,0,0"
@@ -120,7 +121,7 @@
         </VerticalStackPanel>
         <!-- ========================= -->
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false"
-                             Padding="0,5,0,0">
+                             Padding="10">
 
           <GroupBox Title="Cancel Events" Margin="0,5,0,5" Padding="5" >
             <VerticalStackPanel>
@@ -142,7 +143,7 @@
 
         </VerticalStackPanel>
         <!-- ========================= -->
-      </StackPanel>
+      </TabControl>
     </HorizontalStackPanel>
   </Control>
 </Control>

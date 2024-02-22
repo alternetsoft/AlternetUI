@@ -34,7 +34,7 @@
           <MenuItem Text="Page" Name="pageScrollingMenuItem"
                     Click="PageScrollingMenuItem_Click" />
         </MenuItem>
-        <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click" />
+        <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click" Name="menuItemGrid"/>
       </MenuItem>
       <MenuItem Text="_Tools">
         <MenuItem Text="_Options..." Name="optionsMenuItem"
@@ -60,10 +60,11 @@
 
   <!-- ========================= -->
 
-    <StackPanel Orientation="Horizontal" Name="mainPanel" Margin="5" VerticalAlignment="Fill">
+  <TabControl Name="mainPanel" Margin="10" VerticalAlignment="Fill">
 
-      <!-- ========================= -->
-      <HorizontalStackPanel Margin="5" Padding="5" Name="menuPanel" HorizontalAlignment="Fill">
+    <!-- ========================= -->
+    
+      <HorizontalStackPanel Margin="10" Name="menuPanel">
         <VerticalStackPanel>
           <Button Text="Add Menu Item"
                     Name="addDynamicMenuItemMenuItem"
@@ -86,10 +87,10 @@
           <Button Text="Set About Item Role to None"
                   Name="setAboutMenuItemRoleToNone"
                   Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-          <Button Text="Set Options Item Role to None"
+          <Button Text="Set Options Item Role to None" Name="buttonSetOptionsItemRoletoNone"
                   Click="SetOptionsMenuItemRoleToNone_Click"
                   Margin="0,0,0,10" />
-          <Button Text="Set Options Item Role to Preferences"
+          <Button Text="Set Options Item Role to Preferences" Name="buttonSetOptionsItemRoletoPreferences"
                   Click="SetOptionsMenuItemRoleToPreferences_Click"
                   Margin="0,0,0,10" />
         </VerticalStackPanel>
@@ -103,11 +104,10 @@
           </Border>
         </VerticalStackPanel>
       </HorizontalStackPanel>
-  
-      <!-- ========================= -->
       
-      <HorizontalStackPanel HorizontalAlignment="Fill"
-                Margin="5,5,5,5" Visible="false" Name="toolbarPanel">
+    <!-- ========================= -->
+
+      <HorizontalStackPanel Margin="10" Name="toolbarPanel">
         <StackPanel>
           <Button Text="Toggle item check"
                   Name="toggleToolbarItemCheckButton"
@@ -156,11 +156,10 @@
               Margin="5,5,0,5"/>
         </StackPanel>
       </HorizontalStackPanel>
-      
-      <!-- ========================= -->
-      
-      <HorizontalStackPanel Padding="5"  HorizontalAlignment="Fill"
-                Margin="5,5,5,5" Visible="false" Name="statusPanel">
+
+    <!-- ========================= -->
+
+      <HorizontalStackPanel Margin="10" Name="statusPanel">
         <VerticalStackPanel>
           <Button Text="Add item" Name="statusAddButton" Margin="0,0,0,10" />
           <Button Text="Remove item" Name="statusRemoveButton" Margin="0,0,0,10" />
@@ -180,11 +179,11 @@
         <VerticalStackPanel Margin="5,0,0,0">
           <Button Text="Edit..." Margin="0,0,0,10" Name="statusEditButton"/>
         </VerticalStackPanel>
-      </HorizontalStackPanel>
-      
-      <!-- ========================= -->
+      </HorizontalStackPanel> 
 
-    </StackPanel>
+    <!-- ========================= -->
+
+  </TabControl>
 
   <LogListBox Name="eventsListBox" Margin="10,5,10,10" MinHeight="200"/>
 

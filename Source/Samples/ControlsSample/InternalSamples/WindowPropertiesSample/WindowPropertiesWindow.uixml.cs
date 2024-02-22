@@ -6,14 +6,12 @@ namespace WindowPropertiesSample
 {
     public partial class WindowPropertiesWindow : Window
     {
-        private readonly CardPanelHeader panelHeader;
         private readonly SetBoundsProperties setBoundsProperties;
 
         private Window? testWindow;
 
         public WindowPropertiesWindow()
         {
-            panelHeader = new();
             setBoundsProperties = new(this);
             Icon = Application.DefaultIcon;
 
@@ -29,12 +27,13 @@ namespace WindowPropertiesSample
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
-            panelHeader.BackColor = SystemColors.Window;
-            panelHeader.Add("Actions", actionsPanel);
-            panelHeader.Add("Settings", settingsPanel);
-            panelHeader.Add("Bounds", boundsPanel);
-            pageControl.Children.Prepend(panelHeader);
-            panelHeader.SelectFirstTab();
+            pageControl.Add("Actions", actionsPanel);
+            pageControl.Add("Settings", settingsPanel);
+            pageControl.Add("Bounds", boundsPanel);
+            actionsPanel.Margin = 10;
+            settingsPanel.Margin = 10;
+            boundsPanel.Margin = 10;
+            pageControl.Margin = 10;
 
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
@@ -42,17 +41,17 @@ namespace WindowPropertiesSample
 
         private void Page1Button_Click(object? sender, EventArgs e)
         {
-            panelHeader.SelectedTabIndex = 0;
+            pageControl.SelectTab(0);
         }
 
         private void Page2Button_Click(object? sender, EventArgs e)
         {
-            panelHeader.SelectedTabIndex = 1;
+            pageControl.SelectTab(1);
         }
 
         private void Page3Button_Click(object? sender, EventArgs e)
         {
-            panelHeader.SelectedTabIndex = 2;
+            pageControl.SelectTab(2);
         }
 
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)

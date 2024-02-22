@@ -9,7 +9,6 @@ namespace ControlsSample
 {
     internal partial class TreeViewPage : Control
     {
-        private readonly CardPanelHeader panelHeader = new();
         private readonly PopupTreeView popupTreeView = new();
         private int supressExpandEvents = 0;
         private bool? slowSettingsEnabled;
@@ -29,13 +28,10 @@ namespace ControlsSample
                     focusLastItemButton,
                     modifyLastItemButton).SuggestedWidthToMax();
 
-                panelHeader.BackColor = SystemColors.Window;
-                panelHeader.Add("Actions", stackPanel1);
-                panelHeader.Add("Settings", stackPanel2);
-                panelHeader.Add("Events", stackPanel3);
-                panelHeader.Add("Popup", stackPanel4);
-                pageControl.Children.Prepend(panelHeader);
-                panelHeader.SelectFirstTab();
+                pageControl.Add("Actions", stackPanel1);
+                pageControl.Add("Settings", stackPanel2);
+                pageControl.Add("Events", stackPanel3);
+                pageControl.Add("Popup", stackPanel4);
 
                 treeView.Items.ItemInserted += Items_ItemInserted;
                 treeView.Items.ItemRemoved += Items_ItemRemoved;
