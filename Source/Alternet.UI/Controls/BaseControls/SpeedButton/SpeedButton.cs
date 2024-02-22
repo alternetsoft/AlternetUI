@@ -57,75 +57,8 @@ namespace Alternet.UI
 
         static SpeedButton()
         {
-            InitSchemeLight();
-            InitSchemeDark();
-
-            void InitSchemeLight()
-            {
-                DefaultTheme.Light.Borders =
-                    CreateBorders((0, 108, 190));
-                DefaultTheme.Light.Colors = CreateColorsLight();
-                DefaultTheme.Light.Backgrounds = DefaultTheme.Light.Colors;
-            }
-
-            void InitSchemeDark()
-            {
-                DefaultTheme.Dark.Borders =
-                    CreateBorders((112, 112, 112));
-                DefaultTheme.Dark.Colors = CreateColorsDark();
-                DefaultTheme.Dark.Backgrounds = DefaultTheme.Dark.Colors;
-            }
-
-            ControlStateColors CreateColorsLight()
-            {
-                AllStateColors colors = new()
-                {
-                    HoveredForeColor = (0, 0, 0),
-                    HoveredBackColor = (201, 222, 245),
-
-                    PressedForeColor = (0, 0, 0),
-                    PressedBackColor = (201 - 10, 222 - 10, 245 - 10),
-                };
-
-                return colors.AllStates;
-            }
-
-            ControlStateColors CreateColorsDark()
-            {
-                AllStateColors colors = new()
-                {
-                    HoveredForeColor = (250, 250, 250),
-                    HoveredBackColor = (61, 61, 61),
-
-                    PressedForeColor = (214, 214, 214),
-                    PressedBackColor = (34, 34, 34),
-                };
-
-                return colors.AllStates;
-            }
-
-            ControlStateBorders CreateBorders(Color color)
-            {
-                ControlStateBorders borders = new();
-                var hoveredBorder = CreateBorder(color);
-                var pressedBorder = hoveredBorder.Clone();
-                borders.SetObject(hoveredBorder, GenericControlState.Hovered);
-                borders.SetObject(pressedBorder, GenericControlState.Pressed);
-                return borders;
-            }
-
-            BorderSettings CreateBorder(Color color)
-            {
-                BorderSettings result = new()
-                {
-                    Width = 1,
-                    UniformRadiusIsPercent = false,
-                    UniformCornerRadius = 3,
-                    Color = color,
-                };
-
-                return result;
-            }
+            InitThemeLight(DefaultTheme.Light);
+            InitThemeDark(DefaultTheme.Dark);
         }
 
         /// <summary>
@@ -513,6 +446,77 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         internal GenericLabel Label => label;
+
+        /// <summary>
+        /// Initializes default colors and styles for the <see cref="SpeedButton"/>
+        /// using 'Light' color theme.
+        /// </summary>
+        /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
+        public static void InitThemeLight(ControlStateSettings theme)
+        {
+            AllStateColors colors = new()
+            {
+                HoveredForeColor = (0, 0, 0),
+                HoveredBackColor = (201, 222, 245),
+
+                DisabledForeColor = SystemColors.GrayText,
+
+                PressedForeColor = (0, 0, 0),
+                PressedBackColor = (201 - 10, 222 - 10, 245 - 10),
+            };
+
+            theme.Borders = CreateBorders((0, 108, 190));
+            theme.Colors = colors.AllStates;
+            theme.Backgrounds = theme.Colors;
+        }
+
+        /// <summary>
+        /// Initializes default colors and styles for the <see cref="SpeedButton"/>
+        /// using 'Dark' color theme.
+        /// </summary>
+        /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
+        public static void InitThemeDark(ControlStateSettings theme)
+        {
+            AllStateColors colors = new()
+            {
+                HoveredForeColor = (250, 250, 250),
+                HoveredBackColor = (61, 61, 61),
+
+                DisabledForeColor = SystemColors.GrayText,
+
+                PressedForeColor = (214, 214, 214),
+                PressedBackColor = (34, 34, 34),
+            };
+
+            theme.Borders = CreateBorders((112, 112, 112));
+            theme.Colors = colors.AllStates;
+            theme.Backgrounds = theme.Colors;
+        }
+
+        /// <summary>
+        /// Creates borders for the <see cref="SpeedButton"/>
+        /// using default border width
+        /// and using specified <paramref name="color"/>.
+        /// </summary>
+        /// <param name="color">Border color.</param>
+        /// <returns></returns>
+        public static ControlStateBorders CreateBorders(Color color)
+        {
+            BorderSettings border = new()
+            {
+                Width = 1,
+                UniformRadiusIsPercent = false,
+                UniformCornerRadius = 3,
+                Color = color,
+            };
+
+            ControlStateBorders borders = new();
+            var hoveredBorder = border;
+            var pressedBorder = hoveredBorder.Clone();
+            borders.SetObject(hoveredBorder, GenericControlState.Hovered);
+            borders.SetObject(pressedBorder, GenericControlState.Pressed);
+            return borders;
+        }
 
         /// <inheritdoc/>
         public override string? GetRealToolTip()
