@@ -256,6 +256,8 @@ namespace Alternet.UI
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
+            if (!Enabled)
+                return;
             RaiseClick(EventArgs.Empty);
             if (DropDownMenu is null)
                 return;

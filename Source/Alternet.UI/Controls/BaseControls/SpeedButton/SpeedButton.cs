@@ -87,11 +87,23 @@ namespace Alternet.UI
         /// </remarks>
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
 
+        /// <inheritdoc/>
+        public override bool Enabled
+        {
+            get => base.Enabled;
+            set
+            {
+                base.Enabled = value;
+                PictureBox.Enabled = value;
+                Label.Enabled = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets whether to use <see cref="DefaultTheme"/>.
         /// </summary>
         [Browsable(false)]
-        public bool UseDefaultTheme
+        public virtual bool UseDefaultTheme
         {
             get => useDefaultTheme;
             set
@@ -200,7 +212,7 @@ namespace Alternet.UI
         /// is used to get the template.
         /// </remarks>
         [Browsable(false)]
-        public string? ShortcutToolTipTemplate { get; set; }
+        public virtual string? ShortcutToolTipTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets whether control is sticky.
@@ -208,7 +220,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When this property is true, control painted as pressed if it is not disabled.
         /// </remarks>
-        public bool Sticky
+        public virtual bool Sticky
         {
             get
             {
@@ -289,7 +301,7 @@ namespace Alternet.UI
         /// Gets or sets the disabled <see cref="ImageSet"/> that is displayed by the control.
         /// </summary>
         [Browsable(false)]
-        public ImageSet? DisabledImageSet
+        public virtual ImageSet? DisabledImageSet
         {
             get
             {
@@ -309,7 +321,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ImageSet"/> that is displayed by the control.
         /// </summary>
         [Browsable(false)]
-        public ImageSet? ImageSet
+        public virtual ImageSet? ImageSet
         {
             get
             {
@@ -334,7 +346,7 @@ namespace Alternet.UI
         [Localizable(true)]
         [DefaultValue(Keys.None)]
         [Browsable(false)]
-        public Keys ShortcutKeys
+        public virtual Keys ShortcutKeys
         {
             get
             {
@@ -357,7 +369,7 @@ namespace Alternet.UI
         /// the control.
         /// </summary>
         [Browsable(false)]
-        public KeyGesture? Shortcut
+        public virtual KeyGesture? Shortcut
         {
             get
             {
@@ -380,7 +392,7 @@ namespace Alternet.UI
         /// the control.
         /// </summary>
         [Browsable(false)]
-        public KeyInfo[]? ShortcutKeyInfo
+        public virtual KeyInfo[]? ShortcutKeyInfo
         {
             get
             {
@@ -422,7 +434,7 @@ namespace Alternet.UI
         /// this control is clicked by the user.
         /// </summary>
         [Browsable(false)]
-        public Action? ClickAction
+        public virtual Action? ClickAction
         {
             get => clickAction;
             set

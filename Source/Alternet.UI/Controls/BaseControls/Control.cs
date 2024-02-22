@@ -26,6 +26,7 @@ namespace Alternet.UI
         internal int columnIndex;
         internal int columnSpan = 1;
         internal int rowSpan = 1;
+        internal bool enabled = true;
 
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
         private static int groupIndexCounter;
@@ -38,7 +39,6 @@ namespace Alternet.UI
 
         private ISite? site;
         private bool isMouseLeftButtonDown;
-        private bool enabled = true;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
         private MouseEventArgs? dragEventArgs;
