@@ -116,9 +116,14 @@ namespace Alternet.UI
             scrollInfoValid = true;
         }
 
-        internal class NativeScrollViewerHandler : ScrollViewerHandler
+        internal class NativeScrollViewerHandler : ControlHandler
         {
             public new Native.Panel NativeControl => (Native.Panel)base.NativeControl!;
+
+            /// <summary>
+            /// Gets a <see cref="ScrollViewer"/> this handler provides the implementation for.
+            /// </summary>
+            public new ScrollViewer Control => (ScrollViewer)base.Control;
 
             internal override Native.Control CreateNativeControl()
             {

@@ -2,11 +2,11 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.KeyboardInputWindow"
 		MinWidth="700" MinHeight="700"
-        Title="Keyboard Input" 
+        Title="Keyboard Input"
 		KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
 		KeyPress="Window_TextInput">
   <StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp"
-                            KeyPress="StackPanel_TextInput"      Padding="5">
+          KeyPress="StackPanel_TextInput"      Padding="5" Name="mainStackPanel">
 
     <HorizontalStackPanel>
       <Button Name="helloButton" Text="Hello" Margin="10" Click="HelloButton_Click"
@@ -27,12 +27,11 @@
     <CheckBox Text="Key Handled in StackPanel" Name="checkBoxHandledInStackPanel" Margin="5"/>
     <CheckBox Text="Log Repeated Keys" Name="checkBoxLogRepeated" Margin="5"/>
 
-    <TextBox 
+    <TextBox
       Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="400"/>
 
-      <LogListBox  
-        Name="lb" Margin="5"  SuggestedWidth="400"  SuggestedHeight="300" />
-
+    <LogListBox
+      Name="lb" Margin="5"  SuggestedWidth="400"  SuggestedHeight="300" />
 
   </StackPanel>
 </Window>

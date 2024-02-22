@@ -1,7 +1,7 @@
 <ContextMenu xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="ControlsSample.ExampleContextMenu">
-    <MenuItem Text="Example Context Menu" Click="ExampleMenuItem_Click" />
+    <MenuItem Text="Example Context Menu" Click="ExampleMenuItem_Click" Name="menuItemExampleContextMenu"/>
     <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
     <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveMenuItem_Click" Shortcut="Ctrl+S"/>
     <MenuItem Text="-" />

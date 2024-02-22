@@ -34,7 +34,7 @@ namespace PropertyGridSample
             control.SelectCard(0);
         }
 
-        public static void InitCardPanelHeader(object c)
+        /*public static void InitCardPanelHeader(object c)
         {
             if (c is not CardPanelHeader control)
                 return;
@@ -53,6 +53,6 @@ namespace PropertyGridSample
                 var text = control.SelectedTab?.HeaderButton?.Text;
                 Application.Log($"TabClick: {text}");
             }
-        }
+        }*/
     }
 }

@@ -181,18 +181,31 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             var text = textNode.Text;
             var types = context.GetUixmlPortTypes();
 
-            if (UixmlPortXamlIlLanguageParseIntrinsics.TryConvert(context, node, text, type, types, out result))
+            if (UixmlPortXamlIlLanguageParseIntrinsics.TryConvert(
+                context,
+                node,
+                text,
+                type,
+                types,
+                out result))
             {
                 return true;
             }
             
             if (type.FullName == "Alternet.UI.UixmlPortProperty")
             {
-                var scope = context.ParentNodes().OfType<UixmlPortXamlIlTargetTypeMetadataNode>().FirstOrDefault();
+                var scope =
+                    context.ParentNodes().OfType<UixmlPortXamlIlTargetTypeMetadataNode>()
+                    .FirstOrDefault();
                 if (scope == null)
-                    throw new XamlX.XamlLoadException("Unable to find the parent scope for UixmlPortProperty lookup", node);
+                    throw new XamlX.XamlLoadException(
+                        "Unable to find the parent scope for UixmlPortProperty lookup", node);
 
-                result = XamlIlUixmlPortPropertyHelper.CreateNode(context, text, scope.TargetType, node );
+                result = XamlIlUixmlPortPropertyHelper.CreateNode(
+                    context,
+                    text,
+                    scope.TargetType,
+                    node );
                 return true;
             }
 

@@ -10,21 +10,27 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <StackPanel Grid.Column="0" Margin="0,0,20,0" Name="tabControlPanel">
+      <TabControl Grid.Column="0" Margin="0,0,20,0" Name="tabControlPanel">
 
         <StackPanel Orientation="Vertical" Padding="5" Name="containerStackPanel" Visible="true">
-          <Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
+          <Button Text="Increase Margin" Name="increaseContainerMarginButton"
+                  Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
+          <Button Text="Increase Padding" Name="increaseContainerPaddingButton"
+                  Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
 
-          <CheckBox Text="Horizontal Layout" CheckedChanged="HorizontalContainerLayoutCheckBox_CheckedChanged" Margin="0,0,0,5" />
+          <CheckBox Text="Horizontal Layout" Name="horizontalContainerLayoutCheckBox"
+                    CheckedChanged="HorizontalContainerLayoutCheckBox_CheckedChanged"
+                    Margin="0,0,0,5" />
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Padding="5" Name="buttonPanel" Visible="false">
-          <Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
+          <Button Text="Increase Margin" Name="increaseButtonMarginButton"
+                  Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
+          <Button Text="Increase Padding" Name="increaseButtonPaddingButton"
+                  Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
         </StackPanel>
 
-      </StackPanel>
+      </TabControl>
 
       <GroupBox Grid.Column="1" Title="Container" Name="subjectGroupBox" Margin="15"
           VerticalAlignment="Top" HorizontalAlignment="Left" Padding="15">

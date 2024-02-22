@@ -23,7 +23,8 @@
               MouseDown="DragSource_MouseDown"
               MouseMove="DragSource_MouseMove"
               MouseUp="DragSource_MouseUp">
-        <Label Text="Drag Me" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Text="Drag Me" VerticalAlignment="Center"
+               HorizontalAlignment="Center" BubbleMouse="true"/>
       </Border>
       <Border SuggestedWidth="120" VerticalAlignment="Stretch" Margin="10"
               AllowDrop="True" Name="dropTarget"
@@ -31,7 +32,8 @@
               DragOver="DropTarget_DragOver"
               DragEnter="DropTarget_DragEnter"
               DragLeave="DropTarget_DragLeave">
-        <Label Text="Drop Here" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Text="Drop Here" VerticalAlignment="Center"
+               HorizontalAlignment="Center" BubbleMouse="true"/>
       </Border>
       <GroupBox Title="Drop Effects" VerticalAlignment="Top" Margin="0,0,0,0" MinWidth="100">
         <StackPanel Orientation="Vertical" Margin="10,10,10,10">

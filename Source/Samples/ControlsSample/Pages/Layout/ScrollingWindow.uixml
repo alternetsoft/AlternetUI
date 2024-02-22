@@ -15,12 +15,15 @@
     </Grid.ColumnDefinitions>
     <GroupBox Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
-        <Border SuggestedWidth="200" SuggestedHeight="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+        
+        <Border SuggestedWidth="200" SuggestedHeight="200" Padding="5"
+                VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="false">
           <ScrollViewer>
             <StackPanel Name="stackPanel" Orientation="Vertical">
             </StackPanel>
           </ScrollViewer>
         </Border>
+        
         <Grid Margin="10,0,0,0">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -68,13 +71,15 @@
 
     <GroupBox Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
+        
         <Border SuggestedWidth="200" SuggestedHeight="200" VerticalAlignment="Top"
-                HorizontalAlignment="Left">
+                HorizontalAlignment="Left" Padding="5" HasBorder="false">
           <ScrollViewer>
             <Grid Name="grid">
             </Grid>
           </ScrollViewer>
         </Border>
+        
         <Grid Margin="10,0,0,0">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -124,7 +129,7 @@
 
     <GroupBox Title="Drawing" Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
       <StackPanel Orientation="Vertical">
-        <Border VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Border VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="false" Padding="5">
           <ScrollViewer SuggestedWidth="200" SuggestedHeight="200" Name="imageScrollViewer">
           </ScrollViewer>
         </Border>

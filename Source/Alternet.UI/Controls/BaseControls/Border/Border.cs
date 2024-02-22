@@ -62,6 +62,8 @@ namespace Alternet.UI
                 var bounds = base.ChildrenLayoutBounds;
                 bounds.X += BorderWidth.Left;
                 bounds.Y += BorderWidth.Top;
+                if (bounds.Size == 0)
+                    return bounds;
                 bounds.Width -= BorderWidth.Horizontal;
                 bounds.Height -= BorderWidth.Vertical;
                 return bounds;

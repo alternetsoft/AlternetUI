@@ -29,7 +29,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
         private static SreTypeSystem _sreTypeSystem;
         private static Type _ignoresAccessChecksFromAttribute;
         private static ModuleBuilder _sreBuilder;
-        private static IXamlType _sreContextType; 
+        private static IXamlType _sreContextType;
         private static XamlLanguageTypeMappings _sreMappings;
         private static XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> _sreEmitMappings;
         private static XamlXmlnsMappings _sreXmlns;
@@ -47,14 +47,14 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             try
             {
                 _sreBuilder.CreateGlobalFunctions();
-                saveMethod.Invoke(_sreAsm, new Object[] {"XamlIlLoader.ildump"});
+                saveMethod.Invoke(_sreAsm, new Object[] { "XamlIlLoader.ildump" });
             }
             catch
             {
                 //Ignore
             }
         }
-        
+
         static void InitializeSre()
         {
             if (_sreTypeSystem == null)
@@ -79,11 +79,11 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                     else
                         _sreCanSave = false;
                 }
-                
-                if(_sreAsm == null)
+
+                if (_sreAsm == null)
                     _sreAsm = AssemblyBuilder.DefineDynamicAssembly(name,
                         AssemblyBuilderAccess.RunAndCollect);
-                
+
                 _sreBuilder = _sreAsm.DefineDynamicModule("XamlIlLoader.ildump");
             }
 
@@ -114,7 +114,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             var prop = tb.DefineProperty("AssemblyName", PropertyAttributes.None, typeof(string), Array.Empty<Type>());
             prop.SetGetMethod(propGet);
 
-            
+
             var ctor = tb.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard,
                 new[] { typeof(string) });
             var ctorIl = ctor.GetILGenerator();
@@ -133,14 +133,14 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 new object[] { AttributeTargets.Assembly },
                 new[] { typeof(AttributeUsageAttribute).GetProperty("AllowMultiple") },
                 new object[] { true }));
-            
+
             return tb.CreateTypeInfo();
         }
 
         static void EmitIgnoresAccessCheckToAttribute(AssemblyName assemblyName)
         {
             var name = assemblyName.Name;
-            if(string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
                 return;
             var key = assemblyName.GetPublicKey();
             if (key != null && key.Length != 0)
@@ -149,9 +149,13 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 _ignoresAccessChecksFromAttribute.GetConstructors()[0],
                 new object[] { name }));
         }
-        
 
-        static object LoadSre(string xaml, Assembly localAssembly, object rootInstance, Uri uri, bool isDesignMode)
+        static object LoadSre(
+            string xaml,
+            Assembly localAssembly,
+            object rootInstance,
+            Uri uri,
+            bool isDesignMode)
         {
             var success = false;
             try
@@ -162,13 +166,17 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             }
             finally
             {
-                if(!success && _sreCanSave)
+                if (!success && _sreCanSave)
                     DumpRuntimeCompilationResults();
             }
         }
 
-        
-        static object LoadSreCore(string xaml, Assembly localAssembly, object rootInstance, Uri uri, bool isDesignMode)
+        static object LoadSreCore(
+            string xaml,
+            Assembly localAssembly,
+            object rootInstance,
+            Uri uri,
+            bool isDesignMode)
         {
 
             InitializeSre();
@@ -176,16 +184,29 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 EmitIgnoresAccessCheckToAttribute(localAssembly.GetName());
             var asm = localAssembly == null ? null : _sreTypeSystem.GetAssembly(localAssembly);
             var tb = _sreBuilder.DefineType("Builder_" + Guid.NewGuid().ToString("N") + "_" + uri);
-            var clrPropertyBuilder = tb.DefineNestedType("ClrProperties_" + Guid.NewGuid().ToString("N"));
-            var indexerClosureType = _sreBuilder.DefineType("IndexerClosure_" + Guid.NewGuid().ToString("N"));
+            var clrPropertyBuilder =
+                tb.DefineNestedType("ClrProperties_" + Guid.NewGuid().ToString("N"));
+            var indexerClosureType =
+                _sreBuilder.DefineType("IndexerClosure_" + Guid.NewGuid().ToString("N"));
 
-            var compiler = new UixmlPortXamlIlCompiler(new UixmlPortXamlIlCompilerConfiguration(_sreTypeSystem, asm,
-                _sreMappings, _sreXmlns, UixmlPortXamlIlLanguage.CustomValueConverter,
-                new XamlIlClrPropertyInfoEmitter(_sreTypeSystem.CreateTypeBuilder(clrPropertyBuilder)),
-                new XamlIlPropertyInfoAccessorFactoryEmitter(_sreTypeSystem.CreateTypeBuilder(indexerClosureType))), 
+            var config = new UixmlPortXamlIlCompilerConfiguration(
+                _sreTypeSystem,
+                asm,
+                _sreMappings,
+                _sreXmlns,
+                UixmlPortXamlIlLanguage.CustomValueConverter,
+                new XamlIlClrPropertyInfoEmitter(
+                    _sreTypeSystem.CreateTypeBuilder(clrPropertyBuilder)),
+                new XamlIlPropertyInfoAccessorFactoryEmitter(
+                    _sreTypeSystem.CreateTypeBuilder(indexerClosureType)));
+
+            var compiler = new UixmlPortXamlIlCompiler(
+                config,
                 _sreEmitMappings,
-                _sreContextType) { EnableIlVerification = true };
-            
+                _sreContextType)
+            {
+                EnableIlVerification = true,
+            };
 
             IXamlType overrideType = null;
             if (rootInstance != null)
@@ -201,10 +222,10 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             return LoadOrPopulate(created, rootInstance);
         }
 #endif
-        
+
         static object LoadOrPopulate(Type created, object rootInstance)
         {
-            var isp =  Expression.Parameter(typeof(IServiceProvider));
+            var isp = Expression.Parameter(typeof(IServiceProvider));
 
 
             var epar = Expression.Parameter(typeof(object));
@@ -213,7 +234,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             var populateCb = Expression.Lambda<Action<IServiceProvider, object>>(
                 Expression.Call(populate, isp, Expression.Convert(epar, populate.GetParameters()[1].ParameterType)),
                 isp, epar).Compile();
-            
+
             if (rootInstance == null)
             {
                 var targetType = populate.GetParameters()[1].ParameterType;
@@ -251,7 +272,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                         overrideField.SetValue(null, null);
                     }
                 }
-                
+
                 var createCb = Expression.Lambda<Func<IServiceProvider, object>>(
                     Expression.Convert(Expression.Call(
                         created.GetMethod(UixmlPortXamlIlCompiler.BuildName), isp), typeof(object)), isp).Compile();
@@ -263,8 +284,12 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 return rootInstance;
             }
         }
-        
-        public static object Load(Stream stream, Assembly localAssembly, object rootInstance, Uri uri,
+
+        public static object Load(
+            Stream stream,
+            Assembly localAssembly,
+            object rootInstance,
+            Uri uri,
             bool isDesignMode)
         {
             string xaml;

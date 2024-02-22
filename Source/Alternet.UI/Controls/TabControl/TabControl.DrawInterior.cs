@@ -89,6 +89,7 @@ namespace Alternet.UI
                         tabIndex,
                         tabCount);
 
+            if(tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
             DrawLines();
 
             void DrawLines()
@@ -140,7 +141,8 @@ namespace Alternet.UI
             RectD rectEnd;
             RectD rectOther;
 
-            bool isTopOrBottom = tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom;
+            bool isTopOrBottom = tabAlignment == TabAlignment.Top
+                || tabAlignment == TabAlignment.Bottom;
 
             if(isTopOrBottom)
             {
@@ -205,8 +207,8 @@ namespace Alternet.UI
             void DrawTopOther()
             {
                 Thickness startBorder = (0, 0, 1, 1);
-                Thickness otherBorder = (0, 1, 0, 0);
-                Thickness endBorder = (1, 0, 0, 1);
+                Thickness otherBorder = (0, 1, 1, 0);
+                Thickness endBorder = (0, 0, 0, 1);
                 Thickness[] borders = { startBorder, otherBorder, endBorder };
                 DrawBorders(borders);
             }
@@ -231,8 +233,8 @@ namespace Alternet.UI
             void DrawBottomOther()
             {
                 Thickness startBorder = (0, 1, 1, 0);
-                Thickness otherBorder = (0, 0, 0, 1);
-                Thickness endBorder = (1, 1, 0, 0);
+                Thickness otherBorder = (0, 0, 1, 1);
+                Thickness endBorder = (0, 1, 0, 0);
                 Thickness[] borders = { startBorder, otherBorder, endBorder };
                 DrawBorders(borders);
             }

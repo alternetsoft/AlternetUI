@@ -33,7 +33,7 @@
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
           <Button Text="Has Border" Name="hasBorderButton"
                   Margin="0,3,0,0" Click="HasBorderButton_Click" />
-          <Button Text="Edit Items..."
+          <Button Text="Edit Items..." Name="buttonEditItems"
                   Margin="0,3,0,3" Click="EditorButton_Click" />
           <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
                     Margin="0,3,0,0" IsChecked="true"

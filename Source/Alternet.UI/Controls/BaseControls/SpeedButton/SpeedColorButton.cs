@@ -137,7 +137,7 @@ namespace Alternet.UI
         protected virtual void UpdateImage()
         {
             if (color is null)
-                Image = null;
+                Image = (Bitmap)Color.Transparent.AsImage(colorImageSize);
             else
             {
                 Image = (Bitmap)color.AsImage(colorImageSize);

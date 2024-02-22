@@ -66,7 +66,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
             Actions.Add(typeof(GenericToolBarSet), InitGenericToolBarSet);
             Actions.Add(typeof(CardPanel), InitCardPanel);
-            Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);
+            /*Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);*/
             Actions.Add(typeof(TextBox), InitTextBox);
             Actions.Add(typeof(TextBoxAndLabel), InitTextBoxAndLabel);
             Actions.Add(typeof(RichTextBox), InitRichTextBox);

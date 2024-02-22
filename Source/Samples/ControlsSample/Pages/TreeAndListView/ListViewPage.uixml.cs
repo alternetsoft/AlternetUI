@@ -10,7 +10,6 @@ namespace ControlsSample
 {
     internal partial class ListViewPage : Control
     {
-        private readonly CardPanelHeader panelHeader = new();
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
         private int newColIndex = 2;
@@ -45,12 +44,9 @@ namespace ControlsSample
                 hasBorderButton);
             buttons.SuggestedWidthToMax();
 
-            panelHeader.BackColor = SystemColors.Window;
-            panelHeader.Add("Actions", stackPanel1);
-            panelHeader.Add("Settings", stackPanel2);
-            panelHeader.Add("Events", stackPanel3);
-            tabControlPanel.Children.Prepend(panelHeader);
-            panelHeader.SelectFirstTab();
+            tabControlPanel.Add("Actions", stackPanel1);
+            tabControlPanel.Add("Settings", stackPanel2);
+            tabControlPanel.Add("Events", stackPanel3);
 
             var imageLists = ResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;

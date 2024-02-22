@@ -11,7 +11,7 @@
 		>
     <VerticalStackPanel BubbleMouse="true">
 
-      <GroupBox Margin="10" Padding="5" Text="GroupBox"
+      <GroupBox Margin="10" Padding="5" Text="GroupBox" Name="mainGroupBox"
                     MouseMove="GroupBox_MouseMove"
                     MouseDown="GroupBox_MouseDown"
                     MouseUp="GroupBox_MouseUp"

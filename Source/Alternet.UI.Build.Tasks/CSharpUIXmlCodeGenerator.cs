@@ -56,7 +56,7 @@ using System;
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
             w.WriteLine();
-            w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
+            /*w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");*/
             w.WriteLine("public void InitializeComponent()");
             using (new BlockIndent(w))
             {
@@ -91,22 +91,32 @@ using System;
             w.WriteLine("[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]");
             w.WriteLine("class " + UIXmlPreviewerConstructorMarkerTypeName + " {}");
             w.WriteLine();
-            w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
+            /*w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");*/
             w.WriteLine($"{document.ClassName}(UIXmlPreviewerConstructorMarkerType _)");
             using (new BlockIndent(w))
             {
             }
         }
 
-        private static void WriteEventBinding(IndentedTextWriter w, UIXmlDocument.EventBinding eventBinding)
+        private static void WriteEventBinding(
+            IndentedTextWriter w,
+            UIXmlDocument.EventBinding eventBinding)
         {
+            if(eventBinding is UIXmlDocument.IndexedObjectEventBinding bind
+                && bind.Accessors.Count > 1)
+            {
+                var s = $"#error Bad binding '{bind.HandlerName}' to '{bind.EventName}' event for the element with an empty Name property.";
+                w.WriteLine(s);
+            }
+
             switch (eventBinding)
             {
                 case UIXmlDocument.NamedObjectEventBinding x:
                     w.WriteLine($"{x.ObjectName}.{x.EventName} += {x.HandlerName};");
                     break;
                 case UIXmlDocument.IndexedObjectEventBinding x:
-                    w.WriteLine($"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
+                    w.WriteLine(
+                        $"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
                     break;
                 default:
                     throw new InvalidOperationException();

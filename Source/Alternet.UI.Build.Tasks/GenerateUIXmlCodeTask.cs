@@ -63,7 +63,7 @@ namespace Alternet.UI.Build.Tasks
             }
             catch (Exception ex)
             {
-                LogError(null, $"Code generation error: {ex}");
+               LogError(null, $"Code generation error: {ex}");
             }
 
             return !Log.HasLoggedErrors;

@@ -88,7 +88,6 @@ namespace PropertyGridSample
                     typeof(TextBox),
                     typeof(TreeView),
                     typeof(VerticalStackPanel),
-                    typeof(CardPanelHeader),
                     typeof(CardPanel),
                     typeof(SpeedButton),
                     typeof(ComboBoxAndLabel),

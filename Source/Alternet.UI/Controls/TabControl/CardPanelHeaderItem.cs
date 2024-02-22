@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Individual page of the <see cref="CardPanelHeader"/>
     /// </summary>
-    public class CardPanelHeaderItem : BaseControlItem
+    internal class CardPanelHeaderItem : BaseControlItem
     {
         private readonly SpeedButton headerControl;
         private Control? cardControl;
