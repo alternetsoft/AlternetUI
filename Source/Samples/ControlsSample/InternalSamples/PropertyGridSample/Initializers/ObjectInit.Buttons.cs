@@ -10,11 +10,17 @@ namespace PropertyGridSample
 {
     internal partial class ObjectInit
     {
+        public static void LogClick(object? sender, EventArgs e)
+        {
+            Application.Log($"{sender?.GetType()} Click");
+        }
+
         public static void InitButton(object control)
         {
             if (control is not Button button)
                 return;
             button.Text = "Butt&on";
+            button.Click += LogClick;
             button.StateImages = ButtonImages;
             button.SuggestedHeight = 100;
             button.HorizontalAlignment = HorizontalAlignment.Left;
@@ -25,6 +31,7 @@ namespace PropertyGridSample
             if (control is not SpeedTextButton button)
                 return;
             button.Text = "Sample Text";
+            button.Click += LogClick;
         }
 
         public static void InitSpeedColorButton(object control)
@@ -34,6 +41,7 @@ namespace PropertyGridSample
             button.SuggestedSize = 64;
             button.ColorImageSize = 56;
             button.Value = Color.Red;
+            button.Click += LogClick;
         }
 
         public static void InitSpeedButton(object control)
@@ -41,10 +49,10 @@ namespace PropertyGridSample
             if (control is not SpeedButton button)
                 return;
             button.Text = "speedButton";
+            button.TextVisible = true;
+            button.Click += LogClick;
 
-            var images = KnownSvgImages.GetForSize(
-                button.GetSvgColor(KnownSvgColor.Normal),
-                32);
+            var images = KnownSvgImages.GetForSize(button.GetSvgColor(), 32);
             var imagesDisabled = KnownSvgImages.GetForSize(
                 button.GetSvgColor(KnownSvgColor.Disabled),
                 32);

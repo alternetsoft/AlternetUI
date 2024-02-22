@@ -12,54 +12,72 @@ namespace Alternet.UI
     /// Implements speed button control.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class SpeedButton : PictureBox
+    public partial class SpeedButton : GraphicControl
     {
-        private static SpeedButton? defaults;
+        /// <summary>
+        /// Gets or sets default image and label distance in the <see cref="SpeedButton"/>.
+        /// </summary>
+        public static double DefaultImageLabelDistance = 4;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls.
+        /// </summary>
+        public static ControlColorAndStyle DefaultTheme = new();
+
+        private readonly PictureBox picture = new()
+        {
+            ImageStretch = false,
+            Visible = false,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+        };
+
+        private readonly Control spacer = new()
+        {
+            SuggestedSize = DefaultImageLabelDistance,
+            Visible = false,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+        };
+
+        private readonly GenericLabel label = new()
+        {
+            Visible = false,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+        };
+
         private Action? clickAction;
         private bool sticky;
         private KeyInfo[]? keys;
+        private bool textVisible = false;
+        private bool imageVisible = true;
+        private bool useDefaultTheme = true;
+
+        static SpeedButton()
+        {
+            InitThemeLight(DefaultTheme.Light);
+            InitThemeDark(DefaultTheme.Dark);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButton"/> class.
         /// </summary>
         public SpeedButton()
         {
+            Padding = 4;
+            Layout = LayoutStyle.Horizontal;
+            picture.Parent = this;
+            picture.BubbleMouse = true;
+            spacer.Parent = this;
+            label.Visible = false;
+            label.Parent = this;
+            label.BubbleMouse = true;
+
             AcceptsFocusAll = false;
-            ImageStretch = false;
-            Borders ??= new();
-
-            var defaultsButton = GetButtonDefaults();
-
-            if(defaultsButton is null)
-                InitBorderAndColors();
-            else
-                AssignBorderAndColors(defaultsButton);
+            RefreshOptions = ControlRefreshOptions.RefreshOnState;
         }
-
-        /// <summary>
-        /// Gets or sets default hovered state colors.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultHoveredColors { get; set; }
-
-        /// <summary>
-        /// Gets or sets default pressed state colors.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultPressedColors { get; set; }
-
-        /// <summary>
-        /// Gets or sets default hovered state colors.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultNormalColors { get; set; }
-
-        /// <summary>
-        /// Gets or sets default hovered state colors.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultDisabledColors { get; set; }
-
-        /// <summary>
-        /// Gets or sets default hovered state colors.
-        /// </summary>
-        public static IReadOnlyFontAndColor? DefaultFocusedColors { get; set; }
 
         /// <summary>
         /// Gets or sets default template for the shortcut when it is shown in the tooltip.
@@ -69,24 +87,120 @@ namespace Alternet.UI
         /// </remarks>
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
 
+        /// <inheritdoc/>
+        public override bool Enabled
+        {
+            get => base.Enabled;
+            set
+            {
+                base.Enabled = value;
+                PictureBox.Enabled = value;
+                Label.Enabled = value;
+            }
+        }
+
         /// <summary>
-        /// Gets or sets default settings for the <see cref="SpeedButton"/>.
+        /// Gets or sets whether to use <see cref="DefaultTheme"/>.
         /// </summary>
-        /// <remarks>
-        /// Create instance of the <see cref="SpeedButton"/> and assign to this property.
-        /// You can specify border and background settings and all new <see cref="SpeedButton"/>
-        /// controls will inherit them.
-        /// </remarks>
-        public static SpeedButton? Defaults
+        [Browsable(false)]
+        public virtual bool UseDefaultTheme
+        {
+            get => useDefaultTheme;
+            set
+            {
+                if (useDefaultTheme == value)
+                    return;
+                useDefaultTheme = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to display text in the control.
+        /// </summary>
+        public virtual bool TextVisible
         {
             get
             {
-                return defaults;
+                return textVisible;
             }
 
             set
             {
-                defaults = value;
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<Control> AllChildrenInLayout
+        {
+            get
+            {
+                bool hasImage = (Image is not null) || (ImageSet is not null);
+                var img = ImageVisible && hasImage;
+
+                if (TextVisible)
+                {
+                    if (img)
+                        return Children;
+                    else
+                        return new Control[] { Label };
+                }
+                else
+                {
+                    if (img)
+                        return new Control[] { PictureBox };
+                    else
+                        return Array.Empty<Control>();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw image.
+        /// </summary>
+        public virtual bool ImageVisible
+        {
+            get
+            {
+                return imageVisible;
+            }
+
+            set
+            {
+                if (imageVisible == value)
+                    return;
+                imageVisible = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value which specifies display modes for
+        /// item image and text.
+        /// </summary>
+        public virtual ImageToText ImageToText
+        {
+            get
+            {
+                if (Layout == LayoutStyle.Horizontal)
+                    return ImageToText.Horizontal;
+                else
+                    return ImageToText.Vertical;
+            }
+
+            set
+            {
+                if (value == ImageToText)
+                    return;
+                if (value == ImageToText.Horizontal)
+                    Layout = LayoutStyle.Horizontal;
+                else
+                    Layout = LayoutStyle.Vertical;
+                Invalidate();
             }
         }
 
@@ -98,7 +212,7 @@ namespace Alternet.UI
         /// is used to get the template.
         /// </remarks>
         [Browsable(false)]
-        public string? ShortcutToolTipTemplate { get; set; }
+        public virtual string? ShortcutToolTipTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets whether control is sticky.
@@ -106,7 +220,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When this property is true, control painted as pressed if it is not disabled.
         /// </remarks>
-        public bool Sticky
+        public virtual bool Sticky
         {
             get
             {
@@ -123,14 +237,116 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the image that is displayed by the control.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual Image? Image
+        {
+            get
+            {
+                return PictureBox.Image;
+            }
+
+            set
+            {
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.Image = value;
+                });
+            }
+        }
+
+        /// <inheritdoc/>
+        [DefaultValue("")]
+        [Localizability(LocalizationCategory.Text)]
+        public override string Text
+        {
+            get
+            {
+                return base.Text;
+            }
+
+            set
+            {
+                if (base.Text == value)
+                    return;
+                base.Text = value;
+                Label.Text = value;
+                RaiseTextChanged(EventArgs.Empty);
+                if (TextVisible)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the disabled image that is displayed by the control.
+        /// </summary>
+        public virtual Image? DisabledImage
+        {
+            get
+            {
+                return PictureBox.DisabledImage;
+            }
+
+            set
+            {
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.DisabledImage = value;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the disabled <see cref="ImageSet"/> that is displayed by the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ImageSet? DisabledImageSet
+        {
+            get
+            {
+                return PictureBox.DisabledImageSet;
+            }
+
+            set
+            {
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.DisabledImageSet = value;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="ImageSet"/> that is displayed by the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ImageSet? ImageSet
+        {
+            get
+            {
+                return PictureBox.ImageSet;
+            }
+
+            set
+            {
+                PerformLayoutAndInvalidate(() =>
+                {
+                    PictureBox.ImageSet = value;
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the shortcut keys associated with the control.
         /// </summary>
         /// <returns>
-        /// One of the <see cref="Keys" /> values. The default is <see cref="Keys.None" />.</returns>
+        /// One of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
         [Localizable(true)]
         [DefaultValue(Keys.None)]
         [Browsable(false)]
-        public Keys ShortcutKeys
+        public virtual Keys ShortcutKeys
         {
             get
             {
@@ -153,7 +369,7 @@ namespace Alternet.UI
         /// the control.
         /// </summary>
         [Browsable(false)]
-        public KeyGesture? Shortcut
+        public virtual KeyGesture? Shortcut
         {
             get
             {
@@ -176,7 +392,7 @@ namespace Alternet.UI
         /// the control.
         /// </summary>
         [Browsable(false)]
-        public KeyInfo[]? ShortcutKeyInfo
+        public virtual KeyInfo[]? ShortcutKeyInfo
         {
             get
             {
@@ -204,7 +420,8 @@ namespace Alternet.UI
                 var result = base.CurrentState;
                 if (sticky)
                 {
-                    if (result == GenericControlState.Normal || result == GenericControlState.Focused)
+                    if (result == GenericControlState.Normal
+                        || result == GenericControlState.Focused)
                         result = GenericControlState.Pressed;
                 }
 
@@ -217,7 +434,7 @@ namespace Alternet.UI
         /// this control is clicked by the user.
         /// </summary>
         [Browsable(false)]
-        public Action? ClickAction
+        public virtual Action? ClickAction
         {
             get => clickAction;
             set
@@ -228,6 +445,89 @@ namespace Alternet.UI
                 if (clickAction != null)
                     Click += OnClickAction;
             }
+        }
+
+        /// <summary>
+        /// Gets inner <see cref="PictureBox"/> control.
+        /// </summary>
+        [Browsable(false)]
+        internal PictureBox PictureBox => picture;
+
+        /// <summary>
+        /// Gets inner <see cref="GenericLabel"/> control.
+        /// </summary>
+        [Browsable(false)]
+        internal GenericLabel Label => label;
+
+        /// <summary>
+        /// Initializes default colors and styles for the <see cref="SpeedButton"/>
+        /// using 'Light' color theme.
+        /// </summary>
+        /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
+        public static void InitThemeLight(ControlStateSettings theme)
+        {
+            AllStateColors colors = new()
+            {
+                HoveredForeColor = (0, 0, 0),
+                HoveredBackColor = (229, 243, 255),
+
+                DisabledForeColor = SystemColors.GrayText,
+
+                PressedForeColor = (0, 0, 0),
+                PressedBackColor = (204, 228, 247),
+            };
+
+            theme.Borders = CreateBorders((204, 232, 255));
+            theme.Colors = colors.AllStates;
+            theme.Backgrounds = theme.Colors;
+        }
+
+        /// <summary>
+        /// Initializes default colors and styles for the <see cref="SpeedButton"/>
+        /// using 'Dark' color theme.
+        /// </summary>
+        /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
+        public static void InitThemeDark(ControlStateSettings theme)
+        {
+            AllStateColors colors = new()
+            {
+                HoveredForeColor = (250, 250, 250),
+                HoveredBackColor = (61, 61, 61),
+
+                DisabledForeColor = SystemColors.GrayText,
+
+                PressedForeColor = (214, 214, 214),
+                PressedBackColor = (34, 34, 34),
+            };
+
+            theme.Borders = CreateBorders((112, 112, 112));
+            theme.Colors = colors.AllStates;
+            theme.Backgrounds = theme.Colors;
+        }
+
+        /// <summary>
+        /// Creates borders for the <see cref="SpeedButton"/>
+        /// using default border width
+        /// and using specified <paramref name="color"/>.
+        /// </summary>
+        /// <param name="color">Border color.</param>
+        /// <returns></returns>
+        public static ControlStateBorders CreateBorders(Color color)
+        {
+            BorderSettings border = new()
+            {
+                Width = 1,
+                UniformRadiusIsPercent = false,
+                UniformCornerRadius = 3,
+                Color = color,
+            };
+
+            ControlStateBorders borders = new();
+            var hoveredBorder = border;
+            var pressedBorder = hoveredBorder.Clone();
+            borders.SetObject(hoveredBorder, GenericControlState.Hovered);
+            borders.SetObject(pressedBorder, GenericControlState.Pressed);
+            return borders;
         }
 
         /// <inheritdoc/>
@@ -267,96 +567,33 @@ namespace Alternet.UI
             Borders.Hovered = doubleBorder;
         }
 
-        /// <summary>
-        /// Assigns borders and colors from other <see cref="SpeedButton"/> instance.
-        /// </summary>
-        /// <param name="button"></param>
-        protected virtual void AssignBorderAndColors(SpeedButton button)
+        /// <inheritdoc/>
+        public override void DefaultPaint(Graphics dc, RectD rect)
         {
-            Borders ??= new();
-            Borders.Assign(button.Borders);
-            Backgrounds = button.Backgrounds;
-            StateObjects!.Colors = button.StateObjects?.Colors;
-            Padding = button.Padding;
+            DrawDefaultBackground(dc, rect);
+            if(ImageVisible)
+                PictureBox.DrawDefaultImage(dc, PictureBox.Bounds);
+            if (TextVisible)
+            {
+                var state = CurrentState;
+                var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+                if(foreColor is null)
+                {
+                    var theme = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
+                    foreColor ??= theme?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+                }
+
+                Label.DrawDefaultText(dc, Label.Bounds, foreColor);
+            }
         }
 
-        /// <summary>
-        /// Initializes borders and colors with default settings.
-        /// </summary>
-        protected virtual void InitBorderAndColors()
+        /// <inheritdoc/>
+        protected override ControlColorAndStyle? GetDefaultTheme()
         {
-            Borders ??= new();
-
-            var hoveredBorder = BorderSettings.Default.Clone();
-            hoveredBorder.UniformRadiusIsPercent = false;
-            hoveredBorder.UniformCornerRadius = 3;
-            Borders.SetObject(hoveredBorder, GenericControlState.Hovered);
-
-            var pressedBorder = hoveredBorder.Clone();
-
-            Borders.SetObject(pressedBorder, GenericControlState.Pressed);
-
-            Padding = 4;
-            SetStateColors(GenericControlState.Normal, GetNormalColors());
-            SetStateColors(GenericControlState.Hovered, GetHoveredColors());
-            SetStateColors(GenericControlState.Pressed, GetPressedColors());
-            SetStateColors(GenericControlState.Disabled, GetDisabledColors());
-            SetStateColors(GenericControlState.Focused, GetFocusedColors());
-        }
-
-        /// <summary>
-        /// Gets control colors for the pressed state.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IReadOnlyFontAndColor? GetPressedColors()
-        {
-            return DefaultPressedColors;
-        }
-
-        /// <summary>
-        /// Gets control colors for the hovered state.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IReadOnlyFontAndColor? GetHoveredColors()
-        {
-            return DefaultHoveredColors;
-        }
-
-        /// <summary>
-        /// Gets control colors for the focused state.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IReadOnlyFontAndColor? GetFocusedColors()
-        {
-            return DefaultFocusedColors;
-        }
-
-        /// <summary>
-        /// Gets control colors for the disabled state.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IReadOnlyFontAndColor? GetDisabledColors()
-        {
-            return DefaultDisabledColors;
-        }
-
-        /// <summary>
-        /// Gets control colors for the normal state.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IReadOnlyFontAndColor? GetNormalColors()
-        {
-            return DefaultNormalColors;
-        }
-
-        /// <summary>
-        /// Gets default <see cref="SpeedButton"/> instance from which border and color
-        /// settings are assigned.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual SpeedButton? GetButtonDefaults()
-        {
-            return defaults;
+            if (UseDefaultTheme)
+                return DefaultTheme;
+            else
+                return null;
         }
 
         private void OnClickAction(object? sender, EventArgs? e)

@@ -4595,6 +4595,8 @@ namespace Alternet.UI
             var result = Fn();
             if (result.IsKnownColor)
                 return result;
+            if (!result.IsOpaque)
+                return result;
             var knownResult = KnownColorTable.ArgbToKnownColor(result.AsUInt());
             return knownResult;
         }

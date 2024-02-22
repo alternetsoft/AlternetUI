@@ -15,8 +15,8 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
-            BehaviorOptions = ControlOptions.DrawDefaultBackground | ControlOptions.DrawDefaultBorder
-                | ControlOptions.RefreshOnCurrentState;
+            RefreshOptions = ControlRefreshOptions.RefreshOnBorder
+                | ControlRefreshOptions.RefreshOnBackground;
             Borders ??= new();
             Borders.Normal = CreateBorderSettings(BorderSettings.Default);
             UpdatePadding();
@@ -128,7 +128,8 @@ namespace Alternet.UI
         /// Gets or sets the uniform border width for the <see cref="Border"/> control.
         /// </summary>
         /// <remarks>
-        /// This value is applied to all the sides. If returned value is not null, all border sides
+        /// This value is applied to all the sides. If returned value is not null,
+        /// all border sides
         /// have the same settings.
         /// </remarks>
 #if DEBUG
@@ -241,11 +242,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(Graphics dc, RectD rect)
         {
-            BeforePaint(dc, rect);
             DrawDefaultBackground(dc, rect);
-            AfterPaint(dc, rect);
         }
 
         /// <summary>
@@ -255,14 +254,6 @@ namespace Alternet.UI
         protected virtual BorderSettings CreateBorderSettings(BorderSettings defaultSettings)
         {
             return new(defaultSettings);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnCurrentStateChanged(EventArgs e)
-        {
-            base.OnCurrentStateChanged(e);
-            if ((Borders?.HasOtherStates ?? false) || (Backgrounds?.HasOtherStates ?? false))
-                Refresh();
         }
 
         private void UpdatePadding()

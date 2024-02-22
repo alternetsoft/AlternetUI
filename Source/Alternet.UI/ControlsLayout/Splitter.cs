@@ -297,6 +297,43 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override void DefaultPaint(Graphics dc, RectD rect)
+        {
+            var colors = NormalColors;
+            Color defaultColor;
+            if (IsDarkBackground)
+            {
+                colors ??= DefaultDarkColors;
+                defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
+            }
+            else
+            {
+                colors ??= DefaultLightColors;
+                defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
+            }
+
+            var backColor = colors?.BackgroundColor ?? defaultColor;
+            var foreColor = colors?.ForegroundColor;
+
+            if (backColor is not null)
+                dc.FillRectangle(backColor.AsBrush, rect);
+
+            if (foreColor is null)
+                return;
+
+            if (!Horizontal)
+            {
+                var horzLine = DrawingUtils.GetCenterLineHorz(rect);
+                dc.FillRectangle(foreColor.AsBrush, horzLine);
+            }
+            else
+            {
+                var vertLine = DrawingUtils.GetCenterLineVert(rect);
+                dc.FillRectangle(foreColor.AsBrush, vertLine);
+            }
+        }
+
         /// <summary>
         /// Returns a string representation for this control.
         /// </summary>
@@ -353,43 +390,6 @@ namespace Alternet.UI
             base.OnMouseUp(e);
             if (splitTarget != null)
                 SplitEnd(true);
-        }
-
-        /// <inheritdoc/>
-        protected override void DefaultPaint(Graphics dc, RectD rect)
-        {
-            var colors = NormalColors;
-            Color defaultColor;
-            if (IsDarkBackground)
-            {
-                colors ??= DefaultDarkColors;
-                defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
-            }
-            else
-            {
-                colors ??= DefaultLightColors;
-                defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
-            }
-
-            var backColor = colors?.BackgroundColor ?? defaultColor;
-            var foreColor = colors?.ForegroundColor;
-
-            if (backColor is not null)
-                dc.FillRectangle(backColor.AsBrush, rect);
-
-            if (foreColor is null)
-                return;
-
-            if (!Horizontal)
-            {
-                var horzLine = DrawingUtils.GetCenterLineHorz(rect);
-                dc.FillRectangle(foreColor.AsBrush, horzLine);
-            }
-            else
-            {
-                var vertLine = DrawingUtils.GetCenterLineVert(rect);
-                dc.FillRectangle(foreColor.AsBrush, vertLine);
-            }
         }
 
         /// <summary>

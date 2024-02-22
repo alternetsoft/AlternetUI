@@ -36,6 +36,7 @@ namespace Alternet.UI
 
             base.Layout = LayoutStyle.Vertical;
             cardPanelHeader.TabHasBorder = false;
+            cardPanelHeader.UseTabDefaultTheme = false;
             cardPanelHeader.TabClick += CardPanelHeader_TabClick;
             cardPanelHeader.ButtonSizeChanged += CardPanelHeader_ButtonSizeChanged;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
@@ -257,6 +258,26 @@ namespace Alternet.UI
             get
             {
                 return GetControlAt(SelectedIndex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the display area of the control's tab pages.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RectD" /> that represents the display area
+        /// of the tab pages.
+        /// </returns>
+        /// <remarks>
+        /// <see cref="ContentPadding"/> is not included in the result. This function
+        /// returns client area of the control, except tab header buttons area.
+        /// </remarks>
+        public virtual RectD DisplayRectangle
+        {
+            get
+            {
+                var result = Contents.Bounds;
+                return result;
             }
         }
 
@@ -489,6 +510,36 @@ namespace Alternet.UI
 
             Invalidate();
             return true;
+        }
+
+        /// <summary>
+        /// Sets images for the tab.
+        /// </summary>
+        /// <param name="index">The index of the tab page.</param>
+        /// <param name="image">Tab image.</param>
+        /// <param name="disabledImage">Tab image in the disabled state.</param>
+        public virtual void SetTabImage(int? index, Image? image, Image? disabledImage = null)
+        {
+            var item = Header.GetTab(index);
+            if (item is null)
+                return;
+            item.Image = image;
+            item.DisabledImage = disabledImage;
+        }
+
+        /// <summary>
+        /// Sets images for the tab.
+        /// </summary>
+        /// <param name="index">The index of the tab page.</param>
+        /// <param name="image">Tab image.</param>
+        /// <param name="disabledImage">Tab image in the disabled state.</param>
+        public virtual void SetTabImage(int? index, ImageSet? image, ImageSet? disabledImage = null)
+        {
+            var item = Header.GetTab(index);
+            if (item is null)
+                return;
+            item.ImageSet = image;
+            item.DisabledImageSet = disabledImage;
         }
 
         /// <summary>

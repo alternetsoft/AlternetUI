@@ -15,11 +15,6 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class GenericToolBar : Control
     {
-        private readonly StackPanel panel = new()
-        {
-            Orientation = StackPanelOrientation.Horizontal,
-        };
-
         private double itemSize;
         private bool textVisible = false;
         private bool imageVisible = true;
@@ -30,8 +25,8 @@ namespace Alternet.UI
         /// </summary>
         public GenericToolBar()
         {
+            Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, 24);
-            panel.Parent = this;
             TabStop = false;
             AcceptsFocusAll = false;
         }
@@ -198,7 +193,7 @@ namespace Alternet.UI
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public ImageToText ImageToText
         {
             get => imageToText;
@@ -207,21 +202,16 @@ namespace Alternet.UI
                 if (imageToText == value)
                     return;
                 imageToText = value;
-                if (!ImageVisible || !TextVisible)
-                    return;
-                foreach (var item in Items)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton speedButton)
-                        speedButton.ImageToText = value;
-                }
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton speedButton)
+                            speedButton.ImageToText = value;
+                    }
+                });
             }
         }
-
-        /// <summary>
-        /// Gets items added to the control.
-        /// </summary>
-        [Browsable(false)]
-        public IReadOnlyList<Control> Items => panel.Children;
 
         /// <summary>
         /// Gets toolbar item size.
@@ -242,10 +232,10 @@ namespace Alternet.UI
                 itemSize = value;
 
                 SuspendLayout();
-                foreach (var item in Items)
+                foreach (var item in Children)
                 {
                     if (item is SpeedButton || item is PictureBox)
-                        item.SuggestedSize = value;
+                        item.SuggestedSize = GetItemSuggestedSize(item);
                 }
 
                 ResumeLayout();
@@ -295,7 +285,7 @@ namespace Alternet.UI
             set
             {
                 base.BackgroundColor = value;
-                foreach(var item in Items)
+                foreach(var item in Children)
                 {
                     if (NeedUpdateBackColor(item))
                         item.BackgroundColor = value;
@@ -346,7 +336,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to display text in the buttons.
         /// </summary>
-        internal bool TextVisible
+        public bool TextVisible
         {
             get
             {
@@ -358,18 +348,24 @@ namespace Alternet.UI
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                foreach (var item in Items)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton speedButton)
-                        speedButton.TextVisible = value;
-                }
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton speedButton)
+                        {
+                            speedButton.TextVisible = value;
+                            item.SuggestedSize = GetItemSuggestedSize(item);
+                        }
+                    }
+                });
             }
         }
 
         /// <summary>
         /// Gets or sets whether to display images in the buttons.
         /// </summary>
-        internal bool ImageVisible
+        public bool ImageVisible
         {
             get
             {
@@ -381,12 +377,29 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
-                foreach (var item in Items)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton speedButton)
-                        speedButton.ImageVisible = value;
-                }
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton speedButton)
+                            speedButton.ImageVisible = value;
+                    }
+                });
             }
+        }
+
+        /// <summary>
+        /// Adds an empty disabled <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual ObjectUniqueId AddSpeedBtn()
+        {
+            var result = InternalAddSpeedBtn(
+                ItemKind.Button,
+                null,
+                GetNormalSvgImages().ImgEmpty,
+                null);
+            result.Enabled = false;
+            return result.UniqueId;
         }
 
         /// <summary>
@@ -401,7 +414,7 @@ namespace Alternet.UI
         public virtual ObjectUniqueId AddSpeedBtn(
             string? text,
             ImageSet? imageSet,
-            ImageSet? imageSetDisabled,
+            ImageSet? imageSetDisabled = null,
             string? toolTip = null,
             EventHandler? action = null)
         {
@@ -486,7 +499,7 @@ namespace Alternet.UI
 
             if (action is not null)
                 speedButton.Click += action;
-            speedButton.Parent = panel;
+            speedButton.Parent = this;
 
             return speedButton.UniqueId;
         }
@@ -644,7 +657,7 @@ namespace Alternet.UI
         /// <param name="toolTip">Item tooltip.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
-            ImageSet? image,
+            ImageSet? image = null,
             ImageSet? imageDisabled = null,
             string? toolTip = default)
         {
@@ -654,9 +667,10 @@ namespace Alternet.UI
                 ImageStretch = false,
                 ImageSet = image,
                 ToolTip = toolTip ?? string.Empty,
-                SuggestedSize = itemSize,
                 VerticalAlignment = UI.VerticalAlignment.Center,
             };
+
+            picture.SuggestedSize = GetItemSuggestedSize(picture);
 
             if (imageDisabled is not null)
             {
@@ -665,7 +679,7 @@ namespace Alternet.UI
 
             UpdateItemProps(picture, ItemKind.Picture);
 
-            picture.Parent = panel;
+            picture.Parent = this;
 
             return picture.UniqueId;
         }
@@ -681,7 +695,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddControl(Control control)
         {
-            control.Parent = panel;
+            control.Parent = this;
             UpdateItemProps(control, ItemKind.Control);
             return control.UniqueId;
         }
@@ -700,7 +714,7 @@ namespace Alternet.UI
             };
 
             UpdateItemProps(label, ItemKind.Text);
-            label.Parent = panel;
+            label.Parent = this;
             return label.UniqueId;
         }
 
@@ -718,7 +732,7 @@ namespace Alternet.UI
 
             UpdateItemProps(control, ItemKind.Spacer);
 
-            control.Parent = panel;
+            control.Parent = this;
             return control.UniqueId;
         }
 
@@ -738,7 +752,7 @@ namespace Alternet.UI
 
             UpdateItemProps(border, ItemKind.Separator);
 
-            border.Parent = panel;
+            border.Parent = this;
             return border.UniqueId;
         }
 
@@ -866,6 +880,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the specified toolbar items 'Sticky' property value.
+        /// </summary>
+        /// <param name="toolIds">IDs of a previously added tool.</param>
+        /// <param name="value">new Sticky property value.</param>
+        public void SetToolSticky(IReadOnlyList<ObjectUniqueId> toolIds, bool value)
+        {
+            foreach (var id in toolIds)
+                SetToolSticky(id, value);
+        }
+
+        /// <summary>
         /// Toggles the specified toolbar item Sticky property value.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
@@ -945,28 +970,30 @@ namespace Alternet.UI
         /// Deletes items with the specified id.
         /// </summary>
         /// <param name="id">Item id.</param>
+        /// <param name="dispose">Whether to dispose tool controls.</param>
         /// <remarks>
-        /// This method disposes tool control.
+        /// This method disposes tool control if <paramref name="dispose"/> is <c>true</c>.
         /// </remarks>
-        public virtual void DeleteTool(ObjectUniqueId id)
+        public virtual void DeleteTool(ObjectUniqueId id, bool dispose = true)
         {
             var item = GetToolControl(id);
             if (item is null)
                 return;
             item.Parent = null;
-            item.Dispose();
+            if(dispose)
+                item.Dispose();
         }
 
         /// <summary>
         /// Deletes all items from the control.
         /// </summary>
         /// <remarks>
-        /// This method disposes tool controls.
+        /// This method disposes tool controls if <paramref name="dispose"/> is <c>true</c>.
         /// </remarks>
-        public virtual void DeleteAll()
+        public virtual void DeleteAll(bool dispose = true)
         {
             Stack<Control> controls = new();
-            controls.PushRange(Items);
+            controls.PushRange(Children);
             SuspendLayout();
             try
             {
@@ -1035,12 +1062,57 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets custom attributes of the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual ICustomAttributes? GetToolCustomAttr(ObjectUniqueId id)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return null;
+            return item.CustomAttr;
+        }
+
+        /// <summary>
+        /// Gets custom flags of the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual ICustomFlags? GetToolCustomFlags(ObjectUniqueId id)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return null;
+            return item.CustomFlags;
+        }
+
+        /// <summary>
+        /// Gets tools which has custom flag with the specified name.
+        /// </summary>
+        /// <param name="name">Name of the custom flag.</param>
+        /// <returns></returns>
+        public virtual IReadOnlyList<ObjectUniqueId> GetToolsWithCustomFlag(string name)
+        {
+            List<ObjectUniqueId> result = new();
+
+            foreach(var item in Children)
+            {
+                var hasFlag = item.CustomFlags[name];
+                if (hasFlag)
+                    result.Add(item.UniqueId);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets total count of the items.
         /// </summary>
         /// <returns></returns>
         public virtual int GetToolCount()
         {
-            return panel.Children.Count;
+            return Children.Count;
         }
 
         /// <summary>
@@ -1050,7 +1122,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ObjectUniqueId GetToolId(int index)
         {
-            return panel.Children[index].UniqueId;
+            return Children[index].UniqueId;
         }
 
         /// <summary>
@@ -1060,7 +1132,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Control? GetToolControl(ObjectUniqueId id)
         {
-            var result = panel.FindChild(id);
+            var result = FindChild(id);
             return result;
         }
 
@@ -1274,10 +1346,11 @@ namespace Alternet.UI
                 Text = text,
                 ImageSet = imageSet,
                 ToolTip = toolTip ?? text,
-                SuggestedSize = itemSize,
                 VerticalAlignment = UI.VerticalAlignment.Center,
                 Margin = DefaultSpeedBtnMargin,
             };
+
+            speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
 
             if (imageSetDisabled is not null)
             {
@@ -1288,9 +1361,18 @@ namespace Alternet.UI
 
             if (action is not null)
                 speedButton.Click += action;
-            speedButton.Parent = panel;
+            speedButton.Parent = this;
 
             return speedButton;
+        }
+
+        private SizeD GetItemSuggestedSize(Control control)
+        {
+            if (control is PictureBox)
+                return itemSize;
+            if (TextVisible)
+                return (double.NaN, itemSize);
+            return itemSize;
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)

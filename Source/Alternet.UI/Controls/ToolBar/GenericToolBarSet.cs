@@ -113,7 +113,10 @@ namespace Alternet.UI
         protected virtual GenericToolBar CreateToolBar()
         {
             GenericToolBar result = new();
-            if(Children.Count > 0)
+            result.ParentBackColor = true;
+            result.ParentFont = true;
+            result.ParentForeColor = true;
+            if (Children.Count > 0)
             {
                 result.Margin = (0, ToolBarDistance ?? DefaultToolBarDistance, 0, 0);
             }

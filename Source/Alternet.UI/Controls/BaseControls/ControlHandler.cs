@@ -14,8 +14,6 @@ namespace Alternet.UI
     {
         private Control? control;
         private Native.Control? nativeControl;
-        /*private bool isVisualChild;
-        private Collection<Control>? visualChildren;*/
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -575,9 +573,6 @@ namespace Alternet.UI
         internal void Control_FontChanged()
         {
             ApplyFont();
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-            Control.Refresh();
         }
 
         internal IntPtr GetHandle()

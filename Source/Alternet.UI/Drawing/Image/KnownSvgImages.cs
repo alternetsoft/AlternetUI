@@ -55,6 +55,7 @@ namespace Alternet.UI
         private ImageSet? imgArrowDown;
         private ImageSet? imgArrowUp;
         private ImageSet? imgGear;
+        private ImageSet? imgCircle;
         private ImageSet? imgRegularExpr;
         private ImageSet? imgFindMatchCase;
         private ImageSet? imgFindMatchFullWord;
@@ -158,7 +159,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets empty image.
         /// </summary>
-        public ImageSet ImgEmprt
+        public ImageSet ImgEmpty
         {
             get => imgEmpty ??= Load(KnownSvgUrls.UrlImageEmpty);
             set => imgEmpty = value;
@@ -180,6 +181,15 @@ namespace Alternet.UI
         {
             get => imgGear ??= Load(KnownSvgUrls.UrlImageGear);
             set => imgGear = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Circle' image.
+        /// </summary>
+        public ImageSet ImgCircle
+        {
+            get => imgCircle ??= Load(KnownSvgUrls.UrlImageCircle);
+            set => imgCircle = value;
         }
 
         /// <summary>

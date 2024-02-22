@@ -17,11 +17,9 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the help request events.
     /// </summary>
-    public class HelpEventArgs : BaseEventArgs
+    public class HelpEventArgs : HandledEventArgs
     {
         private readonly PointD mousePos;
-
-        private bool handled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HelpEventArgs" /> class.</summary>
@@ -38,24 +36,5 @@ namespace Alternet.UI
         /// of the mouse pointer.
         /// </returns>
         public PointD MousePos => mousePos;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the help event was handled.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true" /> if the event is handled; otherwise, <see langword="false" />.
-        /// The default is <see langword="false" />.</returns>
-        public bool Handled
-        {
-            get
-            {
-                return handled;
-            }
-
-            set
-            {
-                handled = value;
-            }
-        }
     }
 }

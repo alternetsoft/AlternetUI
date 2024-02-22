@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the tab padding.
         /// </summary>
-        public static Thickness DefaultTabPadding = 4;
+        public static Thickness DefaultTabPadding = (5, 4, 5, 4);
 
         /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
@@ -62,6 +62,7 @@ namespace Alternet.UI
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
         private HorizontalAlignment tabHorizontalAlignment = HorizontalAlignment.Left;
+        private bool useDefaultTheme = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -125,6 +126,23 @@ namespace Alternet.UI
                 if(tabMargin == value)
                     return;
                 tabMargin = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="SpeedButton.DefaultTheme"/>
+        /// for the color and styles of the tabs.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool UseTabDefaultTheme
+        {
+            get => useDefaultTheme;
+            set
+            {
+                if (useDefaultTheme == value)
+                    return;
+                useDefaultTheme = value;
                 UpdateTabs();
             }
         }
@@ -842,6 +860,7 @@ namespace Alternet.UI
             item.HeaderButton.Margin = TabMargin ?? DefaultTabMargin;
             item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
             item.HeaderButton.HorizontalAlignment = TabHorizontalAlignment;
+            item.HeaderButton.UseDefaultTheme = UseTabDefaultTheme;
         }
 
         private void UpdateTabs()

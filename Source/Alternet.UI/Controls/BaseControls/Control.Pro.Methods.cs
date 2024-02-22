@@ -181,6 +181,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseCaptureLost(EventArgs e)
         {
+            IsMouseLeftButtonDown = false;
         }
 
         /// <summary>
@@ -230,6 +231,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseLeave(EventArgs e)
         {
+            IsMouseLeftButtonDown = false;
         }
 
         /// <summary>

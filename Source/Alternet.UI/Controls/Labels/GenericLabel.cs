@@ -37,9 +37,10 @@ namespace Alternet.UI
         /// </summary>
         public GenericLabel()
         {
-            BehaviorOptions = ControlOptions.DrawDefaultBackground
-                | ControlOptions.DrawDefaultBorder
-                | ControlOptions.RefreshOnCurrentState;
+            RefreshOptions = ControlRefreshOptions.RefreshOnBorder
+                | ControlRefreshOptions.RefreshOnColor
+                | ControlRefreshOptions.RefreshOnBackground
+                | ControlRefreshOptions.RefreshOnImage;
         }
 
         /// <summary>
@@ -66,8 +67,7 @@ namespace Alternet.UI
                 if (textPrefix == value)
                     return;
                 textPrefix = value;
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -91,8 +91,7 @@ namespace Alternet.UI
                 if (textFormat == value)
                     return;
                 textFormat = value;
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -115,8 +114,7 @@ namespace Alternet.UI
                 if (textSuffix == value)
                     return;
                 textSuffix = value;
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -218,8 +216,7 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -241,8 +238,7 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Disabled = value;
                 RaiseImageChanged(EventArgs.Empty);
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -262,8 +258,7 @@ namespace Alternet.UI
                     return;
                 text = value ?? string.Empty;
                 RaiseTextChanged(EventArgs.Empty);
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -282,8 +277,7 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
-                PerformLayout();
-                Invalidate();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -297,6 +291,52 @@ namespace Alternet.UI
         {
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Draws text in the default style.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="font">Text font.</param>
+        /// <param name="backColor">Background color of the text.</param>
+        /// <param name="rect">Rectangle to draw in.</param>
+        public virtual void DrawDefaultText(
+            Graphics dc,
+            RectD rect,
+            Color? foreColor = null,
+            Color? backColor = null,
+            Font? font = null)
+        {
+            var state = CurrentState;
+            var paddedRect = (
+                rect.Location + Padding.LeftTop,
+                rect.Size - Padding.Size);
+
+            if (Text != null)
+            {
+                var image = StateObjects?.Images?.GetObjectOrNull(state);
+                image ??= Image;
+                var imageOverride = ImageVisible ? image : null;
+                var textOverride = GetFormattedText();
+
+                dc.DrawLabel(
+                    textOverride,
+                    font ?? GetLabelFont(state),
+                    foreColor ?? GetLabelForeColor(state),
+                    backColor ?? GetLabelBackColor(state),
+                    imageOverride,
+                    paddedRect,
+                    TextAlignment,
+                    GetMnemonicCharIndex());
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(Graphics dc, RectD rect)
+        {
+            DrawDefaultBackground(dc, rect);
+            DrawDefaultText(dc, rect);
         }
 
         /// <inheritdoc/>
@@ -359,19 +399,6 @@ namespace Alternet.UI
             return color ?? TextBackColor ?? Color.Empty;
         }
 
-        /// <inheritdoc/>
-        protected override void OnCurrentStateChanged(EventArgs e)
-        {
-            base.OnCurrentStateChanged(e);
-
-            if (StateObjects is null)
-                return;
-
-            if (StateObjects.HasOtherBackgrounds || StateObjects.HasOtherImages
-                || StateObjects.HasOtherBorders || StateObjects.HasOtherColors)
-                Refresh();
-        }
-
         /// <summary>
         /// Gets <see cref="Color"/> which is used to draw label text.
         /// </summary>
@@ -414,39 +441,6 @@ namespace Alternet.UI
         {
             var result = MnemonicCharIndex ?? -1;
             return result;
-        }
-
-        /// <inheritdoc/>
-        protected override void DefaultPaint(Graphics dc, RectD rect)
-        {
-            BeforePaint(dc, rect);
-
-            var state = CurrentState;
-            var paddedRect = (
-                rect.Location + Padding.LeftTop,
-                rect.Size - Padding.Size);
-
-            DrawDefaultBackground(dc, rect);
-
-            if (Text != null)
-            {
-                var image = StateObjects?.Images?.GetObjectOrNull(state);
-                image ??= Image;
-                var imageOverride = ImageVisible ? image : null;
-                var textOverride = GetFormattedText();
-
-                dc.DrawLabel(
-                    textOverride,
-                    GetLabelFont(state),
-                    GetLabelForeColor(state),
-                    GetLabelBackColor(state),
-                    imageOverride,
-                    paddedRect,
-                    TextAlignment,
-                    GetMnemonicCharIndex());
-            }
-
-            AfterPaint(dc, rect);
         }
     }
 }
