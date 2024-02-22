@@ -1,6 +1,6 @@
 namespace Alternet.UI
 {
-    public partial class CardPanelHeader
+    internal partial class CardPanelHeader
     {
     }
 }

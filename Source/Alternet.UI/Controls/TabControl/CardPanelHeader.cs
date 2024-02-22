@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// on the card title.
     /// </remarks>
     [ControlCategory("Panels")]
-    public partial class CardPanelHeader : Control, ITextProperty
+    internal partial class CardPanelHeader : Control, ITextProperty
     {
         /// <summary>
         /// Gets or sets default minimal tab size.
@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
         /// </summary>
-        public static Func<SpeedButton>? CreateButton;
+        public static Func<SpeedButton>? CreateButton = null;
 
         /// <summary>
         /// Gets or sets default value for the tab margin.
