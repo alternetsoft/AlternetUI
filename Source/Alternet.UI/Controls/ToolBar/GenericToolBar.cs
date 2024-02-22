@@ -193,7 +193,7 @@ namespace Alternet.UI
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public ImageToText ImageToText
         {
             get => imageToText;
@@ -202,13 +202,14 @@ namespace Alternet.UI
                 if (imageToText == value)
                     return;
                 imageToText = value;
-                if (!ImageVisible || !TextVisible)
-                    return;
-                foreach (var item in Children)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton speedButton)
-                        speedButton.ImageToText = value;
-                }
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton speedButton)
+                            speedButton.ImageToText = value;
+                    }
+                });
             }
         }
 
@@ -234,7 +235,7 @@ namespace Alternet.UI
                 foreach (var item in Children)
                 {
                     if (item is SpeedButton || item is PictureBox)
-                        item.SuggestedSize = value;
+                        item.SuggestedSize = GetItemSuggestedSize(item);
                 }
 
                 ResumeLayout();
@@ -352,7 +353,10 @@ namespace Alternet.UI
                     foreach (var item in Children)
                     {
                         if (item is SpeedButton speedButton)
+                        {
                             speedButton.TextVisible = value;
+                            item.SuggestedSize = GetItemSuggestedSize(item);
+                        }
                     }
                 });
             }
@@ -663,9 +667,10 @@ namespace Alternet.UI
                 ImageStretch = false,
                 ImageSet = image,
                 ToolTip = toolTip ?? string.Empty,
-                SuggestedSize = itemSize,
                 VerticalAlignment = UI.VerticalAlignment.Center,
             };
+
+            picture.SuggestedSize = GetItemSuggestedSize(picture);
 
             if (imageDisabled is not null)
             {
@@ -1285,10 +1290,11 @@ namespace Alternet.UI
                 Text = text,
                 ImageSet = imageSet,
                 ToolTip = toolTip ?? text,
-                SuggestedSize = itemSize,
                 VerticalAlignment = UI.VerticalAlignment.Center,
                 Margin = DefaultSpeedBtnMargin,
             };
+
+            speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
 
             if (imageSetDisabled is not null)
             {
@@ -1302,6 +1308,15 @@ namespace Alternet.UI
             speedButton.Parent = this;
 
             return speedButton;
+        }
+
+        private SizeD GetItemSuggestedSize(Control control)
+        {
+            if (control is PictureBox)
+                return itemSize;
+            if (TextVisible)
+                return (double.NaN, itemSize);
+            return itemSize;
         }
 
         private SpeedButton? FindTool(ObjectUniqueId id)

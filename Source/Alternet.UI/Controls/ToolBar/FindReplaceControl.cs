@@ -63,104 +63,113 @@ namespace Alternet.UI
         /// </summary>
         public FindReplaceControl()
         {
-            scopeEdit.IsEditable = false;
-            UpdateFindScope();
+            DoInsideLayout(Fn);
 
-            replaceEdit.TextChanged += ReplaceEdit_TextChanged;
-            findEdit.TextChanged += FindEdit_TextChanged;
+            void Fn()
+            {
+                scopeEdit.IsEditable = false;
+                UpdateFindScope();
 
-            ToolBarCount = 3;
+                replaceEdit.TextChanged += ReplaceEdit_TextChanged;
+                findEdit.TextChanged += FindEdit_TextChanged;
 
-            OptionsToolBar.AddSpeedBtn();
+                ToolBarCount = 3;
 
-            IdMatchCase = OptionsToolBar.AddStickyBtn(
-                CommonStrings.Default.FindOptionMatchCase,
-                OptionsToolBar.GetNormalSvgImages().ImgFindMatchCase,
-                OptionsToolBar.GetDisabledSvgImages().ImgFindMatchCase,
-                null,
-                OnClickMatchCase);
-            OptionsToolBar.SetToolShortcut(IdMatchCase, KnownKeys.FindReplaceControlKeys.MatchCase);
+                OptionsToolBar.AddSpeedBtn();
 
-            IdMatchWholeWord = OptionsToolBar.AddStickyBtn(
-                CommonStrings.Default.FindOptionMatchWholeWord,
-                OptionsToolBar.GetNormalSvgImages().ImgFindMatchFullWord,
-                OptionsToolBar.GetDisabledSvgImages().ImgFindMatchFullWord,
-                null,
-                OnClickMatchWholeWord);
-            OptionsToolBar.SetToolShortcut(
-                IdMatchWholeWord,
-                KnownKeys.FindReplaceControlKeys.MatchWholeWord);
+                IdMatchCase = OptionsToolBar.AddStickyBtn(
+                    CommonStrings.Default.FindOptionMatchCase,
+                    OptionsToolBar.GetNormalSvgImages().ImgFindMatchCase,
+                    OptionsToolBar.GetDisabledSvgImages().ImgFindMatchCase,
+                    null,
+                    OnClickMatchCase);
+                OptionsToolBar.SetToolShortcut(
+                    IdMatchCase,
+                    KnownKeys.FindReplaceControlKeys.MatchCase);
 
-            IdUseRegularExpressions = OptionsToolBar.AddStickyBtn(
-                CommonStrings.Default.FindOptionUseRegularExpressions,
-                OptionsToolBar.GetNormalSvgImages().ImgRegularExpr,
-                OptionsToolBar.GetDisabledSvgImages().ImgRegularExpr,
-                null,
-                OnClickUseRegularExpressions);
-            OptionsToolBar.SetToolShortcut(
-                IdUseRegularExpressions,
-                KnownKeys.FindReplaceControlKeys.UseRegularExpressions);
+                IdMatchWholeWord = OptionsToolBar.AddStickyBtn(
+                    CommonStrings.Default.FindOptionMatchWholeWord,
+                    OptionsToolBar.GetNormalSvgImages().ImgFindMatchFullWord,
+                    OptionsToolBar.GetDisabledSvgImages().ImgFindMatchFullWord,
+                    null,
+                    OnClickMatchWholeWord);
+                OptionsToolBar.SetToolShortcut(
+                    IdMatchWholeWord,
+                    KnownKeys.FindReplaceControlKeys.MatchWholeWord);
 
-            IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
+                IdUseRegularExpressions = OptionsToolBar.AddStickyBtn(
+                    CommonStrings.Default.FindOptionUseRegularExpressions,
+                    OptionsToolBar.GetNormalSvgImages().ImgRegularExpr,
+                    OptionsToolBar.GetDisabledSvgImages().ImgRegularExpr,
+                    null,
+                    OnClickUseRegularExpressions);
+                OptionsToolBar.SetToolShortcut(
+                    IdUseRegularExpressions,
+                    KnownKeys.FindReplaceControlKeys.UseRegularExpressions);
 
-            IdToggleReplaceOptions = FindToolBar.AddSpeedBtn(
-                CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
-                FindToolBar.GetNormalSvgImages().ImgAngleDown,
-                FindToolBar.GetDisabledSvgImages().ImgAngleDown);
+                IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
 
-            findEdit.SuggestedWidth = 150;
-            /*findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
-            replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;*/
-            replaceEdit.SuggestedWidth = 150;
-            IdFindEdit = FindToolBar.AddControl(findEdit);
+                IdToggleReplaceOptions = FindToolBar.AddSpeedBtn(
+                    CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
+                    FindToolBar.GetNormalSvgImages().ImgAngleDown,
+                    FindToolBar.GetDisabledSvgImages().ImgAngleDown);
 
-            IdFindNext = FindToolBar.AddSpeedBtn(
-                CommonStrings.Default.ButtonFindNext,
-                FindToolBar.GetNormalSvgImages().ImgArrowDown,
-                FindToolBar.GetDisabledSvgImages().ImgArrowDown);
-            FindToolBar.SetToolShortcut(IdFindNext, KnownKeys.FindReplaceControlKeys.FindNext);
+                findEdit.SuggestedWidth = 150;
+                /*findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
+                replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;*/
+                replaceEdit.SuggestedWidth = 150;
+                IdFindEdit = FindToolBar.AddControl(findEdit);
 
-            IdFindPrevious = FindToolBar.AddSpeedBtn(
-                CommonStrings.Default.ButtonFindPrevious,
-                FindToolBar.GetNormalSvgImages().ImgArrowUp,
-                FindToolBar.GetDisabledSvgImages().ImgArrowUp);
-            FindToolBar.SetToolShortcut(
-                IdFindPrevious,
-                KnownKeys.FindReplaceControlKeys.FindPrevious);
+                IdFindNext = FindToolBar.AddSpeedBtn(
+                    CommonStrings.Default.ButtonFindNext,
+                    FindToolBar.GetNormalSvgImages().ImgArrowDown,
+                    FindToolBar.GetDisabledSvgImages().ImgArrowDown);
+                FindToolBar.SetToolShortcut(IdFindNext, KnownKeys.FindReplaceControlKeys.FindNext);
 
-            IdFindClose = FindToolBar.AddSpeedBtn(
-                CommonStrings.Default.ButtonClose,
-                FindToolBar.GetNormalSvgImages().ImgCancel,
-                FindToolBar.GetDisabledSvgImages().ImgCancel);
-            FindToolBar.SetToolAlignRight(IdFindClose, true);
+                IdFindPrevious = FindToolBar.AddSpeedBtn(
+                    CommonStrings.Default.ButtonFindPrevious,
+                    FindToolBar.GetNormalSvgImages().ImgArrowUp,
+                    FindToolBar.GetDisabledSvgImages().ImgArrowUp);
+                FindToolBar.SetToolShortcut(
+                    IdFindPrevious,
+                    KnownKeys.FindReplaceControlKeys.FindPrevious);
 
-            ReplaceToolBar.AddSpeedBtn();
+                IdFindClose = FindToolBar.AddSpeedBtn(
+                    CommonStrings.Default.ButtonClose,
+                    FindToolBar.GetNormalSvgImages().ImgCancel,
+                    FindToolBar.GetDisabledSvgImages().ImgCancel);
+                FindToolBar.SetToolAlignRight(IdFindClose, true);
 
-            IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
+                ReplaceToolBar.AddSpeedBtn();
 
-            IdReplace = ReplaceToolBar.AddSpeedBtn(
-                CommonStrings.Default.ButtonReplace,
-                FindToolBar.GetNormalSvgImages().ImgReplace,
-                FindToolBar.GetDisabledSvgImages().ImgReplace);
-            ReplaceToolBar.SetToolShortcut(IdReplace, KnownKeys.FindReplaceControlKeys.Replace);
+                IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
 
-            IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
-                CommonStrings.Default.ButtonReplaceAll,
-                FindToolBar.GetNormalSvgImages().ImgReplaceAll,
-                FindToolBar.GetDisabledSvgImages().ImgReplaceAll);
-            ReplaceToolBar.SetToolShortcut(IdReplaceAll, KnownKeys.FindReplaceControlKeys.ReplaceAll);
+                IdReplace = ReplaceToolBar.AddSpeedBtn(
+                    CommonStrings.Default.ButtonReplace,
+                    FindToolBar.GetNormalSvgImages().ImgReplace,
+                    FindToolBar.GetDisabledSvgImages().ImgReplace);
+                ReplaceToolBar.SetToolShortcut(IdReplace, KnownKeys.FindReplaceControlKeys.Replace);
 
-            ReplaceToolBar.Visible = false;
+                IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
+                    CommonStrings.Default.ButtonReplaceAll,
+                    FindToolBar.GetNormalSvgImages().ImgReplaceAll,
+                    FindToolBar.GetDisabledSvgImages().ImgReplaceAll);
+                ReplaceToolBar.SetToolShortcut(
+                    IdReplaceAll,
+                    KnownKeys.FindReplaceControlKeys.ReplaceAll);
 
-            FindToolBar.AddToolAction(IdFindNext, OnClickFindNext);
-            FindToolBar.AddToolAction(IdFindPrevious, OnClickFindPrevious);
-            FindToolBar.AddToolAction(IdFindClose, OnClickClose);
-            FindToolBar.AddToolAction(IdToggleReplaceOptions, OnClickToggleReplace);
+                ReplaceToolBar.Visible = false;
 
-            ReplaceToolBar.AddToolAction(IdReplace, OnClickReplace);
-            ReplaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
+                FindToolBar.AddToolAction(IdFindNext, OnClickFindNext);
+                FindToolBar.AddToolAction(IdFindPrevious, OnClickFindPrevious);
+                FindToolBar.AddToolAction(IdFindClose, OnClickClose);
+                FindToolBar.AddToolAction(IdToggleReplaceOptions, OnClickToggleReplace);
 
-            ItemSize = 32;
+                ReplaceToolBar.AddToolAction(IdReplace, OnClickReplace);
+                ReplaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
+
+                ItemSize = 32;
+            }
         }
 
         /// <summary>
@@ -567,73 +576,73 @@ namespace Alternet.UI
         /// Gets id of the 'Match Case' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdMatchCase { get; }
+        public ObjectUniqueId IdMatchCase { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Match Whole Word' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdMatchWholeWord { get; }
+        public ObjectUniqueId IdMatchWholeWord { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Use Regular Expressions' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdUseRegularExpressions { get; }
+        public ObjectUniqueId IdUseRegularExpressions { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Toggle Replace Options' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdToggleReplaceOptions { get; }
+        public ObjectUniqueId IdToggleReplaceOptions { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Find' editor.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdFindEdit { get; }
+        public ObjectUniqueId IdFindEdit { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Scope' editor.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdScopeEdit { get; }
+        public ObjectUniqueId IdScopeEdit { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Replace' editor.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdReplaceEdit { get; }
+        public ObjectUniqueId IdReplaceEdit { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Find Next' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdFindNext { get; }
+        public ObjectUniqueId IdFindNext { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Find Previous' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdFindPrevious { get; }
+        public ObjectUniqueId IdFindPrevious { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Close' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdFindClose { get; }
+        public ObjectUniqueId IdFindClose { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Replace' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdReplace { get; }
+        public ObjectUniqueId IdReplace { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Replace All' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdReplaceAll { get; }
+        public ObjectUniqueId IdReplaceAll { get; internal set; }
 
         /// <summary>
         /// Gets <see cref="ComboBox"/> which allows to specify text to find.

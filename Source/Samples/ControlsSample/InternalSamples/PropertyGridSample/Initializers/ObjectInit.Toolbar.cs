@@ -25,11 +25,12 @@ namespace PropertyGridSample
             if (control is not GenericToolBarSet toolbar)
                 return;
 
-            toolbar.ToolBarCount = 2;
+            toolbar.ToolBarCount = 3;
             toolbar.SuggestedWidth = 300;
 
-            var toolbar1 = toolbar.GetToolBar(0);
-            var toolbar2 = toolbar.GetToolBar(1);
+            var toolbar1 = toolbar[0];
+            var toolbar2 = toolbar[1];
+            var toolbar3 = toolbar[2];
 
             toolbar1.AddSpeedBtn(KnownButton.New);
             toolbar1.AddSpeedBtn(KnownButton.Open);
@@ -42,6 +43,13 @@ namespace PropertyGridSample
             var toolRedo = toolbar2.AddSpeedBtn(KnownButton.Redo);
             toolbar2.SetToolAlignCenter(toolRedo, true);
             toolbar2.TextVisible = true;
+
+            toolbar3.AddSpeedBtn(KnownButton.Bold);
+            toolbar3.AddSpeedBtn(KnownButton.Italic);
+            toolbar3.AddSpeedBtn(KnownButton.Underline);
+            toolbar3.ImageToText = ImageToText.Vertical;
+            toolbar3.TextVisible = true;
+            toolbar3.Visible = false;
         }
 
         public static void InitGenericToolBar(object control)

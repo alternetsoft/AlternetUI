@@ -8,5 +8,12 @@ namespace Alternet.UI
             get => base.Text;
             set => base.Text = value;
         }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
     }
 }
