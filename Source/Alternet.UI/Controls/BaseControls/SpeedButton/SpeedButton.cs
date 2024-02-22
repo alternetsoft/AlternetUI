@@ -469,15 +469,15 @@ namespace Alternet.UI
             AllStateColors colors = new()
             {
                 HoveredForeColor = (0, 0, 0),
-                HoveredBackColor = (201, 222, 245),
+                HoveredBackColor = (229, 243, 255),
 
                 DisabledForeColor = SystemColors.GrayText,
 
                 PressedForeColor = (0, 0, 0),
-                PressedBackColor = (201 - 10, 222 - 10, 245 - 10),
+                PressedBackColor = (204, 228, 247),
             };
 
-            theme.Borders = CreateBorders((0, 108, 190));
+            theme.Borders = CreateBorders((204, 232, 255));
             theme.Colors = colors.AllStates;
             theme.Backgrounds = theme.Colors;
         }
