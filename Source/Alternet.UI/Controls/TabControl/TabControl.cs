@@ -46,7 +46,6 @@ namespace Alternet.UI
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
-            base.Padding = 0;
             cardPanelHeader.CardPanel = cardPanel;
         }
 
@@ -589,6 +588,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            Invalidate();
+        }
+
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             if (!hasInteriorBorder || TabCount == 0)
@@ -617,10 +623,16 @@ namespace Alternet.UI
         {
             if (!hasInteriorBorder || TabCount == 0)
                 return;
+            var r = e.Bounds;
+            if(r.Width > ClientSize.Width)
+                r.Width = ClientSize.Width;
+            if (r.Height > ClientSize.Height)
+                r.Height = ClientSize.Height;
+
             DrawTabsInterior(
                 Header,
                 e.DrawingContext,
-                e.Bounds,
+                r,
                 GetInteriorBorderColor(),
                 TabAlignment);
         }
