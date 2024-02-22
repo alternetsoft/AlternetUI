@@ -347,11 +347,14 @@ namespace Alternet.UI
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                foreach (var item in Children)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton speedButton)
-                        speedButton.TextVisible = value;
-                }
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton speedButton)
+                            speedButton.TextVisible = value;
+                    }
+                });
             }
         }
 
@@ -370,12 +373,29 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
-                foreach (var item in Children)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton speedButton)
-                        speedButton.ImageVisible = value;
-                }
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton speedButton)
+                            speedButton.ImageVisible = value;
+                    }
+                });
             }
+        }
+
+        /// <summary>
+        /// Adds an empty disabled <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual ObjectUniqueId AddSpeedBtn()
+        {
+            var result = InternalAddSpeedBtn(
+                ItemKind.Button,
+                null,
+                GetNormalSvgImages().ImgEmpty,
+                null);
+            result.Enabled = false;
+            return result.UniqueId;
         }
 
         /// <summary>
@@ -633,7 +653,7 @@ namespace Alternet.UI
         /// <param name="toolTip">Item tooltip.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
-            ImageSet? image,
+            ImageSet? image = null,
             ImageSet? imageDisabled = null,
             string? toolTip = default)
         {
