@@ -47,7 +47,7 @@ namespace ControlsSample
                 else
                 {
                     image = ImageSet.FromUrl($"{ResPrefixLarge}Calendar32.png");
-                    svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 32).ImgGear;
+                    svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 32).ImgCircle;
                 }
 
                 tabControl.SetTabImage(0, image);

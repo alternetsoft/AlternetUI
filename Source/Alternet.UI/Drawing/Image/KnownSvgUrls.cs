@@ -265,6 +265,11 @@ namespace Alternet.UI
         public static string UrlImageArrowDown { get; set; } = GetImageUrl("alternet-arrow-down");
 
         /// <summary>
+        /// Gets or sets url used to load "Circle" svg image.
+        /// </summary>
+        public static string UrlImageCircle { get; set; } = GetImageUrl("circle");
+
+        /// <summary>
         /// Gets or sets url used to load svg image used in horizontal "More Actions" toolbar buttons.
         /// </summary>
         public static string UrlImageMoreActionsHorz { get; set; } =
