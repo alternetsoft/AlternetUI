@@ -71,7 +71,7 @@ namespace Alternet.UI
 
             ToolBarCount = 3;
 
-            OptionsToolBar.AddPicture(null);
+            OptionsToolBar.AddSpeedBtn();
 
             IdMatchCase = OptionsToolBar.AddStickyBtn(
                 CommonStrings.Default.FindOptionMatchCase,
@@ -87,7 +87,9 @@ namespace Alternet.UI
                 OptionsToolBar.GetDisabledSvgImages().ImgFindMatchFullWord,
                 null,
                 OnClickMatchWholeWord);
-            OptionsToolBar.SetToolShortcut(IdMatchWholeWord, KnownKeys.FindReplaceControlKeys.MatchWholeWord);
+            OptionsToolBar.SetToolShortcut(
+                IdMatchWholeWord,
+                KnownKeys.FindReplaceControlKeys.MatchWholeWord);
 
             IdUseRegularExpressions = OptionsToolBar.AddStickyBtn(
                 CommonStrings.Default.FindOptionUseRegularExpressions,
@@ -95,7 +97,9 @@ namespace Alternet.UI
                 OptionsToolBar.GetDisabledSvgImages().ImgRegularExpr,
                 null,
                 OnClickUseRegularExpressions);
-            OptionsToolBar.SetToolShortcut(IdUseRegularExpressions, KnownKeys.FindReplaceControlKeys.UseRegularExpressions);
+            OptionsToolBar.SetToolShortcut(
+                IdUseRegularExpressions,
+                KnownKeys.FindReplaceControlKeys.UseRegularExpressions);
 
             IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
 
@@ -120,7 +124,9 @@ namespace Alternet.UI
                 CommonStrings.Default.ButtonFindPrevious,
                 FindToolBar.GetNormalSvgImages().ImgArrowUp,
                 FindToolBar.GetDisabledSvgImages().ImgArrowUp);
-            FindToolBar.SetToolShortcut(IdFindPrevious, KnownKeys.FindReplaceControlKeys.FindPrevious);
+            FindToolBar.SetToolShortcut(
+                IdFindPrevious,
+                KnownKeys.FindReplaceControlKeys.FindPrevious);
 
             IdFindClose = FindToolBar.AddSpeedBtn(
                 CommonStrings.Default.ButtonClose,
@@ -128,9 +134,7 @@ namespace Alternet.UI
                 FindToolBar.GetDisabledSvgImages().ImgCancel);
             FindToolBar.SetToolAlignRight(IdFindClose, true);
 
-            FindToolBar.Parent = this;
-
-            ReplaceToolBar.AddPicture(null);
+            ReplaceToolBar.AddSpeedBtn();
 
             IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
 
@@ -147,7 +151,6 @@ namespace Alternet.UI
             ReplaceToolBar.SetToolShortcut(IdReplaceAll, KnownKeys.FindReplaceControlKeys.ReplaceAll);
 
             ReplaceToolBar.Visible = false;
-            ReplaceToolBar.Parent = this;
 
             FindToolBar.AddToolAction(IdFindNext, OnClickFindNext);
             FindToolBar.AddToolAction(IdFindPrevious, OnClickFindPrevious);
