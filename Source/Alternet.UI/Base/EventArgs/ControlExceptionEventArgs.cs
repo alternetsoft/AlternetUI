@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>Provides data for the <see cref="Control.ProcessException" /> event.</summary>
-    public sealed class ControlExceptionEventArgs : EventArgs
+    public sealed class ControlExceptionEventArgs : BaseEventArgs
     {
         private readonly Exception exception;
 
