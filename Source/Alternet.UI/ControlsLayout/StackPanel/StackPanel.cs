@@ -63,6 +63,11 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeHorizontalStackPanel(Control container, SizeD availableSize)
         {
+            var isNanHeight = double.IsNaN(container.SuggestedHeight);
+            var isNanWidth = double.IsNaN(container.SuggestedWidth);
+            if (!isNanHeight && !isNanWidth)
+                return container.SuggestedHeight;
+
             var stackPanelPadding = container.Padding;
 
             double width = 0;
@@ -76,11 +81,9 @@ namespace Alternet.UI
                 maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
             }
 
-            var isNan = double.IsNaN(container.SuggestedHeight);
-
             return new SizeD(
-                width + stackPanelPadding.Horizontal,
-                isNan ? maxHeight + stackPanelPadding.Vertical : container.SuggestedHeight);
+                isNanWidth ? width + stackPanelPadding.Horizontal : container.SuggestedWidth,
+                isNanHeight ? maxHeight + stackPanelPadding.Vertical : container.SuggestedHeight);
         }
 
         internal static SizeD GetPreferredSizeStackPanel(
