@@ -573,9 +573,6 @@ namespace Alternet.UI
         internal void Control_FontChanged()
         {
             ApplyFont();
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-            Control.Refresh();
         }
 
         internal IntPtr GetHandle()

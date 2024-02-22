@@ -46,6 +46,9 @@ namespace Alternet.UI
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
+        private bool parentBackgroundColor;
+        private bool parentForegroundColor;
+        private bool parentFont;
         private ControlCollection? children;
         private SizeD suggestedSize = DefaultControlSize;
         private Thickness margin;
@@ -1805,6 +1808,63 @@ namespace Alternet.UI
                         NativeControl.BackgroundColor = backgroundColor;
                     Refresh();
                 }
+
+                foreach(var child in Children)
+                {
+                    if (child.ParentBackColor)
+                        child.BackgroundColor = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="BackgroundColor"/> is automatically
+        /// updated when parent's <see cref="BackgroundColor"/> is changed.
+        /// </summary>
+        public virtual bool ParentBackColor
+        {
+            get => parentBackgroundColor;
+            set
+            {
+                if (parentBackgroundColor == value)
+                    return;
+                parentBackgroundColor = value;
+                if (value && Parent is not null)
+                    BackgroundColor = Parent.BackgroundColor;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="ForegroundColor"/> is automatically
+        /// updated when parent's <see cref="ForegroundColor"/> is changed.
+        /// </summary>
+        public virtual bool ParentForeColor
+        {
+            get => parentForegroundColor;
+            set
+            {
+                if (parentForegroundColor == value)
+                    return;
+                parentForegroundColor = value;
+                if (value && Parent is not null)
+                    ForegroundColor = Parent.ForegroundColor;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="Font"/> is automatically
+        /// updated when parent's <see cref="Font"/> is changed.
+        /// </summary>
+        public virtual bool ParentFont
+        {
+            get => parentFont;
+            set
+            {
+                if (parentFont == value)
+                    return;
+                parentFont = value;
+                if (value && Parent is not null)
+                    Font = Parent.Font;
             }
         }
 
@@ -1916,6 +1976,12 @@ namespace Alternet.UI
                     else
                         NativeControl.ForegroundColor = foregroundColor;
                     Invalidate();
+                }
+
+                foreach (var child in Children)
+                {
+                    if (child.ParentForeColor)
+                        child.ForegroundColor = value;
                 }
             }
         }
@@ -2109,10 +2175,21 @@ namespace Alternet.UI
                 if (font == value)
                     return;
 
-                font = value;
-                OnFontChanged(EventArgs.Empty);
-                FontChanged?.Invoke(this, EventArgs.Empty);
-                Handler.Control_FontChanged();
+                DoInsideLayout(() =>
+                {
+                    font = value;
+                    OnFontChanged(EventArgs.Empty);
+                    FontChanged?.Invoke(this, EventArgs.Empty);
+                    Handler.Control_FontChanged();
+
+                    foreach (var child in Children)
+                    {
+                        if (child.ParentFont)
+                            child.Font = value;
+                    }
+                });
+                RaiseLayoutChanged();
+                Invalidate();
             }
         }
 
@@ -2139,9 +2216,12 @@ namespace Alternet.UI
             {
                 if (IsBold == value)
                     return;
-                NativeControl.IsBold = value;
-                RaiseLayoutChanged();
-                PerformLayout();
+                DoInsideLayout(() =>
+                {
+                    NativeControl.IsBold = value;
+                    RaiseLayoutChanged();
+                    PerformLayout();
+                });
                 Invalidate();
             }
         }
