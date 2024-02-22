@@ -117,7 +117,7 @@ namespace Alternet.UI
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
-            if (!ShowDialog)
+            if (!ShowDialog || !Enabled)
                 return;
             colorDialog ??= new ColorDialog();
             if(Value is not null)
