@@ -56,7 +56,7 @@ using System;
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
             w.WriteLine();
-            w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
+            /*w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");*/
             w.WriteLine("public void InitializeComponent()");
             using (new BlockIndent(w))
             {
@@ -91,7 +91,7 @@ using System;
             w.WriteLine("[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]");
             w.WriteLine("class " + UIXmlPreviewerConstructorMarkerTypeName + " {}");
             w.WriteLine();
-            w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
+            /*w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");*/
             w.WriteLine($"{document.ClassName}(UIXmlPreviewerConstructorMarkerType _)");
             using (new BlockIndent(w))
             {
