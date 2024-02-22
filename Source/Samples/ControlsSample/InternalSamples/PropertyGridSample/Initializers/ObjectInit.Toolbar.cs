@@ -41,6 +41,7 @@ namespace PropertyGridSample
             toolbar2.SetToolAlignCenter(toolUndo, true);
             var toolRedo = toolbar2.AddSpeedBtn(KnownButton.Redo);
             toolbar2.SetToolAlignCenter(toolRedo, true);
+            toolbar2.TextVisible = true;
         }
 
         public static void InitGenericToolBar(object control)
