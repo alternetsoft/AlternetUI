@@ -414,7 +414,7 @@ namespace Alternet.UI
         public virtual ObjectUniqueId AddSpeedBtn(
             string? text,
             ImageSet? imageSet,
-            ImageSet? imageSetDisabled,
+            ImageSet? imageSetDisabled = null,
             string? toolTip = null,
             EventHandler? action = null)
         {
@@ -880,6 +880,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the specified toolbar items 'Sticky' property value.
+        /// </summary>
+        /// <param name="toolIds">IDs of a previously added tool.</param>
+        /// <param name="value">new Sticky property value.</param>
+        public void SetToolSticky(IReadOnlyList<ObjectUniqueId> toolIds, bool value)
+        {
+            foreach (var id in toolIds)
+                SetToolSticky(id, value);
+        }
+
+        /// <summary>
         /// Toggles the specified toolbar item Sticky property value.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
@@ -1048,6 +1059,51 @@ namespace Alternet.UI
             if (item is null)
                 return;
             item.ToolTip = value;
+        }
+
+        /// <summary>
+        /// Gets custom attributes of the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual ICustomAttributes? GetToolCustomAttr(ObjectUniqueId id)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return null;
+            return item.CustomAttr;
+        }
+
+        /// <summary>
+        /// Gets custom flags of the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <returns></returns>
+        public virtual ICustomFlags? GetToolCustomFlags(ObjectUniqueId id)
+        {
+            var item = GetToolControl(id);
+            if (item is null)
+                return null;
+            return item.CustomFlags;
+        }
+
+        /// <summary>
+        /// Gets tools which has custom flag with the specified name.
+        /// </summary>
+        /// <param name="name">Name of the custom flag.</param>
+        /// <returns></returns>
+        public virtual IReadOnlyList<ObjectUniqueId> GetToolsWithCustomFlag(string name)
+        {
+            List<ObjectUniqueId> result = new();
+
+            foreach(var item in Children)
+            {
+                var hasFlag = item.CustomFlags[name];
+                if (hasFlag)
+                    result.Add(item.UniqueId);
+            }
+
+            return result;
         }
 
         /// <summary>
