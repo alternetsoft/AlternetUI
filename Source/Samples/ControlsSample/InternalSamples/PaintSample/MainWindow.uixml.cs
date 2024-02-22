@@ -15,7 +15,7 @@ namespace PaintSample
         private readonly UndoService? undoService;
 
         private readonly CanvasControl canvasControl;
-        private readonly Toolbar toolbar;
+        private readonly GenericToolBar toolbar = new();
         private readonly ColorSelector colorSelector;
         private readonly Border border;
         private readonly Grid mainGrid;
@@ -35,15 +35,19 @@ namespace PaintSample
         private readonly MenuItem saveAsMenuItem;
         private readonly MenuItem exitMenuItem;
         private readonly MenuItem testMenu;
+        private readonly HorizontalStackPanel optionsPlaceholder = new ();
 
         private readonly string? baseTitle;
 
-        private SpeedButton? undoButton;
-        private SpeedButton? redoButton;
+        private ObjectUniqueId undoId;
+        private ObjectUniqueId redoId;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            var optionsId = toolbar.AddControl(optionsPlaceholder);
+            toolbar.SetToolAlignCenter(optionsId, true);
 
             Title = "AlterNET UI Paint Sample";
             Size = (750, 700);
@@ -127,7 +131,6 @@ namespace PaintSample
             canvasControl = new();
             border.Children.Add(canvasControl);
 
-            toolbar = new();
             colorSelector = new();
 
             Alternet.UI.Grid.SetRow(toolbar, 0);
@@ -152,11 +155,50 @@ namespace PaintSample
             Tools.CurrentTool = Tools.Pen;
             InitializeToolsMenuItems();
 
-            toolbar.SetTools(Tools);
+            ToolBarSetTools(Tools);
 
             UpdateControls();
 
             PerformLayout();
+        }
+
+        public void ToolBarSetTools(Tools tools)
+        {
+            toolbar.ItemSize = 32;
+
+            foreach (var tool in tools.AllTools)
+            {
+                var image = LoadToolImage(tool);
+                image.Rescale(24);
+                var imageSet = new ImageSet(image);
+                var buttonId = toolbar.AddSpeedBtn(tool.Name, imageSet);
+
+                void ClickMe()
+                {
+                    var sticky = toolbar.GetToolSticky(buttonId);
+                    if (sticky)
+                        return;
+                    Tools.CurrentTool = tool;
+                    var stickyGroup = toolbar.GetToolsWithCustomFlag("Tool");
+                    toolbar.SetToolSticky(stickyGroup, false);
+                    toolbar.SetToolSticky(buttonId, true);
+
+                    toolbar.DoInsideLayout(() =>
+                    {
+                        optionsPlaceholder.Children.Clear();
+
+                        var optionsControl = tools.CurrentTool?.OptionsControl;
+
+                        if (optionsControl != null)
+                            optionsPlaceholder.Children.Add(optionsControl);
+                    });
+                }
+
+                toolbar.SetToolAction(buttonId, ClickMe);
+                toolbar.GetToolCustomFlags(buttonId)?.SetFlag("Tool", true);
+                if (tool == Tools.CurrentTool)
+                    ClickMe();
+            }
         }
 
         internal static Image LoadToolImage(Tool tool)
@@ -255,38 +297,12 @@ namespace PaintSample
 
         private void InitializeCommandButtons()
         {
-            const int imageSize = 32;
-
-            undoButton = new()
-            {
-                ToolTip = "Undo",
-            };
-
-            var normalColor = undoButton.GetSvgColor(KnownSvgColor.Normal);
-            var disabledColor = undoButton.GetSvgColor(KnownSvgColor.Disabled);
-
-            undoButton.ImageSet = KnownSvgImages.GetForSize(normalColor, imageSize).ImgUndo;
-
-            var hoveredBorder = undoButton.Borders?.Hovered;
-            if(hoveredBorder is not null)
-            {
-                hoveredBorder.UniformRadiusIsPercent = true;
-                hoveredBorder.UniformCornerRadius = 50;
-            }
-            undoButton.DisabledImageSet = KnownSvgImages.GetForSize(disabledColor, imageSize).ImgUndo;
-            undoButton.Click += UndoButton_Click;
-            toolbar.CommandButtons.Add(undoButton);
-
-            redoButton = new()
-            {
-                ToolTip = "Redo",
-            };
-
-            redoButton.ImageSet = KnownSvgImages.GetForSize(normalColor, imageSize).ImgRedo;
-            redoButton.DisabledImageSet = KnownSvgImages.GetForSize(disabledColor, imageSize).ImgRedo;
-            redoButton.Click += RedoButton_Click;
-            redoButton.Borders?.SetObject(hoveredBorder, GenericControlState.Hovered);
-            toolbar.CommandButtons.Add(redoButton);
+            undoId = toolbar.AddSpeedBtn(KnownButton.Undo);
+            redoId = toolbar.AddSpeedBtn(KnownButton.Redo);
+            toolbar.SetToolAlignRight(undoId, true);
+            toolbar.SetToolAlignRight(redoId, true);
+            toolbar.AddToolAction(undoId, UndoButton_Click);
+            toolbar.AddToolAction(redoId, RedoButton_Click);
         }
 
         private void UndoService_Changed(object? sender, EventArgs e)
@@ -296,9 +312,11 @@ namespace PaintSample
 
         private void UpdateControls()
         {
-            undoMenuItem!.Enabled = undoButton!.Enabled = UndoService.CanUndo;
-            redoMenuItem!.Enabled = redoButton!.Enabled = UndoService.CanRedo;
+            undoMenuItem!.Enabled = UndoService.CanUndo;
+            redoMenuItem!.Enabled = UndoService.CanRedo;
             saveMenuItem!.Enabled = Document.Dirty;
+            toolbar.SetToolEnabled(undoId, UndoService.CanUndo);
+            toolbar.SetToolEnabled(redoId, UndoService.CanRedo);
 
             UpdateTitle();
         }
@@ -457,11 +475,11 @@ namespace PaintSample
         {
             PromptToSaveDocument(out var cancel);
             e.Cancel = cancel;
-            if (!cancel)
+            /*if (!cancel)
             {
                 this.Hide();
                 Alternet.UI.Application.Current.Exit();
-            }
+            }*/
 
             base.OnClosing(e);
         }
