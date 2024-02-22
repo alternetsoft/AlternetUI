@@ -98,15 +98,25 @@ using System;
             }
         }
 
-        private static void WriteEventBinding(IndentedTextWriter w, UIXmlDocument.EventBinding eventBinding)
+        private static void WriteEventBinding(
+            IndentedTextWriter w,
+            UIXmlDocument.EventBinding eventBinding)
         {
+            if(eventBinding is UIXmlDocument.IndexedObjectEventBinding bind
+                && bind.Accessors.Count > 1)
+            {
+                var s = $"#error Bad binding '{bind.HandlerName}' to '{bind.EventName}' event for the element with an empty Name property.";
+                w.WriteLine(s);
+            }
+
             switch (eventBinding)
             {
                 case UIXmlDocument.NamedObjectEventBinding x:
                     w.WriteLine($"{x.ObjectName}.{x.EventName} += {x.HandlerName};");
                     break;
                 case UIXmlDocument.IndexedObjectEventBinding x:
-                    w.WriteLine($"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
+                    w.WriteLine(
+                        $"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
                     break;
                 default:
                     throw new InvalidOperationException();
