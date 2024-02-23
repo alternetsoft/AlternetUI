@@ -13,7 +13,7 @@
                 MouseLeftButtonDown="TreeView_MouseLeftButtonDown"
                 />
 
-      <TabControl Name="pageControl" Margin="10,0,10,0" >
+      <TabControl Name="pageControl" Margin="10,0,10,0" HorizontalAlignment="Fill">
 
         <!-- ========================= -->
         <VerticalStackPanel Name="stackPanel1" Padding="10">

@@ -1,4 +1,38 @@
-# 0.9.507 (in development)
+# 0.9.507 (2024 February 23)
+
+## 2024 February 23
+
+- Hidden AuiManager and other Aui* controls. The reason is that they do not work properly on Linux and MacOs. Also
+they are very limited. We suggest using TabControl, SideBarPanel, ToolBar, Splitter, SplittedPanel instead of Aui* controls.
+- Hidden Sizer* objects and interfaces. As we introduced Control.Layout property, all Sizer* functionality can be 
+implemented through this or using StackPanel, Grid and other layout related containers.
+- TabControl: Draw vertical lines between tabs.
+- TabControl.SetTabImage.
+- TabControl.DisplayRectangle.
+- SpeedButton.Text is now displayed if needed.
+- Color: Added static events StringToColor, ColorToString, ColorToDisplayString.
+- Color: AHex, RGBWeb, ARGBWeb properties.
+- Color from tuple (byte, byte, byte) implicit conversion (Calls Color.FromRgb).
+- Color from tuple (byte, byte, byte, byte) implicit conversion (Calls Color.FromArgb).
+- SpeedColorButton: Now can show color text near color image.
+- SpeedColorButton: Events ValueChanged, StringToColor, ColorToString.
+- SpeedColorButton: Text property is synced with Value.
+- SpeedColorButton: Value is now nullable.
+- Fixed SpeedColorButton/SpeedButton behavior if Ebabled=false.
+- FindReplaceControl: Fixed incorrect align.
+- Control: ParentFont, ParentForeColor, ParentBackColor.
+- GenericToolbar.ImageToText.
+- SpeedButton: Improved default colors.
+- Hidden CardPanelHeader control. The reason it is limited clone of GenericToolBar. You can use TabControl or GenericToolBar instead.
+- <u>**Uixml to Cs generator change.**</u>. Now it is not allowed to specify event handlers in the Uixml 
+if control has no Name property specified. Previously it was possible but raised an exception in some cases. 
+- Display: AllScreens, Bounds, BoundsDip, DeviceName.
+- Application.IsRunning.
+- ThreadExceptionWindow fixed and improved: Removed exception when its used. Now it is possible to specify whether to
+ show Continue button. Layout is improved. Keys Esc and Enter work now. Added localization for buttons.
+- UiXml reading improved: Dialog with error information is shown when there are uixml reading errors. 
+UixmlLoader.ShowExceptionDialog property.
+- Demo improved.
 
 ## 2024 February 20
 

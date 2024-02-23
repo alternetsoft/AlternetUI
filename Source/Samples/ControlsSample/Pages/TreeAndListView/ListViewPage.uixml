@@ -19,7 +19,7 @@
                           />
       <!-- ========================= -->
       <TabControl Margin="10,0,0,0" Padding="5" Name="tabControlPanel"
-                  VerticalAlignment="Stretch">
+                  VerticalAlignment="Stretch" HorizontalAlignment="Fill">
 
         <!-- ========================= -->
         <StackPanel Orientation="Vertical" Padding="10"

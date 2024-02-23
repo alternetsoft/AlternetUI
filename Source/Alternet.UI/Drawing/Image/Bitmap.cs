@@ -169,7 +169,7 @@ namespace Alternet.Drawing
         /// data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the bitmap.</param>
-        public Bitmap(Stream stream)
+        public Bitmap(Stream? stream)
             : base(stream)
         {
         }
