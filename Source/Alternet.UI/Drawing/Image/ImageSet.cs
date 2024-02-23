@@ -217,10 +217,53 @@ namespace Alternet.UI
         public static ImageSet FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
             var nativeImage = new UI.Native.ImageSet();
-            using var inputStream = new UI.Native.InputStream(stream);
+            using var inputStream = new UI.Native.InputStream(stream, false);
             nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
             var result = new ImageSet(nativeImage);
             return result;
+        }
+
+        /// <summary>
+        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
+        /// from the specified <see cref="Stream"/> which contains svg data.
+        /// </summary>
+        /// <param name="stream">Stream with svg data.</param>
+        /// <param name="size">Image size in pixels.</param>
+        /// <param name="color1">Svg fill color 1.</param>
+        /// <param name="color2">Svg fill color 2.</param>
+        /// <returns></returns>
+        public static (ImageSet, ImageSet) FromSvgStream(
+            Stream stream,
+            SizeI size,
+            Color? color1,
+            Color? color2)
+        {
+            var image1 = ImageSet.FromSvgStream(stream, size.Width, size.Height, color1);
+            var image2 = ImageSet.FromSvgStream(stream, size.Width, size.Height, color2);
+            return (image1, image2);
+        }
+
+        /// <summary>
+        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
+        /// from the specified <see cref="Stream"/> which contains svg data. Images are loaded
+        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// </summary>
+        /// <param name="stream">Stream with svg data.</param>
+        /// <param name="size">Image size in pixels.</param>
+        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// method is called to get color information.</param>
+        /// <returns></returns>
+        public static (ImageSet, ImageSet) GetNormalAndDisabledSvg(
+            Stream stream,
+            SizeI size,
+            Control control)
+        {
+            var image = ImageSet.FromSvgStream(
+                stream,
+                32,
+                control.GetSvgColor(KnownSvgColor.Normal),
+                control.GetSvgColor(KnownSvgColor.Disabled));
+            return image;
         }
 
         /// <inheritdoc cref="FromUrl"/>

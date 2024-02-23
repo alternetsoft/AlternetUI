@@ -6,10 +6,12 @@ namespace Alternet.UI.Native
     internal partial class InputStream
     {
         private Stream stream;
+        private bool disposeStream;
 
-        public InputStream(Stream stream)
+        public InputStream(Stream stream, bool disposeStream = true)
         {
             this.stream = stream;
+            this.disposeStream = disposeStream;
         }
 
         public long Length => stream.Length;
@@ -33,7 +35,8 @@ namespace Alternet.UI.Native
         {
             if (disposing)
             {
-                stream.Dispose();
+                if(disposeStream)
+                    stream.Dispose();
                 stream = null!;
             }
 
