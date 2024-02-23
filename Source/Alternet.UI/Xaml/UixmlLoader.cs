@@ -18,6 +18,14 @@ namespace Alternet.UI
         public static bool DisableComponentInitialization { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to show exception dialog when uixml is loaded with errors.
+        /// </summary>
+        /// <remarks>
+        /// Default is <c>true</c>.
+        /// </remarks>
+        public static bool ShowExceptionDialog { get; set; } = true;
+
+        /// <summary>
         /// Returns an object graph created from a source XAML.
         /// </summary>
         public object Load(Stream xamlStream, Assembly localAssembly)
@@ -43,7 +51,6 @@ namespace Alternet.UI
                 ReportException(e, resName);
                 throw;
             }
-
         }
 
         /// <summary>
@@ -77,12 +84,50 @@ namespace Alternet.UI
             {
                 if(report)
                     ReportException(e, resName);
+                if (Application.Initialized && !Application.Current.InUixmlPreviewerMode
+                    && ShowExceptionDialog)
+                {
+                    var s = $"Resource Name: {resName}";
+                    var errorWindow = new ThreadExceptionWindow(e, s, false);
+                    if (Application.IsRunning)
+                    {
+                        errorWindow.ShowModal();
+                    }
+                    else
+                    {
+                        Application.Current.Run(errorWindow);
+                    }
+                }
+
                 throw e;
             }
         }
 
         private static void ReportException(Exception e, string? resName)
         {
+            void BeginSection()
+            {
+            }
+
+            void EndSection()
+            {
+            }
+
+            void WriteLine(string s)
+            {
+                Debug.WriteLine(s);
+            }
+
+            void Indent()
+            {
+                Debug.Indent();
+            }
+
+            void Unindent()
+            {
+                Debug.Unindent();
+            }
+
             string sourceUri = resName;
             int lineNumber = -1;
             int linePos = -1;
@@ -94,8 +139,9 @@ namespace Alternet.UI
                 sourceUri = sourceUri ?? xmlException.SourceUri;
             }
 
-            Debug.WriteLine($"Error reading Uixml: {e.Message}");
-            Debug.Indent();
+            BeginSection();
+            WriteLine($"Error reading Uixml: {e.Message}");
+            Indent();
             if (sourceUri is not null)
             {
                 string lineStr = string.Empty;
@@ -105,12 +151,12 @@ namespace Alternet.UI
                 if(lineNumber > 0)
                     lineStr = $" Ln: {lineNumber}{charStr}";
 
-                Debug.WriteLine($"File: {sourceUri}{lineStr}");
+                WriteLine($"File: {sourceUri}{lineStr}");
             }
 
-            Debug.WriteLine($"Exception type: {e.GetType()}");
-            Debug.Unindent();
-
+            WriteLine($"Exception type: {e.GetType()}");
+            Unindent();
+            EndSection();
         }
     }
 }
