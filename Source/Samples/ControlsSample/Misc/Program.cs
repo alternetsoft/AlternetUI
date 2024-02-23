@@ -10,9 +10,13 @@ namespace ControlsSample
         [STAThread]
         public static void Main()
         {
+
             var testBadFont = false;
 
             var application = new Application();
+
+            /*application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
+            DebugUtils.HookExceptionEvents();*/
 
             if (testBadFont)
                 Control.DefaultFont = new Font("abrakadabra", 12);
