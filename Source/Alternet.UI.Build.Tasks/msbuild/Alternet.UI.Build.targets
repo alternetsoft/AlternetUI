@@ -1,26 +1,26 @@
 <Project>
 
-<PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
-    <AlternetUIBuildTaskPath 
+  <PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
+    <AlternetUIBuildTaskPath
 Condition="'$(MSBuildRuntimeType)' != 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\netstandard2.0</AlternetUIBuildTaskPath>
-    <AlternetUIBuildTaskPath 
+    <AlternetUIBuildTaskPath
 Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\netstandard2.0</AlternetUIBuildTaskPath>
 
     <AlternetUIBuildTaskPathFull>$([System.IO.Path]::GetFullPath('$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll'))</AlternetUIBuildTaskPathFull>
-  </PropertyGroup>	
-		
+  </PropertyGroup>
+
   <!-- <ItemGroup> -->
-    <!-- <None Remove="**\*.uixml" /> -->
+  <!-- <None Remove="**\*.uixml" /> -->
   <!-- </ItemGroup> -->
 
   <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlCodeTask" AssemblyFile="$(AlternetUIBuildTaskPathFull)" />
   <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlResourceTask" AssemblyFile="$(AlternetUIBuildTaskPathFull)" />
 
-    <Target Name="WriteInfoMessages" BeforeTargets="BeforeCompile" Condition="false">
-		<Message Text="AlternetUIBuildTaskPath: $(AlternetUIBuildTaskPath)" Importance="high"/>
-		<Message Text="AlternetUIBuildTaskAllPlatformsPath: $(AlternetUIBuildTaskAllPlatformsPath)" Importance="high"/>
-		<Message Text="Alternet.UI.Build.Tasks.dll: $(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" Importance="high"/>
-	</Target>
+  <Target Name="WriteInfoMessages" BeforeTargets="BeforeCompile" Condition="false">
+    <Message Text="AlternetUIBuildTaskPath: $(AlternetUIBuildTaskPath)" Importance="high"/>
+    <Message Text="AlternetUIBuildTaskAllPlatformsPath: $(AlternetUIBuildTaskAllPlatformsPath)" Importance="high"/>
+    <Message Text="Alternet.UI.Build.Tasks.dll: $(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" Importance="high"/>
+  </Target>
 
 
   <Target Name="PrepareUIXml">
@@ -42,7 +42,8 @@ Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsP
 
     <Error Condition="'$(Language)' != 'C#'" Text="AlterNET UI XML generator only supports C# projects" />
 
-    <GenerateUIXmlCodeTask InputFiles="@(UIXml)" />
+    <GenerateUIXmlCodeTask InputFiles="@(UIXml)">
+    </GenerateUIXmlCodeTask>
 
     <ItemGroup>
       <Compile Include="@(UIXml->'%(CodeGeneratorTargetPath)')" Visible="false" />
@@ -50,7 +51,7 @@ Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsP
     </ItemGroup>
 
   </Target>
-  
+
   <Target Name="GenerateUIXmlResource"
           BeforeTargets="PrepareForBuild"
           DependsOnTargets="PrepareUIXml"
@@ -61,7 +62,9 @@ Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsP
     <GenerateUIXmlResourceTask InputFiles="@(UIXml)" />
 
     <ItemGroup>
-      <EmbeddedResource Include="@(UIXml->'%(ResourceGeneratorTargetPath)')"><LogicalName>$([MSBuild]::ValueOrDefault('%(RelativeDir)%(FileName)%(Extension)', '').Replace('\', '/').Replace('/', '.'))</LogicalName></EmbeddedResource>
+      <EmbeddedResource Include="@(UIXml->'%(ResourceGeneratorTargetPath)')">
+        <LogicalName>$([MSBuild]::ValueOrDefault('%(RelativeDir)%(FileName)%(Extension)', '').Replace('\', '/').Replace('/', '.'))</LogicalName>
+      </EmbeddedResource>
       <FileWrites Include="@(UIXml->'%(ResourceGeneratorTargetPath)')" />
     </ItemGroup>
 

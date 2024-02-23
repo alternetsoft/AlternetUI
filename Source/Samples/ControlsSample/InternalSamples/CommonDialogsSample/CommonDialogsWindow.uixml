@@ -72,7 +72,7 @@
 					    <ComboBox Name="exceptionTypeComboBox"
                                   IsEditable="false" Margin="5,0,0,10" />
 
-					    <Button Text="Throw Exception" Name="throwExceptionButton" 
+					    <Button Text="Throw Exception" Name="buttonThrowException"
 						  Click="ThrowExceptionButton_Click" Margin="5,0,0,10"/>
 				  </StackPanel>
         </GroupBox>
