@@ -8,7 +8,7 @@
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 
-    <TabControl Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Fill">
+    <TabControl Name="pageControl" VerticalAlignment="Fill" HorizontalAlignment="Fill">
 
       <!-- ========================= -->
       <HorizontalStackPanel Name="actionsPanel" HorizontalAlignment="Stretch">
@@ -127,7 +127,7 @@
 
     </TabControl>
 
-    <HorizontalStackPanel  Margin="0,0,0,5">
+    <HorizontalStackPanel  Margin="0,0,0,5" VerticalAlignment="Bottom">
       <Button Text="All Properties..."
               Name="propertiesButton" Click="PropertiesButton_Click"/>
       <Button Text="Page 1"
@@ -138,6 +138,6 @@
               Name="buttonPage3" Click="Page3Button_Click"/>
     </HorizontalStackPanel>
 
-    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Fill"/>
+    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Bottom"/>
 
 </Window>
