@@ -9,8 +9,13 @@ namespace Alternet.UI
     public class Display : DisposableObject
     {
         private static Display? primary;
+        private static Display[]? allScreens;
 
         private readonly Control? control;
+
+        static Display()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Display"/> class.
@@ -51,6 +56,26 @@ namespace Alternet.UI
         public static int DefaultDPIValue => Native.WxOtherFactory.DisplayGetStdPPIValue();
 
         /// <summary>
+        ///  Gets an array of all of the displays on the system.
+        /// </summary>
+        public static unsafe Display[] AllScreens
+        {
+            get
+            {
+                if (allScreens is not null)
+                    return allScreens;
+                var count = Count;
+                allScreens = new Display[count];
+                for(int i = 0; i < count; i++)
+                {
+                    allScreens[i] = new Display(i);
+                }
+
+                return allScreens;
+            }
+        }
+
+        /// <summary>
         /// Gets primary display.
         /// </summary>
         public static Display Primary
@@ -73,6 +98,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the display's name.
         /// </summary>
+        /// <remarks>Same as <see cref="Name"/></remarks>
+        public string DeviceName => Name;
+
+        /// <summary>
+        /// Gets the display's name.
+        /// </summary>
+        /// <remarks>Same as <see cref="DeviceName"/></remarks>
         public string Name => Native.WxOtherFactory.DisplayGetName(Handle);
 
         /// <summary>
@@ -94,6 +126,18 @@ namespace Alternet.UI
         /// Gets the client area of the display.
         /// </summary>
         public RectI ClientArea => Native.WxOtherFactory.DisplayGetClientArea(Handle);
+
+        /// <summary>
+        /// Returns the bounding rectangle of the display in pixels.
+        /// </summary>
+        /// <remarks>Same as <see cref="Geometry"/></remarks>
+        public RectI Bounds => Geometry;
+
+        /// <summary>
+        /// Returns the bounding rectangle of the display in dips.
+        /// </summary>
+        /// <remarks>Same as <see cref="GeometryDip"/></remarks>
+        public RectD BoundsDip => GeometryDip;
 
         /// <summary>
         /// Gets whether display height is bigger than width.
@@ -120,7 +164,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the bounding rectangle of the display.
+        /// Returns the bounding rectangle of the display in pixels.
         /// </summary>
         public RectI Geometry => Native.WxOtherFactory.DisplayGetGeometry(Handle);
 
@@ -163,18 +207,19 @@ namespace Alternet.UI
             method($"Count: {Count}");
             method($"DefaultDPI: {DefaultDPI}");
 
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < Display.AllScreens.Length; i++)
             {
                 method(" ");
-                var display = new Display(i);
+                var display = Display.AllScreens[i];
                 method($"Index: {i}");
-                method($"Name: {display.Name}");
+                method($"Name: {display.DeviceName}");
                 method($"DPI: {display.DPI}");
                 method($"ScaleFactor: {display.ScaleFactor}");
                 method($"IsPrimary: {display.IsPrimary}");
                 method($"IsVertical: {display.IsVertical}");
                 method($"ClientArea: {display.ClientArea}");
-                method($"Geometry: {display.Geometry}");
+                method($"Bounds: {display.Bounds}");
+                method($"BoundsDip: {display.BoundsDip}");
                 method($"PixelToDip(100): {display.PixelToDip(100)}");
             }
 

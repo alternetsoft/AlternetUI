@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// and properties to get information about an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public partial class Application : IDisposable
+    public partial class Application : BaseObject, IDisposable
     {
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -333,8 +333,8 @@ namespace Alternet.UI
         {
             get
             {
-                // todo: maybe make it thread static?
-                // todo: maybe move this to native?
+                // maybe make it thread static?
+                // maybe move this to native?
                 return current ?? throw new InvalidOperationException(
                     ErrorMessages.Default.CurrentApplicationIsNotSet);
             }

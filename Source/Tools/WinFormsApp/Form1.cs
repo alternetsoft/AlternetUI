@@ -5,7 +5,6 @@ namespace WinFormsApp
     public partial class Form1 : Form
     {
         private readonly ListBox listBox = new();
-        private readonly Label labelForm = new();
 
         public Form1()
         {
@@ -20,6 +19,7 @@ namespace WinFormsApp
             KeyPreview = true;
             listBox.Items.Add($"DoubleClickTime: {SystemInformation.DoubleClickTime}");
             listBox.Items.Add($"MouseWheelScrollLines: {SystemInformation.MouseWheelScrollLines}");
+            listBox.Items.Add($"Screen.Bounds: {Screen.AllScreens[0].Bounds}");
 
             StatusStrip bar = new();
         }
