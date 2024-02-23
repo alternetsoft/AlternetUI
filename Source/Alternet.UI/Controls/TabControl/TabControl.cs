@@ -576,7 +576,7 @@ namespace Alternet.UI
             {
                 if (IsDarkBackground)
                 {
-                    color = Color.FromRgb(70, 70, 70);
+                    color = Color.FromRgb(41, 41, 41);
                 }
                 else
                 {
