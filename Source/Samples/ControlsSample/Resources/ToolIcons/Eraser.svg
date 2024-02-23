@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="alternet-eraser.svg"
+   width="512"
+   height="512"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs23" />
+  <sodipodi:namedview
+     id="namedview21"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.5742188"
+     inkscape:cx="288.0794"
+     inkscape:cy="256"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg19" />
+  <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+  <path
+     d="M 255.40486,64.006243 33.248851,285.88682 c -23.8058291,23.77632 -23.8058291,62.29395 0,86.07027 l 76.178659,76.08421 c 11.4268,11.41263 26.9482,17.78469 43.13616,17.78469 h 100.27016 8.95099 204.34924 c 16.85453,0 30.47146,-13.60006 30.47146,-30.43369 0,-16.83363 -13.61693,-30.43368 -30.47146,-30.43368 H 347.96192 L 472.4188,280.75114 c 23.80583,-23.77632 23.80583,-62.29395 0,-86.07027 L 341.67718,64.006243 c -23.80583,-23.776316 -62.37127,-23.776316 -86.1771,0 z m 6.37996,341.047477 H 252.83383 152.46845 L 76.289791,328.96951 195.03327,210.37324 325.87011,341.04788 Z"
+     id="path17"
+     style="stroke-width:0.951643" />
+</svg>
