@@ -326,6 +326,11 @@ namespace Alternet.UI
         public static bool Terminating { get => terminating; }
 
         /// <summary>
+        /// Gets whether execution is inside the <see cref="Run"/> method.
+        /// </summary>
+        public static bool IsRunning { get; internal set; }
+
+        /// <summary>
         /// Gets the <see cref="Application"/> object for the currently
         /// runnning application.
         /// </summary>
@@ -616,7 +621,7 @@ namespace Alternet.UI
                 runAction();
             }
 
-            if(runAction is not null)
+            if (runAction is not null)
                 AddIdleTask(Task);
 
             application.Run(window);
@@ -734,7 +739,7 @@ namespace Alternet.UI
                 return;
             }
 
-            if(logQueue is not null)
+            if (logQueue is not null)
             {
                 while (logQueue.Count > 0)
                 {
@@ -967,14 +972,24 @@ namespace Alternet.UI
         /// method and passes to it the main window of the application.</remarks>
         public void Run(Window window)
         {
-            this.window = window ?? throw new ArgumentNullException(nameof(window));
-            CheckDisposed();
-            window.Show();
-            nativeApplication.Run(
-                ((WindowHandler)window.Handler).NativeControl);
-            SynchronizationContext.Uninstall();
-            this.window = null;
-            terminating = true;
+            IsRunning = true;
+
+            try
+            {
+                this.window = window ?? throw new ArgumentNullException(nameof(window));
+                CheckDisposed();
+                window.Show();
+
+                nativeApplication.Run(
+                    ((WindowHandler)window.Handler).NativeControl);
+                SynchronizationContext.Uninstall();
+                this.window = null;
+            }
+            finally
+            {
+                terminating = true;
+                IsRunning = false;
+            }
         }
 
         /// <summary>
@@ -1178,7 +1193,7 @@ namespace Alternet.UI
         {
             if (!IdleTasks.IsEmpty && Application.current?.Windows.Count > 0)
             {
-                if(IdleTasks.TryDequeue(out var task))
+                if (IdleTasks.TryDequeue(out var task))
                     task.Item1(task.Item2);
             }
 
@@ -1195,7 +1210,7 @@ namespace Alternet.UI
         {
             var s = this.EventArgString;
 
-            if(BeforeNativeLogMessage is not null)
+            if (BeforeNativeLogMessage is not null)
             {
                 LogMessageEventArgs e = new(s);
                 BeforeNativeLogMessage(Application.Current, e);
