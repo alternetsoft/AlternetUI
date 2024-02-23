@@ -86,6 +86,7 @@ namespace PropertyGridSample
         public MainWindow()
         {
             DoInsideLayout(Fn);
+            panel.PropGrid.SuggestedInitDefaults();
 
             void Fn()
             {
@@ -159,8 +160,6 @@ namespace PropertyGridSample
                     PropertyGridKeyboardAction.ActionNextProperty,
                     Key.DownArrow,
                     Alternet.UI.ModifierKeys.Control);
-
-                panel.PropGrid.SuggestedInitDefaults();
 
                 panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
 
@@ -342,6 +341,11 @@ namespace PropertyGridSample
             updatePropertyGrid = true;
         }
 
+        internal void AfterSetProps()
+        {
+
+        }
+
         internal void UpdatePropertyGrid(object? instance = null)
         {
             if (instance != null)
@@ -349,6 +353,7 @@ namespace PropertyGridSample
                 if (PropGrid.FirstItemInstance == instance)
                     return;
                 PropGrid.SetProps(instance, true);
+                AfterSetProps();
                 return;
             }
 
@@ -408,6 +413,7 @@ namespace PropertyGridSample
                     {
                         PropGrid.SetProps(item.PropInstance, true);
                         PropGrid.Refresh();
+                        AfterSetProps();
                     });
 
                     SetBackground(SystemColors.Control);

@@ -35,6 +35,7 @@ namespace PropertyGridSample
 
                 if(!SystemSettings.AppearanceIsDark)
                     PropGrid.SetCategoriesBackgroundColor(Color.LightGray);
+                AfterSetProps();
             }
             finally
             {

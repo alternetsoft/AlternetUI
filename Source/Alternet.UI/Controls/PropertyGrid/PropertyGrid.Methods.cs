@@ -43,7 +43,8 @@ namespace Alternet.UI
         /// always work, even if its editor had invalid value in it.</param>
         /// <returns>Returns true if successful or if there was no selection. May fail if validation
         /// was enabled and active editor had invalid value.</returns>
-        public virtual bool ClearSelection(bool validation) => NativeControl.ClearSelection(validation);
+        public virtual bool ClearSelection(bool validation)
+            => NativeControl.ClearSelection(validation);
 
         /// <summary>
         /// Resets modified status of all properties.
