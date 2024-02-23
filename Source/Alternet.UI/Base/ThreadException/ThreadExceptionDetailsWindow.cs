@@ -18,9 +18,11 @@ namespace Alternet.UI
             MaximizeEnabled = false;
             StartLocation = WindowStartLocation.CenterOwner;
             TopMost = true;
+            Size = (600, 500);
 
             var mainGrid = new Grid();
-            mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            mainGrid.RowDefinitions.Add(
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             mainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
             var detailsTextBox = new TextBox
@@ -38,6 +40,8 @@ namespace Alternet.UI
                 Margin = new Thickness(0, 10, 0, 0),
             };
             closeButton.Click += (o, e) => Close();
+            closeButton.IsCancel = true;
+            closeButton.IsDefault = true;
             mainGrid.Children.Add(closeButton);
             Grid.SetRow(closeButton, 1);
 

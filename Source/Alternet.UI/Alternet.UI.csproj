@@ -64,7 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Base\ThreadException\Resources\ErrorImage.png" />
     <None Remove="Build.Result.Log" />
     <None Remove="Find.Not.Documented.log" />
     <None Remove="Resources\Svg\alternet-add-child.svg" />
@@ -169,7 +168,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Base\ThreadException\Resources\ErrorImage.png" />
+    <EmbeddedResource Include="Resources\Png\ErrorImage.png" />
     <EmbeddedResource Include="Resources\Svg\alternet-align-center.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-align-justify.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-align-left.svg" />

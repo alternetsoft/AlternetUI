@@ -17,31 +17,48 @@ namespace Alternet.UI
     {
         private readonly Exception exception;
         private TextBox? messageTextBox;
+        private bool canContinue;
 
         /// <summary>
         ///  Initializes a new instance of the
         ///  <see cref="ThreadExceptionWindow"/> class.
         /// </summary>
-        public ThreadExceptionWindow(Exception exception)
+        public ThreadExceptionWindow(
+            Exception exception,
+            string? additionalInfo = null,
+            bool canContinue = true)
         {
             this.exception = exception;
+            this.canContinue = canContinue;
             InitializeControls();
 
-            var activeWindow = ActiveWindow;
-            if (activeWindow is null || activeWindow.Title.Length == 0)
-                Title = "Exception Occured";
+            if(Application.FirstWindow() is not null)
+            {
+                var activeWindow = ActiveWindow;
+                if (activeWindow is null || activeWindow.Title.Length == 0)
+                    Title = ErrorMessages.Default.ErrorTitle;
+                else
+                    Title = activeWindow.Title;
+            }
             else
-                Title = activeWindow.Title;
+                Title = ErrorMessages.Default.ErrorTitle;
 
-            messageTextBox!.Text = GetMessageText(exception);
+            var s = GetMessageText(exception);
+
+            if(additionalInfo is not null)
+            {
+                s += "\n" + additionalInfo;
+            }
+
+            messageTextBox!.Text = s;
         }
 
         private static Image LoadImage(string name)
         {
-            return new Bitmap(
-                typeof(ThreadExceptionWindow).Assembly
-                .GetManifestResourceStream(name) ??
-                throw new Exception());
+            var stream = typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name);
+            var result = new Bitmap(stream);
+
+            return result ?? throw new Exception();
         }
 
         private static string GetMessageText(Exception e)
@@ -113,77 +130,61 @@ namespace Alternet.UI
             return detailsTextBuilder.ToString();
         }
 
-        private static bool IsRunningUnderWindows()
-        {
-            return Application.IsWindowsOS;
-        }
-
         private void InitializeControls()
         {
             BeginInit();
 
-            Width = IsRunningUnderWindows() ? 450 : 500;
-            Height = IsRunningUnderWindows() ? 250 : 300;
-
-            Padding = new Thickness(10);
+            Size = (700, 500);
+            Layout = LayoutStyle.Vertical;
+            Padding = 10;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             StartLocation = WindowStartLocation.CenterScreen;
             TopMost = true;
 
-            var mainGrid = new Grid();
-            mainGrid.RowDefinitions.Add(
-                new RowDefinition { Height = GridLength.Auto });
-            mainGrid.RowDefinitions.Add(
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Children.Add(mainGrid);
-
             var messageGrid = CreateMessageGrid();
-            messageGrid.Margin = new Thickness(0, 0, 0, 10);
-            mainGrid.Children.Add(messageGrid);
+            messageGrid.VerticalAlignment = VerticalAlignment.Fill;
+            messageGrid.Parent = this;
 
             var buttonsGrid = CreateButtonsGrid();
-            Grid.SetRow(buttonsGrid, 1);
             buttonsGrid.VerticalAlignment = UI.VerticalAlignment.Bottom;
-            mainGrid.Children.Add(buttonsGrid);
+            buttonsGrid.Parent = this;
 
             EndInit();
 
-            Grid CreateMessageGrid()
+            Control CreateMessageGrid()
             {
-                var messageGrid = new Grid();
-                messageGrid.ColumnDefinitions.Add(
-                    new ColumnDefinition { Width = GridLength.Auto });
-                messageGrid.ColumnDefinitions.Add(
-                    new ColumnDefinition
-                    {
-                        Width = new GridLength(1, GridUnitType.Star),
-                    });
+                var messageGrid = new VerticalStackPanel();
+
+                var firstSection = new HorizontalStackPanel();
+                firstSection.Parent = messageGrid;
 
                 var errorImagePictureBox = new PictureBox
                 {
                     VerticalAlignment = UI.VerticalAlignment.Top,
                     HorizontalAlignment = UI.HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
-                    Image = LoadImage(
-                        "Alternet.UI.Application.ThreadException.Resources.ErrorImage.png"),
+                    Image = LoadImage("Alternet.UI.Resources.Png.ErrorImage.png"),
                 };
-                messageGrid.Children.Add(errorImagePictureBox);
+                errorImagePictureBox.Parent = firstSection;
 
                 var stackPanel = new StackPanel
                 {
                     Orientation = StackPanelOrientation.Vertical,
                 };
-                messageGrid.Children.Add(stackPanel);
-                Grid.SetColumn(stackPanel, 1);
+                stackPanel.Parent = firstSection;
 
-                var lines = new[]
-                {
-                    "Unhandled exception has occurred in your application.",
-                    "If you click Continue, the application will ignore this error",
-                    "and attempt to continue.",
-                    "If you click Quit, the application will close immediately.",
-                };
+                var s1 = "Unhandled exception has occurred in your application.";
+                var s2 = "If you click Continue, the application will ignore this error";
+                var s3 = "and attempt to continue.";
+                var s4 = "If you click Quit, the application will close immediately.";
+
+                string[] lines;
+
+                if(canContinue)
+                    lines = new[] { s1, s2, s3, s4 };
+                else
+                    lines = new[] { s1, s4 };
 
                 foreach (var line in lines)
                 {
@@ -191,10 +192,10 @@ namespace Alternet.UI
                     stackPanel.Children.Add(label);
                 }
 
-                stackPanel.Children.Add(
+                messageGrid.Children.Add(
                     new Label
                     {
-                        Text = "Exception information:",
+                        Text = "Exception information" + ":",
                         Margin = new Thickness(0, 15, 0, 5),
                     });
 
@@ -203,47 +204,45 @@ namespace Alternet.UI
                     Text = " ",
                     ReadOnly = true,
                     Multiline = true,
+                    MinHeight = 150,
+                    VerticalAlignment = VerticalAlignment.Fill,
                 };
 
-                stackPanel.Children.Add(messageTextBox);
+                messageGrid.Children.Add(messageTextBox);
 
                 return messageGrid;
             }
 
-            Grid CreateButtonsGrid()
+            Control CreateButtonsGrid()
             {
-                var buttonsGrid = new Grid();
-                buttonsGrid.ColumnDefinitions.Add(
-                    new ColumnDefinition { Width = GridLength.Auto });
-                buttonsGrid.ColumnDefinitions.Add(
-                    new ColumnDefinition
-                    {
-                        Width = new GridLength(1, GridUnitType.Star),
-                    });
-                buttonsGrid.ColumnDefinitions.Add(
-                    new ColumnDefinition { Width = GridLength.Auto });
-                buttonsGrid.ColumnDefinitions.Add(
-                    new ColumnDefinition { Width = GridLength.Auto });
+                var buttonsGrid = new HorizontalStackPanel();
+                buttonsGrid.Padding = 10;
 
-                var detailsButton = new Button { Text = "&Details..." };
+                var detailsButton = new Button
+                {
+                    Text = CommonStrings.Default.ButtonDetails + "...",
+                };
                 detailsButton.Click += DetailsButton_Click;
                 buttonsGrid.Children.Add(detailsButton);
-                Grid.SetColumn(detailsButton, 0);
 
-                var continueButton =
-                    new Button
-                    {
-                        Text = "&Continue",
-                        Margin = new Thickness(0, 0, 5, 0),
-                    };
-                continueButton.Click += ContinueButton_Click;
-                buttonsGrid.Children.Add(continueButton);
-                Grid.SetColumn(continueButton, 2);
+                if (canContinue)
+                {
+                    var continueButton =
+                        new Button
+                        {
+                            Text = CommonStrings.Default.ButtonContinue,
+                        };
+                    continueButton.Click += ContinueButton_Click;
+                    continueButton.HorizontalAlignment = HorizontalAlignment.Right;
+                    buttonsGrid.Children.Add(continueButton);
+                }
 
-                var quitButton = new Button { Text = "&Quit" };
+                var quitButton = new Button { Text = CommonStrings.Default.ButtonQuit };
                 quitButton.Click += QuitButton_Click;
+                quitButton.IsDefault = true;
+                quitButton.IsCancel = true;
+                quitButton.HorizontalAlignment = HorizontalAlignment.Right;
                 buttonsGrid.Children.Add(quitButton);
-                Grid.SetColumn(quitButton, 3);
 
                 return buttonsGrid;
             }
