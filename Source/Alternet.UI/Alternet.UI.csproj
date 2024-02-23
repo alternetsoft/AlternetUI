@@ -96,6 +96,7 @@
     <None Remove="Resources\Svg\alternet-match-case.svg" />
     <None Remove="Resources\Svg\alternet-match-full-word.svg" />
     <None Remove="Resources\Svg\alternet-minus.svg" />
+    <None Remove="Resources\Svg\alternet-paintbrush.svg" />
     <None Remove="Resources\Svg\alternet-plus.svg" />
     <None Remove="Resources\Svg\alternet-question.svg" />
     <None Remove="Resources\Svg\alternet-redo.svg" />
@@ -148,7 +149,6 @@
     <None Remove="Resources\Svg\list.svg" />
     <None Remove="Resources\Svg\neuter.svg" />
     <None Remove="Resources\Svg\outdent.svg" />
-    <None Remove="Resources\Svg\paintbrush.svg" />
     <None Remove="Resources\Svg\paste.svg" />
     <None Remove="Resources\Svg\print.svg" />
     <None Remove="Resources\Svg\question.svg" />
@@ -243,7 +243,7 @@
     <EmbeddedResource Include="Resources\Svg\alternet-minus.svg" />
     <EmbeddedResource Include="Resources\Svg\neuter.svg" />
     <EmbeddedResource Include="Resources\Svg\outdent.svg" />
-    <EmbeddedResource Include="Resources\Svg\paintbrush.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-paintbrush.svg" />
     <EmbeddedResource Include="Resources\Svg\paste.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-plus.svg" />
     <EmbeddedResource Include="Resources\Svg\print.svg" />
