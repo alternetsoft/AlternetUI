@@ -94,7 +94,7 @@ namespace PropertyGridSample
                     typeof(TextBoxAndLabel),
                     typeof(SpeedTextButton),
                     typeof(SpeedColorButton),
-                    typeof(GenericToolBarSet),
+                    typeof(ToolBarSet),
                     typeof(SideBarPanel),
                     typeof(ControlPainterPreview),
                 };

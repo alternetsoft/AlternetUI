@@ -1,6 +1,6 @@
 namespace Alternet.UI
 {
-    public partial class GenericToolBarSet
+    public partial class ToolBarSet
     {
         [Browsable(false)]
         internal new LayoutStyle? Layout
