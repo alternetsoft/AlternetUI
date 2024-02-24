@@ -562,7 +562,7 @@ namespace Alternet.Drawing
             return result;
 #else
             return GetSystemColorArgbUseSystemSettings(color);
-            // return ColorValueTable[(int)color];
+            /* return ColorValueTable[(int)color];*/
 #endif
         }
     }
