@@ -121,6 +121,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///  Gets or sets the currently selected tab page.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public Control? SelectedPage
+        {
+            get
+            {
+                var pageIndex = Header.SelectedTabIndex;
+                if (pageIndex is null)
+                    return null;
+                return Pages[pageIndex.Value];
+            }
+
+            set
+            {
+                if (TabCount == 0)
+                    return;
+                var selectedPage = SelectedPage;
+                if (selectedPage == value)
+                    return;
+                var index = GetTabIndex(value);
+                SelectedIndex = index ?? 0;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the way that the control's tabs are sized.
         /// </summary>
         /// <returns>One of the <see cref="TabSizeMode" /> values.
@@ -568,8 +597,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public virtual int? GetTabIndex(Control control)
+        public virtual int? GetTabIndex(Control? control)
         {
+            if (control is null)
+                return null;
+
             var tabs = Header.Tabs;
 
             for(int i = 0; i < tabs.Count; i++)
