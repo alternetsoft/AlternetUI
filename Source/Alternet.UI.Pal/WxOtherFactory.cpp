@@ -562,7 +562,7 @@ namespace Alternet::UI
 
 	string WxOtherFactory::DisplayGetName(void* handle)
 	{
-		return wxStr(wxEmptyString);
+		return wxStr(((wxDisplay*)handle)->GetName());
 	}
 
 	Int32Size WxOtherFactory::DisplayGetPPI(void* handle)
