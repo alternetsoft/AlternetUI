@@ -20,10 +20,30 @@ namespace Alternet.UI
         public static double DefaultImageLabelDistance = 4;
 
         /// <summary>
+        /// Gets ot sets default value of <see cref="UseTheme"/> property.
+        /// </summary>
+        public static KnownTheme DefaultUseTheme = KnownTheme.Default;
+
+        /// <summary>
         /// Gets or sets default color and style settings
-        /// for all <see cref="SpeedButton"/> controls.
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.Default"/>.
         /// </summary>
         public static ControlColorAndStyle DefaultTheme = new();
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.Custom"/>.
+        /// </summary>
+        public static ControlColorAndStyle? CustomTheme = null;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.TabControl"/>.
+        /// </summary>
+        public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
         private readonly PictureBox picture = new()
         {
@@ -53,7 +73,7 @@ namespace Alternet.UI
         private KeyInfo[]? keys;
         private bool textVisible = false;
         private bool imageVisible = true;
-        private bool useDefaultTheme = true;
+        private KnownTheme useTheme = DefaultUseTheme;
 
         static SpeedButton()
         {
@@ -77,6 +97,32 @@ namespace Alternet.UI
 
             AcceptsFocusAll = false;
             RefreshOptions = ControlRefreshOptions.RefreshOnState;
+        }
+
+        /// <summary>
+        /// Enumerates known color and style themes for the <see cref="SpeedButton"/>.
+        /// </summary>
+        public enum KnownTheme
+        {
+            /// <summary>
+            /// An empty theme. Settings from <see cref="Control.StateObjects"/> are used.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Theme <see cref="DefaultTheme"/> is used.
+            /// </summary>
+            Default,
+
+            /// <summary>
+            /// Theme <see cref="CustomTheme"/> is used.
+            /// </summary>
+            Custom,
+
+            /// <summary>
+            /// Theme <see cref="TabControlTheme"/> is used.
+            /// </summary>
+            TabControl,
         }
 
         /// <summary>
@@ -105,12 +151,31 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool UseDefaultTheme
         {
-            get => useDefaultTheme;
+            get => UseTheme == KnownTheme.Default;
             set
             {
-                if (useDefaultTheme == value)
+                if (UseDefaultTheme == value)
                     return;
-                useDefaultTheme = value;
+                if(value)
+                    UseTheme = KnownTheme.Default;
+                else
+                    UseTheme = KnownTheme.None;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="DefaultTheme"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KnownTheme UseTheme
+        {
+            get => useTheme;
+            set
+            {
+                if (useTheme == value)
+                    return;
+                useTheme = value;
                 Invalidate();
             }
         }
@@ -590,10 +655,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override ControlColorAndStyle? GetDefaultTheme()
         {
-            if (UseDefaultTheme)
-                return DefaultTheme;
-            else
-                return null;
+            switch (UseTheme)
+            {
+                case KnownTheme.None:
+                    return null;
+                case KnownTheme.Custom:
+                    return CustomTheme;
+                case KnownTheme.Default:
+                default:
+                    return DefaultTheme;
+            }
         }
 
         private void OnClickAction(object? sender, EventArgs? e)
