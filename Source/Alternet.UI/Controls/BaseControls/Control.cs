@@ -629,7 +629,7 @@ namespace Alternet.UI
         /// For example if control is a child of the <see cref="TabControl"/>, <see cref="Title"/>
         /// is displayed as a tab text.
         /// </remarks>
-        public string Title
+        public virtual string Title
         {
             get
             {

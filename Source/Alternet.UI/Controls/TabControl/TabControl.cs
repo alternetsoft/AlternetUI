@@ -422,6 +422,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add(Control control)
+        {
+            return Add(control.Title, control);
+        }
+
+        /// <summary>
         /// Inserts new page at the specified index.
         /// </summary>
         /// <param name="index">The position at which to insert the tab.</param>

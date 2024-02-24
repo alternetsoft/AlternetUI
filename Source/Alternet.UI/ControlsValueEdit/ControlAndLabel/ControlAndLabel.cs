@@ -118,7 +118,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text of the attached <see cref="Label"/> control.
         /// </summary>
-        public string Title
+        public override string Title
         {
             get => Label.Text;
             set => Label.Text = value;
