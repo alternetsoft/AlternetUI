@@ -57,7 +57,7 @@ namespace Alternet.UI
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
         private HorizontalAlignment tabHorizontalAlignment = HorizontalAlignment.Left;
-        private bool useDefaultTheme = true;
+        private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -126,18 +126,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="SpeedButton.DefaultTheme"/>
-        /// for the color and styles of the tabs.
+        /// Gets or sets colors and styles theme of the tabs.
         /// </summary>
         [Browsable(false)]
-        public virtual bool UseTabDefaultTheme
+        public virtual SpeedButton.KnownTheme TabTheme
         {
-            get => useDefaultTheme;
+            get => tabTheme;
             set
             {
-                if (useDefaultTheme == value)
+                if (tabTheme == value)
                     return;
-                useDefaultTheme = value;
+                tabTheme = value;
                 UpdateTabs();
             }
         }
@@ -872,7 +871,7 @@ namespace Alternet.UI
             item.HeaderButton.Margin = TabMargin ?? DefaultTabMargin;
             item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
             item.HeaderButton.HorizontalAlignment = TabHorizontalAlignment;
-            item.HeaderButton.UseDefaultTheme = UseTabDefaultTheme;
+            item.HeaderButton.UseTheme = tabTheme;
         }
 
         private void UpdateTabs()

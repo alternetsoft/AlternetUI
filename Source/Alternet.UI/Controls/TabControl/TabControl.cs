@@ -45,7 +45,6 @@ namespace Alternet.UI
 
             base.Layout = LayoutStyle.Vertical;
             cardPanelHeader.TabHasBorder = false;
-            cardPanelHeader.UseTabDefaultTheme = false;
             cardPanelHeader.TabClick += CardPanelHeader_TabClick;
             cardPanelHeader.ButtonSizeChanged += CardPanelHeader_ButtonSizeChanged;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
@@ -86,6 +85,21 @@ namespace Alternet.UI
             get
             {
                 return cardPanel.Children;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets colors and styles theme of the tabs.
+        /// </summary>
+        public virtual SpeedButton.KnownTheme TabTheme
+        {
+            get => Header.TabTheme;
+            set
+            {
+                if (TabTheme == value)
+                    return;
+                Header.TabTheme = value;
+                Invalidate();
             }
         }
 
