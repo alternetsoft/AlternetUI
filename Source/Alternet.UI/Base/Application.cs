@@ -705,6 +705,9 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         public static void Log(object? obj)
         {
+            if (Application.Terminating)
+                return;
+
             var msg = obj?.ToString();
 
             if (msg is null)
