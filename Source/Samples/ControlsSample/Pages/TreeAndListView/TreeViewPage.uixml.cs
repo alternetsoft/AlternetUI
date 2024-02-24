@@ -28,11 +28,6 @@ namespace ControlsSample
                     focusLastItemButton,
                     modifyLastItemButton).SuggestedWidthToMax();
 
-                pageControl.Add("Actions", stackPanel1);
-                pageControl.Add("Settings", stackPanel2);
-                pageControl.Add("Events", stackPanel3);
-                pageControl.Add("Popup", stackPanel4);
-
                 treeView.Items.ItemInserted += Items_ItemInserted;
                 treeView.Items.ItemRemoved += Items_ItemRemoved;
                 treeView.MouseUp += TreeView_MouseUp;

@@ -11,7 +11,8 @@
     <TabControl Name="pageControl" VerticalAlignment="Fill" HorizontalAlignment="Fill">
 
       <!-- ========================= -->
-      <HorizontalStackPanel Name="actionsPanel" HorizontalAlignment="Stretch">
+      <HorizontalStackPanel Name="actionsPanel" Title="Actions"
+                            HorizontalAlignment="Stretch">
 
         <GroupBox Title="Create" Margin="5">
           <StackPanel Padding="10" >
@@ -44,7 +45,7 @@
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <!-- ========================= -->
-      <HorizontalStackPanel Name="settingsPanel" Visible="false">
+      <HorizontalStackPanel Name="settingsPanel" Visible="false" Title="Settings">
         <StackPanel Padding="10" >
           <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox"
                     CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
@@ -92,7 +93,7 @@
       </HorizontalStackPanel>
 
       <!-- ========================= -->
-      <HorizontalStackPanel Name="boundsPanel" Visible="false">
+      <HorizontalStackPanel Name="boundsPanel" Visible="false" Title="Bounds">
 
         <GroupBox Title="Bounds" Margin="5">
           <StackPanel Padding="10" >

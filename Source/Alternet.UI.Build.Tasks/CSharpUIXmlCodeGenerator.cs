@@ -3,12 +3,17 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 
 namespace Alternet.UI.Build.Tasks
 {
     public static class CSharpUIXmlCodeGenerator
     {
-        public static string Generate(UIXmlDocument document)
+        public static string Generate(
+            UIXmlDocument document,
+            GenerateUIXmlCodeTask task,
+            ITaskItem taskItem)
         {
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
@@ -28,7 +33,7 @@ using System;
                     var namedObjects = document.NamedObjects;
 
                     WriteNamedObjectsFields(w, namedObjects);
-                    WriteInitializeComponent(document, w, namedObjects);
+                    WriteInitializeComponent(document, w, namedObjects, task, taskItem);
                     WriteUIXmlPreviewerConstructor(document, w);
                 }
             }
@@ -36,7 +41,9 @@ using System;
             return codeWriter.ToString();
         }
 
-        private static void WriteNamedObjectsFields(IndentedTextWriter w, IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
+        private static void WriteNamedObjectsFields(
+            IndentedTextWriter w,
+            IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
         {
             foreach (var namedObject in namedObjects)
                 w.WriteLine($"private {namedObject.TypeFullName} {namedObject.Name};");
@@ -51,7 +58,9 @@ using System;
         private static void WriteInitializeComponent(
             UIXmlDocument document,
             IndentedTextWriter w,
-            IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
+            IReadOnlyList<UIXmlDocument.NamedObject> namedObjects,
+            GenerateUIXmlCodeTask task,
+            ITaskItem taskItem)
         {
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
@@ -79,7 +88,7 @@ using System;
 
                 w.WriteLine();
                 foreach (var eventBinding in document.EventBindings)
-                    WriteEventBinding(w, eventBinding);
+                    WriteEventBinding(w, eventBinding, task, taskItem);
             }
         }
 
@@ -100,13 +109,16 @@ using System;
 
         private static void WriteEventBinding(
             IndentedTextWriter w,
-            UIXmlDocument.EventBinding eventBinding)
+            UIXmlDocument.EventBinding eventBinding,
+            GenerateUIXmlCodeTask task,
+            ITaskItem taskItem)
         {
             if(eventBinding is UIXmlDocument.IndexedObjectEventBinding bind
-                && bind.Accessors.Count > 1)
+                /*&& bind.Accessors.Count > 1*/)
             {
-                var s = $"#error Bad binding '{bind.HandlerName}' to '{bind.EventName}' event for the element with an empty Name property.";
-                w.WriteLine(s);
+                var s = $"Bad binding '{bind.HandlerName}' to '{bind.EventName}' event for the element with an empty Name property.";
+                task.LogError(taskItem, s);
+                return;
             }
 
             switch (eventBinding)

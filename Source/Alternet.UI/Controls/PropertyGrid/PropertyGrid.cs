@@ -4474,13 +4474,13 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SuggestedInitDefaults()
         {
-            CenterSplitter();
             SetVerticalSpacing();
 
             // This call makes property editing better if scrollbar is shown.
             // We add an empty column on the right.
             if (Application.IsLinuxOS)
                 SetColumnCount(3);
+            CenterSplitter();
         }
 
         /// <summary>

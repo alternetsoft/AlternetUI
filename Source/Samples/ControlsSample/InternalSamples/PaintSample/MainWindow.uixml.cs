@@ -169,9 +169,7 @@ namespace PaintSample
             foreach (var tool in tools.AllTools)
             {
                 var image = LoadToolImage(tool);
-                image.Rescale(24);
-                var imageSet = new ImageSet(image);
-                var buttonId = toolbar.AddSpeedBtn(tool.Name, imageSet);
+                var buttonId = toolbar.AddSpeedBtn(tool.Name, image.Normal, image.Disabled);
 
                 void ClickMe()
                 {
@@ -201,23 +199,23 @@ namespace PaintSample
             }
         }
 
-        internal static Image LoadToolImage(Tool tool)
+        internal (ImageSet Normal, ImageSet Disabled) LoadToolImage(Tool tool)
         {
-            var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(
+            using var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(
                 "ControlsSample.Resources.ToolIcons."
-                + tool.GetType().Name.Replace("Tool", "") + ".png");
+                + tool.GetType().Name.Replace("Tool", "") + ".svg");
 #pragma warning disable
             if (stream == null)
                 throw new InvalidOperationException();
 #pragma warning restore
 
-            return new Bitmap(stream);
+            var image = ImageSet.GetNormalAndDisabledSvg(stream, 32, this);
+            return image;
         }
 
         void UpdateTitle()
         {
             var title = new StringBuilder();
-
 
             title.Append(baseTitle);
 

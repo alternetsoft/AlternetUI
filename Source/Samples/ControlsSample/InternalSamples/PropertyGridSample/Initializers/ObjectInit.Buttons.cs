@@ -38,7 +38,6 @@ namespace PropertyGridSample
         {
             if (control is not SpeedColorButton button)
                 return;
-            button.SuggestedWidth = 64;
             button.ColorImageSize = 56;
             button.Value = Color.Red;
             button.Click += LogClick;

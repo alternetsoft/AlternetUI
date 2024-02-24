@@ -31,6 +31,9 @@ namespace Alternet.UI.Build.Tasks
             File.AppendAllText(@"e:/a.log", contents);
         }
 
+        [Output]
+        public bool HasErrors { get; set; }
+
         [Required]
         public ITaskItem[] InputFiles { get; set; } = default!;
 
@@ -66,6 +69,8 @@ namespace Alternet.UI.Build.Tasks
                LogError(null, $"Code generation error: {ex}");
             }
 
+            HasErrors = Log.HasLoggedErrors;
+
             return !Log.HasLoggedErrors;
         }
 
@@ -90,14 +95,14 @@ namespace Alternet.UI.Build.Tasks
                 stream,
                 WellKnownApiInfo.Provider);
 
-            var output = CSharpUIXmlCodeGenerator.Generate(document);
+            var output = CSharpUIXmlCodeGenerator.Generate(document, this, inputFile);
 
             File.WriteAllText(GetValidTargetFilePath(inputFile), output);
 
             LogDebug($"{inputFile.ItemSpec}: Generated code.");
         }
 
-        private void LogDebug(string message) =>
+        public void LogDebug(string message) =>
             Log.LogMessage(
                 LogSubcategory,
                 null,
@@ -110,10 +115,10 @@ namespace Alternet.UI.Build.Tasks
                 MessageImportance.Low,
                 message, null);
 
-        internal void LogDebugHigh(string message) =>
+        public void LogDebugHigh(string message) =>
             Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
 
-        private void LogError(
+        public void LogError(
             ITaskItem? inputFile,
             string message,
             int lineNumber = 0,

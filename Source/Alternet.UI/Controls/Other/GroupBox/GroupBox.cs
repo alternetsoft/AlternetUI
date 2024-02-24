@@ -29,35 +29,6 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class GroupBox : Control
     {
-        private string? title = null;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="Title"/> property changes.
-        /// </summary>
-        public event EventHandler? TitleChanged;
-
-        /// <summary>
-        /// Gets or sets the title text for this group box.
-        /// </summary>
-        /// <value>A title text string for this group box, or <c>null</c> if
-        /// the group box has no title.</value>
-        public string? Title
-        {
-            get
-            {
-                return title;
-            }
-
-            set
-            {
-                if (title == value)
-                    return;
-                CheckDisposed();
-                title = value;
-                RaiseTitleChanged(EventArgs.Empty);
-            }
-        }
-
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
@@ -105,21 +76,6 @@ namespace Alternet.UI
         internal override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
-        }
-
-        /// <summary>
-        /// Called when the value of the <see cref="Title"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        protected virtual void OnTitleChanged(EventArgs e)
-        {
-        }
-
-        private void RaiseTitleChanged(EventArgs e)
-        {
-            OnTitleChanged(e);
-            TitleChanged?.Invoke(this, e);
         }
     }
 }

@@ -44,10 +44,6 @@ namespace ControlsSample
                 hasBorderButton);
             buttons.SuggestedWidthToMax();
 
-            tabControlPanel.Add("Actions", stackPanel1);
-            tabControlPanel.Add("Settings", stackPanel2);
-            tabControlPanel.Add("Events", stackPanel3);
-
             var imageLists = ResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;
             listView.LargeImageList = imageLists.Large;

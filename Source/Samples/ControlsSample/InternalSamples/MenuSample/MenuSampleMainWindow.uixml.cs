@@ -52,9 +52,6 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
-            mainPanel.Add("Menu", menuPanel);
-            mainPanel.Add("ToolBar", toolbarPanel);
-            mainPanel.Add("StatusBar", statusPanel);
             mainPanel.TabAlignment = TabAlignment.Left;
 
             statusClearButton.Click += StatusClearButton_Click;

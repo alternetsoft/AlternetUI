@@ -53,6 +53,7 @@ namespace Alternet.UI
         private SizeD suggestedSize = DefaultControlSize;
         private Thickness margin;
         private Thickness padding;
+        private string title = string.Empty;
         private ControlHandler? handler;
         private ControlStateSettings? stateObjects;
         private Font? font;
@@ -118,6 +119,11 @@ namespace Alternet.UI
         /// window's data when the window was not activated.
         /// </remarks>
         public event EventHandler? Activated;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Title"/> property changes.
+        /// </summary>
+        public event EventHandler? TitleChanged;
 
         /// <summary>
         /// Occurs when the mouse pointer is moved over the control.
@@ -613,6 +619,32 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IgnoreLayout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title of the control.
+        /// </summary>
+        /// <value>The title of the control.</value>
+        /// <remarks>
+        /// It's up to control and its parent to decide on how this property will be used.
+        /// For example if control is a child of the <see cref="TabControl"/>, <see cref="Title"/>
+        /// is displayed as a tab text.
+        /// </remarks>
+        public virtual string Title
+        {
+            get
+            {
+                return title;
+            }
+
+            set
+            {
+                if (title == value)
+                    return;
+
+                title = value;
+                RaiseTitleChanged(EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         /// Gets or sets which control borders are docked to its parent control and determines

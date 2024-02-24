@@ -85,10 +85,10 @@
       <None Remove="Resources\ToolBarPng\Small\LineGraph16.png" />
       <None Remove="Resources\ToolBarPng\Small\Pencil16.png" />
       <None Remove="Resources\ToolBarPng\Small\Photo16.png" />
-      <None Remove="Resources\ToolIcons\Airbrush.png" />
-      <None Remove="Resources\ToolIcons\Eraser.png" />
-      <None Remove="Resources\ToolIcons\FloodFill.png" />
-      <None Remove="Resources\ToolIcons\Pen.png" />
+      <None Remove="Resources\ToolIcons\Airbrush.svg" />
+      <None Remove="Resources\ToolIcons\Eraser.svg" />
+      <None Remove="Resources\ToolIcons\FloodFill.svg" />
+      <None Remove="Resources\ToolIcons\Pen.svg" />
       <None Remove="runsample.bat" />
       <None Remove="runsample.sh" />
       <None Remove="SampleImages\cursor.png" />
@@ -182,10 +182,10 @@
       <EmbeddedResource Include="Resources\ToolBarPng\Small\LineGraph16.png" />
       <EmbeddedResource Include="Resources\ToolBarPng\Small\Pencil16.png" />
       <EmbeddedResource Include="Resources\ToolBarPng\Small\Photo16.png" />
-      <EmbeddedResource Include="Resources\ToolIcons\Airbrush.png" />
-      <EmbeddedResource Include="Resources\ToolIcons\Eraser.png" />
-      <EmbeddedResource Include="Resources\ToolIcons\FloodFill.png" />
-      <EmbeddedResource Include="Resources\ToolIcons\Pen.png" />
+      <EmbeddedResource Include="Resources\ToolIcons\Airbrush.svg" />
+      <EmbeddedResource Include="Resources\ToolIcons\Eraser.svg" />
+      <EmbeddedResource Include="Resources\ToolIcons\FloodFill.svg" />
+      <EmbeddedResource Include="Resources\ToolIcons\Pen.svg" />
     </ItemGroup>
 
   <ItemGroup>

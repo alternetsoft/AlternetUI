@@ -22,7 +22,7 @@
                   VerticalAlignment="Stretch" HorizontalAlignment="Fill">
 
         <!-- ========================= -->
-        <StackPanel Orientation="Vertical" Padding="10"
+        <StackPanel Orientation="Vertical" Padding="10" Title="Actions"
                       VerticalAlignment="Stretch" Name="stackPanel1">
 
           <HorizontalStackPanel>
@@ -87,7 +87,7 @@
         </StackPanel>
         <!-- ========================= -->
 
-        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2"
+        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2" Title="Settings"
                             Visible="false" Padding="10">
           <CheckBox Text="Multiple Selection"
                     Name="allowMultipleSelectionCheckBox"
@@ -121,7 +121,7 @@
         </VerticalStackPanel>
         <!-- ========================= -->
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false"
-                             Padding="10">
+                             Title="Events" Padding="10">
 
           <GroupBox Title="Cancel Events" Margin="0,5,0,5" Padding="5" >
             <VerticalStackPanel>

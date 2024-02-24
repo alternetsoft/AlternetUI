@@ -16,7 +16,7 @@
       <TabControl Name="pageControl" Margin="10,0,10,0" HorizontalAlignment="Fill">
 
         <!-- ========================= -->
-        <VerticalStackPanel Name="stackPanel1" Padding="10">
+        <VerticalStackPanel Name="stackPanel1" Padding="10" Title="Actions">
 
           <Grid RowCount="5" ColumnCount="2">
             <Button RowIndex="0" ColumnIndex="0"
@@ -77,7 +77,8 @@
 
         <!-- ========================= -->
 
-        <VerticalStackPanel Name="stackPanel2" Visible="false" Padding="10">
+        <VerticalStackPanel Name="stackPanel2" Visible="false" Title="Settings"
+                            Padding="10">
           <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
                     Margin="0,5,0,0"
                     CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
@@ -107,7 +108,8 @@
 
         <!-- ========================= -->
 
-        <VerticalStackPanel Name="stackPanel3" Visible="false" Padding="10">
+        <VerticalStackPanel Name="stackPanel3" Visible="false" Title="Events"
+                            Padding="10">
           <Button Text="Log Selected" Margin="0,3,0,0"
                   Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
           <GroupBox Title="Cancel Events" Margin="0,3,0,3" Padding="3" >
@@ -128,7 +130,8 @@
         </VerticalStackPanel>
         <!-- ========================= -->
 
-        <VerticalStackPanel Name="stackPanel4" Visible="false" Padding="10">
+        <VerticalStackPanel Name="stackPanel4" Visible="false" Padding="10"
+                            Title="Popup">
           <Button Text="Show TreeView Popup" Margin="10"
                   Name="showPopupButton" Click="ShowPopupButton_Click"/>
         </VerticalStackPanel>

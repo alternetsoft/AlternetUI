@@ -16,21 +16,21 @@
 
       <TabControl Grid.Column="0" Margin="0,0,10,0" Name="pageControl">
 
-        <VerticalStackPanel Name="gridStackPanel" Padding="10">
+        <VerticalStackPanel Name="gridStackPanel" Padding="10" Title="Grid">
           <Button Text="Add Column" Click="AddGridColumnButton_Click"
                   Margin="0,0,0,5" Name="buttonAddGridColumn"/>
           <Button Text="Add Row" Click="AddGridRowButton_Click"
                   Margin="0,0,0,5" Name="buttonAddGridRow"/>
         </VerticalStackPanel>
 
-        <VerticalStackPanel Name="containerStackPanel" Padding="10">
+        <VerticalStackPanel Name="containerStackPanel" Padding="10" Title="Container">
           <Button Text="Increase Margin" Name="buttonIncreaseMargin"
                   Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
           <Button Text="Increase Padding" Name="buttonIncreasePadding"
                   Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
         </VerticalStackPanel>
 
-        <VerticalStackPanel Name="buttonStackPanel" Padding="10">
+        <VerticalStackPanel Name="buttonStackPanel" Padding="10" Title="Button">
           <Button Text="Increase Margin" Name="buttonStackInreaseMargin"
                   Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
           <Button Text="Increase Padding" Name="buttonStackInreasePadding"

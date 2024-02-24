@@ -27,9 +27,6 @@ namespace WindowPropertiesSample
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
-            pageControl.Add("Actions", actionsPanel);
-            pageControl.Add("Settings", settingsPanel);
-            pageControl.Add("Bounds", boundsPanel);
             actionsPanel.Margin = 10;
             settingsPanel.Margin = 10;
             boundsPanel.Margin = 10;
