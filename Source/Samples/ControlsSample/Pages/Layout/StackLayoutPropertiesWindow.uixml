@@ -12,7 +12,8 @@
 
       <TabControl Grid.Column="0" Margin="0,0,20,0" Name="tabControlPanel">
 
-        <StackPanel Orientation="Vertical" Padding="5" Name="containerStackPanel" Visible="true">
+        <StackPanel Orientation="Vertical" Padding="5" Title="Container"
+                    Name="containerStackPanel" Visible="true">
           <Button Text="Increase Margin" Name="increaseContainerMarginButton"
                   Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
           <Button Text="Increase Padding" Name="increaseContainerPaddingButton"
@@ -23,7 +24,8 @@
                     Margin="0,0,0,5" />
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Padding="5" Name="buttonPanel" Visible="false">
+        <StackPanel Orientation="Vertical" Title="Button"
+                    Padding="5" Name="buttonPanel" Visible="false">
           <Button Text="Increase Margin" Name="increaseButtonMarginButton"
                   Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
           <Button Text="Increase Padding" Name="increaseButtonPaddingButton"

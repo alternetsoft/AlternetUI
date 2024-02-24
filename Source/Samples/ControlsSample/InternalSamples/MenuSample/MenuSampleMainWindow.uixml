@@ -64,7 +64,7 @@
 
     <!-- ========================= -->
     
-      <HorizontalStackPanel Margin="10" Name="menuPanel">
+      <HorizontalStackPanel Margin="10" Name="menuPanel" Title="Menu">
         <VerticalStackPanel>
           <Button Text="Add Menu Item"
                     Name="addDynamicMenuItemMenuItem"
@@ -107,7 +107,7 @@
       
     <!-- ========================= -->
 
-      <HorizontalStackPanel Margin="10" Name="toolbarPanel">
+      <HorizontalStackPanel Margin="10" Name="toolbarPanel" Title="ToolBar">
         <StackPanel>
           <Button Text="Toggle item check"
                   Name="toggleToolbarItemCheckButton"
@@ -159,7 +159,7 @@
 
     <!-- ========================= -->
 
-      <HorizontalStackPanel Margin="10" Name="statusPanel">
+      <HorizontalStackPanel Margin="10" Name="statusPanel" Title="StatusBar">
         <VerticalStackPanel>
           <Button Text="Add item" Name="statusAddButton" Margin="0,0,0,10" />
           <Button Text="Remove item" Name="statusRemoveButton" Margin="0,0,0,10" />

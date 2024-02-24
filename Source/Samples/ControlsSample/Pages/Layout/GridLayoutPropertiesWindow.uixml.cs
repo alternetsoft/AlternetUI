@@ -14,10 +14,6 @@ namespace LayoutSample
         {
             InitializeComponent();
 
-            pageControl.Add("Grid", gridStackPanel);
-            pageControl.Add("Container", containerStackPanel);
-            pageControl.Add("Button", buttonStackPanel);
-
             subjectColumnWidthControl = new ();
             subjectRowHeightControl = new();
 

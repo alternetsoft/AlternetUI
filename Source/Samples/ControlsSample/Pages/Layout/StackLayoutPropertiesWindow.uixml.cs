@@ -31,6 +31,7 @@ namespace LayoutSample
 
             dockedControl.Add("Docked");
             subjectGroupBox.MinimumSize = 400;
+            dockedSettings.Title = "Docked";
             dockedSettings.Parent = tabControlPanel;
             dockedLabel.Parent = dockedSettings;
             dockedEdit.Parent = dockedSettings;
@@ -45,9 +46,7 @@ namespace LayoutSample
             dockedEdit.SelectedItem = DockStyle.Left;
             dockedEdit.SelectedItemChanged += DockedEdit_SelectedItemChanged;
 
-            tabControlPanel.Add("Container", containerStackPanel);
-            tabControlPanel.Add("Button", buttonPanel);
-            tabControlPanel.Add("Docked", dockedSettings);
+            tabControlPanel.Add(dockedSettings);
 
             containerAlignmentControl = new AlignmentControl();
             containerStackPanel.Children.Add(containerAlignmentControl);

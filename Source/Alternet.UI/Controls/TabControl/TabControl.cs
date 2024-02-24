@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -16,6 +17,8 @@ namespace Alternet.UI
     /// use native tab control.
     /// </remarks>
     [ControlCategory("Containers")]
+    [DefaultProperty("Pages")]
+    [DefaultEvent("SelectedIndexChanged")]
     public partial class TabControl : Control
     {
         private readonly CardPanel cardPanel = new();
@@ -23,6 +26,7 @@ namespace Alternet.UI
         private bool hasInteriorBorder = true;
         private TabSizeMode sizeMode = TabSizeMode.Normal;
         private TabAppearance tabAppearance = TabAppearance.Normal;
+        private Collection<Control>? pages;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -56,6 +60,39 @@ namespace Alternet.UI
         public event EventHandler? SelectedIndexChanged;
 
         /// <summary>
+        /// Occurs when the selected page has changed.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? SelectedPageChanged;
+
+        /// <inheritdoc/>
+        public override ControlTypeId ControlKind => ControlTypeId.TabControl;
+
+        /// <summary>
+        /// Gets the collection of tab pages in this tab control.
+        /// </summary>
+        /// <value>A <see cref="Collection{Control}"/> that contains pages
+        /// in this <see cref="TabControl"/>.</value>
+        [Content]
+        public Collection<Control> Pages
+        {
+            get
+            {
+                if(pages is null)
+                {
+                    pages = new();
+                    pages.ItemInserted += Pages_ItemInserted;
+                    pages.ItemRemoved += Pages_ItemRemoved;
+                }
+
+                return pages;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements => Pages;
+
+        /// <summary>
         /// Gets or sets the index of the currently selected tab page.
         /// </summary>
         /// <returns>
@@ -79,7 +116,7 @@ namespace Alternet.UI
             {
                 Header.SelectedTabIndex = value;
                 Invalidate();
-                SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+                RaiseSelectedIndexChanged();
             }
         }
 
@@ -312,6 +349,9 @@ namespace Alternet.UI
         [Browsable(false)]
         internal CardPanelHeader Header => cardPanelHeader;
 
+        /// <inheritdoc />
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
+
         /// <summary>
         /// Adds new page.
         /// </summary>
@@ -524,6 +564,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets index of the tab page or <c>null</c> if control is not found in tabs.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
+        public virtual int? GetTabIndex(Control control)
+        {
+            var tabs = Header.Tabs;
+
+            for(int i = 0; i < tabs.Count; i++)
+            {
+                if (tabs[i].CardControl == control || tabs[i].CardUniqueId == control.UniqueId)
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Removes tab page from the control.
+        /// </summary>
+        /// <param name="control">Control to remove</param>
+        /// <returns></returns>
+        public virtual bool Remove(Control control)
+        {
+            var index = GetTabIndex(control);
+            return RemoveAt(index);
+        }
+
+        /// <summary>
         /// Sets images for the tab.
         /// </summary>
         /// <param name="index">The index of the tab page.</param>
@@ -628,7 +697,23 @@ namespace Alternet.UI
 
         private void CardPanelHeader_TabClick(object? sender, EventArgs e)
         {
+            RaiseSelectedIndexChanged();
+        }
+
+        private void RaiseSelectedIndexChanged()
+        {
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+            SelectedPageChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Pages_ItemRemoved(object? sender, int index, Control item)
+        {
+            Remove(item);
+        }
+
+        private void Pages_ItemInserted(object? sender, int index, Control item)
+        {
+            Add(item);
         }
 
         private void Header_Paint(object? sender, PaintEventArgs e)
