@@ -21,6 +21,11 @@ namespace Alternet.UI
     [DefaultEvent("SelectedIndexChanged")]
     public partial class TabControl : Control
     {
+        /// <summary>
+        /// Gets or sets default minimal tab size in the header.
+        /// </summary>
+        public static SizeD DefaultMinTabSize = (0, 0);
+
         private readonly TabControlCardPanel cardPanel = new();
         private readonly CardPanelHeader cardPanelHeader = new();
         private bool hasInteriorBorder = true;

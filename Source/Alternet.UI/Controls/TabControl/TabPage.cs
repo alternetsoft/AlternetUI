@@ -14,7 +14,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class TabPage : Control
     {
-        int? index;
+        private int? index;
 
         /// <summary>
         /// Initializes a new instance of <see cref="TabPage"/> class.
