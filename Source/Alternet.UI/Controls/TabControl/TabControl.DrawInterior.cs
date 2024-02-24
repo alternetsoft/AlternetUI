@@ -189,11 +189,13 @@ namespace Alternet.UI
 
             void DrawBorders(Thickness[] borders)
             {
+#pragma warning disable
                 DrawingUtils.FillRectanglesBorder(
                             dc,
                             brush,
                             rects,
                             borders);
+#pragma warning restore
             }
 
             void DrawTopStart()
