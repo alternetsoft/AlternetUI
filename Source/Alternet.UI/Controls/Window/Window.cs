@@ -21,7 +21,6 @@ namespace Alternet.UI
         private static int incFontSize = 0;
 
         private readonly WindowInfo info = new();
-        private string title = string.Empty;
         private Control? toolbar = null;
         private FrameworkElement? statusBar = null;
         private IconSet? icon = null;
@@ -71,11 +70,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
         /// </summary>
         public event EventHandler? ShowInTaskbarChanged;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="Title"/> property changes.
-        /// </summary>
-        public event EventHandler? TitleChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="State"/> property changes.
@@ -201,7 +195,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets default control font size increment (in points) on normal dpi displays (DPI less or equal to 96).
+        /// Gets or sets default control font size increment (in points) on normal
+        /// dpi displays (DPI less or equal to 96).
         /// Default value is 0.
         /// </summary>
         public static int IncFontSize
@@ -273,6 +268,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.
         /// </summary>
+        /// <remarks>
+        /// On some operating systems additional properties need to be set in order to hide
+        /// the title bar. For example, <see cref="CloseEnabled"/>, <see cref="MinimizeEnabled"/>,
+        /// <see cref="MaximizeEnabled"/>, <see cref="HasSystemMenu"/>, <see cref="HasBorder"/>
+        /// and some other properties can affect on the title bar
+        /// visibility.
+        /// </remarks>
         public virtual bool HasTitleBar
         {
             get => info.HasTitleBar;
@@ -511,27 +513,6 @@ namespace Alternet.UI
                 owner = value;
                 OnOwnerChanged(EventArgs.Empty);
                 OwnerChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a title of this window.
-        /// </summary>
-        /// <remarks>A string that contains a title of this window. Default value is empty
-        /// string ("").</remarks>
-        public virtual string Title
-        {
-            get
-            {
-                return title;
-            }
-
-            set
-            {
-                if (title == value)
-                    return;
-                title = value;
-                TitleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

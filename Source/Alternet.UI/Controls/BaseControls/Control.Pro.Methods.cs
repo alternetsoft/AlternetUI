@@ -220,6 +220,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the value of the <see cref="Title"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnTitleChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when <see cref="CurrentStateChanged"/> property is changed.
         /// </summary>
         protected virtual void OnCurrentStateChanged(EventArgs e)

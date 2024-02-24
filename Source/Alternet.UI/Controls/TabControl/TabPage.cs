@@ -14,13 +14,10 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class TabPage : Control
     {
-        private string title;
-
         /// <summary>
         /// Initializes a new instance of <see cref="TabPage"/> class.
         /// </summary>
         public TabPage()
-            : this(string.Empty)
         {
         }
 
@@ -29,37 +26,11 @@ namespace Alternet.UI
         /// </summary>
         public TabPage(string? title)
         {
-            this.title = title ?? string.Empty;
+            Title = title ?? string.Empty;
         }
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="Title"/> property changes.
-        /// </summary>
-        public event EventHandler? TitleChanged;
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.TabPage;
-
-        /// <summary>
-        /// Gets or sets the text to display on the tab.
-        /// </summary>
-        /// <value>The text to display on the tab.</value>
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-
-            set
-            {
-                if (title == value)
-                    return;
-
-                title = value;
-                RaiseTitleChanged(EventArgs.Empty);
-            }
-        }
 
         /// <summary>
         /// Gets the zero-based index of the page within the <see cref="TabControl"/> control,
@@ -75,25 +46,6 @@ namespace Alternet.UI
                 return base.ToString() ?? nameof(TabPage);
             else
                 return Title;
-        }
-
-        /// <summary>
-        /// Called when the value of the <see cref="Title"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnTitleChanged(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Raises the <see cref="TitleChanged"/> event and calls
-        /// <see cref="OnTitleChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        private void RaiseTitleChanged(EventArgs e)
-        {
-            OnTitleChanged(e);
-            TitleChanged?.Invoke(this, e);
         }
     }
 }
