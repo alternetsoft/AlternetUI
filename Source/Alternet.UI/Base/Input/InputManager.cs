@@ -17,6 +17,7 @@ namespace Alternet.UI
     {
         private static readonly KeyboardDevice KeyboardDevice;
         private static readonly MouseDevice MouseDevice;
+        private long? mouseWheelTimestamp;
 
         static InputManager()
         {
@@ -152,6 +153,11 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
+
+            if (mouseWheelTimestamp == timestamp)
+                return;
+            mouseWheelTimestamp = timestamp;
+
             var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;

@@ -24,6 +24,12 @@ namespace PropertyGridSample
             button.StateImages = ButtonImages;
             button.SuggestedHeight = 100;
             button.HorizontalAlignment = HorizontalAlignment.Left;
+            button.MouseWheel += Button_MouseWheel;
+        }
+
+        private static void Button_MouseWheel(object sender, MouseEventArgs e)
+        {
+            Application.Log($"Button MouseWheel: {e.Delta}, {e.Timestamp}");
         }
 
         public static void InitSpeedTextButton(object control)
