@@ -121,6 +121,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets card which <see cref="CardPanelItem.Control"/> property is equal
+        /// to <paramref name="control"/>.
+        /// </summary>
+        /// <param name="control">Control.</param>
+        public CardPanelItem? Find(Control? control)
+        {
+            if (control is null)
+                return null;
+            foreach (var item in Cards)
+            {
+                if (item.ControlCreated && item.Control == control)
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets index of the specified card.
         /// </summary>
         /// <param name="item">Card.</param>
@@ -132,23 +150,6 @@ namespace Alternet.UI
             {
                 if (item == Cards[i])
                     return i;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets card with the specified control.
-        /// </summary>
-        /// <param name="control">Control attached to the card.</param>
-        public CardPanelItem? Find(Control? control)
-        {
-            if (control is null)
-                return null;
-            foreach (var item in Cards)
-            {
-                if (item.ControlCreated && item.Control == control)
-                    return item;
             }
 
             return null;

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements multiple <see cref="GenericToolBar"/> controls.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class GenericToolBarSet : Control
+    public partial class ToolBarSet : Control
     {
         /// <summary>
         /// Gets or sets default distance (in dips) between toolbars.
@@ -18,9 +18,9 @@ namespace Alternet.UI
         public static double DefaultToolBarDistance = 2;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericToolBarSet"/> class.
+        /// Initializes a new instance of the <see cref="ToolBarSet"/> class.
         /// </summary>
-        public GenericToolBarSet()
+        public ToolBarSet()
         {
             Layout = LayoutStyle.Vertical;
             ToolBarCount = 1;

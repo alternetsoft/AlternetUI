@@ -57,7 +57,11 @@ namespace ControlsSample
 
         private void TabControl_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            Application.Log("TabControl SelectedIndexChanged");
+            var selected = tabControl.SelectedPage as TabPage;
+            if(selected is not null)
+                Application.Log($"TabControl TabPage.Index: {selected.Index}");
+            else
+                Application.Log($"TabControl SelectedIndex: {tabControl.SelectedIndex}");
         }
 
         private int GenItemIndex()
@@ -68,8 +72,8 @@ namespace ControlsSample
 
         private void ModifyPageTitleButton_Click(object? sender, EventArgs e)
         {
-            var index = tabControl.SelectedIndex;
-            tabControl.SetTitle(index, tabControl.GetTitle(index) + "X");
+            var control = tabControl.SelectedControl;
+            control?.SetTitle(control.Title + "X");
         }
 
         private void InsertLastPageSiblingButton_Click(object? sender, EventArgs e)
@@ -96,7 +100,7 @@ namespace ControlsSample
         private void InsertPage(int? index = null)
         {
             var s = "Page " + GenItemIndex();
-            Control page = new() 
+            TabPage page = new() 
             {
                 Padding = 5,
             };
@@ -122,10 +126,9 @@ namespace ControlsSample
 
             page.Disposed += Page_Disposed;
 
-            if(index == null)
-                tabControl.Add(s, page);
-            else
-                tabControl.Insert(index.Value, s, page);
+            page.Title = s;
+
+            tabControl.Insert(index, page);
         }
 
         private void Page_Disposed(object? sender, EventArgs e)

@@ -21,11 +21,6 @@ namespace Alternet.UI
     internal partial class CardPanelHeader : Control, ITextProperty
     {
         /// <summary>
-        /// Gets or sets default minimal tab size.
-        /// </summary>
-        public static SizeD DefaultMinTabSize = (0, 0);
-
-        /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
         /// </summary>
         public static Func<SpeedButton>? CreateButton = null;
@@ -62,7 +57,7 @@ namespace Alternet.UI
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
         private HorizontalAlignment tabHorizontalAlignment = HorizontalAlignment.Left;
-        private bool useDefaultTheme = true;
+        private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -131,18 +126,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="SpeedButton.DefaultTheme"/>
-        /// for the color and styles of the tabs.
+        /// Gets or sets colors and styles theme of the tabs.
         /// </summary>
         [Browsable(false)]
-        public virtual bool UseTabDefaultTheme
+        public virtual SpeedButton.KnownTheme TabTheme
         {
-            get => useDefaultTheme;
+            get => tabTheme;
             set
             {
-                if (useDefaultTheme == value)
+                if (tabTheme == value)
                     return;
-                useDefaultTheme = value;
+                tabTheme = value;
                 UpdateTabs();
             }
         }
@@ -656,6 +650,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets item with the specified control.
+        /// </summary>
+        /// <param name="control">Control attached to the item.</param>
+        public int? IndexOfCardControl(Control? control)
+        {
+            if (control is null)
+                return null;
+            for (int i = 0; i < Tabs.Count; i++)
+            {
+                if (Tabs[i].CardControl == control)
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Inserts new item to the control at the specified position.
         /// </summary>
         /// <param name="index">Item position.</param>
@@ -750,7 +761,7 @@ namespace Alternet.UI
             var result = CreateButton?.Invoke() ?? Fn();
             result.BackgroundColor = BackgroundColor;
             if (result.MinimumSize.IsEmpty)
-                result.MinimumSize = DefaultMinTabSize;
+                result.MinimumSize = TabControl.DefaultMinTabSize;
             return result;
 
             SpeedButton Fn()
@@ -860,7 +871,7 @@ namespace Alternet.UI
             item.HeaderButton.Margin = TabMargin ?? DefaultTabMargin;
             item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
             item.HeaderButton.HorizontalAlignment = TabHorizontalAlignment;
-            item.HeaderButton.UseDefaultTheme = UseTabDefaultTheme;
+            item.HeaderButton.UseTheme = tabTheme;
         }
 
         private void UpdateTabs()

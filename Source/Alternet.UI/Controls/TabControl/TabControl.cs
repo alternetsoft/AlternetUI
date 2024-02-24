@@ -21,12 +21,17 @@ namespace Alternet.UI
     [DefaultEvent("SelectedIndexChanged")]
     public partial class TabControl : Control
     {
-        private readonly CardPanel cardPanel = new();
+        /// <summary>
+        /// Gets or sets default minimal tab size in the header.
+        /// </summary>
+        public static SizeD DefaultMinTabSize = (0, 0);
+
+        private readonly TabControlCardPanel cardPanel = new();
         private readonly CardPanelHeader cardPanelHeader = new();
         private bool hasInteriorBorder = true;
         private TabSizeMode sizeMode = TabSizeMode.Normal;
         private TabAppearance tabAppearance = TabAppearance.Normal;
-        private Collection<Control>? pages;
+        private int addSuspended;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -40,7 +45,6 @@ namespace Alternet.UI
 
             base.Layout = LayoutStyle.Vertical;
             cardPanelHeader.TabHasBorder = false;
-            cardPanelHeader.UseTabDefaultTheme = false;
             cardPanelHeader.TabClick += CardPanelHeader_TabClick;
             cardPanelHeader.ButtonSizeChanged += CardPanelHeader_ButtonSizeChanged;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
@@ -51,6 +55,8 @@ namespace Alternet.UI
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
             cardPanelHeader.CardPanel = cardPanel;
+            cardPanel.Children.ItemInserted += Pages_ItemInserted;
+            cardPanel.Children.ItemRemoved += Pages_ItemRemoved;
         }
 
         /// <summary>
@@ -78,14 +84,22 @@ namespace Alternet.UI
         {
             get
             {
-                if(pages is null)
-                {
-                    pages = new();
-                    pages.ItemInserted += Pages_ItemInserted;
-                    pages.ItemRemoved += Pages_ItemRemoved;
-                }
+                return cardPanel.Children;
+            }
+        }
 
-                return pages;
+        /// <summary>
+        /// Gets or sets colors and styles theme of the tabs.
+        /// </summary>
+        public virtual SpeedButton.KnownTheme TabTheme
+        {
+            get => Header.TabTheme;
+            set
+            {
+                if (TabTheme == value)
+                    return;
+                Header.TabTheme = value;
+                Invalidate();
             }
         }
 
@@ -131,10 +145,9 @@ namespace Alternet.UI
         {
             get
             {
-                var pageIndex = Header.SelectedTabIndex;
-                if (pageIndex is null)
-                    return null;
-                return Pages[pageIndex.Value];
+                var index = Header.SelectedTabIndex;
+                var result = GetControlAt(index);
+                return result;
             }
 
             set
@@ -145,7 +158,7 @@ namespace Alternet.UI
                 if (selectedPage == value)
                     return;
                 var index = GetTabIndex(value);
-                SelectedIndex = index ?? 0;
+                SelectedIndex = index ?? -1;
             }
         }
 
@@ -454,45 +467,6 @@ namespace Alternet.UI
         /// <summary>
         /// Adds new page.
         /// </summary>
-        /// <param name="title">Page title.</param>
-        /// <param name="fnCreate">Function which creates the control.</param>
-        /// <returns>
-        /// Created page index.
-        /// </returns>
-        public virtual int Add(string title, Func<Control> fnCreate)
-        {
-            var cardIndex = cardPanel.Add(title, fnCreate);
-            var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
-            if (headerTabIndex == 0)
-                SelectFirstTab();
-            Invalidate();
-            return cardIndex;
-        }
-
-        /// <summary>
-        /// Adds new page.
-        /// </summary>
-        /// <param name="title">Page title.</param>
-        /// <param name="control">Control.</param>
-        /// <returns>
-        /// Created page index.
-        /// </returns>
-        public virtual int Add(string title, Control? control = null)
-        {
-            control ??= new();
-            var cardIndex = cardPanel.Add(title, control);
-            var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
-            if (headerTabIndex == 0)
-                SelectFirstTab();
-            else
-                control.Visible = false;
-            Invalidate();
-            return cardIndex;
-        }
-
-        /// <summary>
-        /// Adds new page.
-        /// </summary>
         /// <param name="control">Control.</param>
         /// <returns>
         /// Created page index.
@@ -506,6 +480,19 @@ namespace Alternet.UI
         /// Inserts new page at the specified index.
         /// </summary>
         /// <param name="index">The position at which to insert the tab.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Insert(int? index, Control control)
+        {
+            return Insert(index, control.Title, control);
+        }
+
+        /// <summary>
+        /// Inserts new page at the specified index.
+        /// </summary>
+        /// <param name="index">The position at which to insert the tab.</param>
         /// <param name="title">Page title.</param>
         /// <param name="control">Control.</param>
         /// <returns>
@@ -513,15 +500,68 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Insert(int? index, string title, Control? control = null)
         {
-            control ??= new();
-            var cardIndex = cardPanel.Add(title, control);
-            var headerTabIndex = Header.Insert(index, title, cardPanel[cardIndex].UniqueId);
-            if (headerTabIndex == 0)
-                SelectFirstTab();
-            else
-                control.Visible = false;
-            Invalidate();
-            return cardIndex;
+            addSuspended++;
+
+            try
+            {
+                control ??= new TabPage();
+                var cardIndex = cardPanel.Add(title, control);
+                var headerTabIndex = Header.Insert(index, title, cardPanel[cardIndex].UniqueId);
+                if (headerTabIndex == 0)
+                    SelectFirstTab();
+                else
+                {
+                    control.Visible = false;
+                    control.Parent = Contents;
+                }
+
+                Invalidate();
+                return cardIndex;
+            }
+            finally
+            {
+                addSuspended--;
+            }
+        }
+
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="fnCreate">Function which creates the control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add(string title, Func<Control> fnCreate)
+        {
+            addSuspended++;
+
+            try
+            {
+                var cardIndex = cardPanel.Add(title, fnCreate);
+                var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
+                if (headerTabIndex == 0)
+                    SelectFirstTab();
+                Invalidate();
+                return cardIndex;
+            }
+            finally
+            {
+                addSuspended--;
+            }
+        }
+
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add(string title, Control? control = null)
+        {
+            return Insert(Header.Tabs.Count, title, control);
         }
 
         /// <summary>
@@ -606,7 +646,10 @@ namespace Alternet.UI
 
             for(int i = 0; i < tabs.Count; i++)
             {
-                if (tabs[i].CardControl == control || tabs[i].CardUniqueId == control.UniqueId)
+                if (tabs[i].CardControl == control)
+                    return i;
+                var card = cardPanel.Find(tabs[i].CardUniqueId);
+                if (card?.Control == control)
                     return i;
             }
 
@@ -677,6 +720,21 @@ namespace Alternet.UI
             return tabPage;
         }
 
+        /// <inheritdoc/>
+        public override void OnChildPropertyChanged(
+            Control child,
+            string propName,
+            bool directChild = true)
+        {
+            if (propName == nameof(Title))
+            {
+                var index = GetTabIndex(child);
+                if (index is null)
+                    return;
+                Header.Tabs[index.Value].HeaderButton.Text = child.Title;
+            }
+        }
+
         /// <summary>
         /// Gets interior border color.
         /// </summary>
@@ -745,6 +803,10 @@ namespace Alternet.UI
 
         private void Pages_ItemInserted(object? sender, int index, Control item)
         {
+            if (addSuspended > 0)
+                return;
+            if (Contents.Find(item) is not null)
+                return;
             Add(item);
         }
 
@@ -764,6 +826,18 @@ namespace Alternet.UI
                 r,
                 GetInteriorBorderColor(),
                 TabAlignment);
+        }
+
+        private class TabControlCardPanel : CardPanel
+        {
+            /// <inheritdoc/>
+            public override void OnChildPropertyChanged(
+                Control child,
+                string propName,
+                bool directChild = true)
+            {
+                Parent?.OnChildPropertyChanged(child, propName, false);
+            }
         }
     }
 }

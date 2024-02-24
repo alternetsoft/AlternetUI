@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Implements main control of the Find and Replace dialogs.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class FindReplaceControl : GenericToolBarSet
+    public partial class FindReplaceControl : ToolBarSet
     {
         private readonly ComboBox scopeEdit = new()
         {

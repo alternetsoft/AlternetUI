@@ -79,6 +79,9 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void LogReplace(string? message, string? prefix)
         {
+            if (IsDisposed)
+                return;
+
             string? s;
 
             s = LastLogMessage;
@@ -121,6 +124,9 @@ namespace Alternet.UI
         /// <param name="message">Message text.</param>
         public virtual void Log(string? message)
         {
+            if (IsDisposed)
+                return;
+
             lastLogMessage = message;
             Add(ConstructLogMessage(message));
             SelectedIndex = Items.Count - 1;
@@ -140,6 +146,13 @@ namespace Alternet.UI
             if (string.IsNullOrWhiteSpace(msg))
                 return string.Empty;
             return $" [{LogUtils.GenNewId()}] {msg}";
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeResources()
+        {
+            Application.Current.LogMessage -= Application_LogMessage;
+            base.DisposeResources();
         }
 
         /// <summary>

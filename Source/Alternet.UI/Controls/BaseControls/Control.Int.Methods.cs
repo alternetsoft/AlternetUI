@@ -135,7 +135,6 @@ namespace Alternet.UI
         internal void RaiseActivated()
         {
             Activated?.Invoke(this, EventArgs.Empty);
-            /*Application.DebugLog($"Activated {Name}");*/
         }
 
         internal Color? GetDefaultAttributesBgColor()

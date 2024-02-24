@@ -14,6 +14,8 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class TabPage : Control
     {
+        private int? index;
+
         /// <summary>
         /// Initializes a new instance of <see cref="TabPage"/> class.
         /// </summary>
@@ -37,7 +39,23 @@ namespace Alternet.UI
         /// or <see langword="null"/> if the item is not associated with
         /// a <see cref="TabControl"/> control.
         /// </summary>
-        public int? Index { get; internal set; }
+        public int? Index
+        {
+            get
+            {
+                if (index is not null)
+                    return index;
+                if (Parent?.Parent is not TabControl tabControl)
+                    return null;
+                var result = tabControl.GetTabIndex(this);
+                return result;
+            }
+
+            internal set
+            {
+                index = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()

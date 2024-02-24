@@ -22,7 +22,7 @@ namespace PropertyGridSample
 
         public static void InitGenericToolBarSet(object control)
         {
-            if (control is not GenericToolBarSet toolbar)
+            if (control is not ToolBarSet toolbar)
                 return;
 
             toolbar.ToolBarCount = 3;

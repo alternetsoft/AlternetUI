@@ -164,6 +164,37 @@ namespace Alternet.UI
         public virtual void Raise() => NativeControl.Raise();
 
         /// <summary>
+        /// Called by the child control when its property is changed.
+        /// </summary>
+        /// <param name="child">Child control.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="directChild">Whether child is direct or not (child of the child).</param>
+        /// <remarks>
+        /// It's up to the child control to decide on what property changes
+        /// to inform the container control. Call this method
+        /// in the parent control to notify about property change.
+        /// </remarks>
+        /// <remarks>
+        /// By default in <see cref="Control"/> it is called for <see cref="Title"/>,
+        /// <see cref="Enabled"/> and some other properties.
+        /// </remarks>
+        public virtual void OnChildPropertyChanged(
+            Control child,
+            string propName,
+            bool directChild = true)
+        {
+        }
+
+        /// <summary>
+        /// Sets <see cref="Title"/> property.
+        /// </summary>
+        /// <param name="title">New title</param>
+        public void SetTitle(string? title)
+        {
+            Title = title ?? string.Empty;
+        }
+
+        /// <summary>
         /// Centers the window.
         /// </summary>
         /// <param name="direction">Specifies the direction for the centering.</param>
