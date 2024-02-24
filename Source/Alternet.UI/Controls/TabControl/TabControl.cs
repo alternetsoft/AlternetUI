@@ -26,7 +26,7 @@ namespace Alternet.UI
         private bool hasInteriorBorder = true;
         private TabSizeMode sizeMode = TabSizeMode.Normal;
         private TabAppearance tabAppearance = TabAppearance.Normal;
-        private Collection<Control>? pages;
+        private int addSuspended;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -51,6 +51,8 @@ namespace Alternet.UI
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
             cardPanelHeader.CardPanel = cardPanel;
+            cardPanel.Children.ItemInserted += Pages_ItemInserted;
+            cardPanel.Children.ItemRemoved += Pages_ItemRemoved;
         }
 
         /// <summary>
@@ -78,14 +80,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(pages is null)
-                {
-                    pages = new();
-                    pages.ItemInserted += Pages_ItemInserted;
-                    pages.ItemRemoved += Pages_ItemRemoved;
-                }
-
-                return pages;
+                return cardPanel.Children;
             }
         }
 
@@ -131,10 +126,9 @@ namespace Alternet.UI
         {
             get
             {
-                var pageIndex = Header.SelectedTabIndex;
-                if (pageIndex is null)
-                    return null;
-                return Pages[pageIndex.Value];
+                var index = Header.SelectedTabIndex;
+                var result = GetControlAt(index);
+                return result;
             }
 
             set
@@ -145,7 +139,7 @@ namespace Alternet.UI
                 if (selectedPage == value)
                     return;
                 var index = GetTabIndex(value);
-                SelectedIndex = index ?? 0;
+                SelectedIndex = index ?? -1;
             }
         }
 
@@ -454,45 +448,6 @@ namespace Alternet.UI
         /// <summary>
         /// Adds new page.
         /// </summary>
-        /// <param name="title">Page title.</param>
-        /// <param name="fnCreate">Function which creates the control.</param>
-        /// <returns>
-        /// Created page index.
-        /// </returns>
-        public virtual int Add(string title, Func<Control> fnCreate)
-        {
-            var cardIndex = cardPanel.Add(title, fnCreate);
-            var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
-            if (headerTabIndex == 0)
-                SelectFirstTab();
-            Invalidate();
-            return cardIndex;
-        }
-
-        /// <summary>
-        /// Adds new page.
-        /// </summary>
-        /// <param name="title">Page title.</param>
-        /// <param name="control">Control.</param>
-        /// <returns>
-        /// Created page index.
-        /// </returns>
-        public virtual int Add(string title, Control? control = null)
-        {
-            control ??= new();
-            var cardIndex = cardPanel.Add(title, control);
-            var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
-            if (headerTabIndex == 0)
-                SelectFirstTab();
-            else
-                control.Visible = false;
-            Invalidate();
-            return cardIndex;
-        }
-
-        /// <summary>
-        /// Adds new page.
-        /// </summary>
         /// <param name="control">Control.</param>
         /// <returns>
         /// Created page index.
@@ -526,15 +481,68 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Insert(int? index, string title, Control? control = null)
         {
-            control ??= new();
-            var cardIndex = cardPanel.Add(title, control);
-            var headerTabIndex = Header.Insert(index, title, cardPanel[cardIndex].UniqueId);
-            if (headerTabIndex == 0)
-                SelectFirstTab();
-            else
-                control.Visible = false;
-            Invalidate();
-            return cardIndex;
+            addSuspended++;
+
+            try
+            {
+                control ??= new TabPage();
+                var cardIndex = cardPanel.Add(title, control);
+                var headerTabIndex = Header.Insert(index, title, cardPanel[cardIndex].UniqueId);
+                if (headerTabIndex == 0)
+                    SelectFirstTab();
+                else
+                {
+                    control.Visible = false;
+                    control.Parent = Contents;
+                }
+
+                Invalidate();
+                return cardIndex;
+            }
+            finally
+            {
+                addSuspended--;
+            }
+        }
+
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="fnCreate">Function which creates the control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add(string title, Func<Control> fnCreate)
+        {
+            addSuspended++;
+
+            try
+            {
+                var cardIndex = cardPanel.Add(title, fnCreate);
+                var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
+                if (headerTabIndex == 0)
+                    SelectFirstTab();
+                Invalidate();
+                return cardIndex;
+            }
+            finally
+            {
+                addSuspended--;
+            }
+        }
+
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add(string title, Control? control = null)
+        {
+            return Insert(Header.Tabs.Count, title, control);
         }
 
         /// <summary>
@@ -776,6 +784,10 @@ namespace Alternet.UI
 
         private void Pages_ItemInserted(object? sender, int index, Control item)
         {
+            if (addSuspended > 0)
+                return;
+            if (Contents.Find(item) is not null)
+                return;
             Add(item);
         }
 

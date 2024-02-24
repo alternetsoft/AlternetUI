@@ -656,6 +656,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets item with the specified control.
+        /// </summary>
+        /// <param name="control">Control attached to the item.</param>
+        public int? IndexOfCardControl(Control? control)
+        {
+            if (control is null)
+                return null;
+            for (int i = 0; i < Tabs.Count; i++)
+            {
+                if (Tabs[i].CardControl == control)
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Inserts new item to the control at the specified position.
         /// </summary>
         /// <param name="index">Item position.</param>
