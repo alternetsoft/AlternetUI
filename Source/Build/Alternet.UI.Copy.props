@@ -22,7 +22,7 @@
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|x64'">
         <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -33,7 +33,7 @@
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|x64'">
         <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -41,7 +41,7 @@
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|x86'">
         <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -49,7 +49,7 @@
 
    <!-- ====================================================== -->
 
-    <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|x86'">
         <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
