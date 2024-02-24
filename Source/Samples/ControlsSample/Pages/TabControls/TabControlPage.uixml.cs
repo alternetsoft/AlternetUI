@@ -68,8 +68,8 @@ namespace ControlsSample
 
         private void ModifyPageTitleButton_Click(object? sender, EventArgs e)
         {
-            var index = tabControl.SelectedIndex;
-            tabControl.SetTitle(index, tabControl.GetTitle(index) + "X");
+            var control = tabControl.SelectedControl;
+            control?.SetTitle(control.Title + "X");
         }
 
         private void InsertLastPageSiblingButton_Click(object? sender, EventArgs e)
@@ -122,10 +122,12 @@ namespace ControlsSample
 
             page.Disposed += Page_Disposed;
 
+            page.Title = s;
+
             if(index == null)
-                tabControl.Add(s, page);
+                tabControl.Add(page);
             else
-                tabControl.Insert(index.Value, s, page);
+                tabControl.Insert(index.Value, page);
         }
 
         private void Page_Disposed(object? sender, EventArgs e)

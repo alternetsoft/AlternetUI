@@ -31,6 +31,7 @@ namespace Alternet.UI
         {
             OnTitleChanged(e);
             TitleChanged?.Invoke(this, e);
+            Parent?.OnChildPropertyChanged(this, nameof(Title));
         }
 
         private void Children_ItemInserted(object? sender, int index, Control item)
@@ -93,13 +94,7 @@ namespace Alternet.UI
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
             handler?.Control_EnabledChanged();
+            Parent?.OnChildPropertyChanged(this, nameof(Enabled));
         }
-
-/*#pragma warning disable
-        private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
-#pragma warning restore
-        {
-            RaiseEnabledChanged(EventArgs.Empty);
-        }*/
     }
 }

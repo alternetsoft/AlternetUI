@@ -21,7 +21,7 @@ namespace Alternet.UI
     [DefaultEvent("SelectedIndexChanged")]
     public partial class TabControl : Control
     {
-        private readonly CardPanel cardPanel = new();
+        private readonly TabControlCardPanel cardPanel = new();
         private readonly CardPanelHeader cardPanelHeader = new();
         private bool hasInteriorBorder = true;
         private TabSizeMode sizeMode = TabSizeMode.Normal;
@@ -506,6 +506,19 @@ namespace Alternet.UI
         /// Inserts new page at the specified index.
         /// </summary>
         /// <param name="index">The position at which to insert the tab.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Insert(int? index, Control control)
+        {
+            return Insert(index, control.Title, control);
+        }
+
+        /// <summary>
+        /// Inserts new page at the specified index.
+        /// </summary>
+        /// <param name="index">The position at which to insert the tab.</param>
         /// <param name="title">Page title.</param>
         /// <param name="control">Control.</param>
         /// <returns>
@@ -606,7 +619,10 @@ namespace Alternet.UI
 
             for(int i = 0; i < tabs.Count; i++)
             {
-                if (tabs[i].CardControl == control || tabs[i].CardUniqueId == control.UniqueId)
+                if (tabs[i].CardControl == control)
+                    return i;
+                var card = cardPanel.Find(tabs[i].CardUniqueId);
+                if (card?.Control == control)
                     return i;
             }
 
@@ -675,6 +691,21 @@ namespace Alternet.UI
             }
 
             return tabPage;
+        }
+
+        /// <inheritdoc/>
+        public override void OnChildPropertyChanged(
+            Control child,
+            string propName,
+            bool directChild = true)
+        {
+            if (propName == nameof(Title))
+            {
+                var index = GetTabIndex(child);
+                if (index is null)
+                    return;
+                Header.Tabs[index.Value].HeaderButton.Text = child.Title;
+            }
         }
 
         /// <summary>
@@ -764,6 +795,18 @@ namespace Alternet.UI
                 r,
                 GetInteriorBorderColor(),
                 TabAlignment);
+        }
+
+        private class TabControlCardPanel : CardPanel
+        {
+            /// <inheritdoc/>
+            public override void OnChildPropertyChanged(
+                Control child,
+                string propName,
+                bool directChild = true)
+            {
+                Parent?.OnChildPropertyChanged(child, propName, false);
+            }
         }
     }
 }
