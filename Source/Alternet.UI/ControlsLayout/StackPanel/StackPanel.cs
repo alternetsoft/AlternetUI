@@ -61,7 +61,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.StackPanel;
 
-        internal static SizeD GetPreferredSizeHorizontalStackPanel(Control container, SizeD availableSize)
+        internal static SizeD GetPreferredSizeHorizontalStackPanel(
+            Control container,
+            SizeD availableSize)
         {
             var isNanHeight = double.IsNaN(container.SuggestedHeight);
             var isNanWidth = double.IsNaN(container.SuggestedWidth);
@@ -101,6 +103,9 @@ namespace Alternet.UI
             Control container,
             SizeD availableSize)
         {
+            var isNanWidth = double.IsNaN(container.SuggestedWidth);
+            var isNanHeight = double.IsNaN(container.SuggestedHeight);
+
             var padding = container.Padding;
 
             double maxWidth = 0;
@@ -114,9 +119,9 @@ namespace Alternet.UI
                 height += preferredSize.Height + margin.Vertical;
             }
 
-            var isNan = double.IsNaN(container.SuggestedWidth);
-            var newWidth = isNan ? maxWidth + padding.Horizontal : container.SuggestedWidth;
-            return new SizeD(newWidth, height + padding.Vertical);
+            var newWidth = isNanWidth ? maxWidth + padding.Horizontal : container.SuggestedWidth;
+            var newHeight = isNanHeight ? height + padding.Vertical : container.SuggestedHeight;
+            return new SizeD(newWidth, newHeight);
         }
 
         internal static void LayoutHorizontalStackPanel(
