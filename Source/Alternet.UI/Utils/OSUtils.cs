@@ -41,5 +41,26 @@ namespace Alternet.UI
         {
             return (short)(value.ToInt32() >> 16);
         }
+
+        internal static short BytesToInt16(byte ch0, byte ch1)
+        {
+            int num = ch1;
+            num |= ch0 << 8;
+            return (short)num;
+        }
+
+        internal static int BytesToInt(byte ch0, byte ch1, byte ch2, byte ch3)
+        {
+            return MmioFOURCC((char)ch3, (char)ch2, (char)ch1, (char)ch0);
+        }
+
+        internal static int MmioFOURCC(char ch0, char ch1, char ch2, char ch3)
+        {
+            int num = 0;
+            num |= ch0;
+            num |= (int)((uint)ch1 << 8);
+            num |= (int)((uint)ch2 << 16);
+            return num | (int)((uint)ch3 << 24);
+        }
     }
 }
