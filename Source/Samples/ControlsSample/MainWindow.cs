@@ -238,6 +238,7 @@ namespace ControlsSample
             NameValue<Func<Control>>?[] pages =
             {
                 new("System Sounds", () => new SystemSoundsPage()),
+                new("Sound Player", () => new SoundPlayerPage()),
                 animationNameValue,
             };
 
