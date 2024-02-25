@@ -1,8 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-#if FEATURE_WINDOWS_SYSTEM_COLORS
-
 internal static partial class Interop
 {
     internal static partial class User32
@@ -45,5 +40,3 @@ internal static partial class Interop
         }
     }
 }
-
-#endif

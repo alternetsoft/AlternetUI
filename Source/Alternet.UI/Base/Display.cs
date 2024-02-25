@@ -53,6 +53,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default display resolution for the current platform in pixels per inch.
         /// </summary>
+        /// <remarks>
+        /// Currently the default DPI is the same in both horizontal and vertical
+        /// directions on all platforms and its value is 96 everywhere except under
+        /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
+        /// </remarks>
         public static int DefaultDPIValue => Native.WxOtherFactory.DisplayGetStdPPIValue();
 
         /// <summary>
@@ -90,8 +95,9 @@ namespace Alternet.UI
         /// Gets default display resolution for the current platform as <see cref="SizeI"/>.
         /// </summary>
         /// <remarks>
-        /// This property may return 96 on high dpi displays. It is better to get primary display with
-        /// <see cref="Primary"/> property and use it's <see cref="Display.DPI"/> property to get DPI.
+        /// Currently the default DPI is the same in both horizontal and vertical
+        /// directions on all platforms and its value is 96 everywhere except under
+        /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
         public static SizeI DefaultDPI => Native.WxOtherFactory.DisplayGetStdPPI();
 

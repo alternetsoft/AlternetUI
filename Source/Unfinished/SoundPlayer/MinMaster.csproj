@@ -4,8 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\</AlternetUIPath>	
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.510-beta" />
-  </ItemGroup>
+
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props"/>
+
+
 </Project>

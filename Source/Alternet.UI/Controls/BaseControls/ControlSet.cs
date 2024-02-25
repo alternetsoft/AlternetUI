@@ -224,9 +224,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Control.Enabled"/> property for the specified control in the set.
+        /// </summary>
+        /// <param name="value">New 'Enabled' property value.</param>
+        /// <param name="index">Index of the control.</param>
+        public ControlSet Enabled(int index, bool value)
+        {
+            items[index].Enabled = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="Control.Enabled"/> property for all the controls in the set.
         /// </summary>
-        /// <param name="value">New property value.</param>
+        /// <param name="value">New 'Enabled' property value.</param>
         public ControlSet Enabled(bool value)
         {
             foreach (var item in items)

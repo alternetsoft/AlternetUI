@@ -73,11 +73,7 @@ namespace ControlsSample
             AddPage("Layout", CreateLayoutPage);
             AddPage("Notify and ToolTip", CreateNotifyIconPage);
             AddPage("TabControl", CreateTabControlPage);
-
-            // On Ubuntu 23 animation is not working properly.
-            if (!Application.IsLinuxOS)
-                AddPage("Animation", CreateAnimationPage);
-
+            AddPage("Multimedia", CreateMultimediaPage);
             AddPage("Samples", CreateOtherPage);
 
             LogUtils.DebugLogVersion();
@@ -230,7 +226,25 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateAnimationPage() => new AnimationPage();
+        Control CreateMultimediaPage()
+        {
+            NameValue<Func<Control>>? animationNameValue;
+
+            if (!Application.IsLinuxOS)
+                animationNameValue = new("Animation", () => new AnimationPage());
+            else
+                animationNameValue = null;
+
+            NameValue<Func<Control>>?[] pages =
+            {
+                new("System Sounds", () => new SystemSoundsPage()),
+                new("Sound Player", () => new SoundPlayerPage()),
+                animationNameValue,
+            };
+
+            return CreateCustomPage(pages);
+        }
+
         Control CreateTreeViewPage() => new TreeViewPage();
         Control CreateListViewPage() => new ListViewPage();
         Control CreateTabControlPage() => new TabControlPage();
