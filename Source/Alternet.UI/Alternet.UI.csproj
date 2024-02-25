@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <DefineConstants>$(DefineConstants);FEATURE_WINDOWS_SYSTEM_COLORS</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
     <TargetFrameworks>$(UITargetFrameworksWindows)</TargetFrameworks>
   </PropertyGroup>
 

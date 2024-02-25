@@ -35,35 +35,7 @@ namespace Alternet.Drawing
             0,
 
             /*"System" colors, Part 1*/
-#if FEATURE_WINDOWS_SYSTEM_COLORS
-            (uint)(byte)Interop.User32.Win32SystemColors.ActiveBorder,
-            (uint)(byte)Interop.User32.Win32SystemColors.ActiveCaption,
-            (uint)(byte)Interop.User32.Win32SystemColors.ActiveCaptionText,
-            (uint)(byte)Interop.User32.Win32SystemColors.AppWorkspace,
-            (uint)(byte)Interop.User32.Win32SystemColors.Control,
-            (uint)(byte)Interop.User32.Win32SystemColors.ControlDark,
-            (uint)(byte)Interop.User32.Win32SystemColors.ControlDarkDark,
-            (uint)(byte)Interop.User32.Win32SystemColors.ControlLight,
-            (uint)(byte)Interop.User32.Win32SystemColors.ControlLightLight,
-            (uint)(byte)Interop.User32.Win32SystemColors.ControlText,
-            (uint)(byte)Interop.User32.Win32SystemColors.Desktop,
-            (uint)(byte)Interop.User32.Win32SystemColors.GrayText,
-            (uint)(byte)Interop.User32.Win32SystemColors.Highlight,
-            (uint)(byte)Interop.User32.Win32SystemColors.HighlightText,
-            (uint)(byte)Interop.User32.Win32SystemColors.HotTrack,
-            (uint)(byte)Interop.User32.Win32SystemColors.InactiveBorder,
-            (uint)(byte)Interop.User32.Win32SystemColors.InactiveCaption,
-            (uint)(byte)Interop.User32.Win32SystemColors.InactiveCaptionText,
-            (uint)(byte)Interop.User32.Win32SystemColors.Info,
-            (uint)(byte)Interop.User32.Win32SystemColors.InfoText,
-            (uint)(byte)Interop.User32.Win32SystemColors.Menu,
-            (uint)(byte)Interop.User32.Win32SystemColors.MenuText,
-            (uint)(byte)Interop.User32.Win32SystemColors.ScrollBar,
-            (uint)(byte)Interop.User32.Win32SystemColors.Window,
-            (uint)(byte)Interop.User32.Win32SystemColors.WindowFrame,
-            (uint)(byte)Interop.User32.Win32SystemColors.WindowText,
-#else
-            // Hard-coded constants, based on default Windows settings.
+            /* Hard-coded constants, based on default Windows settings.*/
             0xFFD4D0C8,     // ActiveBorder
             0xFF0054E3,     // ActiveCaption
             0xFFFFFFFF,     // ActiveCaptionText
@@ -90,7 +62,6 @@ namespace Alternet.Drawing
             0xFFFFFFFF,     // Window
             0xFF000000,     // WindowFrame
             0xFF000000,     // WindowText
-#endif
 
             // "Web" Colors, Part 1
             0x00FFFFFF,     // Transparent
@@ -234,16 +205,8 @@ namespace Alternet.Drawing
             0xFFF5F5F5,     // WhiteSmoke
             0xFFFFFF00,     // Yellow
             0xFF9ACD32,     // YellowGreen
-#if FEATURE_WINDOWS_SYSTEM_COLORS
-            // "System" colors, Part 2
-            (uint)(byte)Interop.User32.Win32SystemColors.ButtonFace,
-            (uint)(byte)Interop.User32.Win32SystemColors.ButtonHighlight,
-            (uint)(byte)Interop.User32.Win32SystemColors.ButtonShadow,
-            (uint)(byte)Interop.User32.Win32SystemColors.GradientActiveCaption,
-            (uint)(byte)Interop.User32.Win32SystemColors.GradientInactiveCaption,
-            (uint)(byte)Interop.User32.Win32SystemColors.MenuBar,
-            (uint)(byte)Interop.User32.Win32SystemColors.MenuHighlight,
-#else
+
+            /* "System" colors, Part 2 */
             0xFFF0F0F0,     // ButtonFace
             0xFFFFFFFF,     // ButtonHighlight
             0xFFA0A0A0,     // ButtonShadow
@@ -251,9 +214,8 @@ namespace Alternet.Drawing
             0xFFD7E4F2,     // GradientInactiveCaption
             0xFFF0F0F0,     // MenuBar
             0xFF3399FF,     // MenuHighlight
-#endif
 
-            // "Web" colors, Part 2
+            /* "Web" colors, Part 2 */
             0xFF663399,     // RebeccaPurple
         };
 
@@ -555,15 +517,7 @@ namespace Alternet.Drawing
         internal static uint GetSystemColorArgb(KnownColor color)
         {
             Debug.Assert(Color.IsKnownColorSystem(color), nameof(GetSystemColorArgb));
-
-#if FEATURE_WINDOWS_SYSTEM_COLORS
-            var result = ColorTranslator.COLORREFToARGB(
-                Interop.User32.GetSysColor((byte)ColorValueTable[(int)color]));
-            return result;
-#else
             return GetSystemColorArgbUseSystemSettings(color);
-            /* return ColorValueTable[(int)color];*/
-#endif
         }
     }
 }
