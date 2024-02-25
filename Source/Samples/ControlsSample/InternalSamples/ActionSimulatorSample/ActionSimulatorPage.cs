@@ -56,6 +56,8 @@ namespace ControlsSample
                     simulator.SendMouseMove(editor, (5, 5));
                     simulator.SendMouseClick();
                     simulator.SendText("Hello");
+                    simulator.SendMouseMove(button2, (5, 5));
+                    simulator.SendMouseClick();
                 });
             }
         }
