@@ -11,13 +11,16 @@ namespace Alternet.UI
     /// </summary>
     public class SimpleSoundPlayer : DisposableObject
     {
+        private readonly string fileName;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleSoundPlayer"/> class.
         /// </summary>
         /// <param name="fileName">Path to audio file.</param>
         public SimpleSoundPlayer(string fileName)
-            : base(Native.WxOtherFactory.SoundCreate2(fileName, false), true)
         {
+            this.fileName = fileName;
+            Initialize();
         }
 
         /// <summary>
@@ -44,10 +47,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets filename of the audio file.
+        /// </summary>
+        public virtual string FileName => fileName;
+
+        /// <summary>
         /// Returns <c>true</c> if the object contains a successfully loaded file or
         /// resource, <c>false</c> otherwise.
         /// </summary>
-        public bool IsOk
+        public virtual bool IsOk
         {
             get
             {
@@ -60,7 +68,7 @@ namespace Alternet.UI
         /// <summary>
         /// Stops playing sounds.
         /// </summary>
-        public static void Stop()
+        public virtual void Stop()
         {
             Native.WxOtherFactory.SoundStop();
         }
@@ -78,11 +86,20 @@ namespace Alternet.UI
         /// however this currently doesn't work under Windows for sound objects loaded
         /// from memory data.
         /// </remarks>
-        public bool Play(SoundPlayFlags flags = SoundPlayFlags.Asynchronous)
+        public virtual bool Play(SoundPlayFlags flags = SoundPlayFlags.Asynchronous)
         {
             if (IsDisposed || !IsOk)
                 return false;
             return Native.WxOtherFactory.SoundPlay(Handle, (uint)flags);
+        }
+
+        /// <summary>
+        /// Initializes sound player object. Called from constructor.
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            Handle = Native.WxOtherFactory.SoundCreate2(fileName, false);
+            DisposeHandle = true;
         }
 
         /// <inheritdoc/>
