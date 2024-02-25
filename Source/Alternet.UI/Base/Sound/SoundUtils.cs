@@ -12,11 +12,24 @@ namespace Alternet.UI
     public static class SoundUtils
     {
         /// <summary>
+        /// Gets or sets whether <see cref="Bell"/> method is supressed.
+        /// Default is <c>false</c>.
+        /// </summary>
+        public static bool SupressBell
+        {
+            get => SystemSounds.Beep.IsSilent;
+            set => SystemSounds.Beep.IsSilent = value;
+        }
+
+        /// <summary>
         /// Ring the system bell.
         /// </summary>
         /// <remarks>
         /// This function is categorized as a GUI one and so is not thread-safe.
         /// </remarks>
-        public static void Bell() => Native.WxOtherFactory.Bell();
+        public static void Bell()
+        {
+            SystemSounds.Beep.Play();
+        }
     }
 }
