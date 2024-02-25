@@ -1,9 +1,14 @@
 #include "WxOtherFactory.h"
 #include "Application.h"
 #include "WxAlternet/wxAlternetRichToolTip.h"
+#include "Api/InputStream.h"
+#include "Api/OutputStream.h"
+#include "ManagedInputStream.h"
+#include "ManagedOutputStream.h"
 
 #include <wx/numdlg.h>
 #include <string.h>
+#include <wx/sound.h>
 
 namespace Alternet::UI
 {
@@ -993,4 +998,47 @@ namespace Alternet::UI
 	}
 
 	// ============================================
+
+	bool WxOtherFactory::SoundIsOk(void* handle)
+	{
+		return ((wxSound*)handle)->IsOk();
+	}
+
+	void* WxOtherFactory::SoundCreate()
+	{
+		return new wxSound();
+	}
+	
+	void* WxOtherFactory::SoundCreate2(const string& fileName, bool isResource)
+	{
+		return new wxSound(wxStr(fileName), isResource);
+	}
+
+	void* WxOtherFactory::SoundCreate4(uint64_t size, void* data)
+	{
+		return new wxSound(size, data);
+	}
+
+	void WxOtherFactory::SoundDelete(void* handle)
+	{
+		delete (wxSound*)handle;
+	}
+
+	bool WxOtherFactory::SoundPlay2(const string& filename, uint32_t flags)
+	{
+		return wxSound::Play(wxStr(filename), flags);
+	}
+
+	bool WxOtherFactory::SoundPlay(void* handle, uint32_t flags)
+	{
+		return ((wxSound*)handle)->Play(flags);
+	}
+
+	void WxOtherFactory::SoundStop()
+	{
+		wxSound::Stop();
+	}
+
+	// ============================================
+
 }

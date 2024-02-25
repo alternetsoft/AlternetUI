@@ -186,6 +186,46 @@ namespace Alternet.UI.Native
             NativeApi.WxOtherFactory_FsWatcherSetOwner_(handle, handler);
         }
         
+        public static System.IntPtr SoundCreate()
+        {
+            return NativeApi.WxOtherFactory_SoundCreate_();
+        }
+        
+        public static System.IntPtr SoundCreate2(string fileName, bool isResource)
+        {
+            return NativeApi.WxOtherFactory_SoundCreate2_(fileName, isResource);
+        }
+        
+        public static System.IntPtr SoundCreate4(ulong size, System.IntPtr data)
+        {
+            return NativeApi.WxOtherFactory_SoundCreate4_(size, data);
+        }
+        
+        public static void SoundDelete(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_SoundDelete_(handle);
+        }
+        
+        public static bool SoundPlay2(string filename, uint flags)
+        {
+            return NativeApi.WxOtherFactory_SoundPlay2_(filename, flags);
+        }
+        
+        public static bool SoundPlay(System.IntPtr handle, uint flags)
+        {
+            return NativeApi.WxOtherFactory_SoundPlay_(handle, flags);
+        }
+        
+        public static void SoundStop()
+        {
+            NativeApi.WxOtherFactory_SoundStop_();
+        }
+        
+        public static bool SoundIsOk(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_SoundIsOk_(handle);
+        }
+        
         public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz)
         {
             NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
@@ -708,6 +748,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_FsWatcherSetOwner_(System.IntPtr handle, System.IntPtr handler);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_SoundCreate_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_SoundCreate2_(string fileName, bool isResource);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_SoundCreate4_(ulong size, System.IntPtr data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_SoundDelete_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_SoundPlay2_(string filename, uint flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_SoundPlay_(System.IntPtr handle, uint flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_SoundStop_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_SoundIsOk_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz);

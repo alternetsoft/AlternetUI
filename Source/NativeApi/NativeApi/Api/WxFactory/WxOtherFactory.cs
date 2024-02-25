@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.Drawing;
 using ApiCommon;
+using NativeApi.Api.ManagedServers;
 
 namespace NativeApi.Api
 {
@@ -630,6 +631,45 @@ dest
 
         // ===================
 
+        public static IntPtr SoundCreate() => default;
+
+        // Constructs a wave object from a file or, under Windows, from a Windows resource.
+        // Call IsOk() to determine whether this succeeded.
+        // fileName    - The filename or Windows resource.
+        // isResource  - true if fileName is a resource, false if it is a filename.
+        public static IntPtr SoundCreate2(string fileName, bool isResource = false ) => default;
+
+        // Constructs a wave object from in-memory data.
+        // size	- Size of the buffer pointer to by data.
+        // data - The buffer containing the sound data in WAV format.
+        public static IntPtr SoundCreate4(ulong size, IntPtr data) => default;
+
+        public static void SoundDelete(IntPtr handle) { }
+
+        // #define 	wxSOUND_SYNC   0
+        // #define wxSOUND_ASYNC   1
+        // #define wxSOUND_LOOP   2
+        // Plays the sound file.
+        // If another sound is playing, it will be interrupted.
+        // Returns true on success, false otherwise.Note that in general it
+        // is possible to delete the object which is being asynchronously played
+        // any time after calling this function and the sound would continue playing,
+        // however this currently doesn't work under Windows for sound objects loaded
+        // from memory data.
+        // The possible values for flags are:
+        // wxSOUND_SYNC: Play will block and wait until the sound is replayed.
+        // wxSOUND_ASYNC: Sound is played asynchronously, Play returns immediately.
+        // wxSOUND_ASYNC|wxSOUND_LOOP: Sound is played asynchronously and loops until another
+        // sound is played, Stop() is called or the program terminates.
+        public static bool SoundPlay2(string filename, uint flags /*= wxSOUND_ASYNC*/) => default;
+
+        public static bool SoundPlay(IntPtr handle, uint flags /*= wxSOUND_ASYNC*/) => default;
+
+        public static void SoundStop() { }
+
+        // Returns true if the object contains a successfully loaded file or
+        // resource, false otherwise.
+        public static bool SoundIsOk(IntPtr handle) => default;
     }
 }
 

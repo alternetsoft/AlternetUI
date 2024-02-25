@@ -177,6 +177,46 @@ ALTERNET_UI_API void WxOtherFactory_FsWatcherSetOwner_(void* handle, void* handl
     WxOtherFactory::FsWatcherSetOwner(handle, handler);
 }
 
+ALTERNET_UI_API void* WxOtherFactory_SoundCreate_()
+{
+    return WxOtherFactory::SoundCreate();
+}
+
+ALTERNET_UI_API void* WxOtherFactory_SoundCreate2_(const char16_t* fileName, c_bool isResource)
+{
+    return WxOtherFactory::SoundCreate2(fileName, isResource);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_SoundCreate4_(uint64_t size, void* data)
+{
+    return WxOtherFactory::SoundCreate4(size, data);
+}
+
+ALTERNET_UI_API void WxOtherFactory_SoundDelete_(void* handle)
+{
+    WxOtherFactory::SoundDelete(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_SoundPlay2_(const char16_t* filename, uint32_t flags)
+{
+    return WxOtherFactory::SoundPlay2(filename, flags);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_SoundPlay_(void* handle, uint32_t flags)
+{
+    return WxOtherFactory::SoundPlay(handle, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_SoundStop_()
+{
+    WxOtherFactory::SoundStop();
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_SoundIsOk_(void* handle)
+{
+    return WxOtherFactory::SoundIsOk(handle);
+}
+
 ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
     WxOtherFactory::TestPopupWindow(parent, pos, sz);
