@@ -291,6 +291,11 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, text);
         }
         
+        public static void UIActionSimulatorYield()
+        {
+            NativeApi.WxOtherFactory_UIActionSimulatorYield_();
+        }
+        
         public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz)
         {
             NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
@@ -876,6 +881,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_UIActionSimulatorText_(System.IntPtr handle, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_UIActionSimulatorYield_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz);
