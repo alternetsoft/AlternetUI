@@ -1693,6 +1693,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds multiple labels.
+        /// </summary>
+        /// <param name="text">Array of label text.</param>
+        /// <returns><see cref="ControlSet"/> with list of created labels.</returns>
+        public virtual ControlSet AddLabels(params string[] text)
+        {
+            List<Control> result = new();
+
+            DoInsideLayout(() =>
+            {
+                foreach (var item in text)
+                {
+                    var label = AddLabel(item);
+                    result.Add(label);
+                }
+            });
+
+            return new(result);
+        }
+
+        /// <summary>
         /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="Children"/>.
         /// </summary>
         public virtual CheckBox AddCheckBox(string text, Action? action = null)
