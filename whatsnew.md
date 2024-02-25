@@ -1,3 +1,31 @@
+# 0.9.509 (2024 February 25)
+
+- SimpleSoundPlayer. Currently only Windows and MacOs. On Linux does nothing.
+- Add SystemSound and SystemSounds.
+- Fixed PropertyGrid.SuggestedInitDefaults() (mostly Linux related)
+- ImageSet: New FromSvgStream override capable of loading svg with two different colors.
+- ImageSet: Original FromSvgStream doesn't dispose Stream anymore.
+- ImageSet: GetNormalAndDisabledSvg.
+- Uixml code generator: improve error output.
+- Control.Title, so now possible to add any control as TabControl page.
+- TabControl: Returned Pages, SelectedPageChanged #107.
+- Fixed layout: SuggestedHeight was previously ignored in vertical layout.
+- Returned TabControl.SelectedPage.
+- #108 MinMasterTemplate.
+- Fixed mouse wheel event fired multimple times #103.
+- TabControl is repainted when tab page Title changed.
+- TabConrol.DefaultMinTabSize.
+- SpeedButton: DefaultUseTheme, CustomTheme, UseTheme properties.
+- Application.Log fixed exception in some situations.
+- TabControl.TabTheme.
+- GenericToolBarSet -> ToolBarSet.
+- Fixed Display.Name.
+- Removed #if FEATURE_WINDOWS_SYSTEM_COLORS.
+- Control.AddButtons.
+- SupressBell, StopSound.
+- 
+
+
 # 0.9.507 (2024 February 23)
 
 ## 2024 February 23
