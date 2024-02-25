@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// </summary>
     public class SystemSound
     {
-        private SoundType soundType;
+        private readonly SystemSoundType soundType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemSound"/> class.
@@ -21,7 +21,11 @@ namespace Alternet.UI
         {
         }
 
-        public SystemSound(SoundType soundType)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemSound"/> class.
+        /// </summary>
+        /// <param name="soundType">Type of the system sound.</param>
+        public SystemSound(SystemSoundType soundType)
         {
             this.soundType = soundType;
         }
@@ -29,29 +33,15 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when <see cref="Play"/> method is called.
         /// </summary>
-        public event EventHandler<HandledEventArgs>? PlaySound;
+        public static event EventHandler<HandledEventArgs>? PlaySound;
 
         /// <summary>
-        /// Enumerates known system sounds.
+        /// Gets type of the system sound.
         /// </summary>
-        public enum SoundType
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            Beep = 0,
-
-            Hand = 16,
-
-            Question = 32,
-
-            Exclamation = 48,
-
-            Asterisk = 64,
-        }
+        public SystemSoundType SoundType => soundType;
 
         /// <summary>
-        /// Gets or sets whether sound is actually played.
+        /// Gets or sets whether sound is actually played. Default is <c>false</c> (sound is played).
         /// </summary>
         public bool IsSilent { get; set; }
 

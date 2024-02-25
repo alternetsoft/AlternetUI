@@ -31,7 +31,7 @@ namespace Alternet.UI
         {
             get
             {
-                asterisk ??= new SystemSound(SystemSound.SoundType.Asterisk);
+                asterisk ??= new SystemSound(SystemSoundType.Asterisk);
                 return asterisk;
             }
 
@@ -47,7 +47,7 @@ namespace Alternet.UI
         {
             get
             {
-                beep ??= new SystemSound(SystemSound.SoundType.Beep);
+                beep ??= new SystemSound(SystemSoundType.Beep);
                 return beep;
             }
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
         {
             get
             {
-                exclamation ??= new SystemSound(SystemSound.SoundType.Exclamation);
+                exclamation ??= new SystemSound(SystemSoundType.Exclamation);
                 return exclamation;
             }
 
@@ -78,7 +78,7 @@ namespace Alternet.UI
         {
             get
             {
-                hand ??= new SystemSound(SystemSound.SoundType.Hand);
+                hand ??= new SystemSound(SystemSoundType.Hand);
                 return hand;
             }
         }
@@ -92,7 +92,7 @@ namespace Alternet.UI
         {
             get
             {
-                question ??= new SystemSound(SystemSound.SoundType.Question);
+                question ??= new SystemSound(SystemSoundType.Question);
                 return question;
             }
 
