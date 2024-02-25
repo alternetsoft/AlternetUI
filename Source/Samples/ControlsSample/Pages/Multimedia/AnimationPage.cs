@@ -24,7 +24,6 @@ namespace ControlsSample
         internal static readonly string AnimationCustom = "Open animation file (*.gif; *.ani)...";
 
         private readonly AnimationPlayer animation = new();
-        private readonly Button showFrameButton = new();
         private readonly PopupPictureBox popup = new();
         
         private readonly ComboBox selectComboBox = new()
@@ -57,19 +56,20 @@ namespace ControlsSample
 
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
 
-            var buttonPanel = AddHorizontalStackPanel();
-            buttonPanel.AddButton("Play", () => { animation.Play(); });
-            buttonPanel.AddButton("Stop", animation.Stop);
-            buttonPanel.AddButton("Info", ShowInfo);
-            showFrameButton = buttonPanel.AddButton("Show frame 0", ShowFrame);
-            buttonPanel.ChildrenSet.Margin(5).SuggestedWidthToMax();
+            AddVerticalStackPanel()
+            .AddButtons(
+                ("Play", () => { animation.Play(); }),
+                ("Stop", animation.Stop),
+                ("Info", ShowInfo),
+                ("Show frame 0", ShowFrame))
+            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax();
         }
 
         private void ShowFrame()
         {
             var image = animation.GetFrame(0);
             popup.MainControl.Image = (Image)image;
-            popup.ShowPopup(showFrameButton);
+            popup.ShowPopup(animation);
         }
 
         private void ShowInfo()
