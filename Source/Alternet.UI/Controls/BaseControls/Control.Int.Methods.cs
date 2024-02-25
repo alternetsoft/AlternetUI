@@ -211,7 +211,7 @@ namespace Alternet.UI
         {
             OnMouseUp(e);
 
-            if(e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left)
             {
                 OnMouseLeftButtonUp(e);
             }
