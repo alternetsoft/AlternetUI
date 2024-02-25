@@ -282,6 +282,11 @@ ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorText_(void* handle, const
     return WxOtherFactory::UIActionSimulatorText(handle, text);
 }
 
+ALTERNET_UI_API void WxOtherFactory_UIActionSimulatorYield_()
+{
+    WxOtherFactory::UIActionSimulatorYield();
+}
+
 ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
     WxOtherFactory::TestPopupWindow(parent, pos, sz);

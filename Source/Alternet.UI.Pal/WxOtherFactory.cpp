@@ -1062,6 +1062,11 @@ namespace Alternet::UI
 		return ((wxUIActionSimulator*)handle)->KeyDown(keycode, modifiers);
 	}
 
+	void WxOtherFactory::UIActionSimulatorYield()
+	{
+		wxYield();
+	}
+
 	bool WxOtherFactory::UIActionSimulatorKeyUp(void* handle, int keycode, int modifiers)
 	{
 		return ((wxUIActionSimulator*)handle)->KeyUp(keycode, modifiers);

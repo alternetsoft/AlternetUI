@@ -750,6 +750,8 @@ dest
         // text - The string, containing only US ASCII characters, to type.
         public static bool UIActionSimulatorText(IntPtr handle, string text) => default;
 
+        public static void UIActionSimulatorYield() { }
+
         // ===================
     }
 }

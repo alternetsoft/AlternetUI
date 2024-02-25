@@ -15,14 +15,14 @@ namespace Alternet.UI
     /// functionality for users, or to drive unit tests by simulating user sessions.
     /// This class currently doesn't work when using Wayland with Linux.
     /// </summary>
-    public abstract class UIActionSimulator : DisposableObject
+    public class UIActionSimulator : DisposableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UIActionSimulator"/> class.
         /// </summary>
         public UIActionSimulator()
-            : base(Native.WxOtherFactory.UIActionSimulatorCreate(), true)
         {
+            Initialize();
         }
 
         /// <summary>
@@ -106,16 +106,23 @@ namespace Alternet.UI
         /// <summary>
         /// Presses and release a key.
         /// </summary>
-        /// <param name="keycode">Key to operate on.</param>
+        /// <param name="keyCode">Key to operate on.</param>
         /// <param name="modifiers">A combination of key modifier flags to be
         /// pressed with the given keycode.</param>
         /// <returns></returns>
-        public abstract bool SendChar(int keycode, KeyModifier modifiers = KeyModifier.None);
+        public virtual bool SendChar(
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorChar(Handle, (int)keyCode, (int)modifiers);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Presses a key.
         /// </summary>
-        /// <param name="keycode">Key to operate on.</param>
+        /// <param name="keyCode">Key to operate on.</param>
         /// <param name="modifiers">A combination of key modifier flags to be
         /// pressed with the given keycode.</param>
         /// <returns></returns>
@@ -124,38 +131,67 @@ namespace Alternet.UI
         /// be paired with an identical <see cref="SendKeyUp"/> or the modifiers will
         /// not be released (Windows and macOS).
         /// </remarks>
-        public abstract bool SendKeyDown(int keycode, KeyModifier modifiers = KeyModifier.None);
+        public virtual bool SendKeyDown(
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorKeyDown(Handle, (int)keyCode, (int)modifiers);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Releases a key.
         /// </summary>
-        /// <param name="keycode">Key to operate on.</param>
+        /// <param name="keyCode">Key to operate on.</param>
         /// <param name="modifiers">A combination of key modifier flags to be
         /// pressed with the given keycode.</param>
         /// <returns></returns>
         /// <returns></returns>
-        public abstract bool SendKeyUp(int keycode, KeyModifier modifiers = KeyModifier.None);
+        public virtual bool SendKeyUp(
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorKeyUp(Handle, (int)keyCode, (int)modifiers);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Clicks a mouse button.
         /// </summary>
         /// <param name="button">Mouse button to press</param>
         /// <returns></returns>
-        public abstract bool SendMouseClick(MouseButton button = MouseButton.Left);
+        public virtual bool SendMouseClick(MouseButton button = MouseButton.Left)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseClick(Handle, (int)button);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Double-clicks a mouse button.
         /// </summary>
         /// <param name="button">Mouse button to press</param>
         /// <returns></returns>
-        public abstract bool SendMouseDblClick(MouseButton button = MouseButton.Left);
+        public virtual bool SendMouseDblClick(MouseButton button = MouseButton.Left)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseDblClick(Handle, (int)button);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Presses a mouse button.
         /// </summary>
         /// <param name="button">Mouse button to press</param>
         /// <returns></returns>
-        public abstract bool SendMouseDown(MouseButton button = MouseButton.Left);
+        public virtual bool SendMouseDown(MouseButton button = MouseButton.Left)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseDown(Handle, (int)button);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Performs a drag and drop operation.
@@ -166,26 +202,64 @@ namespace Alternet.UI
         /// <param name="y2">y destination coordinate, in screen coordinates.</param>
         /// <param name="button">Mouse button to press</param>
         /// <returns></returns>
-        public abstract bool SendMouseDragDrop(
+        public virtual bool SendMouseDragDrop(
             long x1,
             long y1,
             long x2,
             long y2,
-            MouseButton button = MouseButton.Left);
+            MouseButton button = MouseButton.Left)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseDragDrop(
+                Handle,
+                x1,
+                y1,
+                x2,
+                y2,
+                (int)button);
+            ExecuteCommand();
+            return result;
+        }
+
+        /// <summary>
+        /// Moves the mouse to the top-left corner of the control.
+        /// </summary>
+        /// <param name="control">Control to which mouse will be moved.</param>
+        /// <param name="offset">Additional offset for the mouse movement.</param>
+        /// <returns></returns>
+        public virtual bool SendMouseMove(Control control, PointD? offset = default)
+        {
+            var screenLocationDip = control.ClientToScreen((0,0));
+            if(offset is not null)
+                screenLocationDip.Offset(offset.Value.X, offset.Value.Y);
+            var screenLocationPixel = control.PixelFromDip(screenLocationDip);
+            var result = SendMouseMove(screenLocationPixel);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Moves the mouse to the specified coordinates.
         /// </summary>
         /// <param name="point">Point to move to, in screen coordinates</param>
         /// <returns></returns>
-        public abstract bool SendMouseMove(PointI point);
+        public virtual bool SendMouseMove(PointI point)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseMove(Handle, point);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Releases a mouse button.
         /// </summary>
         /// <param name="button">Mouse button to press</param>
         /// <returns></returns>
-        public abstract bool SendMouseUp(MouseButton button = MouseButton.Left);
+        public virtual bool SendMouseUp(MouseButton button = MouseButton.Left)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseUp(Handle, (int)button);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Simulates selection of an item with the given text.
@@ -200,7 +274,12 @@ namespace Alternet.UI
         /// It does it by simulating keyboard events, so the behaviour
         /// should be the same as if the item was really selected by the user.
         /// </remarks>
-        public abstract bool SendSelect(string text);
+        public virtual bool SendSelect(string text)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorSelect(Handle, text);
+            ExecuteCommand();
+            return result;
+        }
 
         /// <summary>
         /// Emulates typing in the keys representing the given string.
@@ -212,7 +291,29 @@ namespace Alternet.UI
         /// Digits and punctuation characters can be used with the
         /// standard QWERTY (US) keyboard layout but may not work with other layouts.
         /// </remarks>
-        public abstract bool SendText(string text);
+        public virtual bool SendText(string text)
+        {
+            var result = Native.WxOtherFactory.UIActionSimulatorText(Handle, text);
+            ExecuteCommand();
+            return result;
+        }
+
+        /// <summary>
+        /// Executes 'Send*' command.
+        /// </summary>
+        internal void ExecuteCommand()
+        {
+            Native.WxOtherFactory.UIActionSimulatorYield();
+        }
+
+        /// <summary>
+        /// Initializes object. Called from constructor.
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            Handle = Native.WxOtherFactory.UIActionSimulatorCreate();
+            DisposeHandle = true;
+        }
 
         /// <inheritdoc/>
         protected override void DisposeUnmanagedResources()

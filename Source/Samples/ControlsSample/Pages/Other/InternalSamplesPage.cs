@@ -72,6 +72,7 @@ namespace ControlsSample
             Add("Printing Sample", () => new PrintingSample.MainWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
             Add("Threading Sample", () => new ThreadingSample.MainWindow());
+            Add("Action Simulator Sample", () => new ActionSimulatorPage());
         }
 
         private void RunButton_Click(object? sender, EventArgs e)

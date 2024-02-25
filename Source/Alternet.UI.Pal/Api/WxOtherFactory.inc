@@ -55,6 +55,7 @@ static bool UIActionSimulatorMouseMove(void* handle, const PointI& point);
 static bool UIActionSimulatorMouseUp(void* handle, int button);
 static bool UIActionSimulatorSelect(void* handle, const string& text);
 static bool UIActionSimulatorText(void* handle, const string& text);
+static void UIActionSimulatorYield();
 static void TestPopupWindow(void* parent, const PointI& pos, const SizeI& sz);
 static void* CreateRichToolTip(const string& title, const string& message);
 static void DeleteRichToolTip(void* handle);
