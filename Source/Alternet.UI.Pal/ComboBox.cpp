@@ -18,12 +18,6 @@ namespace Alternet::UI
     bool UseChoiceControlForReadOnlyComboBox = true;
 #endif
 
-//#ifdef __WXMSW__
-//    constexpr bool UseChoiceControlForReadOnlyComboBox = false;
-//#else
-//    constexpr bool UseChoiceControlForReadOnlyComboBox = true;
-//#endif
-
     bool ComboBox::GetUseChoiceControl()
     {
         return UseChoiceControlForReadOnlyComboBox;
@@ -169,6 +163,25 @@ namespace Alternet::UI
         }
     };
 
+    class wxOwnerDrawnComboBox2 : public wxOwnerDrawnComboBox, public wxWidgetExtender
+    {
+    public:
+        wxOwnerDrawnComboBox2(wxWindow* parent,
+            wxWindowID id,
+            const wxString& value,
+            const wxPoint& pos,
+            const wxSize& size,
+            int n,
+            const wxString choices[],
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxComboBoxNameStr))
+            : wxOwnerDrawnComboBox(parent, id, value, pos, size, n, choices,
+                style, validator, name)
+        {
+        }
+    };
+
     wxWindow* ComboBox::CreateWxWindowUnparented()
     {
         if (!_isEditable && UseChoiceControlForReadOnlyComboBox)
@@ -211,7 +224,7 @@ namespace Alternet::UI
         {
             auto comboStyle = _isEditable ? wxCB_DROPDOWN : wxCB_READONLY;
             style = style | comboStyle;
-            auto value = new wxComboBox2(
+            auto value = new wxOwnerDrawnComboBox2(
                 parent,
                 wxID_ANY,
                 "",
@@ -392,9 +405,15 @@ namespace Alternet::UI
         GetComboBox()->SetValue(wxStr(value));
     }
 
-    wxComboBox* ComboBox::GetComboBox()
+    wxControlWithItems* ComboBox::GetControlWithItems()
     {
-        auto value = dynamic_cast<wxComboBox*>(GetWxWindow());
+        auto value = dynamic_cast<wxControlWithItems*>(GetWxWindow());
+        return value;
+    }
+
+    wxOwnerDrawnComboBox* ComboBox::GetComboBox()
+    {
+        auto value = dynamic_cast<wxOwnerDrawnComboBox*>(GetWxWindow());
         if (value == nullptr)
             throwExInvalidOp;
         return value;
