@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\</AlternetUIPath>	
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props"/>
+
+
+</Project>
