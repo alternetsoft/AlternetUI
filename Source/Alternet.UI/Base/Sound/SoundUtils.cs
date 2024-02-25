@@ -22,6 +22,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Stops playing sounds.
+        /// </summary>
+        public static void StopSound()
+        {
+            Native.WxOtherFactory.SoundStop();
+        }
+
+        /// <summary>
         /// Ring the system bell.
         /// </summary>
         /// <remarks>
