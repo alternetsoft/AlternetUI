@@ -19,8 +19,7 @@ namespace ControlsSample
                 ("Play Exclamation", SystemSounds.Exclamation.Play),
                 ("Play Hand", SystemSounds.Hand.Play),
                 ("Play Question", SystemSounds.Question.Play))
-            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax()
-            .Enabled(Application.IsWindowsOS).Enabled(0, true);
+            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax();
         }
     }
 }
