@@ -63,6 +63,7 @@ namespace Alternet.UI
         private ControlExtendedProps? extendedProps = null;
         private Thickness? minMargin;
         private Thickness? minPadding;
+        private Thickness? minChildMargin;
         private bool visible = true;
         private Control? parent;
         private int updateCount = 0;
@@ -1625,6 +1626,25 @@ namespace Alternet.UI
         public virtual bool CanUserPaint => true;
 
         /// <summary>
+        /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
+        /// </summary>
+        public virtual Thickness? MinChildMargin
+        {
+            get
+            {
+                return minChildMargin;
+            }
+
+            set
+            {
+                if (minChildMargin == value)
+                    return;
+                minChildMargin = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the outer margin of a control.
         /// </summary>
         /// <value>Provides margin values for the control. The default value is a
@@ -1643,6 +1663,13 @@ namespace Alternet.UI
             {
                 if (minMargin == null)
                     margin.ApplyMin(MinMargin);
+                if(Parent is not null && Parent.MinChildMargin is not null)
+                {
+                    var result = margin;
+                    result.ApplyMin(Parent.MinChildMargin.Value);
+                    return result;
+                }
+
                 return margin;
             }
 
