@@ -62,7 +62,7 @@ namespace Alternet::UI
 		if (wxTheColourDatabase)
 		{
 			// Extend colour database with PG-specific colours.
-			for (int i = 0; i < KnownColorLabels.Count(); i++)
+			for (unsigned int i = 0; i < KnownColorLabels.Count(); i++)
 			{
 				// Don't take into account user-defined custom colour.
 				if (KnownColorValues[i] != wxPG_COLOUR_CUSTOM)
@@ -504,6 +504,9 @@ namespace Alternet::UI
 
         wxPropertyGrid* propgrid = GetGrid();
         wxASSERT(propgrid);
+
+        if (propgrid == nullptr)
+            return res;
 
         // Must only occur when user triggers event
         if (!propgrid->HasInternalFlag(wxPG_FL_IN_HANDLECUSTOMEDITOREVENT))
