@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="UIActionSimulator"/> is a class used to simulate user
     /// interface actions such as a mouse click or a key press.
     /// Common usage for this class would be to provide
-    /// playback and record(aka macro recording)
+    /// playback and record (aka macro recording)
     /// functionality for users, or to drive unit tests by simulating user sessions.
     /// This class currently doesn't work when using Wayland with Linux.
     /// </summary>
@@ -228,7 +228,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseMove(Control control, PointD? offset = default)
         {
-            var screenLocationDip = control.ClientToScreen((0,0));
+            var screenLocationDip = control.ClientToScreen((0, 0));
             if(offset is not null)
                 screenLocationDip.Offset(offset.Value.X, offset.Value.Y);
             var screenLocationPixel = control.PixelFromDip(screenLocationDip);
