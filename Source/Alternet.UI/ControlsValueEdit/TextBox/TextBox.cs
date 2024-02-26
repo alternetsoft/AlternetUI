@@ -1547,7 +1547,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Right"/>
+        /// Sets text alignment in the current position
+        /// to <see cref="TextBoxTextAttrAlignment.Right"/>
         /// </summary>
         public virtual void SelectionAlignRight()
         {

@@ -123,9 +123,6 @@ namespace Alternet::UI
         Frame* GetFrame();
         wxDialog* GetDialog();
     protected:
-        Color RetrieveBackgroundColor() override;
-        void ApplyBackgroundColor(const Color& value) override;
-
         void ApplyBounds(const Rect& value) override;
 
         void OnBeforeDestroyWxWindow() override;

@@ -107,6 +107,10 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnHandleCreated(EventArgs e)
         {
+            if (BackgroundColor is not null)
+                NativeControl.BackgroundColor = BackgroundColor;
+            if (ForegroundColor is not null)
+                NativeControl.ForegroundColor = ForegroundColor;
         }
 
         /// <summary>

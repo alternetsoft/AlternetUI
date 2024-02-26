@@ -134,24 +134,18 @@ namespace Alternet::UI
                 {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled,
                     &Control::ApplyEnabled)},
             }),
-            _backgroundColor(*this, Color(), &Control::IsWxWindowCreated,
-                &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
             _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds,
                 &Control::ApplyBounds),
-            _foregroundColor(*this, Color(), &Control::IsWxWindowCreated,
-                &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
-
             _minimumSize(*this, Size(), &Control::IsWxWindowCreated,
                     &Control::RetrieveMinimumSize, &Control::ApplyMinimumSize),
             _maximumSize(*this, Size(), &Control::IsWxWindowCreated,
                 &Control::RetrieveMaximumSize, &Control::ApplyMaximumSize),
-            
             _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
                 &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
             _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
                 &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
-            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor,
-                &_foregroundColor,&_horizontalScrollBarInfo,
+            _delayedValues({&_delayedFlags, &_bounds, 
+                &_horizontalScrollBarInfo,
                 &_verticalScrollBarInfo,&_minimumSize,&_maximumSize})
     {
     }
@@ -1017,22 +1011,22 @@ namespace Alternet::UI
 
     void Control::SetBackgroundColor(const Color& value)
     {
-        _backgroundColor.Set(value);
+        GetWxWindow()->SetBackgroundColour(value);
     }
 
     Color Control::GetBackgroundColor()
     {
-        return _backgroundColor.Get();
+        return GetWxWindow()->GetBackgroundColour();
     }
 
     void Control::SetForegroundColor(const Color& value)
     {
-        _foregroundColor.Set(value);
+        GetWxWindow()->SetForegroundColour(value);
     }
 
     Color Control::GetForegroundColor()
     {
-        return _foregroundColor.Get();
+        return GetWxWindow()->GetForegroundColour();
     }
 
     void Control::SetMouseCapture(bool value)
@@ -1202,39 +1196,6 @@ namespace Alternet::UI
             if (window->IsFrozen())
                 window->Thaw();
         }
-    }
-
-    Color Control::RetrieveBackgroundColor()
-    {
-#ifndef __WXMSW__
-        // This is a workaround for non-Windows systems returning wrong background color when recreating a wxWindow.
-        // For example, see ListBox on SelectionMode change.
-        // Later this wrong color is reapplied to the recreated control. See also RetrieveForegroundColor().
-        return _backgroundColor.GetDelayed();
-#else
-        return GetWxWindow()->GetBackgroundColour();
-#endif
-    }
-
-    void Control::ApplyBackgroundColor(const Color& value)
-    {
-        if (!value.IsEmpty())
-            GetWxWindow()->SetBackgroundColour(value);
-    }
-
-    Color Control::RetrieveForegroundColor()
-    {
-#ifndef __WXMSW__
-        return _foregroundColor.GetDelayed();
-#else
-        return GetWxWindow()->GetForegroundColour();
-#endif
-    }
-
-    void Control::ApplyForegroundColor(const Color& value)
-    {
-        if (!value.IsEmpty())
-            GetWxWindow()->SetForegroundColour(value);
     }
 
     std::vector<Control*> Control::GetChildren()
