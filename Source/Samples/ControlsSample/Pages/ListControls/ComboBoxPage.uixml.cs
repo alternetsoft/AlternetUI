@@ -5,6 +5,7 @@ namespace ControlsSample
 {
     internal partial class ComboBoxPage : Control
     {
+        private const bool supressUpDown = false;
         private bool ignoreEvents = false;
         private int newItemIndex = 0;
 
@@ -18,6 +19,19 @@ namespace ControlsSample
             comboBox.Items.Add("Three");
             comboBox.SelectedIndex = 1;
             ignoreEvents = false;
+
+            addItemButton.KeyDown += AddItemButton_KeyDown;
+            KeyDown += ComboBoxPage_KeyDown;
+        }
+
+        private void ComboBoxPage_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void AddItemButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Up || e.Key == Key.Down) && supressUpDown)
+                e.Handled = true;
         }
 
         private void Editor_Click(object? sender, System.EventArgs e)
