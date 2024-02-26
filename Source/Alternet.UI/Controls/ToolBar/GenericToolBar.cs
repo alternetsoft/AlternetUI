@@ -557,7 +557,7 @@ namespace Alternet.UI
         /// <summary>
         /// Adds known <see cref="SpeedButton"/> to the control.
         /// </summary>
-        public virtual ObjectUniqueId AddSpeedBtn(KnownButton button)
+        public virtual ObjectUniqueId AddSpeedBtn(KnownButton button, EventHandler? action = null)
         {
             var strings = CommonStrings.Default;
             var images = GetNormalSvgImages();
@@ -567,50 +567,52 @@ namespace Alternet.UI
             {
                 case KnownButton.OK:
                 default:
-                    return AddSpeedBtn(strings.ButtonOk, images.ImgOk, disabled.ImgOk);
+                    return AddSpeedBtn(strings.ButtonOk, images.ImgOk, disabled.ImgOk, null, action);
                 case KnownButton.Cancel:
-                    return AddSpeedBtn(strings.ButtonCancel, images.ImgCancel, disabled.ImgCancel);
+                    return AddSpeedBtn(strings.ButtonCancel, images.ImgCancel, disabled.ImgCancel, null, action);
                 case KnownButton.Yes:
-                    return AddSpeedBtn(strings.ButtonYes, images.ImgYes, disabled.ImgYes);
+                    return AddSpeedBtn(strings.ButtonYes, images.ImgYes, disabled.ImgYes, null, action);
                 case KnownButton.No:
-                    return AddSpeedBtn(strings.ButtonNo, images.ImgNo, disabled.ImgNo);
+                    return AddSpeedBtn(strings.ButtonNo, images.ImgNo, disabled.ImgNo, null, action);
                 case KnownButton.Abort:
-                    return AddSpeedBtn(strings.ButtonAbort, images.ImgAbort, disabled.ImgAbort);
+                    return AddSpeedBtn(strings.ButtonAbort, images.ImgAbort, disabled.ImgAbort, null, action);
                 case KnownButton.Retry:
-                    return AddSpeedBtn(strings.ButtonRetry, images.ImgRetry, disabled.ImgRetry);
+                    return AddSpeedBtn(strings.ButtonRetry, images.ImgRetry, disabled.ImgRetry, null, action);
                 case KnownButton.Ignore:
-                    return AddSpeedBtn(strings.ButtonIgnore, images.ImgIgnore, disabled.ImgIgnore);
+                    return AddSpeedBtn(strings.ButtonIgnore, images.ImgIgnore, disabled.ImgIgnore, null, action);
                 case KnownButton.Help:
-                    return AddSpeedBtn(strings.ButtonHelp, images.ImgHelp, disabled.ImgHelp);
+                    return AddSpeedBtn(strings.ButtonHelp, images.ImgHelp, disabled.ImgHelp, null, action);
                 case KnownButton.Add:
-                    return AddSpeedBtn(strings.ButtonAdd, images.ImgAdd, disabled.ImgAdd);
+                    return AddSpeedBtn(strings.ButtonAdd, images.ImgAdd, disabled.ImgAdd, null, action);
                 case KnownButton.Remove:
-                    return AddSpeedBtn(strings.ButtonRemove, images.ImgRemove, disabled.ImgRemove);
+                    return AddSpeedBtn(strings.ButtonRemove, images.ImgRemove, disabled.ImgRemove, null, action);
                 case KnownButton.Clear:
-                    return AddSpeedBtn(strings.ButtonClear, images.ImgRemoveAll, disabled.ImgRemoveAll);
+                    return AddSpeedBtn(strings.ButtonClear, images.ImgRemoveAll, disabled.ImgRemoveAll, null, action);
                 case KnownButton.AddChild:
-                    return AddSpeedBtn(strings.ButtonAddChild, images.ImgAddChild, disabled.ImgAddChild);
+                    return AddSpeedBtn(strings.ButtonAddChild, images.ImgAddChild, disabled.ImgAddChild, null, action);
                 case KnownButton.MoreItems:
                     return AddSpeedBtn(
                         strings.ToolbarSeeMore,
                         images.ImgMoreActionsHorz,
-                        disabled.ImgMoreActionsHorz);
+                        disabled.ImgMoreActionsHorz,
+                        null,
+                        action);
                 case KnownButton.New:
-                    return AddSpeedBtn(strings.ButtonNew, images.ImgFileNew, disabled.ImgFileNew);
+                    return AddSpeedBtn(strings.ButtonNew, images.ImgFileNew, disabled.ImgFileNew, null, action);
                 case KnownButton.Open:
-                    return AddSpeedBtn(strings.ButtonOpen, images.ImgFileOpen, disabled.ImgFileOpen);
+                    return AddSpeedBtn(strings.ButtonOpen, images.ImgFileOpen, disabled.ImgFileOpen, null, action);
                 case KnownButton.Save:
-                    return AddSpeedBtn(strings.ButtonSave, images.ImgFileSave, disabled.ImgFileSave);
+                    return AddSpeedBtn(strings.ButtonSave, images.ImgFileSave, disabled.ImgFileSave, null, action);
                 case KnownButton.Undo:
-                    return AddSpeedBtn(strings.ButtonUndo, images.ImgUndo, disabled.ImgUndo);
+                    return AddSpeedBtn(strings.ButtonUndo, images.ImgUndo, disabled.ImgUndo, null, action);
                 case KnownButton.Redo:
-                    return AddSpeedBtn(strings.ButtonRedo, images.ImgRedo, disabled.ImgRedo);
+                    return AddSpeedBtn(strings.ButtonRedo, images.ImgRedo, disabled.ImgRedo, null, action);
                 case KnownButton.Bold:
-                    return AddSpeedBtn(strings.ButtonBold, images.ImgBold, disabled.ImgBold);
+                    return AddSpeedBtn(strings.ButtonBold, images.ImgBold, disabled.ImgBold, null, action);
                 case KnownButton.Italic:
-                    return AddSpeedBtn(strings.ButtonItalic, images.ImgItalic, disabled.ImgItalic);
+                    return AddSpeedBtn(strings.ButtonItalic, images.ImgItalic, disabled.ImgItalic, null, action);
                 case KnownButton.Underline:
-                    return AddSpeedBtn(strings.ButtonUnderline, images.ImgUnderline, disabled.ImgUnderline);
+                    return AddSpeedBtn(strings.ButtonUnderline, images.ImgUnderline, disabled.ImgUnderline, null, action);
             }
         }
 
