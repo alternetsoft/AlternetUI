@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Controls playback of a sound from a audio file. This player supports wav files.
+    /// Controls playback of a sound from a audio file. This player supports only wav files.
+    /// On Linux requires package osspd.
     /// </summary>
     public class SimpleSoundPlayer : DisposableObject
     {
