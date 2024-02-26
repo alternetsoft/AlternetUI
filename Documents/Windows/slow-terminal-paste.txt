@@ -1,0 +1,9 @@
+Select Settings in the Windows Terminal dropdown menu while
+ holding Shift to open the settings.json file in your default text editor.
+
+Comment out
+
+// {
+//     "command": "paste",
+//     "keys": "ctrl+v"
+// },
