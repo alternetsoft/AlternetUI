@@ -6,7 +6,10 @@ playback and record (aka macro recording) functionality for users, or to drive u
 This class currently doesn't work when using Wayland with Linux.
 - Control: MinChildMargin, AddLabels.
 - Fixed bugs with colors on control recreate. This is a big difference in default look of the controls. Previous behavior 
-set wrong default colors to some of the controls. Compare, for example, Button look in this build with old builds.
+set wrong default colors to some of the controls. Compare, for example, Button look on Windows in this build with old builds.
+- ComboBox: HasBorder, EmptyTextHint.
+- FindReplaceControl: Used EmptyTextHint in editors.
+- ControlList.Items are IListControlItems now.
 
 # 0.9.509 (2024 February 25)
 
