@@ -13,6 +13,16 @@ ALTERNET_UI_API ComboBox* ComboBox_Create_()
     return new ComboBox();
 }
 
+ALTERNET_UI_API char16_t* ComboBox_GetEmptyTextHint_(ComboBox* obj)
+{
+    return AllocPInvokeReturnString(obj->GetEmptyTextHint());
+}
+
+ALTERNET_UI_API void ComboBox_SetEmptyTextHint_(ComboBox* obj, const char16_t* value)
+{
+    obj->SetEmptyTextHint(value);
+}
+
 ALTERNET_UI_API c_bool ComboBox_GetHasBorder_(ComboBox* obj)
 {
     return obj->GetHasBorder();

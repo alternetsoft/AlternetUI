@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -64,9 +65,7 @@ namespace Alternet.UI
                         UpdateSourceTrigger.PropertyChanged));
 
         private string text = string.Empty;
-
         private int? selectedIndex;
-
         private bool isEditable = true;
 
         /// <summary>
@@ -75,7 +74,9 @@ namespace Alternet.UI
         public ComboBox()
         {
             if (Application.IsWindowsOS)
+            {
                 UserPaint = true;
+            }
         }
 
         /// <summary>
@@ -99,25 +100,6 @@ namespace Alternet.UI
         public event EventHandler? IsEditableChanged;
 
         /// <summary>
-        /// Gets or sets whether to use choice controls as readonly comboboxes.
-        /// </summary>
-        /// <remarks>
-        /// This property may be useful under Linux or MacOs.
-        /// </remarks>
-        public static bool UseChoiceControl
-        {
-            get
-            {
-                return Native.ComboBox.UseChoiceControl;
-            }
-
-            set
-            {
-                Native.ComboBox.UseChoiceControl = value;
-            }
-        }
-
-        /// <summary>
         /// Gets the starting index of text selected in the combo box.
         /// </summary>
         /// <value>The zero-based index of the first character in the string
@@ -130,6 +112,23 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The number of characters selected in the combo box.</value>
         public int TextSelectionLength => Handler.TextSelectionLength;
+
+        /// <summary>
+        /// Gets or sets a hint shown in an empty unfocused text control.
+        /// </summary>
+        public virtual string? EmptyTextHint
+        {
+            get
+            {
+                return NativeControl.EmptyTextHint;
+            }
+
+            set
+            {
+                value ??= string.Empty;
+                NativeControl.EmptyTextHint = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the text displayed in the <see cref="ComboBox"/>.
@@ -236,8 +235,15 @@ namespace Alternet.UI
         /// </remarks>
         public override object? SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get
+            {
+                return GetValue(SelectedItemProperty);
+            }
+
+            set
+            {
+                SetValue(SelectedItemProperty, value);
+            }
         }
 
         /// <summary>
@@ -246,7 +252,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if the <see cref="ComboBox"/> can be edited;
         /// otherwise <c>false</c>. The default is <c>false</c>.</value>
-        public bool IsEditable
+        public virtual bool IsEditable
         {
             get
             {
@@ -255,13 +261,10 @@ namespace Alternet.UI
 
             set
             {
-                CheckDisposed();
-
                 if (isEditable == value)
                     return;
-
+                CheckDisposed();
                 isEditable = value;
-
                 IsEditableChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -269,11 +272,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        internal bool HasBorder
+        public virtual bool HasBorder
         {
             get => Handler.HasBorder;
-            set => Handler.HasBorder = value;
+            set
+            {
+                if (HasBorder == value)
+                    return;
+                Handler.HasBorder = value;
+            }
         }
+
+        internal new Native.ComboBox NativeControl => (Native.ComboBox)base.NativeControl;
 
         internal new ComboBoxHandler Handler
         {
@@ -298,7 +308,7 @@ namespace Alternet.UI
         /// such as when searching through the text of
         /// the control and replacing information.
         /// </remarks>
-        public void SelectTextRange(int start, int length)
+        public virtual void SelectTextRange(int start, int length)
             => Handler.SelectTextRange(start, length);
 
         /// <summary>
@@ -306,7 +316,7 @@ namespace Alternet.UI
         /// <see cref="FrameworkElement.DataContext"/>
         /// </summary>
         /// <param name="propName">Property name.</param>
-        public void BindSelectedItem(string propName)
+        public virtual void BindSelectedItem(string propName)
         {
             Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
             BindingOperations.SetBinding(this, ComboBox.SelectedItemProperty, myBinding);
@@ -315,7 +325,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects all the text in the editable portion of the ComboBox.
         /// </summary>
-        public void SelectAllText() => Handler.SelectAllText();
+        public virtual void SelectAllText() => Handler.SelectAllText();
 
         /// <summary>
         /// Raises the <see cref="SelectedItemChanged"/> event and calls
@@ -323,7 +333,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        public void RaiseSelectedItemChanged(EventArgs e)
+        public virtual void RaiseSelectedItemChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -349,7 +359,7 @@ namespace Alternet.UI
         /// elements using <see cref="PropertyGrid.GetPropChoices"/>. So, it is possible
         /// to localize labels and limit displayed enum elements.
         /// </remarks>
-        public void BindEnumProp(object instance, string propName)
+        public virtual void BindEnumProp(object instance, string propName)
         {
             var choices = PropertyGrid.GetPropChoices(instance, propName);
             if (choices is null)

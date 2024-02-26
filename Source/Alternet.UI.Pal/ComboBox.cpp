@@ -397,7 +397,8 @@ namespace Alternet::UI
 
     string ComboBox::RetrieveText()
     {
-        return wxStr(GetComboBox()->GetValue());
+        auto result = GetComboBox()->GetValue();
+        return wxStr(result);
     }
 
     void ComboBox::ApplyText(const string& value)
@@ -409,6 +410,16 @@ namespace Alternet::UI
     {
         auto value = dynamic_cast<wxControlWithItems*>(GetWxWindow());
         return value;
+    }
+
+    string ComboBox::GetEmptyTextHint()
+    {
+        return wxStr(GetComboBox()->GetHint());
+    }
+
+    void ComboBox::SetEmptyTextHint(const string& value)
+    {
+        GetComboBox()->SetHint(wxStr(value));
     }
 
     wxOwnerDrawnComboBox* ComboBox::GetComboBox()
@@ -442,6 +453,6 @@ namespace Alternet::UI
 
     bool ComboBox::IsUsingComboBoxControl()
     {
-        return dynamic_cast<wxComboBox*>(GetWxWindow()) != nullptr;
+        return dynamic_cast<wxOwnerDrawnComboBox*>(GetWxWindow()) != nullptr;
     }
 }

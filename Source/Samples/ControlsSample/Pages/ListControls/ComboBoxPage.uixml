@@ -49,7 +49,7 @@
 
                 <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
                   <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
-                          Click="HasBorderButton_Click" Visible="false"/>
+                          Click="HasBorderButton_Click" Visible="true"/>
                 </VerticalStackPanel>
         </HorizontalStackPanel>
     </VerticalStackPanel>

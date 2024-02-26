@@ -56,7 +56,7 @@ namespace ControlsSample
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-            //comboBox.HasBorder = !comboBox.HasBorder;
+            comboBox.HasBorder = !comboBox.HasBorder;
         }
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)
@@ -65,7 +65,8 @@ namespace ControlsSample
                 return;
             
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
-            Application.Log($"ComboBox: TextChanged. Text: {text}");
+            var prefix = "ComboBox: TextChanged. Text:";
+            Application.LogReplace($"{prefix} {text}", prefix);
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -73,7 +74,8 @@ namespace ControlsSample
             if (ignoreEvents)
                 return;
             var s = (comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString());
-            Application.Log($"ComboBox: SelectedItemChanged. SelectedIndex: {s}");
+            var prefix = "ComboBox: SelectedItemChanged.SelectedIndex:";
+            Application.LogReplace($"{prefix} {s}", prefix);
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
