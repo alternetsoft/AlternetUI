@@ -51,13 +51,29 @@ namespace ControlsSample
             {
                 Application.AddIdleTask(() =>
                 {
-                    simulator.SendMouseMove(button1, (5,5));
-                    simulator.SendMouseClick();
-                    simulator.SendMouseMove(editor, (5, 5));
-                    simulator.SendMouseClick();
-                    simulator.SendText("Hello");
-                    simulator.SendMouseMove(button2, (5, 5));
-                    simulator.SendMouseClick();
+                    if (Fn())
+                        Application.Log("Simulation is ok.");
+                    else
+                        Application.Log("Simulation not working.");
+
+                    bool Fn()
+                    {
+                        if (!simulator.SendMouseMove(button1, (5, 5)))
+                            return false;
+                        if (!simulator.SendMouseClick())
+                            return false;
+                        if (!simulator.SendMouseMove(editor, (5, 5)))
+                            return false;
+                        if (!simulator.SendMouseClick())
+                            return false;
+                        if (!simulator.SendText("Hello"))
+                            return false;
+                        if (!simulator.SendMouseMove(button2, (5, 5)))
+                            return false;
+                        if (!simulator.SendMouseClick())
+                            return false;
+                        return true;
+                    }
                 });
             }
         }
