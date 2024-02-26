@@ -15,7 +15,7 @@ namespace Alternet::UI
 #endif
 
 #ifdef __WXOSX__
-    bool UseChoiceControlForReadOnlyComboBox = true;
+    bool UseChoiceControlForReadOnlyComboBox = false;
 #endif
 
     bool ComboBox::GetUseChoiceControl()
