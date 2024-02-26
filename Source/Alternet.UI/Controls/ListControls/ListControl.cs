@@ -15,7 +15,7 @@ namespace Alternet.UI
     public abstract class ListControl : Control, IReadOnlyStrings
     {
         private StringSearch? search;
-        private Collection<object>? items;
+        private ListControlItems<object>? items;
 
         /// <summary>
         /// Gets or sets string search provider.
@@ -74,11 +74,11 @@ namespace Alternet.UI
         /// With this reference, you can add items, remove items, and obtain
         /// a count of the items in the collection.</remarks>
         [Content]
-        public virtual Collection<object> Items
+        public virtual IListControlItems<object> Items
         {
             get
             {
-                return items ??= new Collection<object> { ThrowOnNullAdd = true };
+                return items ??= new ListControlItems<object>();
             }
 
             set
@@ -183,10 +183,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The zero-based index of the <see cref="Items"/> element or
         /// <c>null</c>.</param>
-        /// <returns>The <see cref="Items"/> element at the specified index or <c>null</c>.</returns>
+        /// <returns>The <see cref="Items"/> element at the specified
+        /// index or <c>null</c>.</returns>
         public object? this[int? index]
         {
-            get => Items[index];
+            get
+            {
+                if (index is null)
+                    return null;
+                return Items[index.Value];
+            }
         }
 
         string? IReadOnlyStrings.this[int index] => GetItemText(index);

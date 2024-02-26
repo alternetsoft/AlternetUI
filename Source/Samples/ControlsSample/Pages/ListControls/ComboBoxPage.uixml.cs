@@ -5,8 +5,8 @@ namespace ControlsSample
 {
     internal partial class ComboBoxPage : Control
     {
+        private readonly bool ignoreEvents = false;
         private const bool supressUpDown = false;
-        private bool ignoreEvents = false;
         private int newItemIndex = 0;
 
         public ComboBoxPage()

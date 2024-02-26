@@ -346,10 +346,10 @@ namespace PropertyGridSample
         }
 
         internal static Collection<T> NewCollection<T>()
+            where T : class
         {
             var result = new Collection<T>();
-            ObjectInit.AddTenItems(result);
-
+            result.AddRange(ObjectInit.GetTenItems().Cast<T>());
             return result;
         }
 

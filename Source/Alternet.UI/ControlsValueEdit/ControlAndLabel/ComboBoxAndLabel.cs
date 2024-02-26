@@ -64,7 +64,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="ListControl.Items"/>
         [Content]
-        public Collection<object> Items
+        public IListControlItems<object> Items
         {
             get => ComboBox.Items;
             set => ComboBox.Items = value;

@@ -109,7 +109,7 @@ namespace ControlsSample
         {
             var itemIndex = popupListBox.MainControl.HitTest(
                 e.GetPosition(popupListBox.MainControl));
-            var selectedItem = popupListBox.MainControl.Items[itemIndex];
+            var selectedItem = popupListBox.MainControl[itemIndex];
             Application.Log($"Popup: {eventName}. Item: {selectedItem}");
         }
 
