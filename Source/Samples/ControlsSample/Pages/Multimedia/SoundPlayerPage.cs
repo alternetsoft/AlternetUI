@@ -77,7 +77,7 @@ namespace ControlsSample
 
         private void Stop()
         {
-            SimpleSoundPlayer.Stop();
+            player?.Stop();
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)

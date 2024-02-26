@@ -115,6 +115,7 @@ namespace Alternet.UI
                     FindToolBar.GetDisabledSvgImages().ImgAngleDown);
 
                 findEdit.SuggestedWidth = 150;
+                findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind + "...";
                 /*findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
                 replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;*/
                 replaceEdit.SuggestedWidth = 150;
@@ -143,6 +144,7 @@ namespace Alternet.UI
                 ReplaceToolBar.AddSpeedBtn();
 
                 IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
+                replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace + "...";
 
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplace,

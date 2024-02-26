@@ -41,8 +41,14 @@
 
    <!-- ====================================================== -->
 
+    <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
+        <Palx86Release>$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll</Palx86Release>
+	<Palx86Debug>$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll</Palx86Debug>
+	<Palx86DebugPdb>$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb</Palx86DebugPdb>
+    </PropertyGroup>
+	
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|x86'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
+        <None Include="$(Palx86Release)" Link="Alternet.UI.Pal.dll" Condition="Exists($(Palx86Release))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -50,10 +56,11 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|x86'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
+        <None Include="$(Palx86Debug)" Link="Alternet.UI.Pal.dll" Condition="Exists($(Palx86Debug))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb" Link="Alternet.UI.Pal.pdb">
+        <None Include="$(Palx86DebugPdb)" Condition="Exists($(Palx86DebugPdb))"
+		 Link="Alternet.UI.Pal.pdb">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -61,10 +68,10 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="x86\Alternet.UI.Pal.dll">
+        <None Include="$(Palx86Debug)" Link="x86\Alternet.UI.Pal.dll" Condition="Exists($(Palx86Debug))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb" Link="x86\Alternet.UI.Pal.pdb">
+        <None Include="$(Palx86DebugPdb)" Link="x86\Alternet.UI.Pal.pdb" Condition="Exists($(Palx86DebugPdb))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

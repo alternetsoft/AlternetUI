@@ -1,6 +1,19 @@
+# 0.9.511 (2024 February 26)
+
+- Added UIActionSimulator. This class is used to simulate user 
+interface actions such as a mouse click or a key press. Common usage for this class would be to provide 
+playback and record (aka macro recording) functionality for users, or to drive unit tests by simulating user sessions. 
+This class currently doesn't work when using Wayland with Linux.
+- Control: MinChildMargin, AddLabels.
+- Fixed bugs with colors on control recreate. This is a big difference in default look of the controls. Previous behavior 
+set wrong default colors to some of the controls. Compare, for example, Button look on Windows in this build with old builds.
+- ComboBox: HasBorder, EmptyTextHint.
+- FindReplaceControl: Used EmptyTextHint in editors.
+- ControlList.Items are IListControlItems now.
+
 # 0.9.509 (2024 February 25)
 
-- SimpleSoundPlayer. Currently only Windows and MacOs. On Linux does nothing.
+- SimpleSoundPlayer. On Linux requires package osspd: sudo apt-get -y install osspd.
 - Add SystemSound and SystemSounds.
 - Fixed PropertyGrid.SuggestedInitDefaults() (mostly Linux related)
 - ImageSet: New FromSvgStream override capable of loading svg with two different colors.
@@ -23,8 +36,6 @@
 - Removed #if FEATURE_WINDOWS_SYSTEM_COLORS.
 - Control.AddButtons.
 - SupressBell, StopSound.
-- 
-
 
 # 0.9.507 (2024 February 23)
 

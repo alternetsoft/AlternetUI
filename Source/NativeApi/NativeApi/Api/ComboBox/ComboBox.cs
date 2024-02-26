@@ -8,6 +8,7 @@ namespace NativeApi.Api
         public event EventHandler? SelectedItemChanged;
         public event EventHandler? TextChanged;
 
+        public string EmptyTextHint { get; set; }
         public bool HasBorder { get; set; }
         public int ItemsCount { get; }
         public bool IsEditable { get; set; }

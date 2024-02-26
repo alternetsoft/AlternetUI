@@ -133,16 +133,10 @@ namespace Alternet::UI
 
         virtual wxWindow* GetParentingWxWindow(Control* child);
 
-        virtual Color RetrieveBackgroundColor();
-        virtual void ApplyBackgroundColor(const Color& value);
-
         Size RetrieveMinimumSize();
         Size RetrieveMaximumSize();
         virtual void ApplyMinimumSize(const Size& value);
         virtual void ApplyMaximumSize(const Size& value);
-
-        virtual Color RetrieveForegroundColor();
-        virtual void ApplyForegroundColor(const Color& value);
 
         virtual Rect RetrieveBounds();
         virtual void ApplyBounds(const Rect& value);
@@ -224,8 +218,6 @@ namespace Alternet::UI
         Size _clientSizeCache;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
-        DelayedValue<Control, Color> _backgroundColor;
-        DelayedValue<Control, Color> _foregroundColor;
         DelayedValue<Control, ScrollInfo> _verticalScrollBarInfo;
         DelayedValue<Control, ScrollInfo> _horizontalScrollBarInfo;
         DelayedValue<Control, Rect> _bounds;

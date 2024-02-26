@@ -226,6 +226,76 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_SoundIsOk_(handle);
         }
         
+        public static void UIActionSimulatorDelete(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_UIActionSimulatorDelete_(handle);
+        }
+        
+        public static System.IntPtr UIActionSimulatorCreate()
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorCreate_();
+        }
+        
+        public static bool UIActionSimulatorChar(System.IntPtr handle, int keycode, int modifiers)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorChar_(handle, keycode, modifiers);
+        }
+        
+        public static bool UIActionSimulatorKeyDown(System.IntPtr handle, int keycode, int modifiers)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorKeyDown_(handle, keycode, modifiers);
+        }
+        
+        public static bool UIActionSimulatorKeyUp(System.IntPtr handle, int keycode, int modifiers)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorKeyUp_(handle, keycode, modifiers);
+        }
+        
+        public static bool UIActionSimulatorMouseClick(System.IntPtr handle, int button)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorMouseClick_(handle, button);
+        }
+        
+        public static bool UIActionSimulatorMouseDblClick(System.IntPtr handle, int button)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorMouseDblClick_(handle, button);
+        }
+        
+        public static bool UIActionSimulatorMouseDown(System.IntPtr handle, int button)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorMouseDown_(handle, button);
+        }
+        
+        public static bool UIActionSimulatorMouseDragDrop(System.IntPtr handle, long x1, long y1, long x2, long y2, int button)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorMouseDragDrop_(handle, x1, y1, x2, y2, button);
+        }
+        
+        public static bool UIActionSimulatorMouseMove(System.IntPtr handle, Alternet.Drawing.PointI point)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, point);
+        }
+        
+        public static bool UIActionSimulatorMouseUp(System.IntPtr handle, int button)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorMouseUp_(handle, button);
+        }
+        
+        public static bool UIActionSimulatorSelect(System.IntPtr handle, string text)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorSelect_(handle, text);
+        }
+        
+        public static bool UIActionSimulatorText(System.IntPtr handle, string text)
+        {
+            return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, text);
+        }
+        
+        public static void UIActionSimulatorYield()
+        {
+            NativeApi.WxOtherFactory_UIActionSimulatorYield_();
+        }
+        
         public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz)
         {
             NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
@@ -772,6 +842,48 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_SoundIsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_UIActionSimulatorDelete_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_UIActionSimulatorCreate_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorChar_(System.IntPtr handle, int keycode, int modifiers);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorKeyDown_(System.IntPtr handle, int keycode, int modifiers);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorKeyUp_(System.IntPtr handle, int keycode, int modifiers);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseClick_(System.IntPtr handle, int button);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseDblClick_(System.IntPtr handle, int button);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseDown_(System.IntPtr handle, int button);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(System.IntPtr handle, long x1, long y1, long x2, long y2, int button);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseMove_(System.IntPtr handle, Alternet.Drawing.PointI point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseUp_(System.IntPtr handle, int button);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorSelect_(System.IntPtr handle, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_UIActionSimulatorText_(System.IntPtr handle, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_UIActionSimulatorYield_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Alternet.UI;
@@ -53,7 +54,8 @@ namespace Alternet.Base.Collections
         public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinished;
 
         /// <summary>
-        /// Returns <see langword="true"/> if <see cref="AddRange"/> is being executed at the moment.
+        /// Returns <see langword="true"/> if <see cref="AddRange"/> is being
+        /// executed at the moment.
         /// </summary>
         public bool RangeOpInProgress { get; private set; }
 

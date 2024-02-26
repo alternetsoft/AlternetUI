@@ -16,8 +16,8 @@ namespace Alternet.UI
     internal class ThreadExceptionWindow : DialogWindow
     {
         private readonly Exception exception;
+        private readonly bool canContinue;
         private TextBox? messageTextBox;
-        private bool canContinue;
 
         /// <summary>
         ///  Initializes a new instance of the

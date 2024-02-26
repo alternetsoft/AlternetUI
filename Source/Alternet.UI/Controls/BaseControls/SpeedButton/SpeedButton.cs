@@ -120,6 +120,11 @@ namespace Alternet.UI
             Custom,
 
             /// <summary>
+            /// Named theme is used.
+            /// </summary>
+            Named,
+
+            /// <summary>
             /// Theme <see cref="TabControlTheme"/> is used.
             /// </summary>
             TabControl,

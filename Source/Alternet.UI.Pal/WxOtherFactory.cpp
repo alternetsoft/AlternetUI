@@ -9,6 +9,7 @@
 #include <wx/numdlg.h>
 #include <string.h>
 #include <wx/sound.h>
+#include <wx/uiaction.h>
 
 namespace Alternet::UI
 {
@@ -1041,4 +1042,76 @@ namespace Alternet::UI
 
 	// ============================================
 
+	void WxOtherFactory::UIActionSimulatorDelete(void* handle)
+	{
+		delete (wxUIActionSimulator*)handle;
+	}
+
+	void* WxOtherFactory::UIActionSimulatorCreate()
+	{
+		return new wxUIActionSimulator();
+	}
+
+	bool WxOtherFactory::UIActionSimulatorChar(void* handle, int keycode, int modifiers)
+	{
+		return ((wxUIActionSimulator*)handle)->Char(keycode, modifiers);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorKeyDown(void* handle, int keycode, int modifiers)
+	{
+		return ((wxUIActionSimulator*)handle)->KeyDown(keycode, modifiers);
+	}
+
+	void WxOtherFactory::UIActionSimulatorYield()
+	{
+		wxYield();
+	}
+
+	bool WxOtherFactory::UIActionSimulatorKeyUp(void* handle, int keycode, int modifiers)
+	{
+		return ((wxUIActionSimulator*)handle)->KeyUp(keycode, modifiers);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorMouseClick(void* handle, int button)
+	{
+		return ((wxUIActionSimulator*)handle)->MouseClick(button);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorMouseDblClick(void* handle, int button)
+	{
+		return ((wxUIActionSimulator*)handle)->MouseDblClick(button);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorMouseDown(void* handle, int button)
+	{
+		return ((wxUIActionSimulator*)handle)->MouseDown(button);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorMouseDragDrop(void* handle, int64_t x1,
+		int64_t y1, int64_t x2, int64_t y2, int button)
+	{
+		return ((wxUIActionSimulator*)handle)->MouseDragDrop(x1, y1, x2, y2, button);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorMouseMove(void* handle, const PointI& point)
+	{
+		return ((wxUIActionSimulator*)handle)->MouseMove(point);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorMouseUp(void* handle, int button)
+	{
+		return ((wxUIActionSimulator*)handle)->MouseUp(button);
+	}
+
+	bool WxOtherFactory::UIActionSimulatorSelect(void* handle, const string& text)
+	{
+		return ((wxUIActionSimulator*)handle)->Select(wxStr(text));
+	}
+
+	bool WxOtherFactory::UIActionSimulatorText(void* handle, const string& text)
+	{
+		return ((wxUIActionSimulator*)handle)->Text(wxStr(text));
+	}
+
+	// ============================================
 }

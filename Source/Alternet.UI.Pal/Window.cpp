@@ -825,16 +825,6 @@ namespace Alternet::UI
     {
     }
 
-    Color Window::RetrieveBackgroundColor()
-    {
-        return GetTopLevelWindow()->GetBackgroundColour();
-    }
-
-    void Window::ApplyBackgroundColor(const Color& value)
-    {
-        //_frame->SetBackgroundColour(value);
-    }
-
     IconSet* Window::GetIcon()
     {
         if (_icon != nullptr)

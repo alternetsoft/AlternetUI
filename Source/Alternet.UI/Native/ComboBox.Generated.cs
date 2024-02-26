@@ -24,6 +24,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string EmptyTextHint
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEmptyTextHint_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ComboBox_SetEmptyTextHint_(NativePointer, value);
+            }
+        }
+        
         public bool HasBorder
         {
             get
@@ -237,6 +252,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ComboBox_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string ComboBox_GetEmptyTextHint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetEmptyTextHint_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ComboBox_GetHasBorder_(IntPtr obj);

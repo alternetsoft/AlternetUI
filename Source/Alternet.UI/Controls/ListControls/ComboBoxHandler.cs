@@ -32,9 +32,6 @@ namespace Alternet.UI
 
         internal abstract bool HasBorder { get; set; }
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
-
         /// <summary>
         /// Selects a range of text in the editable portion of the ComboBox.
         /// </summary>

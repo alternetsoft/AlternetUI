@@ -177,13 +177,13 @@ namespace PropertyGridSample
             {
                 ListBox listBox = (c as ListBox)!;
                 listBox.SuggestedSize = defaultListSize;
-                AddTenItems(listBox.Items);
+                listBox.Items.AddRange(GetTenItems());
             });
 
             Actions.Add(typeof(ComboBox), (c) =>
             {
                 ComboBox comboBox = (c as ComboBox)!;
-                AddTenItems(comboBox.Items);
+                comboBox.Items.AddRange(GetTenItems());
                 comboBox.HorizontalAlignment = HorizontalAlignment.Left;
                 comboBox.SuggestedWidth = 200;
             });
@@ -192,7 +192,7 @@ namespace PropertyGridSample
             {
                 CheckListBox checkListBox = (c as CheckListBox)!;
                 checkListBox.SuggestedSize = defaultListHeight;
-                AddTenItems(checkListBox.Items);
+                checkListBox.Items.AddRange(GetTenItems());
             });
 
             Actions.Add(typeof(GroupBox), (c) =>
@@ -281,8 +281,10 @@ namespace PropertyGridSample
             }
         }
 
-        internal static void AddTenItems(IList items)
+        internal static IEnumerable<object> GetTenItems()
         {
+            var items = new List<string>();
+
             items.Add("One");
             items.Add("Two");
             items.Add("Three");
@@ -293,6 +295,8 @@ namespace PropertyGridSample
             items.Add("Eight");
             items.Add("Nine");
             items.Add("Ten");
+
+            return items;
         }
 
         public static void InitScrollViewer(object control)

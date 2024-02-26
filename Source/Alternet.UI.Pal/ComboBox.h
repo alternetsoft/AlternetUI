@@ -2,6 +2,8 @@
 #include "Common.h"
 #include "Control.h"
 
+#include <wx/odcombo.h>
+
 namespace Alternet::UI
 {
     class ComboBox : public Control
@@ -48,8 +50,9 @@ namespace Alternet::UI
         string RetrieveText();
         void ApplyText(const string& value);
 
-        wxComboBox* GetComboBox();
+        wxOwnerDrawnComboBox* GetComboBox();
         wxChoice* GetChoice();
         wxItemContainer* GetItemContainer();
+        wxControlWithItems* GetControlWithItems();
     };
 }

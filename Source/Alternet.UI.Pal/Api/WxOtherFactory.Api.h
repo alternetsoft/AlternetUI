@@ -217,6 +217,76 @@ ALTERNET_UI_API c_bool WxOtherFactory_SoundIsOk_(void* handle)
     return WxOtherFactory::SoundIsOk(handle);
 }
 
+ALTERNET_UI_API void WxOtherFactory_UIActionSimulatorDelete_(void* handle)
+{
+    WxOtherFactory::UIActionSimulatorDelete(handle);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_UIActionSimulatorCreate_()
+{
+    return WxOtherFactory::UIActionSimulatorCreate();
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorChar_(void* handle, int keycode, int modifiers)
+{
+    return WxOtherFactory::UIActionSimulatorChar(handle, keycode, modifiers);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorKeyDown_(void* handle, int keycode, int modifiers)
+{
+    return WxOtherFactory::UIActionSimulatorKeyDown(handle, keycode, modifiers);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorKeyUp_(void* handle, int keycode, int modifiers)
+{
+    return WxOtherFactory::UIActionSimulatorKeyUp(handle, keycode, modifiers);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseClick_(void* handle, int button)
+{
+    return WxOtherFactory::UIActionSimulatorMouseClick(handle, button);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDblClick_(void* handle, int button)
+{
+    return WxOtherFactory::UIActionSimulatorMouseDblClick(handle, button);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDown_(void* handle, int button)
+{
+    return WxOtherFactory::UIActionSimulatorMouseDown(handle, button);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(void* handle, int64_t x1, int64_t y1, int64_t x2, int64_t y2, int button)
+{
+    return WxOtherFactory::UIActionSimulatorMouseDragDrop(handle, x1, y1, x2, y2, button);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseMove_(void* handle, PointI point)
+{
+    return WxOtherFactory::UIActionSimulatorMouseMove(handle, point);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseUp_(void* handle, int button)
+{
+    return WxOtherFactory::UIActionSimulatorMouseUp(handle, button);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorSelect_(void* handle, const char16_t* text)
+{
+    return WxOtherFactory::UIActionSimulatorSelect(handle, text);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorText_(void* handle, const char16_t* text)
+{
+    return WxOtherFactory::UIActionSimulatorText(handle, text);
+}
+
+ALTERNET_UI_API void WxOtherFactory_UIActionSimulatorYield_()
+{
+    WxOtherFactory::UIActionSimulatorYield();
+}
+
 ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
     WxOtherFactory::TestPopupWindow(parent, pos, sz);

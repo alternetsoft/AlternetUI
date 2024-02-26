@@ -5,7 +5,8 @@ namespace ControlsSample
 {
     internal partial class ComboBoxPage : Control
     {
-        private bool ignoreEvents = false;
+        private readonly bool ignoreEvents = false;
+        private const bool supressUpDown = false;
         private int newItemIndex = 0;
 
         public ComboBoxPage()
@@ -18,6 +19,19 @@ namespace ControlsSample
             comboBox.Items.Add("Three");
             comboBox.SelectedIndex = 1;
             ignoreEvents = false;
+
+            addItemButton.KeyDown += AddItemButton_KeyDown;
+            KeyDown += ComboBoxPage_KeyDown;
+        }
+
+        private void ComboBoxPage_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void AddItemButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Up || e.Key == Key.Down) && supressUpDown)
+                e.Handled = true;
         }
 
         private void Editor_Click(object? sender, System.EventArgs e)
@@ -56,7 +70,7 @@ namespace ControlsSample
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-            //comboBox.HasBorder = !comboBox.HasBorder;
+            comboBox.HasBorder = !comboBox.HasBorder;
         }
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)
@@ -65,7 +79,8 @@ namespace ControlsSample
                 return;
             
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
-            Application.Log($"ComboBox: TextChanged. Text: {text}");
+            var prefix = "ComboBox: TextChanged. Text:";
+            Application.LogReplace($"{prefix} {text}", prefix);
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -73,7 +88,8 @@ namespace ControlsSample
             if (ignoreEvents)
                 return;
             var s = (comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString());
-            Application.Log($"ComboBox: SelectedItemChanged. SelectedIndex: {s}");
+            var prefix = "ComboBox: SelectedItemChanged.SelectedIndex:";
+            Application.LogReplace($"{prefix} {s}", prefix);
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
