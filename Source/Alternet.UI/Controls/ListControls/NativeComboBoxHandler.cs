@@ -153,17 +153,8 @@ namespace Alternet.UI
             var flags = (DrawItemFlags)NativeControl.EventFlags;
             var isPaintingControl = flags.HasFlag(DrawItemFlags.PaintingControl);
 
-            Graphics dc;
-            Graphics? popupCanvas = null;
-
-            if (isPaintingControl)
-                dc = Control.MeasureCanvas;
-            else
-            {
-                popupCanvas =
-                    new Graphics(Native.Control.OpenDrawingContextForDC(NativeControl.EventDc, false));
-                dc = popupCanvas;
-            }
+            var ptr = Native.Control.OpenDrawingContextForDC(NativeControl.EventDc, false);
+            var dc = new Graphics(ptr);
 
             var rect = Control.PixelToDip(NativeControl.EventRect);
 
@@ -184,7 +175,7 @@ namespace Alternet.UI
             paintEventArgs.IsPaintingBackground = drawBackground;
             DrawItem(paintEventArgs);
             paintEventArgs.DrawingContext = null!;
-            popupCanvas?.Dispose();
+            dc.Dispose();
         }
 
         private void NativeControl_DrawItem()
