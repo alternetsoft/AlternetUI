@@ -46,7 +46,7 @@ namespace Alternet::UI
             return wxOwnerDrawnComboBox::FindString(s, bCase);
         }
 
-        virtual void Select(int n)
+        virtual void Select(int n) wxOVERRIDE
         {
             return wxOwnerDrawnComboBox::Select(n);
         }
@@ -80,13 +80,13 @@ namespace Alternet::UI
         }
 
         // Return the widest item width (recalculating it if necessary)
-        virtual int GetWidestItemWidth()
+        virtual int GetWidestItemWidth() wxOVERRIDE
         {
             return wxOwnerDrawnComboBox::GetWidestItemWidth();
         }
 
         // Return the index of the widest item (recalculating it if necessary)
-        virtual int GetWidestItem()
+        virtual int GetWidestItem() wxOVERRIDE
         {
             return wxOwnerDrawnComboBox::GetWidestItem();
         }
@@ -101,7 +101,7 @@ namespace Alternet::UI
         // item: item index to be drawn, may be wxNOT_FOUND when painting combo control itself
         //       and there is no valid selection
         // flags: wxODCB_PAINTING_CONTROL is set if painting to combo control instead of list
-        virtual void OnDrawItem(wxDC& dc, const wxRect& rect, int item, int flags) const;
+        virtual void OnDrawItem(wxDC& dc, const wxRect& rect, int item, int flags) const wxOVERRIDE;
 
         void DefaultOnDrawItem(wxDC& dc, const wxRect& rect, int item, int flags) const
         {
@@ -109,10 +109,10 @@ namespace Alternet::UI
         }
 
         // Callback for item height, or -1 for default
-        virtual wxCoord OnMeasureItem(size_t item) const;
+        virtual wxCoord OnMeasureItem(size_t item) const wxOVERRIDE;
 
         // Callback for item width, or -1 for default/undetermined
-        virtual wxCoord OnMeasureItemWidth(size_t item) const;
+        virtual wxCoord OnMeasureItemWidth(size_t item) const wxOVERRIDE;
 
         // override base implementation so we can return the size for the
         // largest item
@@ -123,7 +123,7 @@ namespace Alternet::UI
 
         // Callback for background drawing. Flags are same as with
         // OnDrawItem.
-        virtual void OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags) const;
+        virtual void OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags) const wxOVERRIDE;
 
         void DefaultOnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags) const
         {
