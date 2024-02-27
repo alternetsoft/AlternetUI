@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ComboBoxPage : Control
+    internal partial class ComboBoxPage : Control, IComboBoxItemPainter
     {
         private readonly bool ignoreEvents = false;
         private const bool supressUpDown = false;
@@ -92,6 +92,14 @@ namespace ControlsSample
             Application.LogReplace($"{prefix} {s}", prefix);
         }
 
+        private void OwnerDrawCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if(ownerDrawCheckBox.IsChecked)
+                comboBox.ItemPainter = this;
+            else
+                comboBox.ItemPainter = null;
+        }
+
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             comboBox.IsEditable = allowTextEditingCheckBox.IsChecked;
@@ -159,6 +167,33 @@ namespace ControlsSample
         private void SetTextToOneButton_Click(object? sender, System.EventArgs e)
         {
             comboBox.Text = "One";
+        }
+
+        void IComboBoxItemPainter.Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
+        {
+            e.DefaultDraw();
+            if(e.IsPaintingControl)
+                e.Graphics.FillRectangle(Color.Red, (e.Bounds.Location, (5, 5)));
+            else
+            {
+                var point = e.Bounds.TopRight;
+                point.Offset(-5, 0);
+
+                if (e.IsSelected)
+                    e.Graphics.FillRectangle(Color.Yellow, (point, (10, e.Bounds.Height)));
+                else
+                    e.Graphics.FillRectangle(Color.Green, (point, (10, e.Bounds.Height)));
+            }
+        }
+
+        double IComboBoxItemPainter.GetHeight(ComboBox sender, int index, double defaultHeight)
+        {
+            return -1;
+        }
+
+        double IComboBoxItemPainter.GetWidth(ComboBox sender, int index, double defaultWidth)
+        {
+            return -1;
         }
     }
 }

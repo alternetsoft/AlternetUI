@@ -74,6 +74,7 @@ namespace Alternet.UI
         private string? text;
         private DockStyle dock;
         private LayoutStyle? layout;
+        private Graphics? measureCanvas;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.

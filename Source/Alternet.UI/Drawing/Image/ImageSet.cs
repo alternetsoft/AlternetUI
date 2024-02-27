@@ -232,7 +232,7 @@ namespace Alternet.UI
         /// <param name="color1">Svg fill color 1.</param>
         /// <param name="color2">Svg fill color 2.</param>
         /// <returns></returns>
-        public static (ImageSet, ImageSet) FromSvgStream(
+        public static (ImageSet Normal, ImageSet Disabled) FromSvgStream(
             Stream stream,
             SizeI size,
             Color? color1,
@@ -253,14 +253,42 @@ namespace Alternet.UI
         /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
         /// method is called to get color information.</param>
         /// <returns></returns>
-        public static (ImageSet, ImageSet) GetNormalAndDisabledSvg(
+        public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
             Stream stream,
             SizeI size,
             Control control)
         {
             var image = ImageSet.FromSvgStream(
                 stream,
-                32,
+                size,
+                control.GetSvgColor(KnownSvgColor.Normal),
+                control.GetSvgColor(KnownSvgColor.Disabled));
+            return image;
+        }
+
+        /// <summary>
+        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
+        /// from the specified url which contains svg data. Images are loaded
+        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// </summary>
+        /// <param name="size">Image size in pixels. If it is not specified,
+        /// <see cref="ToolBar.GetDefaultImageSize(Control)"/> is used to get image size.</param>
+        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// method is called to get color information.</param>
+        /// <returns></returns>
+        /// <param name="url">"embres" or "file" url with svg image data.</param>
+        /// <returns></returns>
+        public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
+            string url,
+            Control control,
+            SizeI? size = null)
+        {
+            size ??= ToolBar.GetDefaultImageSize(control);
+
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            var image = ImageSet.FromSvgStream(
+                stream,
+                size.Value,
                 control.GetSvgColor(KnownSvgColor.Normal),
                 control.GetSvgColor(KnownSvgColor.Disabled));
             return image;

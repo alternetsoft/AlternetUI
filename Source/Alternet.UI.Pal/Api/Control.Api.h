@@ -351,6 +351,21 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
+{
+    return obj->GetContainingSizer();
+}
+
+ALTERNET_UI_API void* Control_GetSizer_(Control* obj)
+{
+    return obj->GetSizer();
+}
+
+ALTERNET_UI_API void Control_SetSizer_(Control* obj, void* sizer, c_bool deleteOld)
+{
+    obj->SetSizer(sizer, deleteOld);
+}
+
 ALTERNET_UI_API void Control_SetSizerAndFit_(Control* obj, void* sizer, c_bool deleteOld)
 {
     obj->SetSizerAndFit(sizer, deleteOld);
@@ -576,19 +591,19 @@ ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
     obj->SetBoundsEx(rect, flags);
 }
 
-ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
+ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContextForWindow_(void* window)
 {
-    return obj->GetContainingSizer();
+    return Control::OpenClientDrawingContextForWindow(window);
 }
 
-ALTERNET_UI_API void* Control_GetSizer_(Control* obj)
+ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContextForWindow_(void* window)
 {
-    return obj->GetSizer();
+    return Control::OpenPaintDrawingContextForWindow(window);
 }
 
-ALTERNET_UI_API void Control_SetSizer_(Control* obj, void* sizer, c_bool deleteOld)
+ALTERNET_UI_API DrawingContext* Control_OpenDrawingContextForDC_(void* dc, c_bool deleteDc)
 {
-    obj->SetSizer(sizer, deleteOld);
+    return Control::OpenDrawingContextForDC(dc, deleteDc);
 }
 
 ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)

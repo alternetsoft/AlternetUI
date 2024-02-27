@@ -575,6 +575,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr GetContainingSizer()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetContainingSizer_(NativePointer);
+        }
+        
+        public System.IntPtr GetSizer()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetSizer_(NativePointer);
+        }
+        
+        public void SetSizer(System.IntPtr sizer, bool deleteOld)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetSizer_(NativePointer, sizer, deleteOld);
+        }
+        
         public void SetSizerAndFit(System.IntPtr sizer, bool deleteOld)
         {
             CheckDisposed();
@@ -854,22 +872,28 @@ namespace Alternet.UI.Native
             NativeApi.Control_SetBoundsEx_(NativePointer, rect, flags);
         }
         
-        public System.IntPtr GetContainingSizer()
+        public static DrawingContext OpenClientDrawingContextForWindow(System.IntPtr window)
         {
-            CheckDisposed();
-            return NativeApi.Control_GetContainingSizer_(NativePointer);
+            var _nnn = NativeApi.Control_OpenClientDrawingContextForWindow_(window);
+            var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
         }
         
-        public System.IntPtr GetSizer()
+        public static DrawingContext OpenPaintDrawingContextForWindow(System.IntPtr window)
         {
-            CheckDisposed();
-            return NativeApi.Control_GetSizer_(NativePointer);
+            var _nnn = NativeApi.Control_OpenPaintDrawingContextForWindow_(window);
+            var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
         }
         
-        public void SetSizer(System.IntPtr sizer, bool deleteOld)
+        public static DrawingContext OpenDrawingContextForDC(System.IntPtr dc, bool deleteDc)
         {
-            CheckDisposed();
-            NativeApi.Control_SetSizer_(NativePointer, sizer, deleteOld);
+            var _nnn = NativeApi.Control_OpenDrawingContextForDC_(dc, deleteDc);
+            var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
         }
         
         public void CenterOnParent(int orientation)
@@ -1383,6 +1407,15 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetSizer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetSizer_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetSizerAndFit_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1518,13 +1551,13 @@ namespace Alternet.UI.Native
             public static extern void Control_SetBoundsEx_(IntPtr obj, Alternet.Drawing.RectD rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
+            public static extern IntPtr Control_OpenClientDrawingContextForWindow_(System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Control_GetSizer_(IntPtr obj);
+            public static extern IntPtr Control_OpenPaintDrawingContextForWindow_(System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetSizer_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
+            public static extern IntPtr Control_OpenDrawingContextForDC_(System.IntPtr dc, bool deleteDc);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_CenterOnParent_(IntPtr obj, int orientation);

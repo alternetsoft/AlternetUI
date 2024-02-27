@@ -621,6 +621,24 @@ namespace Alternet::UI
         return new DrawingContext(new wxClientDC(GetWxWindow()));
     }
 
+    DrawingContext* Control::OpenClientDrawingContextForWindow(void* window)
+    {
+        return new DrawingContext(new wxClientDC((wxWindow*)window));
+    }
+
+    DrawingContext* Control::OpenDrawingContextForDC(void* dc, bool deleteDc)
+    {
+        auto result = new DrawingContext((wxDC*)dc);
+        if (!deleteDc)
+            result->SetDoNotDeleteDC(true);
+        return result;
+    }
+
+    DrawingContext* Control::OpenPaintDrawingContextForWindow(void* window)
+    {
+        return new DrawingContext(new wxPaintDC((wxWindow*)window));
+    }
+
     Control* Control::GetParent()
     {
         return _parent;

@@ -30,9 +30,32 @@ int GetTextSelectionStart();
 int GetTextSelectionLength();
 
 
-static bool GetUseChoiceControl();
-static void SetUseChoiceControl(bool value);
+void* GetPopupWidget();
 
+
+void* GetEventDc();
+
+
+RectI GetEventRect();
+
+
+int GetEventItem();
+
+
+int GetEventFlags();
+
+
+int GetEventResultInt();
+void SetEventResultInt(int value);
+
+
+bool GetEventCalled();
+void SetEventCalled(bool value);
+
+int DefaultOnMeasureItemWidth();
+int DefaultOnMeasureItem();
+void DefaultOnDrawBackground();
+void DefaultOnDrawItem();
 void* CreateItemsInsertion();
 void AddItemToInsertion(void* insertion, const string& item);
 void CommitItemsInsertion(void* insertion, int index);
@@ -47,6 +70,10 @@ enum class ComboBoxEvent
 {
     SelectedItemChanged,
     TextChanged,
+    MeasureItem,
+    MeasureItemWidth,
+    DrawItem,
+    DrawItemBackground,
 };
 typedef void* (*ComboBoxEventCallbackType)(ComboBox* obj, ComboBoxEvent event, void* param);
 static void SetEventCallback(ComboBoxEventCallbackType value) { eventCallback = value; }

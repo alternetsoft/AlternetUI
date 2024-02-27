@@ -78,14 +78,69 @@ ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
     return obj->GetTextSelectionLength();
 }
 
-ALTERNET_UI_API c_bool ComboBox_GetUseChoiceControl_()
+ALTERNET_UI_API void* ComboBox_GetPopupWidget_(ComboBox* obj)
 {
-    return ComboBox::GetUseChoiceControl();
+    return obj->GetPopupWidget();
 }
 
-ALTERNET_UI_API void ComboBox_SetUseChoiceControl_(c_bool value)
+ALTERNET_UI_API void* ComboBox_GetEventDc_(ComboBox* obj)
 {
-    ComboBox::SetUseChoiceControl(value);
+    return obj->GetEventDc();
+}
+
+ALTERNET_UI_API RectI_C ComboBox_GetEventRect_(ComboBox* obj)
+{
+    return obj->GetEventRect();
+}
+
+ALTERNET_UI_API int ComboBox_GetEventItem_(ComboBox* obj)
+{
+    return obj->GetEventItem();
+}
+
+ALTERNET_UI_API int ComboBox_GetEventFlags_(ComboBox* obj)
+{
+    return obj->GetEventFlags();
+}
+
+ALTERNET_UI_API int ComboBox_GetEventResultInt_(ComboBox* obj)
+{
+    return obj->GetEventResultInt();
+}
+
+ALTERNET_UI_API void ComboBox_SetEventResultInt_(ComboBox* obj, int value)
+{
+    obj->SetEventResultInt(value);
+}
+
+ALTERNET_UI_API c_bool ComboBox_GetEventCalled_(ComboBox* obj)
+{
+    return obj->GetEventCalled();
+}
+
+ALTERNET_UI_API void ComboBox_SetEventCalled_(ComboBox* obj, c_bool value)
+{
+    obj->SetEventCalled(value);
+}
+
+ALTERNET_UI_API int ComboBox_DefaultOnMeasureItemWidth_(ComboBox* obj)
+{
+    return obj->DefaultOnMeasureItemWidth();
+}
+
+ALTERNET_UI_API int ComboBox_DefaultOnMeasureItem_(ComboBox* obj)
+{
+    return obj->DefaultOnMeasureItem();
+}
+
+ALTERNET_UI_API void ComboBox_DefaultOnDrawBackground_(ComboBox* obj)
+{
+    obj->DefaultOnDrawBackground();
+}
+
+ALTERNET_UI_API void ComboBox_DefaultOnDrawItem_(ComboBox* obj)
+{
+    obj->DefaultOnDrawItem();
 }
 
 ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)

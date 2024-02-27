@@ -35,6 +35,15 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
+        /// Removes underscore characters ('_') from string.
+        /// </summary>
+        /// <returns></returns>
+        public static string RemoveUnderscore(this string s)
+        {
+            return s.Replace("_", string.Empty);
+        }
+
+        /// <summary>
         /// Gets whether <see cref="DockStyle"/> equals <see cref="DockStyle.Left"/> or
         /// <see cref="DockStyle.Right"/>.
         /// </summary>

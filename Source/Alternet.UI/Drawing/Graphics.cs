@@ -12,11 +12,13 @@ namespace Alternet.Drawing
     /// </summary>
     public class Graphics : DisposableObject
     {
+        private readonly bool dispose;
         private UI.Native.DrawingContext dc;
 
-        internal Graphics(UI.Native.DrawingContext dc)
+        internal Graphics(UI.Native.DrawingContext dc, bool dispose = true)
         {
             this.dc = dc;
+            this.dispose = dispose;
         }
 
         /// <summary>
@@ -87,7 +89,11 @@ namespace Alternet.Drawing
             }
         }
 
-        internal UI.Native.DrawingContext NativeDrawingContext => dc;
+        internal UI.Native.DrawingContext NativeDrawingContext
+        {
+            get => dc;
+            set => dc = value;
+        }
 
         /// <summary>
         /// Creates a new <see cref="Graphics"/> from the specified
@@ -1379,7 +1385,8 @@ namespace Alternet.Drawing
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            dc.Dispose();
+            if(dispose)
+                dc.Dispose();
             dc = null!;
         }
     }

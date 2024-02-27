@@ -41,6 +41,15 @@ namespace Alternet.UI
             }
         }
 
+        internal Graphics MeasureCanvas
+        {
+            get
+            {
+                measureCanvas ??= CreateDrawingContext();
+                return measureCanvas;
+            }
+        }
+
         internal virtual bool IsDummy => false;
 
         internal Thickness MinMargin

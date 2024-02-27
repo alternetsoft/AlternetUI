@@ -129,17 +129,108 @@ namespace Alternet.UI.Native
             
         }
         
-        public static bool UseChoiceControl
+        public System.IntPtr PopupWidget
         {
             get
             {
-                return NativeApi.ComboBox_GetUseChoiceControl_();
+                CheckDisposed();
+                return NativeApi.ComboBox_GetPopupWidget_(NativePointer);
+            }
+            
+        }
+        
+        public System.IntPtr EventDc
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventDc_(NativePointer);
+            }
+            
+        }
+        
+        public Alternet.Drawing.RectI EventRect
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventRect_(NativePointer);
+            }
+            
+        }
+        
+        public int EventItem
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventItem_(NativePointer);
+            }
+            
+        }
+        
+        public int EventFlags
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventFlags_(NativePointer);
+            }
+            
+        }
+        
+        public int EventResultInt
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventResultInt_(NativePointer);
             }
             
             set
             {
-                NativeApi.ComboBox_SetUseChoiceControl_(value);
+                CheckDisposed();
+                NativeApi.ComboBox_SetEventResultInt_(NativePointer, value);
             }
+        }
+        
+        public bool EventCalled
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventCalled_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ComboBox_SetEventCalled_(NativePointer, value);
+            }
+        }
+        
+        public int DefaultOnMeasureItemWidth()
+        {
+            CheckDisposed();
+            return NativeApi.ComboBox_DefaultOnMeasureItemWidth_(NativePointer);
+        }
+        
+        public int DefaultOnMeasureItem()
+        {
+            CheckDisposed();
+            return NativeApi.ComboBox_DefaultOnMeasureItem_(NativePointer);
+        }
+        
+        public void DefaultOnDrawBackground()
+        {
+            CheckDisposed();
+            NativeApi.ComboBox_DefaultOnDrawBackground_(NativePointer);
+        }
+        
+        public void DefaultOnDrawItem()
+        {
+            CheckDisposed();
+            NativeApi.ComboBox_DefaultOnDrawItem_(NativePointer);
         }
         
         public System.IntPtr CreateItemsInsertion()
@@ -226,12 +317,32 @@ namespace Alternet.UI.Native
                 {
                     TextChanged?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.ComboBoxEvent.MeasureItem:
+                {
+                    MeasureItem?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.ComboBoxEvent.MeasureItemWidth:
+                {
+                    MeasureItemWidth?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.ComboBoxEvent.DrawItem:
+                {
+                    DrawItem?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.ComboBoxEvent.DrawItemBackground:
+                {
+                    DrawItemBackground?.Invoke(); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ComboBoxEvent value: " + e);
             }
         }
         
         public Action? SelectedItemChanged;
         public Action? TextChanged;
+        public Action? MeasureItem;
+        public Action? MeasureItemWidth;
+        public Action? DrawItem;
+        public Action? DrawItemBackground;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -245,6 +356,10 @@ namespace Alternet.UI.Native
             {
                 SelectedItemChanged,
                 TextChanged,
+                MeasureItem,
+                MeasureItemWidth,
+                DrawItem,
+                DrawItemBackground,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -293,10 +408,43 @@ namespace Alternet.UI.Native
             public static extern int ComboBox_GetTextSelectionLength_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ComboBox_GetUseChoiceControl_();
+            public static extern System.IntPtr ComboBox_GetPopupWidget_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetUseChoiceControl_(bool value);
+            public static extern System.IntPtr ComboBox_GetEventDc_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectI ComboBox_GetEventRect_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_GetEventItem_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_GetEventFlags_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_GetEventResultInt_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetEventResultInt_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ComboBox_GetEventCalled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetEventCalled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_DefaultOnMeasureItemWidth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_DefaultOnMeasureItem_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_DefaultOnDrawBackground_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_DefaultOnDrawItem_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ComboBox_CreateItemsInsertion_(IntPtr obj);

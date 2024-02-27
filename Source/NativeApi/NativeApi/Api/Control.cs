@@ -8,6 +8,10 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public static DrawingContext OpenClientDrawingContextForWindow(IntPtr window) => default;
+        public static DrawingContext OpenPaintDrawingContextForWindow(IntPtr window) => default;
+        public static DrawingContext OpenDrawingContextForDC(IntPtr dc, bool deleteDc) => default;
+
         public void CenterOnParent(int orientation) { }
 
         public void RefreshRect(RectD rect, bool eraseBackground = true) { }

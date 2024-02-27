@@ -2,29 +2,34 @@
 
 namespace Alternet::UI
 {
-    // Linux performance note: combo box with many items is really slow on Linux.
-    // This seems to be a known problem, 
-    // see https://gitlab.gnome.org/GNOME/gtk/-/issues/1910
-
-#ifdef __WXGTK__
-    bool UseChoiceControlForReadOnlyComboBox = false;
-#endif
-
-#ifdef __WXMSW__
-    bool UseChoiceControlForReadOnlyComboBox = false;
-#endif
-
-#ifdef __WXOSX__
-    bool UseChoiceControlForReadOnlyComboBox = false;
-#endif
-
-    bool ComboBox::GetUseChoiceControl()
+    void wxOwnerDrawnComboBox2::OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags) const
     {
-        return UseChoiceControlForReadOnlyComboBox;
+        ((ComboBox*)_palControl)->OnDrawBackground(dc, rect, item, flags);
     }
-    void ComboBox::SetUseChoiceControl(bool value)
+
+    // Callback for drawing. Font, background and text colour have been
+    // prepared according to selection, focus and such.
+    // item: item index to be drawn, may be wxNOT_FOUND when painting combo control itself
+    //       and there is no valid selection
+    // flags: wxODCB_PAINTING_CONTROL is set if painting to combo control instead of list
+    void wxOwnerDrawnComboBox2::OnDrawItem(wxDC& dc, const wxRect& rect, int item, int flags) const
     {
-        UseChoiceControlForReadOnlyComboBox = value;
+        if (item == wxNOT_FOUND)
+            return;
+
+        ((ComboBox*)_palControl)->OnDrawItem(dc, rect, item, flags);
+    }
+
+    // Callback for item height, or -1 for default
+    wxCoord wxOwnerDrawnComboBox2::OnMeasureItem(size_t item) const
+    {
+        return ((ComboBox*)_palControl)->OnMeasureItem(item);
+    }
+
+    // Callback for item width, or -1 for default/undetermined
+    wxCoord wxOwnerDrawnComboBox2::OnMeasureItemWidth(size_t item) const
+    {
+        return ((ComboBox*)_palControl)->OnMeasureItemWidth(item);
     }
 
     ComboBox::ComboBox() :
@@ -53,18 +58,10 @@ namespace Alternet::UI
     {
         if (IsWxWindowCreated())
         {
-            if (IsUsingChoiceControl())
-            {
-                auto window = GetChoice();
-                window->Unbind(wxEVT_CHOICE, &ComboBox::OnSelectedItemChanged, this);
-            }
-            else if (IsUsingComboBoxControl())
-            {
-                auto window = GetComboBox();
-                window->Unbind(wxEVT_COMBOBOX, 
-                    &ComboBox::OnSelectedItemChanged, this);
-                window->Unbind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
-            }
+            auto window = GetComboBox();
+            window->Unbind(wxEVT_COMBOBOX, 
+                &ComboBox::OnSelectedItemChanged, this);
+            window->Unbind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
         }
     }
 
@@ -129,71 +126,149 @@ namespace Alternet::UI
             _items.clear();
     }
 
-    class wxChoice2 : public wxChoice, public wxWidgetExtender
+    void* ComboBox::GetEventDc()
     {
-    public:
-        wxChoice2(){}
-        wxChoice2(wxWindow* parent,
-            wxWindowID id,
-            const wxPoint& pos = wxDefaultPosition,
-            const wxSize& size = wxDefaultSize,
-            int n = 0, const wxString choices[] = NULL,
-            long style = 0,
-            const wxValidator& validator = wxDefaultValidator,
-            const wxString& name = wxASCII_STR(wxChoiceNameStr))
-        {
-            Create(parent, id, pos, size, n, choices, style, validator, name);
-        }
-    };
+        return eventDc;
+    }
 
-    class wxComboBox2 : public wxComboBox, public wxWidgetExtender
+    RectI ComboBox::GetEventRect()
     {
-    public:
-        wxComboBox2() {}
-        wxComboBox2(wxWindow* parent, wxWindowID id,
-            const wxString& value = wxEmptyString,
-            const wxPoint& pos = wxDefaultPosition,
-            const wxSize& size = wxDefaultSize,
-            int n = 0, const wxString choices[] = NULL,
-            long style = 0,
-            const wxValidator& validator = wxDefaultValidator,
-            const wxString& name = wxASCII_STR(wxComboBoxNameStr))
-        {
-            Create(parent, id, value, pos, size, n, choices, style, validator, name);
-        }
-    };
+        return eventRect;
+    }
 
-    class wxOwnerDrawnComboBox2 : public wxOwnerDrawnComboBox, public wxWidgetExtender
+    int ComboBox::GetEventItem()
     {
-    public:
-        wxOwnerDrawnComboBox2(wxWindow* parent,
-            wxWindowID id,
-            const wxString& value,
-            const wxPoint& pos,
-            const wxSize& size,
-            int n,
-            const wxString choices[],
-            long style = 0,
-            const wxValidator& validator = wxDefaultValidator,
-            const wxString& name = wxASCII_STR(wxComboBoxNameStr))
-            : wxOwnerDrawnComboBox(parent, id, value, pos, size, n, choices,
-                style, validator, name)
+        return eventItem;
+    }
+
+    int ComboBox::GetEventFlags()
+    {
+        return eventFlags;
+    }
+
+    int ComboBox::GetEventResultInt()
+    {
+        return eventResultInt;
+    }
+
+    bool ComboBox::GetEventCalled()
+    {
+        return eventCalled;
+    }
+
+    void ComboBox::SetEventResultInt(int value)
+    {
+        eventResultInt = value;
+    }
+
+    void ComboBox::SetEventCalled(bool value)
+    {
+        eventCalled = value;
+    }
+
+    void ComboBox::OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags)
+    {
+        // If item is selected or even, or we are painting the
+        // combo control itself, use the default rendering.
+        /*if ((flags & (wxODCB_PAINTING_CONTROL | wxODCB_PAINTING_SELECTED)) ||
+            (item & 1) == 0)
         {
-        }
-    };
+            wxOwnerDrawnComboBox::OnDrawBackground(dc, rect, item, flags);
+            return;
+        }*/
+
+        UpdateDc(dc);
+        eventRect = rect;
+        eventItem = item;
+        eventFlags = flags;
+        eventCalled = false;
+        RaiseEvent(ComboBoxEvent::DrawItemBackground);
+        ReleaseEventDc();
+
+        if (eventCalled)
+            return;
+
+        GetComboBox()->DefaultOnDrawBackground(dc, rect, item, flags);
+    }
+
+    int ComboBox::DefaultOnMeasureItemWidth()
+    {
+        return GetComboBox()->DefaultOnMeasureItemWidth(eventItem);
+    }
+
+    int ComboBox::DefaultOnMeasureItem()
+    {
+        return GetComboBox()->DefaultOnMeasureItem(eventItem);
+    }
+
+    void ComboBox::DefaultOnDrawBackground()
+    {
+        GetComboBox()->DefaultOnDrawBackground(*eventDc, eventRect, eventItem, eventFlags);
+    }
+    
+    void ComboBox::DefaultOnDrawItem()
+    {
+        GetComboBox()->DefaultOnDrawItem(*eventDc, eventRect, eventItem, eventFlags);
+    }
+
+    void ComboBox::UpdateDc(wxDC& dc)
+    {
+        eventDc = std::addressof(dc);
+    }
+
+    void* ComboBox::GetPopupWidget()
+    {
+        auto result = GetComboBox()->GetPopupControl();
+        return result;
+    }
+
+    void ComboBox::ReleaseEventDc()
+    {
+        eventDc = nullptr;
+    }
+
+    void ComboBox::OnDrawItem(wxDC& dc, const wxRect& rect, int item, int flags)
+    {
+        UpdateDc(dc);
+        eventRect = rect;
+        eventItem = item;
+        eventFlags = flags;
+        eventCalled = false;
+        RaiseEvent(ComboBoxEvent::DrawItem);
+        ReleaseEventDc();
+
+        if (eventCalled)
+            return;
+
+        GetComboBox()->DefaultOnDrawItem(dc, rect, item, flags);
+    }
+
+    // Callback for item height, or -1 for default
+    wxCoord ComboBox::OnMeasureItem(size_t item)
+    {
+        eventItem = item;
+        eventCalled = false;
+        RaiseEvent(ComboBoxEvent::MeasureItem);
+        if (eventCalled)
+            return eventResultInt;
+        return GetComboBox()->DefaultOnMeasureItem(item);
+    }
+
+    // Callback for item width, or -1 for default/undetermined
+    wxCoord ComboBox::OnMeasureItemWidth(size_t item)
+    {
+        eventItem = item;
+        eventCalled = false;
+        RaiseEvent(ComboBoxEvent::MeasureItemWidth);
+        if (eventCalled)
+            return eventResultInt;
+        return GetComboBox()->DefaultOnMeasureItemWidth(item);
+    }
 
     wxWindow* ComboBox::CreateWxWindowUnparented()
     {
-        if (!_isEditable && UseChoiceControlForReadOnlyComboBox)
-        {
-            auto value = new wxChoice2();
-            return value;
-        }
-        else
-        {
-            auto value = new wxComboBox2();
-            return value;
-        }
+        auto value = new wxOwnerDrawnComboBox2();
+        return value;
     }
 
     wxWindow* ComboBox::CreateWxWindowCore(wxWindow* parent)
@@ -203,41 +278,21 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
-        if (!_isEditable && UseChoiceControlForReadOnlyComboBox)
-        {
-            // On non-Windows systems wxChoice looks different than 
-            // read-only wxComboBox.
-            auto value = new wxChoice2(
-                parent,
-                wxID_ANY,
-                wxDefaultPosition,
-                wxDefaultSize,
-                0,
-                NULL,
-                style,
-                wxDefaultValidator);
+        auto comboStyle = _isEditable ? wxCB_DROPDOWN : wxCB_READONLY;
+        style = style | comboStyle;
+        auto value = new wxOwnerDrawnComboBox2(
+            parent,
+            wxID_ANY,
+            "",
+            wxDefaultPosition,
+            wxDefaultSize,
+            0,
+            NULL,
+            style);
 
-            value->Bind(wxEVT_CHOICE, &ComboBox::OnSelectedItemChanged, this);
-            return value;
-        }
-        else
-        {
-            auto comboStyle = _isEditable ? wxCB_DROPDOWN : wxCB_READONLY;
-            style = style | comboStyle;
-            auto value = new wxOwnerDrawnComboBox2(
-                parent,
-                wxID_ANY,
-                "",
-                wxDefaultPosition,
-                wxDefaultSize,
-                0,
-                NULL,
-                style);
-
-            value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
-            value->Bind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
-            return value;
-        }
+        value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
+        value->Bind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
+        return value;
     }
 
     void ComboBox::OnSelectedItemChanged(wxCommandEvent& event)
@@ -282,9 +337,6 @@ namespace Alternet::UI
 
     void ComboBox::SelectAllText()
     {
-        if (IsUsingChoiceControl())
-            return;
-
         GetComboBox()->SelectAll();
     }
 
@@ -378,20 +430,14 @@ namespace Alternet::UI
 
     int ComboBox::RetrieveSelectedIndex()
     {
-        if (IsUsingChoiceControl())
-            return GetChoice()->GetSelection();
-        else
-            return GetComboBox()->GetSelection();
+        return GetComboBox()->GetSelection();
     }
 
     void ComboBox::ApplySelectedIndex(const int& value)
     {
-        if (IsUsingChoiceControl())
-            GetChoice()->SetSelection(value);
-        else
-            GetComboBox()->SetSelection(value);
+        GetComboBox()->SetSelection(value);
 
-        // wxEVT_CHOICE / wxEVT_COMBOBOX are not raised on programmatic selection change.
+        // As events are not raised on programmatic selection change.
         RaiseEvent(ComboBoxEvent::SelectedItemChanged);
     }
 
@@ -422,17 +468,9 @@ namespace Alternet::UI
         GetComboBox()->SetHint(wxStr(value));
     }
 
-    wxOwnerDrawnComboBox* ComboBox::GetComboBox()
+    wxOwnerDrawnComboBox2* ComboBox::GetComboBox()
     {
-        auto value = dynamic_cast<wxOwnerDrawnComboBox*>(GetWxWindow());
-        if (value == nullptr)
-            throwExInvalidOp;
-        return value;
-    }
-
-    wxChoice* ComboBox::GetChoice()
-    {
-        auto value = dynamic_cast<wxChoice*>(GetWxWindow());
+        auto value = dynamic_cast<wxOwnerDrawnComboBox2*>(GetWxWindow());
         if (value == nullptr)
             throwExInvalidOp;
         return value;
@@ -444,11 +482,6 @@ namespace Alternet::UI
         if (value == nullptr)
             throwExInvalidOp;
         return value;
-    }
-
-    bool ComboBox::IsUsingChoiceControl()
-    {
-        return dynamic_cast<wxChoice*>(GetWxWindow()) != nullptr;
     }
 
     bool ComboBox::IsUsingComboBoxControl()

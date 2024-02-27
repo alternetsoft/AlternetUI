@@ -1,3 +1,9 @@
+# 0.9.512 (2024 February 27)
+
+- Implemented owner drawn ComboBox.
+- Added IComboBoxItemPainter and ComboBox.ItemPainter.
+- Added more ImageSet.GetNormalAndDisabledSvg overrides.
+
 # 0.9.511 (2024 February 26)
 
 - Added UIActionSimulator. This class is used to simulate user 

@@ -1,5 +1,6 @@
 ﻿#pragma warning disable
 using System;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
@@ -7,6 +8,10 @@ namespace NativeApi.Api
     {
         public event EventHandler? SelectedItemChanged;
         public event EventHandler? TextChanged;
+        public event EventHandler? MeasureItem;
+        public event EventHandler? MeasureItemWidth;
+        public event EventHandler? DrawItem;
+        public event EventHandler? DrawItemBackground;
 
         public string EmptyTextHint { get; set; }
         public bool HasBorder { get; set; }
@@ -17,7 +22,18 @@ namespace NativeApi.Api
         public int TextSelectionStart { get; }
         public int TextSelectionLength { get; }
 
-        public static bool UseChoiceControl { get; set; }
+        public IntPtr PopupWidget { get; }    
+        public IntPtr EventDc { get; }
+        public RectI EventRect { get; }
+        public int EventItem { get; }
+        public int EventFlags { get; }
+        public int EventResultInt { get; set; }
+        public bool EventCalled { get; set; }
+
+        public int DefaultOnMeasureItemWidth() => default;
+        public int DefaultOnMeasureItem() => default;
+        public void DefaultOnDrawBackground() { }
+        public void DefaultOnDrawItem() { }
 
         public IntPtr CreateItemsInsertion() => default;
         public void AddItemToInsertion(IntPtr insertion, string item) { }
