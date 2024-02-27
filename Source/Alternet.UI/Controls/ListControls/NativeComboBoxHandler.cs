@@ -2,11 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     internal class NativeComboBoxHandler : ComboBoxHandler
     {
+        private Graphics? drawItemCanvas;
+        private ComboBoxItemPaintEventArgs? paintEventArgs;
+
+        [Flags]
+        private enum DrawItemFlags
+        {
+            // when set, we are painting the selected item in control,
+            // not in the popup
+            PaintingControl = 0x0001,
+
+            // when set, we are painting an item which should have
+            // focus rectangle painted in the background. Text colour
+            // and clipping region are then appropriately set in
+            // the default OnDrawBackground implementation.
+            PaintingSelected = 0x0002,
+        }
+
         /// <inheritdoc/>
         public override int TextSelectionStart => NativeControl.TextSelectionStart;
 
@@ -60,6 +78,10 @@ namespace Alternet.UI
             Control.SelectedItemChanged += Control_SelectedItemChanged;
 
             NativeControl.SelectedItemChanged = NativeControl_SelectedItemChanged;
+            NativeControl.DrawItem = NativeControl_DrawItem;
+            NativeControl.DrawItemBackground = NativeControl_DrawItemBackground;
+            NativeControl.MeasureItemWidth = NativeControl_MeasureItemWidth;
+            NativeControl.MeasureItem = NativeControl_MeasureItem;
             NativeControl.TextChanged = NativeControl_TextChanged;
         }
 
@@ -75,6 +97,10 @@ namespace Alternet.UI
 
             NativeControl.SelectedItemChanged = null;
             NativeControl.TextChanged = null;
+            NativeControl.DrawItem = null;
+            NativeControl.DrawItemBackground = null;
+            NativeControl.MeasureItemWidth = null;
+            NativeControl.MeasureItem = null;
 
             base.OnDetach();
         }
@@ -88,6 +114,80 @@ namespace Alternet.UI
                 var text = Control.GetItemText(item);
                 NativeControl.SetItem(index, text);
             }
+        }
+
+        private void NativeControl_MeasureItemWidth()
+        {
+            if (Control.ItemPainter is null)
+                return;
+            var defaultWidthPixels = NativeControl.DefaultOnMeasureItemWidth();
+            var defaultWidth = Control.PixelToDip(defaultWidthPixels);
+            var result = Control.ItemPainter.GetWidth(Control, NativeControl.EventItem, defaultWidth);
+            if (result >= 0)
+            {
+                NativeControl.EventResultInt = Control.PixelFromDip(result);
+                NativeControl.EventCalled = true;
+            }
+        }
+
+        private void NativeControl_MeasureItem()
+        {
+            if (Control.ItemPainter is null)
+                return;
+            var defaultHeightPixels = NativeControl.DefaultOnMeasureItem();
+            var defaultHeight = Control.PixelToDip(defaultHeightPixels);
+            var result = Control.ItemPainter.GetHeight(Control, NativeControl.EventItem, defaultHeight);
+            if(result >= 0)
+            {
+                NativeControl.EventResultInt = Control.PixelFromDip(result);
+                NativeControl.EventCalled = true;
+            }
+        }
+
+        private void DrawItem(ComboBoxItemPaintEventArgs prm)
+        {
+            Control.ItemPainter?.Paint(Control, prm);
+        }
+
+        private void DrawItem(bool drawBackground)
+        {
+            drawItemCanvas ??= new(NativeControl.EventDc, false);
+            drawItemCanvas.NativeDrawingContext = NativeControl.EventDc;
+            var rect = Control.PixelToDip(NativeControl.EventRect);
+
+            if (paintEventArgs is null)
+            {
+                paintEventArgs = new ComboBoxItemPaintEventArgs(Control, drawItemCanvas, rect);
+            }
+            else
+            {
+                paintEventArgs.DrawingContext = drawItemCanvas;
+                paintEventArgs.Bounds = rect;
+            }
+
+            const int ItemIndexNotFound = -1;
+            var flags = (DrawItemFlags)NativeControl.EventFlags;
+            paintEventArgs.IsSelected = flags.HasFlag(DrawItemFlags.PaintingSelected);
+            paintEventArgs.IsPaintingControl = flags.HasFlag(DrawItemFlags.PaintingControl);
+            paintEventArgs.IsIndexNotFound = NativeControl.EventItem == ItemIndexNotFound;
+            paintEventArgs.IsPaintingBackground = drawBackground;
+            DrawItem(paintEventArgs);
+        }
+
+        private void NativeControl_DrawItem()
+        {
+            if (Control.ItemPainter is null)
+                return;
+            DrawItem(false);
+            NativeControl.EventCalled = true;
+        }
+
+        private void NativeControl_DrawItemBackground()
+        {
+            if (Control.ItemPainter is null)
+                return;
+            DrawItem(true);
+            NativeControl.EventCalled = true;
         }
 
         private void NativeControl_SelectedItemChanged()

@@ -67,6 +67,7 @@ namespace Alternet.UI
         private string text = string.Empty;
         private int? selectedIndex;
         private bool isEditable = true;
+        private IComboBoxItemPainter? painter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -280,6 +281,25 @@ namespace Alternet.UI
                 if (HasBorder == value)
                     return;
                 Handler.HasBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets item painter associated with the control.
+        /// </summary>
+        public virtual IComboBoxItemPainter? ItemPainter
+        {
+            get
+            {
+                return painter;
+            }
+
+            set
+            {
+                if (painter == value)
+                    return;
+                painter = value;
+                Invalidate();
             }
         }
 
