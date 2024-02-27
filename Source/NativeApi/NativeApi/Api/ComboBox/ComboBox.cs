@@ -22,7 +22,8 @@ namespace NativeApi.Api
         public int TextSelectionStart { get; }
         public int TextSelectionLength { get; }
 
-        public DrawingContext EventDc { get; }
+        public IntPtr PopupWidget { get; }    
+        public IntPtr EventDc { get; }
         public RectI EventRect { get; }
         public int EventItem { get; }
         public int EventFlags { get; }

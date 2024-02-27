@@ -129,15 +129,22 @@ namespace Alternet.UI.Native
             
         }
         
-        public DrawingContext EventDc
+        public System.IntPtr PopupWidget
         {
             get
             {
                 CheckDisposed();
-                var _nnn = NativeApi.ComboBox_GetEventDc_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
-                ReleaseNativeObjectPointer(_nnn);
-                return _mmm;
+                return NativeApi.ComboBox_GetPopupWidget_(NativePointer);
+            }
+            
+        }
+        
+        public System.IntPtr EventDc
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetEventDc_(NativePointer);
             }
             
         }
@@ -401,7 +408,10 @@ namespace Alternet.UI.Native
             public static extern int ComboBox_GetTextSelectionLength_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ComboBox_GetEventDc_(IntPtr obj);
+            public static extern System.IntPtr ComboBox_GetPopupWidget_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr ComboBox_GetEventDc_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectI ComboBox_GetEventRect_(IntPtr obj);

@@ -129,6 +129,11 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnHandleDestroyed(EventArgs e)
         {
+            if(measureCanvas is not null)
+            {
+                measureCanvas.Dispose();
+                measureCanvas = null;
+            }
         }
 
         /// <summary>

@@ -126,12 +126,9 @@ namespace Alternet::UI
             _items.clear();
     }
 
-    DrawingContext* ComboBox::GetEventDc()
+    void* ComboBox::GetEventDc()
     {
-        auto dc = new DrawingContext(eventDc);
-        dc->AddRef();
-        dc->SetDoNotDeleteDC(true);
-        return dc;
+        return eventDc;
     }
 
     RectI ComboBox::GetEventRect()
@@ -217,6 +214,12 @@ namespace Alternet::UI
     void ComboBox::UpdateDc(wxDC& dc)
     {
         eventDc = std::addressof(dc);
+    }
+
+    void* ComboBox::GetPopupWidget()
+    {
+        auto result = GetComboBox()->GetPopupControl();
+        return result;
     }
 
     void ComboBox::ReleaseEventDc()

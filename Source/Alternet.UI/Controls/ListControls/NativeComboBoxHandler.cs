@@ -8,7 +8,6 @@ namespace Alternet.UI
 {
     internal class NativeComboBoxHandler : ComboBoxHandler
     {
-        private Graphics? drawItemCanvas;
         private ComboBoxItemPaintEventArgs? paintEventArgs;
 
         [Flags]
@@ -151,27 +150,41 @@ namespace Alternet.UI
 
         private void DrawItem(bool drawBackground)
         {
-            drawItemCanvas ??= new(NativeControl.EventDc, false);
-            drawItemCanvas.NativeDrawingContext = NativeControl.EventDc;
+            var flags = (DrawItemFlags)NativeControl.EventFlags;
+            var isPaintingControl = flags.HasFlag(DrawItemFlags.PaintingControl);
+
+            Graphics dc;
+            Graphics? popupCanvas = null;
+
+            if (isPaintingControl)
+                dc = Control.MeasureCanvas;
+            else
+            {
+                popupCanvas =
+                    new Graphics(Native.Control.OpenDrawingContextForDC(NativeControl.EventDc, false));
+                dc = popupCanvas;
+            }
+
             var rect = Control.PixelToDip(NativeControl.EventRect);
 
             if (paintEventArgs is null)
             {
-                paintEventArgs = new ComboBoxItemPaintEventArgs(Control, drawItemCanvas, rect);
+                paintEventArgs = new ComboBoxItemPaintEventArgs(Control, dc, rect);
             }
             else
             {
-                paintEventArgs.DrawingContext = drawItemCanvas;
+                paintEventArgs.DrawingContext = dc;
                 paintEventArgs.Bounds = rect;
             }
 
             const int ItemIndexNotFound = -1;
-            var flags = (DrawItemFlags)NativeControl.EventFlags;
             paintEventArgs.IsSelected = flags.HasFlag(DrawItemFlags.PaintingSelected);
-            paintEventArgs.IsPaintingControl = flags.HasFlag(DrawItemFlags.PaintingControl);
+            paintEventArgs.IsPaintingControl = isPaintingControl;
             paintEventArgs.IsIndexNotFound = NativeControl.EventItem == ItemIndexNotFound;
             paintEventArgs.IsPaintingBackground = drawBackground;
             DrawItem(paintEventArgs);
+            paintEventArgs.DrawingContext = null!;
+            popupCanvas?.Dispose();
         }
 
         private void NativeControl_DrawItem()

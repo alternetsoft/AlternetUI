@@ -30,7 +30,10 @@ int GetTextSelectionStart();
 int GetTextSelectionLength();
 
 
-DrawingContext* GetEventDc();
+void* GetPopupWidget();
+
+
+void* GetEventDc();
 
 
 RectI GetEventRect();
