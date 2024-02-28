@@ -53,9 +53,27 @@ namespace Alternet.UI
             messageTextBox!.Text = s;
         }
 
-        private static Image LoadImage(string name)
+        public static void Show(
+            Exception exception,
+            string? additionalInfo = null,
+            bool canContinue = true)
         {
-            var stream = typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name);
+            var errorWindow =
+                new ThreadExceptionWindow(exception, additionalInfo, canContinue);
+            if (Application.IsRunning)
+            {
+                errorWindow.ShowModal();
+            }
+            else
+            {
+                Application.Current.Run(errorWindow);
+            }
+        }
+
+        internal static Image LoadImage(string name)
+        {
+            var stream =
+                typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name);
             var result = new Bitmap(stream);
 
             return result ?? throw new Exception();
@@ -154,6 +172,8 @@ namespace Alternet.UI
 
             Control CreateMessageGrid()
             {
+                const string errorImageUrl = @"embres:Alternet.UI.Resources.ColorSvg.circle-xmark-red.svg?assembly=Alternet.UI";
+
                 var messageGrid = new VerticalStackPanel();
 
                 var firstSection = new HorizontalStackPanel();
@@ -164,7 +184,7 @@ namespace Alternet.UI
                     VerticalAlignment = UI.VerticalAlignment.Top,
                     HorizontalAlignment = UI.HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
-                    Image = LoadImage("Alternet.UI.Resources.Png.ErrorImage.png"),
+                    ImageSet = ImageSet.FromSvgUrl(errorImageUrl, 64, 64),
                 };
                 errorImagePictureBox.Parent = firstSection;
 
