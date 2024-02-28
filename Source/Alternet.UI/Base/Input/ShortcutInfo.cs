@@ -172,7 +172,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Implicit conversion operator from <see cref="ShortcutInfo"/>
-        /// to <see cref="KeyInfo[]"/>.
+        /// to <see cref="KeyInfo"/> array.
         /// </summary>
         /// <param name="value">Value to convert from.</param>
         public static implicit operator KeyInfo[]?(ShortcutInfo? value)
@@ -181,7 +181,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implicit conversion operator from <see cref="KeyInfo[]"/>
+        /// Implicit conversion operator from <see cref="KeyInfo"/> array
         /// to <see cref="ShortcutInfo"/>.
         /// </summary>
         /// <param name="value">Value to convert from.</param>
