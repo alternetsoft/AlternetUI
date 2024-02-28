@@ -70,7 +70,7 @@ namespace Alternet.UI
 
         private Action? clickAction;
         private bool sticky;
-        private KeyInfo[]? keys;
+        private ShortcutInfo? shortcut;
         private bool textVisible = false;
         private bool imageVisible = true;
         private KnownTheme useTheme = DefaultUseTheme;
@@ -147,6 +147,65 @@ namespace Alternet.UI
                 base.Enabled = value;
                 PictureBox.Enabled = value;
                 Label.Enabled = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the associated shortcut keys.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
+        [Localizable(true)]
+        [DefaultValue(Keys.None)]
+        [Browsable(false)]
+        public virtual Keys ShortcutKeys
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KeyGesture? Shortcut
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KeyInfo[]? ShortcutKeyInfo
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
             }
         }
 
@@ -407,80 +466,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the shortcut keys associated with the control.
-        /// </summary>
-        /// <returns>
-        /// One of the <see cref="Keys" /> values.
-        /// The default is <see cref="Keys.None" />.</returns>
-        [Localizable(true)]
-        [DefaultValue(Keys.None)]
-        [Browsable(false)]
-        public virtual Keys ShortcutKeys
-        {
-            get
-            {
-                if (Shortcut is null)
-                    return Keys.None;
-                var result = Shortcut.Key.ToKeys(Shortcut.Modifiers);
-                return result;
-            }
-
-            set
-            {
-                var key = value.ToKey();
-                var modifiers = value.ToModifiers();
-                Shortcut = new(key, modifiers);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the shortcut key associated with
-        /// the control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual KeyGesture? Shortcut
-        {
-            get
-            {
-                if (keys is null || keys.Length == 0)
-                    return null;
-                return new(keys[0].Key, keys[0].Modifiers);
-            }
-
-            set
-            {
-                if (value is null)
-                    ShortcutKeyInfo = null;
-                else
-                    ShortcutKeyInfo = new KeyInfo[] { new(value.Key, value.Modifiers) };
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the shortcut key associated with
-        /// the control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual KeyInfo[]? ShortcutKeyInfo
-        {
-            get
-            {
-                return keys;
-            }
-
-            set
-            {
-                if (keys == value)
-                    return;
-
-                keys = value;
-                var s = ToolTip;
-                ToolTip = null;
-                ToolTip = s;
-            }
-        }
-
         /// <inheritdoc/>
         [Browsable(false)]
         public override GenericControlState CurrentState
@@ -612,7 +597,7 @@ namespace Alternet.UI
 
             var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
 
-            var filteredKeys = KeyInfo.FilterBackendOs(keys);
+            var filteredKeys = KeyInfo.FilterBackendOs(shortcut?.KeyInfo);
             if (filteredKeys is not null && filteredKeys.Length > 0)
             {
                 s += " " + string.Format(template, filteredKeys[0]);
@@ -672,9 +657,31 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override
+            IReadOnlyList<(ShortcutInfo Shortcut, Action Action)>? GetShortcuts()
+        {
+            if (shortcut is null)
+                return null;
+            return new (ShortcutInfo Shortcut, Action action)[] { (shortcut, Fn) };
+
+            void Fn()
+            {
+                RaiseClick(EventArgs.Empty);
+                ShowDropDownMenu();
+            }
+        }
+
         private void OnClickAction(object? sender, EventArgs? e)
         {
             clickAction?.Invoke();
+        }
+
+        private void UpdateToolTip()
+        {
+            var s = ToolTip;
+            ToolTip = null;
+            ToolTip = s;
         }
     }
 }

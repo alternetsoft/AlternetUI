@@ -259,11 +259,19 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
             RaiseClick(EventArgs.Empty);
+            ShowDropDownMenu();
+            Invalidate();
+        }
+
+        /// <summary>
+        /// Shows attached drop down menu.
+        /// </summary>
+        protected virtual void ShowDropDownMenu()
+        {
             if (DropDownMenu is null)
                 return;
             PointD pt = (0, Bounds.Height);
             this.ShowPopupMenu(DropDownMenu, pt.X, pt.Y);
-            Invalidate();
         }
 
         /// <inheritdoc/>

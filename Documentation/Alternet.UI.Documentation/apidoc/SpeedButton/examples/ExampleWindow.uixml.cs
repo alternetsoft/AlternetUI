@@ -14,7 +14,6 @@ namespace Alternet.UI.Documentation.Examples
             button1.ImageSet =
                 KnownSvgImages.GetForSize(button1.GetSvgColor(KnownSvgColor.Normal), 32).ImgOk;
             button2 = CreateSpeedButton();
-            KeyDown += MainWindow_KeyDown;
         }
 
         #region CSharpCreation
@@ -34,24 +33,14 @@ namespace Alternet.UI.Documentation.Examples
             result.HorizontalAlignment = HorizontalAlignment.Center;
             result.Parent = mainPanel;
             result.ShortcutKeys = Keys.Control | Keys.A;
+            result.Name = "cancelBtn";
             return result;
-        }
-
-        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Shortcuts in SpeedButton are not handled by default, they are only shown in hint,
-            // so here we need to handle speedbutton shortcut.
-            if (e.KeyData == button2.ShortcutKeys)
-            {
-                Application.Log("button2 shortcut pressed");
-                e.Handled = true;
-            }
         }
         #endregion
 
         private void Button_Click(object? sender, EventArgs e)
         {
-            Application.Log("SpeedButton.Click");
+            Application.Log($"SpeedButton '{(sender as Control)?.Name}' Click");
         }
     }
 }

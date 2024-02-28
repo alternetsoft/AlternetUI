@@ -255,15 +255,18 @@ namespace Alternet.UI
         {
             var control = this;
             var form = ParentWindow;
-            if (form is not null && form.KeyPreview)
+            if (form is not null)
             {
-                e.CurrentTarget = form;
-                form.OnKeyDown(e);
-                if (e.Handled)
-                    return;
+                if (form.KeyPreview)
+                {
+                    e.CurrentTarget = form;
+                    form.OnKeyDown(e);
+                    if (e.Handled)
+                        return;
+                }
+                else
+                    form = null;
             }
-            else
-                form = null;
 
             while (control is not null && control != form)
             {
