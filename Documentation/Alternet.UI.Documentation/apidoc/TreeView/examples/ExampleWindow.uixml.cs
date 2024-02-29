@@ -9,12 +9,19 @@ namespace Alternet.UI.Documentation.Examples.TreeView
         public MainWindow()
         {
             InitializeComponent();
+
+            var imageLists = ResourceLoader.LoadImageLists();
+            treeView.ImageList = imageLists.Small;
+
             AddItems(treeView, 10);
+            treeView.Items.First?.ExpandAll();
         }
 
         #region TreeViewCSharpCreation
         void AddItems(Alternet.UI.TreeView treeView, int count)
         {
+            var r = new Random();
+
             int start = treeView.Items.Count + 1;
 
             treeView.BeginUpdate();
@@ -22,10 +29,13 @@ namespace Alternet.UI.Documentation.Examples.TreeView
             {
                 for (int i = start; i < start + count; i++)
                 {
-                    int imageIndex = i % 4;
-                    var item = new TreeViewItem("Item " + i, imageIndex);
+                    int imageIndex = r.Next(4);
+                    var item = new TreeViewItem("Item " + i)
+                    {
+                        ImageIndex = imageIndex,
+                    };
                     for (int j = 0; j < 3; j++)
-                        item.Items.Add(new TreeViewItem(item.Text + "." + j, imageIndex));
+                        item.Items.Add(new TreeViewItem(item.Text + "." + j, r.Next(4)));
                     treeView.Items.Add(item);
                 }
             }

@@ -88,15 +88,7 @@ namespace Alternet.UI
                     && ShowExceptionDialog)
                 {
                     var s = $"Resource Name: {resName}";
-                    var errorWindow = new ThreadExceptionWindow(e, s, false);
-                    if (Application.IsRunning)
-                    {
-                        errorWindow.ShowModal();
-                    }
-                    else
-                    {
-                        Application.Current.Run(errorWindow);
-                    }
+                    ThreadExceptionWindow.Show(e, s, false);
                 }
 
                 throw e;

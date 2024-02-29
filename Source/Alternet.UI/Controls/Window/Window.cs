@@ -1078,7 +1078,32 @@ namespace Alternet.UI
         {
             base.OnKeyDown(e);
             if(e.Key == Key.Escape && SupressEsc)
+            {
                 e.Handled = true;
+                return;
+            }
+
+            ProcessShortcuts(e);
+        }
+
+        /// <summary>
+        /// Iterates through all child control's shortcuts and
+        /// calls shortcut action if it's key is pressed.
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void ProcessShortcuts(KeyEventArgs e)
+        {
+            var shortcuts = GetShortcuts();
+            if (shortcuts is null)
+                return;
+            foreach (var (shortcut, action) in shortcuts)
+            {
+                var keys = shortcut.KeyInfo;
+                if (keys is null)
+                    continue;
+                if (KeyInfo.Run(keys, e, action, setHandled: true))
+                    break;
+            }
         }
 
         /// <summary>

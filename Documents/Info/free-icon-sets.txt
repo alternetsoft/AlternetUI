@@ -4,7 +4,7 @@ Latest icon fonts and optimized SVGs for material design icons.
 https://github.com/marella/material-design-icons
 ==========
 Over 2900 Free SVG icons for popular brands. See them all on one page at SimpleIcons.org.
-https://github.com/simple-icons/simple-icons/tree/develop
+https://github.com/simple-icons/simple-icons
 ==========
 Fluent UI System Icons from Microsoft
 Fluent UI System Icons are a collection of familiar, friendly and modern icons from Microsoft.

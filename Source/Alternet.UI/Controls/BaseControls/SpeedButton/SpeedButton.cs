@@ -70,7 +70,7 @@ namespace Alternet.UI
 
         private Action? clickAction;
         private bool sticky;
-        private KeyInfo[]? keys;
+        private ShortcutInfo? shortcut;
         private bool textVisible = false;
         private bool imageVisible = true;
         private KnownTheme useTheme = DefaultUseTheme;
@@ -120,11 +120,6 @@ namespace Alternet.UI
             Custom,
 
             /// <summary>
-            /// Named theme is used.
-            /// </summary>
-            Named,
-
-            /// <summary>
             /// Theme <see cref="TabControlTheme"/> is used.
             /// </summary>
             TabControl,
@@ -147,6 +142,65 @@ namespace Alternet.UI
                 base.Enabled = value;
                 PictureBox.Enabled = value;
                 Label.Enabled = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the associated shortcut keys.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
+        [Localizable(true)]
+        [DefaultValue(Keys.None)]
+        [Browsable(false)]
+        public virtual Keys ShortcutKeys
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KeyGesture? Shortcut
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KeyInfo[]? ShortcutKeyInfo
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
             }
         }
 
@@ -407,80 +461,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the shortcut keys associated with the control.
-        /// </summary>
-        /// <returns>
-        /// One of the <see cref="Keys" /> values.
-        /// The default is <see cref="Keys.None" />.</returns>
-        [Localizable(true)]
-        [DefaultValue(Keys.None)]
-        [Browsable(false)]
-        public virtual Keys ShortcutKeys
-        {
-            get
-            {
-                if (Shortcut is null)
-                    return Keys.None;
-                var result = Shortcut.Key.ToKeys(Shortcut.Modifiers);
-                return result;
-            }
-
-            set
-            {
-                var key = value.ToKey();
-                var modifiers = value.ToModifiers();
-                Shortcut = new(key, modifiers);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the shortcut key associated with
-        /// the control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual KeyGesture? Shortcut
-        {
-            get
-            {
-                if (keys is null || keys.Length == 0)
-                    return null;
-                return new(keys[0].Key, keys[0].Modifiers);
-            }
-
-            set
-            {
-                if (value is null)
-                    ShortcutKeyInfo = null;
-                else
-                    ShortcutKeyInfo = new KeyInfo[] { new(value.Key, value.Modifiers) };
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the shortcut key associated with
-        /// the control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual KeyInfo[]? ShortcutKeyInfo
-        {
-            get
-            {
-                return keys;
-            }
-
-            set
-            {
-                if (keys == value)
-                    return;
-
-                keys = value;
-                var s = ToolTip;
-                ToolTip = null;
-                ToolTip = s;
-            }
-        }
-
         /// <inheritdoc/>
         [Browsable(false)]
         public override GenericControlState CurrentState
@@ -612,7 +592,7 @@ namespace Alternet.UI
 
             var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
 
-            var filteredKeys = KeyInfo.FilterBackendOs(keys);
+            var filteredKeys = KeyInfo.FilterBackendOs(shortcut?.KeyInfo);
             if (filteredKeys is not null && filteredKeys.Length > 0)
             {
                 s += " " + string.Format(template, filteredKeys[0]);
@@ -635,6 +615,34 @@ namespace Alternet.UI
             doubleBorder.SetWidth(doubleBorder.Top.Width + 1);
             Borders.Pressed = doubleBorder;
             Borders.Hovered = doubleBorder;
+        }
+
+        /// <summary>
+        /// Loads normal and disabled image from the specified file or resource url.
+        /// Loaded images assigned to <see cref="ImageSet"/> and
+        /// <see cref="DisabledImageSet"/> properties.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.
+        /// </param>
+        /// <param name="imageSize">Image size in pixels.</param>
+        /// <remarks>
+        /// <paramref name="url"/> can include assembly name. Example:
+        /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
+        /// </remarks>
+        /// <remarks>
+        /// This method updates Svg default fill colors using
+        /// <see cref="Control.GetSvgColor"/>.
+        /// If you need to load Svg without updating it's colors, use
+        /// <see cref="ImageSet.FromSvgUrl(string, int, int, Color?)"/> without
+        /// defining the last parameter.
+        /// </remarks>
+        public virtual void LoadSvg(string url, SizeI imageSize)
+        {
+            var (normalImage, disabledImage) =
+                ImageSet.GetNormalAndDisabledSvg(url, this, imageSize);
+            ImageSet = normalImage;
+            DisabledImageSet = disabledImage;
         }
 
         /// <inheritdoc/>
@@ -672,9 +680,31 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override
+            IReadOnlyList<(ShortcutInfo Shortcut, Action Action)>? GetShortcuts()
+        {
+            if (shortcut is null)
+                return null;
+            return new (ShortcutInfo Shortcut, Action action)[] { (shortcut, Fn) };
+
+            void Fn()
+            {
+                RaiseClick(EventArgs.Empty);
+                ShowDropDownMenu();
+            }
+        }
+
         private void OnClickAction(object? sender, EventArgs? e)
         {
             clickAction?.Invoke();
+        }
+
+        private void UpdateToolTip()
+        {
+            var s = ToolTip;
+            ToolTip = null;
+            ToolTip = s;
         }
     }
 }

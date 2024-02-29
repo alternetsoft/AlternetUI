@@ -8,12 +8,19 @@ namespace Alternet.UI.Documentation.Examples.TextBox
         public MainWindow()
         {
             InitializeComponent();
+            TextBoxExample1();
         }
 
         public void TextBoxExample1()
         {
             #region TextBoxCSharpCreation
-            var TextBox = new Alternet.UI.TextBox{ Text = "Text 1.1", Margin = new Thickness(0, 0, 0, 5) };
+            var textBox = new Alternet.UI.TextBox
+            {
+                Text = "Text 1.2",
+                Margin = 10,
+                Parent = mainPanel,
+            };
+            
             #endregion
         }
 

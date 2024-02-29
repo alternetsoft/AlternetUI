@@ -56,14 +56,7 @@ namespace PropertyGridSample
             button.Text = "speedButton";
             button.TextVisible = true;
             button.Click += LogClick;
-
-            var images = KnownSvgImages.GetForSize(button.GetSvgColor(), 32);
-            var imagesDisabled = KnownSvgImages.GetForSize(
-                button.GetSvgColor(KnownSvgColor.Disabled),
-                32);
-
-            button.ImageSet = images.ImgOk;
-            button.DisabledImageSet = imagesDisabled.ImgOk;
+            button.LoadSvg(KnownSvgUrls.UrlImageOk, 32);
         }
     }
 }

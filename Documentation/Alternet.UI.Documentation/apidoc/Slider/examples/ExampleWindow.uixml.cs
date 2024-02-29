@@ -13,15 +13,21 @@ namespace Alternet.UI.Documentation.Examples.Slider
         public void SliderExample1()
         {
             #region SliderCSharpCreation
-            var Slider = new Alternet.UI.Slider() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) };
+            var Slider = new Alternet.UI.Slider()
+            {
+                Minimum = 50,
+                Maximum = 200,
+                Value = 125,
+                TickFrequency = 10,                
+                Margin = new Thickness(0, 0, 0, 5),
+            };
             #endregion
         }
 
         #region SliderEventHandler
         private void Slider_ValueChanged(object sender, EventArgs e)
         {
-            string text = slider.Value.ToString();
-            MessageBox.Show(text, string.Empty);
+            Title = slider.Value.ToString();
         }
         #endregion    
     }

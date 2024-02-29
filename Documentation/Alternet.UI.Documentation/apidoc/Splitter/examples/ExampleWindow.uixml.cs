@@ -9,6 +9,7 @@ namespace Alternet.UI.Documentation.Examples
         {
             InitializeComponent();
             Example1();
+            topListBox.Add("Top");
         }
 
         public void Example1()
@@ -16,18 +17,26 @@ namespace Alternet.UI.Documentation.Examples
             #region CSharpCreation
             LayoutPanel panel = new();
 
-            ListBox listBox1 = new();
-            listBox1.Dock = DockStyle.Fill;
-            listBox1.Parent = panel;
+            ListBox listBox1 = new()
+            {
+                Dock = DockStyle.Fill,
+                Parent = panel,
+            };
+            listBox1.Add("Fill");
 
-            Splitter splitter = new();
-            splitter.Dock = DockStyle.Right;
-            splitter.Parent = panel;
+            Splitter splitter = new()
+            {
+                Dock = DockStyle.Right,
+                Parent = panel,
+            };
 
-            ListBox listBox2 = new();
-            listBox2.Dock = DockStyle.Right;
-            listBox2.Parent = panel;
-            listBox2.MinWidth = 250;
+            ListBox listBox2 = new()
+            {
+                Dock = DockStyle.Right,
+                Parent = panel,
+                MinWidth = 250,
+            };
+            listBox2.Add("Right");
 
             panel.Parent = fillPanel;
             #endregion

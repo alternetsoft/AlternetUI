@@ -1143,6 +1143,19 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="value">New property value.</param>
+        public virtual void SetToolShortcut(ObjectUniqueId id, Keys value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ShortcutKeys = value;
+        }
+
+        /// <summary>
+        /// Sets item 'Shortcut' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">New property value.</param>
         public virtual void SetToolShortcut(ObjectUniqueId id, KeyInfo[]? value)
         {
             var item = FindTool(id);
@@ -1201,19 +1214,6 @@ namespace Alternet.UI
             if (item is null)
                 return;
             item.Click -= value;
-        }
-
-        /// <summary>
-        /// Sets item 'Shortcut' property value.
-        /// </summary>
-        /// <param name="id">Item id.</param>
-        /// <param name="value">New property value.</param>
-        public virtual void SetToolShortcut(ObjectUniqueId id, Keys value)
-        {
-            var item = FindTool(id);
-            if (item is null)
-                return;
-            item.ShortcutKeys = value;
         }
 
         /// <summary>

@@ -135,6 +135,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets selected tab page.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Control? SelectedControl
+        {
+            get
+            {
+                return GetControlAt(SelectedIndex);
+            }
+
+            set
+            {
+                SelectedPage = value;
+            }
+        }
+
+        /// <summary>
         ///  Gets or sets the currently selected tab page.
         /// </summary>
         [Bindable(true)]
@@ -324,18 +341,6 @@ namespace Alternet.UI
                 });
                 Invalidate();
                 Header.Invalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets selected tab page.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Control? SelectedControl
-        {
-            get
-            {
-                return GetControlAt(SelectedIndex);
             }
         }
 

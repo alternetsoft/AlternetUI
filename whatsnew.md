@@ -1,3 +1,12 @@
+# 0.9.513 (2024 February 29)
+
+- SpeedButton shortcuts are now handled in KeyDown.
+- ThreadExceptionWindow: used svg image.
+- ShortcutInfo class.
+- Added 3 color svg images in Resources\ColorSvg: circle-exclamation-blue, circle-xmark-red, triangle-exclamation-yellow.
+- ControlSet new methods: Padding, MinSize, MinWidth, MinHeight.
+- SpeedButton.LoadSvg(string url, SizeI imageSize)
+
 # 0.9.512 (2024 February 27)
 
 - Implemented owner drawn ComboBox.

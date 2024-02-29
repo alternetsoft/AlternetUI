@@ -115,7 +115,7 @@ namespace Alternet.UI
             Native.WxOtherFactory.TestPopupWindow(control.WxWidget, pos, sz);
         }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Substitutes <paramref name="control"/> with dummy <see cref="Control"/>, adding
         /// <paramref name="control"/> as its child.
         /// </summary>
@@ -127,7 +127,7 @@ namespace Alternet.UI
             control.Parent = parent;
             control = parent;
             return control;
-        }
+        }*/
 
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if

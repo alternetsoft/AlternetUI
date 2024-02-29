@@ -129,7 +129,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the default assembly from which to load assets for which no assembly is specified.
+        /// Sets the default assembly from which to load assets for which
+        /// no assembly is specified.
         /// </summary>
         /// <param name="assembly">The default assembly.</param>
         public void SetDefaultAssembly(Assembly assembly)
@@ -161,7 +162,8 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public Stream Open(Uri uri, Uri? baseUri = null) => OpenAndGetAssembly(uri, baseUri).stream;
+        public Stream Open(Uri uri, Uri? baseUri = null)
+            => OpenAndGetAssembly(uri, baseUri).stream;
 
         /// <summary>
         /// Opens the asset with the requested URI and returns the asset stream and the
@@ -177,7 +179,9 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public (Stream stream, Assembly assembly) OpenAndGetAssembly(Uri uri, Uri? baseUri = null)
+        public (Stream stream, Assembly assembly) OpenAndGetAssembly(
+            Uri uri,
+            Uri? baseUri = null)
         {
             var asset = GetAsset(uri, baseUri)
                 ?? throw new FileNotFoundException($"The resource {uri} could not be found.");

@@ -209,6 +209,33 @@ namespace Alternet.UI
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
+
+            AddAction("Show ThreadExceptionWindow", () =>
+            {
+                try
+                {
+                    throw new ApplicationException("This is exception message");
+                }
+                catch (Exception e)
+                {
+                    ThreadExceptionWindow.Show(e, "This is an additional info", true);
+                }
+            });
+
+            AddAction("Enum Embedded Resources in Alternet.UI", () =>
+            {
+                const string s = "embres:Alternet.UI?assembly=Alternet.UI";
+
+                Application.Log("Embedded Resource Names added to log file");
+
+                var items = ResourceLoader.GetAssets(new Uri(s), null);
+                LogUtils.LogToFile(LogUtils.SectionSeparator);
+                foreach (var item in items)
+                {
+                    LogUtils.LogToFile(item);
+                }
+                LogUtils.LogToFile(LogUtils.SectionSeparator);
+            });
         }
 
         private void LogControlInfo()

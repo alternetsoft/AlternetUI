@@ -302,6 +302,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds list of shortcuts associated with the control and it's
+        /// child controls. Only visible and enabled child controls are queried.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// An example of the correct implementation
+        /// can be found in <see cref="SpeedButton.GetShortcuts"/>.
+        /// </remarks>
+        protected virtual IReadOnlyList<(ShortcutInfo Shortcut, Action Action)>? GetShortcuts()
+        {
+            if (!HasChildren)
+                return null;
+
+            List<(ShortcutInfo Shortcut, Action Action)>? result = null;
+
+            foreach (var child in Children)
+            {
+                if (!child.Visible || !child.Enabled)
+                    continue;
+                var childShortcuts = child.GetShortcuts();
+                if (childShortcuts is null)
+                    continue;
+                result ??= new();
+                result.AddRange(childShortcuts);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Raises the <see cref="KeyDown" /> event.
         /// </summary>
         /// <param name="e">A <see cref="KeyEventArgs" /> that contains the event data.</param>
