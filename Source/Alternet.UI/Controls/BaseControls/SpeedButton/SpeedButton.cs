@@ -630,6 +630,13 @@ namespace Alternet.UI
         /// <paramref name="url"/> can include assembly name. Example:
         /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
         /// </remarks>
+        /// <remarks>
+        /// This method updates Svg default fill colors using
+        /// <see cref="Control.GetSvgColor"/>.
+        /// If you need to load Svg without updating it's colors, use
+        /// <see cref="ImageSet.FromSvgUrl(string, int, int, Color?)"/> without
+        /// defining the last parameter.
+        /// </remarks>
         public virtual void LoadSvg(string url, SizeI imageSize)
         {
             var (normalImage, disabledImage) =
