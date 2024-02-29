@@ -354,6 +354,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Control.Padding"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">A padding of a control.</param>
+        public ControlSet Padding(Thickness value)
+        {
+            foreach (var item in items)
+                item.Padding = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="Control.Size"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">size of a control.</param>
@@ -361,6 +372,39 @@ namespace Alternet.UI
         {
             foreach (var item in items)
                 item.Size = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.MinimumSize"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">Minimum size of a control.</param>
+        public ControlSet MinSize(SizeD value)
+        {
+            foreach (var item in items)
+                item.MinimumSize = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.MinWidth"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">Minimum width of a control.</param>
+        public ControlSet MinWidth(double value)
+        {
+            foreach (var item in items)
+                item.MinWidth = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.MinHeight"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">Minimum height of a control.</param>
+        public ControlSet MinHeight(double value)
+        {
+            foreach (var item in items)
+                item.MinHeight = value;
             return this;
         }
 
