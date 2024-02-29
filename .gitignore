@@ -46,3 +46,4 @@ Documentation/Alternet.UI.Documentation/Build.Result.txt
 *.nupkg
 *.snupkg
 node_modules
+External/Svg/
