@@ -617,6 +617,27 @@ namespace Alternet.UI
             Borders.Hovered = doubleBorder;
         }
 
+        /// <summary>
+        /// Loads normal and disabled image from the specified file or resource url.
+        /// Loaded images assigned to <see cref="ImageSet"/> and
+        /// <see cref="DisabledImageSet"/> properties.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.
+        /// </param>
+        /// <param name="imageSize">Image size in pixels.</param>
+        /// <remarks>
+        /// <paramref name="url"/> can include assembly name. Example:
+        /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
+        /// </remarks>
+        public virtual void LoadSvg(string url, SizeI imageSize)
+        {
+            var (normalImage, disabledImage) =
+                ImageSet.GetNormalAndDisabledSvg(url, this, imageSize);
+            ImageSet = normalImage;
+            DisabledImageSet = disabledImage;
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(Graphics dc, RectD rect)
         {
