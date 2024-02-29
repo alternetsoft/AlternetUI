@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildProjectDirectory)\..\..\..\Common.props"/>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,8 +26,5 @@
     <EmbeddedResource Include="Resources\ImageListIcons\Small\LineGraph16.png" />
     <EmbeddedResource Include="Resources\ImageListIcons\Small\Pencil16.png" />
     <EmbeddedResource Include="Resources\ImageListIcons\Small\Photo16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.503-beta" />
   </ItemGroup>
 </Project>

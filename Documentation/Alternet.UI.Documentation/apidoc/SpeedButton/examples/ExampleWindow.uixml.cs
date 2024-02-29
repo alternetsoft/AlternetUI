@@ -11,29 +11,27 @@ namespace Alternet.UI.Documentation.Examples
         {
             InitializeComponent();
             logListBox.BindApplicationLog();
-            button1.ImageSet =
-                KnownSvgImages.GetForSize(button1.GetSvgColor(KnownSvgColor.Normal), 32).ImgOk;
+
+            button1.LoadSvg(KnownSvgUrls.UrlImageOk, 32);
             button2 = CreateSpeedButton();
         }
 
         #region CSharpCreation
         public SpeedButton CreateSpeedButton()
         {
-            SpeedButton result = new();
-
-            // This call sets image and disabled image to the known svg image with the
-            // specified size and color
-            result.ImageSet
-                = KnownSvgImages.GetForSize(result.GetSvgColor(KnownSvgColor.Normal), 32).ImgCancel;
-            result.DisabledImageSet
-                = KnownSvgImages.GetForSize(result.GetSvgColor(KnownSvgColor.Disabled), 32).ImgCancel;
-            
+            SpeedButton result = new()
+            {
+                Text = "Cancel",
+                TextVisible = true,
+                ToolTip = "Some hint",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Parent = buttonPanel,
+                ShortcutKeys = Keys.Control | Keys.A,
+                Name = "cancelBtn",
+            };
+            result.HorizontalAlignment = HorizontalAlignment.Right;
+            result.LoadSvg(KnownSvgUrls.UrlImageCancel, 32);
             result.Click += Button_Click;
-            result.ToolTip = "Some hint";
-            result.HorizontalAlignment = HorizontalAlignment.Center;
-            result.Parent = mainPanel;
-            result.ShortcutKeys = Keys.Control | Keys.A;
-            result.Name = "cancelBtn";
             return result;
         }
         #endregion

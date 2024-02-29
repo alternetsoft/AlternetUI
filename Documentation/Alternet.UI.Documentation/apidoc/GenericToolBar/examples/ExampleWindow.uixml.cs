@@ -9,14 +9,14 @@ namespace Alternet.UI.Documentation.Examples
         public MainWindow()
         {
             InitializeComponent();
+            Padding = 5;
             VerticalStackPanel mainPanel = new();
-            mainPanel.AllowStretch = true;
             mainPanel.Parent = this;
             var control = InitGenericToolBar();
             control.Parent = mainPanel;
             LogListBox listBox = new();
             listBox.HasBorder = false;
-            listBox.VerticalAlignment = VerticalAlignment.Stretch;
+            listBox.VerticalAlignment = VerticalAlignment.Fill;
             listBox.Parent = mainPanel;
             listBox.BindApplicationLog();
         }

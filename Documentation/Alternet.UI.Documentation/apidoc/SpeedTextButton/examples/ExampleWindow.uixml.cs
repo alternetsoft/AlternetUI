@@ -13,6 +13,8 @@ namespace Alternet.UI.Documentation.Examples
             logListBox.BindApplicationLog();
             button2 = CreateSpeedButton();
             KeyDown += MainWindow_KeyDown;
+
+            Group(button1, button2).Padding(10).MinWidth(50);
         }
 
         #region CSharpCreation
@@ -22,10 +24,9 @@ namespace Alternet.UI.Documentation.Examples
             result.Click += Button_Click;
             result.Text = "Cancel";
             result.ToolTip = "Some hint";
-            result.HorizontalAlignment = HorizontalAlignment.Center;
-            result.Parent = mainPanel;
+            result.Parent = buttonPanel;
             result.ShortcutKeys = Keys.Escape;
-            result.Margin = 10;
+            result.Margin = 5;
             return result;
         }
 

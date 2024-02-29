@@ -3,7 +3,7 @@
         x:Class="Alternet.UI.Documentation.Examples.CheckBox.MainWindow"
         Title="Examples.CheckBox">
   <StackPanel Orientation="Vertical">
-    <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" />
+    <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" Margin="8"/>
     <!-- <CreateUixmlDeclaration> -->
     <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="8" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
     <!-- </CreateUixmlDeclaration> -->

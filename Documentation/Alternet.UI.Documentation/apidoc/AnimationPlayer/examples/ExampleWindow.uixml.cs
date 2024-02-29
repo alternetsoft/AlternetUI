@@ -21,9 +21,6 @@ namespace Alternet.UI.Documentation.Examples
             #region CSharpCreation
             AnimationPlayer result = new();
 
-            // Use generic or native animation control.
-            result.UseGeneric = true;
-
             result.Parent = mainPanel;
             result.LoadFromUrl(AnimationHourGlass, AnimationType.Gif);
             result.Play();
