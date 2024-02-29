@@ -426,7 +426,10 @@ namespace Alternet.UI
 
             if (radius != null)
             {
-                dc.DrawRoundedRectangle(Top.GetPen(defaultColor), rect.InflatedBy(-1, -1), radius.Value);
+                dc.DrawRoundedRectangle(
+                    Top.GetPen(defaultColor),
+                    rect.InflatedBy(-1, -1),
+                    radius.Value);
                 return;
             }
 
