@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -73,7 +74,7 @@ namespace Alternet.UI
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         /// <remarks>
         /// This is a default implementation which is called from
-        /// <see cref="Control.GetPreferredSize"/>.
+        /// <see cref="Control.GetPreferredSize(SizeD)"/>.
         /// </remarks>
         /// <param name="container">Container control which childs will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
@@ -1602,6 +1603,14 @@ namespace Alternet.UI
                 availableSize,
                 layoutType);
         }
+
+        /// <summary>
+        /// Calls <see cref="GetPreferredSize(SizeD)"/> with <see cref="SizeD.PositiveInfinity"/>
+        /// as a parameter value.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
         /// Call this function to force one or both scrollbars to be always shown, even if
