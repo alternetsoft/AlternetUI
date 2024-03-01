@@ -9,6 +9,8 @@ namespace ControlsSample
 {
     internal partial class ButtonPage : Control
     {
+        private int imageMargins = 5;
+
         private static readonly object[] ValidAlign =
         {
                     new ListControlItem("Default", GenericDirection.Default),
@@ -30,6 +32,9 @@ namespace ControlsSample
         public ButtonPage()
         {
             InitializeComponent();
+
+            imageMarginsButton.Enabled = Application.IsWindowsOS;
+            imageMarginsButton.Click += ImageMarginsButton_Click;
 
             button.Padding = 5;
 
@@ -63,7 +68,7 @@ namespace ControlsSample
                 textAlignComboBox,
                 imageAlignComboBox,
                 comboBoxTextColor);
-            editors.SuggestedHeightToMax();
+            editors.SuggestedHeightToMax().SuggestedWidth(125);
 
             ApplyAll();
 
@@ -83,15 +88,20 @@ namespace ControlsSample
             exactFitCheckBox.CheckedChanged += Button_Changed;
         }
 
+        private void ImageMarginsButton_Click(object? sender, EventArgs e)
+        {
+            var value = DialogFactory.GetNumberFromUser("Image Margin", null, null, imageMargins);
+            if (value is null)
+                return;
+            imageMargins = (int)value;
+            button.SetImageMargins(value.Value);
+        }
+
         public void DoInside(Action action)
         {
-            button?.Parent?.DoInsideUpdate(() =>
-            {
-                button.Parent?.DoInsideLayout(() =>
-                {
-                    action();
-                });
-            });
+            action();
+            button.PerformLayout();
+            button.Refresh();
         }
 
         private void ApplyAll()
@@ -165,6 +175,7 @@ namespace ControlsSample
 
                 ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
+                button.SetImageMargins(imageMargins);
             });
             button.Refresh();
         }

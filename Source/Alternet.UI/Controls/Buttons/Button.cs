@@ -241,6 +241,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets the margins between the image and the text of the button.
+        /// Value is in dips (1/96 inch).
         /// </summary>
         /// <remarks>
         /// This method is currently only implemented under Windows.
@@ -251,8 +252,12 @@ namespace Alternet.UI
         public virtual void SetImageMargins(double x, double? y = null)
         {
             y ??= x;
-            if(Application.IsWindowsOS)
-                Handler.SetImageMargins(x, y.Value);
+            if (Application.IsWindowsOS)
+            {
+                var xPixels = PixelFromDip(x);
+                var yPixels = PixelFromDip(y.Value);
+                Handler.SetImageMargins(xPixels, yPixels);
+            }
         }
 
         /// <inheritdoc/>
