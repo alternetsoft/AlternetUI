@@ -44,8 +44,8 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
 
-            PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
-            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);
+            /*PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
+            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);*/
 #endif
         }
 

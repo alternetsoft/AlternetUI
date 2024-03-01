@@ -114,10 +114,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics FromImage(Image image)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             return new Graphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
         }
 
@@ -854,10 +851,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, PointD origin)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             dc.DrawImageAtPoint(image.NativeImage, origin);
         }
 
@@ -870,10 +864,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, RectD destinationRect)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             dc.DrawImageAtRect(image.NativeImage, destinationRect);
         }
 
@@ -891,10 +882,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
         }
 
@@ -1388,6 +1376,18 @@ namespace Alternet.Drawing
             if(dispose)
                 dc.Dispose();
             dc = null!;
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private static void DebugImageAssert(Image image)
+        {
+            if (image is null)
+                throw new ArgumentNullException(nameof(image));
+            if(image.IsDisposed)
+                throw new Exception("Image was disposed");
+            if (image.Width <= 0 || image.Height <= 0)
+                throw new Exception("Image has invalid size");
         }
     }
 }
