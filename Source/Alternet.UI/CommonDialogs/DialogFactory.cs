@@ -86,8 +86,8 @@ namespace Alternet.UI
         /// <param name="pos"></param>
         public static long? GetNumberFromUser(
             string? message,
-            string? prompt,
-            string? caption,
+            string? prompt = null,
+            string? caption = null,
             long value = 0,
             long min = 0,
             long max = 100,
