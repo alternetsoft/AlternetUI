@@ -168,8 +168,11 @@ namespace PaintSample
 
             foreach (var tool in tools.AllTools)
             {
-                var image = LoadToolImage(tool);
-                var buttonId = toolbar.AddSpeedBtn(tool.Name, image.Normal, image.Disabled);
+                var url = "embres:ControlsSample.Resources.ToolIcons." +
+                    tool.GetType().Name.Replace("Tool", "") + ".svg";
+                var (normalImage, disabledImage) =
+                    ImageSet.GetNormalAndDisabledSvg(url, this);
+                var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);
 
                 void ClickMe()
                 {

@@ -61,7 +61,7 @@ namespace ControlsSample
             // Buttons panel
 
             var buttonPanel = optionsPanel.AddVerticalStackPanel();
-            var setDayColorsButton = buttonPanel.AddButton("Set days (5, 7) style", SetDayColors);
+            var setDayColorsButton = buttonPanel.AddButton("Days (5, 7) style", SetDayColors);
             setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
 
             buttonPanel.AddButton("Mark days (2, 3)", MarkDays);
@@ -71,12 +71,13 @@ namespace ControlsSample
 
             // Allow date range panel
 
-            var rangePanel = optionsPanel.AddVerticalStackPanel();
+            var rangePanel = optionsPanel.AddGroupBox("Allow Date Range");
+            rangePanel.Layout = LayoutStyle.Vertical;
 
-            rangePanel.AddButton("Allow Any Date", RangeAnyDate_Click);
-            rangePanel.AddButton("Allow Dates <= Tomorrow", RangeTomorrow_Click);
-            rangePanel.AddButton("Allow Dates >= Yesterday", RangeYesterday_Click);
-            rangePanel.AddButton("Allow Yesterday..Tomorrow", RangeYesterdayTomorrow_Click);
+            rangePanel.AddButton("Any Date", RangeAnyDate_Click);
+            rangePanel.AddButton("<= Tomorrow", RangeTomorrow_Click);
+            rangePanel.AddButton(">= Yesterday", RangeYesterday_Click);
+            rangePanel.AddButton("Yesterday..Tomorrow", RangeYesterdayTomorrow_Click);
 
             rangePanel.ChildrenSet.Margin(5);
 

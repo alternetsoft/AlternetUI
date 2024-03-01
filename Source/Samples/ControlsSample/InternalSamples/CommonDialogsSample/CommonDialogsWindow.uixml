@@ -10,77 +10,89 @@
   </Window.StatusBar>
 
   <VerticalStackPanel>
-    <StackPanel Orientation="Horizontal">
-      <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
+
+    <TabControl>
+
+      <!-- =============================== -->
+
+      <Control Title="File and Directory" Margin="10">
         <StackPanel>
-          <CheckBox Text="Set Initial Dir to User Home Dir" 
+          <CheckBox Text="Set Initial Dir to User Home Dir"
             Name="setInitialDirectoryCheckBox" Margin="5" />
-                                        
-          <CheckBox Text="Set Title to 'Custom Title'" 
+
+          <CheckBox Text="Set Title to 'Custom Title'"
                     Name="setCustomTitleCheckBox" Margin="5" />
 
           <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" />
 
           <GroupBox Title="Open File Dialog" Margin="10">
             <StackPanel>
-              <CheckBox Text="Allow Multiple Selection" 
-                        Name="allowMultipleSelectionCheckBox" Margin="5" />
-              <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" 
-              Click="ShowOpenFileDialogButton_Click" Margin="5"/>
+              <CheckBox Text="Allow Multiple Selection"
+                  Name="allowMultipleSelectionCheckBox" Margin="5" />
+              <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton"
+                    HorizontalAlignment="Left" Click ="ShowOpenFileDialogButton_Click" Margin="5"/>
             </StackPanel>
           </GroupBox>
 
-          <Button Text="Save File Dialog" Name="showSaveFileDialogButton" 
+          <Button Text="Save File Dialog" Name="showSaveFileDialogButton"
+                      HorizontalAlignment="Left"
             Click="ShowSaveFileDialogButton_Click" Margin="5"/>
-          <Button Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton" 
-            Click="ShowSelectDirectoryDialogButton_Click" Margin="5,5,5,10"/>
+          <Button Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton"
+                  HorizontalAlignment="Left"
+                  Click="ShowSelectDirectoryDialogButton_Click" Margin="5,5,5,10"/>
+        </StackPanel>
+      </Control>
+
+      <!-- =============================== -->
+
+      <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5">
+        <StackPanel Orientation="Vertical" Padding="5">
+          <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+          <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10"
+                    HorizontalAlignment="Left" />
+
+          <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+          <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10"
+                    HorizontalAlignment="Left" />
+
+          <Label Text="Default Button:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+          <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10"
+                    HorizontalAlignment="Left" />
+
+          <Button Text="Show Message" Name="showMessageBoxButton"
+            Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
         </StackPanel>
       </GroupBox>
 
-      <StackPanel Orientation="Vertical">
-		  <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5">
-			  <StackPanel Orientation="Vertical" Padding="5">
-			    <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center"/>
-			    <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10" />
+      <!-- =============================== -->
 
-			    <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center"/>
-			    <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10" />
-
-			    <Label Text="Default Button:" Margin="5,0,5,10" VerticalAlignment="Center"/>
-			    <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10" />
-
-			    <Button Text="Show Message" Name="showMessageBoxButton" 
-				  Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" />
-				  </StackPanel>
-		  </GroupBox>
-      
-      </StackPanel>
-
-      <VerticalStackPanel>
-        <GroupBox Title="Other Dialogs" Margin="10" VerticalAlignment="Top" Padding="5">
+      <VerticalStackPanel Title="Other">
+        <GroupBox Margin="10" VerticalAlignment="Top" Padding="5">
           <StackPanel>
             <Button Text="Color Dialog" Name="showColorDialogButton"
-              Click="ShowColorDialogButton_Click" Margin="5"/>
+              Click="ShowColorDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
             <Button Text="Font Dialog" Name="showFontDialogButton"
-              Click="ShowFontDialogButton_Click" Margin="5"/>
+              Click="ShowFontDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
           </StackPanel>
-        </GroupBox>  
+        </GroupBox>
 
         <GroupBox Title="Thread Exception Window" Margin="10" VerticalAlignment="Top" Padding="5">
-				  <StackPanel Orientation="Vertical" Padding="5" Enabled="false">
-					    <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"/>
-					    <ComboBox Name="exceptionTypeComboBox"
-                                  IsEditable="false" Margin="5,0,0,10" />
+          <StackPanel Orientation="Vertical" Padding="5" Enabled="false">
+            <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"/>
+            <ComboBox Name="exceptionTypeComboBox"
+                      IsEditable="false" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
-					    <Button Text="Throw Exception" Name="buttonThrowException"
-						  Click="ThrowExceptionButton_Click" Margin="5,0,0,10"/>
-				  </StackPanel>
+            <Button Text="Throw Exception" Name="buttonThrowException"
+              Click="ThrowExceptionButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
+          </StackPanel>
         </GroupBox>
-      
-      </VerticalStackPanel>
-    </StackPanel>
 
-    <Label Text="Sample Label" Name="sampleLabel" Margin="10,20,10,10" 
+      </VerticalStackPanel>
+      <!-- =============================== -->
+
+    </TabControl>
+
+    <Label Text="Sample Label" Name="sampleLabel" Margin="10,20,10,10"
            HorizontalAlignment="Center"/>
 
   </VerticalStackPanel>
