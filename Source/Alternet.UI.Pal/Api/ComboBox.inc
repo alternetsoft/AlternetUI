@@ -30,6 +30,9 @@ int GetTextSelectionStart();
 int GetTextSelectionLength();
 
 
+PointI GetTextMargins();
+
+
 void* GetPopupWidget();
 
 

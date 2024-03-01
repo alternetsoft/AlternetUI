@@ -78,6 +78,11 @@ ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
     return obj->GetTextSelectionLength();
 }
 
+ALTERNET_UI_API PointI_C ComboBox_GetTextMargins_(ComboBox* obj)
+{
+    return obj->GetTextMargins();
+}
+
 ALTERNET_UI_API void* ComboBox_GetPopupWidget_(ComboBox* obj)
 {
     return obj->GetPopupWidget();

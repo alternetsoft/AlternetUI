@@ -172,6 +172,7 @@ namespace Alternet.UI
             paintEventArgs.IsSelected = flags.HasFlag(DrawItemFlags.PaintingSelected);
             paintEventArgs.IsPaintingControl = isPaintingControl;
             paintEventArgs.IsIndexNotFound = NativeControl.EventItem == ItemIndexNotFound;
+            paintEventArgs.ItemIndex = NativeControl.EventItem;
             paintEventArgs.IsPaintingBackground = drawBackground;
             DrawItem(paintEventArgs);
             paintEventArgs.DrawingContext = null!;

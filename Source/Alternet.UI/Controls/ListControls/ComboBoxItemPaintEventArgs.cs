@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// <summary>
         /// Default drawing method.
         /// </summary>
-        public void DefaultDraw()
+        public void DefaultPaint()
         {
             if (IsPaintingBackground)
                 ComboBox.NativeControl.DefaultOnDrawBackground();

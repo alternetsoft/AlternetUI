@@ -171,7 +171,7 @@ namespace ControlsSample
 
         void IComboBoxItemPainter.Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
         {
-            e.DefaultDraw();
+            e.DefaultPaint();
             if(e.IsPaintingControl)
                 e.Graphics.FillRectangle(Color.Red, (e.Bounds.Location, (5, 5)));
             else

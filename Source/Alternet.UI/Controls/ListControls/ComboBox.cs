@@ -303,6 +303,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets text margin. It is the empty space between borders
+        /// of control and the text itself.
+        /// </summary>
+        [Browsable(false)]
+        public virtual PointD TextMargin
+        {
+            get
+            {
+                var margins = NativeControl.TextMargins;
+                var result = PixelToDip(margins);
+                return result;
+            }
+        }
+
         internal new Native.ComboBox NativeControl => (Native.ComboBox)base.NativeControl;
 
         internal new ComboBoxHandler Handler
@@ -420,6 +435,71 @@ namespace Alternet.UI
                     value = item;
                 propInfo?.SetValue(instance, value);
             }
+        }
+
+        /// <summary>
+        /// Default item paint method.
+        /// </summary>
+        /// <param name="e">Paint arguments.</param>
+        public virtual void DefaultItemPaint(ComboBoxItemPaintEventArgs e)
+        {
+            if (e.IsPaintingBackground || ShouldPaintHintText())
+            {
+                e.DefaultPaint();
+                return;
+            }
+
+            var font = Font ?? Control.DefaultFont;
+            Color color;
+            color = ForegroundColor ?? SystemColors.WindowText;
+
+            if (e.IsPaintingControl)
+            {
+                var s = Text;
+                if (Enabled)
+                {
+                }
+                else
+                {
+                    color = SystemColors.GrayText;
+                }
+
+                var size = e.DrawingContext.MeasureText(s, font);
+
+                var location =
+                    (e.Bounds.X + TextMargin.X,
+                    ((e.Bounds.Height - size.Height) / 2) + e.Bounds.Y);
+
+                e.Graphics.DrawText(
+                    s,
+                    font,
+                    color.AsBrush,
+                    location);
+            }
+            else
+            {
+                if (e.IsSelected)
+                    color = SystemColors.HighlightText;
+
+                var s = Items[e.ItemIndex].ToString() ?? string.Empty;
+                e.Graphics.DrawText(
+                    s,
+                    font,
+                    color,
+                    (e.Bounds.X + 2, e.Bounds.Y));
+            }
+        }
+
+        /// <summary>
+        /// Gets whether hint text should be painted.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ShouldPaintHintText()
+        {
+            bool noHintText = string.IsNullOrEmpty(EmptyTextHint);
+            bool noText = string.IsNullOrEmpty(Text);
+
+            return !Focused && noText && !noHintText;
         }
 
         /// <inheritdoc/>

@@ -53,6 +53,11 @@ namespace ControlsSample
             ListControlUtils.AddFontSizes(comboBoxFontSize, true);
             ListControlUtils.AddFontNames(comboBoxFontName, true);
 
+            var colorPainter = new ComboBoxColorPainter();
+
+            comboBoxTextColor.ItemPainter = colorPainter;
+            comboBoxBackColor.ItemPainter = colorPainter;
+
             comboBoxTextColor.Add("Default");
             comboBoxBackColor.Add("Default");
             ListControlUtils.AddColorNames(comboBoxTextColor, false);
