@@ -18,6 +18,11 @@ namespace Alternet.UI
         IWin32Window, ITextProperty, IComponent
     {
         /// <summary>
+        /// Gets or sets min element size.
+        /// </summary>
+        public static double MinElementSize = 32;
+
+        /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
