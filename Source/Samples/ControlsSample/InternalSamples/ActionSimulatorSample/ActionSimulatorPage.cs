@@ -18,6 +18,7 @@ namespace ControlsSample
         {
             Layout = LayoutStyle.Vertical;
             MinChildMargin = 5;
+            Size = (800, 600);
 
             AddLabels(
                 "This demo send mouse clicks and key presses to operating system",
@@ -41,6 +42,9 @@ namespace ControlsSample
                 "Simulator moves mouse to 'Button1' and clicks it.",
                 "After that, it moves mouse to the editor, clicks it",
                 "and enters 'Hello' text.");
+
+            AddLabels(
+                "Simulator currently doesn't work when using Wayland with Linux.");
 
         }
 

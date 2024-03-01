@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.MainWindow"
         Width="900"
-        Height="600"
+        Height="700"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">
 
   <Window.InputBindings>
