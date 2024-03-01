@@ -234,7 +234,15 @@ namespace Alternet.UI
                 {
                     LogUtils.LogToFile(item);
                 }
+
                 LogUtils.LogToFile(LogUtils.SectionSeparator);
+            });
+
+            AddAction("Show Second MainForm", () =>
+            {
+                var type = Application.FirstWindow()?.GetType();
+                var instance = Activator.CreateInstance(type ?? typeof(Window)) as Window;
+                instance?.Show();
             });
         }
 
