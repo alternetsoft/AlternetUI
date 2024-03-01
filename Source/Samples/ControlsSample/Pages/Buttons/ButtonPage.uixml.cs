@@ -60,8 +60,8 @@ namespace ControlsSample
 
             comboBoxTextColor.Add("Default");
             comboBoxBackColor.Add("Default");
-            ListControlUtils.AddColorNames(comboBoxTextColor, false);
-            ListControlUtils.AddColorNames(comboBoxBackColor, false);
+            ListControlUtils.AddColors(comboBoxTextColor, false);
+            ListControlUtils.AddColors(comboBoxBackColor, false);
             comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
             comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
 
