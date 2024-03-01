@@ -187,6 +187,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether <see cref="Control.ToolTip"/> will be hidden
+        /// when control is clicked. Default is <c>true</c>.
+        /// </summary>
+        public bool HideToolTipOnClick { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating the associated shortcut key.
         /// </summary>
         [Browsable(false)]
@@ -678,6 +684,14 @@ namespace Alternet.UI
                 default:
                     return DefaultTheme;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (HideToolTipOnClick)
+                HideToolTip();
         }
 
         /// <inheritdoc/>
