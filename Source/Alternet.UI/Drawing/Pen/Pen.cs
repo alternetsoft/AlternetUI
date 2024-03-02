@@ -135,6 +135,12 @@ namespace Alternet.Drawing
         public bool Immutable => immutable;
 
         /// <summary>
+        /// Gets whether object is disposed.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDisposed => isDisposed;
+
+        /// <summary>
         /// Gets or sets the color of this <see cref="Pen"/>.
         /// </summary>
         /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this

@@ -405,6 +405,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether object is disposed.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDisposed => isDisposed;
+
+        /// <summary>
         /// Gets a byte value that specifies the character set that this <see cref="Font" /> uses.
         /// </summary>
         /// <returns>

@@ -43,6 +43,12 @@ namespace Alternet.Drawing
         public bool Immutable => immutable;
 
         /// <summary>
+        /// Gets whether object is disposed.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDisposed => isDisposed;
+
+        /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
         /// </summary>
         /// <remarks>
