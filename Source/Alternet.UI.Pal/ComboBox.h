@@ -6,6 +6,22 @@
 
 namespace Alternet::UI
 {
+    class wxVListBoxComboPopup2 : public wxVListBoxComboPopup, public wxWidgetExtender
+    {
+    public:
+        wxVListBoxComboPopup2()
+        {
+        }
+
+        virtual bool Create(wxWindow* parent) wxOVERRIDE
+        {
+            auto result = wxVListBoxComboPopup::Create(parent);
+            if (result)
+                SetDoubleBuffered(true);
+            return result;
+        }
+    };
+
     class wxOwnerDrawnComboBox2 : public wxOwnerDrawnComboBox, public wxWidgetExtender
     {
     public:
@@ -24,6 +40,11 @@ namespace Alternet::UI
             : wxOwnerDrawnComboBox(parent, id, value, pos, size, n, choices,
                 style, validator, name)
         {
+        }
+
+        virtual void DoSetPopupControl(wxComboPopup* popup) wxOVERRIDE
+        {
+            wxOwnerDrawnComboBox::DoSetPopupControl(new wxVListBoxComboPopup2());
         }
 
         virtual unsigned int GetCount() const wxOVERRIDE
@@ -177,6 +198,7 @@ namespace Alternet::UI
         int eventFlags = 0;
         int eventResultInt = 0;
         bool eventCalled = false;
+        int ownerDrawStyle = 0;
 
         void UpdateDc(wxDC& dc);
         void ReleaseEventDc();

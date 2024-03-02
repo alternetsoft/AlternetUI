@@ -24,6 +24,8 @@ namespace NativeApi.Api
 
         public PointI TextMargins { get; }
 
+        public int OwnerDrawStyle { get; set; }
+
         public IntPtr PopupWidget { get; }    
         public IntPtr EventDc { get; }
         public RectI EventRect { get; }

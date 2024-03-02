@@ -100,6 +100,13 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? IsEditableChanged;
 
+        [Flags]
+        internal enum OwnerDrawFlags
+        {
+            ItemBackground = 1,
+            Item = 2,
+        }
+
         /// <summary>
         /// Gets the starting index of text selected in the combo box.
         /// </summary>
@@ -315,6 +322,56 @@ namespace Alternet.UI
                 var margins = NativeControl.TextMargins;
                 var result = PixelToDip(margins);
                 return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether background of the item is owner drawn.
+        /// </summary>
+        [Browsable(false)]
+        public bool OwnerDrawItemBackground
+        {
+            get
+            {
+                return OwnerDrawStyle.HasFlag(OwnerDrawFlags.ItemBackground);
+            }
+
+            set
+            {
+                OwnerDrawStyle |= OwnerDrawFlags.ItemBackground;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether item is owner drawn.
+        /// </summary>
+        [Browsable(false)]
+        public bool OwnerDrawItem
+        {
+            get
+            {
+                return OwnerDrawStyle.HasFlag(OwnerDrawFlags.Item);
+            }
+
+            set
+            {
+                OwnerDrawStyle |= OwnerDrawFlags.Item;
+            }
+        }
+
+        internal OwnerDrawFlags OwnerDrawStyle
+        {
+            get
+            {
+                return (OwnerDrawFlags)NativeControl.OwnerDrawStyle;
+            }
+
+            set
+            {
+                if (OwnerDrawStyle == value)
+                    return;
+                NativeControl.OwnerDrawStyle = (int)value;
+                Invalidate();
             }
         }
 
