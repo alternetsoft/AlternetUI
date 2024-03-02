@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This is the same as <see cref="ClipRectangle"/> property.
         /// </remarks>
-        public RectD Bounds { get; internal set; }
+        public RectD Bounds { get; set; }
 
         /// <summary>Gets the rectangle in which to paint.</summary>
         /// <returns>The <see cref="RectD" /> in which to paint.</returns>

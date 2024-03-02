@@ -37,6 +37,7 @@ namespace Alternet.UI
             mainPanel.Parent = this;
             Padding = DefaultPadding;
             var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+            bottomToolBar.ItemSize = Math.Max(bottomToolBar.ItemSize, MinElementSize);
             ButtonIdOk = buttons[0];
             ButtonIdCancel = buttons[1];
             bottomToolBar.SuspendLayout();

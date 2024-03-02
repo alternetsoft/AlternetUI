@@ -763,7 +763,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="visible">New property value.</param>
-        public virtual void SetToolVisible(ObjectUniqueId id, bool visible)
+        public virtual void SetToolVisible(ObjectUniqueId id, bool visible = true)
         {
             var item = GetToolControl(id);
             if (item is null)
@@ -776,7 +776,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="enabled">New property value.</param>
-        public virtual void SetToolEnabled(ObjectUniqueId id, bool enabled)
+        public virtual void SetToolEnabled(ObjectUniqueId id, bool enabled = true)
         {
             var item = GetToolControl(id);
             if (item is null)
@@ -789,7 +789,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="isRight"><c>true</c> if item must be right aligned.</param>
-        public virtual void SetToolAlignRight(ObjectUniqueId id, bool isRight)
+        public virtual void SetToolAlignRight(ObjectUniqueId id, bool isRight = true)
         {
             var item = GetToolControl(id);
             if (item is null)
@@ -805,7 +805,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="isCenter"><c>true</c> if item must be aligned to the center.</param>
-        public virtual void SetToolAlignCenter(ObjectUniqueId id, bool isCenter)
+        public virtual void SetToolAlignCenter(ObjectUniqueId id, bool isCenter = true)
         {
             var item = GetToolControl(id);
             if (item is null)
@@ -873,7 +873,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
         /// <param name="value">new Sticky property value.</param>
-        public void SetToolSticky(ObjectUniqueId toolId, bool value)
+        public void SetToolSticky(ObjectUniqueId toolId, bool value = true)
         {
             var item = FindTool(toolId);
             if (item is null)

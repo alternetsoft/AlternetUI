@@ -114,10 +114,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics FromImage(Image image)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             return new Graphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
         }
 
@@ -225,6 +222,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
             dc.Rectangle(pen.NativePen, brush.NativeBrush, rectangle);
         }
 
@@ -240,6 +239,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Ellipse(Pen pen, Brush brush, RectD rectangle)
         {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
             dc.Ellipse(pen.NativePen, brush.NativeBrush, rectangle);
         }
 
@@ -255,6 +256,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Path(Pen pen, Brush brush, GraphicsPath path)
         {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
             dc.Path(pen.NativePen, brush.NativeBrush, path.NativePath);
         }
 
@@ -279,6 +282,8 @@ namespace Alternet.Drawing
             double startAngle,
             double sweepAngle)
         {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
             dc.Pie(
                 pen.NativePen,
                 brush.NativeBrush,
@@ -301,6 +306,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Circle(Pen pen, Brush brush, PointD center, double radius)
         {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
             dc.Circle(pen.NativePen, brush.NativeBrush, center, radius);
         }
 
@@ -317,6 +324,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
         {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
             dc.Polygon(pen.NativePen, brush.NativeBrush, points, (UI.Native.FillMode)fillMode);
         }
 
@@ -334,10 +343,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRectangle(Brush brush, RectD rectangle)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillRectangle(brush.NativeBrush, rectangle);
         }
 
@@ -358,10 +364,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawArc(Pen pen, PointD center, double radius, double startAngle, double sweepAngle)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawArc(pen.NativePen, center, radius, startAngle, sweepAngle);
         }
 
@@ -396,10 +399,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPoint(Pen pen, double x, double y)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawPoint(pen.NativePen, x, y);
         }
 
@@ -424,10 +424,7 @@ namespace Alternet.Drawing
             double startAngle,
             double sweepAngle)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillPie(brush.NativeBrush, center, radius, startAngle, sweepAngle);
         }
 
@@ -452,10 +449,7 @@ namespace Alternet.Drawing
             double startAngle,
             double sweepAngle)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawPie(pen.NativePen, center, radius, startAngle, sweepAngle);
         }
 
@@ -480,10 +474,7 @@ namespace Alternet.Drawing
             PointD controlPoint2,
             PointD endPoint)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawBezier(pen.NativePen, startPoint, controlPoint1, controlPoint2, endPoint);
         }
 
@@ -499,10 +490,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawBeziers(Pen pen, PointD[] points)
         {
+            DebugPenAssert(pen);
 #if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-
             if (points.Length == 0)
                 return;
 
@@ -527,10 +516,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawCircle(Pen pen, PointD center, double radius)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawCircle(pen.NativePen, center, radius);
         }
 
@@ -545,10 +531,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillCircle(Brush brush, PointD center, double radius)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillCircle(brush.NativeBrush, center, radius);
         }
 
@@ -562,11 +545,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
-
+            DebugPenAssert(pen);
             dc.DrawRoundedRectangle(pen.NativePen, rect, cornerRadius);
         }
 
@@ -581,11 +560,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
-
+            DebugBrushAssert(brush);
             dc.FillRoundedRectangle(brush.NativeBrush, rect, cornerRadius);
         }
 
@@ -599,10 +574,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPolygon(Pen pen, PointD[] points)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawPolygon(pen.NativePen, points);
         }
 
@@ -618,10 +590,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillPolygon(Brush brush, PointD[] points, FillMode fillMode = FillMode.Alternate)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillPolygon(brush.NativeBrush, points, (UI.Native.FillMode)fillMode);
         }
 
@@ -635,10 +604,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawRectangles(Pen pen, RectD[] rects)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawRectangles(pen.NativePen, rects);
         }
 
@@ -652,10 +618,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRectangles(Brush brush, RectD[] rects)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillRectangles(brush.NativeBrush, rects);
         }
 
@@ -675,10 +638,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillEllipse(Brush brush, RectD bounds)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillEllipse(brush.NativeBrush, bounds);
         }
 
@@ -695,10 +655,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FloodFill(Brush brush, PointD point)
         {
+            DebugBrushAssert(brush);
 #if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-
             if (brush is not SolidBrush)
             {
                 throw new ArgumentException(
@@ -719,10 +677,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawRectangle(Pen pen, RectD rectangle)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawRectangle(pen.NativePen, rectangle);
         }
 
@@ -735,10 +690,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPath(Pen pen, GraphicsPath path)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawPath(pen.NativePen, path.NativePath);
         }
 
@@ -751,10 +703,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillPath(Brush brush, GraphicsPath path)
         {
-#if DEBUG
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-#endif
+            DebugBrushAssert(brush);
             dc.FillPath(brush.NativeBrush, path.NativePath);
         }
 
@@ -772,10 +721,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawLine(Pen pen, PointD a, PointD b)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawLine(pen.NativePen, a, b);
         }
 
@@ -810,10 +756,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawLines(Pen pen, PointD[] points)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawLines(pen.NativePen, points);
         }
 
@@ -827,10 +770,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawEllipse(Pen pen, RectD bounds)
         {
-#if DEBUG
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-#endif
+            DebugPenAssert(pen);
             dc.DrawEllipse(pen.NativePen, bounds);
         }
 
@@ -854,10 +794,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, PointD origin)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             dc.DrawImageAtPoint(image.NativeImage, origin);
         }
 
@@ -870,10 +807,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, RectD destinationRect)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             dc.DrawImageAtRect(image.NativeImage, destinationRect);
         }
 
@@ -891,10 +825,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
-#if DEBUG
-            if (image is null)
-                throw new ArgumentNullException(nameof(image));
-#endif
+            DebugImageAssert(image);
             dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
         }
 
@@ -909,6 +840,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetPixel(PointD point, Pen pen)
         {
+            DebugPenAssert(pen);
             dc.SetPixel(point, pen.NativePen);
         }
 
@@ -923,7 +855,10 @@ namespace Alternet.Drawing
         /// <param name="y">The y-coordinate of the pixel to set.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetPixel(double x, double y, Pen pen)
-            => dc.SetPixel(new PointD(x, y), pen.NativePen);
+        {
+            DebugPenAssert(pen);
+            dc.SetPixel(new PointD(x, y), pen.NativePen);
+        }
 
         /// <summary>
         /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -936,7 +871,10 @@ namespace Alternet.Drawing
         /// <param name="y">The y-coordinate of the pixel to set.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetPixel(double x, double y, Color color)
-            => dc.SetPixel(new PointD(x, y), color.AsPen.NativePen);
+        {
+            DebugColorAssert(color);
+            dc.SetPixel(new PointD(x, y), color.AsPen.NativePen);
+        }
 
         /// <summary>
         /// Gets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -964,7 +902,11 @@ namespace Alternet.Drawing
         /// <paramref name="image"/> object to draw.
         /// </param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawImage(Image image, RectD destinationRect, RectD sourceRect, GraphicsUnit unit)
+        public void DrawImage(
+            Image image,
+            RectD destinationRect,
+            RectD sourceRect,
+            GraphicsUnit unit)
         {
             if (unit != GraphicsUnit.Pixel)
             {
@@ -1008,16 +950,9 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, Font font, Brush brush, PointD origin, TextFormat format)
         {
-#if DEBUG
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-
-            if (format is null)
-                throw new ArgumentNullException(nameof(format));
-#endif
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            DebugFormatAssert(format);
             dc.DrawTextAtPoint(
                 text,
                 origin,
@@ -1063,13 +998,8 @@ namespace Alternet.Drawing
             RectD bounds,
             TextFormat format)
         {
-#if DEBUG
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-#endif
+            DebugTextAssert(text);
+            DebugFontAssert(font);
             dc.DrawTextAtRect(
                 text,
                 bounds,
@@ -1158,13 +1088,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD MeasureText(string text, Font font)
         {
-#if DEBUG
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-#endif
+            DebugTextAssert(text);
+            DebugFontAssert(font);
             return dc.MeasureText(text, font.NativeFont, double.NaN, UI.Native.TextWrapping.None);
         }
 
@@ -1184,13 +1109,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD MeasureText(string text, Font font, double maximumWidth)
         {
-#if DEBUG
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-#endif
+            DebugTextAssert(text);
+            DebugFontAssert(font);
             return dc.MeasureText(
                 text,
                 font.NativeFont,
@@ -1217,16 +1137,9 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD MeasureText(string text, Font font, double maximumWidth, TextFormat format)
         {
-#if DEBUG
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-
-            if (format is null)
-                throw new ArgumentNullException(nameof(format));
-#endif
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            DebugFormatAssert(format);
             return dc.MeasureText(
                 text,
                 font.NativeFont,
@@ -1251,7 +1164,8 @@ namespace Alternet.Drawing
         /// <param name="text">Text to draw.</param>
         /// <param name="font">Font used to draw the text.</param>
         /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(
             string text,
@@ -1260,6 +1174,9 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor)
         {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            DebugColorAssert(foreColor);
             dc.DrawText(text, location, font.NativeFont, foreColor, backColor);
         }
 
@@ -1270,7 +1187,8 @@ namespace Alternet.Drawing
         /// <param name="text">Text to draw.</param>
         /// <param name="font">Font used to draw the text.</param>
         /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted.</param>
         /// <param name="image">Optional image.</param>
         /// <param name="rect">Rectangle in which drawing is performed.</param>
         /// <param name="alignment">Alignment of the text.</param>
@@ -1286,6 +1204,9 @@ namespace Alternet.Drawing
             GenericAlignment alignment = GenericAlignment.TopLeft,
             int indexAccel = -1)
         {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            DebugColorAssert(foreColor, nameof(foreColor));
             return dc.DrawLabel(
                 text,
                 font.NativeFont,
@@ -1388,6 +1309,89 @@ namespace Alternet.Drawing
             if(dispose)
                 dc.Dispose();
             dc = null!;
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugBrushAssert(Brush value)
+        {
+            if (value is null)
+                throw new Exception("Brush is null");
+            if (value.IsDisposed)
+                throw new Exception("Brush was disposed");
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugPenAssert(Pen value)
+        {
+            if (value is null)
+                throw new Exception("Pen is null");
+            if (value.IsDisposed)
+                throw new Exception("Pen was disposed");
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugColorAssert(Color value, string? paramName = default)
+        {
+            if (value is null)
+                throw new Exception($"{Fn()} is null");
+            if (!value.IsOk)
+                throw new Exception($"{Fn()} is not ok");
+
+            string Fn()
+            {
+                if (paramName is null)
+                    return "Color";
+                else
+                    return $"Color '{paramName}'";
+            }
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugImageAssert(Image image)
+        {
+            if (image is null)
+                throw new Exception("Image is null");
+            if(image.IsDisposed)
+                throw new Exception("Image was disposed");
+            if (image.Width <= 0 || image.Height <= 0)
+                throw new Exception("Image has invalid size");
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugTextAssert(string text)
+        {
+            if (text is null)
+                throw new Exception("Text is null");
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugFontAssert(Font font)
+        {
+            if (font is null)
+                throw new Exception("Font is null");
+            if (font.IsDisposed)
+                throw new Exception("Font is disposed");
+        }
+
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DebugFormatAssert(TextFormat format)
+        {
+            if (format is null)
+                throw new Exception("Text format is null");
         }
     }
 }

@@ -9,6 +9,40 @@ namespace ControlsSample
 {
     internal partial class ButtonPage : Control
     {
+        private readonly Label labelBackColor = new("Back Color")
+        {
+            Margin = (0, 5, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            ColumnIndex = 0,
+            RowIndex = 3,
+        };
+
+        private readonly ColorComboBox comboBoxBackColor = new()
+        {
+            Margin = (5, 5, 0, 0),
+            IsEditable = false,
+            ColumnIndex = 1,
+            RowIndex = 3,
+        };
+
+        private readonly Label labelTextColor = new("Color")
+        {
+            Margin = (0, 5, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            ColumnIndex = 0,
+            RowIndex = 2,
+        };
+
+        private readonly ColorComboBox comboBoxTextColor = new()
+        {
+            Margin = (5, 5, 0, 0),
+            IsEditable = false,
+            ColumnIndex = 1,
+            RowIndex = 2,
+        };
+
+        private int imageMargins = 5;
+
         private static readonly object[] ValidAlign =
         {
                     new ListControlItem("Default", GenericDirection.Default),
@@ -22,48 +56,59 @@ namespace ControlsSample
 
         static ButtonPage()
         {
-#if DEBUG
             Button.ImagesEnabled = true;
-#endif
         }
 
         public ButtonPage()
         {
             InitializeComponent();
 
-            button.Padding = 5;
+            DoInsideLayout(Fn);
 
-            textAlignComboBox.Items.AddRange(ValidAlign);
-            textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact("Default");
-            imageAlignComboBox.Items.AddRange(ValidAlign);
-            imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact("Default");
-
-            if (!Button.ImagesEnabled)
+            void Fn()
             {
-                imageAlignComboBox.Enabled = false;
-                imageCheckBox.Enabled = false;
-                showTextCheckBox.Enabled = false;
+                labelBackColor.Parent = propsContainer1;
+                comboBoxBackColor.Parent = propsContainer1;
+
+                labelTextColor.Parent = propsContainer2;
+                comboBoxTextColor.Parent = propsContainer2;
+
+                imageMarginsButton.Enabled = Application.IsWindowsOS;
+                imageMarginsButton.Click += ImageMarginsButton_Click;
+
+                button.Padding = 5;
+
+                textAlignComboBox.Items.AddRange(ValidAlign);
+                textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact("Default");
+                imageAlignComboBox.Items.AddRange(ValidAlign);
+                imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact("Default");
+
+                if (!Button.ImagesEnabled)
+                {
+                    imageAlignComboBox.Enabled = false;
+                    imageCheckBox.Enabled = false;
+                    showTextCheckBox.Enabled = false;
+                }
+
+                ListControlUtils.AddFontSizes(comboBoxFontSize, true);
+                ListControlUtils.AddFontNames(comboBoxFontName, true);
+
+                comboBoxTextColor.Add("Default");
+                comboBoxBackColor.Add("Default");
+                comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
+                comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
+
+                ControlSet editors = new(
+                    textTextBox,
+                    comboBoxFontName,
+                    comboBoxFontSize,
+                    comboBoxBackColor,
+                    textAlignComboBox,
+                    imageAlignComboBox,
+                    comboBoxTextColor);
+                editors.SuggestedHeightToMax().SuggestedWidth(125);
+
             }
-
-            ListControlUtils.AddFontSizes(comboBoxFontSize, true);
-            ListControlUtils.AddFontNames(comboBoxFontName, true);
-
-            comboBoxTextColor.Add("Default");
-            comboBoxBackColor.Add("Default");
-            ListControlUtils.AddColorNames(comboBoxTextColor, false);
-            ListControlUtils.AddColorNames(comboBoxBackColor, false);
-            comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
-            comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
-
-            ControlSet editors = new(
-                textTextBox,
-                comboBoxFontName,
-                comboBoxFontSize,
-                comboBoxBackColor,
-                textAlignComboBox,
-                imageAlignComboBox,
-                comboBoxTextColor);
-            editors.SuggestedHeightToMax();
 
             ApplyAll();
 
@@ -83,15 +128,20 @@ namespace ControlsSample
             exactFitCheckBox.CheckedChanged += Button_Changed;
         }
 
+        private void ImageMarginsButton_Click(object? sender, EventArgs e)
+        {
+            var value = DialogFactory.GetNumberFromUser("Image Margin", null, null, imageMargins);
+            if (value is null)
+                return;
+            imageMargins = (int)value;
+            button.SetImageMargins(value.Value);
+        }
+
         public void DoInside(Action action)
         {
-            button?.Parent?.DoInsideUpdate(() =>
-            {
-                button.Parent?.DoInsideLayout(() =>
-                {
-                    action();
-                });
-            });
+            action();
+            button.PerformLayout();
+            button.Refresh();
         }
 
         private void ApplyAll()
@@ -165,6 +215,7 @@ namespace ControlsSample
 
                 ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
+                button.SetImageMargins(imageMargins);
             });
             button.Refresh();
         }

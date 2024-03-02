@@ -36,11 +36,13 @@
                            CheckedChanged="Popup_CheckedChanged" />
             </VerticalStackPanel>
           </GroupBox>
-          <Button Text="Set Date And Time" Click="SetNow_Click" Margin="0,0,0,5" Name="buttonSetNow"/>
-          <Button Text="Set Only Date" Click="SetNowDate_Click" Margin="0,0,0,5" Name="buttonSetOnlyDate"/>
+          <Button Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5"
+                  Name="buttonSetNow"/>
+          <Button Text="Set Date" Click="SetNowDate_Click" Margin="0,0,0,5"
+                  Name="buttonSetOnlyDate"/>
         </VerticalStackPanel>
 
-        <VerticalStackPanel Margin="5" Padding="5">
+        <VerticalStackPanel Margin="0,5,5,5" Padding="0">
           <GroupBox Title="Allow Date Range" Margin="0,0,0,5">
             <VerticalStackPanel Margin="5">
               <Button Text="Any Date" Margin="0,0,0,5"

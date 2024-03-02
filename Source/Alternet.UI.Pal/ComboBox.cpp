@@ -166,27 +166,26 @@ namespace Alternet::UI
         eventCalled = value;
     }
 
+    constexpr auto OwnerDrawItemBackground = 1;
+    constexpr auto OwnerDrawItem = 2;
+
     void ComboBox::OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags)
     {
-        // If item is selected or even, or we are painting the
-        // combo control itself, use the default rendering.
-        /*if ((flags & (wxODCB_PAINTING_CONTROL | wxODCB_PAINTING_SELECTED)) ||
-            (item & 1) == 0)
+        auto drawBackground = (ownerDrawStyle & OwnerDrawItemBackground) != 0;
+
+        if (drawBackground)
         {
-            wxOwnerDrawnComboBox::OnDrawBackground(dc, rect, item, flags);
-            return;
-        }*/
+            UpdateDc(dc);
+            eventRect = rect;
+            eventItem = item;
+            eventFlags = flags;
+            eventCalled = false;
+            RaiseEvent(ComboBoxEvent::DrawItemBackground);
+            ReleaseEventDc();
 
-        UpdateDc(dc);
-        eventRect = rect;
-        eventItem = item;
-        eventFlags = flags;
-        eventCalled = false;
-        RaiseEvent(ComboBoxEvent::DrawItemBackground);
-        ReleaseEventDc();
-
-        if (eventCalled)
-            return;
+            if (eventCalled)
+                return;
+        }
 
         GetComboBox()->DefaultOnDrawBackground(dc, rect, item, flags);
     }
@@ -205,7 +204,12 @@ namespace Alternet::UI
     {
         GetComboBox()->DefaultOnDrawBackground(*eventDc, eventRect, eventItem, eventFlags);
     }
-    
+
+    PointI ComboBox::GetTextMargins()
+    {
+        return GetComboBox()->GetMargins();
+    }
+
     void ComboBox::DefaultOnDrawItem()
     {
         GetComboBox()->DefaultOnDrawItem(*eventDc, eventRect, eventItem, eventFlags);
@@ -229,16 +233,21 @@ namespace Alternet::UI
 
     void ComboBox::OnDrawItem(wxDC& dc, const wxRect& rect, int item, int flags)
     {
-        UpdateDc(dc);
-        eventRect = rect;
-        eventItem = item;
-        eventFlags = flags;
-        eventCalled = false;
-        RaiseEvent(ComboBoxEvent::DrawItem);
-        ReleaseEventDc();
+        auto drawItem = (ownerDrawStyle & OwnerDrawItem) != 0;
 
-        if (eventCalled)
-            return;
+        if (drawItem)
+        {
+            UpdateDc(dc);
+            eventRect = rect;
+            eventItem = item;
+            eventFlags = flags;
+            eventCalled = false;
+            RaiseEvent(ComboBoxEvent::DrawItem);
+            ReleaseEventDc();
+
+            if (eventCalled)
+                return;
+        }
 
         GetComboBox()->DefaultOnDrawItem(dc, rect, item, flags);
     }
@@ -466,6 +475,16 @@ namespace Alternet::UI
     void ComboBox::SetEmptyTextHint(const string& value)
     {
         GetComboBox()->SetHint(wxStr(value));
+    }
+
+    int ComboBox::GetOwnerDrawStyle()
+    {
+        return ownerDrawStyle;
+    }
+
+    void ComboBox::SetOwnerDrawStyle(int value)
+    {
+        ownerDrawStyle = value;
     }
 
     wxOwnerDrawnComboBox2* ComboBox::GetComboBox()

@@ -1,3 +1,19 @@
+# 0.9.514 (2024 March 2)
+
+- Added ColorComboBox. You can check how it looks in Button page of ControlSample demo.
+- SpeedButton.HideToolTipOnClick.
+- TabControl.TabsVisible.
+- Button.SetImageMargins parameters are now in dips.
+- FindReplaceControl: DefaultFindEditBorderColorLight, DefaultFindEditBorderColorDark, DefaultNotFoundBorderLight, 
+DefaultNotFoundBorderDark, FindEditBorder, ReplaceEditBorder, FindEditBorderColor.
+- Control.GetPreferredSize().
+- Image.IsDisposed.
+- Graphics: DrawImage now asserts image size #114.
+- Demo layout improved.
+- Control.MinElementSize and it's used in popup window Ok and Cancel buttons.
+- ComboBox owner draw improved.
+- ComboBox: OwnerDrawItemBackground, OwnerDrawItem properties. 
+
 # 0.9.513 (2024 February 29)
 
 - SpeedButton shortcuts are now handled in KeyDown.

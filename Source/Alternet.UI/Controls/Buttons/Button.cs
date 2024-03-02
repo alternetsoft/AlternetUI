@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Specifies a set of images for different <see cref="Button"/> states.
         /// </summary>
         [Browsable(false)]
-        public ControlStateImages StateImages
+        public virtual ControlStateImages StateImages
         {
             get => Handler.StateImages;
 
@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// The <see cref="Image"/> displayed on the button control. The default
         /// value is <see langword="null"/>.
         /// </value>
-        public Image? Image
+        public virtual Image? Image
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for hovered control state.
         /// </summary>
-        public Image? HoveredImage
+        public virtual Image? HoveredImage
         {
             get => StateImages.Hovered;
             set => StateImages.Hovered = value;
@@ -117,7 +117,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for focused control state.
         /// </summary>
-        public Image? FocusedImage
+        public virtual Image? FocusedImage
         {
             get => StateImages.Focused;
             set => StateImages.Focused = value;
@@ -126,7 +126,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for pressed control state.
         /// </summary>
-        public Image? PressedImage
+        public virtual Image? PressedImage
         {
             get => StateImages.Pressed;
             set => StateImages.Pressed = value;
@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for disabled control state.
         /// </summary>
-        public Image? DisabledImage
+        public virtual Image? DisabledImage
         {
             get => StateImages.Disabled;
             set => StateImages.Disabled = value;
@@ -151,7 +151,7 @@ namespace Alternet.UI
         /// button; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        public bool IsDefault
+        public virtual bool IsDefault
         {
             get => Handler.IsDefault;
             set => Handler.IsDefault = value;
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// the button will still have at least the standard height, even with this style,
         /// if it has a non-empty label.
         /// </remarks>
-        public bool ExactFit
+        public virtual bool ExactFit
         {
             get => Handler.ExactFit;
             set => Handler.ExactFit = value;
@@ -185,7 +185,7 @@ namespace Alternet.UI
         /// button; otherwise, <see langword="false"/>.
         /// The default is <see langword="false"/>.
         /// </value>
-        public bool IsCancel
+        public virtual bool IsCancel
         {
             get => Handler.IsCancel;
             set => Handler.IsCancel = value;
@@ -194,7 +194,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets visibility of the text in the bitmap.
         /// </summary>
-        public bool TextVisible
+        public virtual bool TextVisible
         {
             get => Handler.TextVisible;
             set => Handler.TextVisible = value;
@@ -206,7 +206,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Valid positions are left, top, right, bottom, default.
         /// </remarks>
-        public GenericDirection TextAlign
+        public virtual GenericDirection TextAlign
         {
             get => Handler.TextAlign;
             set => Handler.TextAlign = value;
@@ -232,7 +232,7 @@ namespace Alternet.UI
         /// an associated image.
         /// </remarks>
         /// <param name="dir">New image position (left, top, right, bottom).</param>
-        public void SetImagePosition(GenericDirection dir)
+        public virtual void SetImagePosition(GenericDirection dir)
         {
             if (dir == GenericDirection.Left || dir == GenericDirection.Right ||
                 dir == GenericDirection.Top || dir == GenericDirection.Bottom)
@@ -241,6 +241,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets the margins between the image and the text of the button.
+        /// Value is in dips (1/96 inch).
         /// </summary>
         /// <remarks>
         /// This method is currently only implemented under Windows.
@@ -248,10 +249,15 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="x">New horizontal margin.</param>
         /// <param name="y">New vertical margin.</param>
-        public void SetImageMargins(double x, double y)
+        public virtual void SetImageMargins(double x, double? y = null)
         {
-            if(Application.IsWindowsOS)
-                Handler.SetImageMargins(x, y);
+            y ??= x;
+            if (Application.IsWindowsOS)
+            {
+                var xPixels = PixelFromDip(x);
+                var yPixels = PixelFromDip(y.Value);
+                Handler.SetImageMargins(xPixels, yPixels);
+            }
         }
 
         /// <inheritdoc/>

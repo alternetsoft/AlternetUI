@@ -11,14 +11,31 @@ namespace ControlsTest
 {
     public class CustomDrawControl : UserControl
     {
+        private List<Action<Control, Graphics, RectD>>? paintActions;
+
         public CustomDrawControl()
-            : base()
         {
+        }
+
+        public IList<Action<Control, Graphics, RectD>> PaintActions
+        {
+            get
+            {
+                return paintActions ??= new();
+            }
+        }
+
+        public void SetPaintAction(Action<Control, Graphics, RectD> action)
+        {
+            PaintActions.Clear();
+            PaintActions.Add(action);
+            Invalidate();
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -30,11 +47,13 @@ namespace ControlsTest
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
 
-            NativeControlPainter.Default.DrawComboBox(
-                this,
-                dc,
-                (50, 50, 150, 100),
-                NativeControlPainter.DrawFlags.None);
+            if (paintActions is null)
+                return;
+
+            foreach(var paintAction in paintActions)
+            {
+                paintAction(this, e.DrawingContext, e.Bounds);
+            }
         }
     }
 }

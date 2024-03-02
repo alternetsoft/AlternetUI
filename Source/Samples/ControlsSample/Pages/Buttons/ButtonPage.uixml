@@ -12,19 +12,11 @@
 
       <HorizontalStackPanel>
 
-        <Grid Margin="0,0,0,0">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
+        <!-- ===================================== -->
 
-          <Label Text="Text " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
+        <Grid Margin="0,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer1">
+          <Label Text="Text " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0"
+                 VerticalAlignment="Center"/>
           <TextBox Text="Test Button" Name="textTextBox" Margin="5,0,0,0"
                    TextChanged="Button_Changed" Grid.Column="1" Grid.Row="0"/>
 
@@ -37,24 +29,11 @@
                  Grid.Column="0" Grid.Row="2"/>
           <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
                     Margin="5,5,0,0"  Grid.Column="1" Grid.Row="2"/>
-
-          <Label Text="BackGround" Name="labelBackColor" Margin="0,5,0,0"
-                 VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
-          <ComboBox Name="comboBoxBackColor"
-                    Margin="5,5,0,0" IsEditable="false"  Grid.Column="1" Grid.Row="3"/>
         </Grid>
 
-        <Grid Margin="10,0,0,0">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
+        <!-- ===================================== -->
 
+        <Grid Margin="10,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer2">
           <Label Text="Align" VerticalAlignment="Center" Margin="0,0,0,0"
                  Grid.Column="0" Grid.Row="0" />
           <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="5,0,0,0"
@@ -65,10 +44,8 @@
           <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="5,5,0,0"
                     Grid.Column="1" Grid.Row="1"/>
 
-          <Label Text="Color" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"
-                 Name="labelTextColor" Margin="0,5,0,0"/>
-          <ComboBox Name="comboBoxTextColor" Margin="5,5,0,0" IsEditable="false"
-                    Grid.Column="1" Grid.Row="2"/>
+          <Button Text="Image Margins..." Name="imageMarginsButton" RowIndex="3" ColumnIndex="0"
+                  ColumnSpan="2"/>
         </Grid>
       </HorizontalStackPanel>
 

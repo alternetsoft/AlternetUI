@@ -30,6 +30,13 @@ int GetTextSelectionStart();
 int GetTextSelectionLength();
 
 
+PointI GetTextMargins();
+
+
+int GetOwnerDrawStyle();
+void SetOwnerDrawStyle(int value);
+
+
 void* GetPopupWidget();
 
 

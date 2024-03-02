@@ -45,12 +45,6 @@
                   Orientation="Vertical" HorizontalAlignment="Center"
                   Grid.Column="0" Grid.Row="1" SuggestedHeight="150"/>
 
-          <Label Text="5 [0..20]" Margin="0,0,10,5"
-              Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
-          <Slider Maximum="20" Value="5" Margin="0,0,0,5"
-                  Orientation="Vertical" HorizontalAlignment="Center"
-                  Grid.Column="1" Grid.Row="1" SuggestedHeight="150"/>
-
           <Label Text="100 [0..100]" Margin="0,0,10,5"
               Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
           <Slider Maximum="100" Value="100" Margin="0,0,0,5"

@@ -47,7 +47,8 @@ namespace Alternet.UI
             bool select = true,
             Color? defaultValue = null)
         {
-            var knownColors = Color.GetKnownColors(KnownColorCategory.Standard, KnownColorCategory.Web);
+            var knownColors =
+                Color.GetKnownColors(KnownColorCategory.Standard, KnownColorCategory.Web);
 
             var colorsNames = new List<string>();
             colorsNames.AddRange(knownColors.Select(x => x.Name));
@@ -64,6 +65,40 @@ namespace Alternet.UI
             if (select && name is not null)
             {
                 var found = control.FindStringExact(name);
+                if (found != null)
+                    control.SelectedIndex = found.Value;
+            }
+        }
+
+        /// <summary>
+        /// Initializes <see cref="ListControl"/> with list of known colors
+        /// (Web and Standard colors are used).
+        /// </summary>
+        /// <param name="control">Control instance which items will be filled with colors.</param>
+        /// <param name="defaultValue">Select this color in <see cref="ListControl"/>.</param>
+        /// <param name="select">Specifies whether to select default item in the control.</param>
+        public static void AddColors(
+            ListControl control,
+            bool select = true,
+            Color? defaultValue = null)
+        {
+            var knownColors =
+                Color.GetKnownColors(KnownColorCategory.Standard, KnownColorCategory.Web);
+            var colors = new List<Color>();
+            colors.AddRange(knownColors);
+
+            if (defaultValue is not null && !colors.Exists(x => x == defaultValue))
+                colors.Add(defaultValue);
+
+            foreach (var item in colors)
+            {
+                ListControlItem controlItem = new(item.Name, item);
+                control.Items.Add(controlItem);
+            }
+
+            if (select && defaultValue is not null)
+            {
+                var found = control.FindStringExact(defaultValue.Name);
                 if (found != null)
                     control.SelectedIndex = found.Value;
             }

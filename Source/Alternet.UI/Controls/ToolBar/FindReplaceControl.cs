@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -14,21 +15,48 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class FindReplaceControl : ToolBarSet
     {
+        /// <summary>
+        /// Gets or sets default border color of the find text editor.
+        /// This property contains default value for the light color theme.
+        /// </summary>
+        public static Color DefaultFindEditBorderColorLight = Color.Empty;
+
+        /// <summary>
+        /// Gets or sets default border color of the find text editor.
+        /// This property contains default value for the light color theme.
+        /// </summary>
+        public static Color DefaultFindEditBorderColorDark = Color.Empty;
+
+        /// <summary>
+        /// Gets or sets default border color of the find text editor
+        /// in the case when search string is not found.
+        /// This property contains default value for the light color theme.
+        /// </summary>
+        public static Color DefaultNotFoundBorderLight = (229, 20, 0);
+
+        /// <summary>
+        /// Gets or sets default border color of the find text editor
+        /// in the case when search string is not found.
+        /// This property contains default value for the dark color theme.
+        /// </summary>
+        public static Color DefaultNotFoundBorderDark = (255, 153, 164);
+
         private readonly ComboBox scopeEdit = new()
         {
+            HasBorder = false,
             Margin = (2, 0, 2, 0),
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly ComboBox findEdit = new()
         {
-            Margin = (2, 0, 2, 0),
+            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly ComboBox replaceEdit = new()
         {
-            Margin = (2, 0, 2, 0),
+            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
@@ -52,17 +80,33 @@ namespace Alternet.UI
             Text = CommonStrings.Default.FindScopeSelectionOnly,
         };
 
+        private readonly Border findEditBorder = new()
+        {
+            Margin = (2, 0, 2, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        private readonly Border replaceEditBorder = new()
+        {
+            Margin = (2, 0, 2, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
         private IFindReplaceConnect? manager;
         private bool canFindInCurrentDocument = true;
         private bool canFindInAllOpenDocuments = true;
         private bool canFindInCurrentProject = true;
         private bool canFindInSelectionOnly = true;
+        private bool showErrorBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
         /// </summary>
         public FindReplaceControl()
         {
+            findEditBorder.BorderColor = FindEditBorderColor;
+            replaceEditBorder.BorderColor = FindEditBorderColor;
+
             DoInsideLayout(Fn);
 
             void Fn()
@@ -116,10 +160,9 @@ namespace Alternet.UI
 
                 findEdit.SuggestedWidth = 150;
                 findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind + "...";
-                /*findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind;
-                replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace;*/
-                replaceEdit.SuggestedWidth = 150;
-                IdFindEdit = FindToolBar.AddControl(findEdit);
+                replaceEdit.SuggestedWidth = findEdit.SuggestedWidth;
+                findEdit.Parent = findEditBorder;
+                IdFindEdit = FindToolBar.AddControl(findEditBorder);
 
                 IdFindNext = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindNext,
@@ -143,7 +186,8 @@ namespace Alternet.UI
 
                 ReplaceToolBar.AddSpeedBtn();
 
-                IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
+                replaceEdit.Parent = replaceEditBorder;
+                IdReplaceEdit = ReplaceToolBar.AddControl(replaceEditBorder);
                 replaceEdit.EmptyTextHint = CommonStrings.Default.ButtonReplace + "...";
 
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
@@ -289,6 +333,75 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="text"></param>
             void SetReplaceText(string text);
+        }
+
+        /// <summary>
+        /// Gets border of the <see cref="FindEdit"/>.
+        /// </summary>
+        [Browsable(false)]
+        public Border FindEditBorder => findEditBorder;
+
+        /// <summary>
+        /// Gets border of the <see cref="ReplaceEdit"/>.
+        /// </summary>
+        [Browsable(false)]
+        public Border ReplaceEditBorder => replaceEditBorder;
+
+        /// <summary>
+        /// Gets border color of the find text editor.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color FindEditBorderColor
+        {
+            get
+            {
+                if (IsDarkBackground)
+                    return DefaultFindEditBorderColorDark;
+                else
+                    return DefaultFindEditBorderColorLight;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border color of the find text editor
+        /// in the case when search string is not found.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color NotFoundBorderColor
+        {
+            get
+            {
+                if (IsDarkBackground)
+                    return DefaultNotFoundBorderDark;
+                else
+                    return DefaultNotFoundBorderLight;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to show error border around find text editor.
+        /// </summary>
+        public bool ShowErrorBorder
+        {
+            get
+            {
+                return showErrorBorder;
+            }
+
+            set
+            {
+                if (showErrorBorder == value)
+                    return;
+                showErrorBorder = value;
+                if (value)
+                {
+                    findEditBorder.BorderColor = NotFoundBorderColor;
+                }
+                else
+                {
+                    findEditBorder.BorderColor = FindEditBorderColor;
+                }
+            }
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
     <VerticalStackPanel>
         <HorizontalStackPanel>
             <VerticalStackPanel Margin="0,0,0,5" Padding="5,0,5,5">
-              <ComboBox SuggestedWidth="200" Name="comboBox" IsEditable="false"
+              <ComboBox SuggestedWidth="170" Name="comboBox" IsEditable="false"
                             VerticalAlignment="Top"
                             SelectedItemChanged="ComboBox_SelectedItemChanged"
                             TextChanged="ComboBox_TextChanged" />
@@ -14,11 +14,11 @@
                         Name="allowTextEditingCheckBox" Margin="0,10,0,0"
                         CheckedChanged=
                                 "AllowTextEditingCheckBox_CheckedChanged"/>
-              <CheckBox Text="Owner Draw (experimental)"
+              <CheckBox Text="Owner Draw"
                         Name="ownerDrawCheckBox" Margin="0,5,0,10"
                         CheckedChanged=
                                 "OwnerDrawCheckBox_CheckedChanged"/>
-              <Button Text="Text = Empty String"
+              <Button Text="Text = Empty"
                       Name="setTextToEmptyStringButton" Margin="0,0,0,0"
                       Click="SetTextToEmptyStringButton_Click"/>
               <Button Text="Text = 'One'" Name="setTextToOneButton"
@@ -40,7 +40,7 @@
                     <Button Text="SelectedItem = null" 
                             Name="setSelectedItemToNullButton" Margin="0,3,0,0" 
                             Click="SetSelectedItemToNullButton_Click"/>
-                    <Button Text="Select Text Range [2..5]" 
+                    <Button Text="Select Text [2..5]" 
                             Name="selectTextRangeButton" Margin="0,3,0,0" 
                             Click="SelectTextRangeButton_Click"/>
                     <Button Text="Get Text Selection" Name="getTextSelectionButton" 
@@ -51,7 +51,7 @@
                           Margin="0,3,0,0" Click="Editor_Click"/>
                 </VerticalStackPanel>
 
-                <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
+                <VerticalStackPanel Margin="0,0,0,5" Padding="0,0,5,5">
                   <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
                           Click="HasBorderButton_Click" Visible="true"/>
                 </VerticalStackPanel>

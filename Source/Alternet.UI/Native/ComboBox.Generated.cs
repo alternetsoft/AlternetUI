@@ -129,6 +129,31 @@ namespace Alternet.UI.Native
             
         }
         
+        public Alternet.Drawing.PointI TextMargins
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetTextMargins_(NativePointer);
+            }
+            
+        }
+        
+        public int OwnerDrawStyle
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetOwnerDrawStyle_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ComboBox_SetOwnerDrawStyle_(NativePointer, value);
+            }
+        }
+        
         public System.IntPtr PopupWidget
         {
             get
@@ -406,6 +431,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_GetTextSelectionLength_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.PointI ComboBox_GetTextMargins_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_GetOwnerDrawStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetOwnerDrawStyle_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ComboBox_GetPopupWidget_(IntPtr obj);

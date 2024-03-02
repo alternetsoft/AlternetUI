@@ -187,6 +187,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether <see cref="Control.ToolTip"/> will be hidden
+        /// when control is clicked. Default is <c>true</c>.
+        /// </summary>
+        public bool HideToolTipOnClick { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating the associated shortcut key.
         /// </summary>
         [Browsable(false)]
@@ -601,7 +607,7 @@ namespace Alternet.UI
             return s;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Initializes solid border in the normal state.
         /// Also border width in hovered and pressed states
         /// is made larger than in the normal state.
@@ -615,7 +621,7 @@ namespace Alternet.UI
             doubleBorder.SetWidth(doubleBorder.Top.Width + 1);
             Borders.Pressed = doubleBorder;
             Borders.Hovered = doubleBorder;
-        }
+        }*/
 
         /// <summary>
         /// Loads normal and disabled image from the specified file or resource url.
@@ -678,6 +684,14 @@ namespace Alternet.UI
                 default:
                     return DefaultTheme;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (HideToolTipOnClick)
+                HideToolTip();
         }
 
         /// <inheritdoc/>

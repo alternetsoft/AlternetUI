@@ -30,7 +30,7 @@ namespace LayoutSample
             InitializeComponent();
 
             dockedControl.Add("Docked");
-            subjectGroupBox.MinimumSize = 400;
+            subjectGroupBox.MinimumSize = 370;
             dockedSettings.Title = "Docked";
             dockedSettings.Parent = tabControlPanel;
             dockedLabel.Parent = dockedSettings;

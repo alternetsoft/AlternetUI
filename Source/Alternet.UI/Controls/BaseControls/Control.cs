@@ -18,6 +18,11 @@ namespace Alternet.UI
         IWin32Window, ITextProperty, IComponent
     {
         /// <summary>
+        /// Gets or sets min element size.
+        /// </summary>
+        public static double MinElementSize = 32;
+
+        /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
@@ -87,10 +92,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs inside <see cref="Control.GetPreferredSize"/> method.
+        /// Occurs inside <see cref="Control.GetPreferredSize(SizeD)"/> method.
         /// </summary>
         /// <remarks>
-        /// If default <see cref="Control.GetPreferredSize"/> call is not needed,
+        /// If default <see cref="Control.GetPreferredSize(SizeD)"/> call is not needed,
         /// set <see cref="HandledEventArgs.Handled"/>
         /// property to <c>true</c>.
         /// </remarks>

@@ -227,6 +227,12 @@ namespace Alternet.Drawing
         public bool IsOk => !IsEmpty;
 
         /// <summary>
+        /// Gets whether image is disposed.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDisposed => isDisposed;
+
+        /// <summary>
         /// Gets whether image is empty (is disposed or has an empty width or height).
         /// </summary>
         public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;

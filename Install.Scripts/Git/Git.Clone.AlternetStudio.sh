@@ -1,0 +1,1 @@
+git clone -b cross-platform --single-branch https://github.com/alternetsoft/AlternetStudio.git
