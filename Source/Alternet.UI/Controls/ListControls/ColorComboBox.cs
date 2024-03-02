@@ -112,7 +112,10 @@ namespace Alternet.UI
                 if (item is ListControlItem item1)
                     item = item1.Value;
 
-                var itemColor = (item as Color) ?? Color.Empty;
+                var itemColor = (item as Color) ?? Color.White;
+
+                if (!itemColor.IsOk)
+                    itemColor = Color.White;
 
                 e.Graphics.FillRectangle(itemColor.AsBrush, colorRect);
 
