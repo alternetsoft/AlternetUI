@@ -1801,6 +1801,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="GroupBox"/> with vertical layout and adds
+        /// it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual GroupBox AddVerticalGroupBox(string? title = default)
+        {
+            var result = new GroupBox
+            {
+                Layout = LayoutStyle.Vertical,
+                Parent = this,
+            };
+
+            if (title is not null)
+                result.Title = title;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="GroupBox"/> with horizontal layout and adds
+        /// it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual GroupBox AddHorizontalGroupBox(string? title = default)
+        {
+            var result = new GroupBox
+            {
+                Layout = LayoutStyle.Horizontal,
+                Parent = this,
+            };
+
+            if (title is not null)
+                result.Title = title;
+            return result;
+        }
+
+        /// <summary>
         /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="Children"/>.
         /// </summary>
         public virtual StackPanel AddStackPanel(bool isVertical = true)
