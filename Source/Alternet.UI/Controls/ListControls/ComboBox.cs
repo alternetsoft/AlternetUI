@@ -536,11 +536,11 @@ namespace Alternet.UI
                     color = SystemColors.GrayText;
                 }
 
-                var size = e.DrawingContext.MeasureText(s, font);
+                var size = e.Graphics.MeasureText(s, font);
 
                 var offsetX = TextMargin.X;
-                var offsetY = (e.Bounds.Height - size.Height) / 2;
-                var rect = e.Bounds;
+                var offsetY = (e.ClipRectangle.Height - size.Height) / 2;
+                var rect = e.ClipRectangle;
                 rect.Inflate(-offsetX, -offsetY);
 
                 e.Graphics.DrawText(
@@ -559,7 +559,7 @@ namespace Alternet.UI
                     s,
                     font,
                     color,
-                    (e.Bounds.X + 2, e.Bounds.Y));
+                    (e.ClipRectangle.X + 2, e.ClipRectangle.Y));
             }
         }
 
@@ -575,14 +575,14 @@ namespace Alternet.UI
             if (e.IsPaintingControl)
                 offset++;
 
-            var size = e.Bounds.Height - (TextMargin.Y * 2) - (offset * 2);
+            var size = e.ClipRectangle.Height - (TextMargin.Y * 2) - (offset * 2);
             var imageRect = new RectD(
-                e.Bounds.X + TextMargin.X,
-                e.Bounds.Y + TextMargin.Y + offset,
+                e.ClipRectangle.X + TextMargin.X,
+                e.ClipRectangle.Y + TextMargin.Y + offset,
                 size,
                 size);
 
-            var itemRect = e.Bounds;
+            var itemRect = e.ClipRectangle;
             itemRect.X += imageRect.Width + DefaultImageTextDistance;
             itemRect.Width -= imageRect.Width + DefaultImageTextDistance;
 

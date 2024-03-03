@@ -305,8 +305,8 @@ namespace Alternet.UI
 
             if (sender is not BorderSettings border)
                 return;
-            var dc = args.DrawingContext;
-            var rect = args.Bounds;
+            var dc = args.Graphics;
+            var rect = args.ClipRectangle;
             var defaultColor = GetDefaultBorderColor(null);
 
             if (border.Top.Width > 0)

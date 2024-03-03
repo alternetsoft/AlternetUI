@@ -39,12 +39,12 @@ namespace PaintSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.DrawingContext.FillRectangle(Brushes.LightGray, e.Bounds);
+            e.Graphics.FillRectangle(Brushes.LightGray, e.ClipRectangle);
 
             if (Document == null)
                 return;
             
-            Document.Paint(this, e.DrawingContext);
+            Document.Paint(this, e.Graphics);
         }
     }
 }

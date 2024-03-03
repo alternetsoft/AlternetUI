@@ -51,6 +51,16 @@ namespace Alternet.UI
             Initialize(defaultColors);
         }
 
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override bool IsEditable
+        {
+            get => false;
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// Paints color image in the item with the default style. Borders around
         /// color image are also painted by this method.
@@ -140,7 +150,7 @@ namespace Alternet.UI
 
                 var (colorRect, itemRect) = sender.GetItemImageRect(e);
                 PaintColorImage(e.Graphics, colorRect, itemColor);
-                e.Bounds = itemRect;
+                e.ClipRectangle = itemRect;
                 sender.DefaultItemPaint(e);
             }
         }

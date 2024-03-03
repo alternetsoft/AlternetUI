@@ -41,8 +41,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
-            var bounds = e.Bounds;
-            var dc = e.DrawingContext;
+            var bounds = e.ClipRectangle;
+            var dc = e.Graphics;
 
             var gaugeBounds = bounds.InflatedBy(-2, -2);
             var scaleBounds = gaugeBounds.InflatedBy(-4, -4);
