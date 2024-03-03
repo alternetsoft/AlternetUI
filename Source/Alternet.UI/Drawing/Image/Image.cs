@@ -253,6 +253,12 @@ namespace Alternet.Drawing
         public bool IsDisposed => isDisposed;
 
         /// <summary>
+        /// Creates texture brush with this image.
+        /// </summary>
+        [Browsable(false)]
+        public TextureBrush AsBrush => new TextureBrush(this);
+
+        /// <summary>
         /// Gets whether image is empty (is disposed or has an empty width or height).
         /// </summary>
         public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;
