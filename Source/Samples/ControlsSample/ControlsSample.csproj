@@ -42,6 +42,8 @@
       <None Remove="Resources\Animation\HourGlass.gif" />
       <None Remove="Resources\Animation\HourGlassInFile.gif" />
       <None Remove="Resources\Animation\Spinner.gif" />
+      <None Remove="Resources\Backgrounds\blue-textured-background1.jpg" />
+      <None Remove="Resources\Backgrounds\textured-background2.jpg" />
       <None Remove="Resources\ButtonImages\ButtonImageDisabled.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageFocused.png" />
       <None Remove="Resources\ButtonImages\ButtonImageFocused.svg" />
@@ -146,6 +148,8 @@
       <EmbeddedResource Include="Resources\Animation\HourGlass.gif" />
       <EmbeddedResource Include="Resources\Animation\Plant.gif" />
       <EmbeddedResource Include="Resources\Animation\Spinner.gif" />
+      <EmbeddedResource Include="Resources\Backgrounds\blue-textured-background1.jpg" />
+      <EmbeddedResource Include="Resources\Backgrounds\textured-background2.jpg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.svg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageFocused.png" />

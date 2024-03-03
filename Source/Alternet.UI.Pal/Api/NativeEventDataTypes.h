@@ -5,33 +5,6 @@
 namespace Alternet::UI
 {
     #pragma pack(push, 1)
-    struct DragEventData
-    {
-        void* data;
-        double mouseClientLocationX;
-        double mouseClientLocationY;
-        DragDropEffects effect;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct TextInputEventData
-    {
-        char16_t keyChar;
-        int64_t timestamp;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct KeyEventData
-    {
-        Key key;
-        int64_t timestamp;
-        c_bool isRepeat;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
     struct CompareListViewItemsEventData
     {
         int64_t item1Index;
@@ -52,32 +25,6 @@ namespace Alternet::UI
         int64_t itemIndex;
         char16_t* label;
         c_bool editCancelled;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct MouseButtonEventData
-    {
-        int64_t timestamp;
-        void* targetControl;
-        MouseButton changedButton;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct MouseEventData
-    {
-        int64_t timestamp;
-        void* targetControl;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct MouseWheelEventData
-    {
-        int64_t timestamp;
-        void* targetControl;
-        int delta;
     };
     #pragma pack(pop)
     
@@ -127,6 +74,59 @@ namespace Alternet::UI
         char16_t* Text;
         int IntVal;
         void* ClientData;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct DragEventData
+    {
+        void* data;
+        double mouseClientLocationX;
+        double mouseClientLocationY;
+        DragDropEffects effect;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct TextInputEventData
+    {
+        char16_t keyChar;
+        int64_t timestamp;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct KeyEventData
+    {
+        Key key;
+        int64_t timestamp;
+        c_bool isRepeat;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct MouseButtonEventData
+    {
+        int64_t timestamp;
+        void* targetControl;
+        MouseButton changedButton;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct MouseEventData
+    {
+        int64_t timestamp;
+        void* targetControl;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct MouseWheelEventData
+    {
+        int64_t timestamp;
+        void* targetControl;
+        int delta;
     };
     #pragma pack(pop)
     

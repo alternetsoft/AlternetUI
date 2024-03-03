@@ -40,5 +40,10 @@ namespace Alternet.Drawing
         /// Transparent brush.
         /// </summary>
         Transparent,
+
+        /// <summary>
+        /// Brush is <see cref="TextureBrush"/>.
+        /// </summary>
+        Texture,
     }
 }

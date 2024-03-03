@@ -8,6 +8,158 @@ namespace Alternet.UI.Native
         Save = 1,
     }
     
+    enum MessageBoxResult
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+    }
+    
+    enum MessageBoxDefaultButton
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+    }
+    
+    enum MessageBoxButtons
+    {
+        OK = 0,
+        OKCancel = 1,
+        YesNoCancel = 2,
+        YesNo = 3,
+    }
+    
+    enum MessageBoxIcon
+    {
+        None = 0,
+        Information = 1,
+        Warning = 2,
+        Error = 3,
+        Question = 4,
+    }
+    
+    enum ListBoxSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    }
+    
+    enum ListViewColumnWidthMode
+    {
+        Fixed = 0,
+        AutoSize = 1,
+        AutoSizeHeader = 2,
+    }
+    
+    enum ListViewGridLinesDisplayMode
+    {
+        None = 0,
+        Vertical = 1,
+        Horizontal = 2,
+        VerticalAndHorizontal = 3,
+    }
+    
+    enum ListViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemImage = 64,
+        ItemLabel = 128,
+        RightOfItem = 256,
+    }
+    
+    enum ListViewItemBoundsPortion
+    {
+        EntireItem = 0,
+        Icon = 1,
+        Label = 2,
+    }
+    
+    enum ListViewSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    }
+    
+    enum ListViewSortMode
+    {
+        None = 0,
+        Ascending = 1,
+        Descending = 2,
+        Custom = 3,
+    }
+    
+    enum ListViewView
+    {
+        List = 0,
+        Details = 1,
+        SmallIcon = 2,
+        LargeIcon = 3,
+    }
+    
+    enum ProgressBarOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
+    enum ScrollBarOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1,
+    }
+    
+    enum SliderOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
+    enum SliderTickStyle
+    {
+        None = 0,
+        TopLeft = 1,
+        BottomRight = 2,
+        Both = 3,
+    }
+    
+    enum TabAlignment
+    {
+        Top = 0,
+        Bottom = 1,
+        Left = 2,
+        Right = 3,
+    }
+    
+    enum TreeViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemExpandButton = 64,
+        ItemImage = 128,
+        ItemIndent = 256,
+        ItemLabel = 512,
+        RightOfItemLabel = 1024,
+        ItemStateImage = 2048,
+        ItemUpperPart = 4096,
+        ItemLowerPart = 8192,
+    }
+    
+    enum TreeViewSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    }
+    
     enum DragAction
     {
         Continue = 0,
@@ -434,101 +586,6 @@ namespace Alternet.UI.Native
         Windows = 8,
     }
     
-    enum ListBoxSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    }
-    
-    enum ListViewColumnWidthMode
-    {
-        Fixed = 0,
-        AutoSize = 1,
-        AutoSizeHeader = 2,
-    }
-    
-    enum ListViewGridLinesDisplayMode
-    {
-        None = 0,
-        Vertical = 1,
-        Horizontal = 2,
-        VerticalAndHorizontal = 3,
-    }
-    
-    enum ListViewHitTestLocations
-    {
-        None = 2,
-        AboveClientArea = 4,
-        BelowClientArea = 8,
-        LeftOfClientArea = 16,
-        RightOfClientArea = 32,
-        ItemImage = 64,
-        ItemLabel = 128,
-        RightOfItem = 256,
-    }
-    
-    enum ListViewItemBoundsPortion
-    {
-        EntireItem = 0,
-        Icon = 1,
-        Label = 2,
-    }
-    
-    enum ListViewSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    }
-    
-    enum ListViewSortMode
-    {
-        None = 0,
-        Ascending = 1,
-        Descending = 2,
-        Custom = 3,
-    }
-    
-    enum ListViewView
-    {
-        List = 0,
-        Details = 1,
-        SmallIcon = 2,
-        LargeIcon = 3,
-    }
-    
-    enum MessageBoxResult
-    {
-        OK = 0,
-        Cancel = 1,
-        Yes = 2,
-        No = 3,
-    }
-    
-    enum MessageBoxDefaultButton
-    {
-        OK = 0,
-        Cancel = 1,
-        Yes = 2,
-        No = 3,
-    }
-    
-    enum MessageBoxButtons
-    {
-        OK = 0,
-        OKCancel = 1,
-        YesNoCancel = 2,
-        YesNo = 3,
-    }
-    
-    enum MessageBoxIcon
-    {
-        None = 0,
-        Information = 1,
-        Warning = 2,
-        Error = 3,
-        Question = 4,
-    }
-    
     enum MouseButton
     {
         Left = 0,
@@ -544,67 +601,10 @@ namespace Alternet.UI.Native
         Pressed = 1,
     }
     
-    enum ProgressBarOrientation
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    }
-    
-    enum ScrollBarOrientation
-    {
-        Vertical = 0,
-        Horizontal = 1,
-    }
-    
-    enum SliderOrientation
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    }
-    
-    enum SliderTickStyle
-    {
-        None = 0,
-        TopLeft = 1,
-        BottomRight = 2,
-        Both = 3,
-    }
-    
-    enum TabAlignment
-    {
-        Top = 0,
-        Bottom = 1,
-        Left = 2,
-        Right = 3,
-    }
-    
     enum ToolbarItemImageToTextDisplayMode
     {
         Horizontal = 0,
         Vertical = 1,
-    }
-    
-    enum TreeViewHitTestLocations
-    {
-        None = 2,
-        AboveClientArea = 4,
-        BelowClientArea = 8,
-        LeftOfClientArea = 16,
-        RightOfClientArea = 32,
-        ItemExpandButton = 64,
-        ItemImage = 128,
-        ItemIndent = 256,
-        ItemLabel = 512,
-        RightOfItemLabel = 1024,
-        ItemStateImage = 2048,
-        ItemUpperPart = 4096,
-        ItemLowerPart = 8192,
-    }
-    
-    enum TreeViewSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
     }
     
     enum ModalResult

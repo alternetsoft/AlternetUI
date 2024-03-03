@@ -9,6 +9,10 @@ namespace ControlsSample
 {
     internal class NinePatchDrawingWindow : Window
     {
+        private const string ResPrefixBackground = "embres:ControlsSample.Resources.Backgrounds.";
+
+        internal const string backgroundUrl1 = $"{ResPrefixBackground}textured-background2.jpg";
+
         private const string ResPrefix = "embres:ControlsSample.Resources.NinePatchImages.";
 
         internal const string imageUrl1 = $"{ResPrefix}NinePatch1.png";
@@ -16,6 +20,8 @@ namespace ControlsSample
 
         internal static Image image1 = new Bitmap(imageUrl1);
         internal static Image image2 = new Bitmap(imageUrl2);
+
+        internal static Image background1 = new Bitmap(backgroundUrl1);
 
         private readonly UserControl control = new();
 
@@ -35,6 +41,9 @@ namespace ControlsSample
 
         private void Control_Paint(object? sender, PaintEventArgs e)
         {
+            var brush = background1.AsBrush;
+            e.Graphics.FillRectangle(brush, e.ClipRectangle);
+
             NinePatchImagePaintArgs args = new(e, image2);
             args.SourceRect = (24, 24, 16, 16);
             args.PatchRect = RectI.Inflate(args.SourceRect, -2, -2);
