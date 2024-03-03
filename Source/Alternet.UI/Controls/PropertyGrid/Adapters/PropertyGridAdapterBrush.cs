@@ -304,6 +304,9 @@ namespace Alternet.UI
                 case BrushType.RadialGradient:
                     Brush = CreateRadialGradientBrush();
                     break;
+                case BrushType.Transparent:
+                    Brush = Brush.Transparent;
+                    break;
                 default:
                     break;
             }
