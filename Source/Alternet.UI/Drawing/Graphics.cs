@@ -934,14 +934,25 @@ namespace Alternet.Drawing
             RectD sourceRect,
             GraphicsUnit unit)
         {
-            if (unit != GraphicsUnit.Pixel)
+            if(unit != GraphicsUnit.Pixel)
             {
-                throw new ArgumentException(
-                    "Currently only GraphicsUnit.Pixel is supported in DrawImage",
-                    nameof(unit));
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                destinationRect = GraphicsUnitConverter.ConvertRect(
+                    unit,
+                    GraphicsUnit.Pixel,
+                    dpi,
+                    destinationRect,
+                    graphicsType);
+                sourceRect = GraphicsUnitConverter.ConvertRect(
+                    unit,
+                    GraphicsUnit.Pixel,
+                    dpi,
+                    sourceRect,
+                    graphicsType);
             }
 
-            DrawImage(image, destinationRect, sourceRect);
+            DrawImageI(image, destinationRect.ToRect(), sourceRect.ToRect());
         }
 
         /// <summary>

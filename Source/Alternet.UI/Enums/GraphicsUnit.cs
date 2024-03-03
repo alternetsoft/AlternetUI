@@ -8,43 +8,43 @@
         /// <summary>
         /// Specifies the world coordinate system unit as the unit of measure.
         /// </summary>
-        World,
+        World, // World coordinate (non-physical unit).
 
         /// <summary>
         /// Specifies the unit of measure of the display device.
         /// Typically pixels for video displays, and 1/100 inch for printers.
         /// </summary>
-        Display,
+        Display, // Variable - for PageTransform only.
 
         /// <summary>
         /// Specifies a device pixel as the unit of measure.
         /// </summary>
-        Pixel,
+        Pixel, // Each unit is one device pixel.
 
         /// <summary>
         /// Specifies a printer's point (1/72 inch) as the unit of measure.
         /// </summary>
-        Point,
+        Point, // Each unit is a printer's point, or 1/72 inch.
 
         /// <summary>
         /// Specifies the inch as the unit of measure.
         /// </summary>
-        Inch,
+        Inch, // Each unit is 1 inch.
 
         /// <summary>
         /// Specifies the document unit (1/300 inch) as the unit of measure.
         /// </summary>
-        Document,
+        Document, // Each unit is 1/300 inch.
 
         /// <summary>
         /// Specifies the millimeter as the unit of measure.
         /// 1 inch = 25.4 millimeters. 1 inch = 2.54 centimeters. 1 centimeter = 10 millimeters.
         /// </summary>
-        Millimeter,
+        Millimeter, // Each unit is 1 millimeter.
 
         /// <summary>
         /// Specifies a device-independent point (1/96 inch) as the unit of measure.
         /// </summary>
-        Dip,
+        Dip, // Each unit is 1/96 inch.
     }
 }
