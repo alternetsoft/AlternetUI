@@ -99,6 +99,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws inner and outer border with the specified colors.
+        /// </summary>
+        /// <param name="canvas"><see cref="Graphics"/> where drawing is performed.</param>
+        /// <param name="rect"><see cref="RectD"/> where drawing is performed.</param>
+        /// <param name="innerColor">Inner border color.</param>
+        /// <param name="outerColor">Outer border color.</param>
+        /// <returns>
+        /// Value of the <paramref name="rect"/> parameter deflated by number of the painted
+        /// borders (0, 1 or 2).
+        /// </returns>
+        /// <remarks>
+        /// If border color is <see cref="Color.Empty"/> it is not painted.
+        /// </remarks>
+        public static RectD DrawDoubleBorder(
+            Graphics canvas,
+            RectD rect,
+            Color innerColor,
+            Color outerColor)
+        {
+            var result = rect;
+            var hasOuterBorder = outerColor != Color.Empty;
+            var hasInnerBorder = innerColor != Color.Empty;
+            if (hasOuterBorder)
+            {
+                DrawingUtils.FillRectangleBorder(canvas, outerColor, result);
+                result.Deflate();
+            }
+
+            if (hasInnerBorder)
+            {
+                DrawingUtils.FillRectangleBorder(canvas, innerColor, rect);
+                result.Deflate();
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Draws rectangle border using <see cref="Graphics.FillRectangle"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
@@ -109,7 +147,7 @@ namespace Alternet.UI
             Graphics dc,
             Brush brush,
             RectD rect,
-            double borderWidth)
+            double borderWidth = 1)
         {
             dc.FillRectangle(brush, GetTopLineRect(rect, borderWidth));
             dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth));
