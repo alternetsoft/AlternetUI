@@ -54,6 +54,8 @@
       <None Remove="Resources\Leaves.jpg" />
       <None Remove="Resources\logo-128x128.png" />
       <None Remove="Resources\Logo.png" />
+      <None Remove="Resources\NinePatchImages\NinePatch1.png" />
+      <None Remove="Resources\NinePatchImages\NinePatch2.png" />
       <None Remove="Resources\ReportImage_16x.png" />
       <None Remove="Resources\Report_16x.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
@@ -174,6 +176,8 @@
       </EmbeddedResource>
       <EmbeddedResource Include="Resources\ExplorerUISample\ReportImage_16x.png" />
       <EmbeddedResource Include="Resources\ExplorerUISample\Report_16x.png" />
+      <EmbeddedResource Include="Resources\NinePatchImages\NinePatch1.png" />
+      <EmbeddedResource Include="Resources\NinePatchImages\NinePatch2.png" />
       <EmbeddedResource Include="Resources\TestIcon1.ico" />
       <EmbeddedResource Include="Resources\TestIcon2.ico" />
       <EmbeddedResource Include="Resources\ToolBarPng\Large\Calendar32.png" />

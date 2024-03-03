@@ -27,8 +27,6 @@ namespace PropertyGridSample
             if (control is null)
                 return;
             control.Image = KnownSvgImages.GetForSize(Color.Red, 64).ImgAddChild.AsImage(64);
-            /*(control?.Background as SolidBrush)?.SetColor(Color.Red);
-            control?.Refresh();*/
         }
 
         void ReorderButtonsTest()
@@ -97,6 +95,7 @@ namespace PropertyGridSample
                     typeof(ToolBarSet),
                     typeof(SideBarPanel),
                     typeof(ControlPainterPreview),
+                    typeof(ColorComboBox),
                 };
 
                 List<ControlListBoxItem> items = new();
