@@ -686,6 +686,34 @@ namespace Alternet.Drawing
         public void Inflate(SizeD size) => Inflate(size.Width, size.Height);
 
         /// <summary>
+        /// Inflates this <see cref='RectD'/> by 1. <see cref="X"/> and <see cref="Y"/>
+        /// are decremented by 1, <see cref="Width"/> and <see cref="Height"/> are
+        /// incremented by 2.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Inflate()
+        {
+            x -= 1;
+            y -= 1;
+            width += 2;
+            height += 2;
+        }
+
+        /// <summary>
+        /// Deflates this <see cref='RectD'/> by 1. <see cref="X"/> and <see cref="Y"/>
+        /// are incremented by 1, <see cref="Width"/> and <see cref="Height"/> are
+        /// decremented by 2.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Deflate()
+        {
+            x += 1;
+            y += 1;
+            width -= 2;
+            height -= 2;
+        }
+
+        /// <summary>
         /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
