@@ -129,7 +129,7 @@ namespace Alternet.UI
 
             if (hasInnerBorder)
             {
-                DrawingUtils.FillRectangleBorder(canvas, innerColor, rect);
+                DrawingUtils.FillRectangleBorder(canvas, innerColor, result);
                 result.Deflate();
             }
 
