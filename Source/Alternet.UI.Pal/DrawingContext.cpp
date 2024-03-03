@@ -395,7 +395,12 @@ namespace Alternet::UI
         auto oldInterpolationQuality = _graphicsContext->GetInterpolationQuality();
         _graphicsContext->SetInterpolationQuality(GetInterpolationQuality(_interpolationMode));
 
-        _graphicsContext->DrawBitmap(bitmap, destRect.x, destRect.y, destRect.width, destRect.height);
+        _graphicsContext->DrawBitmap(
+            bitmap,
+            destRect.x,
+            destRect.y,
+            destRect.width,
+            destRect.height);
 
         _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
     }
@@ -403,9 +408,18 @@ namespace Alternet::UI
     void DrawingContext::DrawImagePortionAtRect(Image* image, const Rect& destinationRect,
         const Rect& sourceRect)
     {
+        auto sourceRectI = fromDipI(sourceRect, _dc->GetWindow());
+        auto destinationRectI = fromDipI(destinationRect, _dc->GetWindow());
+        DrawImagePortionAtPixelRect(image, destinationRectI, sourceRectI);
+    }
+
+    void DrawingContext::DrawImagePortionAtPixelRect(Image* image, const RectI& destinationRect,
+        const RectI& sourceRect)
+    {
+        wxRect wxSourceRect = sourceRect;
+        wxRect wxDestinationRect = destinationRect;
+
         wxBitmap bitmap = image->GetBitmap();
-        auto wxSourceRect = fromDip(sourceRect, _dc->GetWindow());
-        auto wxDestinationRect = fromDip(destinationRect, _dc->GetWindow());
 
         wxMemoryDC sourceBitmapDC(bitmap);
         if (_interpolationMode == InterpolationMode::None)

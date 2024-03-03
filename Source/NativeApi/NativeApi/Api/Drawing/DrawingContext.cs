@@ -116,6 +116,10 @@ namespace NativeApi.Api
         public void DrawImagePortionAtRect(Image image, RectD destinationRect,
             RectD sourceRect) { }
 
+        public void DrawImagePortionAtPixelRect(Image image, RectI destinationRect,
+            RectI sourceRect)
+        { }
+
         public void Push() => throw new Exception();
 
         public void Pop() => throw new Exception();

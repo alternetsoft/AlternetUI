@@ -205,6 +205,11 @@ ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj,
     obj->DrawImagePortionAtRect(image, destinationRect, sourceRect);
 }
 
+ALTERNET_UI_API void DrawingContext_DrawImagePortionAtPixelRect_(DrawingContext* obj, Image* image, RectI destinationRect, RectI sourceRect)
+{
+    obj->DrawImagePortionAtPixelRect(image, destinationRect, sourceRect);
+}
+
 ALTERNET_UI_API void DrawingContext_Push_(DrawingContext* obj)
 {
     obj->Push();

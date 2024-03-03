@@ -265,6 +265,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawImagePortionAtRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
         }
         
+        public void DrawImagePortionAtPixelRect(Image image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawImagePortionAtPixelRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
+        }
+        
         public void Push()
         {
             CheckDisposed();
@@ -504,6 +510,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImagePortionAtRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectD destinationRect, Alternet.Drawing.RectD sourceRect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawImagePortionAtPixelRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Push_(IntPtr obj);

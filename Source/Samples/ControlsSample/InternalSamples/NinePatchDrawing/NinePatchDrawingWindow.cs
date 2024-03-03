@@ -30,12 +30,15 @@ namespace ControlsSample
 
         private void DrawSlicedImage(NinePatchImagePaintArgs e)
         {
-            e.Graphics.DrawImageUnscaled(image1, (10, 10));
+            e.Graphics.DrawImageI(image1, e.DestRect, e.PatchRect);
         }
 
         private void Control_Paint(object? sender, PaintEventArgs e)
         {
-            NinePatchImagePaintArgs args = new(e, image1);
+            NinePatchImagePaintArgs args = new(e, image2);
+            args.SourceRect = (24, 24, 16, 16);
+            args.PatchRect = RectI.Inflate(args.SourceRect, -2, -2);
+            args.DestRect = (50, 50, 200, 200);
             DrawSlicedImage(args);
         }
 
@@ -53,6 +56,16 @@ namespace ControlsSample
             }
 
             public Image Image { get; set; }
+
+            public RectI SourceRect { get; set; }
+
+            public RectI DestRect { get; set; }
+
+            public RectI PatchRect { get; set; }
+
+            public bool TileHorz { get; set; }
+
+            public bool TileVert { get; set; }
         }
     }
 }

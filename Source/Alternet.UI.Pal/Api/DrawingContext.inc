@@ -44,6 +44,7 @@ void DrawTextAtRect(const string& text, const RectD& bounds, Font* font, Brush* 
 void DrawImageAtPoint(Image* image, const PointD& origin);
 void DrawImageAtRect(Image* image, const RectD& destinationRect);
 void DrawImagePortionAtRect(Image* image, const RectD& destinationRect, const RectD& sourceRect);
+void DrawImagePortionAtPixelRect(Image* image, const RectI& destinationRect, const RectI& sourceRect);
 void Push();
 void Pop();
 void DrawLine(Pen* pen, const PointD& a, const PointD& b);

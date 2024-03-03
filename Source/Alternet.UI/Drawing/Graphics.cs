@@ -822,11 +822,37 @@ namespace Alternet.Drawing
         /// <see cref="RectD"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
         /// </param>
+        /// <remarks>
+        /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
+        /// are specified in dips (1/96 inch).
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
             DebugImageAssert(image);
             dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
+        }
+
+        /// <summary>
+        /// Draws the specified portion of the image into the region defined by the specified
+        /// <see cref="RectI"/>.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="destinationRect">The region in which to draw
+        /// <paramref name="image"/>.</param>
+        /// <param name="sourceRect">
+        /// <see cref="RectI"/> structure that specifies the portion of the
+        /// <paramref name="image"/> object to draw.
+        /// </param>
+        /// <remarks>
+        /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
+        /// are specified in pixels.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
+        {
+            DebugImageAssert(image);
+            dc.DrawImagePortionAtPixelRect(image.NativeImage, destinationRect, sourceRect);
         }
 
         /// <summary>
