@@ -8,11 +8,7 @@ namespace ControlsSample
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
-        private readonly StackPanel mainPanel = new()
-        {
-            Orientation = StackPanelOrientation.Vertical,
-            Padding = 10,
-        };
+        private TabControl tabControl = new();
 
         static CalendarPage()
         {
@@ -24,31 +20,20 @@ namespace ControlsSample
 
             void Fn()
             {
-
-                mainPanel.Parent = this;
-
+                Layout = LayoutStyle.Horizontal;
                 calendar.Margin = 5;
                 calendar.HorizontalAlignment = HorizontalAlignment.Left;
                 calendar.VerticalAlignment = VerticalAlignment.Top;
-
-                var calendarPanel = mainPanel.AddHorizontalStackPanel();
-
-                calendar.Parent = calendarPanel;
-
-                var optionsPanel = mainPanel.AddHorizontalStackPanel();
-
-                // Allow date range panel
-
-                var rangePanel = optionsPanel.AddVerticalStackPanel();
-                rangePanel.AddButtons(
-                    ("Allow Any Date", RangeAnyDate_Click),
-                    ("Allow <= Tomorrow", RangeTomorrow_Click),
-                    ("Allow >= Yesterday", RangeYesterday_Click),
-                    ("Allow Yesterday..Tomorrow", RangeYesterdayTomorrow_Click)).Margin(5);
+                calendar.Parent = this;
+                tabControl.Margin = 5;
+                tabControl.Parent = this;
 
                 // CheckBoxes panel
 
-                var checkboxPanel = optionsPanel.AddVerticalStackPanel();
+                var checkboxPanel = new VerticalStackPanel();
+                checkboxPanel.Margin = 5;
+                checkboxPanel.Title = "Options";
+                tabControl.Add(checkboxPanel);
 
                 var showHolidaysCheckBox = checkboxPanel.AddCheckBox("Show Holidays")
                     .BindBoolProp(calendar, nameof(Calendar.ShowHolidays));
@@ -73,14 +58,28 @@ namespace ControlsSample
 
                 // Buttons panel
 
-                var buttonPanel = calendarPanel.AddVerticalStackPanel();
+                var buttonPanel = new VerticalStackPanel();
+                buttonPanel.Title = "Mark";
+                buttonPanel.Margin = 5;
+                tabControl.Add(buttonPanel);
                 var setDayColorsButton = buttonPanel.AddButton("Days (5, 7) style", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
 
-                buttonPanel.AddButton("Mark days (2, 3)", MarkDays);
-                buttonPanel.AddButton("Today", calendar.SelectToday);
+                buttonPanel.AddButtons(
+                    ("Mark days (2, 3)", MarkDays),
+                    ("Today", calendar.SelectToday)).Margin(5);
 
-                buttonPanel.ChildrenSet.Margin(5);
+                // Allow date range panel
+
+                var rangePanel = new VerticalStackPanel();
+                rangePanel.Margin = 5;
+                rangePanel.Title = "Range";
+                tabControl.Add(rangePanel);
+                rangePanel.AddButtons(
+                    ("Allow Any Date", RangeAnyDate_Click),
+                    ("Allow <= Tomorrow", RangeTomorrow_Click),
+                    ("Allow >= Yesterday", RangeYesterday_Click),
+                    ("Allow Yesterday..Tomorrow", RangeYesterdayTomorrow_Click)).Margin(5);
 
                 // Other initializations
 
