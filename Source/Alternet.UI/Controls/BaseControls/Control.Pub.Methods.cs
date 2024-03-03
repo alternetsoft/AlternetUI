@@ -629,6 +629,12 @@ namespace Alternet.UI
         public virtual ControlSet Group(params Control[] controls) => new(controls);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public virtual ControlSet Group(IReadOnlyList<Control> controls) => new(controls);
+
+        /// <summary>
         /// Gets <see cref="ControlSet"/> with all controls which are members of the
         /// specified group.
         /// </summary>
@@ -1653,6 +1659,18 @@ namespace Alternet.UI
         public virtual HorizontalStackPanel AddHorizontalStackPanel()
         {
             var result = new HorizontalStackPanel
+            {
+                Parent = this,
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="TabControl"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual TabControl AddTabControl()
+        {
+            var result = new TabControl
             {
                 Parent = this,
             };
