@@ -948,7 +948,12 @@ namespace Alternet.Drawing
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, Font font, Brush brush, PointD origin, TextFormat format)
+        public void DrawText(
+            string text,
+            Font font,
+            Brush brush,
+            PointD origin,
+            TextFormat format)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
