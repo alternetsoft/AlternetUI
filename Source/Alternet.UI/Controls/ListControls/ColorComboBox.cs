@@ -61,29 +61,11 @@ namespace Alternet.UI
         /// <param name="color">Color value.</param>
         public static void PaintDefaultColorImage(Graphics canvas, RectD rect, Color color)
         {
-            RectD colorRect;
-
-            if (ColorImageParams.SmartBorder)
-            {
-                Color borderColor;
-                if (color.IsDark())
-                    borderColor = ColorImageParams.DarkBorderColor;
-                else
-                    borderColor = ColorImageParams.LightBorderColor;
-                colorRect = DrawingUtils.DrawDoubleBorder(
-                    canvas,
-                    rect,
-                    Color.Empty,
-                    borderColor);
-            }
-            else
-            {
-                colorRect = DrawingUtils.DrawDoubleBorder(
-                    canvas,
-                    rect,
-                    ColorImageParams.InnerBorderColor,
-                    ColorImageParams.OuterBorderColor);
-            }
+            RectD colorRect = DrawingUtils.DrawDoubleBorder(
+                canvas,
+                rect,
+                Color.Empty,
+                ComboBox.DefaultImageBorderColor);
 
             canvas.FillRectangle(color.AsBrush, colorRect);
         }
@@ -112,54 +94,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Defines style of the color image painting. If <see cref="SmartBorder"/>
-        /// is <c>true</c>, a single border is painted using <see cref="DarkBorderColor"/>
-        /// or <see cref="LightBorderColor"/> depending on the <see cref="Color.IsDark"/>
-        /// of the color image. Otherwise double border is painted using
-        /// <see cref="InnerBorderColor"/> and <see cref="OuterBorderColor"/>.
-        /// </summary>
-        public static class ColorImageParams
-        {
-            /// <summary>
-            /// Gets or sets inner border of the color image.
-            /// </summary>
-            /// <remarks>
-            /// Each color image is painted with inner and outer borders. If border color
-            /// is <see cref="Color.Empty"/> it is not painted.
-            /// </remarks>
-            public static Color InnerBorderColor = SystemColors.GrayText;
-
-            /// <summary>
-            /// Gets or sets outer border of the color image.
-            /// </summary>
-            /// <remarks>
-            /// Each color image is painted with inner and outer borders. If border color
-            /// is <see cref="Color.Empty"/> it is not painted.
-            /// </remarks>
-            public static Color OuterBorderColor = Color.White;
-
-            /// <summary>
-            /// Gets or sets vertical offset of the color image.
-            /// </summary>
-            public static double VerticalOffset = 3;
-
-            /// <summary>
-            /// Gets or sets border of the color image when it is dark.
-            /// </summary>
-            public static Color DarkBorderColor = SystemColors.GrayText;
-
-            /// <summary>
-            /// Gets or sets border of the color image when it is light.
-            /// </summary>
-            public static Color LightBorderColor = SystemColors.GrayText;
-
-            /// <summary>
-            /// Gets or sets whether to paint single smart border or double border.
-            /// </summary>
-            public static bool SmartBorder = true;
-        }
-
-        /// <summary>
         /// Default item painter for the <see cref="ColorComboBox"/> items.
         /// </summary>
         public class DefaultItemPainter : IComboBoxItemPainter
@@ -185,17 +119,6 @@ namespace Alternet.UI
                     return;
                 }
 
-                var offset = ColorImageParams.VerticalOffset;
-                if (e.IsPaintingControl)
-                    offset++;
-
-                var size = e.Bounds.Height - (sender.TextMargin.Y * 2) - (offset * 2);
-                var colorRect = new RectD(
-                    e.Bounds.X + sender.TextMargin.X,
-                    e.Bounds.Y + sender.TextMargin.Y + offset,
-                    size,
-                    size);
-
                 object? item;
 
                 if (e.IsPaintingControl)
@@ -215,11 +138,8 @@ namespace Alternet.UI
                 if (!itemColor.IsOk)
                     itemColor = Color.White;
 
+                var (colorRect, itemRect) = sender.GetItemImageRect(e);
                 PaintColorImage(e.Graphics, colorRect, itemColor);
-
-                var itemRect = e.Bounds;
-                itemRect.X += size + 2;
-                itemRect.Width -= size + 2;
                 e.Bounds = itemRect;
                 sender.DefaultItemPaint(e);
             }
