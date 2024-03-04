@@ -34,47 +34,22 @@ namespace ControlsSample
 
         }
 
-        private void DrawSlicedImage(NinePatchImagePaintArgs e)
-        {
-            e.Graphics.DrawImageI(image1, e.DestRect, e.PatchRect);
-        }
-
         private void Control_Paint(object? sender, PaintEventArgs e)
         {
             var brush = background1.AsBrush;
             e.Graphics.FillRectangle(brush, e.ClipRectangle);
 
-            NinePatchImagePaintArgs args = new(e, image2);
+            DrawingUtils.NinePatchImagePaintParams args = new(image1);
             args.SourceRect = (24, 24, 16, 16);
             args.PatchRect = RectI.Inflate(args.SourceRect, -2, -2);
-            args.DestRect = (50, 50, 200, 200);
-            DrawSlicedImage(args);
-        }
+            args.DestRect = (70, 70, 64, 64);
+            DrawingUtils.DrawSlicedImage(e.Graphics, args);
 
-        public class NinePatchImagePaintArgs : PaintEventArgs
-        {
-            public NinePatchImagePaintArgs(PaintEventArgs e, Image image)
-                : this(e.Graphics, e.ClipRectangle, image)
-            {
-            }
-
-            public NinePatchImagePaintArgs(Graphics canvas, RectD rect, Image image)
-                : base(canvas, rect)
-            {
-                Image = image;
-            }
-
-            public Image Image { get; set; }
-
-            public RectI SourceRect { get; set; }
-
-            public RectI DestRect { get; set; }
-
-            public RectI PatchRect { get; set; }
-
-            public bool TileHorz { get; set; }
-
-            public bool TileVert { get; set; }
+            DrawingUtils.NinePatchImagePaintParams args2 = new(image2);
+            args2.SourceRect = image2.Bounds;
+            args2.PatchRect = RectI.Inflate(args2.SourceRect, -10, -10);
+            args2.DestRect = (170, 170, 250, 160);
+            DrawingUtils.DrawSlicedImage(e.Graphics, args2);
         }
     }
 }
