@@ -1,3 +1,19 @@
+# 0.9.515 (2024 March 4)
+
+- TextureBrush.
+- RectD: Inflate(), Deflate().
+- DrawingUtils: DrawDoubleBorder, DrawSlicedImage.
+- Control: AddVerticalGroupBox, AddHorizontalGroupBox.
+- ComboBox: DefaultImageVerticalOffset, DefaultImageTextDistance, DefaultImageBorderColor, GetItemImageRect.
+- Improved demo layout.
+- New Bitmap contructor with url param: Bitmap(string url).
+- Graphics: DrawImageI, FillRectangleI.
+- Brush.Transparent.
+- Image: AsBrush, Bounds.
+- Control: AddTabControl, new Group method override.
+- Implemented and used converter for GraphicsUnit.
+- Improved ColorComboBox painting.
+
 # 0.9.514 (2024 March 2)
 
 - Added ColorComboBox. You can check how it looks in Button page of ControlSample demo.
