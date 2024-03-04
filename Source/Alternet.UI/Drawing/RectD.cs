@@ -208,8 +208,7 @@ namespace Alternet.Drawing
         public readonly bool IsEmpty => (width == 0) && (height == 0) && (x == 0) && (y == 0);
 
         /// <summary>
-        /// TopLeft Property - This is a read-only alias for the Point which is at X, Y
-        /// If this is the empty rectangle, the value will be positive infinity, positive infinity.
+        /// This is a read-only alias for the point which is at (X, Y).
         /// </summary>
         [Browsable(false)]
         public readonly PointD TopLeft
@@ -221,8 +220,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// TopRight Property - This is a read-only alias for the Point which is at X + Width, Y
-        /// If this is the empty rectangle, the value will be negative infinity, positive infinity.
+        /// Gets the point which is at (X + Width, Y).
         /// </summary>
         [Browsable(false)]
         public readonly PointD TopRight
@@ -234,8 +232,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// BottomLeft Property - This is a read-only alias for the Point which is at X, Y + Height
-        /// If this is the empty rectangle, the value will be positive infinity, negative infinity.
+        /// Gets the point which is at (X, Y + Height).
         /// </summary>
         [Browsable(false)]
         public readonly PointD BottomLeft
@@ -247,9 +244,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// BottomRight Property - This is a read-only alias for the Point
-        /// which is at X + Width, Y + Height
-        /// If this is the empty rectangle, the value will be negative infinity, negative infinity.
+        /// Gets the point which is at (X + Width, Y + Height).
         /// </summary>
         [Browsable(false)]
         public readonly PointD BottomRight
