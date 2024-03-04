@@ -20,7 +20,10 @@ namespace PropertyGridSample
         {
             this.type = type;
             this.instance = instance;
-            this.Text = type.Name;
+            Text = type.FullName ?? type.Name;
+
+            if (Text.StartsWith("Alternet.UI."))
+                Text = Text.Remove(0, 9);
         }
 
         public Type InstanceType => type;
@@ -96,7 +99,7 @@ namespace PropertyGridSample
 
         public int CompareTo(ControlListBoxItem? other)
         {
-            return string.Compare(type.Name, other?.type.Name);
+            return string.Compare(type.FullName, other?.type.FullName);
         }
 
         private bool EqualsInternal(ControlListBoxItem? other)
