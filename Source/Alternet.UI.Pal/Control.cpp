@@ -1892,6 +1892,8 @@ namespace Alternet::UI
 
     void Control::SetUserPaint(bool value)
     {
+        if (GetUserPaint() == value)
+            return;
         _flags.Set(ControlFlags::UserPaint, value);
         RecreateWxWindowIfNeeded();
     }

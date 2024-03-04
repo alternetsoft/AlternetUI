@@ -17,6 +17,7 @@ namespace Alternet.UI.Native
 
 #if NETCOREAPP
         public const string NativeModuleName = NativeModuleNameNoExt;
+        private static IntPtr libHandle = default;
 #else
         public const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
 #endif
@@ -98,18 +99,26 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
-            IntPtr libHandle = IntPtr.Zero;
             if (libraryName == NativeModuleName)
             {
-                var libraryFileName = FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
-                if (libraryFileName is null)
-                    return NativeLibrary.Load(libraryName);
-                var loaded = NativeLibrary.TryLoad(libraryFileName, out libHandle);
-                if (!loaded)
-                    return NativeLibrary.Load(libraryName);
-            }
+                if(libHandle == default)
+                {
+                    var libraryFileName =
+                        FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
+                    if (libraryFileName is null)
+                        libHandle = NativeLibrary.Load(libraryName);
+                    else
+                    {
+                        var loaded = NativeLibrary.TryLoad(libraryFileName, out libHandle);
+                        if (!loaded)
+                            libHandle = NativeLibrary.Load(libraryName);
+                    }
+                }
 
-            return libHandle;
+                return libHandle;
+            }
+            else
+                return NativeLibrary.Load(libraryName);
         }
 #endif
 

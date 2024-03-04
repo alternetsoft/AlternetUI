@@ -1,14 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Specialized;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeListBoxHandler : ListBoxHandler
+    internal class VListBoxHandler : ListBoxHandler
     {
         private bool receivingSelection;
         private bool applyingSelection;
+        private Graphics? graphics;
+        private IntPtr savedDC;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
@@ -26,42 +28,45 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.ListBox NativeControl =>
-            (Native.ListBox)base.NativeControl!;
+        internal new Native.VListBox NativeControl =>
+            (Native.VListBox)base.NativeControl!;
 
         /// <inheritdoc/>
         public override void EnsureVisible(int itemIndex)
         {
-            NativeControl.EnsureVisible(itemIndex);
+            // !!!
         }
 
         /// <inheritdoc/>
         public override int? HitTest(PointD position)
         {
-            int index = NativeControl.ItemHitTest(position);
-            return index == -1 ? null : index;
+            // !!!
+            return null;
         }
 
         internal override Native.Control CreateNativeControl()
         {
-            return new NativeListBox();
+            return new NativeVListBox();
         }
 
         protected override void OnAttach()
         {
             base.OnAttach();
 
-            ApplyItems();
             ApplySelectionMode();
+            NativeControl.ItemsCount = Control.Items.Count;
             ApplySelection();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.Items.CollectionChanged += Items_CollectionChanged;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
-
             Control.SelectionChanged += Control_SelectionChanged;
+
             NativeControl.SelectionChanged = NativeControl_SelectionChanged;
+            NativeControl.HandleCreated = NativeControl_HandleCreated;
+            NativeControl.DrawItem = NativeControl_DrawItem;
+            NativeControl.MeasureItem = NativeControl_MeasureItem;
         }
 
         protected override void OnDetach()
@@ -70,11 +75,79 @@ namespace Alternet.UI
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
             Control.Items.CollectionChanged -= Items_CollectionChanged;
-
             Control.SelectionChanged -= Control_SelectionChanged;
+
             NativeControl.SelectionChanged = null;
+            NativeControl.HandleCreated = null;
+            NativeControl.DrawItem = null;
+            NativeControl.MeasureItem = null;
 
             base.OnDetach();
+        }
+
+        private Graphics GetGraphics()
+        {
+            if (NativeControl.EventDc != savedDC && graphics is not null)
+            {
+                graphics.Dispose();
+                graphics = null;
+            }
+
+            if (graphics is null)
+            {
+                savedDC = NativeControl.EventDc;
+                var ptr = Native.Control.OpenDrawingContextForDC(savedDC, false);
+                graphics = new Graphics(ptr);
+            }
+
+            return graphics;
+        }
+
+        private void NativeControl_DrawItem()
+        {
+            var dc = GetGraphics();
+
+            var rect = Control.PixelToDip(NativeControl.EventRect);
+
+            var itemIndex = NativeControl.EventItem;
+            string s;
+
+            if (itemIndex < Control.Items.Count)
+                s = Control.GetItemText(itemIndex);
+            else
+                s = string.Empty;
+
+            var font = Control.Font ?? UI.Control.DefaultFont;
+
+            dc.DrawText(
+                s,
+                font,
+                SystemColors.GrayText.AsBrush,
+                rect);
+        }
+
+        private void NativeControl_MeasureItem()
+        {
+            var itemIndex = NativeControl.EventItem;
+            string s;
+
+            if (itemIndex < Control.Items.Count)
+                s = Control.GetItemText(itemIndex);
+            else
+                s = "Wy";
+
+            var font = Control.Font ?? UI.Control.DefaultFont;
+
+            var size = Control.MeasureCanvas.MeasureText(s, font);
+
+            var height = Control.PixelFromDip(size.Height);
+
+            NativeControl.EventHeight = height;
+        }
+
+        private void NativeControl_HandleCreated()
+        {
+            NativeControl.ItemsCount = Control.Count;
         }
 
         private void NativeControl_SelectionChanged()
@@ -101,18 +174,6 @@ namespace Alternet.UI
         private void ApplySelectionMode()
         {
             NativeControl.SelectionMode = (Native.ListBoxSelectionMode)Control.SelectionMode;
-        }
-
-        private void ApplyItems()
-        {
-            var nativeControl = NativeControl;
-            nativeControl.ClearItems();
-
-            var control = Control;
-            var items = control.Items;
-
-            for (var i = 0; i < items.Count; i++)
-                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
         }
 
         private void ApplySelection()
@@ -142,7 +203,8 @@ namespace Alternet.UI
 
             try
             {
-                Control.SelectedIndices = NativeControl.SelectedIndices;
+                // !!!
+                Control.SelectedIndices = Array.Empty<int>();
             }
             finally
             {
@@ -152,33 +214,26 @@ namespace Alternet.UI
 
         private void Items_ItemInserted(object? sender, int index, object item)
         {
-            NativeControl.InsertItem(index, Control.GetItemText(item));
+            NativeControl.ItemsCount = Control.Items.Count;
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if(e.Action == NotifyCollectionChangedAction.Replace)
-            {
-                var item = e.NewItems?[0];
-                var index = e.NewStartingIndex;
-                var text = Control.GetItemText(item);
-                NativeControl.SetItem(index, text);
-            }
         }
 
         private void Items_ItemRemoved(object? sender, int index, object item)
         {
-            NativeControl.RemoveItemAt(index);
+            NativeControl.ItemsCount = Control.Items.Count;
         }
 
-        private class NativeListBox : Native.ListBox
+        private class NativeVListBox : Native.VListBox
         {
-            public NativeListBox()
+            public NativeVListBox()
             {
-                SetNativePointer(NativeApi.ListBox_CreateEx_(1));
+                SetNativePointer(NativeApi.VListBox_CreateEx_(1));
             }
 
-            public NativeListBox(IntPtr nativePointer)
+            public NativeVListBox(IntPtr nativePointer)
                 : base(nativePointer)
             {
             }

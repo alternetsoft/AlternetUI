@@ -38,6 +38,7 @@
 #include "Api/CheckListBox.Api.h"
 #include "Api/ComboBox.Api.h"
 #include "Api/ListBox.Api.h"
+#include "Api/VListBox.Api.h"
 #include "Api/ListView.Api.h"
 #include "Api/NumericUpDown.Api.h"
 #include "Api/Panel.Api.h"
