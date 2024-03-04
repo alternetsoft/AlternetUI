@@ -193,6 +193,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_Polygon_(NativePointer, pen.NativePointer, brush.NativePointer, points, points.Length, fillMode);
         }
         
+        public void FillRectangleI(Brush brush, Alternet.Drawing.RectI rectangle)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_FillRectangleI_(NativePointer, brush.NativePointer, rectangle);
+        }
+        
         public void FillRectangle(Brush brush, Alternet.Drawing.RectD rectangle)
         {
             CheckDisposed();
@@ -474,6 +480,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Polygon_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD[] points, int pointsCount, FillMode fillMode);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_FillRectangleI_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectI rectangle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD rectangle);

@@ -681,10 +681,10 @@ namespace Alternet::UI
 	inline RectI fromDipI(const Rect& value, wxWindow* window)
 	{
 		return RectI(
-			fromDipF(value.X, window),
-			fromDipF(value.Y, window),
-			fromDipF(value.Width, window),
-			fromDipF(value.Height, window));
+			fromDip(value.X, window),
+			fromDip(value.Y, window),
+			fromDip(value.Width, window),
+			fromDip(value.Height, window));
 	};
 
 	inline Rect fromDipF(const Rect& value, wxWindow* window)

@@ -145,6 +145,11 @@ ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brus
     obj->Polygon(pen, brush, points, pointsCount, fillMode);
 }
 
+ALTERNET_UI_API void DrawingContext_FillRectangleI_(DrawingContext* obj, Brush* brush, RectI rectangle)
+{
+    obj->FillRectangleI(brush, rectangle);
+}
+
 ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, RectD rectangle)
 {
     obj->FillRectangle(brush, rectangle);

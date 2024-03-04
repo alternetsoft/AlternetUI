@@ -32,6 +32,7 @@ void Path(Pen* pen, Brush* brush, GraphicsPath* path);
 void Pie(Pen* pen, Brush* brush, const PointD& center, double radius, double startAngle, double sweepAngle);
 void Circle(Pen* pen, Brush* brush, const PointD& center, double radius);
 void Polygon(Pen* pen, Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
+void FillRectangleI(Brush* brush, const RectI& rectangle);
 void FillRectangle(Brush* brush, const RectD& rectangle);
 void DrawRectangle(Pen* pen, const RectD& rectangle);
 void FillEllipse(Brush* brush, const RectD& bounds);

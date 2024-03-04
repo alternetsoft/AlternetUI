@@ -82,6 +82,7 @@ namespace NativeApi.Api
         public void Circle(Pen pen, Brush brush, PointD center, double radius) { }
         public void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode) { }
 
+        public void FillRectangleI(Brush brush, RectI rectangle) { }
         public void FillRectangle(Brush brush, RectD rectangle) { }
         public void DrawRectangle(Pen pen, RectD rectangle) { }
 

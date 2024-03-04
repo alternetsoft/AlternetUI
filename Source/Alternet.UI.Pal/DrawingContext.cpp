@@ -422,9 +422,22 @@ namespace Alternet::UI
         wxBitmap bitmap = image->GetBitmap();
 
         wxMemoryDC sourceBitmapDC(bitmap);
+
+        if (wxSourceRect.GetSize() == wxDestinationRect.GetSize())
+        {
+            UseDC();
+            _dc->Blit(
+                wxDestinationRect.GetLeftTop(),
+                wxDestinationRect.GetSize(),
+                &sourceBitmapDC,
+                wxSourceRect.GetLeftTop());
+            return;
+        }
+
         if (_interpolationMode == InterpolationMode::None)
         {
             UseDC();
+
             _dc->StretchBlit(
                 wxDestinationRect.GetLeftTop(),
                 wxDestinationRect.GetSize(),
@@ -651,6 +664,18 @@ namespace Alternet::UI
 
     void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)
     {
+        auto r = fromDip(
+            Rect(
+                rectangle.X,
+                rectangle.Y,
+                rectangle.Width,
+                rectangle.Height),
+            _dc->GetWindow());
+        FillRectangleI(brush, r);
+    }
+
+    void DrawingContext::FillRectangleI(Brush* brush, const RectI& rectangle)
+    {
         if (NeedToUseDC())
         {
             UseDC();
@@ -661,14 +686,7 @@ namespace Alternet::UI
             _dc->SetPen(*wxTRANSPARENT_PEN);
             _dc->SetBrush(brush->GetWxBrush());
 
-            _dc->DrawRectangle(
-                fromDip(
-                    Rect(
-                        rectangle.X,
-                        rectangle.Y,
-                        rectangle.Width,
-                        rectangle.Height),
-                    _dc->GetWindow()));
+            _dc->DrawRectangle(rectangle);
 
             _dc->SetPen(oldPen);
             _dc->SetBrush(oldBrush);
@@ -677,12 +695,9 @@ namespace Alternet::UI
         {
             UseGC();
 
-            auto rect = fromDipF(rectangle, _dc->GetWindow());
-
             _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-
-            _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rectangle.X, rectangle.Y)));
+            _graphicsContext->DrawRectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
     }
 

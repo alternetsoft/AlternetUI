@@ -331,6 +331,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
+        /// Rectangle is specified in dips (1/96 inch).
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics
         /// of the fill.</param>
@@ -338,13 +339,34 @@ namespace Alternet.Drawing
         /// rectangle to fill.</param>
         /// <remarks>
         /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
-        /// including the specified upper-left corner and up to the calculated lower and bottom edges.
+        /// including the specified upper-left corner and up to the calculated
+        /// lower and bottom edges.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRectangle(Brush brush, RectD rectangle)
         {
             DebugBrushAssert(brush);
             dc.FillRectangle(brush.NativeBrush, rectangle);
+        }
+
+        /// <summary>
+        /// Fills the interior of a rectangle specified by a <see cref="RectI"/> structure.
+        /// Rectangle is specified in pixels.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics
+        /// of the fill.</param>
+        /// <param name="rectangle"><see cref="RectI"/> structure that represents the
+        /// rectangle to fill.</param>
+        /// <remarks>
+        /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
+        /// including the specified upper-left corner and up to the calculated lower and
+        /// bottom edges.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FillRectangleI(Brush brush, RectI rectangle)
+        {
+            DebugBrushAssert(brush);
+            dc.FillRectangleI(brush.NativeBrush, rectangle);
         }
 
         /// <summary>
