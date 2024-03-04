@@ -12,6 +12,22 @@ namespace Alternet.UI
         private bool receivingSelection;
         private bool applyingSelection;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public override bool HasBorder
+        {
+            get
+            {
+                return NativeControl.HasBorder;
+            }
+
+            set
+            {
+                NativeControl.HasBorder = value;
+            }
+        }
+
         public new CheckListBox Control => (CheckListBox)base.Control;
 
         public new Native.CheckListBox NativeControl => (Native.CheckListBox)base.NativeControl!;

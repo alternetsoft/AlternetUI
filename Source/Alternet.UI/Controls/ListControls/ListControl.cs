@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// The number of elements actually contained in the <see cref="Items"/>.
         /// </returns>
         [Browsable(false)]
-        public int Count
+        public virtual int Count
         {
             get => Items.Count;
         }

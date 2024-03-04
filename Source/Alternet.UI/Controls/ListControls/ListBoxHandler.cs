@@ -16,8 +16,10 @@ namespace Alternet.UI
         /// </summary>
         public new ListBox Control => (ListBox)base.Control;
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public abstract bool HasBorder { get; set; }
 
         /// <summary>
         /// Ensures that the item is visible within the control, scrolling

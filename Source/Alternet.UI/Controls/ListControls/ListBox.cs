@@ -144,17 +144,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                if (Handler is not NativeListBoxHandler handler)
-                    return true;
-                return handler.NativeControl.HasBorder;
+                return Handler.HasBorder;
             }
 
             set
             {
                 CheckDisposed();
-                if (Handler is not NativeListBoxHandler handler)
-                    return;
-                handler.NativeControl.HasBorder = value;
+                Handler.HasBorder = value;
             }
         }
 

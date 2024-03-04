@@ -74,6 +74,7 @@ namespace ControlsSample
             Add("Threading Sample", () => new ThreadingSample.MainWindow());
             Add("Action Simulator Sample", () => new ActionSimulatorPage());
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
+            Add("Virtual ListBox Sample (experimental)", () => new VListBoxSampleWindow());
         }
 
         private void RunButton_Click(object? sender, EventArgs e)

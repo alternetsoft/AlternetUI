@@ -316,6 +316,7 @@
     <ClCompile Include="ValidatorNumeric.cpp" />
     <ClCompile Include="ValidatorNumericProperty.cpp" />
     <ClCompile Include="ValidatorText.cpp" />
+    <ClCompile Include="VListBox.cpp" />
     <ClCompile Include="WebBrowser.cpp" />
     <ClCompile Include="WebBrowserApiPal.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
@@ -447,6 +448,7 @@
     <ClInclude Include="Api\ValidatorNumeric.Api.h" />
     <ClInclude Include="Api\ValidatorNumericProperty.Api.h" />
     <ClInclude Include="Api\ValidatorText.Api.h" />
+    <ClInclude Include="Api\VListBox.Api.h" />
     <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Api\WrapSizer.Api.h" />
@@ -578,6 +580,7 @@
     <ClInclude Include="ValidatorNumeric.h" />
     <ClInclude Include="ValidatorNumericProperty.h" />
     <ClInclude Include="ValidatorText.h" />
+    <ClInclude Include="VListBox.h" />
     <ClInclude Include="WebBrowser.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
@@ -699,6 +702,7 @@
     <None Include="Api\ValidatorNumeric.inc" />
     <None Include="Api\ValidatorNumericProperty.inc" />
     <None Include="Api\ValidatorText.inc" />
+    <None Include="Api\VListBox.inc" />
     <None Include="Api\WebBrowser.inc" />
     <None Include="Api\Window.inc" />
     <None Include="Api\WrapSizer.inc" />
