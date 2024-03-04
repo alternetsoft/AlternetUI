@@ -1,0 +1,1 @@
+chmod u+x **/*.sh
