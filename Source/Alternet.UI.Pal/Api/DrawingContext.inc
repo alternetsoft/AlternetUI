@@ -32,6 +32,7 @@ void Path(Pen* pen, Brush* brush, GraphicsPath* path);
 void Pie(Pen* pen, Brush* brush, const PointD& center, double radius, double startAngle, double sweepAngle);
 void Circle(Pen* pen, Brush* brush, const PointD& center, double radius);
 void Polygon(Pen* pen, Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
+void FillRectangleI(Brush* brush, const RectI& rectangle);
 void FillRectangle(Brush* brush, const RectD& rectangle);
 void DrawRectangle(Pen* pen, const RectD& rectangle);
 void FillEllipse(Brush* brush, const RectD& bounds);
@@ -44,6 +45,7 @@ void DrawTextAtRect(const string& text, const RectD& bounds, Font* font, Brush* 
 void DrawImageAtPoint(Image* image, const PointD& origin);
 void DrawImageAtRect(Image* image, const RectD& destinationRect);
 void DrawImagePortionAtRect(Image* image, const RectD& destinationRect, const RectD& sourceRect);
+void DrawImagePortionAtPixelRect(Image* image, const RectI& destinationRect, const RectI& sourceRect);
 void Push();
 void Pop();
 void DrawLine(Pen* pen, const PointD& a, const PointD& b);

@@ -164,8 +164,8 @@ namespace Alternet.UI
             }
             else
             {
-                paintEventArgs.DrawingContext = dc;
-                paintEventArgs.Bounds = rect;
+                paintEventArgs.Graphics = dc;
+                paintEventArgs.ClipRectangle = rect;
             }
 
             const int ItemIndexNotFound = -1;
@@ -175,7 +175,7 @@ namespace Alternet.UI
             paintEventArgs.ItemIndex = NativeControl.EventItem;
             paintEventArgs.IsPaintingBackground = drawBackground;
             DrawItem(paintEventArgs);
-            paintEventArgs.DrawingContext = null!;
+            paintEventArgs.Graphics = null!;
             dc.Dispose();
         }
 

@@ -40,12 +40,12 @@ namespace LayoutSample
         protected override void OnPaint(PaintEventArgs e)
         {
             var bounds = ClientRectangle;
-            e.DrawingContext.FillRectangle(Brushes.White, bounds);
+            e.Graphics.FillRectangle(Brushes.White, bounds);
 
             var image = Image;
 
             if (image != null)
-                e.DrawingContext.DrawImage(image, bounds);
+                e.Graphics.DrawImage(image, bounds);
         }
     }
 }

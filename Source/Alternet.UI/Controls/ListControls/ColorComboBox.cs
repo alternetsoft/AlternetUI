@@ -10,6 +10,11 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="ComboBox"/> descendant for editing <see cref="Color"/> values.
     /// </summary>
+    /// <remarks>
+    /// Items in this control have <see cref="ListControlItem"/> type where
+    /// <see cref="ListControlItem.Value"/> is <see cref="Color"/> and
+    /// <see cref="ListControlItem.Text"/> is label of the color.
+    /// </remarks>
     public class ColorComboBox : ComboBox
     {
         /// <summary>
@@ -21,6 +26,12 @@ namespace Alternet.UI
         /// Gets or sets method that initializes items in <see cref="ColorComboBox"/>.
         /// </summary>
         public static Action<ColorComboBox>? InitColors = InitDefaultColors;
+
+        /// <summary>
+        /// Gets or sets method that paints color image in the item. Borders around
+        /// color image are also painted by this method.
+        /// </summary>
+        public static Action<Graphics, RectD, Color> PaintColorImage = PaintDefaultColorImage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorComboBox"/> class.
@@ -38,6 +49,35 @@ namespace Alternet.UI
         public ColorComboBox(bool defaultColors)
         {
             Initialize(defaultColors);
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override bool IsEditable
+        {
+            get => false;
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Paints color image in the item with the default style. Borders around
+        /// color image are also painted by this method.
+        /// This is default value of the <see cref="PaintColorImage"/> field.
+        /// </summary>
+        /// <param name="canvas"><see cref="Graphics"/> where drawing is performed.</param>
+        /// <param name="rect"><see cref="RectD"/> where drawing is performed.</param>
+        /// <param name="color">Color value.</param>
+        public static void PaintDefaultColorImage(Graphics canvas, RectD rect, Color color)
+        {
+            RectD colorRect = DrawingUtils.DrawDoubleBorder(
+                canvas,
+                rect,
+                Color.Empty,
+                ComboBox.DefaultImageBorderColor);
+
+            canvas.FillRectangle(color.AsBrush, colorRect);
         }
 
         /// <summary>
@@ -89,25 +129,16 @@ namespace Alternet.UI
                     return;
                 }
 
-                const double offset = 2;
-
-                var size = e.Bounds.Height - (sender.TextMargin.Y * 2) - (offset * 2);
-                var colorRect = new RectD(
-                    e.Bounds.X + sender.TextMargin.X,
-                    e.Bounds.Y + sender.TextMargin.Y + offset,
-                    size,
-                    size);
-                DrawingUtils.FillRectangleBorder(e.Graphics, Color.White, colorRect, 1);
-                colorRect.Inflate(-1);
-                DrawingUtils.FillRectangleBorder(e.Graphics, SystemColors.GrayText, colorRect, 1);
-                colorRect.Inflate(-1);
-
                 object? item;
 
                 if (e.IsPaintingControl)
+                {
                     item = sender.SelectedItem;
+                }
                 else
+                {
                     item = sender.Items[e.ItemIndex];
+                }
 
                 if (item is ListControlItem item1)
                     item = item1.Value;
@@ -117,12 +148,9 @@ namespace Alternet.UI
                 if (!itemColor.IsOk)
                     itemColor = Color.White;
 
-                e.Graphics.FillRectangle(itemColor.AsBrush, colorRect);
-
-                var itemRect = e.Bounds;
-                itemRect.X += size + 2;
-                itemRect.Width -= size + 2;
-                e.Bounds = itemRect;
+                var (colorRect, itemRect) = sender.GetItemImageRect(e);
+                PaintColorImage(e.Graphics, colorRect, itemColor);
+                e.ClipRectangle = itemRect;
                 sender.DefaultItemPaint(e);
             }
         }

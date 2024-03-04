@@ -145,6 +145,11 @@ ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brus
     obj->Polygon(pen, brush, points, pointsCount, fillMode);
 }
 
+ALTERNET_UI_API void DrawingContext_FillRectangleI_(DrawingContext* obj, Brush* brush, RectI rectangle)
+{
+    obj->FillRectangleI(brush, rectangle);
+}
+
 ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, RectD rectangle)
 {
     obj->FillRectangle(brush, rectangle);
@@ -203,6 +208,11 @@ ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image*
 ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj, Image* image, RectD destinationRect, RectD sourceRect)
 {
     obj->DrawImagePortionAtRect(image, destinationRect, sourceRect);
+}
+
+ALTERNET_UI_API void DrawingContext_DrawImagePortionAtPixelRect_(DrawingContext* obj, Image* image, RectI destinationRect, RectI sourceRect)
+{
+    obj->DrawImagePortionAtPixelRect(image, destinationRect, sourceRect);
 }
 
 ALTERNET_UI_API void DrawingContext_Push_(DrawingContext* obj)

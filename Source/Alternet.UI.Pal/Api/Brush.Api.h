@@ -2,9 +2,14 @@
 
 #pragma once
 
-
+#include "Brush.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
 using namespace Alternet::UI;
+
+ALTERNET_UI_API Brush* Brush_Create_()
+{
+    return new Brush();
+}
 

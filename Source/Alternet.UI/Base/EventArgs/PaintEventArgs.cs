@@ -4,19 +4,27 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Control.Paint"/> event.
+    /// Provides data for the <see cref="Control.Paint"/> or other paint events.
     /// </summary>
     /// <remarks>
-    /// The <see cref="Control.Paint"/> event occurs when a control is redrawn.
-    /// A <see cref="PaintEventArgs"/> specifies the <see cref="DrawingContext"/> to use
-    /// to paint the control and the <see cref="Bounds"/> in which to paint.
+    /// A <see cref="PaintEventArgs"/> specifies the <see cref="Graphics"/> to use
+    /// to paint the control or object and the <see cref="ClipRectangle"/> in which to paint.
     /// </remarks>
     public class PaintEventArgs : BaseEventArgs
     {
-        internal PaintEventArgs(Graphics drawingContext, RectD bounds)
+        private Graphics canvas;
+        private RectD rect;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaintEventArgs"/> class.
+        /// </summary>
+        /// <param name="canvas">The <see cref="Graphics"/> used to paint.</param>
+        /// <param name="clipRect">The <see cref="RectD" /> that represents
+        /// the rectangle in which to paint.</param>
+        public PaintEventArgs(Graphics canvas, RectD clipRect)
         {
-            DrawingContext = drawingContext;
-            Bounds = bounds;
+            this.canvas = canvas;
+            this.rect = clipRect;
         }
 
         /// <summary>
@@ -26,37 +34,53 @@ namespace Alternet.UI
         /// The <see cref="Graphics"/> object provides methods for drawing objects
         /// on the display or other device.</value>
         /// <remarks>
-        /// This is the same as <see cref="Graphics"/> property.
+        /// Please use <see cref="Graphics"/> instead of this property.
         /// </remarks>
-        public Graphics DrawingContext { get; internal set; }
+        [Obsolete("'DrawingContext' is deprecated, please use 'Graphics' instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        public Graphics DrawingContext
+        {
+            get => canvas;
+            set => canvas = value;
+        }
 
         /// <summary>
         /// Gets the rectangle in which to paint.
         /// </summary>
         /// <value>The <see cref="RectD"/> in which to paint.</value>
         /// <remarks>
-        /// This is the same as <see cref="ClipRectangle"/> property.
+        /// Please use <see cref="ClipRectangle"/> instead of this property.
         /// </remarks>
-        public RectD Bounds { get; set; }
+        [Obsolete("'Bounds' is deprecated, please use 'ClipRectangle' instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        public RectD Bounds
+        {
+            get => rect;
+            set => rect = value;
+        }
 
         /// <summary>Gets the rectangle in which to paint.</summary>
         /// <returns>The <see cref="RectD" /> in which to paint.</returns>
-        /// <remarks>
-        /// This is the same as <see cref="Bounds"/> property.
-        /// </remarks>
-        public RectD ClipRectangle => Bounds;
+        public RectD ClipRectangle
+        {
+            get => rect;
+            set => rect = value;
+        }
 
         /// <summary>
-        /// Gets the graphics used to paint.
+        /// Gets the <see cref="Graphics"/> used to paint.
         /// </summary>
         /// <returns>
         /// The <see cref="Graphics" /> object used to paint.
         /// The <see cref="Graphics" /> object provides methods for drawing objects
         /// on the display or other device.
         /// </returns>
-        /// <remarks>
-        /// This is the same as <see cref="DrawingContext"/> property.
-        /// </remarks>
-        public Graphics Graphics => DrawingContext;
+        public Graphics Graphics
+        {
+            get => canvas;
+            set => canvas = value;
+        }
     }
 }

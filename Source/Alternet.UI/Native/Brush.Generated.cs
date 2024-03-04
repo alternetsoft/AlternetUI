@@ -8,14 +8,15 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract partial class Brush : NativeObject
+    internal partial class Brush : NativeObject
     {
         static Brush()
         {
         }
         
-        protected Brush()
+        public Brush()
         {
+            SetNativePointer(NativeApi.Brush_Create_());
         }
         
         public Brush(IntPtr nativePointer) : base(nativePointer)
@@ -27,6 +28,9 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Brush_Create_();
             
         }
     }

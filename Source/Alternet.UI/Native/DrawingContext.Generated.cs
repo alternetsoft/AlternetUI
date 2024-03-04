@@ -193,6 +193,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_Polygon_(NativePointer, pen.NativePointer, brush.NativePointer, points, points.Length, fillMode);
         }
         
+        public void FillRectangleI(Brush brush, Alternet.Drawing.RectI rectangle)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_FillRectangleI_(NativePointer, brush.NativePointer, rectangle);
+        }
+        
         public void FillRectangle(Brush brush, Alternet.Drawing.RectD rectangle)
         {
             CheckDisposed();
@@ -263,6 +269,12 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawImagePortionAtRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
+        }
+        
+        public void DrawImagePortionAtPixelRect(Image image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawImagePortionAtPixelRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
         }
         
         public void Push()
@@ -470,6 +482,9 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_Polygon_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD[] points, int pointsCount, FillMode fillMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_FillRectangleI_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectI rectangle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD rectangle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -504,6 +519,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImagePortionAtRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectD destinationRect, Alternet.Drawing.RectD sourceRect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawImagePortionAtPixelRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Push_(IntPtr obj);

@@ -22,6 +22,7 @@ namespace Alternet.UI
         private Color endColor = DefaultEndColor;
         private double radialGradientRadius = DefaultRadialGradientRadius;
         private BrushHatchStyle hatchStyle;
+        private Image? image;
 
         // (Color color, double offset)
         private GradientStop[] gradientStops = Array.Empty<GradientStop>();
@@ -212,6 +213,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="TextureBrush.Image"/>
+        public Image? Image
+        {
+            get
+            {
+                return image;
+            }
+
+            set
+            {
+                image = value;
+                Save();
+            }
+        }
+
         /// <inheritdoc cref="HatchBrush.HatchStyle"/>
         public BrushHatchStyle HatchStyle
         {
@@ -242,6 +258,7 @@ namespace Alternet.UI
                 propGrid.CreateProperty(this, nameof(RadialGradientRadius))!,
                 propGrid.CreateProperty(this, nameof(GradientStops))!,
                 propGrid.CreateProperty(this, nameof(HatchStyle))!,
+                propGrid.CreateProperty(this, nameof(Image))!,
             };
             return list;
         }
@@ -304,6 +321,15 @@ namespace Alternet.UI
                 case BrushType.RadialGradient:
                     Brush = CreateRadialGradientBrush();
                     break;
+                case BrushType.Transparent:
+                    Brush = Brush.Transparent;
+                    break;
+                case BrushType.Texture:
+                    if(image is null)
+                        Brush = Brush.Transparent;
+                    else
+                        Brush = new TextureBrush(image);
+                    break;
                 default:
                     break;
             }
@@ -325,6 +351,11 @@ namespace Alternet.UI
             else
                 endColor = Color.White;
 
+            if(Brush is TextureBrush t)
+            {
+                image = t.Image;
+            }
+            else
             if (Brush is LinearGradientBrush b)
             {
                 linearGradientStart = b.StartPoint;

@@ -21,8 +21,8 @@ namespace PrintingSample
 
         private void DrawingArea_Paint(object? sender, PaintEventArgs e)
         {
-            var dc = e.DrawingContext;
-            var bounds = e.Bounds;
+            var dc = e.Graphics;
+            var bounds = e.ClipRectangle;
 
             if (originAtMarginCheckBox.IsChecked)
             {

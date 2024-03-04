@@ -4,30 +4,6 @@ using System.Runtime.InteropServices;
 namespace Alternet.UI.Native
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class DragEventData
-    {
-        public System.IntPtr data;
-        public double mouseClientLocationX;
-        public double mouseClientLocationY;
-        public DragDropEffects effect;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class TextInputEventData
-    {
-        public char keyChar;
-        public long timestamp;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class KeyEventData
-    {
-        public Key key;
-        public long timestamp;
-        public bool isRepeat;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class CompareListViewItemsEventData
     {
         public long item1Index;
@@ -46,29 +22,6 @@ namespace Alternet.UI.Native
         public long itemIndex;
         public string label;
         public bool editCancelled;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class MouseButtonEventData
-    {
-        public long timestamp;
-        public System.IntPtr targetControl;
-        public MouseButton changedButton;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class MouseEventData
-    {
-        public long timestamp;
-        public System.IntPtr targetControl;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class MouseWheelEventData
-    {
-        public long timestamp;
-        public System.IntPtr targetControl;
-        public int delta;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -113,6 +66,53 @@ namespace Alternet.UI.Native
         public string Text;
         public int IntVal;
         public System.IntPtr ClientData;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class DragEventData
+    {
+        public System.IntPtr data;
+        public double mouseClientLocationX;
+        public double mouseClientLocationY;
+        public DragDropEffects effect;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class TextInputEventData
+    {
+        public char keyChar;
+        public long timestamp;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class KeyEventData
+    {
+        public Key key;
+        public long timestamp;
+        public bool isRepeat;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class MouseButtonEventData
+    {
+        public long timestamp;
+        public System.IntPtr targetControl;
+        public MouseButton changedButton;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class MouseEventData
+    {
+        public long timestamp;
+        public System.IntPtr targetControl;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class MouseWheelEventData
+    {
+        public long timestamp;
+        public System.IntPtr targetControl;
+        public int delta;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

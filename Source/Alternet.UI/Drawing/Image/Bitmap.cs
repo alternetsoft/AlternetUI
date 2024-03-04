@@ -174,6 +174,21 @@ namespace Alternet.Drawing
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified
+        /// file or resource url.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used
+        /// to load the image.
+        /// </param>
+        /// <remarks>
+        /// See <see cref="Image.FromUrl(string)"/> for the details.
+        /// </remarks>
+        public Bitmap(string url)
+            : base(url)
+        {
+        }
+
         internal Bitmap(UI.Native.Image nativeImage)
             : base(nativeImage)
         {

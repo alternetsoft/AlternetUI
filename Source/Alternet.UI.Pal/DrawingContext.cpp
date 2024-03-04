@@ -395,7 +395,12 @@ namespace Alternet::UI
         auto oldInterpolationQuality = _graphicsContext->GetInterpolationQuality();
         _graphicsContext->SetInterpolationQuality(GetInterpolationQuality(_interpolationMode));
 
-        _graphicsContext->DrawBitmap(bitmap, destRect.x, destRect.y, destRect.width, destRect.height);
+        _graphicsContext->DrawBitmap(
+            bitmap,
+            destRect.x,
+            destRect.y,
+            destRect.width,
+            destRect.height);
 
         _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
     }
@@ -403,14 +408,36 @@ namespace Alternet::UI
     void DrawingContext::DrawImagePortionAtRect(Image* image, const Rect& destinationRect,
         const Rect& sourceRect)
     {
+        auto sourceRectI = fromDipI(sourceRect, _dc->GetWindow());
+        auto destinationRectI = fromDipI(destinationRect, _dc->GetWindow());
+        DrawImagePortionAtPixelRect(image, destinationRectI, sourceRectI);
+    }
+
+    void DrawingContext::DrawImagePortionAtPixelRect(Image* image, const RectI& destinationRect,
+        const RectI& sourceRect)
+    {
+        wxRect wxSourceRect = sourceRect;
+        wxRect wxDestinationRect = destinationRect;
+
         wxBitmap bitmap = image->GetBitmap();
-        auto wxSourceRect = fromDip(sourceRect, _dc->GetWindow());
-        auto wxDestinationRect = fromDip(destinationRect, _dc->GetWindow());
 
         wxMemoryDC sourceBitmapDC(bitmap);
+
+        if (wxSourceRect.GetSize() == wxDestinationRect.GetSize())
+        {
+            UseDC();
+            _dc->Blit(
+                wxDestinationRect.GetLeftTop(),
+                wxDestinationRect.GetSize(),
+                &sourceBitmapDC,
+                wxSourceRect.GetLeftTop());
+            return;
+        }
+
         if (_interpolationMode == InterpolationMode::None)
         {
             UseDC();
+
             _dc->StretchBlit(
                 wxDestinationRect.GetLeftTop(),
                 wxDestinationRect.GetSize(),
@@ -637,6 +664,18 @@ namespace Alternet::UI
 
     void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)
     {
+        auto r = fromDip(
+            Rect(
+                rectangle.X,
+                rectangle.Y,
+                rectangle.Width,
+                rectangle.Height),
+            _dc->GetWindow());
+        FillRectangleI(brush, r);
+    }
+
+    void DrawingContext::FillRectangleI(Brush* brush, const RectI& rectangle)
+    {
         if (NeedToUseDC())
         {
             UseDC();
@@ -647,14 +686,7 @@ namespace Alternet::UI
             _dc->SetPen(*wxTRANSPARENT_PEN);
             _dc->SetBrush(brush->GetWxBrush());
 
-            _dc->DrawRectangle(
-                fromDip(
-                    Rect(
-                        rectangle.X,
-                        rectangle.Y,
-                        rectangle.Width,
-                        rectangle.Height),
-                    _dc->GetWindow()));
+            _dc->DrawRectangle(rectangle);
 
             _dc->SetPen(oldPen);
             _dc->SetBrush(oldBrush);
@@ -663,12 +695,9 @@ namespace Alternet::UI
         {
             UseGC();
 
-            auto rect = fromDipF(rectangle, _dc->GetWindow());
-
             _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-
-            _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rectangle.X, rectangle.Y)));
+            _graphicsContext->DrawRectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
     }
 

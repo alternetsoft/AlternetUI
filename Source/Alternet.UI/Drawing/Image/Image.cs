@@ -184,6 +184,26 @@ namespace Alternet.Drawing
             imageSet.NativeImageSet.InitImage(nativeImage, size.Width, size.Height);
         }
 
+        internal Image(string url)
+        {
+            nativeImage = new UI.Native.Image();
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                Application.LogError($"Image not loaded from: {url}");
+                return;
+            }
+
+            using var inputStream = new UI.Native.InputStream(stream);
+            if (inputStream is null)
+            {
+                Application.LogError($"Image not loaded from: {url}");
+                return;
+            }
+
+            NativeImage.LoadFromStream(inputStream);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
@@ -233,6 +253,12 @@ namespace Alternet.Drawing
         public bool IsDisposed => isDisposed;
 
         /// <summary>
+        /// Creates texture brush with this image.
+        /// </summary>
+        [Browsable(false)]
+        public TextureBrush AsBrush => new(this);
+
+        /// <summary>
         /// Gets whether image is empty (is disposed or has an empty width or height).
         /// </summary>
         public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;
@@ -269,6 +295,18 @@ namespace Alternet.Drawing
         /// Gets image height in pixels.
         /// </summary>
         public int Height => NativeImage.PixelHeight;
+
+        /// <summary>
+        /// Gets image bounds in pixels. This method returns (0, 0, Width, Height).
+        /// </summary>
+        public RectI Bounds
+        {
+            get
+            {
+                var size = Size;
+                return new(0, 0, size.Width, size.Height);
+            }
+        }
 
         /// <summary>
         /// Gets image width in pixels.

@@ -179,16 +179,16 @@ namespace ControlsSample
         {
             e.DefaultPaint();
             if(e.IsPaintingControl)
-                e.Graphics.FillRectangle(Color.Red, (e.Bounds.Location, (5, 5)));
+                e.Graphics.FillRectangle(Color.Red, (e.ClipRectangle.Location, (5, 5)));
             else
             {
-                var point = e.Bounds.TopRight;
+                var point = e.ClipRectangle.TopRight;
                 point.Offset(-5, 0);
 
                 if (e.IsSelected)
-                    e.Graphics.FillRectangle(Color.Yellow, (point, (10, e.Bounds.Height)));
+                    e.Graphics.FillRectangle(Color.Yellow, (point, (10, e.ClipRectangle.Height)));
                 else
-                    e.Graphics.FillRectangle(Color.Green, (point, (10, e.Bounds.Height)));
+                    e.Graphics.FillRectangle(Color.Green, (point, (10, e.ClipRectangle.Height)));
             }
         }
 

@@ -2,7 +2,7 @@
 
 namespace NativeApi.Api
 {
-    public abstract class Brush
+    public class Brush
     {
     }
 }

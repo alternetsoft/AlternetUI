@@ -64,6 +64,21 @@ namespace Alternet.UI
                         true, // IsAnimationProhibited
                         UpdateSourceTrigger.PropertyChanged));
 
+        /// <summary>
+        /// Gets or sets default vertical offset of the item's image for the items with images.
+        /// </summary>
+        public static double DefaultImageVerticalOffset = 3;
+
+        /// <summary>
+        /// Gets or sets default distance between image and text in the item.
+        /// </summary>
+        public static double DefaultImageTextDistance = 3;
+
+        /// <summary>
+        /// Gets or sets default color of the image border.
+        /// </summary>
+        public static Color DefaultImageBorderColor = SystemColors.GrayText;
+
         private string text = string.Empty;
         private int? selectedIndex;
         private bool isEditable = true;
@@ -521,17 +536,18 @@ namespace Alternet.UI
                     color = SystemColors.GrayText;
                 }
 
-                var size = e.DrawingContext.MeasureText(s, font);
+                var size = e.Graphics.MeasureText(s, font);
 
-                var location =
-                    (e.Bounds.X + TextMargin.X,
-                    ((e.Bounds.Height - size.Height) / 2) + e.Bounds.Y);
+                var offsetX = TextMargin.X;
+                var offsetY = (e.ClipRectangle.Height - size.Height) / 2;
+                var rect = e.ClipRectangle;
+                rect.Inflate(-offsetX, -offsetY);
 
                 e.Graphics.DrawText(
                     s,
                     font,
                     color.AsBrush,
-                    location);
+                    rect);
             }
             else
             {
@@ -543,8 +559,34 @@ namespace Alternet.UI
                     s,
                     font,
                     color,
-                    (e.Bounds.X + 2, e.Bounds.Y));
+                    (e.ClipRectangle.X + 2, e.ClipRectangle.Y));
             }
+        }
+
+        /// <summary>
+        /// Gets suggested rectangles of the item's image and text.
+        /// </summary>
+        /// <param name="e">Item painting paramaters.</param>
+        /// <returns></returns>
+        public virtual (RectD ImageRect, RectD TextRect) GetItemImageRect(
+            ComboBoxItemPaintEventArgs e)
+        {
+            var offset = DefaultImageVerticalOffset;
+            if (e.IsPaintingControl)
+                offset++;
+
+            var size = e.ClipRectangle.Height - (TextMargin.Y * 2) - (offset * 2);
+            var imageRect = new RectD(
+                e.ClipRectangle.X + TextMargin.X,
+                e.ClipRectangle.Y + TextMargin.Y + offset,
+                size,
+                size);
+
+            var itemRect = e.ClipRectangle;
+            itemRect.X += imageRect.Width + DefaultImageTextDistance;
+            itemRect.Width -= imageRect.Width + DefaultImageTextDistance;
+
+            return (imageRect, itemRect);
         }
 
         /// <summary>

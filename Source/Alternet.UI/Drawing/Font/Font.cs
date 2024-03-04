@@ -986,9 +986,12 @@ namespace Alternet.Drawing
         {
             if (unit != GraphicsUnit.Point)
             {
-                Application.LogError("Invalid font unit, using default font size");
+                emSize = GraphicsUnitConverter.Convert(
+                    unit,
+                    GraphicsUnit.Point,
+                    Display.Primary.DPI.Height,
+                    emSize);
                 unit = GraphicsUnit.Point;
-                emSize = Font.Default.Size;
             }
 
             if (family == null)

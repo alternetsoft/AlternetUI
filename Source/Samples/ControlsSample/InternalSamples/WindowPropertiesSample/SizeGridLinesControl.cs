@@ -12,8 +12,8 @@ namespace WindowPropertiesSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var dc = e.DrawingContext;
-            var bounds = e.Bounds;
+            var dc = e.Graphics;
+            var bounds = e.ClipRectangle;
             const double Step = 50;
             var pen = Pens.LightGray;
 

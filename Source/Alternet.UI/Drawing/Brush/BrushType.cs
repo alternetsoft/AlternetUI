@@ -35,5 +35,15 @@ namespace Alternet.Drawing
         /// Brush is <see cref="RadialGradientBrush"/>.
         /// </summary>
         RadialGradient,
+
+        /// <summary>
+        /// Transparent brush.
+        /// </summary>
+        Transparent,
+
+        /// <summary>
+        /// Brush is <see cref="TextureBrush"/>.
+        /// </summary>
+        Texture,
     }
 }

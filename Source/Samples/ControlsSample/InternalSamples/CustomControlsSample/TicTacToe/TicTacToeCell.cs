@@ -35,8 +35,8 @@ namespace Alternet.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var bounds = e.Bounds;
-            var dc = e.DrawingContext;
+            var bounds = e.ClipRectangle;
+            var dc = e.Graphics;
             var brush = GetBackgroundBrush();
             if (brush != null)
                 dc.FillRectangle(brush, bounds);

@@ -42,6 +42,8 @@
       <None Remove="Resources\Animation\HourGlass.gif" />
       <None Remove="Resources\Animation\HourGlassInFile.gif" />
       <None Remove="Resources\Animation\Spinner.gif" />
+      <None Remove="Resources\Backgrounds\blue-textured-background1.jpg" />
+      <None Remove="Resources\Backgrounds\textured-background2.jpg" />
       <None Remove="Resources\ButtonImages\ButtonImageDisabled.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageFocused.png" />
       <None Remove="Resources\ButtonImages\ButtonImageFocused.svg" />
@@ -54,6 +56,8 @@
       <None Remove="Resources\Leaves.jpg" />
       <None Remove="Resources\logo-128x128.png" />
       <None Remove="Resources\Logo.png" />
+      <None Remove="Resources\NinePatchImages\NinePatch1.png" />
+      <None Remove="Resources\NinePatchImages\NinePatch2.png" />
       <None Remove="Resources\ReportImage_16x.png" />
       <None Remove="Resources\Report_16x.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
@@ -144,6 +148,8 @@
       <EmbeddedResource Include="Resources\Animation\HourGlass.gif" />
       <EmbeddedResource Include="Resources\Animation\Plant.gif" />
       <EmbeddedResource Include="Resources\Animation\Spinner.gif" />
+      <EmbeddedResource Include="Resources\Backgrounds\blue-textured-background1.jpg" />
+      <EmbeddedResource Include="Resources\Backgrounds\textured-background2.jpg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.svg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageFocused.png" />
@@ -174,6 +180,8 @@
       </EmbeddedResource>
       <EmbeddedResource Include="Resources\ExplorerUISample\ReportImage_16x.png" />
       <EmbeddedResource Include="Resources\ExplorerUISample\Report_16x.png" />
+      <EmbeddedResource Include="Resources\NinePatchImages\NinePatch1.png" />
+      <EmbeddedResource Include="Resources\NinePatchImages\NinePatch2.png" />
       <EmbeddedResource Include="Resources\TestIcon1.ico" />
       <EmbeddedResource Include="Resources\TestIcon2.ico" />
       <EmbeddedResource Include="Resources\ToolBarPng\Large\Calendar32.png" />

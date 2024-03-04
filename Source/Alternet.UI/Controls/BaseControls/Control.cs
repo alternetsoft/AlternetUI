@@ -2493,7 +2493,7 @@ namespace Alternet.UI
             get
             {
                 var childrenBounds = ClientRectangle;
-                if (childrenBounds.IsEmpty)
+                if (childrenBounds.SizeIsEmpty)
                     return RectD.Empty;
 
                 var padding = Padding;

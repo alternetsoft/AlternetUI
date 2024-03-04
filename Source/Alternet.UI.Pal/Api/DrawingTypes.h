@@ -678,6 +678,15 @@ namespace Alternet::UI
 			fromDip(value.Height, window));
 	};
 
+	inline RectI fromDipI(const Rect& value, wxWindow* window)
+	{
+		return RectI(
+			fromDip(value.X, window),
+			fromDip(value.Y, window),
+			fromDip(value.Width, window),
+			fromDip(value.Height, window));
+	};
+
 	inline Rect fromDipF(const Rect& value, wxWindow* window)
 	{
 		return Rect(

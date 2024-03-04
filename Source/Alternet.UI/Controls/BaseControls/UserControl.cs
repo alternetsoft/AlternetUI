@@ -277,7 +277,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
-            DefaultPaint(e.DrawingContext, e.Bounds);
+            DefaultPaint(e.Graphics, e.ClipRectangle);
         }
 
         /// <inheritdoc/>

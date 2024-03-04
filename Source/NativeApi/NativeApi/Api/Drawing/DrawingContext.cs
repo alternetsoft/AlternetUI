@@ -82,6 +82,7 @@ namespace NativeApi.Api
         public void Circle(Pen pen, Brush brush, PointD center, double radius) { }
         public void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode) { }
 
+        public void FillRectangleI(Brush brush, RectI rectangle) { }
         public void FillRectangle(Brush brush, RectD rectangle) { }
         public void DrawRectangle(Pen pen, RectD rectangle) { }
 
@@ -115,6 +116,10 @@ namespace NativeApi.Api
 
         public void DrawImagePortionAtRect(Image image, RectD destinationRect,
             RectD sourceRect) { }
+
+        public void DrawImagePortionAtPixelRect(Image image, RectI destinationRect,
+            RectI sourceRect)
+        { }
 
         public void Push() => throw new Exception();
 

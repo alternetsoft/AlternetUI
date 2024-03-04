@@ -58,7 +58,7 @@ namespace PropertyGridSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var dc = e.DrawingContext;
+            var dc = e.Graphics;
             var bounds = DrawClientRectangle;
 
             var brush = this.Background;

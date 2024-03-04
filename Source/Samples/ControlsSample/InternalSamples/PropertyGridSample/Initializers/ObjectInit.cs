@@ -32,11 +32,12 @@ namespace PropertyGridSample
 
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
+        internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
+
         private const string ResPrefix =
             "embres:ControlsSample.Resources.";
         private const string ResPrefixImage = $"{ResPrefix}logo-128x128.png";
 
-        private static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
         private static int newItemIndex = 0;
 
         static void SetBackgrounds(Control control)

@@ -1,9 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -47,7 +45,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the Rectangle class with the specified location and size.
+        /// Initializes a new instance of the Rectangle class with the specified
+        /// location and size.
         /// </summary>
         public RectI(PointI location, SizeI size)
         {
@@ -65,11 +64,11 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public PointI Location
         {
-            readonly get => new(X, Y);
+            readonly get => new(x, y);
             set
             {
-                X = value.X;
-                Y = value.Y;
+                x = value.X;
+                y = value.Y;
             }
         }
 
@@ -79,11 +78,11 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public SizeI Size
         {
-            readonly get => new(Width, Height);
+            readonly get => new(width, height);
             set
             {
-                Width = value.Width;
-                Height = value.Height;
+                width = value.Width;
+                height = value.Height;
             }
         }
 
@@ -136,37 +135,86 @@ namespace Alternet.Drawing
         public readonly int PixelCount => width * height;
 
         /// <summary>
-        /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
+        /// Gets the x-coordinate of the upper-left corner of the rectangular
+        /// region defined by this
         /// <see cref='Drawing.RectI'/> .
         /// </summary>
         [Browsable(false)]
-        public readonly int Left => X;
+        public readonly int Left => x;
 
         /// <summary>
-        /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
+        /// Gets the y-coordinate of the upper-left corner of the rectangular
+        /// region defined by this
         /// <see cref='Drawing.RectI'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly int Top => Y;
+        public readonly int Top => y;
 
         /// <summary>
-        /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectI'/>.
+        /// Gets the x-coordinate of the lower-right corner of the rectangular
+        /// region defined by this <see cref='RectI'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly int Right => unchecked(X + Width);
+        public readonly int Right => unchecked(x + width);
 
         /// <summary>
-        /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectI'/>.
+        /// This is a read-only alias for the point which is at (X, Y).
         /// </summary>
         [Browsable(false)]
-        public readonly int Bottom => unchecked(Y + Height);
+        public readonly PointI TopLeft
+        {
+            get
+            {
+                return new(x, y);
+            }
+        }
 
         /// <summary>
-        /// Tests whether this <see cref='Drawing.RectI'/> has
-        /// a <see cref='Drawing.RectI.Width'/>
-        /// or a <see cref='Drawing.RectI.Height'/> of 0.
+        /// Gets the point which is at (X + Width, Y).
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointI TopRight
+        {
+            get
+            {
+                return new(Right, y);
+            }
+        }
+
+        /// <summary>
+        /// Gets the point which is at (X, Y + Height).
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointI BottomLeft
+        {
+            get
+            {
+                return new(x, Bottom);
+            }
+        }
+
+        /// <summary>
+        /// Gets the point which is at (X + Width, Y + Height).
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointI BottomRight
+        {
+            get
+            {
+                return new(Right, Bottom);
+            }
+        }
+
+        /// <summary>
+        /// Gets the y-coordinate of the lower-right corner of the rectangular
+        /// region defined by this <see cref='RectI'/>.
+        /// </summary>
+        [Browsable(false)]
+        public readonly int Bottom => unchecked(y + height);
+
+        /// <summary>
+        /// Tests whether this <see cref='RectI'/> has
+        /// all properties equal to 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
@@ -176,6 +224,7 @@ namespace Alternet.Drawing
         /// to <see cref="RectI"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RectI((int, int, int, int) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
@@ -184,37 +233,58 @@ namespace Alternet.Drawing
         /// to <see cref="RectI"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RectI((PointI, SizeI) d) => new(d.Item1, d.Item2);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Rectangle'/> with the coordinates of the
         /// specified <see cref='RectI'/>
         /// </summary>
-        public static implicit operator System.Drawing.Rectangle(RectI p) => new(p.X, p.Y, p.Width, p.Height);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Drawing.Rectangle(RectI p) =>
+            new(p.x, p.y, p.width, p.height);
 
         /// <summary>
         /// Creates a <see cref='RectI'/> with the coordinates of the
         /// specified <see cref='System.Drawing.Rectangle'/>
         /// </summary>
-        public static implicit operator RectI(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator RectI(System.Drawing.Rectangle p) =>
+            new(p.X, p.Y, p.Width, p.Height);
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.RectI'/> objects have equal location and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(RectI left, RectI right) =>
-            left.X == right.X && left.Y == right.Y && left.Width == right.Width
-            && left.Height == right.Height;
+            left.x == right.x && left.y == right.y && left.width == right.width
+            && left.height == right.height;
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.RectI'/> objects differ in location or size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(RectI left, RectI right) => !(left == right);
 
         /// <summary>
-        /// Creates a new <see cref='Drawing.RectI'/> with the specified location and size.
+        /// Creates a new <see cref='RectI'/> using
+        /// (<paramref name="left"/>, <paramref name="top"/>) and
+        /// (<paramref name="right"/>, <paramref name="bottom"/>) points.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectI FromLTRB(int left, int top, int right, int bottom) =>
             new(left, top, unchecked(right - left), unchecked(bottom - top));
+
+        /// <summary>
+        /// Creates a new <see cref='RectI'/> specified by two points.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RectI FromLTRB(PointI leftTop, PointI rightBottom) =>
+            new(
+                leftTop.X,
+                leftTop.Y,
+                rightBottom.X - leftTop.X,
+                rightBottom.Y - leftTop.Y);
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
@@ -291,10 +361,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static RectI Intersect(RectI a, RectI b)
         {
-            int x1 = Math.Max(a.X, b.X);
-            int x2 = Math.Min(a.X + a.Width, b.X + b.Width);
-            int y1 = Math.Max(a.Y, b.Y);
-            int y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
+            int x1 = Math.Max(a.x, b.x);
+            int x2 = Math.Min(a.x + a.width, b.x + b.width);
+            int y1 = Math.Max(a.y, b.y);
+            int y2 = Math.Min(a.y + a.height, b.y + b.height);
 
             if (x2 >= x1 && y2 >= y1)
             {
@@ -309,10 +379,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static RectI Union(RectI a, RectI b)
         {
-            int x1 = Math.Min(a.X, b.X);
-            int x2 = Math.Max(a.X + a.Width, b.X + b.Width);
-            int y1 = Math.Min(a.Y, b.Y);
-            int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
+            int x1 = Math.Min(a.x, b.x);
+            int x2 = Math.Max(a.x + a.width, b.x + b.width);
+            int y1 = Math.Min(a.y, b.y);
+            int y2 = Math.Max(a.y + a.height, b.y + b.height);
 
             return new RectI(x1, y1, x2 - x1, y2 - y1);
         }
@@ -320,6 +390,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref='Drawing.RectI'/> that is inflated by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectI Inflate(RectI rect, int x, int y)
         {
             RectI r = rect;
@@ -348,6 +419,7 @@ namespace Alternet.Drawing
         /// the same location
         /// and size of this Rectangle.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
             obj is RectI rect && Equals(rect);
 
@@ -357,21 +429,22 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(RectI other) => this == other;
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region
-        /// defined by this
-        /// <see cref='Drawing.RectI'/> .
+        /// defined by this <see cref='RectI'/> .
         /// </summary>
-        public readonly bool Contains(int x, int y) => X <= x && x < X + Width
-            && Y <= y && y < Y + Height;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool Contains(int px, int py) => (x <= px) && (px < x + width)
+            && (y <= py) && (py < y + height);
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined
-        /// by this
-        /// <see cref='Drawing.RectI'/> .
+        /// by this <see cref='RectI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Contains(PointI pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
@@ -380,33 +453,35 @@ namespace Alternet.Drawing
         /// rectangular region represented by this <see cref='Drawing.RectI'/> .
         /// </summary>
         public readonly bool Contains(RectI rect) =>
-            (X <= rect.X) && (rect.X + rect.Width <= X + Width) &&
-            (Y <= rect.Y) && (rect.Y + rect.Height <= Y + Height);
+            (x <= rect.x) && (rect.x + rect.width <= x + width) &&
+            (y <= rect.y) && (rect.y + rect.height <= y + height);
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
-        public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override readonly int GetHashCode() => HashCode.Combine(x, y, width, height);
 
         /// <summary>
-        /// Inflates this <see cref='Drawing.RectI'/> by the specified amount.
+        /// Inflates this <see cref='RectI'/> by the specified amount.
         /// </summary>
-        public void Inflate(int width, int height)
+        public void Inflate(int nwidth, int nheight)
         {
             unchecked
             {
-                X -= width;
-                Y -= height;
+                x -= nwidth;
+                y -= nheight;
 
-                Width += 2 * width;
-                Height += 2 * height;
+                width += 2 * nwidth;
+                height += 2 * nheight;
             }
         }
 
         /// <summary>
         /// Inflates this <see cref='Drawing.RectI'/> by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate(SizeI size) => Inflate(size.Width, size.Height);
 
         /// <summary>
@@ -416,33 +491,35 @@ namespace Alternet.Drawing
         {
             RectI result = Intersect(rect, this);
 
-            X = result.X;
-            Y = result.Y;
-            Width = result.Width;
-            Height = result.Height;
+            x = result.x;
+            y = result.y;
+            width = result.width;
+            height = result.height;
         }
 
         /// <summary>
         /// Determines if this rectangle intersects with rect.
         /// </summary>
         public readonly bool IntersectsWith(RectI rect) =>
-            (rect.X < X + Width) && (X < rect.X + rect.Width) &&
-            (rect.Y < Y + Height) && (Y < rect.Y + rect.Height);
+            (rect.x < x + width) && (x < rect.x + rect.width) &&
+            (rect.y < y + height) && (y < rect.y + rect.height);
 
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Offset(PointI pos) => Offset(pos.X, pos.Y);
 
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
-        public void Offset(int x, int y)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Offset(int px, int py)
         {
             unchecked
             {
-                X += x;
-                Y += y;
+                x += px;
+                y += py;
             }
         }
 
@@ -477,9 +554,7 @@ namespace Alternet.Drawing
         internal readonly string ConvertToString(string format, IFormatProvider provider)
         {
             if (IsEmpty)
-            {
                 return "Empty";
-            }
 
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);

@@ -331,6 +331,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
+        /// Rectangle is specified in dips (1/96 inch).
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics
         /// of the fill.</param>
@@ -338,13 +339,34 @@ namespace Alternet.Drawing
         /// rectangle to fill.</param>
         /// <remarks>
         /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
-        /// including the specified upper-left corner and up to the calculated lower and bottom edges.
+        /// including the specified upper-left corner and up to the calculated
+        /// lower and bottom edges.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRectangle(Brush brush, RectD rectangle)
         {
             DebugBrushAssert(brush);
             dc.FillRectangle(brush.NativeBrush, rectangle);
+        }
+
+        /// <summary>
+        /// Fills the interior of a rectangle specified by a <see cref="RectI"/> structure.
+        /// Rectangle is specified in pixels.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics
+        /// of the fill.</param>
+        /// <param name="rectangle"><see cref="RectI"/> structure that represents the
+        /// rectangle to fill.</param>
+        /// <remarks>
+        /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
+        /// including the specified upper-left corner and up to the calculated lower and
+        /// bottom edges.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FillRectangleI(Brush brush, RectI rectangle)
+        {
+            DebugBrushAssert(brush);
+            dc.FillRectangleI(brush.NativeBrush, rectangle);
         }
 
         /// <summary>
@@ -822,11 +844,37 @@ namespace Alternet.Drawing
         /// <see cref="RectD"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
         /// </param>
+        /// <remarks>
+        /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
+        /// are specified in dips (1/96 inch).
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
             DebugImageAssert(image);
             dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
+        }
+
+        /// <summary>
+        /// Draws the specified portion of the image into the region defined by the specified
+        /// <see cref="RectI"/>.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="destinationRect">The region in which to draw
+        /// <paramref name="image"/>.</param>
+        /// <param name="sourceRect">
+        /// <see cref="RectI"/> structure that specifies the portion of the
+        /// <paramref name="image"/> object to draw.
+        /// </param>
+        /// <remarks>
+        /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
+        /// are specified in pixels.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
+        {
+            DebugImageAssert(image);
+            dc.DrawImagePortionAtPixelRect(image.NativeImage, destinationRect, sourceRect);
         }
 
         /// <summary>
@@ -908,14 +956,25 @@ namespace Alternet.Drawing
             RectD sourceRect,
             GraphicsUnit unit)
         {
-            if (unit != GraphicsUnit.Pixel)
+            if(unit != GraphicsUnit.Pixel)
             {
-                throw new ArgumentException(
-                    "Currently only GraphicsUnit.Pixel is supported in DrawImage",
-                    nameof(unit));
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                destinationRect = GraphicsUnitConverter.ConvertRect(
+                    unit,
+                    GraphicsUnit.Pixel,
+                    dpi,
+                    destinationRect,
+                    graphicsType);
+                sourceRect = GraphicsUnitConverter.ConvertRect(
+                    unit,
+                    GraphicsUnit.Pixel,
+                    dpi,
+                    sourceRect,
+                    graphicsType);
             }
 
-            DrawImage(image, destinationRect, sourceRect);
+            DrawImageI(image, destinationRect.ToRect(), sourceRect.ToRect());
         }
 
         /// <summary>
@@ -948,7 +1007,12 @@ namespace Alternet.Drawing
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, Font font, Brush brush, PointD origin, TextFormat format)
+        public void DrawText(
+            string text,
+            Font font,
+            Brush brush,
+            PointD origin,
+            TextFormat format)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);

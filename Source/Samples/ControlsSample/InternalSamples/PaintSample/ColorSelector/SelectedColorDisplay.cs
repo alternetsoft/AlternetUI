@@ -32,23 +32,20 @@ namespace PaintSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var dc = e.DrawingContext;
+            var dc = e.Graphics;
 
-            dc.FillRectangle(Brushes.LightGray, e.Bounds);
-            dc.FillRectangle(backgroundHatchBrush, e.Bounds);
+            dc.FillRectangle(Brushes.LightGray, e.ClipRectangle);
+            dc.FillRectangle(backgroundHatchBrush, e.ClipRectangle);
             dc.DrawLine(
                 Pens.Gray,
-                e.Bounds.TopRight + (-1, 0),
-                e.Bounds.BottomRight + (-1, 0));
+                e.ClipRectangle.TopRight + (-1, 0),
+                e.ClipRectangle.BottomRight + (-1, 0));
 
-            var innerRect = e.Bounds;
+            var innerRect = e.ClipRectangle;
             innerRect.Inflate(-10, -10);
 
             dc.FillRectangle(new SolidBrush(SelectedColor), innerRect);
             dc.DrawRectangle(Pens.Gray, innerRect);
-
-            //dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.TopRight + new Size(-1, 1));
-            //dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.BottomLeft + new Size(1, -1));
         }
     }
 }

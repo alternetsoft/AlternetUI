@@ -629,6 +629,12 @@ namespace Alternet.UI
         public virtual ControlSet Group(params Control[] controls) => new(controls);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public virtual ControlSet Group(IReadOnlyList<Control> controls) => new(controls);
+
+        /// <summary>
         /// Gets <see cref="ControlSet"/> with all controls which are members of the
         /// specified group.
         /// </summary>
@@ -1660,6 +1666,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="TabControl"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual TabControl AddTabControl()
+        {
+            var result = new TabControl
+            {
+                Parent = this,
+            };
+            return result;
+        }
+
+        /// <summary>
         /// Creates new <see cref="Button"/> and adds it to the <see cref="Children"/>.
         /// </summary>
         public virtual Button AddButton(string text, Action? action = null)
@@ -1792,6 +1810,40 @@ namespace Alternet.UI
         {
             var result = new GroupBox
             {
+                Parent = this,
+            };
+
+            if (title is not null)
+                result.Title = title;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="GroupBox"/> with vertical layout and adds
+        /// it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual GroupBox AddVerticalGroupBox(string? title = default)
+        {
+            var result = new GroupBox
+            {
+                Layout = LayoutStyle.Vertical,
+                Parent = this,
+            };
+
+            if (title is not null)
+                result.Title = title;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="GroupBox"/> with horizontal layout and adds
+        /// it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual GroupBox AddHorizontalGroupBox(string? title = default)
+        {
+            var result = new GroupBox
+            {
+                Layout = LayoutStyle.Horizontal,
                 Parent = this,
             };
 
