@@ -193,13 +193,19 @@ namespace Alternet.Drawing
         /// or a <see cref='Height'/> less than or equal to 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => (width <= 0) || (height <= 0);
+        public readonly bool SizeIsEmpty => (width <= 0) || (height <= 0);
 
         /// <summary>
         /// Tests whether this <see cref='RectD'/> has all properties equal to 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsZero => (width == 0) && (height == 0) && (x == 0) && (y == 0);
+
+        /// <summary>
+        /// Tests whether this <see cref='RectD'/> has all properties equal to 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsEmpty => (width == 0) && (height == 0) && (x == 0) && (y == 0);
 
         /// <summary>
         /// TopLeft Property - This is a read-only alias for the Point which is at X, Y
@@ -788,7 +794,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and <see cref="IFormatProvider"/> passed in.
-        /// If the provider is null, the <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used.
+        /// If the provider is null, the
+        /// <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used.
         /// See the documentation for <see cref="IFormattable"/> for more information.
         /// </summary>
         /// <returns>
@@ -796,7 +803,7 @@ namespace Alternet.Drawing
         /// </returns>
         public readonly string ConvertToString(string format, IFormatProvider provider)
         {
-            if (IsEmpty)
+            if (IsZero)
             {
                 return "Empty";
             }
