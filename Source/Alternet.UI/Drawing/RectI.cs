@@ -231,7 +231,7 @@ namespace Alternet.Drawing
         /// Creates a new <see cref='RectI'/> specified by two points.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RectD FromLTRB(PointI leftTop, PointI rightBottom) =>
+        public static RectI FromLTRB(PointI leftTop, PointI rightBottom) =>
             new(
                 leftTop.X,
                 leftTop.Y,
