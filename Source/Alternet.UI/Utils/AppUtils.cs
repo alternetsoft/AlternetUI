@@ -42,16 +42,24 @@ namespace Alternet.UI
         /// Executes terminal command redirecting output and error streams
         /// to <see cref="Application.Log"/>.
         /// </summary>
+        /// <param name="waitResult">Whether to wait until command finishes its execution.</param>
         /// <param name="command">Terminal command.</param>
         /// <param name="folder">Value of <see cref="ProcessStartInfo.WorkingDirectory"/>.</param>
-        public static void ExecuteTerminalCommand(string command, string? folder = null)
+        /// <returns>
+        /// Result of the command execution in case when <paramref name="waitResult"/> is <c>true</c>;
+        /// otherwise <c>null</c>.
+        /// </returns>
+        public static string? ExecuteTerminalCommand(
+            string command,
+            string? folder = null,
+            bool waitResult = false)
         {
-            void ExecuteOnWindows()
+            string? ExecuteOnWindows()
             {
-                Execute("cmd.exe", "/c " + command);
+                return Execute("cmd.exe", "/c " + command);
             }
 
-            void Execute(string fileName, string arguments)
+            string? Execute(string fileName, string arguments)
             {
                 Process process = new();
                 Application.Log("Run: " + fileName + " " + arguments);
@@ -79,19 +87,34 @@ namespace Alternet.UI
                     Application.IdleLog($"Error> {y.Data}");
                 };
                 process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
+
+                if (waitResult)
+                {
+                    // Do not wait for the child process to exit before
+                    // reading to the end of its redirected stream.
+                    // p.WaitForExit();
+                    // Read the output stream first and then wait.
+                    string output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+                    return output;
+                }
+                else
+                {
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+                    return null;
+                }
             }
 
-            void ExecuteOnOther()
+            string? ExecuteOnOther()
             {
-                Execute("/bin/bash", "-c \" " + command + " \"");
+                return Execute("/bin/bash", "-c \" " + command + " \"");
             }
 
             if (Application.IsWindowsOS)
-                ExecuteOnWindows();
+                return ExecuteOnWindows();
             else
-                ExecuteOnOther();
+                return ExecuteOnOther();
         }
 
         /// <summary>
