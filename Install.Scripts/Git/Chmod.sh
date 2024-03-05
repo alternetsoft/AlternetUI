@@ -1,1 +1,1 @@
-chmod u+x **/*.sh
+find -type f -iname "*.sh" -exec chmod +x {} \;
