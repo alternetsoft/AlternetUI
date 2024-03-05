@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetTopLineRect(RectD rect, double width)
+        public static RectD GetTopLineRect(this RectD rect, double width)
         {
             var point = rect.TopLeft;
             var size = new SizeD(rect.Width, width);
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Rectangle.</param>
         /// <returns></returns>
-        public static RectD GetCenterLineHorz(RectD rect)
+        public static RectD GetCenterLineHorz(this RectD rect)
         {
             var size = new SizeD(rect.Width, 1);
             var point = new PointD(rect.Left, (int)rect.Center.Y);
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Rectangle.</param>
         /// <returns></returns>
-        public static RectD GetCenterLineVert(RectD rect)
+        public static RectD GetCenterLineVert(this RectD rect)
         {
             var size = new SizeD(1, rect.Height);
             var point = new PointD((int)rect.Center.X, rect.Top);
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetBottomLineRect(RectD rect, double width)
+        public static RectD GetBottomLineRect(this RectD rect, double width)
         {
             var point = new PointD(rect.Left, rect.Bottom - width);
             var size = new SizeD(rect.Width, width);
@@ -69,7 +69,7 @@ namespace Alternet.UI
         /// <param name="length">Line length.</param>
         /// <param name="width">Line width.</param>
         public static void DrawHorzLine(
-            Graphics dc,
+            this Graphics dc,
             Brush brush,
             PointD point,
             double length,
@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// <param name="length">Line length.</param>
         /// <param name="width">Line width.</param>
         public static void DrawVertLine(
-            Graphics dc,
+            this Graphics dc,
             Brush brush,
             PointD point,
             double length,
@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// If border color is <see cref="Color.Empty"/> it is not painted.
         /// </remarks>
         public static RectD DrawDoubleBorder(
-            Graphics canvas,
+            this Graphics canvas,
             RectD rect,
             Color innerColor,
             Color outerColor)
@@ -144,7 +144,7 @@ namespace Alternet.UI
         /// <param name="rect">Border rectangle.</param>
         /// <param name="borderWidth">Border width.</param>
         public static void FillRectangleBorder(
-            Graphics dc,
+            this Graphics dc,
             Brush brush,
             RectD rect,
             double borderWidth = 1)
@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// <param name="rect">Border rectangle.</param>
         /// <param name="borderWidth">Border width.</param>
         public static void FillRectangleBorder(
-            Graphics dc,
+            this Graphics dc,
             Brush brush,
             RectD rect,
             Thickness borderWidth)
@@ -194,7 +194,7 @@ namespace Alternet.UI
         /// Issue with details is here:
         /// <see href="https://github.com/alternetsoft/AlternetUI/issues/115"/>.
         /// </remarks>
-        public static void DrawSlicedImage(Graphics canvas, NinePatchImagePaintParams e)
+        public static void DrawImageSliced(this Graphics canvas, NinePatchImagePaintParams e)
         {
             var src = e.SourceRect;
             var dst = e.DestRect;
@@ -248,7 +248,7 @@ namespace Alternet.UI
         /// <param name="rects">Border rectangles.</param>
         /// <param name="borders">Border width.</param>
         public static void FillRectanglesBorder(
-            Graphics dc,
+            this Graphics dc,
             Brush brush,
             RectD[] rects,
             Thickness[]? borders = null)
@@ -264,7 +264,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetLeftLineRect(RectD rect, double width)
+        public static RectD GetLeftLineRect(this RectD rect, double width)
         {
             var point = rect.TopLeft;
             var size = new SizeD(width, rect.Height);
@@ -276,51 +276,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetRightLineRect(RectD rect, double width)
+        public static RectD GetRightLineRect(this RectD rect, double width)
         {
             var point = new PointD(rect.Right - width, rect.Top);
             var size = new SizeD(width, rect.Height);
             return new RectD(point, size);
-        }
-
-        /// <summary>
-        /// Defines parameters for <see cref="DrawSlicedImage(Graphics, NinePatchImagePaintParams)"/>.
-        /// </summary>
-        public class NinePatchImagePaintParams
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NinePatchImagePaintParams"/> class.
-            /// </summary>
-            /// <param name="image">Image to draw.</param>
-            public NinePatchImagePaintParams(Image image)
-            {
-                Image = image;
-            }
-
-            /// <summary>
-            /// Gets or sets image that will be painted.
-            /// </summary>
-            public Image Image { get; set; }
-
-            /// <summary>
-            /// Gets or sets rectangle inside the image that will be used for painting.
-            /// </summary>
-            public RectI SourceRect { get; set; }
-
-            /// <summary>
-            /// Gets or sets destination rectangle. It supposed to be larger than
-            /// <see cref="SourceRect"/>. In this case all parts except top-left, top-right,
-            /// bottom-right, bottom-left parts will be filled with <see cref="TextureBrush"/>
-            /// constructed with correspoding parts of the image.
-            /// </summary>
-            public RectI DestRect { get; set; }
-
-            /// <summary>
-            /// Rectangle that slices image into 9 parts.
-            /// </summary>
-            public RectI PatchRect { get; set; }
-
-            internal bool Tile { get; set; } = true;
         }
     }
 }
