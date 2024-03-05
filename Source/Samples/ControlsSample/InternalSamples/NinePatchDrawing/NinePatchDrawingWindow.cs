@@ -24,32 +24,88 @@ namespace ControlsSample
         internal static Image background1 = new Bitmap(backgroundUrl1);
 
         private readonly UserControl control = new();
+        private readonly PopupPictureBox popup = new();
+
+        private readonly Button button = new("Draw on screen")
+        {
+            Visible = true,
+        };
 
         public NinePatchDrawingWindow()
         {
+            Layout = LayoutStyle.Vertical;
+
             Title = "Graphics.DrawSlicedImage demo";
 
+            control.VerticalAlignment = VerticalAlignment.Fill;
             control.Paint += Control_Paint;
             control.Parent = this;
 
+            Size = (600, 600);
+
+            button.Margin = 10;
+            button.VerticalAlignment = VerticalAlignment.Bottom;
+            button.HorizontalAlignment = HorizontalAlignment.Left;
+            button.Parent = this;
+
+            button.ClickAction = () =>
+            {
+                var dc = Graphics.FromScreen();
+
+                dc.FillRectangleI(Color.White, (0,0,500,400));
+
+                dc.DrawRotatedTextI(
+                    "Hello",
+                    (190, 250),
+                    (Font ?? Control.DefaultFont).Scaled(2.7),
+                    Color.Red,
+                    Color.Empty,
+                    40);
+            };
         }
 
         private void Control_Paint(object? sender, PaintEventArgs e)
         {
+            // All rectangles in this method are not in dips but in pixels.
+            // Graphics methods with 'I' suffix assume pixels.
+
             var brush = background1.AsBrush;
             e.Graphics.FillRectangle(brush, e.ClipRectangle);
 
-            DrawingUtils.NinePatchImagePaintParams args = new(image1);
+            NinePatchImagePaintParams args = new(image1);
             args.SourceRect = (24, 24, 16, 16);
             args.PatchRect = RectI.Inflate(args.SourceRect, -2, -2);
             args.DestRect = (70, 70, 64, 64);
-            DrawingUtils.DrawSlicedImage(e.Graphics, args);
+            e.Graphics.DrawImageSliced(args);
 
-            DrawingUtils.NinePatchImagePaintParams args2 = new(image2);
+            NinePatchImagePaintParams args2 = new(image2);
             args2.SourceRect = image2.Bounds;
             args2.PatchRect = RectI.Inflate(args2.SourceRect, -10, -10);
             args2.DestRect = (170, 170, 250, 160);
-            DrawingUtils.DrawSlicedImage(e.Graphics, args2);
+            e.Graphics.DrawImageSliced(args2);
+
+            e.Graphics.DrawRotatedTextI(
+                "Hello",
+                (190, 250),
+                (Font ?? Control.DefaultFont).Scaled(2.7),
+                Color.Red,
+                Color.Empty,
+                40);
+
+            e.Graphics.BlitI(
+                (450, 200),
+                args2.DestRect.Size,
+                e.Graphics,
+                args2.DestRect.Location,
+                RasterOperationMode.Copy);
+
+            e.Graphics.StretchBlitI(
+                (450, 400),
+                args2.DestRect.Size * 2,
+                e.Graphics,
+                args2.DestRect.Location,
+                args2.DestRect.Size,
+                RasterOperationMode.Copy);
         }
     }
 }

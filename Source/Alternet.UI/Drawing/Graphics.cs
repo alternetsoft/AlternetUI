@@ -119,6 +119,223 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Graphics FromScreen()
+        {
+            return new Graphics(UI.Native.DrawingContext.FromScreen());
+        }
+
+        /// <summary>
+        /// Draws the text rotated by angle degrees (positive angles are counterclockwise;
+        /// the full angle is 360 degrees) with the specified font, background and
+        /// foreground colors.
+        /// </summary>
+        /// <param name="location">Location used to draw the text. Specified in pixels.</param>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="angle">Text angle.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
+        /// <remarks>
+        /// Notice that, as with other draw text methods, the text can contain multiple
+        /// lines separated by the new line('\n') characters.
+        /// </remarks>
+        /// <remarks>
+        /// Under Windows only TrueType fonts can be drawn by this function.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawRotatedTextI(
+            string text,
+            PointI location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            double angle)
+        {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            DebugColorAssert(foreColor);
+            dc.DrawRotatedTextI(
+                text,
+                location,
+                font.NativeFont,
+                foreColor,
+                backColor,
+                angle);
+        }
+
+        /*/// <summary>
+        /// If supported by the platform and the type of <see cref="Graphics"/>,
+        /// fetches the contents
+        /// of the graphics, or a subset of it, as an <see cref="Image"/>.
+        /// </summary>
+        /// <param name="subrect">Subset rectangle or <c>null</c> to get full image.
+        /// Rectangle is specified in pixels.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Image GetAsBitmapI(RectI? subrect = default)
+        {
+            var result = dc.GetAsBitmapI(subrect ?? RectI.Empty);
+            return new Bitmap(result);
+        }*/
+
+        /// <summary>
+        /// Copy from a source <see cref="Graphics"/> to this graphics.
+        /// With this method you can specify the destination coordinates and the
+        /// size of area to copy which will be the same for both the source and target.
+        /// If you need to apply scaling while copying, use <see cref="StretchBlitI"/>.
+        /// Sizes and positions are specified in pixels.
+        /// </summary>
+        /// <param name="destPt">Destination device context position.</param>
+        /// <param name="sz">Size of source area to be copied.</param>
+        /// <param name="source">Source device context.</param>
+        /// <param name="srcPt">Source device context position.</param>
+        /// <param name="rop">Logical function to use.</param>
+        /// <param name="useMask">If true, Blit does a transparent blit using the mask
+        /// that is associated with the bitmap selected into the source device context.</param>
+        /// <param name="srcPtMask">Source position on the mask. If it equals (-1, -1),
+        /// <paramref name="srcPt"/> will be assumed for the mask source position.
+        /// Currently only implemented on Windows.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Notice that source coordinate <paramref name="srcPt"/> is interpreted
+        /// using the current source DC coordinate system, i.e. the scale, origin position
+        /// and axis directions are taken into account when transforming them to
+        /// physical(pixel) coordinates.
+        /// </remarks>
+        /// <remarks>
+        /// There is partial support for Blit in PostScript DC, under X.
+        /// </remarks>
+        /// <remarks>
+        /// You can influence whether MaskBlt or the explicit mask blitting code
+        /// is used, by using <see cref="Application.SetSystemOption(string, int)"/>
+        /// and setting the 'no-maskblt' option to 1.
+        /// </remarks>
+        /// <remarks>
+        /// The Windows implementation does the following if MaskBlt cannot be used:
+        /// <list type="bullet">
+        /// <listheader><term>Operations:</term></listheader>
+        ///     <item>The library or executable built from a compilation.</item>
+        /// <item>Creates a temporary bitmap and copies the destination area into it.</item>
+        /// <item>Copies the source area into the temporary bitmap using the
+        /// specified logical function.</item>
+        /// <item>Sets the masked area in the temporary bitmap to BLACK by ANDing the mask bitmap
+        /// with the temp bitmap with the foreground color set to WHITE and the bg color
+        /// set to BLACK.</item>
+        /// <item>Sets the unmasked area in the destination area to BLACK by ANDing
+        /// the mask bitmap
+        /// with the destination area with the foreground color set to BLACK and the background
+        /// color set to WHITE.</item>
+        /// <item>ORs the temporary bitmap with the destination area.</item>
+        /// <item>Deletes the temporary bitmap.</item>
+        /// </list>
+        /// This sequence of operations ensures that the source's transparent area
+        /// need not be black, and logical functions are supported.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool BlitI(
+            PointI destPt,
+            SizeI sz,
+            Graphics source,
+            PointI srcPt,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointI? srcPtMask = null)
+        {
+            srcPtMask ??= PointI.MinusOne;
+            return dc.BlitI(
+                        destPt,
+                        sz,
+                        source.NativeDrawingContext,
+                        srcPt,
+                        (int)rop,
+                        useMask,
+                        srcPtMask.Value);
+        }
+
+        /// <summary>
+        /// Copies from a source <see cref="Graphics"/> to this graphics
+        /// possibly changing the scale. Unlike <see cref="BlitI"/>, this method
+        /// allows specifying different source and destination region sizes,
+        /// meaning that it can stretch or shrink it while copying.
+        /// The meaning of its other parameters is the same as with <see cref="BlitI"/>.
+        /// Sizes and positions are specified in pixels.
+        /// </summary>
+        /// <param name="dstPt">Destination device context position.</param>
+        /// <param name="srcSize">Size of source area to be copied.</param>
+        /// <param name="dstSize">Size of destination area.</param>
+        /// <param name="source">Source device context.</param>
+        /// <param name="srcPt">Source device context position.</param>
+        /// <param name="rop">Logical function to use.</param>
+        /// <param name="useMask">If true, Blit does a transparent blit using the mask
+        /// that is associated with the bitmap selected into the source device context.</param>
+        /// <param name="srcPtMask">Source position on the mask. If it equals (-1, -1),
+        /// <paramref name="srcPt"/> will be assumed for the mask source position.
+        /// Currently only implemented on Windows.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Notice that source coordinate <paramref name="srcPt"/> is interpreted
+        /// using the current source DC coordinate system, i.e. the scale, origin position
+        /// and axis directions are taken into account when transforming them to
+        /// physical(pixel) coordinates.
+        /// </remarks>
+        /// <remarks>
+        /// There is partial support for Blit in PostScript DC, under X.
+        /// </remarks>
+        /// <remarks>
+        /// You can influence whether MaskBlt or the explicit mask blitting code
+        /// is used, by using <see cref="Application.SetSystemOption(string, int)"/>
+        /// and setting the 'no-maskblt' option to 1.
+        /// </remarks>
+        /// <remarks>
+        /// The Windows implementation does the following if MaskBlt cannot be used:
+        /// <list type="bullet">
+        /// <listheader><term>Operations:</term></listheader>
+        ///     <item>The library or executable built from a compilation.</item>
+        /// <item>Creates a temporary bitmap and copies the destination area into it.</item>
+        /// <item>Copies the source area into the temporary bitmap using the
+        /// specified logical function.</item>
+        /// <item>Sets the masked area in the temporary bitmap to BLACK by ANDing the mask bitmap
+        /// with the temp bitmap with the foreground color set to WHITE and the bg color
+        /// set to BLACK.</item>
+        /// <item>Sets the unmasked area in the destination area to BLACK by ANDing
+        /// the mask bitmap
+        /// with the destination area with the foreground color set to BLACK and the background
+        /// color set to WHITE.</item>
+        /// <item>ORs the temporary bitmap with the destination area.</item>
+        /// <item>Deletes the temporary bitmap.</item>
+        /// </list>
+        /// This sequence of operations ensures that the source's transparent area
+        /// need not be black, and logical functions are supported.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool StretchBlitI(
+            PointI dstPt,
+            SizeI dstSize,
+            Graphics source,
+            PointI srcPt,
+            SizeI srcSize,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointI? srcPtMask = null)
+        {
+            srcPtMask ??= PointI.MinusOne;
+            return dc.StretchBlitI(
+                dstPt,
+                dstSize,
+                source.NativeDrawingContext,
+                srcPt,
+                srcSize,
+                (int)rop,
+                useMask,
+                srcPtMask.Value);
+        }
+
+        /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
         /// </summary>
         /// <param name="pen"></param>
@@ -813,11 +1030,18 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="PointD"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        /// <param name="useMask">If useMask is true and the bitmap has a transparency mask,
+        /// the bitmap will be drawn transparently.</param>
+        /// <remarks>
+        /// When drawing a mono-bitmap, the current text foreground color will
+        /// be used to draw the foreground of the bitmap (all bits set to 1), and
+        /// the current text background color to draw the background (all bits set to 0).
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawImage(Image image, PointD origin)
+        public void DrawImage(Image image, PointD origin, bool useMask = false)
         {
             DebugImageAssert(image);
-            dc.DrawImageAtPoint(image.NativeImage, origin);
+            dc.DrawImageAtPoint(image.NativeImage, origin, useMask);
         }
 
         /// <summary>
@@ -826,11 +1050,18 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw
         /// <paramref name="image"/>.</param>
+        /// <param name="useMask">If useMask is true and the bitmap has a transparency mask,
+        /// the bitmap will be drawn transparently.</param>
+        /// <remarks>
+        /// When drawing a mono-bitmap, the current text foreground color will
+        /// be used to draw the foreground of the bitmap (all bits set to 1), and
+        /// the current text background color to draw the background (all bits set to 0).
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawImage(Image image, RectD destinationRect)
+        public void DrawImage(Image image, RectD destinationRect, bool useMask = false)
         {
             DebugImageAssert(image);
-            dc.DrawImageAtRect(image.NativeImage, destinationRect);
+            dc.DrawImageAtRect(image.NativeImage, destinationRect, useMask);
         }
 
         /// <summary>

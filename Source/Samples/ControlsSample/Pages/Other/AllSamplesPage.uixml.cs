@@ -112,12 +112,13 @@ namespace ControlsSample
         private void RunDotNetOnCsProjInFolder(string folder, string dotnetCmd = "run")
         {
             var targetFramework = AppUtils.GetMyTargetFrameworkName();
+            var arch = Application.Is64BitOS ? "x64" : "x86";
             var cmdRunWindows =
-              $"dotnet {dotnetCmd} /p:Platform=x64 --arch x64 --property WarningLevel=0 --framework {targetFramework}";
+              $"dotnet {dotnetCmd} /p:Platform={arch} --arch {arch} --property WarningLevel=0 --framework {targetFramework}";
             var cmdRunOther =
                 $"dotnet {dotnetCmd} --property WarningLevel=0 --framework {targetFramework}";
             var cmd = Application.IsWindowsOS ? cmdRunWindows : cmdRunOther;
-            ExecuteTerminalCommand(cmd, folder);
+            AppUtils.ExecuteTerminalCommand(cmd, folder);
         }
 
         private void BuildCsProjInFolder(string folder)
@@ -178,43 +179,7 @@ namespace ControlsSample
                 FileUtils.DeleteBinObjFiles(s);
         }
 
-        public void ExecuteTerminalCommand(string command, string? folder = null)
-        {
-            void ExecuteOnWindows()
-            {
-                ProcessStartInfo processInfo;
-                var cmdName = "cmd.exe";
-                var cmdPrefix = "/c ";
-                Application.Log("Run: " + cmdName + " " + cmdPrefix + command);
-                processInfo = new(cmdName, cmdPrefix + command)
-                {
-                    CreateNoWindow = false,
-                    UseShellExecute = false,
-                };
-                if (folder != null)
-                    processInfo.WorkingDirectory = folder;
-                Process.Start(processInfo);
-            }
-
-            void ExecuteOnOther()
-            {
-                Process proc = new();
-                proc.StartInfo.FileName = "/bin/bash";
-                proc.StartInfo.Arguments = "-c \" " + command + " \"";
-                proc.StartInfo.UseShellExecute = false;
-                if (folder != null)
-                    proc.StartInfo.WorkingDirectory = folder;
-                proc.Start();
-            }
-
-            if (Application.IsWindowsOS)
-                ExecuteOnWindows();
-            else
-                ExecuteOnOther();
-
-        }
-
-        internal static bool RunSample(
+        /*internal static bool RunSample(
             string filePath,
             string args,
             string? folder = null)
@@ -236,7 +201,7 @@ namespace ControlsSample
             {
                 return false;
             }
-        }
+        }*/
 
         private void RunAllButton_Click(object? sender, EventArgs e)
         {

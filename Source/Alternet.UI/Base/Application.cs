@@ -536,7 +536,8 @@ namespace Alternet.UI
         internal string EventArgString => NativeApplication.EventArgString;
 
         /// <summary>
-        /// Instructs the application to display a dialog with an optional <paramref name="message"/>,
+        /// Instructs the application to display a dialog with an optional
+        /// <paramref name="message"/>,
         /// and to wait until the user dismisses the dialog.
         /// </summary>
         /// <param name="message">A string you want to display in the alert dialog, or,

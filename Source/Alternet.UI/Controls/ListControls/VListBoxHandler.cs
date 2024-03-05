@@ -9,8 +9,7 @@ namespace Alternet.UI
     {
         private bool receivingSelection;
         private bool applyingSelection;
-        private Graphics? graphics;
-        private IntPtr savedDC;
+        private Graphics? drawItemCanvas;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
@@ -85,27 +84,29 @@ namespace Alternet.UI
             base.OnDetach();
         }
 
-        private Graphics GetGraphics()
+        protected Graphics GetDrawItemCanvas()
         {
-            if (NativeControl.EventDc != savedDC && graphics is not null)
+            var drawItemDC = NativeControl.EventDc;
+
+            if (drawItemCanvas is not null
+                && drawItemDC != drawItemCanvas.NativeDrawingContext.WxWidgetDC)
             {
-                graphics.Dispose();
-                graphics = null;
+                drawItemCanvas.Dispose();
+                drawItemCanvas = null;
             }
 
-            if (graphics is null)
+            if (drawItemCanvas is null)
             {
-                savedDC = NativeControl.EventDc;
-                var ptr = Native.Control.OpenDrawingContextForDC(savedDC, false);
-                graphics = new Graphics(ptr);
+                var ptr = Native.Control.OpenDrawingContextForDC(drawItemDC, false);
+                drawItemCanvas = new Graphics(ptr);
             }
 
-            return graphics;
+            return drawItemCanvas;
         }
 
         private void NativeControl_DrawItem()
         {
-            var dc = GetGraphics();
+            var dc = GetDrawItemCanvas();
 
             var rect = Control.PixelToDip(NativeControl.EventRect);
 
