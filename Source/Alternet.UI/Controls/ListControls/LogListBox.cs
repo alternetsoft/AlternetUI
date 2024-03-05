@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI.Localization;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -23,7 +26,6 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
         /// </summary>
         public LogListBox()
-            : base()
         {
             SelectionMode = ListBoxSelectionMode.Multiple;
         }

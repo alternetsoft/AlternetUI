@@ -39,6 +39,8 @@ namespace ControlsSample
             };
 
             eventsControl.BindApplicationLog();
+            ConsoleUtils.BindConsoleOutput();
+            ConsoleUtils.BindConsoleError();
             DoInsideLayout(Initialize);
         }
 
