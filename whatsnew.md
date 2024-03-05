@@ -1,3 +1,12 @@
+# 0.9.516 (2024 March 5)
+
+- Started VListBox control. This is ListBox descendant which is capable to contain huge number of items.
+- Fixed Alternet.UI.Pal library loader.
+- Graphics: FromScreen, DrawRotatedTextI, BlitI, StretchBlitI.
+- Renamed DrawSlicedImage to DrawImageSliced and defined as Graphics extension #115.
+- AppUtils.ExecuteTerminalCommand.
+- Add ConsoleUtils class.
+
 # 0.9.515 (2024 March 4)
 
 - TextureBrush.
