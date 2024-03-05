@@ -6,6 +6,23 @@ namespace NativeApi.Api
 {
     public class DrawingContext
     {
+        public IntPtr WxWidgetDC { get; }
+
+        public void DrawRotatedTextI(string text, PointI location, Font font,
+            Color foreColor, Color backColor, double angle) {}
+
+        public Image GetAsBitmapI(RectI subrect) => default;
+
+        public bool BlitI(PointI destPt, SizeI sz,
+              DrawingContext source, PointI srcPt,
+              int rop /*= wxCOPY RasterOperationMode*/, bool useMask /*= false*/,
+              PointI srcPtMask /*= wxDefaultPosition*/) => default;
+
+        public bool StretchBlitI(PointI dstPt, SizeI dstSize,
+                     DrawingContext source, PointI srcPt, SizeI srcSize,
+                     int rop, bool useMask /*= false*/,
+                     PointI srcMaskPt) => default;
+
         public RectD DrawLabel(string text, Font font,
             Color foreColor, Color backColor, Image? image, RectD rect,
             int alignment /*= wxALIGN_LEFT | wxALIGN_TOP*/,
@@ -72,6 +89,8 @@ namespace NativeApi.Api
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
+        public static DrawingContext FromScreen() => throw new Exception();
+
         public void RoundedRectangle(Pen pen, Brush brush, RectD rectangle,
             double cornerRadius) { }
         public void Rectangle(Pen pen, Brush brush, RectD rectangle) { }
@@ -110,9 +129,9 @@ namespace NativeApi.Api
             TextTrimming trimming,
             TextWrapping wrapping) => throw new Exception();
 
-        public void DrawImageAtPoint(Image image, PointD origin) => throw new Exception();
+        public void DrawImageAtPoint(Image image, PointD origin, bool useMask = false) => throw new Exception();
 
-        public void DrawImageAtRect(Image image, RectD destinationRect) => throw new Exception();
+        public void DrawImageAtRect(Image image, RectD destinationRect, bool useMask = false) => throw new Exception();
 
         public void DrawImagePortionAtRect(Image image, RectD destinationRect,
             RectD sourceRect) { }

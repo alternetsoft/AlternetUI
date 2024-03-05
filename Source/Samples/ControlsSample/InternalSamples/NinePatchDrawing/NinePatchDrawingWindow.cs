@@ -24,18 +24,50 @@ namespace ControlsSample
         internal static Image background1 = new Bitmap(backgroundUrl1);
 
         private readonly UserControl control = new();
+        private readonly PopupPictureBox popup = new();
+
+        private readonly Button button = new("Draw on screen")
+        {
+            Visible = true,
+        };
 
         public NinePatchDrawingWindow()
         {
+            Layout = LayoutStyle.Vertical;
+
             Title = "Graphics.DrawSlicedImage demo";
 
+            control.VerticalAlignment = VerticalAlignment.Fill;
             control.Paint += Control_Paint;
             control.Parent = this;
 
+            Size = (600, 600);
+
+            button.Margin = 10;
+            button.VerticalAlignment = VerticalAlignment.Bottom;
+            button.HorizontalAlignment = HorizontalAlignment.Left;
+            button.Parent = this;
+
+            button.ClickAction = () =>
+            {
+                var dc = Graphics.FromScreen();
+
+                dc.FillRectangleI(Color.White, (0,0,500,400));
+
+                dc.DrawRotatedTextI(
+                    "Hello",
+                    (190, 250),
+                    (Font ?? Control.DefaultFont).Scaled(2.7),
+                    Color.Red,
+                    Color.Empty,
+                    40);
+            };
         }
 
         private void Control_Paint(object? sender, PaintEventArgs e)
         {
+            // All rectangles in this method are in pixels
+
             var brush = background1.AsBrush;
             e.Graphics.FillRectangle(brush, e.ClipRectangle);
 
@@ -50,6 +82,29 @@ namespace ControlsSample
             args2.PatchRect = RectI.Inflate(args2.SourceRect, -10, -10);
             args2.DestRect = (170, 170, 250, 160);
             DrawingUtils.DrawSlicedImage(e.Graphics, args2);
+
+            e.Graphics.DrawRotatedTextI(
+                "Hello",
+                (190, 250),
+                (Font ?? Control.DefaultFont).Scaled(2.7),
+                Color.Red,
+                Color.Empty,
+                40);
+
+            e.Graphics.BlitI(
+                (450, 200),
+                args2.DestRect.Size,
+                e.Graphics,
+                args2.DestRect.Location,
+                RasterOperationMode.Copy);
+
+            e.Graphics.StretchBlitI(
+                (450, 400),
+                args2.DestRect.Size * 2,
+                e.Graphics,
+                args2.DestRect.Location,
+                args2.DestRect.Size,
+                RasterOperationMode.Copy);
         }
     }
 }
