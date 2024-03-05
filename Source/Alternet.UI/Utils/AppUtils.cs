@@ -39,6 +39,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes terminal command redirecting output and error streams
+        /// to <see cref="Application.Log"/>.
+        /// </summary>
+        /// <param name="command">Terminal command.</param>
+        /// <param name="folder">Value of <see cref="ProcessStartInfo.WorkingDirectory"/>.</param>
+        public static void ExecuteTerminalCommand(string command, string? folder = null)
+        {
+            void ExecuteOnWindows()
+            {
+                Execute("cmd.exe", "/c " + command);
+            }
+
+            void Execute(string fileName, string arguments)
+            {
+                Process process = new();
+                Application.Log("Run: " + fileName + " " + arguments);
+                ProcessStartInfo processInfo = new(fileName, arguments)
+                {
+                    // If the UseShellExecute property is true,
+                    // the CreateNoWindow property value is ignored
+                    // and a new window is created.
+                    // .NET Core does not support creating windows directly
+                    // on Unix/Linux/macOS and the property is ignored.
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    RedirectStandardError = true,
+                };
+                if (folder != null)
+                    processInfo.WorkingDirectory = folder;
+                process.StartInfo = processInfo;
+                process.OutputDataReceived += (x, y) => Application.IdleLog($"Output> {y.Data}");
+                process.ErrorDataReceived += (x, y) =>
+                {
+                    if (string.IsNullOrWhiteSpace(y.Data))
+                        return;
+                    Application.IdleLog($"Error> {y.Data}");
+                };
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+            }
+
+            void ExecuteOnOther()
+            {
+                Execute("/bin/bash", "-c \" " + command + " \"");
+            }
+
+            if (Application.IsWindowsOS)
+                ExecuteOnWindows();
+            else
+                ExecuteOnOther();
+        }
+
+        /// <summary>
         /// Uses <see cref="Process"/> to start the application.
         /// </summary>
         /// <param name="filePath">Path to the application.</param>
