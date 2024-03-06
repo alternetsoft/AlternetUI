@@ -61,6 +61,49 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override string Text
+        {
+            get => base.Text;
+            set
+            {
+                base.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected color.
+        /// Color value must be added to the list of colors
+        /// before selecting it.
+        /// </summary>
+        public Color? Value
+        {
+            get
+            {
+                if (SelectedItem is ListControlItem item)
+                    return item.Value as Color;
+                return SelectedItem as Color;
+            }
+
+            set
+            {
+                if (Value == value)
+                    return;
+                foreach(var item in Items)
+                {
+                    if (item is not ListControlItem item2)
+                        continue;
+                    if (item2.Value is not Color color)
+                        continue;
+                    if (color != value)
+                        continue;
+                    SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// Paints color image in the item with the default style. Borders around
         /// color image are also painted by this method.
