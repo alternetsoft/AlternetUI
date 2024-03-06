@@ -37,7 +37,7 @@ namespace Alternet::UI
 
     void Menu::OnMenuCommand(wxCommandEvent& event)
     {
-        event.Skip();
+        event.StopPropagation();
         auto item = MenuItem::GetMenuItemById(event.GetId());
         if (item == nullptr)
             return;

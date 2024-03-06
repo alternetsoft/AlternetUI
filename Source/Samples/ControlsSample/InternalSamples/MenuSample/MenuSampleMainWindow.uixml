@@ -4,18 +4,13 @@
         Width="900"
         Height="700"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">
-
-  <Window.InputBindings>
-    <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ExportToPngCommand}" />
-  </Window.InputBindings>
-
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">
         <MenuItem Text="_Open..." Name="openMenuItem"
                   Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
-        <MenuItem Text="_Save..." Name="saveMenuItem"
-                  Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
+        <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveCommand_Click"
+                  Shortcut="Ctrl+S"/>
         <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem"
                   Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />
@@ -23,7 +18,7 @@
           <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem"
                     Click="ExportToPdfMenuItem_Click" />
           <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem"
-                    Command="{Binding ExportToPngCommand}" Shortcut="Ctrl+Shift+G"/>
+                    Click="ExportToPngCommand_Click" Shortcut="Ctrl+Shift+G"/>
         </MenuItem>
         <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
       </MenuItem>
