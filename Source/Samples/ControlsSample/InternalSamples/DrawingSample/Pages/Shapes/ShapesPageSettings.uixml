@@ -2,20 +2,13 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
-    <Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+  <Grid Margin="5" RowCount="2" ColumnCount="2">
+    <Label Text="Brush Color:" Margin="0,5,15,5" Grid.Column="0" Grid.Row="0"/>
+    <ColorComboBox Name="brushColorCombo" SelectedItemChanged="BrushColorCombo_Changed"
+      Margin="0,0,0,10" Grid.Column="1" Grid.Row="0" />
 
-        <Label Text="Brush Color:" Margin="0,5,15,5" Grid.Column="0" Grid.Row="0"/>
-        <ColorPicker Margin="0,0,0,10" Value="{Binding BrushColor}" Grid.Column="1" Grid.Row="0" />
-
-        <Label Text="Pen Color:" Margin="0,5,15,5" Grid.Column="0" Grid.Row="1"/>
-        <ColorPicker Margin="0,0,0,10" Value="{Binding PenColor}" Grid.Column="1" Grid.Row="1"/>
-    </Grid>
+    <Label Text="Pen Color:" Margin="0,5,15,5" Grid.Column="0" Grid.Row="1"/>
+    <ColorComboBox Name="penColorCombo" SelectedItemChanged="PenColorCombo_Changed"
+      Margin="0,0,0,10" Grid.Column="1" Grid.Row="1"/>
+  </Grid>
 </Control>
