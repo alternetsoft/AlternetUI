@@ -9,21 +9,14 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class ColorPicker : Control
     {
+        private Color color = Color.Black;
+
         /// <summary>
-        /// Identifies the <see cref="Value"/> dependency property.
+        /// Initializes a new instance of the <see cref="ColorPicker"/> class.
         /// </summary>
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(
-                    "Value",
-                    typeof(Color),
-                    typeof(ColorPicker),
-                    new FrameworkPropertyMetadata(
-                            Color.Black,
-                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),
-                            null,
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));
+        public ColorPicker()
+        {
+        }
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in some way.
@@ -44,12 +37,16 @@ namespace Alternet.UI
         {
             get
             {
-                return (Color)GetValue(ValueProperty);
+                return color;
             }
 
             set
             {
-                SetValue(ValueProperty, value);
+                value ??= Color.Black;
+                if (color == value)
+                    return;
+                color = value;
+                RaiseValueChanged(EventArgs.Empty);
             }
         }
 
@@ -61,9 +58,6 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
         }
@@ -82,24 +76,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Callback for changes to the Value property
-        /// </summary>
-        private static void OnValuePropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            ColorPicker control = (ColorPicker)d;
-            control.OnValuePropertyChanged((Color)e.OldValue, (Color)e.NewValue);
-        }
-
-#pragma warning disable
-        private void OnValuePropertyChanged(Color oldValue, Color newValue)
-#pragma warning restore
-        {
-            RaiseValueChanged(EventArgs.Empty);
         }
     }
 }
