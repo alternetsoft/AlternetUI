@@ -15,7 +15,6 @@ namespace DrawingSample
 
         public void Initialize(GraphicsPathPage page)
         {
-            DataContext = page;
             this.page = page;
 
             foreach (var value in Enum.GetValues(typeof(RandomArt.PathSegmentType)))
@@ -23,14 +22,29 @@ namespace DrawingSample
 
             foreach (var value in Enum.GetValues(typeof(FillMode)))
                 pathFillModeComboBox.Items.Add(value!);
+
+            pathFillModeComboBox.SelectedItem = page.PathFillMode;
+            pathSegmentTypeComboBox.SelectedItem = page.PathSegmentType;
         }
 
-        private void ClearButton_Click(object sender, System.EventArgs e)
+        private void PathSegmentTypeComboBox_Changed(object? sender, System.EventArgs e)
+        {
+            if (page is not null && pathSegmentTypeComboBox.SelectedItem is not null)
+                page.PathSegmentType = (RandomArt.PathSegmentType)pathSegmentTypeComboBox.SelectedItem;
+        }
+
+        private void PathFillModeComboBox_Changed(object? sender, System.EventArgs e)
+        {
+            if (page is not null && pathFillModeComboBox.SelectedItem is not null)
+                page.PathFillMode = (FillMode)pathFillModeComboBox.SelectedItem;
+        }
+
+        private void ClearButton_Click(object? sender, System.EventArgs e)
         {
             page?.Clear();
         }
 
-        private void CloseLastFigureButton_Click(object sender, System.EventArgs e)
+        private void CloseLastFigureButton_Click(object? sender, System.EventArgs e)
         {
             page?.CloseLastFigure();
         }

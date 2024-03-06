@@ -3,26 +3,27 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample"
         Title="Alternet UI Custom Controls Sample"
-        MinWidth="800" MinHeight="700" StartLocation="CenterScreen">
+        MinWidth="900" MinHeight="700" StartLocation="CenterScreen">
     
   <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Padding="10"
               HorizontalAlignment="Stretch">
         
-		<GroupBox Title="Color Picker" Margin="0,0,0,10" Padding="10" >
-            <StackPanel Orientation="Horizontal" Name="colorPickerStackPanel">
-                <Label Text="Native:" VerticalAlignment="Center" Margin="0,0,5,5" />
-                <ColorPicker Value="Red" HorizontalAlignment="Left" Margin="0,0,10,5"
+		<GroupBox Title="Color Picker" Margin="0,0,0,10">
+          <HorizontalStackPanel MinChildMargin="5" Name="colorGroupBox" Padding="10">
+                <Label Text="Native:" VerticalAlignment="Center"/>
+                <ColorPicker Value="Red" HorizontalAlignment="Left"
                              Name="nativeColorPicker"/>
-                <Label Text="Custom:" VerticalAlignment="Center" Margin="0,0,5,5" /> 
-            </StackPanel>
+                <Label Text="SpeedButton:" VerticalAlignment="Center"/>
+          </HorizontalStackPanel>
         </GroupBox>
 
 			<GroupBox Title="Native Sliders and Progress Bars" Margin="0,0,0,10" Padding="10">
 				<StackPanel Orientation="Horizontal">
-					<Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" 
-                            TickFrequency="25" 
+					<Slider Minimum="0" Maximum="100" Value="25"
+                            TickFrequency="25" Name="slider1" ValueChanged="Slider_ValueChanged"
 						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
-					<ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" 
+					<ProgressBar Name="progressBar1"
+                      Minimum="0" Maximum="100"
 						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
 					<Label VerticalAlignment="Center" Name="intValueLabel"/>
 				</StackPanel>

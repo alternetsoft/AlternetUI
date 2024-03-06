@@ -4,7 +4,8 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Clip Operation:" Margin="0,10,0,5" />
-        <ComboBox Name="clipOperationComboBox" IsEditable="false" SelectedItem="{Binding SelectedClipOperation}"/>
+        <ComboBox Name="clipOperationComboBox" IsEditable="false"
+                  SelectedItemChanged="ClipOperationComboBox_Changed"/>
     
         <Button Name="resetButton" Text="Reset" Click="ResetButton_Click" Margin="0,20,0,0"/>
     </StackPanel>

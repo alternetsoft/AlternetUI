@@ -49,18 +49,18 @@ namespace Alternet.UI
         /// Result of the command execution in case when <paramref name="waitResult"/> is <c>true</c>;
         /// otherwise <c>null</c>.
         /// </returns>
-        public static string? ExecuteTerminalCommand(
+        public static (string? Output, string? Error, int ExitCode) ExecuteTerminalCommand(
             string command,
             string? folder = null,
             bool waitResult = false)
         {
-            string? ExecuteOnWindows()
+            (string? Output, string? Error, int ExitCode) Execute(
+                string fileName,
+                string arguments)
             {
-                return Execute("cmd.exe", "/c " + command);
-            }
+                string? errorData = null;
+                string? outputData = null;
 
-            string? Execute(string fileName, string arguments)
-            {
                 Process process = new();
                 Application.Log("Run: " + fileName + " " + arguments);
                 ProcessStartInfo processInfo = new(fileName, arguments)
@@ -79,14 +79,22 @@ namespace Alternet.UI
                 if (folder != null)
                     processInfo.WorkingDirectory = folder;
                 process.StartInfo = processInfo;
-                process.OutputDataReceived += (x, y) => Application.IdleLog($"Output> {y.Data}");
+                process.OutputDataReceived += (x, y) =>
+                {
+                    outputData += y.Data;
+                    Application.IdleLog($"Output> {y.Data}");
+                };
                 process.ErrorDataReceived += (x, y) =>
                 {
                     if (string.IsNullOrWhiteSpace(y.Data))
                         return;
+                    errorData += y.Data;
                     Application.IdleLog($"Error> {y.Data}");
                 };
                 process.Start();
+
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
 
                 if (waitResult)
                 {
@@ -94,27 +102,20 @@ namespace Alternet.UI
                     // reading to the end of its redirected stream.
                     // p.WaitForExit();
                     // Read the output stream first and then wait.
-                    string output = process.StandardOutput.ReadToEnd();
+                    // string output = process.StandardOutput.ReadToEnd();
                     process.WaitForExit();
-                    return output;
+                    return (outputData, errorData, process.ExitCode);
                 }
                 else
                 {
-                    process.BeginOutputReadLine();
-                    process.BeginErrorReadLine();
-                    return null;
+                    return (null, null, 0);
                 }
             }
 
-            string? ExecuteOnOther()
-            {
-                return Execute("/bin/bash", "-c \" " + command + " \"");
-            }
-
             if (Application.IsWindowsOS)
-                return ExecuteOnWindows();
+                return Execute("cmd.exe", "/c " + command);
             else
-                return ExecuteOnOther();
+                return Execute("/bin/bash", "-c \" " + command + " \"");
         }
 
         /// <summary>

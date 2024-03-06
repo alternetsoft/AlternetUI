@@ -20,12 +20,21 @@ namespace MenuSample
         {
         }
 
+        public void ExportToPngCommand_Click(object? sender, EventArgs e)
+        {
+            ExportToPngCommand?.Execute(null);
+        }
+
+        public void SaveCommand_Click(object? sender, EventArgs e)
+        {
+            SaveCommand?.Execute(null);
+        }
+
         public MainWindow()
         {
             Icon = Application.DefaultIcon;
             InitializeComponent();
 
-            eventsListBox.BindApplicationLog();
             InitToolbar();
 
             SaveCommand = new Command(o => LogEvent("Save"), o => saveEnabledMenuItem.Checked);
@@ -71,6 +80,8 @@ namespace MenuSample
 
             saveMenuItem.Image = images.ImgFileSave;
             saveMenuItem.Image = imagesDisabled.ImgFileSave;
+
+            eventsListBox.BindApplicationLog();
         }
         private StatusBar? GetStatusBar() => StatusBar as StatusBar;
 
@@ -186,13 +197,6 @@ namespace MenuSample
 
             dynamicToolbarItemsSeparator = new ToolBarItem("-");
             toolbar?.Items.Add(dynamicToolbarItemsSeparator);
-
-            Application.Current.LogMessage += Current_LogMessage;
-        }
-
-        private void Current_LogMessage(object? sender, LogMessageEventArgs e)
-        {
-            LogEvent(e.Message);
         }
 
         private void PlatformSpecificInitialize()
@@ -345,10 +349,7 @@ namespace MenuSample
 
         void LogEvent(string? message)
         {
-            if (message is null)
-                return;
-            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
-            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
+            Application.Log(message);
         }
 
         private void ToggleToolbarItemCheckButton_Click(object? sender, EventArgs e)

@@ -14,7 +14,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Value = (Color)Control.Value;
+            NativeControl.Value = Control.Value;
 
             Control.ValueChanged += Control_ValueChanged;
 
