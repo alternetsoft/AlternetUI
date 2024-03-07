@@ -115,7 +115,7 @@ namespace Alternet.UI
             if (Application.IsWindowsOS)
                 return Execute("cmd.exe", "/c " + command);
             else
-                return Execute("/bin/bash", "-c \" " + command + " \"");
+                return Execute("/bin/bash", "-c " + command);
         }
 
         /// <summary>
