@@ -54,68 +54,73 @@ namespace Alternet.UI
             string? folder = null,
             bool waitResult = false)
         {
-            (string? Output, string? Error, int ExitCode) Execute(
-                string fileName,
-                string arguments)
-            {
-                string? errorData = null;
-                string? outputData = null;
-
-                Process process = new();
-                Application.Log("Run: " + fileName + " " + arguments);
-                ProcessStartInfo processInfo = new(fileName, arguments)
-                {
-                    // If the UseShellExecute property is true,
-                    // the CreateNoWindow property value is ignored
-                    // and a new window is created.
-                    // .NET Core does not support creating windows directly
-                    // on Unix/Linux/macOS and the property is ignored.
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    RedirectStandardError = true,
-                };
-                if (folder != null)
-                    processInfo.WorkingDirectory = folder;
-                process.StartInfo = processInfo;
-                process.OutputDataReceived += (x, y) =>
-                {
-                    outputData += y.Data;
-                    Application.IdleLog($"Output> {y.Data}");
-                };
-                process.ErrorDataReceived += (x, y) =>
-                {
-                    if (string.IsNullOrWhiteSpace(y.Data))
-                        return;
-                    errorData += y.Data;
-                    Application.IdleLog($"Error> {y.Data}");
-                };
-                process.Start();
-
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-
-                if (waitResult)
-                {
-                    // Do not wait for the child process to exit before
-                    // reading to the end of its redirected stream.
-                    // p.WaitForExit();
-                    // Read the output stream first and then wait.
-                    // string output = process.StandardOutput.ReadToEnd();
-                    process.WaitForExit();
-                    return (outputData, errorData, process.ExitCode);
-                }
-                else
-                {
-                    return (null, null, 0);
-                }
-            }
-
             if (Application.IsWindowsOS)
-                return Execute("cmd.exe", "/c " + command);
+                return ExecuteApp("cmd.exe", "/c " + command, folder, waitResult);
             else
-                return Execute("/bin/bash", "-c " + command);
+                return ExecuteApp("/bin/bash", "-c \"" + command + "\"", folder, waitResult);
+        }
+
+        /// <summary>
+        /// Executes application with the specified parameters.
+        /// </summary>
+        public static (string? Output, string? Error, int ExitCode) ExecuteApp(
+            string fileName,
+            string arguments,
+            string? folder = null,
+            bool waitResult = false)
+        {
+            string? errorData = null;
+            string? outputData = null;
+
+            Process process = new();
+            Application.Log("Run: " + fileName + " " + arguments);
+            ProcessStartInfo processInfo = new(fileName, arguments)
+            {
+                // If the UseShellExecute property is true,
+                // the CreateNoWindow property value is ignored
+                // and a new window is created.
+                // .NET Core does not support creating windows directly
+                // on Unix/Linux/macOS and the property is ignored.
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                RedirectStandardError = true,
+            };
+            if (folder != null)
+                processInfo.WorkingDirectory = folder;
+            process.StartInfo = processInfo;
+            process.OutputDataReceived += (x, y) =>
+            {
+                outputData += y.Data;
+                Application.IdleLog($"Output> {y.Data}");
+            };
+            process.ErrorDataReceived += (x, y) =>
+            {
+                if (string.IsNullOrWhiteSpace(y.Data))
+                    return;
+                errorData += y.Data;
+                Application.IdleLog($"Error> {y.Data}");
+            };
+            process.Start();
+
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
+            if (waitResult)
+            {
+                // Do not wait for the child process to exit before
+                // reading to the end of its redirected stream.
+                // p.WaitForExit();
+                // Read the output stream first and then wait.
+                // string output = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return (outputData, errorData, process.ExitCode);
+            }
+            else
+            {
+                return (null, null, 0);
+            }
         }
 
         /// <summary>
