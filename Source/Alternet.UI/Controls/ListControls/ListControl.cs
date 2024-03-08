@@ -201,6 +201,30 @@ namespace Alternet.UI
             }
         }
 
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        internal new Thickness Padding
+        {
+            get => base.Padding;
+            set => base.Padding = value;
+        }
+
+        internal new Thickness? MinChildMargin
+        {
+            get => base.MinChildMargin;
+            set => base.MinChildMargin = value;
+        }
+
         string? IReadOnlyStrings.this[int index] => GetItemText(index);
 
         /// <summary>
