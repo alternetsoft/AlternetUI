@@ -104,7 +104,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <seealso cref="SelectedIndicesDescending"/>
         [Browsable(false)]
-        public IReadOnlyList<int> SelectedIndices
+        public virtual IReadOnlyList<int> SelectedIndices
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Alternet.UI
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
         [Browsable(false)]
-        public IReadOnlyList<int> SelectedIndicesDescending
+        public virtual IReadOnlyList<int> SelectedIndicesDescending
         {
             get
             {
@@ -337,7 +337,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public IReadOnlyList<object> SelectedItems
+        public virtual IReadOnlyList<object> SelectedItems
         {
             get
             {
@@ -358,7 +358,7 @@ namespace Alternet.UI
         /// how many items in the <see cref="ListBox"/>
         /// a user can select at one time.
         /// </remarks>
-        public ListBoxSelectionMode SelectionMode
+        public virtual ListBoxSelectionMode SelectionMode
         {
             get
             {
@@ -395,7 +395,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes selected items from the <see cref="ListBox"/>.
         /// </summary>
-        public void RemoveSelectedItems()
+        public virtual void RemoveSelectedItems()
         {
             RemoveItems(SelectedIndicesDescending);
         }
@@ -405,7 +405,7 @@ namespace Alternet.UI
         /// contents of the control, if necessary.
         /// </summary>
         /// <param name="itemIndex">The item index to scroll into visibility.</param>
-        public void EnsureVisible(int itemIndex) => Handler.EnsureVisible(itemIndex);
+        public virtual void EnsureVisible(int itemIndex) => Handler.EnsureVisible(itemIndex);
 
         /// <summary>
         /// Returns the zero-based index of the item at the specified coordinates.
@@ -416,7 +416,7 @@ namespace Alternet.UI
         /// <returns>The zero-based index of the item found at the specified
         /// coordinates; returns <see langword="null"/>
         /// if no match is found.</returns>
-        public int? HitTest(PointD position) => Handler.HitTest(position);
+        public virtual int? HitTest(PointD position) => Handler.HitTest(position);
 
         /// <summary>
         /// Gets only valid indexes from the list of indexes in
@@ -449,7 +449,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects items with specified indexes in the <see cref="ListBox"/>.
         /// </summary>
-        public void SelectItems(params int[] indexes)
+        public virtual void SelectItems(params int[] indexes)
         {
             SelectedIndices = GetValidIndexes(indexes);
         }
@@ -457,7 +457,7 @@ namespace Alternet.UI
         /// <summary>
         /// Checks whether index is valid in the <see cref="ListBox"/>.
         /// </summary>
-        public bool IsValidIndex(int index)
+        public virtual bool IsValidIndex(int index)
         {
             return index >= 0 && index < Items.Count;
         }
@@ -485,7 +485,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The specified index
         /// was outside the range of valid values.</exception>
-        public bool SetSelected(int index, bool value)
+        public virtual bool SetSelected(int index, bool value)
         {
             if (index < 0 || index >= Items.Count)
                 throw new ArgumentOutOfRangeException(nameof(value));
