@@ -1,3 +1,15 @@
+# 0.9.517 (2024 March 8)
+
+- ColorComboBox.Value.
+- Fixed MenuItem raised multiple Click events. Fixed two problems: If menu item was not on the main level it raised multiple 
+Click events. Clicks were logged twice in the MenuSample.
+- ListControl.CustomItemText event.
+- VListBox: DefaultItemMargin, ItemMargin, DefaultSelectedItemTextColor, SelectedItemTextColor, DefaultItemTextColor, 
+ItemTextColor, SelectedItemBackColor, DefaultSelectedItemBackColor, SelectedItemIsBold.
+- VListBox: Added virtual methods to get font and color settings for the items.
+- VListBox: Added virtual DrawItem and MeasureItemSize.
+- NinePatchDrawingWindow: Draw on all screens.
+
 # 0.9.516 (2024 March 5)
 
 - Started VListBox control. This is ListBox descendant which is capable to contain huge number of items.
