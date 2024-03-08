@@ -298,7 +298,7 @@ namespace Alternet.UI
             if (NativeControl is null)
                 return;
             NativeControl.UnsetToolTip();
-            NativeControl.ToolTip = toolTip;
+            NativeControl.ToolTip = GetRealToolTip();
         }
 
         /// <summary>
