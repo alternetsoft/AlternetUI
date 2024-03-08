@@ -49,19 +49,25 @@ namespace ControlsSample
 
             button.ClickAction = () =>
             {
-                var rect = Display.Primary.Bounds;
+                for(int i = 0; i < Display.Count; i++)
+                    DrawOnDisplay(i);
 
-                var dc = Graphics.FromScreen();
+                void DrawOnDisplay(int index)
+                {
+                    var rect = Display.AllScreens[index].Bounds;
 
-                dc.FillRectangleI(Color.White, (rect.Location,(500,400)));
+                    var dc = Graphics.FromScreen();
 
-                dc.DrawRotatedTextI(
-                    "Hello",
-                    rect.Location + (190, 250),
-                    (Font ?? Control.DefaultFont).Scaled(2.7),
-                    Color.Red,
-                    Color.Empty,
-                    40);
+                    dc.FillRectangleI(Color.White, (rect.Location, (500, 400)));
+
+                    dc.DrawRotatedTextI(
+                        $"Display {index}",
+                        rect.Location + (50, 250),
+                        (Font ?? Control.DefaultFont).Scaled(2.7),
+                        Color.Red,
+                        Color.Empty,
+                        40);
+                }
             };
         }
 
