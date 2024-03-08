@@ -29,6 +29,14 @@ static void* CreateEx(int64_t styles);
 void ClearItems();
 void ClearSelected();
 void SetSelected(int index, bool value);
+int GetFirstSelected();
+int GetNextSelected();
+int GetSelectedCount();
+int GetSelection();
+void EnsureVisible(int itemIndex);
+int ItemHitTest(const PointD& position);
+void SetSelection(int selection);
+void SetSelectionBackground(const Color& color);
 public:
 enum class VListBoxEvent
 {

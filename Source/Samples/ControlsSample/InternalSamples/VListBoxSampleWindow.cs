@@ -20,7 +20,19 @@ namespace ControlsSample
                 listBox.Add($"Item {i}");
             }
 
+            listBox.Count = 5000;
+            listBox.CustomItemText += ListBox_CustomItemText;
+
             listBox.Parent = this;
+        }
+
+        private void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)
+        {
+            if(e.ItemIndex >= listBox.Count)
+            {
+                e.Result = "Custom item " + e.ItemIndex.ToString();
+                e.Handled = true;
+            }
         }
     }
 }

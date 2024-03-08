@@ -29,15 +29,14 @@ namespace NativeApi.Api
         public void ClearItems() { }
         public void ClearSelected() { }
         public void SetSelected(int index, bool value) { }
+
+        public int GetFirstSelected() => default;
+        public int GetNextSelected() => default;
+        public int GetSelectedCount() => default;
+        public int GetSelection() => default;
+        public void EnsureVisible(int itemIndex) { }
+        public int ItemHitTest(PointD position) => default;
+        public void SetSelection(int selection) { }
+        public void SetSelectionBackground(Color color) { }
     }
 }
-
-/*
-public int[] SelectedIndices { get; }
-
-public void InsertItem(int index, string value) { }
-public void RemoveItemAt(int index) { }
-public void EnsureVisible(int itemIndex) { }
-public int ItemHitTest(PointD position) => default;
-public void SetItem(int index, string value) { }
-*/

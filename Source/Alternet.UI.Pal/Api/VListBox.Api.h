@@ -88,6 +88,46 @@ ALTERNET_UI_API void VListBox_SetSelected_(VListBox* obj, int index, c_bool valu
     obj->SetSelected(index, value);
 }
 
+ALTERNET_UI_API int VListBox_GetFirstSelected_(VListBox* obj)
+{
+    return obj->GetFirstSelected();
+}
+
+ALTERNET_UI_API int VListBox_GetNextSelected_(VListBox* obj)
+{
+    return obj->GetNextSelected();
+}
+
+ALTERNET_UI_API int VListBox_GetSelectedCount_(VListBox* obj)
+{
+    return obj->GetSelectedCount();
+}
+
+ALTERNET_UI_API int VListBox_GetSelection_(VListBox* obj)
+{
+    return obj->GetSelection();
+}
+
+ALTERNET_UI_API void VListBox_EnsureVisible_(VListBox* obj, int itemIndex)
+{
+    obj->EnsureVisible(itemIndex);
+}
+
+ALTERNET_UI_API int VListBox_ItemHitTest_(VListBox* obj, PointD position)
+{
+    return obj->ItemHitTest(position);
+}
+
+ALTERNET_UI_API void VListBox_SetSelection_(VListBox* obj, int selection)
+{
+    obj->SetSelection(selection);
+}
+
+ALTERNET_UI_API void VListBox_SetSelectionBackground_(VListBox* obj, Color color)
+{
+    obj->SetSelectionBackground(color);
+}
+
 ALTERNET_UI_API void VListBox_SetEventCallback_(VListBox::VListBoxEventCallbackType callback)
 {
     VListBox::SetEventCallback(callback);
