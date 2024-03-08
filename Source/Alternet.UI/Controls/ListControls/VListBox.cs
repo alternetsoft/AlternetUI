@@ -236,10 +236,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Measures item height.
+        /// Measures item size.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        public virtual double MeasureItemHeight(int itemIndex)
+        public virtual SizeD MeasureItemSize(int itemIndex)
         {
             string s;
 
@@ -250,7 +250,9 @@ namespace Alternet.UI
 
             var font = GetItemFont().AsBold;
             var size = MeasureCanvas.MeasureText(s, font);
-            return size.Height + ItemMargin.Vertical;
+            size.Width += ItemMargin.Horizontal;
+            size.Height += ItemMargin.Vertical;
+            return size;
         }
 
         /// <summary>
