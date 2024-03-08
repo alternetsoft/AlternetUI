@@ -18,6 +18,12 @@ namespace Alternet.UI
         private ListControlItems<object>? items;
 
         /// <summary>
+        /// Occurs when controls needs to get string representation of the item for the display
+        /// or other purposes. Called from <see cref="GetItemText(int)"/>.
+        /// </summary>
+        public event EventHandler<GetItemTextEventArgs>? CustomItemText;
+
+        /// <summary>
         /// Gets or sets string search provider.
         /// </summary>
         [Browsable(false)]
@@ -253,7 +259,24 @@ namespace Alternet.UI
         /// Returns the text representation of item with the specified <paramref name="index"/>.
         /// </summary>
         /// <param name="index">Item index from which to get the contents to display.</param>
-        public virtual string GetItemText(int index) => GetItemText(Items[index]);
+        public virtual string GetItemText(int index)
+        {
+            object? s;
+            if (index >= 0 && items is not null && index < Items.Count)
+                s = Items[index];
+            else
+                s = null;
+            var result = GetItemText(s);
+
+            if(CustomItemText is null)
+                return result;
+
+            GetItemTextEventArgs e = new(index, s, result);
+            CustomItemText(this, e);
+            if (e.Handled)
+                return e.Result;
+            return result;
+        }
 
         /// <summary>
         /// Returns the text representation of the specified item.
