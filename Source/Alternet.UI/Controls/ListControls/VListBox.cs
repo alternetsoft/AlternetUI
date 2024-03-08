@@ -28,6 +28,11 @@ namespace Alternet.UI
         public static Color DefaultSelectedItemBackColor = SystemColors.Highlight;
 
         /// <summary>
+        /// Gets or sets default disabled item text color.
+        /// </summary>
+        public static Color DefaultDisabledItemTextColor = SystemColors.GrayText;
+
+        /// <summary>
         /// Gets or sets default item text color.
         /// </summary>
         public static Color DefaultItemTextColor = SystemColors.WindowText;
@@ -36,6 +41,8 @@ namespace Alternet.UI
         private Color? selectedItemTextColor;
         private Color? itemTextColor;
         private Color? selectedItemBackColor;
+        private bool selectedIsBold;
+        private Color? disabledItemTextColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VListBox"/> class.
@@ -44,6 +51,44 @@ namespace Alternet.UI
         {
             Handler.NativeControl.SetSelectionBackground(DefaultSelectedItemBackColor);
             SuggestedSize = 200;
+        }
+
+        /// <summary>
+        /// Gets or sets disabled item text color.
+        /// </summary>
+        public Color? DisabledItemTextColor
+        {
+            get
+            {
+                return disabledItemTextColor;
+            }
+
+            set
+            {
+                if (disabledItemTextColor == value)
+                    return;
+                disabledItemTextColor = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="ListControl.SelectedItem"/> has bold font.
+        /// </summary>
+        public bool SelectedItemIsBold
+        {
+            get
+            {
+                return selectedIsBold;
+            }
+
+            set
+            {
+                if (selectedIsBold == value)
+                    return;
+                selectedIsBold = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -143,6 +188,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override bool CanUserPaint
         {
             get => false;
@@ -151,6 +197,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets number of items in the control.
         /// </summary>
+        [Browsable(false)]
         public new int Count
         {
             get
@@ -182,7 +229,10 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Font GetItemFont()
         {
-            return Font ?? UI.Control.DefaultFont;
+            var result = Font ?? UI.Control.DefaultFont;
+            if (IsBold)
+                result = result.AsBold;
+            return result;
         }
 
         /// <summary>
@@ -198,7 +248,7 @@ namespace Alternet.UI
             else
                 s = "Wy";
 
-            var font = GetItemFont();
+            var font = GetItemFont().AsBold;
             var size = MeasureCanvas.MeasureText(s, font);
             return size.Height + ItemMargin.Vertical;
         }
@@ -215,10 +265,17 @@ namespace Alternet.UI
             var font = GetItemFont();
 
             Color textColor;
+
             if (SelectedIndex == itemIndex)
+            {
+                if (SelectedItemIsBold)
+                    font = font.AsBold;
                 textColor = GetSelectedItemTextColor();
+            }
             else
+            {
                 textColor = GetItemTextColor();
+            }
 
             rect.ApplyMargin(ItemMargin);
 
@@ -230,21 +287,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets selected item text color. Default is <see cref="SystemColors.HighlightText"/>.
+        /// Gets selected item text color. Default is <see cref="SelectedItemTextColor"/>
+        /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
         public virtual Color GetSelectedItemTextColor()
         {
-            return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
+            if (Enabled)
+                return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
+            else
+                return GetDisabledItemTextColor();
         }
 
         /// <summary>
-        /// Gets item text color. Default is <see cref="SystemColors.WindowText"/>.
+        /// Gets item text color. Default is <see cref="ItemTextColor"/> (if it is not <c>null</c>)
+        /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
         public virtual Color GetItemTextColor()
         {
-            return ItemTextColor ?? DefaultItemTextColor;
+            if (Enabled)
+                return ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
+            else
+                return GetDisabledItemTextColor();
+        }
+
+        /// <summary>
+        /// Gets disabled item text color.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Color GetDisabledItemTextColor()
+        {
+            return DisabledItemTextColor ?? DefaultDisabledItemTextColor;
         }
 
         /// <inheritdoc/>

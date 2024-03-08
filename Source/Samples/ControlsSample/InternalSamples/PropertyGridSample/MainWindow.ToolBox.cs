@@ -96,6 +96,7 @@ namespace PropertyGridSample
                     typeof(SideBarPanel),
                     typeof(ControlPainterPreview),
                     typeof(ColorComboBox),
+                    typeof(VListBox),
                 };
 
                 List<ControlListBoxItem> items = new();
