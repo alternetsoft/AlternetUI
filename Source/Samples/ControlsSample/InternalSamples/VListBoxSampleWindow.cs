@@ -14,13 +14,30 @@ namespace ControlsSample
         public VListBoxSampleWindow()
         {
             Layout = LayoutStyle.Horizontal;
+            InitVListBox(listBox);
+            listBox.Parent = this;
+        }
 
-            for(int i = 0; i < 150; i++)
+        public static void InitVListBox(VListBox listBox)
+        {
+            for (int i = 0; i < 150; i++)
             {
                 listBox.Add($"Item {i}");
             }
 
-            listBox.Parent = this;
+            listBox.Count = 5000;
+            listBox.CustomItemText += ListBox_CustomItemText;
+        }
+
+        private static void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)
+        {
+            if (sender is not VListBox listBox)
+                return;
+            if(e.ItemIndex >= listBox.Count)
+            {
+                e.Result = "Custom item " + e.ItemIndex.ToString();
+                e.Handled = true;
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <summary>Provides data for the <see langword="DrawItem" /> event.</summary>
+    /// <summary>Provides data for the draw item events.</summary>
     public class DrawItemEventArgs : BaseEventArgs
     {
         private readonly Graphics graphics;
@@ -25,9 +25,8 @@ namespace Alternet.UI
         /// <param name="font">The <see cref="Font" /> to use, usually
         /// the parent control's <see cref="Font" /> property.</param>
         /// <param name="rect">The <see cref="RectD" /> bounds to draw within.</param>
-        /// <param name="index">The <see cref="Control.ControlCollection" /> index value
-        /// of the item that is being drawn.</param>
-        /// <param name="state">The control's <see cref="T:DrawItemState" /> information.</param>
+        /// <param name="index">The index value of the item that is being drawn.</param>
+        /// <param name="state">The control's <see cref="DrawItemState" /> information.</param>
         public DrawItemEventArgs(
             Graphics graphics,
             Font font,
@@ -52,8 +51,7 @@ namespace Alternet.UI
         /// <param name="font">The <see cref="Font" /> to use, usually the parent
         /// control's <see cref="Font" /> property.</param>
         /// <param name="rect">The <see cref="RectD" /> bounds to draw within.</param>
-        /// <param name="index">The <see cref="Control.ControlCollection" /> index
-        /// value of the item that is being drawn.</param>
+        /// <param name="index">The index value of the item that is being drawn.</param>
         /// <param name="state">The control's <see cref="DrawItemState" /> information.</param>
         /// <param name="foreColor">The foreground <see cref="Color" /> to
         /// draw the control with.</param>

@@ -24,7 +24,6 @@ namespace ControlsSample
         internal static Image background1 = new Bitmap(backgroundUrl1);
 
         private readonly UserControl control = new();
-        private readonly PopupPictureBox popup = new();
 
         private readonly Button button = new("Draw on screen")
         {
@@ -50,17 +49,25 @@ namespace ControlsSample
 
             button.ClickAction = () =>
             {
-                var dc = Graphics.FromScreen();
+                for(int i = 0; i < Display.Count; i++)
+                    DrawOnDisplay(i);
 
-                dc.FillRectangleI(Color.White, (0,0,500,400));
+                void DrawOnDisplay(int index)
+                {
+                    var rect = Display.AllScreens[index].Bounds;
 
-                dc.DrawRotatedTextI(
-                    "Hello",
-                    (190, 250),
-                    (Font ?? Control.DefaultFont).Scaled(2.7),
-                    Color.Red,
-                    Color.Empty,
-                    40);
+                    var dc = Graphics.FromScreen();
+
+                    dc.FillRectangleI(Color.White, (rect.Location, (500, 400)));
+
+                    dc.DrawRotatedTextI(
+                        $"Display {index}",
+                        rect.Location + (50, 250),
+                        (Font ?? Control.DefaultFont).Scaled(2.7),
+                        Color.Red,
+                        Color.Empty,
+                        40);
+                }
             };
         }
 

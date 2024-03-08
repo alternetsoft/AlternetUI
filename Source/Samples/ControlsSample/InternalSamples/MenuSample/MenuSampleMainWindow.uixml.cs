@@ -345,8 +345,6 @@ namespace MenuSample
             LogEvent($"Toggle toolbar item clicked: {item?.Text}. Is checked: {item?.Checked}");
         }
 
-        private int lastEventNumber = 1;
-
         void LogEvent(string? message)
         {
             Application.Log(message);

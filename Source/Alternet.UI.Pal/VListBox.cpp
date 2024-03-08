@@ -111,18 +111,6 @@ namespace Alternet::UI
         return size;
     }
 
-    void VListBox::ClearSelected()
-    {
-        /*auto listBox = GetListBox();
-            
-        if(_selectionMode == ListBoxSelectionMode::Multiple)
-            listBox->DeselectAll();
-        else
-        {
-            listBox->SetSelection(-1);
-        }*/
-    }
-
     void VListBox::SetItemsCount(int value)
     {
         return GetListBox()->SetItemCount(value);
@@ -143,24 +131,6 @@ namespace Alternet::UI
         case ListBoxSelectionMode::Multiple:
             return wxLB_EXTENDED;
         }
-    }
-
-    void VListBox::SetSelected(int index, bool value)
-    {
-        /*auto listBox = GetListBox();
-
-        if (_selectionMode == ListBoxSelectionMode::Multiple)
-            listBox->Select(index, value);
-        else
-        {
-            if(value)
-                listBox->SetSelection(index);
-            else
-            {
-                if (listBox->GetSelection() == index)
-                    listBox->SetSelection(-1);
-            }
-        }*/
     }
 
     ListBoxSelectionMode VListBox::GetSelectionMode()
@@ -232,5 +202,74 @@ namespace Alternet::UI
     wxCoord wxVListBox2::OnMeasureItem(size_t n) const
     {
         return ((VListBox*)_palControl)->OnMeasureItem(n);
+    }
+
+    int VListBox::GetFirstSelected()
+    {
+        return GetListBox()->GetFirstSelected(selectedCookie);
+    }
+
+    int VListBox::GetNextSelected()
+    {
+        return GetListBox()->GetNextSelected(selectedCookie);
+    }
+
+    int VListBox::GetSelectedCount()
+    {
+        return GetListBox()->GetSelectedCount();
+    }
+
+    int VListBox::GetSelection()
+    {
+        return GetListBox()->GetSelection();
+    }
+
+    void VListBox::ClearSelected()
+    {
+        auto listBox = GetListBox();
+
+        if(_selectionMode == ListBoxSelectionMode::Multiple)
+            listBox->DeselectAll();
+        else
+        {
+            listBox->SetSelection(-1);
+        }
+    }
+
+    void VListBox::SetSelectionBackground(const Color& color)
+    {
+        GetListBox()->SetSelectionBackground(color);
+    }
+
+    void VListBox::SetSelection(int selection)
+    {
+        GetListBox()->SetSelection(selection);
+    }
+
+    void VListBox::SetSelected(int index, bool value)
+    {
+        auto listBox = GetListBox();
+
+        if (_selectionMode == ListBoxSelectionMode::Multiple)
+            listBox->Select(index, value);
+        else
+        {
+            if(value)
+                listBox->SetSelection(index);
+            else
+            {
+                if (listBox->GetSelection() == index)
+                    listBox->SetSelection(-1);
+            }
+        }
+    }
+
+    void VListBox::EnsureVisible(int itemIndex)
+    {
+    }
+
+    int VListBox::ItemHitTest(const PointD& position)
+    {
+        return -1;
     }
 }

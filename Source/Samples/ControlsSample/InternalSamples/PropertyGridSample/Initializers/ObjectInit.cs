@@ -81,6 +81,10 @@ namespace PropertyGridSample
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
+            Actions.Add(typeof(VListBox), InitVListBox);
+            Actions.Add(typeof(ListBox), InitListBox);
+            Actions.Add(typeof(ComboBox), InitComboBox);
+            Actions.Add(typeof(CheckListBox), InitCheckListBox);
 
             Actions.Add(typeof(ControlPainterPreview), (c) =>
             {
@@ -172,28 +176,6 @@ namespace PropertyGridSample
                 ListView listView = (c as ListView)!;
                 listView.SuggestedSize = defaultListSize;
                 InitListView(listView);
-            });
-
-            Actions.Add(typeof(ListBox), (c) =>
-            {
-                ListBox listBox = (c as ListBox)!;
-                listBox.SuggestedSize = defaultListSize;
-                listBox.Items.AddRange(GetTenItems());
-            });
-
-            Actions.Add(typeof(ComboBox), (c) =>
-            {
-                ComboBox comboBox = (c as ComboBox)!;
-                comboBox.Items.AddRange(GetTenItems());
-                comboBox.HorizontalAlignment = HorizontalAlignment.Left;
-                comboBox.SuggestedWidth = 200;
-            });
-
-            Actions.Add(typeof(CheckListBox), (c) =>
-            {
-                CheckListBox checkListBox = (c as CheckListBox)!;
-                checkListBox.SuggestedSize = defaultListHeight;
-                checkListBox.Items.AddRange(GetTenItems());
             });
 
             Actions.Add(typeof(GroupBox), (c) =>

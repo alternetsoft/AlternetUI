@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
@@ -168,6 +169,7 @@ namespace Alternet.UI
         /// with the same double value.
         /// </summary>
         /// <param name="d">New thickness value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Thickness(double d) => new(d);
 
         /// <summary>
@@ -176,6 +178,7 @@ namespace Alternet.UI
         /// with the same int value.
         /// </summary>
         /// <param name="d">New thickness value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Thickness(int d) => new(d);
 
         /// <summary>
@@ -183,6 +186,7 @@ namespace Alternet.UI
         /// to <see cref="Thickness"/>.
         /// </summary>
         /// <param name="d">New thickness value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Thickness((double, double, double, double) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
@@ -217,6 +221,7 @@ namespace Alternet.UI
         /// <param name="t2">second Thickness to compare</param>
         /// <returns>False if all sides of the Thickness are equal, true
         /// otherwise</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Thickness t1, Thickness t2)
         {
             return !(t1 == t2);
@@ -292,6 +297,7 @@ namespace Alternet.UI
         /// <param name="obj">Object to compare</param>
         /// <returns>True if object is a Thickness and all sides of it are equal
         /// to this Thickness.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly bool Equals(object? obj)
         {
             if (obj is Thickness otherObj)
@@ -305,6 +311,7 @@ namespace Alternet.UI
         /// <param name="thickness">Thickness instance to compare.</param>
         /// <returns><c>true</c>if this Thickness instance has the same value
         /// and unit type as thickness.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(Thickness thickness)
         {
             return this == thickness;

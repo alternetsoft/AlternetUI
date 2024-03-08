@@ -768,6 +768,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Applies margins to this rectangle. <see cref="X"/> is incremented with
+        /// <see cref="Thickness.Left"/>, <see cref="Y"/> is incremented with
+        /// <see cref="Thickness.Top"/>, <see cref="Width"/> is decremented with horizontal
+        /// margins (<see cref="Thickness.Horizontal"/>)
+        /// and <see cref="Height"/> is decremented with
+        /// vertical margins (<see cref="Thickness.Vertical"/>).
+        /// </summary>
+        /// <param name="margin"></param>
+        public void ApplyMargin(Thickness margin)
+        {
+            x += margin.Left;
+            y += margin.Top;
+            width -= margin.Horizontal;
+            height -= margin.Vertical;
+        }
+
+        /// <summary>
         /// Converts the <see cref='Location'/> and <see cref='Size'/>
         /// of this <see cref='RectD'/> to a human-readable string.
         /// </summary>

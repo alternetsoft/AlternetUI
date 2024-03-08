@@ -57,6 +57,7 @@ namespace Alternet::UI
         ListBoxSelectionMode _selectionMode = ListBoxSelectionMode::Single;
     private:
         wxVListBox2* GetListBox();
+        unsigned long selectedCookie = 0;
         wxDC* eventDc = nullptr;
         RectI eventRect;
         int eventItemIndex = -1;

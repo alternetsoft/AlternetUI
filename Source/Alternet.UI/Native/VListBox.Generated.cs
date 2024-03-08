@@ -137,6 +137,54 @@ namespace Alternet.UI.Native
             NativeApi.VListBox_SetSelected_(NativePointer, index, value);
         }
         
+        public int GetFirstSelected()
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetFirstSelected_(NativePointer);
+        }
+        
+        public int GetNextSelected()
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetNextSelected_(NativePointer);
+        }
+        
+        public int GetSelectedCount()
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetSelectedCount_(NativePointer);
+        }
+        
+        public int GetSelection()
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetSelection_(NativePointer);
+        }
+        
+        public void EnsureVisible(int itemIndex)
+        {
+            CheckDisposed();
+            NativeApi.VListBox_EnsureVisible_(NativePointer, itemIndex);
+        }
+        
+        public int ItemHitTest(Alternet.Drawing.PointD position)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_ItemHitTest_(NativePointer, position);
+        }
+        
+        public void SetSelection(int selection)
+        {
+            CheckDisposed();
+            NativeApi.VListBox_SetSelection_(NativePointer, selection);
+        }
+        
+        public void SetSelectionBackground(Alternet.Drawing.Color color)
+        {
+            CheckDisposed();
+            NativeApi.VListBox_SetSelectionBackground_(NativePointer, color);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -256,6 +304,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void VListBox_SetSelected_(IntPtr obj, int index, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetFirstSelected_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetNextSelected_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetSelectedCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_EnsureVisible_(IntPtr obj, int itemIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_ItemHitTest_(IntPtr obj, Alternet.Drawing.PointD position);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_SetSelection_(IntPtr obj, int selection);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_SetSelectionBackground_(IntPtr obj, NativeApiTypes.Color color);
             
         }
     }

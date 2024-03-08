@@ -12,6 +12,12 @@ namespace Alternet.UI
         private Graphics? drawItemCanvas;
 
         /// <summary>
+        /// Gets a <see cref="VListBox"/> this handler provides the
+        /// implementation for.
+        /// </summary>
+        public new VListBox Control => (VListBox)base.Control;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         public override bool HasBorder
@@ -33,14 +39,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void EnsureVisible(int itemIndex)
         {
-            // !!!
+            NativeControl.EnsureVisible(itemIndex);
         }
 
         /// <inheritdoc/>
         public override int? HitTest(PointD position)
         {
-            // !!!
-            return null;
+            int index = NativeControl.ItemHitTest(position);
+            return index == -1 ? null : index;
         }
 
         internal override Native.Control CreateNativeControl()
@@ -107,42 +113,16 @@ namespace Alternet.UI
         private void NativeControl_DrawItem()
         {
             var dc = GetDrawItemCanvas();
-
             var rect = Control.PixelToDip(NativeControl.EventRect);
-
             var itemIndex = NativeControl.EventItem;
-            string s;
-
-            if (itemIndex < Control.Items.Count)
-                s = Control.GetItemText(itemIndex);
-            else
-                s = string.Empty;
-
-            var font = Control.Font ?? UI.Control.DefaultFont;
-
-            dc.DrawText(
-                s,
-                font,
-                SystemColors.GrayText.AsBrush,
-                rect);
+            Control.DrawItem(dc, rect, itemIndex);
         }
 
         private void NativeControl_MeasureItem()
         {
             var itemIndex = NativeControl.EventItem;
-            string s;
-
-            if (itemIndex < Control.Items.Count)
-                s = Control.GetItemText(itemIndex);
-            else
-                s = "Wy";
-
-            var font = Control.Font ?? UI.Control.DefaultFont;
-
-            var size = Control.MeasureCanvas.MeasureText(s, font);
-
-            var height = Control.PixelFromDip(size.Height);
-
+            var heightDip = Control.MeasureItemSize(itemIndex).Height;
+            var height = Control.PixelFromDip(heightDip);
             NativeControl.EventHeight = height;
         }
 
@@ -179,6 +159,9 @@ namespace Alternet.UI
 
         private void ApplySelection()
         {
+            if (Control.SelectionMode == ListBoxSelectionMode.Single)
+                return;
+
             applyingSelection = true;
 
             try
