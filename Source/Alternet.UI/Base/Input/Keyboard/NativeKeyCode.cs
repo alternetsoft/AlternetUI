@@ -50,6 +50,102 @@ namespace Alternet.UI
         /* values from 33 to 126 are reserved for the standard ASCII characters */
 
         Space = 32,
+
+        ExclamationMark = 33, // ! 
+        DoubleQuotes = 34, // "  ; Quotation mark ; speech marks
+        NumberSign = 35, // # 
+        DollarSign = 36, // $ 
+        PercentSign = 37, // % 
+        Ampersand = 38, // & 
+        SingleQuote = 39, // ' or Apostrophe
+        OpeningRoundBracket = 40, // round brackets or parentheses, opening round bracket
+        ClosingRoundBracket = 41, // parentheses or round brackets, closing parentheses
+        Asterisk = 42, // * 
+        PlusSign = 43, // + 
+        Comma = 44, // , 
+        MinusSign = 45, // - Hyphen , minus sign
+        Dot = 46, // . full stop
+        Slash = 47, // / forward slash , fraction bar , division slash
+        D0 = 48, // 0 number zero
+        D1 = 49, // 1 number one
+        D2 = 50, // 2 number two
+        D3 = 51, // 3 number three
+        D4 = 52, // 4 number four
+        D5 = 53, // 5 number five
+        D6 = 54, // 6 number six
+        D7 = 55, // 7 number seven
+        D8 = 56, // 8 number eight
+        D9 = 57, // 9 number nine
+        Colon = 58, // : 
+        Semicolon = 59, // ;
+        LessThanSign = 60, // < 
+        EqualsSign = 61, //= 
+        GreaterThanSign = 62, // >
+        QuestionMark = 63, // ? 
+        AtSign = 64, // @ 
+        A = 65, // A Capital letter A
+        B = 66, // B Capital letter B
+        C = 67, // C Capital letter C
+        D = 68, // D Capital letter D
+        E = 69, // E Capital letter E
+        F = 70, // F Capital letter F
+        G = 71, // G Capital letter G
+        H = 72, // H Capital letter H
+        I = 73, // I Capital letter I
+        J = 74, // J Capital letter J
+        K = 75, // K Capital letter K
+        L = 76, // L Capital letter L
+        M = 77, // M Capital letter M
+        N = 78, // N Capital letter N
+        O = 79, // O Capital letter O
+        P = 80, // P Capital letter P
+        Q = 81, // Q Capital letter Q
+        R = 82, // R Capital letter R
+        S = 83, // S Capital letter S
+        T = 84, // T Capital letter T
+        U = 85, // U Capital letter U
+        V = 86, // V Capital letter V
+        W = 87, // W Capital letter W
+        X = 88, // X Capital letter X
+        Y = 89, // Y Capital letter Y
+        Z = 90, // Z Capital letter Z
+        OpeningSquareBracket = 91, // [ (square brackets or box brackets, opening bracket)
+        Backslash = 92, // \ reverse slash
+        ClosingSquareBracket = 93, // ] (box brackets or square brackets, closing bracket
+        CircumflexAccent = 94, // ^ CircumflexAccent or Caret
+        Underscore = 95, // _  understrike, underbar or low line
+        GraveAccent = 96, // ` 
+        LowerA = 97, // a Lowercase letter a , minuscule a
+        LowerB = 98, // b Lowercase letter b , minuscule b
+        LowerC = 99, // c Lowercase letter c , minuscule c
+        LowerD = 100, // d Lowercase letter d , minuscule d
+        LowerE = 101, // e Lowercase letter e , minuscule e
+        LowerF = 102, // f Lowercase letter f , minuscule f
+        LowerG = 103, // g Lowercase letter g , minuscule g
+        LowerH = 104, // h Lowercase letter h , minuscule h
+        LowerI = 105, // i Lowercase letter i , minuscule i
+        LowerJ = 106, // j Lowercase letter j , minuscule j
+        LowerK = 107, // k Lowercase letter k , minuscule k
+        LowerL = 108, // l Lowercase letter l , minuscule l
+        LowerM = 109, // m Lowercase letter m , minuscule m
+        LowerN = 110, // n Lowercase letter n , minuscule n
+        LowerO = 111, // o Lowercase letter o , minuscule o
+        LowerP = 112, // p Lowercase letter p , minuscule p
+        LowerQ = 113, // q Lowercase letter q , minuscule q
+        LowerR = 114, // r Lowercase letter r , minuscule r
+        LowerS = 115, // s Lowercase letter s , minuscule s
+        LowerT = 116, // t Lowercase letter t , minuscule t
+        LowerU = 117, // u Lowercase letter u , minuscule u
+        LowerV = 118, // v Lowercase letter v , minuscule v
+        LowerW = 119, // w Lowercase letter w , minuscule w
+        LowerX = 120, // x Lowercase letter x , minuscule x
+        LowerY = 121, // y Lowercase letter y , minuscule y
+        LowerZ = 122, // z Lowercase letter z , minuscule z
+        OpeningCurlyBracket = 123, // { braces or curly brackets, opening braces
+        VerticalBar = 124, // | , vbar, vertical line or vertical slash
+        ClosingCurlyBracket = 125, // } (curly brackets or braces, closing curly brackets
+        Tilde = 126, // ~ swung dash
+
         Delete = 127,
 
         /* values from 128 to 255 are reserved for ASCII extended characters
@@ -225,5 +321,4 @@ namespace Alternet.UI
         LaunchApp1 = LaunchA,
         LaunchApp2 = LaunchB,
     };
-
 }
