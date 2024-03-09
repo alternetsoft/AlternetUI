@@ -85,6 +85,11 @@ ALTERNET_UI_API c_bool Image_InitializeFromDipSize_(Image* obj, int width, int h
     return obj->InitializeFromDipSize(width, height, scale, depth);
 }
 
+ALTERNET_UI_API c_bool Image_InitializeFromScreen_(Image* obj)
+{
+    return obj->InitializeFromScreen();
+}
+
 ALTERNET_UI_API c_bool Image_LoadFromStream_(Image* obj, void* stream)
 {
     return obj->LoadFromStream(stream);

@@ -13,6 +13,8 @@ namespace ControlsSample
         private readonly Button button2;
         private readonly UIActionSimulator simulator = new();
         private readonly TextBox editor;
+        private readonly TextBox editor2;
+        private int counter;
 
         public ActionSimulatorPage()
         {
@@ -38,13 +40,16 @@ namespace ControlsSample
             editor = new TextBox();
             editor.Parent = this;
 
+            editor2 = new TextBox();
+            editor2.Parent = this;
+
             AddLabels(
                 "Simulator moves mouse to 'Button1' and clicks it.",
                 "After that, it moves mouse to the editor, clicks it",
                 "and enters 'Hello' text.");
 
             AddLabels(
-                "Simulator currently doesn't work when using Wayland with Linux.");
+                "Simulator currently doesn't work when using Wayland on Linux.");
 
         }
 
@@ -62,21 +67,20 @@ namespace ControlsSample
 
                     bool Fn()
                     {
-                        if (!simulator.SendMouseMove(button1, (5, 5)))
-                            return false;
-                        if (!simulator.SendMouseClick())
-                            return false;
-                        if (!simulator.SendMouseMove(editor, (5, 5)))
-                            return false;
-                        if (!simulator.SendMouseClick())
-                            return false;
-                        if (!simulator.SendText("Hello"))
-                            return false;
-                        if (!simulator.SendMouseMove(button2, (5, 5)))
-                            return false;
-                        if (!simulator.SendMouseClick())
-                            return false;
-                        return true;
+                        var condition = true;
+                        simulator.SendMouseMoveIf(ref condition, button1, (5, 5));
+                        simulator.SendMouseClickIf(ref condition);
+                        simulator.SendMouseMoveIf(ref condition, editor, (5, 5));
+                        simulator.SendMouseClickIf(ref condition);
+                        simulator.SendTextIf(ref condition, "Hello");
+                        simulator.SendMouseMoveIf(ref condition, button2, (5, 5));
+                        simulator.SendMouseClickIf(ref condition);
+
+                        Clipboard.SetText($"({++counter}) Text from clipboard using Ctrl+V");
+                        editor2.Focus();
+                        editor2.Text = string.Empty;
+                        simulator.SendKeyIf(ref condition, NativeKeyCode.V, UIActionSimulator.KeyModifier.Control);
+                        return condition;
                     }
                 });
             }

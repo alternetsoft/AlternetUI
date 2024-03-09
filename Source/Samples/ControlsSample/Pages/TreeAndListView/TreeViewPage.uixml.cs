@@ -33,11 +33,11 @@ namespace ControlsSample
                 treeView.MouseUp += TreeView_MouseUp;
                 treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
 
-                treeView.ImageList = ResourceLoader.LoadImageLists().Small;
+                treeView.ImageList = DemoResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
                 SetCustomColors();
 
-                popupTreeView.MainControl.ImageList = ResourceLoader.LoadImageLists().Small;
+                popupTreeView.MainControl.ImageList = DemoResourceLoader.LoadImageLists().Small;
                 AddItems(popupTreeView.MainControl, 10);
                 popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }

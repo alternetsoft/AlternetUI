@@ -33,6 +33,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when <see cref="StreamFromUrl"/> is called. You can implement
+        /// <see cref="CustomStreamFromUrl"/> event handler in order to perform custom url processing.
+        /// </summary>
+        public static event EventHandler<StreamFromUrlEventArgs>? CustomStreamFromUrl;
+
+        /// <summary>
         /// Gets or sets default <see cref="ResourceLoader"/>.
         /// </summary>
         public static ResourceLoader Default
@@ -52,7 +58,9 @@ namespace Alternet.UI
         /// <summary>
         /// Loads <see cref="Stream"/> from the specified url.
         /// </summary>
-        /// <param name="url">The file or embedded resource url used to load the image.
+        /// <param name="url">Url used to load the data. By default "file" and "embres"
+        /// protocols are supported but you can extend it with <see cref="CustomStreamFromUrl"/>
+        /// event.
         /// </param>
         /// <example>
         /// <code>
@@ -64,16 +72,64 @@ namespace Alternet.UI
         /// </code>
         /// </example>
         /// <remarks>
-        /// <paramref name="url"/> can include assembly name. Example:
+        /// <paramref name="url"/> with "embres" protocol can include assembly name. Example:
         /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
         /// </remarks>
         public static Stream StreamFromUrl(string url)
         {
-            var s = url;
-            var uri = s.StartsWith("/")
-                ? new Uri(s, UriKind.Relative)
-                : new Uri(s, UriKind.RelativeOrAbsolute);
+            if(CustomStreamFromUrl is not null)
+            {
+                StreamFromUrlEventArgs e = new(url);
 
+                var list = CustomStreamFromUrl.GetInvocationList();
+
+                foreach(var item in list)
+                {
+                    ((EventHandler<StreamFromUrlEventArgs>)item)(null, e);
+                    if (e.Handled && e.Result is not null)
+                        return e.Result;
+                }
+            }
+
+            return DefaultStreamFromUrl(url);
+        }
+
+        /// <summary>
+        /// Default implementation of <see cref="StreamFromUrl"/>.
+        /// See <see cref="StreamFromUrl"/> for details.
+        /// </summary>
+        /// <returns></returns>
+        public static Stream DefaultStreamFromUrl(string url)
+        {
+            var s = url.Trim();
+
+            var isFile = s.StartsWith("file:");
+            var isEmbres = s.StartsWith("embres:");
+            var isUires = s.StartsWith("uires:");
+
+            var hasScheme = isFile || isEmbres || isUires;
+
+            if (hasScheme)
+            {
+                var uri = new Uri(s, UriKind.Absolute);
+                return DefaultStreamFromUri(uri);
+            }
+            else
+            {
+                var fullPath = Path.GetFullPath(s);
+                var stream = File.OpenRead(fullPath);
+                return stream;
+            }
+        }
+
+        /// <summary>
+        /// Default implementation of the open stream from the <see cref="Uri"/>.
+        /// Used in <see cref="DefaultStreamFromUrl"/>.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        public static Stream DefaultStreamFromUri(Uri uri)
+        {
             if (uri.IsAbsoluteUri && uri.IsFile)
             {
                 var stream = File.OpenRead(uri.LocalPath);

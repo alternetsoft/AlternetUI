@@ -24,8 +24,14 @@ namespace ControlsSample
         internal static Image background1 = new Bitmap(backgroundUrl1);
 
         private readonly UserControl control = new();
+        private readonly PopupPictureBox picturePopup = new();
 
         private readonly Button button = new("Draw on screen")
+        {
+            Visible = true,
+        };
+
+        private readonly Button button2 = new("Screen image")
         {
             Visible = true,
         };
@@ -42,13 +48,36 @@ namespace ControlsSample
 
             Size = (600, 600);
 
+            var buttonPanel = AddHorizontalStackPanel();
+
             button.Margin = 10;
             button.VerticalAlignment = VerticalAlignment.Bottom;
             button.HorizontalAlignment = HorizontalAlignment.Left;
-            button.Parent = this;
+            button.Parent = buttonPanel;
+
+            button2.Margin = 10;
+            button2.VerticalAlignment = VerticalAlignment.Bottom;
+            button2.HorizontalAlignment = HorizontalAlignment.Left;
+            button2.Parent = buttonPanel;
+
+            button2.ClickAction = () =>
+            {
+                Application.Log("Some Linux versions don't support getting screen image.");
+                var bitmap = Image.FromScreen();
+                if (bitmap is not null)
+                {
+                    bitmap?.Rescale((800, 600));
+                    picturePopup.MainControl.Image = bitmap;
+                    picturePopup.ShowPopup(button2);
+                }
+                else
+                    Application.LogError("Screen picture is null");
+            };           
 
             button.ClickAction = () =>
             {
+                Application.Log("Some Linux versions don't support drawing on screen.");
+
                 for(int i = 0; i < Display.Count; i++)
                     DrawOnDisplay(i);
 

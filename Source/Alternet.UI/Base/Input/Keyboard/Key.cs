@@ -31,147 +31,147 @@ namespace Alternet.UI
         /// <summary>
         ///  The "Backspace" key.
         /// </summary>
-        Backspace,
+        Backspace = 1,
 
         /// <summary>
         ///  The "Tab" key.
         /// </summary>
-        Tab,
+        Tab = 2,
 
         /// <summary>
         ///  The "Enter" key.
         /// </summary>
-        Enter,
+        Enter = 3,
 
         /// <summary>
         ///  The "Pause" key.
         /// </summary>
-        Pause,
+        Pause = 4,
 
         /// <summary>
         ///  The "Caps Lock" key.
         /// </summary>
-        CapsLock,
+        CapsLock = 5,
 
         /// <summary>
         ///  The "Esc" key.
         /// </summary>
-        Escape,
+        Escape = 6,
 
         /// <summary>
         ///  The "Space Bar" key.
         /// </summary>
-        Space,
+        Space = 7,
 
         /// <summary>
         ///  The "Page Up" key.
         /// </summary>
-        PageUp,
+        PageUp = 8,
 
         /// <summary>
         ///  The "Page Down" key.
         /// </summary>
-        PageDown,
+        PageDown = 9,
 
         /// <summary>
         ///  The "End" key.
         /// </summary>
-        End,
+        End = 10,
 
         /// <summary>
         ///  The "Home" key.
         /// </summary>
-        Home,
+        Home = 11,
 
         /// <summary>
         ///  The "Left Arrow" key.
         /// </summary>
-        LeftArrow,
+        LeftArrow = 12,
 
         /// <summary>
         ///  The "Up Arrow" key.
         /// </summary>
-        UpArrow,
+        UpArrow = 13,
 
         /// <summary>
         ///  The "Right Arrow" key.
         /// </summary>
-        RightArrow,
+        RightArrow = 14,
 
         /// <summary>
         ///  The "Down Arrow" key.
         /// </summary>
-        DownArrow,
+        DownArrow = 15,
 
         /// <summary>
         ///  The "Print Screen" key.
         /// </summary>
-        PrintScreen,
+        PrintScreen = 16,
 
         /// <summary>
         ///  The "Insert" key.
         /// </summary>
-        Insert,
+        Insert = 17,
 
         /// <summary>
         ///  The "Delete" key.
         /// </summary>
-        Delete,
+        Delete = 18,
 
         /// <summary>
         ///  The "0" key.
         /// </summary>
-        D0,
+        D0 = 19,
 
         /// <summary>
         ///  The "1" key.
         /// </summary>
-        D1,
+        D1 = 20,
 
         /// <summary>
         ///  The "2" key.
         /// </summary>
-        D2,
+        D2 = 21,
 
         /// <summary>
         ///  The "3" key.
         /// </summary>
-        D3,
+        D3 = 22,
 
         /// <summary>
         ///  The "4" key.
         /// </summary>
-        D4,
+        D4 = 23,
 
         /// <summary>
         ///  The "5" key.
         /// </summary>
-        D5,
+        D5 = 24,
 
         /// <summary>
         ///  The "6" key.
         /// </summary>
-        D6,
+        D6 = 25,
 
         /// <summary>
         ///  The "7" key.
         /// </summary>
-        D7,
+        D7 = 26,
 
         /// <summary>
         ///  The "8" key.
         /// </summary>
-        D8,
+        D8 = 27,
 
         /// <summary>
         ///  The "9" key.
         /// </summary>
-        D9,
+        D9 = 28,
 
         /// <summary>
         ///  The "A" key.
         /// </summary>
-        A,
+        A = 29,
 
         /// <summary>
         ///  The "B" key.

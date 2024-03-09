@@ -1,0 +1,5 @@
+AppDomain.FirstChanceException
+https://learn.microsoft.com/en-us/dotnet/api/system.appdomain.firstchanceexception?view=net-8.0
+
+Occurs when an exception is thrown in managed code, before the runtime
+ searches the call stack for an exception handler in the application domain.

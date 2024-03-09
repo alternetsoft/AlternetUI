@@ -44,7 +44,7 @@ namespace ControlsSample
                 hasBorderButton);
             buttons.SuggestedWidthToMax();
 
-            var imageLists = ResourceLoader.LoadImageLists();
+            var imageLists = DemoResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;
             listView.LargeImageList = imageLists.Large;
 

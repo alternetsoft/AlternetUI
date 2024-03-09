@@ -1,3 +1,14 @@
+# 0.9.518 (2024 March 9)
+
+- Image.FromScreen.
+- StreamFromUrl now uses Path.GetFullPath #124.
+- ResourceLoader.CustomStreamFromUrl event.
+- ImageSet constructor with url parameter.
+- Fixed Control.HideToolTip.
+- UIActionSimulator: Added SendKey which is SendKeyUp+SendKeyDown.
+- Added NativeKeyCode from 33 to 126, so, for example, NativeKeyCode.V can be used.
+- UIActionSimulator: Added Send__If methods, so it is possible to have send command in the single line without if checks.
+
 # 0.9.517 (2024 March 8)
 
 - ColorComboBox.Value.

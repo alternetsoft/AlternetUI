@@ -141,6 +141,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sends key. This methods calls <see cref="SendKeyDown"/> and <see cref="SendKeyUp"/>.
+        /// </summary>
+        /// <param name="keyCode"></param>
+        /// <param name="modifiers"></param>
+        public virtual bool SendKey(
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            var result1 = SendKeyDown(keyCode, modifiers);
+            var result2 = SendKeyUp(keyCode, modifiers);
+            return result1 & result2;
+        }
+
+        /// <summary>
         /// Releases a key.
         /// </summary>
         /// <param name="keyCode">Key to operate on.</param>
@@ -224,7 +238,8 @@ namespace Alternet.UI
         /// Moves the mouse to the top-left corner of the control.
         /// </summary>
         /// <param name="control">Control to which mouse will be moved.</param>
-        /// <param name="offset">Additional offset for the mouse movement.</param>
+        /// <param name="offset">Additional offset for the mouse movement.
+        /// Value is in dips (1/96 inch)</param>
         /// <returns></returns>
         public virtual bool SendMouseMove(Control control, PointD? offset = default)
         {
@@ -240,7 +255,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves the mouse to the specified coordinates.
         /// </summary>
-        /// <param name="point">Point to move to, in screen coordinates</param>
+        /// <param name="point">Point to move to, in screen coordinates (pixels).</param>
         /// <returns></returns>
         public virtual bool SendMouseMove(PointI point)
         {
@@ -296,6 +311,198 @@ namespace Alternet.UI
             var result = Native.WxOtherFactory.UIActionSimulatorText(Handle, text);
             ExecuteCommand();
             return result;
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendChar"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendCharIf(
+            ref bool condition,
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            if (!condition)
+                return false;
+            return SendChar(keyCode, modifiers);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendKeyDown"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendKeyDownIf(
+            ref bool condition,
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            if (!condition)
+                return false;
+            return SendKeyDown(keyCode, modifiers);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendKey"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendKeyIf(
+            ref bool condition,
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            if (!condition)
+                return false;
+            return SendKey(keyCode, modifiers);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendKeyUp"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendKeyUpIf(
+            ref bool condition,
+            NativeKeyCode keyCode,
+            KeyModifier modifiers = KeyModifier.None)
+        {
+            if (!condition)
+                return false;
+            return SendKeyUp(keyCode, modifiers);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseClick"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseClickIf(
+            ref bool condition,
+            MouseButton button = MouseButton.Left)
+        {
+            if (!condition)
+                return false;
+            return SendMouseClick(button);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseDblClick"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseDblClickIf(
+            ref bool condition,
+            MouseButton button = MouseButton.Left)
+        {
+            if (!condition)
+                return false;
+            return SendMouseDblClick(button);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseDown"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseDownIf(
+            ref bool condition,
+            MouseButton button = MouseButton.Left)
+        {
+            if (!condition)
+                return false;
+            return SendMouseDown(button);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseDragDrop"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseDragDropIf(
+            ref bool condition,
+            long x1,
+            long y1,
+            long x2,
+            long y2,
+            MouseButton button = MouseButton.Left)
+        {
+            if (!condition)
+                return false;
+            return SendMouseDragDrop(x1, y1, x2, y2, button);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseMove(Control,PointD?)"/> but checks for
+        /// the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseMoveIf(
+            ref bool condition,
+            Control control,
+            PointD? offset = default)
+        {
+            if (!condition)
+                return false;
+            return SendMouseMove(control, offset);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseMove(PointI)"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseMoveIf(
+            ref bool condition,
+            PointI point)
+        {
+            if (!condition)
+                return false;
+            return SendMouseMove(point);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendMouseUp"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendMouseUpIf(
+            ref bool condition,
+            MouseButton button = MouseButton.Left)
+        {
+            if (!condition)
+                return false;
+            return SendMouseUp(button);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendSelect"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendSelectIf(
+            ref bool condition,
+            string text)
+        {
+            if (!condition)
+                return false;
+            return SendSelect(text);
+        }
+
+        /// <summary>
+        /// Same as <see cref="SendText"/> but checks for the <paramref name="condition"/>
+        /// before sending action. This method sets <paramref name="condition"/> to
+        /// the result of the send action operation.
+        /// </summary>
+        public bool SendTextIf(
+            ref bool condition,
+            string text)
+        {
+            if (!condition)
+                return false;
+            return SendText(text);
         }
 
         /// <summary>

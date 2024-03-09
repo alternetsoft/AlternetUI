@@ -43,6 +43,24 @@ namespace Alternet::UI
 		return _bitmap.GetScaledWidth();
 	}
 
+	bool Image::InitializeFromScreen()
+	{
+		wxScreenDC screenDC;
+		wxSize size = screenDC.GetSize();
+
+		wxBitmap bitmap(size.x, size.y, -1);
+		wxMemoryDC memDC;
+		memDC.SelectObject(bitmap);
+
+		memDC.Blit(0, 0, size.x, size.y, &screenDC, 0, 0);
+		memDC.SelectObject(wxNullBitmap);
+
+		/*wxString bmpFilename = "e://aa.bmp";
+		bool succBmpSave = bitmap.SaveFile(bmpFilename, wxBITMAP_TYPE_BMP);*/
+		_bitmap = bitmap;
+		return true;
+	}
+
 	bool Image::InitializeFromDipSize(int width, int height, double scale, int depth)
 	{
 		_bitmap = wxBitmap();

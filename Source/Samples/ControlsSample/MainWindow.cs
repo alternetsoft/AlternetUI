@@ -16,6 +16,9 @@ namespace ControlsSample
         static MainWindow()
         {
             UseDebugBackgroundColor = false;
+
+            ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl;
+            ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl2;
         }
 
         public MainWindow()
@@ -277,6 +280,17 @@ namespace ControlsSample
         public void LogEvent(string? message)
         {
             eventsControl.Log(message);
+        }
+
+        private static void ResourceLoader_CustomStreamFromUrl(object? sender, StreamFromUrlEventArgs e)
+        {
+            e.Handled = true;
+            e.Result = ResourceLoader.DefaultStreamFromUrl(e.Value);
+        }
+
+        private static void ResourceLoader_CustomStreamFromUrl2(object? sender, StreamFromUrlEventArgs e)
+        {
+            Application.Log("CustomStreamFromUrl 2");
         }
     }
 }
