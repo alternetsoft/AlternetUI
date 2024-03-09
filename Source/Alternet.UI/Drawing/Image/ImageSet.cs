@@ -45,6 +45,36 @@ namespace Alternet.UI
             NativeImageSet.LoadFromStream(inputStream);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class from the specified
+        /// file or resource url.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used
+        /// to load the image.
+        /// </param>
+        /// <remarks>
+        /// See <see cref="ImageSet.FromUrl(string)"/> for the details.
+        /// </remarks>
+        public ImageSet(string url)
+            : this()
+        {
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                Application.LogError($"ImageSet not loaded from: {url}");
+                return;
+            }
+
+            using var inputStream = new UI.Native.InputStream(stream);
+            if (inputStream is null)
+            {
+                Application.LogError($"ImageSet not loaded from: {url}");
+                return;
+            }
+
+            NativeImageSet.LoadFromStream(inputStream);
+        }
+
         internal ImageSet(UI.Native.ImageSet imageSet)
         {
             NativeImageSet = imageSet;
