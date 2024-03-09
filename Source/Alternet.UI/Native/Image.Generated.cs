@@ -149,6 +149,12 @@ namespace Alternet.UI.Native
             return NativeApi.Image_InitializeFromDipSize_(NativePointer, width, height, scale, depth);
         }
         
+        public bool InitializeFromScreen()
+        {
+            CheckDisposed();
+            return NativeApi.Image_InitializeFromScreen_(NativePointer);
+        }
+        
         public bool LoadFromStream(InputStream stream)
         {
             CheckDisposed();
@@ -318,6 +324,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, double scale, int depth);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Image_InitializeFromScreen_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_LoadFromStream_(IntPtr obj, IntPtr stream);

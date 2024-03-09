@@ -54,6 +54,8 @@ namespace NativeApi.Api
         public bool InitializeFromDipSize(int width, int height,
             double scale, int depth = -1) => default;
 
+        public bool InitializeFromScreen() => default;
+
         public bool LoadFromStream(InputStream stream) => default;
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
         public void Initialize(SizeI size, int depth) { }

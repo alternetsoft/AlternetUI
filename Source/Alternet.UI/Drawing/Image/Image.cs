@@ -526,6 +526,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates images with screen pixels.
+        /// </summary>
+        /// <returns></returns>
+        public static Image? FromScreen()
+        {
+            var nativeImage = new UI.Native.Image();
+            if (nativeImage.InitializeFromScreen())
+                return new Image(nativeImage);
+            else
+                return null;
+        }
+
+        /// <summary>
         /// Creates an <see cref="Image" /> from the specified data stream.
         /// </summary>
         /// <param name="stream">
