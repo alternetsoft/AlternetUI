@@ -93,8 +93,9 @@ namespace PaintSample
             testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
             testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
             testMenu.Add("Make file grey...", DoMakeFileGray);
+            testMenu.Add("Load Toucan image", DoLoadToucanImage);
 
-            if(!Application.IsLinuxOS)
+            if (!Application.IsLinuxOS)
                 testMenu.Add("Sample draw", DoDrawOnBitmap);
 
             testMenu.Add("Rotate", DoRotate);
@@ -609,6 +610,13 @@ namespace PaintSample
             }
 
             Document.Bitmap = (Bitmap)image;
+        }
+
+        public void DoLoadToucanImage()
+        {
+            Bitmap toucan = new("SampleImages/toucan.png");
+            toucan.Rescale(toucan.Size * 3);
+            Document.Bitmap = toucan;
         }
 
         public void DoDrawOnBitmap()
