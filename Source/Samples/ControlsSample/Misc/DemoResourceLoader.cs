@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace ControlsSample
 {
-    internal static class ResourceLoader
+    internal static class DemoResourceLoader
     {
         private static ImageLists? imageLists;
 

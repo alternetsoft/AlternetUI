@@ -209,7 +209,7 @@ namespace ControlsSample
                 button.StateImages = ControlStateImages.Empty;
                 if (imageCheckBox.IsChecked)
                 {
-                    buttonImages ??= ResourceLoader.LoadButtonImages(button);
+                    buttonImages ??= DemoResourceLoader.LoadButtonImages(button);
                     button.StateImages = buttonImages;
                 }
 

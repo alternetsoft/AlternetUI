@@ -33,6 +33,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when <see cref="StreamFromUrl"/> is called. You can implement
+        /// <see cref="CustomStreamFromUrl"/> event handler in order to perform custom url processing.
+        /// </summary>
+        public static event EventHandler<StreamFromUrlEventArgs>? CustomStreamFromUrl;
+
+        /// <summary>
         /// Gets or sets default <see cref="ResourceLoader"/>.
         /// </summary>
         public static ResourceLoader Default
@@ -68,6 +74,30 @@ namespace Alternet.UI
         /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
         /// </remarks>
         public static Stream StreamFromUrl(string url)
+        {
+            if(CustomStreamFromUrl is not null)
+            {
+                StreamFromUrlEventArgs e = new(url);
+
+                var list = CustomStreamFromUrl.GetInvocationList();
+
+                foreach(var item in list)
+                {
+                    ((EventHandler<StreamFromUrlEventArgs>)item)(null, e);
+                    if (e.Handled && e.Result is not null)
+                        return e.Result;
+                }
+            }
+
+            return DefaultStreamFromUrl(url);
+        }
+
+        /// <summary>
+        /// Default implementation of <see cref="StreamFromUrl"/>.
+        /// See <see cref="StreamFromUrl"/> for details.
+        /// </summary>
+        /// <returns></returns>
+        public static Stream DefaultStreamFromUrl(string url)
         {
             var s = url;
             var uri = s.StartsWith("/")
