@@ -58,5 +58,14 @@ namespace PropertyGridSample
             comboBox.HorizontalAlignment = HorizontalAlignment.Left;
             comboBox.SuggestedWidth = 200;
         }
+
+        public static void InitColorComboBox(object control)
+        {
+            if (control is not ColorComboBox comboBox)
+                return;
+            comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+            comboBox.SuggestedWidth = 200;
+            comboBox.Value = Color.Red;
+        }
     }
 }

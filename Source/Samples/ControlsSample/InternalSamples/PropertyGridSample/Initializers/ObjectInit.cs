@@ -84,6 +84,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(VListBox), InitVListBox);
             Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
+            Actions.Add(typeof(ColorComboBox), InitColorComboBox);
             Actions.Add(typeof(CheckListBox), InitCheckListBox);
 
             Actions.Add(typeof(ControlPainterPreview), (c) =>

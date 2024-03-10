@@ -533,8 +533,8 @@ namespace Alternet.UI
 
                 if (rectRow.IntersectsWith(rectUpdate))
                 {
-                    // don't allow drawing outside of the lines rectangle
-                    // wxDCClipper clip(*dc, rectRow);
+                    /*don't allow drawing outside of the lines rectangle
+                    wxDCClipper clip(*dc, rectRow);*/
 
                     DrawItemBackground(dc, rectRow, line);
                     DrawItem(dc, rectRow, line);

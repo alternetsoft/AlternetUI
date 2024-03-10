@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -14,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="ListControlItem.Value"/> is <see cref="Color"/> and
     /// <see cref="ListControlItem.Text"/> is label of the color.
     /// </remarks>
-    internal class ColorListBox : VListBox
+    public class ColorListBox : VListBox
     {
         /// <summary>
         /// Gets or sets default painter for the <see cref="ColorListBox"/> items.
@@ -45,6 +46,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the selected color.
+        /// Color value must be added to the list of colors
+        /// before selecting it.
+        /// </summary>
+        public Color? Value
+        {
+            get
+            {
+                if (SelectedItem is ListControlItem item)
+                    return item.Value as Color;
+                return SelectedItem as Color;
+            }
+
+            set
+            {
+                if (Value == value)
+                    return;
+                foreach (var item in Items)
+                {
+                    if (item is not ListControlItem item2)
+                        continue;
+                    if (item2.Value is not Color color)
+                        continue;
+                    if (color != value)
+                        continue;
+                    SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds color items to the <see cref="ColorListBox"/>. This is default
         /// implementation of the initialization method. It is assigned to
         /// <see cref="InitColors"/> property by default.
@@ -67,15 +100,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default item painter for the <see cref="ColorListBoxBox"/> items.
+        /// Default item painter for the <see cref="ColorListBox"/> items.
         /// </summary>
         public class DefaultItemPainter : IListBoxItemPainter
         {
+            /// <inheritdoc/>
             public SizeD GetSize(VListBox sender, int index)
             {
                 return sender.DefaultMeasureItemSize(index);
             }
 
+            /// <inheritdoc/>
             public void Paint(VListBox sender, ListBoxItemPaintEventArgs e)
             {
                 object? item = sender.Items[e.ItemIndex];
