@@ -58,7 +58,7 @@ namespace Alternet.UI
             {
                 var itemFont = ListBox.GetItemFont();
                 if (ListBox.SelectedItemIsBold && IsCurrent)
-                    itemFont = ItemFont.AsBold;
+                    itemFont = itemFont.AsBold;
                 return itemFont;
             }
         }
