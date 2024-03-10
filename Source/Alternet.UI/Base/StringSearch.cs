@@ -48,6 +48,15 @@ namespace Alternet.UI
         public CompareOptions CompareOptions { get; set; } = DefaultCompareOptions;
 
         /// <summary>
+        /// Gets or sets whether to use partial string comparison
+        /// when search is performed. Default is <c>false</c>.
+        /// When <see cref="UseContains"/> is <c>true</c>,
+        /// search operation is successful if
+        /// searched string occurrence is on any character position.
+        /// </summary>
+        public bool UseContains { get; set; } = false;
+
+        /// <summary>
         /// Returns the index of the first item in the control that starts
         /// with the specified string.
         /// </summary>
@@ -175,9 +184,13 @@ namespace Alternet.UI
             var options = CompareOptions;
 
             if (ignoreCase)
+            {
                 options |= CompareOptions.IgnoreCase;
+            }
             else
+            {
                 options &= ~CompareOptions.IgnoreCase;
+            }
 
             for (
                 int index = (startIndexInt + 1) % itemCount;
@@ -186,25 +199,38 @@ namespace Alternet.UI
             {
                 numberOfTimesThroughLoop++;
 
+                var strSource = strings[index];
+
+                if (strSource is null)
+                    continue;
+
                 bool found;
                 if (exact)
                 {
                     found = string.Compare(
                         str,
-                        strings[index],
+                        strSource,
                         culture,
                         options) == 0;
                 }
                 else
                 {
-                    found = string.Compare(
-                        str,
-                        0,
-                        strings[index],
-                        0,
-                        str.Length,
-                        culture,
-                        options) == 0;
+                    if (UseContains)
+                    {
+                        var indexOf = culture.CompareInfo.IndexOf(strSource, str, options);
+                        found = indexOf >= 0;
+                    }
+                    else
+                    {
+                        found = string.Compare(
+                            str,
+                            0,
+                            strSource,
+                            0,
+                            str.Length,
+                            culture,
+                            options) == 0;
+                    }
                 }
 
                 if (found)
