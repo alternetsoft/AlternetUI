@@ -29,6 +29,8 @@ namespace Alternet.UI.Native
             Dispose(disposing: false);
         }
 
+        public bool NoDispose { get; set; }
+
         public bool IsDisposed { get; private set; }
 
         public IntPtr NativePointer { get; private set; }
@@ -93,7 +95,7 @@ namespace Alternet.UI.Native
                 {
                 }
 
-                if (NativePointer != IntPtr.Zero)
+                if (NativePointer != IntPtr.Zero && !NoDispose)
                 {
                     ReleaseNativeObjectPointer(NativePointer);
                     SetNativePointer(IntPtr.Zero);

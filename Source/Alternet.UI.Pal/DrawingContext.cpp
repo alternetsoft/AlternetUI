@@ -113,6 +113,16 @@ namespace Alternet::UI
         image->_bitmap = wxBitmap(((GenericImage*)source)->_image, *wxdc);
     }
 
+    bool DrawingContext::GetIsOk()
+    {
+        return _dc->IsOk();
+    }
+
+    void* DrawingContext::GetHandle()
+    {
+        return _dc->GetHandle();
+    }
+
     DrawingContext::DrawingContext(wxDC* dc,
         optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
     {

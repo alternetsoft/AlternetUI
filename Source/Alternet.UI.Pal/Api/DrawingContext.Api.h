@@ -15,6 +15,11 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API c_bool DrawingContext_GetIsOk_(DrawingContext* obj)
+{
+    return obj->GetIsOk();
+}
+
 ALTERNET_UI_API void* DrawingContext_GetWxWidgetDC_(DrawingContext* obj)
 {
     return obj->GetWxWidgetDC();
@@ -48,6 +53,11 @@ ALTERNET_UI_API InterpolationMode DrawingContext_GetInterpolationMode_(DrawingCo
 ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, InterpolationMode value)
 {
     obj->SetInterpolationMode(value);
+}
+
+ALTERNET_UI_API void* DrawingContext_GetHandle_(DrawingContext* obj)
+{
+    return obj->GetHandle();
 }
 
 ALTERNET_UI_API void DrawingContext_DrawRotatedTextI_(DrawingContext* obj, const char16_t* text, PointI location, Font* font, Color foreColor, Color backColor, double angle)
