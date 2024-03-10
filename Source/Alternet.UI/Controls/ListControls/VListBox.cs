@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// </summary>
         public VListBox()
         {
-            Handler.NativeControl.SetSelectionBackground(DefaultSelectedItemBackColor);
+            UpdateSelectionBackground();
             SuggestedSize = 200;
         }
 
@@ -125,7 +125,7 @@ namespace Alternet.UI
                 if (selectedItemBackColor == value)
                     return;
                 selectedItemBackColor = value;
-                Handler.NativeControl.SetSelectionBackground(value ?? DefaultSelectedItemBackColor);
+                UpdateSelectionBackground();
                 Invalidate();
             }
         }
@@ -154,17 +154,36 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl.GetSelection();
-                if (result < 0)
-                    return null;
-                return result;
+                if(SelectionMode == ListBoxSelectionMode.Single)
+                {
+                    var result = NativeControl.GetSelection();
+                    if (result < 0)
+                        return null;
+                    return result;
+                }
+                else
+                {
+                    var result = NativeControl.GetFirstSelected();
+                    if (result < 0)
+                        return null;
+                    return result;
+                }
             }
 
             set
             {
                 if (SelectedIndex == value)
                     return;
-                Handler.NativeControl.SetSelection(value ?? -1);
+                if (SelectionMode == ListBoxSelectionMode.Single)
+                {
+                    NativeControl.SetSelection(value ?? -1);
+                }
+                else
+                {
+                    NativeControl.ClearSelected();
+                    if (value is not null && value >= 0)
+                        NativeControl.SetSelected(value.Value, true);
+                }
             }
         }
 
@@ -194,20 +213,18 @@ namespace Alternet.UI
             get => false;
         }
 
-        /// <summary>
-        /// Gets or sets number of items in the control.
-        /// </summary>
-        [Browsable(false)]
-        public new int Count
+        /// <inheritdoc/>
+        public override int Count
         {
             get
             {
-                return base.Count;
+                var result = NativeControl.ItemsCount;
+                return result;
             }
 
             set
             {
-                ((VListBoxHandler)Handler).NativeControl.ItemsCount = value;
+                NativeControl.ItemsCount = value;
             }
         }
 
@@ -222,6 +239,11 @@ namespace Alternet.UI
                 return (VListBoxHandler)base.Handler;
             }
         }
+
+        /// <summary>
+        /// Gets <see cref="NativeControl"/> attached to this control.
+        /// </summary>
+        internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
 
         /// <summary>
         /// Gets item font. It must not be <c>null</c>.
@@ -256,6 +278,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether item with the specified index is selected.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual bool IsSelected(int index)
+        {
+            if (SelectionMode == ListBoxSelectionMode.Single)
+                return NativeControl.GetSelection() == index;
+
+            var selCount = NativeControl.GetSelectedCount();
+
+            if (selCount == 0)
+                return false;
+
+            var firstSelected = NativeControl.GetFirstSelected();
+            if (firstSelected == index)
+                return true;
+
+            while (true)
+            {
+                var selected = NativeControl.GetNextSelected();
+                if (selected == index)
+                    return true;
+                if (selected < 0)
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// Draws item with the specified index.
         /// </summary>
         /// <param name="dc">The <see cref="Graphics" /> surface on which to draw.</param>
@@ -268,10 +319,14 @@ namespace Alternet.UI
 
             Color textColor;
 
-            if (SelectedIndex == itemIndex)
+            var isCurrent = NativeControl.IsCurrent(itemIndex);
+            if (SelectedItemIsBold && isCurrent)
+                font = font.AsBold;
+
+            var isSelected = IsSelected(itemIndex);
+
+            if (isSelected)
             {
-                if (SelectedItemIsBold)
-                    font = font.AsBold;
                 textColor = GetSelectedItemTextColor();
             }
             else
@@ -327,6 +382,19 @@ namespace Alternet.UI
         internal override ControlHandler CreateHandler()
         {
             return new VListBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            UpdateSelectionBackground();
+        }
+
+        private void UpdateSelectionBackground()
+        {
+            Handler.NativeControl.SetSelectionBackground(
+                selectedItemBackColor ?? DefaultSelectedItemBackColor);
         }
     }
 }

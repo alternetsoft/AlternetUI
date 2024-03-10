@@ -185,6 +185,18 @@ namespace Alternet.UI.Native
             NativeApi.VListBox_SetSelectionBackground_(NativePointer, color);
         }
         
+        public bool IsCurrent(int current)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_IsCurrent_(NativePointer, current);
+        }
+        
+        public bool DoSetCurrent(int current)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_DoSetCurrent_(NativePointer, current);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -328,6 +340,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void VListBox_SetSelectionBackground_(IntPtr obj, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_IsCurrent_(IntPtr obj, int current);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_DoSetCurrent_(IntPtr obj, int current);
             
         }
     }

@@ -69,7 +69,6 @@ namespace Alternet.UI
             Control.SelectionChanged += Control_SelectionChanged;
 
             NativeControl.SelectionChanged = NativeControl_SelectionChanged;
-            NativeControl.HandleCreated = NativeControl_HandleCreated;
             NativeControl.DrawItem = NativeControl_DrawItem;
             NativeControl.MeasureItem = NativeControl_MeasureItem;
         }
@@ -83,7 +82,6 @@ namespace Alternet.UI
             Control.SelectionChanged -= Control_SelectionChanged;
 
             NativeControl.SelectionChanged = null;
-            NativeControl.HandleCreated = null;
             NativeControl.DrawItem = null;
             NativeControl.MeasureItem = null;
 
@@ -126,11 +124,6 @@ namespace Alternet.UI
             NativeControl.EventHeight = height;
         }
 
-        private void NativeControl_HandleCreated()
-        {
-            NativeControl.ItemsCount = Control.Count;
-        }
-
         private void NativeControl_SelectionChanged()
         {
             if (applyingSelection)
@@ -160,17 +153,21 @@ namespace Alternet.UI
         private void ApplySelection()
         {
             if (Control.SelectionMode == ListBoxSelectionMode.Single)
-                return;
+            {
+                var indices = Control.SelectedIndices;
+                if(indices.Count > 0)
+                    NativeControl.SetSelection(indices[0]);
+                else
+                    NativeControl.SetSelection(-1);
+            }
 
             applyingSelection = true;
 
             try
             {
-                var nativeControl = NativeControl;
-                nativeControl.ClearSelected();
+                NativeControl.ClearSelected();
 
-                var control = Control;
-                var indices = control.SelectedIndices;
+                var indices = Control.SelectedIndices;
 
                 for (var i = 0; i < indices.Count; i++)
                     NativeControl.SetSelected(indices[i], true);

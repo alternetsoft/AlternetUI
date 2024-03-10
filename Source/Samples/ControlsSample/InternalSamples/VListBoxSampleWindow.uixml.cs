@@ -6,19 +6,35 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class ListBoxPage : Control
+    internal partial class VListBoxSampleWindow: Window
     {
-        private int newItemIndex = 0;
+        private readonly VListBox listBox = new()
+        {
+            SuggestedWidth = 200,
+            Margin = (0,0,0,5),
+        };
 
-        public ListBoxPage()
+        public VListBoxSampleWindow()
         {
             InitializeComponent();
+            Title = "Virtual ListBox";
 
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
             findText.TextChanged += FindText_TextChanged;
-            AddDefaultItems(listBox);
+            PropertyGridSample.ObjectInit.InitVListBox(listBox);
+
+            tab1.Children.Prepend(listBox);
+            listBox.SelectionChanged += ListBox_SelectionChanged;
+            listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
+            listBox.HandleCreated += ListBox_HandleCreated;
+            SetSizeToContent();
+        }
+
+        private void ListBox_HandleCreated(object? sender, EventArgs e)
+        {
+            Application.LogIf("VListBox.HandleCreated", true);
         }
 
         private void FindText_TextChanged(object? sender, EventArgs e)
@@ -37,29 +53,9 @@ namespace ControlsSample
 
         public bool FindIgnoreCase { get; set; } = true;
 
-        private void AddDefaultItems(ListBox control)
-        {
-            control.Add("One");
-            control.Add("Two");
-            control.Add("Three");
-            control.Add("Four");
-            control.Add("Five");
-            control.Add("Six");
-            control.Add("Seven");
-            control.Add("Eight");
-            control.Add("Nine");
-            control.Add("Ten");
-        }
-
         private void EditorButton_Click(object? sender, System.EventArgs e)
         {
             DialogFactory.EditItemsWithListEditor(listBox);
-        }
-
-        private int GenItemIndex()
-        {
-            newItemIndex++;
-            return newItemIndex;
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
@@ -75,20 +71,6 @@ namespace ControlsSample
             var item = (result == null ? "<none>" : listBox.Items[result.Value]);
 
             Application.Log($"HitTest result: Item: '{item}'");
-        }
-
-        private void AddManyItemsButton_Click(object? sender, EventArgs e)
-        {
-            listBox.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < 5000; i++)
-                    listBox.Items.Add("Item " + GenItemIndex());
-            }
-            finally
-            {
-                listBox.EndUpdate();
-            }
         }
 
         private static string IndicesToStr(IReadOnlyList<int> indices)
@@ -117,16 +99,6 @@ namespace ControlsSample
             selectItemAtIndices2And4Button.Enabled = b;
 
             listBox.Parent?.EndUpdate();
-        }
-
-        private void RemoveItemButton_Click(object? sender, EventArgs e)
-        {
-            listBox.RemoveSelectedItems();
-        }
-
-        private void AddItemButton_Click(object? sender, EventArgs e)
-        {
-            listBox.Items.Add("Item " + GenItemIndex());
         }
 
         private void EnsureLastItemVisibleButton_Click(

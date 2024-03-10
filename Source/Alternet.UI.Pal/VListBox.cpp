@@ -113,12 +113,25 @@ namespace Alternet::UI
 
     void VListBox::SetItemsCount(int value)
     {
-        return GetListBox()->SetItemCount(value);
+        if (_itemsCount == value)
+            return;
+        _itemsCount = value;
+        GetListBox()->SetItemCount(value);
     }
 
     int VListBox::GetItemsCount()
     {
-        return GetListBox()->GetItemCount();
+        return _itemsCount;
+    }
+
+    bool VListBox::IsCurrent(int current)
+    {
+        return GetListBox()->IsCurrent(current);
+    }
+
+    bool VListBox::DoSetCurrent(int current)
+    {
+        return GetListBox()->SetCurrent(current);
     }
 
     long VListBox::GetSelectionStyle()
@@ -129,7 +142,7 @@ namespace Alternet::UI
         default:
             return wxLB_SINGLE;
         case ListBoxSelectionMode::Multiple:
-            return wxLB_EXTENDED;
+            return wxLB_MULTIPLE;
         }
     }
 
@@ -150,6 +163,7 @@ namespace Alternet::UI
     void VListBox::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
+        GetListBox()->SetItemCount(_itemsCount);
     }
 
     wxVListBox2* VListBox::GetListBox()

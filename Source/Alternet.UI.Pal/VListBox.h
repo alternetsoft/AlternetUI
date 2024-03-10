@@ -31,6 +31,11 @@ namespace Alternet::UI
         virtual wxCoord OnMeasureItem(size_t n) const override;
 
         virtual void OnDrawBackground(wxDC& dc, const wxRect& rect, size_t n) const override;
+
+        bool SetCurrent(int current)
+        {
+            return DoSetCurrent(current);
+        }
     };
 
     class VListBox : public Control
@@ -62,6 +67,7 @@ namespace Alternet::UI
         RectI eventRect;
         int eventItemIndex = -1;
         int eventItemHeight = 16;
+        int _itemsCount = 0;
 
         void UpdateDc(wxDC& dc);
     };

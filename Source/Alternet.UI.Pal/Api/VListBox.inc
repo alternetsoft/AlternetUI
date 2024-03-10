@@ -37,6 +37,8 @@ void EnsureVisible(int itemIndex);
 int ItemHitTest(const PointD& position);
 void SetSelection(int selection);
 void SetSelectionBackground(const Color& color);
+bool IsCurrent(int current);
+bool DoSetCurrent(int current);
 public:
 enum class VListBoxEvent
 {

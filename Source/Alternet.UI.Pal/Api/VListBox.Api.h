@@ -128,6 +128,16 @@ ALTERNET_UI_API void VListBox_SetSelectionBackground_(VListBox* obj, Color color
     obj->SetSelectionBackground(color);
 }
 
+ALTERNET_UI_API c_bool VListBox_IsCurrent_(VListBox* obj, int current)
+{
+    return obj->IsCurrent(current);
+}
+
+ALTERNET_UI_API c_bool VListBox_DoSetCurrent_(VListBox* obj, int current)
+{
+    return obj->DoSetCurrent(current);
+}
+
 ALTERNET_UI_API void VListBox_SetEventCallback_(VListBox::VListBoxEventCallbackType callback)
 {
     VListBox::SetEventCallback(callback);

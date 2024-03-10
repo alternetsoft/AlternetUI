@@ -38,5 +38,8 @@ namespace NativeApi.Api
         public int ItemHitTest(PointD position) => default;
         public void SetSelection(int selection) { }
         public void SetSelectionBackground(Color color) { }
+        public bool IsCurrent(int current) => default;
+
+        public bool DoSetCurrent(int current) => default;
     }
 }

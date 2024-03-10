@@ -105,6 +105,11 @@ namespace Alternet.UI
         public virtual int Count
         {
             get => Items.Count;
+
+            set
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         /// <summary>
@@ -115,15 +120,15 @@ namespace Alternet.UI
         {
             get
             {
-                if (Count > 0)
-                    return Items[Count - 1];
+                if (Items.Count > 0)
+                    return Items[Items.Count - 1];
                 return null;
             }
 
             set
             {
-                if (Count > 0 && value is not null)
-                    Items[Count - 1] = value;
+                if (Items.Count > 0 && value is not null)
+                    Items[Items.Count - 1] = value;
             }
         }
 
@@ -135,14 +140,14 @@ namespace Alternet.UI
         {
             get
             {
-                if (Count > 0)
+                if (Items.Count > 0)
                     return Items[0];
                 return null;
             }
 
             set
             {
-                if (Count > 0 && value is not null)
+                if (Items.Count > 0 && value is not null)
                     Items[0] = value;
             }
         }
@@ -158,7 +163,13 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        int IReadOnlyStrings.Count => Items.Count;
+        int IReadOnlyStrings.Count
+        {
+            get
+            {
+                return Count;
+            }
+        }
 
         internal new LayoutStyle? Layout
         {
@@ -190,9 +201,13 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the <see cref="Items"/> element
         /// to get or set.</param>
         /// <returns>The <see cref="Items"/> element at the specified index.</returns>
-        public object this[long index]
+        public virtual object this[long index]
         {
-            get => Items[(int)index];
+            get
+            {
+                return Items[(int)index];
+            }
+
             set => Items[(int)index] = value;
         }
 
@@ -202,9 +217,13 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the <see cref="Items"/> element
         /// to get or set.</param>
         /// <returns>The <see cref="Items"/> element at the specified index.</returns>
-        public object this[int index]
+        public virtual object this[int index]
         {
-            get => Items[index];
+            get
+            {
+                return Items[index];
+            }
+
             set => Items[index] = value;
         }
 
@@ -215,13 +234,13 @@ namespace Alternet.UI
         /// <c>null</c>.</param>
         /// <returns>The <see cref="Items"/> element at the specified
         /// index or <c>null</c>.</returns>
-        public object? this[int? index]
+        public virtual object? this[int? index]
         {
             get
             {
                 if (index is null)
                     return null;
-                return Items[index.Value];
+                return this[index.Value];
             }
         }
 
