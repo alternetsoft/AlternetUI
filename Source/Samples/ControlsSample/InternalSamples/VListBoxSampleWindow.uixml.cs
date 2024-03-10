@@ -14,8 +14,16 @@ namespace ControlsSample
             Margin = (0,0,0,5),
         };
 
+        private readonly ColorListBox colorListBox = new()
+        {
+            SuggestedWidth = 200,
+            Margin = (0, 0, 0, 5),
+        };
+
         public VListBoxSampleWindow()
         {
+            MinHeight = 500;
+
             InitializeComponent();
             Title = "Virtual ListBox";
 
@@ -29,6 +37,9 @@ namespace ControlsSample
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
             listBox.HandleCreated += ListBox_HandleCreated;
+
+            colorListBox.Parent = tab2;
+
             SetSizeToContent();
         }
 

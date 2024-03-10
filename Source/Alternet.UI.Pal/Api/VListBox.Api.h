@@ -3,6 +3,7 @@
 #pragma once
 
 #include "VListBox.h"
+#include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -13,7 +14,12 @@ ALTERNET_UI_API VListBox* VListBox_Create_()
     return new VListBox();
 }
 
-ALTERNET_UI_API void* VListBox_GetEventDc_(VListBox* obj)
+ALTERNET_UI_API void* VListBox_GetEventDcHandle_(VListBox* obj)
+{
+    return obj->GetEventDcHandle();
+}
+
+ALTERNET_UI_API DrawingContext* VListBox_GetEventDc_(VListBox* obj)
 {
     return obj->GetEventDc();
 }
@@ -66,6 +72,26 @@ ALTERNET_UI_API ListBoxSelectionMode VListBox_GetSelectionMode_(VListBox* obj)
 ALTERNET_UI_API void VListBox_SetSelectionMode_(VListBox* obj, ListBoxSelectionMode value)
 {
     obj->SetSelectionMode(value);
+}
+
+ALTERNET_UI_API int VListBox_GetVisibleEnd_(VListBox* obj)
+{
+    return obj->GetVisibleEnd();
+}
+
+ALTERNET_UI_API int VListBox_GetVisibleBegin_(VListBox* obj)
+{
+    return obj->GetVisibleBegin();
+}
+
+ALTERNET_UI_API int VListBox_GetRowHeight_(VListBox* obj, int line)
+{
+    return obj->GetRowHeight(line);
+}
+
+ALTERNET_UI_API c_bool VListBox_IsSelected_(VListBox* obj, int line)
+{
+    return obj->IsSelected(line);
 }
 
 ALTERNET_UI_API void* VListBox_CreateEx_(int64_t styles)
