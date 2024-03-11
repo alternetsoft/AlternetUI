@@ -150,6 +150,7 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+void SetBoundsEx(const RectD& rect, int flags);
 void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);
@@ -197,7 +198,7 @@ void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
 void SendMouseDownEvent(int x, int y);
 void SendMouseUpEvent(int x, int y);
-void SetBoundsEx(const RectD& rect, int flags);
+RectI GetUpdateClientRect();
 static DrawingContext* OpenClientDrawingContextForWindow(void* window);
 static DrawingContext* OpenPaintDrawingContextForWindow(void* window);
 static DrawingContext* OpenDrawingContextForDC(void* dc, bool deleteDc);
