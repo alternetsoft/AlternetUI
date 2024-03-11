@@ -90,6 +90,11 @@ namespace Alternet.UI
         public string ItemText => ListBox.GetItemText(ItemIndex);
 
         /// <summary>
+        /// Gets minimal height of the item.
+        /// </summary>
+        public double ItemMinHeight => ListBox.GetItemMinHeight(ItemIndex);
+
+        /// <summary>
         /// Gets alignment of the item.
         /// </summary>
         public GenericAlignment ItemAlignment => ListBox.GetItemAlignment(ItemIndex);

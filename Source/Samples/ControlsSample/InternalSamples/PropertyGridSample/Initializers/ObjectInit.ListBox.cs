@@ -20,25 +20,43 @@ namespace PropertyGridSample
                 listBox.Add(item);
             }
 
-            var item5 = listBox.SafeItem<ListControlItem>(5);
+            var imageSize = 24; /* image sizes are always in pixels */
+            var item5 = listBox.SafeItem(5);
+            item5!.Text = "Bold item at right";
             item5!.Alignment = GenericAlignment.CenterRight;
             item5!.FontStyle = FontStyle.Bold;
-            item5!.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), 24).ImgBold.AsImage();
+            item5!.MinHeight = listBox.PixelToDip(imageSize);
+            item5!.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), imageSize).ImgBold.AsImage();
             item5!.SelectedImage =
-                KnownSvgImages.GetForSize(SystemColors.HighlightText, 24).ImgBold.AsImage();
+                KnownSvgImages.GetForSize(SystemColors.HighlightText, imageSize).ImgBold.AsImage();
             item5!.DisabledImage =
-                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), 24).ImgBold.AsImage();
+                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), imageSize).ImgBold.AsImage();
 
             const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Large.";
-            string Calendar16Url = $"{ResPrefix}Calendar32.png";
+            string CalendarUrl = $"{ResPrefix}Calendar32.png";
+            string PencilUrl = $"{ResPrefix}Pencil32.png";
+            string PhotoUrl = $"{ResPrefix}Photo32.png";
 
-            var item6 = listBox.SafeItem<ListControlItem>(6);
+            var item6 = listBox.SafeItem(6);
             item6!.Alignment = GenericAlignment.Center;
-            item6!.Image = new Bitmap(Calendar16Url);
+            item6!.Image = new Bitmap(CalendarUrl);
             item6!.DisabledImage = item6!.Image.ToGrayScale();
+            item6!.ForegroundColor = Color.Green;
+            item6!.BackgroundColor = Color.Lavender;
+            item6!.Text = "Green item at center";
 
-            var item8 = listBox.SafeItem<ListControlItem>(8);
-            item8!.FontStyle = FontStyle.Underline;
+            var item8 = listBox.SafeItem(8);
+            item8!.Text = "Custom height/align";
+            item8!.MinHeight = 60;
+            item8!.Alignment = GenericAlignment.Bottom | GenericAlignment.CenterHorizontal;
+            item8!.Image = new Bitmap(PencilUrl);
+            item8!.DisabledImage = item8!.Image.ToGrayScale();
+            item8!.ForegroundColor = Color.Indigo;
+            item8!.BackgroundColor = Color.LightSkyBlue;
+
+            var item9 = listBox.SafeItem(9);
+            item9!.FontStyle = FontStyle.Underline;
+            item9!.Text = "Underlined item";
 
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;

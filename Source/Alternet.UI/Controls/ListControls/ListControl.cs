@@ -273,6 +273,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="ListControlItem"/> item with the specified index.
+        /// If index of the item is invalid or item is not <see cref="ListControlItem"/>,
+        /// returns <c>null</c>.
+        /// </summary>
+        public ListControlItem? SafeItem(int index) => SafeItem<ListControlItem>(index);
+
+        /// <summary>
         /// Adds <paramref name="text"/> with <paramref name="data"/> to the end of
         /// the <see cref="Items"/> collection.
         /// </summary>

@@ -46,6 +46,7 @@ namespace Alternet.UI
         private IListBoxItemPainter? painter;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private GenericAlignment itemAlignment = GenericAlignment.CenterVertical | GenericAlignment.Left;
+        private double minItemHeight = 24;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VListBox"/> class.
@@ -54,6 +55,25 @@ namespace Alternet.UI
         {
             UserPaint = true;
             SuggestedSize = 200;
+        }
+
+        /// <summary>
+        /// Gets minimal height of the items. Default is 24 dip.
+        /// </summary>
+        public double MinItemHeight
+        {
+            get
+            {
+                return minItemHeight;
+            }
+
+            set
+            {
+                if (minItemHeight == value)
+                    return;
+                minItemHeight = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -293,7 +313,7 @@ namespace Alternet.UI
             if (IsBold)
                 result = result.AsBold;
 
-            var item = SafeItem<ListControlItem>(itemIndex);
+            var item = SafeItem(itemIndex);
             if (item is not null)
             {
                 var itemFont = item.Font;
@@ -332,10 +352,17 @@ namespace Alternet.UI
             if(string.IsNullOrEmpty(s))
                 s = "Wy";
 
+            var (normal, disabled, selected) = GetItemImages(itemIndex);
+            var maxHeightI =
+                MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
+            var maxHeightD = PixelToDip(maxHeightI);
+
             var font = GetItemFont(itemIndex).AsBold;
             var size = MeasureCanvas.MeasureText(s, font);
+            size.Height = Math.Max(size.Height, maxHeightD);
             size.Width += ItemMargin.Horizontal;
             size.Height += ItemMargin.Vertical;
+            size.Height = Math.Max(size.Height, GetItemMinHeight(itemIndex));
             return size;
         }
 
@@ -445,6 +472,13 @@ namespace Alternet.UI
             {
                 if (isSelected)
                     dc.FillRectangle(GetSelectedItemBackColor(e.ItemIndex), rect);
+                else
+                {
+                    var itemBackColor = SafeItem(e.ItemIndex)?.BackgroundColor;
+                    if(itemBackColor is not null)
+                        dc.FillRectangle(itemBackColor, rect);
+                }
+
                 if (isCurrent && Focused)
                     dc.FillRectangleBorder(Color.Black, rect);
             }
@@ -520,10 +554,23 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual GenericAlignment GetItemAlignment(int itemIndex)
         {
-            var item = SafeItem<ListControlItem>(itemIndex);
+            var item = SafeItem(itemIndex);
             if(item is null)
                 return ItemAlignment;
             return item.Alignment;
+        }
+
+        /// <summary>
+        /// Gets item minimal height.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        public virtual double GetItemMinHeight(int itemIndex)
+        {
+            var item = SafeItem(itemIndex);
+            if (item is null)
+                return MinItemHeight;
+            return Math.Max(item.MinHeight, MinItemHeight);
         }
 
         /// <summary>
@@ -533,7 +580,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual (Image? Normal, Image? Disabled, Image? Selected) GetItemImages(int itemIndex)
         {
-            var item = SafeItem<ListControlItem>(itemIndex);
+            var item = SafeItem(itemIndex);
             if (item is null)
                 return (null, null, null);
             return (
@@ -586,7 +633,10 @@ namespace Alternet.UI
         public virtual Color GetItemTextColor(int itemIndex)
         {
             if (Enabled)
-                return ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
+            {
+                var itemColor = SafeItem(itemIndex)?.ForegroundColor;
+                return itemColor ?? ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
+            }
             else
                 return GetDisabledItemTextColor(itemIndex);
         }
@@ -601,7 +651,7 @@ namespace Alternet.UI
             if (Enabled)
                 return selectedItemBackColor ?? DefaultSelectedItemBackColor;
             else
-                return GetDisabledItemTextColor(itemIndex);
+                return RealBackgroundColor;
         }
 
         /// <summary>

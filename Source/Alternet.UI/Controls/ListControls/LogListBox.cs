@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Alternet.UI.Localization;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with log and debug related functionality.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class LogListBox : ListBox
+    public partial class LogListBox : VListBox
     {
         private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;
