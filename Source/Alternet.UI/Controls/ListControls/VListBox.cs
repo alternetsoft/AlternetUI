@@ -263,7 +263,7 @@ namespace Alternet.UI
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public virtual Font GetItemFont()
+        public virtual Font GetItemFont(int itemIndex)
         {
             var result = Font ?? UI.Control.DefaultFont;
             if (IsBold)
@@ -297,7 +297,7 @@ namespace Alternet.UI
             if(string.IsNullOrEmpty(s))
                 s = "Wy";
 
-            var font = GetItemFont().AsBold;
+            var font = GetItemFont(itemIndex).AsBold;
             var size = MeasureCanvas.MeasureText(s, font);
             size.Width += ItemMargin.Horizontal;
             size.Height += ItemMargin.Vertical;
@@ -362,7 +362,7 @@ namespace Alternet.UI
             if (Enabled)
             {
                 if (isSelected)
-                    dc.FillRectangle(GetSelectedItemBackColor(), rect);
+                    dc.FillRectangle(GetSelectedItemBackColor(itemIndex), rect);
                 if (isCurrent && Focused)
                     dc.FillRectangleBorder(Color.Black, rect);
             }
@@ -459,12 +459,12 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetSelectedItemTextColor()
+        public virtual Color GetSelectedItemTextColor(int itemIndex)
         {
             if (Enabled)
                 return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
             else
-                return GetDisabledItemTextColor();
+                return GetDisabledItemTextColor(itemIndex);
         }
 
         /// <summary>
@@ -472,12 +472,12 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetItemTextColor()
+        public virtual Color GetItemTextColor(int itemIndex)
         {
             if (Enabled)
                 return ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
             else
-                return GetDisabledItemTextColor();
+                return GetDisabledItemTextColor(itemIndex);
         }
 
         /// <summary>
@@ -485,19 +485,19 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetSelectedItemBackColor()
+        public virtual Color GetSelectedItemBackColor(int itemIndex)
         {
             if (Enabled)
                 return selectedItemBackColor ?? DefaultSelectedItemBackColor;
             else
-                return GetDisabledItemTextColor();
+                return GetDisabledItemTextColor(itemIndex);
         }
 
         /// <summary>
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetDisabledItemTextColor()
+        public virtual Color GetDisabledItemTextColor(int itemIndex)
         {
             return DisabledItemTextColor ?? DefaultDisabledItemTextColor;
         }
@@ -515,15 +515,13 @@ namespace Alternet.UI
 
             var dc = e.Graphics;
 
-            var rectUpdate = e.ClipRectangle; // GetUpdateClientRect();
+            var rectUpdate = GetUpdateClientRect();
 
             dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
 
-            // the bounding rectangle of the current line
             RectD rectRow = RectD.Empty;
             rectRow.Width = clientSize.Width;
 
-            // iterate over all visible lines
             int lineMax = NativeControl.GetVisibleEnd();
             for (int line = NativeControl.GetVisibleBegin(); line < lineMax; line++)
             {
