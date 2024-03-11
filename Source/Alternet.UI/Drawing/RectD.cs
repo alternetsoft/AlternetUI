@@ -791,7 +791,7 @@ namespace Alternet.Drawing
         /// <param name="margin">Margin to apply</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RectD WithMargin(Thickness margin)
+        public readonly RectD WithMargin(Thickness margin)
         {
             RectD result = this;
             result.ApplyMargin(margin);
