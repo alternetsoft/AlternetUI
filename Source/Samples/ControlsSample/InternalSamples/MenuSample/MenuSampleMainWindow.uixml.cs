@@ -9,6 +9,7 @@ namespace MenuSample
     public partial class MainWindow : Window
     {
         private const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Small.";
+        private readonly string Calendar16Url = $"{ResPrefix}Calendar16.png";
         private readonly int dynamicToolbarItemsSeparatorIndex;
         private int newItemIndex = 0;
         ToolBar? toolbar;
@@ -150,7 +151,7 @@ namespace MenuSample
             var calendarToolbarItem = new ToolBarItem("Calendar", ToolbarItem_Click)
             {
                 ToolTip = "Calendar Toolbar Item",
-                Image = ImageSet.FromUrl($"{ResPrefix}Calendar16.png")
+                Image = ImageSet.FromUrl(Calendar16Url)
             };
 
             var photoToolbarItem = new ToolBarItem("Photo", ToolbarItem_Click)

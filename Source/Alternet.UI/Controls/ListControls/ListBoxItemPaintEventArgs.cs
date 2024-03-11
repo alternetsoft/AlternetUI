@@ -90,6 +90,16 @@ namespace Alternet.UI
         public string ItemText => ListBox.GetItemText(ItemIndex);
 
         /// <summary>
+        /// Gets alignment of the item.
+        /// </summary>
+        public GenericAlignment ItemAlignment => ListBox.GetItemAlignment(ItemIndex);
+
+        /// <summary>
+        /// Gets normal and disabled images of the item.
+        /// </summary>
+        public (Image? Normal, Image? Disabled, Image? Selected) ItemImages => ListBox.GetItemImages(ItemIndex);
+
+        /// <summary>
         /// Gets control which item is painted.
         /// </summary>
         public VListBox ListBox { get; }

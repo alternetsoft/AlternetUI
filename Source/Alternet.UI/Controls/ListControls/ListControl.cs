@@ -258,6 +258,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets item with the specified index.
+        /// If index of the item is invalid, returns null.
+        /// </summary>
+        /// <typeparam name="T">Type of the result.</typeparam>
+        /// <param name="index">Index of the item.</param>
+        /// <returns></returns>
+        public virtual T? SafeItem<T>(int index)
+            where T : class
+        {
+            if (index < 0 || index >= Items.Count)
+                return default;
+            return Items[index] as T;
+        }
+
+        /// <summary>
         /// Adds <paramref name="text"/> with <paramref name="data"/> to the end of
         /// the <see cref="Items"/> collection.
         /// </summary>

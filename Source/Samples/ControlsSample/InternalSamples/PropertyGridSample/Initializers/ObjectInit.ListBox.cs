@@ -16,8 +16,29 @@ namespace PropertyGridSample
 
             for (int i = 0; i < 150; i++)
             {
-                listBox.Add($"Item {i}");
+                ListControlItem item = new($"Item {i}");
+                listBox.Add(item);
             }
+
+            var item5 = listBox.SafeItem<ListControlItem>(5);
+            item5!.Alignment = GenericAlignment.CenterRight;
+            item5!.FontStyle = FontStyle.Bold;
+            item5!.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), 24).ImgBold.AsImage();
+            item5!.SelectedImage =
+                KnownSvgImages.GetForSize(SystemColors.HighlightText, 24).ImgBold.AsImage();
+            item5!.DisabledImage =
+                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), 24).ImgBold.AsImage();
+
+            const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Large.";
+            string Calendar16Url = $"{ResPrefix}Calendar32.png";
+
+            var item6 = listBox.SafeItem<ListControlItem>(6);
+            item6!.Alignment = GenericAlignment.Center;
+            item6!.Image = new Bitmap(Calendar16Url);
+            item6!.DisabledImage = item6!.Image.ToGrayScale();
+
+            var item8 = listBox.SafeItem<ListControlItem>(8);
+            item8!.FontStyle = FontStyle.Underline;
 
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;

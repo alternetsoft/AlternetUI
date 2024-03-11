@@ -45,6 +45,7 @@ namespace Alternet.UI
         private Color? disabledItemTextColor;
         private IListBoxItemPainter? painter;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
+        private GenericAlignment itemAlignment = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VListBox"/> class.
@@ -209,6 +210,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default alignment of the items.
+        /// </summary>
+        /// <remarks>
+        /// In order to set individual item alignment, item must be <see cref="ListControlItem"/>
+        /// descendant, it has <see cref="ListControlItem.Alignment"/> property.
+        /// </remarks>
+        public virtual GenericAlignment ItemAlignment
+        {
+            get
+            {
+                return itemAlignment;
+            }
+
+            set
+            {
+                if (itemAlignment == value)
+                    return;
+                itemAlignment = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets item margin.
         /// </summary>
         public virtual Thickness ItemMargin
@@ -268,6 +292,17 @@ namespace Alternet.UI
             var result = Font ?? UI.Control.DefaultFont;
             if (IsBold)
                 result = result.AsBold;
+
+            var item = SafeItem<ListControlItem>(itemIndex);
+            if (item is not null)
+            {
+                var itemFont = item.Font;
+                if (itemFont is not null)
+                    result = itemFont;
+                if (item.FontStyle is not null)
+                    result = result.GetWithStyle(item.FontStyle.Value);
+            }
+
             return result;
         }
 
@@ -479,15 +514,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets item alignment.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        public virtual GenericAlignment GetItemAlignment(int itemIndex)
+        {
+            var item = SafeItem<ListControlItem>(itemIndex);
+            if(item is null)
+                return ItemAlignment;
+            return item.Alignment;
+        }
+
+        /// <summary>
+        /// Gets item image.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        public virtual (Image? Normal, Image? Disabled, Image? Selected) GetItemImages(int itemIndex)
+        {
+            var item = SafeItem<ListControlItem>(itemIndex);
+            if (item is null)
+                return (null, null, null);
+            return (
+                item.Image,
+                item.DisabledImage ?? item.Image,
+                item.SelectedImage ?? item.Image);
+        }
+
+        /// <summary>
         /// Default method which draws items. Called from <see cref="DrawItem"/>.
         /// </summary>
         public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
         {
-            e.Graphics.DrawText(
-                e.ItemText,
+            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
+            var image = Enabled ? (e.IsSelected ? selectedImage : normalImage) : disabledImage;
+
+            var s = e.ItemText;
+
+            if (image is not null)
+                s = $" {s}";
+
+            e.Graphics.DrawLabel(
+                s,
                 e.ItemFont,
-                e.TextColor.AsBrush,
-                e.ClipRectangle);
+                e.TextColor,
+                Color.Empty,
+                image,
+                e.ClipRectangle,
+                e.ItemAlignment);
         }
 
         /// <summary>
