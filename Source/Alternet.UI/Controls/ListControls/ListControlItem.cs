@@ -138,7 +138,7 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual GenericAlignment Alignment { get; set; }
+        public virtual GenericAlignment Alignment { get; set; } = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
         /// <summary>
         /// Gets or sets text which is displayed in the <see cref="ListControl"/>.
