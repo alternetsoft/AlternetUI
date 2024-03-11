@@ -7,12 +7,22 @@ namespace Alternet::UI
         return new VListBox(styles);
     }
 
+    bool VListBox::IsSelected(int line)
+    {
+        return GetListBox()->IsSelected(line);
+    }
+
     VListBox::VListBox(int64_t styles)
     {
         bindScrollEvents = false;
     }
 
-    void* VListBox::GetEventDc()
+    void* VListBox::GetEventDcHandle()
+    {
+        return eventDc->GetHandle();
+    }
+
+    DrawingContext* VListBox::GetEventDc()
     {
         return eventDc;
     }
@@ -113,12 +123,25 @@ namespace Alternet::UI
 
     void VListBox::SetItemsCount(int value)
     {
-        return GetListBox()->SetItemCount(value);
+        if (_itemsCount == value)
+            return;
+        _itemsCount = value;
+        GetListBox()->SetItemCount(value);
     }
 
     int VListBox::GetItemsCount()
     {
-        return GetListBox()->GetItemCount();
+        return _itemsCount;
+    }
+
+    bool VListBox::IsCurrent(int current)
+    {
+        return GetListBox()->IsCurrent(current);
+    }
+
+    bool VListBox::DoSetCurrent(int current)
+    {
+        return GetListBox()->SetCurrent(current);
     }
 
     long VListBox::GetSelectionStyle()
@@ -129,7 +152,7 @@ namespace Alternet::UI
         default:
             return wxLB_SINGLE;
         case ListBoxSelectionMode::Multiple:
-            return wxLB_EXTENDED;
+            return wxLB_MULTIPLE;
         }
     }
 
@@ -150,6 +173,7 @@ namespace Alternet::UI
     void VListBox::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
+        GetListBox()->SetItemCount(_itemsCount);
     }
 
     wxVListBox2* VListBox::GetListBox()
@@ -163,14 +187,9 @@ namespace Alternet::UI
         RaiseEvent(VListBoxEvent::SelectionChanged);
     }
 
-    void VListBox::UpdateDc(wxDC& dc)
+    void VListBox::OnDrawItem(DrawingContext* dc, const wxRect& rect, size_t n)
     {
-        eventDc = std::addressof(dc);
-    }
-
-    void VListBox::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n)
-    {
-        UpdateDc(dc);
+        eventDc = dc;
         eventRect = rect;
         eventItemIndex = n;
         RaiseEvent(VListBoxEvent::DrawItem);
@@ -190,9 +209,34 @@ namespace Alternet::UI
         wxVListBox::OnDrawBackground(dc, rect, n);
     }
 
+    int VListBox::GetVisibleEnd()
+    {
+        return GetListBox()->GetVisibleEnd();
+    }
+
+    int VListBox::GetVisibleBegin()
+    {
+        return GetListBox()->GetVisibleBegin();
+    }
+
+    int VListBox::GetRowHeight(int line)
+    {
+        return GetListBox()->OnMeasureItem(line);
+    }
+
+    void VListBox::OnPaint(wxPaintEvent& event)
+    {
+        event.Skip(false);
+        Control::RaiseEvent(ControlEvent::Paint);
+    }
+
     // the derived class must implement this function to actually draw the item
     // with the given index on the provided DC
     void wxVListBox2::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
+    {
+    }
+
+    void wxVListBox2::OnDrawItem(DrawingContext* dc, const wxRect& rect, size_t n) const
     {
         ((VListBox*)_palControl)->OnDrawItem(dc, rect, n);
     }
@@ -264,12 +308,41 @@ namespace Alternet::UI
         }
     }
 
+    bool VListBox::ScrollRows(int rows)
+    {
+        return GetListBox()->ScrollRows(rows);
+    }
+
+    bool VListBox::ScrollRowPages(int pages)
+    {
+        return GetListBox()->ScrollRowPages(pages);
+    }
+
+    void VListBox::RefreshRow(int row)
+    {
+        GetListBox()->RefreshRow(row);
+    }
+
+    void VListBox::RefreshRows(int from, int to)
+    {
+        GetListBox()->RefreshRows(from, to);
+    }
+
+    bool VListBox::IsVisible(int line)
+    {
+        return GetListBox()->IsRowVisible(line);
+    }
+
     void VListBox::EnsureVisible(int itemIndex)
     {
+        GetListBox()->ScrollToRow(itemIndex);
     }
 
     int VListBox::ItemHitTest(const PointD& position)
     {
-        return -1;
+        auto listBox = GetListBox();
+        auto y = fromDip(position.Y, listBox);
+        auto result = listBox->VirtualHitTest(y);
+        return result;
     }
 }

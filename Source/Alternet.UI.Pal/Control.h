@@ -114,6 +114,29 @@ namespace Alternet::UI
         int _borderStyle = 0;
         int _disableRecreateCounter = 0;
 
+        virtual void OnPaint(wxPaintEvent& event);
+        void OnEraseBackground(wxEraseEvent& event);
+
+        void OnMouseCaptureLost(wxEvent& event);
+
+        void OnMouseEnter(wxMouseEvent& event);
+        void OnMouseLeave(wxMouseEvent& event);
+        void OnMouseLeftUp(wxMouseEvent& event);
+        void OnVisibleChanged(wxShowEvent& event);
+        void OnSizeChanged(wxSizeEvent& event);
+        void OnDestroy(wxWindowDestroyEvent& event);
+        void OnIdle(wxIdleEvent& event);
+        void OnActivate(wxActivateEvent& event);
+
+        void OnScrollTop(wxScrollWinEvent& event);
+        void OnScrollBottom(wxScrollWinEvent& event);
+        void OnScrollLineUp(wxScrollWinEvent& event);
+        void OnScrollLineDown(wxScrollWinEvent& event);
+        void OnScrollPageUp(wxScrollWinEvent& event);
+        void OnScrollPageDown(wxScrollWinEvent& event);
+        void OnScrollThumbTrack(wxScrollWinEvent& event);
+        void OnScrollThumbRelease(wxScrollWinEvent& event);
+
         virtual void OnParentChanged();
         virtual void OnAnyParentChanged();
 
@@ -255,29 +278,6 @@ namespace Alternet::UI
 
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);
-
-        void OnPaint(wxPaintEvent& event);
-        void OnEraseBackground(wxEraseEvent& event);
-
-        void OnMouseCaptureLost(wxEvent& event);
-
-        void OnMouseEnter(wxMouseEvent& event);
-        void OnMouseLeave(wxMouseEvent& event);
-        void OnMouseLeftUp(wxMouseEvent& event);
-        void OnVisibleChanged(wxShowEvent& event);
-        void OnSizeChanged(wxSizeEvent& event);
-        void OnDestroy(wxWindowDestroyEvent& event);
-        void OnIdle(wxIdleEvent& event);
-        void OnActivate(wxActivateEvent& event);
-
-        void OnScrollTop(wxScrollWinEvent& event);
-        void OnScrollBottom(wxScrollWinEvent& event);
-        void OnScrollLineUp(wxScrollWinEvent& event);
-        void OnScrollLineDown(wxScrollWinEvent& event);
-        void OnScrollPageUp(wxScrollWinEvent& event);
-        void OnScrollPageDown(wxScrollWinEvent& event);
-        void OnScrollThumbTrack(wxScrollWinEvent& event);
-        void OnScrollThumbRelease(wxScrollWinEvent& event);
 
         DelayedValue<Control, Control::ScrollInfo>& GetScrollInfoDelayedValue(
             const wxScrollWinEvent& event);

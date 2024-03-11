@@ -1975,6 +1975,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the update rectangle region bounding box in client coords. This method
+        /// can be used in paint events. Returns rectangle in pixels.
+        /// </summary>
+        /// <returns></returns>
+        public RectI GetUpdateClientRectI()
+        {
+            return NativeControl.GetUpdateClientRect();
+        }
+
+        /// <summary>
+        /// Gets the update rectangle region bounding box in client coords. This method
+        /// can be used in paint events. Returns rectangle in dips (1/96 inch).
+        /// </summary>
+        /// <returns></returns>
+        public RectD GetUpdateClientRect()
+        {
+            var resultI = NativeControl.GetUpdateClientRect();
+            var resultD = PixelToDip(resultI);
+            return resultD;
+        }
+
+        /// <summary>
         /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>

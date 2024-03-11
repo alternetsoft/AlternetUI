@@ -43,14 +43,37 @@ namespace Alternet.UI
         private Color? selectedItemBackColor;
         private bool selectedIsBold;
         private Color? disabledItemTextColor;
+        private IListBoxItemPainter? painter;
+        private ListBoxItemPaintEventArgs? itemPaintArgs;
+        private GenericAlignment itemAlignment = GenericAlignment.CenterVertical | GenericAlignment.Left;
+        private double minItemHeight = 24;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VListBox"/> class.
         /// </summary>
         public VListBox()
         {
-            Handler.NativeControl.SetSelectionBackground(DefaultSelectedItemBackColor);
+            UserPaint = true;
             SuggestedSize = 200;
+        }
+
+        /// <summary>
+        /// Gets minimal height of the items. Default is 24 dip.
+        /// </summary>
+        public double MinItemHeight
+        {
+            get
+            {
+                return minItemHeight;
+            }
+
+            set
+            {
+                if (minItemHeight == value)
+                    return;
+                minItemHeight = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -68,6 +91,26 @@ namespace Alternet.UI
                 if (disabledItemTextColor == value)
                     return;
                 disabledItemTextColor = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets item painter associated with the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IListBoxItemPainter? ItemPainter
+        {
+            get
+            {
+                return painter;
+            }
+
+            set
+            {
+                if (painter == value)
+                    return;
+                painter = value;
                 Invalidate();
             }
         }
@@ -125,7 +168,6 @@ namespace Alternet.UI
                 if (selectedItemBackColor == value)
                     return;
                 selectedItemBackColor = value;
-                Handler.NativeControl.SetSelectionBackground(value ?? DefaultSelectedItemBackColor);
                 Invalidate();
             }
         }
@@ -154,17 +196,59 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl.GetSelection();
-                if (result < 0)
-                    return null;
-                return result;
+                if (SelectionMode == ListBoxSelectionMode.Single)
+                {
+                    var result = NativeControl.GetSelection();
+                    if (result < 0)
+                        return null;
+                    return result;
+                }
+                else
+                {
+                    var result = NativeControl.GetFirstSelected();
+                    if (result < 0)
+                        return null;
+                    return result;
+                }
             }
 
             set
             {
                 if (SelectedIndex == value)
                     return;
-                Handler.NativeControl.SetSelection(value ?? -1);
+                if (SelectionMode == ListBoxSelectionMode.Single)
+                {
+                    NativeControl.SetSelection(value ?? -1);
+                }
+                else
+                {
+                    NativeControl.ClearSelected();
+                    if (value is not null && value >= 0)
+                        NativeControl.SetSelected(value.Value, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default alignment of the items.
+        /// </summary>
+        /// <remarks>
+        /// In order to set individual item alignment, item must be <see cref="ListControlItem"/>
+        /// descendant, it has <see cref="ListControlItem.Alignment"/> property.
+        /// </remarks>
+        public virtual GenericAlignment ItemAlignment
+        {
+            get
+            {
+                return itemAlignment;
+            }
+
+            set
+            {
+                if (itemAlignment == value)
+                    return;
+                itemAlignment = value;
+                Invalidate();
             }
         }
 
@@ -188,26 +272,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        [Browsable(false)]
-        public override bool CanUserPaint
-        {
-            get => false;
-        }
-
-        /// <summary>
-        /// Gets or sets number of items in the control.
-        /// </summary>
-        [Browsable(false)]
-        public new int Count
+        public override int Count
         {
             get
             {
-                return base.Count;
+                var result = NativeControl.ItemsCount;
+                return result;
             }
 
             set
             {
-                ((VListBoxHandler)Handler).NativeControl.ItemsCount = value;
+                NativeControl.ItemsCount = value;
             }
         }
 
@@ -224,68 +299,317 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="NativeControl"/> attached to this control.
+        /// </summary>
+        internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
+
+        /// <summary>
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public virtual Font GetItemFont()
+        public virtual Font GetItemFont(int itemIndex)
         {
             var result = Font ?? UI.Control.DefaultFont;
             if (IsBold)
                 result = result.AsBold;
+
+            var item = SafeItem(itemIndex);
+            if (item is not null)
+            {
+                var itemFont = item.Font;
+                if (itemFont is not null)
+                    result = itemFont;
+                if (item.FontStyle is not null)
+                    result = result.GetWithStyle(item.FontStyle.Value);
+            }
+
             return result;
         }
 
         /// <summary>
-        /// Measures item size.
+        /// Measures item size. If <see cref="ItemPainter"/> is assigned, uses
+        /// <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
+        /// <see cref="DefaultMeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
         public virtual SizeD MeasureItemSize(int itemIndex)
         {
-            string s;
+            if (painter is null)
+                return DefaultMeasureItemSize(itemIndex);
+            var result = painter.GetSize(this, itemIndex);
+            if(result == SizeD.MinusOne)
+                return DefaultMeasureItemSize(itemIndex);
+            return result;
+        }
 
-            if (itemIndex < Items.Count)
-                s = GetItemText(itemIndex);
-            else
+        /// <summary>
+        /// Default method which measures item size. Called from <see cref="MeasureItemSize"/>.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        public virtual SizeD DefaultMeasureItemSize(int itemIndex)
+        {
+            var s = GetItemText(itemIndex);
+            if(string.IsNullOrEmpty(s))
                 s = "Wy";
 
-            var font = GetItemFont().AsBold;
+            var (normal, disabled, selected) = GetItemImages(itemIndex);
+            var maxHeightI =
+                MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
+            var maxHeightD = PixelToDip(maxHeightI);
+
+            var font = GetItemFont(itemIndex).AsBold;
             var size = MeasureCanvas.MeasureText(s, font);
+            size.Height = Math.Max(size.Height, maxHeightD);
             size.Width += ItemMargin.Horizontal;
             size.Height += ItemMargin.Vertical;
+            size.Height = Math.Max(size.Height, GetItemMinHeight(itemIndex));
             return size;
         }
 
         /// <summary>
-        /// Draws item with the specified index.
+        /// Gets whether item with the specified index is selected.
         /// </summary>
-        /// <param name="dc">The <see cref="Graphics" /> surface on which to draw.</param>
-        /// <param name="rect">Rectangle in which to draw the item.</param>
-        /// <param name="itemIndex">Index of the item.</param>
-        public virtual void DrawItem(Graphics dc, RectD rect, int itemIndex)
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual bool IsSelected(int index)
         {
-            var s = GetItemText(itemIndex);
-            var font = GetItemFont();
+            return NativeControl.IsSelected(index);
+        }
 
-            Color textColor;
+        /// <summary>
+        /// Gets whether item with the specified index is visible.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual bool IsVisible(int index)
+        {
+            return NativeControl.IsVisible(index);
+        }
 
-            if (SelectedIndex == itemIndex)
+        /// <summary>
+        /// Scroll by the specified number of rows which may be positive (to scroll down)
+        /// or negative (to scroll up).
+        /// </summary>
+        /// <param name="rows">Number of items to scroll.</param>
+        /// <returns><c>true</c> if the control was scrolled, <c>false</c> otherwise
+        /// (for example, if we're trying to scroll down but we are already
+        /// showing the last row).</returns>
+        public virtual bool ScrollRows(int rows)
+        {
+            return NativeControl.ScrollRows(rows);
+        }
+
+        /// <summary>
+        /// Scroll by the specified number of pages which may be positive
+        /// (to scroll down) or negative (to scroll up).
+        /// </summary>
+        /// <param name="pages">Number of pages to scroll.</param>
+        /// <returns><c>true</c> if the control was scrolled, <c>false</c> otherwise
+        /// (for example, if we're trying to scroll down but we are already
+        /// showing the last row).</returns>
+        public virtual bool ScrollRowPages(int pages)
+        {
+            return NativeControl.ScrollRowPages(pages);
+        }
+
+        /// <summary>
+        /// Triggers a refresh for just the given row's area of the control if it's visible.
+        /// </summary>
+        /// <param name="row">Item index.</param>
+        public virtual void RefreshRow(int row)
+        {
+            NativeControl.RefreshRow(row);
+        }
+
+        /// <summary>
+        /// Triggers a refresh for the area between the specified range of rows given (inclusively).
+        /// </summary>
+        /// <param name="from">First item index.</param>
+        /// <param name="to">Last item index.</param>
+        public virtual void RefreshRows(int from, int to)
+        {
+            NativeControl.RefreshRows(from, to);
+        }
+
+        /// <summary>
+        /// Gets whether item with the specified index is current.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual bool IsCurrent(int index)
+        {
+            return NativeControl.IsCurrent(index);
+        }
+
+        /// <summary>
+        /// Draws background for the item with the specified index.
+        /// If <see cref="ItemPainter"/> is assigned, uses
+        /// <see cref="IListBoxItemPainter.PaintBackground"/>, otherwise calls
+        /// <see cref="DefaultDrawItemBackground"/>.
+        /// </summary>
+        /// <param name="e">Draw parameters.</param>
+        public virtual void DrawItemBackground(ListBoxItemPaintEventArgs e)
+        {
+            var result = painter?.PaintBackground(this, e) ?? false;
+            if(!result)
+                DefaultDrawItemBackground(e);
+        }
+
+        /// <summary>
+        /// Draws default background for the item with the specified index.
+        /// Used inside <see cref="DrawItemBackground"/>.
+        /// </summary>
+        /// <param name="e">Draw parameters.</param>
+        public virtual void DefaultDrawItemBackground(ListBoxItemPaintEventArgs e)
+        {
+            var rect = e.ClipRectangle;
+            var dc = e.Graphics;
+
+            var isSelected = e.IsSelected;
+            var isCurrent = e.IsCurrent;
+
+            if (Enabled)
             {
-                if (SelectedItemIsBold)
-                    font = font.AsBold;
-                textColor = GetSelectedItemTextColor();
+                if (isSelected)
+                    dc.FillRectangle(GetSelectedItemBackColor(e.ItemIndex), rect);
+                else
+                {
+                    var itemBackColor = SafeItem(e.ItemIndex)?.BackgroundColor;
+                    if(itemBackColor is not null)
+                        dc.FillRectangle(itemBackColor, rect);
+                }
+
+                if (isCurrent && Focused)
+                    dc.FillRectangleBorder(Color.Black, rect);
             }
-            else
+        }
+
+        /// <summary>
+        /// Draws item with the specified index.  If <see cref="ItemPainter"/> is assigned, uses
+        /// <see cref="IListBoxItemPainter.Paint"/>, otherwise calls
+        /// <see cref="DefaultDrawItem"/>.
+        /// </summary>
+        /// <param name="e">Draw parameters.</param>
+        public virtual void DrawItem(ListBoxItemPaintEventArgs e)
+        {
+            e.ClipRectangle = e.ClipRectangle.WithMargin(ItemMargin);
+
+            if (painter is null)
             {
-                textColor = GetItemTextColor();
+                DefaultDrawItem(e);
+                return;
             }
 
-            rect.ApplyMargin(ItemMargin);
+            painter.Paint(this, e);
+        }
 
-            dc.DrawText(
+        /// <summary>
+        /// Gets index of the first visible item.
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetVisibleBegin()
+        {
+            return NativeControl.GetVisibleBegin();
+        }
+
+        /// <summary>
+        /// Gets index of the last visible item.
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetVisibleEnd()
+        {
+            return NativeControl.GetVisibleEnd();
+        }
+
+        /// <summary>
+        /// Gets suggested rectangles of the item's image and text.
+        /// </summary>
+        /// <param name="e">Item painting paramaters.</param>
+        /// <returns></returns>
+        public virtual (RectD ImageRect, RectD TextRect) GetItemImageRect(
+            ListBoxItemPaintEventArgs e)
+        {
+            Thickness textMargin = Thickness.Empty;
+
+            var offset = ComboBox.DefaultImageVerticalOffset;
+
+            var size = e.ClipRectangle.Height - textMargin.Vertical - (offset * 2);
+            var imageRect = new RectD(
+                e.ClipRectangle.X + textMargin.Left,
+                e.ClipRectangle.Y + textMargin.Top + offset,
+                size,
+                size);
+
+            var itemRect = e.ClipRectangle;
+            itemRect.X += imageRect.Width + ComboBox.DefaultImageTextDistance;
+            itemRect.Width -= imageRect.Width + ComboBox.DefaultImageTextDistance;
+
+            return (imageRect, itemRect);
+        }
+
+        /// <summary>
+        /// Gets item alignment.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        public virtual GenericAlignment GetItemAlignment(int itemIndex)
+        {
+            var item = SafeItem(itemIndex);
+            if(item is null)
+                return ItemAlignment;
+            return item.Alignment;
+        }
+
+        /// <summary>
+        /// Gets item minimal height.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        public virtual double GetItemMinHeight(int itemIndex)
+        {
+            var item = SafeItem(itemIndex);
+            if (item is null)
+                return MinItemHeight;
+            return Math.Max(item.MinHeight, MinItemHeight);
+        }
+
+        /// <summary>
+        /// Gets item image.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        public virtual (Image? Normal, Image? Disabled, Image? Selected) GetItemImages(int itemIndex)
+        {
+            var item = SafeItem(itemIndex);
+            if (item is null)
+                return (null, null, null);
+            return (
+                item.Image,
+                item.DisabledImage ?? item.Image,
+                item.SelectedImage ?? item.Image);
+        }
+
+        /// <summary>
+        /// Default method which draws items. Called from <see cref="DrawItem"/>.
+        /// </summary>
+        public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
+        {
+            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
+            var image = Enabled ? (e.IsSelected ? selectedImage : normalImage) : disabledImage;
+
+            var s = e.ItemText;
+
+            if (image is not null)
+                s = $" {s}";
+
+            e.Graphics.DrawLabel(
                 s,
-                font,
-                textColor.AsBrush,
-                rect);
+                e.ItemFont,
+                e.TextColor,
+                Color.Empty,
+                image,
+                e.ClipRectangle,
+                e.ItemAlignment);
         }
 
         /// <summary>
@@ -293,12 +617,12 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetSelectedItemTextColor()
+        public virtual Color GetSelectedItemTextColor(int itemIndex)
         {
             if (Enabled)
                 return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
             else
-                return GetDisabledItemTextColor();
+                return GetDisabledItemTextColor(itemIndex);
         }
 
         /// <summary>
@@ -306,19 +630,35 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetItemTextColor()
+        public virtual Color GetItemTextColor(int itemIndex)
         {
             if (Enabled)
-                return ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
+            {
+                var itemColor = SafeItem(itemIndex)?.ForegroundColor;
+                return itemColor ?? ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
+            }
             else
-                return GetDisabledItemTextColor();
+                return GetDisabledItemTextColor(itemIndex);
+        }
+
+        /// <summary>
+        /// Gets selected item back color. Default is <see cref="SelectedItemBackColor"/>
+        /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Color GetSelectedItemBackColor(int itemIndex)
+        {
+            if (Enabled)
+                return selectedItemBackColor ?? DefaultSelectedItemBackColor;
+            else
+                return RealBackgroundColor;
         }
 
         /// <summary>
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetDisabledItemTextColor()
+        public virtual Color GetDisabledItemTextColor(int itemIndex)
         {
             return DisabledItemTextColor ?? DefaultDisabledItemTextColor;
         }
@@ -327,6 +667,59 @@ namespace Alternet.UI
         internal override ControlHandler CreateHandler()
         {
             return new VListBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            var clientSize = ClientSize;
+
+            var dc = e.Graphics;
+
+            var rectUpdate = GetUpdateClientRect();
+
+            dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
+
+            RectD rectRow = RectD.Empty;
+            rectRow.Width = clientSize.Width;
+
+            int lineMax = NativeControl.GetVisibleEnd();
+            for (int line = NativeControl.GetVisibleBegin(); line < lineMax; line++)
+            {
+                var hRow = MeasureItemSize(line).Height;
+
+                rectRow.Height = hRow;
+
+                if (rectRow.IntersectsWith(rectUpdate))
+                {
+                    /*wxDCClipper clip(*dc, rectRow);*/
+
+                    if (itemPaintArgs is null)
+                        itemPaintArgs = new(this, dc, rectRow, line);
+                    else
+                    {
+                        itemPaintArgs.Graphics = dc;
+                        itemPaintArgs.ClipRectangle = rectRow;
+                        itemPaintArgs.ItemIndex = line;
+                    }
+
+                    DrawItemBackground(itemPaintArgs);
+                    DrawItem(itemPaintArgs);
+                }
+                else
+                {
+                    if (rectRow.Top > rectUpdate.Bottom)
+                        break;
+                }
+
+                rectRow.Top += hRow;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
         }
     }
 }

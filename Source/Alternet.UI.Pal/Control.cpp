@@ -1458,6 +1458,11 @@ namespace Alternet::UI
         RaiseEvent(ControlEvent::SizeChanged);
     }
 
+    RectI Control::GetUpdateClientRect()
+    {
+        return GetWxWindow()->GetUpdateClientRect();
+    }
+
     void Control::UpdateWxWindowParent()
     {
         auto wxWindow = GetWxWindow();

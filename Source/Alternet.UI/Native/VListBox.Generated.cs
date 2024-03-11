@@ -24,12 +24,25 @@ namespace Alternet.UI.Native
         {
         }
         
-        public System.IntPtr EventDc
+        public System.IntPtr EventDcHandle
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.VListBox_GetEventDc_(NativePointer);
+                return NativeApi.VListBox_GetEventDcHandle_(NativePointer);
+            }
+            
+        }
+        
+        public DrawingContext EventDc
+        {
+            get
+            {
+                CheckDisposed();
+                var _nnn = NativeApi.VListBox_GetEventDc_(NativePointer);
+                var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
+                ReleaseNativeObjectPointer(_nnn);
+                return _mmm;
             }
             
         }
@@ -114,6 +127,60 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool ScrollRows(int rows)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_ScrollRows_(NativePointer, rows);
+        }
+        
+        public bool ScrollRowPages(int pages)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_ScrollRowPages_(NativePointer, pages);
+        }
+        
+        public void RefreshRow(int row)
+        {
+            CheckDisposed();
+            NativeApi.VListBox_RefreshRow_(NativePointer, row);
+        }
+        
+        public void RefreshRows(int from, int to)
+        {
+            CheckDisposed();
+            NativeApi.VListBox_RefreshRows_(NativePointer, from, to);
+        }
+        
+        public int GetVisibleEnd()
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetVisibleEnd_(NativePointer);
+        }
+        
+        public int GetVisibleBegin()
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetVisibleBegin_(NativePointer);
+        }
+        
+        public int GetRowHeight(int line)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetRowHeight_(NativePointer, line);
+        }
+        
+        public bool IsSelected(int line)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_IsSelected_(NativePointer, line);
+        }
+        
+        public bool IsVisible(int line)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_IsVisible_(NativePointer, line);
+        }
+        
         public static System.IntPtr CreateEx(long styles)
         {
             return NativeApi.VListBox_CreateEx_(styles);
@@ -183,6 +250,18 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.VListBox_SetSelectionBackground_(NativePointer, color);
+        }
+        
+        public bool IsCurrent(int current)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_IsCurrent_(NativePointer, current);
+        }
+        
+        public bool DoSetCurrent(int current)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_DoSetCurrent_(NativePointer, current);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -261,7 +340,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr VListBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr VListBox_GetEventDc_(IntPtr obj);
+            public static extern System.IntPtr VListBox_GetEventDcHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr VListBox_GetEventDc_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectI VListBox_GetEventRect_(IntPtr obj);
@@ -292,6 +374,33 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void VListBox_SetSelectionMode_(IntPtr obj, ListBoxSelectionMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_ScrollRows_(IntPtr obj, int rows);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_ScrollRowPages_(IntPtr obj, int pages);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_RefreshRow_(IntPtr obj, int row);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_RefreshRows_(IntPtr obj, int from, int to);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetVisibleEnd_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetVisibleBegin_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int VListBox_GetRowHeight_(IntPtr obj, int line);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_IsSelected_(IntPtr obj, int line);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_IsVisible_(IntPtr obj, int line);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr VListBox_CreateEx_(long styles);
@@ -328,6 +437,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void VListBox_SetSelectionBackground_(IntPtr obj, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_IsCurrent_(IntPtr obj, int current);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_DoSetCurrent_(IntPtr obj, int current);
             
         }
     }

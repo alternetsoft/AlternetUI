@@ -22,6 +22,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns true if the object is ok to use.
+        /// </summary>
+        public bool IsOk => dc.IsOk;
+
+        /// <summary>
         /// Gets or sets name of the <see cref="Graphics"/> for the debug purposes.
         /// </summary>
         public string? Name { get; set; }

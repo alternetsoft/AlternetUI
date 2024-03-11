@@ -309,6 +309,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets item painter associated with the control.
         /// </summary>
+        [Browsable(false)]
         public virtual IComboBoxItemPainter? ItemPainter
         {
             get

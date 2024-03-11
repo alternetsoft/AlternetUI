@@ -22,6 +22,16 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool IsOk
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.DrawingContext_GetIsOk_(NativePointer);
+            }
+            
+        }
+        
         public System.IntPtr WxWidgetDC
         {
             get
@@ -81,6 +91,12 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.DrawingContext_SetInterpolationMode_(NativePointer, value);
             }
+        }
+        
+        public System.IntPtr GetHandle()
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_GetHandle_(NativePointer);
         }
         
         public void DrawRotatedTextI(string text, Alternet.Drawing.PointI location, Font font, Alternet.Drawing.Color foreColor, Alternet.Drawing.Color backColor, double angle)
@@ -449,6 +465,9 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool DrawingContext_GetIsOk_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr DrawingContext_GetWxWidgetDC_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -468,6 +487,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, InterpolationMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr DrawingContext_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawRotatedTextI_(IntPtr obj, string text, Alternet.Drawing.PointI location, IntPtr font, NativeApiTypes.Color foreColor, NativeApiTypes.Color backColor, double angle);

@@ -16,9 +16,9 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBoxItemPaintEventArgs"/> class.
         /// </summary>
-        /// <param name="control"></param>
-        /// <param name="graphics"></param>
-        /// <param name="bounds"></param>
+        /// <param name="control">Control which owns the item.</param>
+        /// <param name="graphics"><see cref="Graphics"/> where drawing is performed.</param>
+        /// <param name="bounds">Bounds of the item.</param>
         public ComboBoxItemPaintEventArgs(ComboBox control, Graphics graphics, RectD bounds)
             : base(graphics, bounds)
         {
@@ -28,28 +28,28 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is selected
         /// </summary>
-        public bool IsSelected { get; internal set; }
+        public bool IsSelected { get; set; }
 
         /// <summary>
         /// Gets whether painting is done inside <see cref="ComboBox"/> (<c>true</c>)
         /// or in the popup control (<c>false</c>).
         /// </summary>
-        public bool IsPaintingControl { get; internal set; }
+        public bool IsPaintingControl { get; set; }
 
         /// <summary>
         /// Get whether item index is not found.
         /// </summary>
-        public bool IsIndexNotFound { get; internal set; }
+        public bool IsIndexNotFound { get; set; }
 
         /// <summary>
         /// Gets index of the item.
         /// </summary>
-        public int ItemIndex { get; internal set; }
+        public int ItemIndex { get; set; }
 
         /// <summary>
         /// Gets whether background painting need to be performed.
         /// </summary>
-        public bool IsPaintingBackground { get; internal set; }
+        public bool IsPaintingBackground { get; set; }
 
         internal ComboBox ComboBox { get; set; }
 

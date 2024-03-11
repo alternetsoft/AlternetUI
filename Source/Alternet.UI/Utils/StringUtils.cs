@@ -74,6 +74,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes <see cref="StringComparison"/> value to use <paramref name="ignoreCase"/>.
+        /// </summary>
+        /// <param name="comparisonType">Value to change.</param>
+        /// <param name="ignoreCase">Whether to ignore case.</param>
+        /// <returns></returns>
+        public static StringComparison OverrideIgnoreCase(
+            StringComparison comparisonType,
+            bool ignoreCase)
+        {
+            if (ignoreCase)
+            {
+                switch (comparisonType)
+                {
+                    case StringComparison.CurrentCulture:
+                        return StringComparison.CurrentCultureIgnoreCase;
+                    case StringComparison.InvariantCulture:
+                        return StringComparison.InvariantCultureIgnoreCase;
+                    case StringComparison.Ordinal:
+                        return StringComparison.OrdinalIgnoreCase;
+                }
+            }
+            else
+            {
+                switch (comparisonType)
+                {
+                    case StringComparison.CurrentCultureIgnoreCase:
+                        return StringComparison.CurrentCulture;
+                    case StringComparison.InvariantCultureIgnoreCase:
+                        return StringComparison.InvariantCulture;
+                    case StringComparison.OrdinalIgnoreCase:
+                        return StringComparison.Ordinal;
+                }
+            }
+
+            return comparisonType;
+        }
+
+        /// <summary>
         /// Gets whether string <paramref name="s"/> starts with one of the strings
         /// specified in <paramref name="items"/> collection.
         /// </summary>

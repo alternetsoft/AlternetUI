@@ -351,6 +351,11 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
+{
+    obj->SetBoundsEx(rect, flags);
+}
+
 ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
 {
     return obj->GetContainingSizer();
@@ -586,9 +591,9 @@ ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
     obj->SendMouseUpEvent(x, y);
 }
 
-ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
+ALTERNET_UI_API RectI_C Control_GetUpdateClientRect_(Control* obj)
 {
-    obj->SetBoundsEx(rect, flags);
+    return obj->GetUpdateClientRect();
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContextForWindow_(void* window)

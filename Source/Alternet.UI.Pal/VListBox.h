@@ -26,11 +26,18 @@ namespace Alternet::UI
         // with the given index on the provided DC
         virtual void OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const override;
 
+        void OnDrawItem(DrawingContext* dc, const wxRect& rect, size_t n) const;
+
         // the derived class must implement this method to return the height of the
         // specified item
         virtual wxCoord OnMeasureItem(size_t n) const override;
 
         virtual void OnDrawBackground(wxDC& dc, const wxRect& rect, size_t n) const override;
+
+        bool SetCurrent(int current)
+        {
+            return DoSetCurrent(current);
+        }
     };
 
     class VListBox : public Control
@@ -46,10 +53,11 @@ namespace Alternet::UI
 
         Size GetPreferredSize(const Size& availableSize) override;
 
-        void OnDrawItem(wxDC& dc, const wxRect& rect, size_t n);
+        void OnDrawItem(DrawingContext* dc, const wxRect& rect, size_t n);
         wxCoord OnMeasureItem(size_t n);
 
     protected:
+        virtual void OnPaint(wxPaintEvent& event) override;
         void OnWxWindowCreated() override;
         long GetSelectionStyle();
 
@@ -58,11 +66,10 @@ namespace Alternet::UI
     private:
         wxVListBox2* GetListBox();
         unsigned long selectedCookie = 0;
-        wxDC* eventDc = nullptr;
+        DrawingContext* eventDc = nullptr;
         RectI eventRect;
         int eventItemIndex = -1;
         int eventItemHeight = 16;
-
-        void UpdateDc(wxDC& dc);
+        int _itemsCount = 0;
     };
 }

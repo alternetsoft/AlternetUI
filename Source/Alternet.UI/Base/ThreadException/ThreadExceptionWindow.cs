@@ -172,7 +172,7 @@ namespace Alternet.UI
 
             Control CreateMessageGrid()
             {
-                const string errorImageUrl = @"embres:Alternet.UI.Resources.ColorSvg.circle-xmark-red.svg?assembly=Alternet.UI";
+                string errorImageUrl = KnownColorSvgUrls.Error;
 
                 var messageGrid = new VerticalStackPanel();
 

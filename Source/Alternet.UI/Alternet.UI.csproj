@@ -63,6 +63,7 @@
     <None Remove="Build.Result.Log" />
     <None Remove="Find.Not.Documented.log" />
     <None Remove="Resources\ColorSvg\circle-exclamation-blue.svg" />
+    <None Remove="Resources\ColorSvg\circle-info-blue.svg" />
     <None Remove="Resources\ColorSvg\circle-xmark-red.svg" />
     <None Remove="Resources\ColorSvg\triangle-exclamation-yellow.svg" />
     <None Remove="Resources\Svg\alternet-add-child.svg" />
@@ -168,6 +169,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\ColorSvg\circle-exclamation-blue.svg" />
+    <EmbeddedResource Include="Resources\ColorSvg\circle-info-blue.svg" />
     <EmbeddedResource Include="Resources\ColorSvg\circle-xmark-red.svg" />
     <EmbeddedResource Include="Resources\ColorSvg\triangle-exclamation-yellow.svg" />
     <EmbeddedResource Include="Resources\Png\ErrorImage.png" />

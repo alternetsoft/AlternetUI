@@ -6,7 +6,9 @@ namespace NativeApi.Api
 {
     public class DrawingContext
     {
+        public bool IsOk { get; }
         public IntPtr WxWidgetDC { get; }
+        public IntPtr GetHandle() => default; 
 
         public void DrawRotatedTextI(string text, PointI location, Font font,
             Color foreColor, Color backColor, double angle) {}

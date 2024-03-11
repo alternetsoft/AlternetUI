@@ -1,3 +1,15 @@
+# 0.9.519 (2024 March 11)
+
+- StringSearch.UseContains. So now it's possible to specify whether to use partial text compare during search operations 
+in any ListControl descendant (ListControl.Search.UseContains).
+- ColorListBox.
+- Control.GetUpdateClientRect.
+- Many bug fixes, new properties and methods in VListBox. This control is ready to use.
+- KnownColorSvgUrls and KnownColorSvgImages.
+- Meny new properties in ListControlItem. Now it allows to specify style of the item (font, color, height, etc.). This is used in VListBox.
+- Application.Log: Added LogItemKind param.
+- LogListBox: shows image near log item.
+
 # 0.9.518 (2024 March 9)
 
 - Image.FromScreen.

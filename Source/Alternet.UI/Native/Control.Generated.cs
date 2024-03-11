@@ -575,6 +575,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SetBoundsEx(Alternet.Drawing.RectD rect, int flags)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetBoundsEx_(NativePointer, rect, flags);
+        }
+        
         public System.IntPtr GetContainingSizer()
         {
             CheckDisposed();
@@ -866,10 +872,10 @@ namespace Alternet.UI.Native
             NativeApi.Control_SendMouseUpEvent_(NativePointer, x, y);
         }
         
-        public void SetBoundsEx(Alternet.Drawing.RectD rect, int flags)
+        public Alternet.Drawing.RectI GetUpdateClientRect()
         {
             CheckDisposed();
-            NativeApi.Control_SetBoundsEx_(NativePointer, rect, flags);
+            return NativeApi.Control_GetUpdateClientRect_(NativePointer);
         }
         
         public static DrawingContext OpenClientDrawingContextForWindow(System.IntPtr window)
@@ -1407,6 +1413,9 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetBoundsEx_(IntPtr obj, Alternet.Drawing.RectD rect, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1548,7 +1557,7 @@ namespace Alternet.UI.Native
             public static extern void Control_SendMouseUpEvent_(IntPtr obj, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBoundsEx_(IntPtr obj, Alternet.Drawing.RectD rect, int flags);
+            public static extern Alternet.Drawing.RectI Control_GetUpdateClientRect_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenClientDrawingContextForWindow_(System.IntPtr window);
