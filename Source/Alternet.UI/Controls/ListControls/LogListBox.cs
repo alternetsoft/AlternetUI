@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
 using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
@@ -18,6 +19,21 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class LogListBox : VListBox
     {
+        /// <summary>
+        /// Gets or sets image used for error messages.
+        /// </summary>
+        public static Image? ErrorImage = null;
+
+        /// <summary>
+        /// Gets or sets image used for warning messages.
+        /// </summary>
+        public static Image? WarningImage = null;
+
+        /// <summary>
+        /// Gets or sets image used for information messages.
+        /// </summary>
+        public static Image? InformationImage = null;
+
         private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;
         private MenuItem? menuItemShowDevTools;
@@ -50,6 +66,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="BindApplicationLog"/> was called.
+        /// </summary>
+        public bool BoundToApplicationLog
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets context menu for the control.
         /// </summary>
         [Browsable(false)]
@@ -74,38 +99,48 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="message">Message text.</param>
         /// <param name="prefix">Message text prefix.</param>
+        /// <param name="kind">Message kind.</param>
         /// <remarks>
         /// If last logged message
         /// contains <paramref name="prefix"/>, last log item is replaced with
         /// <paramref name="message"/> instead of adding new log item.
         /// </remarks>
-        public virtual void LogReplace(string? message, string? prefix)
+        public virtual LogListBoxItem LogReplace(
+            string? message,
+            string? prefix,
+            LogItemKind kind = LogItemKind.Information)
         {
             if (IsDisposed)
-                return;
+                return new();
 
             string? s;
 
             s = LastLogMessage;
 
             if (s is null)
-            {
-                Log(message);
-                return;
-            }
+                return Log(message, kind);
 
             var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
 
             if (b)
             {
                 lastLogMessage = message;
-                LastItem = ConstructLogMessage(message);
-                SelectedIndex = Items.Count - 1;
-                EnsureVisible(SelectedIndex.Value);
-                Refresh();
+                var item = (LogListBoxItem)LastItem!;
+                item.Text = ConstructLogMessage(message);
+                item.Kind = kind;
+
+                if (!Application.LogInUpdates() || !BoundToApplicationLog)
+                {
+                    var index = Items.Count - 1;
+                    SelectedIndex = index;
+                    EnsureVisible(index);
+                    Refresh();
+                }
+
+                return item;
             }
             else
-                Log(message);
+                return Log(message, kind);
         }
 
         /// <summary>
@@ -114,8 +149,10 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BindApplicationLog()
         {
+            BoundToApplicationLog = true;
             ContextMenu.Required();
             Application.Current.LogMessage += Application_LogMessage;
+            Application.LogRefresh += Application_LogRefresh;
             LogUtils.DebugLogVersion();
         }
 
@@ -124,16 +161,37 @@ namespace Alternet.UI
         /// uses only this control for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
-        public virtual void Log(string? message)
+        /// <param name="kind">Message kind.</param>
+        public virtual LogListBoxItem Log(string? message, LogItemKind kind = LogItemKind.Information)
         {
             if (IsDisposed)
-                return;
+                return new();
 
             lastLogMessage = message;
-            Add(ConstructLogMessage(message));
-            SelectedIndex = Items.Count - 1;
-            EnsureVisible(SelectedIndex.Value);
-            Refresh();
+
+            LogListBoxItem item = CreateItem();
+            item.Text = ConstructLogMessage(message);
+            item.Kind = kind;
+            Add(item);
+
+            if (!Application.LogInUpdates() || !BoundToApplicationLog)
+            {
+                var index = Items.Count - 1;
+                SelectedIndex = index;
+                EnsureVisible(index);
+                Refresh();
+            }
+
+            return item;
+        }
+
+        /// <summary>
+        /// Creates new empty item.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual LogListBoxItem CreateItem()
+        {
+            return new();
         }
 
         /// <summary>
@@ -197,12 +255,66 @@ namespace Alternet.UI
             }
         }
 
+        private void Application_LogRefresh(object? sender, EventArgs e)
+        {
+            var index = Items.Count - 1;
+            SelectedIndex = index;
+            EnsureVisible(index);
+            Refresh();
+        }
+
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
             if (e.ReplaceLastMessage)
-                LogReplace(e.Message, e.MessagePrefix);
+                LogReplace(e.Message, e.MessagePrefix, e.Kind);
             else
-                Log(e.Message);
+                Log(e.Message, e.Kind);
+        }
+
+        /// <summary>
+        /// Item of the <see cref="LogListBox"/> control.
+        /// </summary>
+        public class LogListBoxItem : ListControlItem
+        {
+            private LogItemKind kind = LogItemKind.Other;
+
+            /// <summary>
+            /// Gets or sets log item kind.
+            /// </summary>
+            public LogItemKind Kind
+            {
+                get => kind;
+
+                set
+                {
+                    if (kind == value)
+                        return;
+                    kind = value;
+
+                    var size = ToolBar.GetDefaultImageSize();
+
+                    switch (kind)
+                    {
+                        case LogItemKind.Error:
+                            ErrorImage ??= KnownColorSvgImages.GetForSize(size).ImgError.AsImage();
+                            Image = ErrorImage;
+                            break;
+                        case LogItemKind.Warning:
+                            WarningImage ??=
+                                KnownColorSvgImages.GetForSize(size).ImgWarning.AsImage();
+                            Image = WarningImage;
+                            break;
+                        case LogItemKind.Information:
+                            InformationImage ??=
+                                KnownColorSvgImages.GetForSize(size).ImgInformation.AsImage();
+                            Image = InformationImage;
+                            break;
+                        default:
+                            Image = null;
+                            break;
+                    }
+                }
+            }
         }
     }
 }
