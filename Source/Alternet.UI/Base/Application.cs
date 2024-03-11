@@ -69,11 +69,12 @@ namespace Alternet.UI
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly ConcurrentQueue<(Action<object?>, object?)> IdleTasks = new();
-        private static Queue<string>? logQueue;
+        private static Queue<(string Msg, LogItemKind Kind)>? logQueue;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
         private static IconSet? icon;
+        private static int logUpdateCount;
 
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -176,6 +177,11 @@ namespace Alternet.UI
         /// Occurs before native debug message needs to be displayed.
         /// </summary>
         public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
+
+        /// <summary>
+        /// Occurs when controls which display log messages need to be refreshed.
+        /// </summary>
+        public static event EventHandler LogRefresh;
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
@@ -667,21 +673,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs message with 'Warning' prefix.
+        /// Logs warning message.
         /// </summary>
         /// <param name="obj"></param>
         public static void LogWarning(object? obj)
         {
-            Log($"Warning: {obj}");
+            Log($"Warning: {obj}", LogItemKind.Warning);
         }
 
         /// <summary>
-        /// Logs message with 'Error' prefix.
+        /// Logs error message.
         /// </summary>
         /// <param name="obj"></param>
         public static void LogError(object? obj)
         {
-            Log($"Error: {obj}");
+            Log($"Error: {obj}", LogItemKind.Error);
         }
 
         /// <summary>
@@ -689,14 +695,15 @@ namespace Alternet.UI
         /// when application becomes idle.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
+        /// <param name="kind">Message kind.</param>
         /// <remarks>
         /// This method is thread safe and can be called from non-ui threads.
         /// </remarks>
-        public static void IdleLog(object? obj)
+        public static void IdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
         {
             AddIdleTask(() =>
             {
-                Log(obj);
+                Log(obj, kind);
             });
         }
 
@@ -704,7 +711,8 @@ namespace Alternet.UI
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
-        public static void Log(object? obj)
+        /// <param name="kind">Message kind.</param>
+        public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
             if (Application.Terminating)
                 return;
@@ -716,7 +724,9 @@ namespace Alternet.UI
 
             WriteToLogFileIfAllowed(msg);
 
-            string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.RemoveEmptyEntries);
+            string[] result = msg.Split(
+                StringUtils.StringSplitToArrayChars,
+                StringSplitOptions.RemoveEmptyEntries);
             var evt = Current?.LogMessage;
 
             if (DebugWriteLine || evt is null)
@@ -739,7 +749,7 @@ namespace Alternet.UI
             {
                 logQueue ??= new();
                 foreach (string s2 in result)
-                    logQueue.Enqueue(s2);
+                    logQueue.Enqueue((s2, kind));
                 return;
             }
 
@@ -747,15 +757,17 @@ namespace Alternet.UI
             {
                 while (logQueue.Count > 0)
                 {
-                    LogToEvent(logQueue.Dequeue());
+                    var queueItem = logQueue.Dequeue();
+                    LogToEvent(queueItem.Kind, queueItem.Msg);
                 }
             }
 
-            LogToEvent(result);
+            LogToEvent(kind, result);
 
-            void LogToEvent(params string[] items)
+            void LogToEvent(LogItemKind kind, params string[] items)
             {
                 LogMessageEventArgs? args = new();
+                args.Kind = kind;
 
                 foreach (string s2 in items)
                 {
@@ -859,6 +871,35 @@ namespace Alternet.UI
             if (windows.Count == 0)
                 return null;
             return windows[0] as T;
+        }
+
+        /// <summary>
+        /// Can be called before massive outputs to log. Pairs with <see cref="LogEndUpdate"/>.
+        /// </summary>
+        public static void LogBeginUpdate()
+        {
+            logUpdateCount++;
+        }
+
+        /// <summary>
+        /// Must be called after massive outputs to log,
+        /// if <see cref="LogBeginUpdate"/> was previously called.
+        /// </summary>
+        public static void LogEndUpdate()
+        {
+            logUpdateCount--;
+            if (logUpdateCount == 0)
+                LogRefresh?.Invoke(Current, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Gets whether massive log outputs are performed and controls attached to log
+        /// should not refresh.
+        /// </summary>
+        /// <returns></returns>
+        public static bool LogInUpdates()
+        {
+            return logUpdateCount > 0;
         }
 
         /// <summary>

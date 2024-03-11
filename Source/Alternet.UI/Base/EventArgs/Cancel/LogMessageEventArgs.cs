@@ -40,6 +40,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets message kind.
+        /// </summary>
+        public LogItemKind Kind { get; set; }
+
+        /// <summary>
         /// Message that needs to be logged.
         /// </summary>
         public string? Message { get => message; set => message = value; }

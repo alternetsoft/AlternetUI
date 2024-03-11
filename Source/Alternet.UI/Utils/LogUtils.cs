@@ -101,10 +101,15 @@ namespace Alternet.UI
                 LogToFile(value?.ToString());
             }
 
+            static void ToLog(object? value)
+            {
+                Application.Log(value);
+            }
+
             if (toFile)
                 return ToFile;
             else
-                return Application.Log;
+                return ToLog;
         }
 
         /// <summary>
