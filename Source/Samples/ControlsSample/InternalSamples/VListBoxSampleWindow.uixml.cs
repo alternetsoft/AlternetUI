@@ -116,9 +116,8 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            var count = listBox.Items.Count;
-            if (count > 0)
-                listBox.EnsureVisible(count - 1);
+            // do not need to check count as EnsureVisible does this.
+            listBox.EnsureVisible(listBox.Count - 1);
         }
 
         private void SelectItemAtIndex2Button_Click(

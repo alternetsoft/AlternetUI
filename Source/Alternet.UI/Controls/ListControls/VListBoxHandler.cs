@@ -38,7 +38,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void EnsureVisible(int itemIndex)
         {
-            NativeControl.EnsureVisible(itemIndex);
+            if(itemIndex >= 0 && NativeControl.ItemsCount > 0)
+                NativeControl.EnsureVisible(itemIndex);
         }
 
         /// <inheritdoc/>

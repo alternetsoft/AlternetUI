@@ -310,6 +310,7 @@ namespace Alternet::UI
 
     void VListBox::EnsureVisible(int itemIndex)
     {
+        GetListBox()->ScrollToRow(itemIndex);
     }
 
     int VListBox::ItemHitTest(const PointD& position)

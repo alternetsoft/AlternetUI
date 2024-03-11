@@ -28,7 +28,7 @@
         </StackPanel>
       </StackPanel>
 
-      <HorizontalStackPanel Title="ColorListBox" Name="tab2" Padding="5">        
+      <HorizontalStackPanel Title="Colors" Name="tab2" Padding="5">        
       </HorizontalStackPanel>
 
     </TabControl>
