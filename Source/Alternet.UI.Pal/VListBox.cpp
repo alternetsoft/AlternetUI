@@ -308,6 +308,31 @@ namespace Alternet::UI
         }
     }
 
+    bool VListBox::ScrollRows(int rows)
+    {
+        return GetListBox()->ScrollRows(rows);
+    }
+
+    bool VListBox::ScrollRowPages(int pages)
+    {
+        return GetListBox()->ScrollRowPages(pages);
+    }
+
+    void VListBox::RefreshRow(int row)
+    {
+        GetListBox()->RefreshRow(row);
+    }
+
+    void VListBox::RefreshRows(int from, int to)
+    {
+        GetListBox()->RefreshRows(from, to);
+    }
+
+    bool VListBox::IsVisible(int line)
+    {
+        return GetListBox()->IsRowVisible(line);
+    }
+
     void VListBox::EnsureVisible(int itemIndex)
     {
         GetListBox()->ScrollToRow(itemIndex);

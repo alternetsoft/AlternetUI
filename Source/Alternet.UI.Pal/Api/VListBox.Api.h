@@ -74,6 +74,26 @@ ALTERNET_UI_API void VListBox_SetSelectionMode_(VListBox* obj, ListBoxSelectionM
     obj->SetSelectionMode(value);
 }
 
+ALTERNET_UI_API c_bool VListBox_ScrollRows_(VListBox* obj, int rows)
+{
+    return obj->ScrollRows(rows);
+}
+
+ALTERNET_UI_API c_bool VListBox_ScrollRowPages_(VListBox* obj, int pages)
+{
+    return obj->ScrollRowPages(pages);
+}
+
+ALTERNET_UI_API void VListBox_RefreshRow_(VListBox* obj, int row)
+{
+    obj->RefreshRow(row);
+}
+
+ALTERNET_UI_API void VListBox_RefreshRows_(VListBox* obj, int from, int to)
+{
+    obj->RefreshRows(from, to);
+}
+
 ALTERNET_UI_API int VListBox_GetVisibleEnd_(VListBox* obj)
 {
     return obj->GetVisibleEnd();
@@ -92,6 +112,11 @@ ALTERNET_UI_API int VListBox_GetRowHeight_(VListBox* obj, int line)
 ALTERNET_UI_API c_bool VListBox_IsSelected_(VListBox* obj, int line)
 {
     return obj->IsSelected(line);
+}
+
+ALTERNET_UI_API c_bool VListBox_IsVisible_(VListBox* obj, int line)
+{
+    return obj->IsVisible(line);
 }
 
 ALTERNET_UI_API void* VListBox_CreateEx_(int64_t styles)

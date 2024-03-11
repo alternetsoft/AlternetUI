@@ -28,10 +28,15 @@ void SetItemsCount(int value);
 ListBoxSelectionMode GetSelectionMode();
 void SetSelectionMode(ListBoxSelectionMode value);
 
+bool ScrollRows(int rows);
+bool ScrollRowPages(int pages);
+void RefreshRow(int row);
+void RefreshRows(int from, int to);
 int GetVisibleEnd();
 int GetVisibleBegin();
 int GetRowHeight(int line);
 bool IsSelected(int line);
+bool IsVisible(int line);
 static void* CreateEx(int64_t styles);
 void ClearItems();
 void ClearSelected();

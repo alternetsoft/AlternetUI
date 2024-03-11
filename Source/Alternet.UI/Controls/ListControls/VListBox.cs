@@ -315,6 +315,61 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether item with the specified index is visible.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual bool IsVisible(int index)
+        {
+            return NativeControl.IsVisible(index);
+        }
+
+        /// <summary>
+        /// Scroll by the specified number of rows which may be positive (to scroll down)
+        /// or negative (to scroll up).
+        /// </summary>
+        /// <param name="rows">Number of items to scroll.</param>
+        /// <returns><c>true</c> if the control was scrolled, <c>false</c> otherwise
+        /// (for example, if we're trying to scroll down but we are already
+        /// showing the last row).</returns>
+        public virtual bool ScrollRows(int rows)
+        {
+            return NativeControl.ScrollRows(rows);
+        }
+
+        /// <summary>
+        /// Scroll by the specified number of pages which may be positive
+        /// (to scroll down) or negative (to scroll up).
+        /// </summary>
+        /// <param name="pages">Number of pages to scroll.</param>
+        /// <returns><c>true</c> if the control was scrolled, <c>false</c> otherwise
+        /// (for example, if we're trying to scroll down but we are already
+        /// showing the last row).</returns>
+        public virtual bool ScrollRowPages(int pages)
+        {
+            return NativeControl.ScrollRowPages(pages);
+        }
+
+        /// <summary>
+        /// Triggers a refresh for just the given row's area of the control if it's visible.
+        /// </summary>
+        /// <param name="row">Item index.</param>
+        public virtual void RefreshRow(int row)
+        {
+            NativeControl.RefreshRow(row);
+        }
+
+        /// <summary>
+        /// Triggers a refresh for the area between the specified range of rows given (inclusively).
+        /// </summary>
+        /// <param name="from">First item index.</param>
+        /// <param name="to">Last item index.</param>
+        public virtual void RefreshRows(int from, int to)
+        {
+            NativeControl.RefreshRows(from, to);
+        }
+
+        /// <summary>
         /// Gets whether item with the specified index is current.
         /// </summary>
         /// <param name="index">Item index.</param>
