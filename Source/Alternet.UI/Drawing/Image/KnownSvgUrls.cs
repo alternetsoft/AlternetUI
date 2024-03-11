@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to Svg image handling.
+    /// Contains urls for svg images that are included in Alternet.UI.dll resources.
     /// </summary>
     public static class KnownSvgUrls
     {
