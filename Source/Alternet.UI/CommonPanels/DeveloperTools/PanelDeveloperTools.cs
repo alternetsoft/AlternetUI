@@ -193,19 +193,40 @@ namespace Alternet.UI
             LogUtils.LogAsSection(splitted);
         }
 
+        private void AddLogAction(string title, Action action)
+        {
+            AddAction(title, Fn);
+
+            void Fn()
+            {
+                Application.DoInsideBusyCursor(() =>
+                {
+                    Application.LogBeginUpdate();
+                    try
+                    {
+                        action();
+                    }
+                    finally
+                    {
+                        Application.LogEndUpdate();
+                    }
+                });
+            }
+        }
+
         private void InitActions()
         {
-            AddAction("Log system settings", SystemSettings.Log);
-            AddAction("Log font families", LogUtils.LogFontFamilies);
-            AddAction("Log system fonts", SystemSettings.LogSystemFonts);
-            AddAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
-            AddAction("Log display info", Display.Log);
-            AddAction("Log control info", LogControlInfo);
-            AddAction("Log useful defines", LogUsefulDefines);
-            AddAction("Log OS information", LogOSInformation);
-            AddAction("Log System Colors", ColorUtils.LogSystemColors);
-            AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
-            AddAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
+            AddLogAction("Log system settings", SystemSettings.Log);
+            AddLogAction("Log font families", LogUtils.LogFontFamilies);
+            AddLogAction("Log system fonts", SystemSettings.LogSystemFonts);
+            AddLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
+            AddLogAction("Log display info", Display.Log);
+            AddLogAction("Log control info", LogControlInfo);
+            AddLogAction("Log useful defines", LogUsefulDefines);
+            AddLogAction("Log OS information", LogOSInformation);
+            AddLogAction("Log System Colors", ColorUtils.LogSystemColors);
+            AddLogAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
+            AddLogAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
@@ -222,7 +243,7 @@ namespace Alternet.UI
                 }
             });
 
-            AddAction("Enum Embedded Resources in Alternet.UI", () =>
+            AddLogAction("Enum Embedded Resources in Alternet.UI", () =>
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI";
 
@@ -243,6 +264,13 @@ namespace Alternet.UI
                 var type = Application.FirstWindow()?.GetType();
                 var instance = Activator.CreateInstance(type ?? typeof(Window)) as Window;
                 instance?.Show();
+            });
+
+            AddAction("Test log error and warning", () =>
+            {
+                Application.Log("Sample error", LogItemKind.Error);
+                Application.Log("Sample warning", LogItemKind.Warning);
+                Application.Log("Sample info", LogItemKind.Information);
             });
         }
 
