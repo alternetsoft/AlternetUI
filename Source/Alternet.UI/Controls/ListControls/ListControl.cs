@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
@@ -64,11 +65,13 @@ namespace Alternet.UI
         public virtual Action? SelectedAction => (SelectedItem as ListControlItem)?.Action;
 
         /// <summary>
-        /// Returns <see cref="ObjectUniqueId"/> associated with the <see cref="SelectedItem"/> if it is
+        /// Returns <see cref="ObjectUniqueId"/> associated
+        /// with the <see cref="SelectedItem"/> if it is
         /// <see cref="ListControlItem"/>.
         /// </summary>
         [Browsable(false)]
-        public virtual ObjectUniqueId? SelectedUniqueId => (SelectedItem as ListControlItem)?.UniqueId;
+        public virtual ObjectUniqueId? SelectedUniqueId =>
+            (SelectedItem as ListControlItem)?.UniqueId;
 
         /// <summary>
         /// Gets the items of the <see cref="ListControl"/>.
@@ -95,11 +98,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the number of elements actually contained in the <see cref="Items"/>
-        /// collection.
+        /// Gets the number of elements contained in the control.
         /// </summary>
         /// <returns>
-        /// The number of elements actually contained in the <see cref="Items"/>.
+        /// The number of elements contained in the control.
         /// </returns>
         [Browsable(false)]
         public virtual int Count
@@ -120,15 +122,17 @@ namespace Alternet.UI
         {
             get
             {
-                if (Items.Count > 0)
-                    return Items[Items.Count - 1];
+                var count = Count;
+                if (count > 0)
+                    return GetItem(count - 1);
                 return null;
             }
 
             set
             {
-                if (Items.Count > 0 && value is not null)
-                    Items[Items.Count - 1] = value;
+                var count = Count;
+                if (count > 0 && value is not null)
+                    SetItem(count - 1, value);
             }
         }
 
@@ -140,15 +144,15 @@ namespace Alternet.UI
         {
             get
             {
-                if (Items.Count > 0)
-                    return Items[0];
+                if (Count > 0)
+                    return GetItem(0);
                 return null;
             }
 
             set
             {
-                if (Items.Count > 0 && value is not null)
-                    Items[0] = value;
+                if (Count > 0 && value is not null)
+                    SetItem(0, value);
             }
         }
 
@@ -198,53 +202,95 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="Items"/> element at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index of the <see cref="Items"/> element
+        /// <param name="index">The zero-based index of the element
         /// to get or set.</param>
-        /// <returns>The <see cref="Items"/> element at the specified index.</returns>
-        public virtual object this[long index]
+        /// <returns>The element at the specified index.</returns>
+        public virtual object? this[long index]
         {
             get
             {
-                return Items[(int)index];
+                return GetItem((int)index);
             }
 
-            set => Items[(int)index] = value;
+            set => SetItem((int)index, value ?? throw new ArgumentNullException(nameof(value)));
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Items"/> element at the specified index.
+        /// Gets or sets the element at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index of the <see cref="Items"/> element
+        /// <param name="index">The zero-based index of the element
         /// to get or set.</param>
-        /// <returns>The <see cref="Items"/> element at the specified index.</returns>
-        public virtual object this[int index]
+        /// <returns>The element at the specified index.</returns>
+        public virtual object? this[int index]
         {
             get
             {
-                return Items[index];
+                return GetItem(index);
             }
 
-            set => Items[index] = value;
+            set => SetItem(index, value ?? throw new ArgumentNullException(nameof(value)));
         }
 
         /// <summary>
-        /// Gets the <see cref="Items"/> element at the specified index.
+        /// Gets the element at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index of the <see cref="Items"/> element or
+        /// <param name="index">The zero-based index of the element or
         /// <c>null</c>.</param>
-        /// <returns>The <see cref="Items"/> element at the specified
-        /// index or <c>null</c>.</returns>
+        /// <returns>The element at the specified index or <c>null</c>.</returns>
         public virtual object? this[int? index]
         {
             get
             {
                 if (index is null)
                     return null;
-                return this[index.Value];
+                return GetItem(index.Value);
+            }
+
+            set
+            {
+                if (index is null)
+                    return;
+                SetItem(index.Value, value ?? throw new ArgumentNullException(nameof(value)));
             }
         }
 
         string? IReadOnlyStrings.this[int index] => GetItemText(index);
+
+        /// <summary>
+        /// Gets item with the specified index.
+        /// This methods is called from all other methods that
+        /// request the item.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual object? GetItem(int index)
+        {
+            object? result;
+            if (index >= 0 && items is not null && index < items.Count)
+                result = Items[index];
+            else
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Sets item with the specified index.
+        /// This methods is called from all other methods that
+        /// change the item.
+        /// </summary>
+        /// <param name="index">Index of the item.</param>
+        /// <param name="value">New item value.</param>
+        public virtual void SetItem(int index, object value)
+        {
+            if (index >= 0 && items is not null && index < items.Count)
+                Items[index] = value;
+            else
+            {
+            }
+        }
 
         /// <summary>
         /// Adds an object to the end of the <see cref="Items"/> collection.
@@ -267,17 +313,38 @@ namespace Alternet.UI
         public virtual T? SafeItem<T>(int index)
             where T : class
         {
-            if (index < 0 || index >= Items.Count)
+            if (index < 0 || index >= Count)
                 return default;
-            return Items[index] as T;
+            return GetItem(index) as T;
         }
+
+        /// <summary>
+        /// Gets item with the specified index.
+        /// If index of the item is invalid, throws an exception.
+        /// </summary>
+        /// <typeparam name="T">Type of the result.</typeparam>
+        /// <param name="index">Index of the item.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T RequiredItem<T>(int index)
+            where T : class
+            => SafeItem<T>(index) ?? throw new NullReferenceException();
 
         /// <summary>
         /// Gets <see cref="ListControlItem"/> item with the specified index.
         /// If index of the item is invalid or item is not <see cref="ListControlItem"/>,
         /// returns <c>null</c>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ListControlItem? SafeItem(int index) => SafeItem<ListControlItem>(index);
+
+        /// <summary>
+        /// Gets <see cref="ListControlItem"/> item with the specified index.
+        /// If index of the item is invalid, an exception is thrown.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ListControlItem RequiredItem(int index)
+            => SafeItem<ListControlItem>(index) ?? throw new NullReferenceException();
 
         /// <summary>
         /// Adds <paramref name="text"/> with <paramref name="data"/> to the end of
@@ -290,6 +357,7 @@ namespace Alternet.UI
         /// <paramref name="text"/> and <paramref name="data"/>. Created object is added to
         /// the <see cref="Items"/> collection.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int Add(string text, object? data)
         {
             return Add(new ListControlItem(text, data));
@@ -306,6 +374,7 @@ namespace Alternet.UI
         /// <paramref name="text"/> and <paramref name="action"/>. Created object is added to
         /// the <see cref="Items"/> collection.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int Add(string text, Action action)
         {
             return Add(new ListControlItem(text, action));
@@ -314,6 +383,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects last item in the control.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void SelectLastItem()
         {
             if (Count > 0)
@@ -327,10 +397,7 @@ namespace Alternet.UI
         public virtual string GetItemText(int index)
         {
             object? s;
-            if (index >= 0 && items is not null && index < Items.Count)
-                s = Items[index];
-            else
-                s = null;
+            s = GetItem(index);
             var result = GetItemText(s);
 
             if(CustomItemText is null)
@@ -361,6 +428,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects first item in the control.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void SelectFirstItem()
         {
             SelectedItem = FirstItem;
@@ -383,6 +451,7 @@ namespace Alternet.UI
         /// Adds enum values to <see cref="Items"/> property of the control.
         /// </summary>
         /// <typeparam name="T">Type of the enum which values are added.</typeparam>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddEnumValues<T>()
             where T : Enum
         {
@@ -394,6 +463,7 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the enum which values are added.</typeparam>
         /// <param name="selectValue">New <see cref="SelectedItem"/> value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddEnumValues<T>(T selectValue)
             where T : Enum
         {
@@ -456,7 +526,7 @@ namespace Alternet.UI
             foreach (var index in indexes)
             {
                 if (result is null)
-                    result = Items[index].ToString();
+                    result = GetItemText(index);
                 else
                     result += $"{separator}{Items[index]}";
             }
@@ -465,15 +535,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="StringSearch.FindString(string)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindString(string s) => Search.FindString(s);
 
         /// <inheritdoc cref="StringSearch.FindString(string, int?)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindString(string s, int? startIndex) => Search.FindString(s, startIndex);
 
         /// <inheritdoc cref="StringSearch.FindStringExact(string)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindStringExact(string s) => Search.FindStringExact(s);
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindStringEx(
          string? str,
          int? startIndex,
@@ -488,6 +562,7 @@ namespace Alternet.UI
         /// <see cref="SelectedIndex"/> property to <c>null</c>.
         /// You can use this method to quickly unselect all items in the list.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void ClearSelected()
         {
             SelectedItem = null;
