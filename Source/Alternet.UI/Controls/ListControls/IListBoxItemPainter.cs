@@ -22,6 +22,19 @@ namespace Alternet.UI
         void Paint(VListBox sender, ListBoxItemPaintEventArgs e);
 
         /// <summary>
+        /// Called by owner drawn <see cref="VListBox"/> control for the background
+        /// painting.
+        /// </summary>
+        /// <remarks>
+        /// This method must return <c>true</c> if default background
+        /// painting is not needed. The simplest implemetation is to return <c>false</c>.
+        /// In this case default background will be painted.
+        /// </remarks>
+        /// <param name="sender"><see cref="VListBox"/> control.</param>
+        /// <param name="e">Paint arguments</param>
+        bool PaintBackground(VListBox sender, ListBoxItemPaintEventArgs e);
+
+        /// <summary>
         /// Called by owner drawn <see cref="VListBox"/> control in order
         /// to get size of the item. Return (-1, -1) to use default behavior.
         /// </summary>

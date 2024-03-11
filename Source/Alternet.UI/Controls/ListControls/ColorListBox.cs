@@ -128,6 +128,12 @@ namespace Alternet.UI
                 sender.DefaultDrawItem(e);
                 ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);
             }
+
+            /// <inheritdoc/>
+            public bool PaintBackground(VListBox sender, ListBoxItemPaintEventArgs e)
+            {
+                return false;
+            }
         }
     }
 }

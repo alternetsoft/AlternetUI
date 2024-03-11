@@ -785,6 +785,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets this rectangle with applied margin. Uses <see cref="ApplyMargin"/>, see it
+        /// for details.
+        /// </summary>
+        /// <param name="margin">Margin to apply</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RectD WithMargin(Thickness margin)
+        {
+            RectD result = this;
+            result.ApplyMargin(margin);
+            return result;
+        }
+
+        /// <summary>
         /// Converts the <see cref='Location'/> and <see cref='Size'/>
         /// of this <see cref='RectD'/> to a human-readable string.
         /// </summary>

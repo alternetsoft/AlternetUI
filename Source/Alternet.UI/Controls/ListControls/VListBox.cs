@@ -350,19 +350,35 @@ namespace Alternet.UI
 
         /// <summary>
         /// Draws background for the item with the specified index.
+        /// If <see cref="ItemPainter"/> is assigned, uses
+        /// <see cref="IListBoxItemPainter.PaintBackground"/>, otherwise calls
+        /// <see cref="DefaultDrawItemBackground"/>.
         /// </summary>
-        /// <param name="dc">The <see cref="Graphics" /> surface on which to draw.</param>
-        /// <param name="rect">Rectangle in which to draw the item.</param>
-        /// <param name="itemIndex">Index of the item.</param>
-        public virtual void DrawItemBackground(Graphics dc, RectD rect, int itemIndex)
+        /// <param name="e">Draw parameters.</param>
+        public virtual void DrawItemBackground(ListBoxItemPaintEventArgs e)
         {
-            var isSelected = IsSelected(itemIndex);
-            var isCurrent = IsCurrent(itemIndex);
+            var result = painter?.PaintBackground(this, e) ?? false;
+            if(!result)
+                DefaultDrawItemBackground(e);
+        }
+
+        /// <summary>
+        /// Draws default background for the item with the specified index.
+        /// Used inside <see cref="DrawItemBackground"/>.
+        /// </summary>
+        /// <param name="e">Draw parameters.</param>
+        public virtual void DefaultDrawItemBackground(ListBoxItemPaintEventArgs e)
+        {
+            var rect = e.ClipRectangle;
+            var dc = e.Graphics;
+
+            var isSelected = e.IsSelected;
+            var isCurrent = e.IsCurrent;
 
             if (Enabled)
             {
                 if (isSelected)
-                    dc.FillRectangle(GetSelectedItemBackColor(itemIndex), rect);
+                    dc.FillRectangle(GetSelectedItemBackColor(e.ItemIndex), rect);
                 if (isCurrent && Focused)
                     dc.FillRectangleBorder(Color.Black, rect);
             }
@@ -373,29 +389,18 @@ namespace Alternet.UI
         /// <see cref="IListBoxItemPainter.Paint"/>, otherwise calls
         /// <see cref="DefaultDrawItem"/>.
         /// </summary>
-        /// <param name="dc">The <see cref="Graphics" /> surface on which to draw.</param>
-        /// <param name="rect">Rectangle in which to draw the item.</param>
-        /// <param name="itemIndex">Index of the item.</param>
-        public virtual void DrawItem(Graphics dc, RectD rect, int itemIndex)
+        /// <param name="e">Draw parameters.</param>
+        public virtual void DrawItem(ListBoxItemPaintEventArgs e)
         {
-            rect.ApplyMargin(ItemMargin);
-
-            if (itemPaintArgs is null)
-                itemPaintArgs = new(this, dc, rect, itemIndex);
-            else
-            {
-                itemPaintArgs.Graphics = dc;
-                itemPaintArgs.ClipRectangle = rect;
-                itemPaintArgs.ItemIndex = itemIndex;
-            }
+            e.ClipRectangle = e.ClipRectangle.WithMargin(ItemMargin);
 
             if (painter is null)
             {
-                DefaultDrawItem(itemPaintArgs);
+                DefaultDrawItem(e);
                 return;
             }
 
-            painter.Paint(this, itemPaintArgs);
+            painter.Paint(this, e);
         }
 
         /// <summary>
@@ -531,11 +536,19 @@ namespace Alternet.UI
 
                 if (rectRow.IntersectsWith(rectUpdate))
                 {
-                    /*don't allow drawing outside of the lines rectangle
-                    wxDCClipper clip(*dc, rectRow);*/
+                    /*wxDCClipper clip(*dc, rectRow);*/
 
-                    DrawItemBackground(dc, rectRow, line);
-                    DrawItem(dc, rectRow, line);
+                    if (itemPaintArgs is null)
+                        itemPaintArgs = new(this, dc, rectRow, line);
+                    else
+                    {
+                        itemPaintArgs.Graphics = dc;
+                        itemPaintArgs.ClipRectangle = rectRow;
+                        itemPaintArgs.ItemIndex = line;
+                    }
+
+                    DrawItemBackground(itemPaintArgs);
+                    DrawItem(itemPaintArgs);
                 }
                 else
                 {
