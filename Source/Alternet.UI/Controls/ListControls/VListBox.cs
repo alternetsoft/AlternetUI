@@ -304,30 +304,6 @@ namespace Alternet.UI
             return size;
         }
 
-        /*public virtual bool IsSelected(int index)
-        {
-            if (SelectionMode == ListBoxSelectionMode.Single)
-                return NativeControl.GetSelection() == index;
-
-            var selCount = NativeControl.GetSelectedCount();
-
-            if (selCount == 0)
-                return false;
-
-            var firstSelected = NativeControl.GetFirstSelected();
-            if (firstSelected == index)
-                return true;
-
-            while (true)
-            {
-                var selected = NativeControl.GetNextSelected();
-                if (selected == index)
-                    return true;
-                if (selected < 0)
-                    return false;
-            }
-        }*/
-
         /// <summary>
         /// Gets whether item with the specified index is selected.
         /// </summary>

@@ -152,8 +152,33 @@ namespace Alternet.UI
 
             try
             {
-                // !!!
-                Control.SelectedIndices = Array.Empty<int>();
+                if (Control.SelectionMode == ListBoxSelectionMode.Single)
+                {
+                    Control.SelectedIndices = new int[] { NativeControl.GetSelection() };
+                    return;
+                }
+
+                var selCount = NativeControl.GetSelectedCount();
+
+                if (selCount == 0)
+                {
+                    Control.SelectedIndices = Array.Empty<int>();
+                    return;
+                }
+
+                var result = new List<int>(selCount + 1);
+                var firstSelected = NativeControl.GetFirstSelected();
+                result.Add(firstSelected);
+
+                while (true)
+                {
+                    var selected = NativeControl.GetNextSelected();
+                    if (selected < 0)
+                        break;
+                    result.Add(selected);
+                }
+
+                Control.SelectedIndices = result;
             }
             finally
             {
