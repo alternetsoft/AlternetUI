@@ -340,6 +340,9 @@ namespace Alternet::UI
 
     int VListBox::ItemHitTest(const PointD& position)
     {
-        return -1;
+        auto listBox = GetListBox();
+        auto y = fromDip(position.Y, listBox);
+        auto result = listBox->VirtualHitTest(y);
+        return result;
     }
 }
