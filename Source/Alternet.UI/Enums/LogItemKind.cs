@@ -12,7 +12,7 @@ namespace Alternet.UI
     public enum LogItemKind
     {
         /// <summary>
-        /// General.
+        /// Information.
         /// </summary>
         Information,
 
@@ -27,7 +27,7 @@ namespace Alternet.UI
         Warning,
 
         /// <summary>
-        /// Other item.
+        /// Other item without any image.
         /// </summary>
         Other,
     }

@@ -51,7 +51,8 @@ namespace Alternet.UI
         public static readonly bool IsIOS;
 
         /// <summary>
-        /// Gets a value that indicates whether the current operating system is a 64-bit operating system.
+        /// Gets a value that indicates whether the current operating system is
+        /// a 64-bit operating system.
         /// </summary>
         public static readonly bool Is64BitOS;
 
@@ -181,7 +182,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when controls which display log messages need to be refreshed.
         /// </summary>
-        public static event EventHandler LogRefresh;
+        public static event EventHandler? LogRefresh;
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
@@ -642,9 +643,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">Name.</param>
         /// <param name="value">Value.</param>
-        public static void LogNameValue(string name, object? value)
+        /// <param name="kind">Item kind.</param>
+        public static void LogNameValue(
+            string name,
+            object? value,
+            LogItemKind kind = LogItemKind.Information)
         {
-            Application.Log($"{name} = {value}");
+            Application.Log($"{name} = {value}", kind);
         }
 
         /// <summary>
@@ -654,10 +659,15 @@ namespace Alternet.UI
         /// <param name="name">Name.</param>
         /// <param name="value">Value.</param>
         /// <param name="condition">Log if <c>true</c>.</param>
-        public static void LogNameValueIf(string name, object? value, bool condition)
+        /// <param name="kind">Item kind.</param>
+        public static void LogNameValueIf(
+            string name,
+            object? value,
+            bool condition,
+            LogItemKind kind = LogItemKind.Information)
         {
             if (condition)
-                LogNameValue(name, value);
+                LogNameValue(name, value, kind);
         }
 
         /// <summary>
@@ -666,16 +676,20 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="condition">Log if <c>true</c>.</param>
-        public static void LogIf(object? obj, bool condition)
+        /// <param name="kind">Item kind.</param>
+        public static void LogIf(
+            object? obj,
+            bool condition,
+            LogItemKind kind = LogItemKind.Information)
         {
             if (condition)
-                Log(obj);
+                Log(obj, kind);
         }
 
         /// <summary>
         /// Logs warning message.
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="obj">Message text or object to log.</param>
         public static void LogWarning(object? obj)
         {
             Log($"Warning: {obj}", LogItemKind.Warning);
@@ -684,7 +698,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs error message.
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="obj">Message text or object to log.</param>
         public static void LogError(object? obj)
         {
             Log($"Error: {obj}", LogItemKind.Error);
