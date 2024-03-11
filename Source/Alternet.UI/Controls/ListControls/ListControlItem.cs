@@ -85,6 +85,12 @@ namespace Alternet.UI
         public virtual Image? SelectedImage { get; set; }
 
         /// <summary>
+        /// Gets or sets minimal item height.
+        /// </summary>
+        [Browsable(false)]
+        public virtual double MinHeight { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="FontStyle"/> associated with the item.
         /// </summary>
         /// <remarks>
@@ -113,6 +119,16 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public virtual Color? ForegroundColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets background color of the item.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Color? BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets alignment of the item.
