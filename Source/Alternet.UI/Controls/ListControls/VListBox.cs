@@ -13,6 +13,11 @@ namespace Alternet.UI
     public class VListBox : ListBox
     {
         /// <summary>
+        /// Gets or sets default current item border.
+        /// </summary>
+        public static BorderSettings DefaultCurrentItemBorder;
+
+        /// <summary>
         /// Gets or sets default item margin.
         /// </summary>
         public static Thickness DefaultItemMargin = 2;
@@ -49,9 +54,16 @@ namespace Alternet.UI
         private bool textVisible = true;
         private bool currentItemBorderVisible = true;
         private bool selectionVisible = true;
+        private BorderSettings? currentItemBorder;
 
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
+
+        static VListBox()
+        {
+            DefaultCurrentItemBorder = new();
+            DefaultCurrentItemBorder.Color = Color.Black;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VListBox"/> class.
@@ -60,6 +72,26 @@ namespace Alternet.UI
         {
             UserPaint = true;
             SuggestedSize = 200;
+        }
+
+        /// <summary>
+        /// Gets or sets current item border. If it is <c>null</c> (default value),
+        /// <see cref="DefaultCurrentItemBorder"/> is used.
+        /// </summary>
+        public virtual BorderSettings? CurrentItemBorder
+        {
+            get
+            {
+                return currentItemBorder;
+            }
+
+            set
+            {
+                if (currentItemBorder == value)
+                    return;
+                currentItemBorder = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -537,6 +569,8 @@ namespace Alternet.UI
             var isSelected = e.IsSelected;
             var isCurrent = e.IsCurrent;
 
+            var item = SafeItem(e.ItemIndex);
+
             if (Enabled)
             {
                 if (isSelected)
@@ -545,15 +579,28 @@ namespace Alternet.UI
                         dc.FillRectangle(GetSelectedItemBackColor(e.ItemIndex), rect);
                 }
 
-                if(!isSelected || !selectionVisible)
+                if (!isSelected || !selectionVisible)
                 {
-                    var itemBackColor = SafeItem(e.ItemIndex)?.BackgroundColor;
+                    var itemBackColor = item?.BackgroundColor;
                     if(itemBackColor is not null)
                         dc.FillRectangle(itemBackColor, rect);
                 }
 
                 if (isCurrent && Focused && currentItemBorderVisible)
-                    dc.FillRectangleBorder(Color.Black, rect);
+                {
+                    var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
+                    border.Draw(this, e.Graphics, rect);
+                }
+                else
+                {
+                    var border = item?.Border;
+                    border?.Draw(this, e.Graphics, rect);
+                }
+            }
+            else
+            {
+                var border = item?.Border?.ToGrayScale();
+                border?.Draw(this, e.Graphics, rect);
             }
         }
 

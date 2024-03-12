@@ -65,6 +65,14 @@ namespace PropertyGridSample
             item.FontStyle = FontStyle.Underline;
             item.Text = "Underlined item";
 
+            item = listBox.RequiredItem(firstIndex + 5);
+            item.Text = "Custom border";
+            item.Alignment = GenericAlignment.Center;
+            item.Border = new();
+            item.Border.Color = listBox.IsDarkBackground ? Color.White : Color.Black;
+            item.Border.UniformCornerRadius = 50;
+            item.Border.UniformRadiusIsPercent = true;
+
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;
 
