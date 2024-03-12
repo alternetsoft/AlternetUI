@@ -88,7 +88,37 @@ namespace Alternet.UI
             ListControlUtils.AddColors(control);
         }
 
-        private void Initialize(bool defaultColors = true)
+        /// <summary>
+        /// Gets color value of the specified item or default color.
+        /// </summary>
+        /// <param name="control">Control with items.</param>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns></returns>
+        public static Color GetItemValueOrDefault(
+            ListControl control,
+            int itemIndex,
+            Color defaultValue)
+        {
+            object? item = control.GetItem(itemIndex);
+
+            if (item is ListControlItem item1)
+                item = item1.Value;
+
+            var itemColor = (item as Color) ?? defaultValue;
+
+            if (!itemColor.IsOk)
+                itemColor = defaultValue;
+
+            return itemColor;
+        }
+
+        /// <summary>
+        /// Initializes control with default colors and assigns item painter.
+        /// This method is called from constructor.
+        /// </summary>
+        /// <param name="defaultColors">Whether to add default colors.</param>
+        protected virtual void Initialize(bool defaultColors = true)
         {
             if (defaultColors)
             {
@@ -113,20 +143,19 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public void Paint(VListBox sender, ListBoxItemPaintEventArgs e)
             {
-                object? item = sender.Items[e.ItemIndex];
+                var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
 
-                if (item is ListControlItem item1)
-                    item = item1.Value;
-
-                var itemColor = (item as Color) ?? Color.White;
-
-                if (!itemColor.IsOk)
-                    itemColor = Color.White;
-
-                var (colorRect, itemRect) = sender.GetItemImageRect(e);
-                e.ClipRectangle = itemRect;
-                sender.DefaultDrawItem(e);
-                ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);
+                if (sender.TextVisible)
+                {
+                    var (colorRect, itemRect) = sender.GetItemImageRect(e);
+                    e.ClipRectangle = itemRect;
+                    sender.DefaultDrawItem(e);
+                    ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);
+                }
+                else
+                {
+                    ColorComboBox.PaintColorImage(e.Graphics, e.ClipRectangle, itemColor);
+                }
             }
 
             /// <inheritdoc/>
