@@ -137,6 +137,9 @@ namespace ControlsSample
                 new("List", () => new ListBoxPage()),
                 new("Checks", () => new CheckListBoxPage()),
                 new("Combo", () => new ComboBoxPage()),
+                new("Virtual", () => new VListBoxSamplePage()),
+                new("Colors", () => new ColorListBoxSamplePage()),
+
                 popupNameValue,
             };
 
