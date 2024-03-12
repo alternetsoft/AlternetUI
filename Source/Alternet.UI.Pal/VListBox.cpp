@@ -94,6 +94,8 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
+        /*style = style | wxHSCROLL;*/
+
         auto value = new wxVListBox2(
             parent,
             wxID_ANY,

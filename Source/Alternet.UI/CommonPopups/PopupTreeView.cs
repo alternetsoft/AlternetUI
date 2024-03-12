@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="TreeView"/> control.
     /// </summary>
-    public class PopupTreeView : PopupWindow
+    public class PopupTreeView : PopupWindow<TreeView>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupTreeView"/> class.
@@ -20,18 +20,8 @@ namespace Alternet.UI
             HideOnClick = false;
         }
 
-        /// <summary>
-        /// Gets or sets <see cref="TreeView"/> control used in the popup window.
-        /// </summary>
-        [Browsable(false)]
-        public new TreeView MainControl
-        {
-            get => (TreeView)base.MainControl;
-            set => base.MainControl = value;
-        }
-
         /// <inheritdoc/>
-        protected override Control CreateMainControl()
+        protected override TreeView CreateMainControl()
         {
             return new TreeView()
             {

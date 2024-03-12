@@ -340,7 +340,7 @@ namespace Alternet.UI
             var image = StateObjects?.Images?.GetObjectOrNull(state);
             image ??= Image;
             var imageOverride = ImageVisible ? image : null;
-            return image;
+            return imageOverride;
         }
 
         /// <inheritdoc/>

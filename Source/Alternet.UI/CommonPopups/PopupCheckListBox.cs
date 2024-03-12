@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="CheckListBox"/> control.
     /// </summary>
-    public partial class PopupCheckListBox : PopupListBox
+    public partial class PopupCheckListBox : PopupListBox<CheckListBox>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCheckListBox"/> class.
@@ -19,25 +19,6 @@ namespace Alternet.UI
         {
             this.HideOnClick = false;
             this.HideOnDoubleClick = true;
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="CheckListBox"/> control used in the popup window.
-        /// </summary>
-        [Browsable(false)]
-        public new CheckListBox MainControl
-        {
-            get => (CheckListBox)base.MainControl;
-            set => base.MainControl = value;
-        }
-
-        /// <inheritdoc/>
-        protected override Control CreateMainControl()
-        {
-            return new CheckListBox()
-            {
-                HasBorder = false,
-            };
         }
     }
 }

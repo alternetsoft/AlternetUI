@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <summary>
         /// Temporary border used for calculations.
         /// </summary>
-        private static readonly BorderSettings Temp = new();
+        public static readonly BorderSettings Temp = new();
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();

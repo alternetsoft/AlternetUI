@@ -34,7 +34,7 @@ namespace ControlsSample
             SetSizeToContent();
         }
 
-        private void RoundSelectionCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void RoundSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             if (roundSelectionCheckBox.IsChecked)
             {
@@ -90,8 +90,7 @@ namespace ControlsSample
             var result = listBox.HitTest(e.GetPosition(listBox));
             var item = (result == null ? "<none>" : listBox.GetItem(result.Value));
 
-            if (item is null)
-                item = result;
+            item ??= result;
 
             Application.Log($"HitTest result: Item: '{item}'");
         }
