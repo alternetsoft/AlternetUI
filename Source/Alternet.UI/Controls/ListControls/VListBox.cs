@@ -13,6 +13,11 @@ namespace Alternet.UI
     public class VListBox : ListBox
     {
         /// <summary>
+        /// Gets or sets default minimal item height.
+        /// </summary>
+        public static double DefaultMinItemHeight = 24;
+
+        /// <summary>
         /// Gets or sets default current item border.
         /// </summary>
         public static BorderSettings DefaultCurrentItemBorder;
@@ -50,12 +55,14 @@ namespace Alternet.UI
         private Color? disabledItemTextColor;
         private IListBoxItemPainter? painter;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
-        private double minItemHeight = 24;
+        private double minItemHeight = DefaultMinItemHeight;
         private bool textVisible = true;
         private bool currentItemBorderVisible = true;
         private bool selectionVisible = true;
         private BorderSettings? currentItemBorder;
         private BorderSettings? selectionBorder;
+        private bool checkBoxesVisible;
+        private bool checkBoxThreeState;
 
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
@@ -92,6 +99,60 @@ namespace Alternet.UI
                 if (currentItemBorder == value)
                     return;
                 currentItemBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether checkbox will
+        /// allow three check states rather than two.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the checkbox is able to display
+        /// three check states; otherwise, <see langword="false" />. The default value
+        /// is <see langword="false"/>.
+        /// </returns>
+        [DefaultValue(false)]
+        public virtual bool CheckBoxThreeState
+        {
+            get => checkBoxThreeState;
+
+            set
+            {
+                if (checkBoxThreeState == value)
+                    return;
+                checkBoxThreeState = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether user can set the checkboxes to
+        /// the third state by clicking.
+        /// </summary>
+        /// <remarks>
+        /// By default a user can't set a 3-state checkboxes to the third state. It can only
+        /// be done from code. Using this flags allows the user to set the checkboxes to
+        /// the third state by clicking.
+        /// </remarks>
+        [DefaultValue(false)]
+        public virtual bool CheckBoxAllowAllStatesForUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to show checkboxes in the items.
+        /// </summary>
+        public virtual bool CheckBoxVisible
+        {
+            get
+            {
+                return checkBoxesVisible;
+            }
+
+            set
+            {
+                if (checkBoxesVisible == value)
+                    return;
+                checkBoxesVisible = value;
                 Invalidate();
             }
         }
