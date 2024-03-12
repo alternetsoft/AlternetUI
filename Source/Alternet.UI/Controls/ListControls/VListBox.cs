@@ -55,6 +55,7 @@ namespace Alternet.UI
         private bool currentItemBorderVisible = true;
         private bool selectionVisible = true;
         private BorderSettings? currentItemBorder;
+        private BorderSettings? selectionBorder;
 
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
@@ -78,6 +79,7 @@ namespace Alternet.UI
         /// Gets or sets current item border. If it is <c>null</c> (default value),
         /// <see cref="DefaultCurrentItemBorder"/> is used.
         /// </summary>
+        [Browsable(false)]
         public virtual BorderSettings? CurrentItemBorder
         {
             get
@@ -90,6 +92,26 @@ namespace Alternet.UI
                 if (currentItemBorder == value)
                     return;
                 currentItemBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selection border.
+        /// </summary>
+        [Browsable(false)]
+        public virtual BorderSettings? SelectionBorder
+        {
+            get
+            {
+                return selectionBorder;
+            }
+
+            set
+            {
+                if (selectionBorder == value)
+                    return;
+                selectionBorder = value;
                 Invalidate();
             }
         }
@@ -573,27 +595,26 @@ namespace Alternet.UI
 
             if (Enabled)
             {
-                if (isSelected)
-                {
-                    if(selectionVisible)
-                        dc.FillRectangle(GetSelectedItemBackColor(e.ItemIndex), rect);
-                }
+                dc.FillBorderRectangle(
+                    rect,
+                    item?.BackgroundColor?.AsBrush,
+                    item?.Border,
+                    true,
+                    this);
 
-                if (!isSelected || !selectionVisible)
+                if (isSelected && selectionVisible)
                 {
-                    var itemBackColor = item?.BackgroundColor;
-                    if(itemBackColor is not null)
-                        dc.FillRectangle(itemBackColor, rect);
+                    dc.FillBorderRectangle(
+                        rect,
+                        GetSelectedItemBackColor(e.ItemIndex).AsBrush,
+                        selectionBorder,
+                        true,
+                        this);
                 }
 
                 if (isCurrent && Focused && currentItemBorderVisible)
                 {
                     var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
-                    border.Draw(this, e.Graphics, rect);
-                }
-                else
-                {
-                    var border = item?.Border;
                     border?.Draw(this, e.Graphics, rect);
                 }
             }

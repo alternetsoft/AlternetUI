@@ -29,8 +29,27 @@ namespace ControlsSample
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
             listBox.HandleCreated += ListBox_HandleCreated;
+            roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged; 
 
             SetSizeToContent();
+        }
+
+        private void RoundSelectionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (roundSelectionCheckBox.IsChecked)
+            {
+                BorderSettings border = new();
+                border.UniformRadiusIsPercent = true;
+                border.UniformCornerRadius = 50;
+
+                listBox.CurrentItemBorder = border;
+                listBox.SelectionBorder = border;
+            }
+            else
+            {
+                listBox.CurrentItemBorder = null;
+                listBox.SelectionBorder = null;
+            }
         }
 
         private void ListBox_HandleCreated(object? sender, EventArgs e)
@@ -69,14 +88,17 @@ namespace ControlsSample
             MouseEventArgs e)
         {
             var result = listBox.HitTest(e.GetPosition(listBox));
-            var item = (result == null ? "<none>" : listBox.Items[result.Value]);
+            var item = (result == null ? "<none>" : listBox.GetItem(result.Value));
+
+            if (item is null)
+                item = result;
 
             Application.Log($"HitTest result: Item: '{item}'");
         }
 
         private static string IndicesToStr(IReadOnlyList<int> indices)
         {
-            string result = indices.Count > 100 ?
+            string result = indices.Count > 50 ?
                 "too many indices to display" : string.Join(",", indices);
             return result;
         }

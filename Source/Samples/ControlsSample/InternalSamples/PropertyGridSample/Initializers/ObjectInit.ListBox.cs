@@ -69,7 +69,7 @@ namespace PropertyGridSample
             item.Text = "Custom border";
             item.Alignment = GenericAlignment.Center;
             item.Border = new();
-            item.Border.Color = listBox.IsDarkBackground ? Color.White : Color.Black;
+            item.Border.Color = Color.Red;
             item.Border.UniformCornerRadius = 50;
             item.Border.UniformRadiusIsPercent = true;
 

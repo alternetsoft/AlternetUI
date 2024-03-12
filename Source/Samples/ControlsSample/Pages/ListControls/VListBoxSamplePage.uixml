@@ -13,8 +13,9 @@
                   Enabled="false"/>
           <Button Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0"
               Click="DeselectAllButton_Click" />
-          <Button Text="Has Border" Name="hasBorderButton"
-              Margin="0,3,0,5" Click="HasBorderButton_Click" />
+          <Button Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0"
+              Click="HasBorderButton_Click" />
+          <CheckBox Margin="0,3,0,5" Text="Round Selection" Name="roundSelectionCheckBox"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
           <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
