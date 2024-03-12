@@ -16,6 +16,9 @@ namespace Alternet.UI
         private Color? color = Color.Black;
         private SizeI colorImageSize = DefaultColorImageSize;
         private ColorDialog? colorDialog;
+        private PopupColorListBox? popupWindow;
+        private bool showDialog = false;
+        private bool showPopupWindow = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -42,10 +45,57 @@ namespace Alternet.UI
         public event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToString;
 
         /// <summary>
+        /// Gets attached popup window with <see cref="ColorListBox"/>.
+        /// </summary>
+        public PopupColorListBox PopupWindow
+        {
+            get
+            {
+                if(popupWindow is null)
+                {
+                    popupWindow = new();
+                    popupWindow.AfterHide += PopupWindow_AfterHide;
+                }
+
+                return popupWindow;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to show <see cref="ColorDialog"/> when
         /// button is clicked.
         /// </summary>
-        public virtual bool ShowDialog { get; set; } = true;
+        public virtual bool ShowDialog
+        {
+            get => showDialog;
+
+            set
+            {
+                if (showDialog = value)
+                    return;
+                showDialog = value;
+                if (value)
+                    showPopupWindow = false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to show popup window with <see cref="ColorListBox"/> when
+        /// button is clicked.
+        /// </summary>
+        public virtual bool ShowPopupWindow
+        {
+            get => showPopupWindow;
+
+            set
+            {
+                if (showPopupWindow = value)
+                    return;
+                showPopupWindow = value;
+                if (value)
+                    showDialog = false;
+            }
+        }
 
         /// <summary>
         /// Gets or sets size of the color image.
@@ -81,7 +131,7 @@ namespace Alternet.UI
                 base.Text = InternalAsString() ?? string.Empty;
                 ValueChanged?.Invoke(this, EventArgs.Empty);
                 UpdateImage();
-                Invalidate();
+                Refresh();
             }
         }
 
@@ -117,17 +167,23 @@ namespace Alternet.UI
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
-            if (!ShowDialog || !Enabled)
+            if (!Enabled)
                 return;
-            colorDialog ??= new ColorDialog();
-            if(Value is not null)
-                colorDialog.Color = Value;
-            if (colorDialog.ShowModal() == ModalResult.Accepted)
-            {
-                Value = colorDialog.Color;
-            }
 
-            Refresh();
+            if (ShowDialog)
+            {
+                colorDialog ??= new ColorDialog();
+                if (Value is not null)
+                    colorDialog.Color = Value;
+                if (colorDialog.ShowModal() == ModalResult.Accepted)
+                    Value = colorDialog.Color;
+            }
+            else
+            if(ShowPopupWindow)
+            {
+                PopupWindow.MainControl.Value = Value;
+                PopupWindow.ShowPopup(this);
+            }
         }
 
         /// <summary>
@@ -142,6 +198,12 @@ namespace Alternet.UI
             {
                 Image = (Bitmap)color.AsImage(colorImageSize);
             }
+        }
+
+        private void PopupWindow_AfterHide(object? sender, EventArgs e)
+        {
+            if (PopupWindow.PopupResult == ModalResult.Accepted)
+                Value = PopupWindow.ResultValue ?? Color.Black;
         }
 
         private string? InternalAsString()
