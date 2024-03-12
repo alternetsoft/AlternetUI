@@ -21,6 +21,11 @@ namespace Alternet.UI
         /// </summary>
         public static readonly BorderSettings Default = new();
 
+        /// <summary>
+        /// Temporary border used for calculations.
+        /// </summary>
+        private static readonly BorderSettings Temp = new();
+
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
         private readonly BorderSideSettings right = new();
@@ -414,7 +419,7 @@ namespace Alternet.UI
         /// <param name="control">Control in which drawing is performed.</param>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public virtual void Draw(Control control, Graphics dc, RectD rect)
+        public virtual void Draw(Control? control, Graphics dc, RectD rect)
         {
             Paint?.Invoke(this, new PaintEventArgs(dc, rect));
 
@@ -517,7 +522,7 @@ namespace Alternet.UI
             var topColor = ColorIsOk(Top.Color) ? value : Top.Color;
             var rightColor = ColorIsOk(Right.Color) ? value : Right.Color;
             var bottomColor = ColorIsOk(Bottom.Color) ? value : Bottom.Color;
-            SetColors(leftColor, topColor, rightColor, bottomColor);
+            result.SetColors(leftColor, topColor, rightColor, bottomColor);
             return result;
         }
 
