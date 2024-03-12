@@ -131,6 +131,16 @@ namespace Alternet.UI
         public virtual Color? BackgroundColor { get; set; }
 
         /// <summary>
+        /// Gets or sets border of the item.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual BorderSettings? Border { get; set; }
+
+        /// <summary>
         /// Gets or sets alignment of the item.
         /// </summary>
         /// <remarks>
@@ -138,7 +148,8 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual GenericAlignment Alignment { get; set; } = GenericAlignment.CenterVertical | GenericAlignment.Left;
+        public virtual GenericAlignment Alignment { get; set; }
+            = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
         /// <summary>
         /// Gets or sets text which is displayed in the <see cref="ListControl"/>.
