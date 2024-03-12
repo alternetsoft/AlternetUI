@@ -13,6 +13,58 @@ namespace Alternet.UI
     public static class DrawingUtils
     {
         /// <summary>
+        /// Fills rectangle background and draws its border using the specified border settings.
+        /// </summary>
+        /// <param name="dc"><see cref="Graphics"/> where to draw.</param>
+        /// <param name="rect">Rectangle.</param>
+        /// <param name="brush">Brush to fill the rectangle.</param>
+        /// <param name="border">Border settings.</param>
+        /// <param name="hasBorder">Whether border is painted.</param>
+        /// <param name="control">Control in which border is painted. Optional.</param>
+        public static void FillBorderRectangle(
+            this Graphics dc,
+            RectD rect,
+            Brush? brush,
+            BorderSettings? border,
+            bool hasBorder = true,
+            Control? control = null)
+        {
+            if (brush is null && border is null)
+                return;
+
+            var radius = border?.GetUniformCornerRadius(rect);
+
+            if (radius is not null && brush is not null)
+            {
+                var color = border?.Color;
+                if (border is null || color is null || !hasBorder)
+                {
+                    dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
+                }
+                else
+                {
+                    dc.RoundedRectangle(
+                        color.AsPen,
+                        brush,
+                        rect.InflatedBy(-1, -1),
+                        radius.Value);
+                }
+
+                return;
+            }
+
+            if (brush != null)
+            {
+                dc.FillRectangle(brush, rect);
+            }
+
+            if (hasBorder)
+            {
+                border?.Draw(control, dc, rect);
+            }
+        }
+
+        /// <summary>
         /// Gets rectangle of the top border edge with the specified width.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
