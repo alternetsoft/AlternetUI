@@ -77,7 +77,8 @@ namespace Alternet.UI
             string? outputData = null;
 
             Process process = new();
-            Application.Log("Run: " + fileName + " " + arguments);
+            if(logStdOut)
+                Application.IdleLog("Run: " + fileName + " " + arguments);
             ProcessStartInfo processInfo = new(fileName, arguments)
             {
                 // If the UseShellExecute property is true,
@@ -100,7 +101,9 @@ namespace Alternet.UI
                 if (string.IsNullOrWhiteSpace(y.Data))
                     return;
                 if (logStdOut)
+                {
                     Application.IdleLog($"Output> {y.Data}");
+                }
             };
             process.ErrorDataReceived += (x, y) =>
             {
@@ -108,7 +111,9 @@ namespace Alternet.UI
                 if (string.IsNullOrWhiteSpace(y.Data))
                     return;
                 if (logStdOut)
+                {
                     Application.IdleLog($"Error> {y.Data}");
+                }
             };
             process.Start();
 
