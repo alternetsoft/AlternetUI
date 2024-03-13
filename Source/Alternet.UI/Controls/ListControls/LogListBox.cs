@@ -265,11 +265,10 @@ namespace Alternet.UI
                 var item = (LogListBoxItem)LastItem!;
                 item.Text = ConstructLogMessage(message);
                 item.Kind = kind;
-                LogRefresh();
                 return item;
             }
             else
-                return Log(message, kind);
+                return LogInternal(message, kind);
         }
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)

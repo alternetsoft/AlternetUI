@@ -706,7 +706,7 @@ namespace Alternet.UI
         {
             IdleLog(obj, kind);
 
-            if (LogMessage is null || LogInUpdates())
+            if (LogMessage is null || LogInUpdates() || !LogQueue.IsEmpty)
                 return;
             ProcessLogQueue(true);
         }
@@ -868,7 +868,7 @@ namespace Alternet.UI
         {
             logUpdateCount--;
             if (logUpdateCount == 0)
-                LogRefresh?.Invoke(Current, EventArgs.Empty);
+                OnLogRefresh();
         }
 
         /// <summary>
@@ -1186,18 +1186,24 @@ namespace Alternet.UI
 
         private static void ProcessLogQueue(bool refresh)
         {
-            refresh = refresh && !LogQueue.IsEmpty;
+            if (LogQueue.IsEmpty || LogInUpdates())
+                return;
 
-            while (true)
+            LogBeginUpdate();
+            try
             {
-                if (LogQueue.TryDequeue(out var queueItem))
-                    LogToEvent(queueItem.Kind, queueItem.Msg);
-                else
-                    break;
+                while (true)
+                {
+                    if (LogQueue.TryDequeue(out var queueItem))
+                        LogToEvent(queueItem.Kind, queueItem.Msg);
+                    else
+                        break;
+                }
             }
-
-            if (refresh)
-                OnLogRefresh();
+            finally
+            {
+                LogEndUpdate();
+            }
         }
 
         private static void LogToEvent(LogItemKind kind, params string[] items)
