@@ -53,7 +53,7 @@ namespace Alternet.UI
             prm.EnumIsFlags = false;
             prm.Choices = choices;
 
-            var useErrorColors = Application.IsWindowsOS;
+            var useErrorColors = false;
             DefaultErrorUseForegroundColor = useErrorColors;
             DefaultErrorUseBackgroundColor = useErrorColors;
         }
