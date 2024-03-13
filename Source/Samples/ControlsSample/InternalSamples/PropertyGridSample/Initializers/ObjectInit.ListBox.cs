@@ -38,11 +38,11 @@ namespace PropertyGridSample
             item.Alignment = GenericAlignment.CenterRight;
             item.FontStyle = FontStyle.Bold;
             item.MinHeight = listBox.PixelToDip(imageSize);
-            item.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), imageSize).ImgBold.AsImage();
+            item.Image = KnownSvgImages.ImgBold.AsNormalImage(imageSize, listBox.IsDarkBackground);
             item.SelectedImage =
-                KnownSvgImages.GetForSize(SystemColors.HighlightText, imageSize).ImgBold.AsImage();
+                KnownSvgImages.ImgBold.AsImageSet(imageSize, KnownSvgColor.HighlightText, listBox.IsDarkBackground)?.AsImage();
             item.DisabledImage =
-                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), imageSize).ImgBold.AsImage();
+                KnownSvgImages.ImgBold.AsDisabledImage(imageSize, listBox.IsDarkBackground);
 
             item = listBox.RequiredItem(firstIndex + 1);
             item.Alignment = GenericAlignment.Center;

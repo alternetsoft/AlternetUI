@@ -61,15 +61,13 @@ namespace PropertyGridSample
 
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
-                toolbar.GetNormalSvgImages().ImgFileNew,
-                toolbar.GetDisabledSvgImages().ImgFileNew);
+                KnownSvgImages.ImgFileNew);
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
             var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
-                toolbar.GetNormalSvgImages().ImgFileOpen,
-                toolbar.GetDisabledSvgImages().ImgFileOpen);
+                KnownSvgImages.ImgFileOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
@@ -84,8 +82,7 @@ namespace PropertyGridSample
 
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                toolbar.GetNormalSvgImages().ImgFileSave,
-                toolbar.GetDisabledSvgImages().ImgFileSave);
+                KnownSvgImages.ImgFileSave);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
@@ -100,8 +97,7 @@ namespace PropertyGridSample
             var idEdit = toolbar.AddControl(textBox);
 
             var itemPicture = toolbar.AddPicture(
-                toolbar.GetNormalSvgImages().ImgMessageBoxWarning,
-                toolbar.GetDisabledSvgImages().ImgMessageBoxWarning,
+                KnownSvgImages.ImgMessageBoxWarning,
                 "Picture");
             toolbar.AddToolAction(itemPicture, ButtonClick);
             toolbar.SetToolAlignRight(itemPicture, true);

@@ -21,14 +21,6 @@ namespace PropertyGridSample
             return default;
         }
 
-        void PictureBoxTest()
-        {
-            var control = GetSelectedControl<PictureBox>();
-            if (control is null)
-                return;
-            control.Image = KnownSvgImages.GetForSize(Color.Red, 64).ImgAddChild.AsImage(64);
-        }
-
         void ReorderButtonsTest()
         {
             var control = GetSelectedControl<PanelOkCancelButtons>();

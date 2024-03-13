@@ -262,41 +262,29 @@ namespace Alternet.UI
             var imageSize = GetBaseToolSvgSize();
             toolbar.ToolBitmapSizeInPixels = imageSize;
 
-            var images = KnownSvgImages.GetForSize(
-                toolbar.GetSvgColor(KnownSvgColor.Normal),
-                imageSize);
-
-            buttonIdBack = toolbar.AddTool(
+            buttonIdBack = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonBack,
-                images.ImgBrowserBack,
-                CommonStrings.Default.ButtonBack);
+                KnownSvgImages.ImgBrowserBack);
 
-            buttonIdForward = toolbar.AddTool(
+            buttonIdForward = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonForward,
-                images.ImgBrowserForward,
-                CommonStrings.Default.ButtonForward);
+                KnownSvgImages.ImgBrowserForward);
 
-            buttonIdZoomIn = toolbar.AddTool(
+            buttonIdZoomIn = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonZoomIn,
-                images.ImgZoomIn,
-                CommonStrings.Default.ButtonZoomIn);
+                KnownSvgImages.ImgZoomIn);
 
-            buttonIdZoomOut = toolbar.AddTool(
+            buttonIdZoomOut = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonZoomOut,
-                images.ImgZoomOut,
-                CommonStrings.Default.ButtonZoomOut);
+                KnownSvgImages.ImgZoomOut);
 
             buttonIdUrl = toolbar.AddControl(urlTextBox);
 
-            buttonIdGo = toolbar.AddTool(
+            buttonIdGo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonGo,
-                images.ImgBrowserGo,
-                CommonStrings.Default.ButtonGo);
+                KnownSvgImages.ImgBrowserGo);
 
-            buttonIdMoreActions = toolbar.AddTool(
-                null,
-                images.ImgMoreActions,
-                null);
+            buttonIdMoreActions = toolbar.AddToolButton(null, KnownSvgImages.ImgMoreActions);
 
             MenuItem itemSearch = new(
                 CommonStrings.Default.ButtonFind + "...",

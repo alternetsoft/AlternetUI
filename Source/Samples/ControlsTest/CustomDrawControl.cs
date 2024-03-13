@@ -40,7 +40,7 @@ namespace ControlsTest
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var dc = e.DrawingContext;
+            var dc = e.Graphics;
             var bounds = DrawClientRectangle;
 
             var brush = this.Background;
@@ -52,7 +52,7 @@ namespace ControlsTest
 
             foreach(var paintAction in paintActions)
             {
-                paintAction(this, e.DrawingContext, e.Bounds);
+                paintAction(this, e.Graphics, e.ClipRectangle);
             }
         }
     }

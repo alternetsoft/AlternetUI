@@ -132,49 +132,37 @@ namespace Alternet.UI
             var imageSize = GetBaseToolSvgSize();
             toolbar.ToolBitmapSizeInPixels = imageSize;
 
-            var images = KnownSvgImages.GetForSize(
-                toolbar.GetSvgColor(KnownSvgColor.Normal),
-                imageSize);
-
-            buttonIdNew = toolbar.AddTool(
+            buttonIdNew = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonNew,
-                images.ImgFileNew,
-                CommonStrings.Default.ButtonNew);
+                KnownSvgImages.ImgFileNew);
 
-            buttonIdOpen = toolbar.AddTool(
+            buttonIdOpen = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonOpen,
-                images.ImgFileOpen,
-                CommonStrings.Default.ButtonOpen);
+                KnownSvgImages.ImgFileOpen);
 
-            buttonIdSave = toolbar.AddTool(
+            buttonIdSave = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonSave,
-                images.ImgFileSave,
-                CommonStrings.Default.ButtonSave);
+                KnownSvgImages.ImgFileSave);
 
-            buttonIdUndo = toolbar.AddTool(
+            buttonIdUndo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonUndo,
-                images.ImgUndo,
-                CommonStrings.Default.ButtonUndo);
+                KnownSvgImages.ImgUndo);
 
-            buttonIdRedo = toolbar.AddTool(
+            buttonIdRedo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonRedo,
-                images.ImgRedo,
-                CommonStrings.Default.ButtonRedo);
+                KnownSvgImages.ImgRedo);
 
-            buttonIdBold = toolbar.AddTool(
+            buttonIdBold = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonBold,
-                images.ImgBold,
-                CommonStrings.Default.ButtonBold);
+                KnownSvgImages.ImgBold);
 
-            buttonIdItalic = toolbar.AddTool(
+            buttonIdItalic = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonItalic,
-                images.ImgItalic,
-                CommonStrings.Default.ButtonItalic);
+                KnownSvgImages.ImgItalic);
 
-            buttonIdUnderline = toolbar.AddTool(
+            buttonIdUnderline = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonUnderline,
-                images.ImgUnderline,
-                CommonStrings.Default.ButtonUnderline);
+                KnownSvgImages.ImgUnderline);
 
             toolbar.AddToolOnClick(buttonIdNew, FileNew_Click);
             toolbar.AddToolOnClick(buttonIdOpen, FileOpen_Click);

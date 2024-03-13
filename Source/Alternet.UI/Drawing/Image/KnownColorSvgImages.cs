@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgError
         {
-            get => imgError ??= new(KnownColorSvgUrls.Error);
+            get => imgError ??= new(KnownColorSvgUrls.Error, false);
             set => imgError = value;
         }
 
@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgWarning
         {
-            get => imgWarning ??= new(KnownColorSvgUrls.Warning);
+            get => imgWarning ??= new(KnownColorSvgUrls.Warning, false);
             set => imgWarning = value;
         }
 
@@ -40,8 +40,21 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgInformation
         {
-            get => imgInformation ??= new(KnownColorSvgUrls.Information);
+            get => imgInformation ??= new(KnownColorSvgUrls.Information, false);
             set => imgInformation = value;
+        }
+
+        /// <summary>
+        /// Gets <see cref="ImgError"/> image for the specified bitmap size.
+        /// If size is not specified, gets image for the default toolbar image size.
+        /// </summary>
+        /// <param name="size">Image size.</param>
+        public static Image? GetErrorImage(int? size = null)
+        {
+            size ??= ToolBar.GetDefaultImageSize().Width;
+            var imageSet = KnownColorSvgImages.ImgError.AsImageSet(size.Value);
+            var image = imageSet?.AsImage(size.Value);
+            return image;
         }
     }
 }

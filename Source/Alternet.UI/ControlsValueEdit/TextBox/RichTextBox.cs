@@ -2417,7 +2417,7 @@ namespace Alternet.UI
         /// Supply an optional type to use for internal and file storage of the raw data.
         /// </summary>
         public bool WriteImage(
-            Image bitmap,
+            Image? bitmap,
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
         {

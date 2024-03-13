@@ -371,19 +371,15 @@ namespace Alternet.UI
             return toolId;
         }
 
-        public int AddToolButton(string? label, string url)
+        public int AddToolButton(string? label, SvgImage image)
         {
             var imageSize = PanelAuiManager.GetBaseToolSvgSize().Width;
-
-            var (normal, disabled) =
-                ImageSet.GetNormalAndDisabledSvg(url, this, imageSize);
-
             return AddTool(
                         label,
-                        normal,
+                        image.AsNormal(imageSize, IsDarkBackground),
                         label,
                         AuiToolbarItemKind.Normal,
-                        disabled);
+                        image.AsDisabled(imageSize, IsDarkBackground));
         }
 
         /// <summary>

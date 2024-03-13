@@ -78,6 +78,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets svg image as <see cref="ImageSet"/> with default toolbar image size.
+        /// </summary>
+        public virtual ImageSet? AsImageSet() => AsImageSet(ToolBar.GetDefaultImageSize().Width);
+
+        /// <summary>
+        /// Gets svg image as <see cref="Image"/> with default toolbar image size.
+        /// </summary>
+        public virtual Image? AsImage() => AsImage(ToolBar.GetDefaultImageSize().Width);
+
+        /// <summary>
         /// Gets svg image as <see cref="Image"/>.
         /// </summary>
         /// <param name="size">Image size</param>
@@ -121,6 +131,28 @@ namespace Alternet.Drawing
         public virtual ImageSet? AsDisabled(int size, bool isDark)
         {
             return AsImageSet(size, KnownSvgColor.Disabled, isDark);
+        }
+
+        /// <summary>
+        /// Gets image with the specified size and <see cref="KnownSvgColor.Normal"/> color.
+        /// </summary>
+        /// <param name="size">Image size in pixels.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns></returns>
+        public virtual Image? AsNormalImage(int size, bool isDark)
+        {
+            return AsImageSet(size, KnownSvgColor.Normal, isDark)?.AsImage();
+        }
+
+        /// <summary>
+        /// Gets image with the specified size and <see cref="KnownSvgColor.Disabled"/> color.
+        /// </summary>
+        /// <param name="size">Image size in pixels.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns></returns>
+        public virtual Image? AsDisabledImage(int size, bool isDark)
+        {
+            return AsImageSet(size, KnownSvgColor.Disabled, isDark)?.AsImage();
         }
 
         /// <summary>

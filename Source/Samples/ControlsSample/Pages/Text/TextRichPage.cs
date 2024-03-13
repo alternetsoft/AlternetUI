@@ -175,10 +175,10 @@ namespace ControlsSample
 
         public void WriteKnownImages(RichTextBox r)
         {
-            var images = KnownSvgImages.GetForSize(r.GetSvgColor(KnownSvgColor.Normal), 24).GetAllImages();
+            var images = KnownSvgImages.GetAllImages();
             foreach (var image in images)
             {
-                r.WriteImage(image.AsImage(24));
+                r.WriteImage(image.AsNormalImage(24, IsDarkBackground));
                 r.WriteText(" | ");
             }
             r.NewLine();
@@ -225,9 +225,7 @@ namespace ControlsSample
 
             r.WriteText("What can you do with this thing? ");
 
-            r.WriteImage(KnownSvgImages.GetForSize(
-                r.GetSvgColor(KnownSvgColor.Normal),
-                24).ImgMessageBoxInformation.AsImage(24));
+            r.WriteImage(KnownSvgImages.ImgMessageBoxInformation.AsNormalImage(24,IsDarkBackground));
 
             r.WriteText(" Well, you can change text ");
 

@@ -37,17 +37,17 @@ namespace ControlsSample
                     TabAlignmentComboBox_SelectedItemChanged;
 
                 ImageSet image;
-                ImageSet svgImage;
+                ImageSet? svgImage;
 
                 if(GetDPI().Width <= 96)
                 {
                     image = ImageSet.FromUrl($"{ResPrefixSmall}Calendar16.png");
-                    svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 16).ImgGear;
+                    svgImage = KnownSvgImages.ImgGear.AsNormal(16, IsDarkBackground);
                 }
                 else
                 {
                     image = ImageSet.FromUrl($"{ResPrefixLarge}Calendar32.png");
-                    svgImage = KnownSvgImages.GetForSize(GetSvgColor(), 32).ImgCircle;
+                    svgImage = KnownSvgImages.ImgGear.AsNormal(32, IsDarkBackground);
                 }
 
                 tabControl.SetTabImage(0, image);

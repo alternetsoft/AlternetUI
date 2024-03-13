@@ -51,7 +51,7 @@ namespace ControlsTest
                 });
             });
 
-            panel.AddAction("Draw bad Image", () =>
+            panel.AddAction("Bad Image (test assert)", () =>
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {

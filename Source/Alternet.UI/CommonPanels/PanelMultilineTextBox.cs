@@ -115,23 +115,23 @@ namespace Alternet.UI
 
             buttonIdNew = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonNew,
-                KnownSvgUrls.UrlImageFileNew);
+                KnownSvgImages.ImgFileNew);
 
             buttonIdOpen = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonOpen,
-                KnownSvgUrls.UrlImageFileOpen);
+                KnownSvgImages.ImgFileOpen);
 
             buttonIdSave = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonSave,
-                KnownSvgUrls.UrlImageFileSave);
+                KnownSvgImages.ImgFileSave);
 
             buttonIdUndo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonUndo,
-                KnownSvgUrls.UrlImageUndo);
+                KnownSvgImages.ImgUndo);
 
             buttonIdRedo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonRedo,
-                KnownSvgUrls.UrlImageRedo);
+                KnownSvgImages.ImgRedo);
 
             toolbar.AddToolOnClick(buttonIdNew, FileNew_Click);
             toolbar.AddToolOnClick(buttonIdOpen, FileOpen_Click);
