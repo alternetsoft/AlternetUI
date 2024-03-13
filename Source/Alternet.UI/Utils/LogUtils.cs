@@ -16,6 +16,12 @@ namespace Alternet.UI
     /// </summary>
     public static class LogUtils
     {
+        /// <summary>
+        /// Gets or sets whether to show debug welcome message
+        /// with version number and other information.
+        /// </summary>
+        public static bool ShowDebugWelcomeMessage = false;
+
         private static int id;
         private static int logUseMaxLength;
         private static Flags flags;
@@ -121,6 +127,8 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void DebugLogVersion()
         {
+            if (!ShowDebugWelcomeMessage)
+                return;
             if (flags.HasFlag(Flags.VersionLogged))
                 return;
             flags |= Flags.VersionLogged;

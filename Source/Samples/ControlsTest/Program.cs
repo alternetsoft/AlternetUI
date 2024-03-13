@@ -8,10 +8,10 @@ namespace ControlsTest
     internal class Program
     {
         [STAThread]
-#pragma warning disable
         public static void Main(string[] args)
-#pragma warning restore
         {
+            LogUtils.ShowDebugWelcomeMessage = true;
+
             var application = new Application();
 
             var window = new MainTestWindow();
