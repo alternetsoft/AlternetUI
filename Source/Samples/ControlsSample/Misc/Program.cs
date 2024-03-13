@@ -10,6 +10,7 @@ namespace ControlsSample
         [STAThread]
         public static void Main()
         {
+            LogUtils.ShowDebugWelcomeMessage = true;
 
             var testBadFont = false;
 

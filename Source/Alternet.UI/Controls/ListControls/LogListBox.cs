@@ -110,37 +110,9 @@ namespace Alternet.UI
             string? prefix,
             LogItemKind kind = LogItemKind.Information)
         {
-            if (IsDisposed)
-                return new();
-
-            string? s;
-
-            s = LastLogMessage;
-
-            if (s is null)
-                return Log(message, kind);
-
-            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
-
-            if (b)
-            {
-                lastLogMessage = message;
-                var item = (LogListBoxItem)LastItem!;
-                item.Text = ConstructLogMessage(message);
-                item.Kind = kind;
-
-                if (!Application.LogInUpdates() || !BoundToApplicationLog)
-                {
-                    var index = Items.Count - 1;
-                    SelectedIndex = index;
-                    EnsureVisible(index);
-                    Refresh();
-                }
-
-                return item;
-            }
-            else
-                return Log(message, kind);
+            var result = LogReplaceInternal(message, prefix, kind);
+            LogRefresh();
+            return result;
         }
 
         /// <summary>
@@ -151,7 +123,7 @@ namespace Alternet.UI
         {
             BoundToApplicationLog = true;
             ContextMenu.Required();
-            Application.Current.LogMessage += Application_LogMessage;
+            Application.LogMessage += Application_LogMessage;
             Application.LogRefresh += Application_LogRefresh;
             LogUtils.DebugLogVersion();
         }
@@ -164,25 +136,9 @@ namespace Alternet.UI
         /// <param name="kind">Message kind.</param>
         public virtual LogListBoxItem Log(string? message, LogItemKind kind = LogItemKind.Information)
         {
-            if (IsDisposed)
-                return new();
-
-            lastLogMessage = message;
-
-            LogListBoxItem item = CreateItem();
-            item.Text = ConstructLogMessage(message);
-            item.Kind = kind;
-            Add(item);
-
-            if (!Application.LogInUpdates() || !BoundToApplicationLog)
-            {
-                var index = Items.Count - 1;
-                SelectedIndex = index;
-                EnsureVisible(index);
-                Refresh();
-            }
-
-            return item;
+            var result = LogInternal(message, kind);
+            LogRefresh();
+            return result;
         }
 
         /// <summary>
@@ -211,7 +167,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeResources()
         {
-            Application.Current.LogMessage -= Application_LogMessage;
+            Application.LogMessage -= Application_LogMessage;
+            Application.LogRefresh -= Application_LogRefresh;
             base.DisposeResources();
         }
 
@@ -255,20 +212,72 @@ namespace Alternet.UI
             }
         }
 
+        private void LogRefresh()
+        {
+            if (!Application.LogInUpdates() || !BoundToApplicationLog)
+            {
+                var index = Items.Count - 1;
+                SelectedIndex = index;
+                EnsureVisible(index);
+                Refresh();
+            }
+        }
+
         private void Application_LogRefresh(object? sender, EventArgs e)
         {
-            var index = Items.Count - 1;
-            SelectedIndex = index;
-            EnsureVisible(index);
-            Refresh();
+            LogRefresh();
+        }
+
+        private LogListBoxItem LogInternal(string? message, LogItemKind kind)
+        {
+            if (IsDisposed)
+                return new();
+
+            lastLogMessage = message;
+
+            LogListBoxItem item = CreateItem();
+            item.Text = ConstructLogMessage(message);
+            item.Kind = kind;
+            Add(item);
+            return item;
+        }
+
+        private LogListBoxItem LogReplaceInternal(
+            string? message,
+            string? prefix,
+            LogItemKind kind)
+        {
+            if (IsDisposed)
+                return new();
+
+            string? s;
+
+            s = LastLogMessage;
+
+            if (s is null)
+                return Log(message, kind);
+
+            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
+
+            if (b)
+            {
+                lastLogMessage = message;
+                var item = (LogListBoxItem)LastItem!;
+                item.Text = ConstructLogMessage(message);
+                item.Kind = kind;
+                LogRefresh();
+                return item;
+            }
+            else
+                return Log(message, kind);
         }
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
             if (e.ReplaceLastMessage)
-                LogReplace(e.Message, e.MessagePrefix, e.Kind);
+                LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
             else
-                Log(e.Message, e.Kind);
+                LogInternal(e.Message, e.Kind);
         }
 
         /// <summary>
