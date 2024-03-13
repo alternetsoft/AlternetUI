@@ -1,3 +1,17 @@
+# 0.9.520 (2024 March 13)
+
+- VListBox: SelectionVisible, CurrentItemBorderVisible, TextVisible.
+- Added VListBox/ColorListBox samples to ListBoxes tabs in ControlsSample demo.
+- BorderSettings: ToGrayScale, ToColor(Color).
+- Border side is not painted if color is empty or transparent or not ok.
+- ListControlItem.Border.
+- VListBox: DefaultCurrentItemBorder, CurrentItemBorder, SelectionBorder.
+- DrawingUtils.FillBorderRectangle.
+- GenericLabel: Improved painting and layout.
+- PopupWindow{T}, PopupListBox{T}, PopupColorListBox.
+- SpeedColorButton: PopupWindow, ShowPopupWindow.
+- Improved Application.Log related code.
+
 # 0.9.519 (2024 March 11)
 
 - StringSearch.UseContains. So now it's possible to specify whether to use partial text compare during search operations 
