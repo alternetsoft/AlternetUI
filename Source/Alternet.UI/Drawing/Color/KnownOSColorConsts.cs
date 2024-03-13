@@ -54,5 +54,25 @@ namespace Alternet.Drawing
             /// </summary>
             public static Color ExplorerPreviewBack = Color.FromRgb(255, 255, 255);
         }
+
+        /// <summary>
+        /// Gets color constants for the control parts under Windows for light
+        /// or dark theme.
+        /// </summary>
+        public static class WindowsLightOrDark
+        {
+            /// <summary>
+            /// Gets splitter color in File Explorer.
+            /// </summary>
+            /// <param name="isDark">Whether to get color for the dark theme.</param>
+            /// <returns></returns>
+            public static Color ExplorerSplitter(bool isDark)
+            {
+                if (isDark)
+                    return WindowsDark.ExplorerSplitter;
+                else
+                    return WindowsLight.ExplorerSplitter;
+            }
+        }
     }
 }

@@ -100,10 +100,12 @@ namespace Alternet.UI
             public SvgColorsWhite()
             {
                 Normal = Color.Black;
-                Disabled = SystemColors.GrayText;
                 Error = Normal;
                 Information = Normal;
                 Warning = Normal;
+
+                // SystemColors.GrayText is too dark for this
+                Disabled = TabControl.GetDefaultInteriorBorderColor(false);
             }
         }
     }
