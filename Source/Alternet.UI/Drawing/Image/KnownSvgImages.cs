@@ -15,6 +15,8 @@ namespace Alternet.UI
     {
         private static readonly AdvDictionary<SizeI, List<KnownSvgImages>> Images = new();
 
+        private static SvgImage? imgOk;
+
         private readonly SizeI size;
         private readonly Color color;
 
@@ -27,7 +29,6 @@ namespace Alternet.UI
         private ImageSet? imgMoreActions;
         private ImageSet? imgMoreActionsHorz;
         private ImageSet? imgRemove;
-        private ImageSet? imgOk;
         private ImageSet? imgCancel;
         private ImageSet? imgAddChild;
         private ImageSet? imgRemoveAll;
@@ -72,6 +73,15 @@ namespace Alternet.UI
         {
             this.size = size;
             this.color = color;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Ok" buttons.
+        /// </summary>
+        public static SvgImage ImgOk
+        {
+            get => imgOk ??= new(KnownSvgUrls.UrlImageOk);
+            set => imgOk = value;
         }
 
         /// <summary>
@@ -403,15 +413,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets image that can be used in "Ok" buttons.
-        /// </summary>
-        public ImageSet ImgOk
-        {
-            get => imgOk ??= Load(KnownSvgUrls.UrlImageOk);
-            set => imgOk = value;
-        }
-
-        /// <summary>
         /// Gets or sets image that can be used in "Cancel" buttons.
         /// </summary>
         public ImageSet ImgCancel
@@ -518,8 +519,8 @@ namespace Alternet.UI
         public static Image? GetWarningImage(Color color, int? size = null)
         {
             size ??= ToolBar.GetDefaultImageSize().Width;
-            var imageSet = GetForSize(color, size.Value).ImgMessageBoxWarning;
-            var image = imageSet.AsImage(size.Value);
+            var imageSet = KnownColorSvgImages.ImgError.AsImageSet(size.Value);
+            var image = imageSet?.AsImage(size.Value);
             return image;
         }
 

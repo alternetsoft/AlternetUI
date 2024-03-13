@@ -555,6 +555,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="ImageSet"/> from <see cref="SvgImage"/>
+        /// for the normal state.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <returns></returns>
+        public ImageSet? ToNormal(SvgImage? image)
+        {
+            var result = image?.AsImageSet(GetImageSize(), KnownSvgColor.Normal, IsDarkBackground);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets <see cref="ImageSet"/> from <see cref="SvgImage"/>
+        /// for the disabled state.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <returns></returns>
+        public ImageSet? ToDisabled(SvgImage? image)
+        {
+            var result = image?.AsImageSet(GetImageSize(), KnownSvgColor.Disabled, IsDarkBackground);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control with svg image.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddSpeedBtn(
+            string? text,
+            SvgImage? image,
+            EventHandler? action = null)
+        {
+            return AddSpeedBtn(
+                text,
+                ToNormal(image),
+                ToDisabled(image),
+                null,
+                action);
+        }
+
+        /// <summary>
         /// Adds known <see cref="SpeedButton"/> to the control.
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn(KnownButton button, EventHandler? action = null)
@@ -567,7 +611,7 @@ namespace Alternet.UI
             {
                 case KnownButton.OK:
                 default:
-                    return AddSpeedBtn(strings.ButtonOk, images.ImgOk, disabled.ImgOk, null, action);
+                    return AddSpeedBtn(strings.ButtonOk, KnownSvgImages.ImgOk, action);
                 case KnownButton.Cancel:
                     return AddSpeedBtn(strings.ButtonCancel, images.ImgCancel, disabled.ImgCancel, null, action);
                 case KnownButton.Yes:

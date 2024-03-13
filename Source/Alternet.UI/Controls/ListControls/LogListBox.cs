@@ -304,17 +304,17 @@ namespace Alternet.UI
                     switch (kind)
                     {
                         case LogItemKind.Error:
-                            ErrorImage ??= KnownColorSvgImages.GetForSize(size).ImgError.AsImage();
+                            ErrorImage ??= KnownColorSvgImages.ImgError.AsImage(size.Width);
                             Image = ErrorImage;
                             break;
                         case LogItemKind.Warning:
                             WarningImage ??=
-                                KnownColorSvgImages.GetForSize(size).ImgWarning.AsImage();
+                                KnownColorSvgImages.ImgWarning.AsImage(size.Width);
                             Image = WarningImage;
                             break;
                         case LogItemKind.Information:
                             InformationImage ??=
-                                KnownColorSvgImages.GetForSize(size).ImgInformation.AsImage();
+                                KnownColorSvgImages.ImgInformation.AsImage(size.Width);
                             Image = InformationImage;
                             break;
                         default:

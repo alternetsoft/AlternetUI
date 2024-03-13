@@ -151,10 +151,10 @@ namespace Alternet.UI
         /// <param name="e">Exception to log.</param>
         public static void LogException(Exception e)
         {
-            Application.Log(SectionSeparator);
-            Application.Log("Exception:");
-            Application.Log(e.ToString());
-            Application.Log(SectionSeparator);
+            Application.Log(SectionSeparator, LogItemKind.Error);
+            Application.Log("Exception:", LogItemKind.Error);
+            Application.Log(e.ToString(), LogItemKind.Error);
+            Application.Log(SectionSeparator, LogItemKind.Error);
         }
 
         /// <summary>

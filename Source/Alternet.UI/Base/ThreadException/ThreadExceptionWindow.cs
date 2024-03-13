@@ -172,8 +172,6 @@ namespace Alternet.UI
 
             Control CreateMessageGrid()
             {
-                string errorImageUrl = KnownColorSvgUrls.Error;
-
                 var messageGrid = new VerticalStackPanel();
 
                 var firstSection = new HorizontalStackPanel();
@@ -184,7 +182,7 @@ namespace Alternet.UI
                     VerticalAlignment = UI.VerticalAlignment.Top,
                     HorizontalAlignment = UI.HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
-                    ImageSet = ImageSet.FromSvgUrl(errorImageUrl, 64, 64),
+                    ImageSet = KnownColorSvgImages.ImgError.AsImageSet(64),
                 };
                 errorImagePictureBox.Parent = firstSection;
 

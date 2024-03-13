@@ -97,6 +97,12 @@ namespace Alternet.UI
                 toolbar.GetSvgColor(KnownSvgColor.Normal),
                 imageSize);
 
+            ImageSet? ToNormal(SvgImage? image)
+            {
+                var result = image?.AsImageSet(imageSize.Width, KnownSvgColor.Normal, IsDarkBackground);
+                return result;
+            }
+
             if (source.AllowAdd)
             {
                 buttonIdAdd = toolbar.AddTool(
@@ -129,7 +135,7 @@ namespace Alternet.UI
             {
                 buttonIdOk = toolbar.AddTool(
                     CommonStrings.Default.ButtonOk,
-                    images.ImgOk,
+                    ToNormal(KnownSvgImages.ImgOk),
                     CommonStrings.Default.ButtonOk);
             }
 
