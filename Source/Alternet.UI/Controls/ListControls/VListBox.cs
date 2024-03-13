@@ -13,6 +13,16 @@ namespace Alternet.UI
     public class VListBox : ListBox
     {
         /// <summary>
+        /// Gets or sets default minimal item height.
+        /// </summary>
+        public static double DefaultMinItemHeight = 24;
+
+        /// <summary>
+        /// Gets or sets default current item border.
+        /// </summary>
+        public static BorderSettings DefaultCurrentItemBorder;
+
+        /// <summary>
         /// Gets or sets default item margin.
         /// </summary>
         public static Thickness DefaultItemMargin = 2;
@@ -45,8 +55,23 @@ namespace Alternet.UI
         private Color? disabledItemTextColor;
         private IListBoxItemPainter? painter;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
-        private GenericAlignment itemAlignment = GenericAlignment.CenterVertical | GenericAlignment.Left;
-        private double minItemHeight = 24;
+        private double minItemHeight = DefaultMinItemHeight;
+        private bool textVisible = true;
+        private bool currentItemBorderVisible = true;
+        private bool selectionVisible = true;
+        private BorderSettings? currentItemBorder;
+        private BorderSettings? selectionBorder;
+        private bool checkBoxesVisible;
+        private bool checkBoxThreeState;
+
+        private GenericAlignment itemAlignment
+            = GenericAlignment.CenterVertical | GenericAlignment.Left;
+
+        static VListBox()
+        {
+            DefaultCurrentItemBorder = new();
+            DefaultCurrentItemBorder.Color = Color.Black;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VListBox"/> class.
@@ -58,9 +83,168 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets current item border. If it is <c>null</c> (default value),
+        /// <see cref="DefaultCurrentItemBorder"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual BorderSettings? CurrentItemBorder
+        {
+            get
+            {
+                return currentItemBorder;
+            }
+
+            set
+            {
+                if (currentItemBorder == value)
+                    return;
+                currentItemBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether checkbox will
+        /// allow three check states rather than two.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the checkbox is able to display
+        /// three check states; otherwise, <see langword="false" />. The default value
+        /// is <see langword="false"/>.
+        /// </returns>
+        [DefaultValue(false)]
+        public virtual bool CheckBoxThreeState
+        {
+            get => checkBoxThreeState;
+
+            set
+            {
+                if (checkBoxThreeState == value)
+                    return;
+                checkBoxThreeState = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether user can set the checkboxes to
+        /// the third state by clicking.
+        /// </summary>
+        /// <remarks>
+        /// By default a user can't set a 3-state checkboxes to the third state. It can only
+        /// be done from code. Using this flags allows the user to set the checkboxes to
+        /// the third state by clicking.
+        /// </remarks>
+        [DefaultValue(false)]
+        public virtual bool CheckBoxAllowAllStatesForUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to show checkboxes in the items.
+        /// </summary>
+        public virtual bool CheckBoxVisible
+        {
+            get
+            {
+                return checkBoxesVisible;
+            }
+
+            set
+            {
+                if (checkBoxesVisible == value)
+                    return;
+                checkBoxesVisible = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selection border.
+        /// </summary>
+        [Browsable(false)]
+        public virtual BorderSettings? SelectionBorder
+        {
+            get
+            {
+                return selectionBorder;
+            }
+
+            set
+            {
+                if (selectionBorder == value)
+                    return;
+                selectionBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection background is visible.
+        /// </summary>
+        public virtual bool SelectionVisible
+        {
+            get
+            {
+                return selectionVisible;
+            }
+
+            set
+            {
+                if (selectionVisible == value)
+                    return;
+                selectionVisible = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether current item border is visible.
+        /// </summary>
+        public virtual bool CurrentItemBorderVisible
+        {
+            get
+            {
+                return currentItemBorderVisible;
+            }
+
+            set
+            {
+                if (currentItemBorderVisible == value)
+                    return;
+                currentItemBorderVisible = value;
+                Invalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool UserPaint
+        {
+            get => base.UserPaint;
+            set => base.UserPaint = true;
+        }
+
+        /// <summary>
+        /// Gets or sets whether item text is displayed.
+        /// </summary>
+        public virtual bool TextVisible
+        {
+            get
+            {
+                return textVisible;
+            }
+
+            set
+            {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets minimal height of the items. Default is 24 dip.
         /// </summary>
-        public double MinItemHeight
+        public virtual double MinItemHeight
         {
             get
             {
@@ -79,7 +263,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets disabled item text color.
         /// </summary>
-        public Color? DisabledItemTextColor
+        public virtual Color? DisabledItemTextColor
         {
             get
             {
@@ -118,7 +302,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="ListControl.SelectedItem"/> has bold font.
         /// </summary>
-        public bool SelectedItemIsBold
+        public virtual bool SelectedItemIsBold
         {
             get
             {
@@ -137,7 +321,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected item text color.
         /// </summary>
-        public Color? SelectedItemTextColor
+        public virtual Color? SelectedItemTextColor
         {
             get
             {
@@ -156,7 +340,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected item text color.
         /// </summary>
-        public Color? SelectedItemBackColor
+        public virtual Color? SelectedItemBackColor
         {
             get
             {
@@ -175,7 +359,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets item text color.
         /// </summary>
-        public Color? ItemTextColor
+        public virtual Color? ItemTextColor
         {
             get
             {
@@ -468,19 +652,37 @@ namespace Alternet.UI
             var isSelected = e.IsSelected;
             var isCurrent = e.IsCurrent;
 
+            var item = SafeItem(e.ItemIndex);
+
             if (Enabled)
             {
-                if (isSelected)
-                    dc.FillRectangle(GetSelectedItemBackColor(e.ItemIndex), rect);
-                else
+                dc.FillBorderRectangle(
+                    rect,
+                    item?.BackgroundColor?.AsBrush,
+                    item?.Border,
+                    true,
+                    this);
+
+                if (isSelected && selectionVisible)
                 {
-                    var itemBackColor = SafeItem(e.ItemIndex)?.BackgroundColor;
-                    if(itemBackColor is not null)
-                        dc.FillRectangle(itemBackColor, rect);
+                    dc.FillBorderRectangle(
+                        rect,
+                        GetSelectedItemBackColor(e.ItemIndex).AsBrush,
+                        selectionBorder,
+                        true,
+                        this);
                 }
 
-                if (isCurrent && Focused)
-                    dc.FillRectangleBorder(Color.Black, rect);
+                if (isCurrent && Focused && currentItemBorderVisible)
+                {
+                    var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
+                    border?.Draw(this, e.Graphics, rect);
+                }
+            }
+            else
+            {
+                var border = item?.Border?.ToGrayScale();
+                border?.Draw(this, e.Graphics, rect);
             }
         }
 
@@ -597,9 +799,9 @@ namespace Alternet.UI
             var (normalImage, disabledImage, selectedImage) = e.ItemImages;
             var image = Enabled ? (e.IsSelected ? selectedImage : normalImage) : disabledImage;
 
-            var s = e.ItemText;
+            var s = textVisible ? e.ItemText.Trim() : string.Empty;
 
-            if (image is not null)
+            if (image is not null && s != string.Empty)
                 s = $" {s}";
 
             e.Graphics.DrawLabel(
@@ -619,10 +821,15 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetSelectedItemTextColor(int itemIndex)
         {
-            if (Enabled)
-                return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
+            if (selectionVisible)
+            {
+                if (Enabled)
+                    return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
+                else
+                    return GetDisabledItemTextColor(itemIndex);
+            }
             else
-                return GetDisabledItemTextColor(itemIndex);
+                return GetItemTextColor(itemIndex);
         }
 
         /// <summary>
@@ -648,7 +855,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetSelectedItemBackColor(int itemIndex)
         {
-            if (Enabled)
+            if (Enabled && selectionVisible)
                 return selectedItemBackColor ?? DefaultSelectedItemBackColor;
             else
                 return RealBackgroundColor;

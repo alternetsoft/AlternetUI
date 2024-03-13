@@ -70,7 +70,7 @@ namespace Alternet.UI
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly ConcurrentQueue<(Action<object?>, object?)> IdleTasks = new();
-        private static Queue<(string Msg, LogItemKind Kind)>? logQueue;
+        private static ConcurrentQueue<(string Msg, LogItemKind Kind)>? logQueue;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
@@ -771,8 +771,8 @@ namespace Alternet.UI
             {
                 while (logQueue.Count > 0)
                 {
-                    var queueItem = logQueue.Dequeue();
-                    LogToEvent(queueItem.Kind, queueItem.Msg);
+                    if(logQueue.TryDequeue(out var queueItem))
+                        LogToEvent(queueItem.Kind, queueItem.Msg);
                 }
             }
 

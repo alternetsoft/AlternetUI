@@ -6,7 +6,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class VListBoxSampleWindow: Window
+    internal partial class VListBoxSamplePage: Control
     {
         private readonly VListBox listBox = new()
         {
@@ -14,18 +14,10 @@ namespace ControlsSample
             Margin = (0,0,0,5),
         };
 
-        private readonly ColorListBox colorListBox = new()
+        public VListBoxSamplePage()
         {
-            SuggestedWidth = 200,
-            Margin = (0, 0, 0, 5),
-        };
-
-        public VListBoxSampleWindow()
-        {
-            MinHeight = 500;
-
             InitializeComponent();
-            Title = "Virtual ListBox";
+            Title = "Virtual";
 
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
@@ -37,15 +29,32 @@ namespace ControlsSample
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
             listBox.HandleCreated += ListBox_HandleCreated;
-
-            colorListBox.Parent = tab2;
+            roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged; 
 
             SetSizeToContent();
         }
 
+        private void RoundSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (roundSelectionCheckBox.IsChecked)
+            {
+                BorderSettings border = new();
+                border.UniformRadiusIsPercent = true;
+                border.UniformCornerRadius = 50;
+
+                listBox.CurrentItemBorder = border;
+                listBox.SelectionBorder = border;
+            }
+            else
+            {
+                listBox.CurrentItemBorder = null;
+                listBox.SelectionBorder = null;
+            }
+        }
+
         private void ListBox_HandleCreated(object? sender, EventArgs e)
         {
-            Application.LogIf("VListBox.HandleCreated", true);
+            Application.LogIf("VListBox.HandleCreated", false);
         }
 
         private void FindText_TextChanged(object? sender, EventArgs e)
@@ -79,14 +88,16 @@ namespace ControlsSample
             MouseEventArgs e)
         {
             var result = listBox.HitTest(e.GetPosition(listBox));
-            var item = (result == null ? "<none>" : listBox.Items[result.Value]);
+            var item = (result == null ? "<none>" : listBox.GetItem(result.Value));
+
+            item ??= result;
 
             Application.Log($"HitTest result: Item: '{item}'");
         }
 
         private static string IndicesToStr(IReadOnlyList<int> indices)
         {
-            string result = indices.Count > 100 ?
+            string result = indices.Count > 50 ?
                 "too many indices to display" : string.Join(",", indices);
             return result;
         }

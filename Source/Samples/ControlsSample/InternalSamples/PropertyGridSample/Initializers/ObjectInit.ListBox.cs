@@ -11,6 +11,11 @@ namespace PropertyGridSample
     {
         public static void InitVListBox(object control)
         {
+            const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Large.";
+            string CalendarUrl = $"{ResPrefix}Calendar32.png";
+            string PencilUrl = $"{ResPrefix}Pencil32.png";
+            string PhotoUrl = $"{ResPrefix}Photo32.png";
+
             if (control is not VListBox listBox)
                 return;
 
@@ -22,22 +27,22 @@ namespace PropertyGridSample
 
             var firstIndex = 2;
 
-            var imageSize = 24; /* image sizes are always in pixels */
-            var item = listBox.SafeItem(firstIndex);
-            item!.Text = "Bold item at right";
-            item!.Alignment = GenericAlignment.CenterRight;
-            item!.FontStyle = FontStyle.Bold;
-            item!.MinHeight = listBox.PixelToDip(imageSize);
-            item!.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), imageSize).ImgBold.AsImage();
-            item!.SelectedImage =
-                KnownSvgImages.GetForSize(SystemColors.HighlightText, imageSize).ImgBold.AsImage();
-            item!.DisabledImage =
-                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), imageSize).ImgBold.AsImage();
+            var item = listBox.RequiredItem(0);
+            item.Alignment = GenericAlignment.Center;
+            item.Text = string.Empty;
+            item.Image = new Bitmap(PhotoUrl);
 
-            const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Large.";
-            string CalendarUrl = $"{ResPrefix}Calendar32.png";
-            string PencilUrl = $"{ResPrefix}Pencil32.png";
-            string PhotoUrl = $"{ResPrefix}Photo32.png";
+            var imageSize = 24; /* image sizes are always in pixels */
+            item = listBox.RequiredItem(firstIndex);
+            item.Text = "Bold item at right";
+            item.Alignment = GenericAlignment.CenterRight;
+            item.FontStyle = FontStyle.Bold;
+            item.MinHeight = listBox.PixelToDip(imageSize);
+            item.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), imageSize).ImgBold.AsImage();
+            item.SelectedImage =
+                KnownSvgImages.GetForSize(SystemColors.HighlightText, imageSize).ImgBold.AsImage();
+            item.DisabledImage =
+                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), imageSize).ImgBold.AsImage();
 
             item = listBox.RequiredItem(firstIndex + 1);
             item.Alignment = GenericAlignment.Center;
@@ -59,6 +64,14 @@ namespace PropertyGridSample
             item = listBox.RequiredItem(firstIndex + 3);
             item.FontStyle = FontStyle.Underline;
             item.Text = "Underlined item";
+
+            item = listBox.RequiredItem(firstIndex + 5);
+            item.Text = "Custom border";
+            item.Alignment = GenericAlignment.Center;
+            item.Border = new();
+            item.Border.Color = Color.Red;
+            item.Border.UniformCornerRadius = 50;
+            item.Border.UniformRadiusIsPercent = true;
 
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;

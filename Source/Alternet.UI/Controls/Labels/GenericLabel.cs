@@ -313,23 +313,34 @@ namespace Alternet.UI
                 rect.Location + Padding.LeftTop,
                 rect.Size - Padding.Size);
 
-            if (Text != null)
-            {
-                var image = StateObjects?.Images?.GetObjectOrNull(state);
-                image ??= Image;
-                var imageOverride = ImageVisible ? image : null;
-                var textOverride = GetFormattedText();
+            var labelImage = GetImage(state);
+            var labelText = GetFormattedText();
 
-                dc.DrawLabel(
-                    textOverride,
-                    font ?? GetLabelFont(state),
-                    foreColor ?? GetLabelForeColor(state),
-                    backColor ?? GetLabelBackColor(state),
-                    imageOverride,
-                    paddedRect,
-                    TextAlignment,
-                    GetMnemonicCharIndex());
-            }
+            if (labelImage is null && labelText == string.Empty)
+                return;
+
+            dc.DrawLabel(
+                labelText,
+                font ?? GetLabelFont(state),
+                foreColor ?? GetLabelForeColor(state),
+                backColor ?? GetLabelBackColor(state),
+                labelImage,
+                paddedRect,
+                TextAlignment,
+                GetMnemonicCharIndex());
+        }
+
+        /// <summary>
+        /// Gets image for the specified control state.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public virtual Image? GetImage(GenericControlState state = GenericControlState.Normal)
+        {
+            var image = StateObjects?.Images?.GetObjectOrNull(state);
+            image ??= Image;
+            var imageOverride = ImageVisible ? image : null;
+            return imageOverride;
         }
 
         /// <inheritdoc/>
@@ -350,8 +361,17 @@ namespace Alternet.UI
             var text = GetFormattedText();
             if (!string.IsNullOrEmpty(text))
             {
-                using var dc = CreateDrawingContext();
-                result = dc.GetTextExtent(text, GetLabelFont(GenericControlState.Normal), this);
+                result = MeasureCanvas.GetTextExtent(
+                    text,
+                    GetLabelFont(GenericControlState.Normal),
+                    this);
+            }
+
+            var image = GetImage();
+
+            if(image is not null)
+            {
+                result.Width += PixelToDip(image.Width);
             }
 
             if (!double.IsNaN(specifiedWidth))
@@ -424,7 +444,14 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual string GetFormattedText()
         {
-            var result = $"{TextPrefix}{Text}{TextSuffix}" ?? string.Empty;
+            var image = GetImage();
+            var prefix = TextPrefix;
+            var labelText = Text;
+
+            if (image is not null && prefix is null && !string.IsNullOrEmpty(labelText))
+                prefix = StringUtils.OneSpace;
+
+            var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
             if (textFormat is not null)
                 result = string.Format(textFormat, result);
             return result;

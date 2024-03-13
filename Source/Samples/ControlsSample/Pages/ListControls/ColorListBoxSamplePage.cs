@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Alternet.UI;
+using Alternet.Drawing;
+
+namespace ControlsSample
+{
+    internal class ColorListBoxSamplePage : Control
+    {
+        private readonly ColorListBox listBox = new()
+        {
+            SuggestedWidth = 200,
+        };
+
+        private readonly CheckBox textVisibleCheckBox = new("Text Visible")
+        {
+            IsChecked = true,
+        };
+
+        private readonly VerticalStackPanel panel = new()
+        {
+            MinChildMargin = 5,
+        };
+
+        private readonly Button setColorButton = new("Set Color")
+        {
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
+        private readonly ColorComboBox comboBox = new()
+        {
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
+        public ColorListBoxSamplePage()
+        {
+            Layout = LayoutStyle.Horizontal;
+            MinChildMargin = 10;
+            listBox.Parent = this;
+            panel.Parent = this;
+            comboBox.Value = Color.Red;
+            comboBox.Parent = panel;
+            textVisibleCheckBox.Parent = panel;
+            setColorButton.Parent = panel;
+            setColorButton.Click += SetColorButton_Click;
+            textVisibleCheckBox.BindBoolProp(listBox, nameof(VListBox.TextVisible));
+            comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged;
+        }
+
+        private void ComboBox_SelectedItemChanged(object sender, EventArgs e)
+        {
+            listBox.Value = comboBox.Value;
+        }
+
+        private void SetColorButton_Click(object sender, EventArgs e)
+        {
+            if(listBox.Value == Color.Red)
+            {
+                listBox.Value = Color.Green;
+                comboBox.Value = Color.Green;
+            }
+            else
+            {
+                listBox.Value = Color.Red;
+                comboBox.Value = Color.Red;
+            }
+        }
+    }
+}

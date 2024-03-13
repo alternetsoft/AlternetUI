@@ -16,28 +16,24 @@ namespace PropertyGridSample
             label.Text = "GenericLabel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.ForegroundColor = Color.Sienna;
-            label.TextBackColor = Color.Aqua;
             label.MnemonicCharIndex = 3;
             label.ImageVisible = true;
             label.TextAlignment = GenericAlignment.Center;
-            label.IsBold = true;
             label.Image = DefaultImage;
             label.DisabledImage = DefaultImage.ToGrayScale();
             label.SuggestedSize = (300, 300);
-            label.TextPrefix = " ";
-            label.TextSuffix = " ";
 
             label.Borders ??= new();
             var border = BorderSettings.Default.Clone();
             border.UniformCornerRadius = 15;
             border.UniformRadiusIsPercent = true;
             var doubleBorder = border.Clone();
-            doubleBorder.Width = 10;
+            doubleBorder.Width = 2;
 
             label.Borders.SetAll(border);
             label.Borders.SetObject(doubleBorder, GenericControlState.Hovered);
 
-            var colors = new FontAndColor(Color.Red, Color.Yellow, Control.DefaultFont.AsUnderlined);
+            var colors = new FontAndColor(Color.Black, null, Control.DefaultFont.AsBold);
 
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();

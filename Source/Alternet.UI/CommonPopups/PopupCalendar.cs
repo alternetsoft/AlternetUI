@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="Calendar"/> control.
     /// </summary>
-    public class PopupCalendar : PopupWindow
+    public class PopupCalendar : PopupWindow<Calendar>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCalendar"/> class.
@@ -25,18 +25,8 @@ namespace Alternet.UI
             MainControl.BackgroundColor = SystemColors.Window;
         }
 
-        /// <summary>
-        /// Gets or sets <see cref="Calendar"/> control used in the popup window.
-        /// </summary>
-        [Browsable(false)]
-        public new Calendar MainControl
-        {
-            get => (Calendar)base.MainControl;
-            set => base.MainControl = value;
-        }
-
         /// <inheritdoc/>
-        protected override Control CreateMainControl()
+        protected override Calendar CreateMainControl()
         {
             return new Calendar()
             {

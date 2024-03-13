@@ -21,6 +21,11 @@ namespace Alternet.UI
         /// </summary>
         public static readonly BorderSettings Default = new();
 
+        /// <summary>
+        /// Temporary border used for calculations.
+        /// </summary>
+        public static readonly BorderSettings Temp = new();
+
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
         private readonly BorderSideSettings right = new();
@@ -414,7 +419,7 @@ namespace Alternet.UI
         /// <param name="control">Control in which drawing is performed.</param>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public virtual void Draw(Control control, Graphics dc, RectD rect)
+        public virtual void Draw(Control? control, Graphics dc, RectD rect)
         {
             Paint?.Invoke(this, new PaintEventArgs(dc, rect));
 
@@ -433,25 +438,35 @@ namespace Alternet.UI
                 return;
             }
 
-            if (Top.Width > 0)
+            if (Top.Width > 0 && ColorIsOk(Top.Color))
             {
                 dc.FillRectangle(Top.GetBrush(defaultColor), GetTopRectangle(rect));
             }
 
-            if (Bottom.Width > 0)
+            if (Bottom.Width > 0 && ColorIsOk(Bottom.Color))
             {
                 dc.FillRectangle(Bottom.GetBrush(defaultColor), GetBottomRectangle(rect));
             }
 
-            if (Left.Width > 0)
+            if (Left.Width > 0 && ColorIsOk(Left.Color))
             {
                 dc.FillRectangle(Left.GetBrush(defaultColor), GetLeftRectangle(rect));
             }
 
-            if (Right.Width > 0)
+            if (Right.Width > 0 && ColorIsOk(Right.Color))
             {
                 dc.FillRectangle(Right.GetBrush(defaultColor), GetRightRectangle(rect));
             }
+        }
+
+        /// <summary>
+        /// Gets whether color is ok for painting the border.
+        /// </summary>
+        /// <param name="color">Color to check.</param>
+        /// <returns></returns>
+        public virtual bool ColorIsOk(Color color)
+        {
+            return color.IsOk && color != Color.Transparent && !color.IsEmpty;
         }
 
         /// <summary>
@@ -493,9 +508,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets this border with all valid side colors set to the specified value.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Border side color is changed only if <see cref="ColorIsOk"/> returns <c>true</c>
+        /// for this color.
+        /// </remarks>
+        public virtual BorderSettings ToColor(Color value)
+        {
+            var result = Clone();
+            var leftColor = ColorIsOk(Left.Color) ? value : Left.Color;
+            var topColor = ColorIsOk(Top.Color) ? value : Top.Color;
+            var rightColor = ColorIsOk(Right.Color) ? value : Right.Color;
+            var bottomColor = ColorIsOk(Bottom.Color) ? value : Bottom.Color;
+            result.SetColors(leftColor, topColor, rightColor, bottomColor);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets this border with all colors set to <see cref="SystemColors.GrayText"/>
+        /// </summary>
+        /// <returns></returns>
+        public virtual BorderSettings ToGrayScale()
+        {
+            var result = ToColor(SystemColors.GrayText);
+            return result;
+        }
+
+        /// <summary>
         /// Creates clone of the <see cref="BorderSettings"/>
         /// </summary>
-        public BorderSettings Clone()
+        public virtual BorderSettings Clone()
         {
             BorderSettings result = new();
             result.Assign(this);

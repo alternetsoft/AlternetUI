@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="PropertyGrid"/> control.
     /// </summary>
-    public class PopupPropertyGrid : PopupWindow
+    public class PopupPropertyGrid : PopupWindow<PropertyGrid>
     {
         static PopupPropertyGrid()
         {
@@ -30,22 +30,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="ListBox"/> control used in the popup window.
-        /// </summary>
-        [Browsable(false)]
-        public new PropertyGrid MainControl
-        {
-            get => (PropertyGrid)base.MainControl;
-            set => base.MainControl = value;
-        }
-
-        /// <summary>
         /// Creates properties popup window.
         /// </summary>
         /// <remarks>
         /// In order to use properties popup window you can call <see cref="PropertyGrid.SetProps"/>
-        /// for the <see cref="PopupPropertyGrid.MainControl"/> and show the popup with call
-        /// to <see cref="PopupWindow.ShowPopup(Control)"/>. Thats it!
+        /// for the <see cref="PopupWindow{T}.MainControl"/> and show the popup with call
+        /// to <see cref="PopupWindow{T}.ShowPopup(Control)"/>. Thats it!
         /// </remarks>
         /// <returns></returns>
         public static PopupPropertyGrid CreatePropertiesPopup()
@@ -83,7 +73,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Control CreateMainControl()
+        protected override PropertyGrid CreateMainControl()
         {
             return new PropertyGrid()
             {

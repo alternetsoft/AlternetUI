@@ -48,11 +48,49 @@ namespace Alternet.UI
         /// Gets or sets state of the check box associated with the item.
         /// </summary>
         /// <remarks>
-        /// It is up to control to decide whether and how checkboxes are painted.
+        /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
         public virtual CheckState CheckState { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether checkbox will
+        /// allow three check states rather than two. If property is null (default),
+        /// control's setting is used.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the checkbox is able to display
+        /// three check states; <see langword="false" /> if not; <c>null</c> if control's setting
+        /// is used.
+        /// </returns>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [DefaultValue(false)]
+        public virtual bool? CheckBoxThreeState { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether user can set the checkbox to
+        /// the third state by clicking. If property is null (default),
+        /// control's setting is used.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// </remarks>
+        [DefaultValue(false)]
+        public virtual bool? CheckBoxAllowAllStatesForUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to show check box inside the item. This property (if specified)
+        /// overrides global checkboxes visibility setting in the control.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        public virtual bool? CheckBoxVisible { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="Image"/> associated with the item.
@@ -131,6 +169,16 @@ namespace Alternet.UI
         public virtual Color? BackgroundColor { get; set; }
 
         /// <summary>
+        /// Gets or sets border of the item.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual BorderSettings? Border { get; set; }
+
+        /// <summary>
         /// Gets or sets alignment of the item.
         /// </summary>
         /// <remarks>
@@ -138,7 +186,8 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual GenericAlignment Alignment { get; set; } = GenericAlignment.CenterVertical | GenericAlignment.Left;
+        public virtual GenericAlignment Alignment { get; set; }
+            = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
         /// <summary>
         /// Gets or sets text which is displayed in the <see cref="ListControl"/>.

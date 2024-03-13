@@ -23,6 +23,18 @@ namespace ControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        private readonly Button showPopupColorListBoxButton = new()
+        {
+            Text = "Show Popup ColorListBox",
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
+        private readonly Button showPopupVListBoxButton = new()
+        {
+            Text = "Show Popup Virtual ListBox",
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
+
         private readonly Button showPopupCheckListBoxButton = new()
         {
             Text = "Show Popup CheckListBox",
@@ -37,6 +49,8 @@ namespace ControlsSample
 
         private readonly PopupListBox popupListBox = new();
         private readonly PopupCheckListBox popupCheckListBox = new();
+        private readonly PopupColorListBox popupColorListBox = new();
+        private readonly PopupListBox<VListBox> popupVListBox = new();
 
         static ListControlsPopups()
         {
@@ -48,18 +62,24 @@ namespace ControlsSample
             Padding = 5;
             panel.Parent = this;
 
-            showPopupListBoxButton.Parent = panel;
-            showPopupCheckListBoxButton.Parent = panel;
-            modalPopupsCheckBox.Parent = panel;
-            modalPopupsCheckBox.BindBoolProp(this, nameof(ModalPopups));
+            Group(
+                showPopupVListBoxButton,
+                showPopupListBoxButton,
+                showPopupCheckListBoxButton,
+                showPopupColorListBoxButton,
+                modalPopupsCheckBox).Parent(panel).SuggestedWidthToMax().Margin(10);
 
-            panel.ChildrenSet.Margin(10);
+            modalPopupsCheckBox.BindBoolProp(this, nameof(ModalPopups));
 
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
             showPopupCheckListBoxButton.Click += ShowPopupCheckListBoxButton_Click;
+            showPopupVListBoxButton.Click += ShowPopupVListBoxButton_Click;
+            showPopupColorListBoxButton.Click += ShowPopupColorListBoxButton_Click;
 
             popupListBox.AfterHide += PopupListBox_AfterHide;
             popupCheckListBox.AfterHide += PopupCheckListBox_AfterHide;
+            popupVListBox.AfterHide += PopupVListBox_AfterHide;
+            popupColorListBox.AfterHide+= PopupColorListBox_AfterHide;
 
             // These events are handled only for logging purposes.
             // They are normally not needed in order to work with popup windows
@@ -68,9 +88,6 @@ namespace ControlsSample
             popupListBox.MainControl.SelectionChanged += PopupListBox_SelectionChanged;
             popupListBox.MainControl.Click += PopupListBox_Click;
             popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
-
-            Group(showPopupListBoxButton, showPopupCheckListBoxButton).SuggestedWidthToMax();
-
         }
 
         public bool ModalPopups
@@ -97,6 +114,18 @@ namespace ControlsSample
         {
             var resultItem = popupListBox.ResultItem ?? "<null>";
             Application.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
+        }
+
+        private void PopupVListBox_AfterHide(object? sender, EventArgs e)
+        {
+            var resultItem = popupVListBox.ResultItem ?? "<null>";
+            Application.Log($"AfterHide PopupResult: {popupVListBox.PopupResult}, Item: {resultItem}");
+        }
+
+        private void PopupColorListBox_AfterHide(object? sender, EventArgs e)
+        {
+            var resultItem = popupColorListBox.ResultValue?.ToString() ?? "<null>";
+            Application.Log($"AfterHide PopupResult: {popupColorListBox.PopupResult}, Item: {resultItem}");
         }
 
         internal void LogPopupListBoxEvent(string eventName)
@@ -164,6 +193,23 @@ namespace ControlsSample
                 popupListBox.MainControl.SelectFirstItem();
             }
             popupListBox.ShowPopup(showPopupListBoxButton);
+        }
+
+        private void ShowPopupVListBoxButton_Click(object? sender, EventArgs e)
+        {
+            if (popupVListBox.MainControl.Items.Count == 0)
+            {
+                PropertyGridSample.ObjectInit.InitVListBox(popupVListBox.MainControl);
+                popupVListBox.MainControl.SelectFirstItem();
+            }
+            popupVListBox.ShowPopup(showPopupVListBoxButton);
+        }
+
+        private void ShowPopupColorListBoxButton_Click(object? sender, EventArgs e)
+        {
+            if(popupColorListBox.MainControl.SelectedItem is null)
+                popupColorListBox.MainControl.SelectFirstItem();
+            popupColorListBox.ShowPopup(showPopupColorListBoxButton);
         }
 
         private void ShowPopupCheckListBoxButton_Click(object? sender, EventArgs e)
