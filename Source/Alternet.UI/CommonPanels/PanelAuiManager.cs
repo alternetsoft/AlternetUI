@@ -289,7 +289,6 @@ namespace Alternet.UI
                 toolbar ??= new()
                 {
                     CreateStyle = DefaultToolbarStyle,
-                    /*ToolBitmapSizeInPixels = GetToolBitmapSize(),*/
                 };
 
                 return toolbar;
