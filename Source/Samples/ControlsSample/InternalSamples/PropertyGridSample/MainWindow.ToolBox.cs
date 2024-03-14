@@ -14,7 +14,7 @@ namespace PropertyGridSample
     {
         private T? GetSelectedControl<T>()
         {
-            if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
+            if (ToolBox.SelectedItem is not ControlListBoxItem item)
                 return default;
             if (item.Instance is T control)
                 return control;
@@ -42,7 +42,7 @@ namespace PropertyGridSample
                 {
                     Text = "Welcome Page",
                 };
-                panel.LeftTreeView.Add(item);
+                ToolBox.Add(item);
 
                 Type[] limitedTypes =
                 {
@@ -116,7 +116,7 @@ namespace PropertyGridSample
                 items.Sort();
 
                 foreach (var elem in items)
-                    panel.LeftTreeView.Add(elem);
+                    ToolBox.Add(elem);
 
                 item = new(typeof(SettingsControl))
                 {
@@ -124,15 +124,15 @@ namespace PropertyGridSample
                     EventInstance = new object(),
                     Text = "Demo Options",
                 };
-                panel.LeftTreeView.Add(item);
+                ToolBox.Add(item);
             }
 
-            panel.LeftTreeView.DoInsideUpdate(() => { Fn(); });
+            ToolBox.DoInsideUpdate(() => { Fn(); });
         }
 
         internal void AddMainWindow()
         {
-            panel.LeftTreeView.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
+            ToolBox.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
         }
 
         private ControlListBoxItem CreateDialogItem<T>()
@@ -166,7 +166,7 @@ namespace PropertyGridSample
                 PropInstance = menu,
                 EventInstance = new object(),
             };
-            panel.LeftTreeView.Add(item);
+            ToolBox.Add(item);
         }
 
         private void ApplicationIdle(object? sender, EventArgs e)
