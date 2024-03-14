@@ -54,6 +54,10 @@ namespace Alternet.UI
         private ImageSet? image;
         private ImageSet? disabledImage;
 
+        static MenuItem()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
         /// </summary>
