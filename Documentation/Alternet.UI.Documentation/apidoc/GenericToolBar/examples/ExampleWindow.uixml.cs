@@ -10,35 +10,38 @@ namespace Alternet.UI.Documentation.Examples
         {
             InitializeComponent();
             Padding = 5;
-            VerticalStackPanel mainPanel = new();
-            mainPanel.Parent = this;
+            VerticalStackPanel mainPanel = new()
+            {
+                Parent = this,
+            };
             var control = InitGenericToolBar();
             control.Parent = mainPanel;
-            LogListBox listBox = new();
-            listBox.HasBorder = false;
-            listBox.VerticalAlignment = VerticalAlignment.Fill;
-            listBox.Parent = mainPanel;
+            LogListBox listBox = new()
+            {
+                HasBorder = false,
+                VerticalAlignment = VerticalAlignment.Fill,
+                Parent = mainPanel,
+            };
             listBox.BindApplicationLog();
         }
 
         #region CSharpCreation
         public static GenericToolBar InitGenericToolBar()
         {
-            GenericToolBar toolbar = new();
-
-            toolbar.Margin = (0, 0, 0, 4);
+            GenericToolBar toolbar = new()
+            {
+                Margin = (0, 0, 0, 4),
+            };
 
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
-                toolbar.GetNormalSvgImages().ImgFileNew,
-                toolbar.GetDisabledSvgImages().ImgFileNew);
+                KnownSvgImages.ImgFileNew);
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
             var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
-                toolbar.GetNormalSvgImages().ImgFileOpen,
-                toolbar.GetDisabledSvgImages().ImgFileOpen);
+                KnownSvgImages.ImgFileOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
@@ -53,8 +56,7 @@ namespace Alternet.UI.Documentation.Examples
 
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                toolbar.GetNormalSvgImages().ImgFileSave,
-                toolbar.GetDisabledSvgImages().ImgFileSave);
+                KnownSvgImages.ImgFileSave);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
@@ -62,15 +64,16 @@ namespace Alternet.UI.Documentation.Examples
             var idText = toolbar.AddText("text");
             toolbar.AddToolAction(idText, ButtonClick);
 
-            var textBox = new TextBox();
-            textBox.VerticalAlignment = VerticalAlignment.Center;
-            textBox.SuggestedWidth = 300;
+            var textBox = new TextBox
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                SuggestedWidth = 300,
+            };
 
             var idEdit = toolbar.AddControl(textBox);
 
             var itemPicture = toolbar.AddPicture(
-                toolbar.GetNormalSvgImages().ImgMessageBoxWarning,
-                toolbar.GetDisabledSvgImages().ImgMessageBoxWarning,
+                KnownSvgImages.ImgMessageBoxWarning,
                 "Picture");
             toolbar.AddToolAction(itemPicture, ButtonClick);
             toolbar.SetToolAlignRight(itemPicture, true);

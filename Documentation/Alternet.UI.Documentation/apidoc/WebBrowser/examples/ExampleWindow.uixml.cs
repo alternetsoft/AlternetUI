@@ -19,8 +19,6 @@ namespace Alternet.UI.Documentation.Examples.WebBrowser
             #endregion
         }
 
-        private static string? headerText;    
-
         private bool historyCleared = false;
         private bool pandaLoaded = false;
         private void FindClearButton_Click(object sender, EventArgs e)

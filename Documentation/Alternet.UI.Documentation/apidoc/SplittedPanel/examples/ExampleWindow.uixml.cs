@@ -32,8 +32,10 @@ namespace Alternet.UI.Documentation.Examples
             };
             RightLabel.Add("Right");
 
-            GenericToolBar toolbar = new();
-            toolbar.Parent = panel.TopPanel;
+            GenericToolBar toolbar = new()
+            {
+                Parent = panel.TopPanel,
+            };
             InitGenericToolBar(toolbar);
             panel.TopSplitter.Visible = false;
             panel.TopPanel.Height = toolbar.ItemSize + 6;
@@ -69,15 +71,13 @@ namespace Alternet.UI.Documentation.Examples
 
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
-                toolbar.GetNormalSvgImages().ImgFileNew,
-                toolbar.GetDisabledSvgImages().ImgFileNew);
+                KnownSvgImages.ImgFileNew);
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
             var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
-                toolbar.GetNormalSvgImages().ImgFileOpen,
-                toolbar.GetDisabledSvgImages().ImgFileOpen);
+                KnownSvgImages.ImgFileOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
@@ -92,8 +92,7 @@ namespace Alternet.UI.Documentation.Examples
 
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                toolbar.GetNormalSvgImages().ImgFileSave,
-                toolbar.GetDisabledSvgImages().ImgFileSave);
+                KnownSvgImages.ImgFileSave);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
@@ -101,15 +100,16 @@ namespace Alternet.UI.Documentation.Examples
             var idText = toolbar.AddText("text");
             toolbar.AddToolAction(idText, ButtonClick);
 
-            var textBox = new TextBox();
-            textBox.VerticalAlignment = VerticalAlignment.Center;
-            textBox.SuggestedWidth = 100;
+            var textBox = new TextBox
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                SuggestedWidth = 100
+            };
 
             var idEdit = toolbar.AddControl(textBox);
 
             var itemPicture = toolbar.AddPicture(
-                toolbar.GetNormalSvgImages().ImgMessageBoxWarning,
-                toolbar.GetDisabledSvgImages().ImgMessageBoxWarning,
+                KnownSvgImages.ImgMessageBoxWarning,
                 "Picture");
             toolbar.AddToolAction(itemPicture, ButtonClick);
             toolbar.SetToolAlignRight(itemPicture, true);

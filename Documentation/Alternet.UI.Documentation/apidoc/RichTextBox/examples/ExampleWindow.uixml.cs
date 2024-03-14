@@ -54,9 +54,7 @@ namespace Alternet.UI.Documentation.Examples
 
             r.WriteText("What can you do with this thing? ");
 
-            r.WriteImage(KnownSvgImages.GetForSize(
-                r.GetSvgColor(KnownSvgColor.Normal),
-                24).ImgMessageBoxInformation.AsImage(24));
+            r.WriteImageAsNormal(KnownSvgImages.ImgMessageBoxInformation, 24);
 
             r.WriteText(" Well, you can change text ");
 
@@ -240,8 +238,8 @@ namespace Alternet.UI.Documentation.Examples
                 MinimumSize = (200, 50),
                 Dock = DockStyle.Bottom,
                 Parent = mainPanel,
+                Text = "Bottom",
             };
-            result.Text = "Bottom";
             #endregion
 
             return result;

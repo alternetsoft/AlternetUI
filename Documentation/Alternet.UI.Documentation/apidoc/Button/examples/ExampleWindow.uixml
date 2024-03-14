@@ -6,7 +6,7 @@
     <Button Name="executeButton" Text="Execute" Click="ExecuteButton_Click"/>
     <!-- </CreateUixmlDeclaration> -->
 
-    <Button Text="Execute" Margin="20, 20, 250, 0" Click="ExecuteButton_Click"/>
+    <Button Text="Execute" Margin="20, 20, 250, 0" Click="ExecuteButton_Click" Name="executeButton2"/>
 
   </StackPanel>
 </Window>
