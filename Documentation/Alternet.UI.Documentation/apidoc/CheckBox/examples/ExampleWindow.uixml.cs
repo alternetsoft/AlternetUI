@@ -8,12 +8,21 @@ namespace Alternet.UI.Documentation.Examples.CheckBox
        public MainWindow()
         {
             InitializeComponent();
+            comboBox.Add("One");
+            comboBox.Add("Two");
+            comboBox.Add("Three");
+            comboBox.SelectFirstItem();
         }
 
-        public void CheckBoxExample1()
+        public static UI.CheckBox CheckBoxExample1()
         {
             #region CheckBoxCSharpCreation
-            var checkBox = new Alternet.UI.CheckBox() { Text = "Option 1.1", Margin = new Thickness(0, 0, 0, 5) };
+            var checkBox = new Alternet.UI.CheckBox()
+            {
+                Text = "Option 1.1",
+                Margin = new Thickness(0, 0, 0, 5),
+            };
+            return checkBox;
             #endregion
         }
 
@@ -22,7 +31,6 @@ namespace Alternet.UI.Documentation.Examples.CheckBox
         {
             comboBox.IsEditable = allowTextEditingCheckBox.IsChecked;
         }
-
         #endregion    
     }
 }

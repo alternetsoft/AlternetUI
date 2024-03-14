@@ -3,7 +3,7 @@
         x:Class="Alternet.UI.Documentation.Examples.WebBrowser.MainWindow"
         Title="WebBrowser" Width="800" Height="700">
 
-  <VerticalStackPanel Margin="5,5,5,5" AllowStretch="true">
+  <VerticalStackPanel Margin="5,5,5,5">
     <Label  Grid.Row="0" Grid.Column="0"
       Text="Web Browser Control" Margin="0,0,5,0" VerticalAlignment="Center" Name="HeaderLabel"/>
 
@@ -28,7 +28,7 @@
     <!-- <CreateUixmlDeclaration> -->
     <WebBrowser
           Name="WebBrowser1"
-          VerticalAlignment="Stretch"
+          VerticalAlignment="Fill"
           Navigated="WebBrowser1_Navigated"
           Loaded="WebBrowser1_Loaded"
           NewWindow="WebBrowser1_NewWindow"

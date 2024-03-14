@@ -59,7 +59,10 @@ namespace Alternet.UI.Documentation.Examples.WebBrowser
                 pandaLoaded = true;
                 WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
 
-                WebBrowser1.LoadURL("https://www.google.com/");
+                Application.AddIdleTask(() =>
+                {
+                    WebBrowser1.LoadURL("https://www.google.com/");
+                });
             }
         }
 

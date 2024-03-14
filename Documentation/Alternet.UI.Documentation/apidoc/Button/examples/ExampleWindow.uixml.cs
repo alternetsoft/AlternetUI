@@ -13,8 +13,11 @@ namespace Alternet.UI.Documentation.Examples
         public void ButtonExample1()
         {
             #region ButtonCSharpCreation
-            var button = new Button();
-            button.Text = "Hello, world!";
+            var button = new Button
+            {
+                Text = "Hello, world!",
+                HorizontalAlignment = HorizontalAlignment.Left,
+            };
             button.Click += ExecuteButton_Click;
             #endregion
         }
