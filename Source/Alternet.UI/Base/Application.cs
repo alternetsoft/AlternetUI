@@ -66,6 +66,17 @@ namespace Alternet.UI
         /// </summary>
         public static readonly OperatingSystems BackendOS;
 
+        /// <summary>
+        /// Gets or sets application exit code used when application terminates
+        /// due to unhandled exception.
+        /// </summary>
+        public static int ThreadExceptionExitCode = 0;
+
+        /// <summary>
+        /// Gets or sets whether to log unhandled thread exception.
+        /// </summary>
+        public static bool LogUnhandledThreadException = true;
+
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
@@ -77,11 +88,15 @@ namespace Alternet.UI
         private static IconSet? icon;
         private static int logUpdateCount;
 
+        private static UnhandledExceptionMode unhandledExceptionMode
+            = UnhandledExceptionMode.CatchException;
+
+        private static UnhandledExceptionMode unhandledExceptionModeDebug
+            = UnhandledExceptionMode.ThrowException;
+
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
-
-        private UnhandledExceptionMode unhandledExceptionMode;
         private volatile bool isDisposed;
         private Native.Application nativeApplication;
         private VisualTheme visualTheme = StockVisualThemes.Native;
@@ -220,6 +235,19 @@ namespace Alternet.UI
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static bool DebugWriteLine { get; set; } = false;
+
+        /// <summary>
+        /// Gets how the application responds to unhandled exceptions.
+        /// Use <see cref="SetUnhandledExceptionMode"/> to change this property.
+        /// </summary>
+        public static UnhandledExceptionMode UnhandledExceptionMode => unhandledExceptionMode;
+
+        /// <summary>
+        /// Gets how the application responds to unhandled exceptions (if debugger is attached).
+        /// Use <see cref="SetUnhandledExceptionModeIfDebugger"/> to change this property.
+        /// </summary>
+        public static UnhandledExceptionMode UnhandledExceptionModeIfDebugger
+            => unhandledExceptionModeDebug;
 
         /// <summary>
         /// Gets or sets default icon for the application.
@@ -898,31 +926,31 @@ namespace Alternet.UI
         /// <summary>
         /// Begins log section.
         /// </summary>
-        public static void LogBeginSection(string? title = null)
+        public static void LogBeginSection(string? title = null, LogItemKind kind = LogItemKind.Information)
         {
-            Log(LogUtils.SectionSeparator);
+            Log(LogUtils.SectionSeparator, kind);
 
             if (title is not null)
             {
-                Log(title);
-                Log(LogUtils.SectionSeparator);
+                Log(title, kind);
+                Log(LogUtils.SectionSeparator, kind);
             }
         }
 
         /// <summary>
         /// Logs separator.
         /// </summary>
-        public static void LogSeparator()
+        public static void LogSeparator(LogItemKind kind = LogItemKind.Information)
         {
-            Log(LogUtils.SectionSeparator);
+            Log(LogUtils.SectionSeparator, kind);
         }
 
         /// <summary>
         /// Ends log section.
         /// </summary>
-        public static void LogEndSection()
+        public static void LogEndSection(LogItemKind kind = LogItemKind.Information)
         {
-            Log(LogUtils.SectionSeparator);
+            Log(LogUtils.SectionSeparator, kind);
         }
 
         /// <summary>
@@ -938,12 +966,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Message text.</param>
         /// <param name="prefix">Message text prefix.</param>
+        /// <param name="kind">Message kind.</param>
         /// <remarks>
         /// If last logged message
         /// contains <paramref name="prefix"/>, last log item is replaced with
         /// <paramref name="obj"/> instead of adding new log item.
         /// </remarks>
-        public static void LogReplace(object? obj, string? prefix = null)
+        public static void LogReplace(
+            object? obj,
+            string? prefix = null,
+            LogItemKind kind = LogItemKind.Information)
         {
             var msg = obj?.ToString();
             if (msg is null || msg.Length == 0)
@@ -952,7 +984,11 @@ namespace Alternet.UI
             if (DebugWriteLine)
                 Debug.WriteLine(msg);
             prefix ??= msg;
-            LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
+
+            var args = new LogMessageEventArgs(msg, prefix, true);
+            args.Kind = kind;
+
+            LogMessage?.Invoke(Current, args);
         }
 
         /// <summary>Processes all messages currently in the message queue.</summary>
@@ -991,12 +1027,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions in debug mode.
+        /// </summary>
+        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
+        {
+            unhandledExceptionModeDebug = mode;
+        }
+
+        /// <summary>
         /// Informs all message pumps that they must terminate, and then closes
         /// all application windows after the messages have been processed.
         /// </summary>
         public virtual void Exit()
         {
             nativeApplication.Exit();
+        }
+
+        /// <summary>
+        /// Calls <see cref="Exit"/> and after that terminates this process and returns an
+        /// exit code to the operating system.
+        /// </summary>
+        /// <param name="exitCode">
+        /// The exit code to return to the operating system. Use 0 (zero) to indicate that
+        /// the process completed successfully.
+        /// </param>
+        public virtual void ExitAndTerminate(int exitCode = 0)
+        {
+            Exit();
+            Environment.Exit(exitCode);
         }
 
         /// <summary>
@@ -1018,8 +1079,20 @@ namespace Alternet.UI
                 CheckDisposed();
                 window.Show();
 
-                nativeApplication.Run(
-                    ((WindowHandler)window.Handler).NativeControl);
+                while (true)
+                {
+                    try
+                    {
+                        nativeApplication.Run(
+                            ((WindowHandler)window.Handler).NativeControl);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        OnThreadException(e);
+                    }
+                }
+
                 SynchronizationContext.Uninstall();
                 this.window = null;
             }
@@ -1092,16 +1165,18 @@ namespace Alternet.UI
             inOnThreadException = true;
             try
             {
-                if (unhandledExceptionMode ==
-                    UnhandledExceptionMode.ThrowException
-                    || System.Diagnostics.Debugger.IsAttached)
+                if(LogUnhandledThreadException)
+                {
+                    LogUtils.LogException(exception);
+                }
+
+                if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
                     throw exception;
 
                 if (ThreadException is not null)
                 {
-                    ThreadException(
-                        Thread.CurrentThread,
-                        new ThreadExceptionEventArgs(exception));
+                    var args = new ThreadExceptionEventArgs(exception);
+                    ThreadException(Thread.CurrentThread, args);
                 }
                 else
                 {
@@ -1119,8 +1194,7 @@ namespace Alternet.UI
 
                     if (result == ModalResult.Canceled)
                     {
-                        Exit();
-                        Environment.Exit(0);
+                        ExitAndTerminate(ThreadExceptionExitCode);
                     }
                 }
             }
@@ -1150,6 +1224,18 @@ namespace Alternet.UI
         internal void BeginInvoke(Action action)
         {
             nativeApplication.BeginInvoke(action);
+        }
+
+        /// <summary>
+        /// Gets current unhandled exception mode.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual UnhandledExceptionMode GetUnhandledExceptionMode()
+        {
+            if (Application.IsDebuggerAttached)
+                return unhandledExceptionModeDebug;
+            else
+                return unhandledExceptionMode;
         }
 
         /// <summary>
@@ -1237,7 +1323,7 @@ namespace Alternet.UI
         [return: MaybeNull]
         private T HandleThreadExceptionsCore<T>(Func<T> func)
         {
-            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
                 return func();
 
             try
@@ -1253,7 +1339,7 @@ namespace Alternet.UI
 
         private void HandleThreadExceptionsCore(Action action)
         {
-            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
             {
                 action();
                 return;
@@ -1271,7 +1357,7 @@ namespace Alternet.UI
 
         private void NativeApplication_Idle()
         {
-            if(HasForms)
+            if (HasForms)
             {
                 ProcessLogQueue(true);
                 ProcessIdleTasks();
