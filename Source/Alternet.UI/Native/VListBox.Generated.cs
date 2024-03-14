@@ -127,6 +127,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.RectI GetItemRectI(int index)
+        {
+            CheckDisposed();
+            return NativeApi.VListBox_GetItemRectI_(NativePointer, index);
+        }
+        
         public bool ScrollRows(int rows)
         {
             CheckDisposed();
@@ -374,6 +380,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void VListBox_SetSelectionMode_(IntPtr obj, ListBoxSelectionMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectI VListBox_GetItemRectI_(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool VListBox_ScrollRows_(IntPtr obj, int rows);

@@ -29,9 +29,16 @@ namespace ControlsSample
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
             listBox.HandleCreated += ListBox_HandleCreated;
-            roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged; 
-
+            roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged;
+            showCheckBoxesCheckBox.CheckedChanged += ShowCheckBoxesCheckBox_CheckedChanged;
+            threeStateCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckBoxThreeState));
+            allowAllStatesCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckBoxAllowAllStatesForUser));
             SetSizeToContent();
+        }
+
+        private void ShowCheckBoxesCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            listBox.CheckBoxVisible = showCheckBoxesCheckBox.IsChecked;
         }
 
         private void RoundSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -39,8 +46,8 @@ namespace ControlsSample
             if (roundSelectionCheckBox.IsChecked)
             {
                 BorderSettings border = new();
-                border.UniformRadiusIsPercent = true;
-                border.UniformCornerRadius = 50;
+                border.UniformRadiusIsPercent = false;
+                border.UniformCornerRadius = 10;
 
                 listBox.CurrentItemBorder = border;
                 listBox.SelectionBorder = border;

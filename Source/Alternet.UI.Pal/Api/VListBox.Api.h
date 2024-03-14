@@ -74,6 +74,11 @@ ALTERNET_UI_API void VListBox_SetSelectionMode_(VListBox* obj, ListBoxSelectionM
     obj->SetSelectionMode(value);
 }
 
+ALTERNET_UI_API RectI_C VListBox_GetItemRectI_(VListBox* obj, int index)
+{
+    return obj->GetItemRectI(index);
+}
+
 ALTERNET_UI_API c_bool VListBox_ScrollRows_(VListBox* obj, int rows)
 {
     return obj->ScrollRows(rows);

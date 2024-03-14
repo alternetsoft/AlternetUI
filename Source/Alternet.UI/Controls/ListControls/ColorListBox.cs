@@ -147,7 +147,7 @@ namespace Alternet.UI
 
                 if (sender.TextVisible)
                 {
-                    var (colorRect, itemRect) = sender.GetItemImageRect(e);
+                    var (colorRect, itemRect) = sender.GetItemImageRect(e.ClipRectangle);
                     e.ClipRectangle = itemRect;
                     sender.DefaultDrawItem(e);
                     ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);

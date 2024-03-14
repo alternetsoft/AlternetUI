@@ -47,6 +47,7 @@ namespace PropertyGridSample
             item = listBox.RequiredItem(firstIndex + 1);
             item.Alignment = GenericAlignment.Center;
             item.Image = new Bitmap(CalendarUrl);
+            item.CheckState = CheckState.Indeterminate;
             item.DisabledImage = item!.Image.ToGrayScale();
             item.ForegroundColor = Color.Green;
             item.BackgroundColor = Color.Lavender;
@@ -54,6 +55,7 @@ namespace PropertyGridSample
 
             item = listBox.RequiredItem(firstIndex + 2);
             item.Text = "Custom height/align";
+            item.CheckBoxVisible = false;
             item.MinHeight = 60;
             item.Alignment = GenericAlignment.Bottom | GenericAlignment.CenterHorizontal;
             item.Image = new Bitmap(PencilUrl);
@@ -63,11 +65,13 @@ namespace PropertyGridSample
 
             item = listBox.RequiredItem(firstIndex + 3);
             item.FontStyle = FontStyle.Underline;
+            item.CheckState = CheckState.Checked;
             item.Text = "Underlined item";
 
             item = listBox.RequiredItem(firstIndex + 5);
             item.Text = "Custom border";
             item.Alignment = GenericAlignment.Center;
+            item.CheckBoxVisible = false;
             item.Border = new();
             item.Border.Color = Color.Red;
             item.Border.UniformCornerRadius = 50;

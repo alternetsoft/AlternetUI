@@ -726,27 +726,34 @@ namespace Alternet.UI
         /// <summary>
         /// Gets suggested rectangles of the item's image and text.
         /// </summary>
-        /// <param name="e">Item painting paramaters.</param>
+        /// <param name="rect">Item rectangle.</param>
+        /// <param name="imageSize">Image size. Optional. If not specified, calculated
+        /// using height of the item.</param>
         /// <returns></returns>
         public virtual (RectD ImageRect, RectD TextRect) GetItemImageRect(
-            ListBoxItemPaintEventArgs e)
+            RectD rect, SizeD? imageSize = null)
         {
             Thickness textMargin = Thickness.Empty;
 
             var offset = ComboBox.DefaultImageVerticalOffset;
 
-            var size = e.ClipRectangle.Height - textMargin.Vertical - (offset * 2);
-            var imageRect = new RectD(
-                e.ClipRectangle.X + textMargin.Left,
-                e.ClipRectangle.Y + textMargin.Top + offset,
-                size,
-                size);
+            var size = rect.Height - textMargin.Vertical - (offset * 2);
 
-            var itemRect = e.ClipRectangle;
-            itemRect.X += imageRect.Width + ComboBox.DefaultImageTextDistance;
-            itemRect.Width -= imageRect.Width + ComboBox.DefaultImageTextDistance;
+            if (imageSize is null || imageSize.Value.Height > size)
+                imageSize = (size, size);
 
-            return (imageRect, itemRect);
+            PointD imageLocation = (
+                rect.X + textMargin.Left,
+                rect.Y + textMargin.Top + offset);
+
+            var imageRect = new RectD(imageLocation, imageSize.Value);
+            var centeredImageRect = imageRect.CenterIn(rect, false, true);
+
+            var itemRect = rect;
+            itemRect.X += centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+            itemRect.Width -= centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+
+            return (centeredImageRect, itemRect);
         }
 
         /// <summary>
@@ -792,26 +799,101 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default method which draws items. Called from <see cref="DrawItem"/>.
+        /// Gets whether three state checkbox is allowed in the item.
         /// </summary>
-        public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
+        /// <param name="item">Item.</param>
+        /// <returns></returns>
+        public virtual bool GetItemAllowThreeState(ListControlItem item)
         {
-            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
-            var image = Enabled ? (e.IsSelected ? selectedImage : normalImage) : disabledImage;
+            bool allowThreeState = CheckBoxThreeState;
+            if (allowThreeState && item.CheckBoxThreeState is not null)
+                allowThreeState = item.CheckBoxThreeState.Value;
+            return allowThreeState;
+        }
 
-            var s = textVisible ? e.ItemText.Trim() : string.Empty;
+        /// <summary>
+        /// Gets whether user can set the checkbox of the item to
+        /// the third state by clicking.
+        /// </summary>
+        public virtual bool GetItemCheckBoxAllowAllStatesForUser(ListControlItem item)
+        {
+            bool result = CheckBoxAllowAllStatesForUser;
+            if (result && item.CheckBoxAllowAllStatesForUser is not null)
+                result = item.CheckBoxAllowAllStatesForUser.Value;
+            return result;
+        }
 
-            if (image is not null && s != string.Empty)
-                s = $" {s}";
+        /// <summary>
+        /// Gets whether checkbox is shown in the item.
+        /// </summary>
+        /// <param name="item">Item.</param>
+        /// <returns></returns>
+        public virtual bool GetItemShowCheckBox(ListControlItem item)
+        {
+            var showCheckBox = CheckBoxVisible;
+            if (showCheckBox)
+            {
+                if (item.CheckBoxVisible is not null)
+                    showCheckBox = item.CheckBoxVisible.Value;
+            }
 
-            e.Graphics.DrawLabel(
-                s,
-                e.ItemFont,
-                e.TextColor,
-                Color.Empty,
-                image,
-                e.ClipRectangle,
-                e.ItemAlignment);
+            return showCheckBox;
+        }
+
+        /// <summary>
+        /// Gets <see cref="CheckState"/> of the item using <see cref="GetItemAllowThreeState"/>
+        /// and <see cref="ListControlItem.CheckState"/>.
+        /// </summary>
+        /// <param name="item">Item.</param>
+        /// <returns></returns>
+        public virtual CheckState GetItemCheckState(ListControlItem item)
+        {
+            var allowThreeState = GetItemAllowThreeState(item);
+            var checkState = item.CheckState;
+            if (!allowThreeState && checkState == CheckState.Indeterminate)
+                checkState = CheckState.Unchecked;
+            return checkState;
+        }
+
+        /// <summary>
+        /// Changes item <see cref="CheckState"/> to the next value.
+        /// </summary>
+        /// <param name="itemIndex">Index of the item.</param>
+        public virtual void ToggleItemCheckState(int itemIndex)
+        {
+            var item = SafeItem(itemIndex);
+            if (item is null)
+                return;
+            var checkState = GetItemCheckState(item);
+            var allowThreeState = GetItemAllowThreeState(item);
+            var allowAllStatesForUser = GetItemCheckBoxAllowAllStatesForUser(item);
+
+            allowThreeState = allowThreeState && allowAllStatesForUser;
+
+            if (allowThreeState)
+            {
+                switch (checkState)
+                {
+                    case CheckState.Unchecked:
+                        item.CheckState = CheckState.Checked;
+                        break;
+                    case CheckState.Checked:
+                        item.CheckState = CheckState.Indeterminate;
+                        break;
+                    case CheckState.Indeterminate:
+                        item.CheckState = CheckState.Unchecked;
+                        break;
+                }
+            }
+            else
+            {
+                if (checkState == CheckState.Checked)
+                    item.CheckState = CheckState.Unchecked;
+                else
+                    item.CheckState = CheckState.Checked;
+            }
+
+            RefreshRow(itemIndex);
         }
 
         /// <summary>
@@ -870,10 +952,116 @@ namespace Alternet.UI
             return DisabledItemTextColor ?? DefaultDisabledItemTextColor;
         }
 
+        /// <summary>
+        /// Returns the zero-based index of the item, if specified coordinates are over checkbox;
+        /// otherwise returns <c>null</c>.
+        /// </summary>
+        /// <param name="position">A <see cref="PointD"/> object containing
+        /// the coordinates used to obtain the item
+        /// index.</param>
+        public virtual int? HitTestCheckBox(PointD position)
+        {
+            var itemIndex = HitTest(position);
+            if (itemIndex is null)
+                return null;
+            var rect = GetItemRect(itemIndex);
+            if (rect is null)
+                return null;
+            var info = GetCheckBoxInfo(itemIndex.Value, rect.Value);
+            if (info is null)
+                return null;
+            var checkRect = info.CheckRect;
+            checkRect.Inflate(2);
+            var isOverCheck = checkRect.Contains(position);
+            return isOverCheck ? itemIndex : null;
+        }
+
+        /// <summary>
+        /// Returns the rectangle occupied by this item in physical coordinates (dips).
+        /// If the item is not currently visible, returns an empty rectangle.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public virtual RectD? GetItemRect(int? index)
+        {
+            if (index is null)
+                return null;
+            var resultI = NativeControl.GetItemRectI(index.Value);
+            if (resultI.SizeIsEmpty)
+                return null;
+            var resultD = PixelToDip(resultI);
+            return resultD;
+        }
+
+        /// <summary>
+        /// Default method which draws items. Called from <see cref="DrawItem"/>.
+        /// </summary>
+        public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
+        {
+            var item = SafeItem(e.ItemIndex);
+
+            if (item is not null)
+            {
+                var info = GetCheckBoxInfo(item, e.ClipRectangle);
+                if(info is not null)
+                {
+                    e.Graphics.DrawCheckBox(this, info.CheckRect, info.CheckState, info.PartState);
+                    e.ClipRectangle = info.TextRect;
+                }
+            }
+
+            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
+            var image = Enabled ? (e.IsSelected ? selectedImage : normalImage) : disabledImage;
+
+            var s = textVisible ? e.ItemText.Trim() : string.Empty;
+
+            if (image is not null && s != string.Empty)
+                s = $" {s}";
+
+            e.Graphics.DrawLabel(
+                s,
+                e.ItemFont,
+                e.TextColor,
+                Color.Empty,
+                image,
+                e.ClipRectangle,
+                e.ItemAlignment);
+        }
+
         /// <inheritdoc/>
         internal override ControlHandler CreateHandler()
         {
             return new VListBoxHandler();
+        }
+
+        internal ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
+        {
+            var item = SafeItem(itemIndex);
+            if (item is null)
+                return null;
+            return GetCheckBoxInfo(item, rect);
+        }
+
+        internal void ToggleItemCheckState(PointD location)
+        {
+            var itemIndex = HitTestCheckBox(location);
+            if (itemIndex is null)
+                return;
+            ToggleItemCheckState(itemIndex.Value);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            ToggleItemCheckState(e.Location);
+            base.OnMouseDoubleClick(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            ToggleItemCheckState(e.Location);
+            base.OnMouseLeftButtonDown(e);
         }
 
         /// <inheritdoc/>
@@ -924,9 +1112,40 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+        }
+
+        /// <inheritdoc/>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        private ItemCheckBoxInfo? GetCheckBoxInfo(ListControlItem item, RectD rect)
+        {
+            var showCheckBox = GetItemShowCheckBox(item);
+            if (!showCheckBox)
+                return null;
+            ItemCheckBoxInfo result = new();
+            result.PartState = Enabled
+                ? GenericControlState.Normal : GenericControlState.Disabled;
+            result.CheckState = GetItemCheckState(item);
+            result.CheckSize = DrawingUtils.GetCheckBoxSize(this, result.CheckState, result.PartState);
+            var (checkRect, textRect) = GetItemImageRect(rect, result.CheckSize);
+            result.CheckRect = checkRect;
+            result.TextRect = textRect;
+            return result;
+        }
+
+        internal class ItemCheckBoxInfo
+        {
+            public GenericControlState PartState;
+            public SizeD CheckSize;
+            public RectD CheckRect;
+            public RectD TextRect;
+            public CheckState CheckState;
         }
     }
 }

@@ -2,6 +2,11 @@
 
 namespace Alternet::UI
 {
+    RectI VListBox::GetItemRectI(int index)
+    {
+        return GetListBox()->GetItemRect(index);
+    }
+
     void* VListBox::CreateEx(int64_t styles)
     {
         return new VListBox(styles);
