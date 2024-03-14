@@ -118,7 +118,7 @@ namespace PropertyGridSample
                 PropertyGridSettings.Default = new(this);
                 PropGrid.ProcessException += PropertyGrid_ProcessException;
                 InitIgnorePropNames(PropGrid.IgnorePropNames);
-                PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+                /*PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;*/
 
                 Icon = Application.DefaultIcon;
 
