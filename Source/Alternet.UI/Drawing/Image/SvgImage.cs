@@ -9,14 +9,17 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Impements methods and properties to work with svg images.
+    /// Impements methods and properties to work with toolbar svg images.
+    /// These are rectangular images with small size. This class allows
+    /// to speed up loading and getting of different states (and sizes) of the
+    /// same image.
     /// </summary>
     public class SvgImage : BaseObject
     {
         private readonly string? url;
         private readonly string? urlOrData;
         private readonly SvgImageDataKind kind;
-        private readonly bool isMono;
+        private readonly SvgImageNumOfColors numOfColors;
         private Stream? stream;
         private Data?[] data = new Data?[16];
 
@@ -25,17 +28,17 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="urlOrData">Image url or data.</param>
         /// <param name="kind">Image data kind.</param>
-        /// <param name="isMono">Image has single color.</param>
+        /// <param name="numOfColors">Number of colors in svg image.</param>
         public SvgImage(
             string urlOrData,
-            bool isMono = true,
+            SvgImageNumOfColors numOfColors = SvgImageNumOfColors.One,
             SvgImageDataKind kind = SvgImageDataKind.Auto)
         {
             if (kind == SvgImageDataKind.Url)
                 url = urlOrData;
             this.urlOrData = urlOrData;
             this.kind = kind;
-            this.isMono = isMono;
+            this.numOfColors = numOfColors;
         }
 
         /// <summary>
@@ -50,7 +53,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether image has single color.
         /// </summary>
-        public virtual bool IsMono => isMono;
+        public virtual bool IsMono => numOfColors == SvgImageNumOfColors.One;
+
+        /// <summary>
+        /// Gets number of colors in svg, passed in the constructor.
+        /// </summary>
+        public virtual SvgImageNumOfColors NumOfColors => numOfColors;
 
         /// <summary>
         /// Gets image url.

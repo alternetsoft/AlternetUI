@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgError
         {
-            get => imgError ??= new(KnownColorSvgUrls.Error, false);
+            get => imgError ??= new(KnownColorSvgUrls.Error, SvgImageNumOfColors.Many);
             set => imgError = value;
         }
 
@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgWarning
         {
-            get => imgWarning ??= new(KnownColorSvgUrls.Warning, false);
+            get => imgWarning ??= new(KnownColorSvgUrls.Warning, SvgImageNumOfColors.Many);
             set => imgWarning = value;
         }
 
@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgInformation
         {
-            get => imgInformation ??= new(KnownColorSvgUrls.Information, false);
+            get => imgInformation ??= new(KnownColorSvgUrls.Information, SvgImageNumOfColors.Many);
             set => imgInformation = value;
         }
 
