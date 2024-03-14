@@ -74,5 +74,35 @@ namespace Alternet.UI
         /// <see cref="GenericControlState.Normal"/> control state.
         /// </summary>
         public bool HasOtherBackgrounds => Backgrounds?.HasOtherStates ?? false;
+
+        /// <summary>
+        /// Creates clone of this object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlStateSettings Clone()
+        {
+            ControlStateSettings result = new();
+
+            result.Backgrounds = Backgrounds?.Clone();
+            result.Foregrounds = Foregrounds?.Clone();
+            result.Pens = Pens?.Clone();
+            result.Images = Images?.Clone();
+            result.BackgroundImages = BackgroundImages?.Clone();
+            result.ImageSets = ImageSets?.Clone();
+            result.Colors = Colors?.Clone();
+            result.Borders = Borders?.Clone();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Sets border in the normal state equal to border in the hovered state.
+        /// </summary>
+        public virtual void NormalBorderAsHovered()
+        {
+            if (Borders is null)
+                return;
+            Borders.Normal = Borders.Hovered;
+        }
     }
 }

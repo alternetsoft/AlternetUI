@@ -18,5 +18,20 @@ namespace Alternet.UI
         {
             Immutable = true,
         };
+
+        /// <summary>
+        /// Creates clone of this object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlStateImageSets Clone()
+        {
+            var result = new ControlStateImageSets();
+            result.Normal = Normal;
+            result.Hovered = Hovered;
+            result.Pressed = Pressed;
+            result.Disabled = Disabled;
+            result.Focused = Focused;
+            return result;
+        }
     }
 }
