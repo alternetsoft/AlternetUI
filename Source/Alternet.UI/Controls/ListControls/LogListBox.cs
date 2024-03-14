@@ -214,12 +214,17 @@ namespace Alternet.UI
 
         private void LogRefresh()
         {
-            if (!Application.LogInUpdates() || !BoundToApplicationLog)
+            Invoke(Fn);
+
+            void Fn()
             {
-                var index = Items.Count - 1;
-                SelectedIndex = index;
-                EnsureVisible(index);
-                Refresh();
+                if (!Application.LogInUpdates() || !BoundToApplicationLog)
+                {
+                    var index = Items.Count - 1;
+                    SelectedIndex = index;
+                    EnsureVisible(index);
+                    Refresh();
+                }
             }
         }
 
@@ -273,10 +278,15 @@ namespace Alternet.UI
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
-            if (e.ReplaceLastMessage)
-                LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
-            else
-                LogInternal(e.Message, e.Kind);
+            Invoke(Fn);
+
+            void Fn()
+            {
+                if (e.ReplaceLastMessage)
+                    LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
+                else
+                    LogInternal(e.Message, e.Kind);
+            }
         }
 
         /// <summary>

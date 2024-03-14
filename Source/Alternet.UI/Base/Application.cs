@@ -706,7 +706,7 @@ namespace Alternet.UI
         {
             IdleLog(obj, kind);
 
-            if (LogMessage is null || LogInUpdates() || !LogQueue.IsEmpty)
+            if (LogMessage is null || LogInUpdates())
                 return;
             ProcessLogQueue(true);
         }
