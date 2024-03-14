@@ -37,6 +37,7 @@ namespace PropertyGridSample
             if (control is not SpeedTextButton button)
                 return;
             button.Text = "Sample Text";
+            button.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             button.Click += LogClick;
         }
 
@@ -44,8 +45,8 @@ namespace PropertyGridSample
         {
             if (control is not SpeedColorButton button)
                 return;
-            button.ColorImageSize = 56;
             button.Value = Color.Red;
+            button.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             button.Click += LogClick;
         }
 

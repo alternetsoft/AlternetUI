@@ -14,6 +14,7 @@ namespace CustomControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
             MinimumSize = 32,
             VerticalAlignment = VerticalAlignment.Center,
+            UseTheme = SpeedButton.KnownTheme.StaticBorder,
         };
         private readonly ColorComboBox colorCombo = new()
         {
