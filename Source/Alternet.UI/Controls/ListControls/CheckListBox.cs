@@ -21,7 +21,6 @@ namespace Alternet.UI
     /// you to add a large number of items to the CheckListBox without the control
     /// being repainted each time an item is added to the list.
     /// The <see cref="ListControl.Items"/>, <see cref="ListBox.SelectedItems"/>,
-    /// <see cref="CheckedItems"/>,
     /// <see cref="ListBox.SelectedIndices"/>, and <see cref="CheckedIndices"/>
     /// properties provide access to the
     /// collections that are used by the <see cref="CheckListBox"/>.
@@ -32,15 +31,8 @@ namespace Alternet.UI
         private readonly HashSet<int> checkedIndices = new();
 
         /// <summary>
-        /// Occurs when the <see cref="CheckedIndex"/> property or the
-        /// <see cref="CheckedIndices"/> collection has changed.
+        /// Occurs when the checkbox state of the item has changed.
         /// </summary>
-        /// <remarks>
-        /// You can create an event handler for this event to determine when the
-        /// checekd index in the <see cref="CheckListBox"/> has been changed.
-        /// This can be useful when you need to display information in other
-        /// controls based on the current state in the <see cref="CheckListBox"/>.
-        /// </remarks>
         public event EventHandler? CheckedChanged;
 
         /// <inheritdoc/>
@@ -67,21 +59,8 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.CheckListBox;
 
         /// <summary>
-        /// Gets the checked items of the <see cref="CheckListBox"/>.
-        /// </summary>
-        /// <value>An <see cref="Collection{Object}"/> representing the checked
-        /// items in the <see cref="CheckListBox"/>.</value>
-        /// <remarks>This property enables you to obtain a reference to the list
-        /// of items that are currently checked in the <see cref="CheckListBox"/>.
-        /// With this reference, you obtain a count of the items in the
-        /// collection and iterate through it.</remarks>
-        [Browsable(false)]
-        public Collection<object> CheckedItems { get; } =
-            new Collection<object> { ThrowOnNullAdd = true };
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the check box should be
-        /// toggled when an item is checked.
+        /// Gets or sets a value indicating whether the checkbox should be
+        /// toggled when an item is clicked on the checkbox area.
         /// </summary>
         public bool CheckOnClick { get; set; }
 
@@ -235,11 +214,6 @@ namespace Alternet.UI
         /// <summary>
         /// Unchecks all items in the ListBox.
         /// </summary>
-        /// <remarks>
-        /// Calling this method is equivalent to setting the
-        /// <see cref="CheckedIndex"/> property to <c>null</c>.
-        /// You can use this method to quickly unselect all items in the list.
-        /// </remarks>
         public void ClearChecked()
         {
             ClearCheckedCore();
@@ -252,7 +226,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The zero-based index of the item in a
         /// <see cref="CheckListBox"/> to set or clear the check state.</param>
-        /// <param name="value"><c>true</c> to select the specified item;
+        /// <param name="value"><c>true</c> to check the specified item;
         /// otherwise, false.</param>
         /// <exception cref="ArgumentOutOfRangeException">The specified
         /// index was outside the range of valid values.</exception>
@@ -289,8 +263,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the <see cref="CheckedIndex"/> property or the
-        /// <see cref="CheckedIndices"/> collection has changed.
+        /// Called when when the checkbox state of the item has changed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
