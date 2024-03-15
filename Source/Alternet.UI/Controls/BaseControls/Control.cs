@@ -578,6 +578,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Graphics"/> which can be used to measure text size
+        /// and for other measure purposes.
+        /// </summary>
+        public virtual Graphics MeasureCanvas
+        {
+            get
+            {
+                measureCanvas ??= CreateDrawingContext();
+                return measureCanvas;
+            }
+        }
+
+        /// <summary>
         /// Gets border for all states of the control.
         /// </summary>
         [Browsable(false)]
