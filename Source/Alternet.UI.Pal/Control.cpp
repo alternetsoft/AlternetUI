@@ -110,6 +110,16 @@ namespace Alternet::UI
         return fromDipF(value, (wxWindow*)window);
     }
 
+    bool Control::BeginRepositioningChildren()
+    {
+        return GetWxWindow()->BeginRepositioningChildren();
+    }
+
+    void Control::EndRepositioningChildren()
+    {
+        GetWxWindow()->EndRepositioningChildren();
+    }
+
     bool Control::GetProcessUIUpdates()
     {
         return HasExtraStyle(wxWS_EX_PROCESS_UI_UPDATES);            
@@ -923,6 +933,8 @@ namespace Alternet::UI
             parentingWxWindow = _parent->GetParentingWxWindow(this);
             _wxWindow = CreateWxWindowCore(parentingWxWindow);
         }
+
+        _wxWindow->SetAutoLayout(false);
 
         ApplyToolTip();
 

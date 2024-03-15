@@ -27,25 +27,12 @@ namespace Alternet::UI
             const wxSize& size = wxDefaultSize,
             long style = wxDEFAULT_FRAME_STYLE,
             const wxString& name = wxASCII_STR(wxFrameNameStr));
-        /*virtual ~Frame();*/
-
-        /*static std::vector<wxTopLevelWindow*> GetAllFrames();*/
-
-        /*Window* GetWindow();*/
-        
-        /*void RemoveFrame();*/
 
         bool Layout() override
         {
             return false;
         }
     private:
-        /*Window* _window;
-        bool _frameRemoved = false;
-
-        inline static std::vector<wxTopLevelWindow*> _allFrames;
-
-        BYREF_ONLY(Frame);*/
     };
 
     class MiniFrame : public wxMiniFrame, public wxWidgetExtender
@@ -67,6 +54,8 @@ namespace Alternet::UI
         }
     };
 
+    // Dialog =============================================
+
     class Dialog : public wxDialog, public wxWidgetExtender
     {
     public:
@@ -84,21 +73,6 @@ namespace Alternet::UI
             return false;
         }
     };
-
-    // FrameDisabler =============================================
-
-    /*class FrameDisabler
-    {
-    public:
-        FrameDisabler(wxTopLevelWindow* frameToSkip);
-        virtual ~FrameDisabler();
-
-    private:
-
-        std::vector<wxTopLevelWindow*> _disabledFrames;
-
-        BYREF_ONLY(FrameDisabler);
-    };*/
 
     // Window =============================================
 
@@ -123,8 +97,6 @@ namespace Alternet::UI
         Frame* GetFrame();
         wxDialog* GetDialog();
     protected:
-        void ApplyBounds(const Rect& value) override;
-
         void OnBeforeDestroyWxWindow() override;
         void OnWxWindowDestroyed(wxWindow* window) override;
 
@@ -142,8 +114,6 @@ namespace Alternet::UI
 
         ModalResult _modalResult = ModalResult::None;
 
-        //Frame* _frame = nullptr;
-
         void UpdateAcceleratorTable(wxWindow* frame);
 
         void OnClose(wxCloseEvent& event);
@@ -157,9 +127,6 @@ namespace Alternet::UI
         string RetrieveTitle();
         void ApplyTitle(const string& value);
 
-        WindowState RetrieveState();
-        void ApplyState(const WindowState& value);
-
         MainMenu* RetrieveMenu();
         void ApplyMenu(MainMenu* const& value);
 
@@ -169,8 +136,6 @@ namespace Alternet::UI
         long GetWindowStyle();
 
         void ApplyIcon(wxTopLevelWindow* value);
-
-        /*void ApplyDefaultLocation();*/
 
         std::vector<Window*> GetOwnedWindows();
 
@@ -194,10 +159,8 @@ namespace Alternet::UI
             HasTitleBar = 1 << 8,
             Active = 1 << 9,
             Modal = 1 << 10,
-            /*ModalLoopStopRequested = 1 << 11,*/
-            /*ShownOnce = 1 << 12,*/
-            SystemMenu = 1 << 13,
-            PopupWindow = 1 << 14,
+            SystemMenu = 1 << 11,
+            PopupWindow = 1 << 12,
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
@@ -205,7 +168,7 @@ namespace Alternet::UI
         FlagsAccessor<WindowFlags> _flags;
 
         DelayedValue<Window, string> _title;
-        DelayedValue<Window, WindowState> _state;
+        WindowState _state = WindowState::Normal;
 
         DelayedValue<Window, MainMenu*> _menu;
         DelayedValue<Window, Toolbar*> _toolbar;
@@ -216,8 +179,6 @@ namespace Alternet::UI
         WindowState _lastState = WindowState::Normal;
 
         inline static RectD _defaultBounds = RectD(0, 0, 0, 0);
-        /*inline static FrameDisabler* _modalWindowDisabler = nullptr;*/
-        /*inline static std::stack<Window*> _modalWindows;*/
 
         WindowStartLocation _startLocation = WindowStartLocation::Default;
 

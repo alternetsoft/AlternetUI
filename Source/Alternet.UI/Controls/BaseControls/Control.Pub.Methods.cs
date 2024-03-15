@@ -1188,10 +1188,7 @@ namespace Alternet.UI
         /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
         public virtual void PerformLayout(bool layoutParent = true)
         {
-            if (IsLayoutSuspended || IsDisposed)
-                return;
-
-            if (inLayout)
+            if (IsLayoutSuspended || IsDisposed || inLayout)
                 return;
 
             inLayout = true;

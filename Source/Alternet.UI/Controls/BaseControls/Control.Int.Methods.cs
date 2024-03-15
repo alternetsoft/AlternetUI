@@ -508,5 +508,33 @@ namespace Alternet.UI
             else
                 nativeControl.SetSizer(sizer.Handle, deleteOld);
         }
+
+        internal bool BeginRepositioningChildren()
+        {
+            return NativeControl.BeginRepositioningChildren();
+        }
+
+        internal void EndRepositioningChildren()
+        {
+            NativeControl.EndRepositioningChildren();
+        }
+
+        internal void DoInsideRepositioningChildren(Action action)
+        {
+            var repositioning = BeginRepositioningChildren();
+            if (repositioning)
+            {
+                try
+                {
+                    action();
+                }
+                finally
+                {
+                    EndRepositioningChildren();
+                }
+            }
+            else
+                action();
+        }
     }
 }

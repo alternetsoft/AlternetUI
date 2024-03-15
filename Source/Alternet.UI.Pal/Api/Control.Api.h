@@ -351,6 +351,16 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_SendMouseDownEvent_(Control* obj, int x, int y)
+{
+    obj->SendMouseDownEvent(x, y);
+}
+
+ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
+{
+    obj->SendMouseUpEvent(x, y);
+}
+
 ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
 {
     obj->SetBoundsEx(rect, flags);
@@ -581,14 +591,14 @@ ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
     obj->SendSizeEvent();
 }
 
-ALTERNET_UI_API void Control_SendMouseDownEvent_(Control* obj, int x, int y)
+ALTERNET_UI_API c_bool Control_BeginRepositioningChildren_(Control* obj)
 {
-    obj->SendMouseDownEvent(x, y);
+    return obj->BeginRepositioningChildren();
 }
 
-ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
+ALTERNET_UI_API void Control_EndRepositioningChildren_(Control* obj)
 {
-    obj->SendMouseUpEvent(x, y);
+    obj->EndRepositioningChildren();
 }
 
 ALTERNET_UI_API RectI_C Control_GetUpdateClientRect_(Control* obj)

@@ -34,7 +34,6 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
-            ProcessIdle = true;
             Bounds = GetDefaultBounds();
 
             if (Control.DefaultFont != Font.Default)
@@ -561,14 +560,16 @@ namespace Alternet.UI
         /// </summary>
         public virtual WindowState State
         {
-            get => info.State;
+            get => (WindowState)NativeControl.State;
 
             set
             {
-                if (info.State == value)
+                if (State == value)
                     return;
 
-                info.State = value;
+                if (IsDisposed)
+                    return;
+                NativeControl.State = (Native.WindowState)value;
                 OnStateChanged(EventArgs.Empty);
                 StateChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -812,14 +813,6 @@ namespace Alternet.UI
                 Font font = info;
                 Control.DefaultFont = font;
             }
-        }
-
-        /// <inheritdoc/>
-        public override void PerformLayout(bool layoutParent = true)
-        {
-            if (IsLayoutPerform || IsLayoutSuspended)
-                return;
-            base.PerformLayout(layoutParent);
         }
 
         /// <summary>
@@ -1066,11 +1059,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnIdle(EventArgs e)
         {
-            if (NeedPerformLayout)
-            {
-                NeedPerformLayout = false;
-                PerformLayout();
-            }
+            base.OnIdle(e);
         }
 
         /// <inheritdoc/>

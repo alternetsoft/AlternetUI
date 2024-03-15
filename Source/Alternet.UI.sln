@@ -25,6 +25,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeApi.Generator", "NativeApi\NativeApi.Generator\NativeApi.Generator.csproj", "{4C0B1499-2320-47E2-852C-9DDD9A0BA3EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsSample", "Samples\ControlsSample\ControlsSample.csproj", "{CF2BC7A2-9997-4613-9300-32889D89B8B9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Build.Tasks", "Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj", "{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}"
 EndProject

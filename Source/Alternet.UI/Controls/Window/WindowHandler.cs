@@ -127,7 +127,6 @@ namespace Alternet.UI
             Control.HasBorderChanged -= ApplyHasBorder;
             Control.HasTitleBarChanged -= ApplyHasTitleBar;
             Control.HasSystemMenuChanged -= ApplyHasSystemMenu;
-            Control.StateChanged -= ApplyState;
             Control.IconChanged -= ApplyIcon;
             Control.MenuChanged -= ApplyMenu;
             Control.ToolBarChanged -= ApplyToolbar;
@@ -155,7 +154,6 @@ namespace Alternet.UI
             ApplyHasBorder(null, EventArgs.Empty);
             ApplyHasTitleBar(null, EventArgs.Empty);
             ApplyHasSystemMenu(null, EventArgs.Empty);
-            ApplyState(null, EventArgs.Empty);
             ApplyIcon(null, EventArgs.Empty);
             ApplyMenu(null, EventArgs.Empty);
             ApplyToolbar(null, EventArgs.Empty);
@@ -174,7 +172,6 @@ namespace Alternet.UI
             Control.HasBorderChanged += ApplyHasBorder;
             Control.HasTitleBarChanged += ApplyHasTitleBar;
             Control.HasSystemMenuChanged += ApplyHasSystemMenu;
-            Control.StateChanged += ApplyState;
             Control.IconChanged += ApplyIcon;
             Control.MenuChanged += ApplyMenu;
             Control.ToolBarChanged += ApplyToolbar;
@@ -238,14 +235,22 @@ namespace Alternet.UI
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 
-        private void NativeControl_StateChanged()
+        private void NativeControl_SizeChanged()
         {
-            Control.State = (WindowState)NativeControl.State;
+            if (!Application.IsLinuxOS)
+                Control.PerformLayout();
+            Application.AddIdleTask(() =>
+            {
+                if (Control.IsDisposed)
+                    return;
+                Control.PerformLayout();
+            });
+            Control.RaiseSizeChanged(EventArgs.Empty);
         }
 
-        private void ApplyState(object? sender, EventArgs e)
+        private void NativeControl_StateChanged()
         {
-            NativeControl.State = (Native.WindowState)Control.State;
+            NativeControl_SizeChanged();
         }
 
         private void ApplyIcon(object? sender, EventArgs e)
@@ -333,14 +338,6 @@ namespace Alternet.UI
         private void ApplyHasTitleBar(object? sender, EventArgs e)
         {
             NativeControl.HasTitleBar = Control.HasTitleBar;
-        }
-
-        private void NativeControl_SizeChanged()
-        {
-            Control.RaiseSizeChanged(EventArgs.Empty);
-            if(!Application.IsLinuxOS)
-                Control.PerformLayout();
-            Control.NeedPerformLayout = true;
         }
 
         private void NativeControl_LocationChanged()

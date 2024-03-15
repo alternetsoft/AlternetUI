@@ -8,6 +8,9 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public bool BeginRepositioningChildren() => default;
+        public void EndRepositioningChildren() { }
+
         public RectI GetUpdateClientRect() => default;
 
         public static DrawingContext OpenClientDrawingContextForWindow(IntPtr window) => default;
