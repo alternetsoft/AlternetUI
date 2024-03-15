@@ -59,12 +59,6 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.CheckListBox;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the checkbox should be
-        /// toggled when an item is clicked on the checkbox area.
-        /// </summary>
-        public bool CheckOnClick { get; set; }
-
-        /// <summary>
         /// Gets a collection that contains the zero-based indexes of all
         /// currently checked items in the <see cref="CheckListBox"/>.
         /// </summary>
