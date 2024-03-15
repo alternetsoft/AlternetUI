@@ -83,6 +83,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the checked state of an item changes.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? CheckedChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the checkbox should be
+        /// toggled when an item is clicked on the checkbox area.
+        /// </summary>
+        public virtual bool CheckOnClick { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets current item border. If it is <c>null</c> (default value),
         /// <see cref="DefaultCurrentItemBorder"/> is used.
         /// </summary>
@@ -100,6 +112,89 @@ namespace Alternet.UI
                     return;
                 currentItemBorder = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection that contains the zero-based indexes of
+        /// all currently checked items in the control.
+        /// </summary>
+        /// <remarks>
+        /// Indexes are returned in the descending order (maximal index
+        /// is the first).
+        /// </remarks>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
+        /// currently checked items in the control.
+        /// If no items are currently selected, an empty
+        /// <see cref="IReadOnlyList{T}"/> is returned.
+        /// </value>
+        [Browsable(false)]
+        public virtual IReadOnlyList<int> CheckedIndicesDescending
+        {
+            get
+            {
+#pragma warning disable
+                int[] sortedCopy =
+                    CheckedIndices.OrderByDescending(i => i).ToArray();
+#pragma warning restore
+                return sortedCopy;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection that contains the zero-based indexes of all
+        /// currently checked items in the control.
+        /// </summary>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
+        /// currently checked items in the control.
+        /// If no items are currently checked, an empty
+        /// <see cref="IReadOnlyList{T}"/> is returned.
+        /// </value>
+        [Browsable(false)]
+        public virtual IReadOnlyList<int> CheckedIndices
+        {
+            get
+            {
+                var checkedCount = CheckedCount;
+                if (checkedCount == 0)
+                    return Array.Empty<int>();
+                int[] result = new int[checkedCount];
+                var index = 0;
+
+                for (int i = 0; i < Count; i++)
+                {
+                    var item = SafeItem(i);
+                    if (item is null)
+                        continue;
+                    if (item.CheckState == CheckState.Checked)
+                    {
+                        result[index] = i;
+                        index++;
+                    }
+                }
+
+                return result;
+            }
+
+            set
+            {
+                var changed = ClearChecked(false);
+
+                foreach (var index in value)
+                {
+                    if (SetItemCheckedCore(index, true))
+                    {
+                        changed = true;
+                    }
+                }
+
+                if (changed)
+                {
+                    Invalidate();
+                    RaiseCheckedChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -123,6 +218,28 @@ namespace Alternet.UI
                     return;
                 checkBoxThreeState = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets number of checked items.
+        /// </summary>
+        [DefaultValue(false)]
+        public virtual int CheckedCount
+        {
+            get
+            {
+                var result = 0;
+                for (int i = 0; i < Count; i++)
+                {
+                    var item = SafeItem(i);
+                    if (item is null)
+                        continue;
+                    if (item.CheckState == CheckState.Checked)
+                        result++;
+                }
+
+                return result;
             }
         }
 
@@ -527,6 +644,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Unchecks all items in the control.
+        /// </summary>
+        public virtual bool ClearChecked(bool raiseEvents = true)
+        {
+            if (Items.Count == 0)
+                return false;
+            bool changed = false;
+            for (int i = 0; i < Count; i++)
+            {
+                var item = SafeItem(i);
+                if (item is null)
+                    continue;
+                if (item.CheckState != CheckState.Unchecked)
+                {
+                    item.CheckState = CheckState.Unchecked;
+                    changed = true;
+                }
+            }
+
+            if (changed && raiseEvents)
+            {
+                Invalidate();
+                RaiseCheckedChanged(EventArgs.Empty);
+            }
+
+            return changed;
+        }
+
+        /// <summary>
         /// Default method which measures item size. Called from <see cref="MeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
@@ -893,6 +1039,7 @@ namespace Alternet.UI
                     item.CheckState = CheckState.Checked;
             }
 
+            RaiseCheckedChanged(EventArgs.Empty);
             RefreshRow(itemIndex);
         }
 
@@ -994,6 +1141,125 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes checked items from the control.
+        /// </summary>
+        public virtual void RemoveCheckedItems()
+        {
+            RemoveItems(CheckedIndicesDescending);
+        }
+
+        /// <summary>
+        /// Checks items with specified indexes.
+        /// </summary>
+        public virtual void CheckItems(params int[] indexes)
+        {
+            CheckedIndices = GetValidIndexes(indexes);
+        }
+
+        /// <summary>
+        /// Checks or clears the check state for the specified item.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item in the control
+        /// to set or clear the check state.</param>
+        /// <param name="value"><c>true</c> to check the specified item;
+        /// otherwise, false.</param>
+        /// <remarks>
+        /// This method repaints control and raises events. Use <see cref="SetItemCheckedCore(int, bool)"/>
+        /// method to change checked state without raising events and repainting the
+        /// control.
+        /// </remarks>
+        public virtual bool SetItemChecked(int index, bool value)
+        {
+            var result = SetItemCheckedCore(index, value);
+            if (result)
+            {
+                Invalidate();
+                RaiseCheckedChanged(EventArgs.Empty);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Checks or clears the check state for the specified item.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item in the control
+        /// to set or clear the check state.</param>
+        /// <param name="value"><c>true</c> to check the specified item;
+        /// otherwise, false.</param>
+        /// <remarks>
+        /// This method doesn't repaint control and raises no events.
+        /// Use <see cref="SetItemChecked"/>
+        /// method to change checked state, raise events and repaint the
+        /// control.
+        /// </remarks>
+        public virtual bool SetItemCheckedCore(int index, bool value)
+        {
+            if (value)
+                return SetItemCheckStateCore(index, CheckState.Checked);
+            else
+                return SetItemCheckStateCore(index, CheckState.Unchecked);
+        }
+
+        /// <summary>
+        /// Changes the check state for the specified item.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item in the control
+        /// to change the check state.</param>
+        /// <param name="value">New value.</param>
+        /// <remarks>
+        /// This method doesn't repaint control and raises no events.
+        /// Use <see cref="SetItemCheckState"/>
+        /// method to change checked state, raise events and repaint the
+        /// control.
+        /// </remarks>
+        public virtual bool SetItemCheckStateCore(int index, CheckState value)
+        {
+            var item = SafeItem(index);
+            if (item is null)
+                return false;
+            if (item.CheckState == value)
+                return false;
+            item.CheckState = value;
+            return true;
+        }
+
+        /// <summary>
+        /// Changes the check state for the specified item.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item in the control
+        /// to change the check state.</param>
+        /// <param name="value">New value.</param>
+        /// <remarks>
+        /// This method repaints control and raises events. Use <see cref="SetItemCheckStateCore"/>
+        /// method to change checked state without raising events and repainting the
+        /// control.
+        /// </remarks>
+        public virtual bool SetItemCheckState(int index, CheckState value)
+        {
+            var result = SetItemCheckStateCore(index, value);
+            if (result)
+            {
+                Invalidate();
+                RaiseCheckedChanged(EventArgs.Empty);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CheckedChanged"/> event and calls
+        /// <see cref="OnCheckedChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        public void RaiseCheckedChanged(EventArgs e)
+        {
+            OnCheckedChanged(e);
+            CheckedChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Default method which draws items. Called from <see cref="DrawItem"/>.
         /// </summary>
         public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
@@ -1050,17 +1316,29 @@ namespace Alternet.UI
             ToggleItemCheckState(itemIndex.Value);
         }
 
+        /// <summary>
+        /// Called when when the checkbox state of the item has changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
+        protected virtual void OnCheckedChanged(EventArgs e)
+        {
+        }
+
         /// <inheritdoc/>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            ToggleItemCheckState(e.Location);
+            if(CheckOnClick)
+                ToggleItemCheckState(e.Location);
             base.OnMouseDoubleClick(e);
         }
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            ToggleItemCheckState(e.Location);
+            if (CheckOnClick)
+                ToggleItemCheckState(e.Location);
             base.OnMouseLeftButtonDown(e);
         }
 

@@ -19,6 +19,7 @@
           <CheckBox Margin="0,3,0,0" Text="CheckBox ThreeState" Name="threeStateCheckBox"/>
           <CheckBox Margin="0,3,0,0" Text="CheckBox UserAllStates" Name="allowAllStatesCheckBox"
                     ToolTip="Allow the user to set the checkboxes to the third state by clicking."/>
+          <CheckBox Margin="0,3,0,0" Text="CheckBox AllowClick" Name="allowClickCheckCheckBox"/>
           <CheckBox Margin="0,3,0,5" Text="Round Selection" Name="roundSelectionCheckBox"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
