@@ -19,7 +19,6 @@ namespace Alternet.Drawing
         private readonly string? url;
         private readonly string? urlOrData;
         private readonly SvgImageDataKind kind;
-        private readonly SvgImageNumOfColors numOfColors;
         private Stream? stream;
         private Data?[] data = new Data?[16];
 
@@ -28,24 +27,19 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="urlOrData">Image url or data.</param>
         /// <param name="kind">Image data kind.</param>
-        /// <param name="numOfColors">Number of colors in svg image.</param>
-        public SvgImage(
-            string urlOrData,
-            SvgImageNumOfColors numOfColors = SvgImageNumOfColors.One,
-            SvgImageDataKind kind = SvgImageDataKind.Auto)
+        protected SvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Auto)
         {
             if (kind == SvgImageDataKind.Url)
                 url = urlOrData;
             this.urlOrData = urlOrData;
             this.kind = kind;
-            this.numOfColors = numOfColors;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImage"/> class.
         /// </summary>
         /// <param name="stream">Stream with image data.</param>
-        public SvgImage(Stream stream)
+        protected SvgImage(Stream stream)
         {
             this.stream = stream;
         }
@@ -53,12 +47,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether image has single color.
         /// </summary>
-        public virtual bool IsMono => numOfColors == SvgImageNumOfColors.One;
+        public virtual bool IsMono => NumOfColors == SvgImageNumOfColors.One;
 
         /// <summary>
         /// Gets number of colors in svg, passed in the constructor.
         /// </summary>
-        public virtual SvgImageNumOfColors NumOfColors => numOfColors;
+        public virtual SvgImageNumOfColors NumOfColors => SvgImageNumOfColors.Uknown;
 
         /// <summary>
         /// Gets image url.

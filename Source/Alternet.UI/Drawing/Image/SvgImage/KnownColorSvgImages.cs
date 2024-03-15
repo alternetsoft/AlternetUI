@@ -13,34 +13,34 @@ namespace Alternet.UI
     /// </summary>
     public static class KnownColorSvgImages
     {
-        private static SvgImage? imgError;
-        private static SvgImage? imgWarning;
-        private static SvgImage? imgInformation;
+        private static ColorSvgImage? imgError;
+        private static ColorSvgImage? imgWarning;
+        private static ColorSvgImage? imgInformation;
 
         /// <summary>
         /// Gets or sets 'Error' image.
         /// </summary>
-        public static SvgImage ImgError
+        public static ColorSvgImage ImgError
         {
-            get => imgError ??= new(KnownColorSvgUrls.Error, SvgImageNumOfColors.Many);
+            get => imgError ??= new(KnownColorSvgUrls.Error);
             set => imgError = value;
         }
 
         /// <summary>
         /// Gets or sets 'Warning' image.
         /// </summary>
-        public static SvgImage ImgWarning
+        public static ColorSvgImage ImgWarning
         {
-            get => imgWarning ??= new(KnownColorSvgUrls.Warning, SvgImageNumOfColors.Many);
+            get => imgWarning ??= new(KnownColorSvgUrls.Warning);
             set => imgWarning = value;
         }
 
         /// <summary>
         /// Gets or sets 'Information' image.
         /// </summary>
-        public static SvgImage ImgInformation
+        public static ColorSvgImage ImgInformation
         {
-            get => imgInformation ??= new(KnownColorSvgUrls.Information, SvgImageNumOfColors.Many);
+            get => imgInformation ??= new(KnownColorSvgUrls.Information);
             set => imgInformation = value;
         }
 
