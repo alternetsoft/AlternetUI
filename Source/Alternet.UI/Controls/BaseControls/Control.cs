@@ -581,6 +581,7 @@ namespace Alternet.UI
         /// Gets <see cref="Graphics"/> which can be used to measure text size
         /// and for other measure purposes.
         /// </summary>
+        [Browsable(false)]
         public virtual Graphics MeasureCanvas
         {
             get
@@ -2687,6 +2688,22 @@ namespace Alternet.UI
             set
             {
                 NativeControl.ProcessIdle = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether scroll events are binded and recveived in the control.
+        /// </summary>
+        protected virtual bool BindScrollEvents
+        {
+            get
+            {
+                return NativeControl.BindScrollEvents;
+            }
+
+            set
+            {
+                NativeControl.BindScrollEvents = value;
             }
         }
 
