@@ -2316,6 +2316,9 @@ namespace Alternet.UI
                 var foregroundColor = RealForegroundColor;
                 var backgroundColor = RealBackgroundColor;
 
+                if (backgroundColor.IsBlack)
+                    return true;
+
                 if (foregroundColor.IsEmpty || backgroundColor.IsEmpty)
                     return SystemSettings.IsUsingDarkBackground;
 
