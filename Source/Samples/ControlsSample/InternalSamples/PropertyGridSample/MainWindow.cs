@@ -118,13 +118,13 @@ namespace PropertyGridSample
                 PropertyGridSettings.Default = new(this);
                 PropGrid.ProcessException += PropertyGrid_ProcessException;
                 InitIgnorePropNames(PropGrid.IgnorePropNames);
-                PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+                /*PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;*/
 
                 Icon = Application.DefaultIcon;
 
                 Children.Add(panel);
 
-                panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
+                ToolBox.SelectionChanged += ControlsListBox_SelectionChanged;
                 panel.LogControl.Required();
                 panel.PropGrid.Required();
                 panel.ActionsControl.Required();
@@ -161,7 +161,7 @@ namespace PropertyGridSample
                     Key.DownArrow,
                     Alternet.UI.ModifierKeys.Control);
 
-                panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
+                ToolBox.SelectedItem = ToolBox.FirstItem;
 
                 Application.Current.Idle += ApplicationIdle;
                 RunTests();
@@ -174,8 +174,11 @@ namespace PropertyGridSample
                 controlPanel.DragStart += ControlPanel_DragStart;
 
                 panel.WriteWelcomeLogMessages();
+                updatePropertyGrid = true;
             }
         }
+
+        public VListBox ToolBox => panel.LeftListBox;
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {
@@ -302,27 +305,9 @@ namespace PropertyGridSample
 
         internal bool LogSize { get; set; } = false;
 
-        private void LeftTreeView_SizeChanged(object? sender, EventArgs e)
-        {
-            if (LogSize)
-                Application.Log("LeftTreeView_SizeChanged");
-        }
-
-        private void CenterNotebook_LayoutUpdated(object? sender, EventArgs e)
-        {
-            if (LogSize)
-                Application.Log("CenterNotebook_LayoutUpdated");
-        }
-
-        private void CenterNotebook_SizeChanged(object? sender, EventArgs e)
-        {
-            if (LogSize)
-                Application.Log("CenterNotebook_SizeChanged");
-        }
-
         private void Designer_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
         {
-            var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
+            var item = ToolBox.SelectedItem as ControlListBoxItem;
             var type = item?.InstanceType;
             if (type == typeof(WelcomePage))
                 return;
@@ -360,7 +345,7 @@ namespace PropertyGridSample
             void DoAction()
             {
                 controlPanel.GetVisibleChildOrNull()?.Hide();
-                if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
+                if (ToolBox.SelectedItem is not ControlListBoxItem item)
                 {
                     PropGrid.Clear();
                     return;
@@ -390,6 +375,7 @@ namespace PropertyGridSample
                         }
 
                         control.Visible = true;
+                        control.Refresh();
                     });
                 }
                 else

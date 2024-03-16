@@ -48,6 +48,11 @@ namespace Alternet.UI
         public Color Warning { get; set; } = SystemColors.WindowText;
 
         /// <summary>
+        /// Highlight text svg color.
+        /// </summary>
+        public Color HighlightText { get; set; } = SystemColors.HighlightText;
+
+        /// <summary>
         /// Gets known svg color for the specified <see cref="KnownSvgColor"/>.
         /// </summary>
         /// <param name="knownSvgColor">Known Svg color identifier.</param>
@@ -80,6 +85,8 @@ namespace Alternet.UI
                     return Information;
                 case KnownSvgColor.Warning:
                     return Warning;
+                case KnownSvgColor.HighlightText:
+                    return HighlightText;
             }
         }
 
@@ -100,10 +107,12 @@ namespace Alternet.UI
             public SvgColorsWhite()
             {
                 Normal = Color.Black;
-                Disabled = SystemColors.GrayText;
                 Error = Normal;
                 Information = Normal;
                 Warning = Normal;
+
+                // SystemColors.GrayText is too dark for this
+                Disabled = TabControl.GetDefaultInteriorBorderColor(false);
             }
         }
     }

@@ -555,6 +555,12 @@ namespace Alternet.UI
          bool ignoreCase) => Search.FindStringEx(str, startIndex, exact, ignoreCase);
 
         /// <summary>
+        /// Sets <see cref="SelectedIndex"/>. Implemented as method for the convenience.
+        /// </summary>
+        /// <param name="index"></param>
+        public virtual void SetSelectedIndex(int? index) => SelectedIndex = index;
+
+        /// <summary>
         /// Unselects all items in the control.
         /// </summary>
         /// <remarks>

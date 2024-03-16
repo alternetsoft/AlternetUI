@@ -14,6 +14,26 @@ ALTERNET_UI_API VListBox* VListBox_Create_()
     return new VListBox();
 }
 
+ALTERNET_UI_API c_bool VListBox_GetVScrollBarVisible_(VListBox* obj)
+{
+    return obj->GetVScrollBarVisible();
+}
+
+ALTERNET_UI_API void VListBox_SetVScrollBarVisible_(VListBox* obj, c_bool value)
+{
+    obj->SetVScrollBarVisible(value);
+}
+
+ALTERNET_UI_API c_bool VListBox_GetHScrollBarVisible_(VListBox* obj)
+{
+    return obj->GetHScrollBarVisible();
+}
+
+ALTERNET_UI_API void VListBox_SetHScrollBarVisible_(VListBox* obj, c_bool value)
+{
+    obj->SetHScrollBarVisible(value);
+}
+
 ALTERNET_UI_API void* VListBox_GetEventDcHandle_(VListBox* obj)
 {
     return obj->GetEventDcHandle();
@@ -72,6 +92,11 @@ ALTERNET_UI_API ListBoxSelectionMode VListBox_GetSelectionMode_(VListBox* obj)
 ALTERNET_UI_API void VListBox_SetSelectionMode_(VListBox* obj, ListBoxSelectionMode value)
 {
     obj->SetSelectionMode(value);
+}
+
+ALTERNET_UI_API RectI_C VListBox_GetItemRectI_(VListBox* obj, int index)
+{
+    return obj->GetItemRectI(index);
 }
 
 ALTERNET_UI_API c_bool VListBox_ScrollRows_(VListBox* obj, int rows)

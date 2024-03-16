@@ -13,6 +13,7 @@ namespace NativeApi.Api
         public bool IsOk { get; }
         public bool IsReadOnly { get; }
         public void LoadSvgFromStream(InputStream stream, int width, int height, Color color) { }
+        public void LoadSvgFromString(string s, int width, int height, Color color) { }
 
         public void InitImage(Image image, int width, int height) { }
 

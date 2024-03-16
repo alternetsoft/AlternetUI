@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// when application needs to report user an error.
         /// </summary>
         /// <remarks>
-        /// Default value is <c>true</c> on Windows and <c>false</c> on other platforms.
+        /// Default value is <c>false</c>.
         /// Do not set <c>true</c> on MacOs as it is not supported.
         /// </remarks>
         public static bool DefaultErrorUseForegroundColor { get; set; }
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// when application needs to report user an error.
         /// </summary>
         /// <remarks>
-        /// Default value is <c>true</c> on Windows and <c>false</c> on other platforms.
+        /// Default value is <c>false</c>.
         /// Do not set <c>true</c> on MacOs as it is not supported.
         /// </remarks>
         public static bool DefaultErrorUseBackgroundColor { get; set; }
@@ -431,8 +431,7 @@ namespace Alternet.UI
         /// <param name="picture"></param>
         public static void InitErrorPicture(PictureBox picture)
         {
-            picture.Image = KnownSvgImages.GetWarningImage(
-                picture.GetSvgColor(KnownSvgColor.Error));
+            picture.Image = KnownColorSvgImages.GetErrorImage();
             picture.VerticalAlignment = UI.VerticalAlignment.Center;
             picture.ImageVisible = false;
             picture.ImageStretch = false;

@@ -18,8 +18,9 @@ namespace Alternet::UI
 
     wxWindow* App::GetTopWindow() const
     {
-        //return wxApp::GetTopWindow();
-        
+        return wxApp::GetTopWindow();
+     
+        /*
         wxWindow* window = m_topWindow;
 
         // If there is no top window or it is about to be destroyed,
@@ -43,7 +44,7 @@ namespace Alternet::UI
             }
         }
 
-        return window;
+        return window;*/
     }
 
     bool App::OnInit()

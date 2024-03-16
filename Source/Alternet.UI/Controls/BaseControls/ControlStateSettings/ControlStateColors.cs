@@ -33,5 +33,20 @@ namespace Alternet.UI
             brushes.Pressed = colors?.Pressed?.BackgroundColor?.AsBrush;
             return brushes;
         }
+
+        /// <summary>
+        /// Creates clone of this object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlStateColors Clone()
+        {
+            var result = new ControlStateColors();
+            result.Normal = Normal;
+            result.Hovered = Hovered;
+            result.Pressed = Pressed;
+            result.Disabled = Disabled;
+            result.Focused = Focused;
+            return result;
+        }
     }
 }

@@ -1230,6 +1230,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="origin"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawText(string text, PointD origin)
+        {
+            DrawText(text, Control.DefaultFont, Brush.Default, origin);
+        }
+
+        /// <summary>
         /// Draws the specified text string at the specified location with the specified
         /// <see cref="Brush"/> and <see cref="Font"/> objects.
         /// </summary>

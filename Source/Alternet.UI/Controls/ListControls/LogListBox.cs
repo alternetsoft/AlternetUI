@@ -214,12 +214,17 @@ namespace Alternet.UI
 
         private void LogRefresh()
         {
-            if (!Application.LogInUpdates() || !BoundToApplicationLog)
+            Invoke(Fn);
+
+            void Fn()
             {
-                var index = Items.Count - 1;
-                SelectedIndex = index;
-                EnsureVisible(index);
-                Refresh();
+                if (!Application.LogInUpdates() || !BoundToApplicationLog)
+                {
+                    var index = Items.Count - 1;
+                    SelectedIndex = index;
+                    EnsureVisible(index);
+                    Refresh();
+                }
             }
         }
 
@@ -265,19 +270,23 @@ namespace Alternet.UI
                 var item = (LogListBoxItem)LastItem!;
                 item.Text = ConstructLogMessage(message);
                 item.Kind = kind;
-                LogRefresh();
                 return item;
             }
             else
-                return Log(message, kind);
+                return LogInternal(message, kind);
         }
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
-            if (e.ReplaceLastMessage)
-                LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
-            else
-                LogInternal(e.Message, e.Kind);
+            Invoke(Fn);
+
+            void Fn()
+            {
+                if (e.ReplaceLastMessage)
+                    LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
+                else
+                    LogInternal(e.Message, e.Kind);
+            }
         }
 
         /// <summary>
@@ -305,17 +314,17 @@ namespace Alternet.UI
                     switch (kind)
                     {
                         case LogItemKind.Error:
-                            ErrorImage ??= KnownColorSvgImages.GetForSize(size).ImgError.AsImage();
+                            ErrorImage ??= KnownColorSvgImages.ImgError.AsImage(size.Width);
                             Image = ErrorImage;
                             break;
                         case LogItemKind.Warning:
                             WarningImage ??=
-                                KnownColorSvgImages.GetForSize(size).ImgWarning.AsImage();
+                                KnownColorSvgImages.ImgWarning.AsImage(size.Width);
                             Image = WarningImage;
                             break;
                         case LogItemKind.Information:
                             InformationImage ??=
-                                KnownColorSvgImages.GetForSize(size).ImgInformation.AsImage();
+                                KnownColorSvgImages.ImgInformation.AsImage(size.Width);
                             Image = InformationImage;
                             break;
                         default:

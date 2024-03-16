@@ -29,9 +29,26 @@ namespace ControlsSample
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
             listBox.HandleCreated += ListBox_HandleCreated;
-            roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged; 
+            roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged;
+            showCheckBoxesCheckBox.CheckedChanged += ShowCheckBoxesCheckBox_CheckedChanged;
+            threeStateCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckBoxThreeState));
+            allowAllStatesCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckBoxAllowAllStatesForUser));
+            allowClickCheckCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckOnClick));
 
             SetSizeToContent();
+            listBox.CheckedChanged += ListBox_CheckedChanged;
+        }
+
+        private void ListBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            string checkedIndicesString = IndexesToStr(listBox.CheckedIndices);
+            Application.Log(
+                $"ListBox.CheckedChanged: ({checkedIndicesString})");
+        }
+
+        private void ShowCheckBoxesCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            listBox.CheckBoxVisible = showCheckBoxesCheckBox.IsChecked;
         }
 
         private void RoundSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -39,8 +56,8 @@ namespace ControlsSample
             if (roundSelectionCheckBox.IsChecked)
             {
                 BorderSettings border = new();
-                border.UniformRadiusIsPercent = true;
-                border.UniformCornerRadius = 50;
+                border.UniformRadiusIsPercent = false;
+                border.UniformCornerRadius = 10;
 
                 listBox.CurrentItemBorder = border;
                 listBox.SelectionBorder = border;
@@ -54,7 +71,7 @@ namespace ControlsSample
 
         private void ListBox_HandleCreated(object? sender, EventArgs e)
         {
-            Application.LogIf("VListBox.HandleCreated", false);
+            Application.LogIf("ListBox.HandleCreated", false);
         }
 
         private void FindText_TextChanged(object? sender, EventArgs e)
@@ -95,22 +112,22 @@ namespace ControlsSample
             Application.Log($"HitTest result: Item: '{item}'");
         }
 
-        private static string IndicesToStr(IReadOnlyList<int> indices)
+        private static string IndexesToStr(IReadOnlyList<int>? indexes)
         {
-            string result = indices.Count > 50 ?
-                "too many indices to display" : string.Join(",", indices);
+            if (indexes is null)
+                return string.Empty;
+            string result = indexes.Count > 50 ?
+                "too many indexes to display" : string.Join(",", indexes);
             return result;
         }
 
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            string s = IndicesToStr(listBox.SelectedIndices);
-            Application.Log($"ListBox: SelectionChanged. SelectedIndices: ({s})");
+            string s = IndexesToStr(listBox.SelectedIndexes);
+            Application.Log($"ListBox: SelectionChanged. SelectedIndexes: ({s})");
         }
 
-        private void AllowMultipleSelectionCheckBox_CheckedChanged(
-            object? sender, 
-            EventArgs e)
+        private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             listBox.Parent?.BeginUpdate();
 

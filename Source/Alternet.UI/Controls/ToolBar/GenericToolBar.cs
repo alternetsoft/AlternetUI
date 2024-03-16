@@ -178,18 +178,6 @@ namespace Alternet.UI
         public int? ImageSize { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="KnownSvgImages"/> for the normal state.
-        /// </summary>
-        [Browsable(false)]
-        public KnownSvgImages? NormalSvgImages { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="KnownSvgImages"/> for the disabled state.
-        /// </summary>
-        [Browsable(false)]
-        public KnownSvgImages? DisabledSvgImages { get; set; }
-
-        /// <summary>
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
@@ -396,10 +384,52 @@ namespace Alternet.UI
             var result = InternalAddSpeedBtn(
                 ItemKind.Button,
                 null,
-                GetNormalSvgImages().ImgEmpty,
+                KnownSvgImages.ImgEmpty.AsImageSet(GetImageSize()),
                 null);
             result.Enabled = false;
             return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control with svg image.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddSpeedBtn(
+            string? text,
+            SvgImage? image,
+            EventHandler? action)
+        {
+            return AddSpeedBtn(
+                text,
+                ToNormal(image),
+                ToDisabled(image),
+                null,
+                action);
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddSpeedBtn(
+            string? text,
+            SvgImage? image,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            return AddSpeedBtn(
+                text,
+                ToNormal(image),
+                ToDisabled(image),
+                toolTip,
+                action);
         }
 
         /// <summary>
@@ -426,6 +456,28 @@ namespace Alternet.UI
                 toolTip,
                 action);
             return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds sticky <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddStickyBtn(
+            string? text,
+            SvgImage? image,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            return AddStickyBtn(
+                text,
+                ToNormal(image),
+                ToDisabled(image),
+                toolTip,
+                action);
         }
 
         /// <summary>
@@ -555,64 +607,81 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="ImageSet"/> from <see cref="SvgImage"/>
+        /// for the normal state.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <returns></returns>
+        public ImageSet? ToNormal(SvgImage? image)
+        {
+            var result = image?.AsNormal(GetImageSize(), IsDarkBackground);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets <see cref="ImageSet"/> from <see cref="SvgImage"/>
+        /// for the disabled state.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <returns></returns>
+        public ImageSet? ToDisabled(SvgImage? image)
+        {
+            var result = image?.AsDisabled(GetImageSize(), IsDarkBackground);
+            return result;
+        }
+
+        /// <summary>
         /// Adds known <see cref="SpeedButton"/> to the control.
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn(KnownButton button, EventHandler? action = null)
         {
             var strings = CommonStrings.Default;
-            var images = GetNormalSvgImages();
-            var disabled = GetDisabledSvgImages();
 
             switch (button)
             {
                 case KnownButton.OK:
                 default:
-                    return AddSpeedBtn(strings.ButtonOk, images.ImgOk, disabled.ImgOk, null, action);
+                    return AddSpeedBtn(strings.ButtonOk, KnownSvgImages.ImgOk, action);
                 case KnownButton.Cancel:
-                    return AddSpeedBtn(strings.ButtonCancel, images.ImgCancel, disabled.ImgCancel, null, action);
+                    return AddSpeedBtn(strings.ButtonCancel, KnownSvgImages.ImgCancel, action);
                 case KnownButton.Yes:
-                    return AddSpeedBtn(strings.ButtonYes, images.ImgYes, disabled.ImgYes, null, action);
+                    return AddSpeedBtn(strings.ButtonYes, KnownSvgImages.ImgYes, action);
                 case KnownButton.No:
-                    return AddSpeedBtn(strings.ButtonNo, images.ImgNo, disabled.ImgNo, null, action);
+                    return AddSpeedBtn(strings.ButtonNo, KnownSvgImages.ImgNo, action);
                 case KnownButton.Abort:
-                    return AddSpeedBtn(strings.ButtonAbort, images.ImgAbort, disabled.ImgAbort, null, action);
+                    return AddSpeedBtn(strings.ButtonAbort, KnownSvgImages.ImgAbort, action);
                 case KnownButton.Retry:
-                    return AddSpeedBtn(strings.ButtonRetry, images.ImgRetry, disabled.ImgRetry, null, action);
+                    return AddSpeedBtn(strings.ButtonRetry, KnownSvgImages.ImgRetry, action);
                 case KnownButton.Ignore:
-                    return AddSpeedBtn(strings.ButtonIgnore, images.ImgIgnore, disabled.ImgIgnore, null, action);
+                    return AddSpeedBtn(strings.ButtonIgnore, KnownSvgImages.ImgIgnore, action);
                 case KnownButton.Help:
-                    return AddSpeedBtn(strings.ButtonHelp, images.ImgHelp, disabled.ImgHelp, null, action);
+                    return AddSpeedBtn(strings.ButtonHelp, KnownSvgImages.ImgHelp, action);
                 case KnownButton.Add:
-                    return AddSpeedBtn(strings.ButtonAdd, images.ImgAdd, disabled.ImgAdd, null, action);
+                    return AddSpeedBtn(strings.ButtonAdd, KnownSvgImages.ImgAdd, action);
                 case KnownButton.Remove:
-                    return AddSpeedBtn(strings.ButtonRemove, images.ImgRemove, disabled.ImgRemove, null, action);
+                    return AddSpeedBtn(strings.ButtonRemove, KnownSvgImages.ImgRemove, action);
                 case KnownButton.Clear:
-                    return AddSpeedBtn(strings.ButtonClear, images.ImgRemoveAll, disabled.ImgRemoveAll, null, action);
+                    return AddSpeedBtn(strings.ButtonClear, KnownSvgImages.ImgRemoveAll, action);
                 case KnownButton.AddChild:
-                    return AddSpeedBtn(strings.ButtonAddChild, images.ImgAddChild, disabled.ImgAddChild, null, action);
+                    return AddSpeedBtn(strings.ButtonAddChild, KnownSvgImages.ImgAddChild, action);
                 case KnownButton.MoreItems:
-                    return AddSpeedBtn(
-                        strings.ToolbarSeeMore,
-                        images.ImgMoreActionsHorz,
-                        disabled.ImgMoreActionsHorz,
-                        null,
-                        action);
+                    return AddSpeedBtn(strings.ToolbarSeeMore, KnownSvgImages.ImgMoreActionsHorz, action);
                 case KnownButton.New:
-                    return AddSpeedBtn(strings.ButtonNew, images.ImgFileNew, disabled.ImgFileNew, null, action);
+                    return AddSpeedBtn(strings.ButtonNew, KnownSvgImages.ImgFileNew, action);
                 case KnownButton.Open:
-                    return AddSpeedBtn(strings.ButtonOpen, images.ImgFileOpen, disabled.ImgFileOpen, null, action);
+                    return AddSpeedBtn(strings.ButtonOpen, KnownSvgImages.ImgFileOpen, action);
                 case KnownButton.Save:
-                    return AddSpeedBtn(strings.ButtonSave, images.ImgFileSave, disabled.ImgFileSave, null, action);
+                    return AddSpeedBtn(strings.ButtonSave, KnownSvgImages.ImgFileSave, action);
                 case KnownButton.Undo:
-                    return AddSpeedBtn(strings.ButtonUndo, images.ImgUndo, disabled.ImgUndo, null, action);
+                    return AddSpeedBtn(strings.ButtonUndo, KnownSvgImages.ImgUndo, action);
                 case KnownButton.Redo:
-                    return AddSpeedBtn(strings.ButtonRedo, images.ImgRedo, disabled.ImgRedo, null, action);
+                    return AddSpeedBtn(strings.ButtonRedo, KnownSvgImages.ImgRedo, action);
                 case KnownButton.Bold:
-                    return AddSpeedBtn(strings.ButtonBold, images.ImgBold, disabled.ImgBold, null, action);
+                    return AddSpeedBtn(strings.ButtonBold, KnownSvgImages.ImgBold, action);
                 case KnownButton.Italic:
-                    return AddSpeedBtn(strings.ButtonItalic, images.ImgItalic, disabled.ImgItalic, null, action);
+                    return AddSpeedBtn(strings.ButtonItalic, KnownSvgImages.ImgItalic, action);
                 case KnownButton.Underline:
-                    return AddSpeedBtn(strings.ButtonUnderline, images.ImgUnderline, disabled.ImgUnderline, null, action);
+                    return AddSpeedBtn(strings.ButtonUnderline, KnownSvgImages.ImgUnderline, action);
             }
         }
 
@@ -649,6 +718,19 @@ namespace Alternet.UI
             }
 
             return Array.Empty<ObjectUniqueId>();
+        }
+
+        /// <summary>
+        /// Adds <see cref="PictureBox"/> to the control.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddPicture(
+            SvgImage? image = null,
+            string? toolTip = default)
+        {
+            return AddPicture(ToNormal(image), ToDisabled(image), toolTip);
         }
 
         /// <summary>
@@ -992,7 +1074,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method disposes tool controls if <paramref name="dispose"/> is <c>true</c>.
         /// </remarks>
-        public virtual void DeleteAll(bool dispose = true)
+        public virtual void DeleteAll(bool dispose = false)
         {
             Stack<Control> controls = new();
             controls.PushRange(Children);
@@ -1002,7 +1084,8 @@ namespace Alternet.UI
                 foreach (var control in controls)
                 {
                     control.Parent = null;
-                    control.Dispose();
+                    if(dispose)
+                        control.Dispose();
                 }
             }
             finally
@@ -1237,39 +1320,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual Color GetDisabledImageColor() =>
             DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
-
-        /// <summary>
-        /// Gets <see cref="KnownSvgImages"/> for the normal state.
-        /// </summary>
-        public virtual KnownSvgImages GetNormalSvgImages() =>
-            NormalSvgImages ??= KnownSvgImages.GetForSize(GetNormalImageColor(), GetImageSize());
-
-        /// <summary>
-        /// Gets unscaled <see cref="KnownSvgImages"/> for the normal state.
-        /// </summary>
-        public virtual KnownSvgImages GetUnscaledNormalSvgImages() =>
-            KnownSvgImages.GetForSize(GetNormalImageColor(), 16);
-
-        /// <summary>
-        /// Gets <see cref="KnownSvgImages"/> for the disabled state.
-        /// </summary>
-        public virtual KnownSvgImages GetDisabledSvgImages() =>
-            DisabledSvgImages ??= KnownSvgImages.GetForSize(GetDisabledImageColor(), GetImageSize());
-
-        /// <summary>
-        /// Gets <see cref="KnownSvgImages"/> for the normal or disabled state depending
-        /// on the parameter value.
-        /// </summary>
-        /// <param name="enabled">Enabled or disabled images.</param>
-        /// <returns></returns>
-        public virtual KnownSvgImages GetSvgImages(bool enabled) =>
-            enabled ? GetNormalSvgImages() : GetDisabledSvgImages();
-
-        /// <summary>
-        /// Gets <see cref="KnownSvgImages"/> for the disabled state.
-        /// </summary>
-        public virtual KnownSvgImages GetUnscaledDisabledSvgImages() =>
-            KnownSvgImages.GetForSize(GetDisabledImageColor(), 16);
 
         /// <summary>
         /// Updates common properties of the item control.

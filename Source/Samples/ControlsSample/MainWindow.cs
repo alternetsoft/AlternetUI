@@ -47,12 +47,15 @@ namespace ControlsSample
             DoInsideLayout(Initialize);
         }
 
-        public void Initialize()
+        internal void SetDebugColors()
         {
             DebugBackgroundColor(Color.Red, nameof(MainWindow));
-            pageContainer = new();
-            pageContainer.TreeView.MakeAsListBox();
-            pageContainer.SetDebugColors();
+            pageContainer?.SetDebugColors();
+        }
+
+        public void Initialize()
+        {
+            pageContainer = new(SplittedTreeAndCards.TreeKind.ListBox);
             panel.Parent = this;
             Title = "Alternet UI Controls Sample";
             Size = (900, 700);
@@ -92,7 +95,8 @@ namespace ControlsSample
             eventsControl.Parent = splitterPanel;
 
             pageContainer.SelectedIndex = 0;
-            pageContainer.TreeView.SetFocusIfPossible();
+            pageContainer.ListBox!.HScrollBarVisible = true;
+            pageContainer.LeftControl?.SetFocusIfPossible();
 
             var logSizeChanged = false;
 
@@ -287,6 +291,9 @@ namespace ControlsSample
 
         private static void ResourceLoader_CustomStreamFromUrl(object? sender, StreamFromUrlEventArgs e)
         {
+            if (e.Value is null)
+                return;
+
             e.Handled = true;
             e.Result = ResourceLoader.DefaultStreamFromUrl(e.Value);
         }

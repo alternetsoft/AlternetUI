@@ -220,6 +220,13 @@ namespace Alternet.Drawing
         public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
 
         /// <summary>
+        /// Tests whether this <see cref='RectI'/> has a <see cref='Width'/>
+        /// or a <see cref='Height'/> less than or equal to 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool SizeIsEmpty => (width <= 0) || (height <= 0);
+
+        /// <summary>
         /// Implicit operator convertion from tuple with four <see cref="int"/> values
         /// to <see cref="RectI"/>.
         /// </summary>

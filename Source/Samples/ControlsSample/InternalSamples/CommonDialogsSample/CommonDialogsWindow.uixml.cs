@@ -23,7 +23,9 @@ namespace ControlsSample
             messageBoxButtonsComboBox.SelectedItem = MessageBoxButtons.OKCancel;
 
             messageBoxIconComboBox.AddEnumValues(typeof(MessageBoxIcon), MessageBoxIcon.None);            
-            exceptionTypeComboBox.AddEnumValues(typeof(TestExceptionType), TestExceptionType.FileNotFoundException);
+            exceptionTypeComboBox.AddEnumValues(
+                typeof(TestExceptionType),
+                TestExceptionType.FileNotFoundException);
 
             messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button1);
             messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button2);
@@ -159,12 +161,16 @@ namespace ControlsSample
 
         private void ThrowExceptionButton_Click(object? sender, EventArgs e)
         {
-            if (System.Diagnostics.Debugger.IsAttached)
+            if (Application.UnhandledExceptionMode != UnhandledExceptionMode.CatchException)
             {
-                MessageBox.Show(
-                    "Run this application without debugging to see the thread exception window.",
-                    "Common Dialogs Sample");
-                return;
+                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.Log("Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)");
+            }
+
+            if(Application.UnhandledExceptionModeIfDebugger != UnhandledExceptionMode.CatchException)
+            {
+                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                Application.Log("Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException)");
             }
 
             throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch

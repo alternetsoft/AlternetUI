@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for url to <see cref="Stream"/> convertion events.
     /// </summary>
-    public class StreamFromUrlEventArgs : ValueConvertEventArgs<string, Stream?>
+    public class StreamFromUrlEventArgs : ValueConvertEventArgs<string?, Stream?>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamFromUrlEventArgs"/> class.

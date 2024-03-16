@@ -74,23 +74,23 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="IEnumerable"/>.
         /// </summary>
-        public static void Log(IEnumerable? items)
+        public static void Log(IEnumerable? items, LogItemKind kind = LogItemKind.Information)
         {
             if (items is null)
                 return;
             foreach (var item in items)
-                Application.Log(item);
+                Application.Log(item, kind);
         }
 
         /// <summary>
         /// Logs <see cref="IEnumerable"/> as section.
         /// </summary>
-        public static void LogAsSection(IEnumerable? items)
+        public static void LogAsSection(IEnumerable? items, LogItemKind kind = LogItemKind.Information)
         {
             if (items is null)
                 return;
             Application.LogBeginSection();
-            Log(items);
+            Log(items, kind);
             Application.LogEndSection();
         }
 
@@ -100,16 +100,19 @@ namespace Alternet.UI
         /// <param name="toFile">If <c>true</c>, <see cref="LogToFile"/> is returned;
         /// otherwise <see cref="Application.Log"/> is returned.</param>
         /// <returns></returns>
-        public static Action<object?> GetLogMethod(bool toFile)
+        /// <param name="kind">Log item kind.</param>
+        public static Action<object?> GetLogMethod(
+            bool toFile,
+            LogItemKind kind = LogItemKind.Information)
         {
             static void ToFile(object? value)
             {
                 LogToFile(value?.ToString());
             }
 
-            static void ToLog(object? value)
+            void ToLog(object? value)
             {
-                Application.Log(value);
+                Application.Log(value, kind);
             }
 
             if (toFile)
@@ -151,10 +154,16 @@ namespace Alternet.UI
         /// <param name="e">Exception to log.</param>
         public static void LogException(Exception e)
         {
-            Application.Log(SectionSeparator);
-            Application.Log("Exception:");
-            Application.Log(e.ToString());
-            Application.Log(SectionSeparator);
+            try
+            {
+                Application.Log(SectionSeparator, LogItemKind.Error);
+                Application.Log("Exception:", LogItemKind.Error);
+                Application.Log(e.ToString(), LogItemKind.Error);
+                Application.Log(SectionSeparator, LogItemKind.Error);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -173,7 +182,12 @@ namespace Alternet.UI
         /// <param name="obj">Object instance.</param>
         /// <param name="propName">Property name.</param>
         /// <param name="prefix">Object name.</param>
-        public static void LogProp(object? obj, string propName, string? prefix = null)
+        /// <param name="kind">Log item kind.</param>
+        public static void LogProp(
+            object? obj,
+            string propName,
+            string? prefix = null,
+            LogItemKind kind = LogItemKind.Information)
         {
             var s = prefix;
             if (s != null)
@@ -187,7 +201,7 @@ namespace Alternet.UI
             if (logUseMaxLength > 0)
                 propValue = StringUtils.LimitLength(propValue, LogPropMaxLength);
 
-            Application.Log(s + propName + " = " + propValue);
+            Application.Log(s + propName + " = " + propValue, kind);
         }
 
         /// <summary>
@@ -297,11 +311,12 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="IEnumerable"/>.
         /// </summary>
+        /// <param name="kind">Log item kind.</param>
         /// <param name="items">Items to log.</param>
-        public static void LogRange(IEnumerable items)
+        public static void LogRange(IEnumerable items, LogItemKind kind = LogItemKind.Information)
         {
             foreach (var item in items)
-                Application.Log(item);
+                Application.Log(item, kind);
         }
 
         internal static void LogAppDomainTargetFrameworkName()

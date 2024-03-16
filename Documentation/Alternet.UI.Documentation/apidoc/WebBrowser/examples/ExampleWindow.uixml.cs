@@ -19,8 +19,6 @@ namespace Alternet.UI.Documentation.Examples.WebBrowser
             #endregion
         }
 
-        private static string? headerText;    
-
         private bool historyCleared = false;
         private bool pandaLoaded = false;
         private void FindClearButton_Click(object sender, EventArgs e)
@@ -61,7 +59,10 @@ namespace Alternet.UI.Documentation.Examples.WebBrowser
                 pandaLoaded = true;
                 WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
 
-                WebBrowser1.LoadURL("https://www.google.com/");
+                Application.AddIdleTask(() =>
+                {
+                    WebBrowser1.LoadURL("https://www.google.com/");
+                });
             }
         }
 

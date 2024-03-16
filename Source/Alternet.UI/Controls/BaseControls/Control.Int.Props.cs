@@ -12,8 +12,6 @@ namespace Alternet.UI
     {
         internal static int ScreenShotCounter { get; set; } = 0;
 
-        internal bool NeedPerformLayout { get; set; }
-
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>
@@ -38,15 +36,6 @@ namespace Alternet.UI
             {
                 if (NativeControl is not null)
                     NativeControl.ProcessUIUpdates = value;
-            }
-        }
-
-        internal Graphics MeasureCanvas
-        {
-            get
-            {
-                measureCanvas ??= CreateDrawingContext();
-                return measureCanvas;
             }
         }
 

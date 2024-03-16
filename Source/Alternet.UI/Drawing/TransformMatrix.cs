@@ -3,14 +3,16 @@ using System;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform. This class cannot be inherited.
+    /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
+    /// This class cannot be inherited.
     /// </summary>
     public sealed class TransformMatrix : IDisposable
     {
         private bool isDisposed;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TransformMatrix"/> class as the identity matrix.
+        /// Initializes a new instance of the <see cref="TransformMatrix"/> class
+        /// as the identity matrix.
         /// </summary>
         public TransformMatrix()
             : this(new UI.Native.TransformMatrix())
@@ -18,14 +20,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TransformMatrix"/> class with the specified elements.
+        /// Initializes a new instance of the <see cref="TransformMatrix"/> class
+        /// with the specified elements.
         /// </summary>
-        /// <param name="m11">The value in the first row and first column of the new <see cref="TransformMatrix"/>.</param>
-        /// <param name="m12">The value in the first row and second column of the new <see cref="TransformMatrix"/>.</param>
-        /// <param name="m21">The value in the second row and first column of the new <see cref="TransformMatrix"/>.</param>
-        /// <param name="m22">The value in the second row and second column of the new <see cref="TransformMatrix"/>.</param>
-        /// <param name="dx">The value in the third row and first column of the new <see cref="TransformMatrix"/>.</param>
-        /// <param name="dy">The value in the third row and second column of the new <see cref="TransformMatrix"/>.</param>
+        /// <param name="m11">The value in the first row and first column
+        /// of the new <see cref="TransformMatrix"/>.</param>
+        /// <param name="m12">The value in the first row and second column of the
+        /// new <see cref="TransformMatrix"/>.</param>
+        /// <param name="m21">The value in the second row and first column of the
+        /// new <see cref="TransformMatrix"/>.</param>
+        /// <param name="m22">The value in the second row and second column of the
+        /// new <see cref="TransformMatrix"/>.</param>
+        /// <param name="dx">The value in the third row and first column of the
+        /// new <see cref="TransformMatrix"/>.</param>
+        /// <param name="dy">The value in the third row and second column of the
+        /// new <see cref="TransformMatrix"/>.</param>
         public TransformMatrix(
             double m11,
             double m12,
@@ -44,17 +53,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets an array of floating-point values that represents the elements of this <see cref="TransformMatrix"/>.
+        /// Gets an array of floating-point values that represents the
+        /// elements of this <see cref="TransformMatrix"/>.
         /// </summary>
-        /// <value>Gets an array of floating-point values that represents the elements of this <see cref="TransformMatrix"/>.</value>
+        /// <value>Gets an array of floating-point values that represents
+        /// the elements of this <see cref="TransformMatrix"/>.</value>
         /// <remarks>
-        /// The elements m11, m12, m21, m22, dx, and dy of the <see cref="TransformMatrix"/> are represented by the
+        /// The elements m11, m12, m21, m22, dx, and dy of the
+        /// <see cref="TransformMatrix"/> are represented by the
         /// values in the array in that order.
         /// </remarks>
         public double[] Elements => new[] { M11, M12, M21, M22, DX, DY };
 
         /// <summary>
-        /// Gets or sets the value in the first row and first column of the new <see cref="TransformMatrix"/>.
+        /// Gets or sets the value in the first row and first column of the
+        /// new <see cref="TransformMatrix"/>.
         /// </summary>
         public double M11
         {
@@ -72,7 +85,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the first row and second column of the <see cref="TransformMatrix"/>.
+        /// Gets or sets the value in the first row and second column of
+        /// the <see cref="TransformMatrix"/>.
         /// </summary>
         public double M12
         {
@@ -90,7 +104,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the second row and first column of the <see cref="TransformMatrix"/>.
+        /// Gets or sets the value in the second row and first column of
+        /// the <see cref="TransformMatrix"/>.
         /// </summary>
         public double M21
         {
@@ -108,7 +123,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the second row and second column of the <see cref="TransformMatrix"/>.
+        /// Gets or sets the value in the second row and second column
+        /// of the <see cref="TransformMatrix"/>.
         /// </summary>
         public double M22
         {
@@ -126,7 +142,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the x translation value (the dx value, or the element in the third row and first column) of
+        /// Gets or sets the x translation value (the dx value, or the element
+        /// in the third row and first column) of
         /// this <see cref="TransformMatrix"/>.
         /// </summary>
         public double DX
@@ -145,7 +162,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the y translation value (the dy value, or the element in the third row and second column) of
+        /// Gets or sets the y translation value (the dy value, or the
+        /// element in the third row and second column) of
         /// this <see cref="TransformMatrix"/>.
         /// </summary>
         public double DY
@@ -166,7 +184,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a value indicating whether this <see cref="TransformMatrix"/> is the identity matrix.
         /// </summary>
-        /// <value>This property is <see langword="true"/> if this <see cref="TransformMatrix"/> is identity; otherwise,
+        /// <value>This property is <see langword="true"/> if this
+        /// <see cref="TransformMatrix"/> is identity; otherwise,
         /// <see langword="false"/>.</value>
         public bool IsIdentity
         {
@@ -182,8 +201,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref="TransformMatrix"/> with the specified translation vector.
         /// </summary>
-        /// <param name="offsetX">The x value by which to translate this <see cref="TransformMatrix"/>.</param>
-        /// <param name="offsetY">The y value by which to translate this <see cref="TransformMatrix"/>.</param>
+        /// <param name="offsetX">The x value by which to translate
+        /// this <see cref="TransformMatrix"/>.</param>
+        /// <param name="offsetY">The y value by which to translate
+        /// this <see cref="TransformMatrix"/>.</param>
         public static TransformMatrix CreateTranslation(double offsetX, double offsetY)
         {
             var matrix = new TransformMatrix();
@@ -194,8 +215,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref="TransformMatrix"/> with the specified scale vector.
         /// </summary>
-        /// <param name="scaleX">The value by which to scale this <see cref="TransformMatrix"/> in the x-axis direction.</param>
-        /// <param name="scaleY">The value by which to scale this <see cref="TransformMatrix"/> in the y-axis direction.</param>
+        /// <param name="scaleX">The value by which to scale
+        /// this <see cref="TransformMatrix"/> in the x-axis direction.</param>
+        /// <param name="scaleY">The value by which to scale
+        /// this <see cref="TransformMatrix"/> in the y-axis direction.</param>
         public static TransformMatrix CreateScale(double scaleX, double scaleY)
         {
             var matrix = new TransformMatrix();
@@ -233,10 +256,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Multiplies this <see cref="TransformMatrix"/> by the specified <see cref="TransformMatrix"/> by prepending
+        /// Multiplies this <see cref="TransformMatrix"/> by the specified
+        /// <see cref="TransformMatrix"/> by prepending
         /// the specified <see cref="TransformMatrix"/>.
         /// </summary>
-        /// <param name="matrix">The <see cref="TransformMatrix"/> by which this <see cref="TransformMatrix"/> is to be multiplied.</param>
+        /// <param name="matrix">The <see cref="TransformMatrix"/> by
+        /// which this <see cref="TransformMatrix"/> is to be multiplied.</param>
         public void Multiply(TransformMatrix matrix)
         {
             CheckDisposed();
@@ -244,10 +269,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Applies the specified translation vector to this <see cref="TransformMatrix"/> by prepending the translation vector.
+        /// Applies the specified translation vector to
+        /// this <see cref="TransformMatrix"/> by prepending the translation vector.
         /// </summary>
-        /// <param name="offsetX">The x value by which to translate this <see cref="TransformMatrix"/>.</param>
-        /// <param name="offsetY">The y value by which to translate this <see cref="TransformMatrix"/>.</param>
+        /// <param name="offsetX">The x value by which to
+        /// translate this <see cref="TransformMatrix"/>.</param>
+        /// <param name="offsetY">The y value by which to
+        /// translate this <see cref="TransformMatrix"/>.</param>
         public void Translate(double offsetX, double offsetY)
         {
             CheckDisposed();
@@ -255,10 +283,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Applies the specified scale vector to this <see cref="TransformMatrix"/> by prepending the scale vector.
+        /// Applies the specified scale vector to
+        /// this <see cref="TransformMatrix"/> by prepending the scale vector.
         /// </summary>
-        /// <param name="scaleX">The value by which to scale this <see cref="TransformMatrix"/> in the x-axis direction.</param>
-        /// <param name="scaleY">The value by which to scale this <see cref="TransformMatrix"/> in the y-axis direction.</param>
+        /// <param name="scaleX">The value by which to
+        /// scale this <see cref="TransformMatrix"/> in the x-axis direction.</param>
+        /// <param name="scaleY">The value by which to
+        /// scale this <see cref="TransformMatrix"/> in the y-axis direction.</param>
         public void Scale(double scaleX, double scaleY)
         {
             CheckDisposed();
@@ -266,7 +297,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Applies a clockwise rotation of the specified angle about the origin to this <see cref="TransformMatrix"/>.
+        /// Applies a clockwise rotation of the specified angle about the
+        /// origin to this <see cref="TransformMatrix"/>.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
         public void Rotate(double angle)

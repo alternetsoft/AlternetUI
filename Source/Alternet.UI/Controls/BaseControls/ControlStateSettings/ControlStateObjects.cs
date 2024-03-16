@@ -124,14 +124,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         /// <returns></returns>
-        public bool HasObject(GenericControlState state) => GetObjectOrNormal(state) != null;
+        public virtual bool HasObject(GenericControlState state) => GetObjectOrNormal(state) != null;
 
         /// <summary>
         /// Gets an object for the specified state or <see cref="Normal"/> if
         /// object for that state is not specified.
         /// </summary>
         /// <param name="state">Control state.</param>
-        public T? GetObjectOrNormal(GenericControlState state)
+        public virtual T? GetObjectOrNormal(GenericControlState state)
         {
             return GetObjectOrNull(state) ?? normal;
         }
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         /// <param name="value">Object value.</param>
-        public void SetObject(T? value, GenericControlState state = GenericControlState.Normal)
+        public virtual void SetObject(T? value, GenericControlState state = GenericControlState.Normal)
         {
             switch (state)
             {
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// Assigns data for all states from the <paramref name="source"/>.
         /// </summary>
         /// <param name="source"></param>
-        public void Assign(ControlStateObjects<T>? source)
+        public virtual void Assign(ControlStateObjects<T>? source)
         {
             if(source is null)
             {
@@ -193,7 +193,7 @@ namespace Alternet.UI
         /// Sets data for all the states with the <paramref name="value"/>.
         /// </summary>
         /// <param name="value">Object value.</param>
-        public void SetAll(T? value)
+        public virtual void SetAll(T? value)
         {
             Normal = value;
             Hovered = value;
@@ -209,7 +209,7 @@ namespace Alternet.UI
         /// <param name="state">Control state.</param>
         /// <param name="action">Action to call if no object is assigned for the state.</param>
         /// <returns></returns>
-        public T GetObjectOrAction(GenericControlState state, Func<T> action)
+        public virtual T GetObjectOrAction(GenericControlState state, Func<T> action)
         {
             return GetObjectOrNull(state) ?? action();
         }
@@ -220,7 +220,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         /// <param name="defaultValue">Default result value.</param>
-        public T GetObjectOrDefault(GenericControlState state, T defaultValue)
+        public virtual T GetObjectOrDefault(GenericControlState state, T defaultValue)
         {
             return GetObjectOrNull(state) ?? defaultValue;
         }
@@ -230,7 +230,7 @@ namespace Alternet.UI
         /// is not specified.
         /// </summary>
         /// <param name="state">Control state.</param>
-        public T? GetObjectOrNull(GenericControlState state)
+        public virtual T? GetObjectOrNull(GenericControlState state)
         {
             return state switch
             {
@@ -249,7 +249,7 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        protected bool SetProperty(
+        protected virtual bool SetProperty(
             ref T? storage,
             T? value,
             [CallerMemberName] string? propertyName = null)

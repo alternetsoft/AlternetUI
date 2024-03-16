@@ -5,15 +5,14 @@ namespace Alternet.UI.Documentation.Examples
 {
     public partial class MainWindow : Window
     {
-        private readonly SpeedButton button2;
-
         public MainWindow()
         {
             InitializeComponent();
             logListBox.BindApplicationLog();
 
-            button1.LoadSvg(KnownSvgUrls.UrlImageOk, 32);
-            button2 = CreateSpeedButton();
+            button1.ImageSet = KnownSvgImages.ImgOk.AsNormal(32, button1.IsDarkBackground);
+            button1.DisabledImageSet = KnownSvgImages.ImgOk.AsDisabled(32, button1.IsDarkBackground);
+            CreateSpeedButton();
         }
 
         #region CSharpCreation
@@ -24,13 +23,14 @@ namespace Alternet.UI.Documentation.Examples
                 Text = "Cancel",
                 TextVisible = true,
                 ToolTip = "Some hint",
-                HorizontalAlignment = HorizontalAlignment.Center,
                 Parent = buttonPanel,
                 ShortcutKeys = Keys.Control | Keys.A,
                 Name = "cancelBtn",
+                Enabled = false,
+                HorizontalAlignment = HorizontalAlignment.Right,
             };
-            result.HorizontalAlignment = HorizontalAlignment.Right;
-            result.LoadSvg(KnownSvgUrls.UrlImageCancel, 32);
+            result.ImageSet = KnownSvgImages.ImgCancel.AsNormal(32, result.IsDarkBackground);
+            result.DisabledImageSet = KnownSvgImages.ImgCancel.AsDisabled(32, result.IsDarkBackground);
             result.Click += Button_Click;
             return result;
         }

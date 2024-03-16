@@ -244,8 +244,10 @@ namespace Alternet.UI
                 if (boundsI == oldBoundsI)
                     return;
 
-                spd.Target.Bounds = boundsI;
-                /*Application.DoEvents();*/
+                Parent?.DoInsideUpdate(() =>
+                {
+                    spd.Target.Bounds = boundsI;
+                });
                 Parent?.Refresh();
                 var args = new SplitterEventArgs(
                     Left,

@@ -54,6 +54,10 @@ namespace Alternet.UI
         private ImageSet? image;
         private ImageSet? disabledImage;
 
+        static MenuItem()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
         /// </summary>
@@ -151,7 +155,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image associated with the menu item.
         /// </summary>
-        public ImageSet? Image
+        public virtual ImageSet? Image
         {
             get
             {
@@ -170,7 +174,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets disabled image associated with the menu item.
         /// </summary>
-        public ImageSet? DisabledImage
+        public virtual ImageSet? DisabledImage
         {
             get
             {
@@ -194,7 +198,7 @@ namespace Alternet.UI
         [Localizable(true)]
         [DefaultValue(Keys.None)]
         [Browsable(false)]
-        public Keys ShortcutKeys
+        public virtual Keys ShortcutKeys
         {
             get
             {
@@ -217,7 +221,7 @@ namespace Alternet.UI
         /// this <see cref="MenuItem"/> is clicked by the user.
         /// </summary>
         [Browsable(false)]
-        public Action? ClickAction
+        public virtual Action? ClickAction
         {
             get => action;
             set
@@ -259,7 +263,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating the shortcut key associated with
         /// the menu item.
         /// </summary>
-        public KeyGesture? Shortcut
+        public virtual KeyGesture? Shortcut
         {
             get
             {
@@ -294,7 +298,7 @@ namespace Alternet.UI
         /// The <see langword="null"/> is the default value of this property.
         /// </para>
         /// </remarks>
-        public MenuItemRole? Role
+        public virtual MenuItemRole? Role
         {
             get
             {
@@ -315,7 +319,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether a check mark appears next
         /// to the text of the menu item.
         /// </summary>
-        public bool Checked
+        public virtual bool Checked
         {
             get
             {
@@ -333,21 +337,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ICommand? Command
+        public virtual ICommand? Command
         {
             get { return (ICommand?)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
         /// <inheritdoc/>
-        public object? CommandParameter
+        public virtual object? CommandParameter
         {
             get { return (object?)GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
 
         /// <inheritdoc/>
-        public object? CommandTarget
+        public virtual object? CommandTarget
         {
             get { return GetValue(CommandTargetProperty); }
             set { SetValue(CommandTargetProperty, value); }

@@ -123,8 +123,7 @@ namespace Alternet.UI
 
                 IdMatchCase = OptionsToolBar.AddStickyBtn(
                     CommonStrings.Default.FindOptionMatchCase,
-                    OptionsToolBar.GetNormalSvgImages().ImgFindMatchCase,
-                    OptionsToolBar.GetDisabledSvgImages().ImgFindMatchCase,
+                    KnownSvgImages.ImgFindMatchCase,
                     null,
                     OnClickMatchCase);
                 OptionsToolBar.SetToolShortcut(
@@ -133,8 +132,7 @@ namespace Alternet.UI
 
                 IdMatchWholeWord = OptionsToolBar.AddStickyBtn(
                     CommonStrings.Default.FindOptionMatchWholeWord,
-                    OptionsToolBar.GetNormalSvgImages().ImgFindMatchFullWord,
-                    OptionsToolBar.GetDisabledSvgImages().ImgFindMatchFullWord,
+                    KnownSvgImages.ImgFindMatchFullWord,
                     null,
                     OnClickMatchWholeWord);
                 OptionsToolBar.SetToolShortcut(
@@ -143,8 +141,7 @@ namespace Alternet.UI
 
                 IdUseRegularExpressions = OptionsToolBar.AddStickyBtn(
                     CommonStrings.Default.FindOptionUseRegularExpressions,
-                    OptionsToolBar.GetNormalSvgImages().ImgRegularExpr,
-                    OptionsToolBar.GetDisabledSvgImages().ImgRegularExpr,
+                    KnownSvgImages.ImgRegularExpr,
                     null,
                     OnClickUseRegularExpressions);
                 OptionsToolBar.SetToolShortcut(
@@ -155,8 +152,7 @@ namespace Alternet.UI
 
                 IdToggleReplaceOptions = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
-                    FindToolBar.GetNormalSvgImages().ImgAngleDown,
-                    FindToolBar.GetDisabledSvgImages().ImgAngleDown);
+                    KnownSvgImages.ImgAngleDown);
 
                 findEdit.SuggestedWidth = 150;
                 findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind + "...";
@@ -166,22 +162,19 @@ namespace Alternet.UI
 
                 IdFindNext = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindNext,
-                    FindToolBar.GetNormalSvgImages().ImgArrowDown,
-                    FindToolBar.GetDisabledSvgImages().ImgArrowDown);
+                    KnownSvgImages.ImgArrowDown);
                 FindToolBar.SetToolShortcut(IdFindNext, KnownKeys.FindReplaceControlKeys.FindNext);
 
                 IdFindPrevious = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindPrevious,
-                    FindToolBar.GetNormalSvgImages().ImgArrowUp,
-                    FindToolBar.GetDisabledSvgImages().ImgArrowUp);
+                    KnownSvgImages.ImgArrowUp);
                 FindToolBar.SetToolShortcut(
                     IdFindPrevious,
                     KnownKeys.FindReplaceControlKeys.FindPrevious);
 
                 IdFindClose = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonClose,
-                    FindToolBar.GetNormalSvgImages().ImgCancel,
-                    FindToolBar.GetDisabledSvgImages().ImgCancel);
+                    KnownSvgImages.ImgCancel);
                 FindToolBar.SetToolAlignRight(IdFindClose, true);
 
                 ReplaceToolBar.AddSpeedBtn();
@@ -192,14 +185,12 @@ namespace Alternet.UI
 
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplace,
-                    FindToolBar.GetNormalSvgImages().ImgReplace,
-                    FindToolBar.GetDisabledSvgImages().ImgReplace);
+                    KnownSvgImages.ImgReplace);
                 ReplaceToolBar.SetToolShortcut(IdReplace, KnownKeys.FindReplaceControlKeys.Replace);
 
                 IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplaceAll,
-                    FindToolBar.GetNormalSvgImages().ImgReplaceAll,
-                    FindToolBar.GetDisabledSvgImages().ImgReplaceAll);
+                    KnownSvgImages.ImgReplaceAll);
                 ReplaceToolBar.SetToolShortcut(
                     IdReplaceAll,
                     KnownKeys.FindReplaceControlKeys.ReplaceAll);
@@ -839,10 +830,10 @@ namespace Alternet.UI
                 ReplaceToolBar.Visible = value;
                 FindToolBar.SetToolDisabledImage(
                     IdToggleReplaceOptions,
-                    FindToolBar.GetSvgImages(false).GetImgAngleUpDown(value));
+                    FindToolBar.ToDisabled(KnownSvgImages.GetImgAngleUpDown(value)));
                 FindToolBar.SetToolImage(
                     IdToggleReplaceOptions,
-                    FindToolBar.GetSvgImages(true).GetImgAngleUpDown(value));
+                    FindToolBar.ToNormal(KnownSvgImages.GetImgAngleUpDown(value)));
                 Manager?.SetReplaceVisible(value);
             }
         }

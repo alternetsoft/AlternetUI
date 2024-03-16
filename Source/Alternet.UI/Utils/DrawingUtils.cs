@@ -12,6 +12,31 @@ namespace Alternet.UI
     /// </summary>
     public static class DrawingUtils
     {
+        /// <inheritdoc cref="CustomControlPainter.GetCheckBoxSize"/>
+        public static SizeD GetCheckBoxSize(
+            Control control,
+            CheckState checkState,
+            GenericControlState controlState)
+        {
+            return CustomControlPainter.Current.GetCheckBoxSize(control, checkState, controlState);
+        }
+
+        /// <inheritdoc cref="CustomControlPainter.DrawCheckBox"/>
+        public static void DrawCheckBox(
+            this Graphics canvas,
+            Control control,
+            RectD rect,
+            CheckState checkState,
+            GenericControlState controlState)
+        {
+            CustomControlPainter.Current.DrawCheckBox(
+                control,
+                canvas,
+                rect,
+                checkState,
+                controlState);
+        }
+
         /// <summary>
         /// Fills rectangle background and draws its border using the specified border settings.
         /// </summary>

@@ -14,10 +14,12 @@ namespace Alternet::UI
     {
     }
 
-    void TransformMatrix::Initialize(double m11, double m12, double m21, double m22, double dx, double dy)
+    void TransformMatrix::Initialize(double m11, double m12, double m21,
+        double m22, double dx, double dy)
     {
         auto window = GetWindow();
-        _matrix.Set(wxMatrix2D(m11, m12, m21, m22), wxPoint2DDouble(fromDip(dx, window), fromDip(dy, window)));
+        _matrix.Set(wxMatrix2D(m11, m12, m21, m22), wxPoint2DDouble(fromDip(dx, window),
+            fromDip(dy, window)));
     }
 
     double TransformMatrix::GetM11()
@@ -167,7 +169,8 @@ namespace Alternet::UI
     Size TransformMatrix::TransformSize(const Size& size)
     {
         auto window = GetWindow();
-        auto result = toDip(_matrix.TransformDistance(fromDip(Point(size.Width, size.Height), window)), window);
+        auto result = toDip(_matrix.TransformDistance(
+            fromDip(Point(size.Width, size.Height), window)), window);
         return Size(result.X, result.Y);
     }
 
@@ -198,7 +201,8 @@ namespace Alternet::UI
         return (((int)num2) ^ ((int)(num2 >> 32)));
     }
 
-    int TransformMatrix::CombineHashCodes(double v1, double v2, double v3, double v4, double v5, double v6)
+    int TransformMatrix::CombineHashCodes(double v1, double v2, double v3,
+        double v4, double v5, double v6)
     {
         int hash = 17;
         hash = hash * 23 + GetHashCode(v1);

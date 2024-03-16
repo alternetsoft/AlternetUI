@@ -110,41 +110,28 @@ namespace Alternet.UI
         protected virtual void CreateToolbarItems()
         {
             var toolbar = Toolbar;
-            var imageSize = GetBaseToolSvgSize();
+            var imageSize = GetBaseToolSvgSize().Width;
             toolbar.ToolBitmapSizeInPixels = imageSize;
 
-            var images = KnownSvgImages.GetForSize(
-                toolbar.GetSvgColor(KnownSvgColor.Normal),
-                imageSize);
-
-            /*Application.LogNameValue(
-                "PreferredSize",
-                images.ImgFileNew.GetPreferredBitmapSizeFor(this));*/
-
-            buttonIdNew = toolbar.AddTool(
+            buttonIdNew = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonNew,
-                images.ImgFileNew,
-                CommonStrings.Default.ButtonNew);
+                KnownSvgImages.ImgFileNew);
 
-            buttonIdOpen = toolbar.AddTool(
+            buttonIdOpen = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonOpen,
-                images.ImgFileOpen,
-                CommonStrings.Default.ButtonOpen);
+                KnownSvgImages.ImgFileOpen);
 
-            buttonIdSave = toolbar.AddTool(
+            buttonIdSave = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonSave,
-                images.ImgFileSave,
-                CommonStrings.Default.ButtonSave);
+                KnownSvgImages.ImgFileSave);
 
-            buttonIdUndo = toolbar.AddTool(
+            buttonIdUndo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonUndo,
-                images.ImgUndo,
-                CommonStrings.Default.ButtonUndo);
+                KnownSvgImages.ImgUndo);
 
-            buttonIdRedo = toolbar.AddTool(
+            buttonIdRedo = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonRedo,
-                images.ImgRedo,
-                CommonStrings.Default.ButtonRedo);
+                KnownSvgImages.ImgRedo);
 
             toolbar.AddToolOnClick(buttonIdNew, FileNew_Click);
             toolbar.AddToolOnClick(buttonIdOpen, FileOpen_Click);

@@ -76,7 +76,6 @@ namespace Alternet.UI
         private readonly HashSet<TreeViewItem> selectedItems = new();
 
         private ImageList? imageList = null;
-
         private TreeViewSelectionMode selectionMode = TreeViewSelectionMode.Single;
 
         /// <summary>
@@ -149,14 +148,12 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs before the tree item is expanded. This event can be canceled.
         /// </summary>
-        public event
-            EventHandler<TreeViewCancelEventArgs>? BeforeExpand;
+        public event EventHandler<TreeViewCancelEventArgs>? BeforeExpand;
 
         /// <summary>
         /// Occurs before the tree item is collapsed. This event can be canceled.
         /// </summary>
-        public event
-            EventHandler<TreeViewCancelEventArgs>? BeforeCollapse;
+        public event EventHandler<TreeViewCancelEventArgs>? BeforeCollapse;
 
         /// <summary>
         /// Occurs before the tree item label text is edited. This event can
@@ -203,7 +200,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public TreeViewItem? SelectedItem
+        public virtual TreeViewItem? SelectedItem
         {
             get
             {
@@ -225,7 +222,7 @@ namespace Alternet.UI
         /// Gets first root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public TreeViewItem? FirstItem
+        public virtual TreeViewItem? FirstItem
         {
             get
             {
@@ -239,7 +236,7 @@ namespace Alternet.UI
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public TreeViewItem? LastRootItem
+        public virtual TreeViewItem? LastRootItem
         {
             get
             {
@@ -253,7 +250,7 @@ namespace Alternet.UI
         /// Gets last item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public TreeViewItem? LastItem
+        public virtual TreeViewItem? LastItem
         {
             get
             {
@@ -277,7 +274,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public bool HasBorder
+        public virtual bool HasBorder
         {
             get
             {
@@ -306,7 +303,7 @@ namespace Alternet.UI
         /// <see langword="false" />, if the the root node is shown.
         /// The default is <see langword="true" />.
         /// </returns>
-        public bool HideRoot
+        public virtual bool HideRoot
         {
             get
             {
@@ -331,7 +328,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This property doesn't work on all the platforms.
         /// </remarks>
-        public bool VariableRowHeight
+        public virtual bool VariableRowHeight
         {
             get
             {
@@ -360,7 +357,7 @@ namespace Alternet.UI
         /// control in Explorer and other built-in programs and so using it
         /// may be preferable to the default style.
         /// </remarks>
-        public bool TwistButtons
+        public virtual bool TwistButtons
         {
             get
             {
@@ -378,7 +375,7 @@ namespace Alternet.UI
         /// the state images.
         /// </summary>
         [Browsable(false)]
-        public uint StateImageSpacing
+        public virtual uint StateImageSpacing
         {
             get
             {
@@ -395,7 +392,7 @@ namespace Alternet.UI
         /// Gets or sets the current control indentation.
         /// </summary>
         [Browsable(false)]
-        public uint Indentation
+        public virtual uint Indentation
         {
             get
             {
@@ -417,7 +414,7 @@ namespace Alternet.UI
         /// <see langword="false" />, if row lines are hidden.
         /// The default is <see langword="false" />.
         /// </returns>
-        public bool RowLines
+        public virtual bool RowLines
         {
             get
             {
@@ -437,7 +434,7 @@ namespace Alternet.UI
         /// <value><see langword="true"/> if lines are drawn between tree items in
         /// the tree view control; otherwise,
         /// <see langword="false"/>. The default is <see langword="true"/>.</value>
-        public bool ShowLines
+        public virtual bool ShowLines
         {
             get => Handler.ShowLines;
             set => Handler.ShowLines = value;
@@ -451,7 +448,7 @@ namespace Alternet.UI
         /// items that are at the root of the tree
         /// view; otherwise, <see langword="false"/>. The default is
         /// <see langword="true"/>.</value>
-        public bool ShowRootLines
+        public virtual bool ShowRootLines
         {
             get => Handler.ShowRootLines;
             set => Handler.ShowRootLines = value;
@@ -468,7 +465,7 @@ namespace Alternet.UI
         /// child tree items; otherwise, <see langword="false"/>. The default is
         /// <see langword="true"/>.
         /// </value>
-        public bool ShowExpandButtons
+        public virtual bool ShowExpandButtons
         {
             get => Handler.ShowExpandButtons;
             set => Handler.ShowExpandButtons = value;
@@ -480,7 +477,7 @@ namespace Alternet.UI
         /// <value>A <see cref="TreeViewItem"/> that represents the first
         /// fully-visible tree item in the tree view control.</value>
         [Browsable(false)]
-        public TreeViewItem? TopItem => Handler.TopItem;
+        public virtual TreeViewItem? TopItem => Handler.TopItem;
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the
@@ -497,7 +494,7 @@ namespace Alternet.UI
         /// <see cref="TreeView"/>.
         /// </remarks>
         [Browsable(false)]
-        public IReadOnlyList<TreeViewItem> SelectedItems
+        public virtual IReadOnlyList<TreeViewItem> SelectedItems
         {
             get
             {
@@ -527,7 +524,7 @@ namespace Alternet.UI
         /// how many items in the <see cref="TreeView"/>
         /// a user can select at one time.
         /// </remarks>
-        public TreeViewSelectionMode SelectionMode
+        public virtual TreeViewSelectionMode SelectionMode
         {
             get
             {
@@ -561,7 +558,7 @@ namespace Alternet.UI
         /// <see cref="Items"/> property
         /// that can contain its own child items collection.
         /// </remarks>
-        public Collection<TreeViewItem> Items { get; } =
+        public virtual Collection<TreeViewItem> Items { get; } =
             new Collection<TreeViewItem> { ThrowOnNullAdd = true };
 
         /// <summary>
@@ -581,7 +578,7 @@ namespace Alternet.UI
         /// These individual <see cref="TreeViewItem"/> settings will override
         /// the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
-        public ImageList? ImageList
+        public virtual ImageList? ImageList
         {
             get
             {
@@ -624,7 +621,7 @@ namespace Alternet.UI
         /// These individual <see cref="TreeViewItem"/> settings will override
         /// the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
-        public int? ImageIndex { get; set; }
+        public virtual int? ImageIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the selection highlight spans
@@ -635,7 +632,7 @@ namespace Alternet.UI
         /// the tree view control; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        public bool FullRowSelect
+        public virtual bool FullRowSelect
         {
             get => Handler.FullRowSelect;
             set => Handler.FullRowSelect = value;
@@ -650,7 +647,7 @@ namespace Alternet.UI
         /// edited; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        public bool AllowLabelEdit
+        public virtual bool AllowLabelEdit
         {
             get => Handler.AllowLabelEdit;
             set => Handler.AllowLabelEdit = value;
@@ -671,15 +668,27 @@ namespace Alternet.UI
         /// <summary>
         /// Expands all child tree items.
         /// </summary>
-        public void ExpandAll()
+        public virtual void ExpandAll()
         {
             Handler.ExpandAll();
         }
 
         /// <summary>
+        /// Sets <see cref="SelectedItem"/> to the item on the root level with the specified index.
+        /// </summary>
+        /// <param name="index"></param>
+        public virtual void SetSelectedIndex(int? index)
+        {
+            if (index is null)
+                SelectedItem = null;
+            else
+                SelectedItem = Items[index];
+        }
+
+        /// <summary>
         /// Collapses all child tree items.
         /// </summary>
-        public void CollapseAll()
+        public virtual void CollapseAll()
         {
             Handler.CollapseAll();
         }
@@ -697,7 +706,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/> and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public TreeViewHitTestInfo HitTest(PointD point)
+        public virtual TreeViewHitTestInfo HitTest(PointD point)
         {
             return Handler.HitTest(point);
         }
@@ -741,7 +750,7 @@ namespace Alternet.UI
         /// <see cref="SelectedItem"/> property to <c>null</c>.
         /// You can use this method to quickly unselect all items in the tree.
         /// </remarks>
-        public void ClearSelected()
+        public virtual void ClearSelected()
         {
             ClearSelectedCore();
             RaiseSelectionChanged(EventArgs.Empty);
@@ -761,7 +770,7 @@ namespace Alternet.UI
         /// To select an item in a single-selection <see cref="TreeView"/>,
         /// use the <see cref="SelectedItem"/> property.
         /// </remarks>
-        public void SetSelected(TreeViewItem item, bool value)
+        public virtual void SetSelected(TreeViewItem item, bool value)
         {
             CheckDisposed();
 
@@ -777,7 +786,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.
         /// </param>
-        public void RaiseSelectionChanged(EventArgs e)
+        public virtual void RaiseSelectionChanged(EventArgs e)
         {
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
@@ -828,7 +837,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseAfterCollapse(TreeViewEventArgs e)
+        public virtual void RaiseAfterCollapse(TreeViewEventArgs e)
         {
             e.Item.IsExpanded = false;
             OnAfterCollapse(e);
@@ -841,7 +850,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseAfterExpand(TreeViewEventArgs e)
+        public virtual void RaiseAfterExpand(TreeViewEventArgs e)
         {
             e.Item.IsExpanded = true;
             OnAfterExpand(e);
@@ -854,7 +863,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewCancelEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseBeforeCollapse(TreeViewCancelEventArgs e)
+        public virtual void RaiseBeforeCollapse(TreeViewCancelEventArgs e)
         {
             OnBeforeCollapse(e);
             BeforeCollapse?.Invoke(this, e);
@@ -866,7 +875,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewEditEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseBeforeLabelEdit(TreeViewEditEventArgs e)
+        public virtual void RaiseBeforeLabelEdit(TreeViewEditEventArgs e)
         {
             OnBeforeLabelEdit(e);
             BeforeLabelEdit?.Invoke(this, e);
@@ -878,7 +887,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewEditEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseAfterLabelEdit(TreeViewEditEventArgs e)
+        public virtual void RaiseAfterLabelEdit(TreeViewEditEventArgs e)
         {
             OnAfterLabelEdit(e);
             AfterLabelEdit?.Invoke(this, e);
@@ -887,7 +896,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes selected items from the control.
         /// </summary>
-        public void RemoveSelected()
+        public virtual void RemoveSelected()
         {
             BeginUpdate();
             try
@@ -906,7 +915,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removed all items from the control.
         /// </summary>
-        public void RemoveAll()
+        public virtual void RemoveAll()
         {
             if (Items.Count == 0)
                 return;
@@ -926,7 +935,7 @@ namespace Alternet.UI
         /// Removes item and selects its sibling (next or previous on the same level).
         /// </summary>
         /// <param name="item"></param>
-        public void RemoveItemAndSelectSibling(TreeViewItem? item)
+        public virtual void RemoveItemAndSelectSibling(TreeViewItem? item)
         {
             if (item == null)
                 return;
@@ -955,7 +964,7 @@ namespace Alternet.UI
         /// <summary>
         /// Changes visual style of the control to look like <see cref="ListBox"/>.
         /// </summary>
-        public void MakeAsListBox()
+        public virtual void MakeAsListBox()
         {
             (Handler.NativeControl as NativeTreeViewHandler.NativeTreeView)?.MakeAsListBox();
         }
@@ -966,7 +975,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewCancelEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseBeforeExpand(TreeViewCancelEventArgs e)
+        public virtual void RaiseBeforeExpand(TreeViewCancelEventArgs e)
         {
             OnBeforeExpand(e);
             BeforeExpand?.Invoke(this, e);
@@ -978,7 +987,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewEventArgs"/>
         /// that contains the event data.</param>
-        public void RaiseExpandedChanged(TreeViewEventArgs e)
+        public virtual void RaiseExpandedChanged(TreeViewEventArgs e)
         {
             OnExpandedChanged(e);
             ExpandedChanged?.Invoke(this, e);

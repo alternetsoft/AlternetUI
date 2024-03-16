@@ -14,7 +14,10 @@ namespace Alternet.UI.Documentation.Examples
             button2 = CreateSpeedButton();
             KeyDown += MainWindow_KeyDown;
 
-            Group(button1, button2).Padding(10).MinWidth(50);
+            button1.UseTheme = SpeedButton.KnownTheme.StaticBorder;
+
+            Group(button1, button2).Padding(10).MinWidth(50)
+                .HorizontalAlignment(HorizontalAlignment.Center);
         }
 
         #region CSharpCreation
@@ -27,6 +30,7 @@ namespace Alternet.UI.Documentation.Examples
             result.Parent = buttonPanel;
             result.ShortcutKeys = Keys.Escape;
             result.Margin = 5;
+            result.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             return result;
         }
 

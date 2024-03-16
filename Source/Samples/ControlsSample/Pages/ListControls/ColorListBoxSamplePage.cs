@@ -50,12 +50,12 @@ namespace ControlsSample
             comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged;
         }
 
-        private void ComboBox_SelectedItemChanged(object sender, EventArgs e)
+        private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             listBox.Value = comboBox.Value;
         }
 
-        private void SetColorButton_Click(object sender, EventArgs e)
+        private void SetColorButton_Click(object? sender, EventArgs e)
         {
             if(listBox.Value == Color.Red)
             {

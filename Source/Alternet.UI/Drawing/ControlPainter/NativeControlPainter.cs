@@ -15,13 +15,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets default instance of the <see cref="NativeControlPainter"/>.
         /// </summary>
-        public static NativeControlPainter Default = new();
+        public static NativeControlPainter Default;
+
+        static NativeControlPainter()
+        {
+            Default ??= new();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeControlPainter"/> class.
         /// </summary>
         public NativeControlPainter()
-            : base()
         {
         }
 
@@ -264,6 +268,66 @@ namespace Alternet.Drawing
             /// Item is 'SplitterSash'.
             /// </summary>
             SplitterSash,
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetCheckBoxSize(
+            Control control,
+            CheckState checkState,
+            GenericControlState controlState)
+        {
+            var flags = Convert(checkState, controlState);
+            var painter = NativeControlPainter.Default;
+            return painter.GetCheckBoxSize(control, flags);
+        }
+
+        /// <inheritdoc/>
+        public override void DrawCheckBox(
+            Control control,
+            Graphics canvas,
+            RectD rect,
+            CheckState checkState,
+            GenericControlState controlState)
+        {
+            var flags = Convert(checkState, controlState);
+            var painter = NativeControlPainter.Default;
+            painter.DrawCheckBox(control, canvas, rect, flags);
+        }
+
+        /// <summary>
+        /// Converts <see cref="CheckState"/> and <see cref="GenericControlState"/>
+        /// to <see cref="DrawFlags"/>.
+        /// </summary>
+        /// <param name="checkState"></param>
+        /// <param name="controlState"></param>
+        /// <returns></returns>
+        public virtual DrawFlags Convert(CheckState checkState, GenericControlState controlState)
+        {
+            DrawFlags flags;
+            switch (checkState)
+            {
+                case CheckState.Checked:
+                    flags = DrawFlags.Checked;
+                    break;
+                case CheckState.Indeterminate:
+                    flags = DrawFlags.Undetermined;
+                    break;
+                default:
+                    flags = 0;
+                    break;
+            }
+
+            switch (controlState)
+            {
+                case GenericControlState.Hovered:
+                    flags |= DrawFlags.Current;
+                    break;
+                case GenericControlState.Disabled:
+                    flags |= DrawFlags.Disabled;
+                    break;
+            }
+
+            return flags;
         }
 
         /// <summary>
@@ -965,6 +1029,16 @@ namespace Alternet.Drawing
                 default:
                     return 0;
             }
+        }
+
+        internal void LogPartSize(Control control)
+        {
+            Application.Log($"CheckMarkSize: {GetCheckMarkSize(control)}");
+            Application.Log($"CheckBoxSize(0): {GetCheckBoxSize(control, 0)}");
+            Application.Log($"CheckBoxSize(Cell): {GetCheckBoxSize(control, DrawFlags.Cell)}");
+            Application.Log($"GetExpanderSize: {GetExpanderSize(control)}");
+            Application.Log($"GetHeaderButtonHeight: {GetHeaderButtonHeight(control)}");
+            Application.Log($"GetHeaderButtonMargin: {GetHeaderButtonMargin(control)}");
         }
 
         /// <summary>

@@ -371,6 +371,17 @@ namespace Alternet.UI
             return toolId;
         }
 
+        public int AddToolButton(string? label, SvgImage image)
+        {
+            var imageSize = PanelAuiManager.GetBaseToolSvgSize().Width;
+            return AddTool(
+                        label,
+                        image.AsNormal(imageSize, IsDarkBackground),
+                        label,
+                        AuiToolbarItemKind.Normal,
+                        image.AsDisabled(imageSize, IsDarkBackground));
+        }
+
         /// <summary>
         /// Gets kind of the tool item.
         /// </summary>

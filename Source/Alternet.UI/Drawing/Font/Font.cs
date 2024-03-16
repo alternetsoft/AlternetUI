@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     /// style attributes. This class cannot be inherited.
     /// </summary>
     [DebuggerDisplay("{ToInfoString()}")]
-    public sealed class Font : IDisposable, IEquatable<Font>
+    public class Font : IDisposable, IEquatable<Font>
     {
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
@@ -729,7 +729,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font Smaller()
+        public virtual Font Smaller()
         {
             return Get(Name, SizeInPoints / 1.2, Style);
         }
@@ -743,7 +743,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font Larger()
+        public virtual Font Larger()
         {
             return Scaled(1.2);
         }
@@ -758,7 +758,7 @@ namespace Alternet.Drawing
         /// (which may be less than 1 to create a smaller version of the font).
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font Scaled(double scaleFactor)
+        public virtual Font Scaled(double scaleFactor)
         {
             return Get(this.Name, SizeInPoints * scaleFactor, this.Style);
         }
@@ -777,7 +777,7 @@ namespace Alternet.Drawing
         /// This function saves created fonts in the base font and is memory efficient.
         /// creates 
         /// </remarks>
-        public Font GetWithStyle(FontStyle style)
+        public virtual Font GetWithStyle(FontStyle style)
         {
             if (Style == style)
                 return this;
@@ -816,7 +816,7 @@ namespace Alternet.Drawing
         /// <param name="text">Text string to measure its size.</param>
         /// <param name="dc">Drawing context where measuring is performed.</param>
         /// <returns></returns>
-        public SizeD MeasureText(string text, Graphics dc)
+        public virtual SizeD MeasureText(string text, Graphics dc)
         {
             var result = dc.GetTextExtent(text, this);
             return result;
@@ -825,7 +825,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
-        public bool Equals(Font? other)
+        public virtual bool Equals(Font? other)
         {
             if (other == null)
                 return false;
@@ -848,7 +848,7 @@ namespace Alternet.Drawing
         /// Returns a human-readable string representation of this <see cref="Font"/>.
         /// </summary>
         /// <returns>A string that represents this <see cref="Font"/>.</returns>
-        public string ToInfoString()
+        public virtual string ToInfoString()
         {
             return string.Format(
                 CultureInfo.CurrentCulture,
@@ -885,7 +885,7 @@ namespace Alternet.Drawing
         /// <param name="sizeInPoints">Font size.</param>
         /// <param name="style">Font style.</param>
         /// <returns></returns>
-        public bool Equals(string name, double sizeInPoints, FontStyle style)
+        public virtual bool Equals(string name, double sizeInPoints, FontStyle style)
         {
             return Name == name && SizeInPoints == sizeInPoints && Style == style;
         }
@@ -893,7 +893,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates an exact copy of this <see cref="Font" />.
         /// </summary>
-        public Font Clone()
+        public virtual Font Clone()
         {
             var nativeResult = new UI.Native.Font();
             var result = new Font(nativeResult);

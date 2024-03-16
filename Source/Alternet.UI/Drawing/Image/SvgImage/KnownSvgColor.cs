@@ -35,5 +35,15 @@ namespace Alternet.UI
         /// Warning image color.
         /// </summary>
         Warning,
+
+        /// <summary>
+        /// Highlight Text color.
+        /// </summary>
+        HighlightText,
+
+        /// <summary>
+        /// Maximum value in the enumeration.
+        /// </summary>
+        MaxValue = HighlightText,
     }
 }

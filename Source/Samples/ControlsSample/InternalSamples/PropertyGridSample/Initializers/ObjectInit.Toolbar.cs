@@ -61,15 +61,13 @@ namespace PropertyGridSample
 
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
-                toolbar.GetNormalSvgImages().ImgFileNew,
-                toolbar.GetDisabledSvgImages().ImgFileNew);
+                KnownSvgImages.ImgFileNew);
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
             var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
-                toolbar.GetNormalSvgImages().ImgFileOpen,
-                toolbar.GetDisabledSvgImages().ImgFileOpen);
+                KnownSvgImages.ImgFileOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
@@ -82,10 +80,13 @@ namespace PropertyGridSample
 
             var separatorId = toolbar.AddSeparator();
 
+            var saveClone = KnownSvgImages.ImgFileSave.Clone();
+            saveClone.SetColorOverride(KnownSvgColor.Normal, true, Color.Red);
+            saveClone.SetColorOverride(KnownSvgColor.Normal, false, Color.IndianRed);
+
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                toolbar.GetNormalSvgImages().ImgFileSave,
-                toolbar.GetDisabledSvgImages().ImgFileSave);
+                saveClone);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
@@ -95,13 +96,13 @@ namespace PropertyGridSample
 
             var textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Center;
+            textBox.Text = "text1";
             textBox.SuggestedWidth = 100;
 
             var idEdit = toolbar.AddControl(textBox);
 
             var itemPicture = toolbar.AddPicture(
-                toolbar.GetNormalSvgImages().ImgMessageBoxWarning,
-                toolbar.GetDisabledSvgImages().ImgMessageBoxWarning,
+                KnownSvgImages.ImgMessageBoxWarning,
                 "Picture");
             toolbar.AddToolAction(itemPicture, ButtonClick);
             toolbar.SetToolAlignRight(itemPicture, true);

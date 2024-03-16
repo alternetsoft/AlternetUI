@@ -47,6 +47,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clones this object.
+        /// </summary>
+        public virtual ControlColorAndStyle Clone()
+        {
+            ControlColorAndStyle result = new();
+            result.dark = dark?.Clone();
+            result.light = light?.Clone();
+            return result;
+        }
+
+        /// <summary>
         /// Gets <see cref="Dark"/> if <paramref name="isDark"/> is <c>true</c>
         /// and dark theme settings were defined;
         /// <see cref="Light"/> otherwise.
@@ -60,6 +71,15 @@ namespace Alternet.UI
                 return dark;
             else
                 return Light;
+        }
+
+        /// <summary>
+        /// Sets border in the normal state equal to border in the hovered state.
+        /// </summary>
+        public virtual void NormalBorderAsHovered()
+        {
+            Dark?.NormalBorderAsHovered();
+            Light?.NormalBorderAsHovered();
         }
     }
 }

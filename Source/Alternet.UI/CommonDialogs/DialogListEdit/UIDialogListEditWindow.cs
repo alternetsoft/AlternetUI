@@ -93,50 +93,40 @@ namespace Alternet.UI
             var imageSize = PanelAuiManager.GetBaseToolSvgSize();
             toolbar.ToolBitmapSizeInPixels = imageSize;
 
-            var images = KnownSvgImages.GetForSize(
-                toolbar.GetSvgColor(KnownSvgColor.Normal),
-                imageSize);
-
             if (source.AllowAdd)
             {
-                buttonIdAdd = toolbar.AddTool(
+                buttonIdAdd = toolbar.AddToolButton(
                     CommonStrings.Default.ButtonAdd,
-                    images.ImgAdd,
-                    CommonStrings.Default.ButtonAdd);
+                    KnownSvgImages.ImgAdd);
             }
 
             if(source.AllowSubItems && source.AllowAdd)
             {
-                buttonIdAddChild = toolbar.AddTool(
+                buttonIdAddChild = toolbar.AddToolButton(
                     CommonStrings.Default.ButtonAddChild,
-                    images.ImgAddChild,
-                    CommonStrings.Default.ButtonAddChild);
+                    KnownSvgImages.ImgAddChild);
             }
 
             if (source.AllowDelete)
             {
-                buttonIdRemove = toolbar.AddTool(
+                buttonIdRemove = toolbar.AddToolButton(
                     CommonStrings.Default.ButtonRemove,
-                    images.ImgRemove,
-                    CommonStrings.Default.ButtonRemove);
-                buttonIdRemoveAll = toolbar.AddTool(
+                    KnownSvgImages.ImgRemove);
+                buttonIdRemoveAll = toolbar.AddToolButton(
                     CommonStrings.Default.ButtonClear,
-                    images.ImgRemoveAll,
-                    CommonStrings.Default.ButtonClear);
+                    KnownSvgImages.ImgRemoveAll);
             }
 
             if (source.AllowApplyData)
             {
-                buttonIdOk = toolbar.AddTool(
+                buttonIdOk = toolbar.AddToolButton(
                     CommonStrings.Default.ButtonOk,
-                    images.ImgOk,
-                    CommonStrings.Default.ButtonOk);
+                    KnownSvgImages.ImgOk);
             }
 
-            buttonIdCancel = toolbar.AddTool(
+            buttonIdCancel = toolbar.AddToolButton(
                 CommonStrings.Default.ButtonCancel,
-                images.ImgCancel,
-                CommonStrings.Default.ButtonCancel);
+                KnownSvgImages.ImgCancel);
 
             toolbar.Realize();
             manager.AddPane(toolbar, toolbarPane);

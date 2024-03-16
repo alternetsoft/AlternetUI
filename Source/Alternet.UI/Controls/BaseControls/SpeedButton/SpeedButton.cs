@@ -34,9 +34,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticBorder"/>.
+        /// </summary>
+        public static ControlColorAndStyle StaticBorderTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.Custom"/>.
         /// </summary>
-        public static ControlColorAndStyle? CustomTheme = null;
+        public static ControlColorAndStyle? DefaultCustomTheme = null;
 
         /// <summary>
         /// Gets or sets default color and style settings
@@ -74,11 +81,14 @@ namespace Alternet.UI
         private bool textVisible = false;
         private bool imageVisible = true;
         private KnownTheme useTheme = DefaultUseTheme;
+        private ControlColorAndStyle? customTheme;
 
         static SpeedButton()
         {
             InitThemeLight(DefaultTheme.Light);
             InitThemeDark(DefaultTheme.Dark);
+            StaticBorderTheme = DefaultTheme.Clone();
+            StaticBorderTheme.NormalBorderAsHovered();
         }
 
         /// <summary>
@@ -123,6 +133,11 @@ namespace Alternet.UI
             /// Theme <see cref="TabControlTheme"/> is used.
             /// </summary>
             TabControl,
+
+            /// <summary>
+            /// Theme <see cref="StaticBorderTheme"/> is used.
+            /// </summary>
+            StaticBorder,
         }
 
         /// <summary>
@@ -132,6 +147,29 @@ namespace Alternet.UI
         /// Default value is "({0})".
         /// </remarks>
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.Custom"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlColorAndStyle? CustomTheme
+        {
+            get
+            {
+                return customTheme;
+            }
+
+            set
+            {
+                if (customTheme == value)
+                    return;
+                customTheme = value;
+                if (UseTheme == KnownTheme.Custom)
+                    Invalidate();
+            }
+        }
 
         /// <inheritdoc/>
         public override bool Enabled
@@ -232,7 +270,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to use <see cref="DefaultTheme"/>.
         /// </summary>
-        [Browsable(false)]
         public virtual KnownTheme UseTheme
         {
             get => useTheme;
@@ -679,7 +716,9 @@ namespace Alternet.UI
                 case KnownTheme.None:
                     return null;
                 case KnownTheme.Custom:
-                    return CustomTheme;
+                    return CustomTheme ?? DefaultCustomTheme;
+                case KnownTheme.StaticBorder:
+                    return StaticBorderTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;

@@ -9,8 +9,7 @@
 	<UseLatestDocFx>false</UseLatestDocFx>
 	<UseLatestDocFx Condition="'$(LatestDocFx)'!=''">$(LatestDocFx)</UseLatestDocFx>
 
-        <TargetFramework Condition="!$(UseLatestDocFx)">net462</TargetFramework>
-        <TargetFramework Condition="$(UseLatestDocFx)">net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
     	<BuildDocumentationTN Condition="!$(UseLatestDocFx)">BuildDocumentation</BuildDocumentationTN>
 	<BuildDocumentationTN Condition="$(UseLatestDocFx)">BuildDocumentation2</BuildDocumentationTN>

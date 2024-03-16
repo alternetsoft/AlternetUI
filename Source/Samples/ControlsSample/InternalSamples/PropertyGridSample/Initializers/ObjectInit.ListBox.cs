@@ -19,6 +19,8 @@ namespace PropertyGridSample
             if (control is not VListBox listBox)
                 return;
 
+            listBox.HScrollBarVisible = true;
+
             for (int i = 0; i < 150; i++)
             {
                 ListControlItem newItem = new($"Item {i}");
@@ -38,15 +40,16 @@ namespace PropertyGridSample
             item.Alignment = GenericAlignment.CenterRight;
             item.FontStyle = FontStyle.Bold;
             item.MinHeight = listBox.PixelToDip(imageSize);
-            item.Image = KnownSvgImages.GetForSize(listBox.GetSvgColor(), imageSize).ImgBold.AsImage();
+            item.Image = KnownSvgImages.ImgBold.AsNormalImage(imageSize, listBox.IsDarkBackground);
             item.SelectedImage =
-                KnownSvgImages.GetForSize(SystemColors.HighlightText, imageSize).ImgBold.AsImage();
+                KnownSvgImages.ImgBold.AsImageSet(imageSize, KnownSvgColor.HighlightText, listBox.IsDarkBackground)?.AsImage();
             item.DisabledImage =
-                KnownSvgImages.GetForSize(listBox.GetSvgColor(KnownSvgColor.Disabled), imageSize).ImgBold.AsImage();
+                KnownSvgImages.ImgBold.AsDisabledImage(imageSize, listBox.IsDarkBackground);
 
             item = listBox.RequiredItem(firstIndex + 1);
             item.Alignment = GenericAlignment.Center;
             item.Image = new Bitmap(CalendarUrl);
+            item.CheckState = CheckState.Indeterminate;
             item.DisabledImage = item!.Image.ToGrayScale();
             item.ForegroundColor = Color.Green;
             item.BackgroundColor = Color.Lavender;
@@ -54,6 +57,7 @@ namespace PropertyGridSample
 
             item = listBox.RequiredItem(firstIndex + 2);
             item.Text = "Custom height/align";
+            item.CheckBoxVisible = false;
             item.MinHeight = 60;
             item.Alignment = GenericAlignment.Bottom | GenericAlignment.CenterHorizontal;
             item.Image = new Bitmap(PencilUrl);
@@ -63,15 +67,20 @@ namespace PropertyGridSample
 
             item = listBox.RequiredItem(firstIndex + 3);
             item.FontStyle = FontStyle.Underline;
+            item.CheckState = CheckState.Checked;
             item.Text = "Underlined item";
 
             item = listBox.RequiredItem(firstIndex + 5);
             item.Text = "Custom border";
             item.Alignment = GenericAlignment.Center;
+            item.CheckBoxVisible = false;
             item.Border = new();
             item.Border.Color = Color.Red;
             item.Border.UniformCornerRadius = 50;
             item.Border.UniformRadiusIsPercent = true;
+
+            item = listBox.RequiredItem(firstIndex + 6);
+            item.Text = LoremIpsum.Replace(StringUtils.OneNewLine, StringUtils.OneSpace);
 
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;

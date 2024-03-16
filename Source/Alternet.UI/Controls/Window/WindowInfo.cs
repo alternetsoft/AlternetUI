@@ -14,8 +14,6 @@ namespace Alternet.UI
 
         public bool ShowInTaskbar = true;
 
-        public WindowState State = WindowState.Normal;
-
         public bool CloseEnabled = true;
 
         public bool HasSystemMenu = true;

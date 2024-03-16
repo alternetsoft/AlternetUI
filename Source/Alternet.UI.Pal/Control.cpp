@@ -61,6 +61,28 @@ namespace Alternet::UI
             : up ? "released" : "clicked");
     }
 
+    long Control::BuildStyle(long style, long element, bool value)
+    {
+        if (value)
+            style |= element;
+        else
+            style &= ~element;
+        return style;
+    }
+
+    void Control::UpdateWindowStyle(long element, bool value)
+    {
+        auto window = GetWxWindow();
+        auto style = window->GetWindowStyle();
+
+        if (value)
+            style |= element;
+        else
+            style &= ~element;
+
+        window->SetWindowStyle(style);
+    }
+
     bool Control::HasExtraStyle(long extra)
     {
         auto window = GetWxWindow();
@@ -108,6 +130,16 @@ namespace Alternet::UI
     double Control::DrawingFromDipF(double value, void* window)
     {
         return fromDipF(value, (wxWindow*)window);
+    }
+
+    bool Control::BeginRepositioningChildren()
+    {
+        return GetWxWindow()->BeginRepositioningChildren();
+    }
+
+    void Control::EndRepositioningChildren()
+    {
+        GetWxWindow()->EndRepositioningChildren();
     }
 
     bool Control::GetProcessUIUpdates()
@@ -924,6 +956,8 @@ namespace Alternet::UI
             _wxWindow = CreateWxWindowCore(parentingWxWindow);
         }
 
+        _wxWindow->SetAutoLayout(false);
+
         ApplyToolTip();
 
         if (GetUserPaint())
@@ -971,6 +1005,16 @@ namespace Alternet::UI
         for (auto child : _children)
             child->UpdateWxWindowParent();
         RaiseEvent(ControlEvent::HandleCreated);
+    }
+
+    bool Control::GetBindScrollEvents()
+    {
+        return bindScrollEvents;
+    }
+    
+    void Control::SetBindScrollEvents(bool value)
+    {
+        bindScrollEvents = value;
     }
 
     void Control::RecreateWindow() 

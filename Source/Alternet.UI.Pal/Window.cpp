@@ -19,76 +19,8 @@ namespace Alternet::UI
         long style,
         const wxString& name)
             : wxFrame(parent, id, title, pos, size, style, name)
-            /*_window(window)*/
     {
-        /*_allFrames.push_back(this);*/
-        /* Application::Log(std::to_string(_allFrames.size())); */
     }
-
-    /*void Frame::RemoveFrame()
-    {
-        if (_frameRemoved)
-            return;
-        _frameRemoved = true;
-
-        // Ensure the parking window is closed after all regular windows have been closed.
-        _allFrames.erase(std::find(_allFrames.begin(), _allFrames.end(), this));
-
-        if (!ParkingWindow::IsCreated())
-            return;
-
-        if (wxTheApp->GetTopWindow() == ParkingWindow::GetWindow())
-        {
-            if (_allFrames.size() == 0)
-            {
-                NotifyIcon::DestroyAllNotifyIcons();
-                ParkingWindow::Destroy();
-            }
-            else
-            {
-                auto win = _allFrames[0];
-                if (win->CanBeFocused())
-                    win->SetFocus();
-            }
-        }
-    }*/
-
-    /*Frame::~Frame()
-    {
-        RemoveFrame();
-    }*/
-
-    /*std::vector<wxTopLevelWindow*> Frame::GetAllFrames()
-    {
-        return _allFrames;
-    }*/
-
-    /*Window* Frame::GetWindow()
-    {
-        return _window;
-    }*/
-
-    // ------------
-
-    /*FrameDisabler::FrameDisabler(wxTopLevelWindow* frameToSkip)
-    {
-        for (auto frame : Frame::GetAllFrames())
-        {
-            if (frame != frameToSkip && frame->IsEnabled())
-            {
-                frame->Enable(false);
-                _disabledFrames.push_back(frame);
-            }
-        }
-    }*/
-
-    /*FrameDisabler::~FrameDisabler()
-    {
-        for (auto frame : _disabledFrames)
-        {
-            frame->Enable(true);
-        }
-    }*/
 
     // ------------
 
@@ -119,20 +51,15 @@ namespace Alternet::UI
             DelayedWindowFlags::None,
             &Control::IsWxWindowCreated,
             {
-                //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar,
-                //  &Window::ApplyShowInTaskbar)},
             }),
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
             &Window::ApplyTitle),
-        _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, 
-            &Window::RetrieveState, &Window::ApplyState),
         _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
             &Window::ApplyMenu),
         _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, 
             &Window::ApplyToolbar)
     {
         GetDelayedValues().Add(&_title);
-        GetDelayedValues().Add(&_state);
         GetDelayedValues().Add(&_delayedFlags);
         SetVisible(false);
 
@@ -260,34 +187,6 @@ namespace Alternet::UI
         _toolbar.Set(value);
     }
 
-    WindowState Window::RetrieveState()
-    {
-        auto frame = GetTopLevelWindow();
-        if (frame->IsMaximized())
-            return WindowState::Maximized;
-
-        if (frame->IsIconized())
-            return WindowState::Minimized;
-
-        return WindowState::Normal;
-    }
-
-    void Window::ApplyState(const WindowState& value)
-    {
-        auto frame = GetTopLevelWindow();
-        if (value == WindowState::Maximized)
-            frame->Maximize();
-        else if (value == WindowState::Minimized)
-            frame->Iconize();
-        else if (value == WindowState::Normal)
-        {
-            if (frame->IsMaximized())
-                frame->Maximize(false);
-            else if (frame->IsIconized())
-                frame->Iconize(false);
-        }
-    }
-
     MainMenu* Window::RetrieveMenu()
     {
         return _storedMenu;
@@ -372,10 +271,6 @@ namespace Alternet::UI
     {
         Control::OnBeforeDestroyWxWindow();
 
-        /*auto wxFrame = GetFrame();
-        if(wxFrame != nullptr)
-            wxFrame->RemoveFrame();*/
-
         auto wxWindow = GetWxWindow();
         wxWindow->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_MOVE, &Window::OnMove, this);
@@ -385,55 +280,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_MENU, &Window::OnCommand, this);
         wxWindow->Unbind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
     }
-
-    void Window::ApplyBounds(const Rect& value)
-    {
-        Control::ApplyBounds(value);
-
-        /*
-        if (value.IsEmpty())
-            return;
-
-    //    Control::ApplyBounds(value);
-        auto wxWindow = GetWxWindow();
-        auto rect = fromDip(value, wxWindow);
-
-
-        if (_startLocation == WindowStartLocation::Manual ||
-            _flags.IsSet(WindowFlags::ShownOnce))
-        {
-            wxWindow->SetSize(rect);
-            // Control::LogRectMethod("ApplyBounds", value, rect);
-        }
-        else
-        {
-            wxWindow->SetSize(rect.width, rect.height);
-            // Control::LogRectMethod("ApplyBounds WH", value, rect);
-        }
-
-        wxWindow->Refresh();
-        */
-    }
-
-    /*void Window::ApplyDefaultLocation()
-    {
-        auto wxWindow = GetWxWindow();
-
-        switch (_startLocation)
-        {
-        case WindowStartLocation::Default:
-            break;
-        case WindowStartLocation::Manual:
-            break;
-        case WindowStartLocation::CenterScreen:
-            wxWindow->Center();
-            break;
-        case WindowStartLocation::CenterOwner:
-            wxWindow->CenterOnParent();
-            break;
-        }
-    }*/
-
+            
     std::vector<Window*> Window::GetOwnedWindows()
     {
         std::vector<Window*> result;
@@ -728,36 +575,6 @@ namespace Alternet::UI
         dialog->ShowModal();
 
         _flags.Set(WindowFlags::Modal, false);
-
-/*
-
-        if (_modalWindowDisabler != nullptr)
-            delete _modalWindowDisabler;
-
-        _modalWindowDisabler = new FrameDisabler(_frame);
-        _modalWindows.push(this);
-
-        SetVisible(true);
-
-        // HACK: because wxWidgets doesnt support modal windows with menu,
-        // we have to simulate modal loop but processing messages and sleeping.
-        // Will need to implement this properly somehow.
-        
-        while (!_flags.IsSet(WindowFlags::ModalLoopStopRequested))
-        {
-
-#ifdef __WXOSX_COCOA__
-            unsigned long delay = 20;
-#else
-            unsigned long delay = 1;
-#endif
-
-            wxMilliSleep(delay);
-            wxTheApp->GetMainLoop()->Yield();
-        }
-
-        _flags.Set(WindowFlags::ModalLoopStopRequested, false);
-*/
     }
 
     void Window::Close()
@@ -866,12 +683,33 @@ namespace Alternet::UI
 
     WindowState Window::GetState()
     {
-        return _state.Get();
+        auto frame = GetTopLevelWindow();
+        if (frame->IsMaximized())
+            return WindowState::Maximized;
+
+        if (frame->IsIconized())
+            return WindowState::Minimized;
+
+        return WindowState::Normal;
     }
 
     void Window::SetState(WindowState value)
     {
-        _state.Set(value);
+        if (GetState() == value)
+            return;
+
+        auto frame = GetTopLevelWindow();
+        if (value == WindowState::Maximized)
+            frame->Maximize();
+        else if (value == WindowState::Minimized)
+            frame->Iconize();
+        else if (value == WindowState::Normal)
+        {
+            if (frame->IsMaximized())
+                frame->Maximize(false);
+            else if (frame->IsIconized())
+                frame->Iconize(false);
+        }
     }
 
     void* Window::OpenOwnedWindowsArray()
@@ -924,22 +762,6 @@ namespace Alternet::UI
         auto result = dynamic_cast<Window*>(palControl);
         result->AddRef();
         return result;
-
-        /*auto allFrames = Frame::GetAllFrames();
-        for (auto frame : allFrames)
-        {
-            auto window = frame->GetWindow();
-            if (window->GetIsActive() && window->GetVisible())
-            {
-                if (window->IsDestroyingWxWindow())
-                    return nullptr;
-                
-                window->AddRef();
-                return window;
-            }
-        }
-
-        return nullptr;*/
     }
 
     void Window::Activate()
@@ -1010,7 +832,7 @@ namespace Alternet::UI
         event.Skip();
         RaiseEvent(WindowEvent::SizeChanged);
 
-        auto newState = RetrieveState();
+        auto newState = GetState();
         if (_lastState != newState)
         {
             _lastState = newState;
@@ -1036,14 +858,14 @@ namespace Alternet::UI
     void Window::OnMaximize(wxMaximizeEvent& event)
     {
         event.Skip();
-        _lastState = RetrieveState();
+        _lastState = GetState();
         RaiseEvent(WindowEvent::StateChanged);
     }
 
     void Window::OnIconize(wxIconizeEvent& event)
     {
         event.Skip();
-        _lastState = RetrieveState();
+        _lastState = GetState();
         RaiseEvent(WindowEvent::StateChanged);
     }
 

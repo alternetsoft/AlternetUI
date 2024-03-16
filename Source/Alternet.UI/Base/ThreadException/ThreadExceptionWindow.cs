@@ -10,19 +10,22 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    ///  Implements a window that is displayed when an unhandled exception occurs in
-    ///  a thread.
+    ///  Implements a window that is displayed when an exception occurs in
+    ///  the application.
     /// </summary>
-    internal class ThreadExceptionWindow : DialogWindow
+    public class ThreadExceptionWindow : DialogWindow
     {
         private readonly Exception exception;
-        private readonly bool canContinue;
+        private bool canContinue;
         private TextBox? messageTextBox;
 
         /// <summary>
         ///  Initializes a new instance of the
         ///  <see cref="ThreadExceptionWindow"/> class.
         /// </summary>
+        /// <param name="exception">Exception information.</param>
+        /// <param name="additionalInfo">Additional information.</param>
+        /// <param name="canContinue">Whether continue button is visible.</param>
         public ThreadExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
@@ -53,30 +56,30 @@ namespace Alternet.UI
             messageTextBox!.Text = s;
         }
 
-        public static void Show(
+        /// <summary>
+        /// Shows <see cref="ThreadExceptionWindow"/> on the screen.
+        /// </summary>
+        /// <param name="exception">Exception information.</param>
+        /// <param name="additionalInfo">Additional information.</param>
+        /// <param name="canContinue">Whether continue button is visible.</param>
+        /// <returns><c>true</c> if continue pressed, <c>false</c> otherwise.</returns>
+        public static bool Show(
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true)
         {
-            var errorWindow =
+            using var errorWindow =
                 new ThreadExceptionWindow(exception, additionalInfo, canContinue);
             if (Application.IsRunning)
             {
-                errorWindow.ShowModal();
+                return errorWindow.ShowModal() == ModalResult.Accepted;
             }
             else
             {
+                errorWindow.canContinue = false;
                 Application.Current.Run(errorWindow);
+                return false;
             }
-        }
-
-        internal static Image LoadImage(string name)
-        {
-            var stream =
-                typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name);
-            var result = new Bitmap(stream);
-
-            return result ?? throw new Exception();
         }
 
         private static string GetMessageText(Exception e)
@@ -172,8 +175,6 @@ namespace Alternet.UI
 
             Control CreateMessageGrid()
             {
-                string errorImageUrl = KnownColorSvgUrls.Error;
-
                 var messageGrid = new VerticalStackPanel();
 
                 var firstSection = new HorizontalStackPanel();
@@ -184,7 +185,7 @@ namespace Alternet.UI
                     VerticalAlignment = UI.VerticalAlignment.Top,
                     HorizontalAlignment = UI.HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
-                    ImageSet = ImageSet.FromSvgUrl(errorImageUrl, 64, 64),
+                    ImageSet = KnownColorSvgImages.ImgError.AsImageSet(64),
                 };
                 errorImagePictureBox.Parent = firstSection;
 
@@ -245,17 +246,15 @@ namespace Alternet.UI
                 detailsButton.Click += DetailsButton_Click;
                 buttonsGrid.Children.Add(detailsButton);
 
-                if (canContinue)
-                {
-                    var continueButton =
-                        new Button
-                        {
-                            Text = CommonStrings.Default.ButtonContinue,
-                        };
-                    continueButton.Click += ContinueButton_Click;
-                    continueButton.HorizontalAlignment = HorizontalAlignment.Right;
-                    buttonsGrid.Children.Add(continueButton);
-                }
+                var continueButton =
+                    new Button
+                    {
+                        Text = CommonStrings.Default.ButtonContinue,
+                    };
+                continueButton.Click += ContinueButton_Click;
+                continueButton.HorizontalAlignment = HorizontalAlignment.Right;
+                buttonsGrid.Children.Add(continueButton);
+                continueButton.Visible = canContinue;
 
                 var quitButton = new Button { Text = CommonStrings.Default.ButtonQuit };
                 quitButton.Click += QuitButton_Click;

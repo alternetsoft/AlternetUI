@@ -2413,11 +2413,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Write a bitmap or image at the current insertion point.
+        /// Writes svg image in the normal state at the current insertion point.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <param name="size">Image size.</param>
+        /// <param name="textAttr">Optional text attribute.</param>
+        /// <returns></returns>
+        public bool WriteImageAsNormal(SvgImage? image, int size, ITextBoxRichAttr? textAttr = null)
+        {
+            if (image is null)
+                return false;
+            return WriteImage(image.AsNormalImage(size, IsDarkBackground));
+        }
+
+        /// <summary>
+        /// Writes a bitmap at the current insertion point.
         /// Supply an optional type to use for internal and file storage of the raw data.
         /// </summary>
         public bool WriteImage(
-            Image bitmap,
+            Image? bitmap,
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
         {

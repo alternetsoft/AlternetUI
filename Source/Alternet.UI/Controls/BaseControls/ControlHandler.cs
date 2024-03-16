@@ -14,6 +14,7 @@ namespace Alternet.UI
     {
         private Control? control;
         private Native.Control? nativeControl;
+        private RectD? reportedBounds;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -106,9 +107,7 @@ namespace Alternet.UI
             {
                 if (NativeControl.Bounds == value)
                     return;
-                var oldBounds = Bounds;
                 NativeControl.Bounds = value;
-                ReportBoundsChanged(oldBounds, value);
             }
         }
 
@@ -136,42 +135,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Control.DrawClientRectangle"/>
         public virtual RectD DrawClientRectangle => Control.DrawClientRectangle;
-
-        /*/// <summary>
-        /// Gets a value indicating whether the <see cref="Control"/> is contained in a
-        /// <see cref="VisualChildren"/> collection.
-        /// </summary>
-        public virtual bool IsVisualChild
-        {
-            get => isVisualChild;
-            private set
-            {
-                if (isVisualChild == value)
-                    return;
-
-                isVisualChild = value;
-                OnIsVisualChildChanged();
-            }
-        }*/
-
-        /*/// <summary>
-        /// Gets the collection of visual child controls contained within
-        /// the control.
-        /// </summary>
-        public virtual Collection<Control> VisualChildren
-        {
-            get
-            {
-                if (visualChildren == null)
-                {
-                    visualChildren = new();
-                    visualChildren.ItemInserted += VisualChildren_ItemInserted;
-                    visualChildren.ItemRemoved += VisualChildren_ItemRemoved;
-                }
-
-                return visualChildren;
-            }
-        }*/
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control
@@ -666,14 +629,6 @@ namespace Alternet.UI
             NativeControl?.EndInit();
         }
 
-        /*/// <summary>
-        /// Called when the value of the <see cref="IsVisualChild"/> property changes.
-        /// </summary>
-        protected virtual void OnIsVisualChildChanged()
-        {
-            DisposeNativeControl();
-        }*/
-
         /// <summary>
         /// Returns the size of the area which can fit all the children of this
         /// control, with an added padding.
@@ -771,9 +726,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnDetach()
         {
-            // todo: consider clearing the native control's children.
-
-            /*VisualChildren.Clear();*/
+            /*todo: consider clearing the native control's children.*/
 
             if (NativeControl != null)
             {
@@ -910,12 +863,17 @@ namespace Alternet.UI
         private void NativeControl_SizeChanged()
         {
             NativeControlSizeChanged();
+            ReportBoundsChanged();
         }
 
-        private void ReportBoundsChanged(RectD oldBounds, RectD newBounds)
+        private void ReportBoundsChanged()
         {
-            var locationChanged = oldBounds.Location != newBounds.Location;
-            var sizeChanged = oldBounds.Size != newBounds.Size;
+            var newBounds = Control.Bounds;
+
+            var locationChanged = reportedBounds?.Location != newBounds.Location;
+            var sizeChanged = reportedBounds?.Size != newBounds.Size;
+
+            reportedBounds = newBounds;
 
             if (locationChanged)
                 Control.RaiseLocationChanged(EventArgs.Empty);
@@ -923,10 +881,8 @@ namespace Alternet.UI
             if (sizeChanged)
                 Control.RaiseSizeChanged(EventArgs.Empty);
 
-            if (locationChanged || sizeChanged)
-            {
-                Control.PerformLayout();
-            }
+            if (sizeChanged)
+                Control.PerformLayout(true);
         }
 
         private void ApplyToolTip()

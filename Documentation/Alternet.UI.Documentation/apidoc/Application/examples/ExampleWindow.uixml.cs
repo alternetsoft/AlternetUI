@@ -1,5 +1,5 @@
-using Alternet.UI;
 using System;
+using Alternet.UI;
 
 namespace Alternet.UI.Documentation.Examples.Application
 {
@@ -8,22 +8,30 @@ namespace Alternet.UI.Documentation.Examples.Application
         public MainWindow()
         {
             InitializeComponent();
+            Alternet.UI.Application.LogMessage += Application_LogMessage;
+            logItemButton.Click += LogItemButton_Click;
         }
+
+        private void LogItemButton_Click(object? sender, EventArgs e)
+        {
+            UI.Application.Log("Helllo!");
+        }
+
         public void ApplicationExample1()
         {
             #region ApplicationCSharpCreation
             var application = new Alternet.UI.Application();
             var window = new MainWindow();
-            application.VisualThemeChanged += Application_VisualThemeChanged;
+            Alternet.UI.Application.LogMessage += Application_LogMessage;
+            application.Run(window);
             #endregion
 
         }
 
-
         #region ApplicationEventHandler
-        private void Application_VisualThemeChanged(object? sender, EventArgs e)
+        private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
-            MessageBox.Show("Visual Theme changed", string.Empty);
+            listBox.Log(e.Message);
         }
         #endregion
     }

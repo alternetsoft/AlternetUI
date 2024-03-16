@@ -73,14 +73,8 @@ namespace MenuSample
 
             eventsListBox.ContextMenu.Required();
 
-            var images = KnownSvgImages.GetForSize(GetSvgColor(KnownSvgColor.Normal), 16);
-            var imagesDisabled = KnownSvgImages.GetForSize(GetSvgColor(KnownSvgColor.Disabled), 16);
-
-            openMenuItem.Image = images.ImgFileOpen;
-            openMenuItem.Image = imagesDisabled.ImgFileOpen;
-
-            saveMenuItem.Image = images.ImgFileSave;
-            saveMenuItem.Image = imagesDisabled.ImgFileSave;
+            openMenuItem.Image = KnownSvgImages.ImgFileOpen.AsNormal(16, IsDarkBackground);
+            saveMenuItem.Image = KnownSvgImages.ImgFileSave.AsNormal(16, IsDarkBackground);
 
             eventsListBox.BindApplicationLog();
         }

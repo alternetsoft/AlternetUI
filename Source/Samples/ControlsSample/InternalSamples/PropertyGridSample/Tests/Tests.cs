@@ -18,16 +18,13 @@ namespace PropertyGridSample
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
 
-#pragma warning disable
         internal void RunTests()
-#pragma warning restore
         {
         }
 
         void InitSimpleTestActions()
         {
 #if DEBUG
-            PropertyGrid.AddSimpleAction<PictureBox>("Test", PictureBoxTest);
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
 
             PropertyGrid.AddSimpleAction<GenericToolBar>("Test Visible", TestGenericToolBarVisible);
@@ -43,9 +40,6 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<GenericToolBar>("Add OK button", TestGenericToolBarAddOk);
             PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
-
-            /*PropertyGrid.AddSimpleAction<MultilineTextBox>("Find", TestMemoFind);
-            PropertyGrid.AddSimpleAction<MultilineTextBox>("Replace", TestMemoReplace);*/
 #endif
         }
 
@@ -58,12 +52,12 @@ namespace PropertyGridSample
             pair.Dialog.ShowModal();
         }
 
-        void TestMemoFind()
+        internal void TestMemoFind()
         {
             TestMemoFindReplace(false);
         }
 
-        void TestMemoReplace()
+        internal void TestMemoReplace()
         {
             TestMemoFindReplace(true);
         }
@@ -149,7 +143,7 @@ namespace PropertyGridSample
             var control = GetSelectedControl<GenericToolBar>();
             if (control is null)
                 return;
-            control.DeleteAll();
+            control.DeleteAll(false);
             ObjectInit.InitGenericToolBar(control);
         }
 

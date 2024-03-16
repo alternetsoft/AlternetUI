@@ -88,5 +88,20 @@ namespace Alternet.UI
         /// <param name="state">Control state.</param>
         [Obsolete("'GetImageOrNull' is deprecated, please use 'GetObjectOrNull' instead.")]
         public Image? GetImageOrNull(GenericControlState state) => GetObjectOrNull(state);
+
+        /// <summary>
+        /// Creates clone of this object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlStateImages Clone()
+        {
+            var result = new ControlStateImages();
+            result.Normal = Normal;
+            result.Hovered = Hovered;
+            result.Pressed = Pressed;
+            result.Disabled = Disabled;
+            result.Focused = Focused;
+            return result;
+        }
     }
 }

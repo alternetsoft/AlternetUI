@@ -51,12 +51,59 @@ namespace ControlsTest
                 });
             });
 
-            panel.AddAction("Draw bad Image", () =>
+            panel.AddAction("Bad Image (test assert)", () =>
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {
                     var image = new Bitmap();
                     canvas.DrawImage(image, PointD.Empty);
+                });
+            });
+
+            panel.AddAction("Draw native checkbox", () =>
+            {
+                customDrawControl.SetPaintAction((control, canvas, rect) =>
+                {
+                    var painter = NativeControlPainter.Default;
+
+                    Fn((50, 50), CheckState.Unchecked, GenericControlState.Normal, "unchecked");
+
+                    Fn((150, 50), CheckState.Checked, GenericControlState.Normal, "checked");
+
+                    Fn(
+                        (250, 50),
+                        CheckState.Checked,
+                        GenericControlState.Hovered,
+                        "checked, current");
+
+                    Fn(
+                        (50, 100),
+                        CheckState.Checked,
+                        GenericControlState.Disabled,
+                        "disabled");
+
+                    Fn(
+                        (150, 100),
+                        CheckState.Indeterminate,
+                        GenericControlState.Normal,
+                        "undetermined");
+
+                    void Fn(
+                        PointD location,
+                        CheckState checkState,
+                        GenericControlState controlState,
+                        string title)
+                    {
+                        var size = DrawingUtils.GetCheckBoxSize(control, checkState, controlState);
+                        var rect = (location, size);
+                        canvas.DrawCheckBox(
+                            control,
+                            rect,
+                            checkState,
+                            controlState);
+                        location.Y += size.Height;
+                        canvas.DrawText(title, location);
+                    }
                 });
             });
         }

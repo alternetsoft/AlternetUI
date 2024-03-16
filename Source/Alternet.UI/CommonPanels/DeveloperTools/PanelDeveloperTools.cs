@@ -224,7 +224,7 @@ namespace Alternet.UI
             AddLogAction("Log control info", LogControlInfo);
             AddLogAction("Log useful defines", LogUsefulDefines);
             AddLogAction("Log OS information", LogOSInformation);
-            AddLogAction("Log System Colors", ColorUtils.LogSystemColors);
+            AddLogAction("Log system colors", ColorUtils.LogSystemColors);
             AddLogAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             AddLogAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
 
@@ -243,7 +243,7 @@ namespace Alternet.UI
                 }
             });
 
-            AddLogAction("Enum Embedded Resources in Alternet.UI", () =>
+            AddLogAction("Log Embedded Resources in Alternet.UI", () =>
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI";
 
@@ -266,11 +266,16 @@ namespace Alternet.UI
                 instance?.Show();
             });
 
-            AddAction("Test log error and warning", () =>
+            AddAction("Log test error and warning items", () =>
             {
                 Application.Log("Sample error", LogItemKind.Error);
                 Application.Log("Sample warning", LogItemKind.Warning);
                 Application.Log("Sample info", LogItemKind.Information);
+            });
+
+            AddLogAction("Log NativeControlPainter metrics", () =>
+            {
+                NativeControlPainter.Default.LogPartSize(this);
             });
         }
 
