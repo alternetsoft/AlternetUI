@@ -12,13 +12,13 @@ namespace Alternet.Drawing
     public enum SvgImageDataKind
     {
         /// <summary>
-        /// Type of the data string is autodetected.
-        /// </summary>
-        Auto,
-
-        /// <summary>
-        /// Data string is url.
+        /// String is url.
         /// </summary>
         Url,
+
+        /// <summary>
+        /// String contains data.
+        /// </summary>
+        Data,
     }
 }

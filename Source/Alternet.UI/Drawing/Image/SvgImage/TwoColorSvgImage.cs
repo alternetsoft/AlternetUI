@@ -13,15 +13,32 @@ namespace Alternet.Drawing
     /// </summary>
     public class TwoColorSvgImage : SvgImage
     {
-        /// <inheritdoc cref="SvgImage.SvgImage(string, SvgImageDataKind)"/>
-        public TwoColorSvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Auto)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoColorSvgImage"/> class.
+        /// </summary>
+        /// <remarks>
+        /// See <see cref="SvgImage.SvgImage(string, SvgImageDataKind)"/> for the details.
+        /// </remarks>
+        public TwoColorSvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Url)
             : base(urlOrData, kind)
         {
         }
 
-        /// <inheritdoc cref="SvgImage.SvgImage(Stream)"/>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoColorSvgImage"/> class.
+        /// </summary>
+        /// <remarks>
+        /// See <see cref="SvgImage.SvgImage(Stream)"/> for the details.
+        /// </remarks>
         public TwoColorSvgImage(Stream stream)
             : base(stream)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoColorSvgImage"/> class.
+        /// </summary>
+        public TwoColorSvgImage()
         {
         }
 

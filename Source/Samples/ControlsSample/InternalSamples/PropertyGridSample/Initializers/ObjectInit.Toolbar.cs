@@ -80,9 +80,13 @@ namespace PropertyGridSample
 
             var separatorId = toolbar.AddSeparator();
 
+            var saveClone = KnownSvgImages.ImgFileSave.Clone();
+            saveClone.SetColorOverride(KnownSvgColor.Normal, true, Color.Red);
+            saveClone.SetColorOverride(KnownSvgColor.Normal, false, Color.IndianRed);
+
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                KnownSvgImages.ImgFileSave);
+                saveClone);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSpacer();
@@ -92,6 +96,7 @@ namespace PropertyGridSample
 
             var textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Center;
+            textBox.Text = "text1";
             textBox.SuggestedWidth = 100;
 
             var idEdit = toolbar.AddControl(textBox);

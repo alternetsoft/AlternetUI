@@ -143,7 +143,7 @@ namespace PropertyGridSample
             var control = GetSelectedControl<GenericToolBar>();
             if (control is null)
                 return;
-            control.DeleteAll();
+            control.DeleteAll(false);
             ObjectInit.InitGenericToolBar(control);
         }
 

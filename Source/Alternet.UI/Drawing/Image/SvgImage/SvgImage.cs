@@ -16,23 +16,34 @@ namespace Alternet.Drawing
     /// </summary>
     public class SvgImage : BaseObject
     {
-        private readonly string? url;
-        private readonly string? urlOrData;
-        private readonly SvgImageDataKind kind;
-        private Stream? stream;
+        private string? url;
+        private string? svg;
         private Data?[] data = new Data?[16];
+        private bool wasLoaded;
+        private Color?[]? colorOverridesLight;
+        private Color?[]? colorOverridesDark;
+
+        internal SvgImage()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImage"/> class.
         /// </summary>
         /// <param name="urlOrData">Image url or data.</param>
         /// <param name="kind">Image data kind.</param>
-        protected SvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Auto)
+        protected SvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Url)
         {
-            if (kind == SvgImageDataKind.Url)
-                url = urlOrData;
-            this.urlOrData = urlOrData;
-            this.kind = kind;
+            switch (kind)
+            {
+                case SvgImageDataKind.Url:
+                    url = urlOrData;
+                    break;
+                case SvgImageDataKind.Data:
+                    wasLoaded = true;
+                    svg = urlOrData;
+                    break;
+            }
         }
 
         /// <summary>
@@ -41,7 +52,9 @@ namespace Alternet.Drawing
         /// <param name="stream">Stream with image data.</param>
         protected SvgImage(Stream stream)
         {
-            this.stream = stream;
+            wasLoaded = true;
+            using var reader = new StreamReader(stream);
+            svg = reader.ReadToEnd();
         }
 
         /// <summary>
@@ -59,42 +72,25 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual string? Url => url;
 
-        internal virtual SvgImageDataKind Kind => kind;
-
-        /// <summary>
-        /// Gets <see cref="Stream"/> with image data.
-        /// </summary>
-        internal virtual Stream? Stream
-        {
-            get
-            {
-                if (stream is null)
-                {
-                    if (urlOrData is null)
-                        return null;
-                    stream = ResourceLoader.StreamFromUrl(urlOrData);
-                }
-
-                return stream;
-            }
-        }
-
         /// <summary>
         /// Gets svg image as <see cref="ImageSet"/> with default toolbar image size.
         /// </summary>
-        public virtual ImageSet? AsImageSet() => AsImageSet(ToolBar.GetDefaultImageSize().Width);
+        public virtual ImageSet? AsImageSet()
+            => AsImageSet(ToolBar.GetDefaultImageSize().Width);
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/> with default toolbar image size.
         /// </summary>
-        public virtual Image? AsImage() => AsImage(ToolBar.GetDefaultImageSize().Width);
+        public virtual Image? AsImage()
+            => AsImage(ToolBar.GetDefaultImageSize().Width);
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/>.
         /// </summary>
         /// <param name="size">Image size</param>
         /// <returns></returns>
-        public virtual Image? AsImage(int size) => AsImageSet(size)?.AsImage();
+        public virtual Image? AsImage(int size)
+            => AsImageSet(size)?.AsImage();
 
         /// <summary>
         /// Gets svg image as <see cref="ImageSet"/>.
@@ -170,15 +166,95 @@ namespace Alternet.Drawing
                 return AsImageSet(size);
 
             Resize(size);
-            var result = data[size]?.KnownColorImages[(int)knownColor];
+
+            ImageSet? result;
+
+            if (isDark)
+                result = data[size]?.KnownColorImagesDark[(int)knownColor];
+            else
+                result = data[size]?.KnownColorImagesLight[(int)knownColor];
+
             if (result is not null)
                 return result;
 
-            var color = SvgColors.GetSvgColor(knownColor, isDark);
+            var color = GetSvgColor(knownColor, isDark);
             result = LoadImage(size, color);
             data[size] ??= new();
-            data[size]!.KnownColorImages[(int)knownColor] = result;
+
+            if(isDark)
+                data[size]!.KnownColorImagesDark[(int)knownColor] = result;
+            else
+                data[size]!.KnownColorImagesLight[(int)knownColor] = result;
             return result;
+        }
+
+        /// <summary>
+        /// Gets real color value for the specified known svg color.
+        /// Uses <see cref="SvgColors.GetSvgColor(KnownSvgColor, bool)"/> and color overrides
+        /// specified with <see cref="SetColorOverride"/>.
+        /// </summary>
+        /// <param name="knownColor">Known svg color</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns></returns>
+        public virtual Color GetSvgColor(KnownSvgColor knownColor, bool isDark)
+        {
+            Color? result = null;
+
+            if (isDark)
+            {
+                if (colorOverridesDark is not null)
+                    result = colorOverridesDark[(int)knownColor];
+            }
+            else
+            {
+                if (colorOverridesLight is not null)
+                    result = colorOverridesLight[(int)knownColor];
+            }
+
+            if(result is null)
+                return SvgColors.GetSvgColor(knownColor, isDark);
+            return result;
+        }
+
+        /// <summary>
+        /// Clones this object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual SvgImage Clone()
+        {
+            SvgImage result = (SvgImage)Activator.CreateInstance(GetType())!;
+
+            result.url = url;
+            result.svg = svg;
+            result.wasLoaded = wasLoaded;
+
+            if (colorOverridesLight is not null)
+                result.colorOverridesLight = (Color?[]?)colorOverridesLight.Clone();
+            if (colorOverridesDark is not null)
+                result.colorOverridesDark = (Color?[]?)colorOverridesDark.Clone();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Sets color overrides used instead of default known svg colors.
+        /// Override is used only for this svg image.
+        /// </summary>
+        /// <param name="knownColor">Known svg color</param>
+        /// <param name="value">Override.</param>
+        /// <param name="isDark">Whether override is set for dark or light color theme.</param>
+        public virtual void SetColorOverride(KnownSvgColor knownColor, bool isDark, Color? value)
+        {
+            if (isDark)
+            {
+                colorOverridesDark ??= new Color?[(int)KnownSvgColor.MaxValue + 1];
+                colorOverridesDark[(int)knownColor] = value;
+            }
+            else
+            {
+                colorOverridesLight ??= new Color?[(int)KnownSvgColor.MaxValue + 1];
+                colorOverridesLight[(int)knownColor] = value;
+            }
         }
 
         internal void Resize(int size)
@@ -192,21 +268,30 @@ namespace Alternet.Drawing
 
         private ImageSet? LoadImage(int size, Color? color = null)
         {
-            if (Stream is null)
-                return null;
-            Stream.Seek(0, SeekOrigin.Begin);
-            var result = ImageSet.FromSvgStream(Stream, size, size, color);
-            return result;
+            if(svg is null && url is not null && !wasLoaded)
+            {
+                wasLoaded = true;
+                using var stream = ResourceLoader.StreamFromUrl(url);
+                using var reader = new StreamReader(stream);
+                svg = reader.ReadToEnd();
+            }
+
+            if (svg is null)
+                return ImageSet.Empty;
+            else
+                return ImageSet.FromSvgString(svg, size, size, color);
         }
 
         internal class Data
         {
             public ImageSet? OriginalImage;
-            public ImageSet?[] KnownColorImages;
+            public ImageSet?[] KnownColorImagesLight;
+            public ImageSet?[] KnownColorImagesDark;
 
             public Data()
             {
-                KnownColorImages = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
+                KnownColorImagesLight = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
+                KnownColorImagesDark = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
             }
         }
     }
