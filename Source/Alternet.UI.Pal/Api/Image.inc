@@ -39,6 +39,7 @@ bool InitializeFromDipSize(int width, int height, double scale, int depth);
 bool InitializeFromScreen();
 bool LoadFromStream(void* stream);
 bool LoadSvgFromStream(void* stream, int width, int height, const Color& color);
+bool LoadSvgFromString(const string& s, int width, int height, const Color& color);
 void Initialize(const SizeI& size, int depth);
 void InitializeFromImage(Image* source, const SizeI& size);
 void CopyFrom(Image* otherImage);

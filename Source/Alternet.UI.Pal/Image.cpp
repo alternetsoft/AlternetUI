@@ -240,6 +240,35 @@ namespace Alternet::UI
 			return wxBitmapBundle();
 	}
 
+	wxBitmapBundle Image::CreateFromSvgStr(const string& s, int width, int height, const Color& color)
+	{
+		auto wxs = wxStr(s);
+		wxCharBuffer buffer = wxs.ToUTF8();
+		char* const ptr = buffer.data();
+
+		auto size = wxSize(width, height);
+		auto bitmapBundle = wxBitmapBundleFromSVG(ptr, size, color);
+		return bitmapBundle;
+	}
+
+	bool Image::LoadSvgFromString(const string& s, int width, int height, const Color& color)
+	{
+
+		auto bundle = CreateFromSvgStr(s, width, height, color);
+
+		if (bundle.IsOk())
+		{
+			auto size = wxSize(width, height);
+			_bitmap = bundle.GetBitmap(size);
+			return true;
+		}
+		else
+		{
+			_bitmap = wxBitmap();
+			return false;
+		}
+	}
+
 	bool Image::LoadSvgFromStream(void* stream, int width, int height, const Color& color)
 	{
 		auto bundle = CreateFromSvgStream(stream, width, height, color);

@@ -56,6 +56,14 @@ namespace Alternet::UI
 		InvalidateBitmapBundle();
 	}
 
+	void ImageSet::LoadSvgFromString(const string& s, int width, int height, const Color& color)
+	{
+		Clear();
+		_bitmapBundleValid = true;
+		_readOnly = true;
+		_bitmapBundle = Image::CreateFromSvgStr(s, width, height, color);
+	}
+
 	void ImageSet::LoadSvgFromStream(void* stream, int width, int height, const Color& color)
 	{
 		Clear();

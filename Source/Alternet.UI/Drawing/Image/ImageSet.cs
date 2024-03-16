@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -13,7 +14,19 @@ namespace Alternet.UI
     [TypeConverter(typeof(ImageSetConverter))]
     public class ImageSet : BaseComponent, IDisposable
     {
+        /// <summary>
+        /// Gets an empty <see cref="ImageSet"/>.
+        /// </summary>
+        public static readonly ImageSet Empty;
+
         private bool isDisposed;
+        private bool? isReadOnly;
+
+        static ImageSet()
+        {
+            Empty = new();
+            Empty.isReadOnly = true;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with default values.
@@ -109,7 +122,7 @@ namespace Alternet.UI
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
-        public Collection<Image> Images { get; } = new() { ThrowOnNullAdd = true };
+        public Collection<Image> Images { get; internal set; } = new() { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets whether this <see cref="ImageSet"/> instance is valid and contains image(s).
@@ -118,9 +131,17 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets whether this <see cref="ImageSet"/> instance is readonly (no further
+        /// add or load operations are allowed). Same as <see cref="IsReadOnly"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool Immutable => IsReadOnly;
+
+        /// <summary>
+        /// Gets whether this <see cref="ImageSet"/> instance is readonly (no further
         /// add or load operations are allowed).
         /// </summary>
-        public bool IsReadOnly => NativeImageSet.IsReadOnly;
+        [Browsable(false)]
+        public bool IsReadOnly => isReadOnly ??= NativeImageSet.IsReadOnly;
 
         internal UI.Native.ImageSet NativeImageSet { get; private set; }
 
@@ -249,6 +270,25 @@ namespace Alternet.UI
             var nativeImage = new UI.Native.ImageSet();
             using var inputStream = new UI.Native.InputStream(stream, false);
             nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
+            var result = new ImageSet(nativeImage);
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified string which contains svg data.
+        /// </summary>
+        /// <param name="s">String with svg data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        /// <returns><see cref="ImageSet"/> instance with svg data loaded from
+        /// <paramref name="s"/>. </returns>
+        public static ImageSet FromSvgString(string s, int width, int height, Color? color = null)
+        {
+            var nativeImage = new UI.Native.ImageSet();
+            nativeImage.LoadSvgFromString(s, width, height, color ?? Color.Black);
             var result = new ImageSet(nativeImage);
             return result;
         }
@@ -431,12 +471,24 @@ namespace Alternet.UI
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
+            if (IsReadOnly)
+            {
+                throw new InvalidOperationException(
+                    ErrorMessages.Default.CannotChangeReadOnlyObject);
+            }
+
             NativeImageSet.AddImage(item.NativeImage);
             OnChanged();
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
+            if (IsReadOnly)
+            {
+                throw new InvalidOperationException(
+                    ErrorMessages.Default.CannotChangeReadOnlyObject);
+            }
+
             OnChanged();
 
             // todo

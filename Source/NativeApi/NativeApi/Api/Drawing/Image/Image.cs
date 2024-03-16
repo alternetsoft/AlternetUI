@@ -58,6 +58,8 @@ namespace NativeApi.Api
 
         public bool LoadFromStream(InputStream stream) => default;
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
+        public bool LoadSvgFromString(string s, int width, int height, Color color) => default;
+
         public void Initialize(SizeI size, int depth) { }
         public void InitializeFromImage(Image source, SizeI size) { }
         public void CopyFrom(Image otherImage) { }

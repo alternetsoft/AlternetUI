@@ -12,18 +12,13 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public class Image : IDisposable
+    public class Image : BaseComponent, IDisposable
     {
         /// <summary>
         /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
         /// grayscale method.
         /// </summary>
         public static EventHandler<BaseEventArgs<Image>>? GrayScale;
-
-        /// <summary>
-        /// Gets or sets default disabled image brightness used in <see cref="ToGrayScale"/>.
-        /// </summary>
-        public byte DefaultDisabledBrightness = 170;
 
         private bool isDisposed;
         private UI.Native.Image nativeImage;
@@ -553,7 +548,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class
         /// from the specified <see cref="Stream"/> which contains svg data.
         /// </summary>
-        /// <param name="stream">Stream with Svg data.</param>
+        /// <param name="stream">Stream with svg data.</param>
         /// <param name="width">Image width.</param>
         /// <param name="height">Image height.</param>
         /// <returns>Image instance with dimensions specified in <paramref name="width"/>
@@ -565,6 +560,25 @@ namespace Alternet.Drawing
             var nativeImage = new UI.Native.Image();
             using var inputStream = new UI.Native.InputStream(stream);
             nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
+            var result = new Bitmap(nativeImage);
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified string which contains svg data.
+        /// </summary>
+        /// <param name="s">String with svg data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Image instance with dimensions specified in <paramref name="width"/>
+        /// and <paramref name="height"/> and data loaded from <paramref name="s"/>. </returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static Image FromSvgString(string s, int width, int height, Color? color = null)
+        {
+            var nativeImage = new UI.Native.Image();
+            nativeImage.LoadSvgFromString(s, width, height, color ?? Color.Black);
             var result = new Bitmap(nativeImage);
             return result;
         }
