@@ -6,14 +6,15 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements splitter panel with <see cref="TreeView"/> and <see cref="CardPanel"/>.
+    /// Implements splitter panel with <see cref="TreeView"/> or <see cref="VListBox"/>
+    /// on the left and <see cref="CardPanel"/> on the right.
     /// </summary>
     public partial class SplittedTreeAndCards : LayoutPanel
     {
-        private readonly TreeView treeView = new()
-        {
-            HasBorder = false,
-        };
+        /// <summary>
+        /// Gets default sash position.
+        /// </summary>
+        public double DefaultSashPosition = 140;
 
         private readonly CardPanel cardPanel = new()
         {
@@ -21,27 +22,51 @@ namespace Alternet.UI
 
         private readonly Splitter splitter = new();
 
+        private TreeKind kind = TreeKind.TreeView;
+        private Control? leftControl;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
         /// </summary>
         public SplittedTreeAndCards()
         {
-            cardPanel.Dock = DockStyle.Fill;
-            cardPanel.Parent = this;
-
-            splitter.Dock = DockStyle.Left;
-            splitter.Parent = this;
-
-            treeView.SelectionChanged += PagesListBox_SelectionChanged;
-            treeView.Dock = DockStyle.Left;
-            treeView.Width = DefaultSashPosition;
-            treeView.Parent = this;
+            Initialize(TreeKind.TreeView);
         }
 
         /// <summary>
-        /// Gets <see cref="TreeView"/> attached to the control.
+        /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
         /// </summary>
-        public TreeView TreeView => treeView;
+        public SplittedTreeAndCards(TreeKind kind)
+        {
+            Initialize(kind);
+        }
+
+        /// <summary>
+        /// Enumerates possible kinds of the left control.
+        /// </summary>
+        public enum TreeKind
+        {
+            /// <summary>
+            /// Control is <see cref="TreeView"/>.
+            /// </summary>
+            TreeView,
+
+            /// <summary>
+            /// Control is <see cref="ListBox"/>.
+            /// </summary>
+            ListBox,
+        }
+
+        /// <summary>
+        /// Gets left control.
+        /// </summary>
+        public Control? LeftControl
+        {
+            get
+            {
+                return leftControl;
+            }
+        }
 
         /// <summary>
         /// Gets <see cref="CardPanel"/> attached to the control.
@@ -49,30 +74,54 @@ namespace Alternet.UI
         public CardPanel Cards => cardPanel;
 
         /// <summary>
+        /// Gets left control as <see cref="TreeView"/>.
+        /// </summary>
+        public TreeView? TreeView => leftControl as TreeView;
+
+        /// <summary>
+        /// Gets left control as <see cref="VListBox"/>.
+        /// </summary>
+        public VListBox? ListBox => leftControl as VListBox;
+
+        /// <summary>
         /// Gets or sets index of the selected item in the <see cref="TreeView"/>.
         /// </summary>
         public int? SelectedIndex
         {
-            get => treeView?.SelectedItem?.Index;
+            get
+            {
+                if(kind == TreeKind.TreeView)
+                    return TreeView?.SelectedItem?.Index;
+                else
+                    return ListBox?.SelectedIndex;
+            }
+
             set
             {
-                treeView.SelectedItem = treeView.Items[(int)value!];
+                if (kind == TreeKind.TreeView)
+                    TreeView?.SetSelectedIndex(value);
+                else
+                    ListBox?.SetSelectedIndex(value);
+                SetActiveCard();
             }
         }
 
         /// <summary>
-        /// Gets default sash position.
+        /// Gets kind of the left control.
         /// </summary>
-        protected virtual double DefaultSashPosition => 140;
-
-        /*/// <summary>
-        /// Splits controls vertically.
-        /// </summary>
-        /// <param name="sashPosition">Sash position in dips.</param>
-        public void SplitVerticalDip(double sashPosition = 0)
+        public virtual TreeKind LeftControlKind
         {
-            SplitVertical(TreeView, Cards, PixelFromDip(sashPosition));
-        }*/
+            get => kind;
+        }
+
+        /// <summary>
+        /// Calls <see cref="TreeView.MakeAsListBox"/> for the left control if
+        /// it is <see cref="TreeView"/>.
+        /// </summary>
+        public void MakeAsListBox()
+        {
+            TreeView?.MakeAsListBox();
+        }
 
         /// <summary>
         /// Sets debug background colors for the different parts of the control.
@@ -101,21 +150,99 @@ namespace Alternet.UI
         public void Add(string title, Func<Control> action)
         {
             var index = cardPanel.Add(title, action);
-            var item = new TreeViewItem(title)
+
+            if(LeftControlKind is TreeKind.TreeView)
             {
-                Tag = index,
-            };
-            treeView.Add(item);
+                var item = new TreeViewItem(title)
+                {
+                    Tag = index,
+                };
+                TreeView?.Add(item);
+            }
+            else
+            {
+                var item = new ListControlItem(title)
+                {
+                    Tag = index,
+                };
+
+                ListBox?.Add(item);
+            }
         }
 
-        private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
+        /// <summary>
+        /// Creates used <see cref="TreeView"/> control.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateTreeView()
+        {
+            TreeView treeView = new()
+            {
+                HasBorder = false,
+            };
+
+            treeView.SelectionChanged += OnSelectionChanged;
+
+            return treeView;
+        }
+
+        /// <summary>
+        /// Creates used <see cref="VListBox"/> control.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Control CreateListBox()
+        {
+            VListBox listBox = new()
+            {
+                HasBorder = false,
+            };
+
+            listBox.SelectionChanged += OnSelectionChanged;
+
+            return listBox;
+        }
+
+        /// <summary>
+        /// Called when selection changed in the left control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnSelectionChanged(object? sender, System.EventArgs e)
         {
             SetActiveCard();
         }
 
+        /// <summary>
+        /// Initializes controls. Called from constructor.
+        /// </summary>
+        protected virtual void Initialize(TreeKind kind)
+        {
+            this.kind = kind;
+            cardPanel.Dock = DockStyle.Fill;
+            cardPanel.Parent = this;
+
+            splitter.Dock = DockStyle.Left;
+            splitter.Parent = this;
+
+            if (kind == TreeKind.TreeView)
+                leftControl = CreateTreeView();
+            else
+                leftControl = CreateListBox();
+
+            leftControl.Dock = DockStyle.Left;
+            leftControl.Width = DefaultSashPosition;
+            leftControl.Parent = this;
+        }
+
         private void SetActiveCard()
         {
-            var pageIndex = treeView.SelectedItem?.Tag;
+            object? pageIndex;
+
+            if (kind == TreeKind.TreeView)
+                pageIndex = TreeView?.SelectedItem?.Tag;
+            else
+                pageIndex = (ListBox?.SelectedItem as ListControlItem)?.Tag;
+
             if (pageIndex == null)
                 return;
             cardPanel.SelectedCardIndex = (int)pageIndex;
