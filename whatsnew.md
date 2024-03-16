@@ -1,3 +1,33 @@
+# 0.9.521 (2024 March 16)
+
+- Splitter: improved painting when resize is done.
+- Improved log handling. Now it works faster and is more thread safe.
+- Changed default color for disabled svg images for light theme.
+- Added SvgImage, MonoSvgImage, ColorSvgImage, TwoColorSvgImage.
+- TextBox changed default error state image/color. Now error back/fore color is not used by default.
+- Fixed uixml and cs in documentation samples.
+- Added Clone and NormalBorderAsHovered to all theme related classes.
+- SpeedButton: DefaultCustomTheme, CustomTheme, StaticBorderTheme
+- SpeedButton.KnownTheme.StaticBorder (new SpeedButton theme with border in the normal state).
+- LogUtils: Add optional Kind param to log methods.
+- ThreadExceptionWindow made public.
+- Application.Run now shows exception dialog when unhandled exception occurs where user can select 
+whether to continue or exit the app.
+- Application: ThreadExceptionExitCode, LogUnhandledThreadException, UnhandledExceptionMode, UnhandledExceptionModeIfDebugger, 
+SetUnhandledExceptionModeIfDebugger, ExitAndTerminate(int exitCode = 0).
+- Graphics.DrawText(string text, PointD origin). Uses Control.DefaultFont and Brush.Default for drawing the text.
+- Graphics.DrawCheckBox, DrawingUtils.GetCheckBoxSize.
+- CustomControlPainter: GetCheckBoxSize, DrawCheckBox, Current.
+- VListBox: implemented checkboxes.
+- VListBox: CheckOnClick, CheckedIndicesDescending, CheckedIndices, CheckedCount, RemoveCheckedItems, ClearChecked, CheckItems, 
+SetItemChecked, SetItemCheckState, CheckedChanged event.
+- Control.MeasureCanvas.
+- Improved Window resize behavior.
+- SplittedTreeAndCards: Now possible to specify kind of the left control (TreeView or VListBox). Added many new props and methods.
+- Control.BindScrollEvents.
+- VListBox.HScrollBarVisible (not finished).
+- Added FromSvgString to Image and ImageSet. These methods are faster than FromSvgStream.
+
 # 0.9.520 (2024 March 13)
 
 - VListBox: SelectionVisible, CurrentItemBorderVisible, TextVisible.
