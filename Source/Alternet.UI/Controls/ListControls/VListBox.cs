@@ -47,6 +47,8 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultItemTextColor = SystemColors.WindowText;
 
+        private readonly TransformMatrix matrix = new();
+
         private Thickness itemMargin = DefaultItemMargin;
         private Color? selectedItemTextColor;
         private Color? itemTextColor;
@@ -64,7 +66,6 @@ namespace Alternet.UI
         private bool checkBoxesVisible;
         private bool checkBoxThreeState;
         private double scrollOffset;
-        private TransformMatrix matrix = new();
 
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
@@ -1389,7 +1390,6 @@ namespace Alternet.UI
 
             RectD rectRow = RectD.Empty;
             rectRow.Width = clientSize.Width;
-
 
             int lineMax = NativeControl.GetVisibleEnd();
             for (int line = NativeControl.GetVisibleBegin(); line < lineMax; line++)
