@@ -22,6 +22,27 @@ namespace Alternet::UI
         {
         }
 
+        void ProcessScrollEvent(wxScrollWinEvent& event);
+
+        virtual bool ProcessEvent(wxEvent& event) override
+        {
+            wxEventType evType = event.GetEventType();
+
+            if (evType == wxEVT_SCROLLWIN_TOP ||
+                evType == wxEVT_SCROLLWIN_BOTTOM ||
+                evType == wxEVT_SCROLLWIN_LINEUP ||
+                evType == wxEVT_SCROLLWIN_LINEDOWN ||
+                evType == wxEVT_SCROLLWIN_PAGEUP ||
+                evType == wxEVT_SCROLLWIN_PAGEDOWN ||
+                evType == wxEVT_SCROLLWIN_THUMBTRACK ||
+                evType == wxEVT_SCROLLWIN_THUMBRELEASE)
+            {
+                ProcessScrollEvent((wxScrollWinEvent&)event);
+            }
+
+            return wxVListBox::ProcessEvent(event);
+        }
+
         // the derived class must implement this function to actually draw the item
         // with the given index on the provided DC
         virtual void OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const override;
@@ -55,6 +76,7 @@ namespace Alternet::UI
 
         void OnDrawItem(DrawingContext* dc, const wxRect& rect, size_t n);
         wxCoord OnMeasureItem(size_t n);
+        void ProcessScrollEvent(wxScrollWinEvent& event);
 
     protected:
         virtual void OnPaint(wxPaintEvent& event) override;
@@ -71,5 +93,7 @@ namespace Alternet::UI
         int eventItemIndex = -1;
         int eventItemHeight = 16;
         int _itemsCount = 0;
+        bool _hScrollBarVisible = false;
+        bool _vScrollBarVisible = true;
     };
 }

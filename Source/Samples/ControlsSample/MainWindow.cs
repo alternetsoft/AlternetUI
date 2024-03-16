@@ -95,6 +95,7 @@ namespace ControlsSample
             eventsControl.Parent = splitterPanel;
 
             pageContainer.SelectedIndex = 0;
+            pageContainer.ListBox!.HScrollBarVisible = true;
             pageContainer.LeftControl?.SetFocusIfPossible();
 
             var logSizeChanged = false;

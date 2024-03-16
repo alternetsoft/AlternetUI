@@ -90,6 +90,7 @@ namespace PropertyGridSample
                     typeof(ColorComboBox),
                     typeof(ColorListBox),
                     typeof(VListBox),
+                    typeof(UserControl),
                 };
 
                 List<ControlListBoxItem> items = new();

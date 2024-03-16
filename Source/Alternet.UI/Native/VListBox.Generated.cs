@@ -24,6 +24,36 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool VScrollBarVisible
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.VListBox_GetVScrollBarVisible_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.VListBox_SetVScrollBarVisible_(NativePointer, value);
+            }
+        }
+        
+        public bool HScrollBarVisible
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.VListBox_GetHScrollBarVisible_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.VListBox_SetHScrollBarVisible_(NativePointer, value);
+            }
+        }
+        
         public System.IntPtr EventDcHandle
         {
             get
@@ -344,6 +374,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr VListBox_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_GetVScrollBarVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_SetVScrollBarVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool VListBox_GetHScrollBarVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void VListBox_SetHScrollBarVisible_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr VListBox_GetEventDcHandle_(IntPtr obj);

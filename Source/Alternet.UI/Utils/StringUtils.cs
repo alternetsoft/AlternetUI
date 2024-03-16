@@ -42,6 +42,16 @@ namespace Alternet.UI
         public const string OneSpace = " ";
 
         /// <summary>
+        /// Gets initialized string with one carriage return.
+        /// </summary>
+        public const string OneCarriageReturn = "\r";
+
+        /// <summary>
+        /// Gets initialized string with one new line character.
+        /// </summary>
+        public const string OneNewLine = "\n";
+
+        /// <summary>
         /// Gets title of the windows key on MacOs (0x2318 character).
         /// </summary>
         public const string MacCommandKeyTitle = "\u2318";

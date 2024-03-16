@@ -11,6 +11,16 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API c_bool Control_GetBindScrollEvents_(Control* obj)
+{
+    return obj->GetBindScrollEvents();
+}
+
+ALTERNET_UI_API void Control_SetBindScrollEvents_(Control* obj, c_bool value)
+{
+    obj->SetBindScrollEvents(value);
+}
+
 ALTERNET_UI_API c_bool Control_GetProcessIdle_(Control* obj)
 {
     return obj->GetProcessIdle();
@@ -351,6 +361,16 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
+{
+    obj->SaveScreenshot(fileName);
+}
+
+ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
+{
+    obj->SendSizeEvent();
+}
+
 ALTERNET_UI_API void Control_SendMouseDownEvent_(Control* obj, int x, int y)
 {
     obj->SendMouseDownEvent(x, y);
@@ -579,16 +599,6 @@ ALTERNET_UI_API void Control_EndInit_(Control* obj)
 ALTERNET_UI_API void Control_Destroy_(Control* obj)
 {
     obj->Destroy();
-}
-
-ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
-{
-    obj->SaveScreenshot(fileName);
-}
-
-ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
-{
-    obj->SendSizeEvent();
 }
 
 ALTERNET_UI_API c_bool Control_BeginRepositioningChildren_(Control* obj)

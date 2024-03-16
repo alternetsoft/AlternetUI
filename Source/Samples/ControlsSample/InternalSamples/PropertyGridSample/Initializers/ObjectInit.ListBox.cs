@@ -19,6 +19,8 @@ namespace PropertyGridSample
             if (control is not VListBox listBox)
                 return;
 
+            listBox.HScrollBarVisible = true;
+
             for (int i = 0; i < 150; i++)
             {
                 ListControlItem newItem = new($"Item {i}");
@@ -76,6 +78,9 @@ namespace PropertyGridSample
             item.Border.Color = Color.Red;
             item.Border.UniformCornerRadius = 50;
             item.Border.UniformRadiusIsPercent = true;
+
+            item = listBox.RequiredItem(firstIndex + 6);
+            item.Text = LoremIpsum.Replace(StringUtils.OneNewLine, StringUtils.OneSpace);
 
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;

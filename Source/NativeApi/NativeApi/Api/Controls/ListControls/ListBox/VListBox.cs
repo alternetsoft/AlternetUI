@@ -10,6 +10,9 @@ namespace NativeApi.Api
 {
     public class VListBox : Control
     {
+        public bool VScrollBarVisible { get; set; }
+        public bool HScrollBarVisible { get; set; }
+
         public RectI GetItemRectI(int index) => default;
 
         public bool ScrollRows(int rows) => default;

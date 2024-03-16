@@ -8,6 +8,7 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public bool BindScrollEvents { get; set; }
         public bool BeginRepositioningChildren() => default;
         public void EndRepositioningChildren() { }
 
