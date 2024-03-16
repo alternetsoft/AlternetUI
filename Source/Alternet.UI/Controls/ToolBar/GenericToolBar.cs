@@ -614,7 +614,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public ImageSet? ToNormal(SvgImage? image)
         {
-            var result = image?.AsImageSet(GetImageSize(), KnownSvgColor.Normal, IsDarkBackground);
+            var result = image?.AsNormal(GetImageSize(), IsDarkBackground);
             return result;
         }
 
@@ -626,7 +626,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public ImageSet? ToDisabled(SvgImage? image)
         {
-            var result = image?.AsImageSet(GetImageSize(), KnownSvgColor.Disabled, IsDarkBackground);
+            var result = image?.AsDisabled(GetImageSize(), IsDarkBackground);
             return result;
         }
 
@@ -1074,7 +1074,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method disposes tool controls if <paramref name="dispose"/> is <c>true</c>.
         /// </remarks>
-        public virtual void DeleteAll(bool dispose = true)
+        public virtual void DeleteAll(bool dispose = false)
         {
             Stack<Control> controls = new();
             controls.PushRange(Children);
@@ -1084,7 +1084,8 @@ namespace Alternet.UI
                 foreach (var control in controls)
                 {
                     control.Parent = null;
-                    control.Dispose();
+                    if(dispose)
+                        control.Dispose();
                 }
             }
             finally
