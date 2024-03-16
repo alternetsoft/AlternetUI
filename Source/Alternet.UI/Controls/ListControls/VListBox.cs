@@ -63,6 +63,8 @@ namespace Alternet.UI
         private BorderSettings? selectionBorder;
         private bool checkBoxesVisible;
         private bool checkBoxThreeState;
+        private double scrollOffset;
+        private TransformMatrix matrix = new();
 
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
@@ -93,6 +95,22 @@ namespace Alternet.UI
         /// toggled when an item is clicked on the checkbox area.
         /// </summary>
         public virtual bool CheckOnClick { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets whether horizontal scrollbar is visible in the control.
+        /// </summary>
+        public virtual bool HScrollBarVisible
+        {
+            get => NativeControl.HScrollBarVisible;
+
+            set
+            {
+                if (HScrollBarVisible == value)
+                    return;
+                NativeControl.HScrollBarVisible = value;
+                Refresh();
+            }
+        }
 
         /// <summary>
         /// Gets or sets current item border. If it is <c>null</c> (default value),
@@ -225,6 +243,7 @@ namespace Alternet.UI
         /// Gets number of checked items.
         /// </summary>
         [DefaultValue(false)]
+        [Browsable(false)]
         public virtual int CheckedCount
         {
             get
@@ -600,6 +619,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether vertical scrollbar is visible in the control.
+        /// </summary>
+        internal virtual bool VScrollBarVisible
+        {
+            get => NativeControl.VScrollBarVisible;
+            set
+            {
+                if (VScrollBarVisible == value)
+                    return;
+                NativeControl.VScrollBarVisible = value;
+                Refresh();
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="NativeControl"/> attached to this control.
         /// </summary>
         internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
@@ -608,7 +642,7 @@ namespace Alternet.UI
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public virtual Font GetItemFont(int itemIndex)
+        public virtual Font GetItemFont(int itemIndex = -1)
         {
             var result = Font ?? UI.Control.DefaultFont;
             if (IsBold)
@@ -1356,6 +1390,7 @@ namespace Alternet.UI
             RectD rectRow = RectD.Empty;
             rectRow.Width = clientSize.Width;
 
+
             int lineMax = NativeControl.GetVisibleEnd();
             for (int line = NativeControl.GetVisibleBegin(); line < lineMax; line++)
             {
@@ -1376,7 +1411,12 @@ namespace Alternet.UI
                         itemPaintArgs.ItemIndex = line;
                     }
 
+                    matrix.Reset();
+                    dc.Transform = matrix;
                     DrawItemBackground(itemPaintArgs);
+
+                    matrix.Translate(-scrollOffset, 0);
+                    dc.Transform = matrix;
                     DrawItem(itemPaintArgs);
                 }
                 else
@@ -1386,6 +1426,52 @@ namespace Alternet.UI
                 }
 
                 rectRow.Top += hRow;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnScroll(ScrollEventArgs e)
+        {
+            double CharWidth() => MeasureCanvas.MeasureText("W", GetItemFont()).Width;
+
+            void IncOffset(double delta)
+            {
+                var newOffset = Math.Max(scrollOffset + delta, 0);
+                if (newOffset != scrollOffset)
+                {
+                    scrollOffset = newOffset;
+                    Refresh();
+                }
+            }
+
+            base.OnScroll(e);
+
+            switch (e.Type)
+            {
+                case ScrollEventType.SmallDecrement:
+                    if (scrollOffset == 0)
+                        return;
+                    IncOffset(-CharWidth());
+                    break;
+                case ScrollEventType.SmallIncrement:
+                    IncOffset(CharWidth());
+                    break;
+                case ScrollEventType.LargeDecrement:
+                    break;
+                case ScrollEventType.LargeIncrement:
+                    break;
+                case ScrollEventType.ThumbPosition:
+                    break;
+                case ScrollEventType.ThumbTrack:
+                    break;
+                case ScrollEventType.First:
+                    break;
+                case ScrollEventType.Last:
+                    break;
+                case ScrollEventType.EndScroll:
+                    break;
+                default:
+                    break;
             }
         }
 
