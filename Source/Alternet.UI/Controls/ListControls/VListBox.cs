@@ -8,7 +8,8 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements virtual ListBox control. This is experimental and will be changed at any time.
+    /// <see cref="ListBox"/> descendant with advanced formatting for the items.
+    /// Please use <see cref="ListControlItem"/> with this control.
     /// </summary>
     public class VListBox : ListBox
     {

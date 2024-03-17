@@ -7,8 +7,6 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    // todo: copy DataSource, DisplayMember, ValueMember etc implementation from WinForms
-
     /// <summary>
     /// Provides a common implementation of members for the ListBox and
     /// ComboBox classes.
