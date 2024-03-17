@@ -191,7 +191,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets real color value for the specified known svg color.
         /// Uses <see cref="SvgColors.GetSvgColor(KnownSvgColor, bool)"/> and color overrides
-        /// specified with <see cref="SetColorOverride"/>.
+        /// specified with <see cref="SetColorOverride(KnownSvgColor, bool, Color?)"/>.
         /// </summary>
         /// <param name="knownColor">Known svg color</param>
         /// <param name="isDark">Whether color theme is dark.</param>
@@ -241,7 +241,7 @@ namespace Alternet.Drawing
         /// Override is used only for this svg image.
         /// </summary>
         /// <param name="knownColor">Known svg color</param>
-        /// <param name="value">Override.</param>
+        /// <param name="value">Override color value.</param>
         /// <param name="isDark">Whether override is set for dark or light color theme.</param>
         public virtual void SetColorOverride(KnownSvgColor knownColor, bool isDark, Color? value)
         {
@@ -255,6 +255,18 @@ namespace Alternet.Drawing
                 colorOverridesLight ??= new Color?[(int)KnownSvgColor.MaxValue + 1];
                 colorOverridesLight[(int)knownColor] = value;
             }
+        }
+
+        /// <summary>
+        /// Sets color overrides used instead of default known svg colors.
+        /// Override is used only for this svg image.
+        /// </summary>
+        /// <param name="knownColor">Known svg color</param>
+        /// <param name="value">Override color value.</param>
+        public virtual void SetColorOverride(KnownSvgColor knownColor, LightDarkColor? value)
+        {
+            SetColorOverride(knownColor, true, value?.Dark);
+            SetColorOverride(knownColor, false, value?.Light);
         }
 
         internal void Resize(int size)
