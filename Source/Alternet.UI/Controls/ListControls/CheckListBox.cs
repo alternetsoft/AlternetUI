@@ -5,11 +5,11 @@ using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
-// TODO: CheckState, OnItemClick, fill xml comment remarks
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a control to display a list of items.
+    /// Represents a control to display a list of items with checkboxes.
+    /// Please consider using <see cref="VCheckListBox"/> instead of this simple control.
     /// </summary>
     /// <remarks>
     /// The <see cref="CheckListBox"/> control enables you to display a list of
