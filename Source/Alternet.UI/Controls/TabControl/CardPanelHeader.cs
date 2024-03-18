@@ -900,14 +900,12 @@ namespace Alternet.UI
 
         private void Item_Click(object? sender, EventArgs e)
         {
-            Application.Log("Item_Click");
             if (sender is not Control control)
                 return;
             foreach(var tab in tabs)
             {
                 if(control == tab.HeaderButton || control.HasIndirectParent(tab.HeaderButton))
                 {
-                    Application.Log("Item_Click 2");
                     var oldSelectedTab = SelectedTab;
                     SelectedTab = tab;
                     if(oldSelectedTab != SelectedTab)

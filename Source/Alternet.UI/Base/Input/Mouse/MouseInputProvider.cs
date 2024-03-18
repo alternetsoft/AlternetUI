@@ -52,8 +52,8 @@ namespace Alternet.UI
             if (nobj is not Native.Control c)
                 return null;
 
-            if (!c.IsMouseCaptured)
-                return null;
+            /*if (!c.IsMouseCaptured)
+                return null;*/
 
             return ControlHandler.NativeControlToHandler(c)?.Control;
         }
