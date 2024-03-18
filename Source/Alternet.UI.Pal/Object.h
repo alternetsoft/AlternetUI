@@ -15,6 +15,16 @@ namespace Alternet::UI
         {
         }
 
+        void SetId(uint64_t value)
+        {
+            _id = value;
+        }
+
+        uint64_t GetId()
+        {
+            return _id;
+        }
+
         void AddRef()
         {
             if (_referenceCount < 0)
@@ -42,6 +52,7 @@ namespace Alternet::UI
 
     private:
         int _referenceCount;
+        uint64_t _id;
     };
 }
 
