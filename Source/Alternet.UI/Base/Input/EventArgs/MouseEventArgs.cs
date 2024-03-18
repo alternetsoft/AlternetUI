@@ -267,5 +267,14 @@ namespace Alternet.UI
             else
                 return this.MouseDevice.GetPosition(relativeTo);
         }
+
+        /// <summary>
+        /// Gets string representation of this object.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"MouseEventArgs ({ChangedButton}, {Location}, ClickCount: {ClickCount}, Delta: {Delta})";
+        }
     }
 }
