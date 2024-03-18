@@ -94,7 +94,6 @@ namespace Alternet.UI
 
         private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
-            Application.LogIf("NativeMouse_MouseDown", true);
             InputManager.Current.ReportMouseDown(
                 GetTargetControl(e.Data.targetControl),
                 e.Data.timestamp,

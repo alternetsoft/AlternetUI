@@ -72,9 +72,11 @@ namespace Alternet.UI
             }
         }
 
-        internal static Control? GetMouseTargetControl(Control? control)
+        internal static Control? GetMouseTargetControl(ref Control? control)
         {
-            var result = control ?? GetControlUnderMouse();
+            control ??= GetControlUnderMouse();
+
+            var result = control;
 
             while (result is not null)
             {
@@ -93,7 +95,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = GetMouseTargetControl(targetControl);
+            var control = GetMouseTargetControl(ref targetControl);
             if (control == null)
                 return;
 
@@ -108,12 +110,13 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = GetMouseTargetControl(targetControl);
+            var control = GetMouseTargetControl(ref targetControl);
             if (control == null)
                 return;
-            Application.LogIf("ReportMouseDown after GetMouseTargetControl", true);
 
             var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            Application.LogIf(eventArgs, true);
+
             control.RaiseMouseDown(eventArgs);
         }
 
@@ -124,7 +127,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = GetMouseTargetControl(targetControl);
+            var control = GetMouseTargetControl(ref targetControl);
             if (control == null)
                 return;
 
@@ -139,7 +142,7 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var control = GetMouseTargetControl(targetControl);
+            var control = GetMouseTargetControl(ref targetControl);
             if (control == null)
                 return;
 
@@ -159,7 +162,7 @@ namespace Alternet.UI
                 return;
             mouseWheelTimestamp = timestamp;
 
-            var control = GetMouseTargetControl(targetControl);
+            var control = GetMouseTargetControl(ref targetControl);
             if (control == null)
                 return;
 
