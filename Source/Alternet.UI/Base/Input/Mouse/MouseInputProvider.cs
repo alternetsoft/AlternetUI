@@ -52,6 +52,11 @@ namespace Alternet.UI
             if (nobj is not Native.Control c)
                 return null;
 
+            /*
+            Do not uncomment this. For what reason it was here?
+            If uncommented, under Linux, mouse events will be send to wrong windows
+            as wxFindWindowAtPoint gets wrong window.
+            */
             /*if (!c.IsMouseCaptured)
                 return null;*/
 

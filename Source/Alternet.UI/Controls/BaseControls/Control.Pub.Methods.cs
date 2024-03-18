@@ -578,9 +578,9 @@ namespace Alternet.UI
         /// data.</param>
         public virtual void RaiseClick(EventArgs e)
         {
-            Application.Log("RaiseClick");
+            /*Application.Log("RaiseClick");*/
             OnClick(e);
-            Application.Log("RaiseClick2");
+            /*Application.Log("RaiseClick2");*/
             Click?.Invoke(this, e);
         }
 

@@ -74,7 +74,7 @@ namespace Alternet.UI
 
         internal static Control? GetMouseTargetControl(ref Control? control)
         {
-            control ??= GetControlUnderMouse();
+            /*control ??= GetControlUnderMouse();*/
 
             var result = control;
 
@@ -115,7 +115,7 @@ namespace Alternet.UI
                 return;
 
             var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
-            Application.LogIf(eventArgs, true);
+            /*Application.LogIf(eventArgs, true);*/
 
             control.RaiseMouseDown(eventArgs);
         }

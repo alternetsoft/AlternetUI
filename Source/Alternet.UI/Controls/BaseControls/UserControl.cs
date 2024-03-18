@@ -230,11 +230,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            Application.Log($"{GetType()}.OnMouseLeftButtonDown");
+            /*Application.Log($"{GetType()}.OnMouseLeftButtonDown");*/
             base.OnMouseLeftButtonDown(e);
             if (!Enabled)
                 return;
-            Application.Log($"{GetType()}.OnMouseLeftButtonDown 2");
+            /*Application.Log($"{GetType()}.OnMouseLeftButtonDown 2");*/
             RaiseClick(EventArgs.Empty);
             ShowDropDownMenu();
             Invalidate();
