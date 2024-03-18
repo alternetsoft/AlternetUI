@@ -445,11 +445,13 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.CalendarEventCallbackType((obj, e, parameter) =>
-                {
-                    var w = NativeObject.GetFromNativePointer<Calendar>(obj, p => new Calendar(p));
-                    if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e, parameter);
-                }
+                    UI.Application.HandleThreadExceptions(() =>
+                    {
+                        var w = NativeObject.GetFromNativePointer<Calendar>(obj, p => new Calendar(p));
+                        if (w == null) return IntPtr.Zero;
+                        return w.OnEvent(e, parameter);
+                    }
+                    )
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.Calendar_SetEventCallback_(sink);
