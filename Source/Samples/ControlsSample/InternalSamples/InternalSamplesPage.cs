@@ -11,7 +11,7 @@ namespace ControlsSample
 {
     internal partial class InternalSamplesPage : Control
     {
-        private readonly ListBox view = new()
+        private readonly VListBox view = new()
         {
             SuggestedWidth = 350,
             SuggestedHeight = 400,
@@ -40,6 +40,7 @@ namespace ControlsSample
             Padding = 10;
             AddDefaultItems();
             view.SelectFirstItem();
+            view.EnsureVisible(0);
         }
 
         private void AddDefaultItems()
