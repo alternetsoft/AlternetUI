@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     internal class WindowDeveloperTools : Window
     {
-        private readonly PanelDeveloperTools panel = new()
+        private readonly PanelDevTools panel = new()
         {
             SuggestedSize = new(900, 700),
         };

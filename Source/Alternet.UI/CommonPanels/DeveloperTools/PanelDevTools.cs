@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class PanelDeveloperTools : PanelAuiManager
+    internal class PanelDevTools : PanelAuiManager
     {
         private readonly IAuiNotebookPage? mainLogPage;
 
@@ -24,7 +25,7 @@ namespace Alternet.UI
         private IAuiNotebookPage? controlsPage;
         private bool insideSetProps;
 
-        public PanelDeveloperTools()
+        public PanelDevTools()
             : base()
         {
             DefaultRightPaneBestSize = (350, 200);
@@ -276,6 +277,13 @@ namespace Alternet.UI
             AddLogAction("Log NativeControlPainter metrics", () =>
             {
                 NativeControlPainter.Default.LogPartSize(this);
+            });
+
+            AddLogAction("Test throw exception", () =>
+            {
+                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
         }
 
