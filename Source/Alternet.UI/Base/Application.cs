@@ -1167,7 +1167,7 @@ namespace Alternet.UI
             {
                 if(LogUnhandledThreadException)
                 {
-                    LogUtils.LogException(exception);
+                    LogUtils.LogException(exception, "Application.OnThreadException");
                 }
 
                 if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)

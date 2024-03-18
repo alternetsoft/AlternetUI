@@ -51,7 +51,6 @@ namespace Alternet.UI
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
             InitActions();
-            DebugUtils.HookExceptionEvents();
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
         }
 
@@ -265,14 +264,14 @@ namespace Alternet.UI
                 NativeControlPainter.Default.LogPartSize(this);
             });
 
-            AddLogAction("Exception: Throw C++", () =>
+            AddAction("Exception: Throw C++", () =>
             {
                 Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
 
-            AddLogAction("Exception: Throw C#", () =>
+            AddAction("Exception: Throw C#", () =>
             {
                 Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
@@ -291,7 +290,7 @@ namespace Alternet.UI
                 }
             });
 
-            AddLogAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
+            AddAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
         }
 
         private void LogControlInfo()

@@ -152,12 +152,13 @@ namespace Alternet.UI
         /// Logs <see cref="Exception"/> information.
         /// </summary>
         /// <param name="e">Exception to log.</param>
-        public static void LogException(Exception e)
+        /// <param name="info">Additional info.</param>
+        public static void LogException(Exception e, string? info = default)
         {
             try
             {
                 Application.Log(SectionSeparator, LogItemKind.Error);
-                Application.Log("Exception:", LogItemKind.Error);
+                Application.Log($"Exception: {info}", LogItemKind.Error);
                 Application.Log(e.ToString(), LogItemKind.Error);
                 Application.Log(SectionSeparator, LogItemKind.Error);
             }
