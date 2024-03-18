@@ -226,23 +226,9 @@ namespace Alternet.UI
             AddLogAction("Log useful defines", LogUsefulDefines);
             AddLogAction("Log OS information", LogOSInformation);
             AddLogAction("Log system colors", ColorUtils.LogSystemColors);
-            AddLogAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
-            AddLogAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
-
-            AddAction("Show ThreadExceptionWindow", () =>
-            {
-                try
-                {
-                    throw new ApplicationException("This is exception message");
-                }
-                catch (Exception e)
-                {
-                    ThreadExceptionWindow.Show(e, "This is an additional info", true);
-                }
-            });
 
             AddLogAction("Log Embedded Resources in Alternet.UI", () =>
             {
@@ -279,12 +265,28 @@ namespace Alternet.UI
                 NativeControlPainter.Default.LogPartSize(this);
             });
 
-            AddLogAction("Test throw exception", () =>
+            AddLogAction("Exception: Throw C++", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
+
+            AddLogAction("Exception: Throw C#", () =>
             {
                 Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
+
+            AddAction("Exception: Show ThreadExceptionWindow", () =>
+            {
+                try
+                {
+                    throw new ApplicationException("This is exception message");
+                }
+                catch (Exception e)
+                {
+                    ThreadExceptionWindow.Show(e, "This is an additional info", true);
+                }
+            });
+
+            AddLogAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
         }
 
         private void LogControlInfo()
