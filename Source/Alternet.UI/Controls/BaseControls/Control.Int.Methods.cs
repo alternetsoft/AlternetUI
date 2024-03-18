@@ -225,9 +225,11 @@ namespace Alternet.UI
         {
             Application.Log("RaiseMouseDown");
             OnMouseDown(e);
+            Application.Log($"RaiseMouseDown 2: {e}");
 
             if (e.ChangedButton == MouseButton.Left)
             {
+                Application.Log("RaiseMouseDown 3");
                 OnMouseLeftButtonDown(e);
             }
             else if (e.ChangedButton == MouseButton.Right)
