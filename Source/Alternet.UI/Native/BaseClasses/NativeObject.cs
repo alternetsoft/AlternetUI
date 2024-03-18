@@ -97,7 +97,7 @@ namespace Alternet.UI.Native
 
         protected void SetNativePointer(IntPtr value)
         {
-            if (value == IntPtr.Zero)
+            if (value == IntPtr.Zero && NativePointer != IntPtr.Zero)
             {
                 InstancesByNativePointers.Remove(NativePointer);
             }
