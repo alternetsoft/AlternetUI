@@ -265,7 +265,12 @@ namespace Alternet.UI
                 NativeControlPainter.Default.LogPartSize(this);
             });
 
-            AddLogAction("Exception: Throw C++", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
+            AddLogAction("Exception: Throw C++", () =>
+            {
+                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                WebBrowser.DoCommandGlobal("CppThrow");
+            });
 
             AddLogAction("Exception: Throw C#", () =>
             {
