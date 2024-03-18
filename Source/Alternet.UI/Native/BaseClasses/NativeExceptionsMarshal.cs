@@ -32,7 +32,7 @@ namespace Alternet.UI.Native
             ExceptionType exceptionType,
             string message,
             int errorCode) =>
-            UI.Application.Current.OnThreadException(GetException(exceptionType, message, errorCode));
+            UI.Application.OnThreadException(GetException(exceptionType, message, errorCode));
 
         public static ExceptionType GetExceptionType(Exception exception) =>
             exception switch
