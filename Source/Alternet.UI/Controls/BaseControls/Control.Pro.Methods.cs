@@ -205,6 +205,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseLeftButtonDown(MouseEventArgs e)
         {
+            Application.Log($"{GetType()}.OnMouseLeftButtonDown");
+
             IsMouseLeftButtonDown = true;
             RaiseCurrentStateChanged();
             Designer?.RaiseMouseLeftButtonDown(this, e);
