@@ -223,6 +223,7 @@ namespace Alternet.UI
 
         internal void RaiseMouseDown(MouseEventArgs e)
         {
+            Application.Log("RaiseMouseDown");
             OnMouseDown(e);
 
             if (e.ChangedButton == MouseButton.Left)
