@@ -111,6 +111,7 @@ namespace Alternet.UI
             var control = GetMouseTargetControl(targetControl);
             if (control == null)
                 return;
+            Application.LogIf("ReportMouseDown after GetMouseTargetControl", true);
 
             var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
             control.RaiseMouseDown(eventArgs);
