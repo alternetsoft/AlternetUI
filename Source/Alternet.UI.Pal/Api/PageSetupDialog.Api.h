@@ -12,81 +12,177 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PageSetupDialog* PageSetupDialog_Create_()
 {
-    return new PageSetupDialog();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PageSetupDialog*>([&](){
+    #endif
+        return new PageSetupDialog();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PrintDocument* PageSetupDialog_GetDocument_(PageSetupDialog* obj)
 {
-    return obj->GetDocument();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrintDocument*>([&](){
+    #endif
+        return obj->GetDocument();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetDocument_(PageSetupDialog* obj, PrintDocument* value)
 {
-    obj->SetDocument(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDocument(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Thickness_C PageSetupDialog_GetMinMargins_(PageSetupDialog* obj)
 {
-    return obj->GetMinMargins();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Thickness_C>([&](){
+    #endif
+        return obj->GetMinMargins();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetMinMargins_(PageSetupDialog* obj, Thickness value)
 {
-    obj->SetMinMargins(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinMargins(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetMinMarginsValueSet_(PageSetupDialog* obj)
 {
-    return obj->GetMinMarginsValueSet();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetMinMarginsValueSet();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetMinMarginsValueSet_(PageSetupDialog* obj, c_bool value)
 {
-    obj->SetMinMarginsValueSet(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinMarginsValueSet(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowMargins_(PageSetupDialog* obj)
 {
-    return obj->GetAllowMargins();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowMargins();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowMargins_(PageSetupDialog* obj, c_bool value)
 {
-    obj->SetAllowMargins(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowMargins(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowOrientation_(PageSetupDialog* obj)
 {
-    return obj->GetAllowOrientation();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowOrientation();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowOrientation_(PageSetupDialog* obj, c_bool value)
 {
-    obj->SetAllowOrientation(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowOrientation(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowPaper_(PageSetupDialog* obj)
 {
-    return obj->GetAllowPaper();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowPaper();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowPaper_(PageSetupDialog* obj, c_bool value)
 {
-    obj->SetAllowPaper(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowPaper(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowPrinter_(PageSetupDialog* obj)
 {
-    return obj->GetAllowPrinter();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowPrinter();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowPrinter_(PageSetupDialog* obj, c_bool value)
 {
-    obj->SetAllowPrinter(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowPrinter(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ModalResult PageSetupDialog_ShowModal_(PageSetupDialog* obj, Window* owner)
 {
-    return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ModalResult>([&](){
+    #endif
+        return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

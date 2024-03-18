@@ -11,162 +11,354 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API SplitterPanel* SplitterPanel_Create_()
 {
-    return new SplitterPanel();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SplitterPanel*>([&](){
+    #endif
+        return new SplitterPanel();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t SplitterPanel_GetStyles_(SplitterPanel* obj)
 {
-    return obj->GetStyles();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetStyles();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetStyles_(SplitterPanel* obj, int64_t value)
 {
-    obj->SetStyles(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetStyles(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SplitterPanel_GetMinimumPaneSize_(SplitterPanel* obj)
 {
-    return obj->GetMinimumPaneSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetMinimumPaneSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetMinimumPaneSize_(SplitterPanel* obj, int value)
 {
-    obj->SetMinimumPaneSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinimumPaneSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double SplitterPanel_GetSashGravity_(SplitterPanel* obj)
 {
-    return obj->GetSashGravity();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetSashGravity();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashGravity_(SplitterPanel* obj, double value)
 {
-    obj->SetSashGravity(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSashGravity(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SplitterPanel_GetDefaultSashSize_(SplitterPanel* obj)
 {
-    return obj->GetDefaultSashSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetDefaultSashSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSashSize_(SplitterPanel* obj)
 {
-    return obj->GetSashSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetSashSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSplitMode_(SplitterPanel* obj)
 {
-    return obj->GetSplitMode();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetSplitMode();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSplitMode_(SplitterPanel* obj, int value)
 {
-    obj->SetSplitMode(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSplitMode(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetSashVisible_(SplitterPanel* obj)
 {
-    return obj->GetSashVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetSashVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashVisible_(SplitterPanel* obj, c_bool value)
 {
-    obj->SetSashVisible(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSashVisible(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetIsSplit_(SplitterPanel* obj)
 {
-    return obj->GetIsSplit();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsSplit();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetCanDoubleClick_(SplitterPanel* obj)
 {
-    return obj->GetCanDoubleClick();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanDoubleClick();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetCanDoubleClick_(SplitterPanel* obj, c_bool value)
 {
-    obj->SetCanDoubleClick(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCanDoubleClick(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetCanMoveSplitter_(SplitterPanel* obj)
 {
-    return obj->GetCanMoveSplitter();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanMoveSplitter();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetCanMoveSplitter_(SplitterPanel* obj, c_bool value)
 {
-    obj->SetCanMoveSplitter(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCanMoveSplitter(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSashPosition_(SplitterPanel* obj)
 {
-    return obj->GetSashPosition();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetSashPosition();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashPosition_(SplitterPanel* obj, int value)
 {
-    obj->SetSashPosition(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSashPosition(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetRedrawOnSashPosition_(SplitterPanel* obj)
 {
-    return obj->GetRedrawOnSashPosition();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetRedrawOnSashPosition();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetRedrawOnSashPosition_(SplitterPanel* obj, c_bool value)
 {
-    obj->SetRedrawOnSashPosition(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetRedrawOnSashPosition(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Control* SplitterPanel_GetControl1_(SplitterPanel* obj)
 {
-    return obj->GetControl1();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return obj->GetControl1();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Control* SplitterPanel_GetControl2_(SplitterPanel* obj)
 {
-    return obj->GetControl2();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return obj->GetControl2();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* SplitterPanel_CreateEx_(int64_t styles)
 {
-    return SplitterPanel::CreateEx(styles);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return SplitterPanel::CreateEx(styles);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetMinSashSize_(int value)
 {
-    SplitterPanel::SetMinSashSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SplitterPanel::SetMinSashSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_Initialize_(SplitterPanel* obj, Control* window)
 {
-    obj->Initialize(window);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Initialize(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_Replace_(SplitterPanel* obj, Control* winOld, Control* winNew)
 {
-    return obj->Replace(winOld, winNew);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Replace(winOld, winNew);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_SplitHorizontally_(SplitterPanel* obj, Control* window1, Control* window2, int sashPosition)
 {
-    return obj->SplitHorizontally(window1, window2, sashPosition);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SplitHorizontally(window1, window2, sashPosition);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_SplitVertically_(SplitterPanel* obj, Control* window1, Control* window2, int sashPosition)
 {
-    return obj->SplitVertically(window1, window2, sashPosition);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SplitVertically(window1, window2, sashPosition);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_DoUnsplit_(SplitterPanel* obj, Control* toRemove)
 {
-    return obj->DoUnsplit(toRemove);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DoUnsplit(toRemove);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_UpdateSize_(SplitterPanel* obj)
 {
-    obj->UpdateSize();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->UpdateSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SplitterPanel_SetEventCallback_(SplitterPanel::SplitterPanelEventCallbackType callback)

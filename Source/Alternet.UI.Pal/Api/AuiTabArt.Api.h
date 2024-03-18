@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiTabArt* AuiTabArt_Create_()
 {
-    return new AuiTabArt();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiTabArt*>([&](){
+    #endif
+        return new AuiTabArt();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

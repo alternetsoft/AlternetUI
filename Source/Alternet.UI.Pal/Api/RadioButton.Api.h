@@ -10,27 +10,57 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API RadioButton* RadioButton_Create_()
 {
-    return new RadioButton();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RadioButton*>([&](){
+    #endif
+        return new RadioButton();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* RadioButton_GetText_(RadioButton* obj)
 {
-    return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void RadioButton_SetText_(RadioButton* obj, const char16_t* value)
 {
-    obj->SetText(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetText(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool RadioButton_GetIsChecked_(RadioButton* obj)
 {
-    return obj->GetIsChecked();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsChecked();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void RadioButton_SetIsChecked_(RadioButton* obj, c_bool value)
 {
-    obj->SetIsChecked(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsChecked(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void RadioButton_SetEventCallback_(RadioButton::RadioButtonEventCallbackType callback)

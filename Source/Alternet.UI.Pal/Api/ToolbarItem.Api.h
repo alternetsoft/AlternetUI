@@ -12,77 +12,167 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ToolbarItem* ToolbarItem_Create_()
 {
-    return new ToolbarItem();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ToolbarItem*>([&](){
+    #endif
+        return new ToolbarItem();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* ToolbarItem_GetManagedCommandId_(ToolbarItem* obj)
 {
-    return AllocPInvokeReturnString(obj->GetManagedCommandId());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetManagedCommandId());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetManagedCommandId_(ToolbarItem* obj, const char16_t* value)
 {
-    obj->SetManagedCommandId(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetManagedCommandId(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* ToolbarItem_GetText_(ToolbarItem* obj)
 {
-    return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetText_(ToolbarItem* obj, const char16_t* value)
 {
-    obj->SetText(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetText(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool ToolbarItem_GetChecked_(ToolbarItem* obj)
 {
-    return obj->GetChecked();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetChecked();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetChecked_(ToolbarItem* obj, c_bool value)
 {
-    obj->SetChecked(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetChecked(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Menu* ToolbarItem_GetDropDownMenu_(ToolbarItem* obj)
 {
-    return obj->GetDropDownMenu();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Menu*>([&](){
+    #endif
+        return obj->GetDropDownMenu();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetDropDownMenu_(ToolbarItem* obj, Menu* value)
 {
-    obj->SetDropDownMenu(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDropDownMenu(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool ToolbarItem_GetIsCheckable_(ToolbarItem* obj)
 {
-    return obj->GetIsCheckable();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsCheckable();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetIsCheckable_(ToolbarItem* obj, c_bool value)
 {
-    obj->SetIsCheckable(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsCheckable(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ImageSet* ToolbarItem_GetDisabledImage_(ToolbarItem* obj)
 {
-    return obj->GetDisabledImage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ImageSet*>([&](){
+    #endif
+        return obj->GetDisabledImage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetDisabledImage_(ToolbarItem* obj, ImageSet* value)
 {
-    obj->SetDisabledImage(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDisabledImage(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ImageSet* ToolbarItem_GetImage_(ToolbarItem* obj)
 {
-    return obj->GetImage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ImageSet*>([&](){
+    #endif
+        return obj->GetImage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetImage_(ToolbarItem* obj, ImageSet* value)
 {
-    obj->SetImage(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetImage(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ToolbarItem_SetEventCallback_(ToolbarItem::ToolbarItemEventCallbackType callback)

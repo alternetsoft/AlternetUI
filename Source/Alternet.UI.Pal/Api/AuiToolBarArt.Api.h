@@ -10,41 +10,89 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiToolBarArt* AuiToolBarArt_Create_()
 {
-    return new AuiToolBarArt();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiToolBarArt*>([&](){
+    #endif
+        return new AuiToolBarArt();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBarArt_SetFlags_(void* handle, uint32_t flags)
 {
-    AuiToolBarArt::SetFlags(handle, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        AuiToolBarArt::SetFlags(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API uint32_t AuiToolBarArt_GetFlags_(void* handle)
 {
-    return AuiToolBarArt::GetFlags(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<uint32_t>([&](){
+    #endif
+        return AuiToolBarArt::GetFlags(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBarArt_SetTextOrientation_(void* handle, int orientation)
 {
-    AuiToolBarArt::SetTextOrientation(handle, orientation);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        AuiToolBarArt::SetTextOrientation(handle, orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBarArt_GetTextOrientation_(void* handle)
 {
-    return AuiToolBarArt::GetTextOrientation(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return AuiToolBarArt::GetTextOrientation(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBarArt_GetElementSize_(void* handle, int elementId)
 {
-    return AuiToolBarArt::GetElementSize(handle, elementId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return AuiToolBarArt::GetElementSize(handle, elementId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBarArt_SetElementSize_(void* handle, int elementId, int size)
 {
-    AuiToolBarArt::SetElementSize(handle, elementId, size);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        AuiToolBarArt::SetElementSize(handle, elementId, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBarArt_UpdateColorsFromSystem_(void* handle)
 {
-    AuiToolBarArt::UpdateColorsFromSystem(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        AuiToolBarArt::UpdateColorsFromSystem(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

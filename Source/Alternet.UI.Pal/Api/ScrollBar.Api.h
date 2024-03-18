@@ -10,62 +10,134 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ScrollBar* ScrollBar_Create_()
 {
-    return new ScrollBar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ScrollBar*>([&](){
+    #endif
+        return new ScrollBar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetEventTypeID_(ScrollBar* obj)
 {
-    return obj->GetEventTypeID();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEventTypeID();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetEventOldPos_(ScrollBar* obj)
 {
-    return obj->GetEventOldPos();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEventOldPos();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetEventNewPos_(ScrollBar* obj)
 {
-    return obj->GetEventNewPos();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEventNewPos();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool ScrollBar_GetIsVertical_(ScrollBar* obj)
 {
-    return obj->GetIsVertical();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsVertical();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ScrollBar_SetIsVertical_(ScrollBar* obj, c_bool value)
 {
-    obj->SetIsVertical(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsVertical(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetThumbPosition_(ScrollBar* obj)
 {
-    return obj->GetThumbPosition();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetThumbPosition();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ScrollBar_SetThumbPosition_(ScrollBar* obj, int value)
 {
-    obj->SetThumbPosition(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetThumbPosition(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetRange_(ScrollBar* obj)
 {
-    return obj->GetRange();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetRange();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetThumbSize_(ScrollBar* obj)
 {
-    return obj->GetThumbSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetThumbSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ScrollBar_GetPageSize_(ScrollBar* obj)
 {
-    return obj->GetPageSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetPageSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ScrollBar_SetScrollbar_(ScrollBar* obj, int position, int thumbSize, int range, int pageSize, c_bool refresh)
 {
-    obj->SetScrollbar(position, thumbSize, range, pageSize, refresh);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetScrollbar(position, thumbSize, range, pageSize, refresh);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ScrollBar_SetEventCallback_(ScrollBar::ScrollBarEventCallbackType callback)

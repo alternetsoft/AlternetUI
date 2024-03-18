@@ -10,56 +10,122 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ProgressBar* ProgressBar_Create_()
 {
-    return new ProgressBar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ProgressBar*>([&](){
+    #endif
+        return new ProgressBar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ProgressBar_GetMinimum_(ProgressBar* obj)
 {
-    return obj->GetMinimum();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetMinimum();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ProgressBar_SetMinimum_(ProgressBar* obj, int value)
 {
-    obj->SetMinimum(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinimum(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ProgressBar_GetMaximum_(ProgressBar* obj)
 {
-    return obj->GetMaximum();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetMaximum();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ProgressBar_SetMaximum_(ProgressBar* obj, int value)
 {
-    obj->SetMaximum(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMaximum(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int ProgressBar_GetValue_(ProgressBar* obj)
 {
-    return obj->GetValue();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetValue();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ProgressBar_SetValue_(ProgressBar* obj, int value)
 {
-    obj->SetValue(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetValue(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool ProgressBar_GetIsIndeterminate_(ProgressBar* obj)
 {
-    return obj->GetIsIndeterminate();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsIndeterminate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ProgressBar_SetIsIndeterminate_(ProgressBar* obj, c_bool value)
 {
-    obj->SetIsIndeterminate(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsIndeterminate(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ProgressBarOrientation ProgressBar_GetOrientation_(ProgressBar* obj)
 {
-    return obj->GetOrientation();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ProgressBarOrientation>([&](){
+    #endif
+        return obj->GetOrientation();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ProgressBar_SetOrientation_(ProgressBar* obj, ProgressBarOrientation value)
 {
-    obj->SetOrientation(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetOrientation(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

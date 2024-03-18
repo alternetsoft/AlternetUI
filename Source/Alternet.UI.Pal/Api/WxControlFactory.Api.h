@@ -10,1416 +10,3114 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API WxControlFactory* WxControlFactory_Create_()
 {
-    return new WxControlFactory();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<WxControlFactory*>([&](){
+    #endif
+        return new WxControlFactory();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetConstraintSizes_(void* handle, c_bool recurse)
 {
-    WxControlFactory::SetConstraintSizes(handle, recurse);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetConstraintSizes(handle, recurse);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_DoPhase_(void* handle, int phase)
 {
-    return WxControlFactory::DoPhase(handle, phase);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::DoPhase(handle, phase);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetSizeConstraint_(void* handle, int x, int y, int w, int h)
 {
-    WxControlFactory::SetSizeConstraint(handle, x, y, w, h);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetSizeConstraint(handle, x, y, w, h);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_MoveConstraint_(void* handle, int x, int y)
 {
-    WxControlFactory::MoveConstraint(handle, x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::MoveConstraint(handle, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetSizeConstraint_(void* handle)
 {
-    return WxControlFactory::GetSizeConstraint(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetSizeConstraint(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetClientSizeConstraint_(void* handle)
 {
-    return WxControlFactory::GetClientSizeConstraint(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetClientSizeConstraint(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetPositionConstraint_(void* handle)
 {
-    return WxControlFactory::GetPositionConstraint(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetPositionConstraint(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetAutoLayout_(void* handle, c_bool autoLayout)
 {
-    WxControlFactory::SetAutoLayout(handle, autoLayout);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetAutoLayout(handle, autoLayout);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_GetAutoLayout_(void* handle)
 {
-    return WxControlFactory::GetAutoLayout(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::GetAutoLayout(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Layout_(void* handle)
 {
-    return WxControlFactory::Layout(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Layout(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetSizer_(void* handle, void* sizer, c_bool deleteOld)
 {
-    WxControlFactory::SetSizer(handle, sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetSizer(handle, sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetSizerAndFit_(void* handle, void* sizer, c_bool deleteOld)
 {
-    WxControlFactory::SetSizerAndFit(handle, sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetSizerAndFit(handle, sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetSizer_(void* handle)
 {
-    return WxControlFactory::GetSizer(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetSizer(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetContainingSizer_(void* handle, void* sizer)
 {
-    WxControlFactory::SetContainingSizer(handle, sizer);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetContainingSizer(handle, sizer);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetContainingSizer_(void* handle)
 {
-    return WxControlFactory::GetContainingSizer(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetContainingSizer(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_CreateAccessible_(void* handle)
 {
-    return WxControlFactory::CreateAccessible(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::CreateAccessible(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetAccessible_(void* handle, void* accessible)
 {
-    WxControlFactory::SetAccessible(handle, accessible);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetAccessible(handle, accessible);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetAccessible_(void* handle)
 {
-    return WxControlFactory::GetAccessible(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetAccessible(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetOrCreateAccessible_(void* handle)
 {
-    return WxControlFactory::GetOrCreateAccessible(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetOrCreateAccessible(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_SetTransparent_(void* handle, uint8_t alpha)
 {
-    return WxControlFactory::SetTransparent(handle, alpha);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::SetTransparent(handle, alpha);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanSetTransparent_(void* handle)
 {
-    return WxControlFactory::CanSetTransparent(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanSetTransparent(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetHandle_(void* handle)
 {
-    return WxControlFactory::GetHandle(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetHandle(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_InheritAttributes_(void* handle)
 {
-    WxControlFactory::InheritAttributes(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::InheritAttributes(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_ShouldInheritColors_(void* handle)
 {
-    return WxControlFactory::ShouldInheritColors(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::ShouldInheritColors(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanBeOutsideClientArea_(void* handle)
 {
-    return WxControlFactory::CanBeOutsideClientArea(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanBeOutsideClientArea(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanApplyThemeBorder_(void* handle)
 {
-    return WxControlFactory::CanApplyThemeBorder(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanApplyThemeBorder(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetMainWindowOfCompositeControl_(void* handle)
 {
-    return WxControlFactory::GetMainWindowOfCompositeControl(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetMainWindowOfCompositeControl(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsTopNavigationDomain_(void* handle, int kind)
 {
-    return WxControlFactory::IsTopNavigationDomain(handle, kind);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsTopNavigationDomain(handle, kind);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_WXGetTextEntry_(void* handle)
 {
-    return WxControlFactory::WXGetTextEntry(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::WXGetTextEntry(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_ReleaseMouse_(void* handle)
 {
-    WxControlFactory::ReleaseMouse(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::ReleaseMouse(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetCapture_()
 {
-    return WxControlFactory::GetCapture();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetCapture();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasCapture_(void* handle)
 {
-    return WxControlFactory::HasCapture(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasCapture(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_EnableTouchEvents_(void* handle, int WXUNUSEDeventsMask)
 {
-    return WxControlFactory::EnableTouchEvents(handle, WXUNUSEDeventsMask);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::EnableTouchEvents(handle, WXUNUSEDeventsMask);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_RefreshRect_(void* handle, RectI rect, c_bool eraseBackground)
 {
-    WxControlFactory::RefreshRect(handle, rect, eraseBackground);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::RefreshRect(handle, rect, eraseBackground);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Update_(void* handle)
 {
-    WxControlFactory::Update(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Update(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_ClearBackground_(void* handle)
 {
-    WxControlFactory::ClearBackground(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::ClearBackground(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Freeze_(void* handle)
 {
-    WxControlFactory::Freeze(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Freeze(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Thaw_(void* handle)
 {
-    WxControlFactory::Thaw(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Thaw(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsFrozen_(void* handle)
 {
-    return WxControlFactory::IsFrozen(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsFrozen(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_PrepareDC_(void* handle, void* dc)
 {
-    WxControlFactory::PrepareDC(handle, dc);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::PrepareDC(handle, dc);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetDoubleBuffered_(void* handle, c_bool on)
 {
-    WxControlFactory::SetDoubleBuffered(handle, on);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetDoubleBuffered(handle, on);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsDoubleBuffered_(void* handle)
 {
-    return WxControlFactory::IsDoubleBuffered(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsDoubleBuffered(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetUpdateRegion_(void* handle)
 {
-    return WxControlFactory::GetUpdateRegion(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetUpdateRegion(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxControlFactory_GetUpdateClientRect_(void* handle)
 {
-    return WxControlFactory::GetUpdateClientRect(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxControlFactory::GetUpdateClientRect(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsExposed_(void* handle, int x, int y)
 {
-    return WxControlFactory::IsExposed(handle, x, y);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsExposed(handle, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsExposed2_(void* handle, int x, int y, int w, int h)
 {
-    return WxControlFactory::IsExposed2(handle, x, y, w, h);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsExposed2(handle, x, y, w, h);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_SetBackgroundColor_(void* handle, Color Color)
 {
-    return WxControlFactory::SetBackgroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::SetBackgroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetOwnBackgroundColor_(void* handle, Color Color)
 {
-    WxControlFactory::SetOwnBackgroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetOwnBackgroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C WxControlFactory_GetBackgroundColor_(void* handle)
 {
-    return WxControlFactory::GetBackgroundColor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return WxControlFactory::GetBackgroundColor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_InheritsBackgroundColor_(void* handle)
 {
-    return WxControlFactory::InheritsBackgroundColor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::InheritsBackgroundColor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_UseBackgroundColor_(void* handle)
 {
-    return WxControlFactory::UseBackgroundColor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::UseBackgroundColor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_SetForegroundColor_(void* handle, Color Color)
 {
-    return WxControlFactory::SetForegroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::SetForegroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetOwnForegroundColor_(void* handle, Color Color)
 {
-    WxControlFactory::SetOwnForegroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetOwnForegroundColor(handle, Color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C WxControlFactory_GetForegroundColor_(void* handle)
 {
-    return WxControlFactory::GetForegroundColor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return WxControlFactory::GetForegroundColor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_UseForegroundColor_(void* handle)
 {
-    return WxControlFactory::UseForegroundColor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::UseForegroundColor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_InheritsForegroundColor_(void* handle)
 {
-    return WxControlFactory::InheritsForegroundColor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::InheritsForegroundColor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_SetBackgroundStyle_(void* handle, int style)
 {
-    return WxControlFactory::SetBackgroundStyle(handle, style);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::SetBackgroundStyle(handle, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetBackgroundStyle_(void* handle)
 {
-    return WxControlFactory::GetBackgroundStyle(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetBackgroundStyle(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasTransparentBackground_(void* handle)
 {
-    return WxControlFactory::HasTransparentBackground(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasTransparentBackground(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsTransparentBackgroundSupported_(void* handle, const char16_t* reason)
 {
-    return WxControlFactory::IsTransparentBackgroundSupported(handle, reason);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsTransparentBackgroundSupported(handle, reason);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_SetFont_(void* handle, void* font)
 {
-    return WxControlFactory::SetFont(handle, font);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::SetFont(handle, font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetOwnFont_(void* handle, void* font)
 {
-    WxControlFactory::SetOwnFont(handle, font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetOwnFont(handle, font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetFont_(void* handle)
 {
-    return WxControlFactory::GetFont(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetFont(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_SetCursor_(void* handle, void* cursor)
 {
-    return WxControlFactory::SetCursor(handle, cursor);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::SetCursor(handle, cursor);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetCursor_(void* handle)
 {
-    return WxControlFactory::GetCursor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetCursor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetCaret_(void* handle, void* caret)
 {
-    WxControlFactory::SetCaret(handle, caret);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetCaret(handle, caret);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetCaret_(void* handle)
 {
-    return WxControlFactory::GetCaret(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetCaret(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetCharHeight_(void* handle)
 {
-    return WxControlFactory::GetCharHeight(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetCharHeight(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetCharWidth_(void* handle)
 {
-    return WxControlFactory::GetCharWidth(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetCharWidth(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetTextExtent_(void* handle, const char16_t* str)
 {
-    return WxControlFactory::GetTextExtent(handle, str);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetTextExtent(handle, str);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ClientToScreen_(void* handle, PointI pt)
 {
-    return WxControlFactory::ClientToScreen(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ClientToScreen(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ScreenToClient_(void* handle, PointI pt)
 {
-    return WxControlFactory::ScreenToClient(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ScreenToClient(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_HitTest_(void* handle, int x, int y)
 {
-    return WxControlFactory::HitTest(handle, x, y);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::HitTest(handle, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetBorderEx_(void* handle, int64_t flags)
 {
-    return WxControlFactory::GetBorderEx(handle, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetBorderEx(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetBorder_(void* handle)
 {
-    return WxControlFactory::GetBorder(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetBorder(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_UpdateWindowUI_(void* handle, int64_t flags)
 {
-    WxControlFactory::UpdateWindowUI(handle, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::UpdateWindowUI(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_PopupMenu_(void* handle, void* menu, int x, int y)
 {
-    return WxControlFactory::PopupMenu(handle, menu, x, y);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::PopupMenu(handle, menu, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetPopupMenuSelectionFromUser_(void* handle, void* menu, int x, int y)
 {
-    return WxControlFactory::GetPopupMenuSelectionFromUser(handle, menu, x, y);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetPopupMenuSelectionFromUser(handle, menu, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasMultiplePages_(void* handle)
 {
-    return WxControlFactory::HasMultiplePages(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasMultiplePages(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanScroll_(void* handle, int orient)
 {
-    return WxControlFactory::CanScroll(handle, orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanScroll(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasScrollbar_(void* handle, int orient)
 {
-    return WxControlFactory::HasScrollbar(handle, orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasScrollbar(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetScrollbar_(void* handle, int orient, int pos, int thumbvisible, int range, c_bool refresh)
 {
-    WxControlFactory::SetScrollbar(handle, orient, pos, thumbvisible, range, refresh);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetScrollbar(handle, orient, pos, thumbvisible, range, refresh);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetScrollPos_(void* handle, int orient, int pos, c_bool refresh)
 {
-    WxControlFactory::SetScrollPos(handle, orient, pos, refresh);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetScrollPos(handle, orient, pos, refresh);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetScrollPos_(void* handle, int orient)
 {
-    return WxControlFactory::GetScrollPos(handle, orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetScrollPos(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetScrollThumb_(void* handle, int orient)
 {
-    return WxControlFactory::GetScrollThumb(handle, orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetScrollThumb(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetScrollRange_(void* handle, int orient)
 {
-    return WxControlFactory::GetScrollRange(handle, orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetScrollRange(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_ScrollLines_(void* handle, int lines)
 {
-    return WxControlFactory::ScrollLines(handle, lines);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::ScrollLines(handle, lines);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_ScrollPages_(void* handle, int pages)
 {
-    return WxControlFactory::ScrollPages(handle, pages);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::ScrollPages(handle, pages);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_LineUp_(void* handle)
 {
-    return WxControlFactory::LineUp(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::LineUp(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_LineDown_(void* handle)
 {
-    return WxControlFactory::LineDown(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::LineDown(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_PageUp_(void* handle)
 {
-    return WxControlFactory::PageUp(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::PageUp(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_PageDown_(void* handle)
 {
-    return WxControlFactory::PageDown(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::PageDown(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_AlwaysShowScrollbars_(void* handle, c_bool horz, c_bool vert)
 {
-    WxControlFactory::AlwaysShowScrollbars(handle, horz, vert);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::AlwaysShowScrollbars(handle, horz, vert);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsScrollbarAlwaysShown_(void* handle, int orient)
 {
-    return WxControlFactory::IsScrollbarAlwaysShown(handle, orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsScrollbarAlwaysShown(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetHelpText_(void* handle, const char16_t* text)
 {
-    WxControlFactory::SetHelpText(handle, text);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetHelpText(handle, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxControlFactory_GetHelpTextAtPoint_(void* handle, PointI pt, int origin)
 {
-    return AllocPInvokeReturnString(WxControlFactory::GetHelpTextAtPoint(handle, pt, origin));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxControlFactory::GetHelpTextAtPoint(handle, pt, origin));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxControlFactory_GetHelpText_(void* handle)
 {
-    return AllocPInvokeReturnString(WxControlFactory::GetHelpText(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxControlFactory::GetHelpText(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetToolTip_(void* handle, const char16_t* tip)
 {
-    WxControlFactory::SetToolTip(handle, tip);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetToolTip(handle, tip);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetToolTip2_(void* handle, void* tip)
 {
-    WxControlFactory::SetToolTip2(handle, tip);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetToolTip2(handle, tip);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_UnsetToolTip_(void* handle)
 {
-    WxControlFactory::UnsetToolTip(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::UnsetToolTip(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetToolTip_(void* handle)
 {
-    return WxControlFactory::GetToolTip(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetToolTip(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxControlFactory_GetToolTipText_(void* handle)
 {
-    return AllocPInvokeReturnString(WxControlFactory::GetToolTipText(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxControlFactory::GetToolTipText(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CopyToolTip_(void* handle, void* tip)
 {
-    return WxControlFactory::CopyToolTip(handle, tip);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CopyToolTip(handle, tip);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetDropTarget_(void* handle, void* dropTarget)
 {
-    WxControlFactory::SetDropTarget(handle, dropTarget);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetDropTarget(handle, dropTarget);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetDropTarget_(void* handle)
 {
-    return WxControlFactory::GetDropTarget(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetDropTarget(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_DragAcceptFiles_(void* handle, c_bool accept)
 {
-    WxControlFactory::DragAcceptFiles(handle, accept);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::DragAcceptFiles(handle, accept);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetConstraints_(void* handle, void* constraints)
 {
-    WxControlFactory::SetConstraints(handle, constraints);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetConstraints(handle, constraints);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetConstraints_(void* handle)
 {
-    return WxControlFactory::GetConstraints(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetConstraints(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_UnsetConstraints_(void* handle, void* c)
 {
-    WxControlFactory::UnsetConstraints(handle, c);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::UnsetConstraints(handle, c);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetConstraintsInvolvedIn_(void* handle)
 {
-    return WxControlFactory::GetConstraintsInvolvedIn(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetConstraintsInvolvedIn(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_AddConstraintReference_(void* handle, void* otherWin)
 {
-    WxControlFactory::AddConstraintReference(handle, otherWin);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::AddConstraintReference(handle, otherWin);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_RemoveConstraintReference_(void* handle, void* otherWin)
 {
-    WxControlFactory::RemoveConstraintReference(handle, otherWin);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::RemoveConstraintReference(handle, otherWin);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_DeleteRelatedConstraints_(void* handle)
 {
-    WxControlFactory::DeleteRelatedConstraints(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::DeleteRelatedConstraints(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_ResetConstraints_(void* handle)
 {
-    WxControlFactory::ResetConstraints(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::ResetConstraints(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasFlag_(void* handle, int flag)
 {
-    return WxControlFactory::HasFlag(handle, flag);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasFlag(handle, flag);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsRetained_(void* handle)
 {
-    return WxControlFactory::IsRetained(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsRetained(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_ToggleWindowStyle_(void* handle, int flag)
 {
-    return WxControlFactory::ToggleWindowStyle(handle, flag);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::ToggleWindowStyle(handle, flag);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetExtraStyle_(void* handle, int64_t exStyle)
 {
-    WxControlFactory::SetExtraStyle(handle, exStyle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetExtraStyle(handle, exStyle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t WxControlFactory_GetExtraStyle_(void* handle)
 {
-    return WxControlFactory::GetExtraStyle(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return WxControlFactory::GetExtraStyle(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasExtraStyle_(void* handle, int exFlag)
 {
-    return WxControlFactory::HasExtraStyle(handle, exFlag);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasExtraStyle(handle, exFlag);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetThemeEnabled_(void* handle, c_bool enableTheme)
 {
-    WxControlFactory::SetThemeEnabled(handle, enableTheme);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetThemeEnabled(handle, enableTheme);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_GetThemeEnabled_(void* handle)
 {
-    return WxControlFactory::GetThemeEnabled(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::GetThemeEnabled(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetFocus_(void* handle)
 {
-    WxControlFactory::SetFocus(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetFocus(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetFocusFromKbd_(void* handle)
 {
-    WxControlFactory::SetFocusFromKbd(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetFocusFromKbd(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_FindFocus_()
 {
-    return WxControlFactory::FindFocus();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::FindFocus();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HasFocus_(void* handle)
 {
-    return WxControlFactory::HasFocus(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HasFocus(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_AcceptsFocus_(void* handle)
 {
-    return WxControlFactory::AcceptsFocus(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::AcceptsFocus(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_AcceptsFocusRecursively_(void* handle)
 {
-    return WxControlFactory::AcceptsFocusRecursively(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::AcceptsFocusRecursively(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_AcceptsFocusFromKeyboard_(void* handle)
 {
-    return WxControlFactory::AcceptsFocusFromKeyboard(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::AcceptsFocusFromKeyboard(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_DisableFocusFromKeyboard_(void* handle)
 {
-    WxControlFactory::DisableFocusFromKeyboard(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::DisableFocusFromKeyboard(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanBeFocused_(void* handle)
 {
-    return WxControlFactory::CanBeFocused(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanBeFocused(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsFocusable_(void* handle)
 {
-    return WxControlFactory::IsFocusable(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsFocusable(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanAcceptFocus_(void* handle)
 {
-    return WxControlFactory::CanAcceptFocus(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanAcceptFocus(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_CanAcceptFocusFromKeyboard_(void* handle)
 {
-    return WxControlFactory::CanAcceptFocusFromKeyboard(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::CanAcceptFocusFromKeyboard(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetCanFocus_(void* handle, c_bool canFocus)
 {
-    WxControlFactory::SetCanFocus(handle, canFocus);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetCanFocus(handle, canFocus);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_EnableVisibleFocus_(void* handle, c_bool enabled)
 {
-    WxControlFactory::EnableVisibleFocus(handle, enabled);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::EnableVisibleFocus(handle, enabled);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_NavigateIn_(void* handle, int flags)
 {
-    return WxControlFactory::NavigateIn(handle, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::NavigateIn(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Navigate_(void* handle, int flags)
 {
-    return WxControlFactory::Navigate(handle, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Navigate(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_MoveBeforeInTabOrder_(void* handle, void* win)
 {
-    WxControlFactory::MoveBeforeInTabOrder(handle, win);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::MoveBeforeInTabOrder(handle, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_MoveAfterInTabOrder_(void* handle, void* win)
 {
-    WxControlFactory::MoveAfterInTabOrder(handle, win);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::MoveAfterInTabOrder(handle, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetChildren_(void* handle)
 {
-    return WxControlFactory::GetChildren(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetChildren(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetPrevSibling_(void* handle)
 {
-    return WxControlFactory::GetPrevSibling(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetPrevSibling(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetNextSibling_(void* handle)
 {
-    return WxControlFactory::GetNextSibling(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetNextSibling(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetParent_(void* handle)
 {
-    return WxControlFactory::GetParent(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetParent(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetGrandParent_(void* handle)
 {
-    return WxControlFactory::GetGrandParent(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetGrandParent(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsTopLevel_(void* handle)
 {
-    return WxControlFactory::IsTopLevel(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsTopLevel(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsDescendant_(void* handle, void* win)
 {
-    return WxControlFactory::IsDescendant(handle, win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsDescendant(handle, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetParent_(void* handle, void* parent)
 {
-    WxControlFactory::SetParent(handle, parent);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetParent(handle, parent);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Reparent_(void* handle, void* newParent)
 {
-    return WxControlFactory::Reparent(handle, newParent);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Reparent(handle, newParent);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_AddChild_(void* handle, void* child)
 {
-    WxControlFactory::AddChild(handle, child);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::AddChild(handle, child);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_RemoveChild_(void* handle, void* child)
 {
-    WxControlFactory::RemoveChild(handle, child);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::RemoveChild(handle, child);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsClientAreaChild_(void* handle, void* child)
 {
-    return WxControlFactory::IsClientAreaChild(handle, child);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsClientAreaChild(handle, child);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_FindWindow_(void* handle, int64_t winid)
 {
-    return WxControlFactory::FindWindow(handle, winid);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::FindWindow(handle, winid);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_FindWindow2_(void* handle, const char16_t* name)
 {
-    return WxControlFactory::FindWindow2(handle, name);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::FindWindow2(handle, name);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_FindWindowById_(int64_t winid, void* parent)
 {
-    return WxControlFactory::FindWindowById(winid, parent);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::FindWindowById(winid, parent);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_FindWindowByName_(const char16_t* name, void* parent)
 {
-    return WxControlFactory::FindWindowByName(name, parent);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::FindWindowByName(name, parent);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_FindWindowByLabel_(const char16_t* label, void* parent)
 {
-    return WxControlFactory::FindWindowByLabel(label, parent);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::FindWindowByLabel(label, parent);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetValidator_(void* handle, void* validator)
 {
-    WxControlFactory::SetValidator(handle, validator);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetValidator(handle, validator);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetValidator_(void* handle)
 {
-    return WxControlFactory::GetValidator(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetValidator(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Validate_(void* handle)
 {
-    return WxControlFactory::Validate(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Validate(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_TransferDataToWindow_(void* handle)
 {
-    return WxControlFactory::TransferDataToWindow(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::TransferDataToWindow(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_TransferDataFromWindow_(void* handle)
 {
-    return WxControlFactory::TransferDataFromWindow(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::TransferDataFromWindow(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_InitDialog_(void* handle)
 {
-    WxControlFactory::InitDialog(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::InitDialog(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetAcceleratorTable_(void* handle, void* accel)
 {
-    WxControlFactory::SetAcceleratorTable(handle, accel);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetAcceleratorTable(handle, accel);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetAcceleratorTable_(void* handle)
 {
-    return WxControlFactory::GetAcceleratorTable(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetAcceleratorTable(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetDPI_(void* handle)
 {
-    return WxControlFactory::GetDPI(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetDPI(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_WXAdjustFontToOwnPPI_(void* handle, void* font)
 {
-    WxControlFactory::WXAdjustFontToOwnPPI(handle, font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::WXAdjustFontToOwnPPI(handle, font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_FromPhys_(SizeI sz, void* w)
 {
-    return WxControlFactory::FromPhys(sz, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::FromPhys(sz, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_FromPhys2_(PointI pt, void* w)
 {
-    return WxControlFactory::FromPhys2(pt, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::FromPhys2(pt, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_FromPhys3_(int d, void* w)
 {
-    return WxControlFactory::FromPhys3(d, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::FromPhys3(d, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_FromPhys4_(SizeI sz)
 {
-    return WxControlFactory::FromPhys4(sz);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::FromPhys4(sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_FromPhys5_(PointI pt)
 {
-    return WxControlFactory::FromPhys5(pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::FromPhys5(pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_FromPhys6_(int d)
 {
-    return WxControlFactory::FromPhys6(d);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::FromPhys6(d);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ToPhys_(SizeI sz, void* w)
 {
-    return WxControlFactory::ToPhys(sz, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ToPhys(sz, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ToPhys2_(PointI pt, void* w)
 {
-    return WxControlFactory::ToPhys2(pt, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ToPhys2(pt, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_ToPhys3_(int d, void* w)
 {
-    return WxControlFactory::ToPhys3(d, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::ToPhys3(d, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ToPhys4_(SizeI sz)
 {
-    return WxControlFactory::ToPhys4(sz);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ToPhys4(sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ToPhys5_(PointI pt)
 {
-    return WxControlFactory::ToPhys5(pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ToPhys5(pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_ToPhys6_(int d)
 {
-    return WxControlFactory::ToPhys6(d);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::ToPhys6(d);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_FromDIP_(SizeI sz, void* window)
 {
-    return WxControlFactory::FromDIP(sz, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::FromDIP(sz, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_FromDIP2_(PointI pt, void* window)
 {
-    return WxControlFactory::FromDIP2(pt, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::FromDIP2(pt, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_FromDIP3_(int d, void* w)
 {
-    return WxControlFactory::FromDIP3(d, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::FromDIP3(d, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_FromDIP4_(void* handle, SizeI sz)
 {
-    return WxControlFactory::FromDIP4(handle, sz);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::FromDIP4(handle, sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_FromDIP5_(void* handle, PointI pt)
 {
-    return WxControlFactory::FromDIP5(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::FromDIP5(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_FromDIP6_(void* handle, int d)
 {
-    return WxControlFactory::FromDIP6(handle, d);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::FromDIP6(handle, d);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ToDIP_(SizeI sz, void* w)
 {
-    return WxControlFactory::ToDIP(sz, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ToDIP(sz, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ToDIP2_(PointI pt, void* w)
 {
-    return WxControlFactory::ToDIP2(pt, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ToDIP2(pt, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_ToDIP3_(int d, void* w)
 {
-    return WxControlFactory::ToDIP3(d, w);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::ToDIP3(d, w);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ToDIP4_(void* handle, SizeI sz)
 {
-    return WxControlFactory::ToDIP4(handle, sz);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ToDIP4(handle, sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ToDIP5_(void* handle, PointI pt)
 {
-    return WxControlFactory::ToDIP5(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ToDIP5(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_ToDIP6_(int d)
 {
-    return WxControlFactory::ToDIP6(d);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::ToDIP6(d);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ConvertPixelsToDialog_(void* handle, PointI pt)
 {
-    return WxControlFactory::ConvertPixelsToDialog(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ConvertPixelsToDialog(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_ConvertDialogToPixels_(void* handle, PointI pt)
 {
-    return WxControlFactory::ConvertDialogToPixels(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::ConvertDialogToPixels(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ConvertPixelsToDialog2_(void* handle, SizeI sz)
 {
-    return WxControlFactory::ConvertPixelsToDialog2(handle, sz);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ConvertPixelsToDialog2(handle, sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ConvertDialogToPixels2_(void* handle, SizeI sz)
 {
-    return WxControlFactory::ConvertDialogToPixels2(handle, sz);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ConvertDialogToPixels2(handle, sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_WarpPointer_(void* handle, int x, int y)
 {
-    WxControlFactory::WarpPointer(handle, x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::WarpPointer(handle, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_CaptureMouse_(void* handle)
 {
-    WxControlFactory::CaptureMouse(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::CaptureMouse(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Close_(void* handle, c_bool force)
 {
-    return WxControlFactory::Close(handle, force);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Close(handle, force);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_DestroyWindow_(void* handle)
 {
-    return WxControlFactory::DestroyWindow(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::DestroyWindow(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_DestroyChildren_(void* handle)
 {
-    return WxControlFactory::DestroyChildren(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::DestroyChildren(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsBeingDeleted_(void* handle)
 {
-    return WxControlFactory::IsBeingDeleted(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsBeingDeleted(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetLabel_(void* handle, const char16_t* label)
 {
-    WxControlFactory::SetLabel(handle, label);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetLabel(handle, label);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxControlFactory_GetLabel_(void* handle)
 {
-    return AllocPInvokeReturnString(WxControlFactory::GetLabel(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxControlFactory::GetLabel(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetName_(void* handle, const char16_t* name)
 {
-    WxControlFactory::SetName(handle, name);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetName(handle, name);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxControlFactory_GetName_(void* handle)
 {
-    return AllocPInvokeReturnString(WxControlFactory::GetName(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxControlFactory::GetName(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetLayoutDirection_(void* handle)
 {
-    return WxControlFactory::GetLayoutDirection(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetLayoutDirection(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetLayoutDirection_(void* handle, int dir)
 {
-    WxControlFactory::SetLayoutDirection(handle, dir);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetLayoutDirection(handle, dir);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_AdjustForLayoutDirection_(void* handle, int x, int width, int widthTotal)
 {
-    return WxControlFactory::AdjustForLayoutDirection(handle, x, width, widthTotal);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::AdjustForLayoutDirection(handle, x, width, widthTotal);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetId_(void* handle, int winid)
 {
-    WxControlFactory::SetId(handle, winid);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetId(handle, winid);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetId_(void* handle)
 {
-    return WxControlFactory::GetId(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetId(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_NewControlId_(int count)
 {
-    return WxControlFactory::NewControlId(count);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::NewControlId(count);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_UnreserveControlId_(int id, int count)
 {
-    WxControlFactory::UnreserveControlId(id, count);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::UnreserveControlId(id, count);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetSize2_(void* handle, int x, int y, int width, int height)
 {
-    WxControlFactory::SetSize2(handle, x, y, width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetSize2(handle, x, y, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetSize_(void* handle, int width, int height)
 {
-    WxControlFactory::SetSize(handle, width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetSize(handle, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Move_(void* handle, int x, int y, int flags)
 {
-    WxControlFactory::Move(handle, x, y, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Move(handle, x, y, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetPosition_(void* handle, int width, int height)
 {
-    WxControlFactory::SetPosition(handle, width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetPosition(handle, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Raise_(void* handle)
 {
-    WxControlFactory::Raise(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Raise(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Lower_(void* handle)
 {
-    WxControlFactory::Lower(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Lower(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetClientSize_(void* handle, int width, int height)
 {
-    WxControlFactory::SetClientSize(handle, width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetClientSize(handle, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_GetPosition_(void* handle)
 {
-    return WxControlFactory::GetPosition(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::GetPosition(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_GetScreenPosition_(void* handle)
 {
-    return WxControlFactory::GetScreenPosition(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::GetScreenPosition(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetSize_(void* handle)
 {
-    return WxControlFactory::GetSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetClientSize_(void* handle)
 {
-    return WxControlFactory::GetClientSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetClientSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxControlFactory_GetRect_(void* handle)
 {
-    return WxControlFactory::GetRect(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxControlFactory::GetRect(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxControlFactory_GetScreenRect_(void* handle)
 {
-    return WxControlFactory::GetScreenRect(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxControlFactory::GetScreenRect(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxControlFactory_GetClientAreaOrigin_(void* handle)
 {
-    return WxControlFactory::GetClientAreaOrigin(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxControlFactory::GetClientAreaOrigin(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxControlFactory_GetClientRect_(void* handle)
 {
-    return WxControlFactory::GetClientRect(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxControlFactory::GetClientRect(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_ClientToWindowSize_(void* handle, SizeI size)
 {
-    return WxControlFactory::ClientToWindowSize(handle, size);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::ClientToWindowSize(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_WindowToClientSize_(void* handle, SizeI size)
 {
-    return WxControlFactory::WindowToClientSize(handle, size);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::WindowToClientSize(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetBestSize_(void* handle)
 {
-    return WxControlFactory::GetBestSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetBestSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetBestHeight_(void* handle, int width)
 {
-    return WxControlFactory::GetBestHeight(handle, width);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetBestHeight(handle, width);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetBestWidth_(void* handle, int height)
 {
-    return WxControlFactory::GetBestWidth(handle, height);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetBestWidth(handle, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetScrollHelper_(void* handle, void* sh)
 {
-    WxControlFactory::SetScrollHelper(handle, sh);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetScrollHelper(handle, sh);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxControlFactory_GetScrollHelper_(void* handle)
 {
-    return WxControlFactory::GetScrollHelper(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxControlFactory::GetScrollHelper(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_InvalidateBestSize_(void* handle)
 {
-    WxControlFactory::InvalidateBestSize(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::InvalidateBestSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_CacheBestSize_(void* handle, SizeI size)
 {
-    WxControlFactory::CacheBestSize(handle, size);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::CacheBestSize(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetEffectiveMinSize_(void* handle)
 {
-    return WxControlFactory::GetEffectiveMinSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetEffectiveMinSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetInitialSize_(void* handle, SizeI size)
 {
-    WxControlFactory::SetInitialSize(handle, size);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetInitialSize(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Center_(void* handle, int dir)
 {
-    WxControlFactory::Center(handle, dir);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Center(handle, dir);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_CenterOnParent_(void* handle, int dir)
 {
-    WxControlFactory::CenterOnParent(handle, dir);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::CenterOnParent(handle, dir);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_Fit_(void* handle)
 {
-    WxControlFactory::Fit(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::Fit(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_FitInside_(void* handle)
 {
-    WxControlFactory::FitInside(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::FitInside(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetSizeHints_(void* handle, int minW, int minH, int maxW, int maxH, int incW, int incH)
 {
-    WxControlFactory::SetSizeHints(handle, minW, minH, maxW, maxH, incW, incH);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetSizeHints(handle, minW, minH, maxW, maxH, incW, incH);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetMinSize_(void* handle, SizeI minSize)
 {
-    WxControlFactory::SetMinSize(handle, minSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetMinSize(handle, minSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetMaxSize_(void* handle, SizeI maxSize)
 {
-    WxControlFactory::SetMaxSize(handle, maxSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetMaxSize(handle, maxSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetMinClientSize_(void* handle, SizeI size)
 {
-    WxControlFactory::SetMinClientSize(handle, size);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetMinClientSize(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetMaxClientSize_(void* handle, SizeI size)
 {
-    WxControlFactory::SetMaxClientSize(handle, size);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetMaxClientSize(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetMinSize_(void* handle)
 {
-    return WxControlFactory::GetMinSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetMinSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetMaxSize_(void* handle)
 {
-    return WxControlFactory::GetMaxSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetMaxSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetMinClientSize_(void* handle)
 {
-    return WxControlFactory::GetMinClientSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetMinClientSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetMaxClientSize_(void* handle)
 {
-    return WxControlFactory::GetMaxClientSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetMaxClientSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetMinWidth_(void* handle)
 {
-    return WxControlFactory::GetMinWidth(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetMinWidth(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetMinHeight_(void* handle)
 {
-    return WxControlFactory::GetMinHeight(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetMinHeight(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetMaxWidth_(void* handle)
 {
-    return WxControlFactory::GetMaxWidth(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetMaxWidth(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxControlFactory_GetMaxHeight_(void* handle)
 {
-    return WxControlFactory::GetMaxHeight(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxControlFactory::GetMaxHeight(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetVirtualSize_(void* handle, int x, int y)
 {
-    WxControlFactory::SetVirtualSize(handle, x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetVirtualSize(handle, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetVirtualSize_(void* handle)
 {
-    return WxControlFactory::GetVirtualSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetVirtualSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetBestVirtualSize_(void* handle)
 {
-    return WxControlFactory::GetBestVirtualSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetBestVirtualSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double WxControlFactory_GetContentScaleFactor_(void* handle)
 {
-    return WxControlFactory::GetContentScaleFactor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return WxControlFactory::GetContentScaleFactor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double WxControlFactory_GetDPIScaleFactor_(void* handle)
 {
-    return WxControlFactory::GetDPIScaleFactor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return WxControlFactory::GetDPIScaleFactor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxControlFactory_GetWindowBorderSize_(void* handle)
 {
-    return WxControlFactory::GetWindowBorderSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxControlFactory::GetWindowBorderSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_InformFirstDirection_(void* handle, int direction, int size, int availableOtherDir)
 {
-    return WxControlFactory::InformFirstDirection(handle, direction, size, availableOtherDir);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::InformFirstDirection(handle, direction, size, availableOtherDir);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SendSizeEvent_(void* handle, int flags)
 {
-    WxControlFactory::SendSizeEvent(handle, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SendSizeEvent(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SendSizeEventToParent_(void* handle, int flags)
 {
-    WxControlFactory::SendSizeEventToParent(handle, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SendSizeEventToParent(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_PostSizeEvent_(void* handle)
 {
-    WxControlFactory::PostSizeEvent(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::PostSizeEvent(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_PostSizeEventToParent_(void* handle)
 {
-    WxControlFactory::PostSizeEventToParent(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::PostSizeEventToParent(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_BeginRepositioningChildren_(void* handle)
 {
-    return WxControlFactory::BeginRepositioningChildren(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::BeginRepositioningChildren(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_EndRepositioningChildren_(void* handle)
 {
-    WxControlFactory::EndRepositioningChildren(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::EndRepositioningChildren(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Show_(void* handle, c_bool show)
 {
-    return WxControlFactory::Show(handle, show);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Show(handle, show);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Hide_(void* handle)
 {
-    return WxControlFactory::Hide(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Hide(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_ShowWithEffect_(void* handle, int effect, uint32_t timeout)
 {
-    return WxControlFactory::ShowWithEffect(handle, effect, timeout);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::ShowWithEffect(handle, effect, timeout);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_HideWithEffect_(void* handle, int effect, uint32_t timeout)
 {
-    return WxControlFactory::HideWithEffect(handle, effect, timeout);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::HideWithEffect(handle, effect, timeout);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Enable_(void* handle, c_bool enable)
 {
-    return WxControlFactory::Enable(handle, enable);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Enable(handle, enable);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_Disable_(void* handle)
 {
-    return WxControlFactory::Disable(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::Disable(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsShown_(void* handle)
 {
-    return WxControlFactory::IsShown(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsShown(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsEnabled_(void* handle)
 {
-    return WxControlFactory::IsEnabled(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsEnabled(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsThisEnabled_(void* handle)
 {
-    return WxControlFactory::IsThisEnabled(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsThisEnabled(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxControlFactory_IsShownOnScreen_(void* handle)
 {
-    return WxControlFactory::IsShownOnScreen(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxControlFactory::IsShownOnScreen(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetWindowStyleFlag_(void* handle, int64_t style)
 {
-    WxControlFactory::SetWindowStyleFlag(handle, style);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetWindowStyleFlag(handle, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t WxControlFactory_GetWindowStyleFlag_(void* handle)
 {
-    return WxControlFactory::GetWindowStyleFlag(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return WxControlFactory::GetWindowStyleFlag(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxControlFactory_SetWindowStyle_(void* handle, int64_t style)
 {
-    WxControlFactory::SetWindowStyle(handle, style);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxControlFactory::SetWindowStyle(handle, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t WxControlFactory_GetWindowStyle_(void* handle)
 {
-    return WxControlFactory::GetWindowStyle(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return WxControlFactory::GetWindowStyle(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

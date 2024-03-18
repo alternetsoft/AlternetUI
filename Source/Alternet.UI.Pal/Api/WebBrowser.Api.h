@@ -10,342 +10,750 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API WebBrowser* WebBrowser_Create_()
 {
-    return new WebBrowser();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<WebBrowser*>([&](){
+    #endif
+        return new WebBrowser();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetHasBorder_(WebBrowser* obj)
 {
-    return obj->GetHasBorder();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetHasBorder();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetHasBorder_(WebBrowser* obj, c_bool value)
 {
-    obj->SetHasBorder(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetHasBorder(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanGoBack_(WebBrowser* obj)
 {
-    return obj->GetCanGoBack();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanGoBack();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanGoForward_(WebBrowser* obj)
 {
-    return obj->GetCanGoForward();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanGoForward();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanCut_(WebBrowser* obj)
 {
-    return obj->GetCanCut();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanCut();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanCopy_(WebBrowser* obj)
 {
-    return obj->GetCanCopy();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanCopy();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanUndo_(WebBrowser* obj)
 {
-    return obj->GetCanUndo();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanUndo();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanRedo_(WebBrowser* obj)
 {
-    return obj->GetCanRedo();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanRedo();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetIsBusy_(WebBrowser* obj)
 {
-    return obj->GetIsBusy();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsBusy();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetCanPaste_(WebBrowser* obj)
 {
-    return obj->GetCanPaste();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanPaste();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API float WebBrowser_GetZoomFactor_(WebBrowser* obj)
 {
-    return obj->GetZoomFactor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<float>([&](){
+    #endif
+        return obj->GetZoomFactor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetZoomFactor_(WebBrowser* obj, float value)
 {
-    obj->SetZoomFactor(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetZoomFactor(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetHasSelection_(WebBrowser* obj)
 {
-    return obj->GetHasSelection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetHasSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetSelectedSource_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetSelectedSource());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetSelectedSource());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetSelectedText_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetSelectedText());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetSelectedText());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetPageSource_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetPageSource());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetPageSource());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetPageText_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetPageText());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetPageText());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetAccessToDevToolsEnabled_(WebBrowser* obj)
 {
-    return obj->GetAccessToDevToolsEnabled();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAccessToDevToolsEnabled();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetAccessToDevToolsEnabled_(WebBrowser* obj, c_bool value)
 {
-    obj->SetAccessToDevToolsEnabled(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAccessToDevToolsEnabled(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WebBrowser_GetPreferredColorScheme_(WebBrowser* obj)
 {
-    return obj->GetPreferredColorScheme();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetPreferredColorScheme();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetPreferredColorScheme_(WebBrowser* obj, int value)
 {
-    obj->SetPreferredColorScheme(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPreferredColorScheme(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetUserAgent_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetUserAgent());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetUserAgent());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetUserAgent_(WebBrowser* obj, const char16_t* value)
 {
-    obj->SetUserAgent(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetUserAgent(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetContextMenuEnabled_(WebBrowser* obj)
 {
-    return obj->GetContextMenuEnabled();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetContextMenuEnabled();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetContextMenuEnabled_(WebBrowser* obj, c_bool value)
 {
-    obj->SetContextMenuEnabled(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetContextMenuEnabled(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_GetEditable_(WebBrowser* obj)
 {
-    return obj->GetEditable();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetEditable();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetEditable_(WebBrowser* obj, c_bool value)
 {
-    obj->SetEditable(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetEditable(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WebBrowser_GetZoom_(WebBrowser* obj)
 {
-    return obj->GetZoom();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetZoom();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetZoom_(WebBrowser* obj, int value)
 {
-    obj->SetZoom(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetZoom(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WebBrowser_CreateWebBrowser_(const char16_t* url)
 {
-    return WebBrowser::CreateWebBrowser(url);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WebBrowser::CreateWebBrowser(url);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetDefaultUserAgent_(const char16_t* value)
 {
-    WebBrowser::SetDefaultUserAgent(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WebBrowser::SetDefaultUserAgent(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetDefaultScriptMesageName_(const char16_t* value)
 {
-    WebBrowser::SetDefaultScriptMesageName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WebBrowser::SetDefaultScriptMesageName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetDefaultFSNameMemory_(const char16_t* value)
 {
-    WebBrowser::SetDefaultFSNameMemory(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WebBrowser::SetDefaultFSNameMemory(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetDefaultFSNameArchive_(const char16_t* value)
 {
-    WebBrowser::SetDefaultFSNameArchive(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WebBrowser::SetDefaultFSNameArchive(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_DoCommand_(WebBrowser* obj, const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
 {
-    return AllocPInvokeReturnString(obj->DoCommand(cmdName, cmdParam1, cmdParam2));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->DoCommand(cmdName, cmdParam1, cmdParam2));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_DoCommandGlobal_(const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
 {
-    return AllocPInvokeReturnString(WebBrowser::DoCommandGlobal(cmdName, cmdParam1, cmdParam2));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WebBrowser::DoCommandGlobal(cmdName, cmdParam1, cmdParam2));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetVirtualHostNameToFolderMapping_(WebBrowser* obj, const char16_t* hostName, const char16_t* folderPath, int accessKind)
 {
-    obj->SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WebBrowser_GetNativeBackend_(WebBrowser* obj)
 {
-    return obj->GetNativeBackend();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetNativeBackend();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_GoBack_(WebBrowser* obj)
 {
-    obj->GoBack();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->GoBack();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_GoForward_(WebBrowser* obj)
 {
-    obj->GoForward();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->GoForward();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Stop_(WebBrowser* obj)
 {
-    obj->Stop();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Stop();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_ClearSelection_(WebBrowser* obj)
 {
-    obj->ClearSelection();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ClearSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Copy_(WebBrowser* obj)
 {
-    obj->Copy();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Copy();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Paste_(WebBrowser* obj)
 {
-    obj->Paste();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Paste();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Cut_(WebBrowser* obj)
 {
-    obj->Cut();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Cut();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_ClearHistory_(WebBrowser* obj)
 {
-    obj->ClearHistory();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ClearHistory();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_EnableHistory_(WebBrowser* obj, c_bool enable)
 {
-    obj->EnableHistory(enable);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EnableHistory(enable);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_ReloadDefault_(WebBrowser* obj)
 {
-    obj->ReloadDefault();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ReloadDefault();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Reload_(WebBrowser* obj, c_bool noCache)
 {
-    obj->Reload(noCache);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Reload(noCache);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SelectAll_(WebBrowser* obj)
 {
-    obj->SelectAll();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SelectAll();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_DeleteSelection_(WebBrowser* obj)
 {
-    obj->DeleteSelection();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DeleteSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Undo_(WebBrowser* obj)
 {
-    obj->Undo();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Undo();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Redo_(WebBrowser* obj)
 {
-    obj->Redo();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Redo();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_Print_(WebBrowser* obj)
 {
-    obj->Print();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Print();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_RemoveAllUserScripts_(WebBrowser* obj)
 {
-    obj->RemoveAllUserScripts();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RemoveAllUserScripts();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_AddScriptMessageHandler_(WebBrowser* obj, const char16_t* name)
 {
-    return obj->AddScriptMessageHandler(name);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->AddScriptMessageHandler(name);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_RemoveScriptMessageHandler_(WebBrowser* obj, const char16_t* name)
 {
-    return obj->RemoveScriptMessageHandler(name);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->RemoveScriptMessageHandler(name);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_RunScriptAsync_(WebBrowser* obj, const char16_t* javascript, void* clientData)
 {
-    obj->RunScriptAsync(javascript, clientData);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RunScriptAsync(javascript, clientData);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_CreateBackend_(WebBrowser* obj)
 {
-    obj->CreateBackend();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->CreateBackend();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WebBrowser_GetBackendOS_()
 {
-    return WebBrowser::GetBackendOS();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WebBrowser::GetBackendOS();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetEdgePath_(const char16_t* path)
 {
-    WebBrowser::SetEdgePath(path);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WebBrowser::SetEdgePath(path);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetCurrentTitle_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetCurrentTitle());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetCurrentTitle());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_GetCurrentURL_(WebBrowser* obj)
 {
-    return AllocPInvokeReturnString(obj->GetCurrentURL());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetCurrentURL());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_LoadURL_(WebBrowser* obj, const char16_t* url)
 {
-    obj->LoadURL(url);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->LoadURL(url);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WebBrowser_RunScript_(WebBrowser* obj, const char16_t* javascript)
 {
-    return AllocPInvokeReturnString(obj->RunScript(javascript));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->RunScript(javascript));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetPage_(WebBrowser* obj, const char16_t* text, const char16_t* baseUrl)
 {
-    obj->SetPage(text, baseUrl);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPage(text, baseUrl);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WebBrowser_AddUserScript_(WebBrowser* obj, const char16_t* javascript, int injectionTime)
 {
-    return obj->AddUserScript(javascript, injectionTime);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->AddUserScript(javascript, injectionTime);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WebBrowser_SetEventCallback_(WebBrowser::WebBrowserEventCallbackType callback)

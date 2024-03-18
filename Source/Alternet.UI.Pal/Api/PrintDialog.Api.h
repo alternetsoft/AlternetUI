@@ -12,61 +12,133 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PrintDialog* PrintDialog_Create_()
 {
-    return new PrintDialog();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrintDialog*>([&](){
+    #endif
+        return new PrintDialog();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrintDialog_GetAllowSomePages_(PrintDialog* obj)
 {
-    return obj->GetAllowSomePages();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowSomePages();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintDialog_SetAllowSomePages_(PrintDialog* obj, c_bool value)
 {
-    obj->SetAllowSomePages(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowSomePages(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrintDialog_GetAllowSelection_(PrintDialog* obj)
 {
-    return obj->GetAllowSelection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintDialog_SetAllowSelection_(PrintDialog* obj, c_bool value)
 {
-    obj->SetAllowSelection(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowSelection(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrintDialog_GetAllowPrintToFile_(PrintDialog* obj)
 {
-    return obj->GetAllowPrintToFile();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowPrintToFile();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintDialog_SetAllowPrintToFile_(PrintDialog* obj, c_bool value)
 {
-    obj->SetAllowPrintToFile(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowPrintToFile(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrintDialog_GetShowHelp_(PrintDialog* obj)
 {
-    return obj->GetShowHelp();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetShowHelp();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintDialog_SetShowHelp_(PrintDialog* obj, c_bool value)
 {
-    obj->SetShowHelp(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetShowHelp(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PrintDocument* PrintDialog_GetDocument_(PrintDialog* obj)
 {
-    return obj->GetDocument();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrintDocument*>([&](){
+    #endif
+        return obj->GetDocument();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintDialog_SetDocument_(PrintDialog* obj, PrintDocument* value)
 {
-    obj->SetDocument(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDocument(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ModalResult PrintDialog_ShowModal_(PrintDialog* obj, Window* owner)
 {
-    return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ModalResult>([&](){
+    #endif
+        return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

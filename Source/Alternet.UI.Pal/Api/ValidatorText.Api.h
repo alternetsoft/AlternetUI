@@ -10,81 +10,177 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorText* ValidatorText_Create_()
 {
-    return new ValidatorText();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ValidatorText*>([&](){
+    #endif
+        return new ValidatorText();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_DeleteValidatorText_(void* handle)
 {
-    ValidatorText::DeleteValidatorText(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::DeleteValidatorText(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* ValidatorText_CreateValidatorText_(int64_t style)
 {
-    return ValidatorText::CreateValidatorText(style);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return ValidatorText::CreateValidatorText(style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t ValidatorText_GetStyle_(void* handle)
 {
-    return ValidatorText::GetStyle(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return ValidatorText::GetStyle(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_SetStyle_(void* handle, int64_t style)
 {
-    ValidatorText::SetStyle(handle, style);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::SetStyle(handle, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_SetCharIncludes_(void* handle, const char16_t* chars)
 {
-    ValidatorText::SetCharIncludes(handle, chars);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::SetCharIncludes(handle, chars);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_AddCharIncludes_(void* handle, const char16_t* chars)
 {
-    ValidatorText::AddCharIncludes(handle, chars);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::AddCharIncludes(handle, chars);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* ValidatorText_GetCharIncludes_(void* handle)
 {
-    return AllocPInvokeReturnString(ValidatorText::GetCharIncludes(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(ValidatorText::GetCharIncludes(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_AddInclude_(void* handle, const char16_t* include)
 {
-    ValidatorText::AddInclude(handle, include);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::AddInclude(handle, include);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_AddExclude_(void* handle, const char16_t* exclude)
 {
-    ValidatorText::AddExclude(handle, exclude);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::AddExclude(handle, exclude);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_SetCharExcludes_(void* handle, const char16_t* chars)
 {
-    ValidatorText::SetCharExcludes(handle, chars);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::SetCharExcludes(handle, chars);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_AddCharExcludes_(void* handle, const char16_t* chars)
 {
-    ValidatorText::AddCharExcludes(handle, chars);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::AddCharExcludes(handle, chars);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* ValidatorText_GetCharExcludes_(void* handle)
 {
-    return AllocPInvokeReturnString(ValidatorText::GetCharExcludes(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(ValidatorText::GetCharExcludes(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_ClearExcludes_(void* handle)
 {
-    ValidatorText::ClearExcludes(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::ClearExcludes(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorText_ClearIncludes_(void* handle)
 {
-    ValidatorText::ClearIncludes(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorText::ClearIncludes(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* ValidatorText_IsValid_(void* handle, const char16_t* val)
 {
-    return AllocPInvokeReturnString(ValidatorText::IsValid(handle, val));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(ValidatorText::IsValid(handle, val));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

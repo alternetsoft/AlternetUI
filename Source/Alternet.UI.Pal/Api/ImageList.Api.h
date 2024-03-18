@@ -11,31 +11,67 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ImageList* ImageList_Create_()
 {
-    return new ImageList();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ImageList*>([&](){
+    #endif
+        return new ImageList();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C ImageList_GetPixelImageSize_(ImageList* obj)
 {
-    return obj->GetPixelImageSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return obj->GetPixelImageSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, SizeI value)
 {
-    obj->SetPixelImageSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPixelImageSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C ImageList_GetImageSize_(ImageList* obj)
 {
-    return obj->GetImageSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetImageSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, SizeD value)
 {
-    obj->SetImageSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetImageSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ImageList_AddImage_(ImageList* obj, Image* image)
 {
-    obj->AddImage(image);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddImage(image);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

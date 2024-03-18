@@ -14,207 +14,453 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Application* Application_Create_()
 {
-    return new Application();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Application*>([&](){
+    #endif
+        return new Application();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Application_GetEventArgString_(Application* obj)
 {
-    return AllocPInvokeReturnString(obj->GetEventArgString());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetEventArgString());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Application_GetName_(Application* obj)
 {
-    return AllocPInvokeReturnString(obj->GetName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetName_(Application* obj, const char16_t* value)
 {
-    obj->SetName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Keyboard* Application_GetKeyboard_(Application* obj)
 {
-    return obj->GetKeyboard();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Keyboard*>([&](){
+    #endif
+        return obj->GetKeyboard();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Mouse* Application_GetMouse_(Application* obj)
 {
-    return obj->GetMouse();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Mouse*>([&](){
+    #endif
+        return obj->GetMouse();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Clipboard* Application_GetClipboard_(Application* obj)
 {
-    return obj->GetClipboard();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Clipboard*>([&](){
+    #endif
+        return obj->GetClipboard();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Application_GetDisplayName_(Application* obj)
 {
-    return AllocPInvokeReturnString(obj->GetDisplayName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetDisplayName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetDisplayName_(Application* obj, const char16_t* value)
 {
-    obj->SetDisplayName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDisplayName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Application_GetAppClassName_(Application* obj)
 {
-    return AllocPInvokeReturnString(obj->GetAppClassName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetAppClassName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetAppClassName_(Application* obj, const char16_t* value)
 {
-    obj->SetAppClassName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAppClassName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Application_GetVendorName_(Application* obj)
 {
-    return AllocPInvokeReturnString(obj->GetVendorName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetVendorName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetVendorName_(Application* obj, const char16_t* value)
 {
-    obj->SetVendorName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetVendorName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Application_GetVendorDisplayName_(Application* obj)
 {
-    return AllocPInvokeReturnString(obj->GetVendorDisplayName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetVendorDisplayName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetVendorDisplayName_(Application* obj, const char16_t* value)
 {
-    obj->SetVendorDisplayName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetVendorDisplayName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_GetInUixmlPreviewerMode_(Application* obj)
 {
-    return obj->GetInUixmlPreviewerMode();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetInUixmlPreviewerMode();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetInUixmlPreviewerMode_(Application* obj, c_bool value)
 {
-    obj->SetInUixmlPreviewerMode(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetInUixmlPreviewerMode(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_GetInvokeRequired_(Application* obj)
 {
-    return obj->GetInvokeRequired();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetInvokeRequired();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_ThrowError_(int value)
 {
-    Application::ThrowError(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Application::ThrowError(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetSystemOptionInt_(const char16_t* name, int value)
 {
-    Application::SetSystemOptionInt(name, value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Application::SetSystemOptionInt(name, value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
-    obj->Run(window);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Run(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Application_GetTopWindow_(Application* obj)
 {
-    return obj->GetTopWindow();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetTopWindow();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_ExitMainLoop_(Application* obj)
 {
-    obj->ExitMainLoop();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ExitMainLoop();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_WakeUpIdle_(Application* obj)
 {
-    obj->WakeUpIdle();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->WakeUpIdle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_Exit_(Application* obj)
 {
-    obj->Exit();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Exit();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SuppressDiagnostics_(int flags)
 {
-    Application::SuppressDiagnostics(flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Application::SuppressDiagnostics(flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_BeginInvoke_(Application* obj, PInvokeCallbackActionType action)
 {
-    obj->BeginInvoke(action);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->BeginInvoke(action);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_ProcessPendingEvents_(Application* obj)
 {
-    obj->ProcessPendingEvents();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ProcessPendingEvents();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_HasPendingEvents_(Application* obj)
 {
-    return obj->HasPendingEvents();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->HasPendingEvents();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Application_GetDisplayMode_(Application* obj)
 {
-    return obj->GetDisplayMode();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetDisplayMode();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_GetExitOnFrameDelete_(Application* obj)
 {
-    return obj->GetExitOnFrameDelete();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetExitOnFrameDelete();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Application_GetLayoutDirection_(Application* obj)
 {
-    return obj->GetLayoutDirection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetLayoutDirection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_GetUseBestVisual_(Application* obj)
 {
-    return obj->GetUseBestVisual();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetUseBestVisual();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_IsActive_(Application* obj)
 {
-    return obj->IsActive();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsActive();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_SafeYield_(Application* obj, void* window, c_bool onlyIfNeeded)
 {
-    return obj->SafeYield(window, onlyIfNeeded);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SafeYield(window, onlyIfNeeded);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_SafeYieldFor_(Application* obj, void* window, int64_t eventsToProcess)
 {
-    return obj->SafeYieldFor(window, eventsToProcess);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SafeYieldFor(window, eventsToProcess);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_SetDisplayMode_(Application* obj, void* videoMode)
 {
-    return obj->SetDisplayMode(videoMode);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetDisplayMode(videoMode);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetExitOnFrameDelete_(Application* obj, c_bool flag)
 {
-    obj->SetExitOnFrameDelete(flag);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetExitOnFrameDelete(flag);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Application_SetNativeTheme_(Application* obj, const char16_t* theme)
 {
-    return obj->SetNativeTheme(theme);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetNativeTheme(theme);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetTopWindow_(Application* obj, void* window)
 {
-    obj->SetTopWindow(window);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTopWindow(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetUseBestVisual_(Application* obj, c_bool flag, c_bool forceTrueColour)
 {
-    obj->SetUseBestVisual(flag, forceTrueColour);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetUseBestVisual(flag, forceTrueColour);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)

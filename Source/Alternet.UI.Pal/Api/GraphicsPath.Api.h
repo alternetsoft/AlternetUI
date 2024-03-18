@@ -11,81 +11,177 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GraphicsPath* GraphicsPath_Create_()
 {
-    return new GraphicsPath();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<GraphicsPath*>([&](){
+    #endif
+        return new GraphicsPath();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API FillMode GraphicsPath_GetFillMode_(GraphicsPath* obj)
 {
-    return obj->GetFillMode();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<FillMode>([&](){
+    #endif
+        return obj->GetFillMode();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_SetFillMode_(GraphicsPath* obj, FillMode value)
 {
-    obj->SetFillMode(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFillMode(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_Initialize_(GraphicsPath* obj, DrawingContext* dc)
 {
-    obj->Initialize(dc);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Initialize(dc);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, PointD* points, int pointsCount)
 {
-    obj->AddLines(points, pointsCount);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddLines(points, pointsCount);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddLine_(GraphicsPath* obj, PointD pt1, PointD pt2)
 {
-    obj->AddLine(pt1, pt2);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddLine(pt1, pt2);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddLineTo_(GraphicsPath* obj, PointD pt)
 {
-    obj->AddLineTo(pt);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddLineTo(pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddEllipse_(GraphicsPath* obj, RectD rect)
 {
-    obj->AddEllipse(rect);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddEllipse(rect);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddBezier_(GraphicsPath* obj, PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
 {
-    obj->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
 {
-    obj->AddBezierTo(controlPoint1, controlPoint2, endPoint);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddBezierTo(controlPoint1, controlPoint2, endPoint);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, PointD center, double radius, double startAngle, double sweepAngle)
 {
-    obj->AddArc(center, radius, startAngle, sweepAngle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddArc(center, radius, startAngle, sweepAngle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, RectD rect)
 {
-    obj->AddRectangle(rect);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddRectangle(rect);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, RectD rect, double cornerRadius)
 {
-    obj->AddRoundedRectangle(rect, cornerRadius);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddRoundedRectangle(rect, cornerRadius);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectD_C GraphicsPath_GetBounds_(GraphicsPath* obj)
 {
-    return obj->GetBounds();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectD_C>([&](){
+    #endif
+        return obj->GetBounds();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj, PointD point)
 {
-    obj->StartFigure(point);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->StartFigure(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GraphicsPath_CloseFigure_(GraphicsPath* obj)
 {
-    obj->CloseFigure();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->CloseFigure();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

@@ -12,26 +12,56 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API IconSet* IconSet_Create_()
 {
-    return new IconSet();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<IconSet*>([&](){
+    #endif
+        return new IconSet();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void IconSet_AddImage_(IconSet* obj, Image* image)
 {
-    obj->AddImage(image);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddImage(image);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void IconSet_LoadFromStream_(IconSet* obj, void* stream)
 {
-    obj->LoadFromStream(stream);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->LoadFromStream(stream);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void IconSet_Clear_(IconSet* obj)
 {
-    obj->Clear();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Clear();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool IconSet_IsOk_(IconSet* obj)
 {
-    return obj->IsOk();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsOk();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

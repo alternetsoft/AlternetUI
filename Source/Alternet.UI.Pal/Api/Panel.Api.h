@@ -10,46 +10,100 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Panel* Panel_Create_()
 {
-    return new Panel();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Panel*>([&](){
+    #endif
+        return new Panel();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Panel_GetWantChars_(Panel* obj)
 {
-    return obj->GetWantChars();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetWantChars();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Panel_SetWantChars_(Panel* obj, c_bool value)
 {
-    obj->SetWantChars(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetWantChars(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Panel_GetShowVertScrollBar_(Panel* obj)
 {
-    return obj->GetShowVertScrollBar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetShowVertScrollBar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Panel_SetShowVertScrollBar_(Panel* obj, c_bool value)
 {
-    obj->SetShowVertScrollBar(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetShowVertScrollBar(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Panel_GetShowHorzScrollBar_(Panel* obj)
 {
-    return obj->GetShowHorzScrollBar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetShowHorzScrollBar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Panel_SetShowHorzScrollBar_(Panel* obj, c_bool value)
 {
-    obj->SetShowHorzScrollBar(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetShowHorzScrollBar(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Panel_GetScrollBarAlwaysVisible_(Panel* obj)
 {
-    return obj->GetScrollBarAlwaysVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetScrollBarAlwaysVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Panel_SetScrollBarAlwaysVisible_(Panel* obj, c_bool value)
 {
-    obj->SetScrollBarAlwaysVisible(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetScrollBarAlwaysVisible(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

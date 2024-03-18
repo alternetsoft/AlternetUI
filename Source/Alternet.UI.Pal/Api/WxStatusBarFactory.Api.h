@@ -10,86 +10,188 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API WxStatusBarFactory* WxStatusBarFactory_Create_()
 {
-    return new WxStatusBarFactory();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<WxStatusBarFactory*>([&](){
+    #endif
+        return new WxStatusBarFactory();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_DeleteStatusBar_(void* handle)
 {
-    WxStatusBarFactory::DeleteStatusBar(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::DeleteStatusBar(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxStatusBarFactory_CreateStatusBar_(void* window, int64_t style)
 {
-    return WxStatusBarFactory::CreateStatusBar(window, style);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxStatusBarFactory::CreateStatusBar(window, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxStatusBarFactory_GetFieldsCount_(void* handle)
 {
-    return WxStatusBarFactory::GetFieldsCount(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxStatusBarFactory::GetFieldsCount(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_SetStatusText_(void* handle, const char16_t* text, int number)
 {
-    WxStatusBarFactory::SetStatusText(handle, text, number);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::SetStatusText(handle, text, number);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxStatusBarFactory_GetStatusText_(void* handle, int number)
 {
-    return AllocPInvokeReturnString(WxStatusBarFactory::GetStatusText(handle, number));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxStatusBarFactory::GetStatusText(handle, number));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_PushStatusText_(void* handle, const char16_t* text, int number)
 {
-    WxStatusBarFactory::PushStatusText(handle, text, number);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::PushStatusText(handle, text, number);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_PopStatusText_(void* handle, int number)
 {
-    WxStatusBarFactory::PopStatusText(handle, number);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::PopStatusText(handle, number);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_SetStatusWidths_(void* handle, int* widths, int widthsCount)
 {
-    WxStatusBarFactory::SetStatusWidths(handle, widths, widthsCount);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::SetStatusWidths(handle, widths, widthsCount);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_SetFieldsCount_(void* handle, int number)
 {
-    WxStatusBarFactory::SetFieldsCount(handle, number);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::SetFieldsCount(handle, number);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxStatusBarFactory_GetStatusWidth_(void* handle, int n)
 {
-    return WxStatusBarFactory::GetStatusWidth(handle, n);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxStatusBarFactory::GetStatusWidth(handle, n);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxStatusBarFactory_GetStatusStyle_(void* handle, int n)
 {
-    return WxStatusBarFactory::GetStatusStyle(handle, n);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxStatusBarFactory::GetStatusStyle(handle, n);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_SetStatusStyles_(void* handle, int* styles, int stylesCount)
 {
-    WxStatusBarFactory::SetStatusStyles(handle, styles, stylesCount);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::SetStatusStyles(handle, styles, stylesCount);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxStatusBarFactory_GetFieldRect_(void* handle, int i)
 {
-    return WxStatusBarFactory::GetFieldRect(handle, i);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxStatusBarFactory::GetFieldRect(handle, i);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxStatusBarFactory_SetMinHeight_(void* handle, int height)
 {
-    WxStatusBarFactory::SetMinHeight(handle, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxStatusBarFactory::SetMinHeight(handle, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxStatusBarFactory_GetBorderX_(void* handle)
 {
-    return WxStatusBarFactory::GetBorderX(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxStatusBarFactory::GetBorderX(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxStatusBarFactory_GetBorderY_(void* handle)
 {
-    return WxStatusBarFactory::GetBorderY(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxStatusBarFactory::GetBorderY(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

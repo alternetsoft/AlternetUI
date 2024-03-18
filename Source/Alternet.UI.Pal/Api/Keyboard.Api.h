@@ -10,12 +10,24 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Keyboard* Keyboard_Create_()
 {
-    return new Keyboard();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Keyboard*>([&](){
+    #endif
+        return new Keyboard();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API KeyStates Keyboard_GetKeyState_(Keyboard* obj, Key key)
 {
-    return obj->GetKeyState(key);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<KeyStates>([&](){
+    #endif
+        return obj->GetKeyState(key);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Keyboard_SetEventCallback_(Keyboard::KeyboardEventCallbackType callback)

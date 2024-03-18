@@ -10,126 +10,276 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PrinterSettings* PrinterSettings_Create_()
 {
-    return new PrinterSettings();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrinterSettings*>([&](){
+    #endif
+        return new PrinterSettings();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Duplex PrinterSettings_GetDuplex_(PrinterSettings* obj)
 {
-    return obj->GetDuplex();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Duplex>([&](){
+    #endif
+        return obj->GetDuplex();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetDuplex_(PrinterSettings* obj, Duplex value)
 {
-    obj->SetDuplex(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDuplex(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int PrinterSettings_GetFromPage_(PrinterSettings* obj)
 {
-    return obj->GetFromPage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetFromPage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetFromPage_(PrinterSettings* obj, int value)
 {
-    obj->SetFromPage(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFromPage(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int PrinterSettings_GetToPage_(PrinterSettings* obj)
 {
-    return obj->GetToPage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToPage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetToPage_(PrinterSettings* obj, int value)
 {
-    obj->SetToPage(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToPage(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int PrinterSettings_GetMinimumPage_(PrinterSettings* obj)
 {
-    return obj->GetMinimumPage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetMinimumPage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetMinimumPage_(PrinterSettings* obj, int value)
 {
-    obj->SetMinimumPage(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinimumPage(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int PrinterSettings_GetMaximumPage_(PrinterSettings* obj)
 {
-    return obj->GetMaximumPage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetMaximumPage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetMaximumPage_(PrinterSettings* obj, int value)
 {
-    obj->SetMaximumPage(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMaximumPage(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PrintRange PrinterSettings_GetPrintRange_(PrinterSettings* obj)
 {
-    return obj->GetPrintRange();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrintRange>([&](){
+    #endif
+        return obj->GetPrintRange();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetPrintRange_(PrinterSettings* obj, PrintRange value)
 {
-    obj->SetPrintRange(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPrintRange(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrinterSettings_GetCollate_(PrinterSettings* obj)
 {
-    return obj->GetCollate();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCollate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetCollate_(PrinterSettings* obj, c_bool value)
 {
-    obj->SetCollate(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCollate(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int PrinterSettings_GetCopies_(PrinterSettings* obj)
 {
-    return obj->GetCopies();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetCopies();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetCopies_(PrinterSettings* obj, int value)
 {
-    obj->SetCopies(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCopies(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrinterSettings_GetPrintToFile_(PrinterSettings* obj)
 {
-    return obj->GetPrintToFile();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetPrintToFile();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetPrintToFile_(PrinterSettings* obj, c_bool value)
 {
-    obj->SetPrintToFile(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPrintToFile(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* PrinterSettings_GetPrinterName_(PrinterSettings* obj)
 {
-    return AllocPInvokeReturnString(obj->GetPrinterName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetPrinterName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetPrinterName_(PrinterSettings* obj, const char16_t* value)
 {
-    obj->SetPrinterName(ToOptional(value));
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPrinterName(ToOptional(value));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrinterSettings_GetIsValid_(PrinterSettings* obj)
 {
-    return obj->GetIsValid();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsValid();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PrinterSettings_GetIsDefaultPrinter_(PrinterSettings* obj)
 {
-    return obj->GetIsDefaultPrinter();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsDefaultPrinter();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* PrinterSettings_GetPrintFileName_(PrinterSettings* obj)
 {
-    return AllocPInvokeReturnString(obj->GetPrintFileName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetPrintFileName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrinterSettings_SetPrintFileName_(PrinterSettings* obj, const char16_t* value)
 {
-    obj->SetPrintFileName(ToOptional(value));
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPrintFileName(ToOptional(value));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

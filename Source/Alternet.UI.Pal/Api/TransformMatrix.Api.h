@@ -10,126 +10,276 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API TransformMatrix* TransformMatrix_Create_()
 {
-    return new TransformMatrix();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<TransformMatrix*>([&](){
+    #endif
+        return new TransformMatrix();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM11_(TransformMatrix* obj)
 {
-    return obj->GetM11();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetM11();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM11_(TransformMatrix* obj, double value)
 {
-    obj->SetM11(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetM11(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM12_(TransformMatrix* obj)
 {
-    return obj->GetM12();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetM12();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM12_(TransformMatrix* obj, double value)
 {
-    obj->SetM12(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetM12(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM21_(TransformMatrix* obj)
 {
-    return obj->GetM21();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetM21();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM21_(TransformMatrix* obj, double value)
 {
-    obj->SetM21(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetM21(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM22_(TransformMatrix* obj)
 {
-    return obj->GetM22();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetM22();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM22_(TransformMatrix* obj, double value)
 {
-    obj->SetM22(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetM22(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double TransformMatrix_GetDX_(TransformMatrix* obj)
 {
-    return obj->GetDX();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetDX();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_SetDX_(TransformMatrix* obj, double value)
 {
-    obj->SetDX(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDX(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double TransformMatrix_GetDY_(TransformMatrix* obj)
 {
-    return obj->GetDY();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetDY();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_SetDY_(TransformMatrix* obj, double value)
 {
-    obj->SetDY(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDY(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool TransformMatrix_GetIsIdentity_(TransformMatrix* obj)
 {
-    return obj->GetIsIdentity();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsIdentity();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Initialize_(TransformMatrix* obj, double m11, double m12, double m21, double m22, double dx, double dy)
 {
-    obj->Initialize(m11, m12, m21, m22, dx, dy);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Initialize(m11, m12, m21, m22, dx, dy);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Reset_(TransformMatrix* obj)
 {
-    obj->Reset();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Reset();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Multiply_(TransformMatrix* obj, TransformMatrix* matrix)
 {
-    obj->Multiply(matrix);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Multiply(matrix);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Translate_(TransformMatrix* obj, double offsetX, double offsetY)
 {
-    obj->Translate(offsetX, offsetY);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Translate(offsetX, offsetY);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Scale_(TransformMatrix* obj, double scaleX, double scaleY)
 {
-    obj->Scale(scaleX, scaleY);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Scale(scaleX, scaleY);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Rotate_(TransformMatrix* obj, double angle)
 {
-    obj->Rotate(angle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Rotate(angle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TransformMatrix_Invert_(TransformMatrix* obj)
 {
-    obj->Invert();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Invert();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointD_C TransformMatrix_TransformPoint_(TransformMatrix* obj, PointD point)
 {
-    return obj->TransformPoint(point);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->TransformPoint(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C TransformMatrix_TransformSize_(TransformMatrix* obj, SizeD size)
 {
-    return obj->TransformSize(size);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->TransformSize(size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool TransformMatrix_IsEqualTo_(TransformMatrix* obj, TransformMatrix* other)
 {
-    return obj->IsEqualTo(other);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsEqualTo(other);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int TransformMatrix_GetHashCode__(TransformMatrix* obj)
 {
-    return obj->GetHashCode_();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetHashCode_();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

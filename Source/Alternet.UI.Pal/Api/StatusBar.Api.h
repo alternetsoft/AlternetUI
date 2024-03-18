@@ -10,22 +10,46 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API StatusBar* StatusBar_Create_()
 {
-    return new StatusBar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<StatusBar*>([&](){
+    #endif
+        return new StatusBar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* StatusBar_GetRealHandle_(StatusBar* obj)
 {
-    return obj->GetRealHandle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetRealHandle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool StatusBar_GetSizingGripVisible_(StatusBar* obj)
 {
-    return obj->GetSizingGripVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetSizingGripVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void StatusBar_SetSizingGripVisible_(StatusBar* obj, c_bool value)
 {
-    obj->SetSizingGripVisible(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSizingGripVisible(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void StatusBar_SetEventCallback_(StatusBar::StatusBarEventCallbackType callback)

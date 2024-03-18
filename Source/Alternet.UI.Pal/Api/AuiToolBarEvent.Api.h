@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiToolBarEvent* AuiToolBarEvent_Create_()
 {
-    return new AuiToolBarEvent();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiToolBarEvent*>([&](){
+    #endif
+        return new AuiToolBarEvent();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

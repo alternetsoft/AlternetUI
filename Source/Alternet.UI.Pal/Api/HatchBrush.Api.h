@@ -10,11 +10,23 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API HatchBrush* HatchBrush_Create_()
 {
-    return new HatchBrush();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<HatchBrush*>([&](){
+    #endif
+        return new HatchBrush();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void HatchBrush_Initialize_(HatchBrush* obj, BrushHatchStyle style, Color color)
 {
-    obj->Initialize(style, color);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Initialize(style, color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

@@ -11,101 +11,221 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Toolbar* Toolbar_Create_()
 {
-    return new Toolbar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Toolbar*>([&](){
+    #endif
+        return new Toolbar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Toolbar_GetItemsCount_(Toolbar* obj)
 {
-    return obj->GetItemsCount();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetItemsCount();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetItemTextVisible_(Toolbar* obj)
 {
-    return obj->GetItemTextVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetItemTextVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetItemTextVisible_(Toolbar* obj, c_bool value)
 {
-    obj->SetItemTextVisible(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetItemTextVisible(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetItemImagesVisible_(Toolbar* obj)
 {
-    return obj->GetItemImagesVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetItemImagesVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetItemImagesVisible_(Toolbar* obj, c_bool value)
 {
-    obj->SetItemImagesVisible(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetItemImagesVisible(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetNoDivider_(Toolbar* obj)
 {
-    return obj->GetNoDivider();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetNoDivider();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetNoDivider_(Toolbar* obj, c_bool value)
 {
-    obj->SetNoDivider(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetNoDivider(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetIsVertical_(Toolbar* obj)
 {
-    return obj->GetIsVertical();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsVertical();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetIsVertical_(Toolbar* obj, c_bool value)
 {
-    obj->SetIsVertical(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsVertical(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetIsBottom_(Toolbar* obj)
 {
-    return obj->GetIsBottom();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsBottom();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetIsBottom_(Toolbar* obj, c_bool value)
 {
-    obj->SetIsBottom(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsBottom(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetIsRight_(Toolbar* obj)
 {
-    return obj->GetIsRight();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsRight();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetIsRight_(Toolbar* obj, c_bool value)
 {
-    obj->SetIsRight(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsRight(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
 {
-    return obj->GetImageToTextDisplayMode();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ToolbarItemImageToTextDisplayMode>([&](){
+    #endif
+        return obj->GetImageToTextDisplayMode();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_SetImageToTextDisplayMode_(Toolbar* obj, ToolbarItemImageToTextDisplayMode value)
 {
-    obj->SetImageToTextDisplayMode(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetImageToTextDisplayMode(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Toolbar_CreateEx_(c_bool mainToolbar)
 {
-    return Toolbar::CreateEx(mainToolbar);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return Toolbar::CreateEx(mainToolbar);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_InsertItemAt_(Toolbar* obj, int index, ToolbarItem* item)
 {
-    obj->InsertItemAt(index, item);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InsertItemAt(index, item);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_RemoveItemAt_(Toolbar* obj, int index)
 {
-    obj->RemoveItemAt(index);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RemoveItemAt(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Toolbar_Realize_(Toolbar* obj)
 {
-    obj->Realize();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Realize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

@@ -17,10 +17,18 @@ inline void SetExceptionCallbackImpl(NativeExceptionCallbackType unhandledExcept
 
 template<typename TResult> TResult MarshalExceptions(std::function<TResult()> action)
 {
+#if defined(__WXMSW__)
+    return action();
+#else
     return MarshalExceptions(action, [&] { return unhandledExceptionCallback; });
+#endif
 }
 
 template<typename TResult> TResult CatchAndMarshalThreadExceptions(std::function<TResult()> action)
 {
+#if defined(__WXMSW__)
+    return action();
+#else
     return MarshalExceptions(action, [&] { return caughtExceptionCallback; });
+#endif
 }

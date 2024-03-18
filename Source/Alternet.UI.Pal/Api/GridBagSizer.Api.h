@@ -10,151 +10,331 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GridBagSizer* GridBagSizer_Create_()
 {
-    return new GridBagSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<GridBagSizer*>([&](){
+    #endif
+        return new GridBagSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_CreateGridBagSizer_(int vgap, int hgap)
 {
-    return GridBagSizer::CreateGridBagSizer(vgap, hgap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::CreateGridBagSizer(vgap, hgap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C GridBagSizer_CalcMin_(void* handle)
 {
-    return GridBagSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return GridBagSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_FindItemAtPoint_(void* handle, PointI pt)
 {
-    return GridBagSizer::FindItemAtPoint(handle, pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::FindItemAtPoint(handle, pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_FindItemAtPosition_(void* handle, PointI pos)
 {
-    return GridBagSizer::FindItemAtPosition(handle, pos);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::FindItemAtPosition(handle, pos);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_FindItemWithData_(void* handle, void* userData)
 {
-    return GridBagSizer::FindItemWithData(handle, userData);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::FindItemWithData(handle, userData);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C GridBagSizer_GetCellSize_(void* handle, int row, int col)
 {
-    return GridBagSizer::GetCellSize(handle, row, col);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return GridBagSizer::GetCellSize(handle, row, col);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C GridBagSizer_GetEmptyCellSize_(void* handle)
 {
-    return GridBagSizer::GetEmptyCellSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return GridBagSizer::GetEmptyCellSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridBagSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
-    GridBagSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridBagSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridBagSizer_SetEmptyCellSize_(void* handle, SizeI sz)
 {
-    GridBagSizer::SetEmptyCellSize(handle, sz);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridBagSizer::SetEmptyCellSize(handle, sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_Add_(void* handle, void* window, PointI pos, SizeI span, int flag, int border, void* userData)
 {
-    return GridBagSizer::Add(handle, window, pos, span, flag, border, userData);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::Add(handle, window, pos, span, flag, border, userData);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_Add2_(void* handle, void* sizer, PointI pos, SizeI span, int flag, int border, void* userData)
 {
-    return GridBagSizer::Add2(handle, sizer, pos, span, flag, border, userData);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::Add2(handle, sizer, pos, span, flag, border, userData);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_Add3_(void* handle, void* item)
 {
-    return GridBagSizer::Add3(handle, item);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::Add3(handle, item);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_Add4_(void* handle, int width, int height, PointI pos, SizeI span, int flag, int border, void* userData)
 {
-    return GridBagSizer::Add4(handle, width, height, pos, span, flag, border, userData);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::Add4(handle, width, height, pos, span, flag, border, userData);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_CheckForIntersection_(void* handle, void* item, void* excludeItem)
 {
-    return GridBagSizer::CheckForIntersection(handle, item, excludeItem);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::CheckForIntersection(handle, item, excludeItem);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_CheckForIntersection2_(void* handle, PointI pos, SizeI span, void* excludeItem)
 {
-    return GridBagSizer::CheckForIntersection2(handle, pos, span, excludeItem);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::CheckForIntersection2(handle, pos, span, excludeItem);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_FindItem_(void* handle, void* window)
 {
-    return GridBagSizer::FindItem(handle, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::FindItem(handle, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridBagSizer_FindItem2_(void* handle, void* sizer)
 {
-    return GridBagSizer::FindItem2(handle, sizer);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridBagSizer::FindItem2(handle, sizer);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C GridBagSizer_GetItemPosition_(void* handle, void* window)
 {
-    return GridBagSizer::GetItemPosition(handle, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return GridBagSizer::GetItemPosition(handle, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C GridBagSizer_GetItemPosition2_(void* handle, void* sizer)
 {
-    return GridBagSizer::GetItemPosition2(handle, sizer);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return GridBagSizer::GetItemPosition2(handle, sizer);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C GridBagSizer_GetItemPosition3_(void* handle, int index)
 {
-    return GridBagSizer::GetItemPosition3(handle, index);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return GridBagSizer::GetItemPosition3(handle, index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C GridBagSizer_GetItemSpan_(void* handle, void* window)
 {
-    return GridBagSizer::GetItemSpan(handle, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return GridBagSizer::GetItemSpan(handle, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C GridBagSizer_GetItemSpan2_(void* handle, void* sizer)
 {
-    return GridBagSizer::GetItemSpan2(handle, sizer);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return GridBagSizer::GetItemSpan2(handle, sizer);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C GridBagSizer_GetItemSpan3_(void* handle, int index)
 {
-    return GridBagSizer::GetItemSpan3(handle, index);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return GridBagSizer::GetItemSpan3(handle, index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_SetItemPosition_(void* handle, void* window, PointI pos)
 {
-    return GridBagSizer::SetItemPosition(handle, window, pos);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::SetItemPosition(handle, window, pos);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_SetItemPosition2_(void* handle, void* sizer, PointI pos)
 {
-    return GridBagSizer::SetItemPosition2(handle, sizer, pos);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::SetItemPosition2(handle, sizer, pos);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_SetItemPosition3_(void* handle, int index, PointI pos)
 {
-    return GridBagSizer::SetItemPosition3(handle, index, pos);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::SetItemPosition3(handle, index, pos);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_SetItemSpan_(void* handle, void* window, SizeI span)
 {
-    return GridBagSizer::SetItemSpan(handle, window, span);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::SetItemSpan(handle, window, span);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_SetItemSpan2_(void* handle, void* sizer, SizeI span)
 {
-    return GridBagSizer::SetItemSpan2(handle, sizer, span);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::SetItemSpan2(handle, sizer, span);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool GridBagSizer_SetItemSpan3_(void* handle, int index, SizeI span)
 {
-    return GridBagSizer::SetItemSpan3(handle, index, span);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GridBagSizer::SetItemSpan3(handle, index, span);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

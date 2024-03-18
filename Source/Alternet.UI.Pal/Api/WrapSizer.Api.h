@@ -10,21 +10,45 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API WrapSizer* WrapSizer_Create_()
 {
-    return new WrapSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<WrapSizer*>([&](){
+    #endif
+        return new WrapSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WrapSizer_CreateWrapSizer_(int orient, int flags)
 {
-    return WrapSizer::CreateWrapSizer(orient, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WrapSizer::CreateWrapSizer(orient, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WrapSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
-    WrapSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WrapSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WrapSizer_CalcMin_(void* handle)
 {
-    return WrapSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WrapSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

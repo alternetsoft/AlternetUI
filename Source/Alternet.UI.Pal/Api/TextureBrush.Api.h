@@ -11,11 +11,23 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API TextureBrush* TextureBrush_Create_()
 {
-    return new TextureBrush();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<TextureBrush*>([&](){
+    #endif
+        return new TextureBrush();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void TextureBrush_Initialize_(TextureBrush* obj, Image* image)
 {
-    obj->Initialize(image);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Initialize(image);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

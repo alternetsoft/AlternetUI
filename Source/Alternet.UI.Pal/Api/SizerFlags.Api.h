@@ -10,131 +10,287 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API SizerFlags* SizerFlags_Create_()
 {
-    return new SizerFlags();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizerFlags*>([&](){
+    #endif
+        return new SizerFlags();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* SizerFlags_CreateSizerFlags_(int proportion)
 {
-    return SizerFlags::CreateSizerFlags(proportion);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return SizerFlags::CreateSizerFlags(proportion);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SizerFlags_GetDefaultBorder_()
 {
-    return SizerFlags::GetDefaultBorder();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return SizerFlags::GetDefaultBorder();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API float SizerFlags_GetDefaultBorderFractional_()
 {
-    return SizerFlags::GetDefaultBorderFractional();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<float>([&](){
+    #endif
+        return SizerFlags::GetDefaultBorderFractional();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SizerFlags_GetProportion_(void* handle)
 {
-    return SizerFlags::GetProportion(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return SizerFlags::GetProportion(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SizerFlags_GetFlags_(void* handle)
 {
-    return SizerFlags::GetFlags(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return SizerFlags::GetFlags(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int SizerFlags_GetBorderInPixels_(void* handle)
 {
-    return SizerFlags::GetBorderInPixels(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return SizerFlags::GetBorderInPixels(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Proportion_(void* handle, int proportion)
 {
-    SizerFlags::Proportion(handle, proportion);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Proportion(handle, proportion);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Expand_(void* handle)
 {
-    SizerFlags::Expand(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Expand(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Align_(void* handle, int alignment)
 {
-    SizerFlags::Align(handle, alignment);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Align(handle, alignment);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Center_(void* handle)
 {
-    SizerFlags::Center(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Center(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_CenterVertical_(void* handle)
 {
-    SizerFlags::CenterVertical(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::CenterVertical(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_CenterHorizontal_(void* handle)
 {
-    SizerFlags::CenterHorizontal(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::CenterHorizontal(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Top_(void* handle)
 {
-    SizerFlags::Top(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Top(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Left_(void* handle)
 {
-    SizerFlags::Left(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Left(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Right_(void* handle)
 {
-    SizerFlags::Right(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Right(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Bottom_(void* handle)
 {
-    SizerFlags::Bottom(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Bottom(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Border_(void* handle, int direction, int borderInPixels)
 {
-    SizerFlags::Border(handle, direction, borderInPixels);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Border(handle, direction, borderInPixels);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Border2_(void* handle, int direction)
 {
-    SizerFlags::Border2(handle, direction);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Border2(handle, direction);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_DoubleBorder_(void* handle, int direction)
 {
-    SizerFlags::DoubleBorder(handle, direction);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::DoubleBorder(handle, direction);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_TripleBorder_(void* handle, int direction)
 {
-    SizerFlags::TripleBorder(handle, direction);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::TripleBorder(handle, direction);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_HorzBorder_(void* handle)
 {
-    SizerFlags::HorzBorder(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::HorzBorder(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_DoubleHorzBorder_(void* handle)
 {
-    SizerFlags::DoubleHorzBorder(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::DoubleHorzBorder(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_Shaped_(void* handle)
 {
-    SizerFlags::Shaped(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::Shaped(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_FixedMinSize_(void* handle)
 {
-    SizerFlags::FixedMinSize(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::FixedMinSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void SizerFlags_ReserveSpaceEvenIfHidden_(void* handle)
 {
-    SizerFlags::ReserveSpaceEvenIfHidden(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        SizerFlags::ReserveSpaceEvenIfHidden(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

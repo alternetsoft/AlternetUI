@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorNumeric* ValidatorNumeric_Create_()
 {
-    return new ValidatorNumeric();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ValidatorNumeric*>([&](){
+    #endif
+        return new ValidatorNumeric();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
