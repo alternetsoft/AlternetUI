@@ -423,7 +423,7 @@ namespace Alternet.UI
         {
             if (isDark)
             {
-                return Color.FromRgb(153, 153, 153);
+                return Color.FromRgb(123, 123, 123);
             }
             else
             {
