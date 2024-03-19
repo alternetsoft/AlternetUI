@@ -1,0 +1,3 @@
+https://github.com/dotnet/diagnostics
+
+https://www.nuget.org/packages/Microsoft.Diagnostics.DbgShim
