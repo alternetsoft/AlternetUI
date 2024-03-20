@@ -9,8 +9,13 @@ namespace Alternet.UI.Native
 {
     internal class NativeObject : BaseObject, IDisposable
     {
-        private static readonly Dictionary<IntPtr, NativeObject>
-            InstancesByNativePointers = new();
+        private static readonly IdAndData<NativeObject> IdAndData = new();
+
+        /*private static readonly Dictionary<IntPtr, NativeObject>
+            InstancesByNativePointers = new();*/
+
+        private IntPtr nativePointer;
+        private bool isDisposed;
 
         protected NativeObject()
         {
@@ -30,11 +35,9 @@ namespace Alternet.UI.Native
             Dispose(disposing: false);
         }
 
-        public bool NoDispose { get; set; }
+        public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
 
-        public bool IsDisposed { get; private set; }
-
-        public IntPtr NativePointer { get; private set; }
+        public IntPtr NativePointer { get => nativePointer; private set => nativePointer = value; }
 
         public static T? GetFromNativePointer<T>(
             IntPtr pointer,
@@ -44,19 +47,26 @@ namespace Alternet.UI.Native
             if (pointer == IntPtr.Zero)
                 return null;
 
-            if (!InstancesByNativePointers.TryGetValue(pointer, out var w))
+            var id = GetIdNativeObjectPointer(pointer);
+            if(id != 0)
             {
-                if (fromPointerFactory != null)
-                {
-                    var newObject = fromPointerFactory(pointer);
-                    AddRefNativeObjectPointer(pointer);
-                    return newObject;
-                }
-                else
-                    return null;
+                var result = IdAndData.GetData(id);
+                return (T?)result;
             }
 
-            return (T)w;
+            /*if (!InstancesByNativePointers.TryGetValue(pointer, out var w))
+            {*/
+            if (fromPointerFactory != null)
+            {
+                var newObject = fromPointerFactory(pointer);
+                AddRefNativeObjectPointer(pointer);
+                return newObject;
+            }
+            else
+                return null;
+            /*}*/
+
+            /*return (T)w;*/
         }
 
         public void Dispose()
@@ -66,14 +76,14 @@ namespace Alternet.UI.Native
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void SetIdNativeObjectPointer(IntPtr ptr, ulong value)
+        protected static void SetIdNativeObjectPointer(IntPtr ptr, int value)
         {
             if (ptr != IntPtr.Zero)
                 NativeApi.Object_SetId(ptr, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static ulong GetIdNativeObjectPointer(IntPtr ptr)
+        protected static int GetIdNativeObjectPointer(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
                 return 0;
@@ -97,41 +107,46 @@ namespace Alternet.UI.Native
 
         protected void SetNativePointer(IntPtr value)
         {
-            if (value == IntPtr.Zero && NativePointer != IntPtr.Zero)
+            if (value == IntPtr.Zero && nativePointer != IntPtr.Zero)
             {
-                InstancesByNativePointers.Remove(NativePointer);
+                var id = GetIdNativeObjectPointer(nativePointer);
+                SetIdNativeObjectPointer(nativePointer, 0);
+                IdAndData.FreeId(id);
+                /*InstancesByNativePointers.Remove(NativePointer);*/
             }
 
-            NativePointer = value;
+            nativePointer = value;
 
             if (value != IntPtr.Zero)
             {
-                InstancesByNativePointers.Add(NativePointer, this);
+                var id = IdAndData.AllocID(this);
+                SetIdNativeObjectPointer(value, id);
+                /*InstancesByNativePointers.Add(NativePointer, this);*/
             }
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!IsDisposed)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
                 }
 
-                if (NativePointer != IntPtr.Zero && !NoDispose)
+                if (nativePointer != IntPtr.Zero)
                 {
-                    ReleaseNativeObjectPointer(NativePointer);
                     SetNativePointer(IntPtr.Zero);
+                    ReleaseNativeObjectPointer(nativePointer);
                 }
 
-                IsDisposed = true;
+                isDisposed = true;
             }
         }
 
         [Conditional("DEBUG")]
         protected void CheckDisposed()
         {
-            if (IsDisposed)
+            if (isDisposed)
                 throw new ObjectDisposedException(null);
         }
 
@@ -141,10 +156,10 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Object_SetId(IntPtr obj, ulong value);
+            public static extern void Object_SetId(IntPtr obj, int value);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ulong Object_GetId(IntPtr obj);
+            public static extern int Object_GetId(IntPtr obj);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Object_AddRef(IntPtr obj);
