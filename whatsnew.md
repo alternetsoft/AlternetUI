@@ -1,3 +1,12 @@
+# 0.9.522 (2024 March 20)
+
+- VCheckListBox.
+- LightDarkColor and LightDarkColors.
+- Improved exception handling. Added exceptions catching on non-Windows machines.
+- Fixed ignored mouse events on Linux.
+- TabControl: changed default border color as it was bad on Macos.
+- TabControl: Increase default tab padding. This is done because on normal dpi display distance was too small.
+
 # 0.9.521 (2024 March 16)
 
 - Splitter: improved painting when resize is done.
