@@ -14,6 +14,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class ListControlItem : BaseControlItem
     {
+        private SvgImage? svgImage;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
         /// </summary>
@@ -101,6 +103,39 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public virtual Image? Image { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="SvgImage"/> associated with the item.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual SvgImage? SvgImage
+        {
+            get => svgImage;
+            set
+            {
+                if (svgImage == value)
+                    return;
+                svgImage = value;
+                Image = null;
+                DisabledImage = null;
+                SelectedImage = null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets size of the svg image.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// Currently only rectangular svg images are supported.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual SizeI? SvgImageSize { get; set; }
 
         /// <summary>
         /// Gets or sets disabled <see cref="Image"/> associated with the item.
@@ -205,6 +240,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Action? Action { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="Action"/> which is executed on mouse double click.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action? DoubleClickAction { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
