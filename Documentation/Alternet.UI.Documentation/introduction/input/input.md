@@ -54,7 +54,9 @@ This article explains the architecture of the input systems in AlteNET UI.
  Event routing is the process of forwarding events to multiple elements so that
  a particular object or element along the route can choose to offer a
  significant response (through handling) to an event that might have been
- sourced by a different element. Routed events use one of three routing
+ sourced by a different element.
+
+ Routed events use one of three routing
  mechanisms: direct, bubbling, and tunneling. In direct routing, the source
  element is the only element notified, and the event is not routed to any other
  elements. However, the direct routed event still offers some additional
@@ -62,7 +64,7 @@ This article explains the architecture of the input systems in AlteNET UI.
  events. Bubbling works up the element tree by first notifying the element that
  sourced the event, then the parent element, and so on. Tunneling starts at the
  root of the element tree and works down, ending with the original source
- element. For more information about routed events, see [Routed Events](../routed-events/routed-events.md).
+ element.
 
 ## Handling Input Events
  To handle an element's input, an event handler must be associated with that

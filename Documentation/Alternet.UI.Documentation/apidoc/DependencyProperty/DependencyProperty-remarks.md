@@ -5,9 +5,7 @@ remarks: *content
  A <xref:Alternet.UI.DependencyProperty> supports the following capabilities in
  Alternet UI:  
   
--   The property can be set through data binding. For more information about
-    data binding dependency properties, see [Data
-    binding](../../introduction/data-binding/data-binding.md).
+-   The property can be set through data binding.
   
 -   The property can inherit its value automatically from a parent element in
     the element tree.
@@ -18,9 +16,7 @@ remarks: *content
 -   The property reports information to Alternet UI, such as whether changing a the property value should require the layout system to recompose the visuals for
     an element.  
     
- To learn more about dependency properties, see [Dependency
- Properties](../../introduction/dependency-properties/dependency-properties.md). If
- you want properties on your custom types to support the capabilities in the
+If you want properties on your custom types to support the capabilities in the
  preceding list, you should create a dependency property.
   
  An attached property is a property that enables any object to report

@@ -16,12 +16,9 @@ AlterNET UI provides the following core controls:
 
 **Containers**: <xref:Alternet.UI.Grid>, <xref:Alternet.UI.StackPanel>, <xref:Alternet.UI.VerticalStackPanel>, 
 <xref:Alternet.UI.HorizontalStackPanel>, <xref:Alternet.UI.GroupBox>, <xref:Alternet.UI.Border>, 
-<xref:Alternet.UI.TabControl>, <xref:Alternet.UI.SplitterPanel>, <xref:Alternet.UI.LayoutPanel>.
+<xref:Alternet.UI.TabControl>, <xref:Alternet.UI.SplittedPanel>, <xref:Alternet.UI.LayoutPanel>.
 
 These controls act as containers for other controls and provide a different kinds of layouts in your windows.
-
-A <xref:Alternet.UI.AuiManager> is a central class of the advanced docking and floating toolbars and
-panes framework.
 
 A <xref:Alternet.UI.ScrollViewer> is a special kind of container which makes its child controls scrollable. 
 
@@ -33,7 +30,7 @@ A <xref:Alternet.UI.ScrollViewer> is a special kind of container which makes its
 These controls most often detect and respond to user input. The control classes expose API to handle text and mouse input, focus management, and more.
 
 **Data display**: <xref:Alternet.UI.ListBox>, <xref:Alternet.UI.ListView>, <xref:Alternet.UI.TreeView>, 
-<xref:Alternet.UI.CheckListBox>, <xref:Alternet.UI.PropertyGrid>.
+<xref:Alternet.UI.CheckListBox>, <xref:Alternet.UI.VListBox>, <xref:Alternet.UI.PropertyGrid>.
 
 These controls provide a visual representation of data elements in different layouts or views.
 

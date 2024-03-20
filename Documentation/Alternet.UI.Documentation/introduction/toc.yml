@@ -6,12 +6,6 @@
   href: controls.md
 - name: Layout
   href: layout/layout.md
-- name: Data Binding
-  href: data-binding/data-binding.md
-- name: Dependency Properties
-  href: dependency-properties/dependency-properties.md
-- name: Routed Events
-  href: routed-events/routed-events.md
 - name: Input
   href: input/input.md
 - name: Menu

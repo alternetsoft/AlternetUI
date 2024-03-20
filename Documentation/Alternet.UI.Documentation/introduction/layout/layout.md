@@ -73,18 +73,22 @@ describes the process that occurs when the layout system is invoked.
 
 1. A child <xref:Alternet.UI.Control> generally begins the layout process by first measuring itself
    by having its core sizing properties
-   evaluated, such as <xref:Alternet.UI.Control.Width%2A>,
+   evaluated, such as <xref:Alternet.UI.Control.Width%2A>, <xref:Alternet.UI.Control.SuggestedWidth%2A>,
+   <xref:Alternet.UI.Control.SuggestedHeight%2A>, 
    <xref:Alternet.UI.Control.Height%2A>, and
    <xref:Alternet.UI.Control.Margin%2A>.
 
 2. After that, a custom <xref:Alternet.UI.Control.GetPreferredSize%2A> implementation may change the desired control's size.
 
-3. Layout <xref:Alternet.UI.Control>-specific logic is applied, such as
-   <xref:Alternet.UI.StackPanel>'s <xref:Alternet.UI.Control.OnLayout%2A> logic and its related properties, such as <xref:Alternet.UI.StackPanel.Orientation%2A>.
+3. Layout using <xref:Alternet.UI.Control.Dock%2A> property.
 
-4. The control bounds are set after all children have been measured and laid out.
+4. Layout <xref:Alternet.UI.Control>-specific logic is applied, such as
+   <xref:Alternet.UI.StackPanel>'s <xref:Alternet.UI.Control.OnLayout%2A> logic and its related properties,
+ such as <xref:Alternet.UI.StackPanel.Orientation%2A>.
 
-5. The process is invoked again if additional
+5. The control bounds are set after all children have been measured and laid out.
+
+6. The process is invoked again if additional
    <xref:Alternet.UI.Control.Children%2A> are added to the collection, or
    the <xref:Alternet.UI.Control.PerformLayout%2A> method is called.
 
@@ -109,7 +113,8 @@ generally describe the sizing characteristics of the underlying
 <xref:Alternet.UI.Control.Height%2A>,
 <xref:Alternet.UI.Control.Width%2A>,
 <xref:Alternet.UI.Control.Margin%2A>,
-<xref:Alternet.UI.Control.Padding%2A>,
+<xref:Alternet.UI.Control.Padding%2A>, <xref:Alternet.UI.Control.Layout%2A>,
+<xref:Alternet.UI.Control.Dock%2A>,
 <xref:Alternet.UI.Control.HorizontalAlignment%2A>, and
 <xref:Alternet.UI.Control.VerticalAlignment%2A>. Each of these properties can
 change the space that is necessary to display the control.
@@ -143,15 +148,23 @@ The following table summarizes the available layout controls.
 |<xref:Alternet.UI.StackPanel>|Arranges child controls into a single line that can be oriented horizontally or vertically.|
 |<xref:Alternet.UI.VerticalStackPanel>|Arranges child controls into a single line that can be oriented vertically.|
 |<xref:Alternet.UI.HorizontalStackPanel>|Arranges child controls into a single line that can be oriented horizontally.|
-|<xref:Alternet.UI.SplitterPanel>|Manages up to two subcontrols which are aligned vertically or horizontally with splitter control between them.|
+|<xref:Alternet.UI.SplittedPanel>|Manages subcontrols which are aligned to the sides with splitter control between them.|
 |<xref:Alternet.UI.LayoutPanel>|Arranges child controls using different methods.|
-|<xref:Alternet.UI.AuiManager>|Implement advanced docking and floating toolbars and panes framework.|
+|<xref:Alternet.UI.Splitter>|Provides resizing of docked controls.|
 
 ## Custom Layout Behaviors
 
 For applications that require a layout that is not possible by using any of the
 predefined <xref:Alternet.UI.Control> controls, custom layout
-behaviors can be achieved by inheriting from
-<xref:Alternet.UI.Control> and overriding the
+behaviors can be achieved using one of these approaches:
+
+- Set <xref:Alternet.UI.Control.Layout%2A> property.
+
+- Inherit from <xref:Alternet.UI.Control> and override the
 <xref:Alternet.UI.Control.GetPreferredSize%2A> and
 <xref:Alternet.UI.Control.OnLayout%2A> methods.
+
+- Implement <xref:Alternet.UI.Control.CustomLayout> event handler.
+
+- Implement <xref:Alternet.UI.Control.GlobalOnLayout>
+ and/or <xref:Alternet.UI.Control.GlobalGetPreferredSize> event handlers.

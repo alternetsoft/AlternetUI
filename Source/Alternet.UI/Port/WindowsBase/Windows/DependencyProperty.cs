@@ -20,6 +20,7 @@ namespace Alternet.UI
     /// <summary>
     ///     An attached dependency-based property
     /// </summary>
+    /// <exclude />
     [TypeConverter("System.Windows.Markup.DependencyPropertyConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     [ValueSerializer(typeof(DependencyPropertyValueSerializer))]
     public sealed class DependencyProperty : IPropertyInfo

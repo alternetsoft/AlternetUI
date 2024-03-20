@@ -12,7 +12,8 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Provides resizing of docked elements. You can dock some control to an edge of a
-    /// container, and then dock the splitter to the same edge.
+    /// container using <see cref="Control.Dock"/> property,
+    /// and then dock the splitter to the same edge.
     /// The splitter resizes the control that is previous in the docking order.
     /// </summary>
     [DefaultEvent("SplitterMoved")]

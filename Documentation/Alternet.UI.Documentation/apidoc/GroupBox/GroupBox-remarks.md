@@ -21,4 +21,4 @@ Examples of how a <xref:Alternet.UI.GroupBox> can look on different platforms:
 ![GroupBox on Linux](images/groupbox-linux.png)
 ***
 
-Set <xref:Alternet.UI.GroupBox.Title> property to specify the title text displayed on the control.
+Set <xref:Alternet.UI.Control.Title> property to specify the title text displayed on the control.

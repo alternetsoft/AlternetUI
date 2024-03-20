@@ -1,3 +1,38 @@
 apiRules:
 - exclude:
     uidRegex: ^XamlX\.
+- exclude:
+    uidRegex: ^Alternet\.UI\.Markup
+- exclude:
+    uidRegex: ^Alternet\.UI\.Dependency
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.Binding
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.MultiBinding
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.PriorityBinding
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.ValidationError
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.VisualTreeHelper
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.WeakEventManager
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.XmlDataProvider
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.XmlNamespace
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.XmlnsDefinitionAttribute
+    type: Type
+- exclude:
+    uidRegex: ^Alternet\.UI\.UixmlPortObjectExtensions
+    type: Type
