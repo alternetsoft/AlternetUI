@@ -14,691 +14,1519 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API WxOtherFactory* WxOtherFactory_Create_()
 {
-    return new WxOtherFactory();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<WxOtherFactory*>([&](){
+    #endif
+        return new WxOtherFactory();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_GetRichToolTipUseGeneric_()
 {
-    return WxOtherFactory::GetRichToolTipUseGeneric();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::GetRichToolTipUseGeneric();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
 {
-    WxOtherFactory::SetRichToolTipUseGeneric(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::SetRichToolTipUseGeneric(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
 {
-    return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
 {
-    return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, void* win)
 {
-    return WxOtherFactory::RendererGetExpanderSize(renderer, win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::RendererGetExpanderSize(renderer, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawPushButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawPushButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCollapseButtonSize_(void* renderer, void* win, DrawingContext* dc)
 {
-    return WxOtherFactory::RendererGetCollapseButtonSize(renderer, win, dc);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::RendererGetCollapseButtonSize(renderer, win, dc);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawChoice(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawChoice(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawComboBox(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawComboBox(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, DrawingContext* dc, RectI rect, int value, int max, int flags)
 {
-    WxOtherFactory::RendererDrawGauge(renderer, win, dc, rect, value, max, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawGauge(renderer, win, dc, rect, value, max, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, DrawingContext* dc, const char16_t* text, RectI rect, int align, int flags, int ellipsizeMode)
 {
-    WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, rect, align, flags, ellipsizeMode);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, rect, align, flags, ellipsizeMode);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxOtherFactory_RendererGetVersion_(void* renderer)
 {
-    return AllocPInvokeReturnString(WxOtherFactory::RendererGetVersion(renderer));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxOtherFactory::RendererGetVersion(renderer));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_MemoryAlloc_(uint64_t size)
 {
-    return WxOtherFactory::MemoryAlloc(size);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::MemoryAlloc(size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_MemoryRealloc_(void* memory, uint64_t newSize)
 {
-    return WxOtherFactory::MemoryRealloc(memory, newSize);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::MemoryRealloc(memory, newSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_MemoryFree_(void* memory)
 {
-    WxOtherFactory::MemoryFree(memory);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::MemoryFree(memory);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_MemoryCopy_(void* dest, void* src, uint64_t count)
 {
-    return WxOtherFactory::MemoryCopy(dest, src, count);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::MemoryCopy(dest, src, count);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_MemoryMove_(void* dest, void* src, uint64_t count)
 {
-    return WxOtherFactory::MemoryMove(dest, src, count);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::MemoryMove(dest, src, count);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_MemorySet_(void* dest, int fillByte, uint64_t count)
 {
-    return WxOtherFactory::MemorySet(dest, fillByte, count);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::MemorySet(dest, fillByte, count);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_FsWatcherCreate_()
 {
-    return WxOtherFactory::FsWatcherCreate();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherCreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_FsWatcherDelete_(void* handle)
 {
-    WxOtherFactory::FsWatcherDelete(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::FsWatcherDelete(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAdd_(void* handle, const char16_t* path, int events)
 {
-    return WxOtherFactory::FsWatcherAdd(handle, path, events);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherAdd(handle, path, events);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAddTree_(void* handle, const char16_t* path, int events, const char16_t* filter)
 {
-    return WxOtherFactory::FsWatcherAddTree(handle, path, events, filter);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherAddTree(handle, path, events, filter);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_FsWatcherGetWatchedPathsCount_(void* handle)
 {
-    return WxOtherFactory::FsWatcherGetWatchedPathsCount(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherGetWatchedPathsCount(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemove_(void* handle, const char16_t* path)
 {
-    return WxOtherFactory::FsWatcherRemove(handle, path);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherRemove(handle, path);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveAll_(void* handle)
 {
-    return WxOtherFactory::FsWatcherRemoveAll(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherRemoveAll(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveTree_(void* handle, const char16_t* path)
 {
-    return WxOtherFactory::FsWatcherRemoveTree(handle, path);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::FsWatcherRemoveTree(handle, path);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_FsWatcherSetOwner_(void* handle, void* handler)
 {
-    WxOtherFactory::FsWatcherSetOwner(handle, handler);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::FsWatcherSetOwner(handle, handler);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_SoundCreate_()
 {
-    return WxOtherFactory::SoundCreate();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::SoundCreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_SoundCreate2_(const char16_t* fileName, c_bool isResource)
 {
-    return WxOtherFactory::SoundCreate2(fileName, isResource);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::SoundCreate2(fileName, isResource);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_SoundCreate4_(uint64_t size, void* data)
 {
-    return WxOtherFactory::SoundCreate4(size, data);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::SoundCreate4(size, data);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_SoundDelete_(void* handle)
 {
-    WxOtherFactory::SoundDelete(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::SoundDelete(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_SoundPlay2_(const char16_t* filename, uint32_t flags)
 {
-    return WxOtherFactory::SoundPlay2(filename, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::SoundPlay2(filename, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_SoundPlay_(void* handle, uint32_t flags)
 {
-    return WxOtherFactory::SoundPlay(handle, flags);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::SoundPlay(handle, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_SoundStop_()
 {
-    WxOtherFactory::SoundStop();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::SoundStop();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_SoundIsOk_(void* handle)
 {
-    return WxOtherFactory::SoundIsOk(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::SoundIsOk(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_UIActionSimulatorDelete_(void* handle)
 {
-    WxOtherFactory::UIActionSimulatorDelete(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::UIActionSimulatorDelete(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_UIActionSimulatorCreate_()
 {
-    return WxOtherFactory::UIActionSimulatorCreate();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorCreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorChar_(void* handle, int keycode, int modifiers)
 {
-    return WxOtherFactory::UIActionSimulatorChar(handle, keycode, modifiers);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorChar(handle, keycode, modifiers);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorKeyDown_(void* handle, int keycode, int modifiers)
 {
-    return WxOtherFactory::UIActionSimulatorKeyDown(handle, keycode, modifiers);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorKeyDown(handle, keycode, modifiers);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorKeyUp_(void* handle, int keycode, int modifiers)
 {
-    return WxOtherFactory::UIActionSimulatorKeyUp(handle, keycode, modifiers);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorKeyUp(handle, keycode, modifiers);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseClick_(void* handle, int button)
 {
-    return WxOtherFactory::UIActionSimulatorMouseClick(handle, button);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorMouseClick(handle, button);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDblClick_(void* handle, int button)
 {
-    return WxOtherFactory::UIActionSimulatorMouseDblClick(handle, button);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorMouseDblClick(handle, button);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDown_(void* handle, int button)
 {
-    return WxOtherFactory::UIActionSimulatorMouseDown(handle, button);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorMouseDown(handle, button);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(void* handle, int64_t x1, int64_t y1, int64_t x2, int64_t y2, int button)
 {
-    return WxOtherFactory::UIActionSimulatorMouseDragDrop(handle, x1, y1, x2, y2, button);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorMouseDragDrop(handle, x1, y1, x2, y2, button);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseMove_(void* handle, PointI point)
 {
-    return WxOtherFactory::UIActionSimulatorMouseMove(handle, point);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorMouseMove(handle, point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseUp_(void* handle, int button)
 {
-    return WxOtherFactory::UIActionSimulatorMouseUp(handle, button);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorMouseUp(handle, button);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorSelect_(void* handle, const char16_t* text)
 {
-    return WxOtherFactory::UIActionSimulatorSelect(handle, text);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorSelect(handle, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorText_(void* handle, const char16_t* text)
 {
-    return WxOtherFactory::UIActionSimulatorText(handle, text);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::UIActionSimulatorText(handle, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_UIActionSimulatorYield_()
 {
-    WxOtherFactory::UIActionSimulatorYield();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::UIActionSimulatorYield();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
-    WxOtherFactory::TestPopupWindow(parent, pos, sz);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::TestPopupWindow(parent, pos, sz);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateRichToolTip_(const char16_t* title, const char16_t* message)
 {
-    return WxOtherFactory::CreateRichToolTip(title, message);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateRichToolTip(title, message);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_DeleteRichToolTip_(void* handle)
 {
-    WxOtherFactory::DeleteRichToolTip(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::DeleteRichToolTip(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetBkColor_(void* handle, Color color, Color endColor)
 {
-    WxOtherFactory::RichToolTipSetBkColor(handle, color, endColor);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetBkColor(handle, color, endColor);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetFgColor_(void* handle, Color color)
 {
-    WxOtherFactory::RichToolTipSetFgColor(handle, color);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetFgColor(handle, color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFgColor_(void* handle, Color color)
 {
-    WxOtherFactory::RichToolTipSetTitleFgColor(handle, color);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetTitleFgColor(handle, color);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetIcon_(void* handle, ImageSet* bitmapBundle)
 {
-    WxOtherFactory::RichToolTipSetIcon(handle, bitmapBundle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetIcon(handle, bitmapBundle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetIcon2_(void* handle, int icon)
 {
-    WxOtherFactory::RichToolTipSetIcon2(handle, icon);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetIcon2(handle, icon);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTimeout_(void* handle, uint32_t milliseconds, uint32_t millisecondsShowdelay)
 {
-    WxOtherFactory::RichToolTipSetTimeout(handle, milliseconds, millisecondsShowdelay);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetTimeout(handle, milliseconds, millisecondsShowdelay);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTipKind_(void* handle, int tipKind)
 {
-    WxOtherFactory::RichToolTipSetTipKind(handle, tipKind);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetTipKind(handle, tipKind);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFont_(void* handle, Font* font)
 {
-    WxOtherFactory::RichToolTipSetTitleFont(handle, font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetTitleFont(handle, font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* window, RectI rect)
 {
-    WxOtherFactory::RichToolTipShowFor(handle, window, rect);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipShowFor(handle, window, rect);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateToolTip_(const char16_t* tip)
 {
-    return WxOtherFactory::CreateToolTip(tip);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateToolTip(tip);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_DeleteToolTip_(void* handle)
 {
-    WxOtherFactory::DeleteToolTip(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::DeleteToolTip(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxOtherFactory_ToolTipGetTip_(void* handle)
 {
-    return AllocPInvokeReturnString(WxOtherFactory::ToolTipGetTip(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxOtherFactory::ToolTipGetTip(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_ToolTipGetWindow_(void* handle)
 {
-    return WxOtherFactory::ToolTipGetWindow(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::ToolTipGetWindow(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_ToolTipSetTip_(void* handle, const char16_t* tip)
 {
-    WxOtherFactory::ToolTipSetTip(handle, tip);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::ToolTipSetTip(handle, tip);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_ToolTipEnable_(c_bool flag)
 {
-    WxOtherFactory::ToolTipEnable(flag);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::ToolTipEnable(flag);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_ToolTipSetAutoPop_(int64_t msecs)
 {
-    WxOtherFactory::ToolTipSetAutoPop(msecs);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::ToolTipSetAutoPop(msecs);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_ToolTipSetDelay_(int64_t msecs)
 {
-    WxOtherFactory::ToolTipSetDelay(msecs);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::ToolTipSetDelay(msecs);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_ToolTipSetMaxWidth_(int width)
 {
-    WxOtherFactory::ToolTipSetMaxWidth(width);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::ToolTipSetMaxWidth(width);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_ToolTipSetReshow_(int64_t msecs)
 {
-    WxOtherFactory::ToolTipSetReshow(msecs);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::ToolTipSetReshow(msecs);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateCursor_()
 {
-    return WxOtherFactory::CreateCursor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCursor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateCursor2_(int cursorId)
 {
-    return WxOtherFactory::CreateCursor2(cursorId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCursor2(cursorId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateCursor3_(const char16_t* cursorName, int type, int hotSpotX, int hotSpotY)
 {
-    return WxOtherFactory::CreateCursor3(cursorName, type, hotSpotX, hotSpotY);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCursor3(cursorName, type, hotSpotX, hotSpotY);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateCursor4_(Image* image)
 {
-    return WxOtherFactory::CreateCursor4(image);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCursor4(image);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_DeleteCursor_(void* handle)
 {
-    WxOtherFactory::DeleteCursor(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::DeleteCursor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_CursorIsOk_(void* handle)
 {
-    return WxOtherFactory::CursorIsOk(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::CursorIsOk(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxOtherFactory_CursorGetHotSpot_(void* handle)
 {
-    return WxOtherFactory::CursorGetHotSpot(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxOtherFactory::CursorGetHotSpot(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_SetCursor_(void* handle)
 {
-    WxOtherFactory::SetCursor(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::SetCursor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_CaretGetBlinkTime_()
 {
-    return WxOtherFactory::CaretGetBlinkTime();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::CaretGetBlinkTime();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_CaretSetBlinkTime_(int milliseconds)
 {
-    WxOtherFactory::CaretSetBlinkTime(milliseconds);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::CaretSetBlinkTime(milliseconds);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_DeleteCaret_(void* handle)
 {
-    WxOtherFactory::DeleteCaret(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::DeleteCaret(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C WxOtherFactory_CaretGetPosition_(void* handle)
 {
-    return WxOtherFactory::CaretGetPosition(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return WxOtherFactory::CaretGetPosition(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_CaretGetSize_(void* handle)
 {
-    return WxOtherFactory::CaretGetSize(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::CaretGetSize(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_CaretMove_(void* handle, int x, int y)
 {
-    WxOtherFactory::CaretMove(handle, x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::CaretMove(handle, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_CaretSetSize_(void* handle, int width, int height)
 {
-    WxOtherFactory::CaretSetSize(handle, width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::CaretSetSize(handle, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateCaret_()
 {
-    return WxOtherFactory::CreateCaret();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCaret();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateCaret2_(void* window, int width, int height)
 {
-    return WxOtherFactory::CreateCaret2(window, width, height);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCaret2(window, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CaretGetWindow_(void* handle)
 {
-    return WxOtherFactory::CaretGetWindow(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CaretGetWindow(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_CaretHide_(void* handle)
 {
-    WxOtherFactory::CaretHide(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::CaretHide(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_CaretIsOk_(void* handle)
 {
-    return WxOtherFactory::CaretIsOk(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::CaretIsOk(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_CaretIsVisible_(void* handle)
 {
-    return WxOtherFactory::CaretIsVisible(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::CaretIsVisible(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_CaretShow_(void* handle, c_bool show)
 {
-    WxOtherFactory::CaretShow(handle, show);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::CaretShow(handle, show);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateDisplay_()
 {
-    return WxOtherFactory::CreateDisplay();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateDisplay();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateDisplay2_(uint32_t index)
 {
-    return WxOtherFactory::CreateDisplay2(index);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateDisplay2(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateDisplay3_(void* window)
 {
-    return WxOtherFactory::CreateDisplay3(window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateDisplay3(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_DeleteDisplay_(void* handle)
 {
-    WxOtherFactory::DeleteDisplay(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::DeleteDisplay(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API uint32_t WxOtherFactory_DisplayGetCount_()
 {
-    return WxOtherFactory::DisplayGetCount();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<uint32_t>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetCount();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(PointI pt)
 {
-    return WxOtherFactory::DisplayGetFromPoint(pt);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetFromPoint(pt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_DisplayGetFromWindow_(void* win)
 {
-    return WxOtherFactory::DisplayGetFromWindow(win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetFromWindow(win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_DisplayGetStdPPIValue_()
 {
-    return WxOtherFactory::DisplayGetStdPPIValue();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetStdPPIValue();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_DisplayGetStdPPI_()
 {
-    return WxOtherFactory::DisplayGetStdPPI();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetStdPPI();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxOtherFactory_DisplayGetName_(void* handle)
 {
-    return AllocPInvokeReturnString(WxOtherFactory::DisplayGetName(handle));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxOtherFactory::DisplayGetName(handle));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C WxOtherFactory_DisplayGetPPI_(void* handle)
 {
-    return WxOtherFactory::DisplayGetPPI(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetPPI(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double WxOtherFactory_DisplayGetScaleFactor_(void* handle)
 {
-    return WxOtherFactory::DisplayGetScaleFactor(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetScaleFactor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_DisplayIsPrimary_(void* handle)
 {
-    return WxOtherFactory::DisplayIsPrimary(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::DisplayIsPrimary(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxOtherFactory_DisplayGetClientArea_(void* handle)
 {
-    return WxOtherFactory::DisplayGetClientArea(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetClientArea(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C WxOtherFactory_DisplayGetGeometry_(void* handle)
 {
-    return WxOtherFactory::DisplayGetGeometry(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return WxOtherFactory::DisplayGetGeometry(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_SystemSettingsHasFeature_(int index)
 {
-    return WxOtherFactory::SystemSettingsHasFeature(index);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::SystemSettingsHasFeature(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Font* WxOtherFactory_SystemSettingsGetFont_(int index)
 {
-    return WxOtherFactory::SystemSettingsGetFont(index);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return WxOtherFactory::SystemSettingsGetFont(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C WxOtherFactory_SystemSettingsGetColor_(int index)
 {
-    return WxOtherFactory::SystemSettingsGetColor(index);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return WxOtherFactory::SystemSettingsGetColor(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_SystemSettingsGetMetric_(int index, void* win)
 {
-    return WxOtherFactory::SystemSettingsGetMetric(index, win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::SystemSettingsGetMetric(index, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxOtherFactory_SystemAppearanceGetName_()
 {
-    return AllocPInvokeReturnString(WxOtherFactory::SystemAppearanceGetName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxOtherFactory::SystemAppearanceGetName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_SystemAppearanceIsDark_()
 {
-    return WxOtherFactory::SystemAppearanceIsDark();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::SystemAppearanceIsDark();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_()
 {
-    return WxOtherFactory::SystemAppearanceIsUsingDarkBackground();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::SystemAppearanceIsUsingDarkBackground();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool WxOtherFactory_IsBusyCursor_()
 {
-    return WxOtherFactory::IsBusyCursor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::IsBusyCursor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_BeginBusyCursor_()
 {
-    WxOtherFactory::BeginBusyCursor();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::BeginBusyCursor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_EndBusyCursor_()
 {
-    WxOtherFactory::EndBusyCursor();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::EndBusyCursor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_Bell_()
 {
-    WxOtherFactory::Bell();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::Bell();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* WxOtherFactory_GetTextFromUser_(const char16_t* message, const char16_t* caption, const char16_t* defaultValue, void* parent, int x, int y, c_bool centre)
 {
-    return AllocPInvokeReturnString(WxOtherFactory::GetTextFromUser(message, caption, defaultValue, parent, x, y, centre));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(WxOtherFactory::GetTextFromUser(message, caption, defaultValue, parent, x, y, centre));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, PointI pos)
 {
-    return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, pos);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, pos);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags, int sortArrow, void* headerButtonParams)
 {
-    return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags, int sortArrow, void* headerButtonParams)
 {
-    return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonHeight_(void* renderer, void* win)
 {
-    return WxOtherFactory::RendererGetHeaderButtonHeight(renderer, win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::RendererGetHeaderButtonHeight(renderer, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonMargin_(void* renderer, void* win)
 {
-    return WxOtherFactory::RendererGetHeaderButtonMargin(renderer, win);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return WxOtherFactory::RendererGetHeaderButtonMargin(renderer, win);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, DrawingContext* dcReal, SizeI sizeReal, int position, int orientation, int flags)
 {
-    WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, sizeReal, position, orientation, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, sizeReal, position, orientation, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
-    WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

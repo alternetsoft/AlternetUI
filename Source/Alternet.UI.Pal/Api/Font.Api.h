@@ -10,136 +10,298 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Font* Font_Create_()
 {
-    return new Font();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return new Font();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Font_GetName_(Font* obj)
 {
-    return AllocPInvokeReturnString(obj->GetName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double Font_GetSizeInPoints_(Font* obj)
 {
-    return obj->GetSizeInPoints();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetSizeInPoints();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API FontStyle Font_GetStyle_(Font* obj)
 {
-    return obj->GetStyle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<FontStyle>([&](){
+    #endif
+        return obj->GetStyle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Font_GetDescription_(Font* obj)
 {
-    return AllocPInvokeReturnString(obj->GetDescription());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetDescription());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Font_OpenFamiliesArray_()
 {
-    return Font::OpenFamiliesArray();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return Font::OpenFamiliesArray();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Font_GetFamiliesItemCount_(void* array)
 {
-    return Font::GetFamiliesItemCount(array);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return Font::GetFamiliesItemCount(array);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Font_GetFamiliesItemAt_(void* array, int index)
 {
-    return AllocPInvokeReturnString(Font::GetFamiliesItemAt(array, index));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(Font::GetFamiliesItemAt(array, index));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
 {
-    Font::CloseFamiliesArray(array);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Font::CloseFamiliesArray(array);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C Font_GetPixelSize_(Font* obj)
 {
-    return obj->GetPixelSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return obj->GetPixelSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Font_IsUsingSizeInPixels_(Font* obj)
 {
-    return obj->IsUsingSizeInPixels();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsUsingSizeInPixels();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Font_GetNumericWeight_(Font* obj)
 {
-    return obj->GetNumericWeight();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetNumericWeight();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Font_GetUnderlined_(Font* obj)
 {
-    return obj->GetUnderlined();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetUnderlined();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Font_GetStrikethrough_(Font* obj)
 {
-    return obj->GetStrikethrough();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetStrikethrough();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Font_GetEncoding_(Font* obj)
 {
-    return obj->GetEncoding();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEncoding();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Font_IsFixedWidth_(Font* obj)
 {
-    return obj->IsFixedWidth();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsFixedWidth();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Font_GetDefaultEncoding_()
 {
-    return Font::GetDefaultEncoding();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return Font::GetDefaultEncoding();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Font_SetDefaultEncoding_(int encoding)
 {
-    Font::SetDefaultEncoding(encoding);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Font::SetDefaultEncoding(encoding);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Font_GetWeight_(Font* obj)
 {
-    return obj->GetWeight();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetWeight();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
 {
-    obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Font_InitializeWithDefaultFont_(Font* obj)
 {
-    obj->InitializeWithDefaultFont();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InitializeWithDefaultFont();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Font_InitializeWithDefaultMonoFont_(Font* obj)
 {
-    obj->InitializeWithDefaultMonoFont();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InitializeWithDefaultMonoFont();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Font_InitializeFromFont_(Font* obj, Font* font)
 {
-    obj->InitializeFromFont(font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InitializeFromFont(font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Font_IsFamilyValid_(const char16_t* fontFamily)
 {
-    return Font::IsFamilyValid(fontFamily);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return Font::IsFamilyValid(fontFamily);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Font_GetGenericFamilyName_(GenericFontFamily genericFamily)
 {
-    return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Font_IsEqualTo_(Font* obj, Font* other)
 {
-    return obj->IsEqualTo(other);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsEqualTo(other);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Font_Serialize_(Font* obj)
 {
-    return AllocPInvokeReturnString(obj->Serialize());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->Serialize());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

@@ -12,61 +12,133 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API UnmanagedDataObject* UnmanagedDataObject_Create_()
 {
-    return new UnmanagedDataObject();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<UnmanagedDataObject*>([&](){
+    #endif
+        return new UnmanagedDataObject();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* UnmanagedDataObject_OpenFormatsArray_(UnmanagedDataObject* obj)
 {
-    return obj->OpenFormatsArray();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->OpenFormatsArray();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int UnmanagedDataObject_GetFormatsItemCount_(UnmanagedDataObject* obj, void* array)
 {
-    return obj->GetFormatsItemCount(array);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetFormatsItemCount(array);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* UnmanagedDataObject_GetFormatsItemAt_(UnmanagedDataObject* obj, void* array, int index)
 {
-    return AllocPInvokeReturnString(obj->GetFormatsItemAt(array, index));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetFormatsItemAt(array, index));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void UnmanagedDataObject_CloseFormatsArray_(UnmanagedDataObject* obj, void* array)
 {
-    obj->CloseFormatsArray(array);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->CloseFormatsArray(array);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* UnmanagedDataObject_GetStringData_(UnmanagedDataObject* obj, const char16_t* format)
 {
-    return AllocPInvokeReturnString(obj->GetStringData(format));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetStringData(format));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* UnmanagedDataObject_GetFileNamesData_(UnmanagedDataObject* obj, const char16_t* format)
 {
-    return AllocPInvokeReturnString(obj->GetFileNamesData(format));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetFileNamesData(format));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API UnmanagedStream* UnmanagedDataObject_GetStreamData_(UnmanagedDataObject* obj, const char16_t* format)
 {
-    return obj->GetStreamData(format);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<UnmanagedStream*>([&](){
+    #endif
+        return obj->GetStreamData(format);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void UnmanagedDataObject_SetStringData_(UnmanagedDataObject* obj, const char16_t* format, const char16_t* value)
 {
-    obj->SetStringData(format, value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetStringData(format, value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void UnmanagedDataObject_SetFileNamesData_(UnmanagedDataObject* obj, const char16_t* format, const char16_t* value)
 {
-    obj->SetFileNamesData(format, value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFileNamesData(format, value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void UnmanagedDataObject_SetStreamData_(UnmanagedDataObject* obj, const char16_t* format, void* value)
 {
-    obj->SetStreamData(format, value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetStreamData(format, value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool UnmanagedDataObject_GetDataPresent_(UnmanagedDataObject* obj, const char16_t* format)
 {
-    return obj->GetDataPresent(format);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetDataPresent(format);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

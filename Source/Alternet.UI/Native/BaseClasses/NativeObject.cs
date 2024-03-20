@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -64,12 +65,30 @@ namespace Alternet.UI.Native
             GC.SuppressFinalize(this);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static void SetIdNativeObjectPointer(IntPtr ptr, ulong value)
+        {
+            if (ptr != IntPtr.Zero)
+                NativeApi.Object_SetId(ptr, value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static ulong GetIdNativeObjectPointer(IntPtr ptr)
+        {
+            if (ptr == IntPtr.Zero)
+                return 0;
+            else
+                return NativeApi.Object_GetId(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected static void AddRefNativeObjectPointer(IntPtr value)
         {
             if (value != IntPtr.Zero)
                 NativeApi.Object_AddRef(value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected static void ReleaseNativeObjectPointer(IntPtr value)
         {
             if (value != IntPtr.Zero)
@@ -78,13 +97,17 @@ namespace Alternet.UI.Native
 
         protected void SetNativePointer(IntPtr value)
         {
-            if (value == IntPtr.Zero)
+            if (value == IntPtr.Zero && NativePointer != IntPtr.Zero)
+            {
                 InstancesByNativePointers.Remove(NativePointer);
+            }
 
             NativePointer = value;
 
             if (value != IntPtr.Zero)
+            {
                 InstancesByNativePointers.Add(NativePointer, this);
+            }
         }
 
         protected virtual void Dispose(bool disposing)
@@ -116,6 +139,12 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Object_SetId(IntPtr obj, ulong value);
+
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ulong Object_GetId(IntPtr obj);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Object_AddRef(IntPtr obj);

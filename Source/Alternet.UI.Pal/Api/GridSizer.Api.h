@@ -10,76 +10,166 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GridSizer* GridSizer_Create_()
 {
-    return new GridSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<GridSizer*>([&](){
+    #endif
+        return new GridSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int GridSizer_GetCols_(void* handle)
 {
-    return GridSizer::GetCols(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GridSizer::GetCols(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int GridSizer_GetRows_(void* handle)
 {
-    return GridSizer::GetRows(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GridSizer::GetRows(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int GridSizer_GetEffectiveColsCount_(void* handle)
 {
-    return GridSizer::GetEffectiveColsCount(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GridSizer::GetEffectiveColsCount(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int GridSizer_GetEffectiveRowsCount_(void* handle)
 {
-    return GridSizer::GetEffectiveRowsCount(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GridSizer::GetEffectiveRowsCount(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int GridSizer_GetHGap_(void* handle)
 {
-    return GridSizer::GetHGap(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GridSizer::GetHGap(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int GridSizer_GetVGap_(void* handle)
 {
-    return GridSizer::GetVGap(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GridSizer::GetVGap(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridSizer_SetCols_(void* handle, int cols)
 {
-    GridSizer::SetCols(handle, cols);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridSizer::SetCols(handle, cols);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridSizer_SetHGap_(void* handle, int gap)
 {
-    GridSizer::SetHGap(handle, gap);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridSizer::SetHGap(handle, gap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridSizer_SetRows_(void* handle, int rows)
 {
-    GridSizer::SetRows(handle, rows);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridSizer::SetRows(handle, rows);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridSizer_SetVGap_(void* handle, int gap)
 {
-    GridSizer::SetVGap(handle, gap);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridSizer::SetVGap(handle, gap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C GridSizer_CalcMin_(void* handle)
 {
-    return GridSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return GridSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void GridSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
-    GridSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GridSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridSizer_CreateGridSizer_(int cols, int vgap, int hgap)
 {
-    return GridSizer::CreateGridSizer(cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridSizer::CreateGridSizer(cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* GridSizer_CreateGridSizer2_(int rows, int cols, int vgap, int hgap)
 {
-    return GridSizer::CreateGridSizer2(rows, cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GridSizer::CreateGridSizer2(rows, cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

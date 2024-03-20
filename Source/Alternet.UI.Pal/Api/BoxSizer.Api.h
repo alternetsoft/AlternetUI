@@ -10,36 +10,78 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API BoxSizer* BoxSizer_Create_()
 {
-    return new BoxSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<BoxSizer*>([&](){
+    #endif
+        return new BoxSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* BoxSizer_CreateBoxSizer_(int orient)
 {
-    return BoxSizer::CreateBoxSizer(orient);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return BoxSizer::CreateBoxSizer(orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* BoxSizer_AddSpacer_(void* handle, int size)
 {
-    return BoxSizer::AddSpacer(handle, size);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return BoxSizer::AddSpacer(handle, size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C BoxSizer_CalcMin_(void* handle)
 {
-    return BoxSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return BoxSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int BoxSizer_GetOrientation_(void* handle)
 {
-    return BoxSizer::GetOrientation(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return BoxSizer::GetOrientation(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void BoxSizer_SetOrientation_(void* handle, int orient)
 {
-    BoxSizer::SetOrientation(handle, orient);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        BoxSizer::SetOrientation(handle, orient);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void BoxSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
-    BoxSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        BoxSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

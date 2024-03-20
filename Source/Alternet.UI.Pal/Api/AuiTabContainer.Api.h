@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiTabContainer* AuiTabContainer_Create_()
 {
-    return new AuiTabContainer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiTabContainer*>([&](){
+    #endif
+        return new AuiTabContainer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

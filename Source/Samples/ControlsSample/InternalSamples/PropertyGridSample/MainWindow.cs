@@ -190,7 +190,7 @@ namespace PropertyGridSample
             */
         }
 
-        public virtual IPropertyGridItem CreatePropertyAsColor(
+        /*public virtual IPropertyGridItem CreatePropertyAsColor(
                     string? label,
                     string? name,
                     object instance,
@@ -237,7 +237,7 @@ namespace PropertyGridSample
                     PropGrid.SetPropertyValueAsStr(item, newValue);
                 }
             }
-        }
+        }*/
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
         {
@@ -375,8 +375,8 @@ namespace PropertyGridSample
                         }
 
                         control.Visible = true;
-                        control.Refresh();
                     });
+                    parentParent.Refresh();
                 }
                 else
                 {

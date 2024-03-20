@@ -10,76 +10,166 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PageSettings* PageSettings_Create_()
 {
-    return new PageSettings();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PageSettings*>([&](){
+    #endif
+        return new PageSettings();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSettings_GetColor_(PageSettings* obj)
 {
-    return obj->GetColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetColor_(PageSettings* obj, c_bool value)
 {
-    obj->SetColor(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetColor(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSettings_GetLandscape_(PageSettings* obj)
 {
-    return obj->GetLandscape();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetLandscape();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetLandscape_(PageSettings* obj, c_bool value)
 {
-    obj->SetLandscape(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetLandscape(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Thickness_C PageSettings_GetMargins_(PageSettings* obj)
 {
-    return obj->GetMargins();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Thickness_C>([&](){
+    #endif
+        return obj->GetMargins();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetMargins_(PageSettings* obj, Thickness value)
 {
-    obj->SetMargins(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMargins(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
 {
-    return obj->GetCustomPaperSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetCustomPaperSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, SizeD value)
 {
-    obj->SetCustomPaperSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCustomPaperSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool PageSettings_GetUseCustomPaperSize_(PageSettings* obj)
 {
-    return obj->GetUseCustomPaperSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetUseCustomPaperSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetUseCustomPaperSize_(PageSettings* obj, c_bool value)
 {
-    obj->SetUseCustomPaperSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetUseCustomPaperSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PaperKind PageSettings_GetPaperSize_(PageSettings* obj)
 {
-    return obj->GetPaperSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PaperKind>([&](){
+    #endif
+        return obj->GetPaperSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetPaperSize_(PageSettings* obj, PaperKind value)
 {
-    obj->SetPaperSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPaperSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PrinterResolutionKind PageSettings_GetPrinterResolution_(PageSettings* obj)
 {
-    return obj->GetPrinterResolution();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrinterResolutionKind>([&](){
+    #endif
+        return obj->GetPrinterResolution();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetPrinterResolution_(PageSettings* obj, PrinterResolutionKind value)
 {
-    obj->SetPrinterResolution(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPrinterResolution(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

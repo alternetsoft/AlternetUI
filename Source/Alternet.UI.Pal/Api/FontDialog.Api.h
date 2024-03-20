@@ -11,96 +11,210 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API FontDialog* FontDialog_Create_()
 {
-    return new FontDialog();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<FontDialog*>([&](){
+    #endif
+        return new FontDialog();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool FontDialog_GetAllowSymbols_(FontDialog* obj)
 {
-    return obj->GetAllowSymbols();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowSymbols();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetAllowSymbols_(FontDialog* obj, c_bool value)
 {
-    obj->SetAllowSymbols(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowSymbols(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool FontDialog_GetShowHelp_(FontDialog* obj)
 {
-    return obj->GetShowHelp();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetShowHelp();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetShowHelp_(FontDialog* obj, c_bool value)
 {
-    obj->SetShowHelp(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetShowHelp(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool FontDialog_GetEnableEffects_(FontDialog* obj)
 {
-    return obj->GetEnableEffects();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetEnableEffects();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetEnableEffects_(FontDialog* obj, c_bool value)
 {
-    obj->SetEnableEffects(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetEnableEffects(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int FontDialog_GetRestrictSelection_(FontDialog* obj)
 {
-    return obj->GetRestrictSelection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetRestrictSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetRestrictSelection_(FontDialog* obj, int value)
 {
-    obj->SetRestrictSelection(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetRestrictSelection(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C FontDialog_GetColor_(FontDialog* obj)
 {
-    return obj->GetColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetColor_(FontDialog* obj, Color value)
 {
-    obj->SetColor(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetColor(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* FontDialog_GetResultFontName_(FontDialog* obj)
 {
-    return AllocPInvokeReturnString(obj->GetResultFontName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetResultFontName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double FontDialog_GetResultFontSizeInPoints_(FontDialog* obj)
 {
-    return obj->GetResultFontSizeInPoints();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetResultFontSizeInPoints();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API FontStyle FontDialog_GetResultFontStyle_(FontDialog* obj)
 {
-    return obj->GetResultFontStyle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<FontStyle>([&](){
+    #endif
+        return obj->GetResultFontStyle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* FontDialog_GetTitle_(FontDialog* obj)
 {
-    return AllocPInvokeReturnString(obj->GetTitle());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetTitle());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, const char16_t* value)
 {
-    obj->SetTitle(ToOptional(value));
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTitle(ToOptional(value));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ModalResult FontDialog_ShowModal_(FontDialog* obj, Window* owner)
 {
-    return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ModalResult>([&](){
+    #endif
+        return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetRange_(FontDialog* obj, int minRange, int maxRange)
 {
-    obj->SetRange(minRange, maxRange);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetRange(minRange, maxRange);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
 {
-    obj->SetInitialFont(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetInitialFont(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

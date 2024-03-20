@@ -10,17 +10,35 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Mouse* Mouse_Create_()
 {
-    return new Mouse();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Mouse*>([&](){
+    #endif
+        return new Mouse();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointD_C Mouse_GetPosition_(Mouse* obj)
 {
-    return obj->GetPosition();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->GetPosition();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API MouseButtonState Mouse_GetButtonState_(Mouse* obj, MouseButton button)
 {
-    return obj->GetButtonState(button);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<MouseButtonState>([&](){
+    #endif
+        return obj->GetButtonState(button);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Mouse_SetEventCallback_(Mouse::MouseEventCallbackType callback)

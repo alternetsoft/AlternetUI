@@ -1087,13 +1087,15 @@ namespace Alternet.UI
 
         private void NativeControl_MouseEnter()
         {
-            var currentTarget = InputManager.GetMouseTargetControl(Control);
+            var myControl = Control;
+            var currentTarget = InputManager.GetMouseTargetControl(ref myControl);
             currentTarget?.RaiseMouseEnter();
         }
 
         private void NativeControl_MouseLeave()
         {
-            var currentTarget = InputManager.GetMouseTargetControl(Control);
+            var myControl = Control;
+            var currentTarget = InputManager.GetMouseTargetControl(ref myControl);
             currentTarget?.RaiseMouseLeave();
         }
 

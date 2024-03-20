@@ -10,16 +10,34 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Validator* Validator_Create_()
 {
-    return new Validator();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Validator*>([&](){
+    #endif
+        return new Validator();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Validator_SuppressBellOnError_(c_bool suppress)
 {
-    Validator::SuppressBellOnError(suppress);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Validator::SuppressBellOnError(suppress);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Validator_IsSilent_()
 {
-    return Validator::IsSilent();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return Validator::IsSilent();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

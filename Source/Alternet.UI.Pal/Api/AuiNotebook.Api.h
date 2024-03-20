@@ -12,172 +12,376 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiNotebook* AuiNotebook_Create_()
 {
-    return new AuiNotebook();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiNotebook*>([&](){
+    #endif
+        return new AuiNotebook();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiNotebook_GetEventSelection_(AuiNotebook* obj)
 {
-    return obj->GetEventSelection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEventSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiNotebook_GetEventOldSelection_(AuiNotebook* obj)
 {
-    return obj->GetEventOldSelection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEventOldSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_GetCreateStyle_(AuiNotebook* obj)
 {
-    return obj->GetCreateStyle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetCreateStyle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetCreateStyle_(AuiNotebook* obj, int64_t value)
 {
-    obj->SetCreateStyle(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCreateStyle(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiNotebook_CreateEx_(int64_t styles)
 {
-    return AuiNotebook::CreateEx(styles);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return AuiNotebook::CreateEx(styles);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetArtProvider_(AuiNotebook* obj, void* art)
 {
-    obj->SetArtProvider(art);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetArtProvider(art);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiNotebook_GetArtProvider_(AuiNotebook* obj)
 {
-    return obj->GetArtProvider();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetArtProvider();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetUniformBitmapSize_(AuiNotebook* obj, int width, int height)
 {
-    obj->SetUniformBitmapSize(width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetUniformBitmapSize(width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetTabCtrlHeight_(AuiNotebook* obj, int height)
 {
-    obj->SetTabCtrlHeight(height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTabCtrlHeight(height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_AddPage_(AuiNotebook* obj, void* page, const char16_t* caption, c_bool select, ImageSet* bitmap)
 {
-    return obj->AddPage(page, caption, select, bitmap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->AddPage(page, caption, select, bitmap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_InsertPage_(AuiNotebook* obj, uint64_t pageIdx, void* page, const char16_t* caption, c_bool select, ImageSet* bitmap)
 {
-    return obj->InsertPage(pageIdx, page, caption, select, bitmap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->InsertPage(pageIdx, page, caption, select, bitmap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_DeletePage_(AuiNotebook* obj, uint64_t page)
 {
-    return obj->DeletePage(page);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DeletePage(page);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_RemovePage_(AuiNotebook* obj, uint64_t page)
 {
-    return obj->RemovePage(page);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->RemovePage(page);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API uint64_t AuiNotebook_GetPageCount_(AuiNotebook* obj)
 {
-    return obj->GetPageCount();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<uint64_t>([&](){
+    #endif
+        return obj->GetPageCount();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiNotebook_GetPage_(AuiNotebook* obj, uint64_t pageIdx)
 {
-    return obj->GetPage(pageIdx);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetPage(pageIdx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiNotebook_FindPage_(AuiNotebook* obj, void* page)
 {
-    return obj->FindPage(page);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->FindPage(page);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_SetPageText_(AuiNotebook* obj, uint64_t page, const char16_t* text)
 {
-    return obj->SetPageText(page, text);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetPageText(page, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* AuiNotebook_GetPageText_(AuiNotebook* obj, uint64_t pageIdx)
 {
-    return AllocPInvokeReturnString(obj->GetPageText(pageIdx));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetPageText(pageIdx));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_SetPageToolTip_(AuiNotebook* obj, uint64_t page, const char16_t* text)
 {
-    return obj->SetPageToolTip(page, text);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetPageToolTip(page, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* AuiNotebook_GetPageToolTip_(AuiNotebook* obj, uint64_t pageIdx)
 {
-    return AllocPInvokeReturnString(obj->GetPageToolTip(pageIdx));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetPageToolTip(pageIdx));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_SetPageBitmap_(AuiNotebook* obj, uint64_t page, ImageSet* bitmap)
 {
-    return obj->SetPageBitmap(page, bitmap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetPageBitmap(page, bitmap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_SetSelection_(AuiNotebook* obj, uint64_t newPage)
 {
-    return obj->SetSelection(newPage);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->SetSelection(newPage);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_GetSelection_(AuiNotebook* obj)
 {
-    return obj->GetSelection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetSelection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_ChangeSelection_(AuiNotebook* obj, uint64_t newPage)
 {
-    return obj->ChangeSelection(newPage);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->ChangeSelection(newPage);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_AdvanceSelection_(AuiNotebook* obj, c_bool forward)
 {
-    obj->AdvanceSelection(forward);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AdvanceSelection(forward);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetMeasuringFont_(AuiNotebook* obj, Font* font)
 {
-    obj->SetMeasuringFont(font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMeasuringFont(font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetNormalFont_(AuiNotebook* obj, Font* font)
 {
-    obj->SetNormalFont(font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetNormalFont(font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetSelectedFont_(AuiNotebook* obj, Font* font)
 {
-    obj->SetSelectedFont(font);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSelectedFont(font);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_Split_(AuiNotebook* obj, uint64_t page, int direction)
 {
-    obj->Split(page, direction);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Split(page, direction);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiNotebook_GetTabCtrlHeight_(AuiNotebook* obj)
 {
-    return obj->GetTabCtrlHeight();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetTabCtrlHeight();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiNotebook_GetHeightForPageHeight_(AuiNotebook* obj, int pageHeight)
 {
-    return obj->GetHeightForPageHeight(pageHeight);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetHeightForPageHeight(pageHeight);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_ShowWindowMenu_(AuiNotebook* obj)
 {
-    return obj->ShowWindowMenu();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->ShowWindowMenu();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_DeleteAllPages_(AuiNotebook* obj)
 {
-    return obj->DeleteAllPages();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DeleteAllPages();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiNotebook_SetEventCallback_(AuiNotebook::AuiNotebookEventCallbackType callback)

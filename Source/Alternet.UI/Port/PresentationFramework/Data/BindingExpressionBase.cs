@@ -1695,7 +1695,9 @@ namespace Alternet.UI
         // discover the binding group (if any) that this root binding should join.
         internal BindingGroup FindBindingGroup(bool isReflective, DependencyObject contextElement)
         {
-            Debug.Assert(RootBindingExpression == this, "Only call this with a root binding");
+            MarkAsNonGrouped();
+            return null;
+            /*Debug.Assert(RootBindingExpression == this, "Only call this with a root binding");
 
             // if we've already joined (or failed to join) a group, just return the result
             if ((WeakReference<BindingGroup>)GetValue(Feature.BindingGroup, null) != null)
@@ -1709,8 +1711,6 @@ namespace Alternet.UI
             // a null group name means "don't join any group".
             if (groupName == null)
             {
-                MarkAsNonGrouped();
-                return null;
             }
 
             // an empty group name means join by DataContext
@@ -1792,7 +1792,7 @@ namespace Alternet.UI
 
                 MarkAsNonGrouped();
                 return null;
-            }
+            }*/
         }
 
         // add a binding to the given binding group

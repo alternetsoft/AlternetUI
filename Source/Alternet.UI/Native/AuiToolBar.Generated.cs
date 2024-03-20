@@ -487,11 +487,13 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.AuiToolBarEventCallbackType((obj, e, parameter) =>
-                {
-                    var w = NativeObject.GetFromNativePointer<AuiToolBar>(obj, p => new AuiToolBar(p));
-                    if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e, parameter);
-                }
+                    UI.Application.HandleThreadExceptions(() =>
+                    {
+                        var w = NativeObject.GetFromNativePointer<AuiToolBar>(obj, p => new AuiToolBar(p));
+                        if (w == null) return IntPtr.Zero;
+                        return w.OnEvent(e, parameter);
+                    }
+                    )
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.AuiToolBar_SetEventCallback_(sink);

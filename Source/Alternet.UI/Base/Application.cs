@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
@@ -77,6 +78,15 @@ namespace Alternet.UI
         /// </summary>
         public static bool LogUnhandledThreadException = true;
 
+        /// <summary>
+        /// Gets or sets whether calls to and from native code are wrapped in "try catch".
+        /// </summary>
+        /// <remarks>
+        /// Under Windows default value is <c>true</c> and such wrapping is not needed.
+        /// Under other systems default value is <c>false</c> and all calls are wrapped.
+        /// </remarks>
+        public static bool FastThreadExceptions;
+
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
@@ -86,6 +96,7 @@ namespace Alternet.UI
         private static bool logFileIsEnabled;
         private static Application? current;
         private static IconSet? icon;
+        private static bool inOnThreadException;
         private static int logUpdateCount;
 
         private static UnhandledExceptionMode unhandledExceptionMode
@@ -100,7 +111,6 @@ namespace Alternet.UI
         private volatile bool isDisposed;
         private Native.Application nativeApplication;
         private VisualTheme visualTheme = StockVisualThemes.Native;
-        private bool inOnThreadException;
         private Window? window;
 
         static Application()
@@ -114,6 +124,8 @@ namespace Alternet.UI
 
             if (IsWindowsOS)
             {
+                FastThreadExceptions = true;
+
                 BackendOS = OperatingSystems.Windows;
                 goto exit;
             }
@@ -222,7 +234,7 @@ namespace Alternet.UI
         /// is used for unhandled Windows Forms thread
         /// exceptions by setting <see cref="SetUnhandledExceptionMode"/>.
         /// </remarks>
-        public event ThreadExceptionEventHandler? ThreadException;
+        public static event ThreadExceptionEventHandler? ThreadException;
 
         /// <summary>
         /// Occurs when the application finishes processing events and is
@@ -962,6 +974,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Informs all message pumps that they must terminate, and then closes
+        /// all application windows after the messages have been processed.
+        /// </summary>
+        public static void Exit()
+        {
+            current?.nativeApplication.Exit();
+        }
+
+        /// <summary>
+        /// Calls <see cref="Exit"/> and after that terminates this process and returns an
+        /// exit code to the operating system.
+        /// </summary>
+        /// <param name="exitCode">
+        /// The exit code to return to the operating system. Use 0 (zero) to indicate that
+        /// the process completed successfully.
+        /// </param>
+        public static void ExitAndTerminate(int exitCode = 0)
+        {
+            Exit();
+            Environment.Exit(exitCode);
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event to add or replace log message.
         /// </summary>
         /// <param name="obj">Message text.</param>
@@ -1038,29 +1073,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Informs all message pumps that they must terminate, and then closes
-        /// all application windows after the messages have been processed.
-        /// </summary>
-        public virtual void Exit()
-        {
-            nativeApplication.Exit();
-        }
-
-        /// <summary>
-        /// Calls <see cref="Exit"/> and after that terminates this process and returns an
-        /// exit code to the operating system.
-        /// </summary>
-        /// <param name="exitCode">
-        /// The exit code to return to the operating system. Use 0 (zero) to indicate that
-        /// the process completed successfully.
-        /// </param>
-        public virtual void ExitAndTerminate(int exitCode = 0)
-        {
-            Exit();
-            Environment.Exit(exitCode);
-        }
-
-        /// <summary>
         /// Starts an application UI event loop and makes the specified window
         /// visible.
         /// Begins running a UI event processing loop on the current thread.
@@ -1132,32 +1144,25 @@ namespace Alternet.UI
         }
 
         [return: MaybeNull]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static T HandleThreadExceptions<T>(Func<T> func)
         {
-            if (current == null)
+            if (FastThreadExceptions)
                 return func();
 
-            return current.HandleThreadExceptionsCore(func);
+            return HandleThreadExceptionsCore(func);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void HandleThreadExceptions(Action action)
         {
-            if (current == null)
+            if (FastThreadExceptions)
                 action();
             else
-                current.HandleThreadExceptionsCore(action);
+                HandleThreadExceptionsCore(action);
         }
 
-        /// <summary>
-        /// Sets the 'top' window.
-        /// </summary>
-        /// <param name="window">New 'top' window.</param>
-        internal virtual void SetTopWindow(Window window)
-        {
-            nativeApplication.SetTopWindow(window.WxWidget);
-        }
-
-        internal void OnThreadException(Exception exception)
+        internal static void OnThreadException(Exception exception)
         {
             if (inOnThreadException)
                 return;
@@ -1167,7 +1172,7 @@ namespace Alternet.UI
             {
                 if(LogUnhandledThreadException)
                 {
-                    LogUtils.LogException(exception);
+                    LogUtils.LogException(exception, "Application.OnThreadException");
                 }
 
                 if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
@@ -1204,6 +1209,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets the 'top' window.
+        /// </summary>
+        /// <param name="window">New 'top' window.</param>
+        internal virtual void SetTopWindow(Window window)
+        {
+            nativeApplication.SetTopWindow(window.WxWidget);
+        }
+
         internal void WakeUpIdle()
         {
             nativeApplication.WakeUpIdle();
@@ -1230,7 +1244,7 @@ namespace Alternet.UI
         /// Gets current unhandled exception mode.
         /// </summary>
         /// <returns></returns>
-        protected virtual UnhandledExceptionMode GetUnhandledExceptionMode()
+        protected static UnhandledExceptionMode GetUnhandledExceptionMode()
         {
             if (Application.IsDebuggerAttached)
                 return unhandledExceptionModeDebug;
@@ -1321,7 +1335,7 @@ namespace Alternet.UI
         }
 
         [return: MaybeNull]
-        private T HandleThreadExceptionsCore<T>(Func<T> func)
+        private static T HandleThreadExceptionsCore<T>(Func<T> func)
         {
             if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
                 return func();
@@ -1337,7 +1351,7 @@ namespace Alternet.UI
             }
         }
 
-        private void HandleThreadExceptionsCore(Action action)
+        private static void HandleThreadExceptionsCore(Action action)
         {
             if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
             {

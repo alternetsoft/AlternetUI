@@ -10,67 +10,145 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API CheckBox* CheckBox_Create_()
 {
-    return new CheckBox();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<CheckBox*>([&](){
+    #endif
+        return new CheckBox();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* CheckBox_GetText_(CheckBox* obj)
 {
-    return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetText_(CheckBox* obj, const char16_t* value)
 {
-    obj->SetText(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetText(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool CheckBox_GetIsChecked_(CheckBox* obj)
 {
-    return obj->GetIsChecked();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsChecked();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetIsChecked_(CheckBox* obj, c_bool value)
 {
-    obj->SetIsChecked(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsChecked(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int CheckBox_GetCheckState_(CheckBox* obj)
 {
-    return obj->GetCheckState();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetCheckState();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetCheckState_(CheckBox* obj, int value)
 {
-    obj->SetCheckState(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCheckState(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool CheckBox_GetThreeState_(CheckBox* obj)
 {
-    return obj->GetThreeState();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetThreeState();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetThreeState_(CheckBox* obj, c_bool value)
 {
-    obj->SetThreeState(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetThreeState(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool CheckBox_GetAlignRight_(CheckBox* obj)
 {
-    return obj->GetAlignRight();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAlignRight();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetAlignRight_(CheckBox* obj, c_bool value)
 {
-    obj->SetAlignRight(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAlignRight(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool CheckBox_GetAllowAllStatesForUser_(CheckBox* obj)
 {
-    return obj->GetAllowAllStatesForUser();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowAllStatesForUser();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetAllowAllStatesForUser_(CheckBox* obj, c_bool value)
 {
-    obj->SetAllowAllStatesForUser(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowAllStatesForUser(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void CheckBox_SetEventCallback_(CheckBox::CheckBoxEventCallbackType callback)

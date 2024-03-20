@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Brush* Brush_Create_()
 {
-    return new Brush();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Brush*>([&](){
+    #endif
+        return new Brush();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

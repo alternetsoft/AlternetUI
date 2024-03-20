@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class PanelDeveloperTools : PanelAuiManager
+    internal class PanelDevTools : PanelAuiManager
     {
         private readonly IAuiNotebookPage? mainLogPage;
 
@@ -24,7 +25,7 @@ namespace Alternet.UI
         private IAuiNotebookPage? controlsPage;
         private bool insideSetProps;
 
-        public PanelDeveloperTools()
+        public PanelDevTools()
             : base()
         {
             DefaultRightPaneBestSize = (350, 200);
@@ -50,7 +51,6 @@ namespace Alternet.UI
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
             InitActions();
-            DebugUtils.HookExceptionEvents();
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
         }
 
@@ -225,23 +225,9 @@ namespace Alternet.UI
             AddLogAction("Log useful defines", LogUsefulDefines);
             AddLogAction("Log OS information", LogOSInformation);
             AddLogAction("Log system colors", ColorUtils.LogSystemColors);
-            AddLogAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
-            AddLogAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
-
-            AddAction("Show ThreadExceptionWindow", () =>
-            {
-                try
-                {
-                    throw new ApplicationException("This is exception message");
-                }
-                catch (Exception e)
-                {
-                    ThreadExceptionWindow.Show(e, "This is an additional info", true);
-                }
-            });
 
             AddLogAction("Log Embedded Resources in Alternet.UI", () =>
             {
@@ -277,6 +263,34 @@ namespace Alternet.UI
             {
                 NativeControlPainter.Default.LogPartSize(this);
             });
+
+            AddAction("Exception: Throw C++", () =>
+            {
+                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                WebBrowser.DoCommandGlobal("CppThrow");
+            });
+
+            AddAction("Exception: Throw C#", () =>
+            {
+                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                throw new FileNotFoundException("Test message", "MyFileName.dat");
+            });
+
+            AddAction("Exception: Show ThreadExceptionWindow", () =>
+            {
+                try
+                {
+                    throw new ApplicationException("This is exception message");
+                }
+                catch (Exception e)
+                {
+                    ThreadExceptionWindow.Show(e, "This is an additional info", true);
+                }
+            });
+
+            AddAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
         }
 
         private void LogControlInfo()

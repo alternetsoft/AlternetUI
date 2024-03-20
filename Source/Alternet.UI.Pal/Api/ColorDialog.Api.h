@@ -11,31 +11,67 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ColorDialog* ColorDialog_Create_()
 {
-    return new ColorDialog();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ColorDialog*>([&](){
+    #endif
+        return new ColorDialog();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C ColorDialog_GetColor_(ColorDialog* obj)
 {
-    return obj->GetColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ColorDialog_SetColor_(ColorDialog* obj, Color value)
 {
-    obj->SetColor(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetColor(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* ColorDialog_GetTitle_(ColorDialog* obj)
 {
-    return AllocPInvokeReturnString(obj->GetTitle());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetTitle());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ColorDialog_SetTitle_(ColorDialog* obj, const char16_t* value)
 {
-    obj->SetTitle(ToOptional(value));
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTitle(ToOptional(value));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API ModalResult ColorDialog_ShowModal_(ColorDialog* obj, Window* owner)
 {
-    return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ModalResult>([&](){
+    #endif
+        return obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

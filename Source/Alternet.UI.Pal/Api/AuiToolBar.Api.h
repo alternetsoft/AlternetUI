@@ -11,372 +11,816 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiToolBar* AuiToolBar_Create_()
 {
-    return new AuiToolBar();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiToolBar*>([&](){
+    #endif
+        return new AuiToolBar();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t AuiToolBar_GetCreateStyle_(AuiToolBar* obj)
 {
-    return obj->GetCreateStyle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetCreateStyle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetCreateStyle_(AuiToolBar* obj, int64_t value)
 {
-    obj->SetCreateStyle(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCreateStyle(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetEventToolId_(AuiToolBar* obj)
 {
-    return obj->GetEventToolId();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetEventToolId();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetEventIsDropDownClicked_(AuiToolBar* obj)
 {
-    return obj->GetEventIsDropDownClicked();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetEventIsDropDownClicked();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C AuiToolBar_GetEventClickPoint_(AuiToolBar* obj)
 {
-    return obj->GetEventClickPoint();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->GetEventClickPoint();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C AuiToolBar_GetEventItemRect_(AuiToolBar* obj)
 {
-    return obj->GetEventItemRect();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return obj->GetEventItemRect();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_DoOnCaptureLost_(AuiToolBar* obj)
 {
-    obj->DoOnCaptureLost();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DoOnCaptureLost();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_DoOnLeftUp_(AuiToolBar* obj, int x, int y)
 {
-    obj->DoOnLeftUp(x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DoOnLeftUp(x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_DoOnLeftDown_(AuiToolBar* obj, int x, int y)
 {
-    obj->DoOnLeftDown(x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DoOnLeftDown(x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_CreateEx_(int64_t styles)
 {
-    return AuiToolBar::CreateEx(styles);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return AuiToolBar::CreateEx(styles);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetArtProvider_(AuiToolBar* obj, void* art)
 {
-    obj->SetArtProvider(art);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetArtProvider(art);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_GetArtProvider_(AuiToolBar* obj)
 {
-    return obj->GetArtProvider();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetArtProvider();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolKind_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolKind(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolKind(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddTool_(AuiToolBar* obj, int toolId, const char16_t* label, ImageSet* bitmapBundle, const char16_t* shortHelpString, int itemKind)
 {
-    return obj->AddTool(toolId, label, bitmapBundle, shortHelpString, itemKind);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddTool(toolId, label, bitmapBundle, shortHelpString, itemKind);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddTool2_(AuiToolBar* obj, int toolId, const char16_t* label, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, int itemKind, const char16_t* shortHelpString, const char16_t* longHelpString, void* clientData)
 {
-    return obj->AddTool2(toolId, label, bitmapBundle, disabledBitmapBundle, itemKind, shortHelpString, longHelpString, clientData);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddTool2(toolId, label, bitmapBundle, disabledBitmapBundle, itemKind, shortHelpString, longHelpString, clientData);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddTool3_(AuiToolBar* obj, int toolId, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, c_bool toggle, void* clientData, const char16_t* shortHelpString, const char16_t* longHelpString)
 {
-    return obj->AddTool3(toolId, bitmapBundle, disabledBitmapBundle, toggle, clientData, shortHelpString, longHelpString);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddTool3(toolId, bitmapBundle, disabledBitmapBundle, toggle, clientData, shortHelpString, longHelpString);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddLabel_(AuiToolBar* obj, int toolId, const char16_t* label, int width)
 {
-    return obj->AddLabel(toolId, label, width);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddLabel(toolId, label, width);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddControl_(AuiToolBar* obj, int toolId, void* control, const char16_t* label)
 {
-    return obj->AddControl(toolId, control, label);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddControl(toolId, control, label);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddSeparator_(AuiToolBar* obj, int toolId)
 {
-    return obj->AddSeparator(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddSeparator(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddSpacer_(AuiToolBar* obj, int toolId, int pixels)
 {
-    return obj->AddSpacer(toolId, pixels);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddSpacer(toolId, pixels);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddStretchSpacer_(AuiToolBar* obj, int toolId, int proportion)
 {
-    return obj->AddStretchSpacer(toolId, proportion);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->AddStretchSpacer(toolId, proportion);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_Realize_(AuiToolBar* obj)
 {
-    return obj->Realize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Realize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_FindControl_(AuiToolBar* obj, int windowId)
 {
-    return obj->FindControl(windowId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->FindControl(windowId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_FindToolByPosition_(AuiToolBar* obj, int x, int y)
 {
-    return obj->FindToolByPosition(x, y);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->FindToolByPosition(x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_FindToolByIndex_(AuiToolBar* obj, int idx)
 {
-    return obj->FindToolByIndex(idx);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->FindToolByIndex(idx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* AuiToolBar_FindTool_(AuiToolBar* obj, int toolId)
 {
-    return obj->FindTool(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->FindTool(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_Clear_(AuiToolBar* obj)
 {
-    obj->Clear();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Clear();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_DestroyTool_(AuiToolBar* obj, int toolId)
 {
-    return obj->DestroyTool(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DestroyTool(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_DestroyToolByIndex_(AuiToolBar* obj, int idx)
 {
-    return obj->DestroyToolByIndex(idx);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DestroyToolByIndex(idx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_DeleteTool_(AuiToolBar* obj, int toolId)
 {
-    return obj->DeleteTool(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DeleteTool(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_DeleteByIndex_(AuiToolBar* obj, int toolId)
 {
-    return obj->DeleteByIndex(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->DeleteByIndex(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolIndex_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolIndex(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolIndex(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolFits_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolFits(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolFits(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectD_C AuiToolBar_GetToolRect_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolRect(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectD_C>([&](){
+    #endif
+        return obj->GetToolRect(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolFitsByIndex_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolFitsByIndex(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolFitsByIndex(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolBarFits_(AuiToolBar* obj)
 {
-    return obj->GetToolBarFits();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolBarFits();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolBitmapSizeInPixels_(AuiToolBar* obj, SizeI size)
 {
-    obj->SetToolBitmapSizeInPixels(size);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolBitmapSizeInPixels(size);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C AuiToolBar_GetToolBitmapSizeInPixels_(AuiToolBar* obj)
 {
-    return obj->GetToolBitmapSizeInPixels();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return obj->GetToolBitmapSizeInPixels();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetOverflowVisible_(AuiToolBar* obj)
 {
-    return obj->GetOverflowVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetOverflowVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetOverflowVisible_(AuiToolBar* obj, c_bool visible)
 {
-    obj->SetOverflowVisible(visible);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetOverflowVisible(visible);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetGripperVisible_(AuiToolBar* obj)
 {
-    return obj->GetGripperVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetGripperVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetGripperVisible_(AuiToolBar* obj, c_bool visible)
 {
-    obj->SetGripperVisible(visible);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetGripperVisible(visible);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_ToggleTool_(AuiToolBar* obj, int toolId, c_bool state)
 {
-    obj->ToggleTool(toolId, state);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ToggleTool(toolId, state);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolToggled_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolToggled(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolToggled(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetMargins_(AuiToolBar* obj, int left, int right, int top, int bottom)
 {
-    obj->SetMargins(left, right, top, bottom);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMargins(left, right, top, bottom);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_EnableTool_(AuiToolBar* obj, int toolId, c_bool state)
 {
-    obj->EnableTool(toolId, state);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EnableTool(toolId, state);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolEnabled_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolEnabled(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolEnabled(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolDropDown_(AuiToolBar* obj, int toolId, c_bool dropdown)
 {
-    obj->SetToolDropDown(toolId, dropdown);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolDropDown(toolId, dropdown);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolDropDown_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolDropDown(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolDropDown(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolBorderPadding_(AuiToolBar* obj, int padding)
 {
-    obj->SetToolBorderPadding(padding);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolBorderPadding(padding);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolBorderPadding_(AuiToolBar* obj)
 {
-    return obj->GetToolBorderPadding();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolBorderPadding();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolTextOrientation_(AuiToolBar* obj, int orientation)
 {
-    obj->SetToolTextOrientation(orientation);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolTextOrientation(orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolTextOrientation_(AuiToolBar* obj)
 {
-    return obj->GetToolTextOrientation();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolTextOrientation();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolPacking_(AuiToolBar* obj, int packing)
 {
-    obj->SetToolPacking(packing);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolPacking(packing);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolPacking_(AuiToolBar* obj)
 {
-    return obj->GetToolPacking();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolPacking();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolProportion_(AuiToolBar* obj, int toolId, int proportion)
 {
-    obj->SetToolProportion(toolId, proportion);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolProportion(toolId, proportion);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolProportion_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolProportion(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolProportion(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolSeparation_(AuiToolBar* obj, int separation)
 {
-    obj->SetToolSeparation(separation);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolSeparation(separation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetToolSeparation_(AuiToolBar* obj)
 {
-    return obj->GetToolSeparation();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetToolSeparation();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolSticky_(AuiToolBar* obj, int toolId, c_bool sticky)
 {
-    obj->SetToolSticky(toolId, sticky);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolSticky(toolId, sticky);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetToolSticky_(AuiToolBar* obj, int toolId)
 {
-    return obj->GetToolSticky(toolId);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetToolSticky(toolId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* AuiToolBar_GetToolLabel_(AuiToolBar* obj, int toolId)
 {
-    return AllocPInvokeReturnString(obj->GetToolLabel(toolId));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetToolLabel(toolId));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolLabel_(AuiToolBar* obj, int toolId, const char16_t* label)
 {
-    obj->SetToolLabel(toolId, label);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolLabel(toolId, label);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolBitmap_(AuiToolBar* obj, int toolId, ImageSet* bitmapBundle)
 {
-    obj->SetToolBitmap(toolId, bitmapBundle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolBitmap(toolId, bitmapBundle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* AuiToolBar_GetToolShortHelp_(AuiToolBar* obj, int toolId)
 {
-    return AllocPInvokeReturnString(obj->GetToolShortHelp(toolId));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetToolShortHelp(toolId));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolShortHelp_(AuiToolBar* obj, int toolId, const char16_t* helpString)
 {
-    obj->SetToolShortHelp(toolId, helpString);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolShortHelp(toolId, helpString);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* AuiToolBar_GetToolLongHelp_(AuiToolBar* obj, int toolId)
 {
-    return AllocPInvokeReturnString(obj->GetToolLongHelp(toolId));
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetToolLongHelp(toolId));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolLongHelp_(AuiToolBar* obj, int toolId, const char16_t* helpString)
 {
-    obj->SetToolLongHelp(toolId, helpString);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolLongHelp(toolId, helpString);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API uint64_t AuiToolBar_GetToolCount_(AuiToolBar* obj)
 {
-    return obj->GetToolCount();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<uint64_t>([&](){
+    #endif
+        return obj->GetToolCount();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetToolMinSize_(AuiToolBar* obj, int tool_id, int width, int height)
 {
-    obj->SetToolMinSize(tool_id, width, height);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolMinSize(tool_id, width, height);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C AuiToolBar_GetToolMinSize_(AuiToolBar* obj, int tool_id)
 {
-    return obj->GetToolMinSize(tool_id);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return obj->GetToolMinSize(tool_id);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetAlignment_(AuiToolBar* obj, int tool_id, int l)
 {
-    obj->SetAlignment(tool_id, l);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAlignment(tool_id, l);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int AuiToolBar_GetAlignment_(AuiToolBar* obj, int tool_id)
 {
-    return obj->GetAlignment(tool_id);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetAlignment(tool_id);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void AuiToolBar_SetEventCallback_(AuiToolBar::AuiToolBarEventCallbackType callback)

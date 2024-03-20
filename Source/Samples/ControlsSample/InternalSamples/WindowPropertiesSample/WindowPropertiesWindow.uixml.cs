@@ -16,7 +16,7 @@ namespace WindowPropertiesSample
             Icon = Application.DefaultIcon;
 
             InitializeComponent();
-            pageControl.TabsVisible = false;
+            pageControl.TabsVisible = true;
 
             stateComboBox.AddEnumValues<WindowState>();
             

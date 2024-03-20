@@ -251,11 +251,13 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.ButtonEventCallbackType((obj, e, parameter) =>
-                {
-                    var w = NativeObject.GetFromNativePointer<Button>(obj, p => new Button(p));
-                    if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e, parameter);
-                }
+                    UI.Application.HandleThreadExceptions(() =>
+                    {
+                        var w = NativeObject.GetFromNativePointer<Button>(obj, p => new Button(p));
+                        if (w == null) return IntPtr.Zero;
+                        return w.OnEvent(e, parameter);
+                    }
+                    )
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.Button_SetEventCallback_(sink);

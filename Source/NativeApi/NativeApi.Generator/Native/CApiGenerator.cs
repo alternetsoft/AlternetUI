@@ -12,7 +12,7 @@ namespace ApiGenerator.Native
 {
     internal static class CApiGenerator
     {
-        internal static bool UseMarshalExceptionsScope = false;
+        internal static bool UseMarshalExceptionsScope = true;
 
         public static string Generate(ApiType apiType)
         {
@@ -122,12 +122,13 @@ namespace ApiGenerator.Native
                 if (!UseMarshalExceptionsScope)
                     return;
 
+                writer.WriteLine("#if !defined(__WXMSW__)");
                 if (returnTypeName != "void")
                     writer.Write("return ");
 
                 writer.Write($"MarshalExceptions<{returnTypeName}>([&]()");
-                writer.Indent++;
                 writer.WriteLine("{");
+                writer.WriteLine("#endif");
                 writer.Indent++;
             }
 
@@ -137,8 +138,9 @@ namespace ApiGenerator.Native
                     return;
 
                 writer.Indent--;
+                writer.WriteLine("#if !defined(__WXMSW__)");
                 writer.WriteLine("});");
-                writer.Indent--;
+                writer.WriteLine("#endif");
             }
         }
 

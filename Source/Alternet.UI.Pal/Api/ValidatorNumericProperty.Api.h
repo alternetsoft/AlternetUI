@@ -10,16 +10,34 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorNumericProperty* ValidatorNumericProperty_Create_()
 {
-    return new ValidatorNumericProperty();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ValidatorNumericProperty*>([&](){
+    #endif
+        return new ValidatorNumericProperty();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void ValidatorNumericProperty_DeleteValidatorNumericProperty_(void* handle)
 {
-    ValidatorNumericProperty::DeleteValidatorNumericProperty(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        ValidatorNumericProperty::DeleteValidatorNumericProperty(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* ValidatorNumericProperty_CreateValidatorNumericProperty_(int numericType, int valBase)
 {
-    return ValidatorNumericProperty::CreateValidatorNumericProperty(numericType, valBase);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return ValidatorNumericProperty::CreateValidatorNumericProperty(numericType, valBase);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

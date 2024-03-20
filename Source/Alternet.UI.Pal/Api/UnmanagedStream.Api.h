@@ -10,36 +10,78 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API UnmanagedStream* UnmanagedStream_Create_()
 {
-    return new UnmanagedStream();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<UnmanagedStream*>([&](){
+    #endif
+        return new UnmanagedStream();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t UnmanagedStream_GetLength_(UnmanagedStream* obj)
 {
-    return obj->GetLength();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetLength();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool UnmanagedStream_GetIsOK_(UnmanagedStream* obj)
 {
-    return obj->GetIsOK();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsOK();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool UnmanagedStream_GetIsSeekable_(UnmanagedStream* obj)
 {
-    return obj->GetIsSeekable();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsSeekable();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int64_t UnmanagedStream_GetPosition_(UnmanagedStream* obj)
 {
-    return obj->GetPosition();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetPosition();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void UnmanagedStream_SetPosition_(UnmanagedStream* obj, int64_t value)
 {
-    obj->SetPosition(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPosition(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* UnmanagedStream_Read_(UnmanagedStream* obj, void* buffer, int bufferCount, void* length)
 {
-    return obj->Read(buffer, bufferCount, length);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->Read(buffer, bufferCount, length);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

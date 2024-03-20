@@ -12,31 +12,67 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PrintPreviewDialog* PrintPreviewDialog_Create_()
 {
-    return new PrintPreviewDialog();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrintPreviewDialog*>([&](){
+    #endif
+        return new PrintPreviewDialog();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* PrintPreviewDialog_GetTitle_(PrintPreviewDialog* obj)
 {
-    return AllocPInvokeReturnString(obj->GetTitle());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetTitle());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintPreviewDialog_SetTitle_(PrintPreviewDialog* obj, const char16_t* value)
 {
-    obj->SetTitle(ToOptional(value));
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTitle(ToOptional(value));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PrintDocument* PrintPreviewDialog_GetDocument_(PrintPreviewDialog* obj)
 {
-    return obj->GetDocument();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PrintDocument*>([&](){
+    #endif
+        return obj->GetDocument();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintPreviewDialog_SetDocument_(PrintPreviewDialog* obj, PrintDocument* value)
 {
-    obj->SetDocument(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDocument(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void PrintPreviewDialog_ShowModal_(PrintPreviewDialog* obj, Window* owner)
 {
-    obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ShowModal(owner);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

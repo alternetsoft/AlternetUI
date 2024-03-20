@@ -24,7 +24,7 @@ namespace Alternet.UI
             if (hookedExceptionEvents)
                 return;
             var a = Application.Current;
-            a.ThreadException += Application_ThreadException;
+            Application.ThreadException += Application_ThreadException;
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException +=
                 CurrentDomain_UnhandledException;
@@ -55,14 +55,14 @@ namespace Alternet.UI
             }
         }
 
-        private static void HandleException(Exception e)
+        private static void HandleException(Exception e, string info)
         {
-            LogUtils.LogException(e);
+            LogUtils.LogException(e, info);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            HandleException(e.Exception);
+            HandleException(e.Exception, "Application.ThreadException");
         }
 
         private static void CurrentDomain_UnhandledException(
@@ -74,7 +74,7 @@ namespace Alternet.UI
                 insideUnhandledException = true;
                 try
                 {
-                    HandleException((e.ExceptionObject as Exception)!);
+                    HandleException((e.ExceptionObject as Exception)!, "CurrentDomain.UnhandledException");
                 }
                 finally
                 {

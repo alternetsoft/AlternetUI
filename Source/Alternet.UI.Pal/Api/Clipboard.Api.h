@@ -11,16 +11,34 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Clipboard* Clipboard_Create_()
 {
-    return new Clipboard();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Clipboard*>([&](){
+    #endif
+        return new Clipboard();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API UnmanagedDataObject* Clipboard_GetDataObject_(Clipboard* obj)
 {
-    return obj->GetDataObject();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<UnmanagedDataObject*>([&](){
+    #endif
+        return obj->GetDataObject();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Clipboard_SetDataObject_(Clipboard* obj, UnmanagedDataObject* value)
 {
-    obj->SetDataObject(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDataObject(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

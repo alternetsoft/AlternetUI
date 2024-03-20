@@ -10,42 +10,90 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Timer* Timer_Create_()
 {
-    return new Timer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Timer*>([&](){
+    #endif
+        return new Timer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Timer_GetEnabled_(Timer* obj)
 {
-    return obj->GetEnabled();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetEnabled();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Timer_SetEnabled_(Timer* obj, c_bool value)
 {
-    obj->SetEnabled(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetEnabled(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Timer_GetInterval_(Timer* obj)
 {
-    return obj->GetInterval();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetInterval();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Timer_SetInterval_(Timer* obj, int value)
 {
-    obj->SetInterval(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetInterval(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Timer_GetAutoReset_(Timer* obj)
 {
-    return obj->GetAutoReset();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAutoReset();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Timer_SetAutoReset_(Timer* obj, c_bool value)
 {
-    obj->SetAutoReset(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAutoReset(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Timer_Restart_(Timer* obj)
 {
-    obj->Restart();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Restart();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Timer_SetEventCallback_(Timer::TimerEventCallbackType callback)

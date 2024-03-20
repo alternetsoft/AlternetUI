@@ -440,15 +440,20 @@ using System.Security;");
                 {
                     w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e, parameter) =>");
 
-                    // w.WriteLine($"UI.Application.HandleThreadExceptions(() =>");
-                    using (new BlockIndent(w))
-                    {
-                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType(), out _), "obj")};");
-                        w.WriteLine("if (w == null) return IntPtr.Zero;");
-                        w.WriteLine("return w.OnEvent(e, parameter);");
-                    }
+                    w.Indent++;
+
+                        w.WriteLine($"UI.Application.HandleThreadExceptions(() =>");
+                        using (new BlockIndent(w))
+                        {
+                            w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType(), out _), "obj")};");
+                            w.WriteLine("if (w == null) return IntPtr.Zero;");
+                            w.WriteLine("return w.OnEvent(e, parameter);");
+                        }
+                        w.WriteLine(")");
+
+                    w.Indent--;
+
                     w.WriteLine(");");
-                    //w.WriteLine("));");
 
                     w.WriteLine("eventCallbackGCHandle = GCHandle.Alloc(sink);");
                     w.WriteLine($"NativeApi.{declaringTypeName}_SetEventCallback_(sink);");

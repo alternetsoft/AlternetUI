@@ -10,86 +10,188 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API FlexGridSizer* FlexGridSizer_Create_()
 {
-    return new FlexGridSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<FlexGridSizer*>([&](){
+    #endif
+        return new FlexGridSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_AddGrowableCol_(void* handle, int idx, int proportion)
 {
-    FlexGridSizer::AddGrowableCol(handle, idx, proportion);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::AddGrowableCol(handle, idx, proportion);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_AddGrowableRow_(void* handle, int idx, int proportion)
 {
-    FlexGridSizer::AddGrowableRow(handle, idx, proportion);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::AddGrowableRow(handle, idx, proportion);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int FlexGridSizer_GetFlexibleDirection_(void* handle)
 {
-    return FlexGridSizer::GetFlexibleDirection(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return FlexGridSizer::GetFlexibleDirection(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int FlexGridSizer_GetNonFlexibleGrowMode_(void* handle)
 {
-    return FlexGridSizer::GetNonFlexibleGrowMode(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return FlexGridSizer::GetNonFlexibleGrowMode(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool FlexGridSizer_IsColGrowable_(void* handle, int idx)
 {
-    return FlexGridSizer::IsColGrowable(handle, idx);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return FlexGridSizer::IsColGrowable(handle, idx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool FlexGridSizer_IsRowGrowable_(void* handle, int idx)
 {
-    return FlexGridSizer::IsRowGrowable(handle, idx);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return FlexGridSizer::IsRowGrowable(handle, idx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_RemoveGrowableCol_(void* handle, int idx)
 {
-    FlexGridSizer::RemoveGrowableCol(handle, idx);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::RemoveGrowableCol(handle, idx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_RemoveGrowableRow_(void* handle, int idx)
 {
-    FlexGridSizer::RemoveGrowableRow(handle, idx);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::RemoveGrowableRow(handle, idx);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_SetFlexibleDirection_(void* handle, int direction)
 {
-    FlexGridSizer::SetFlexibleDirection(handle, direction);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::SetFlexibleDirection(handle, direction);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_SetNonFlexibleGrowMode_(void* handle, int mode)
 {
-    FlexGridSizer::SetNonFlexibleGrowMode(handle, mode);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::SetNonFlexibleGrowMode(handle, mode);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* FlexGridSizer_GetRowHeights_(void* handle)
 {
-    return FlexGridSizer::GetRowHeights(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return FlexGridSizer::GetRowHeights(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* FlexGridSizer_GetColWidths_(void* handle)
 {
-    return FlexGridSizer::GetColWidths(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return FlexGridSizer::GetColWidths(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void FlexGridSizer_RepositionChildren_(void* handle, SizeI minSize)
 {
-    FlexGridSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        FlexGridSizer::RepositionChildren(handle, minSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeI_C FlexGridSizer_CalcMin_(void* handle)
 {
-    return FlexGridSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return FlexGridSizer::CalcMin(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* FlexGridSizer_CreateFlexGridSizer_(int cols, int vgap, int hgap)
 {
-    return FlexGridSizer::CreateFlexGridSizer(cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return FlexGridSizer::CreateFlexGridSizer(cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* FlexGridSizer_CreateFlexGridSizer2_(int rows, int cols, int vgap, int hgap)
 {
-    return FlexGridSizer::CreateFlexGridSizer2(rows, cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return FlexGridSizer::CreateFlexGridSizer2(rows, cols, vgap, hgap);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

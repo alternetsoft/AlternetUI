@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorFloat* ValidatorFloat_Create_()
 {
-    return new ValidatorFloat();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<ValidatorFloat*>([&](){
+    #endif
+        return new ValidatorFloat();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

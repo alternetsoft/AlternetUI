@@ -7,7 +7,6 @@ using System;
 using System.ComponentModel;
 
 using System.Globalization;
-using System.Windows.Markup;
 
 namespace Alternet.UI
 {
@@ -26,8 +25,6 @@ namespace Alternet.UI
     ///     NOTE: None of the members can be null
     /// </remarks>
     /// <ExternalAPI/>
-    [TypeConverter("System.Windows.Markup.RoutedEventConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
-    [ValueSerializer("System.Windows.Markup.RoutedEventValueSerializer, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     public sealed class RoutedEvent
     {
         #region External API

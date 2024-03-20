@@ -8,17 +8,6 @@
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 
-  <HorizontalStackPanel  Margin="5">
-    <Button Text="Actions"
-            Name="buttonPage1" Click="Page1Button_Click"/>
-    <Button Text="Settings"
-            Name="buttonPage2" Click="Page2Button_Click"/>
-    <Button Text="Bounds"
-            Name="buttonPage3" Click="Page3Button_Click"/>
-    <Button Text="All Properties..."
-            Name="propertiesButton" Click="PropertiesButton_Click"/>
-  </HorizontalStackPanel>
-
   <TabControl Name="pageControl" VerticalAlignment="Fill">
 
       <!-- ========================= -->
@@ -54,8 +43,11 @@
               <Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
               <Label Name="isWindowActiveLabel" Margin="0,0,0,3"/>
               <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
-            </StackPanel>
+            </StackPanel>            
           </GroupBox>
+
+          <Button Text="All Properties..."
+                  Name="propertiesButton" Click="PropertiesButton_Click"/>
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <!-- ========================= -->
@@ -142,6 +134,6 @@
 
     </TabControl>
 
-    <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Bottom"/>
+  <LogListBox Name="eventsListBox"  MinHeight="150" Margin="0" VerticalAlignment="Bottom"/>
 
 </Window>

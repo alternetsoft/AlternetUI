@@ -673,10 +673,7 @@ namespace Alternet.UI
             if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)
                 return;
             logControl?.Log("Do action: " + item.Text);
-            BeginInvoke(() =>
-            {
-                item.Action();
-            });
+            item.Action();
         }
 
 #pragma warning disable

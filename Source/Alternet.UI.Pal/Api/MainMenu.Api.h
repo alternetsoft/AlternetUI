@@ -11,26 +11,56 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API MainMenu* MainMenu_Create_()
 {
-    return new MainMenu();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<MainMenu*>([&](){
+    #endif
+        return new MainMenu();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int MainMenu_GetItemsCount_(MainMenu* obj)
 {
-    return obj->GetItemsCount();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetItemsCount();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void MainMenu_InsertItemAt_(MainMenu* obj, int index, Menu* menu, const char16_t* text)
 {
-    obj->InsertItemAt(index, menu, text);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InsertItemAt(index, menu, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void MainMenu_RemoveItemAt_(MainMenu* obj, int index)
 {
-    obj->RemoveItemAt(index);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RemoveItemAt(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void MainMenu_SetItemText_(MainMenu* obj, int index, const char16_t* text)
 {
-    obj->SetItemText(index, text);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetItemText(index, text);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

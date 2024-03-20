@@ -12,31 +12,67 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Menu* Menu_Create_()
 {
-    return new Menu();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Menu*>([&](){
+    #endif
+        return new Menu();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Menu_GetMenuHandle_(Menu* obj)
 {
-    return obj->GetMenuHandle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetMenuHandle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Menu_GetItemsCount_(Menu* obj)
 {
-    return obj->GetItemsCount();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetItemsCount();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Menu_InsertItemAt_(Menu* obj, int index, MenuItem* item)
 {
-    obj->InsertItemAt(index, item);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InsertItemAt(index, item);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Menu_RemoveItemAt_(Menu* obj, int index)
 {
-    obj->RemoveItemAt(index);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RemoveItemAt(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, PointD position)
 {
-    obj->ShowContextMenu(control, position);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ShowContextMenu(control, position);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

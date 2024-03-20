@@ -595,7 +595,7 @@ namespace Alternet.UI
             CheckDetach(inheritanceContext);
             _inheritanceContext = (inheritanceContext == null) ? NullInheritanceContext : new WeakReference<DependencyObject>(inheritanceContext);
 
-            // if there's a validation rule that should run on data transfer, schedule it to run
+            /*// if there's a validation rule that should run on data transfer, schedule it to run
             if (property == FrameworkElement.BindingGroupProperty &&
                 !_hasMultipleInheritanceContexts &&
                 (ValidatesOnDataTransfer || ValidatesOnNotifyDataError))
@@ -607,7 +607,7 @@ namespace Alternet.UI
                     // bindings to join the group
                     layoutElement.LayoutUpdated += new EventHandler(OnLayoutUpdated);
                 }
-            }
+            }*/
 
             // sharing a BindingGroup among multiple hosts is bad - we wouldn't know which host
             // to send the errors to (just for starters).  But sharing an ItemBindingGroup is

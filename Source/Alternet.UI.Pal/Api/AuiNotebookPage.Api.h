@@ -10,6 +10,12 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiNotebookPage* AuiNotebookPage_Create_()
 {
-    return new AuiNotebookPage();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<AuiNotebookPage*>([&](){
+    #endif
+        return new AuiNotebookPage();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 

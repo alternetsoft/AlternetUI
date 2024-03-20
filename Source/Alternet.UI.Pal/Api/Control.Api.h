@@ -13,732 +13,1608 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API c_bool Control_GetBindScrollEvents_(Control* obj)
 {
-    return obj->GetBindScrollEvents();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetBindScrollEvents();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetBindScrollEvents_(Control* obj, c_bool value)
 {
-    obj->SetBindScrollEvents(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetBindScrollEvents(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetProcessIdle_(Control* obj)
 {
-    return obj->GetProcessIdle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetProcessIdle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetProcessIdle_(Control* obj, c_bool value)
 {
-    obj->SetProcessIdle(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetProcessIdle(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetProcessUIUpdates_(Control* obj)
 {
-    return obj->GetProcessUIUpdates();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetProcessUIUpdates();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetProcessUIUpdates_(Control* obj, c_bool value)
 {
-    obj->SetProcessUIUpdates(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetProcessUIUpdates(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsBold_(Control* obj)
 {
-    return obj->GetIsBold();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsBold();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetIsBold_(Control* obj, c_bool value)
 {
-    obj->SetIsBold(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsBold(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetAcceptsFocus_(Control* obj)
 {
-    return obj->GetAcceptsFocus();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAcceptsFocus();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetAcceptsFocus_(Control* obj, c_bool value)
 {
-    obj->SetAcceptsFocus(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAcceptsFocus(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetAcceptsFocusFromKeyboard_(Control* obj)
 {
-    return obj->GetAcceptsFocusFromKeyboard();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAcceptsFocusFromKeyboard();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetAcceptsFocusFromKeyboard_(Control* obj, c_bool value)
 {
-    obj->SetAcceptsFocusFromKeyboard(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAcceptsFocusFromKeyboard(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetAcceptsFocusRecursively_(Control* obj)
 {
-    return obj->GetAcceptsFocusRecursively();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAcceptsFocusRecursively();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetAcceptsFocusRecursively_(Control* obj, c_bool value)
 {
-    obj->SetAcceptsFocusRecursively(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAcceptsFocusRecursively(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetAcceptsFocusAll_(Control* obj)
 {
-    return obj->GetAcceptsFocusAll();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAcceptsFocusAll();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetAcceptsFocusAll_(Control* obj, c_bool value)
 {
-    obj->SetAcceptsFocusAll(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAcceptsFocusAll(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetBorderStyle_(Control* obj)
 {
-    return obj->GetBorderStyle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetBorderStyle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetBorderStyle_(Control* obj, int value)
 {
-    obj->SetBorderStyle(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetBorderStyle(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetLayoutDirection_(Control* obj)
 {
-    return obj->GetLayoutDirection();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetLayoutDirection();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetLayoutDirection_(Control* obj, int value)
 {
-    obj->SetLayoutDirection(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetLayoutDirection(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Control_GetName_(Control* obj)
 {
-    return AllocPInvokeReturnString(obj->GetName());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetName());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetName_(Control* obj, const char16_t* value)
 {
-    obj->SetName(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetName(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetId_(Control* obj)
 {
-    return obj->GetId();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetId();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetId_(Control* obj, int value)
 {
-    obj->SetId(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetId(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsActive_(Control* obj)
 {
-    return obj->GetIsActive();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsActive();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsHandleCreated_(Control* obj)
 {
-    return obj->GetIsHandleCreated();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsHandleCreated();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsWxWidgetCreated_(Control* obj)
 {
-    return obj->GetIsWxWidgetCreated();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsWxWidgetCreated();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
 {
-    return obj->GetHandle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetHandle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Control_GetWxWidget_(Control* obj)
 {
-    return obj->GetWxWidget();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetWxWidget();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsScrollable_(Control* obj)
 {
-    return obj->GetIsScrollable();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsScrollable();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
 {
-    obj->SetIsScrollable(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetIsScrollable(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
 {
-    return obj->GetIsMouseCaptured();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsMouseCaptured();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetTabStop_(Control* obj)
 {
-    return obj->GetTabStop();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetTabStop();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetTabStop_(Control* obj, c_bool value)
 {
-    obj->SetTabStop(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTabStop(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsFocused_(Control* obj)
 {
-    return obj->GetIsFocused();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsFocused();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsFocusable_(Control* obj)
 {
-    return obj->GetIsFocusable();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsFocusable();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetCanAcceptFocus_(Control* obj)
 {
-    return obj->GetCanAcceptFocus();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetCanAcceptFocus();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
 {
-    return obj->GetParentRefCounted();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return obj->GetParentRefCounted();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API char16_t* Control_GetToolTip_(Control* obj)
 {
-    return AllocPInvokeReturnString(obj->GetToolTip());
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetToolTip());
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetToolTip_(Control* obj, const char16_t* value)
 {
-    obj->SetToolTip(ToOptional(value));
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetToolTip(ToOptional(value));
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetAllowDrop_(Control* obj)
 {
-    return obj->GetAllowDrop();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowDrop();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetAllowDrop_(Control* obj, c_bool value)
 {
-    obj->SetAllowDrop(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowDrop(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C Control_GetSize_(Control* obj)
 {
-    return obj->GetSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetSize_(Control* obj, SizeD value)
 {
-    obj->SetSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointD_C Control_GetLocation_(Control* obj)
 {
-    return obj->GetLocation();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->GetLocation();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetLocation_(Control* obj, PointD value)
 {
-    obj->SetLocation(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetLocation(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
 {
-    return obj->GetBounds();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectD_C>([&](){
+    #endif
+        return obj->GetBounds();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectD value)
 {
-    obj->SetBounds(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetBounds(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
 {
-    return obj->GetClientSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetClientSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeD value)
 {
-    obj->SetClientSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetClientSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Thickness_C Control_GetIntrinsicLayoutPadding_(Control* obj)
 {
-    return obj->GetIntrinsicLayoutPadding();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Thickness_C>([&](){
+    #endif
+        return obj->GetIntrinsicLayoutPadding();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Thickness_C Control_GetIntrinsicPreferredSizePadding_(Control* obj)
 {
-    return obj->GetIntrinsicPreferredSizePadding();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Thickness_C>([&](){
+    #endif
+        return obj->GetIntrinsicPreferredSizePadding();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetVisible_(Control* obj)
 {
-    return obj->GetVisible();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetVisible();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetVisible_(Control* obj, c_bool value)
 {
-    obj->SetVisible(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetVisible(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetEnabled_(Control* obj)
 {
-    return obj->GetEnabled();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetEnabled();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetEnabled_(Control* obj, c_bool value)
 {
-    obj->SetEnabled(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetEnabled(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetUserPaint_(Control* obj)
 {
-    return obj->GetUserPaint();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetUserPaint();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetUserPaint_(Control* obj, c_bool value)
 {
-    obj->SetUserPaint(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetUserPaint(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetIsMouseOver_(Control* obj)
 {
-    return obj->GetIsMouseOver();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsMouseOver();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_GetHasWindowCreated_(Control* obj)
 {
-    return obj->GetHasWindowCreated();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetHasWindowCreated();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C Control_GetBackgroundColor_(Control* obj)
 {
-    return obj->GetBackgroundColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetBackgroundColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetBackgroundColor_(Control* obj, Color value)
 {
-    obj->SetBackgroundColor(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetBackgroundColor(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C Control_GetForegroundColor_(Control* obj)
 {
-    return obj->GetForegroundColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetForegroundColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color value)
 {
-    obj->SetForegroundColor(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetForegroundColor(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Font* Control_GetFont_(Control* obj)
 {
-    return obj->GetFont();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return obj->GetFont();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
 {
-    obj->SetFont(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFont(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C Control_GetMinimumSize_(Control* obj)
 {
-    return obj->GetMinimumSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetMinimumSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetMinimumSize_(Control* obj, SizeD value)
 {
-    obj->SetMinimumSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinimumSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C Control_GetMaximumSize_(Control* obj)
 {
-    return obj->GetMaximumSize();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetMaximumSize();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
 {
-    obj->SetMaximumSize(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMaximumSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
 {
-    obj->SaveScreenshot(fileName);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SaveScreenshot(fileName);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
 {
-    obj->SendSizeEvent();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SendSizeEvent();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SendMouseDownEvent_(Control* obj, int x, int y)
 {
-    obj->SendMouseDownEvent(x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SendMouseDownEvent(x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
 {
-    obj->SendMouseUpEvent(x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SendMouseUpEvent(x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
 {
-    obj->SetBoundsEx(rect, flags);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetBoundsEx(rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
 {
-    return obj->GetContainingSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetContainingSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void* Control_GetSizer_(Control* obj)
 {
-    return obj->GetSizer();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetSizer();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetSizer_(Control* obj, void* sizer, c_bool deleteOld)
 {
-    obj->SetSizer(sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSizer(sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetSizerAndFit_(Control* obj, void* sizer, c_bool deleteOld)
 {
-    obj->SetSizerAndFit(sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSizerAndFit(sizer, deleteOld);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
 {
-    obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
 {
-    return obj->IsScrollBarVisible(orientation);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsScrollBarVisible(orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
 {
-    return obj->GetScrollBarValue(orientation);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarValue(orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
 {
-    return obj->GetScrollBarLargeChange(orientation);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarLargeChange(orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
 {
-    return obj->GetScrollBarMaximum(orientation);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarMaximum(orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetScrollBarEvtKind_(Control* obj)
 {
-    return obj->GetScrollBarEvtKind();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarEvtKind();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetScrollBarEvtPosition_(Control* obj)
 {
-    return obj->GetScrollBarEvtPosition();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarEvtPosition();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Control* Control_HitTest_(PointD screenPoint)
 {
-    return Control::HitTest(screenPoint);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return Control::HitTest(screenPoint);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Control* Control_GetFocusedControl_()
 {
-    return Control::GetFocusedControl();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return Control::GetFocusedControl();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_NotifyCaptureLost_()
 {
-    Control::NotifyCaptureLost();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Control::NotifyCaptureLost();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Freeze_(Control* obj)
 {
-    obj->Freeze();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Freeze();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Thaw_(Control* obj)
 {
-    obj->Thaw();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Thaw();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, double x, double y)
 {
-    obj->ShowPopupMenu(menu, x, y);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ShowPopupMenu(menu, x, y);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
 {
-    obj->BeginIgnoreRecreate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->BeginIgnoreRecreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
 {
-    obj->EndIgnoreRecreate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndIgnoreRecreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C Control_GetDPI_(Control* obj)
 {
-    return obj->GetDPI();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetDPI();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
-    obj->SetMouseCapture(value);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMouseCapture(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_AddChild_(Control* obj, Control* control)
 {
-    obj->AddChild(control);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddChild(control);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
 {
-    obj->RemoveChild(control);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RemoveChild(control);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Invalidate_(Control* obj)
 {
-    obj->Invalidate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Invalidate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Update_(Control* obj)
 {
-    obj->Update();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Update();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableSize)
 {
-    return obj->GetPreferredSize(availableSize);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetPreferredSize(availableSize);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
 {
-    return obj->DoDragDrop(data, allowedEffects);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DragDropEffects>([&](){
+    #endif
+        return obj->DoDragDrop(data, allowedEffects);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
 {
-    return obj->OpenPaintDrawingContext();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return obj->OpenPaintDrawingContext();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
 {
-    return obj->OpenClientDrawingContext();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return obj->OpenClientDrawingContext();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
 {
-    obj->BeginUpdate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->BeginUpdate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
 {
-    obj->EndUpdate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndUpdate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
 {
-    obj->RecreateWindow();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RecreateWindow();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_ResetBackgroundColor_(Control* obj)
 {
-    obj->ResetBackgroundColor();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ResetBackgroundColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
 {
-    obj->ResetForegroundColor();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ResetForegroundColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD point)
 {
-    return obj->ClientToScreen(point);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->ClientToScreen(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD point)
 {
-    return obj->ScreenToClient(point);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->ScreenToClient(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD point)
 {
-    return obj->ScreenToDevice(point);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->ScreenToDevice(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API PointD_C Control_DeviceToScreen_(Control* obj, PointI point)
 {
-    return obj->DeviceToScreen(point);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->DeviceToScreen(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
 {
-    return obj->SetFocus();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetFocus();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_FocusNextControl_(Control* obj, c_bool forward, c_bool nested)
 {
-    obj->FocusNextControl(forward, nested);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->FocusNextControl(forward, nested);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_BeginInit_(Control* obj)
 {
-    obj->BeginInit();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->BeginInit();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_EndInit_(Control* obj)
 {
-    obj->EndInit();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndInit();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Destroy_(Control* obj)
 {
-    obj->Destroy();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Destroy();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_BeginRepositioningChildren_(Control* obj)
 {
-    return obj->BeginRepositioningChildren();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BeginRepositioningChildren();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_EndRepositioningChildren_(Control* obj)
 {
-    obj->EndRepositioningChildren();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndRepositioningChildren();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API RectI_C Control_GetUpdateClientRect_(Control* obj)
 {
-    return obj->GetUpdateClientRect();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return obj->GetUpdateClientRect();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContextForWindow_(void* window)
 {
-    return Control::OpenClientDrawingContextForWindow(window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return Control::OpenClientDrawingContextForWindow(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContextForWindow_(void* window)
 {
-    return Control::OpenPaintDrawingContextForWindow(window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return Control::OpenPaintDrawingContextForWindow(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenDrawingContextForDC_(void* dc, c_bool deleteDc)
 {
-    return Control::OpenDrawingContextForDC(dc, deleteDc);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return Control::OpenDrawingContextForDC(dc, deleteDc);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)
 {
-    obj->CenterOnParent(orientation);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->CenterOnParent(orientation);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)
 {
-    obj->RefreshRect(rect, eraseBackground);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RefreshRect(rect, eraseBackground);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Raise_(Control* obj)
 {
-    obj->Raise();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Raise();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_Lower_(Control* obj)
 {
-    obj->Lower();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Lower();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_DisableRecreate_(Control* obj)
 {
-    obj->DisableRecreate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DisableRecreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_EnableRecreate_(Control* obj)
 {
-    obj->EnableRecreate();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EnableRecreate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_UnsetToolTip_(Control* obj)
 {
-    obj->UnsetToolTip();
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->UnsetToolTip();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_IsTransparentBackgroundSupported_(Control* obj)
 {
-    return obj->IsTransparentBackgroundSupported();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsTransparentBackgroundSupported();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API c_bool Control_SetBackgroundStyle_(Control* obj, int style)
 {
-    return obj->SetBackgroundStyle(style);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetBackgroundStyle(style);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_GetBackgroundStyle_(Control* obj)
 {
-    return obj->GetBackgroundStyle();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetBackgroundStyle();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_AlwaysShowScrollbars_(Control* obj, c_bool hflag, c_bool vflag)
 {
-    obj->AlwaysShowScrollbars(hflag, vflag);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AlwaysShowScrollbars(hflag, vflag);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C Control_GetDefaultAttributesBgColor_(Control* obj)
 {
-    return obj->GetDefaultAttributesBgColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetDefaultAttributesBgColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C Control_GetDefaultAttributesFgColor_(Control* obj)
 {
-    return obj->GetDefaultAttributesFgColor();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetDefaultAttributesFgColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Font* Control_GetDefaultAttributesFont_(Control* obj)
 {
-    return obj->GetDefaultAttributesFont();
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return obj->GetDefaultAttributesFont();
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant)
 {
-    return Control::GetClassDefaultAttributesBgColor(controlType, windowVariant);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return Control::GetClassDefaultAttributesBgColor(controlType, windowVariant);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesFgColor_(int controlType, int windowVariant)
 {
-    return Control::GetClassDefaultAttributesFgColor(controlType, windowVariant);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return Control::GetClassDefaultAttributesFgColor(controlType, windowVariant);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API Font* Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant)
 {
-    return Control::GetClassDefaultAttributesFont(controlType, windowVariant);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return Control::GetClassDefaultAttributesFont(controlType, windowVariant);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
 {
-    return Control::DrawingFromDip(value, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return Control::DrawingFromDip(value, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double Control_DrawingDPIScaleFactor_(void* window)
 {
-    return Control::DrawingDPIScaleFactor(window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return Control::DrawingDPIScaleFactor(window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double Control_DrawingToDip_(int value, void* window)
 {
-    return Control::DrawingToDip(value, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return Control::DrawingToDip(value, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API double Control_DrawingFromDipF_(double value, void* window)
 {
-    return Control::DrawingFromDipF(value, window);
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return Control::DrawingFromDipF(value, window);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
 {
-    obj->SetCursor(handle);
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCursor(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
