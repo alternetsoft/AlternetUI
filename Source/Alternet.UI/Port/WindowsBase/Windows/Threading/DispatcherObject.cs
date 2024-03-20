@@ -81,7 +81,7 @@ namespace Alternet.UI.Threading
         ///     True if the calling thread has access to this object.
         /// </returns>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public bool CheckAccess()
+        internal bool CheckAccess()
         {
             // This method is free-threaded.
 
@@ -108,7 +108,7 @@ namespace Alternet.UI.Threading
         ///     see if the calling thread has access to itself.
         /// </remarks>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public void VerifyAccess()
+        internal void VerifyAccess()
         {
             // This method is free-threaded.
 

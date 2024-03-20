@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class FrameworkElement : UIElement
     {
-        /// <summary>
+        /*/// <summary>
         ///     BindingGroup DependencyProperty
         /// </summary>
         public static readonly DependencyProperty BindingGroupProperty =
@@ -24,7 +24,7 @@ namespace Alternet.UI
                                 typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                     null,
-                                    PropMetadataOption.Inherits));
+                                    PropMetadataOption.Inherits));*/
 
         /// <summary>
         /// Language can be specified in xaml at any point using the xml language attribute xml:lang.
@@ -97,7 +97,7 @@ namespace Alternet.UI
         /// UIXML processor.
         /// </summary>
         /// <value>The name of the control. The default is <c>null</c>.</value>
-        public string? Name { get; set; } // todo: maybe use Site.Name?
+        public string? Name { get; set; }
 
         /// <summary>
         ///     DataContext Property
@@ -833,7 +833,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">EventArgs that contains the property, metadata, old value,
         /// and new value for this change</param>
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        internal override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             DependencyProperty dp = e.Property;
 

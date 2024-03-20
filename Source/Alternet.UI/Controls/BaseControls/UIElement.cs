@@ -20,82 +20,6 @@ namespace Alternet.UI
         public event EventHandler? LayoutUpdated;
 
         /// <summary>
-        ///     Raise the events specified by
-        ///     <see cref="RoutedEventArgs.RoutedEvent"/>
-        /// </summary>
-        /// <param name="e">
-        ///     <see cref="RoutedEventArgs"/> for the event to
-        ///     be raised
-        /// </param>
-        public void RaiseEvent(RoutedEventArgs e)
-        {
-            if (e == null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
-
-            e.ClearUserInitiated();
-
-            UIElement.RaiseEventImpl(this, e);
-        }
-
-        /// <summary>
-        ///     Add the event handlers for this element to the route.
-        /// </summary>
-        public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
-        {
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
-
-            if (e == null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
-
-            // Get class listeners for this UIElement
-            RoutedEventHandlerInfoList classListeners =
-                GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
-
-            // Add all class listeners for this UIElement
-            while (classListeners != null)
-            {
-                for (int i = 0; i < classListeners.Handlers.Length; i++)
-                {
-                    route.Add(
-                        this,
-                        classListeners.Handlers[i].Handler,
-                        classListeners.Handlers[i].InvokeHandledEventsToo);
-                }
-
-                classListeners = classListeners.Next;
-            }
-
-            var store = EventHandlersStore;
-            if (store != null)
-            {
-                // Get instance listeners for this UIElement
-                FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = store[e.RoutedEvent];
-
-                // Add all instance listeners for this UIElement
-                if (instanceListeners != null)
-                {
-                    for (int i = 0; i < instanceListeners.Count; i++)
-                    {
-                        route.Add(
-                            this,
-                            instanceListeners[i].Handler,
-                            instanceListeners[i].InvokeHandledEventsToo);
-                    }
-                }
-            }
-
-            // Allow Framework to add event handlers in styles
-            AddToEventRouteCore(route, e);
-        }
-
-        /// <summary>
         ///     Adds a handler for the given attached event
         /// </summary>
         [FriendAccessAllowed] // Built into Core, also used by Framework.
@@ -289,6 +213,82 @@ namespace Alternet.UI
                     }
                 }
             }
+        }
+
+        /// <summary>
+        ///     Raise the events specified by
+        ///     <see cref="RoutedEventArgs.RoutedEvent"/>
+        /// </summary>
+        /// <param name="e">
+        ///     <see cref="RoutedEventArgs"/> for the event to
+        ///     be raised
+        /// </param>
+        internal void RaiseEvent(RoutedEventArgs e)
+        {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
+            e.ClearUserInitiated();
+
+            UIElement.RaiseEventImpl(this, e);
+        }
+
+        /// <summary>
+        ///     Add the event handlers for this element to the route.
+        /// </summary>
+        internal void AddToEventRoute(EventRoute route, RoutedEventArgs e)
+        {
+            if (route == null)
+            {
+                throw new ArgumentNullException(nameof(route));
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
+            // Get class listeners for this UIElement
+            RoutedEventHandlerInfoList classListeners =
+                GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
+
+            // Add all class listeners for this UIElement
+            while (classListeners != null)
+            {
+                for (int i = 0; i < classListeners.Handlers.Length; i++)
+                {
+                    route.Add(
+                        this,
+                        classListeners.Handlers[i].Handler,
+                        classListeners.Handlers[i].InvokeHandledEventsToo);
+                }
+
+                classListeners = classListeners.Next;
+            }
+
+            var store = EventHandlersStore;
+            if (store != null)
+            {
+                // Get instance listeners for this UIElement
+                FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = store[e.RoutedEvent];
+
+                // Add all instance listeners for this UIElement
+                if (instanceListeners != null)
+                {
+                    for (int i = 0; i < instanceListeners.Count; i++)
+                    {
+                        route.Add(
+                            this,
+                            instanceListeners[i].Handler,
+                            instanceListeners[i].InvokeHandledEventsToo);
+                    }
+                }
+            }
+
+            // Allow Framework to add event handlers in styles
+            AddToEventRouteCore(route, e);
         }
 
         /// <summary>

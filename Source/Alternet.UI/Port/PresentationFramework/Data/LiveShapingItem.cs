@@ -229,7 +229,7 @@ namespace Alternet.UI
             get { return GetValue(ParentGroupsProperty) as CollectionViewGroupInternal; }
         }
 
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        internal override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             if (ForwardChanges)
             {

@@ -290,7 +290,7 @@ namespace Alternet.UI
         /// Override OnPropertyChanged so that we can fire the Freezable's Changed
         /// handler in response to a DP changing.
         /// </remarks>
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        internal override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
 

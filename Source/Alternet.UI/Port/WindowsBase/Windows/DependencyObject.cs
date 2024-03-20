@@ -45,7 +45,6 @@ namespace Alternet.UI
     /// This attribute allows designers looking at metadata through TypeDescriptor to see dependency properties
     /// and attached properties.
     [System.ComponentModel.TypeDescriptionProvider(typeof(DependencyObjectProvider))]
-    //[System.Windows.Markup.NameScopeProperty("NameScope", typeof(System.Windows.NameScope))]
     public class DependencyObject : DispatcherObject
     {
         /// <summary>
@@ -62,7 +61,7 @@ namespace Alternet.UI
 
         /// <summary>Returns the DType that represents the CLR type of this instance</summary>
         [Browsable(false)]
-        public DependencyObjectType DependencyObjectType
+        internal DependencyObjectType DependencyObjectType
         {
             get
             {
@@ -114,7 +113,7 @@ namespace Alternet.UI
         ///     though the effective value for a property may change.
         /// </summary>
         [Browsable(false)]
-        public bool IsSealed
+        internal bool IsSealed
         {
             get
             {
@@ -164,7 +163,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <returns>The computed value</returns>
-        public object GetValue(DependencyProperty dp)
+        internal object GetValue(DependencyProperty dp)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -2061,7 +2060,7 @@ namespace Alternet.UI
         ///     Notification that a specified property has been changed
         /// </summary>
         /// <param name="e">EventArgs that contains the property, metadata, old value, and new value for this change</param>
-        protected virtual void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        internal virtual void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             // Do not call VerifyAccess because this is a virtual, and is used as a call-out.
 
@@ -2085,7 +2084,7 @@ namespace Alternet.UI
         /// Override this method to control whether a DependencyProperty should be serialized.
         /// The base implementation returns true if the property is set (locally) on this object.
         /// </summary>
-        protected internal virtual bool ShouldSerializeProperty( DependencyProperty dp )
+        internal virtual bool ShouldSerializeProperty( DependencyProperty dp )
         {
             return ContainsValue( dp );
         }
