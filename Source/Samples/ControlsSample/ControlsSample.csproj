@@ -395,8 +395,4 @@
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="NewCode\" />
-    </ItemGroup>
 </Project>

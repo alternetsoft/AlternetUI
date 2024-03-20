@@ -70,6 +70,7 @@ namespace ControlsSample
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Menu Sample", () => new MenuSample.MainWindow());
             Add("Printing Sample", () => new PrintingSample.MainWindow());
+            Add("Preview Uixml and other files", () => new PreviewSampleWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
             Add("Threading Sample", () => new ThreadingSample.MainWindow());
             Add("Action Simulator Sample", () => new ActionSimulatorPage());
