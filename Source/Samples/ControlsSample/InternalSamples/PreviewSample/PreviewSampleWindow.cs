@@ -133,11 +133,8 @@ namespace ControlsSample
 
             if (item is null || item.Path is null || !item.IsFile)
             {
-                DoInsideUpdate(() =>
-                {
-                    richText.Visible = true;
-                    preview.Visible = false;
-                });
+                preview.Visible = false;
+                richText.Visible = true;
                 preview.FileName = null;
                 return;
             }
