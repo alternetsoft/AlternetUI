@@ -24,6 +24,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="System.Runtime"  Version="4.3.1" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Package\readme.md" Pack="true" PackagePath="" />
     <None Include="Package\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
@@ -270,7 +282,6 @@
     <EmbeddedResource Include="Resources\Svg\alternet-xmark.svg" />
   </ItemGroup>
 
-
   <!-- Uncomment this to debug in release build. -->
   <!-- <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugSymbols>true</DebugSymbols>
@@ -278,39 +289,19 @@
     <Optimize>false</Optimize>
   </PropertyGroup> -->
 
-  <ItemGroup>
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
-    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
     <PackageReference Include="Alternet.UI.Pal" Version="$(Version)">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
-    <PackageReference Include="System.Runtime">
-      <Version>4.3.1</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
-    <Reference Include="System.Runtime" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-  </ItemGroup>
-
   <ItemGroup>
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false"
+          Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false"
+          Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True"
+          PackagePath="build" />
 
     <None Include="build\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
     <None Include="build\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
@@ -323,13 +314,6 @@
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
 -->	
-  </ItemGroup>
-
-  <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
-    <Reference Include="System.Configuration" />
-  </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -355,7 +339,8 @@
 
   <!-- ================================================= -->
   <!-- remove .. in path -->
-  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
+  <Target Name="CreateAllClassesXml"
+          AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
 
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
