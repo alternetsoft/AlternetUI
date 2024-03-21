@@ -321,6 +321,17 @@ namespace Alternet.UI
             }
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if(e.KeyData == Keys.F5)
+            {
+                e.Handled = true;
+                Reload();
+            }
+
+            base.OnKeyDown(e);
+        }
+
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             base.OnMouseDoubleClick(e);
