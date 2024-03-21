@@ -61,7 +61,7 @@ namespace Alternet.UI
             {
                 if (selectedFolder == value)
                     return;
-                Application.LogIf($"FileListBox.SelectedFolder = {value}", true);
+                Application.LogIf($"FileListBox.SelectedFolder = {value}", false);
                 var oldSelectedFolder = selectedFolder;
                 selectedFolder = value;
                 try
@@ -170,6 +170,7 @@ namespace Alternet.UI
                 if (IsDisposed)
                     return;
                 SelectedItem = null;
+                EnsureVisible(0);
             });
 
             void RootFolderAction()
