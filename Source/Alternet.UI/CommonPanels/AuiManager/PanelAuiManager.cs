@@ -213,7 +213,6 @@ namespace Alternet.UI
                     {
                         HasBorder = false,
                     };
-                    actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
                     actionsControl.Parent = RightNotebook;
                     actionsPage = RightNotebook.AddPage(
                         actionsControl,
@@ -515,7 +514,7 @@ namespace Alternet.UI
         {
             ListControlItem item = new(title)
             {
-                Action = action,
+                DoubleClickAction = action,
             };
 
             ActionsControl.Required();
@@ -665,15 +664,6 @@ namespace Alternet.UI
         {
             base.OnSizeChanged(e);
             Manager.Update();
-        }
-
-        private void Actions_MouseDoubleClick(object? sender, MouseEventArgs e)
-        {
-            var listBox = sender as ListBox;
-            if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)
-                return;
-            logControl?.Log("Do action: " + item.Text);
-            item.Action();
         }
 
 #pragma warning disable
