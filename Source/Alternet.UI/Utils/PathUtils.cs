@@ -14,6 +14,23 @@ namespace Alternet.UI
     public static class PathUtils
     {
         /// <summary>
+        /// Returns the extension of a file path in the lower case without leading period.
+        /// </summary>
+        /// <param name="path">The file path from which to get the extension.</param>
+        /// <returns>
+        /// The extension of the specified path (without the period, "."), or
+        /// an empty string if path does not have extension information.
+        /// </returns>
+        public static string GetExtensionLower(string? path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return string.Empty;
+
+            var result = System.IO.Path.GetExtension(path).Trim('.').ToLower();
+            return result;
+        }
+
+        /// <summary>
         /// Returns directory separator char which is used in given path.
         /// </summary>
         /// <param name="path">Path in which directory separator
