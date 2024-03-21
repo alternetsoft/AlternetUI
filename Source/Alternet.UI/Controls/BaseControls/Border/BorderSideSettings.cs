@@ -13,14 +13,10 @@ namespace Alternet.UI
     /// </summary>
     public class BorderSideSettings : BaseObject, INotifyPropertyChanged
     {
-#pragma warning disable
-        public static Color DefaultColor = SystemColors.GrayText;
-#pragma warning restore
-
         private Pen? pen;
         private Brush? brush;
         private double width = 1;
-        private Color color = DefaultColor;
+        private Color? color;
         private bool incStartPoint;
         private bool decLength;
 
@@ -70,7 +66,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets border color.
         /// </summary>
-        public Color Color
+        public Color? Color
         {
             get
             {

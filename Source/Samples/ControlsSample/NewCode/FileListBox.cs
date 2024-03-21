@@ -333,14 +333,6 @@ namespace Alternet.UI
             base.OnKeyDown(e);
         }
 
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
-            base.OnMouseDoubleClick(e);
-            var item = SelectedItem as ListControlItem;
-            var action = item?.DoubleClickAction;
-            action?.Invoke();
-        }
-
         public class FileListBoxItem : ListControlItem
         {
             public string? Path;

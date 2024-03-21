@@ -434,6 +434,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default interior border color as <see cref="LightDarkColor"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static LightDarkColor GetDefaultInteriorBorderColor()
+        {
+            return new(
+                light: GetDefaultInteriorBorderColor(false),
+                dark: GetDefaultInteriorBorderColor(true));
+        }
+
+        /// <summary>
         /// Adds new page.
         /// </summary>
         /// <param name="page">Page title and control.</param>

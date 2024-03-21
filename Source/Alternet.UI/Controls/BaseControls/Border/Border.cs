@@ -11,6 +11,12 @@ namespace Alternet.UI
     public partial class Border : UserControl
     {
         /// <summary>
+        /// Gets or sets default border color. If not specified (default),
+        /// <see cref="TabControl.GetDefaultInteriorBorderColor()"/> is used.
+        /// </summary>
+        public static LightDarkColor? DefaultColor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
         public Border()
@@ -18,9 +24,10 @@ namespace Alternet.UI
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnBackground;
             Borders ??= new();
-            Borders.Normal = CreateBorderSettings(BorderSettings.Default);
+            var settings = CreateBorderSettings(BorderSettings.Default);
+            Borders.SetAll(settings);
             UpdatePadding();
-            Borders.Normal.PropertyChanged += Settings_PropertyChanged;
+            Borders.Normal!.PropertyChanged += Settings_PropertyChanged;
         }
 
         /// <summary>
@@ -35,23 +42,6 @@ namespace Alternet.UI
         {
             get => BorderSettings.Default.Width;
             set => BorderSettings.Default.Width = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default border color for
-        /// the <see cref="Border"/> control.
-        /// </summary>
-        public static Color DefaultBorderColor
-        {
-            get
-            {
-                return BorderSettings.Default.Color ?? BorderSideSettings.DefaultColor;
-            }
-
-            set
-            {
-                BorderSettings.Default.Color = value;
-            }
         }
 
         /// <inheritdoc/>
@@ -175,20 +165,24 @@ namespace Alternet.UI
         /// Gets or sets the border color for the <see cref="Border"/> control.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="DefaultBorderColor"/> is used
+        /// If this property is null, <see cref="DefaultColor"/> is used
         /// for the border color.
         /// </remarks>
         public Color? BorderColor
         {
             get
             {
-                return Normal.Color;
+                return Normal.Color ?? DefaultColor?.Get(IsDarkBackground) ??
+                        TabControl.GetDefaultInteriorBorderColor(IsDarkBackground);
             }
 
             set
             {
                 if (value == null)
-                    Normal.Color = BorderSettings.Default.Color;
+                {
+                    Normal.Color = DefaultColor?.Get(IsDarkBackground) ??
+                        TabControl.GetDefaultInteriorBorderColor(IsDarkBackground);
+                }
                 else
                     Normal.Color = (Color)value;
                 Refresh();

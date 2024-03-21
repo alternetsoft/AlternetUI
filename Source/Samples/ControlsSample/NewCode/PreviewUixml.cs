@@ -55,19 +55,17 @@ namespace Alternet.UI
             Application.DoInsideBusyCursor(ReloadInternal);
         }
 
-        public void DisposeChildren(Control control)
-        {
-            var children = control.Children.Clone();
-            foreach (var child in children)
-            {
-                child.Parent = null;
-                child.Dispose();
-            }
-        }
-
         public void Reset()
         {
-            DisposeChildren(control);
+            if (previewWindow is null)
+                return;
+
+            var children = control.Children.Clone();
+            foreach (var child in children)
+                child.Parent = previewWindow;
+
+            previewWindow.Close();
+            previewWindow = null;
         }
 
         protected override void DisposeResources()
@@ -87,13 +85,8 @@ namespace Alternet.UI
             {
                 using var stream = File.Open(fileName, FileMode.Open);
 
-                if(previewWindow is null)
-                {
-                    previewWindow = new();
-                    previewWindow.Disposed += PreviewWindow_Disposed;
-                }
-
-                DisposeChildren(previewWindow);
+                previewWindow = new();
+                previewWindow.Disposed += PreviewWindow_Disposed;
 
                 var saved = UixmlLoader.ShowExceptionDialog;
 

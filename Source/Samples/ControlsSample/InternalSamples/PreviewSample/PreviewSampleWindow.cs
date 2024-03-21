@@ -63,7 +63,8 @@ namespace ControlsSample
 
             try
             {
-                var samplesFolder = Path.GetFullPath("Samples/Uixml");
+                var appFolder = PathUtils.GetAppFolder();
+                var samplesFolder = Path.Combine(appFolder, "Samples/Uixml");
                 if (!Directory.Exists(samplesFolder))
                     Directory.CreateDirectory(samplesFolder);
                 fileListBox.SelectedFolder = samplesFolder;
