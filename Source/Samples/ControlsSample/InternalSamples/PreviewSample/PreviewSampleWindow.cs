@@ -12,6 +12,11 @@ namespace ControlsSample
 {
     internal class PreviewSampleWindow : Window
     {
+        private readonly RichTextBox richText = new()
+        {
+            HasBorder = false,
+        };
+
         private readonly SplittedPanel panel = new()
         {
             TopVisible = false,
@@ -47,12 +52,14 @@ namespace ControlsSample
             panel.Parent = this;
             fileListBox.Parent = panel.LeftPanel;
             fileListBox.SearchPattern = "*.uixml";
+            richText.Parent = panel.FillPanel;
+            preview.Visible = false;
             preview.Parent = panel.FillPanel;
             logListBox.Parent = panel.BottomPanel;
-            logListBox.Log("Select uixml or other supported file and it will be previewed");
             logListBox.Log("This demo is under development.");
             fileListBox.SelectionChanged += FileListBox_SelectionChanged;
             logListBox.BindApplicationLog();
+            LoadWelcomePage();
 
             try
             {
@@ -123,19 +130,87 @@ namespace ControlsSample
         {
             var item = fileListBox.SelectedItem;
 
-            Application.LogIf($"Preview file: {item?.Path}", true);
-
             if (item is null || item.Path is null || !item.IsFile)
             {
+                DoInsideUpdate(() =>
+                {
+                    richText.Visible = true;
+                    preview.Visible = false;
+                });
                 preview.FileName = null;
                 return;
             }
+
+            Application.LogIf($"Preview: {item.Path}", true);
 
             var ext = item.ExtensionLower;
             if (ext == "uixml")
                 preview.FileName = item.Path;
             else
                 preview.FileName = null;
+
+            DoInsideUpdate(() =>
+            {
+                richText.Visible = false;
+                preview.Visible = true;
+            });
+        }
+
+        public void LoadWelcomePage()
+        {
+            var r = richText;
+
+            r.ReadOnly = true;
+
+            VerticalAlignment = VerticalAlignment.Stretch;
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+
+            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+
+            r.SetDefaultStyle(TextBox.CreateTextAttr());
+
+            r.BeginUpdate();
+            r.BeginSuppressUndo();
+
+            r.BeginParagraphSpacing(0, 20);
+
+            r.ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
+
+            r.BeginBold();
+            r.BeginFontSize(baseFontSize + 15);
+
+
+            r.NewLine(2);
+            r.WriteText("Preview Example");
+            r.EndFontSize();
+            r.EndBold();
+
+            r.NewLine();
+            r.BeginFontSize(baseFontSize + 2);
+            r.WriteText("Select uixml or other supported file");
+            r.NewLine();
+            r.WriteText("and it will be previewed");
+
+            r.EndFontSize();
+
+            r.NewLine();
+
+            var logoImage = Image.FromUrl("embres:ControlsSample.Resources.logo-128x128.png");
+            r.WriteImage(logoImage);
+
+            r.NewLine();
+
+            r.NewLine(2);
+            r.WriteText("Currently supported: uixml.");
+            r.NewLine();
+            r.WriteText("Will be supported: html, images, txt, folder contents.");
+            r.NewLine(2);
+
+            r.EndSuppressUndo();
+            r.EndUpdate();
+            r.ReadOnly = true;
+            r.AutoUrlOpen = true;
+            r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
         }
 
         private void FileListBox_SelectionChanged(object sender, EventArgs e)
