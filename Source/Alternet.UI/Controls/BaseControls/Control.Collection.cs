@@ -18,9 +18,19 @@ namespace Alternet.UI
             /// Initializes a new instance of the <see cref="ControlCollection"/> class.
             /// </summary>
             public ControlCollection()
-                : base()
             {
                 ThrowOnNullAdd = true;
+            }
+
+            /// <summary>
+            /// Creates clone of this object.
+            /// </summary>
+            /// <returns></returns>
+            public ControlCollection Clone()
+            {
+                var result = new ControlCollection();
+                result.AddRange(this);
+                return result;
             }
         }
     }
