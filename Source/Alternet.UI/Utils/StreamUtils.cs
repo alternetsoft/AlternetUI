@@ -34,5 +34,16 @@ namespace Alternet.UI
             var writer = new StreamWriter(stream, Encoding.UTF8);
             writer.Write(s);
         }
+
+        /// <summary>
+        /// Copies stream to the file with the specified path.
+        /// </summary>
+        /// <param name="stream">Input stream to copy.</param>
+        /// <param name="destPath">Destination file path.</param>
+        public static void CopyStream(Stream stream, string destPath)
+        {
+            using var fileStream = new FileStream(destPath, FileMode.Create, FileAccess.Write);
+            stream.CopyTo(fileStream);
+        }
     }
 }
