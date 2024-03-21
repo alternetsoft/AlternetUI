@@ -628,8 +628,10 @@ namespace Alternet.UI
         /// about to enter the idle state.
         /// </summary>
         /// <param name="task">Task action.</param>
-        public static void AddIdleTask(Action task)
+        public static void AddIdleTask(Action? task)
         {
+            if (task is null)
+                return;
             AddIdleTask((object? param) => task());
         }
 
@@ -749,6 +751,74 @@ namespace Alternet.UI
             if (LogMessage is null || LogInUpdates())
                 return;
             ProcessLogQueue(true);
+        }
+
+        /// <summary>
+        /// Executes the specified delegate on the thread that owns the application.
+        /// </summary>
+        /// <param name="method">A delegate that contains a method to be called
+        /// in the control's thread context.</param>
+        /// <returns>An <see cref="object"/> that contains the return value from
+        /// the delegate being invoked, or <c>null</c> if the delegate has no
+        /// return value.</returns>
+        public static object? Invoke(Delegate? method)
+        {
+            if (method == null)
+                return null;
+            return Invoke(method, Array.Empty<object?>());
+        }
+
+        /// <summary>
+        /// Executes the specified action on the thread that owns the application.
+        /// </summary>
+        /// <param name="action">An action to be called in the control's
+        /// thread context.</param>
+        public static void Invoke(Action? action)
+        {
+            if (action == null)
+                return;
+            Invoke(action, Array.Empty<object?>());
+        }
+
+        /// <summary>
+        /// Executes the specified delegate, on the thread that owns the application,
+        /// with the specified list of arguments.
+        /// </summary>
+        /// <param name="method">A delegate to a method that takes parameters of
+        /// the same number and type that are contained in the
+        /// <c>args</c> parameter.</param>
+        /// <param name="args">An array of objects to pass as arguments to
+        /// the specified method. This parameter can be <c>null</c> if the
+        /// method takes no arguments.</param>
+        /// <returns>An <see cref="object"/> that contains the return value
+        /// from the delegate being invoked, or <c>null</c> if the delegate has
+        /// no return value.</returns>
+        public static object? Invoke(Delegate method, object?[] args)
+            => SynchronizationService.Invoke(method, args);
+
+        /// <summary>
+        /// Executes <see cref="Application.IdleLog"/> using <see cref="Invoke(Action?)"/>.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <param name="kind">Message kind.</param>
+        public static void InvokeIdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
+        {
+            Invoke(() =>
+            {
+                Application.IdleLog(obj, kind);
+            });
+        }
+
+        /// <summary>
+        /// Executes action in the application idle state using <see cref="Invoke(Action?)"/>.
+        /// </summary>
+        /// <param name="action">Action to execute.</param>
+        public static void InvokeIdle(Action? action)
+        {
+            Invoke(() =>
+            {
+                AddIdleTask(action);
+            });
         }
 
         /// <summary>
