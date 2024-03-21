@@ -43,6 +43,7 @@ namespace Alternet.UI
         /// </summary>
         public LogListBox()
         {
+            HScrollBarVisible = true;
             SelectionMode = ListBoxSelectionMode.Multiple;
         }
 
