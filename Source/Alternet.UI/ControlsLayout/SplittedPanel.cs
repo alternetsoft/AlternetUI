@@ -109,10 +109,16 @@ namespace Alternet.UI
         public Control BottomPanel => bottomPanel;
 
         /// <summary>
-        /// Gets center sub-panel.
+        /// Gets center sub-panel. Same as <see cref="CenterPanel"/>.
         /// </summary>
         [Browsable(false)]
         public Control FillPanel => fillPanel;
+
+        /// <summary>
+        /// Gets center sub-panel. Same as <see cref="FillPanel"/>.
+        /// </summary>
+        [Browsable(false)]
+        public Control CenterPanel => fillPanel;
 
         /// <summary>
         /// Gets left splitter.

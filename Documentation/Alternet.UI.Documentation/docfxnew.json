@@ -9,7 +9,13 @@
         {
           "src": "../../Source/Alternet.UI",
           "files": [ "**/*.csproj" ],
-          "exclude": [ "**/bin/**", "**/obj/**" ]
+          "exclude":
+		 [
+		 	"/Port/**",
+		 	"/Xaml/**",
+			"**/bin/**",
+		 	"**/obj/**"
+		 ]
         }
       ],
 	"memberLayout": "separatePages", //samePage

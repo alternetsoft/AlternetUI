@@ -32,3 +32,41 @@ The resource in the example above is embedded into the assembly in the following
 
 The `EmployeeFormSample` part of the manifest resource name comes from the assembly *root namespace*, which is the same
 as the assembly name by default.
+
+## Using `file:` Scheme
+
+`file:` scheme is used to load a file. The URIs in this scheme have the following format:
+
+```text
+file://<host>/<path>
+```
+
+### Linux:
+
+These urls point to the same file <b>/etc/fstab</b>:
+
+```text
+file://localhost/etc/fstab
+file:///etc/fstab
+file:///etc/./fstab
+file:///etc/../etc/fstab
+```
+
+### Mac OS:
+These urls point to the same file <b>/var/log/system.log</b>:
+
+```text
+file://localhost/var/log/system.log
+file:///var/log/system.log
+```
+
+### Windows:
+
+These urls point to the same file <b>c:\WINDOWS\clock.avi</b>:
+
+```text
+file://localhost/c|/WINDOWS/clock.avi
+file:///c|/WINDOWS/clock.avi
+file://localhost/c:/WINDOWS/clock.avi
+file:///c:/WINDOWS/clock.avi
+```

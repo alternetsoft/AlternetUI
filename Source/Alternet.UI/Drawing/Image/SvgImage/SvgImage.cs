@@ -189,6 +189,47 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets mono svg image as <see cref="ImageSet"/> filled using the specified color.
+        /// Svg images with two or more colors are returned as is.
+        /// </summary>
+        /// <param name="size">Svg image size.</param>
+        /// <param name="color">Svg image color.</param>
+        /// <returns></returns>
+        public virtual ImageSet? ImageSetWithColor(int size, Color color)
+        {
+            if(!IsMono)
+                return AsImageSet(size);
+
+            Resize(size);
+
+            data[size]!.ColoredImages ??= new();
+
+            var images = data[size]!.ColoredImages!;
+
+            if (images.TryGetValue(color, out var result))
+                return result;
+
+            result = LoadImage(size, color);
+            if(result is not null)
+                images.Add(color, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets mono svg image as <see cref="Image"/> filled using the specified color.
+        /// Svg images with two or more colors are returned as is.
+        /// </summary>
+        /// <param name="size">Svg image size.</param>
+        /// <param name="color">Svg image color.</param>
+        /// <returns></returns>
+        public virtual Image? ImageWithColor(int size, Color? color)
+        {
+            if (color is null)
+                return AsImage(size);
+            return ImageSetWithColor(size, color)?.AsImage();
+        }
+
+        /// <summary>
         /// Gets real color value for the specified known svg color.
         /// Uses <see cref="SvgColors.GetSvgColor(KnownSvgColor, bool)"/> and color overrides
         /// specified with <see cref="SetColorOverride(KnownSvgColor, bool, Color?)"/>.
@@ -269,18 +310,16 @@ namespace Alternet.Drawing
             SetColorOverride(knownColor, false, value?.Light);
         }
 
-        internal void Resize(int size)
+        /// <summary>
+        /// Creates new <see cref="ImageSet"/> and loads there this svg image
+        /// with the specified size and color.
+        /// </summary>
+        /// <param name="size">Svg image size.</param>
+        /// <param name="color">Color of the mono svg image.</param>
+        /// <returns></returns>
+        public virtual ImageSet? LoadImage(int size, Color? color = null)
         {
-            if (size > short.MaxValue || size < 0)
-                throw new ArgumentOutOfRangeException(nameof(size));
-
-            if (data.Length <= size)
-                Array.Resize(ref data, size + 1);
-        }
-
-        private ImageSet? LoadImage(int size, Color? color = null)
-        {
-            if(svg is null && url is not null && !wasLoaded)
+            if (svg is null && url is not null && !wasLoaded)
             {
                 wasLoaded = true;
                 using var stream = ResourceLoader.StreamFromUrl(url);
@@ -294,11 +333,21 @@ namespace Alternet.Drawing
                 return ImageSet.FromSvgString(svg, size, size, color);
         }
 
+        internal void Resize(int size)
+        {
+            if (size > short.MaxValue || size < 0)
+                throw new ArgumentOutOfRangeException(nameof(size));
+
+            if (data.Length <= size)
+                Array.Resize(ref data, size + 1);
+        }
+
         internal class Data
         {
             public ImageSet? OriginalImage;
             public ImageSet?[] KnownColorImagesLight;
             public ImageSet?[] KnownColorImagesDark;
+            public Dictionary<Color, ImageSet>? ColoredImages;
 
             public Data()
             {

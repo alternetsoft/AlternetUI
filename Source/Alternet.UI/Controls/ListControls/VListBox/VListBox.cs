@@ -99,6 +99,18 @@ namespace Alternet.UI
         public virtual bool CheckOnClick { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets default size of the svg images.
+        /// </summary>
+        /// <remarks>
+        /// Each item has <see cref="ListControlItem.SvgImageSize"/> property where
+        /// this setting can be overriden. If <see cref="SvgImageSize"/> is not specified,
+        /// default toolbar image size is used. Currently only rectangular svg images
+        /// are supported.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual SizeI? SvgImageSize { get; set; }
+
+        /// <summary>
         /// Gets or sets whether horizontal scrollbar is visible in the control.
         /// </summary>
         public virtual bool HScrollBarVisible
@@ -718,7 +730,7 @@ namespace Alternet.UI
             if(string.IsNullOrEmpty(s))
                 s = "Wy";
 
-            var (normal, disabled, selected) = GetItemImages(itemIndex);
+            var (normal, disabled, selected) = GetItemImages(itemIndex, null);
             var maxHeightI =
                 MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
             var maxHeightD = PixelToDip(maxHeightI);
@@ -968,16 +980,37 @@ namespace Alternet.UI
         /// Gets item image.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
+        /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <returns></returns>
-        public virtual (Image? Normal, Image? Disabled, Image? Selected) GetItemImages(int itemIndex)
+        public virtual (Image? Normal, Image? Disabled, Image? Selected)
+            GetItemImages(int itemIndex, Color? svgColor)
         {
             var item = SafeItem(itemIndex);
             if (item is null)
                 return (null, null, null);
+
+            var svgImage = item.SvgImage;
+
+            if (svgImage is not null)
+            {
+                var imageSize = item.SvgImageSize ?? SvgImageSize
+                    ?? ToolBar.GetDefaultImageSize(this);
+                var imageHeight = imageSize.Height;
+                item.Image ??= svgImage.AsNormalImage(imageHeight, IsDarkBackground);
+                item.DisabledImage ??= svgImage.AsDisabledImage(imageHeight, IsDarkBackground);
+
+                if(svgColor is not null)
+                    item.SelectedImage ??= svgImage.ImageWithColor(imageHeight, svgColor);
+            }
+
+            var image = item.Image;
+            var disabledImage = item.DisabledImage ?? item.Image;
+            var selectedImage = item.SelectedImage ?? item.Image;
+
             return (
-                item.Image,
-                item.DisabledImage ?? item.Image,
-                item.SelectedImage ?? item.Image);
+                image,
+                disabledImage,
+                selectedImage);
         }
 
         /// <summary>
@@ -1401,8 +1434,6 @@ namespace Alternet.UI
 
                 if (rectRow.IntersectsWith(rectUpdate))
                 {
-                    /*wxDCClipper clip(*dc, rectRow);*/
-
                     if (itemPaintArgs is null)
                         itemPaintArgs = new(this, dc, rectRow, line);
                     else

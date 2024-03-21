@@ -15,12 +15,12 @@ ALTERNET_UI_API void Object_Release(Object* obj)
     obj->Release();
 }
 
-ALTERNET_UI_API uint64_t Object_GetId(Object* obj)
+ALTERNET_UI_API int Object_GetId(Object* obj)
 {
     return obj->GetId();
 }
 
-ALTERNET_UI_API void Object_SetId(Object* obj, uint64_t value)
+ALTERNET_UI_API void Object_SetId(Object* obj, int value)
 {
     obj->SetId(value);
 }

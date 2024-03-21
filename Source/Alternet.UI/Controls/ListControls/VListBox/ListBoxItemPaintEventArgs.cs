@@ -102,7 +102,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets normal and disabled images of the item.
         /// </summary>
-        public (Image? Normal, Image? Disabled, Image? Selected) ItemImages => ListBox.GetItemImages(ItemIndex);
+        public (Image? Normal, Image? Disabled, Image? Selected) ItemImages
+            => ListBox.GetItemImages(ItemIndex, ListBox.GetSelectedItemTextColor(ItemIndex));
 
         /// <summary>
         /// Gets control which item is painted.

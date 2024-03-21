@@ -406,7 +406,11 @@ namespace Alternet.UI
         /// contents of the control, if necessary.
         /// </summary>
         /// <param name="itemIndex">The item index to scroll into visibility.</param>
-        public virtual void EnsureVisible(int itemIndex) => Handler.EnsureVisible(itemIndex);
+        public virtual void EnsureVisible(int itemIndex)
+        {
+            if(Count > 0)
+                Handler.EnsureVisible(itemIndex);
+        }
 
         /// <summary>
         /// Returns the zero-based index of the item at the specified coordinates.

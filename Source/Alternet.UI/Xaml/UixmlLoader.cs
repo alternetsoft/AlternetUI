@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// Populates an existing root object with the object property values created
         /// from a source XAML.
         /// </summary>
-        internal static void LoadExistingEx(
+        public static void LoadExistingEx(
             Stream xamlStream,
             object existingObject,
             bool report = true,

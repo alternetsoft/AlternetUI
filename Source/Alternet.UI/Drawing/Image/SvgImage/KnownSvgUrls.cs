@@ -275,6 +275,16 @@ namespace Alternet.UI
         public static string UrlImageMoreActionsHorz { get; set; } =
             GetImageUrl("alternet-ellipsis");
 
+        /// <summary>
+        /// Gets or sets url used to load generic file icon.
+        /// </summary>
+        public static string UrlIconFile { get; set; } = GetImageUrl("alternet-file");
+
+        /// <summary>
+        /// Gets or sets url used to load generic folder icon.
+        /// </summary>
+        public static string UrlIconFolder { get; set; } = GetImageUrl("folder");
+
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
 }
