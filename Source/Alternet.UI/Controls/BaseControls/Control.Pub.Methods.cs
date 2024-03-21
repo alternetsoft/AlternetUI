@@ -519,10 +519,10 @@ namespace Alternet.UI
         /// <returns>An <see cref="object"/> that contains the return value
         /// from the delegate being invoked, or <c>null</c> if the delegate has
         /// no return value.</returns>
-        public virtual object? Invoke(Delegate method, object?[] args)
+        public virtual object? Invoke(Delegate? method, object?[] args)
         {
             if (method == null)
-                throw new ArgumentNullException(nameof(method));
+                return null;
             return SynchronizationService.Invoke(method, args);
         }
 
@@ -534,10 +534,10 @@ namespace Alternet.UI
         /// <returns>An <see cref="object"/> that contains the return value from
         /// the delegate being invoked, or <c>null</c> if the delegate has no
         /// return value.</returns>
-        public virtual object? Invoke(Delegate method)
+        public virtual object? Invoke(Delegate? method)
         {
             if (method == null)
-                throw new ArgumentNullException(nameof(method));
+                return null;
             return Invoke(method, Array.Empty<object?>());
         }
 
@@ -546,10 +546,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="action">An action to be called in the control's
         /// thread context.</param>
-        public virtual void Invoke(Action action)
+        public virtual void Invoke(Action? action)
         {
             if (action == null)
-                throw new ArgumentNullException(nameof(action));
+                return;
             Invoke(action, Array.Empty<object?>());
         }
 
