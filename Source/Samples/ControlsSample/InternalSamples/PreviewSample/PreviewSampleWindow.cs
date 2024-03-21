@@ -35,6 +35,8 @@ namespace ControlsSample
 
         public PreviewSampleWindow()
         {
+            Closing += PreviewSampleWindow_Closing;
+            State = WindowState.Normal;
             Margin = 10;
             Icon = Application.DefaultIcon;
             Title = "Alternet.UI Preview File Sample";
@@ -112,11 +114,16 @@ namespace ControlsSample
             }
         }
 
+        private void PreviewSampleWindow_Closing(object sender, WindowClosingEventArgs e)
+        {
+            preview.Reset();
+        }
+
         void SelectionChanged()
         {
             var item = fileListBox.SelectedItem;
 
-            Application.LogIf($"PreviewUixml: {item?.Path}", true);
+            Application.LogIf($"Preview file: {item?.Path}", true);
 
             if (item is null || item.Path is null || !item.IsFile)
             {
