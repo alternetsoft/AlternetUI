@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ namespace Alternet.UI
 
         public static readonly Dictionary<string, FolderInfoItem>? FolderInfo;
 
+        private string? selectedFolder;
+        private string searchPattern = "*";
+
         static FileListBox()
         {
 
@@ -29,12 +33,186 @@ namespace Alternet.UI
         {
         }
 
-        public bool AddFolder(string title, string path, SvgImage? image = null)
+        public bool AddUpperFolderItem { get; set; } = true;
+
+        public bool AddRootFolderItem { get; set; } = true;
+
+        public string SearchPattern
+        {
+            get
+            {
+                return searchPattern;
+            }
+
+            set
+            {
+                if (searchPattern == value)
+                    return;
+                searchPattern = value;
+                Reload();
+            }
+        }
+
+        public string? SelectedFolder
+        {
+            get => selectedFolder;
+
+            set
+            {
+                if (selectedFolder == value)
+                    return;
+                Application.LogIf($"FileListBox.SelectedFolder = {value}", true);
+                var oldSelectedFolder = selectedFolder;
+                selectedFolder = value;
+                try
+                {
+                    Reload(selectedFolder);
+                }
+                catch (Exception e)
+                {
+                    LogUtils.LogException(e);
+
+                    try
+                    {
+                        SelectedFolder = oldSelectedFolder;
+                    }
+                    catch
+                    {
+                        SelectedFolder = null;
+                    }
+                }
+            }
+        }
+
+        [Browsable(false)]
+        public bool SelectedItemIsFile => SelectedItem?.IsFile ?? false;
+
+        [Browsable(false)]
+        public string? SelectedItemPath
+        {
+            get => SelectedItem?.Path;
+
+            set
+            {
+                if (SelectedItemPath == value)
+                    return;
+                if(value is null)
+                {
+                    SelectedItem = null;
+                    return;
+                }
+
+                foreach(var item in Items)
+                {
+                    if (item is not FileListBoxItem item2)
+                        continue;
+                    if(item2.Path == value)
+                    {
+                        SelectedItem = item2;
+                        return;
+                    }
+                }
+            }
+        }
+
+        [Browsable(false)]
+        public new FileListBoxItem? SelectedItem
+        {
+            get => (FileListBoxItem?)base.SelectedItem;
+            set => base.SelectedItem = value;
+        }
+
+        public void Reload(string? selectPath = null)
+        {
+            DoInsideUpdate(() =>
+            {
+                RemoveAll();
+
+                if (selectedFolder is null)
+                {
+                    AddSpecialFolders();
+                    return;
+                }
+
+                if (AddRootFolderItem)
+                {
+                    var rootFolderItem = new FileListBoxItem("/", null);
+                    rootFolderItem.DoubleClickAction = RootFolderAction;
+                    rootFolderItem.SvgImage = DefaultFolderImage;
+                    Add(rootFolderItem);
+                }
+
+                if (AddUpperFolderItem)
+                {
+                    var upperFolderItem = new FileListBoxItem("..", null);
+                    upperFolderItem.DoubleClickAction = UpperFolderAction;
+                    upperFolderItem.SvgImage = DefaultFolderImage;
+                    Add(upperFolderItem);
+                }
+
+                var dirs = Directory.GetDirectories(selectedFolder);
+
+                foreach (var dir in dirs)
+                {
+                    AddFolder(null, dir);
+                }
+
+                var files = Directory.GetFiles(selectedFolder, searchPattern);
+
+                foreach (var file in files)
+                {
+                    AddFile(null, file);
+                }
+            });
+
+            Application.AddIdleTask(() =>
+            {
+                if (IsDisposed)
+                    return;
+                SelectedItem = null;
+            });
+
+            void RootFolderAction()
+            {
+                SelectedFolder = null;
+            }
+
+            void UpperFolderAction()
+            {
+                try
+                {
+                    var upperFolder = Path.Combine(selectedFolder, "..");
+                    var fullFolder = Path.GetFullPath(upperFolder);
+                    SelectedFolder = fullFolder;
+                }
+                catch (Exception e)
+                {
+                    LogUtils.LogException(e);
+                    SelectedFolder = null;
+                }
+            }
+        }
+
+        public bool AddFile(string? title, string path, SvgImage? image = null)
         {
             if (string.IsNullOrEmpty(path))
-                    return false;
+                return false;
+            image ??= DefaultFileImage;
+            title ??= Path.GetFileName(path);
+            var item = new FileListBoxItem(title, path);
+            item.SvgImage = image;
+            Add(item);
+            return true;
+        }
+
+        public bool AddFolder(string? title, string path, SvgImage? image = null)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
             image ??= DefaultFolderImage;
-            var item = new FileListBoxItem(title, path, FolderAction);
+            title ??= Path.GetFileName(path);
+            var item = new FileListBoxItem(title, path);
+            item.DoubleClickAction = FolderAction;
             item.SvgImage = image;
 
             Add(item);
@@ -43,13 +221,8 @@ namespace Alternet.UI
 
             void FolderAction()
             {
-
+                SelectedFolder = item.Path;
             }
-        }
-
-        public void AddGoToParentFolderItem(string thisFolder)
-        {
-
         }
 
         public bool AddSpecialFolder(Environment.SpecialFolder folder)
@@ -148,15 +321,51 @@ namespace Alternet.UI
             }
         }
 
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            var item = SelectedItem as ListControlItem;
+            var action = item?.DoubleClickAction;
+            action?.Invoke();
+        }
+
         public class FileListBoxItem : ListControlItem
         {
             public string? Path;
 
-            public FileListBoxItem(string title, string path, Action? doubleClick)
+            public FileListBoxItem(string title, string? path, Action? doubleClick = null)
             {
                 Text = title;
                 Path = path;
+                DoubleClickAction = doubleClick;
             }
+
+            [Browsable(false)]
+            public bool IsFolder
+            {
+                get
+                {
+                    var result = !string.IsNullOrEmpty(Path);
+                    if (result)
+                        result = Directory.Exists(Path);
+                    return result;
+                }
+            }
+
+            [Browsable(false)]
+            public bool IsFile
+            {
+                get
+                {
+                    var result = !string.IsNullOrEmpty(Path);
+                    if(result)
+                        result = File.Exists(Path);
+                    return result;
+                }
+            }
+
+            [Browsable(false)]
+            public string ExtensionLower => PathUtils.GetExtensionLower(Path);
         }
 
         public class FolderInfoItem
