@@ -1,3 +1,13 @@
+# 0.9.523 (2024 March 21)
+
+- Speedup C++ from/to C# NativeObject conversion. This increases overall application performance.
+- Uixml preview sample. Discussion and screenshot is here: https://github.com/alternetsoft/AlternetUI/discussions/130
+- Updated documentation.
+- ListControltem: SvgImage, SvgImageSize, DoubleClickAction.
+- SvgImage: ImageWithColor, ImageSetWithColor, LoadImage.
+- FileListBox, PreviewUixml, HiddenWindow controls.
+- Application: new static Invoke* methods similar to Control.Invoke* methods.
+
 # 0.9.522 (2024 March 20)
 
 - VCheckListBox.
