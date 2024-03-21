@@ -133,10 +133,7 @@ namespace ControlsSample
 
             if (item is null || item.Path is null || !item.IsFile)
             {
-                preview.Visible = false;
-                richText.Visible = true;
                 preview.FileName = null;
-                Refresh();
                 return;
             }
 
@@ -150,6 +147,7 @@ namespace ControlsSample
 
             richText.Visible = false;
             preview.Visible = true;
+            Refresh();
         }
 
         public void LoadWelcomePage()
