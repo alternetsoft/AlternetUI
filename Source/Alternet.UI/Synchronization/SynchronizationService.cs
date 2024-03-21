@@ -41,6 +41,20 @@ namespace Alternet.UI
             return invocation.ReturnValue;
         }
 
+        public static object? Invoke(Delegate? method)
+        {
+            if (method == null)
+                return null;
+            return Invoke(method, Array.Empty<object?>());
+        }
+
+        public static void Invoke(Action? action)
+        {
+            if (action == null)
+                return;
+            Invoke(action, Array.Empty<object?>());
+        }
+
         public static object? Invoke(Delegate method, object?[] args)
         {
             if (!InvokeRequired)
