@@ -136,6 +136,7 @@ namespace ControlsSample
                 preview.Visible = false;
                 richText.Visible = true;
                 preview.FileName = null;
+                Refresh();
                 return;
             }
 
@@ -147,11 +148,8 @@ namespace ControlsSample
             else
                 preview.FileName = null;
 
-            DoInsideUpdate(() =>
-            {
-                richText.Visible = false;
-                preview.Visible = true;
-            });
+            richText.Visible = false;
+            preview.Visible = true;
         }
 
         public void LoadWelcomePage()
