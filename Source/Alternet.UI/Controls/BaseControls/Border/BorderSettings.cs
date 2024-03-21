@@ -167,7 +167,6 @@ namespace Alternet.UI
 
             set
             {
-                value ??= Default.Color ?? BorderSideSettings.DefaultColor;
                 SetColors(value, value, value, value);
             }
         }
@@ -343,7 +342,11 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Color GetDefaultBorderColor(Control? control)
         {
-            return SystemColors.GrayText;
+            if (control is null)
+                return SystemColors.GrayText;
+            var isDark = control.IsDarkBackground;
+            return Border.DefaultColor?.Get(isDark)
+                ?? TabControl.GetDefaultInteriorBorderColor(isDark);
         }
 
         /// <summary>
@@ -438,24 +441,29 @@ namespace Alternet.UI
                 return;
             }
 
-            if (Top.Width > 0 && ColorIsOk(Top.Color))
+            var topColor = Top.Color ?? defaultColor;
+            var bottomColor = Bottom.Color ?? defaultColor;
+            var leftColor = Left.Color ?? defaultColor;
+            var rightColor = Right.Color ?? defaultColor;
+
+            if (Top.Width > 0 && ColorIsOk(topColor))
             {
-                dc.FillRectangle(Top.GetBrush(defaultColor), GetTopRectangle(rect));
+                dc.FillRectangle(topColor.AsBrush, GetTopRectangle(rect));
             }
 
-            if (Bottom.Width > 0 && ColorIsOk(Bottom.Color))
+            if (Bottom.Width > 0 && ColorIsOk(bottomColor))
             {
-                dc.FillRectangle(Bottom.GetBrush(defaultColor), GetBottomRectangle(rect));
+                dc.FillRectangle(bottomColor.AsBrush, GetBottomRectangle(rect));
             }
 
-            if (Left.Width > 0 && ColorIsOk(Left.Color))
+            if (Left.Width > 0 && ColorIsOk(leftColor))
             {
-                dc.FillRectangle(Left.GetBrush(defaultColor), GetLeftRectangle(rect));
+                dc.FillRectangle(leftColor.AsBrush, GetLeftRectangle(rect));
             }
 
-            if (Right.Width > 0 && ColorIsOk(Right.Color))
+            if (Right.Width > 0 && ColorIsOk(rightColor))
             {
-                dc.FillRectangle(Right.GetBrush(defaultColor), GetRightRectangle(rect));
+                dc.FillRectangle(rightColor.AsBrush, GetRightRectangle(rect));
             }
         }
 
@@ -464,9 +472,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Color to check.</param>
         /// <returns></returns>
-        public virtual bool ColorIsOk(Color color)
+        public virtual bool ColorIsOk(Color? color)
         {
-            return color.IsOk && color != Color.Transparent && !color.IsEmpty;
+            return color is not null && color.IsOk && color != Color.Transparent && !color.IsEmpty;
         }
 
         /// <summary>
@@ -476,7 +484,7 @@ namespace Alternet.UI
         /// <param name="topColor">Color of the top edge.</param>
         /// <param name="rightColor">Color of the right edge.</param>
         /// <param name="bottomColor">Color of the bottom edge.</param>
-        public bool SetColors(Color leftColor, Color topColor, Color rightColor, Color bottomColor)
+        public bool SetColors(Color? leftColor, Color? topColor, Color? rightColor, Color? bottomColor)
         {
             var result = false;
 
