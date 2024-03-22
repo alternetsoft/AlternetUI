@@ -107,8 +107,11 @@ namespace ControlsSample
                     if (File.Exists(destPath))
                         continue;
                     using var stream = assembly.GetManifestResourceStream(item);
-                    StreamUtils.CopyStream(stream, destPath);
-                    number++;
+                    if(stream is not null)
+                    {
+                        StreamUtils.CopyStream(stream, destPath);
+                        number++;
+                    }
                 }
 
                 if (number > 0)
@@ -122,7 +125,7 @@ namespace ControlsSample
             }
         }
 
-        private void PreviewSampleWindow_Closing(object sender, WindowClosingEventArgs e)
+        private void PreviewSampleWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
             preview.Reset();
         }
@@ -207,7 +210,7 @@ namespace ControlsSample
             r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
         }
 
-        private void FileListBox_SelectionChanged(object sender, EventArgs e)
+        private void FileListBox_SelectionChanged(object? sender, EventArgs e)
         {
             Application.AddIdleTask(SelectionChanged);
         }
