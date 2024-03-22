@@ -314,10 +314,41 @@ namespace Alternet.Drawing
         /// Creates new <see cref="ImageSet"/> and loads there this svg image
         /// with the specified size and color.
         /// </summary>
-        /// <param name="size">Svg image size.</param>
-        /// <param name="color">Color of the mono svg image.</param>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="color">Color of the mono svg image. Optional.</param>
         /// <returns></returns>
         public virtual ImageSet? LoadImage(int size, Color? color = null)
+        {
+            LoadImage();
+
+            if (svg is null)
+                return ImageSet.Empty;
+            else
+                return ImageSet.FromSvgString(svg, size, size, color);
+        }
+
+        /// <summary>
+        /// Creates new <see cref="ImageSet"/> and loads there this svg image
+        /// with the specified size and color.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="color">Color of the mono svg image. Optional.</param>
+        /// <returns></returns>
+        public virtual ImageSet? LoadImage(SizeI size, Color? color = null)
+        {
+            LoadImage();
+
+            if (svg is null)
+                return ImageSet.Empty;
+            else
+                return ImageSet.FromSvgString(svg, size.Width, size.Height, color);
+        }
+
+        /// <summary>
+        /// Loads image if it was not yet loaded from the url or stream
+        /// specified in the constructor.
+        /// </summary>
+        public virtual void LoadImage()
         {
             if (svg is null && url is not null && !wasLoaded)
             {
@@ -326,11 +357,6 @@ namespace Alternet.Drawing
                 using var reader = new StreamReader(stream);
                 svg = reader.ReadToEnd();
             }
-
-            if (svg is null)
-                return ImageSet.Empty;
-            else
-                return ImageSet.FromSvgString(svg, size, size, color);
         }
 
         internal void Resize(int size)
