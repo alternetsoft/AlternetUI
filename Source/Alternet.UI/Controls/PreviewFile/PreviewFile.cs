@@ -5,8 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Allows to preview the file using one of the registered preview controls.
+    /// </summary>
     public class PreviewFile : Control, IFilePreview
     {
         private readonly Label label = new()
@@ -27,6 +32,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewFile"/> class.
+        /// </summary>
         public PreviewFile()
         {
             cardPanel.Parent = this;
@@ -37,8 +45,15 @@ namespace Alternet.UI
 
         Control IFilePreview.Control { get => this; }
 
+        /// <summary>
+        /// Gets list of registered preview controls. One of these
+        /// controls will be used to preview the file.
+        /// </summary>
         public IList<PreviewFileRegisterItem> Register => register;
 
+        /// <summary>
+        /// Gets or sets path to the file which will be previewed in the control.
+        /// </summary>
         public string? FileName
         {
             get => fileName;
@@ -54,18 +69,27 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Shows text "No preview available".
+        /// </summary>
         public void ShowNoPreview()
         {
             string noPreviewText = CommonStrings.Default.NoPreviewAvailable;
             ShowLabel(noPreviewText);
         }
 
+        /// <summary>
+        /// Shows custom text.
+        /// </summary>
         public void ShowLabel(string text)
         {
             label.Text = text;
             cardPanel.SelectCard(0);
         }
 
+        /// <summary>
+        /// Resets preview control unloading any data.
+        /// </summary>
         public void Reset()
         {
             fileName = null;
@@ -81,12 +105,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Shows text "Select a file to preview".
+        /// </summary>
         public void ShowNoFile()
         {
             string selectFileToPreviewText = CommonStrings.Default.SelectFileToPreview;
             ShowLabel(selectFileToPreviewText);
         }
 
+        /// <summary>
+        /// Reloads current previewed file.
+        /// </summary>
         public void Reload()
         {
             if(fileName is null || !File.Exists(fileName))
@@ -119,6 +149,11 @@ namespace Alternet.UI
             cardPanel.SelectCard(item.Card);
         }
 
+        /// <summary>
+        /// Gets registered item for the specified file.
+        /// </summary>
+        /// <param name="fileName">Path to file.</param>
+        /// <returns></returns>
         public PreviewFileRegisterItem? GetItem(string? fileName)
         {
             if (fileName is null)
@@ -133,6 +168,9 @@ namespace Alternet.UI
             return null;
         }
 
+        /// <summary>
+        /// Registers default preview controls for use with this object.
+        /// </summary>
         public void RegisterDefaultPreviewControls()
         {
             RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
@@ -140,15 +178,29 @@ namespace Alternet.UI
             RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
         }
 
+        /// <summary>
+        /// Registeres preview control for use with this object.
+        /// </summary>
+        /// <param name="item">Preview control information.</param>
         public void RegisterPreview(PreviewFileRegisterItem item)
         {
             register.Add(item);
         }
 
+        /// <summary>
+        /// Implements registered item for the preview control.
+        /// </summary>
         public class PreviewFileRegisterItem
         {
             private Control? control;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="PreviewFileRegisterItem"/> class.
+            /// </summary>
+            /// <param name="isSupported">Function which is called when preview control
+            /// needs to be queried whether is supports preview of the specified file.</param>
+            /// <param name="createControl">Function which is called when preview control
+            /// needs to be created.</param>
             public PreviewFileRegisterItem(
                 Func<string, bool> isSupported,
                 Func<IFilePreview> createControl)
@@ -157,11 +209,17 @@ namespace Alternet.UI
                 this.CreateControlFn = createControl;
             }
 
+            /// <summary>
+            /// Gets whether control is created.
+            /// </summary>
             public bool ControlCreated
             {
                 get => control is not null;
             }
 
+            /// <summary>
+            /// Gets preview control.
+            /// </summary>
             public Control Control
             {
                 get
@@ -177,6 +235,11 @@ namespace Alternet.UI
 
             internal CardPanelItem? Card { get; set; }
 
+            /// <summary>
+            /// Gets whether specified file is supported for preview by this item.
+            /// </summary>
+            /// <param name="fileName">Path to file.</param>
+            /// <returns></returns>
             public bool IsSupportedFile(string? fileName)
             {
                 if (fileName is null)

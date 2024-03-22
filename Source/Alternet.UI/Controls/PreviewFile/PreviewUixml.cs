@@ -5,8 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Preview control which can preview "uixml" forms.
+    /// There is also <see cref="PreviewUixmlSplitted"/> class which allows to preview
+    /// uixml together with its source code.
+    /// </summary>
     public class PreviewUixml : Control, IFilePreview
     {
         private static HiddenWindow? previewWindow;
@@ -21,11 +28,17 @@ namespace Alternet.UI
 
         private string? fileName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewUixml"/> class.
+        /// </summary>
         public PreviewUixml()
         {
             control.Parent = this;
         }
 
+        /// <summary>
+        /// <inheritdoc cref="IFilePreview.FileName"/>
+        /// </summary>
         public string? FileName
         {
             get => fileName;
@@ -41,6 +54,11 @@ namespace Alternet.UI
 
         Control IFilePreview.Control { get => this; }
 
+        /// <summary>
+        /// Gets whether specified file is supported in this preview control.
+        /// </summary>
+        /// <param name="fileName">Path to file.</param>
+        /// <returns></returns>
         public static bool IsSupportedFile(string fileName)
         {
             var ext = PathUtils.GetExtensionLower(fileName);
@@ -48,16 +66,26 @@ namespace Alternet.UI
             return ext == "uixml";
         }
 
+        /// <summary>
+        /// Creates this preview control.
+        /// </summary>
+        /// <returns></returns>
         public static IFilePreview CreatePreviewControl()
         {
             return new PreviewUixml();
         }
 
+        /// <summary>
+        /// Reloads previewed file.
+        /// </summary>
         public void Reload()
         {
             Application.DoInsideBusyCursor(ReloadInternal);
         }
 
+        /// <summary>
+        /// Resets this object unloading the file which is currently previewed.
+        /// </summary>
         public void Reset()
         {
             if (previewWindow is null)
@@ -71,12 +99,14 @@ namespace Alternet.UI
             previewWindow = null;
         }
 
+        /// <inheritdoc/>
         protected override void DisposeResources()
         {
             base.DisposeResources();
             Reset();
         }
 
+        /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.KeyData == Keys.F5)
@@ -139,7 +169,7 @@ namespace Alternet.UI
             }
         }
 
-        private void PreviewWindow_Disposed(object sender, EventArgs e)
+        private void PreviewWindow_Disposed(object? sender, EventArgs e)
         {
             Application.LogIf("PreviewWindow.Disposed", false);
         }

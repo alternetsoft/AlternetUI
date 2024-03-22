@@ -9,17 +9,38 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// <see cref="VListBox"/> descendant which allows to browse folder contents.
+    /// </summary>
     public class FileListBox : VListBox
     {
-        public static SvgImage? DefaultFileImage = new MonoSvgImage(KnownSvgUrls.UrlIconFile);
-
-        public static SvgImage? DefaultFolderImage = new MonoSvgImage(KnownSvgUrls.UrlIconFolder);
-
+        /// <summary>
+        /// Gets or sets list of special folder which are hidden.
+        /// </summary>
         public static readonly List<Environment.SpecialFolder>? HiddenSpecialFolders;
 
+        /// <summary>
+        /// Gets or sets list of visible special folders. If specified, only these
+        /// folders will be visible on the root level.
+        /// </summary>
         public static readonly List<Environment.SpecialFolder>? VisibleSpecialFolders;
 
+        /// <summary>
+        /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.
+        /// <see cref="FolderInfoItem"/> allows to specify icon, custom title
+        /// and some other information.
+        /// </summary>
         public static readonly Dictionary<string, FolderInfoItem>? FolderInfo;
+
+        /// <summary>
+        /// Gets or sets default svg image used for the "file" items.
+        /// </summary>
+        public static SvgImage? DefaultFileImage = new MonoSvgImage(KnownSvgUrls.UrlIconFile);
+
+        /// <summary>
+        /// Gets or sets default svg image used for the "folder" items.
+        /// </summary>
+        public static SvgImage? DefaultFolderImage = new MonoSvgImage(KnownSvgUrls.UrlIconFolder);
 
         private string? selectedFolder;
         private string searchPattern = "*";
@@ -27,19 +48,34 @@ namespace Alternet.UI
 
         static FileListBox()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileListBox"/> class.
+        /// </summary>
         public FileListBox()
         {
         }
 
+        /// <summary>
+        /// Gets or sets whether to add ".." item which allows to open parent folder.
+        /// </summary>
         public bool AddUpperFolderItem { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets whether to add "/" item which allows to open root folder.
+        /// </summary>
         public bool AddRootFolderItem { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets whether double click on folder opens it's content in the control.
+        /// </summary>
         public bool AllowGoToSubFolder { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets search pattern which allows to limit files shown in the control.
+        /// An example: "*.uixml". Default value is "*" (all files).
+        /// </summary>
         public string SearchPattern
         {
             get
@@ -56,6 +92,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets folder which is currently opened in the control.
+        /// </summary>
         public string? SelectedFolder
         {
             get => selectedFolder;
@@ -69,7 +108,7 @@ namespace Alternet.UI
                 selectedFolder = value;
                 try
                 {
-                    Reload(selectedFolder);
+                    Reload();
                 }
                 catch (Exception e)
                 {
@@ -77,19 +116,28 @@ namespace Alternet.UI
 
                     try
                     {
-                        SelectedFolder = oldSelectedFolder;
+                        selectedFolder = oldSelectedFolder;
+                        Reload();
                     }
                     catch
                     {
-                        SelectedFolder = null;
+                        selectedFolder = null;
+                        Reload();
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Gets whether selected item is file.
+        /// </summary>
         [Browsable(false)]
         public bool SelectedItemIsFile => SelectedItem?.IsFile ?? false;
 
+        /// <summary>
+        /// Gets path of the selected item. When this property is changed,
+        /// selected item is updated to the item with the specified path.
+        /// </summary>
         [Browsable(false)]
         public string? SelectedItemPath
         {
@@ -118,6 +166,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets item which is currently selected.
+        /// </summary>
         [Browsable(false)]
         public new FileListBoxItem? SelectedItem
         {
@@ -125,10 +176,17 @@ namespace Alternet.UI
             set => base.SelectedItem = value;
         }
 
+        /// <summary>
+        /// Gets whether control is reloading and selection change events
+        /// should be ingored.
+        /// </summary>
         [Browsable(false)]
-        public bool IsReloading { get => reloading > 0;}
+        public bool IsReloading { get => reloading > 0; }
 
-        public void Reload(string? selectPath = null)
+        /// <summary>
+        /// Reloads contents of the currently opened folder.
+        /// </summary>
+        public void Reload()
         {
             SelectedItem = null;
             EnsureVisible(0);
@@ -214,6 +272,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Adds file to the control.
+        /// </summary>
+        /// <param name="title">Optional title of the file.</param>
+        /// <param name="path">Path to file.</param>
+        /// <param name="image">File image. If not specified, default image will be used.</param>
+        /// <returns></returns>
         public bool AddFile(string? title, string path, SvgImage? image = null)
         {
             if (string.IsNullOrEmpty(path))
@@ -226,6 +291,13 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <summary>
+        /// Adds folder to the control.
+        /// </summary>
+        /// <param name="title">Optional title of the folder.</param>
+        /// <param name="path">Path to folder.</param>
+        /// <param name="image">Folder image. If not specified, default image will be used.</param>
+        /// <returns></returns>
         public bool AddFolder(string? title, string path, SvgImage? image = null)
         {
             if (string.IsNullOrEmpty(path))
@@ -247,6 +319,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Adds special folder specified using <see cref="Environment.SpecialFolder"/>
+        /// enumeration.
+        /// </summary>
+        /// <param name="folder">Special folder kind.</param>
+        /// <returns></returns>
         public bool AddSpecialFolder(Environment.SpecialFolder folder)
         {
             try
@@ -261,7 +339,7 @@ namespace Alternet.UI
 
                 string? title = null;
                 SvgImage? image = null;
-                
+
                 if(FolderInfo is not null)
                 {
                     if (FolderInfo.TryGetValue(path, out var folderInfo))
@@ -281,6 +359,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Adds all special folders to the control.
+        /// <see cref="VisibleSpecialFolders"/> and <see cref="HiddenSpecialFolders"/>
+        /// can be used to specify what folders are added.
+        /// </summary>
         public void AddSpecialFolders()
         {
             if(VisibleSpecialFolders is not null)
@@ -343,6 +426,7 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if(e.KeyData == Keys.F5)
@@ -354,17 +438,32 @@ namespace Alternet.UI
             base.OnKeyDown(e);
         }
 
+        /// <summary>
+        /// Impements item of the <see cref="FileListBox"/> control.
+        /// </summary>
         public class FileListBoxItem : ListControlItem
         {
-            public string? Path;
-
-            public FileListBoxItem(string title, string? path, Action? doubleClick = null)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.
+            /// </summary>
+            /// <param name="title">Title of the item.</param>
+            /// <param name="path">Path to file or folder.</param>
+            /// <param name="doubleClick">Double click action.</param>
+            public FileListBoxItem(string? title, string? path, Action? doubleClick = null)
             {
-                Text = title;
+                Text = title ?? System.IO.Path.GetFileName(path) ?? string.Empty;
                 Path = path;
                 DoubleClickAction = doubleClick;
             }
 
+            /// <summary>
+            /// Gets or sets path to the file.
+            /// </summary>
+            public string? Path { get; set; }
+
+            /// <summary>
+            /// Gets whether item is folder.
+            /// </summary>
             [Browsable(false)]
             public bool IsFolder
             {
@@ -377,6 +476,9 @@ namespace Alternet.UI
                 }
             }
 
+            /// <summary>
+            /// Gets whether item is file.
+            /// </summary>
             [Browsable(false)]
             public bool IsFile
             {
@@ -389,13 +491,27 @@ namespace Alternet.UI
                 }
             }
 
+            /// <summary>
+            /// Gets extension in the lower case and without "." character.
+            /// </summary>
             [Browsable(false)]
             public string ExtensionLower => PathUtils.GetExtensionLower(Path);
         }
 
+        /// <summary>
+        /// Contains properties which allow to specify custom image and title
+        /// for the file. Used in <see cref="FolderInfo"/> dictionary.
+        /// </summary>
         public class FolderInfoItem
         {
+            /// <summary>
+            /// Gets or sets custom image for the file.
+            /// </summary>
             public SvgImage? Image;
+
+            /// <summary>
+            /// Gets or sets custom title.
+            /// </summary>
             public string? Title;
         }
     }
