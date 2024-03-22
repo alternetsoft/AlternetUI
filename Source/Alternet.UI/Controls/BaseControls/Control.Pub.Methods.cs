@@ -752,24 +752,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Executes <paramref name="action"/> between calls to <see cref="BeginUpdate"/>
-        /// and <see cref="EndUpdate"/>.
-        /// </summary>
-        /// <param name="action">Action that will be executed.</param>
-        public virtual void DoInsideUpdate(Action action)
-        {
-            BeginUpdate();
-            try
-            {
-                action();
-            }
-            finally
-            {
-                EndUpdate();
-            }
-        }
-
-        /// <summary>
         /// Notifies that no more native control recreates are allowed.
         /// </summary>
         /// <remarks>
@@ -1125,10 +1107,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginUpdate"/>
+        /// and <see cref="EndUpdate"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        /// <remarks>
+        /// Do not recreate control (or its child controls), add or remove child controls between
+        /// <see cref="BeginUpdate"/> and <see cref="EndUpdate"/> calls.
+        /// This method is mainly for multiple add or remove of the items in list like controls.
+        /// </remarks>
+        public virtual void DoInsideUpdate(Action action)
+        {
+            BeginUpdate();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
         /// Maintains performance while performing slow operations on a control
         /// by preventing the control from
         /// drawing until the <see cref="EndUpdate"/> method is called.
         /// </summary>
+        /// <remarks>
+        /// Do not recreate control (or its child controls), add or remove child controls between
+        /// <see cref="BeginUpdate"/> and <see cref="EndUpdate"/> calls.
+        /// This method is mainly for multiple add or remove of the items in list like controls.
+        /// </remarks>
         public virtual int BeginUpdate()
         {
             updateCount++;
