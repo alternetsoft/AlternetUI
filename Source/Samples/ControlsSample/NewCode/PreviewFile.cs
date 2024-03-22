@@ -20,7 +20,7 @@ namespace Alternet.UI
         {
         };
 
-        private List<PreviewFileRegisterItem> register = new();
+        private readonly List<PreviewFileRegisterItem> register = new();
         private string? fileName;
 
         static PreviewFile()
@@ -136,6 +136,7 @@ namespace Alternet.UI
         public void RegisterDefaultPreviewControls()
         {
             RegisterPreview(new(PreviewUixml.IsSupportedFile, PreviewUixml.CreatePreviewControl));
+            RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
             RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
         }
 

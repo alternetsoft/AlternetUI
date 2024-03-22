@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     public class PreviewInBrowser : Control, IFilePreview
     {
-        public static string[] SupportedExtensions = new string[]
+        public static List<string> SupportedExtensions = new()
         {
             "html",
             "htm",
@@ -16,15 +16,10 @@ namespace Alternet.UI
             "png",
             "svg",
             "bmp",
-            "txt",
             "mp3",
             "wav",
             "jpg",
             "jpeg",
-            "xml",
-            "js",
-            "cs",
-            "css",
         };
 
         private readonly WebBrowser browser = new()

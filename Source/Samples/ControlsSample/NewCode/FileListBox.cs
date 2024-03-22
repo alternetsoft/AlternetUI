@@ -38,6 +38,8 @@ namespace Alternet.UI
 
         public bool AddRootFolderItem { get; set; } = true;
 
+        public bool AllowGoToSubFolder { get; set; } = true;
+
         public string SearchPattern
         {
             get
@@ -240,7 +242,8 @@ namespace Alternet.UI
 
             void FolderAction()
             {
-                SelectedFolder = item.Path;
+                if (AllowGoToSubFolder)
+                    SelectedFolder = item.Path;
             }
         }
 
