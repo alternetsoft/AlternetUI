@@ -135,7 +135,7 @@ namespace Alternet.UI
 
         public void RegisterDefaultPreviewControls()
         {
-            RegisterPreview(new(PreviewUixml.IsSupportedFile, PreviewUixml.CreatePreviewControl));
+            RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
             RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
             RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
         }
