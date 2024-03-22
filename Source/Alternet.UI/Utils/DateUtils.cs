@@ -16,5 +16,19 @@ namespace Alternet.UI
         /// or in other situations.
         /// </summary>
         public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
+
+        /// <summary>
+        /// Gets current time in milliseconds.
+        /// </summary>
+        /// <returns></returns>
+        public static long GetNowInMilliseconds()
+            => DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+        /// <summary>
+        /// Gets current time in milliseconds using
+        /// <see cref="DateTimeOffset.ToUnixTimeMilliseconds()"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static long GetNowInUnixMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
     }
 }
