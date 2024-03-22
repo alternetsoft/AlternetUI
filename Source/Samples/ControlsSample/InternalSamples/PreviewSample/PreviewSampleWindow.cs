@@ -28,7 +28,7 @@ namespace ControlsSample
             HasBorder = false,
         };
 
-        private readonly PreviewUixml preview = new()
+        private readonly PreviewFile preview = new()
         {
 
         };
@@ -51,7 +51,6 @@ namespace ControlsSample
             panel.BottomPanel.Height = 200;
             panel.Parent = this;
             fileListBox.Parent = panel.LeftPanel;
-            fileListBox.SearchPattern = "*.uixml";
             richText.Parent = panel.FillPanel;
             preview.Visible = false;
             preview.Parent = panel.FillPanel;
@@ -132,6 +131,12 @@ namespace ControlsSample
 
         void SelectionChanged()
         {
+            if (fileListBox.IsReloading)
+            {
+                preview.FileName = null;
+                return;
+            }
+
             var item = fileListBox.SelectedItem;
 
             if (item is null || item.Path is null || !item.IsFile)
@@ -142,11 +147,7 @@ namespace ControlsSample
 
             Application.LogIf($"Preview: {item.Path}", true);
 
-            var ext = item.ExtensionLower;
-            if (ext == "uixml")
-                preview.FileName = item.Path;
-            else
-                preview.FileName = null;
+            preview.FileName = item.Path;
 
             richText.Visible = false;
             preview.Visible = true;
@@ -198,9 +199,7 @@ namespace ControlsSample
             r.NewLine();
 
             r.NewLine(2);
-            r.WriteText("Currently supported: uixml.");
-            r.NewLine();
-            r.WriteText("Will be supported: html, images, txt, folder contents.");
+            r.WriteText("Currently supported: uixml, html, images, sounds, txt.");
             r.NewLine(2);
 
             r.EndSuppressUndo();

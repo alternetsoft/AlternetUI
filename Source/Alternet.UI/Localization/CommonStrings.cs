@@ -238,5 +238,11 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ToolbarSeeMore { get; set; } = "See more";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string NoPreviewAvailable { get; set; } = "No preview available.";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string SelectFileToPreview { get; set; } = "Select a file to preview.";
     }
 }

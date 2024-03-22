@@ -23,6 +23,7 @@ namespace Alternet.UI
 
         private string? selectedFolder;
         private string searchPattern = "*";
+        private int reloading;
 
         static FileListBox()
         {
@@ -122,9 +123,34 @@ namespace Alternet.UI
             set => base.SelectedItem = value;
         }
 
+        [Browsable(false)]
+        public bool IsReloading { get => reloading > 0;}
+
         public void Reload(string? selectPath = null)
         {
-            DoInsideUpdate(() =>
+            SelectedItem = null;
+            EnsureVisible(0);
+
+            try
+            {
+                reloading++;
+
+                Application.AddIdleTask(() =>
+                {
+                    if (IsDisposed)
+                        return;
+                    reloading--;
+                    SelectedItem = null;
+                    EnsureVisible(0);
+                });
+
+                DoInsideUpdate(ReloadFn);
+            }
+            finally
+            {
+            }
+
+            void ReloadFn()
             {
                 RemoveAll();
 
@@ -163,15 +189,7 @@ namespace Alternet.UI
                 {
                     AddFile(null, file);
                 }
-            });
-
-            Application.AddIdleTask(() =>
-            {
-                if (IsDisposed)
-                    return;
-                SelectedItem = null;
-                EnsureVisible(0);
-            });
+            }
 
             void RootFolderAction()
             {

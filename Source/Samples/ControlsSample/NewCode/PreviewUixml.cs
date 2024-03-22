@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class PreviewUixml : Control
+    public class PreviewUixml : Control, IFilePreview
     {
         private static HiddenWindow? previewWindow;
 
@@ -39,15 +39,18 @@ namespace Alternet.UI
             }
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.F5)
-            {
-                e.Handled = true;
-                Reload();
-            }
+        Control IFilePreview.Control { get => this; }
 
-            base.OnKeyDown(e);
+        public static bool IsSupportedFile(string fileName)
+        {
+            var ext = PathUtils.GetExtensionLower(fileName);
+
+            return ext == "uixml";
+        }
+
+        public static IFilePreview CreatePreviewControl()
+        {
+            return new PreviewUixml();
         }
 
         public void Reload()
@@ -72,6 +75,17 @@ namespace Alternet.UI
         {
             base.DisposeResources();
             Reset();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F5)
+            {
+                e.Handled = true;
+                Reload();
+            }
+
+            base.OnKeyDown(e);
         }
 
         private void ReloadInternal()
