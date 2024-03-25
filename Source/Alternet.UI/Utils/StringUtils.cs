@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,6 +41,11 @@ namespace Alternet.UI
         /// Gets initialized string with one space character.
         /// </summary>
         public const string OneSpace = " ";
+
+        /// <summary>
+        /// Gets initialized string with one double quote character (").
+        /// </summary>
+        public const string OneDoubleQuote = "\"";
 
         /// <summary>
         /// Gets initialized string with one carriage return.
@@ -86,6 +92,18 @@ namespace Alternet.UI
                 comparerObjectUsingToString ??= new ComparerUsingToString<object>();
                 return comparerObjectUsingToString;
             }
+        }
+
+        /// <summary>
+        /// Modfies specified string by adding prefix and suffix.
+        /// </summary>
+        /// <param name="s">String to modify.</param>
+        /// <param name="prefixAndSuffix">Prefix and suffix string.</param>
+        /// <returns>Modified string with prefix and suffix.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string PrefixSuffix(string s, string prefixAndSuffix)
+        {
+            return $"{prefixAndSuffix}{s}{prefixAndSuffix}";
         }
 
         /// <summary>
@@ -164,6 +182,7 @@ namespace Alternet.UI
         /// Generates unique string in the format A00000000000000000000000000000000 where
         /// 0 represents a digit.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetUniqueString()
         {
             return $"A{Guid.NewGuid():N}";
@@ -173,6 +192,7 @@ namespace Alternet.UI
         /// Gets whether <paramref name="text"/> is a hex number.
         /// </summary>
         /// <param name="text">Text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsHexNumber(string? text)
         {
             if (text is null)
@@ -281,6 +301,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseSByte(
             string? s,
             NumberStyles style,
@@ -292,6 +313,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseByte(
             string? s,
             NumberStyles style,
@@ -303,6 +325,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseInt16(
             string? s,
             NumberStyles style,
@@ -314,6 +337,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseUInt16(
             string? s,
             NumberStyles style,
@@ -325,6 +349,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseInt32(
             string? s,
             NumberStyles style,
@@ -336,6 +361,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseUInt32(
             string? s,
             NumberStyles style,
@@ -347,6 +373,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseInt64(
             string? s,
             NumberStyles style,
@@ -358,6 +385,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseUInt64(
             string? s,
             NumberStyles style,
@@ -369,6 +397,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseSingle(
             string? s,
             NumberStyles style,
@@ -380,6 +409,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseDouble(
             string? s,
             NumberStyles style,
@@ -391,6 +421,7 @@ namespace Alternet.UI
             return isOk;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryParseDecimal(
             string? s,
             NumberStyles style,
