@@ -31,7 +31,7 @@
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="System.Runtime"  Version="4.3.1" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
 
@@ -296,12 +296,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false"
-          Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false"
-          Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True"
-          PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True" PackagePath="build" />
 
     <None Include="build\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
     <None Include="build\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
@@ -339,8 +336,7 @@
 
   <!-- ================================================= -->
   <!-- remove .. in path -->
-  <Target Name="CreateAllClassesXml"
-          AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
+  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
 
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>

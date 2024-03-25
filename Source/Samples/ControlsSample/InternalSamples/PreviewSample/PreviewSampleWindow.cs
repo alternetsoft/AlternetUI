@@ -28,7 +28,7 @@ namespace ControlsSample
             HasBorder = false,
         };
 
-        private readonly PreviewUixml preview = new()
+        private readonly PreviewFile preview = new()
         {
 
         };
@@ -51,7 +51,6 @@ namespace ControlsSample
             panel.BottomPanel.Height = 200;
             panel.Parent = this;
             fileListBox.Parent = panel.LeftPanel;
-            fileListBox.SearchPattern = "*.uixml";
             richText.Parent = panel.FillPanel;
             preview.Visible = false;
             preview.Parent = panel.FillPanel;
@@ -107,8 +106,11 @@ namespace ControlsSample
                     if (File.Exists(destPath))
                         continue;
                     using var stream = assembly.GetManifestResourceStream(item);
-                    StreamUtils.CopyStream(stream, destPath);
-                    number++;
+                    if(stream is not null)
+                    {
+                        StreamUtils.CopyStream(stream, destPath);
+                        number++;
+                    }
                 }
 
                 if (number > 0)
@@ -122,39 +124,34 @@ namespace ControlsSample
             }
         }
 
-        private void PreviewSampleWindow_Closing(object sender, WindowClosingEventArgs e)
+        private void PreviewSampleWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
             preview.Reset();
         }
 
         void SelectionChanged()
         {
+            if (fileListBox.IsReloading)
+            {
+                preview.FileName = null;
+                return;
+            }
+
             var item = fileListBox.SelectedItem;
 
             if (item is null || item.Path is null || !item.IsFile)
             {
-                DoInsideUpdate(() =>
-                {
-                    richText.Visible = true;
-                    preview.Visible = false;
-                });
                 preview.FileName = null;
                 return;
             }
 
             Application.LogIf($"Preview: {item.Path}", true);
 
-            var ext = item.ExtensionLower;
-            if (ext == "uixml")
-                preview.FileName = item.Path;
-            else
-                preview.FileName = null;
+            preview.FileName = item.Path;
 
-            DoInsideUpdate(() =>
-            {
-                richText.Visible = false;
-                preview.Visible = true;
-            });
+            richText.Visible = false;
+            preview.Visible = true;
+            Refresh();
         }
 
         public void LoadWelcomePage()
@@ -202,9 +199,7 @@ namespace ControlsSample
             r.NewLine();
 
             r.NewLine(2);
-            r.WriteText("Currently supported: uixml.");
-            r.NewLine();
-            r.WriteText("Will be supported: html, images, txt, folder contents.");
+            r.WriteText("Currently supported: uixml, html, images, sounds, txt.");
             r.NewLine(2);
 
             r.EndSuppressUndo();
@@ -214,7 +209,7 @@ namespace ControlsSample
             r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
         }
 
-        private void FileListBox_SelectionChanged(object sender, EventArgs e)
+        private void FileListBox_SelectionChanged(object? sender, EventArgs e)
         {
             Application.AddIdleTask(SelectionChanged);
         }

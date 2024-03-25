@@ -496,6 +496,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
+            LastDoubleClickTimestamp = e.Timestamp;
             MouseDoubleClick?.Invoke(this, e);
         }
 

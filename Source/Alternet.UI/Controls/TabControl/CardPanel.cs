@@ -226,7 +226,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(string title, Control control)
+        public int Add(string? title, Control control)
         {
             var result = new CardPanelItem(title, control);
             Cards.Add(result);

@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// <see cref="SvgImage"/> descendant which works with two color svg images.
     /// </summary>
-    public class TwoColorSvgImage : SvgImage
+    internal class TwoColorSvgImage : SvgImage
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TwoColorSvgImage"/> class.
