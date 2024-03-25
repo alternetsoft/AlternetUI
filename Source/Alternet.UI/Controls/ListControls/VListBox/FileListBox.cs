@@ -45,6 +45,7 @@ namespace Alternet.UI
         private string? selectedFolder;
         private string searchPattern = "*";
         private int reloading;
+        private bool sorted = true;
 
         static FileListBox()
         {
@@ -55,6 +56,21 @@ namespace Alternet.UI
         /// </summary>
         public FileListBox()
         {
+        }
+
+        /// <summary>
+        /// Gets or sets whether foder and file names are sorted.
+        /// </summary>
+        public bool Sorted
+        {
+            get => sorted;
+            set
+            {
+                if (sorted == value)
+                    return;
+                sorted = value;
+                Reload();
+            }
         }
 
         /// <summary>
@@ -237,6 +253,8 @@ namespace Alternet.UI
                 }
 
                 var dirs = Directory.GetDirectories(selectedFolder);
+                if(Sorted)
+                    Array.Sort(dirs, PathUtils.CompareByFileName);
 
                 foreach (var dir in dirs)
                 {
@@ -244,6 +262,8 @@ namespace Alternet.UI
                 }
 
                 var files = Directory.GetFiles(selectedFolder, searchPattern);
+                if (Sorted)
+                    Array.Sort(files, PathUtils.CompareByFileName);
 
                 foreach (var file in files)
                 {

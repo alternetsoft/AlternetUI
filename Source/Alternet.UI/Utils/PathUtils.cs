@@ -97,6 +97,29 @@ namespace Alternet.UI
         public static string GetAppFolder() => CommonUtils.GetAppFolder();
 
         /// <summary>
+        /// Compares two specified paths by file name
+        /// and returns an
+        /// integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="x">First item to compare.</param>
+        /// <param name="y">Second item to compare.</param>
+        /// <returns>
+        /// A 32-bit signed integer that indicates the relationship between the two
+        /// comparands. Result value less than 0 means that <paramref name="x"/> precedes
+        /// <paramref name="y"/> in the sort order.
+        /// Result value equal to 0 means <paramref name="x"/> occurs in the same
+        /// position as <paramref name="y"/>
+        /// in the sort order. Result value greater than 0 means that <paramref name="x"/> follows
+        /// <paramref name="y"/> in the sort order.
+        /// </returns>
+        public static int CompareByFileName(string x, string y)
+        {
+            var xFileName = Path.GetFileName(x);
+            var yFileName = Path.GetFileName(y);
+            return string.Compare(xFileName, yFileName);
+        }
+
+        /// <summary>
         /// Adds directory separator char to the path if it's needed. If path
         /// already has directory separator char at the end, no changes are
         /// performed.

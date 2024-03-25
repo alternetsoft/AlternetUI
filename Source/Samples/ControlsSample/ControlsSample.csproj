@@ -334,7 +334,6 @@
   </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 
