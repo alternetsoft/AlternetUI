@@ -229,5 +229,189 @@ namespace Alternet.UI
                 return false;
             }
         }
+
+        /// <summary>
+        /// Splits command line string into array and adds double quotes to the elements
+        /// if they contain spaces.
+        /// </summary>
+        /// <param name="cmdLine">Command line string.</param>
+        /// <returns></returns>
+        public static string[] SegmentAndQuoteCommandLine(string? cmdLine)
+        {
+            var result = SegmentCommandLine(cmdLine);
+
+            for(int i = 0; i < result.Length; i++)
+            {
+                if (result[i].Contains(StringUtils.OneSpace))
+                {
+                    result[i] = StringUtils.PrefixSuffix(result[i], StringUtils.OneDoubleQuote);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Splits command line string into array.
+        /// </summary>
+        /// <param name="cmdLine">Command line string.</param>
+        /// <returns></returns>
+        public static string[] SegmentCommandLine(string? cmdLine)
+        {
+            if (cmdLine is null)
+                return Array.Empty<string>();
+
+            var s = cmdLine.Trim();
+
+#if NET6_0_OR_GREATER
+            unsafe
+            {
+                fixed (char* p = s)
+                {
+                    return SegmentCommandLineChar(p);
+                }
+            }
+#else
+            return cmdLine.Split(' ');
+#endif
+        }
+
+#if NET6_0_OR_GREATER
+        private static unsafe string[] SegmentCommandLineChar(char* cmdLine)
+        {
+            ArrayBuilder<string> arrayBuilder = default;
+            Span<char> initialBuffer = stackalloc char[260];
+            char* ptr = cmdLine;
+            bool flag = false;
+            ValueStringBuilder valueStringBuilder = new(initialBuffer);
+            char c;
+            bool flag3;
+            do
+            {
+                if (*ptr == '"')
+                {
+                    flag = !flag;
+                    c = *(ptr++);
+                }
+                else
+                {
+                    c = *(ptr++);
+                    valueStringBuilder.Append(c);
+                }
+
+                bool flag2 = c != '\0';
+                flag3 = flag2;
+                if (flag3)
+                {
+                    bool flag4 = flag;
+                    bool flag5 = flag4;
+                    if (!flag5)
+                    {
+                        bool flag6 = c == '\t' || c == ' ';
+                        flag5 = !flag6;
+                    }
+
+                    flag3 = flag5;
+                }
+            }
+            while (flag3);
+            if (c == '\0')
+            {
+                ptr--;
+            }
+
+            valueStringBuilder.Length--;
+            arrayBuilder.Add(valueStringBuilder.ToString());
+            flag = false;
+            while (true)
+            {
+                if (*ptr != 0)
+                {
+                    while (true)
+                    {
+                        char c2 = *ptr;
+                        if ((c2 != '\t' && c2 != ' ') || 1 == 0)
+                        {
+                            break;
+                        }
+
+                        ptr++;
+                    }
+                }
+
+                if (*ptr == '\0')
+                {
+                    break;
+                }
+
+                valueStringBuilder = new ValueStringBuilder(initialBuffer);
+                while (true)
+                {
+                    bool flag7 = true;
+                    int num = 0;
+                    while (*ptr == '\\')
+                    {
+                        ptr++;
+                        num++;
+                    }
+
+                    if (*ptr == '"')
+                    {
+                        if (num % 2 == 0)
+                        {
+                            if (flag && ptr[1] == '"')
+                            {
+                                ptr++;
+                            }
+                            else
+                            {
+                                flag7 = false;
+                                flag = !flag;
+                            }
+                        }
+
+                        num /= 2;
+                    }
+
+                    while (num-- > 0)
+                    {
+                        valueStringBuilder.Append('\\');
+                    }
+
+                    bool flag8 = *ptr == '\0';
+                    bool flag9 = flag8;
+                    if (!flag9)
+                    {
+                        bool flag10 = !flag;
+                        bool flag11 = flag10;
+                        if (flag11)
+                        {
+                            char c2 = *ptr;
+                            bool flag6 = (c2 == '\t' || c2 == ' ') ? true : false;
+                            flag11 = flag6;
+                        }
+
+                        flag9 = flag11;
+                    }
+
+                    if (flag9)
+                    {
+                        break;
+                    }
+
+                    if (flag7)
+                    {
+                        valueStringBuilder.Append(*ptr);
+                    }
+
+                    ptr++;
+                }
+
+                arrayBuilder.Add(valueStringBuilder.ToString());
+            }
+
+            return arrayBuilder.ToArray();
+        }
+#endif
     }
 }

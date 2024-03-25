@@ -63,6 +63,7 @@ namespace Alternet.UI
         private readonly MultilineTextBox textBox = new()
         {
             HasBorder = false,
+            ReadOnly = true,
         };
 
         private string? fileName;

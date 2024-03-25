@@ -116,7 +116,7 @@ namespace Alternet.UI
             }
             else
             {
-                var fullPath = Path.GetFullPath(s);
+                var fullPath = PathUtils.GetFullPath(s, PathUtils.GetAppFolder());
                 var stream = File.OpenRead(fullPath);
                 return stream;
             }
