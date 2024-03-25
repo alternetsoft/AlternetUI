@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,60 @@ namespace Alternet.UI
     /// </summary>
     public static class PathUtils
     {
+        private static ConcurrentStack<string>? pushedFolders;
+
+        /// <summary>
+        /// Saves current directory path to memory and changes it to the specified path.
+        /// Use <see cref="PopDirectory"/> to restore saved folder.
+        /// This method does the same as console command "pushd".
+        /// </summary>
+        /// <param name="path">New current directory path.</param>
+        public static void PushDirectory(string path)
+        {
+            pushedFolders ??= new();
+            var current = Directory.GetCurrentDirectory();
+            pushedFolders.Push(current);
+            Directory.SetCurrentDirectory(path);
+        }
+
+        /// <summary>
+        /// Restores current directory path previously saved with <see cref="PushDirectory"/>.
+        /// This method does the same as console command "popd".
+        /// </summary>
+        public static void PopDirectory()
+        {
+            pushedFolders ??= new();
+            if (pushedFolders.TryPop(out var path))
+                Directory.SetCurrentDirectory(path);
+            else
+                throw new IOException("Invalid call to 'PopDirectory' without call to 'PushDirectory'");
+        }
+
+        /// <summary>
+        /// Returns an absolute path from a relative path and a fully qualified base path.
+        /// </summary>
+        /// <param name="path">A relative path to concatenate to basePath.</param>
+        /// <param name="basePath">The beginning of a fully qualified path. Path must exist.</param>
+        /// <returns></returns>
+        public static string GetFullPath(string path, string basePath)
+        {
+#if NET6_0_OR_GREATER
+            var result = Path.GetFullPath(path, basePath);
+            return result;
+#else
+            try
+            {
+                PushDirectory(basePath);
+                var result = Path.GetFullPath(path);
+                return result;
+            }
+            finally
+            {
+                PopDirectory();
+            }
+#endif
+        }
+
         /// <summary>
         /// Returns the extension of a file path in the lower case without leading period.
         /// </summary>
