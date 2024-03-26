@@ -99,6 +99,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the keyboard code for a <see cref="Control.KeyDown"/> event.
+        /// Contains key code for the key that was pressed
+        /// without modifier flags.
         /// </summary>
         /// <returns>
         /// A <see cref="Keys" /> value that is the key code for the event.
@@ -124,6 +126,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the key data for a <see cref="Control.KeyDown"/> event.
+        /// Contains key code for the key that was pressed, combined
+        /// with modifier flags that indicate which combination
+        /// of CTRL, SHIFT, and ALT keys was pressed at the same time.
         /// </summary>
         /// <returns>
         /// A <see cref="Keys"/> representing
