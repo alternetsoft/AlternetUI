@@ -1,3 +1,15 @@
+# 0.9.526 (2024 March 26)
+
+- FileListBox.Sorted.
+- PathUtils: PushDirectory, PopDirectory, GetFullPath.
+- Resourceloader: Fix relative to full path conversion.
+- AppUtils.SegmentCommandLine.
+- ListControlItem.CanRemove.
+- VListBox: Invalidated when item added or removed.
+- VListBox: SelectAll, UnselectAll, SetAllSelected.
+- Menu.ForEachItem, MenuItem.EnabledFunc.
+- ListBox: HasItems(), HasSelectedItems(), CanRemoveSelectedItem(), RemoveSelectedItem().
+
 # 0.9.525 (2024 March 25)
 
 - Added controls: PreviewFile, PreviewFileSplitted, PreviewInBrowser, PreviewTextFile, PreviewUixml, PreviewUixmlSplitted.
