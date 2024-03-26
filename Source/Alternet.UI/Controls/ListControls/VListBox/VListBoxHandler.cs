@@ -190,6 +190,7 @@ namespace Alternet.UI
         private void Items_ItemInserted(object? sender, int index, object item)
         {
             NativeControl.ItemsCount = Control.Items.Count;
+            Control.Invalidate();
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -199,6 +200,7 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, int index, object item)
         {
             NativeControl.ItemsCount = Control.Items.Count;
+            Control.Invalidate();
         }
 
         private class NativeVListBox : Native.VListBox
