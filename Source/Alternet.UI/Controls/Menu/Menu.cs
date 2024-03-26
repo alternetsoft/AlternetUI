@@ -59,6 +59,25 @@ namespace Alternet.UI
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
 
         /// <summary>
+        /// Performs some action for the each element in <see cref="Items"/>.
+        /// </summary>
+        /// <param name="action">Specifies action which will be called for the
+        /// each item.</param>
+        /// <param name="recursive">Specifies whether to call action for all
+        /// sub-items recursively or only for the direct sub-items.</param>
+        public virtual void ForEachItem(Action<MenuItem> action, bool recursive = false)
+        {
+            if (items is null)
+                return;
+            foreach (var child in Items)
+            {
+                action(child);
+                if (recursive)
+                    child.ForEachItem(action, true);
+            }
+        }
+
+        /// <summary>
         /// Adds item to <see cref="Items"/>.
         /// </summary>
         /// <param name="item">Menu item.</param>
