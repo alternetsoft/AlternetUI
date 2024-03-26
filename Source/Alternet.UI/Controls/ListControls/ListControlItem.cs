@@ -92,7 +92,17 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool? CheckBoxVisible { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether item can be removed.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool CanRemove { get; set; } = true;
 
         /// <summary>
         /// Gets or sets <see cref="Image"/> associated with the item.
