@@ -506,6 +506,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether control has items.
+        /// </summary>
+        public virtual bool HasItems()
+        {
+            return Items.Count > 0;
+        }
+
+        /// <summary>
+        /// Gets whether control has selected items.
+        /// </summary>
+        public virtual bool HasSelectedItems()
+        {
+            var indexes = SelectedIndexes;
+
+            return (indexes is not null) && indexes.Count > 0;
+        }
+
+        /// <summary>
+        /// Gets whether selected item can be removed.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanRemoveSelectedItem()
+        {
+            var item = SelectedItem;
+            var item2 = item as ListControlItem;
+
+            if(item2 is null)
+                return item != null;
+
+            return item2.CanRemove;
+        }
+
+        /// <summary>
+        /// Removes selected item from the control.
+        /// </summary>
+        public virtual void RemoveSelectedItem()
+        {
+            var index = SelectedIndex;
+            if (index is null)
+                return;
+            Items.RemoveAt(index.Value);
+        }
+
+        /// <summary>
         /// Raises the <see cref="SelectionChanged"/> event and calls
         /// <see cref="OnSelectionChanged(EventArgs)"/>.
         /// </summary>
