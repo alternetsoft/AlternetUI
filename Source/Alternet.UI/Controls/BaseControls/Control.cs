@@ -1294,7 +1294,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the control has a native window handle associated with it.
+        /// Gets a value indicating whether the control has a native window
+        /// handle associated with it.
         /// </summary>
         /// <returns>
         /// <see langword="true" /> if a native window handle has been assigned to the
