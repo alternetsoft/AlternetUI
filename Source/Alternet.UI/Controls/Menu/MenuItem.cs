@@ -217,6 +217,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets function which is called inside
+        /// <see cref="ContextMenu.OnOpening(CancelEventArgs)"/> in order
+        /// to update enabled state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Func<bool>? EnabledFunc
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="Action"/> which will be executed when
         /// this <see cref="MenuItem"/> is clicked by the user.
         /// </summary>

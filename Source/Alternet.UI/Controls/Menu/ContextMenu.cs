@@ -134,7 +134,16 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnOpening(CancelEventArgs e)
         {
+            ForEachItem(UpdateEnabled, true);
             Opening?.Invoke(this, e);
+
+            void UpdateEnabled(MenuItem item)
+            {
+                var func = item.EnabledFunc;
+                if (func is null)
+                    return;
+                item.Enabled = func();
+            }
         }
 
         /// <summary>
