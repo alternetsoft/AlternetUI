@@ -1169,6 +1169,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects all items in the control.
+        /// </summary>
+        public virtual void SelectAll()
+        {
+            SetAllSelected(true);
+        }
+
+        /// <summary>
+        /// Unselects all items in the control.
+        /// </summary>
+        public virtual void UnselectAll()
+        {
+            SetAllSelected(false);
+        }
+
+        /// <summary>
+        /// Changes selected state for all items in the control.
+        /// </summary>
+        /// <param name="selected">New selected state.</param>
+        public virtual void SetAllSelected(bool selected)
+        {
+            if (SelectionMode == ListBoxSelectionMode.Single)
+                return;
+
+            DoInsideUpdate(() =>
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    SetSelected(i, selected);
+                }
+            });
+        }
+
+        /// <summary>
         /// Returns the zero-based index of the item, if specified coordinates are over checkbox;
         /// otherwise returns <c>null</c>.
         /// </summary>
