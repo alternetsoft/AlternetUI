@@ -122,12 +122,12 @@ namespace Alternet.UI
         {
             Reset();
 
-            if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
+            if (string.IsNullOrEmpty(fileName) || !GetFileSystem().FileExists(fileName))
                 return;
 
             try
             {
-                using var stream = File.Open(fileName, FileMode.Open);
+                using var stream = GetFileSystem().OpenRead(fileName!);
 
                 previewWindow = new();
                 previewWindow.Disposed += PreviewWindow_Disposed;
