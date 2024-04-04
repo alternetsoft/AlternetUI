@@ -1,3 +1,9 @@
+# 0.9.527 (2024 April 4)
+
+- Added FileSystem, DefaultFileSystem classes and IFileSystem interface.
+- Control: FileSystem, GetFileSystem().
+- Used IFileSystem in FileListBox, Preview* controls.
+
 # 0.9.526 (2024 March 26)
 
 - FileListBox.Sorted.
