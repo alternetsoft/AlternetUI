@@ -68,6 +68,24 @@ namespace Alternet.UI
             return Default.Open(path, mode, access, share);
         }
 
+        /// <inheritdoc cref="IFileSystem.Create(string)"/>
+        public static Stream Create(string path)
+        {
+            return Default.Create(path);
+        }
+
+        /// <inheritdoc cref="IFileSystem.Create(string, int, FileOptions)"/>
+        public static Stream Create(string path, int bufferSize, FileOptions options)
+        {
+            return Default.Create(path, bufferSize, options);
+        }
+
+        /// <inheritdoc cref="IFileSystem.Create(string, int)"/>
+        public static Stream Create(string path, int bufferSize)
+        {
+            return Default.Create(path, bufferSize);
+        }
+
         /*/// <inheritdoc cref="IFileSystem.Open(string, FileStreamOptions)"/>
         public static Stream Open(string path, FileStreamOptions options)
         {

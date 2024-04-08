@@ -137,5 +137,36 @@ namespace Alternet.UI
         /// <param name="options">An object that describes optional parameters to use.</param>
         /// <returns>A <see cref="Stream"/> instance that wraps the opened file.</returns>
         Stream Open(string path, FileStreamOptions options);*/
+
+        /// <summary>
+        /// Creates or overwrites a file in the specified path.
+        /// </summary>
+        /// <param name="path">The path and name of the file to create.</param>
+        /// <returns>
+        /// A <see cref="Stream"/> that provides read/write access to the file specified
+        /// in path.
+        /// </returns>
+        Stream Create(string path);
+
+        /// <summary>
+        /// Creates or overwrites a file in the specified path, specifying a buffer size
+        /// and options that describe how to create or overwrite the file.
+        /// </summary>
+        /// <param name="path">The path and name of the file to create.</param>
+        /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
+        /// <param name="options">
+        /// One of the <see cref="FileOptions"/> values that describes how to create or overwrite
+        /// the file.
+        /// </param>
+        /// <returns>A new file with the specified buffer size.</returns>
+        Stream Create(string path, int bufferSize, FileOptions options);
+
+        /// <summary>
+        /// Creates or overwrites a file in the specified path, specifying a buffer size.
+        /// </summary>
+        /// <param name="path">The path and name of the file to create.</param>
+        /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
+        /// <returns>A new file with the specified buffer size.</returns>
+        Stream Create(string path, int bufferSize);
     }
 }

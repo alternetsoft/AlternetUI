@@ -70,5 +70,23 @@ namespace Alternet.UI
         {
             return File.Open(path, options);
         }*/
+
+        /// <inheritdoc/>
+        public virtual Stream Create(string path)
+        {
+            return File.Create(path);
+        }
+
+        /// <inheritdoc/>
+        public virtual Stream Create(string path, int bufferSize, FileOptions options)
+        {
+            return File.Create(path, bufferSize, options);
+        }
+
+        /// <inheritdoc/>
+        public virtual Stream Create(string path, int bufferSize)
+        {
+            return File.Create(path, bufferSize);
+        }
     }
 }
