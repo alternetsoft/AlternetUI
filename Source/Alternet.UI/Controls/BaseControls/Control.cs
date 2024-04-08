@@ -1294,6 +1294,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="IFileSystem"/> which is used in the control.
+        /// If this property is <c>null</c> (default), <see cref="FileSystem.Default"/>
+        /// is used as file system provider.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// </remarks>
+        [Browsable(false)]
+        public IFileSystem? FileSystem { get; set; }
+
+        /// <summary>
         /// Gets a value indicating whether the control has a native window
         /// handle associated with it.
         /// </summary>

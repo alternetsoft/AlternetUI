@@ -59,9 +59,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when root folder items are added to the control.
+        /// This event is called when <see cref="SelectedFolder"/> is assigned
+        /// with <c>null</c> value.
+        /// </summary>
+        public event EventHandler? AddRootFolder;
+
+        /// <summary>
         /// Gets or sets whether foder and file names are sorted.
         /// </summary>
-        public bool Sorted
+        public virtual bool Sorted
         {
             get => sorted;
             set
@@ -76,23 +83,23 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to add ".." item which allows to open parent folder.
         /// </summary>
-        public bool AddUpperFolderItem { get; set; } = true;
+        public virtual bool AddUpperFolderItem { get; set; } = true;
 
         /// <summary>
         /// Gets or sets whether to add "/" item which allows to open root folder.
         /// </summary>
-        public bool AddRootFolderItem { get; set; } = true;
+        public virtual bool AddRootFolderItem { get; set; } = true;
 
         /// <summary>
         /// Gets or sets whether double click on folder opens it's content in the control.
         /// </summary>
-        public bool AllowGoToSubFolder { get; set; } = true;
+        public virtual bool AllowGoToSubFolder { get; set; } = true;
 
         /// <summary>
         /// Gets or sets search pattern which allows to limit files shown in the control.
         /// An example: "*.uixml". Default value is "*" (all files).
         /// </summary>
-        public string SearchPattern
+        public virtual string SearchPattern
         {
             get
             {
@@ -111,7 +118,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets folder which is currently opened in the control.
         /// </summary>
-        public string? SelectedFolder
+        public virtual string? SelectedFolder
         {
             get => selectedFolder;
 
@@ -148,14 +155,14 @@ namespace Alternet.UI
         /// Gets whether selected item is file.
         /// </summary>
         [Browsable(false)]
-        public bool SelectedItemIsFile => SelectedItem?.IsFile ?? false;
+        public virtual bool SelectedItemIsFile => ItemIsFile(SelectedItem);
 
         /// <summary>
         /// Gets path of the selected item. When this property is changed,
         /// selected item is updated to the item with the specified path.
         /// </summary>
         [Browsable(false)]
-        public string? SelectedItemPath
+        public virtual string? SelectedItemPath
         {
             get => SelectedItem?.Path;
 
@@ -200,9 +207,31 @@ namespace Alternet.UI
         public bool IsReloading { get => reloading > 0; }
 
         /// <summary>
+        /// Gets whether item is folder.
+        /// </summary>
+        public virtual bool ItemIsFolder(FileListBoxItem? item)
+        {
+            var result = !string.IsNullOrEmpty(item?.Path);
+            if (result)
+                result = Directory.Exists(item!.Path);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets whether item is file.
+        /// </summary>
+        public virtual bool ItemIsFile(FileListBoxItem? item)
+        {
+            var result = !string.IsNullOrEmpty(item?.Path);
+            if (result)
+                result = File.Exists(item!.Path);
+            return result;
+        }
+
+        /// <summary>
         /// Reloads contents of the currently opened folder.
         /// </summary>
-        public void Reload()
+        public virtual void Reload()
         {
             SelectedItem = null;
             EnsureVisible(0);
@@ -252,7 +281,7 @@ namespace Alternet.UI
                     Add(upperFolderItem);
                 }
 
-                var dirs = Directory.GetDirectories(selectedFolder);
+                var dirs = GetFileSystem().GetDirectories(selectedFolder);
                 if(Sorted)
                     Array.Sort(dirs, PathUtils.CompareByFileName);
 
@@ -261,7 +290,7 @@ namespace Alternet.UI
                     AddFolder(null, dir);
                 }
 
-                var files = Directory.GetFiles(selectedFolder, searchPattern);
+                var files = GetFileSystem().GetFiles(selectedFolder, searchPattern);
                 if (Sorted)
                     Array.Sort(files, PathUtils.CompareByFileName);
 
@@ -299,7 +328,7 @@ namespace Alternet.UI
         /// <param name="path">Path to file.</param>
         /// <param name="image">File image. If not specified, default image will be used.</param>
         /// <returns></returns>
-        public bool AddFile(string? title, string path, SvgImage? image = null)
+        public virtual bool AddFile(string? title, string path, SvgImage? image = null)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
@@ -318,7 +347,7 @@ namespace Alternet.UI
         /// <param name="path">Path to folder.</param>
         /// <param name="image">Folder image. If not specified, default image will be used.</param>
         /// <returns></returns>
-        public bool AddFolder(string? title, string path, SvgImage? image = null)
+        public virtual bool AddFolder(string? title, string path, SvgImage? image = null)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
@@ -345,7 +374,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="folder">Special folder kind.</param>
         /// <returns></returns>
-        public bool AddSpecialFolder(Environment.SpecialFolder folder)
+        public virtual bool AddSpecialFolder(Environment.SpecialFolder folder)
         {
             try
             {
@@ -384,9 +413,15 @@ namespace Alternet.UI
         /// <see cref="VisibleSpecialFolders"/> and <see cref="HiddenSpecialFolders"/>
         /// can be used to specify what folders are added.
         /// </summary>
-        public void AddSpecialFolders()
+        public virtual void AddSpecialFolders()
         {
-            if(VisibleSpecialFolders is not null)
+            if(AddRootFolder is not null)
+            {
+                AddRootFolder(this, EventArgs.Empty);
+                return;
+            }
+
+            if (VisibleSpecialFolders is not null)
             {
                 foreach(var item in VisibleSpecialFolders)
                     AddSpecialFolder(item);
@@ -480,36 +515,6 @@ namespace Alternet.UI
             /// Gets or sets path to the file.
             /// </summary>
             public string? Path { get; set; }
-
-            /// <summary>
-            /// Gets whether item is folder.
-            /// </summary>
-            [Browsable(false)]
-            public bool IsFolder
-            {
-                get
-                {
-                    var result = !string.IsNullOrEmpty(Path);
-                    if (result)
-                        result = Directory.Exists(Path);
-                    return result;
-                }
-            }
-
-            /// <summary>
-            /// Gets whether item is file.
-            /// </summary>
-            [Browsable(false)]
-            public bool IsFile
-            {
-                get
-                {
-                    var result = !string.IsNullOrEmpty(Path);
-                    if(result)
-                        result = File.Exists(Path);
-                    return result;
-                }
-            }
 
             /// <summary>
             /// Gets extension in the lower case and without "." character.

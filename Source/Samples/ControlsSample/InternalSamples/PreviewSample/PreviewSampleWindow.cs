@@ -139,7 +139,7 @@ namespace ControlsSample
 
             var item = fileListBox.SelectedItem;
 
-            if (item is null || item.Path is null || !item.IsFile)
+            if (item is null || item.Path is null || !fileListBox.ItemIsFile(item))
             {
                 preview.FileName = null;
                 return;

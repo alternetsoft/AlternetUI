@@ -1130,6 +1130,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets used <see cref="IFileSystem"/> provider.
+        /// </summary>
+        /// <returns>
+        /// Returns value of the <see cref="FileSystem"/> property if it is not <c>null</c>;
+        /// otherwise returns <see cref="Alternet.UI.FileSystem.Default"/>.
+        /// </returns>
+        public virtual IFileSystem GetFileSystem()
+        {
+            return FileSystem ?? UI.FileSystem.Default;
+        }
+
+        /// <summary>
         /// Maintains performance while performing slow operations on a control
         /// by preventing the control from
         /// drawing until the <see cref="EndUpdate"/> method is called.
