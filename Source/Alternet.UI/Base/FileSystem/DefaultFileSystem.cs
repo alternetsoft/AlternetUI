@@ -46,5 +46,29 @@ namespace Alternet.UI
         {
             return File.OpenRead(path);
         }
+
+        /// <inheritdoc/>
+        public virtual Stream Open(string path, FileMode mode)
+        {
+            return File.Open(path, mode);
+        }
+
+        /// <inheritdoc/>
+        public virtual Stream Open(string path, FileMode mode, FileAccess access)
+        {
+            return File.Open(path, mode, access);
+        }
+
+        /// <inheritdoc/>
+        public virtual Stream Open(string path, FileMode mode, FileAccess access, FileShare share)
+        {
+            return File.Open(path, mode, access, share);
+        }
+
+        /*/// <inheritdoc/>
+        public virtual Stream Open(string path, FileStreamOptions options)
+        {
+            return File.Open(path, options);
+        }*/
     }
 }

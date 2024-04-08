@@ -71,5 +71,71 @@ namespace Alternet.UI
         /// <param name="path">The file to be opened for reading.</param>
         /// <returns>A read-only <see cref="Stream"/> on the specified path.</returns>
         Stream OpenRead(string path);
+
+        /// <summary>
+        /// Opens a <see cref="Stream"/> on the specified path with read/write
+        /// access with no sharing.
+        /// </summary>
+        /// <param name="path">The file to open.</param>
+        /// <param name="mode">
+        /// A <see cref="FileMode"/> value that specifies whether a file is created if one does
+        /// not exist. Also determines whether the contents of existing file is retained
+        /// or overwritten.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Stream"/> opened in the specified mode and path, with read/write
+        /// access and not shared.
+        /// </returns>
+        Stream Open(string path, FileMode mode);
+
+        /// <summary>
+        /// Opens a <see cref="Stream"/> on the specified path, with the specified mode and
+        /// access with no sharing.
+        /// </summary>
+        /// <param name="path">The file to open.</param>
+        /// <param name="mode">
+        /// A <see cref="FileMode"/> value that specifies whether a file is created if one does
+        /// not exist. Also determines whether the contents of existing file is retained
+        /// or overwritten.
+        /// </param>
+        /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations
+        /// that can be performed on the file.</param>
+        /// <returns>
+        /// A <see cref="Stream"/> on the specified path, having the specified parameters.
+        /// </returns>
+        Stream Open(string path, FileMode mode, FileAccess access);
+
+        /// <summary>
+        ///  Opens a <see cref="Stream"/> on the specified path, having the specified mode
+        ///  with read, write, or read/write access and the specified sharing option.
+        /// </summary>
+        /// <param name="path">The file to open.</param>
+        /// <param name="mode">
+        /// A <see cref="FileMode"/> value that specifies whether a file is created if one does
+        /// not exist. Also determines whether the contents of existing file is retained
+        /// or overwritten.
+        /// </param>
+        /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations
+        /// that can be performed on the file.</param>
+        /// <returns></returns>
+        /// <param name="share">
+        /// A <see cref="FileShare"/> value specifying the type of access other threads have
+        /// to the file.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Stream"/> on the specified path, having the specified parameters.
+        /// </returns>
+        Stream Open(string path, FileMode mode, FileAccess access, FileShare share);
+
+        /*/// <summary>
+        /// Initializes a new instance of the <see cref="Stream"/> class with the specified
+        /// path, creation mode, read/write and sharing permission, the access other streams
+        /// can have to the same file, the buffer size, additional options and the allocation
+        /// size.
+        /// </summary>
+        /// <param name="path">The path of the file to open.</param>
+        /// <param name="options">An object that describes optional parameters to use.</param>
+        /// <returns>A <see cref="Stream"/> instance that wraps the opened file.</returns>
+        Stream Open(string path, FileStreamOptions options);*/
     }
 }
