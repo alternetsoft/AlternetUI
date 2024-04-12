@@ -21,8 +21,8 @@ namespace Alternet.UI
     ///     used to modify other input operations.
     /// </summary>
 #if !ALTERNET_UI_INTEGRATION_REMOTING
-    [TypeConverter(typeof(ModifierKeysConverter))]
-    [ValueSerializer(typeof(ModifierKeysValueSerializer))]
+    [TypeConverter("Alternet.UI.ModifierKeysConverter")]
+    [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
 #endif
     [Flags]
     public enum ModifierKeys

@@ -18,8 +18,8 @@ namespace Alternet.UI
     ///     An enumeration of all of the possible key values on a keyboard.
     /// </summary>
 #if !ALTERNET_UI_INTEGRATION_REMOTING
-    [TypeConverter(typeof(KeyConverter))]
-    [ValueSerializer(typeof(KeyValueSerializer))]
+    [TypeConverter("Alternet.UI.KeyConverter")]
+    [ValueSerializer("Alternet.UI.KeyValueSerializer")]
 #endif
     public enum Key
     {
@@ -684,7 +684,8 @@ namespace Alternet.UI
         MacControl,
 
         /// <summary>
-        /// The Microsoft "Windows Logo" key on Windows or "Command" key on macOS or "Meta" key on Linux.
+        /// The Microsoft "Windows Logo" key on Windows or "Command"
+        /// key on macOS or "Meta" key on Linux.
         /// </summary>
         Windows,
 

@@ -23,8 +23,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Base\EventArgs\Cancel\" />
     <Folder Include="Drawing\Color\" />
+    <Folder Include="Port\Markup\" />
   </ItemGroup>
 
   <ItemGroup>

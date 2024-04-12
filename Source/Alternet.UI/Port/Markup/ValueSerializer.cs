@@ -1,48 +1,45 @@
 #nullable disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents:  Service for providing and finding custom serialization for
-//             value and value like types.
-//
-//  Created:   04/28/2005 Microsoft
-//
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-
-//DateTimeConverter2
-
-//SRID
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace Alternet.UI.Markup
 {
     /// <summary>
-    /// ValueSerializer allows a type to declare a serializer to control how the type is serialized to and from strings. 
-    /// If a TypeConverter is declared for a type that converts to and from a string, a default value serializer will 
-    /// be created for the type. The string values must be loss-less (i.e. converting to and from a string doesn't loose 
-    /// data) and must be stable (i.e. returns the same string for the same value). If a type converter doesn't  meet 
-    /// these requirements, a custom ValueSerializer must be declared that meet the requirements or associate a null 
-    /// ValueSerializer with the type to indicate the type converter should be ignored. Implementation of ValueSerializer 
-    /// should avoid throwing exceptions. Any exceptions thrown could possibly terminate serialization.
+    /// ValueSerializer allows a type to declare a serializer to control how the type
+    /// is serialized to and from strings.
+    /// If a TypeConverter is declared for a type that converts to and from a string,
+    /// a default value serializer will
+    /// be created for the type. The string values must be loss-less (i.e. converting
+    /// to and from a string doesn't loose
+    /// data) and must be stable (i.e. returns the same string for the same value).
+    /// If a type converter doesn't  meet
+    /// these requirements, a custom ValueSerializer must be declared that meet the
+    /// requirements or associate a null
+    /// ValueSerializer with the type to indicate the type converter should be ignored.
+    /// Implementation of ValueSerializer
+    /// should avoid throwing exceptions. Any exceptions thrown could possibly terminate
+    /// serialization.
     /// </summary>
-    /// 
     public abstract class ValueSerializer
     {
+        private static object _valueSerializersLock = new();
+        private static Hashtable _valueSerializers = new();
+
+        static ValueSerializer()
+        {
+            TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
+        }
+
         /// <summary>
         /// Constructor for a ValueSerializer
         /// </summary>
-        protected ValueSerializer() { }
+        protected ValueSerializer()
+        {
+        }
 
         /// <summary>
         /// Returns true if the given value can be converted to a string.
@@ -67,7 +64,8 @@ namespace Alternet.UI.Markup
         }
 
         /// <summary>
-        /// Converts the given value to a string for use in serialization. This method should only be
+        /// Converts the given value to a string for use in serialization. This method
+        /// should only be
         /// called if CanConvertToString returns true for the given value.
         /// </summary>
         /// <param name="value">The value to convert to a string</param>
@@ -91,14 +89,19 @@ namespace Alternet.UI.Markup
         }
 
         /// <summary>
-        /// Returns an enumeration of the types referenced by the value serializer. If the value serializer asks for
-        /// a value serializer for System.Type, any types it asks to convert should be supplied in the returned
-        /// enumeration. This allows a serializer to ensure a de-serializer has enough information about the types
+        /// Returns an enumeration of the types referenced by the value serializer. If the value
+        /// serializer asks for
+        /// a value serializer for System.Type, any types it asks to convert should be supplied
+        /// in the returned
+        /// enumeration. This allows a serializer to ensure a de-serializer has enough
+        /// information about the types
         /// this serializer converts.
-        /// 
-        /// Since a value serializer doesn't exist by default, it is important the value serializer be requested from
-        /// the IValueSerializerContext, not ValueSerializer.GetSerializerFor. This allows a serializer to encode
-        /// context information (such as xmlns definitions) to the System.Type converter (for example, which prefix
+        /// Since a value serializer doesn't exist by default, it is important the value
+        /// serializer be requested from
+        /// the IValueSerializerContext, not ValueSerializer.GetSerializerFor.
+        /// This allows a serializer to encode
+        /// context information (such as xmlns definitions) to the
+        /// System.Type converter (for example, which prefix
         /// to generate).
         /// </summary>
         /// <param name="value">The value being serialized</param>
@@ -121,12 +124,15 @@ namespace Alternet.UI.Markup
                 throw new ArgumentNullException(nameof(type));
 
             object value = _valueSerializers[type];
+
+            // This uses _valueSerializersLock's instance as a sentinal for null
+            // (as opposed to not attempted yet).
             if (value != null)
-                // This uses _valueSerializersLock's instance as a sentinal for null  (as opposed to not attempted yet).
                 return value == _valueSerializersLock ? null : value as ValueSerializer;
 
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
-            ValueSerializerAttribute attribute = attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
+            ValueSerializerAttribute attribute
+                = attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
             ValueSerializer result = null;
 
             if (attribute != null)
@@ -179,9 +185,10 @@ namespace Alternet.UI.Markup
             {
                 throw new ArgumentNullException(nameof(descriptor));
             }
-            
+
             #pragma warning suppress 6506 // descriptor is obviously not null
-            ValueSerializerAttribute serializerAttribute = descriptor.Attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
+            ValueSerializerAttribute serializerAttribute
+                = descriptor.Attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
             if (serializerAttribute != null)
             {
                 result = (ValueSerializer)Activator.CreateInstance(serializerAttribute.ValueSerializerType);
@@ -192,17 +199,20 @@ namespace Alternet.UI.Markup
                 if (result == null || result is TypeConverterValueSerializer)
                 {
                     TypeConverter converter = descriptor.Converter;
-                    if (converter!=null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
+                    if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
                         !(converter is ReferenceConverter))
                         result = new TypeConverterValueSerializer(converter);
                 }
             }
+
             return result;
         }
 
         /// <summary>
-        /// Get the value serializer declared for the given type. This version should be called whenever the caller
-        /// has a IValueSerializerContext to ensure that the correct value serializer is returned for the given
+        /// Get the value serializer declared for the given type. This version should
+        /// be called whenever the caller
+        /// has a IValueSerializerContext to ensure that the correct value serializer
+        /// is returned for the given
         /// context.
         /// </summary>
         /// <param name="type">The value type to serialize</param>
@@ -216,13 +226,17 @@ namespace Alternet.UI.Markup
                 if (result != null)
                     return result;
             }
+
             return GetSerializerFor(type);
         }
 
         /// <summary>
-        /// Get the value serializer declared for the given property. ValueSerializer can be overriden by an attribute
-        /// on the property declaration. This version should be called whenever the caller has a 
-        /// IValueSerializerContext to ensure that the correct value serializer is returned for the given context.
+        /// Get the value serializer declared for the given property. ValueSerializer
+        /// can be overriden by an attribute
+        /// on the property declaration. This version should be called whenever the
+        /// caller has a
+        /// IValueSerializerContext to ensure that the correct value serializer is
+        /// returned for the given context.
         /// </summary>
         /// <param name="descriptor">PropertyDescriptor for the property to be serialized</param>
         /// <param name="context">Context information</param>
@@ -235,6 +249,7 @@ namespace Alternet.UI.Markup
                 if (result != null)
                     return result;
             }
+
             return GetSerializerFor(descriptor);
         }
 
@@ -272,15 +287,9 @@ namespace Alternet.UI.Markup
             return new NotSupportedException(SR.Get(SRID.ConvertFromException, base.GetType().Name, text));
         }
 
-        private static void TypeDescriptorRefreshed(RefreshEventArgs args) {
+        private static void TypeDescriptorRefreshed(RefreshEventArgs args)
+        {
             _valueSerializers = new Hashtable();
         }
-
-        static ValueSerializer() {
-            TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
-        }
-
-        private static object _valueSerializersLock = new object();
-        private static Hashtable _valueSerializers = new Hashtable();
     }
 }
