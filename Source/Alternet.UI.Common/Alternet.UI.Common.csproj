@@ -1,9 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\Version\Version.props" />
+  <Import Project="..\Version\TargetFrameworks.props" />
+  <Import Project="..\Keys\Keys.props" />
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+    <TargetFrameworks>$(UITargetFrameworksWindows)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+    <TargetFrameworks>$(UITargetFrameworksLinux)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+    <TargetFrameworks>$(UITargetFrameworksMacOs)</TargetFrameworks>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
     <Nullable>enable</Nullable>
     <LangVersion>10.0</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Base\EventArgs\Cancel\" />
+    <Folder Include="Drawing\Color\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

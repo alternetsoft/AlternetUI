@@ -1,5 +1,6 @@
 ﻿using System;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {

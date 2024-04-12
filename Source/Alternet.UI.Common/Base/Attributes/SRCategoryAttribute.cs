@@ -14,10 +14,5 @@ namespace Alternet.UI
             : base(category)
         {
         }
-
-        protected override string GetLocalizedString(string value)
-        {
-            return SR.Get(value);
-        }
     }
 }

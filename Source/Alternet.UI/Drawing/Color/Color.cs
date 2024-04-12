@@ -1366,20 +1366,6 @@ namespace Alternet.Drawing
         public bool EqualARGB(Color other) => Value == other.Value;
 
         /// <summary>
-        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
-        /// filled with this color.
-        /// </summary>
-        /// <param name="size">Size of the created image.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage AsImage(SizeI size)
-        {
-            GenericImage image = new(size.Width, size.Height);
-            image.SetRGBRect(this);
-            return image;
-        }
-
-        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>

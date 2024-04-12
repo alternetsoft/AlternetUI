@@ -77,6 +77,11 @@ namespace Alternet.UI
             RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
             RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
             RegisterPropCreateFunc(typeof(Pen), FuncCreatePropertyAsPen);
+
+            KnownColorStrings.CustomChanged += (s, e) =>
+            {
+                Native.PropertyGrid.KnownColorsSetCustomColorTitle(KnownColorStrings.Default.Custom);
+            };
         }
 
         /// <summary>

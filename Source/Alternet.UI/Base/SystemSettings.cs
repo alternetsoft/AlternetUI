@@ -50,6 +50,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns true if <paramref name="backgroundColor"/> is darker
+        /// than <paramref name="foregroundColor"/>.
+        /// </summary>
+        public static bool IsDarkBackground(Color foregroundColor, Color backgroundColor)
+        {
+            // The threshold here is rather arbitrary, but it seems that using just
+            // inequality would be wrong as it could result in false positivies.
+            if (foregroundColor.IsOk && backgroundColor.IsOk)
+                return foregroundColor.GetLuminance() - backgroundColor.GetLuminance() > 0.2;
+            else
+                return SystemSettings.IsUsingDarkBackground;
+        }
+
+        /// <summary>
         /// Logs all fonts enumerated in <see cref="SystemSettingsFont"/>.
         /// </summary>
         public static void LogSystemFonts()

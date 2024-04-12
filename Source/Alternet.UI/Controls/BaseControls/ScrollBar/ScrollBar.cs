@@ -76,7 +76,7 @@ namespace Alternet.UI
                 {
                     if (value < 0)
                     {
-                        ErrorMessages.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
+                        LogUtils.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
                         return;
                     }
 
@@ -171,7 +171,7 @@ namespace Alternet.UI
                 {
                     if (value < 0)
                     {
-                        ErrorMessages.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
+                        LogUtils.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
                         return;
                     }
 
@@ -247,7 +247,7 @@ namespace Alternet.UI
                 {
                     if (value < minimum || value > maximum)
                     {
-                        ErrorMessages.LogInvalidBoundArgument(
+                        LogUtils.LogInvalidBoundArgument(
                             nameof(Value),
                             value,
                             Minimum,

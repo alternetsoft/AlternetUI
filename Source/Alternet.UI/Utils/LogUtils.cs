@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -69,6 +70,20 @@ namespace Alternet.UI
             LogToFile(SectionSeparator);
 
             Application.Log("FontFamilies logged to file.");
+        }
+
+        /// <summary>
+        /// Logs all system colors.
+        /// </summary>
+        public static void LogSystemColors()
+        {
+            var type = typeof(SystemColors);
+            foreach (var prop in type.GetFields(
+                BindingFlags.Public | BindingFlags.Static))
+            {
+                if (prop.FieldType == typeof(Color))
+                    LogUtils.LogColor(prop.Name, (Color)prop.GetValue(null)!);
+            }
         }
 
         /// <summary>
@@ -318,6 +333,38 @@ namespace Alternet.UI
         {
             foreach (var item in items)
                 Application.Log(item, kind);
+        }
+
+        /// <summary>
+        /// Logs error 'InvalidBoundArgument'.
+        /// </summary>
+        /// <param name="name">Name of the field or property.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="minBound">Minimum value.</param>
+        /// <param name="maxBound">Maximum value.</param>
+        public static void LogInvalidBoundArgument(
+            string name,
+            object value,
+            object minBound,
+            object maxBound)
+        {
+            var s = string.Format(
+                ErrorMessages.Default.InvalidBoundArgument,
+                name,
+                value.ToString(),
+                minBound.ToString(),
+                maxBound.ToString());
+            Application.LogError(s);
+        }
+
+        /// <summary>
+        /// Logs error 'InvalidBoundArgument' for unsigned <see cref="int"/> values.
+        /// </summary>
+        /// <param name="name">Name of the field or property.</param>
+        /// <param name="value">Value.</param>
+        public static void LogInvalidBoundArgumentUInt(string name, int value)
+        {
+            LogInvalidBoundArgument(name, value, 0, int.MaxValue);
         }
 
         internal static void LogAppDomainTargetFrameworkName()

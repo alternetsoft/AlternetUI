@@ -21,6 +21,11 @@ namespace Alternet.UI.Localization
         public static KnownColorStrings Default { get; set; } = new();
 
         /// <summary>
+        /// Occurs when <see cref="Custom"/> property is changed.
+        /// </summary>
+        public static event EventHandler? CustomChanged;
+
+        /// <summary>
         /// Gets or sets localized system color name.
         /// </summary>
         public string ActiveBorder
@@ -1615,7 +1620,7 @@ namespace Alternet.UI.Localization
                 if (custom == value)
                     return;
                 custom = value;
-                Native.PropertyGrid.KnownColorsSetCustomColorTitle(custom);
+                CustomChanged?.Invoke(null, EventArgs.Empty);
             }
         }
 

@@ -224,7 +224,7 @@ namespace Alternet.UI
             AddLogAction("Log control info", LogControlInfo);
             AddLogAction("Log useful defines", LogUsefulDefines);
             AddLogAction("Log OS information", LogOSInformation);
-            AddLogAction("Log system colors", ColorUtils.LogSystemColors);
+            AddLogAction("Log system colors", LogUtils.LogSystemColors);
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);

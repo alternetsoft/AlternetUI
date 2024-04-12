@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-    internal class AdvDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    public class AdvDictionary<TKey, TValue> : Dictionary<TKey, TValue>
         where TKey : notnull
     {
 #if NETFRAMEWORK

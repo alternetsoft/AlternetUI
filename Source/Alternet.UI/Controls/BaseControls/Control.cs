@@ -2339,7 +2339,7 @@ namespace Alternet.UI
                 if (foregroundColor.IsEmpty || backgroundColor.IsEmpty)
                     return SystemSettings.IsUsingDarkBackground;
 
-                return ColorUtils.IsDarkBackground(foregroundColor, backgroundColor);
+                return SystemSettings.IsDarkBackground(foregroundColor, backgroundColor);
             }
         }
 

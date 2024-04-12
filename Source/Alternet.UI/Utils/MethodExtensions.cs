@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+using Alternet.UI;
+
 namespace Alternet.UI.Extensions
 {
     /// <summary>
@@ -12,6 +15,21 @@ namespace Alternet.UI.Extensions
     /// </summary>
     public static class MethodExtensions
     {
+        /// <summary>
+        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
+        /// filled with this color.
+        /// </summary>
+        /// <param name="size">Size of the created image.</param>
+        /// <param name="color">Color.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static GenericImage AsImage(this Color color, SizeI size)
+        {
+            GenericImage image = new(size.Width, size.Height);
+            image.SetRGBRect(color);
+            return image;
+        }
+
         /// <summary>
         /// Gets whether <see cref="DockStyle"/> equals <see cref="DockStyle.Top"/> or
         /// <see cref="DockStyle.Bottom"/>.

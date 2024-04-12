@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class AdvDictionaryCached<TKey, TValue> : AdvDictionary<TKey, TValue>
+    public class AdvDictionaryCached<TKey, TValue> : AdvDictionary<TKey, TValue>
         where TKey : class
     {
         private TKey? lastKey;

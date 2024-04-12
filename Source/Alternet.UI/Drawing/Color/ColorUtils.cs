@@ -222,20 +222,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Logs all system colors.
-        /// </summary>
-        public static void LogSystemColors()
-        {
-            var type = typeof(SystemColors);
-            foreach (var prop in type.GetFields(
-                BindingFlags.Public | BindingFlags.Static))
-            {
-                if (prop.FieldType == typeof(Color))
-                    LogUtils.LogColor(prop.Name, (Color)prop.GetValue(null)!);
-            }
-        }
-
-        /// <summary>
         /// Converts <see cref="Color"/> to known color if its possible.
         /// </summary>
         /// <param name="color">Color.</param>
@@ -251,20 +237,6 @@ namespace Alternet.Drawing
                 return color;
             var result = KnownColorTable.ArgbToKnownColor(color.AsUInt());
             return result;
-        }
-
-        /// <summary>
-        /// Returns true if <paramref name="backgroundColor"/> is darker
-        /// than <paramref name="foregroundColor"/>.
-        /// </summary>
-        public static bool IsDarkBackground(Color foregroundColor, Color backgroundColor)
-        {
-            // The threshold here is rather arbitrary, but it seems that using just
-            // inequality would be wrong as it could result in false positivies.
-            if (foregroundColor.IsOk && backgroundColor.IsOk)
-                return foregroundColor.GetLuminance() - backgroundColor.GetLuminance() > 0.2;
-            else
-                return SystemSettings.IsUsingDarkBackground;
         }
 
         /// <summary>
@@ -378,6 +350,15 @@ namespace Alternet.Drawing
                 _ => SystemSettingsColor.Max,
             };
 */
+        }
+
+        /// <summary>
+        /// Gets localized color name for <see cref="KnownColor"/>.
+        /// </summary>
+        /// <param name="color">Known color.</param>
+        public static string GetLabelLocalized(KnownColor color)
+        {
+            return ColorUtils.GetColorInfo(color).LabelLocalized;
         }
 
         /// <summary>

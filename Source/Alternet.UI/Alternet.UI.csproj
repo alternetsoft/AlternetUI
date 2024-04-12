@@ -320,8 +320,7 @@
   </ItemGroup>
 
   <!-- ================================================= -->
-  <!--  and '$(TargetFramework)' == 'net8.0'  Condition="'$(Configuration)'=='Debug'"-->  
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -330,6 +329,10 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
   </ItemGroup>
 
   <!-- ================================================= -->
