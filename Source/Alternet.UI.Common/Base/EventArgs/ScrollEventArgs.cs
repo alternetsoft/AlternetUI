@@ -85,7 +85,7 @@ namespace Alternet.UI
             this.oldValue = oldValue;
         }
 
-        internal ScrollEventArgs()
+        public ScrollEventArgs()
         {
         }
 
@@ -96,7 +96,7 @@ namespace Alternet.UI
         public ScrollOrientation ScrollOrientation
         {
             get => scrollOrientation;
-            internal set => scrollOrientation = value;
+            set => scrollOrientation = value;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Alternet.UI
         public ScrollEventType Type
         {
             get => type;
-            internal set => type = value;
+            set => type = value;
         }
 
         /// <summary>Gets or sets the new <see cref="ScrollBar.Value" /> of the scroll bar.</summary>
@@ -131,7 +131,7 @@ namespace Alternet.UI
         public int OldValue
         {
             get => oldValue;
-            internal set => oldValue = value;
+            set => oldValue = value;
         }
     }
 }
