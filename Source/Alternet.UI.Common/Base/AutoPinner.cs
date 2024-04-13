@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class AutoPinner : IDisposable
+    public class AutoPinner : IDisposable
     {
         private GCHandle pinnedObject;
 

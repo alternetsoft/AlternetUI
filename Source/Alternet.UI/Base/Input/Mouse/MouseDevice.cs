@@ -25,7 +25,7 @@ namespace Alternet.UI
     ///     The MouseDevice class represents the mouse device to the
     ///     members of a context.
     /// </summary>
-    public abstract class MouseDevice : InputDevice
+    public abstract class MouseDevice : DispatcherObject
     {
         internal MouseDevice()
         {
@@ -108,7 +108,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Gets the current state of the specified button from the device from the underlying system
+        ///     Gets the current state of the specified button from the device from the
+        ///     underlying system
         /// </summary>
         /// <param name="mouseButton">
         ///     The mouse button to get the state of

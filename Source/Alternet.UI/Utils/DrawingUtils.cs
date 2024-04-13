@@ -12,6 +12,67 @@ namespace Alternet.UI
     /// </summary>
     public static class DrawingUtils
     {
+        /// <summary>
+        /// Calculates distance between two points.
+        /// </summary>
+        /// <param name="p1">First point.</param>
+        /// <param name="p2">Second point.</param>
+        /// <returns><see cref="double"/> value with distance between point <paramref name="p1"/>
+        /// and point <paramref name="p2"/>.</returns>
+        public static double GetDistance(PointD p1, PointD p2)
+        {
+            return MathUtils.GetDistance(p1.X, p1.Y, p2.X, p2.Y);
+        }
+
+        /// <summary>
+        /// Compares distance between two points and specified value.
+        /// </summary>
+        /// <param name="p1">First point.</param>
+        /// <param name="p2">Second point.</param>
+        /// <param name="value">Value to compare distance with.</param>
+        /// <returns><c>true</c> if distance between two points is less
+        /// than <paramref name="value"/>; <c>false</c> otherwise.</returns>
+        public static bool DistanceIsLess(PointD p1, PointD p2, double value)
+        {
+            return (Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2)) < Math.Pow(value, 2);
+        }
+
+        /// <summary>
+        /// Gets squared distance between two points.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public static double GetDistanceSquared(PointD p1, PointD p2) =>
+            ((double)(p1.X - p2.X) * (double)(p1.X - p2.X))
+            + ((double)(p1.Y - p2.Y) * (double)(p1.Y - p2.Y));
+
+        /// <summary>
+        /// Gets whether point is in circle.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public static bool IsPointInCircle(PointD p, PointD center, double radius)
+        {
+            return GetDistanceSquared(p, center) <= radius * radius;
+        }
+
+        /// <summary>
+        /// Gets point on circle.
+        /// </summary>
+        /// <param name="center">Circle center.</param>
+        /// <param name="radius">Circle radius.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns></returns>
+        public static PointD GetPointOnCircle(PointD center, double radius, double angle)
+        {
+            return new(
+                center.X + (radius * Math.Cos(angle * MathUtils.DegToRad)),
+                center.Y + (radius * Math.Sin(angle * MathUtils.DegToRad)));
+        }
+
         /// <inheritdoc cref="CustomControlPainter.GetCheckBoxSize"/>
         public static SizeD GetCheckBoxSize(
             Control control,

@@ -54,6 +54,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Outputs all <see cref="Control"/> descendants to the debug console.
+        /// </summary>
+        public static void ControlsToConsole()
+        {
+            EnumerableUtils.ForEach<Type>(
+                AssemblyUtils.GetTypeDescendants(typeof(Control)),
+                (t) => Debug.WriteLine(t.Name));
+        }
+
+        /// <summary>
+        /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
+        /// </summary>
+        public static void NativeObjectToConsole()
+        {
+            EnumerableUtils.ForEach<Type>(
+                AssemblyUtils.GetTypeDescendants(typeof(Native.NativeObject), true, false),
+                (t) => Debug.WriteLine(t.Name));
+        }
+
+        /// <summary>
         /// Logs <see cref="FontFamily.FamiliesNames"/>.
         /// </summary>
         public static void LogFontFamilies()

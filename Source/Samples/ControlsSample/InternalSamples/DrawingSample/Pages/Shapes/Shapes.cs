@@ -177,7 +177,7 @@ namespace DrawingSample
             var c = bounds.Center;
             for (double a = 0; a <= 360; a += 45)
             {
-                lines.Add(MathUtils.GetPointOnCircle(c, r, a));
+                lines.Add(DrawingUtils.GetPointOnCircle(c, r, a));
             }
 
             return lines;

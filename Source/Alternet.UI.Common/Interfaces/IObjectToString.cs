@@ -12,14 +12,16 @@ namespace Alternet.UI
     public interface IObjectToString
     {
         /// <summary>
-        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/> representation.
+        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/>
+        /// representation.
         /// </summary>
         /// <param name="value">A value for convertion.</param>
         /// <returns>The <see cref="string"/> representation of the <paramref name="value"/>.</returns>
         string? ToString(object value);
 
         /// <summary>
-        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/> representation
+        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/>
+        /// representation
         /// using the specified culture-specific format information.
         /// </summary>
         /// <param name="value">A value for convertion.</param>
@@ -30,7 +32,8 @@ namespace Alternet.UI
         string? ToString(object value, IFormatProvider? provider);
 
         /// <summary>
-        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/> representation,
+        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/>
+        /// representation,
         /// using the specified format.
         /// </summary>
         /// <param name="value">A value for convertion.</param>
@@ -40,7 +43,8 @@ namespace Alternet.UI
         string? ToString(object value, string? format);
 
         /// <summary>
-        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/> representation using
+        /// Converts the <paramref name="value"/> to its equivalent <see cref="string"/>
+        /// representation using
         /// the specified format and culture-specific format information.
         /// </summary>
         /// <param name="value">A value for convertion.</param>

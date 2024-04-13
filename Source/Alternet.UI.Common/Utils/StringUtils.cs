@@ -14,7 +14,8 @@ namespace Alternet.UI
     /// a number to its number equivalent.
     /// </summary>
     /// <param name="s">The string to parse.</param>
-    /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+    /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values
+    /// that indicates
     /// the permitted format of <paramref name="s"/>.</param>
     /// <param name="provider">
     /// An object that supplies culture-specific formatting information
@@ -302,7 +303,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseSByte(
+        public static bool TryParseSByte(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -314,7 +315,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseByte(
+        public static bool TryParseByte(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -326,7 +327,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseInt16(
+        public static bool TryParseInt16(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -338,7 +339,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseUInt16(
+        public static bool TryParseUInt16(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -350,7 +351,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseInt32(
+        public static bool TryParseInt32(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -362,7 +363,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseUInt32(
+        public static bool TryParseUInt32(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -374,7 +375,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseInt64(
+        public static bool TryParseInt64(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -386,7 +387,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseUInt64(
+        public static bool TryParseUInt64(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -398,7 +399,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseSingle(
+        public static bool TryParseSingle(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -410,7 +411,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseDouble(
+        public static bool TryParseDouble(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,
@@ -422,7 +423,7 @@ namespace Alternet.UI
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryParseDecimal(
+        public static bool TryParseDecimal(
             string? s,
             NumberStyles style,
             IFormatProvider? provider,

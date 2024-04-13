@@ -93,7 +93,7 @@ namespace Alternet.UI
             var location = e.GetPosition(this);
 
             SetFocus();
-            if (MathUtils.IsPointInCircle(
+            if (DrawingUtils.IsPointInCircle(
                 location,
                 GetControlCenter(),
                 GetControlRadius()))

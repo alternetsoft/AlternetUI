@@ -55,7 +55,7 @@ namespace DrawingSample
                 var c = bounds.Center;
                 for (double a = 0; a <= 360; a += 10)
                 {
-                    lines.Add(MathUtils.GetPointOnCircle(c, r, a));
+                    lines.Add(DrawingUtils.GetPointOnCircle(c, r, a));
                 }
 
 #pragma warning disable

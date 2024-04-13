@@ -17,7 +17,7 @@ namespace Alternet.UI
     ///     The KeyboardDevice class represents the mouse device to the
     ///     members of a context.
     /// </summary>
-    public abstract class KeyboardDevice : InputDevice
+    public abstract class KeyboardDevice : DispatcherObject
     {
         /// <summary>
         /// <inheritdoc/>

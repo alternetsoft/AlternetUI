@@ -307,8 +307,50 @@ namespace Alternet.UI
             }
 
             if (sort)
-                result.Sort(PropertyGridItem.CompareByName);
+                result.Sort(CompareByName);
             return result;
+        }
+
+        /// <summary>
+        /// Compares two specified <see cref="EventInfo"/> objects by their names
+        /// and returns an
+        /// integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="x">First item to compare.</param>
+        /// <param name="y">Second item to compare.</param>
+        /// <returns>
+        /// A 32-bit signed integer that indicates the relationship between the two
+        /// comparands. Result value less than 0 means that <paramref name="x"/> precedes
+        /// <paramref name="y"/> in the sort order.
+        /// Result value equal to 0 means <paramref name="x"/> occurs in the same
+        /// position as <paramref name="y"/>
+        /// in the sort order. Result value greater than 0 means that <paramref name="x"/> follows
+        /// <paramref name="y"/> in the sort order.
+        /// </returns>
+        public static int CompareByName(EventInfo x, EventInfo y)
+        {
+            return string.Compare(x.Name, y.Name);
+        }
+
+        /// <summary>
+        /// Compares two specified <see cref="PropertyInfo"/> objects by their names
+        /// and returns an
+        /// integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="x">First item to compare.</param>
+        /// <param name="y">Second item to compare.</param>
+        /// <returns>
+        /// A 32-bit signed integer that indicates the relationship between the two
+        /// comparands. Result value less than 0 means that <paramref name="x"/> precedes
+        /// <paramref name="y"/> in the sort order.
+        /// Result value equal to 0 means <paramref name="x"/> occurs in the same
+        /// position as <paramref name="y"/>
+        /// in the sort order. Result value greater than 0 means that <paramref name="x"/> follows
+        /// <paramref name="y"/> in the sort order.
+        /// </returns>
+        public static int CompareByName(PropertyInfo x, PropertyInfo y)
+        {
+            return string.Compare(x.Name, y.Name);
         }
 
         /// <summary>
@@ -341,7 +383,7 @@ namespace Alternet.UI
             }
 
             if (sort)
-                result.Sort(PropertyGridItem.CompareByName);
+                result.Sort(CompareByName);
             return result;
         }
 
@@ -773,26 +815,6 @@ namespace Alternet.UI
 
                 type = baseType!;
             }
-        }
-
-        /// <summary>
-        /// Outputs all <see cref="Control"/> descendants to the debug console.
-        /// </summary>
-        public static void ControlsToConsole()
-        {
-            EnumerableUtils.ForEach<Type>(
-                GetTypeDescendants(typeof(Control)),
-                (t) => Debug.WriteLine(t.Name));
-        }
-
-        /// <summary>
-        /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
-        /// </summary>
-        public static void NativeObjectToConsole()
-        {
-            EnumerableUtils.ForEach<Type>(
-                GetTypeDescendants(typeof(Native.NativeObject), true, false),
-                (t) => Debug.WriteLine(t.Name));
         }
 
         /// <summary>

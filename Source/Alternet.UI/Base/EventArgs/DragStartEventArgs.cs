@@ -81,7 +81,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = MathUtils.DistanceIsLess(
+                var result = DrawingUtils.DistanceIsLess(
                     MouseDownLocation,
                     MouseClientLocation,
                     MinDragStartDistance);
