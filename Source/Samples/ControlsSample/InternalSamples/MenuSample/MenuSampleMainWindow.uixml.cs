@@ -326,7 +326,7 @@ namespace MenuSample
 
         private void ContextMenuBorder_MouseRightButtonUp(object? sender, MouseEventArgs e)
         {
-            new ExampleContextMenu().Show(contextMenuBorder, e.GetPosition(contextMenuBorder));
+            new ExampleContextMenu().Show(contextMenuBorder, Mouse.GetPosition(contextMenuBorder));
         }
 
         private void ToolbarItem_Click(object? sender, EventArgs e)

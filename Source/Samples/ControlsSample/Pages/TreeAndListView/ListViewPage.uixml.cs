@@ -306,7 +306,7 @@ namespace ControlsSample
             object? sender,
             MouseEventArgs e)
         {
-            var result = listView.HitTest(e.GetPosition(listView));
+            var result = listView.HitTest(Mouse.GetPosition(listView));
 
             string columnHeader;
             var columnIndex = result.Cell?.ColumnIndex;

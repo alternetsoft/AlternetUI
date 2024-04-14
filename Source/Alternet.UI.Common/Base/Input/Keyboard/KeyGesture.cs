@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using Alternet.UI.Localization;
 using Alternet.UI.Markup;
 
 namespace Alternet.UI
@@ -21,7 +22,7 @@ namespace Alternet.UI
     /// Can be set on properties of KeyBinding.
     /// </summary>
     [TypeConverter(typeof(KeyGestureConverter))]
-    [ValueSerializer(typeof(KeyGestureValueSerializer))]
+    [ValueSerializer("Alternet.UI.KeyGestureValueSerializer")]
     public class KeyGesture : InputGesture
     {
         private const char MultipleGestureDelimiter = ';';
@@ -78,7 +79,7 @@ namespace Alternet.UI
         /// <param name="modifiers">Modifiers for the key.</param>
         /// <param name="validateGesture">If true, throws an exception
         /// if the key and modifier are not valid</param>
-        internal KeyGesture(Key key, ModifierKeys modifiers, bool validateGesture)
+        public KeyGesture(Key key, ModifierKeys modifiers, bool validateGesture)
             : this(key, modifiers, string.Empty, validateGesture)
         {
         }
@@ -111,7 +112,7 @@ namespace Alternet.UI
             if (validateGesture && !IsValid(key, modifiers))
             {
                 throw new NotSupportedException(
-                    SR.Get(SRID.KeyGesture_Invalid, modifiers, key));
+                    string.Format(ErrorMessages.Default.KeyGestureInvalid, modifiers, key));
             }
 
             fmodifiers = modifiers;

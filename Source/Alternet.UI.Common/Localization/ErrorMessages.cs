@@ -125,5 +125,9 @@ namespace Alternet.UI.Localization
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string CannotConvertStringToType
             = "Cannot convert string value '{0}' to type '{1}'.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string KeyGestureInvalid =
+            "'{0}+{1}' key and modifier combination is not supported for KeyGesture.";
     }
 }

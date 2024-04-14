@@ -112,7 +112,12 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, timestamp, Mouse.PrimaryDevice);
+            var eventArgs = new MouseEventArgs(
+                control,
+                targetControl!,
+                timestamp,
+                Mouse.PrimaryDevice,
+                Mouse.GetPosition(control));
             control.RaiseMouseMove(eventArgs);
         }
 
@@ -127,7 +132,13 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp, Mouse.PrimaryDevice);
+            var eventArgs = new MouseEventArgs(
+                control,
+                targetControl!,
+                changedButton,
+                timestamp,
+                Mouse.PrimaryDevice,
+                Mouse.GetPosition(control));
             /*Application.LogIf(eventArgs, true);*/
 
             control.RaiseMouseDown(eventArgs);
@@ -145,7 +156,13 @@ namespace Alternet.UI
                 return;
 
             var eventArgs =
-                new MouseEventArgs(control, targetControl!, changedButton, timestamp, Mouse.PrimaryDevice);
+                new MouseEventArgs(
+                    control,
+                    targetControl!,
+                    changedButton,
+                    timestamp,
+                    Mouse.PrimaryDevice,
+                    Mouse.GetPosition(control));
             control.RaiseMouseDoubleClick(eventArgs);
         }
 
@@ -161,7 +178,13 @@ namespace Alternet.UI
                 return;
 
             var eventArgs
-                = new MouseEventArgs(control, targetControl!, changedButton, timestamp, Mouse.PrimaryDevice);
+                = new MouseEventArgs(
+                    control,
+                    targetControl!,
+                    changedButton,
+                    timestamp,
+                    Mouse.PrimaryDevice,
+                    Mouse.GetPosition(control));
             control.RaiseMouseUp(eventArgs);
         }
 
@@ -182,7 +205,12 @@ namespace Alternet.UI
                 return;
 
             var eventArgs
-                = new MouseEventArgs(control, targetControl!, timestamp, Mouse.PrimaryDevice);
+                = new MouseEventArgs(
+                    control,
+                    targetControl!,
+                    timestamp,
+                    Mouse.PrimaryDevice,
+                    Mouse.GetPosition(control));
             eventArgs.Delta = delta;
             control.RaiseMouseWheel(eventArgs);
         }

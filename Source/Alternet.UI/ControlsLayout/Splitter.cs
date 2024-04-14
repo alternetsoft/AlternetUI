@@ -365,7 +365,7 @@ namespace Alternet.UI
             base.OnMouseDown(e);
             if (e.Button == MouseButtons.Left && e.Clicks == 1)
             {
-                var pos = e.GetPosition(this);
+                var pos = Mouse.GetPosition(this);
                 SplitBegin(pos.X, pos.Y);
             }
         }
@@ -377,7 +377,7 @@ namespace Alternet.UI
 
             if (splitTarget != null)
             {
-                var pos = e.GetPosition(this);
+                var pos = Mouse.GetPosition(this);
                 var x = pos.X + Left;
                 var y = pos.Y + Top;
                 var r = CalcSplitLine(GetSplitSize(pos.X, pos.Y), 0);

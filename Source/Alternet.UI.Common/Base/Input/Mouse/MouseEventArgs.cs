@@ -22,13 +22,14 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        internal MouseEventArgs(
+        public MouseEventArgs(
             object currentTarget,
             object originalTarget,
             MouseButton button,
             long timestamp,
-            MouseDevice mouseDevice)
-            : this(currentTarget, originalTarget, timestamp, mouseDevice)
+            MouseDevice mouseDevice,
+            PointD location)
+            : this(currentTarget, originalTarget, timestamp, mouseDevice, location)
         {
             ChangedButton = button;
             ClickCount = 1;
@@ -37,17 +38,18 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        internal MouseEventArgs(
+        public MouseEventArgs(
             object currentTarget,
             object originalTarget,
             long timestamp,
-            MouseDevice mouseDevice)
+            MouseDevice mouseDevice,
+            PointD location)
         {
             this.currentTarget = currentTarget;
             this.originalTarget = originalTarget;
             MouseDevice = mouseDevice;
             Timestamp = timestamp;
-            location = GetPosition(currentTarget as Control);
+            this.location = location;
         }
 
         /// <summary>
@@ -260,18 +262,6 @@ namespace Alternet.UI
         /// <returns>A <see cref="PointD" /> that contains the x- and y- mouse
         /// coordinates, in dips, relative to the upper-left corner of the control.</returns>
         public PointD Location => location;
-
-        /// <summary>
-        ///     Calculates the position of the mouse relative to
-        ///     a particular element.
-        /// </summary>
-        public PointD GetPosition(Control? relativeTo)
-        {
-            if (relativeTo is null)
-                return Mouse.PrimaryDevice.GetScreenPosition();
-            else
-                return Mouse.GetPosition(relativeTo);
-        }
 
         /// <summary>
         /// Gets string representation of this object.

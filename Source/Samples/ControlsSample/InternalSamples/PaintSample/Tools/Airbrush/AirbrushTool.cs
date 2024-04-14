@@ -40,7 +40,7 @@ namespace PaintSample
 
             state = new State(
                 new SolidBrush(SelectedColors.Stroke),
-                e.GetPosition(Canvas),
+                Mouse.GetPosition(Canvas),
                 GetPointsPerTick(),
                 new Bitmap(Document.Bitmap));
 
@@ -52,7 +52,7 @@ namespace PaintSample
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (state != null)
-                state.Center = e.GetPosition(Canvas);
+                state.Center = Mouse.GetPosition(Canvas);
         }
 
         protected override void OnMouseCaptureLost()

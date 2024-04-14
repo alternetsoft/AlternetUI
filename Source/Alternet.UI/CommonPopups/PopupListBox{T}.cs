@@ -129,7 +129,7 @@ namespace Alternet.UI
 
         private void UpdateResultIndex(MouseEventArgs e)
         {
-            resultIndex = MainControl.HitTest(e.GetPosition(MainControl));
+            resultIndex = MainControl.HitTest(Mouse.GetPosition(MainControl));
         }
     }
 }

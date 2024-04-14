@@ -109,7 +109,7 @@ namespace InputSample
 
             var prefix = $"{ objectName }.{ eventName}";
 
-            Application.LogReplace($"{prefix} [{FormatPoint(e.GetPosition(element as Control))}]", prefix);
+            Application.LogReplace($"{prefix} [{FormatPoint(Mouse.GetPosition(element as Control))}]", prefix);
         }
 
         private void LogMouseButton(
@@ -118,7 +118,7 @@ namespace InputSample
             string eventName,
             object? element) =>
             Application.Log(
-                $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(e.GetPosition(element as Control))}]");
+                $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(Mouse.GetPosition(element as Control))}]");
 
         private void LogMouseWheel(
             MouseEventArgs e,
@@ -126,7 +126,7 @@ namespace InputSample
             string eventName,
             object? element) =>
             Application.Log(
-                $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(e.GetPosition(element as Control))}]");
+                $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(Mouse.GetPosition(element as Control))}]");
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) =>
             LogMouseMove(e, "HelloButton", "Move", (Control)sender);

@@ -137,7 +137,7 @@ namespace ControlsSample
         internal void LogPopupListBoxMouseEvent(string eventName, MouseEventArgs e)
         {
             var itemIndex = popupListBox.MainControl.HitTest(
-                e.GetPosition(popupListBox.MainControl));
+                Mouse.GetPosition(popupListBox.MainControl));
             var selectedItem = popupListBox.MainControl[itemIndex];
             Application.Log($"Popup: {eventName}. Item: {selectedItem}");
         }

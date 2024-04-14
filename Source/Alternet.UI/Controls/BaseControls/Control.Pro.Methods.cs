@@ -524,7 +524,7 @@ namespace Alternet.UI
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 dragEventArgs = e;
-                dragEventMousePos = e.GetPosition(this);
+                dragEventMousePos = Mouse.GetPosition(this);
             }
 
             MouseDown?.Invoke(this, e);
@@ -556,7 +556,7 @@ namespace Alternet.UI
             MouseMove?.Invoke(this, e);
             if (dragEventArgs is null)
                 return;
-            var mousePos = e.GetPosition(this);
+            var mousePos = Mouse.GetPosition(this);
             var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
             RaiseDragStart(args);
             if (args.DragStarted || args.Cancel)

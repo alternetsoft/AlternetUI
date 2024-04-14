@@ -71,7 +71,7 @@ namespace ControlsSample
             object? sender, 
             MouseEventArgs e)
         {
-            var result = listBox.HitTest(e.GetPosition(listBox));
+            var result = listBox.HitTest(Mouse.GetPosition(listBox));
             var item = (result == null ? "<none>" : listBox.Items[result.Value]);
 
             Application.Log($"HitTest result: Item: '{item}'");

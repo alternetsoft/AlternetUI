@@ -142,12 +142,12 @@ namespace DrawingSample
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseDown)
-                AddClipAreaPart(e.GetPosition(Canvas));
+                AddClipAreaPart(Mouse.GetPosition(Canvas));
         }
 
         private void Canvas_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
-            AddClipAreaPart(e.GetPosition(Canvas));
+            AddClipAreaPart(Mouse.GetPosition(Canvas));
             Canvas!.CaptureMouse();
             mouseDown = true;
         }

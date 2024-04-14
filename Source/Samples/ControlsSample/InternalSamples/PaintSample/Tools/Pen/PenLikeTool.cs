@@ -44,7 +44,7 @@ namespace PaintSample
                 LineJoin = LineJoin.Round
             };
 
-            state = new State(pen, e.GetPosition(Canvas));
+            state = new State(pen, Mouse.GetPosition(Canvas));
             Document.PreviewAction = Draw;
         }
 
@@ -52,7 +52,7 @@ namespace PaintSample
         {
             if (state != null)
             {
-                state.Points.Add(e.GetPosition(Canvas));
+                state.Points.Add(Mouse.GetPosition(Canvas));
                 Document.UpdatePreview();
             }
         }

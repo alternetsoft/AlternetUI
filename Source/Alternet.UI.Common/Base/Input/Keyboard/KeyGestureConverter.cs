@@ -23,6 +23,16 @@ namespace Alternet.UI
         private static readonly ModifierKeysConverter ModifierKeysConverter = new();
 
         /// <summary>
+        /// Check for Valid enum, as any int can be casted to the enum.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool IsDefinedKey(Key key)
+        {
+            return key >= Key.None && key <= Key.Menu;
+        }
+
+        /// <summary>
         /// Parses string representation of the key with modifiers to the
         /// <see cref="KeyGesture"/> instance.
         /// </summary>
@@ -192,12 +202,6 @@ namespace Alternet.UI
             }
 
             throw GetConvertToException(value, destinationType);
-        }
-
-        // Check for Valid enum, as any int can be casted to the enum.
-        internal static bool IsDefinedKey(Key key)
-        {
-            return key >= Key.None && key <= Key.Menu;
         }
     }
 }

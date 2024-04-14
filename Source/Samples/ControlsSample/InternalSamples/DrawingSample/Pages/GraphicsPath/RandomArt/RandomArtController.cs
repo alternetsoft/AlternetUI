@@ -41,7 +41,7 @@ namespace DrawingSample.RandomArt
             canvas.CaptureMouse();
             model.Paths.Add(new Path());
             IsDrawing = true;
-            TipPoint = e.GetPosition(canvas);
+            TipPoint = Mouse.GetPosition(canvas);
             model.Paths.Last().Segments.Add(SegmentFactory.CreateSegment(PathSegmentType, TipPoint));
             canvas.Invalidate();
         }
@@ -51,7 +51,7 @@ namespace DrawingSample.RandomArt
             if (!IsDrawing)
                 return;
 
-            TipPoint = e.GetPosition(canvas);
+            TipPoint = Mouse.GetPosition(canvas);
             model.Paths.Last().Segments.Last().TryAddSegmentParts(TipPoint, toolSettings);
             canvas.Invalidate();
         }

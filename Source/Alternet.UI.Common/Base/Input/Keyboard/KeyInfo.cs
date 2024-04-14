@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// </summary>
     public class KeyInfo
     {
-        private static bool registeredCustomKeyLabels = false;
+        private static AdvDictionary<Key, string>? customKeyLabels;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyInfo"/> class.
@@ -40,40 +40,6 @@ namespace Alternet.UI
         /// Gets or sets key modifiers.
         /// </summary>
         public ModifierKeys Modifiers { get; set; }
-
-        /// <summary>
-        /// Registers custom labels for the <see cref="Key"/> enum.
-        /// </summary>
-        public static void RegisterCustomKeyLabels()
-        {
-            if (registeredCustomKeyLabels)
-                return;
-            registeredCustomKeyLabels = true;
-            var choices = PropertyGrid.GetChoices<Key>();
-            choices.SetLabelForValue(Key.D0, "0");
-            choices.SetLabelForValue(Key.D1, "1");
-            choices.SetLabelForValue(Key.D2, "2");
-            choices.SetLabelForValue(Key.D3, "3");
-            choices.SetLabelForValue(Key.D4, "4");
-            choices.SetLabelForValue(Key.D5, "5");
-            choices.SetLabelForValue(Key.D6, "6");
-            choices.SetLabelForValue(Key.D7, "7");
-            choices.SetLabelForValue(Key.D8, "8");
-            choices.SetLabelForValue(Key.D9, "9");
-            choices.SetLabelForValue(Key.Slash, "/");
-            choices.SetLabelForValue(Key.Backslash, @"\");
-        }
-
-        /// <summary>
-        /// Gets custom label of the key.
-        /// </summary>
-        /// <param name="key">Key.</param>
-        public static string GetCustomKeyLabel(Key key)
-        {
-            RegisterCustomKeyLabels();
-            var choices = PropertyGrid.GetChoices<Key>();
-            return choices.GetLabelFromValue((int)key) ?? key.ToString();
-        }
 
         /// <summary>
         /// Runs action if any of the keys is pressed.
@@ -112,13 +78,52 @@ namespace Alternet.UI
 
             foreach (var key in keys)
             {
-                if (key.BackendOS.HasFlag(Application.BackendOS))
+                if (key.BackendOS.HasFlag(BaseApplication.BackendOS))
                     result.Add(key);
             }
 
 #pragma warning disable
             return result.ToArray();
 #pragma warning restore
+        }
+
+        /// <summary>
+        /// Registers custom labels for the <see cref="Key"/> enum.
+        /// </summary>
+        public static void RegisterCustomKeyLabels()
+        {
+            if (customKeyLabels is not null)
+                return;
+            SetCustomKeyLabel(Key.D0, "0");
+            SetCustomKeyLabel(Key.D1, "1");
+            SetCustomKeyLabel(Key.D2, "2");
+            SetCustomKeyLabel(Key.D3, "3");
+            SetCustomKeyLabel(Key.D4, "4");
+            SetCustomKeyLabel(Key.D5, "5");
+            SetCustomKeyLabel(Key.D6, "6");
+            SetCustomKeyLabel(Key.D7, "7");
+            SetCustomKeyLabel(Key.D8, "8");
+            SetCustomKeyLabel(Key.D9, "9");
+            SetCustomKeyLabel(Key.Slash, "/");
+            SetCustomKeyLabel(Key.Backslash, @"\");
+        }
+
+        public static void SetCustomKeyLabel(Key key, string label)
+        {
+            customKeyLabels ??= new();
+            customKeyLabels.Remove(key);
+            customKeyLabels.Add(key, label);
+        }
+
+        /// <summary>
+        /// Gets custom label of the key.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        public static string GetCustomKeyLabel(Key key)
+        {
+            RegisterCustomKeyLabels();
+            var result = customKeyLabels!.GetValueOrDefault(key, key.ToString());
+            return result;
         }
 
         /// <summary>
@@ -152,7 +157,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
         public bool Run(KeyEventArgs e, Action? action = null, bool setHandled = true)
         {
-            if (!BackendOS.HasFlag(Application.BackendOS))
+            if (!BackendOS.HasFlag(BaseApplication.BackendOS))
                 return false;
 
             var result = IsPressed(e);
