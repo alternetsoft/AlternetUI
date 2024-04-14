@@ -87,6 +87,10 @@ namespace Alternet.UI
 #if DEBUG
             WebBrowser.CrtSetDbgFlag(0);
 #endif
+
+            Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
+            Mouse.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+
             Initialized = true;
             Window.UpdateDefaultFont();
         }

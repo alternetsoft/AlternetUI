@@ -11,6 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public static class Keyboard
     {
+        private static KeyboardDevice keyboardDevice = KeyboardDevice.Empty;
+
         /// <summary>
         ///     The primary keyboard device.
         /// </summary>
@@ -18,8 +20,12 @@ namespace Alternet.UI
         {
             get
             {
-                KeyboardDevice keyboardDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
                 return keyboardDevice;
+            }
+
+            set
+            {
+                keyboardDevice = value;
             }
         }
 

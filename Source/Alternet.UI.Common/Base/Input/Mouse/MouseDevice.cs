@@ -26,6 +26,8 @@ namespace Alternet.UI
     /// </summary>
     public abstract class MouseDevice : DisposableObject
     {
+        public static MouseDevice Empty = new EmptyMouseDevice();
+
         protected MouseDevice()
         {
         }
@@ -130,6 +132,16 @@ namespace Alternet.UI
         protected MouseButtonState GetButtonState(MouseButton mouseButton)
         {
             return GetButtonStateFromSystem(mouseButton);
+        }
+
+        private class EmptyMouseDevice : MouseDevice
+        {
+            protected override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
+            {
+                return MouseButtonState.Released;
+            }
+
+            protected override PointD GetScreenPositionFromSystem() => PointD.Empty;
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Alternet.UI
     /// </summary>
     public abstract class KeyboardDevice : DisposableObject
     {
+        public static KeyboardDevice Empty = new EmptyKeyboardDevice();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyboardDevice"/> class.
         /// </summary>
@@ -175,6 +177,14 @@ namespace Alternet.UI
         private bool IsKeyDown_private(Key key)
         {
             return (GetKeyStatesFromSystem(key) & KeyStates.Down) == KeyStates.Down;
+        }
+
+        private class EmptyKeyboardDevice : KeyboardDevice
+        {
+            protected override KeyStates GetKeyStatesFromSystem(Key key)
+            {
+                return KeyStates.None;
+            }
         }
     }
 }
