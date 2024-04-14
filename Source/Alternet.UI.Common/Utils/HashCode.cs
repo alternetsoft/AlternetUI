@@ -55,7 +55,7 @@ namespace System
     // xxHash32 is used for the hash code.
     // https://github.com/Cyan4973/xxHash
 
-    internal struct HashCode
+    public struct HashCode
     {
         private static readonly uint s_seed = GenerateGlobalSeed();
 

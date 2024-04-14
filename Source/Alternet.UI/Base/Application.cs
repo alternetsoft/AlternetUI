@@ -19,54 +19,8 @@ namespace Alternet.UI
     /// and properties to get information about an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public partial class Application : BaseObject, IDisposable
+    public partial class Application : BaseApplication, IDisposable
     {
-        /// <summary>
-        /// Returns true if operating system is Windows.
-        /// </summary>
-        public static readonly bool IsWindowsOS;
-
-        /// <summary>
-        /// Returns true if operating system is Linux.
-        /// </summary>
-        public static readonly bool IsLinuxOS;
-
-        /// <summary>
-        /// Returns true if operating system is Apple macOS.
-        /// </summary>
-        public static readonly bool IsMacOS;
-
-        /// <summary>
-        /// Indicates whether the current application is running on Android.
-        /// </summary>
-        public static readonly bool IsAndroidOS;
-
-        /// <summary>
-        /// Indicates whether the current application is running on unknown OS.
-        /// </summary>
-        public static readonly bool IsUnknownOS;
-
-        /// <summary>
-        /// Indicates whether the current application is running on Apple iOS.
-        /// </summary>
-        public static readonly bool IsIOS;
-
-        /// <summary>
-        /// Gets a value that indicates whether the current operating system is
-        /// a 64-bit operating system.
-        /// </summary>
-        public static readonly bool Is64BitOS;
-
-        /// <summary>
-        /// Gets a value that indicates whether the current process is a 64-bit process.
-        /// </summary>
-        public static readonly bool Is64BitProcess;
-
-        /// <summary>
-        /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
-        /// </summary>
-        public static readonly OperatingSystems BackendOS;
-
         /// <summary>
         /// Gets or sets application exit code used when application terminates
         /// due to unhandled exception.
@@ -77,15 +31,6 @@ namespace Alternet.UI
         /// Gets or sets whether to log unhandled thread exception.
         /// </summary>
         public static bool LogUnhandledThreadException = true;
-
-        /// <summary>
-        /// Gets or sets whether calls to and from native code are wrapped in "try catch".
-        /// </summary>
-        /// <remarks>
-        /// Under Windows default value is <c>true</c> and such wrapping is not needed.
-        /// Under other systems default value is <c>false</c> and all calls are wrapped.
-        /// </remarks>
-        public static bool FastThreadExceptions;
 
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
@@ -115,60 +60,6 @@ namespace Alternet.UI
 
         static Application()
         {
-            Is64BitOS = Environment.Is64BitOperatingSystem;
-            Is64BitProcess = Environment.Is64BitProcess;
-
-            var backend = WebBrowser.GetBackendOS();
-
-            IsWindowsOS = backend == WebBrowserBackendOS.Windows;
-
-            if (IsWindowsOS)
-            {
-                FastThreadExceptions = true;
-
-                BackendOS = OperatingSystems.Windows;
-                goto exit;
-            }
-
-            IsMacOS = backend == WebBrowserBackendOS.MacOS;
-
-            if (IsMacOS)
-            {
-                BackendOS = OperatingSystems.MacOs;
-                goto exit;
-            }
-
-            IsLinuxOS = backend == WebBrowserBackendOS.Unix;
-
-            if (IsLinuxOS)
-            {
-                BackendOS = OperatingSystems.Linux;
-                goto exit;
-            }
-
-#if NET5_0_OR_GREATER
-            IsAndroidOS = OperatingSystem.IsAndroid();
-
-            if (IsAndroidOS)
-            {
-                BackendOS = OperatingSystems.Android;
-                goto exit;
-            }
-
-            IsIOS = OperatingSystem.IsIOS();
-
-            if (IsIOS)
-            {
-                BackendOS = OperatingSystems.IOS;
-                goto exit;
-            }
-#endif
-            BackendOS = OperatingSystems.Unknown;
-            IsUnknownOS = true;
-            goto exit;
-
-        exit:
-            ;
         }
 
         /// <summary>

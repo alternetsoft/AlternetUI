@@ -105,5 +105,25 @@ namespace Alternet.UI.Localization
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string InvalidBoundArgument
             = "Value of '{1}' is not valid for '{0}'. '{0}' should be greater than {2} and less than or equal to {3}.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string TokenizerHelperExtraDataEncountered
+            = "Extra data encountered at position {0} while parsing '{1}'.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string TokenizerHelperPrematureStringTermination
+            = "Premature string termination encountered while parsing '{0}'.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string TokenizerHelperMissingEndQuote
+            = "Missing end quote encountered while parsing '{0}'.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string TokenizerHelperEmptyToken
+            = "Empty token encountered at position {0} while parsing '{1}'.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string CannotConvertStringToType
+            = "Cannot convert string value '{0}' to type '{1}'.";
     }
 }

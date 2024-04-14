@@ -5,7 +5,6 @@
 using System;
 using System.Collections;
 using System.Security;
-using Alternet.UI.Threading;
 
 #pragma warning disable
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -14,13 +13,12 @@ using Alternet.UI.Threading;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The KeyboardDevice class represents the mouse device to the
-    ///     members of a context.
+    /// <c>KeyboardDevice</c> class represents the mouse device.
     /// </summary>
-    public abstract class KeyboardDevice : DispatcherObject
+    public abstract class KeyboardDevice : DisposableObject
     {
         /// <summary>
-        /// <inheritdoc/>
+        /// Initializes a new instance of the <see cref="KeyboardDevice"/> class.
         /// </summary>
         protected KeyboardDevice()
         {
@@ -168,7 +166,6 @@ namespace Alternet.UI
             if ((int)key >= 256 || (int)key <= 0)
                 return false;
             return true;
-            /*throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));*/
         }
 
         /// <summary>

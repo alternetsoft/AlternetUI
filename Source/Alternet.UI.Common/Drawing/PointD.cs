@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -217,7 +218,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static PointD Parse(string source)
         {
-            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+            IFormatProvider formatProvider = BaseApplication.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 
@@ -379,7 +380,7 @@ namespace Alternet.Drawing
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal readonly string ConvertToString(string format, IFormatProvider provider)
+        public readonly string ConvertToString(string format, IFormatProvider provider)
         {
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);

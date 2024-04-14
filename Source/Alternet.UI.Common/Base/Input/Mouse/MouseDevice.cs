@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using Alternet.Drawing;
-using Alternet.UI.Threading;
 
 #pragma warning disable
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -25,9 +24,9 @@ namespace Alternet.UI
     ///     The MouseDevice class represents the mouse device to the
     ///     members of a context.
     /// </summary>
-    public abstract class MouseDevice : DispatcherObject
+    public abstract class MouseDevice : DisposableObject
     {
-        internal MouseDevice()
+        protected MouseDevice()
         {
         }
 
@@ -99,15 +98,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Calculates the position of the mouse relative to
-        ///     a particular element.
-        /// </summary>
-        public PointD GetPosition(Control relativeTo)
-        {
-            return relativeTo.ScreenToClient(GetScreenPosition());
-        }
-
-        /// <summary>
         ///     Gets the current state of the specified button from the device from the
         ///     underlying system
         /// </summary>
@@ -117,7 +107,7 @@ namespace Alternet.UI
         /// <returns>
         ///     The state of the specified mouse button
         /// </returns>
-        internal abstract MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton);
+        protected abstract MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton);
 
         /// <summary>
         ///     Gets the current position of the mouse in screen co-ords from the underlying system
@@ -125,7 +115,7 @@ namespace Alternet.UI
         /// <returns>
         ///     The current mouse location in screen co-ords
         /// </returns>
-        internal abstract PointD GetScreenPositionFromSystem();
+        protected abstract PointD GetScreenPositionFromSystem();
 
         /// <summary>
         ///     Gets the current state of the specified button from the device

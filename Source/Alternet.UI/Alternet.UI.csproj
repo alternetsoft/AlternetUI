@@ -335,6 +335,10 @@
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\BaseControls\AbstractControl\" />
+  </ItemGroup>
+
   <!-- ================================================= -->
 
   <!-- ================================================= -->

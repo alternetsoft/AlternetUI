@@ -153,7 +153,7 @@ namespace Alternet.UI
             switch (modifierKeys)
             {
                 case ModifierKeys.Control:
-                    if (forUser && Application.IsMacOS)
+                    if (forUser && BaseApplication.IsMacOS)
                         modifiers = StringUtils.MacCommandKeyTitle;
                     else
                         modifiers = "Ctrl";
@@ -213,7 +213,7 @@ namespace Alternet.UI
 
                         default:
                             throw new NotSupportedException(
-                                SR.Get(SRID.Unsupported_Modifier, token));
+                                string.Format("Unsupported modifier {0}.", token));
                     }
 
                     modifiersToken = modifiersToken.Substring(offset + 1);

@@ -20,10 +20,11 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
         /// </summary>
-        internal KeyPressEventArgs(
-            Control originalTarget,
-            char keyChar)
-            : base(originalTarget)
+        public KeyPressEventArgs(
+            object originalTarget,
+            char keyChar,
+            KeyboardDevice keyboardDevice)
+            : base(originalTarget, keyboardDevice)
         {
             this.keyChar = keyChar;
         }

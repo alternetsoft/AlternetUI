@@ -7,36 +7,36 @@ namespace Alternet.UI
     /// </summary>
     public class KeyboardEventArgs : HandledEventArgs
     {
-        private readonly Control originalTarget;
-        private Control currentTarget;
+        private readonly object originalTarget;
+        private object currentTarget;
 
         /// <summary>
         ///     Initializes a new instance of the KeyboardEventArgs class.
         /// </summary>
-        internal KeyboardEventArgs(Control originalTarget)
+        public KeyboardEventArgs(object originalTarget, KeyboardDevice keyboardDevice)
         {
             this.originalTarget = originalTarget;
             this.currentTarget = originalTarget;
-            KeyboardDevice = Keyboard.PrimaryDevice;
+            KeyboardDevice = keyboardDevice;
         }
 
         /// <summary>
         /// Gets current target control for the event.
         /// </summary>
-        public Control CurrentTarget
+        public object CurrentTarget
         {
             get => currentTarget;
-            internal set => currentTarget = value;
+            set => currentTarget = value;
         }
 
         /// <summary>
         /// Gets original target control for the event.
         /// </summary>
-        public Control OriginalTarget => originalTarget;
+        public object OriginalTarget => originalTarget;
 
         /// <summary>
         /// Gets logical keyboard device associated with this event.
         /// </summary>
-        public KeyboardDevice KeyboardDevice { get; }
+        public KeyboardDevice KeyboardDevice { get; set; }
     }
 }

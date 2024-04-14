@@ -72,6 +72,19 @@ namespace Alternet.UI
             }
         }
 
+        internal static Control? GetControlUnderMouse()
+        {
+            var controlUnderMouse = Native.Control.HitTest(MouseDevice.GetScreenPosition());
+            if (controlUnderMouse == null)
+                return null;
+
+            var handler = ControlHandler.NativeControlToHandler(controlUnderMouse);
+            if (handler == null)
+                return null;
+
+            return handler.IsAttached ? handler.Control : null;
+        }
+
         internal static Control? GetMouseTargetControl(ref Control? control)
         {
             /*control ??= GetControlUnderMouse();*/
@@ -99,7 +112,7 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, timestamp);
+            var eventArgs = new MouseEventArgs(control, targetControl!, timestamp, Mouse.PrimaryDevice);
             control.RaiseMouseMove(eventArgs);
         }
 
@@ -114,7 +127,7 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp, Mouse.PrimaryDevice);
             /*Application.LogIf(eventArgs, true);*/
 
             control.RaiseMouseDown(eventArgs);
@@ -131,7 +144,8 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            var eventArgs =
+                new MouseEventArgs(control, targetControl!, changedButton, timestamp, Mouse.PrimaryDevice);
             control.RaiseMouseDoubleClick(eventArgs);
         }
 
@@ -146,7 +160,8 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, changedButton, timestamp);
+            var eventArgs
+                = new MouseEventArgs(control, targetControl!, changedButton, timestamp, Mouse.PrimaryDevice);
             control.RaiseMouseUp(eventArgs);
         }
 
@@ -166,7 +181,8 @@ namespace Alternet.UI
             if (control == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(control, targetControl!, timestamp);
+            var eventArgs
+                = new MouseEventArgs(control, targetControl!, timestamp, Mouse.PrimaryDevice);
             eventArgs.Delta = delta;
             control.RaiseMouseWheel(eventArgs);
         }
@@ -180,7 +196,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, isRepeat);
+            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
             control.RaiseKeyDown(eventArgs);
             handled = eventArgs.Handled;
         }
@@ -194,7 +210,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, isRepeat);
+            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
             control.RaiseKeyUp(eventArgs);
             handled = eventArgs.Handled;
         }
@@ -208,7 +224,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyPressEventArgs(control, keyChar);
+            var eventArgs = new KeyPressEventArgs(control, keyChar, Keyboard.PrimaryDevice);
             control.RaiseKeyPress(eventArgs);
             handled = eventArgs.Handled;
         }
@@ -227,19 +243,6 @@ namespace Alternet.UI
             }
 
             return inputManager;
-        }
-
-        private static Control? GetControlUnderMouse()
-        {
-            var controlUnderMouse = Native.Control.HitTest(MouseDevice.GetScreenPosition());
-            if (controlUnderMouse == null)
-                return null;
-
-            var handler = ControlHandler.NativeControlToHandler(controlUnderMouse);
-            if (handler == null)
-                return null;
-
-            return handler.IsAttached ? handler.Control : null;
         }
 
         private void CheckSTARequirement()

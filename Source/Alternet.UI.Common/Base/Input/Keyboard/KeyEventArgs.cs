@@ -34,11 +34,13 @@ namespace Alternet.UI
         /// </param>
         /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
         /// <param name="originalTarget"></param>
-        internal KeyEventArgs(
-            Control originalTarget,
+        /// <param name="keyboardDevice"></param>
+        public KeyEventArgs(
+            object originalTarget,
             Key key,
-            bool isRepeat)
-            : base(originalTarget)
+            bool isRepeat,
+            KeyboardDevice keyboardDevice)
+            : base(originalTarget, keyboardDevice)
         {
             this.key = key;
             this.isRepeat = isRepeat;

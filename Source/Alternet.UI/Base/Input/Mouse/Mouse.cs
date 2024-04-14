@@ -112,7 +112,7 @@ namespace Alternet.UI
         /// </summary>
         public static PointD GetPosition(Control relativeTo)
         {
-            return Mouse.PrimaryDevice.GetPosition(relativeTo);
+            return relativeTo.ScreenToClient(Mouse.PrimaryDevice.GetScreenPosition());
         }
     }
 }

@@ -6,6 +6,8 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -33,7 +35,7 @@ namespace Alternet.UI
             else
             {
                 throw new NotSupportedException(
-                    SR.Get(SRID.Unsupported_Key, fullName));
+                    string.Format("Unsupported key {0}.", fullName));
             }
         }
 
@@ -164,7 +166,7 @@ namespace Alternet.UI
                     else
                     {
                         throw new ArgumentException(
-                            SR.Get(SRID.CannotConvertStringToType, keyToken, typeof(Key)));
+                            string.Format(ErrorMessages.Default.CannotConvertStringToType, keyToken, typeof(Key)));
                     }
                 }
                 else

@@ -15,19 +15,20 @@ namespace Alternet.UI
     /// </summary>
     public class MouseEventArgs : HandledEventArgs
     {
-        private readonly Control currentTarget;
-        private readonly Control originalTarget;
+        private readonly object currentTarget;
+        private readonly object originalTarget;
         private PointD location;
 
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
         internal MouseEventArgs(
-            Control currentTarget,
-            Control originalTarget,
+            object currentTarget,
+            object originalTarget,
             MouseButton button,
-            long timestamp)
-            : this(currentTarget, originalTarget, timestamp)
+            long timestamp,
+            MouseDevice mouseDevice)
+            : this(currentTarget, originalTarget, timestamp, mouseDevice)
         {
             ChangedButton = button;
             ClickCount = 1;
@@ -36,24 +37,28 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
-        internal MouseEventArgs(Control currentTarget, Control originalTarget, long timestamp)
+        internal MouseEventArgs(
+            object currentTarget,
+            object originalTarget,
+            long timestamp,
+            MouseDevice mouseDevice)
         {
             this.currentTarget = currentTarget;
             this.originalTarget = originalTarget;
-            MouseDevice = Mouse.PrimaryDevice;
+            MouseDevice = mouseDevice;
             Timestamp = timestamp;
-            location = GetPosition(currentTarget);
+            location = GetPosition(currentTarget as Control);
         }
 
         /// <summary>
         /// Gets current target control for the event.
         /// </summary>
-        public Control CurrentTarget => currentTarget;
+        public object CurrentTarget => currentTarget;
 
         /// <summary>
         /// Gets original target control for the event.
         /// </summary>
-        public Control OriginalTarget => originalTarget;
+        public object OriginalTarget => originalTarget;
 
         /// <summary>
         /// Gets timestamp of the event.
@@ -72,7 +77,7 @@ namespace Alternet.UI
         public MouseButton ChangedButton
         {
             get;
-            internal set;
+            set;
         }
 
         /// <summary>
@@ -177,7 +182,7 @@ namespace Alternet.UI
         public int ClickCount
         {
             get;
-            internal set;
+            set;
         }
 
         /// <summary>
@@ -191,7 +196,7 @@ namespace Alternet.UI
         public int Delta
         {
             get;
-            internal set;
+            set;
         }
 
         /// <summary>
@@ -263,9 +268,9 @@ namespace Alternet.UI
         public PointD GetPosition(Control? relativeTo)
         {
             if (relativeTo is null)
-                return this.MouseDevice.GetScreenPosition();
+                return Mouse.PrimaryDevice.GetScreenPosition();
             else
-                return this.MouseDevice.GetPosition(relativeTo);
+                return Mouse.GetPosition(relativeTo);
         }
 
         /// <summary>
