@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         private bool isDisposed;
         private Pen? asPen;
 
-        internal Brush(UI.Native.Brush nativeBrush, bool immutable)
+        internal Brush(object nativeBrush, bool immutable)
         {
             NativeBrush = nativeBrush;
             this.immutable = immutable;
@@ -81,7 +81,7 @@ namespace Alternet.Drawing
 
         internal virtual Color BrushColor => Color.Black;
 
-        internal UI.Native.Brush NativeBrush { get; private set; }
+        internal object NativeBrush { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -192,7 +192,7 @@ namespace Alternet.Drawing
 
                 if (disposing)
                 {
-                    NativeBrush.Dispose();
+                    ((IDisposable)NativeBrush).Dispose();
                     NativeBrush = null!;
                 }
 
