@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// The <see cref="HatchStyle"/> property defines what type of pattern the brush has and can
     /// be any value from the <see cref="BrushHatchStyle"/> enumeration.
     /// </remarks>
-    public sealed class HatchBrush : Brush
+    public class HatchBrush : Brush
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
@@ -21,14 +21,12 @@ namespace Alternet.Drawing
         /// <param name="color">The <see cref="Drawing.Color"/> structure that represents the
         /// color of lines drawn by this <see cref="HatchBrush"/>.</param>
         public HatchBrush(BrushHatchStyle hatchStyle, Color color)
-            : base(new UI.Native.HatchBrush(), immutable: false)
+            : base(immutable: false)
         {
             HatchStyle = hatchStyle;
             Color = color;
 
-            ((UI.Native.HatchBrush)NativeBrush).Initialize(
-                (UI.Native.BrushHatchStyle)hatchStyle,
-                color);
+            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -48,7 +46,22 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.Hatch;
 
-        internal override Color BrushColor => this.Color;
+        /// <inheritdoc/>
+        public override Color BrushColor => this.Color;
+
+        /// <inheritdoc/>
+        public override object CreateNativeBrush()
+        {
+            return new UI.Native.HatchBrush();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeBrush()
+        {
+            ((UI.Native.HatchBrush)NativeBrush).Initialize(
+                (UI.Native.BrushHatchStyle)HatchStyle,
+                Color);
+        }
 
         private protected override bool EqualsCore(Brush other)
         {

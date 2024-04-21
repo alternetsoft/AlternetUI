@@ -6,7 +6,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Paints an area with a linear gradient.
     /// </summary>
-    public sealed class LinearGradientBrush : Brush
+    public class LinearGradientBrush : Brush
     {
         private PointD startPoint;
         private PointD endPoint;
@@ -51,7 +51,11 @@ namespace Alternet.Drawing
         /// <param name="endPoint">The end point of the gradient.</param>
         /// <param name="startColor">The start color of the gradient.</param>
         /// <param name="endColor">The end color of the gradient.</param>
-        public LinearGradientBrush(PointD startPoint, PointD endPoint, Color startColor, Color endColor)
+        public LinearGradientBrush(
+            PointD startPoint,
+            PointD endPoint,
+            Color startColor,
+            Color endColor)
             : this(startPoint, endPoint, GetGradientStopsFromEdgeColors(startColor, endColor))
         {
         }
@@ -66,19 +70,13 @@ namespace Alternet.Drawing
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
         public LinearGradientBrush(PointD startPoint, PointD endPoint, GradientStop[] gradientStops)
-            : this(new UI.Native.LinearGradientBrush())
+            : base(false)
         {
             this.startPoint = startPoint;
             this.endPoint = endPoint;
             this.gradientStops = gradientStops;
 
-            ReinitializeNativeBrush();
-        }
-
-        private LinearGradientBrush(UI.Native.LinearGradientBrush nativeBrush)
-            : base(nativeBrush, false)
-        {
-            gradientStops = Array.Empty<GradientStop>();
+            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -94,7 +92,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 startPoint = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
@@ -111,7 +109,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 endPoint = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
@@ -129,18 +127,22 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientStops = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.LinearGradient;
 
-        internal override Color BrushColor => GradientStops.Length > 0 ?
+        /// <inheritdoc/>
+        public override Color BrushColor => GradientStops.Length > 0 ?
             GradientStops[0].Color : Color.Black;
 
-        internal new UI.Native.LinearGradientBrush NativeBrush =>
-            (UI.Native.LinearGradientBrush)base.NativeBrush;
+        /// <inheritdoc/>
+        public override object CreateNativeBrush()
+        {
+            return new UI.Native.LinearGradientBrush();
+        }
 
         internal static GradientStop[] GetGradientStopsFromEdgeColors(
             Color startColor,
@@ -161,6 +163,16 @@ namespace Alternet.Drawing
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeBrush()
+        {
+            ((UI.Native.LinearGradientBrush)NativeBrush).Initialize(
+                startPoint,
+                endPoint,
+                gradientStops.Select(x => x.Color).ToArray(),
+                gradientStops.Select(x => x.Offset).ToArray());
         }
 
         private protected override bool EqualsCore(Brush other)
@@ -197,15 +209,6 @@ namespace Alternet.Drawing
             {
                 return $"LinearGradientBrush";
             }
-        }
-
-        private void ReinitializeNativeBrush()
-        {
-            NativeBrush.Initialize(
-                startPoint,
-                endPoint,
-                gradientStops.Select(x => x.Color).ToArray(),
-                gradientStops.Select(x => x.Offset).ToArray());
         }
     }
 }

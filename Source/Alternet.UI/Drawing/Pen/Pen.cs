@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// A <see cref="Pen"/> draws a line of specified width and style.
     /// Use the <see cref="DashStyle"/> property to draw several varieties of dashed lines.
     /// </remarks>
-    public sealed class Pen : IDisposable, IEquatable<Pen>
+    public class Pen : IDisposable, IEquatable<Pen>
     {
         private static Pen? defaultPen;
 
@@ -108,7 +108,7 @@ namespace Alternet.Drawing
             LineJoin lineJoin,
             bool immutable)
         {
-            NativePen = new UI.Native.Pen();
+            NativePen = CreateNativePen();
             this.color = color;
             this.width = width;
             this.dashStyle = dashStyle;
@@ -117,7 +117,7 @@ namespace Alternet.Drawing
 
             this.immutable = immutable;
 
-            ReinitializeNativePen();
+            UpdateNativePen();
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Alternet.Drawing
                 if (color == value || immutable)
                     return;
                 color = value;
-                ReinitializeNativePen();
+                UpdateNativePen();
             }
         }
 
@@ -191,7 +191,7 @@ namespace Alternet.Drawing
                 if (dashStyle == value || immutable)
                     return;
                 dashStyle = value;
-                ReinitializeNativePen();
+                UpdateNativePen();
             }
         }
 
@@ -214,7 +214,7 @@ namespace Alternet.Drawing
                 if (lineCap == value || immutable)
                     return;
                 lineCap = value;
-                ReinitializeNativePen();
+                UpdateNativePen();
             }
         }
 
@@ -237,7 +237,7 @@ namespace Alternet.Drawing
                 if (lineJoin == value || immutable)
                     return;
                 lineJoin = value;
-                ReinitializeNativePen();
+                UpdateNativePen();
             }
         }
 
@@ -263,11 +263,14 @@ namespace Alternet.Drawing
                 if (width == value || immutable)
                     return;
                 width = value;
-                ReinitializeNativePen();
+                UpdateNativePen();
             }
         }
 
-        internal UI.Native.Pen NativePen { get; private set; }
+        /// <summary>
+        /// Gets native pen.
+        /// </summary>
+        public object NativePen { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -349,9 +352,21 @@ namespace Alternet.Drawing
             return Equals(pen);
         }
 
-        private void ReinitializeNativePen()
+        /// <summary>
+        /// Creates native pen.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual object CreateNativePen()
         {
-            NativePen.Initialize(
+            return new UI.Native.Pen();
+        }
+
+        /// <summary>
+        /// Updates native pen.
+        /// </summary>
+        protected virtual void UpdateNativePen()
+        {
+            ((UI.Native.Pen)NativePen).Initialize(
                 (UI.Native.PenDashStyle)DashStyle,
                 Color,
                 Width,
@@ -380,7 +395,7 @@ namespace Alternet.Drawing
 
                 if (disposing)
                 {
-                    NativePen.Dispose();
+                    ((IDisposable)NativePen).Dispose();
                     NativePen = null!;
                 }
 

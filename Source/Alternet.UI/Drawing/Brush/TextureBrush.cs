@@ -4,7 +4,7 @@
     /// Defines a brush of a single color. Brushes are used to fill graphics shapes, such
     /// as rectangles, ellipses, pies, polygons, and paths.
     /// </summary>
-    public sealed class TextureBrush : Brush
+    public class TextureBrush : Brush
     {
         private Image image;
 
@@ -14,11 +14,11 @@
         /// <param name="image">An <see cref="Image"/> that represents the texture of
         /// this brush.</param>
         public TextureBrush(Image image)
-            : base(new UI.Native.TextureBrush(), false)
+            : base(false)
         {
             this.image = image;
             if(image is not null)
-                Initialize(image);
+                UpdateNativeBrush();
         }
 
         /// <summary>
@@ -35,12 +35,24 @@
                 if (image == value || Immutable)
                     return;
                 image = value;
-                Initialize(image);
+                UpdateNativeBrush();
             }
         }
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.Texture;
+
+        /// <inheritdoc/>
+        public override object CreateNativeBrush()
+        {
+            return new UI.Native.TextureBrush();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeBrush()
+        {
+            ((UI.Native.TextureBrush)NativeBrush).Initialize(image.NativeImage);
+        }
 
         private protected override bool EqualsCore(Brush other)
         {
@@ -55,11 +67,6 @@
         private protected override string ToStringCore()
         {
             return $"TextureBrush";
-        }
-
-        private void Initialize(Image image)
-        {
-            ((UI.Native.TextureBrush)NativeBrush).Initialize(image.NativeImage);
         }
     }
 }

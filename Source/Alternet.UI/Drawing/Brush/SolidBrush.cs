@@ -4,7 +4,7 @@ namespace Alternet.Drawing
     /// Defines a brush of a single color. Brushes are used to fill graphics shapes, such
     /// as rectangles, ellipses, pies, polygons, and paths.
     /// </summary>
-    public sealed class SolidBrush : Brush
+    public class SolidBrush : Brush
     {
         private Color color;
 
@@ -19,10 +19,10 @@ namespace Alternet.Drawing
         }
 
         internal SolidBrush(Color color, bool immutable)
-            : base(new UI.Native.SolidBrush(), immutable)
+            : base(immutable)
         {
             this.color = color;
-            ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
+            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -38,14 +38,15 @@ namespace Alternet.Drawing
                 if (color == value || Immutable)
                     return;
                 color = value;
-                ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
+                UpdateNativeBrush();
             }
         }
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.Solid;
 
-        internal override Color BrushColor => this.Color;
+        /// <inheritdoc/>
+        public override Color BrushColor => this.Color;
 
         /// <summary>
         /// Same as <see cref="Color"/> property implemented as method.
@@ -54,6 +55,18 @@ namespace Alternet.Drawing
         public void SetColor(Color color)
         {
             Color = color;
+        }
+
+        /// <inheritdoc/>
+        public override object CreateNativeBrush()
+        {
+            return new UI.Native.SolidBrush();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeBrush()
+        {
+            ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
         }
 
         private protected override bool EqualsCore(Brush other)

@@ -6,7 +6,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Paints an area with a radial gradient.
     /// </summary>
-    public sealed class RadialGradientBrush : Brush
+    public class RadialGradientBrush : Brush
     {
         private PointD center;
         private double radius;
@@ -72,20 +72,14 @@ namespace Alternet.Drawing
             double radius,
             PointD gradientOrigin,
             GradientStop[] gradientStops)
-            : this(new UI.Native.RadialGradientBrush())
+            : base(false)
         {
             this.center = center;
             this.radius = radius;
             this.gradientOrigin = gradientOrigin;
             this.gradientStops = gradientStops;
 
-            ReinitializeNativeBrush();
-        }
-
-        private RadialGradientBrush(UI.Native.RadialGradientBrush nativeBrush)
-            : base(nativeBrush, false)
-        {
-            gradientStops = Array.Empty<GradientStop>();
+            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -100,7 +94,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 center = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
@@ -116,7 +110,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 radius = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
@@ -133,7 +127,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientOrigin = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
@@ -150,18 +144,33 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientStops = value;
-                ReinitializeNativeBrush();
+                UpdateNativeBrush();
             }
         }
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.RadialGradient;
 
-        internal override Color BrushColor => GradientStops.Length > 0 ?
+        /// <inheritdoc/>
+        public override Color BrushColor => GradientStops.Length > 0 ?
             GradientStops[0].Color : Color.Black;
 
-        internal new UI.Native.RadialGradientBrush NativeBrush =>
-            (UI.Native.RadialGradientBrush)base.NativeBrush;
+        /// <inheritdoc/>
+        public override object CreateNativeBrush()
+        {
+            return new UI.Native.RadialGradientBrush();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeBrush()
+        {
+            ((UI.Native.RadialGradientBrush)NativeBrush).Initialize(
+                center,
+                radius,
+                gradientOrigin,
+                gradientStops.Select(x => x.Color).ToArray(),
+                gradientStops.Select(x => x.Offset).ToArray());
+        }
 
         private protected override bool EqualsCore(Brush other)
         {
@@ -209,15 +218,5 @@ namespace Alternet.Drawing
                 new GradientStop(startColor, 0),
                 new GradientStop(endColor, 1),
             };
-
-        private void ReinitializeNativeBrush()
-        {
-            NativeBrush.Initialize(
-                center,
-                radius,
-                gradientOrigin,
-                gradientStops.Select(x => x.Color).ToArray(),
-                gradientStops.Select(x => x.Offset).ToArray());
-        }
     }
 }

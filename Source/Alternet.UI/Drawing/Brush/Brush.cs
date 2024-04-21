@@ -27,14 +27,21 @@ namespace Alternet.Drawing
         private bool isDisposed;
         private Pen? asPen;
 
-        internal Brush(object nativeBrush, bool immutable)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Brush"/> class.
+        /// </summary>
+        /// <param name="immutable">Whether this brush is immutable.</param>
+        protected Brush(bool immutable)
         {
-            NativeBrush = nativeBrush;
+            NativeBrush = CreateNativeBrush();
             this.immutable = immutable;
         }
 
-        internal Brush()
-            : this(new UI.Native.Brush(), true)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Brush"/> class.
+        /// </summary>
+        protected Brush()
+            : this(true)
         {
         }
 
@@ -79,9 +86,19 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual BrushType BrushType => BrushType.None;
 
-        internal virtual Color BrushColor => Color.Black;
+        /// <summary>
+        /// Gets native brush.
+        /// </summary>
+        public virtual object NativeBrush
+        {
+            get;
+            private set;
+        }
 
-        internal object NativeBrush { get; private set; }
+        /// <summary>
+        /// Gets color of the brush.
+        /// </summary>
+        public virtual Color BrushColor => Color.Black;
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -122,6 +139,15 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
             return GetHashCodeCore();
+        }
+
+        /// <summary>
+        /// Creates native brush.
+        /// </summary>
+        /// <returns></returns>
+        public virtual object CreateNativeBrush()
+        {
+            return new UI.Native.Brush();
         }
 
         /// <summary>
@@ -198,6 +224,13 @@ namespace Alternet.Drawing
 
                 isDisposed = true;
             }
+        }
+
+        /// <summary>
+        /// Updates native brush.
+        /// </summary>
+        protected virtual void UpdateNativeBrush()
+        {
         }
 
         private protected virtual int GetHashCodeCore() => base.GetHashCode();
