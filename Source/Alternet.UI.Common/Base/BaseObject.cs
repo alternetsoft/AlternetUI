@@ -39,5 +39,15 @@ namespace Alternet.UI
         public virtual void Required()
         {
         }
+
+        /// <summary>
+        /// Throws <see cref="NotImplementedException"/> exception.
+        /// </summary>
+        public object NotImplemented() => throw new NotImplementedException();
+
+        /// <summary>
+        /// Throws <see cref="NotImplementedException"/> exception.
+        /// </summary>
+        public T NotImplemented<T>() => throw new NotImplementedException();
     }
 }

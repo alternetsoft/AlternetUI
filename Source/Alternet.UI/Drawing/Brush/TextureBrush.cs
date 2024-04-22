@@ -41,6 +41,30 @@
         public override BrushType BrushType => BrushType.Texture;
 
         /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"TextureBrush";
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => Image.GetHashCode();
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public override bool Equals(object? other)
+        {
+            var o = other as TextureBrush;
+            if (o == null)
+                return false;
+            CheckDisposed();
+            return Image == o.Image;
+        }
+
+        /// <inheritdoc/>
         protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateTextureBrush();
@@ -50,21 +74,6 @@
         protected override void UpdateNativeObject()
         {
             ((WxWidgetsDrawing)NativeDrawing.Default).UpdateTextureBrush(this);
-        }
-
-        private protected override bool EqualsCore(Brush other)
-        {
-            var o = other as TextureBrush;
-            if (o == null)
-                return false;
-            return Image == o.Image;
-        }
-
-        private protected override int GetHashCodeCore() => Image.GetHashCode();
-
-        private protected override string ToStringCore()
-        {
-            return $"TextureBrush";
         }
     }
 }

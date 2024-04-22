@@ -423,6 +423,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Tests different methods of getting Argb of the system color.
+        /// </summary>
+        internal static void TestSystemColors()
+        {
+            static void Test(KnownColor color)
+            {
+                var oldArgb = KnownColorTable.GetSystemColorArgb(color);
+                var newArgb = KnownColorTable.GetSystemColorArgbUseSystemSettings(color);
+                var equal = oldArgb == newArgb;
+
+                var oldArgbStr = oldArgb.ToString("X");
+                var newArgbStr = newArgb.ToString("X");
+
+                Application.Log($"{equal} old: {oldArgbStr} new: {newArgbStr}");
+            }
+
+            Test(KnownColor.ActiveBorder);
+            Test(KnownColor.ActiveCaption);
+            Test(KnownColor.ActiveCaptionText);
+            Test(KnownColor.AppWorkspace);
+            Test(KnownColor.Control);
+            Test(KnownColor.ControlDark);
+            Test(KnownColor.ControlDarkDark);
+            Test(KnownColor.ControlLight);
+            Test(KnownColor.ControlLightLight);
+            Test(KnownColor.ControlText);
+            Test(KnownColor.Desktop);
+            Test(KnownColor.GrayText);
+            Test(KnownColor.Highlight);
+            Test(KnownColor.HighlightText);
+            Test(KnownColor.HotTrack);
+            Test(KnownColor.InactiveBorder);
+            Test(KnownColor.InactiveCaption);
+            Test(KnownColor.InactiveCaptionText);
+            Test(KnownColor.Info);
+            Test(KnownColor.InfoText);
+            Test(KnownColor.Menu);
+            Test(KnownColor.MenuText);
+            Test(KnownColor.ScrollBar);
+            Test(KnownColor.Window);
+            Test(KnownColor.WindowFrame);
+            Test(KnownColor.WindowText);
+            Test(KnownColor.ButtonFace);
+            Test(KnownColor.ButtonHighlight);
+            Test(KnownColor.ButtonShadow);
+            Test(KnownColor.GradientActiveCaption);
+            Test(KnownColor.GradientInactiveCaption);
+            Test(KnownColor.MenuBar);
+            Test(KnownColor.MenuHighlight);
+        }
+
+        /// <summary>
         /// Writes to log file "Application finished" header text.
         /// </summary>
         internal static void LogToFileAppFinished()

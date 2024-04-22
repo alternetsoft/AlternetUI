@@ -154,43 +154,7 @@ namespace Alternet.Drawing
             GradientStops[0].Color : Color.Black;
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
-        {
-            return NativeDrawing.Default.CreateRadialGradientBrush();
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateNativeObject()
-        {
-            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateRadialGradientBrush(this);
-        }
-
-        private protected override bool EqualsCore(Brush other)
-        {
-            var o = other as RadialGradientBrush;
-            if (o == null)
-                return false;
-
-            return
-                Center == o.Center &&
-                GradientOrigin == o.GradientOrigin &&
-                Radius == o.Radius &&
-                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
-        }
-
-        private protected override int GetHashCodeCore()
-        {
-            var hashCode = new HashCode();
-            hashCode.Add(Center);
-            hashCode.Add(GradientOrigin);
-            hashCode.Add(Radius);
-            foreach (var gradientStop in GradientStops)
-                hashCode.Add(gradientStop);
-
-            return hashCode.ToHashCode();
-        }
-
-        private protected override string ToStringCore()
+        public override string ToString()
         {
             try
             {
@@ -202,6 +166,50 @@ namespace Alternet.Drawing
             {
                 return $"RadialGradientBrush";
             }
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public override bool Equals(object? other)
+        {
+            var o = other as RadialGradientBrush;
+            if (o == null)
+                return false;
+            CheckDisposed();
+            return
+                Center == o.Center &&
+                GradientOrigin == o.GradientOrigin &&
+                Radius == o.Radius &&
+                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Center);
+            hashCode.Add(GradientOrigin);
+            hashCode.Add(Radius);
+            foreach (var gradientStop in GradientStops)
+                hashCode.Add(gradientStop);
+
+            return hashCode.ToHashCode();
+        }
+
+        /// <inheritdoc/>
+        protected override object CreateNativeObject()
+        {
+            return NativeDrawing.Default.CreateRadialGradientBrush();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeObject()
+        {
+            NativeDrawing.Default.UpdateRadialGradientBrush(this);
         }
 
         private static GradientStop[] GetGradientStopsFromEdgeColors(

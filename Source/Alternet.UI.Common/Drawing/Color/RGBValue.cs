@@ -20,17 +20,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Red component of a color.
         /// </summary>
-        public byte R;
+        public byte R = 0;
 
         /// <summary>
         /// Green component of a color.
         /// </summary>
-        public byte G;
+        public byte G = 0;
 
         /// <summary>
         /// Blue component of a color.
         /// </summary>
-        public byte B;
+        public byte B = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RGBValue"/>.

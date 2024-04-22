@@ -100,35 +100,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Serves as the default hash function.
-        /// </summary>
-        /// <returns>A hash code for the current object.</returns>
-        public override int GetHashCode()
-        {
-            CheckDisposed();
-            return GetHashCodeCore();
-        }
-
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        public bool Equals(Brush? other)
-        {
-            if (other == null)
-                return false;
-
-            CheckDisposed();
-            return EqualsCore(other);
-        }
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            CheckDisposed();
-            return ToStringCore();
+            return "Transparent";
+        }
+
+        bool IEquatable<Brush>.Equals(Brush? other)
+        {
+            return Equals(other as Brush);
         }
 
         /// <summary>
@@ -148,6 +130,12 @@ namespace Alternet.Drawing
             return Equals(brush);
         }
 
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => base.GetHashCode();
+
         /// <inheritdoc/>
         protected override object CreateNativeObject()
         {
@@ -158,11 +146,5 @@ namespace Alternet.Drawing
         protected override void UpdateNativeObject()
         {
         }
-
-        private protected virtual int GetHashCodeCore() => base.GetHashCode();
-
-        private protected virtual bool EqualsCore(Brush other) => other == this;
-
-        private protected virtual string ToStringCore() => "Transparent";
     }
 }

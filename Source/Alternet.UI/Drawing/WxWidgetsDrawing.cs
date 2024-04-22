@@ -41,14 +41,19 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreatePen() => new UI.Native.Pen();
 
-        public virtual void UpdateHatchBrush(HatchBrush brush)
+        public override Color GetColor(SystemSettingsColor index)
+        {
+            return SystemSettings.GetColor(index);
+        }
+
+        public override void UpdateHatchBrush(HatchBrush brush)
         {
             ((UI.Native.HatchBrush)brush.NativeObject).Initialize(
                 (UI.Native.BrushHatchStyle)brush.HatchStyle,
                 brush.Color);
         }
 
-        public virtual void UpdateLinearGradientBrush(LinearGradientBrush brush)
+        public override void UpdateLinearGradientBrush(LinearGradientBrush brush)
         {
             ((UI.Native.LinearGradientBrush)brush.NativeObject).Initialize(
                 brush.StartPoint,
@@ -57,7 +62,7 @@ namespace Alternet.Drawing
                 brush.GradientStops.Select(x => x.Offset).ToArray());
         }
 
-        public virtual void UpdateRadialGradientBrush(RadialGradientBrush brush)
+        public override void UpdateRadialGradientBrush(RadialGradientBrush brush)
         {
             ((UI.Native.RadialGradientBrush)brush.NativeObject).Initialize(
                 brush.Center,
@@ -67,7 +72,7 @@ namespace Alternet.Drawing
                 brush.GradientStops.Select(x => x.Offset).ToArray());
         }
 
-        public virtual void UpdateSolidBrush(SolidBrush brush)
+        public override void UpdateSolidBrush(SolidBrush brush)
         {
             ((UI.Native.SolidBrush)brush.NativeObject).Initialize(brush.Color);
         }
@@ -77,7 +82,7 @@ namespace Alternet.Drawing
             ((UI.Native.TextureBrush)brush.NativeObject).Initialize(brush.Image.NativeImage);
         }
 
-        public virtual void UpdatePen(Pen pen)
+        public override void UpdatePen(Pen pen)
         {
             ((UI.Native.Pen)pen.NativeObject).Initialize(
                 (UI.Native.PenDashStyle)pen.DashStyle,

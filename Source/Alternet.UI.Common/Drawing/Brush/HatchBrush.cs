@@ -48,6 +48,31 @@ namespace Alternet.Drawing
         public override Color BrushColor => this.Color;
 
         /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"HatchBrush ({HatchStyle}, {Color})";
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => HashCode.Combine(HatchStyle, Color);
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public override bool Equals(object? other)
+        {
+            var o = other as HatchBrush;
+            if (o == null)
+                return false;
+
+            CheckDisposed();
+            return Color == o.Color && HatchStyle == o.HatchStyle;
+        }
+
+        /// <inheritdoc/>
         protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateHatchBrush();
@@ -56,23 +81,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateHatchBrush(this);
-        }
-
-        private protected override bool EqualsCore(Brush other)
-        {
-            var o = other as HatchBrush;
-            if (o == null)
-                return false;
-
-            return Color == o.Color && HatchStyle == o.HatchStyle;
-        }
-
-        private protected override int GetHashCodeCore() => HashCode.Combine(HatchStyle, Color);
-
-        private protected override string ToStringCore()
-        {
-            return $"HatchBrush ({HatchStyle}, {Color})";
+            NativeDrawing.Default.UpdateHatchBrush(this);
         }
     }
 }

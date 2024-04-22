@@ -136,13 +136,64 @@ namespace Alternet.Drawing
         public override Color BrushColor => GradientStops.Length > 0 ?
             GradientStops[0].Color : Color.Black;
 
-        internal static GradientStop[] GetGradientStopsFromEdgeColors(
+        /// <summary>
+        /// Converts two colors to array of <see cref="GradientStop"/>.
+        /// </summary>
+        /// <param name="startColor"></param>
+        /// <param name="endColor"></param>
+        /// <returns></returns>
+        public static GradientStop[] GetGradientStopsFromEdgeColors(
             Color startColor,
             Color endColor) => new[]
             {
                 new GradientStop(startColor, 0),
                 new GradientStop(endColor, 1),
             };
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            try
+            {
+                return $"LinearGradientBrush (StartPoint={StartPoint}, EndPoint={EndPoint}," +
+                    $" GradientStops=({GradientStopsToString(GradientStops)}))";
+            }
+            catch
+            {
+                return $"LinearGradientBrush";
+            }
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(StartPoint);
+            hashCode.Add(EndPoint);
+            foreach (var gradientStop in GradientStops)
+                hashCode.Add(gradientStop);
+
+            return hashCode.ToHashCode();
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public override bool Equals(object? other)
+        {
+            var o = other as LinearGradientBrush;
+            if (o == null)
+                return false;
+            CheckDisposed();
+
+            return
+                StartPoint == o.StartPoint &&
+                EndPoint == o.EndPoint &&
+                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
+        }
 
         internal static string GradientStopsToString(GradientStop[] stops)
         {
@@ -166,43 +217,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateLinearGradientBrush(this);
-        }
-
-        private protected override bool EqualsCore(Brush other)
-        {
-            var o = other as LinearGradientBrush;
-            if (o == null)
-                return false;
-
-            return
-                StartPoint == o.StartPoint &&
-                EndPoint == o.EndPoint &&
-                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
-        }
-
-        private protected override int GetHashCodeCore()
-        {
-            var hashCode = new HashCode();
-            hashCode.Add(StartPoint);
-            hashCode.Add(EndPoint);
-            foreach (var gradientStop in GradientStops)
-                hashCode.Add(gradientStop);
-
-            return hashCode.ToHashCode();
-        }
-
-        private protected override string ToStringCore()
-        {
-            try
-            {
-                return $"LinearGradientBrush (StartPoint={StartPoint}, EndPoint={EndPoint}," +
-                    $" GradientStops=({GradientStopsToString(GradientStops)}))";
-            }
-            catch
-            {
-                return $"LinearGradientBrush";
-            }
+            NativeDrawing.Default.UpdateLinearGradientBrush(this);
         }
     }
 }

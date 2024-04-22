@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -322,7 +324,7 @@ namespace Alternet.Drawing
         /// </summary>
         protected override void UpdateNativeObject()
         {
-            ((WxWidgetsDrawing)NativeDrawing.Default).UpdatePen(this);
+            NativeDrawing.Default.UpdatePen(this);
         }
     }
 }

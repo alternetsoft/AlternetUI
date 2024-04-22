@@ -57,6 +57,31 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"SolidBrush ({Color})";
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => Color.GetHashCode();
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public override bool Equals(object? other)
+        {
+            var o = other as SolidBrush;
+            if (o == null)
+                return false;
+
+            CheckDisposed();
+            return Color == o.Color;
+        }
+
+        /// <inheritdoc/>
         protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateSolidBrush();
@@ -65,23 +90,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateSolidBrush(this);
-        }
-
-        private protected override bool EqualsCore(Brush other)
-        {
-            var o = other as SolidBrush;
-            if (o == null)
-                return false;
-
-            return Color == o.Color;
-        }
-
-        private protected override int GetHashCodeCore() => Color.GetHashCode();
-
-        private protected override string ToStringCore()
-        {
-            return $"SolidBrush ({Color})";
+            NativeDrawing.Default.UpdateSolidBrush(this);
         }
     }
 }
