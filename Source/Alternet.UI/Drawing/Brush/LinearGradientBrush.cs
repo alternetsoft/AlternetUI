@@ -75,8 +75,6 @@ namespace Alternet.Drawing
             this.startPoint = startPoint;
             this.endPoint = endPoint;
             this.gradientStops = gradientStops;
-
-            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -92,7 +90,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 startPoint = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -109,7 +107,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 endPoint = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -127,7 +125,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientStops = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -141,7 +139,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreateNativeBrush()
         {
-            return new UI.Native.LinearGradientBrush();
+            return NativeDrawing.Default.CreateLinearGradientBrush();
         }
 
         internal static GradientStop[] GetGradientStopsFromEdgeColors(

@@ -17,8 +17,6 @@
             : base(false)
         {
             this.image = image;
-            if(image is not null)
-                UpdateNativeBrush();
         }
 
         /// <summary>
@@ -35,7 +33,7 @@
                 if (image == value || Immutable)
                     return;
                 image = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -45,7 +43,7 @@
         /// <inheritdoc/>
         public override object CreateNativeBrush()
         {
-            return new UI.Native.TextureBrush();
+            return NativeDrawing.Default.CreateTextureBrush();
         }
 
         /// <inheritdoc/>

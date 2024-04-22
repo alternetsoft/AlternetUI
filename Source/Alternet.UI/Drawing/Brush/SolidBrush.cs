@@ -22,7 +22,6 @@ namespace Alternet.Drawing
             : base(immutable)
         {
             this.color = color;
-            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace Alternet.Drawing
                 if (color == value || Immutable)
                     return;
                 color = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -60,7 +59,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreateNativeBrush()
         {
-            return new UI.Native.SolidBrush();
+            return NativeDrawing.Default.CreateSolidBrush();
         }
 
         /// <inheritdoc/>

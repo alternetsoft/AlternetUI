@@ -25,8 +25,6 @@ namespace Alternet.Drawing
         {
             HatchStyle = hatchStyle;
             Color = color;
-
-            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -52,7 +50,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreateNativeBrush()
         {
-            return new UI.Native.HatchBrush();
+            return NativeDrawing.Default.CreateHatchBrush();
         }
 
         /// <inheritdoc/>

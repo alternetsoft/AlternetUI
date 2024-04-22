@@ -60,6 +60,7 @@ namespace Alternet.UI
 
         static Application()
         {
+            WxWidgetsDrawing.Initialize();
         }
 
         /// <summary>

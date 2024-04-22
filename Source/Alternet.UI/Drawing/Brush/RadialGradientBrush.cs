@@ -78,8 +78,6 @@ namespace Alternet.Drawing
             this.radius = radius;
             this.gradientOrigin = gradientOrigin;
             this.gradientStops = gradientStops;
-
-            UpdateNativeBrush();
         }
 
         /// <summary>
@@ -94,7 +92,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 center = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -110,7 +108,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 radius = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -127,7 +125,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientOrigin = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -144,7 +142,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientStops = value;
-                UpdateNativeBrush();
+                UpdateRequired = true;
             }
         }
 
@@ -158,7 +156,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreateNativeBrush()
         {
-            return new UI.Native.RadialGradientBrush();
+            return NativeDrawing.Default.CreateRadialGradientBrush();
         }
 
         /// <inheritdoc/>

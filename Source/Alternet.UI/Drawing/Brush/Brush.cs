@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     /// <see cref="HatchBrush" />.
     /// </remarks>
     [TypeConverter(typeof(BrushConverter))]
-    public class Brush : IDisposable, IEquatable<Brush>
+    public class Brush : DisposableObject, IEquatable<Brush>
     {
         /// <summary>
         /// Gets transparent brush.
@@ -24,8 +24,8 @@ namespace Alternet.Drawing
 
         private static Brush? defaultBrush;
         private readonly bool immutable;
-        private bool isDisposed;
         private Pen? asPen;
+        private object? nativeBrush;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
@@ -33,7 +33,6 @@ namespace Alternet.Drawing
         /// <param name="immutable">Whether this brush is immutable.</param>
         protected Brush(bool immutable)
         {
-            NativeBrush = CreateNativeBrush();
             this.immutable = immutable;
         }
 
@@ -58,12 +57,6 @@ namespace Alternet.Drawing
         /// </summary>
         [Browsable(false)]
         public bool Immutable => immutable;
-
-        /// <summary>
-        /// Gets whether object is disposed.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsDisposed => isDisposed;
 
         /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
@@ -91,14 +84,33 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual object NativeBrush
         {
-            get;
-            private set;
+            get
+            {
+                if(nativeBrush is null)
+                {
+                    nativeBrush = CreateNativeBrush();
+                    UpdateNativeBrush();
+                }
+                else
+                if (UpdateRequired)
+                {
+                    UpdateRequired = false;
+                    UpdateNativeBrush();
+                }
+
+                return nativeBrush;
+            }
         }
 
         /// <summary>
         /// Gets color of the brush.
         /// </summary>
         public virtual Color BrushColor => Color.Black;
+
+        /// <summary>
+        /// Gets whether native brush update is required.
+        /// </summary>
+        protected bool UpdateRequired { get; set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -123,15 +135,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Releases all resources used by this <see cref="Brush"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
@@ -147,7 +150,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual object CreateNativeBrush()
         {
-            return new UI.Native.Brush();
+            return NativeDrawing.Default.CreateTransparentBrush();
         }
 
         /// <summary>
@@ -189,40 +192,13 @@ namespace Alternet.Drawing
             return Equals(brush);
         }
 
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
-        /// </summary>
-        protected void CheckDisposed()
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
         {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources used by the System.ComponentModel.Component
-        /// and optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing">
-        /// <c>true</c> to release both managed and unmanaged resources; false<c></c> to release
-        /// only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
+            if (nativeBrush is not null)
             {
-                if (immutable)
-                {
-                    throw new InvalidOperationException(
-                        ErrorMessages.Default.CannotDisposeImmutableObject);
-                }
-
-                if (disposing)
-                {
-                    ((IDisposable)NativeBrush).Dispose();
-                    NativeBrush = null!;
-                }
-
-                isDisposed = true;
+                ((IDisposable)NativeBrush).Dispose();
+                nativeBrush = null;
             }
         }
 

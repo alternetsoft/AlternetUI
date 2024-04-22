@@ -8,12 +8,17 @@ using Alternet.UI.Localization;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Describes a drawing surface.
+    /// Defines a drawing surface.
     /// </summary>
     public class Graphics : DisposableObject
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
+
+        static Graphics()
+        {
+            WxWidgetsDrawing.Initialize();
+        }
 
         internal Graphics(UI.Native.DrawingContext dc, bool dispose = true)
         {
