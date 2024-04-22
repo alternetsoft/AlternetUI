@@ -33,14 +33,14 @@ namespace Alternet.Drawing
 
             if (name == string.Empty)
             {
-                Application.LogError("Font name cannot be empty, using default font.");
+                BaseApplication.LogError("Font name cannot be empty, using default font.");
                 GenericFamily = GenericFontFamily.Default;
                 return;
             }
 
             if (!IsFamilyValid(name))
             {
-                Application.LogError($"'{name}' font family is not installed on this computer, using default font.");
+                BaseApplication.LogError($"'{name}' font family is not installed on this computer, using default font.");
                 GenericFamily = GenericFontFamily.Default;
                 return;
             }

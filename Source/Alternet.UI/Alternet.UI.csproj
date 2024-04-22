@@ -337,8 +337,6 @@
 
   <ItemGroup>
     <Folder Include="Controls\BaseControls\AbstractControl\" />
-    <Folder Include="Drawing\Color\" />
-    <Folder Include="Drawing\Pen\" />
   </ItemGroup>
 
   <!-- ================================================= -->
