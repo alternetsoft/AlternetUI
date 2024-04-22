@@ -57,15 +57,15 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateNativeBrush()
+        protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateSolidBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeBrush()
+        protected override void UpdateNativeObject()
         {
-            ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
+            ((UI.Native.SolidBrush)NativeObject).Initialize(color);
         }
 
         private protected override bool EqualsCore(Brush other)

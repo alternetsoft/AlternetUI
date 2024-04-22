@@ -1,8 +1,3 @@
-using System;
-using System.ComponentModel;
-using Alternet.UI;
-using Alternet.UI.Localization;
-
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -12,12 +7,10 @@ namespace Alternet.Drawing
     /// A <see cref="Pen"/> draws a line of specified width and style.
     /// Use the <see cref="DashStyle"/> property to draw several varieties of dashed lines.
     /// </remarks>
-    public class Pen : IDisposable, IEquatable<Pen>
+    public class Pen : GraphicsObject, IEquatable<Pen>
     {
         private static Pen? defaultPen;
 
-        private readonly bool immutable;
-        private bool isDisposed;
         private Color color;
         private DashStyle dashStyle;
         private LineCap lineCap;
@@ -93,10 +86,7 @@ namespace Alternet.Drawing
         /// <param name="brush">A <see cref="Brush"/> that indicates the color of this
         /// <see cref="Pen"/>.</param>
         public Pen(Brush brush)
-            : this(brush as SolidBrush != null ?
-                    ((SolidBrush)brush).Color :
-                    throw new ArgumentException(
-                        ErrorMessages.Default.OnlySolidBrushInstancesSupported))
+            : this(brush.BrushColor)
         {
         }
 
@@ -107,17 +97,13 @@ namespace Alternet.Drawing
             LineCap lineCap,
             LineJoin lineJoin,
             bool immutable)
+            : base(immutable)
         {
-            NativePen = CreateNativePen();
             this.color = color;
             this.width = width;
             this.dashStyle = dashStyle;
             this.lineCap = lineCap;
             this.lineJoin = lineJoin;
-
-            this.immutable = immutable;
-
-            UpdateNativePen();
         }
 
         /// <summary>
@@ -127,18 +113,6 @@ namespace Alternet.Drawing
         /// Default pen has width equal to 1 and Black color.
         /// </value>
         public static Pen Default => defaultPen ??= new(Color.Black);
-
-        /// <summary>
-        /// Gets whether this object is immutable (properties are readonly).
-        /// </summary>
-        [Browsable(false)]
-        public bool Immutable => immutable;
-
-        /// <summary>
-        /// Gets whether object is disposed.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsDisposed => isDisposed;
 
         /// <summary>
         /// Gets or sets the color of this <see cref="Pen"/>.
@@ -158,10 +132,10 @@ namespace Alternet.Drawing
 
             set
             {
-                if (color == value || immutable)
+                if (color == value || Immutable)
                     return;
                 color = value;
-                UpdateNativePen();
+                UpdateRequired = true;
             }
         }
 
@@ -188,10 +162,10 @@ namespace Alternet.Drawing
 
             set
             {
-                if (dashStyle == value || immutable)
+                if (dashStyle == value || Immutable)
                     return;
                 dashStyle = value;
-                UpdateNativePen();
+                UpdateRequired = true;
             }
         }
 
@@ -211,10 +185,10 @@ namespace Alternet.Drawing
 
             set
             {
-                if (lineCap == value || immutable)
+                if (lineCap == value || Immutable)
                     return;
                 lineCap = value;
-                UpdateNativePen();
+                UpdateRequired = true;
             }
         }
 
@@ -234,10 +208,10 @@ namespace Alternet.Drawing
 
             set
             {
-                if (lineJoin == value || immutable)
+                if (lineJoin == value || Immutable)
                     return;
                 lineJoin = value;
-                UpdateNativePen();
+                UpdateRequired = true;
             }
         }
 
@@ -260,17 +234,12 @@ namespace Alternet.Drawing
 
             set
             {
-                if (width == value || immutable)
+                if (width == value || Immutable)
                     return;
                 width = value;
-                UpdateNativePen();
+                UpdateRequired = true;
             }
         }
-
-        /// <summary>
-        /// Gets native pen.
-        /// </summary>
-        public object NativePen { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -295,21 +264,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Releases all resources used by this <see cref="Pen"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            CheckDisposed();
             return HashCode.Combine(Color, DashStyle, Width);
         }
 
@@ -320,8 +279,6 @@ namespace Alternet.Drawing
         {
             if (o == null)
                 return false;
-
-            CheckDisposed();
             return Color == o.Color && DashStyle == o.DashStyle && Width == o.Width;
         }
 
@@ -331,7 +288,6 @@ namespace Alternet.Drawing
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            CheckDisposed();
             return $"Pen ({Color}, {Width}, {DashStyle})";
         }
 
@@ -356,51 +312,22 @@ namespace Alternet.Drawing
         /// Creates native pen.
         /// </summary>
         /// <returns></returns>
-        protected virtual object CreateNativePen()
+        protected override object CreateNativeObject()
         {
-            return new UI.Native.Pen();
+            return NativeDrawing.Default.CreatePen();
         }
 
         /// <summary>
         /// Updates native pen.
         /// </summary>
-        protected virtual void UpdateNativePen()
+        protected override void UpdateNativeObject()
         {
-            ((UI.Native.Pen)NativePen).Initialize(
+            ((UI.Native.Pen)NativeObject).Initialize(
                 (UI.Native.PenDashStyle)DashStyle,
                 Color,
                 Width,
                 (UI.Native.LineCap)LineCap,
                 (UI.Native.LineJoin)LineJoin);
-        }
-
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
-        /// </summary>
-        private void CheckDisposed()
-        {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (immutable)
-                {
-                    throw new InvalidOperationException(
-                        ErrorMessages.Default.CannotDisposeImmutableObject);
-                }
-
-                if (disposing)
-                {
-                    ((IDisposable)NativePen).Dispose();
-                    NativePen = null!;
-                }
-
-                isDisposed = true;
-            }
         }
     }
 }

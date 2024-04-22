@@ -136,12 +136,6 @@ namespace Alternet.Drawing
         public override Color BrushColor => GradientStops.Length > 0 ?
             GradientStops[0].Color : Color.Black;
 
-        /// <inheritdoc/>
-        public override object CreateNativeBrush()
-        {
-            return NativeDrawing.Default.CreateLinearGradientBrush();
-        }
-
         internal static GradientStop[] GetGradientStopsFromEdgeColors(
             Color startColor,
             Color endColor) => new[]
@@ -164,9 +158,15 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeBrush()
+        protected override object CreateNativeObject()
         {
-            ((UI.Native.LinearGradientBrush)NativeBrush).Initialize(
+            return NativeDrawing.Default.CreateLinearGradientBrush();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateNativeObject()
+        {
+            ((UI.Native.LinearGradientBrush)NativeObject).Initialize(
                 startPoint,
                 endPoint,
                 gradientStops.Select(x => x.Color).ToArray(),

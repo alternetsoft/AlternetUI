@@ -359,8 +359,8 @@ namespace Alternet.Drawing
         public virtual void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius)
         {
             dc.RoundedRectangle(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 rectangle,
                 cornerRadius);
         }
@@ -456,8 +456,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Rectangle(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 rectangle);
         }
 
@@ -476,8 +476,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Ellipse(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 rectangle);
         }
 
@@ -496,8 +496,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Path(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 path.NativePath);
         }
 
@@ -525,8 +525,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Pie(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 center,
                 radius,
                 startAngle,
@@ -549,8 +549,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Circle(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 center,
                 radius);
         }
@@ -571,8 +571,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Polygon(
-                (UI.Native.Pen)pen.NativePen,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Brush)brush.NativeObject,
                 points,
                 (UI.Native.FillMode)fillMode);
         }
@@ -594,7 +594,7 @@ namespace Alternet.Drawing
         public virtual void FillRectangle(Brush brush, RectD rectangle)
         {
             DebugBrushAssert(brush);
-            dc.FillRectangle((UI.Native.Brush)brush.NativeBrush, rectangle);
+            dc.FillRectangle((UI.Native.Brush)brush.NativeObject, rectangle);
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace Alternet.Drawing
         public virtual void FillRectangleI(Brush brush, RectI rectangle)
         {
             DebugBrushAssert(brush);
-            dc.FillRectangleI((UI.Native.Brush)brush.NativeBrush, rectangle);
+            dc.FillRectangleI((UI.Native.Brush)brush.NativeObject, rectangle);
         }
 
         /// <summary>
@@ -641,7 +641,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             dc.DrawArc(
-                (UI.Native.Pen)pen.NativePen,
+                (UI.Native.Pen)pen.NativeObject,
                 center,
                 radius,
                 startAngle,
@@ -680,7 +680,7 @@ namespace Alternet.Drawing
         public virtual void DrawPoint(Pen pen, double x, double y)
         {
             DebugPenAssert(pen);
-            dc.DrawPoint((UI.Native.Pen)pen.NativePen, x, y);
+            dc.DrawPoint((UI.Native.Pen)pen.NativeObject, x, y);
         }
 
         /// <summary>
@@ -705,7 +705,7 @@ namespace Alternet.Drawing
             double sweepAngle)
         {
             DebugBrushAssert(brush);
-            dc.FillPie((UI.Native.Brush)brush.NativeBrush, center, radius, startAngle, sweepAngle);
+            dc.FillPie((UI.Native.Brush)brush.NativeObject, center, radius, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -730,7 +730,7 @@ namespace Alternet.Drawing
             double sweepAngle)
         {
             DebugPenAssert(pen);
-            dc.DrawPie((UI.Native.Pen)pen.NativePen, center, radius, startAngle, sweepAngle);
+            dc.DrawPie((UI.Native.Pen)pen.NativeObject, center, radius, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -756,7 +756,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             dc.DrawBezier(
-                (UI.Native.Pen)pen.NativePen,
+                (UI.Native.Pen)pen.NativeObject,
                 startPoint,
                 controlPoint1,
                 controlPoint2,
@@ -787,7 +787,7 @@ namespace Alternet.Drawing
                     nameof(points));
             }
 #endif
-            dc.DrawBeziers((UI.Native.Pen)pen.NativePen, points);
+            dc.DrawBeziers((UI.Native.Pen)pen.NativeObject, points);
         }
 
         /// <summary>
@@ -802,7 +802,7 @@ namespace Alternet.Drawing
         public virtual void DrawCircle(Pen pen, PointD center, double radius)
         {
             DebugPenAssert(pen);
-            dc.DrawCircle((UI.Native.Pen)pen.NativePen, center, radius);
+            dc.DrawCircle((UI.Native.Pen)pen.NativeObject, center, radius);
         }
 
         /// <summary>
@@ -817,7 +817,7 @@ namespace Alternet.Drawing
         public virtual void FillCircle(Brush brush, PointD center, double radius)
         {
             DebugBrushAssert(brush);
-            dc.FillCircle((UI.Native.Brush)brush.NativeBrush, center, radius);
+            dc.FillCircle((UI.Native.Brush)brush.NativeObject, center, radius);
         }
 
         /// <summary>
@@ -831,7 +831,7 @@ namespace Alternet.Drawing
         public virtual void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
         {
             DebugPenAssert(pen);
-            dc.DrawRoundedRectangle((UI.Native.Pen)pen.NativePen, rect, cornerRadius);
+            dc.DrawRoundedRectangle((UI.Native.Pen)pen.NativeObject, rect, cornerRadius);
         }
 
         /// <summary>
@@ -846,7 +846,7 @@ namespace Alternet.Drawing
         public virtual void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
         {
             DebugBrushAssert(brush);
-            dc.FillRoundedRectangle((UI.Native.Brush)brush.NativeBrush, rect, cornerRadius);
+            dc.FillRoundedRectangle((UI.Native.Brush)brush.NativeObject, rect, cornerRadius);
         }
 
         /// <summary>
@@ -860,7 +860,7 @@ namespace Alternet.Drawing
         public virtual void DrawPolygon(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            dc.DrawPolygon((UI.Native.Pen)pen.NativePen, points);
+            dc.DrawPolygon((UI.Native.Pen)pen.NativeObject, points);
         }
 
         /// <summary>
@@ -880,7 +880,7 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             dc.FillPolygon(
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Brush)brush.NativeObject,
                 points,
                 (UI.Native.FillMode)fillMode);
         }
@@ -896,7 +896,7 @@ namespace Alternet.Drawing
         public virtual void DrawRectangles(Pen pen, RectD[] rects)
         {
             DebugPenAssert(pen);
-            dc.DrawRectangles((UI.Native.Pen)pen.NativePen, rects);
+            dc.DrawRectangles((UI.Native.Pen)pen.NativeObject, rects);
         }
 
         /// <summary>
@@ -910,7 +910,7 @@ namespace Alternet.Drawing
         public virtual void FillRectangles(Brush brush, RectD[] rects)
         {
             DebugBrushAssert(brush);
-            dc.FillRectangles((UI.Native.Brush)brush.NativeBrush, rects);
+            dc.FillRectangles((UI.Native.Brush)brush.NativeObject, rects);
         }
 
         /// <summary>
@@ -930,7 +930,7 @@ namespace Alternet.Drawing
         public virtual void FillEllipse(Brush brush, RectD bounds)
         {
             DebugBrushAssert(brush);
-            dc.FillEllipse((UI.Native.Brush)brush.NativeBrush, bounds);
+            dc.FillEllipse((UI.Native.Brush)brush.NativeObject, bounds);
         }
 
         /// <summary>
@@ -955,7 +955,7 @@ namespace Alternet.Drawing
                     nameof(brush));
             }
 #endif
-            dc.FloodFill((UI.Native.Brush)brush.NativeBrush, point);
+            dc.FloodFill((UI.Native.Brush)brush.NativeObject, point);
         }
 
         /// <summary>
@@ -969,7 +969,7 @@ namespace Alternet.Drawing
         public virtual void DrawRectangle(Pen pen, RectD rectangle)
         {
             DebugPenAssert(pen);
-            dc.DrawRectangle((UI.Native.Pen)pen.NativePen, rectangle);
+            dc.DrawRectangle((UI.Native.Pen)pen.NativeObject, rectangle);
         }
 
         /// <summary>
@@ -982,7 +982,7 @@ namespace Alternet.Drawing
         public virtual void DrawPath(Pen pen, GraphicsPath path)
         {
             DebugPenAssert(pen);
-            dc.DrawPath((UI.Native.Pen)pen.NativePen, path.NativePath);
+            dc.DrawPath((UI.Native.Pen)pen.NativeObject, path.NativePath);
         }
 
         /// <summary>
@@ -995,7 +995,7 @@ namespace Alternet.Drawing
         public virtual void FillPath(Brush brush, GraphicsPath path)
         {
             DebugBrushAssert(brush);
-            dc.FillPath((UI.Native.Brush)brush.NativeBrush, path.NativePath);
+            dc.FillPath((UI.Native.Brush)brush.NativeObject, path.NativePath);
         }
 
         /// <summary>
@@ -1013,7 +1013,7 @@ namespace Alternet.Drawing
         public virtual void DrawLine(Pen pen, PointD a, PointD b)
         {
             DebugPenAssert(pen);
-            dc.DrawLine((UI.Native.Pen)pen.NativePen, a, b);
+            dc.DrawLine((UI.Native.Pen)pen.NativeObject, a, b);
         }
 
         /// <summary>
@@ -1048,7 +1048,7 @@ namespace Alternet.Drawing
         public virtual void DrawLines(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            dc.DrawLines((UI.Native.Pen)pen.NativePen, points);
+            dc.DrawLines((UI.Native.Pen)pen.NativeObject, points);
         }
 
         /// <summary>
@@ -1062,7 +1062,7 @@ namespace Alternet.Drawing
         public virtual void DrawEllipse(Pen pen, RectD bounds)
         {
             DebugPenAssert(pen);
-            dc.DrawEllipse((UI.Native.Pen)pen.NativePen, bounds);
+            dc.DrawEllipse((UI.Native.Pen)pen.NativeObject, bounds);
         }
 
         /// <summary>
@@ -1172,7 +1172,7 @@ namespace Alternet.Drawing
         public virtual void SetPixel(PointD point, Pen pen)
         {
             DebugPenAssert(pen);
-            dc.SetPixel(point, (UI.Native.Pen)pen.NativePen);
+            dc.SetPixel(point, (UI.Native.Pen)pen.NativeObject);
         }
 
         /// <summary>
@@ -1188,7 +1188,7 @@ namespace Alternet.Drawing
         public virtual void SetPixel(double x, double y, Pen pen)
         {
             DebugPenAssert(pen);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.NativePen);
+            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.NativeObject);
         }
 
         /// <summary>
@@ -1204,7 +1204,7 @@ namespace Alternet.Drawing
         public virtual void SetPixel(double x, double y, Color color)
         {
             DebugColorAssert(color);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.NativePen);
+            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.NativeObject);
         }
 
         /// <summary>
@@ -1315,7 +1315,7 @@ namespace Alternet.Drawing
                 text,
                 origin,
                 font.NativeFont,
-                (UI.Native.Brush)brush.NativeBrush);
+                (UI.Native.Brush)brush.NativeObject);
         }
 
         /// <summary>
@@ -1362,7 +1362,7 @@ namespace Alternet.Drawing
                 text,
                 bounds,
                 font.NativeFont,
-                (UI.Native.Brush)brush.NativeBrush,
+                (UI.Native.Brush)brush.NativeObject,
                 (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
                 (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
                 (UI.Native.TextTrimming)format.Trimming,

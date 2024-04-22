@@ -37,5 +37,8 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override object CreateTextureBrush() => new UI.Native.TextureBrush();
+
+        /// <inheritdoc/>
+        public override object CreatePen() => new UI.Native.Pen();
     }
 }

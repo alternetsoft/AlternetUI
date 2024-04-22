@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     /// <see cref="HatchBrush" />.
     /// </remarks>
     [TypeConverter(typeof(BrushConverter))]
-    public class Brush : DisposableObject, IEquatable<Brush>
+    public class Brush : GraphicsObject, IEquatable<Brush>
     {
         /// <summary>
         /// Gets transparent brush.
@@ -23,17 +23,16 @@ namespace Alternet.Drawing
         public static readonly Brush Transparent = new();
 
         private static Brush? defaultBrush;
-        private readonly bool immutable;
+
         private Pen? asPen;
-        private object? nativeBrush;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
         /// </summary>
         /// <param name="immutable">Whether this brush is immutable.</param>
         protected Brush(bool immutable)
+            : base(immutable)
         {
-            this.immutable = immutable;
         }
 
         /// <summary>
@@ -51,12 +50,6 @@ namespace Alternet.Drawing
         /// Default brush is <see cref="SolidBrush"/> with Black color.
         /// </value>
         public static Brush Default => defaultBrush ??= Brushes.Black;
-
-        /// <summary>
-        /// Gets whether this object is immutable (properties are readonly).
-        /// </summary>
-        [Browsable(false)]
-        public bool Immutable => immutable;
 
         /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
@@ -80,37 +73,9 @@ namespace Alternet.Drawing
         public virtual BrushType BrushType => BrushType.None;
 
         /// <summary>
-        /// Gets native brush.
-        /// </summary>
-        public virtual object NativeBrush
-        {
-            get
-            {
-                if(nativeBrush is null)
-                {
-                    nativeBrush = CreateNativeBrush();
-                    UpdateNativeBrush();
-                }
-                else
-                if (UpdateRequired)
-                {
-                    UpdateRequired = false;
-                    UpdateNativeBrush();
-                }
-
-                return nativeBrush;
-            }
-        }
-
-        /// <summary>
         /// Gets color of the brush.
         /// </summary>
         public virtual Color BrushColor => Color.Black;
-
-        /// <summary>
-        /// Gets whether native brush update is required.
-        /// </summary>
-        protected bool UpdateRequired { get; set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -142,15 +107,6 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
             return GetHashCodeCore();
-        }
-
-        /// <summary>
-        /// Creates native brush.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object CreateNativeBrush()
-        {
-            return NativeDrawing.Default.CreateTransparentBrush();
         }
 
         /// <summary>
@@ -193,19 +149,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override object CreateNativeObject()
         {
-            if (nativeBrush is not null)
-            {
-                ((IDisposable)NativeBrush).Dispose();
-                nativeBrush = null;
-            }
+            return NativeDrawing.Default.CreateTransparentBrush();
         }
 
-        /// <summary>
-        /// Updates native brush.
-        /// </summary>
-        protected virtual void UpdateNativeBrush()
+        /// <inheritdoc/>
+        protected override void UpdateNativeObject()
         {
         }
 

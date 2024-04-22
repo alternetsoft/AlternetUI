@@ -41,15 +41,15 @@
         public override BrushType BrushType => BrushType.Texture;
 
         /// <inheritdoc/>
-        public override object CreateNativeBrush()
+        protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateTextureBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeBrush()
+        protected override void UpdateNativeObject()
         {
-            ((UI.Native.TextureBrush)NativeBrush).Initialize(image.NativeImage);
+            ((UI.Native.TextureBrush)NativeObject).Initialize(image.NativeImage);
         }
 
         private protected override bool EqualsCore(Brush other)

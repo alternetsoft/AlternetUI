@@ -23,6 +23,12 @@ namespace Alternet.Drawing
         public static NativeDrawing Default = new();
 
         /// <summary>
+        /// Creates native pen.
+        /// </summary>
+        /// <returns></returns>
+        public virtual object CreatePen() => throw new NotImplementedException();
+
+        /// <summary>
         /// Creates native transparent brush.
         /// </summary>
         /// <returns></returns>

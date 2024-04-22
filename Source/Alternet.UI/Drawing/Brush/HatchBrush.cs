@@ -48,15 +48,15 @@ namespace Alternet.Drawing
         public override Color BrushColor => this.Color;
 
         /// <inheritdoc/>
-        public override object CreateNativeBrush()
+        protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateHatchBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeBrush()
+        protected override void UpdateNativeObject()
         {
-            ((UI.Native.HatchBrush)NativeBrush).Initialize(
+            ((UI.Native.HatchBrush)NativeObject).Initialize(
                 (UI.Native.BrushHatchStyle)HatchStyle,
                 Color);
         }

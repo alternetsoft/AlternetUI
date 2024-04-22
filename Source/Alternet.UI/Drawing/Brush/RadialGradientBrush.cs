@@ -154,15 +154,15 @@ namespace Alternet.Drawing
             GradientStops[0].Color : Color.Black;
 
         /// <inheritdoc/>
-        public override object CreateNativeBrush()
+        protected override object CreateNativeObject()
         {
             return NativeDrawing.Default.CreateRadialGradientBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeBrush()
+        protected override void UpdateNativeObject()
         {
-            ((UI.Native.RadialGradientBrush)NativeBrush).Initialize(
+            ((UI.Native.RadialGradientBrush)NativeObject).Initialize(
                 center,
                 radius,
                 gradientOrigin,

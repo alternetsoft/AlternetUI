@@ -182,7 +182,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="TransformMatrix"/> is the identity matrix.
+        /// Gets a value indicating whether this <see cref="TransformMatrix"/>
+        /// is the identity matrix.
         /// </summary>
         /// <value>This property is <see langword="true"/> if this
         /// <see cref="TransformMatrix"/> is identity; otherwise,
@@ -227,7 +228,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref="TransformMatrix"/> with clockwise rotation of the specified angle about the origin.
+        /// Creates a <see cref="TransformMatrix"/> with clockwise rotation of the specified
+        /// angle about the origin.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
         public static TransformMatrix CreateRotation(double angle)
