@@ -36,20 +36,52 @@ namespace Alternet.Drawing
     [TypeConverter(typeof(ColorConverter))]
     public sealed partial class Color : IEquatable<Color>
     {
+        // Shift counts and bit masks for A, R, G, B components in ARGB mode
+
+        /// <summary>
+        /// Shift count for Alpha component of the color.
+        /// </summary>
+        public const int ARGBAlphaShift = 24;
+
+        /// <summary>
+        /// Shift count for Red component of the color.
+        /// </summary>
+        public const int ARGBRedShift = 16;
+
+        /// <summary>
+        /// Shift count for Green component of the color.
+        /// </summary>
+        public const int ARGBGreenShift = 8;
+
+        /// <summary>
+        /// Shift count for Blue component of the color.
+        /// </summary>
+        public const int ARGBBlueShift = 0;
+
+        /// <summary>
+        /// Bit mask for Alpha component of the color.
+        /// </summary>
+        public const uint ARGBAlphaMask = 0xFFu << ARGBAlphaShift;
+
+        /// <summary>
+        /// Bit mask for Red component of the color.
+        /// </summary>
+        public const uint ARGBRedMask = 0xFFu << ARGBRedShift;
+
+        /// <summary>
+        /// Bit mask for Green component of the color.
+        /// </summary>
+        public const uint ARGBGreenMask = 0xFFu << ARGBGreenShift;
+
+        /// <summary>
+        /// Bit mask for Blue component of the color.
+        /// </summary>
+        public const uint ARGBBlueMask = 0xFFu << ARGBBlueShift;
+
         /// <summary>
         /// Represents a color that is <c>null</c>.
         /// </summary>
         public static readonly Color Empty = new();
-
-        // Shift counts and bit masks for A, R, G, B components in ARGB mode
-        internal const int ARGBAlphaShift = 24;
-        internal const int ARGBRedShift = 16;
-        internal const int ARGBGreenShift = 8;
-        internal const int ARGBBlueShift = 0;
-        internal const uint ARGBAlphaMask = 0xFFu << ARGBAlphaShift;
-        internal const uint ARGBRedMask = 0xFFu << ARGBRedShift;
-        internal const uint ARGBGreenMask = 0xFFu << ARGBGreenShift;
-        internal const uint ARGBBlueMask = 0xFFu << ARGBBlueShift;
 
         // NOTE : The "zero" pattern (all members being 0) must represent
         //      : "not set". This allows "Color c;" to be correct.
@@ -122,6 +154,7 @@ namespace Alternet.Drawing
         /// representing full intensity. Likewise, <see cref="R"/> is a value from
         /// 0 to 255 with 0 representing no red and 255 representing fully red.
         /// </remarks>
+        [Browsable(false)]
         public byte R => unchecked((byte)(Value >> ARGBRedShift));
 
         /// <summary>
@@ -136,6 +169,7 @@ namespace Alternet.Drawing
         /// representing full intensity. Likewise, <see cref="G"/> is a value
         /// from 0 to 255 with 0 representing no green and 255 representing fully green.
         /// </remarks>
+        [Browsable(false)]
         public byte G => unchecked((byte)(Value >> ARGBGreenShift));
 
         /// <summary>
@@ -150,6 +184,7 @@ namespace Alternet.Drawing
         /// representing full intensity. Likewise, <see cref="G"/> is a value from
         /// 0 to 255 with 0 representing no blue and 255 representing fully blue.
         /// </remarks>
+        [Browsable(false)]
         public byte B => unchecked((byte)(Value >> ARGBBlueShift));
 
         /// <summary>
@@ -163,11 +198,19 @@ namespace Alternet.Drawing
         /// An <see cref="A"/> value from 1 through 254 represents a semitransparent color.
         /// The color becomes more opaque as <see cref="A"/> approaches 255.
         /// </remarks>
+        [Browsable(false)]
         public byte A => unchecked((byte)(Value >> ARGBAlphaShift));
+
+        /// <summary>
+        /// Gets or sets reference to the SkiaSharp color.
+        /// </summary>
+        [Browsable(false)]
+        public object? SkiaColor { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if color is opaque (<see cref="A"/> is 255).
         /// </summary>
+        [Browsable(false)]
         public bool IsOpaque => A == 255;
 
         /// <summary>
@@ -182,6 +225,7 @@ namespace Alternet.Drawing
         /// the <see cref="FromName"/> method or the
         /// <see cref="FromKnownColor(KnownColor)"/> method; otherwise, <c>false</c>.
         /// </value>
+        [Browsable(false)]
         public bool IsKnownColor => (state & StateKnownColorValid) != 0;
 
         /// <summary>
@@ -189,6 +233,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>This property returns <c>true</c> if this color is uninitialized;
         /// otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public bool IsEmpty => state == 0;
 
         /// <summary>
@@ -196,37 +241,44 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>This property returns <c>true</c> if this color is initialized;
         /// otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public bool IsOk => state != 0;
 
         /// <summary>
         /// Gets <see cref="A"/> as hex <see cref="string"/>.
         /// </summary>
+        [Browsable(false)]
         public string AHex => A.ToString("X2");
 
         /// <summary>
         /// Gets <see cref="R"/> as hex <see cref="string"/>.
         /// </summary>
+        [Browsable(false)]
         public string RHex => R.ToString("X2");
 
         /// <summary>
         /// Gets <see cref="G"/> as hex <see cref="string"/>.
         /// </summary>
+        [Browsable(false)]
         public string GHex => G.ToString("X2");
 
         /// <summary>
         /// Gets <see cref="B"/> as hex <see cref="string"/>.
         /// </summary>
+        [Browsable(false)]
         public string BHex => B.ToString("X2");
 
         /// <summary>
         /// Gets RGB as hex <see cref="string"/> in the format #RRGGBB.
         /// </summary>
+        [Browsable(false)]
         public string RGBHex => $"#{RHex}{GHex}{BHex}";
 
         /// <summary>
         /// Gets RGB as web <see cref="string"/> in the format "rgb({R},{G},{B})".
         /// Fo example for the black color it will return "rgb(0,0,0)".
         /// </summary>
+        [Browsable(false)]
         public string RGBWeb => $"rgb({R},{G},{B})";
 
         /// <summary>

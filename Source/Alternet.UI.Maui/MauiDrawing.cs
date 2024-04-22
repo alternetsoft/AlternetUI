@@ -6,11 +6,29 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.UI.Maui
 {
     public class MauiDrawing : NativeDrawing
     {
+        public static SKColor NullColor = new();
+
         private static bool initialized;
+
+        public static SKColor Convert(Color color)
+        {
+            if (color is null || !color.IsOk)
+                return NullColor;
+
+            if (color.SkiaColor is not null)
+                return (SKColor)color.SkiaColor;
+
+            color.GetArgbValues(out var a, out var r, out var g, out var b);
+            var skColor = new SKColor(r, g, b, a);
+            color.SkiaColor = skColor;
+            return skColor;
+        }
 
         public static void Initialize()
         {
@@ -23,53 +41,78 @@ namespace Alternet.UI.Maui
         /// <inheritdoc/>
         public override object CreatePen()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
         /// <inheritdoc/>
         public override object CreateTransparentBrush()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
         /// <inheritdoc/>
         public override object CreateSolidBrush()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
         /// <inheritdoc/>
         public override object CreateHatchBrush()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
         /// <inheritdoc/>
         public override object CreateLinearGradientBrush()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
         /// <inheritdoc/>
         public override object CreateRadialGradientBrush()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
         /// <inheritdoc/>
         public override object CreateTextureBrush()
         {
-            return NotImplemented();
+            return new SKPaint();
         }
 
+        /*
+         var paint1 = new SKPaint {
+                TextSize = 64.0f,
+                IsAntialias = true,
+                Color = new SKColor(255, 0, 0),
+                Style = SKPaintStyle.Fill
+            };
+
+            var paint2 = new SKPaint {
+                TextSize = 64.0f,
+                IsAntialias = true,
+                Color = new SKColor(0, 136, 0),
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 3
+            };
+
+            var paint3 = new SKPaint {
+                TextSize = 64.0f,
+                IsAntialias = true,
+                Color = new SKColor(136, 136, 136),
+                TextScaleX = 1.5f
+            };
+
+        */
+
         /// <inheritdoc/>
-        public override void UpdatePen(Pen pen)
+        public override void UpdateSolidBrush(SolidBrush brush)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override void UpdateSolidBrush(SolidBrush brush)
+        public override void UpdatePen(Pen pen)
         {
             NotImplemented();
         }
