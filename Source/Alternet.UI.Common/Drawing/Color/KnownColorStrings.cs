@@ -16,14 +16,14 @@ namespace Alternet.UI.Localization
         private string empty = "Empty";
 
         /// <summary>
-        /// Current localizations for system color names.
-        /// </summary>
-        public static KnownColorStrings Default { get; set; } = new();
-
-        /// <summary>
         /// Occurs when <see cref="Custom"/> property is changed.
         /// </summary>
         public static event EventHandler? CustomChanged;
+
+        /// <summary>
+        /// Current localizations for system color names.
+        /// </summary>
+        public static KnownColorStrings Default { get; set; } = new();
 
         /// <summary>
         /// Gets or sets localized system color name.
