@@ -65,7 +65,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((UI.Native.SolidBrush)NativeObject).Initialize(color);
+            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateSolidBrush(this);
         }
 
         private protected override bool EqualsCore(Brush other)

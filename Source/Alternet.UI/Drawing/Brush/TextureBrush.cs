@@ -49,7 +49,7 @@
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((UI.Native.TextureBrush)NativeObject).Initialize(image.NativeImage);
+            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateTextureBrush(this);
         }
 
         private protected override bool EqualsCore(Brush other)

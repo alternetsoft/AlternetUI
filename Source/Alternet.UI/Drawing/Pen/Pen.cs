@@ -322,12 +322,7 @@ namespace Alternet.Drawing
         /// </summary>
         protected override void UpdateNativeObject()
         {
-            ((UI.Native.Pen)NativeObject).Initialize(
-                (UI.Native.PenDashStyle)DashStyle,
-                Color,
-                Width,
-                (UI.Native.LineCap)LineCap,
-                (UI.Native.LineJoin)LineJoin);
+            ((WxWidgetsDrawing)NativeDrawing.Default).UpdatePen(this);
         }
     }
 }

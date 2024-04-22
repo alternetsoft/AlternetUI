@@ -162,12 +162,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((UI.Native.RadialGradientBrush)NativeObject).Initialize(
-                center,
-                radius,
-                gradientOrigin,
-                gradientStops.Select(x => x.Color).ToArray(),
-                gradientStops.Select(x => x.Offset).ToArray());
+            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateRadialGradientBrush(this);
         }
 
         private protected override bool EqualsCore(Brush other)

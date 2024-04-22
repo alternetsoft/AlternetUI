@@ -40,5 +40,51 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override object CreatePen() => new UI.Native.Pen();
+
+        public virtual void UpdateHatchBrush(HatchBrush brush)
+        {
+            ((UI.Native.HatchBrush)brush.NativeObject).Initialize(
+                (UI.Native.BrushHatchStyle)brush.HatchStyle,
+                brush.Color);
+        }
+
+        public virtual void UpdateLinearGradientBrush(LinearGradientBrush brush)
+        {
+            ((UI.Native.LinearGradientBrush)brush.NativeObject).Initialize(
+                brush.StartPoint,
+                brush.EndPoint,
+                brush.GradientStops.Select(x => x.Color).ToArray(),
+                brush.GradientStops.Select(x => x.Offset).ToArray());
+        }
+
+        public virtual void UpdateRadialGradientBrush(RadialGradientBrush brush)
+        {
+            ((UI.Native.RadialGradientBrush)brush.NativeObject).Initialize(
+                brush.Center,
+                brush.Radius,
+                brush.GradientOrigin,
+                brush.GradientStops.Select(x => x.Color).ToArray(),
+                brush.GradientStops.Select(x => x.Offset).ToArray());
+        }
+
+        public virtual void UpdateSolidBrush(SolidBrush brush)
+        {
+            ((UI.Native.SolidBrush)brush.NativeObject).Initialize(brush.Color);
+        }
+
+        public virtual void UpdateTextureBrush(TextureBrush brush)
+        {
+            ((UI.Native.TextureBrush)brush.NativeObject).Initialize(brush.Image.NativeImage);
+        }
+
+        public virtual void UpdatePen(Pen pen)
+        {
+            ((UI.Native.Pen)pen.NativeObject).Initialize(
+                (UI.Native.PenDashStyle)pen.DashStyle,
+                pen.Color,
+                pen.Width,
+                (UI.Native.LineCap)pen.LineCap,
+                (UI.Native.LineJoin)pen.LineJoin);
+        }
     }
 }

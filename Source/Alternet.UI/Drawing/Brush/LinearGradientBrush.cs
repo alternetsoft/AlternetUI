@@ -166,11 +166,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((UI.Native.LinearGradientBrush)NativeObject).Initialize(
-                startPoint,
-                endPoint,
-                gradientStops.Select(x => x.Color).ToArray(),
-                gradientStops.Select(x => x.Offset).ToArray());
+            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateLinearGradientBrush(this);
         }
 
         private protected override bool EqualsCore(Brush other)

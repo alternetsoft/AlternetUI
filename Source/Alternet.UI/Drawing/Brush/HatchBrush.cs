@@ -56,9 +56,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((UI.Native.HatchBrush)NativeObject).Initialize(
-                (UI.Native.BrushHatchStyle)HatchStyle,
-                Color);
+            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateHatchBrush(this);
         }
 
         private protected override bool EqualsCore(Brush other)
