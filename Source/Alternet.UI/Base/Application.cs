@@ -21,34 +21,12 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : BaseApplication, IDisposable
     {
-        /// <summary>
-        /// Gets or sets application exit code used when application terminates
-        /// due to unhandled exception.
-        /// </summary>
-        public static int ThreadExceptionExitCode = 0;
-
-        /// <summary>
-        /// Gets or sets whether to log unhandled thread exception.
-        /// </summary>
-        public static bool LogUnhandledThreadException = true;
-
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
-        private static readonly ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
-        private static readonly ConcurrentQueue<(string Msg, LogItemKind Kind)> LogQueue = new();
-        private static bool terminating = false;
-        private static bool logFileIsEnabled;
         private static Application? current;
         private static IconSet? icon;
         private static bool inOnThreadException;
-        private static int logUpdateCount;
-
-        private static UnhandledExceptionMode unhandledExceptionMode
-            = UnhandledExceptionMode.CatchException;
-
-        private static UnhandledExceptionMode unhandledExceptionModeDebug
-            = UnhandledExceptionMode.ThrowException;
 
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -97,24 +75,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs before native debug message needs to be displayed.
-        /// </summary>
-        public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
-
-        /// <summary>
-        /// Occurs when controls which display log messages need to be refreshed.
-        /// </summary>
-        public static event EventHandler? LogRefresh;
-
-        /// <summary>
         /// Occurs when the <see cref="VisualTheme"/> property changes.
         /// </summary>
         public static event EventHandler? VisualThemeChanged;
 
         /// <summary>
-        /// Occurs when debug message needs to be displayed.
+        /// Occurs before native debug message needs to be displayed.
         /// </summary>
-        public static event EventHandler<LogMessageEventArgs>? LogMessage;
+        public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
@@ -128,7 +96,7 @@ namespace Alternet.UI
         /// exceptions should be handled by a structured
         /// exception handling block. You can change whether this callback
         /// is used for unhandled Windows Forms thread
-        /// exceptions by setting <see cref="SetUnhandledExceptionMode"/>.
+        /// exceptions by setting <see cref="BaseApplication.SetUnhandledExceptionMode"/>.
         /// </remarks>
         public static event ThreadExceptionEventHandler? ThreadException;
 
@@ -137,25 +105,6 @@ namespace Alternet.UI
         /// about to enter the idle state.
         /// </summary>
         public event EventHandler? Idle;
-
-        /// <summary>
-        /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when\
-        /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
-        /// </summary>
-        public static bool DebugWriteLine { get; set; } = false;
-
-        /// <summary>
-        /// Gets how the application responds to unhandled exceptions.
-        /// Use <see cref="SetUnhandledExceptionMode"/> to change this property.
-        /// </summary>
-        public static UnhandledExceptionMode UnhandledExceptionMode => unhandledExceptionMode;
-
-        /// <summary>
-        /// Gets how the application responds to unhandled exceptions (if debugger is attached).
-        /// Use <see cref="SetUnhandledExceptionModeIfDebugger"/> to change this property.
-        /// </summary>
-        public static UnhandledExceptionMode UnhandledExceptionModeIfDebugger
-            => unhandledExceptionModeDebug;
 
         /// <summary>
         /// Gets or sets default icon for the application.
@@ -195,71 +144,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets application log file path.
-        /// </summary>
-        /// <remarks>
-        /// Default value is exe file path and "Alternet.UI.log" file name.
-        /// </remarks>
-        public static string LogFilePath { get; set; } =
-            Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
-
-        /// <summary>
-        /// Gets or sets whether to write all log messages to file.
-        /// </summary>
-        /// <remarks>
-        ///  Default value is <c>false</c>.
-        /// </remarks>
-        public static bool LogFileIsEnabled
-        {
-            get
-            {
-                return logFileIsEnabled;
-            }
-
-            set
-            {
-                if (logFileIsEnabled == value)
-                    return;
-                logFileIsEnabled = value;
-
-                if (logFileIsEnabled)
-                    LogUtils.LogToFileAppStarted();
-            }
-        }
-
-        /// <summary>
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
         /// <see cref="EndBusyCursor"/> calls.
         /// </summary>
         public static bool IsBusyCursor => Native.WxOtherFactory.IsBusyCursor();
-
-        /// <summary>
-        /// Gets a value that indicates whether a debugger is attached to the process.
-        /// </summary>
-        /// <value>
-        /// true if a debugger is attached; otherwise, false.
-        /// </value>
-        public static bool IsDebuggerAttached
-        {
-            get
-            {
-                return System.Diagnostics.Debugger.IsAttached;
-            }
-        }
-
-        /// <summary>
-        /// Allows to suppress some debug messages.
-        /// </summary>
-        /// <remarks>
-        ///  Currently used to suppress GTK messages under Linux. Default
-        ///  value is true.
-        /// </remarks>
-        public static bool SupressDiagnostics { get; set; } = true;
-
-        /// <summary>
-        /// Gets whether <see cref="Run"/> method execution is finished.
-        /// </summary>
-        public static bool Terminating { get => terminating; }
 
         /// <summary>
         /// Gets whether execution is inside the <see cref="Run"/> method.
@@ -507,31 +395,6 @@ namespace Alternet.UI
         public static void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
 
         /// <summary>
-        /// Adds <paramref name="task"/> which will be executed one time
-        /// when the application finished processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        /// <param name="task">Task action.</param>
-        /// <param name="param">Task parameter.</param>
-        public static void AddIdleTask(Action<object?> task, object? param = null)
-        {
-            IdleTasks.Enqueue((task, param));
-        }
-
-        /// <summary>
-        /// Adds <paramref name="task"/> which will be executed one time
-        /// when the application finished processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        /// <param name="task">Task action.</param>
-        public static void AddIdleTask(Action? task)
-        {
-            if (task is null)
-                return;
-            AddIdleTask((object? param) => task());
-        }
-
-        /// <summary>
         /// Sets wxSystemOptions value.
         /// </summary>
         /// <param name="name">Option name.</param>
@@ -567,86 +430,6 @@ namespace Alternet.UI
 
             window.Dispose();
             application.Dispose();
-        }
-
-        /// <summary>
-        /// Logs name and value pair as "{name} = {value}".
-        /// </summary>
-        /// <param name="name">Name.</param>
-        /// <param name="value">Value.</param>
-        /// <param name="kind">Item kind.</param>
-        public static void LogNameValue(
-            string name,
-            object? value,
-            LogItemKind kind = LogItemKind.Information)
-        {
-            Application.Log($"{name} = {value}", kind);
-        }
-
-        /// <summary>
-        /// Logs name and value pair as "{name} = {value}" if <paramref name="condition"/>
-        /// is <c>true</c>.
-        /// </summary>
-        /// <param name="name">Name.</param>
-        /// <param name="value">Value.</param>
-        /// <param name="condition">Log if <c>true</c>.</param>
-        /// <param name="kind">Item kind.</param>
-        public static void LogNameValueIf(
-            string name,
-            object? value,
-            bool condition,
-            LogItemKind kind = LogItemKind.Information)
-        {
-            if (condition)
-                LogNameValue(name, value, kind);
-        }
-
-        /// <summary>
-        /// Calls <see cref="LogMessage"/> event if <paramref name="condition"/>
-        /// is <c>true</c>.
-        /// </summary>
-        /// <param name="obj">Message text or object to log.</param>
-        /// <param name="condition">Log if <c>true</c>.</param>
-        /// <param name="kind">Item kind.</param>
-        public static void LogIf(
-            object? obj,
-            bool condition,
-            LogItemKind kind = LogItemKind.Information)
-        {
-            if (condition)
-                Log(obj, kind);
-        }
-
-        /// <summary>
-        /// Logs warning message.
-        /// </summary>
-        /// <param name="obj">Message text or object to log.</param>
-        public static void LogWarning(object? obj)
-        {
-            Log($"Warning: {obj}", LogItemKind.Warning);
-        }
-
-        /// <summary>
-        /// Logs error message.
-        /// </summary>
-        /// <param name="obj">Message text or object to log.</param>
-        public static void LogError(object? obj)
-        {
-            Log($"Error: {obj}", LogItemKind.Error);
-        }
-
-        /// <summary>
-        /// Calls <see cref="LogMessage"/> event.
-        /// </summary>
-        /// <param name="obj">Message text or object to log.</param>
-        /// <param name="kind">Message kind.</param>
-        public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
-        {
-            IdleLog(obj, kind);
-
-            if (LogMessage is null || LogInUpdates())
-                return;
-            ProcessLogQueue(true);
         }
 
         /// <summary>
@@ -693,7 +476,7 @@ namespace Alternet.UI
             => SynchronizationService.Invoke(method, args);
 
         /// <summary>
-        /// Executes <see cref="Application.IdleLog"/> using <see cref="Invoke(Action?)"/>.
+        /// Executes <see cref="BaseApplication.IdleLog"/> using <see cref="Invoke(Action?)"/>.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="kind">Message kind.</param>
@@ -718,51 +501,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="Log"/> method with <paramref name="obj"/> parameter
-        /// when application becomes idle.
-        /// </summary>
-        /// <param name="obj">Message text or object to log.</param>
-        /// <param name="kind">Message kind.</param>
-        /// <remarks>
-        /// This method is thread safe and can be called from non-ui threads.
-        /// </remarks>
-        public static void IdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
-        {
-            if (Application.Terminating)
-                return;
-
-            var msg = obj?.ToString();
-
-            if (msg is null)
-                return;
-
-            WriteToLogFileIfAllowed(msg);
-
-            string[] result = msg.Split(
-                StringUtils.StringSplitToArrayChars,
-                StringSplitOptions.RemoveEmptyEntries);
-
-            if (DebugWriteLine || LogMessage is null)
-            {
-                foreach (string s2 in result)
-                {
-                    Debug.WriteLine(s2);
-
-                    try
-                    {
-                        Console.WriteLine(s2);
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-
-            foreach (string s2 in result)
-                LogQueue.Enqueue((s2, kind));
-        }
-
-        /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="BeginBusyCursor"/>
         /// and <see cref="EndBusyCursor"/>.
         /// </summary>
@@ -781,69 +519,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Checks if the Android version (returned by the Linux command uname) is greater than
-        /// or equal to the specified version. This method can be used to guard APIs that were
-        /// added in the specified version.
-        /// </summary>
-        /// <param name="major">The major release number.</param>
-        /// <param name="minor">The minor release number.</param>
-        /// <param name="build">The build release number.</param>
-        /// <param name="revision">The revision release number.</param>
-        /// <returns><c>true</c> if the current application is running on an Android version that
-        /// is at least what was specified in the parameters; <c>false</c> otherwise.</returns>
-        public static bool IsAndroidVersionAtLeast(
-            int major,
-            int minor = 0,
-            int build = 0,
-            int revision = 0)
-        {
-#if NET5_0_OR_GREATER
-            return OperatingSystem.IsAndroidVersionAtLeast(major, minor, build, revision);
-#else
-            return false;
-#endif
-        }
-
-        /// <summary>
-        /// Logs an empty string.
-        /// </summary>
-        public static void LogEmptyLine()
-        {
-            Log(" ");
-        }
-
-        /// <inheritdoc cref="Log"/>
-        /// <remarks>
-        /// Works only if DEBUG conditional is defined.
-        /// </remarks>
-        [Conditional("DEBUG")]
-        public static void DebugLog(object? msg)
-        {
-            Log(msg);
-        }
-
-        /// <inheritdoc cref="LogIf"/>
-        /// <remarks>
-        /// Works only if DEBUG conditional is defined.
-        /// </remarks>
-        [Conditional("DEBUG")]
-        public static void DebugLogIf(object? obj, bool condition)
-        {
-            if (condition)
-                Log(obj);
-        }
-
-        /// <inheritdoc cref="LogReplace"/>
-        /// <remarks>
-        /// Works only if DEBUG conditional is defined.
-        /// </remarks>
-        [Conditional("DEBUG")]
-        public static void DebugLogReplace(object? obj, string? prefix = null)
-        {
-            LogReplace(obj, prefix);
-        }
-
-        /// <summary>
         /// Returns first window or <c>null</c> if there are no windows or window is not
         /// of the <typeparamref name="T"/> type.
         /// </summary>
@@ -856,79 +531,6 @@ namespace Alternet.UI
             if (windows.Count == 0)
                 return null;
             return windows[0] as T;
-        }
-
-        /// <summary>
-        /// Can be called before massive outputs to log. Pairs with <see cref="LogEndUpdate"/>.
-        /// </summary>
-        public static void LogBeginUpdate()
-        {
-            logUpdateCount++;
-        }
-
-        /// <summary>
-        /// Must be called after massive outputs to log,
-        /// if <see cref="LogBeginUpdate"/> was previously called.
-        /// </summary>
-        public static void LogEndUpdate()
-        {
-            logUpdateCount--;
-            if (logUpdateCount == 0)
-                OnLogRefresh();
-        }
-
-        /// <summary>
-        /// Gets whether massive log outputs are performed and controls attached to log
-        /// should not refresh.
-        /// </summary>
-        /// <returns></returns>
-        public static bool LogInUpdates()
-        {
-            return logUpdateCount > 0;
-        }
-
-        /// <summary>
-        /// Runs idle tasks if they are present.
-        /// </summary>
-        public static void ProcessIdleTasks()
-        {
-            while (true)
-            {
-                if (IdleTasks.TryDequeue(out var task))
-                    task.Action(task.Data);
-                else
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Begins log section.
-        /// </summary>
-        public static void LogBeginSection(string? title = null, LogItemKind kind = LogItemKind.Information)
-        {
-            Log(LogUtils.SectionSeparator, kind);
-
-            if (title is not null)
-            {
-                Log(title, kind);
-                Log(LogUtils.SectionSeparator, kind);
-            }
-        }
-
-        /// <summary>
-        /// Logs separator.
-        /// </summary>
-        public static void LogSeparator(LogItemKind kind = LogItemKind.Information)
-        {
-            Log(LogUtils.SectionSeparator, kind);
-        }
-
-        /// <summary>
-        /// Ends log section.
-        /// </summary>
-        public static void LogEndSection(LogItemKind kind = LogItemKind.Information)
-        {
-            Log(LogUtils.SectionSeparator, kind);
         }
 
         /// <summary>
@@ -962,36 +564,6 @@ namespace Alternet.UI
             Environment.Exit(exitCode);
         }
 
-        /// <summary>
-        /// Calls <see cref="LogMessage"/> event to add or replace log message.
-        /// </summary>
-        /// <param name="obj">Message text.</param>
-        /// <param name="prefix">Message text prefix.</param>
-        /// <param name="kind">Message kind.</param>
-        /// <remarks>
-        /// If last logged message
-        /// contains <paramref name="prefix"/>, last log item is replaced with
-        /// <paramref name="obj"/> instead of adding new log item.
-        /// </remarks>
-        public static void LogReplace(
-            object? obj,
-            string? prefix = null,
-            LogItemKind kind = LogItemKind.Information)
-        {
-            var msg = obj?.ToString();
-            if (msg is null || msg.Length == 0)
-                return;
-            WriteToLogFileIfAllowed(msg);
-            if (DebugWriteLine)
-                Debug.WriteLine(msg);
-            prefix ??= msg;
-
-            var args = new LogMessageEventArgs(msg, prefix, true);
-            args.Kind = kind;
-
-            LogMessage?.Invoke(Current, args);
-        }
-
         /// <summary>Processes all messages currently in the message queue.</summary>
         public static void DoEvents()
         {
@@ -1014,28 +586,6 @@ namespace Alternet.UI
         public bool HasPendingEvents()
         {
             return nativeApplication.HasPendingEvents();
-        }
-
-        /// <summary>
-        /// Instructs the application how to respond to unhandled exceptions.
-        /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
-        /// value describing how the application should
-        /// behave if an exception is thrown without being caught.</param>
-        public virtual void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
-        {
-            unhandledExceptionMode = mode;
-        }
-
-        /// <summary>
-        /// Instructs the application how to respond to unhandled exceptions in debug mode.
-        /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
-        /// value describing how the application should
-        /// behave if an exception is thrown without being caught.</param>
-        public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
-        {
-            unhandledExceptionModeDebug = mode;
         }
 
         /// <summary>
@@ -1076,7 +626,7 @@ namespace Alternet.UI
             }
             finally
             {
-                terminating = true;
+                Terminating = true;
                 IsRunning = false;
             }
         }
@@ -1207,18 +757,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets current unhandled exception mode.
-        /// </summary>
-        /// <returns></returns>
-        protected static UnhandledExceptionMode GetUnhandledExceptionMode()
-        {
-            if (Application.IsDebuggerAttached)
-                return unhandledExceptionModeDebug;
-            else
-                return unhandledExceptionMode;
-        }
-
-        /// <summary>
         /// Releases the unmanaged resources used by the object and
         /// optionally releases the managed resources.
         /// </summary>
@@ -1242,61 +780,6 @@ namespace Alternet.UI
                 }
 
                 IsDisposed = true;
-            }
-        }
-
-        private static void OnLogRefresh()
-        {
-            LogRefresh?.Invoke(Current, EventArgs.Empty);
-        }
-
-        private static void ProcessLogQueue(bool refresh)
-        {
-            if (LogQueue.IsEmpty || LogInUpdates())
-                return;
-
-            LogBeginUpdate();
-            try
-            {
-                while (true)
-                {
-                    if (LogQueue.TryDequeue(out var queueItem))
-                        LogToEvent(queueItem.Kind, queueItem.Msg);
-                    else
-                        break;
-                }
-            }
-            finally
-            {
-                LogEndUpdate();
-            }
-        }
-
-        private static void LogToEvent(LogItemKind kind, params string[] items)
-        {
-            if (LogMessage is null)
-                return;
-
-            LogMessageEventArgs? args = new();
-            args.Kind = kind;
-
-            foreach (string s2 in items)
-            {
-                args.Message = s2;
-                LogMessage(Current, args);
-            }
-        }
-
-        private static void WriteToLogFileIfAllowed(string? msg)
-        {
-            if (!LogFileIsEnabled || msg is null)
-                return;
-            try
-            {
-                LogUtils.LogToFile(msg);
-            }
-            catch
-            {
             }
         }
 
@@ -1377,7 +860,7 @@ namespace Alternet.UI
         {
             ~Destructor()
             {
-                if (logFileIsEnabled)
+                if (LogFileIsEnabled)
                     LogUtils.LogToFileAppFinished();
             }
         }

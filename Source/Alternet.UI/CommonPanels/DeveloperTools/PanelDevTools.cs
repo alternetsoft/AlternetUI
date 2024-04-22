@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -123,6 +124,45 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Outputs all <see cref="Control"/> descendants to the debug console.
+        /// </summary>
+        public static void ControlsToConsole()
+        {
+            EnumerableUtils.ForEach<Type>(
+                AssemblyUtils.GetTypeDescendants(typeof(Control)),
+                (t) => Debug.WriteLine(t.Name));
+        }
+
+        /// <summary>
+        /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
+        /// </summary>
+        public static void NativeObjectToConsole()
+        {
+            EnumerableUtils.ForEach<Type>(
+                AssemblyUtils.GetTypeDescendants(typeof(Native.NativeObject), true, false),
+                (t) => Debug.WriteLine(t.Name));
+        }
+
+        /// <summary>
+        /// Logs <see cref="FontFamily.FamiliesNames"/>.
+        /// </summary>
+        public static void LogFontFamilies()
+        {
+            var s = string.Empty;
+            foreach (string s2 in FontFamily.FamiliesNames)
+            {
+                s += s2 + Environment.NewLine;
+            }
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogUtils.LogToFile("Font Families:");
+            LogUtils.LogToFile(s);
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+
+            Application.Log("FontFamilies logged to file.");
+        }
+
         internal void PropGridSetProps(object? instance)
         {
             if (insideSetProps)
@@ -217,7 +257,7 @@ namespace Alternet.UI
         private void InitActions()
         {
             AddLogAction("Log system settings", SystemSettings.Log);
-            AddLogAction("Log font families", LogUtils.LogFontFamilies);
+            AddLogAction("Log font families", LogFontFamilies);
             AddLogAction("Log system fonts", SystemSettings.LogSystemFonts);
             AddLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
             AddLogAction("Log display info", Display.Log);

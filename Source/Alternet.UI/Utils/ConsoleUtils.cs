@@ -17,7 +17,7 @@ namespace Alternet.UI
         private static ConsoleWriter? consoleError;
 
         /// <summary>
-        /// Binds system console output to <see cref="Application.Log"/>.
+        /// Binds system console output to <see cref="BaseApplication.Log"/>.
         /// </summary>
         public static void BindConsoleOutput(string prefix = "Output> ")
         {
@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Binds console error to <see cref="Application.Log"/>.
+        /// Binds console error to <see cref="BaseApplication.Log"/>.
         /// </summary>
         public static void BindConsoleError(string prefix = "Error> ")
         {
@@ -41,7 +41,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unbinds system console output from <see cref="Application.Log"/>.
+        /// Unbinds system console output from <see cref="BaseApplication.Log"/>.
         /// </summary>
         public static void UnbindConsoleOutput()
         {
@@ -57,7 +57,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unbinds console error from <see cref="Application.Log"/>.
+        /// Unbinds console error from <see cref="BaseApplication.Log"/>.
         /// </summary>
         public static void UnbindConsoleError()
         {

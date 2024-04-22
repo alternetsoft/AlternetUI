@@ -95,7 +95,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="Application.LogReplace"/> but
+        /// Same as <see cref="BaseApplication.LogReplace"/> but
         /// uses only this control for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
@@ -118,7 +118,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Binds this control to show messages which are logged with
-        /// <see cref="Application.Log"/>.
+        /// <see cref="BaseApplication.Log"/>.
         /// </summary>
         public virtual void BindApplicationLog()
         {
@@ -126,11 +126,11 @@ namespace Alternet.UI
             ContextMenu.Required();
             Application.LogMessage += Application_LogMessage;
             Application.LogRefresh += Application_LogRefresh;
-            LogUtils.DebugLogVersion();
+            AppUtils.DebugLogVersion();
         }
 
         /// <summary>
-        /// Same as <see cref="Application.Log"/> but
+        /// Same as <see cref="BaseApplication.Log"/> but
         /// uses only this control for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
@@ -190,7 +190,7 @@ namespace Alternet.UI
 
             ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, Copy));
 
-            ContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
+            ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
 
             menuItemShowDevTools = ContextMenu.Add(new("Developer Tools"));
             menuItemShowDevTools.ClickAction = ShowDevTools;

@@ -166,7 +166,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Binds <see cref="LogControl"/> to show messages which are logged with
-        /// <see cref="Application.Log"/>.
+        /// <see cref="BaseApplication.Log"/>.
         /// </summary>
         public virtual void BindApplicationLog()
         {
@@ -208,7 +208,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public virtual void WriteWelcomeLogMessages()
         {
-            LogUtils.DebugLogVersion();
+            AppUtils.DebugLogVersion();
         }
 
         /// <summary>

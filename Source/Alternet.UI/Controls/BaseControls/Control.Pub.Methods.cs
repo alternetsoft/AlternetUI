@@ -1961,7 +1961,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="Application.Log"/>.
+        /// Same as <see cref="BaseApplication.Log"/>.
         /// </summary>
         /// <param name="s"></param>
         public void Log(object? s) => Application.Log(s);

@@ -23,12 +23,13 @@ namespace Alternet.UI
         /// </summary>
         public static bool ShowDebugWelcomeMessage = false;
 
+        public static LogFlags Flags;
+
         private static int id;
         private static int logUseMaxLength;
-        private static Flags flags;
 
         [Flags]
-        internal enum Flags
+        public enum LogFlags
         {
             AppStartLogged = 1,
             AppFinishLogged = 2,
@@ -54,45 +55,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Outputs all <see cref="Control"/> descendants to the debug console.
-        /// </summary>
-        public static void ControlsToConsole()
-        {
-            EnumerableUtils.ForEach<Type>(
-                AssemblyUtils.GetTypeDescendants(typeof(Control)),
-                (t) => Debug.WriteLine(t.Name));
-        }
-
-        /// <summary>
-        /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
-        /// </summary>
-        public static void NativeObjectToConsole()
-        {
-            EnumerableUtils.ForEach<Type>(
-                AssemblyUtils.GetTypeDescendants(typeof(Native.NativeObject), true, false),
-                (t) => Debug.WriteLine(t.Name));
-        }
-
-        /// <summary>
-        /// Logs <see cref="FontFamily.FamiliesNames"/>.
-        /// </summary>
-        public static void LogFontFamilies()
-        {
-            var s = string.Empty;
-            foreach (string s2 in FontFamily.FamiliesNames)
-            {
-                s += s2 + Environment.NewLine;
-            }
-
-            LogToFile(SectionSeparator);
-            LogToFile("Font Families:");
-            LogToFile(s);
-            LogToFile(SectionSeparator);
-
-            Application.Log("FontFamilies logged to file.");
-        }
-
-        /// <summary>
         /// Logs all system colors.
         /// </summary>
         public static void LogSystemColors()
@@ -114,7 +76,7 @@ namespace Alternet.UI
             if (items is null)
                 return;
             foreach (var item in items)
-                Application.Log(item, kind);
+                BaseApplication.Log(item, kind);
         }
 
         /// <summary>
@@ -124,9 +86,9 @@ namespace Alternet.UI
         {
             if (items is null)
                 return;
-            Application.LogBeginSection();
+            BaseApplication.LogBeginSection();
             Log(items, kind);
-            Application.LogEndSection();
+            BaseApplication.LogEndSection();
         }
 
         /// <summary>
@@ -147,40 +109,13 @@ namespace Alternet.UI
 
             void ToLog(object? value)
             {
-                Application.Log(value, kind);
+                BaseApplication.Log(value, kind);
             }
 
             if (toFile)
                 return ToFile;
             else
                 return ToLog;
-        }
-
-        /// <summary>
-        /// Logs environment versions.
-        /// </summary>
-        /// <remarks>
-        /// Works only if DEBUG conditional is defined.
-        /// </remarks>
-        [Conditional("DEBUG")]
-        public static void DebugLogVersion()
-        {
-            if (!ShowDebugWelcomeMessage)
-                return;
-            if (flags.HasFlag(Flags.VersionLogged))
-                return;
-            flags |= Flags.VersionLogged;
-            var wxWidgets = WebBrowser.GetLibraryVersionString();
-            var bitsOS = Application.Is64BitOS ? "x64" : "x86";
-            var bitsApp = Application.Is64BitProcess ? "x64" : "x86";
-            var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
-            var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
-            var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
-            var counterStr = $"Counter: {Application.BuildCounter}";
-            var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
-            Application.Log(s);
-            if (Application.LogFileIsEnabled)
-                Application.DebugLog($"Log File = {Application.LogFilePath}");
         }
 
         /// <summary>
@@ -192,10 +127,10 @@ namespace Alternet.UI
         {
             try
             {
-                Application.Log(SectionSeparator, LogItemKind.Error);
-                Application.Log($"Exception: {info}", LogItemKind.Error);
-                Application.Log(e.ToString(), LogItemKind.Error);
-                Application.Log(SectionSeparator, LogItemKind.Error);
+                BaseApplication.Log(SectionSeparator, LogItemKind.Error);
+                BaseApplication.Log($"Exception: {info}", LogItemKind.Error);
+                BaseApplication.Log(e.ToString(), LogItemKind.Error);
+                BaseApplication.Log(SectionSeparator, LogItemKind.Error);
             }
             catch
             {
@@ -237,7 +172,7 @@ namespace Alternet.UI
             if (logUseMaxLength > 0)
                 propValue = StringUtils.LimitLength(propValue, LogPropMaxLength);
 
-            Application.Log(s + propName + " = " + propValue, kind);
+            BaseApplication.Log(s + propName + " = " + propValue, kind);
         }
 
         /// <summary>
@@ -267,8 +202,8 @@ namespace Alternet.UI
         /// </summary>
         public static void DeleteLog()
         {
-            if (File.Exists(Application.LogFilePath))
-                File.Delete(Application.LogFilePath);
+            if (File.Exists(BaseApplication.LogFilePath))
+                File.Delete(BaseApplication.LogFilePath);
         }
 
         /// <summary>
@@ -280,7 +215,7 @@ namespace Alternet.UI
         public static void LogToFile(object? obj = null, string? filename = null)
         {
             var msg = obj?.ToString() ?? string.Empty;
-            filename ??= Application.LogFilePath;
+            filename ??= BaseApplication.LogFilePath;
 
             string dt = System.DateTime.Now.ToString("HH:mm:ss");
             string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
@@ -315,7 +250,7 @@ namespace Alternet.UI
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);
             title ??= "Color";
-            Application.Log($"{title} = {value?.ToDebugString()}");
+            BaseApplication.Log($"{title} = {value?.ToDebugString()}");
         }
 
         /// <summary>
@@ -329,19 +264,7 @@ namespace Alternet.UI
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);
             title ??= "ColorAndRect";
-            Application.Log($"{title} = {value?.ToDebugString()}, {rect}");
-        }
-
-        /// <summary>
-        /// Opens log file <see cref="Application.LogFilePath"/> in the default editor
-        /// of the operating system.
-        /// </summary>
-        public static void OpenLogFile()
-        {
-            if (!File.Exists(Application.LogFilePath))
-                LogToFileAppStarted();
-
-            AppUtils.ShellExecute(Application.LogFilePath);
+            BaseApplication.Log($"{title} = {value?.ToDebugString()}, {rect}");
         }
 
         /// <summary>
@@ -352,7 +275,7 @@ namespace Alternet.UI
         public static void LogRange(IEnumerable items, LogItemKind kind = LogItemKind.Information)
         {
             foreach (var item in items)
-                Application.Log(item, kind);
+                BaseApplication.Log(item, kind);
         }
 
         /// <summary>
@@ -374,7 +297,7 @@ namespace Alternet.UI
                 value.ToString(),
                 minBound.ToString(),
                 maxBound.ToString());
-            Application.LogError(s);
+            BaseApplication.LogError(s);
         }
 
         /// <summary>
@@ -387,29 +310,16 @@ namespace Alternet.UI
             LogInvalidBoundArgument(name, value, 0, int.MaxValue);
         }
 
-        internal static void LogAppDomainTargetFrameworkName()
-        {
-            Application.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
-
-            var frameworkName = new System.Runtime.Versioning.FrameworkName(
-                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
-
-            if (frameworkName.Version >= new Version(4, 5))
-            {
-                // run code
-            }
-        }
-
         /// <summary>
         /// Writes to log file "Application started" header text.
         /// </summary>
-        internal static void LogToFileAppStarted()
+        public static void LogToFileAppStarted()
         {
-            if (flags.HasFlag(Flags.AppStartLogged))
+            if (Flags.HasFlag(LogFlags.AppStartLogged))
                 return;
             try
             {
-                flags |= Flags.AppStartLogged;
+                Flags |= LogFlags.AppStartLogged;
                 LogToFile();
                 LogToFile();
                 LogToFile(SectionSeparator);
@@ -419,6 +329,41 @@ namespace Alternet.UI
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Writes to log file "Application finished" header text.
+        /// </summary>
+        public static void LogToFileAppFinished()
+        {
+            if (Flags.HasFlag(LogFlags.AppFinishLogged))
+                return;
+            try
+            {
+                Flags |= LogFlags.AppFinishLogged;
+                LogToFile();
+                LogToFile();
+                LogToFile(SectionSeparator);
+                LogToFile("Application log finished");
+                LogToFile(SectionSeparator);
+                LogToFile();
+            }
+            catch
+            {
+            }
+        }
+
+        internal static void LogAppDomainTargetFrameworkName()
+        {
+            BaseApplication.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
+
+            var frameworkName = new System.Runtime.Versioning.FrameworkName(
+                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
+
+            if (frameworkName.Version >= new Version(4, 5))
+            {
+                // run code
             }
         }
 
@@ -436,7 +381,7 @@ namespace Alternet.UI
                 var oldArgbStr = oldArgb.ToString("X");
                 var newArgbStr = newArgb.ToString("X");
 
-                Application.Log($"{equal} old: {oldArgbStr} new: {newArgbStr}");
+                BaseApplication.Log($"{equal} old: {oldArgbStr} new: {newArgbStr}");
             }
 
             Test(KnownColor.ActiveBorder);
@@ -472,28 +417,6 @@ namespace Alternet.UI
             Test(KnownColor.GradientInactiveCaption);
             Test(KnownColor.MenuBar);
             Test(KnownColor.MenuHighlight);
-        }
-
-        /// <summary>
-        /// Writes to log file "Application finished" header text.
-        /// </summary>
-        internal static void LogToFileAppFinished()
-        {
-            if (flags.HasFlag(Flags.AppFinishLogged))
-                return;
-            try
-            {
-                flags |= Flags.AppFinishLogged;
-                LogToFile();
-                LogToFile();
-                LogToFile(SectionSeparator);
-                LogToFile("Application log finished");
-                LogToFile(SectionSeparator);
-                LogToFile();
-            }
-            catch
-            {
-            }
         }
     }
 }

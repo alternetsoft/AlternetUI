@@ -144,7 +144,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Emits <see cref="Application.Log"/> with <paramref name="value"/> parameter.
+        /// Emits <see cref="BaseApplication.Log"/> with <paramref name="value"/> parameter.
         /// </summary>
         /// <param name="il">Code generator.</param>
         /// <param name="value">Text string.</param>

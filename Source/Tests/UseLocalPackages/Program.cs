@@ -15,7 +15,6 @@ namespace MinMaster
         private static void Init()
         {
             Application.Log($"The application started at {DateTime.Now:HH:mm:ss.fff}");
-            LogUtils.DebugLogVersion();
             var form = Application.FirstWindow<WindowLogListBox>();
             if (form is null)
                 return;
