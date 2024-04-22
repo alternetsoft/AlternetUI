@@ -1,11 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System.Diagnostics;
 
 namespace Alternet.Drawing
 {
-    internal static class KnownColorNames
+    /// <summary>
+    /// Contains methods which alllow to get name of the color specified using
+    /// <see cref="KnownColor"/>.
+    /// </summary>
+    public static class KnownColorNames
     {
         // Names of all colors (in order of definition in the KnownColor enum).
         private static readonly string[] ColorNameTable =
@@ -194,6 +195,11 @@ namespace Alternet.Drawing
             "RebeccaPurple",
         };
 
+        /// <summary>
+        /// Gets name of the color specified with <see cref="KnownColor"/>.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public static string KnownColorToName(KnownColor color)
         {
             Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple, nameof(KnownColorToName));
