@@ -99,5 +99,22 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="index">System color identifier.</param>
         public virtual Color GetColor(SystemSettingsColor index) => NotImplemented<Color>();
+
+        /// <summary>
+        /// Returns a string array that contains all font families names
+        /// currently available in the system.
+        /// </summary>
+        public virtual string[] GetFontFamiliesNames() => NotImplemented<string[]>();
+
+        /// <summary>
+        /// Gets whether font family is installed on this computer.
+        /// </summary>
+        public virtual bool IsFontFamilyValid(string name) => NotImplemented<bool>();
+
+        /// <summary>
+        /// Gets the name of the font family specified using <see cref="GenericFontFamily"/>.
+        /// </summary>
+        public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
+             => NotImplemented<string>();
     }
 }

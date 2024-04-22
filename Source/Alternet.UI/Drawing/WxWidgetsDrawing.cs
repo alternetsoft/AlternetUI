@@ -91,5 +91,20 @@ namespace Alternet.Drawing
                 (UI.Native.LineCap)pen.LineCap,
                 (UI.Native.LineJoin)pen.LineJoin);
         }
+
+        public override string[] GetFontFamiliesNames()
+        {
+            return UI.Native.Font.Families;
+        }
+
+        public override bool IsFontFamilyValid(string name)
+        {
+            return UI.Native.Font.IsFamilyValid(name);
+        }
+
+        public override string GetFontFamilyName(GenericFontFamily genericFamily)
+        {
+            return UI.Native.Font.GetGenericFamilyName((UI.Native.GenericFontFamily)genericFamily);
+        }
     }
 }

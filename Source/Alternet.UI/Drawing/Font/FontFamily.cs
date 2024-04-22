@@ -8,8 +8,13 @@ namespace Alternet.Drawing
     /// Defines a group of type faces having a similar basic design and
     /// certain variations in styles.
     /// </summary>
-    public sealed class FontFamily
+    public class FontFamily : BaseObject
     {
+        private static FontFamily genericSerif;
+        private static FontFamily genericDefault;
+        private static FontFamily genericSansSerif;
+        private static FontFamily genericMonospace;
+
         private string? name;
 
         /// <summary>
@@ -33,7 +38,7 @@ namespace Alternet.Drawing
                 return;
             }
 
-            if (!UI.Native.Font.IsFamilyValid(name))
+            if (!IsFamilyValid(name))
             {
                 Application.LogError($"'{name}' font family is not installed on this computer, using default font.");
                 GenericFamily = GenericFontFamily.Default;
@@ -60,7 +65,7 @@ namespace Alternet.Drawing
         /// <value>A <see cref="FontFamily"/> that represents a generic serif
         /// font.</value>
         public static FontFamily GenericSerif { get; } =
-            new FontFamily(GenericFontFamily.Serif);
+            genericSerif ??= new FontFamily(GenericFontFamily.Serif);
 
         /// <summary>
         /// Gets a generic default <see cref="FontFamily"/>.
@@ -68,7 +73,7 @@ namespace Alternet.Drawing
         /// <value>A <see cref="FontFamily"/> that represents a generic default
         /// font.</value>
         public static FontFamily GenericDefault { get; } =
-            new FontFamily(GenericFontFamily.Default);
+            genericDefault ??= new FontFamily(GenericFontFamily.Default);
 
         /// <summary>
         /// Gets a generic sans serif <see cref="FontFamily"/>.
@@ -76,7 +81,7 @@ namespace Alternet.Drawing
         /// <value>A <see cref="FontFamily"/> that represents a generic
         /// sans serif font.</value>
         public static FontFamily GenericSansSerif { get; } =
-            new FontFamily(GenericFontFamily.SansSerif);
+            genericSansSerif ??= new FontFamily(GenericFontFamily.SansSerif);
 
         /// <summary>
         /// Gets a generic monospace <see cref="FontFamily"/>.
@@ -84,7 +89,7 @@ namespace Alternet.Drawing
         /// <value>A <see cref="FontFamily"/> that represents a generic
         /// monospace font.</value>
         public static FontFamily GenericMonospace { get; } =
-            new FontFamily(GenericFontFamily.Monospace);
+            genericMonospace ??= new FontFamily(GenericFontFamily.Monospace);
 
         /// <summary>
         /// Returns an array that contains all the <see cref="FontFamily"/>
@@ -95,7 +100,7 @@ namespace Alternet.Drawing
         /// in the system.
         /// </value>
         public static FontFamily[] Families =>
-            UI.Native.Font.Families.Select(x => new FontFamily(x)).ToArray();
+            FamiliesNames.Select(x => new FontFamily(x)).ToArray();
 
         /// <summary>
         /// Returns a string array that contains all names of the
@@ -106,7 +111,7 @@ namespace Alternet.Drawing
         /// A string array of <see cref="FontFamily"/> names currently available
         /// in the system.
         /// </value>
-        public static string[] FamiliesNames => UI.Native.Font.Families;
+        public static string[] FamiliesNames => NativeDrawing.Default.GetFontFamiliesNames();
 
         /// <summary>
         /// Returns a string array that contains all names of the
@@ -122,7 +127,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                string[] result = UI.Native.Font.Families;
+                string[] result = FamiliesNames;
                 Array.Sort(result);
                 return result;
             }
@@ -134,9 +139,7 @@ namespace Alternet.Drawing
         /// <value>A string that represents the name of this
         /// <see cref="FontFamily"/>.</value>
         public string Name => name ??=
-            UI.Native.Font.GetGenericFamilyName(
-                (UI.Native.GenericFontFamily)(GenericFamily ??
-                throw new Exception()));
+            NativeDrawing.Default.GetFontFamilyName(GenericFamily ?? throw new Exception());
 
         /// <summary>
         /// Gets generic font family type.
@@ -147,6 +150,6 @@ namespace Alternet.Drawing
         /// Gets whether font family is installed on this computer.
         /// </summary>
         public static bool IsFamilyValid(string name) =>
-            UI.Native.Font.IsFamilyValid(name);
+            NativeDrawing.Default.IsFontFamilyValid(name);
     }
 }
