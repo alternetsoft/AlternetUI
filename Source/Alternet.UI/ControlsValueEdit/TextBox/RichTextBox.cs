@@ -1841,7 +1841,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginFont(Font? font)
         {
-            return NativeControl.BeginFont(font?.NativeFont);
+            return NativeControl.BeginFont((UI.Native.Font?)font?.NativeObject);
         }
 
         /// <summary>

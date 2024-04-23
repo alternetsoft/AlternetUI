@@ -238,7 +238,7 @@ namespace Alternet.UI
         /// <param name="font">Font of the title.</param>
         public void SetTitleFont(Font? font)
         {
-            Native.WxOtherFactory.RichToolTipSetTitleFont(Handle, font?.NativeFont);
+            Native.WxOtherFactory.RichToolTipSetTitleFont(Handle, (UI.Native.Font?)font?.NativeObject);
         }
 
         /// <summary>

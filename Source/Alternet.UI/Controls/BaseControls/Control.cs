@@ -555,7 +555,7 @@ namespace Alternet.UI
             set
             {
                 defaultFont = value;
-                Native.Window.SetParkingWindowFont(value?.NativeFont);
+                Native.Window.SetParkingWindowFont((UI.Native.Font?)value?.NativeObject);
             }
         }
 

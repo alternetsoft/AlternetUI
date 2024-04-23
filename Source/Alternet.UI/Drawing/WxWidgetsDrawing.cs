@@ -40,13 +40,38 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void UpdateFont(
-            object font,
-            GenericFontFamily genericFamily,
-            string? familyName,
-            double emSizeInPoints,
-            FontStyle style)
+        public override void UpdateFont(object font, FontParams prm)
         {
+            if (prm.Unit != GraphicsUnit.Point)
+            {
+                prm.Size = GraphicsUnitConverter.Convert(
+                    prm.Unit,
+                    GraphicsUnit.Point,
+                    Display.Primary.DPI.Height,
+                    prm.Size);
+            }
+
+            if (prm.GenericFamily == null && prm.FamilyName == null)
+            {
+                Application.LogError("Font name and family are null, using default font.");
+                prm.GenericFamily = GenericFontFamily.Default;
+            }
+
+            prm.Size = Font.CheckSize(prm.Size);
+
+            ((UI.Native.Font)font).Initialize(
+               ToNativeGenericFamily(prm.GenericFamily),
+               prm.FamilyName,
+               prm.Size,
+               (UI.Native.FontStyle)prm.Style);
+
+            static UI.Native.GenericFontFamily ToNativeGenericFamily(
+                GenericFontFamily? value)
+            {
+                return value == null ?
+                    UI.Native.GenericFontFamily.None :
+                    (UI.Native.GenericFontFamily)value;
+            }
         }
 
         /// <inheritdoc/>

@@ -172,7 +172,7 @@ namespace Alternet.Drawing
             dc.DrawRotatedTextI(
                 text,
                 location,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 foreColor,
                 backColor,
                 angle);
@@ -391,7 +391,7 @@ namespace Alternet.Drawing
         {
             var result = dc.GetTextExtent(
                 text,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 control is null ? default : control.WxWidget);
             descent = result.X;
             externalLeading = result.Y;
@@ -418,7 +418,7 @@ namespace Alternet.Drawing
         {
             var result = dc.GetTextExtentSimple(
                 text,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 control is null ? default : control.WxWidget);
             return result;
         }
@@ -437,7 +437,10 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual SizeD GetTextExtent(string text, Font font)
         {
-            var result = dc.GetTextExtentSimple(text, font.NativeFont, default);
+            var result = dc.GetTextExtentSimple(
+                text,
+                (UI.Native.Font)font.NativeObject,
+                default);
             return result;
         }
 
@@ -1314,7 +1317,7 @@ namespace Alternet.Drawing
             dc.DrawTextAtPoint(
                 text,
                 origin,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 (UI.Native.Brush)brush.NativeObject);
         }
 
@@ -1361,7 +1364,7 @@ namespace Alternet.Drawing
             dc.DrawTextAtRect(
                 text,
                 bounds,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 (UI.Native.Brush)brush.NativeObject,
                 (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
                 (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
@@ -1448,7 +1451,11 @@ namespace Alternet.Drawing
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
-            return dc.MeasureText(text, font.NativeFont, double.NaN, UI.Native.TextWrapping.None);
+            return dc.MeasureText(
+                text,
+                (UI.Native.Font)font.NativeObject,
+                double.NaN,
+                UI.Native.TextWrapping.None);
         }
 
         /// <summary>
@@ -1471,7 +1478,7 @@ namespace Alternet.Drawing
             DebugFontAssert(font);
             return dc.MeasureText(
                 text,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 maximumWidth,
                 UI.Native.TextWrapping.Character);
         }
@@ -1493,14 +1500,18 @@ namespace Alternet.Drawing
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD MeasureText(string text, Font font, double maximumWidth, TextFormat format)
+        public virtual SizeD MeasureText(
+            string text,
+            Font font,
+            double maximumWidth,
+            TextFormat format)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugFormatAssert(format);
             return dc.MeasureText(
                 text,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 maximumWidth,
                 (UI.Native.TextWrapping)format.Wrapping);
         }
@@ -1535,7 +1546,12 @@ namespace Alternet.Drawing
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
-            dc.DrawText(text, location, font.NativeFont, foreColor, backColor);
+            dc.DrawText(
+                text,
+                location,
+                (UI.Native.Font)font.NativeObject,
+                foreColor,
+                backColor);
         }
 
         /// <summary>
@@ -1567,7 +1583,7 @@ namespace Alternet.Drawing
             DebugColorAssert(foreColor, nameof(foreColor));
             return dc.DrawLabel(
                 text,
-                font.NativeFont,
+                (UI.Native.Font)font.NativeObject,
                 foreColor,
                 backColor,
                 image?.NativeImage,

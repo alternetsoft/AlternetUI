@@ -328,43 +328,23 @@ namespace Alternet.Drawing
              GraphicsUnit unit = GraphicsUnit.Point,
              byte gdiCharSet = 1)
         {
-            if (unit != GraphicsUnit.Point)
+            NativeDrawing.FontParams prm = new()
             {
-                emSize = GraphicsUnitConverter.Convert(
-                    unit,
-                    GraphicsUnit.Point,
-                    Display.Primary.DPI.Height,
-                    emSize);
-            }
+                GenericFamily = genericFamily,
+                FamilyName = familyName,
+                Size = emSize,
+                Style = style,
+                Unit = GraphicsUnit.Point,
+                GdiCharSet = 1,
+            };
 
-            if (genericFamily == null && familyName == null)
-            {
-                Application.LogError("Font name and family are null, using default font.");
-                genericFamily = GenericFontFamily.Default;
-            }
-
-            emSize = CheckSize(emSize);
-
-            NativeFont = new UI.Native.Font();
-
-            NativeFont.Initialize(
-               ToNativeGenericFamily(genericFamily),
-               familyName,
-               emSize,
-               (UI.Native.FontStyle)style);
-
-            static UI.Native.GenericFontFamily ToNativeGenericFamily(
-                GenericFontFamily? value)
-            {
-                return value == null ?
-                    UI.Native.GenericFontFamily.None :
-                    (UI.Native.GenericFontFamily)value;
-            }
+            NativeObject = (UI.Native.Font)NativeDrawing.Default.CreateFont();
+            NativeDrawing.Default.UpdateFont(NativeObject, prm);
         }
 
         internal Font(UI.Native.Font nativeFont)
         {
-            NativeFont = nativeFont;
+            NativeObject = nativeFont;
         }
 
         /// <summary>
@@ -399,13 +379,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the pixel size.
         /// </summary>
-        public SizeI SizeInPixels => NativeFont.GetPixelSize();
+        public SizeI SizeInPixels => ((UI.Native.Font)NativeObject).GetPixelSize();
 
         /// <summary>
         /// Gets whether font size is in pixels.
         /// </summary>
         /// <returns></returns>
-        public bool IsUsingSizeInPixels => NativeFont.IsUsingSizeInPixels();
+        public bool IsUsingSizeInPixels => ((UI.Native.Font)NativeObject).IsUsingSizeInPixels();
 
         /// <summary>
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
@@ -463,7 +443,7 @@ namespace Alternet.Drawing
         /// <remarks>
         ///  See <see cref="FontWeight"/> for the numeric weight values.
         /// </remarks>
-        public int NumericWeight => NativeFont.GetNumericWeight();
+        public int NumericWeight => ((UI.Native.Font)NativeObject).GetNumericWeight();
 
         /// <summary>
         /// Gets whether this font is a fixed width (or monospaced) font.
@@ -476,13 +456,13 @@ namespace Alternet.Drawing
         /// platform-specific functions are used for the check (resulting in a more accurate
         /// return value).
         /// </remarks>
-        public bool IsFixedWidth => NativeFont.IsFixedWidth();
+        public bool IsFixedWidth => ((UI.Native.Font)NativeObject).IsFixedWidth();
 
         /// <summary>
         /// Gets the font weight.
         /// </summary>
         /// <returns></returns>
-        public FontWeight Weight => (FontWeight)NativeFont.GetWeight();
+        public FontWeight Weight => (FontWeight)((UI.Native.Font)NativeObject).GetWeight();
 
         /// <summary>
         /// Returns bold version of the font.
@@ -526,7 +506,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return (FontStyle)NativeFont.Style;
+                return (FontStyle)((UI.Native.Font)NativeObject).Style;
             }
         }
 
@@ -550,7 +530,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
-        public bool IsStrikethrough => NativeFont.GetStrikethrough();
+        public bool IsStrikethrough => ((UI.Native.Font)NativeObject).GetStrikethrough();
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -558,7 +538,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
-        public bool IsUnderlined => NativeFont.GetUnderlined();
+        public bool IsUnderlined => ((UI.Native.Font)NativeObject).GetUnderlined();
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
@@ -569,7 +549,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeFont.SizeInPoints;
+                return ((UI.Native.Font)NativeObject).SizeInPoints;
             }
         }
 
@@ -606,7 +586,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeFont.Name;
+                return ((UI.Native.Font)NativeObject).Name;
             }
         }
 
@@ -625,9 +605,9 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
-        internal int Encoding => NativeFont.GetEncoding();
+        internal int Encoding => ((UI.Native.Font)NativeObject).GetEncoding();
 
-        internal UI.Native.Font NativeFont { get; private set; }
+        internal object NativeObject { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -672,6 +652,22 @@ namespace Alternet.Drawing
             else
                 result &= ~element;
             return result;
+        }
+
+        /// <summary>
+        /// If font size is correct, returns it; otherwise returns default font size.
+        /// </summary>
+        /// <param name="emSize"></param>
+        /// <returns></returns>
+        public static double CheckSize(double emSize)
+        {
+            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
+            {
+                Application.LogError("Invalid font size {emSize}, using default font size.");
+                return Font.Default.Size;
+            }
+
+            return emSize;
         }
 
         /// <summary>
@@ -817,7 +813,7 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             CheckDisposed();
-            hashCode ??= NativeFont.Serialize().GetHashCode();
+            hashCode ??= ((UI.Native.Font)NativeObject).Serialize().GetHashCode();
             return hashCode.Value;
         }
 
@@ -842,7 +838,7 @@ namespace Alternet.Drawing
                 return false;
 
             CheckDisposed();
-            return NativeFont.IsEqualTo(other.NativeFont);
+            return ((UI.Native.Font)NativeObject).IsEqualTo(((UI.Native.Font)other.NativeObject));
         }
 
         /// <summary>
@@ -852,7 +848,7 @@ namespace Alternet.Drawing
         public override string ToString()
         {
             CheckDisposed();
-            return NativeFont.Description;
+            return ((UI.Native.Font)NativeObject).Description;
         }
 
         /// <summary>
@@ -908,19 +904,8 @@ namespace Alternet.Drawing
         {
             var nativeResult = new UI.Native.Font();
             var result = new Font(nativeResult);
-            result.NativeFont.InitializeFromFont(NativeFont);
+            ((UI.Native.Font)nativeResult).InitializeFromFont(((UI.Native.Font)NativeObject));
             return result;
-        }
-
-        internal static double CheckSize(double emSize)
-        {
-            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
-            {
-                Application.LogError("Invalid font size {emSize}, using default font size.");
-                return Font.Default.Size;
-            }
-
-            return emSize;
         }
 
         internal static Font? FromInternal(UI.Native.Font? font)
@@ -952,10 +937,10 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
-            if (NativeFont is not null)
+            if (NativeObject is not null)
             {
-                ((IDisposable)NativeFont).Dispose();
-                NativeFont = null;
+                ((IDisposable)NativeObject).Dispose();
+                NativeObject = null;
             }
         }
     }

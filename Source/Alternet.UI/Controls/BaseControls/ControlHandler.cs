@@ -894,7 +894,7 @@ namespace Alternet.UI
         private void ApplyFont()
         {
             if (NativeControl != null)
-                NativeControl.Font = Control.Font?.NativeFont;
+                NativeControl.Font = (UI.Native.Font?)Control.Font?.NativeObject;
 
             Invalidate();
         }

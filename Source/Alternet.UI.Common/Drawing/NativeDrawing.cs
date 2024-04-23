@@ -98,12 +98,7 @@ namespace Alternet.Drawing
         /// Updates native font properties.
         /// </summary>
         /// <returns></returns>
-        public virtual void UpdateFont(
-            object font,
-            GenericFontFamily genericFamily,
-            string? familyName,
-            double emSizeInPoints,
-            FontStyle style) => NotImplemented();
+        public virtual void UpdateFont(object font, FontParams prm) => NotImplemented();
 
         /// <summary>
         /// Updates native hatch brush properties.
@@ -145,5 +140,19 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
              => NotImplemented<string>();
+
+        public struct FontParams
+        {
+            public GenericFontFamily? GenericFamily;
+            public string? FamilyName;
+            public double Size;
+            public FontStyle Style = FontStyle.Regular;
+            public GraphicsUnit Unit = GraphicsUnit.Point;
+            public byte GdiCharSet = 1;
+
+            public FontParams()
+            {
+            }
+        }
     }
 }
