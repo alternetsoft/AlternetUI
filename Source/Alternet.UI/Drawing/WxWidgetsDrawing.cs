@@ -21,6 +21,35 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override object CreateFont() => new UI.Native.Font();
+
+        /// <inheritdoc/>
+        public override object CreateDefaultFont()
+        {
+            var result = new UI.Native.Font();
+            result.InitializeWithDefaultFont();
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override object CreateDefaultMonoFont()
+        {
+            var result = new UI.Native.Font();
+            result.InitializeWithDefaultMonoFont();
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override void UpdateFont(
+            object font,
+            GenericFontFamily genericFamily,
+            string? familyName,
+            double emSizeInPoints,
+            FontStyle style)
+        {
+        }
+
+        /// <inheritdoc/>
         public override object CreateTransparentBrush() => new UI.Native.Brush();
 
         /// <inheritdoc/>

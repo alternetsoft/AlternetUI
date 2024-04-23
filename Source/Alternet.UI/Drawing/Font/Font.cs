@@ -13,12 +13,11 @@ namespace Alternet.Drawing
     /// style attributes. This class cannot be inherited.
     /// </summary>
     [DebuggerDisplay("{ToInfoString()}")]
-    public class Font : IDisposable, IEquatable<Font>
+    public class Font : DisposableObject, IEquatable<Font>
     {
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
 
-        private bool isDisposed;
         private int? hashCode;
         private bool? gdiVerticalFont;
         private Font[]? fonts;
@@ -29,10 +28,7 @@ namespace Alternet.Drawing
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
         /// </summary>
         public Font(FontInfo fontInfo)
-            : this(
-                  fontInfo.Name,
-                  fontInfo.SizeInPoints,
-                  fontInfo.Style)
+            : this(fontInfo.Name, fontInfo.SizeInPoints, fontInfo.Style)
         {
         }
 
@@ -52,14 +48,8 @@ namespace Alternet.Drawing
             string familyName,
             double emSize,
             FontStyle style = FontStyle.Regular)
+            : this(null, familyName, emSize, style)
         {
-            emSize = CheckSize(emSize);
-            NativeFont = new UI.Native.Font();
-            NativeFont.Initialize(
-                ToNativeGenericFamily(null),
-                familyName,
-                emSize,
-                (UI.Native.FontStyle)style);
         }
 
         /// <summary>
@@ -78,14 +68,12 @@ namespace Alternet.Drawing
             FontFamily family,
             double emSize,
             FontStyle style = FontStyle.Regular)
-        {
-            emSize = CheckSize(emSize);
-            NativeFont = new UI.Native.Font();
-            NativeFont.Initialize(
-                ToNativeGenericFamily(family.GenericFamily),
+            : this(
+                family.GenericFamily,
                 family.Name,
                 emSize,
-                (UI.Native.FontStyle)style);
+                style)
+        {
         }
 
         /// <summary>
@@ -102,14 +90,13 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(Font prototype, FontStyle newStyle)
-        {
-            NativeFont = new UI.Native.Font();
-            baseFont = prototype;
-            NativeFont.Initialize(
-                ToNativeGenericFamily(prototype.fontFamily?.GenericFamily),
+            : this(
+                prototype.fontFamily?.GenericFamily,
                 prototype.Name,
                 prototype.Size,
-                (UI.Native.FontStyle)newStyle);
+                newStyle)
+        {
+            baseFont = prototype;
         }
 
         /// <summary>
@@ -123,14 +110,13 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(Font prototype, double newSize)
-        {
-            NativeFont = new UI.Native.Font();
-            baseFont = prototype;
-            NativeFont.Initialize(
-                ToNativeGenericFamily(prototype.fontFamily?.GenericFamily),
+            : this(
+                prototype.fontFamily?.GenericFamily,
                 prototype.Name,
                 newSize,
-                (UI.Native.FontStyle)prototype.Style);
+                prototype.Style)
+        {
+            baseFont = prototype;
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified
@@ -146,9 +132,8 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
+            : this(family?.GenericFamily, family?.Name, emSize, style, unit)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(family, emSize, style, unit, 1);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit,
@@ -171,9 +156,8 @@ namespace Alternet.Drawing
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet)
+            : this(family?.GenericFamily, family?.Name, emSize, style, unit, gdiCharSet)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(family, emSize, style, unit, gdiCharSet);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit,
@@ -200,9 +184,8 @@ namespace Alternet.Drawing
             GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
+            : this(family?.GenericFamily, family?.Name, emSize, style, unit, gdiCharSet)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(family, emSize, style, unit, gdiCharSet);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit,
@@ -226,9 +209,8 @@ namespace Alternet.Drawing
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet)
+            : this(null, familyName, emSize, style, unit, gdiCharSet)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, style, unit, gdiCharSet);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using the specified size, style, unit, and
@@ -257,9 +239,8 @@ namespace Alternet.Drawing
             GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
+            : this(null, familyName, emSize, style, unit, gdiCharSet)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, style, unit, gdiCharSet);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified
@@ -275,9 +256,8 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(FontFamily family, float emSize, GraphicsUnit unit)
+            : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular, unit)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(family, emSize, FontStyle.Regular, unit, 1);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
@@ -288,9 +268,8 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(FontFamily family, double emSize)
+            : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(family, emSize, FontStyle.Regular, GraphicsUnit.Point, 1);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, and unit.</summary>
@@ -306,9 +285,8 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
+            : this(null, familyName, emSize, style, unit)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, style, unit, 1);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size and unit. The style
@@ -325,9 +303,8 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(string familyName, double emSize, GraphicsUnit unit)
+            : this(null, familyName, emSize, FontStyle.Regular, unit)
         {
-            NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, FontStyle.Regular, unit, 1);
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
@@ -339,9 +316,50 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         public Font(string familyName, double emSize)
+            : this(null, familyName, emSize, FontStyle.Regular)
         {
+        }
+
+        internal Font(
+             GenericFontFamily? genericFamily,
+             string? familyName,
+             double emSize,
+             FontStyle style,
+             GraphicsUnit unit = GraphicsUnit.Point,
+             byte gdiCharSet = 1)
+        {
+            if (unit != GraphicsUnit.Point)
+            {
+                emSize = GraphicsUnitConverter.Convert(
+                    unit,
+                    GraphicsUnit.Point,
+                    Display.Primary.DPI.Height,
+                    emSize);
+            }
+
+            if (genericFamily == null && familyName == null)
+            {
+                Application.LogError("Font name and family are null, using default font.");
+                genericFamily = GenericFontFamily.Default;
+            }
+
+            emSize = CheckSize(emSize);
+
             NativeFont = new UI.Native.Font();
-            Initialize(familyName, emSize, FontStyle.Regular, GraphicsUnit.Point, 1);
+
+            NativeFont.Initialize(
+               ToNativeGenericFamily(genericFamily),
+               familyName,
+               emSize,
+               (UI.Native.FontStyle)style);
+
+            static UI.Native.GenericFontFamily ToNativeGenericFamily(
+                GenericFontFamily? value)
+            {
+                return value == null ?
+                    UI.Native.GenericFontFamily.None :
+                    (UI.Native.GenericFontFamily)value;
+            }
         }
 
         internal Font(UI.Native.Font nativeFont)
@@ -357,7 +375,7 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font Default => defaultFont ??= Font.CreateDefaultFont();
+        public static Font Default => defaultFont ??= CreateDefaultFont();
 
         /// <summary>
         /// Gets the default fixed width font used in the application.
@@ -367,7 +385,7 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font DefaultMono => defaultMonoFont ??= Font.CreateDefaultMonoFont();
+        public static Font DefaultMono => defaultMonoFont ??= CreateDefaultMonoFont();
 
         /// <summary>
         /// Gets the name of the font originally specified.
@@ -403,12 +421,6 @@ namespace Alternet.Drawing
                     return SizeInPoints;
             }
         }
-
-        /// <summary>
-        /// Gets whether object is disposed.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsDisposed => isDisposed;
 
         /// <summary>
         /// Gets a byte value that specifies the character set that this <see cref="Font" /> uses.
@@ -571,8 +583,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return fontFamily ??= new FontFamily(NativeFont.Name);
+                return fontFamily ??= new FontFamily(Name);
             }
         }
 
@@ -901,14 +912,6 @@ namespace Alternet.Drawing
             return result;
         }
 
-        internal static UI.Native.GenericFontFamily ToNativeGenericFamily(
-            GenericFontFamily? value)
-        {
-            return value == null ?
-                UI.Native.GenericFontFamily.None :
-                (UI.Native.GenericFontFamily)value;
-        }
-
         internal static double CheckSize(double emSize)
         {
             if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
@@ -941,77 +944,19 @@ namespace Alternet.Drawing
             return new Font(nativeFont);
         }
 
-        [Conditional("DEBUG")]
-        private void CheckDisposed()            
+        protected object CreateNativeObject()
         {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
+            return NativeDrawing.Default.CreateFont();
         }
 
-        private void Dispose(bool disposing)
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
         {
-            if (!isDisposed)
+            if (NativeFont is not null)
             {
-                if (disposing)
-                {
-                    NativeFont.Dispose();
-                    NativeFont = null!;
-                }
-
-                isDisposed = true;
+                ((IDisposable)NativeFont).Dispose();
+                NativeFont = null;
             }
-        }
-
-        private void Initialize(
-            string familyName,
-            double emSize,
-            FontStyle style,
-            GraphicsUnit unit,
-            byte gdiCharSet)
-        {
-            Initialize(
-                new FontFamily(familyName),
-                emSize,
-                style,
-                unit,
-                gdiCharSet);
-        }
-
-        private void Initialize(
-            FontFamily family,
-            double emSize,
-            FontStyle style,
-            GraphicsUnit unit,
-            byte gdiCharSet)
-        {
-            if (unit != GraphicsUnit.Point)
-            {
-                emSize = GraphicsUnitConverter.Convert(
-                    unit,
-                    GraphicsUnit.Point,
-                    Display.Primary.DPI.Height,
-                    emSize);
-                unit = GraphicsUnit.Point;
-            }
-
-            if (family == null)
-            {
-                Application.LogError("Font family is null, using default font.");
-                family = FontFamily.GenericDefault;
-            }
-
-            if (double.IsNaN(emSize) || double.IsInfinity(emSize) || emSize <= 0f)
-            {
-                Application.LogError("Invalid font size, using default font size.");
-                unit = GraphicsUnit.Point;
-                emSize = Font.Default.Size;
-            }
-
-            NativeFont.Initialize(
-               ToNativeGenericFamily(family.GenericFamily),
-               family.Name,
-               emSize,
-               (UI.Native.FontStyle)style);
         }
     }
 }

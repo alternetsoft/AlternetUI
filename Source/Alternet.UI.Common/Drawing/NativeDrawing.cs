@@ -23,6 +23,24 @@ namespace Alternet.Drawing
         public static NativeDrawing Default = new();
 
         /// <summary>
+        /// Creates native font.
+        /// </summary>
+        /// <returns></returns>
+        public virtual object CreateFont() => NotImplemented();
+
+        /// <summary>
+        /// Creates default native font.
+        /// </summary>
+        /// <returns></returns>
+        public virtual object CreateDefaultFont() => NotImplemented();
+
+        /// <summary>
+        /// Creates default native mono font.
+        /// </summary>
+        /// <returns></returns>
+        public virtual object CreateDefaultMonoFont() => NotImplemented();
+
+        /// <summary>
         /// Creates native pen.
         /// </summary>
         /// <returns></returns>
@@ -71,25 +89,36 @@ namespace Alternet.Drawing
         public virtual void UpdatePen(Pen pen) => NotImplemented();
 
         /// <summary>
-        /// Updates solid brush properties.
+        /// Updates native solid brush properties.
         /// </summary>
         /// <returns></returns>
         public virtual void UpdateSolidBrush(SolidBrush brush) => NotImplemented();
 
         /// <summary>
-        /// Updates hatch brush properties.
+        /// Updates native font properties.
+        /// </summary>
+        /// <returns></returns>
+        public virtual void UpdateFont(
+            object font,
+            GenericFontFamily genericFamily,
+            string? familyName,
+            double emSizeInPoints,
+            FontStyle style) => NotImplemented();
+
+        /// <summary>
+        /// Updates native hatch brush properties.
         /// </summary>
         /// <returns></returns>
         public virtual void UpdateHatchBrush(HatchBrush brush) => NotImplemented();
 
         /// <summary>
-        /// Updates linear gradient brush properties.
+        /// Updates native linear gradient brush properties.
         /// </summary>
         /// <returns></returns>
         public virtual void UpdateLinearGradientBrush(LinearGradientBrush brush) => NotImplemented();
 
         /// <summary>
-        /// Updates radial gradient brush properties.
+        /// Updates native radial gradient brush properties.
         /// </summary>
         /// <returns></returns>
         public virtual void UpdateRadialGradientBrush(RadialGradientBrush brush) => NotImplemented();
