@@ -338,11 +338,11 @@ namespace Alternet.Drawing
                 GdiCharSet = 1,
             };
 
-            NativeObject = (UI.Native.Font)NativeDrawing.Default.CreateFont();
+            NativeObject = NativeDrawing.Default.CreateFont();
             NativeDrawing.Default.UpdateFont(NativeObject, prm);
         }
 
-        internal Font(UI.Native.Font nativeFont)
+        internal Font(object nativeFont)
         {
             NativeObject = nativeFont;
         }
@@ -379,13 +379,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the pixel size.
         /// </summary>
-        public SizeI SizeInPixels => ((UI.Native.Font)NativeObject).GetPixelSize();
+        public SizeI SizeInPixels => NativeDrawing.Default.GetFontSizeInPixels(NativeObject);
 
         /// <summary>
         /// Gets whether font size is in pixels.
         /// </summary>
         /// <returns></returns>
-        public bool IsUsingSizeInPixels => ((UI.Native.Font)NativeObject).IsUsingSizeInPixels();
+        public bool IsUsingSizeInPixels
+            => NativeDrawing.Default.GetFontIsUsingSizeInPixels(NativeObject);
 
         /// <summary>
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
@@ -412,7 +413,8 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the unit of measure for this <see cref="Font" />.</summary>
-        /// <returns>A value that represents the unit of measure for this <see cref="Font" />.</returns>
+        /// <returns>A value that represents the unit of
+        /// measure for this <see cref="Font" />.</returns>
         public GraphicsUnit Unit
         {
             get
@@ -443,7 +445,7 @@ namespace Alternet.Drawing
         /// <remarks>
         ///  See <see cref="FontWeight"/> for the numeric weight values.
         /// </remarks>
-        public int NumericWeight => ((UI.Native.Font)NativeObject).GetNumericWeight();
+        public int NumericWeight => NativeDrawing.Default.GetFontNumericWeight(NativeObject);
 
         /// <summary>
         /// Gets whether this font is a fixed width (or monospaced) font.
@@ -456,13 +458,13 @@ namespace Alternet.Drawing
         /// platform-specific functions are used for the check (resulting in a more accurate
         /// return value).
         /// </remarks>
-        public bool IsFixedWidth => ((UI.Native.Font)NativeObject).IsFixedWidth();
+        public bool IsFixedWidth => NativeDrawing.Default.GetFontIsFixedWidth(NativeObject);
 
         /// <summary>
         /// Gets the font weight.
         /// </summary>
         /// <returns></returns>
-        public FontWeight Weight => (FontWeight)((UI.Native.Font)NativeObject).GetWeight();
+        public FontWeight Weight => NativeDrawing.Default.GetFontWeight(NativeObject);
 
         /// <summary>
         /// Returns bold version of the font.
@@ -506,7 +508,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return (FontStyle)((UI.Native.Font)NativeObject).Style;
+                return NativeDrawing.Default.GetFontStyle(NativeObject);
             }
         }
 
@@ -530,7 +532,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
-        public bool IsStrikethrough => ((UI.Native.Font)NativeObject).GetStrikethrough();
+        public bool IsStrikethrough => NativeDrawing.Default.GetFontStrikethrough(NativeObject);
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -538,7 +540,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
-        public bool IsUnderlined => ((UI.Native.Font)NativeObject).GetUnderlined();
+        public bool IsUnderlined => NativeDrawing.Default.GetFontUnderlined(NativeObject);
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
@@ -549,7 +551,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return ((UI.Native.Font)NativeObject).SizeInPoints;
+                return NativeDrawing.Default.GetFontSizeInPoints(NativeObject);
             }
         }
 
@@ -586,7 +588,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return ((UI.Native.Font)NativeObject).Name;
+                return NativeDrawing.Default.GetFontName(NativeObject);
             }
         }
 
@@ -595,8 +597,8 @@ namespace Alternet.Drawing
         /// </summary>
         internal static int DefaultEncoding
         {
-            get => UI.Native.Font.GetDefaultEncoding();
-            set => UI.Native.Font.SetDefaultEncoding(value);
+            get => NativeDrawing.Default.GetDefaultFontEncoding();
+            set => NativeDrawing.Default.SetDefaultFontEncoding(value);
         }
 
         /// <summary>
@@ -605,7 +607,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
-        internal int Encoding => ((UI.Native.Font)NativeObject).GetEncoding();
+        internal int Encoding => NativeDrawing.Default.GetFontEncoding(NativeObject);
 
         internal object NativeObject { get; private set; }
 

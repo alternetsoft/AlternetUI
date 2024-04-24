@@ -97,6 +97,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Updates native font properties.
         /// </summary>
+        /// <param name="font">Native font instance.</param>
+        /// <param name="prm">Font properties.</param>
         /// <returns></returns>
         public virtual void UpdateFont(object font, FontParams prm) => NotImplemented();
 
@@ -140,6 +142,82 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
              => NotImplemented<string>();
+
+        /// <summary>
+        /// Gets default font encoding.
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetDefaultFontEncoding() => NotImplemented<int>();
+
+        /// <summary>
+        /// Sets default font encoding.
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual void SetDefaultFontEncoding(int value) => NotImplemented();
+
+        /// <summary>
+        /// Gets native font name.
+        /// </summary>
+        /// <param name="font">Native font instance.</param>
+        /// <returns></returns>
+        public virtual string GetFontName(object font) => NotImplemented<string>();
+
+        /// <summary>
+        /// Gets native font encoding.
+        /// </summary>
+        /// <param name="font">Native font instance.</param>
+        /// <returns></returns>
+        public virtual int GetFontEncoding(object font) => NotImplemented<int>();
+
+        /// <summary>
+        /// Gets native font size in pixels.
+        /// </summary>
+        public virtual SizeI GetFontSizeInPixels(object font) => NotImplemented<SizeI>();
+
+        /// <summary>
+        /// Gets whether native font is using size in pixels.
+        /// </summary>
+        public virtual bool GetFontIsUsingSizeInPixels(object font) => NotImplemented<bool>();
+
+        /// <summary>
+        /// Gets native font weight.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <returns></returns>
+        public virtual int GetFontNumericWeight(object font) => NotImplemented<int>();
+
+        /// <summary>
+        /// Gets whether native font is a fixed width (or monospaced) font.
+        /// </summary>
+        public virtual bool GetFontIsFixedWidth(object font) => NotImplemented<bool>();
+
+        /// <summary>
+        /// Gets native font weight.
+        /// </summary>
+        /// <returns></returns>
+        public virtual FontWeight GetFontWeight(object font) => NotImplemented<FontWeight>();
+
+        /// <summary>
+        /// Gets style information for the native font.
+        /// </summary>
+        /// <param name="font">Native font instance.</param>
+        /// <returns></returns>
+        public virtual FontStyle GetFontStyle(object font) => NotImplemented<FontStyle>();
+
+        /// <summary>
+        /// Gets a value that indicates whether native font is strikethrough.
+        /// </summary>
+        public virtual bool GetFontStrikethrough(object font) => NotImplemented<bool>();
+
+        /// <summary>
+        /// Gets a value that indicates whether native font is underlined.
+        /// </summary>
+        public virtual bool GetFontUnderlined(object font) => NotImplemented<bool>();
+
+        /// <summary>
+        /// Gets the em-size, in points, of the native font.
+        /// </summary>
+        public virtual double GetFontSizeInPoints(object font) => NotImplemented<double>();
 
         public struct FontParams
         {
