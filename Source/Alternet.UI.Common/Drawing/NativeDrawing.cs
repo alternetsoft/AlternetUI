@@ -35,6 +35,19 @@ namespace Alternet.Drawing
         public virtual object CreateDefaultFont() => NotImplemented();
 
         /// <summary>
+        /// Creates system font specified with <see cref="SystemSettingsFont"/>.
+        /// </summary>
+        /// <param name="systemFont">System font identifier.</param>
+        /// <returns></returns>
+        public virtual Font CreateSystemFont(SystemSettingsFont systemFont) => NotImplemented<Font>();
+
+        /// <summary>
+        /// Creates native font using other font properties.
+        /// </summary>
+        /// <returns></returns>
+        public virtual object CreateFont(object font) => NotImplemented();
+
+        /// <summary>
         /// Creates default native mono font.
         /// </summary>
         /// <returns></returns>
@@ -207,17 +220,38 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a value that indicates whether native font is strikethrough.
         /// </summary>
+        /// <returns></returns>
         public virtual bool GetFontStrikethrough(object font) => NotImplemented<bool>();
 
         /// <summary>
         /// Gets a value that indicates whether native font is underlined.
         /// </summary>
+        /// <returns></returns>
         public virtual bool GetFontUnderlined(object font) => NotImplemented<bool>();
 
         /// <summary>
         /// Gets the em-size, in points, of the native font.
         /// </summary>
+        /// <returns></returns>
         public virtual double GetFontSizeInPoints(object font) => NotImplemented<double>();
+
+        /// <summary>
+        /// Gets native font description string.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetFontInfoDesc(object font) => NotImplemented<string>();
+
+        /// <summary>
+        /// Indicates whether native font is equal to another native font.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool FontEquals(object font1, object font2) => NotImplemented<bool>();
+
+        /// <summary>
+        /// Returns a string that represents native font.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string FontToString(object font) => NotImplemented<string>();
 
         public struct FontParams
         {

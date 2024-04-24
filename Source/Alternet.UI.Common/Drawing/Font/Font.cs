@@ -320,6 +320,15 @@ namespace Alternet.Drawing
         {
         }
 
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> using a specified native font.
+        /// </summary>
+        /// <param name="nativeFont">Native font instance.</param>
+        public Font(object nativeFont)
+        {
+            NativeObject = nativeFont;
+        }
+
         internal Font(
              GenericFontFamily? genericFamily,
              string? familyName,
@@ -340,11 +349,6 @@ namespace Alternet.Drawing
 
             NativeObject = NativeDrawing.Default.CreateFont();
             NativeDrawing.Default.UpdateFont(NativeObject, prm);
-        }
-
-        internal Font(object nativeFont)
-        {
-            NativeObject = nativeFont;
         }
 
         /// <summary>
@@ -570,6 +574,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets native font.
+        /// </summary>
+        public object NativeObject { get; private set; }
+
+        /// <summary>
         /// Gets a <see cref="bool"/> value that indicates whether this <see cref="Font" /> is derived from
         /// a vertical font.</summary>
         /// <returns>
@@ -608,8 +617,6 @@ namespace Alternet.Drawing
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
         internal int Encoding => NativeDrawing.Default.GetFontEncoding(NativeObject);
-
-        internal object NativeObject { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -665,7 +672,7 @@ namespace Alternet.Drawing
         {
             if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
             {
-                Application.LogError("Invalid font size {emSize}, using default font size.");
+                BaseApplication.LogError("Invalid font size {emSize}, using default font size.");
                 return Font.Default.Size;
             }
 
@@ -718,15 +725,6 @@ namespace Alternet.Drawing
 #pragma warning disable
             return familyName[0] == '@';
 #pragma warning enable
-        }
-
-        /// <summary>
-        /// Releases all resources used by this <see cref="Font"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -815,20 +813,8 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             CheckDisposed();
-            hashCode ??= ((UI.Native.Font)NativeObject).Serialize().GetHashCode();
+            hashCode ??= NativeDrawing.Default.GetFontInfoDesc(NativeObject).GetHashCode();
             return hashCode.Value;
-        }
-
-        /// <summary>
-        /// Measures text size on the specified <see cref="Graphics"/>.
-        /// </summary>
-        /// <param name="text">Text string to measure its size.</param>
-        /// <param name="dc">Drawing context where measuring is performed.</param>
-        /// <returns></returns>
-        public virtual SizeD MeasureText(string text, Graphics dc)
-        {
-            var result = dc.GetTextExtent(text, this);
-            return result;
         }
 
         /// <summary>
@@ -840,7 +826,7 @@ namespace Alternet.Drawing
                 return false;
 
             CheckDisposed();
-            return ((UI.Native.Font)NativeObject).IsEqualTo(((UI.Native.Font)other.NativeObject));
+            return NativeDrawing.Default.FontEquals(NativeObject, other.NativeObject);
         }
 
         /// <summary>
@@ -850,7 +836,7 @@ namespace Alternet.Drawing
         public override string ToString()
         {
             CheckDisposed();
-            return ((UI.Native.Font)NativeObject).Description;
+            return NativeDrawing.Default.FontToString(NativeObject);
         }
 
         /// <summary>
@@ -904,13 +890,17 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Font Clone()
         {
-            var nativeResult = new UI.Native.Font();
-            var result = new Font(nativeResult);
-            ((UI.Native.Font)nativeResult).InitializeFromFont(((UI.Native.Font)NativeObject));
+            var nativeFont = NativeDrawing.Default.CreateFont(NativeObject);
+            var result = new Font(nativeFont);
             return result;
         }
 
-        internal static Font? FromInternal(UI.Native.Font? font)
+        /// <summary>
+        /// Creates <see cref="Font"/> from native font.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <returns></returns>
+        public static Font? FromInternal(object? font)
         {
             if (font is null)
                 return null;
@@ -926,8 +916,7 @@ namespace Alternet.Drawing
 
         internal static Font CreateDefaultFont()
         {
-            var nativeFont = new UI.Native.Font();
-            nativeFont.InitializeWithDefaultFont();
+            var nativeFont = NativeDrawing.Default.CreateDefaultFont();
             return new Font(nativeFont);
         }
 

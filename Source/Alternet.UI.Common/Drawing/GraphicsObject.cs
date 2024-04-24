@@ -34,7 +34,7 @@ namespace Alternet.Drawing
         public bool Immutable => immutable;
 
         /// <summary>
-        /// Gets native brush.
+        /// Gets native graphics object.
         /// </summary>
         [Browsable(false)]
         public virtual object NativeObject
@@ -58,7 +58,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets whether native brush update is required.
+        /// Gets whether native object update is required.
         /// </summary>
         protected bool UpdateRequired { get; set; }
 

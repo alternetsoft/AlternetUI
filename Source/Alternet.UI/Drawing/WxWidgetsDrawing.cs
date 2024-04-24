@@ -32,6 +32,20 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override Font CreateSystemFont(SystemSettingsFont systemFont)
+        {
+            return SystemSettings.GetFont(systemFont);
+        }
+
+        /// <inheritdoc/>
+        public override object CreateFont(object font)
+        {
+            var result = CreateFont();
+            ((UI.Native.Font)result).InitializeFromFont((UI.Native.Font)font);
+            return result;
+        }
+
+        /// <inheritdoc/>
         public override object CreateDefaultMonoFont()
         {
             var result = new UI.Native.Font();
@@ -243,9 +257,27 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override string FontToString(object font)
+        {
+            return ((UI.Native.Font)font).Description;
+        }
+
+        /// <inheritdoc/>
         public override double GetFontSizeInPoints(object font)
         {
             return ((UI.Native.Font)font).SizeInPoints;
+        }
+
+        /// <inheritdoc/>
+        public override bool FontEquals(object font1, object font2)
+        {
+            return ((UI.Native.Font)font1).IsEqualTo((UI.Native.Font)font2);
+        }
+
+        /// <inheritdoc/>
+        public override string GetFontInfoDesc(object font)
+        {
+            return ((UI.Native.Font)font).Serialize();
         }
     }
 }
