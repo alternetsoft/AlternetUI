@@ -140,5 +140,130 @@ namespace Alternet.UI.Maui
         {
             return NotImplemented<Color>();
         }
+
+        public override object CreateFont()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateDefaultFont()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Font CreateSystemFont(SystemSettingsFont systemFont)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateFont(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateDefaultMonoFont()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateFont(object font, FontParams prm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string[] GetFontFamiliesNames()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsFontFamilyValid(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetFontFamilyName(GenericFontFamily genericFamily)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetDefaultFontEncoding()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetDefaultFontEncoding(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetFontName(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetFontEncoding(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SizeI GetFontSizeInPixels(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool GetFontIsUsingSizeInPixels(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetFontNumericWeight(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool GetFontIsFixedWidth(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override FontWeight GetFontWeight(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override FontStyle GetFontStyle(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool GetFontStrikethrough(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool GetFontUnderlined(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override double GetFontSizeInPoints(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetFontInfoDesc(object font)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool FontEquals(object font1, object font2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string FontToString(object font)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

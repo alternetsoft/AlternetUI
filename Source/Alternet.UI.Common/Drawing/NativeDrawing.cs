@@ -15,97 +15,97 @@ namespace Alternet.Drawing
     /// Do not use <see cref="Default"/> property until native drawing
     /// is initialized.
     /// </remarks>
-    public class NativeDrawing : BaseObject
+    public abstract class NativeDrawing : BaseObject
     {
         /// <summary>
         /// Gets default native drawing implementation.
         /// </summary>
-        public static NativeDrawing Default = new();
+        public static NativeDrawing Default = new NotImplementedDrawing();
 
         /// <summary>
         /// Creates native font.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateFont() => NotImplemented();
+        public abstract object CreateFont();
 
         /// <summary>
         /// Creates default native font.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateDefaultFont() => NotImplemented();
+        public abstract object CreateDefaultFont();
 
         /// <summary>
         /// Creates system font specified with <see cref="SystemSettingsFont"/>.
         /// </summary>
         /// <param name="systemFont">System font identifier.</param>
         /// <returns></returns>
-        public virtual Font CreateSystemFont(SystemSettingsFont systemFont) => NotImplemented<Font>();
+        public abstract Font CreateSystemFont(SystemSettingsFont systemFont);
 
         /// <summary>
         /// Creates native font using other font properties.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateFont(object font) => NotImplemented();
+        public abstract object CreateFont(object font);
 
         /// <summary>
         /// Creates default native mono font.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateDefaultMonoFont() => NotImplemented();
+        public abstract object CreateDefaultMonoFont();
 
         /// <summary>
         /// Creates native pen.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreatePen() => NotImplemented();
+        public abstract object CreatePen();
 
         /// <summary>
         /// Creates native transparent brush.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateTransparentBrush() => NotImplemented();
+        public abstract object CreateTransparentBrush();
 
         /// <summary>
         /// Creates native hatch brush.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateHatchBrush() => NotImplemented();
+        public abstract object CreateHatchBrush();
 
         /// <summary>
         /// Creates native linear gradient brush.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateLinearGradientBrush() => NotImplemented();
+        public abstract object CreateLinearGradientBrush();
 
         /// <summary>
         /// Creates native radial gradient brush.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateRadialGradientBrush() => NotImplemented();
+        public abstract object CreateRadialGradientBrush();
 
         /// <summary>
         /// Creates native solid brush.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateSolidBrush() => NotImplemented();
+        public abstract object CreateSolidBrush();
 
         /// <summary>
         /// Creates native texture brush.
         /// </summary>
         /// <returns></returns>
-        public virtual object CreateTextureBrush() => NotImplemented();
+        public abstract object CreateTextureBrush();
 
         /// <summary>
         /// Updates native pen properties.
         /// </summary>
         /// <returns></returns>
-        public virtual void UpdatePen(Pen pen) => NotImplemented();
+        public abstract void UpdatePen(Pen pen);
 
         /// <summary>
         /// Updates native solid brush properties.
         /// </summary>
         /// <returns></returns>
-        public virtual void UpdateSolidBrush(SolidBrush brush) => NotImplemented();
+        public abstract void UpdateSolidBrush(SolidBrush brush);
 
         /// <summary>
         /// Updates native font properties.
@@ -113,145 +113,144 @@ namespace Alternet.Drawing
         /// <param name="font">Native font instance.</param>
         /// <param name="prm">Font properties.</param>
         /// <returns></returns>
-        public virtual void UpdateFont(object font, FontParams prm) => NotImplemented();
+        public abstract void UpdateFont(object font, FontParams prm);
 
         /// <summary>
         /// Updates native hatch brush properties.
         /// </summary>
         /// <returns></returns>
-        public virtual void UpdateHatchBrush(HatchBrush brush) => NotImplemented();
+        public abstract void UpdateHatchBrush(HatchBrush brush);
 
         /// <summary>
         /// Updates native linear gradient brush properties.
         /// </summary>
         /// <returns></returns>
-        public virtual void UpdateLinearGradientBrush(LinearGradientBrush brush) => NotImplemented();
+        public abstract void UpdateLinearGradientBrush(LinearGradientBrush brush);
 
         /// <summary>
         /// Updates native radial gradient brush properties.
         /// </summary>
         /// <returns></returns>
-        public virtual void UpdateRadialGradientBrush(RadialGradientBrush brush) => NotImplemented();
+        public abstract void UpdateRadialGradientBrush(RadialGradientBrush brush);
 
         /// <summary>
         /// Gets a standard system color.
         /// </summary>
         /// <param name="index">System color identifier.</param>
-        public virtual Color GetColor(SystemSettingsColor index) => NotImplemented<Color>();
+        public abstract Color GetColor(SystemSettingsColor index);
 
         /// <summary>
         /// Returns a string array that contains all font families names
         /// currently available in the system.
         /// </summary>
-        public virtual string[] GetFontFamiliesNames() => NotImplemented<string[]>();
+        public abstract string[] GetFontFamiliesNames();
 
         /// <summary>
         /// Gets whether font family is installed on this computer.
         /// </summary>
-        public virtual bool IsFontFamilyValid(string name) => NotImplemented<bool>();
+        public abstract bool IsFontFamilyValid(string name);
 
         /// <summary>
         /// Gets the name of the font family specified using <see cref="GenericFontFamily"/>.
         /// </summary>
-        public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
-             => NotImplemented<string>();
+        public abstract string GetFontFamilyName(GenericFontFamily genericFamily);
 
         /// <summary>
         /// Gets default font encoding.
         /// </summary>
         /// <returns></returns>
-        public virtual int GetDefaultFontEncoding() => NotImplemented<int>();
+        public abstract int GetDefaultFontEncoding();
 
         /// <summary>
         /// Sets default font encoding.
         /// </summary>
         /// <param name="value"></param>
-        public virtual void SetDefaultFontEncoding(int value) => NotImplemented();
+        public abstract void SetDefaultFontEncoding(int value);
 
         /// <summary>
         /// Gets native font name.
         /// </summary>
         /// <param name="font">Native font instance.</param>
         /// <returns></returns>
-        public virtual string GetFontName(object font) => NotImplemented<string>();
+        public abstract string GetFontName(object font);
 
         /// <summary>
         /// Gets native font encoding.
         /// </summary>
         /// <param name="font">Native font instance.</param>
         /// <returns></returns>
-        public virtual int GetFontEncoding(object font) => NotImplemented<int>();
+        public abstract int GetFontEncoding(object font);
 
         /// <summary>
         /// Gets native font size in pixels.
         /// </summary>
-        public virtual SizeI GetFontSizeInPixels(object font) => NotImplemented<SizeI>();
+        public abstract SizeI GetFontSizeInPixels(object font);
 
         /// <summary>
         /// Gets whether native font is using size in pixels.
         /// </summary>
-        public virtual bool GetFontIsUsingSizeInPixels(object font) => NotImplemented<bool>();
+        public abstract bool GetFontIsUsingSizeInPixels(object font);
 
         /// <summary>
         /// Gets native font weight.
         /// </summary>
         /// <param name="font"></param>
         /// <returns></returns>
-        public virtual int GetFontNumericWeight(object font) => NotImplemented<int>();
+        public abstract int GetFontNumericWeight(object font);
 
         /// <summary>
         /// Gets whether native font is a fixed width (or monospaced) font.
         /// </summary>
-        public virtual bool GetFontIsFixedWidth(object font) => NotImplemented<bool>();
+        public abstract bool GetFontIsFixedWidth(object font);
 
         /// <summary>
         /// Gets native font weight.
         /// </summary>
         /// <returns></returns>
-        public virtual FontWeight GetFontWeight(object font) => NotImplemented<FontWeight>();
+        public abstract FontWeight GetFontWeight(object font);
 
         /// <summary>
         /// Gets style information for the native font.
         /// </summary>
         /// <param name="font">Native font instance.</param>
         /// <returns></returns>
-        public virtual FontStyle GetFontStyle(object font) => NotImplemented<FontStyle>();
+        public abstract FontStyle GetFontStyle(object font);
 
         /// <summary>
         /// Gets a value that indicates whether native font is strikethrough.
         /// </summary>
         /// <returns></returns>
-        public virtual bool GetFontStrikethrough(object font) => NotImplemented<bool>();
+        public abstract bool GetFontStrikethrough(object font);
 
         /// <summary>
         /// Gets a value that indicates whether native font is underlined.
         /// </summary>
         /// <returns></returns>
-        public virtual bool GetFontUnderlined(object font) => NotImplemented<bool>();
+        public abstract bool GetFontUnderlined(object font);
 
         /// <summary>
         /// Gets the em-size, in points, of the native font.
         /// </summary>
         /// <returns></returns>
-        public virtual double GetFontSizeInPoints(object font) => NotImplemented<double>();
+        public abstract double GetFontSizeInPoints(object font);
 
         /// <summary>
         /// Gets native font description string.
         /// </summary>
         /// <returns></returns>
-        public virtual string GetFontInfoDesc(object font) => NotImplemented<string>();
+        public abstract string GetFontInfoDesc(object font);
 
         /// <summary>
         /// Indicates whether native font is equal to another native font.
         /// </summary>
         /// <returns></returns>
-        public virtual bool FontEquals(object font1, object font2) => NotImplemented<bool>();
+        public abstract bool FontEquals(object font1, object font2);
 
         /// <summary>
         /// Returns a string that represents native font.
         /// </summary>
         /// <returns></returns>
-        public virtual string FontToString(object font) => NotImplemented<string>();
+        public abstract string FontToString(object font);
 
         public struct FontParams
         {
