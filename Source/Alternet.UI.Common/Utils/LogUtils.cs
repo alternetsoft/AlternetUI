@@ -25,6 +25,7 @@ namespace Alternet.UI
 
         public static LogFlags Flags;
 
+        private static readonly ICustomFlags EventLoggedFlags = Factory.CreateCustomFlags();
         private static int id;
         private static int logUseMaxLength;
 
@@ -52,6 +53,33 @@ namespace Alternet.UI
         public static int GenNewId()
         {
             return id++;
+        }
+
+        public static bool IsEventLogged(string eventId) => EventLoggedFlags.HasFlag(eventId);
+
+        public static string? GetEventKey(Type? type, EventInfo? evt)
+        {
+            if (type is null || evt is null)
+                return null;
+            var key = type.Name + "." + evt.Name;
+            return key;
+        }
+
+        public static bool IsEventLogged(Type? type, EventInfo? evt)
+        {
+            var key = GetEventKey(type, evt);
+            if (key is null)
+                return false;
+            var result = EventLoggedFlags.HasFlag(key);
+            return result;
+        }
+
+        public static void SetEventLogged(Type? type, EventInfo? evt, bool logged)
+        {
+            var key = GetEventKey(type, evt);
+            if (key is null)
+                return;
+            EventLoggedFlags.SetFlag(key, logged);
         }
 
         /// <summary>

@@ -51,10 +51,10 @@ namespace Alternet.UI
         {
             if (eInfo is null)
                 return null;
-            var eventId = EventLogManager.GetEventKey(eInfo.DeclaringType, eInfo);
+            var eventId = LogUtils.GetEventKey(eInfo.DeclaringType, eInfo);
             if (eventId is null)
                 return null;
-            if (!EventLogManager.IsEventLogged(eventId))
+            if (!LogUtils.IsEventLogged(eventId))
                 return null;
 
             eventDelegates ??= new();
@@ -161,7 +161,7 @@ namespace Alternet.UI
         /// <param name="text">Text string.</param>
         public static void Log(string text)
         {
-            Application.Log(text);
+            BaseApplication.Log(text);
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Alternet.UI
         /// <param name="text">Text string.</param>
         public static void LogEvent(string eventId, string text)
         {
-            if(EventLogManager.IsEventLogged(eventId))
-                Application.Log(text);
+            if(LogUtils.IsEventLogged(eventId))
+                BaseApplication.Log(text);
         }
 
         internal static void EmitEventLog(ILGenerator il, string eventId, string value)

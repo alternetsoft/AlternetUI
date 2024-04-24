@@ -221,15 +221,5 @@ namespace Alternet.Drawing
                     return nSrc;
             }
         }
-
-        internal static void Test()
-        {
-            var value = Convert(
-                GraphicsUnit.Dip,
-                GraphicsUnit.Pixel,
-                Display.Primary.DPI.Width,
-                1);
-            Application.Log($"1 dip = {value} pixels");
-        }
     }
 }
