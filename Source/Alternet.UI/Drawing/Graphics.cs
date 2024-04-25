@@ -8,28 +8,14 @@ using Alternet.UI.Localization;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Defines a drawing surface.
+    /// Defines a custom drawing surface.
     /// </summary>
-    public class Graphics : DisposableObject
+    public abstract class Graphics : DisposableObject
     {
-        private readonly bool dispose;
-        private UI.Native.DrawingContext dc;
-
-        static Graphics()
-        {
-            WxWidgetsDrawing.Initialize();
-        }
-
-        internal Graphics(UI.Native.DrawingContext dc, bool dispose = true)
-        {
-            this.dc = dc;
-            this.dispose = dispose;
-        }
-
         /// <summary>
         /// Returns true if the object is ok to use.
         /// </summary>
-        public virtual bool IsOk => dc.IsOk;
+        public abstract bool IsOk { get; }
 
         /// <summary>
         /// Gets or sets name of the <see cref="Graphics"/> for the debug purposes.
@@ -40,43 +26,12 @@ namespace Alternet.Drawing
         /// Gets or sets a copy of the geometric world transformation for this
         /// <see cref="Graphics"/>.
         /// </summary>
-        public virtual TransformMatrix Transform
-        {
-            get
-            {
-                return new TransformMatrix(dc.Transform);
-            }
-
-            set
-            {
-                dc.Transform = value.NativeMatrix;
-            }
-        }
+        public abstract TransformMatrix Transform { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="Region"/> that limits the drawing region of this
-        /// <see cref="Graphics"/>.
+        /// Gets or sets clippring region.
         /// </summary>
-        /// <value>
-        /// A <see cref="Region"/> that limits the portion of this <see cref="Graphics"/>
-        /// that is currently available for drawing.
-        /// </value>
-        public virtual Region? Clip
-        {
-            get
-            {
-                var clip = dc.Clip;
-                if (clip == null)
-                    return null;
-
-                return new Region(clip);
-            }
-
-            set
-            {
-                dc.Clip = value?.NativeRegion;
-            }
-        }
+        public abstract Region? Clip { get; set; }
 
         /// <summary>
         /// Gets or sets the interpolation mode associated with this <see cref="Graphics"/>.
@@ -86,57 +41,12 @@ namespace Alternet.Drawing
         /// The interpolation mode determines how intermediate values between two endpoints
         /// are calculated.
         /// </remarks>
-        public virtual InterpolationMode InterpolationMode
-        {
-            get
-            {
-                return (InterpolationMode)dc.InterpolationMode;
-            }
-
-            set
-            {
-                dc.InterpolationMode = (UI.Native.InterpolationMode)value;
-            }
-        }
-
-        internal UI.Native.DrawingContext NativeDrawingContext
-        {
-            get => dc;
-            set => dc = value;
-        }
+        public abstract InterpolationMode InterpolationMode { get; set; }
 
         /// <summary>
-        /// Creates a new <see cref="Graphics"/> from the specified
-        /// <see cref="Image"/>.
+        /// Gets native drawing context.
         /// </summary>
-        /// <param name="image"><see cref="Image"/> from which to create the
-        /// new <see cref="Graphics"/>.</param>
-        /// <returns>A new <see cref="Graphics"/> for the specified
-        /// <see cref="Image"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="image"/>
-        /// is <see langword="null"/>.</exception>
-        /// <remarks>
-        /// Use this method to draw on the specified image.
-        /// You should always call the Dispose() method to release
-        /// the <see cref="Graphics"/> and
-        /// related resources created by the <see cref="FromImage"/> method.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Graphics FromImage(Image image)
-        {
-            DebugImageAssert(image);
-            return new Graphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
-        }
-
-        /// <summary>
-        /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Graphics FromScreen()
-        {
-            return new Graphics(UI.Native.DrawingContext.FromScreen());
-        }
+        public abstract object NativeDrawingContext { get; }
 
         /// <summary>
         /// Draws the text rotated by angle degrees (positive angles are counterclockwise;
@@ -157,41 +67,13 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Under Windows only TrueType fonts can be drawn by this function.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawRotatedTextI(
+        public abstract void DrawRotatedTextI(
             string text,
             PointI location,
             Font font,
             Color foreColor,
             Color backColor,
-            double angle)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-            dc.DrawRotatedTextI(
-                text,
-                location,
-                (UI.Native.Font)font.NativeObject,
-                foreColor,
-                backColor,
-                angle);
-        }
-
-        /*/// <summary>
-        /// If supported by the platform and the type of <see cref="Graphics"/>,
-        /// fetches the contents
-        /// of the graphics, or a subset of it, as an <see cref="Image"/>.
-        /// </summary>
-        /// <param name="subrect">Subset rectangle or <c>null</c> to get full image.
-        /// Rectangle is specified in pixels.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Image GetAsBitmapI(RectI? subrect = default)
-        {
-            var result = dc.GetAsBitmapI(subrect ?? RectI.Empty);
-            return new Bitmap(result);
-        }*/
+            double angle);
 
         /// <summary>
         /// Copy from a source <see cref="Graphics"/> to this graphics.
@@ -246,26 +128,14 @@ namespace Alternet.Drawing
         /// This sequence of operations ensures that the source's transparent area
         /// need not be black, and logical functions are supported.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual bool BlitI(
+        public abstract bool BlitI(
             PointI destPt,
             SizeI sz,
             Graphics source,
             PointI srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null)
-        {
-            srcPtMask ??= PointI.MinusOne;
-            return dc.BlitI(
-                        destPt,
-                        sz,
-                        source.NativeDrawingContext,
-                        srcPt,
-                        (int)rop,
-                        useMask,
-                        srcPtMask.Value);
-        }
+            PointI? srcPtMask = null);
 
         /// <summary>
         /// Copies from a source <see cref="Graphics"/> to this graphics
@@ -322,8 +192,7 @@ namespace Alternet.Drawing
         /// This sequence of operations ensures that the source's transparent area
         /// need not be black, and logical functions are supported.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual bool StretchBlitI(
+        public abstract bool StretchBlitI(
             PointI dstPt,
             SizeI dstSize,
             Graphics source,
@@ -331,19 +200,7 @@ namespace Alternet.Drawing
             SizeI srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null)
-        {
-            srcPtMask ??= PointI.MinusOne;
-            return dc.StretchBlitI(
-                dstPt,
-                dstSize,
-                source.NativeDrawingContext,
-                srcPt,
-                srcSize,
-                (int)rop,
-                useMask,
-                srcPtMask.Value);
-        }
+            PointI? srcPtMask = null);
 
         /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
@@ -355,15 +212,11 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius)
-        {
-            dc.RoundedRectangle(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                rectangle,
-                cornerRadius);
-        }
+        public abstract void RoundedRectangle(
+            Pen pen,
+            Brush brush,
+            RectD rectangle,
+            double cornerRadius);
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -381,22 +234,12 @@ namespace Alternet.Drawing
         /// This function only works with single-line strings.
         /// It works faster than MeasureText methods.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD GetTextExtent(
+        public abstract SizeD GetTextExtent(
             string text,
             Font font,
             out double descent,
             out double externalLeading,
-            Control? control = null)
-        {
-            var result = dc.GetTextExtent(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                control is null ? default : control.WxWidget);
-            descent = result.X;
-            externalLeading = result.Y;
-            return result.Size;
-        }
+            Control? control = null);
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -410,18 +253,10 @@ namespace Alternet.Drawing
         /// This function only works with single-line strings.
         /// It works faster than MeasureText methods.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD GetTextExtent(
+        public abstract SizeD GetTextExtent(
             string text,
             Font font,
-            Control? control)
-        {
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                control is null ? default : control.WxWidget);
-            return result;
-        }
+            Control? control);
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -434,15 +269,7 @@ namespace Alternet.Drawing
         /// This function only works with single-line strings.
         /// It works faster than MeasureText methods.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD GetTextExtent(string text, Font font)
-        {
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                default);
-            return result;
-        }
+        public abstract SizeD GetTextExtent(string text, Font font);
 
         /// <summary>
         /// Calls <see cref="FillRectangle"/> and than <see cref="DrawRectangle"/>.
@@ -453,16 +280,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Rectangle(Pen pen, Brush brush, RectD rectangle)
-        {
-            DebugBrushAssert(brush);
-            DebugPenAssert(pen);
-            dc.Rectangle(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                rectangle);
-        }
+        public abstract void Rectangle(Pen pen, Brush brush, RectD rectangle);
 
         /// <summary>
         /// Calls <see cref="FillEllipse"/> and than <see cref="DrawEllipse"/>.
@@ -473,16 +291,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Ellipse(Pen pen, Brush brush, RectD rectangle)
-        {
-            DebugBrushAssert(brush);
-            DebugPenAssert(pen);
-            dc.Ellipse(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                rectangle);
-        }
+        public abstract void Ellipse(Pen pen, Brush brush, RectD rectangle);
 
         /// <summary>
         /// Calls <see cref="FillPath"/> and than <see cref="DrawPath"/>.
@@ -493,16 +302,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Path(Pen pen, Brush brush, GraphicsPath path)
-        {
-            DebugBrushAssert(brush);
-            DebugPenAssert(pen);
-            dc.Path(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                path.NativePath);
-        }
+        public abstract void Path(Pen pen, Brush brush, GraphicsPath path);
 
         /// <summary>
         /// Calls <see cref="FillPie"/> and than <see cref="DrawPie"/>.
@@ -516,25 +316,13 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Pie(
+        public abstract void Pie(
             Pen pen,
             Brush brush,
             PointD center,
             double radius,
             double startAngle,
-            double sweepAngle)
-        {
-            DebugBrushAssert(brush);
-            DebugPenAssert(pen);
-            dc.Pie(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                center,
-                radius,
-                startAngle,
-                sweepAngle);
-        }
+            double sweepAngle);
 
         /// <summary>
         /// Calls <see cref="FillCircle"/> and than <see cref="DrawCircle"/>.
@@ -546,17 +334,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Circle(Pen pen, Brush brush, PointD center, double radius)
-        {
-            DebugBrushAssert(brush);
-            DebugPenAssert(pen);
-            dc.Circle(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                center,
-                radius);
-        }
+        public abstract void Circle(Pen pen, Brush brush, PointD center, double radius);
 
         /// <summary>
         /// Calls <see cref="FillPolygon"/> and than <see cref="DrawPolygon"/>.
@@ -568,17 +346,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
-        {
-            DebugBrushAssert(brush);
-            DebugPenAssert(pen);
-            dc.Polygon(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                points,
-                (UI.Native.FillMode)fillMode);
-        }
+        public abstract void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode);
 
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
@@ -593,12 +361,7 @@ namespace Alternet.Drawing
         /// including the specified upper-left corner and up to the calculated
         /// lower and bottom edges.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillRectangle(Brush brush, RectD rectangle)
-        {
-            DebugBrushAssert(brush);
-            dc.FillRectangle((UI.Native.Brush)brush.NativeObject, rectangle);
-        }
+        public abstract void FillRectangle(Brush brush, RectD rectangle);
 
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectI"/> structure.
@@ -613,12 +376,7 @@ namespace Alternet.Drawing
         /// including the specified upper-left corner and up to the calculated lower and
         /// bottom edges.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillRectangleI(Brush brush, RectI rectangle)
-        {
-            DebugBrushAssert(brush);
-            dc.FillRectangleI((UI.Native.Brush)brush.NativeObject, rectangle);
-        }
+        public abstract void FillRectangleI(Brush brush, RectI rectangle);
 
         /// <summary>
         /// Draws an arc representing a portion of a circle specified by a center
@@ -634,22 +392,12 @@ namespace Alternet.Drawing
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the
         /// <paramref name="startAngle"/>
         /// parameter to ending point of the arc.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawArc(
+        public abstract void DrawArc(
             Pen pen,
             PointD center,
             double radius,
             double startAngle,
-            double sweepAngle)
-        {
-            DebugPenAssert(pen);
-            dc.DrawArc(
-                (UI.Native.Pen)pen.NativeObject,
-                center,
-                radius,
-                startAngle,
-                sweepAngle);
-        }
+            double sweepAngle);
 
         /// <summary>
         /// Draws debug points on the corners of the specified rectangle.
@@ -679,12 +427,7 @@ namespace Alternet.Drawing
         /// <param name="x">X-coordinate of the point.</param>
         /// <param name="y">Y-coordinate of the point.</param>
         /// <exception cref="ArgumentNullException">if <paramref name="pen"/> is <c>null</c>.</exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawPoint(Pen pen, double x, double y)
-        {
-            DebugPenAssert(pen);
-            dc.DrawPoint((UI.Native.Pen)pen.NativeObject, x, y);
-        }
+        public abstract void DrawPoint(Pen pen, double x, double y);
 
         /// <summary>
         /// Fills the interior of a pie section defined by a circle specified by a center
@@ -699,17 +442,12 @@ namespace Alternet.Drawing
         /// to the first side of the pie section.</param>
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle
         /// parameter to the second side of the pie section.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillPie(
+        public abstract void FillPie(
             Brush brush,
             PointD center,
             double radius,
             double startAngle,
-            double sweepAngle)
-        {
-            DebugBrushAssert(brush);
-            dc.FillPie((UI.Native.Brush)brush.NativeObject, center, radius, startAngle, sweepAngle);
-        }
+            double sweepAngle);
 
         /// <summary>
         /// Draws an outline of a pie section defined by a circle specified by a center
@@ -724,17 +462,12 @@ namespace Alternet.Drawing
         /// to the first side of the pie section.</param>
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle
         /// parameter to the second side of the pie section.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawPie(
+        public abstract void DrawPie(
             Pen pen,
             PointD center,
             double radius,
             double startAngle,
-            double sweepAngle)
-        {
-            DebugPenAssert(pen);
-            dc.DrawPie((UI.Native.Pen)pen.NativeObject, center, radius, startAngle, sweepAngle);
-        }
+            double sweepAngle);
 
         /// <summary>
         /// Draws a Bézier spline defined by four <see cref="PointD"/> structures.
@@ -749,22 +482,12 @@ namespace Alternet.Drawing
         /// control point for the curve.</param>
         /// <param name="endPoint"><see cref="PointD"/> structure that represents the ending point
         /// of the curve.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawBezier(
+        public abstract void DrawBezier(
             Pen pen,
             PointD startPoint,
             PointD controlPoint1,
             PointD controlPoint2,
-            PointD endPoint)
-        {
-            DebugPenAssert(pen);
-            dc.DrawBezier(
-                (UI.Native.Pen)pen.NativeObject,
-                startPoint,
-                controlPoint1,
-                controlPoint2,
-                endPoint);
-        }
+            PointD endPoint);
 
         /// <summary>
         /// Draws a series of Bézier splines from an array of <see cref="PointD"/> structures.
@@ -772,26 +495,11 @@ namespace Alternet.Drawing
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
         /// of the curve.</param>
         /// <param name="points">
-        /// Array of <see cref="PointD"/> structures that represent the points that determine the curve.
+        /// Array of <see cref="PointD"/> structures that represent the points that
+        /// determine the curve.
         /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
         /// </param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawBeziers(Pen pen, PointD[] points)
-        {
-            DebugPenAssert(pen);
-#if DEBUG
-            if (points.Length == 0)
-                return;
-
-            if ((points.Length - 1) % 3 != 0)
-            {
-                throw new ArgumentException(
-                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
-                    nameof(points));
-            }
-#endif
-            dc.DrawBeziers((UI.Native.Pen)pen.NativeObject, points);
-        }
+        public abstract void DrawBeziers(Pen pen, PointD[] points);
 
         /// <summary>
         /// Draws an circle specified by a center <see cref="PointD"/> and a radius.
@@ -801,12 +509,7 @@ namespace Alternet.Drawing
         /// <param name="center"><see cref="PointD"/> structure that defines the center of
         /// the circle.</param>
         /// <param name="radius">Defines the radius of the circle.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawCircle(Pen pen, PointD center, double radius)
-        {
-            DebugPenAssert(pen);
-            dc.DrawCircle((UI.Native.Pen)pen.NativeObject, center, radius);
-        }
+        public abstract void DrawCircle(Pen pen, PointD center, double radius);
 
         /// <summary>
         /// Fills the interior of a circle specified by a center <see cref="PointD"/> and a radius.
@@ -816,12 +519,7 @@ namespace Alternet.Drawing
         /// <param name="center"><see cref="PointD"/> structure that defines the center of
         /// the circle.</param>
         /// <param name="radius">Defines the radius of the circle.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillCircle(Brush brush, PointD center, double radius)
-        {
-            DebugBrushAssert(brush);
-            dc.FillCircle((UI.Native.Brush)brush.NativeObject, center, radius);
-        }
+        public abstract void FillCircle(Brush brush, PointD center, double radius);
 
         /// <summary>
         /// Draws a rounded rectangle specified by a <see cref="RectD"/> and a corner radius.
@@ -830,12 +528,7 @@ namespace Alternet.Drawing
         /// style of the rounded rectangle.</param>
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
-        {
-            DebugPenAssert(pen);
-            dc.DrawRoundedRectangle((UI.Native.Pen)pen.NativeObject, rect, cornerRadius);
-        }
+        public abstract void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius);
 
         /// <summary>
         /// Fills the interior of a rounded rectangle specified by a <see cref="RectD"/> and
@@ -845,12 +538,7 @@ namespace Alternet.Drawing
         /// fill.</param>
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
-        {
-            DebugBrushAssert(brush);
-            dc.FillRoundedRectangle((UI.Native.Brush)brush.NativeObject, rect, cornerRadius);
-        }
+        public abstract void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius);
 
         /// <summary>
         /// Draws a polygon defined by an array of <see cref="PointD"/> structures.
@@ -859,12 +547,7 @@ namespace Alternet.Drawing
         /// of the polygon.</param>
         /// <param name="points">Array of <see cref="PointD"/> structures that represent the
         /// vertices of the polygon.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawPolygon(Pen pen, PointD[] points)
-        {
-            DebugPenAssert(pen);
-            dc.DrawPolygon((UI.Native.Pen)pen.NativeObject, points);
-        }
+        public abstract void DrawPolygon(Pen pen, PointD[] points);
 
         /// <summary>
         /// Fills the interior of a polygon defined by an array of <see cref="PointD"/> structures.
@@ -875,18 +558,10 @@ namespace Alternet.Drawing
         /// vertices of the polygon.</param>
         /// <param name="fillMode">Member of the <see cref="FillMode"/> enumeration that
         /// determines the style of the fill.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillPolygon(
+        public abstract void FillPolygon(
             Brush brush,
             PointD[] points,
-            FillMode fillMode = FillMode.Alternate)
-        {
-            DebugBrushAssert(brush);
-            dc.FillPolygon(
-                (UI.Native.Brush)brush.NativeObject,
-                points,
-                (UI.Native.FillMode)fillMode);
-        }
+            FillMode fillMode = FillMode.Alternate);
 
         /// <summary>
         /// Draws a series of rectangles specified by <see cref="RectD"/> structures.
@@ -895,12 +570,7 @@ namespace Alternet.Drawing
         /// of the outlines of the rectangles.</param>
         /// <param name="rects">Array of <see cref="RectD"/> structures that represent the
         /// rectangles to draw.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawRectangles(Pen pen, RectD[] rects)
-        {
-            DebugPenAssert(pen);
-            dc.DrawRectangles((UI.Native.Pen)pen.NativeObject, rects);
-        }
+        public abstract void DrawRectangles(Pen pen, RectD[] rects);
 
         /// <summary>
         /// Fills a series of rectangles specified by <see cref="RectD"/> structures.
@@ -909,12 +579,7 @@ namespace Alternet.Drawing
         /// of the fill.</param>
         /// <param name="rects">Array of <see cref="RectD"/> structures that represent the
         /// rectangles to fill.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillRectangles(Brush brush, RectD[] rects)
-        {
-            DebugBrushAssert(brush);
-            dc.FillRectangles((UI.Native.Brush)brush.NativeObject, rects);
-        }
+        public abstract void FillRectangles(Brush brush, RectD[] rects);
 
         /// <summary>
         /// Fills the interior of an ellipse defined by a bounding rectangle specified by
@@ -929,12 +594,7 @@ namespace Alternet.Drawing
         /// The ellipse is defined by the bounding rectangle represented by the <c>bounds</c>
         /// parameter.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillEllipse(Brush brush, RectD bounds)
-        {
-            DebugBrushAssert(brush);
-            dc.FillEllipse((UI.Native.Brush)brush.NativeObject, bounds);
-        }
+        public abstract void FillEllipse(Brush brush, RectD bounds);
 
         /// <summary>
         /// Flood fills the drawing surface starting from the given point, using the given brush.
@@ -946,20 +606,7 @@ namespace Alternet.Drawing
         /// <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="brush"/> is not
         /// <see cref="SolidBrush"/></exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FloodFill(Brush brush, PointD point)
-        {
-            DebugBrushAssert(brush);
-#if DEBUG
-            if (brush is not SolidBrush)
-            {
-                throw new ArgumentException(
-                    ErrorMessages.Default.OnlySolidBrushInstancesSupported,
-                    nameof(brush));
-            }
-#endif
-            dc.FloodFill((UI.Native.Brush)brush.NativeObject, point);
-        }
+        public abstract void FloodFill(Brush brush, PointD point);
 
         /// <summary>
         /// Draws a rectangle specified by a <see cref="RectD"/> structure.
@@ -968,12 +615,7 @@ namespace Alternet.Drawing
         /// of the rectangle.</param>
         /// <param name="rectangle">A <see cref="RectD"/> structure that represents the
         /// rectangle to draw.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawRectangle(Pen pen, RectD rectangle)
-        {
-            DebugPenAssert(pen);
-            dc.DrawRectangle((UI.Native.Pen)pen.NativeObject, rectangle);
-        }
+        public abstract void DrawRectangle(Pen pen, RectD rectangle);
 
         /// <summary>
         /// Draws a <see cref="GraphicsPath"/>.
@@ -981,12 +623,7 @@ namespace Alternet.Drawing
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and
         /// style of the path.</param>
         /// <param name="path"><see cref="GraphicsPath"/> to draw.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawPath(Pen pen, GraphicsPath path)
-        {
-            DebugPenAssert(pen);
-            dc.DrawPath((UI.Native.Pen)pen.NativeObject, path.NativePath);
-        }
+        public abstract void DrawPath(Pen pen, GraphicsPath path);
 
         /// <summary>
         /// Fills the interior of a <see cref="GraphicsPath"/>.
@@ -994,12 +631,7 @@ namespace Alternet.Drawing
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics
         /// of the fill.</param>
         /// <param name="path"><see cref="GraphicsPath"/> that represents the path to fill.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void FillPath(Brush brush, GraphicsPath path)
-        {
-            DebugBrushAssert(brush);
-            dc.FillPath((UI.Native.Brush)brush.NativeObject, path.NativePath);
-        }
+        public abstract void FillPath(Brush brush, GraphicsPath path);
 
         /// <summary>
         /// Draws a line connecting two points.
@@ -1012,12 +644,7 @@ namespace Alternet.Drawing
         /// to connect.</param>
         /// <exception cref="ArgumentNullException"><paramref name="pen"/> is
         /// <see langword="null"/>.</exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawLine(Pen pen, PointD a, PointD b)
-        {
-            DebugPenAssert(pen);
-            dc.DrawLine((UI.Native.Pen)pen.NativeObject, a, b);
-        }
+        public abstract void DrawLine(Pen pen, PointD a, PointD b);
 
         /// <summary>
         /// Draws a line connecting two points.
@@ -1028,8 +655,7 @@ namespace Alternet.Drawing
         /// <param name="y1">Y coordinate of the first point.</param>
         /// <param name="x2">X coordinate of the second point.</param>
         /// <param name="y2">Y coordinate of the second point.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawLine(Pen pen, double x1, double y1, double x2, double y2) =>
+        public void DrawLine(Pen pen, double x1, double y1, double x2, double y2) =>
             DrawLine(pen, new(x1, y1), new(x2, y2));
 
         /// <summary>
@@ -1047,12 +673,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="pen"/> is
         /// <see langword="null"/>.</exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawLines(Pen pen, PointD[] points)
-        {
-            DebugPenAssert(pen);
-            dc.DrawLines((UI.Native.Pen)pen.NativeObject, points);
-        }
+        public abstract void DrawLines(Pen pen, PointD[] points);
 
         /// <summary>
         /// Draws an ellipse defined by a bounding <see cref="RectD"/>.
@@ -1061,12 +682,7 @@ namespace Alternet.Drawing
         /// of the ellipse.</param>
         /// <param name="bounds"><see cref="RectD"/> structure that defines the boundaries
         /// of the ellipse.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawEllipse(Pen pen, RectD bounds)
-        {
-            DebugPenAssert(pen);
-            dc.DrawEllipse((UI.Native.Pen)pen.NativeObject, bounds);
-        }
+        public abstract void DrawEllipse(Pen pen, RectD bounds);
 
         /// <summary>
         /// Draws the specified <see cref="Image"/>, using its original size, at the
@@ -1075,8 +691,8 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="PointD"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawImageUnscaled(Image image, PointD origin) => DrawImage(image, origin);
+        public void DrawImageUnscaled(Image image, PointD origin)
+            => DrawImage(image, origin);
 
         /// <summary>
         /// Draws the specified <see cref="Image"/>, using its original size, at the
@@ -1092,12 +708,7 @@ namespace Alternet.Drawing
         /// be used to draw the foreground of the bitmap (all bits set to 1), and
         /// the current text background color to draw the background (all bits set to 0).
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawImage(Image image, PointD origin, bool useMask = false)
-        {
-            DebugImageAssert(image);
-            dc.DrawImageAtPoint(image.NativeImage, origin, useMask);
-        }
+        public abstract void DrawImage(Image image, PointD origin, bool useMask = false);
 
         /// <summary>
         /// Draws an image into the region defined by the specified <see cref="RectD"/>.
@@ -1112,12 +723,7 @@ namespace Alternet.Drawing
         /// be used to draw the foreground of the bitmap (all bits set to 1), and
         /// the current text background color to draw the background (all bits set to 0).
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawImage(Image image, RectD destinationRect, bool useMask = false)
-        {
-            DebugImageAssert(image);
-            dc.DrawImageAtRect(image.NativeImage, destinationRect, useMask);
-        }
+        public abstract void DrawImage(Image image, RectD destinationRect, bool useMask = false);
 
         /// <summary>
         /// Draws the specified portion of the image into the region defined by the specified
@@ -1134,12 +740,7 @@ namespace Alternet.Drawing
         /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
         /// are specified in dips (1/96 inch).
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
-        }
+        public abstract void DrawImage(Image image, RectD destinationRect, RectD sourceRect);
 
         /// <summary>
         /// Draws the specified portion of the image into the region defined by the specified
@@ -1156,12 +757,7 @@ namespace Alternet.Drawing
         /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
         /// are specified in pixels.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtPixelRect(image.NativeImage, destinationRect, sourceRect);
-        }
+        public abstract void DrawImageI(Image image, RectI destinationRect, RectI sourceRect);
 
         /// <summary>
         /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -1171,12 +767,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Not all drawing contexts support this operation.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void SetPixel(PointD point, Pen pen)
-        {
-            DebugPenAssert(pen);
-            dc.SetPixel(point, (UI.Native.Pen)pen.NativeObject);
-        }
+        public abstract void SetPixel(PointD point, Pen pen);
 
         /// <summary>
         /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -1187,12 +778,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="x">The x-coordinate of the pixel to set.</param>
         /// <param name="y">The y-coordinate of the pixel to set.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void SetPixel(double x, double y, Pen pen)
-        {
-            DebugPenAssert(pen);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.NativeObject);
-        }
+        public abstract void SetPixel(double x, double y, Pen pen);
 
         /// <summary>
         /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -1203,12 +789,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="x">The x-coordinate of the pixel to set.</param>
         /// <param name="y">The y-coordinate of the pixel to set.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void SetPixel(double x, double y, Color color)
-        {
-            DebugColorAssert(color);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.NativeObject);
-        }
+        public abstract void SetPixel(double x, double y, Color color);
 
         /// <summary>
         /// Gets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -1218,10 +799,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Not all drawing contexts support this operation.
         /// </remarks>
-        public virtual Color GetPixel(PointD point)
-        {
-            return dc.GetPixel(point);
-        }
+        public abstract Color GetPixel(PointD point);
 
         /// <summary>
         /// Draws the specified portion of the image into the region defined by the specified
@@ -1235,33 +813,11 @@ namespace Alternet.Drawing
         /// <see cref="RectD"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
         /// </param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawImage(
+        public abstract void DrawImage(
             Image image,
             RectD destinationRect,
             RectD sourceRect,
-            GraphicsUnit unit)
-        {
-            if(unit != GraphicsUnit.Pixel)
-            {
-                var dpi = GetDPI();
-                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
-                destinationRect = GraphicsUnitConverter.ConvertRect(
-                    unit,
-                    GraphicsUnit.Pixel,
-                    dpi,
-                    destinationRect,
-                    graphicsType);
-                sourceRect = GraphicsUnitConverter.ConvertRect(
-                    unit,
-                    GraphicsUnit.Pixel,
-                    dpi,
-                    sourceRect,
-                    graphicsType);
-            }
-
-            DrawImageI(image, destinationRect.ToRect(), sourceRect.ToRect());
-        }
+            GraphicsUnit unit);
 
         /// <summary>
         /// Draws the specified text string at the specified location with the specified
@@ -1273,8 +829,7 @@ namespace Alternet.Drawing
         /// the drawn text.</param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, Font font, Brush brush, PointD origin)
+        public virtual void DrawText(string text, Font font, Brush brush, PointD origin)
         {
             DrawText(text, font, brush, origin, TextFormat.Default);
         }
@@ -1284,8 +839,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="text"></param>
         /// <param name="origin"></param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, PointD origin)
+        public virtual void DrawText(string text, PointD origin)
         {
             DrawText(text, Control.DefaultFont, Brush.Default, origin);
         }
@@ -1303,23 +857,12 @@ namespace Alternet.Drawing
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawText(
+        public abstract void DrawText(
             string text,
             Font font,
             Brush brush,
             PointD origin,
-            TextFormat format)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugFormatAssert(format);
-            dc.DrawTextAtPoint(
-                text,
-                origin,
-                (UI.Native.Font)font.NativeObject,
-                (UI.Native.Brush)brush.NativeObject);
-        }
+            TextFormat format);
 
         /// <summary>
         /// Draws the specified text string at the specified location with the specified
@@ -1331,7 +874,6 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
         /// the drawn text.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
             DrawText(text, font, brush, bounds, TextFormat.Default);
@@ -1351,26 +893,12 @@ namespace Alternet.Drawing
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawText(
+        public abstract void DrawText(
             string text,
             Font font,
             Brush brush,
             RectD bounds,
-            TextFormat format)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            dc.DrawTextAtRect(
-                text,
-                bounds,
-                (UI.Native.Font)font.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
-                (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
-                (UI.Native.TextTrimming)format.Trimming,
-                (UI.Native.TextWrapping)format.Wrapping);
-        }
+            TextFormat format);
 
         /// <summary>
         /// Draws waved line in the specified rectangular area.
@@ -1382,7 +910,6 @@ namespace Alternet.Drawing
         /// Specify rectangle of the text, line is drawn on the bottom. You can pass the rectangle
         /// which is returned by measure text functions.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void DrawWave(RectD rect, Color color)
         {
             Draw(this, rect.ToRect(), color);
@@ -1446,17 +973,7 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD MeasureText(string text, Font font)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                double.NaN,
-                UI.Native.TextWrapping.None);
-        }
+        public abstract SizeD MeasureText(string text, Font font);
 
         /// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/> and
@@ -1471,17 +988,7 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD MeasureText(string text, Font font, double maximumWidth)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                maximumWidth,
-                UI.Native.TextWrapping.Character);
-        }
+        public abstract SizeD MeasureText(string text, Font font, double maximumWidth);
 
         /// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/>,
@@ -1499,32 +1006,17 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD MeasureText(
+        public abstract SizeD MeasureText(
             string text,
             Font font,
             double maximumWidth,
-            TextFormat format)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugFormatAssert(format);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                maximumWidth,
-                (UI.Native.TextWrapping)format.Wrapping);
-        }
+            TextFormat format);
 
         /// <summary>
         /// Pushes the current state of the <see cref="Graphics"/> transformation
         /// matrix on a stack.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Push()
-        {
-            dc.Push();
-        }
+        public abstract void Push();
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors.
@@ -1535,24 +1027,12 @@ namespace Alternet.Drawing
         /// <param name="foreColor">Foreground color of the text.</param>
         /// <param name="backColor">Background color of the text. If parameter is equal
         /// to <see cref="Color.Empty"/>, background will not be painted. </param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void DrawText(
+        public abstract void DrawText(
             string text,
             PointD location,
             Font font,
             Color foreColor,
-            Color backColor)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-            dc.DrawText(
-                text,
-                location,
-                (UI.Native.Font)font.NativeObject,
-                foreColor,
-                backColor);
-        }
+            Color backColor);
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors,
@@ -1568,7 +1048,7 @@ namespace Alternet.Drawing
         /// <param name="alignment">Alignment of the text.</param>
         /// <param name="indexAccel">Index of underlined mnemonic character</param>
         /// <returns>The bounding rectangle.</returns>
-        public virtual RectD DrawLabel(
+        public abstract RectD DrawLabel(
             string text,
             Font font,
             Color foreColor,
@@ -1576,21 +1056,7 @@ namespace Alternet.Drawing
             Image? image,
             RectD rect,
             GenericAlignment alignment = GenericAlignment.TopLeft,
-            int indexAccel = -1)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor, nameof(foreColor));
-            return dc.DrawLabel(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                foreColor,
-                backColor,
-                image?.NativeImage,
-                rect,
-                (int)alignment,
-                indexAccel);
-        }
+            int indexAccel = -1);
 
         /// <summary>
         /// Pushes the current state of the <see cref="Graphics"/> transformation
@@ -1598,14 +1064,7 @@ namespace Alternet.Drawing
         /// and concatenates the current transform with a new transform.
         /// </summary>
         /// <param name="transform">A transform to concatenate with the current transform.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void PushTransform(TransformMatrix transform)
-        {
-            Push();
-            var currentTransform = Transform;
-            currentTransform.Multiply(transform);
-            Transform = currentTransform;
-        }
+        public abstract void PushTransform(TransformMatrix transform);
 
         /// <summary>
         /// Returns the DPI of the display used by this object.
@@ -1615,29 +1074,18 @@ namespace Alternet.Drawing
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD GetDPI()
-        {
-            return dc.GetDpi();
-        }
+        public abstract SizeD GetDPI();
 
         /// <summary>
         /// Pops a stored state from the stack and sets the current transformation matrix
         /// to that state.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Pop()
-        {
-            dc.Pop();
-        }
+        public abstract void Pop();
 
         /// <summary>
         /// Destroys the current clipping region so that none of the DC is clipped.
         /// </summary>
-        public virtual void DestroyClippingRegion()
-        {
-            dc.DestroyClippingRegion();
-        }
+        public abstract void DestroyClippingRegion();
 
         /// <summary>
         /// Sets the clipping region for this device context to the intersection of the
@@ -1653,15 +1101,13 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Calling this function can only make the clipping region
         /// smaller, never larger.
-        /// You need to call <see cref="DestroyClippingRegion"/> first if you want to set the clipping
+        /// You need to call <see cref="DestroyClippingRegion"/> first if you want
+        /// to set the clipping
         /// region exactly to the region specified.
         /// If resulting clipping region is empty, then all drawing on the DC is
         /// clipped out (all changes made by drawing operations are masked out).
         /// </remarks>
-        public virtual void SetClippingRegion(RectD rect)
-        {
-            dc.SetClippingRegion(rect);
-        }
+        public abstract void SetClippingRegion(RectD rect);
 
         /// <summary>
         /// Gets the rectangle surrounding the current clipping region.
@@ -1671,24 +1117,17 @@ namespace Alternet.Drawing
         /// <see cref="RectD"/> filled in with the logical coordinates of the clipping region
         /// on success, or <see cref="RectD.Empty"/> otherwise.
         /// </returns>
-        public virtual RectD GetClippingBox()
-        {
-            return dc.GetClippingBox();
-        }
+        public abstract RectD GetClippingBox();
 
-        /// <inheritdoc/>
-        protected override void DisposeManagedResources()
-        {
-            base.DisposeManagedResources();
-            if(dispose)
-                dc.Dispose();
-            dc = null!;
-        }
-
+        /// <summary>
+        /// Checks whether <see cref="Brush"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugBrushAssert(Brush value)
+        protected static void DebugBrushAssert(Brush value)
         {
             if (value is null)
                 throw new Exception("Brush is null");
@@ -1696,10 +1135,34 @@ namespace Alternet.Drawing
                 throw new Exception("Brush was disposed");
         }
 
+        /// <summary>
+        /// Checks whether <see cref="SolidBrush"/> parameter is ok.
+        /// </summary>
+        /// <param name="brush">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugPenAssert(Pen value)
+        protected static void DebugSolidBrushAssert(Brush brush)
+        {
+            DebugBrushAssert(brush);
+            if (brush is not SolidBrush)
+            {
+                throw new ArgumentException(
+                    ErrorMessages.Default.OnlySolidBrushInstancesSupported,
+                    nameof(brush));
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Pen"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static void DebugPenAssert(Pen value)
         {
             if (value is null)
                 throw new Exception("Pen is null");
@@ -1707,10 +1170,37 @@ namespace Alternet.Drawing
                 throw new Exception("Pen was disposed");
         }
 
+        /// <summary>
+        /// Checks whether array of <see cref="PointD"/> parameter is ok.
+        /// </summary>
+        /// <param name="points">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugColorAssert(Color value, string? paramName = default)
+        protected static void DebugBezierPointsAssert(PointD[] points)
+        {
+            if (points.Length == 0)
+                return;
+
+            if ((points.Length - 1) % 3 != 0)
+            {
+                throw new ArgumentException(
+                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
+                    nameof(points));
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Color"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="paramName">Parameter name.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static void DebugColorAssert(Color value, string? paramName = default)
         {
             if (value is null)
                 throw new Exception($"{Fn()} is null");
@@ -1726,10 +1216,15 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Checks whether <see cref="Image"/> parameter is ok.
+        /// </summary>
+        /// <param name="image">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugImageAssert(Image image)
+        protected static void DebugImageAssert(Image image)
         {
             if (image is null)
                 throw new Exception("Image is null");
@@ -1739,19 +1234,29 @@ namespace Alternet.Drawing
                 throw new Exception("Image has invalid size");
         }
 
+        /// <summary>
+        /// Checks whether <see cref="string"/> parameter is ok.
+        /// </summary>
+        /// <param name="text">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugTextAssert(string text)
+        protected static void DebugTextAssert(string text)
         {
             if (text is null)
                 throw new Exception("Text is null");
         }
 
+        /// <summary>
+        /// Checks whether <see cref="Font"/> parameter is ok.
+        /// </summary>
+        /// <param name="font">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugFontAssert(Font font)
+        protected static void DebugFontAssert(Font font)
         {
             if (font is null)
                 throw new Exception("Font is null");
@@ -1759,10 +1264,15 @@ namespace Alternet.Drawing
                 throw new Exception("Font is disposed");
         }
 
+        /// <summary>
+        /// Checks whether <see cref="TextFormat"/> parameter is ok.
+        /// </summary>
+        /// <param name="format">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DebugFormatAssert(TextFormat format)
+        protected static void DebugFormatAssert(TextFormat format)
         {
             if (format is null)
                 throw new Exception("Text format is null");

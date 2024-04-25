@@ -94,10 +94,10 @@ namespace PaintSample
 
         public void Modify(Action<Graphics> action)
         {
-            using (var dc = Graphics.FromImage(Bitmap))
+            using (var dc = WxWidgetsGraphics.FromImage(Bitmap))
                 action(dc);
 
-            using (var dc = Graphics.FromImage(Bitmap)) { }
+            using (var dc = WxWidgetsGraphics.FromImage(Bitmap)) { }
 
             OnChanged();
         }
@@ -139,7 +139,7 @@ namespace PaintSample
         {
             var pixelSize = control.PixelFromDip(new SizeD(600, 600));
             var bitmap = new Bitmap(pixelSize, control);
-            using var dc = Graphics.FromImage(bitmap);
+            using var dc = WxWidgetsGraphics.FromImage(bitmap);
             dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.BoundsDip(control)); 
             return bitmap;
         }

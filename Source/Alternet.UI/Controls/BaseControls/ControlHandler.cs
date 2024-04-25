@@ -600,7 +600,7 @@ namespace Alternet.UI
                     throw new Exception(); // todo: maybe use parking window here?
             }
 
-            return new Graphics(nativeControl.OpenClientDrawingContext());
+            return new WxWidgetsGraphics(nativeControl.OpenClientDrawingContext());
         }
 
         internal virtual Native.Control CreateNativeControl() =>
@@ -1108,7 +1108,7 @@ namespace Alternet.UI
                 return;
 
             using var dc =
-                new Graphics(NativeControl.OpenPaintDrawingContext());
+                new WxWidgetsGraphics(NativeControl.OpenPaintDrawingContext());
 
             Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
         }

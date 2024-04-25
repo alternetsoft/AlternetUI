@@ -85,7 +85,7 @@ namespace ControlsSample
                 {
                     var rect = Display.AllScreens[index].Bounds;
 
-                    var dc = Graphics.FromScreen();
+                    var dc = WxWidgetsGraphics.FromScreen();
 
                     dc.FillRectangleI(Color.White, (rect.Location, (500, 400)));
 

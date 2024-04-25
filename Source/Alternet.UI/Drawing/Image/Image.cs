@@ -91,7 +91,7 @@ namespace Alternet.Drawing
                 nativeImage,
                 width,
                 height,
-                dc.NativeDrawingContext);
+                (UI.Native.DrawingContext)dc.NativeDrawingContext);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Alternet.Drawing
             UI.Native.DrawingContext.ImageFromGenericImageDC(
                 nativeImage,
                 genericImage.Handle,
-                dc.NativeDrawingContext);
+                (UI.Native.DrawingContext)dc.NativeDrawingContext);
         }
 
         /// <summary>
@@ -784,7 +784,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Graphics GetDrawingContext()
         {
-            var dc = Graphics.FromImage(this);
+            var dc = WxWidgetsGraphics.FromImage(this);
             return dc;
         }
 
@@ -851,7 +851,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="fileName">A string that contains the name of the file
         /// to which to save this <see cref="Image"/>.</param>
-        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
+        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats
+        /// for the save operation.</remarks>
         public bool Save(string fileName)
         {
             if (fileName is null)

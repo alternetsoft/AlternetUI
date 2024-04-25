@@ -154,7 +154,7 @@ namespace Alternet.UI
             var isPaintingControl = flags.HasFlag(DrawItemFlags.PaintingControl);
 
             var ptr = Native.Control.OpenDrawingContextForDC(NativeControl.EventDc, false);
-            var dc = new Graphics(ptr);
+            var dc = new WxWidgetsGraphics(ptr);
 
             var rect = Control.PixelToDip(NativeControl.EventRect);
 
