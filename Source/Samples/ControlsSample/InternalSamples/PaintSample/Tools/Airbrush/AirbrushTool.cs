@@ -90,7 +90,7 @@ namespace PaintSample
             if (state == null)
                 throw new InvalidOperationException();
 
-            using (var dc = WxWidgetsGraphics.FromImage(state.PreviewBitmap))
+            using (var dc = WxGraphics.FromImage(state.PreviewBitmap))
             {
                 for (int i = 0; i < state.PointsPerTick; i++)
                     DrawSinglePoint(dc, state.Brush, GetNextPoint());

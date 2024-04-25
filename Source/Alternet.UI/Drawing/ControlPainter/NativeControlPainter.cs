@@ -360,7 +360,7 @@ namespace Alternet.Drawing
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButton(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags,
                 (int)sortArrow,
@@ -397,7 +397,7 @@ namespace Alternet.Drawing
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButtonContents(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags,
                 (int)sortArrow,
@@ -420,7 +420,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawTreeItemButton(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -442,7 +442,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterBorder(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -467,7 +467,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawComboBoxDropButton(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -492,7 +492,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawDropArrow(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -518,7 +518,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawCheckBox(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -543,7 +543,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawCheckMark(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -569,7 +569,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawPushButton(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -595,7 +595,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawCollapseButton(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -624,7 +624,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawItemSelectionRect(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -648,7 +648,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawFocusRect(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -669,7 +669,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawChoice(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -690,7 +690,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawComboBox(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -711,7 +711,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawTextCtrl(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -732,7 +732,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawRadioBitmap(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 (int)flags);
         }
@@ -760,7 +760,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawGauge(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(rect),
                 value,
                 max,
@@ -789,7 +789,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 text,
                 control.PixelFromDip(rect),
                 (int)align,
@@ -881,7 +881,7 @@ namespace Alternet.Drawing
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext);
+                (UI.Native.DrawingContext)dc.NativeObject);
             return control.PixelToDip(result);
         }
 
@@ -906,7 +906,7 @@ namespace Alternet.Drawing
             Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterSash(
                 default,
                 control.WxWidget,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext,
+                (UI.Native.DrawingContext)dc.NativeObject,
                 control.PixelFromDip(size),
                 control.PixelFromDip(position),
                 (int)orientation,

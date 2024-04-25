@@ -10,17 +10,17 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    public class WxWidgetsGraphics : Graphics
+    public class WxGraphics : Graphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
 
-        static WxWidgetsGraphics()
+        static WxGraphics()
         {
-            WxWidgetsDrawing.Initialize();
+            WxDrawing.Initialize();
         }
 
-        internal WxWidgetsGraphics(UI.Native.DrawingContext dc, bool dispose = true)
+        internal WxGraphics(UI.Native.DrawingContext dc, bool dispose = true)
         {
             this.dc = dc;
             this.dispose = dispose;
@@ -39,7 +39,7 @@ namespace Alternet.Drawing
 
             set
             {
-                dc.Transform = value.NativeMatrix;
+                dc.Transform = (UI.Native.TransformMatrix)value.NativeObject;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object NativeDrawingContext
+        public override object NativeObject
         {
             get => dc;
         }
@@ -100,7 +100,7 @@ namespace Alternet.Drawing
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
-            return new WxWidgetsGraphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
+            return new WxGraphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static Graphics FromScreen()
         {
-            return new WxWidgetsGraphics(UI.Native.DrawingContext.FromScreen());
+            return new WxGraphics(UI.Native.DrawingContext.FromScreen());
         }
 
         /// <inheritdoc/>
@@ -162,7 +162,7 @@ namespace Alternet.Drawing
             return dc.BlitI(
                         destPt,
                         sz,
-                        (UI.Native.DrawingContext)source.NativeDrawingContext,
+                        (UI.Native.DrawingContext)source.NativeObject,
                         srcPt,
                         (int)rop,
                         useMask,
@@ -184,7 +184,7 @@ namespace Alternet.Drawing
             return dc.StretchBlitI(
                 dstPt,
                 dstSize,
-                (UI.Native.DrawingContext)source.NativeDrawingContext,
+                (UI.Native.DrawingContext)source.NativeObject,
                 srcPt,
                 srcSize,
                 (int)rop,

@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     /// Do not use <see cref="Default"/> property until native drawing
     /// is initialized.
     /// </remarks>
-    public abstract class NativeDrawing : BaseObject
+    public abstract partial class NativeDrawing : BaseObject
     {
         /// <summary>
         /// Gets default native drawing implementation.
@@ -46,6 +46,80 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         public abstract object CreateFont(object font);
+
+        /// <summary>
+        /// Updates native transform matrix properties.
+        /// </summary>
+        /// <param name="m11"></param>
+        /// <param name="m12"></param>
+        /// <param name="m21"></param>
+        /// <param name="m22"></param>
+        /// <param name="dx"></param>
+        /// <param name="dy"></param>
+        public abstract void UpdateTransformMatrix(
+            object matrix,
+            double m11,
+            double m12,
+            double m21,
+            double m22,
+            double dx,
+            double dy);
+
+        public abstract double GetTransformMatrixM11(object matrix);
+
+        public abstract double GetTransformMatrixM12(object matrix);
+
+        public abstract double GetTransformMatrixM21(object matrix);
+
+        public abstract double GetTransformMatrixM22(object matrix);
+
+        public abstract double GetTransformMatrixDX(object matrix);
+
+        public abstract double GetTransformMatrixDY(object matrix);
+
+        public abstract bool GetTransformMatrixIsIdentity(object matrix);
+
+        public abstract void ResetTransformMatrix(object matrix);
+
+        public abstract void MultiplyTransformMatrix(object matrix1, object matrix2);
+
+        public abstract void TranslateTransformMatrix(object matrix, double offsetX, double offsetY);
+
+        public abstract void ScaleTransformMatrix(object matrix, double scaleX, double scaleY);
+
+        public abstract void RotateTransformMatrix(object matrix, double angle);
+
+        public abstract void InvertTransformMatrix(object matrix);
+
+        public abstract void SetTransformMatrixM11(object matrix, double value);
+
+        public abstract void SetTransformMatrixM12(object matrix, double value);
+
+        public abstract void SetTransformMatrixM21(object matrix, double value);
+
+        public abstract void SetTransformMatrixM22(object matrix, double value);
+
+        public abstract void SetTransformMatrixDX(object matrix, double value);
+
+        public abstract void SetTransformMatrixDY(object matrix, double value);
+
+        public abstract PointD TransformMatrixOnPoint(object matrix, PointD point);
+
+        public abstract SizeD TransformMatrixOnSize(object matrix, SizeD size);
+
+        /// <summary>
+        /// Indicates whether native transform matrix is equal to another native transform matrix.
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool TransformMatrixEquals(object matrix1, object matrix2);
+
+        public abstract int TransformMatrixGetHashCode(object matrix);
+
+        /// <summary>
+        /// Creates native transform matrix.
+        /// </summary>
+        /// <returns></returns>
+        public abstract object CreateTransformMatrix();
 
         /// <summary>
         /// Creates default native mono font.

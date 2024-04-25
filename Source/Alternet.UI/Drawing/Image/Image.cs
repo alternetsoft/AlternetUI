@@ -91,7 +91,7 @@ namespace Alternet.Drawing
                 nativeImage,
                 width,
                 height,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext);
+                (UI.Native.DrawingContext)dc.NativeObject);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Alternet.Drawing
             UI.Native.DrawingContext.ImageFromGenericImageDC(
                 nativeImage,
                 genericImage.Handle,
-                (UI.Native.DrawingContext)dc.NativeDrawingContext);
+                (UI.Native.DrawingContext)dc.NativeObject);
         }
 
         /// <summary>
@@ -784,7 +784,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Graphics GetDrawingContext()
         {
-            var dc = WxWidgetsGraphics.FromImage(this);
+            var dc = WxGraphics.FromImage(this);
             return dc;
         }
 

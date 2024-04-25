@@ -73,7 +73,7 @@
         /// <inheritdoc/>
         protected override void UpdateNativeObject()
         {
-            ((WxWidgetsDrawing)NativeDrawing.Default).UpdateTextureBrush(this);
+            ((WxDrawing)NativeDrawing.Default).UpdateTextureBrush(this);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets native drawing context.
         /// </summary>
-        public abstract object NativeDrawingContext { get; }
+        public abstract object NativeObject { get; }
 
         /// <summary>
         /// Draws the text rotated by angle degrees (positive angles are counterclockwise;

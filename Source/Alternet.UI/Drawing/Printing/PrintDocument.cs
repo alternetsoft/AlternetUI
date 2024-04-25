@@ -263,7 +263,7 @@ namespace Alternet.Drawing.Printing
             if (currentDrawingContext != null)
                 throw new InvalidOperationException();
 
-            currentDrawingContext = new WxWidgetsGraphics(NativePrintDocument.PrintPage_DrawingContext);
+            currentDrawingContext = new WxGraphics(NativePrintDocument.PrintPage_DrawingContext);
 
             var ea = new PrintEventArgs();
             OnBeginPrint(ea);
