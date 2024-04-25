@@ -338,7 +338,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Inverts this Matrix, if it is invertible.
+        /// Inverts this matrix, if it is invertible.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invert()
