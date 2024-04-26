@@ -137,8 +137,8 @@ namespace Alternet.Drawing
             nativeImage = NativeDrawing.Default.CreateImage();
             if (stream is null)
                 return;
-            using var inputStream = new UI.Native.InputStream(stream);
-            ((UI.Native.Image)NativeObject).LoadFromStream(inputStream);
+
+            NativeDrawing.Default.ImageLoadFromStream(NativeObject, stream);
         }
 
         /// <summary>
@@ -153,9 +153,8 @@ namespace Alternet.Drawing
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
         protected Image(int width, int height, int depth = 32)
+            : this(new SizeI(width, height), depth)
         {
-            nativeImage = NativeDrawing.Default.CreateImage();
-            ((UI.Native.Image)NativeObject).Initialize((width, height), depth);
         }
 
         /// <summary>
@@ -211,14 +210,13 @@ namespace Alternet.Drawing
                 return;
             }
 
-            using var inputStream = new UI.Native.InputStream(stream);
-            if (inputStream is null)
+            var result = NativeDrawing.Default.ImageLoadFromStream(NativeObject, stream);
+
+            if (!result)
             {
                 Application.LogError($"Image not loaded from: {url}");
                 return;
             }
-
-            ((UI.Native.Image)NativeObject).LoadFromStream(inputStream);
         }
 
         /// <summary>

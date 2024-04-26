@@ -236,5 +236,10 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override bool ImageLoadFromStream(object image, Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

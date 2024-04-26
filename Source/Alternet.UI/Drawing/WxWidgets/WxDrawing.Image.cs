@@ -35,5 +35,15 @@ namespace Alternet.Drawing
         {
             return ((UI.Native.Image)image).PixelSize;
         }
+
+        /// <inheritdoc/>
+        public override bool ImageLoadFromStream(object image, Stream stream)
+        {
+            using var inputStream = new UI.Native.InputStream(stream);
+            if (inputStream is null)
+                return false;
+
+            return ((UI.Native.Image)image).LoadFromStream(inputStream);
+        }
     }
 }

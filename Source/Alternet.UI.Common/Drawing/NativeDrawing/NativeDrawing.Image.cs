@@ -42,5 +42,12 @@ namespace Alternet.Drawing
         /// <param name="image">Native image instance.</param>
         /// <returns></returns>
         public abstract SizeI GetImagePixelSize(object image);
+
+        /// <summary>
+        /// Loads native image from the stream.
+        /// </summary>
+        /// <param name="image">Native image instance.</param>
+        /// <param name="stream">Stream with image data.</param>
+        public abstract bool ImageLoadFromStream(object image, Stream stream);
     }
 }
