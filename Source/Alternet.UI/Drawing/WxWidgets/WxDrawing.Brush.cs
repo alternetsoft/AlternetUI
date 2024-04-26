@@ -47,7 +47,8 @@ namespace Alternet.Drawing
 
         public virtual void UpdateTextureBrush(TextureBrush brush)
         {
-            ((UI.Native.TextureBrush)brush.NativeObject).Initialize(brush.Image.NativeImage);
+            ((UI.Native.TextureBrush)brush.NativeObject).Initialize(
+                (UI.Native.Image)brush.Image.NativeObject);
         }
 
         /// <inheritdoc/>

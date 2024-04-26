@@ -119,11 +119,11 @@ namespace Alternet.UI
         {
             var nativeControl = NativeControl;
             var images = StateImages;
-            nativeControl.NormalImage = images.Normal?.NativeImage;
-            nativeControl.HoveredImage = images.Hovered?.NativeImage;
-            nativeControl.PressedImage = images.Pressed?.NativeImage;
-            nativeControl.DisabledImage = images.Disabled?.NativeImage;
-            nativeControl.FocusedImage = images.Focused?.NativeImage;
+            nativeControl.NormalImage = (UI.Native.Image?)images.Normal?.NativeObject;
+            nativeControl.HoveredImage = (UI.Native.Image?)images.Hovered?.NativeObject;
+            nativeControl.PressedImage = (UI.Native.Image?)images.Pressed?.NativeObject;
+            nativeControl.DisabledImage = (UI.Native.Image?)images.Disabled?.NativeObject;
+            nativeControl.FocusedImage = (UI.Native.Image?)images.Focused?.NativeObject;
         }
 
         private void OnImageChanged()
@@ -144,16 +144,16 @@ namespace Alternet.UI
             switch (e.PropertyName)
             {
                 case nameof(ControlStateImages.Normal):
-                    nativeControl.NormalImage = images.Normal?.NativeImage;
+                    nativeControl.NormalImage = (UI.Native.Image?)images.Normal?.NativeObject;
                     break;
                 case nameof(ControlStateImages.Hovered):
-                    nativeControl.HoveredImage = images.Hovered?.NativeImage;
+                    nativeControl.HoveredImage = (UI.Native.Image?)images.Hovered?.NativeObject;
                     break;
                 case nameof(ControlStateImages.Pressed):
-                    nativeControl.PressedImage = images.Pressed?.NativeImage;
+                    nativeControl.PressedImage = (UI.Native.Image?)images.Pressed?.NativeObject;
                     break;
                 case nameof(ControlStateImages.Disabled):
-                    nativeControl.DisabledImage = images.Disabled?.NativeImage;
+                    nativeControl.DisabledImage = (UI.Native.Image?)images.Disabled?.NativeObject;
                     break;
                 default:
                     throw new Exception();

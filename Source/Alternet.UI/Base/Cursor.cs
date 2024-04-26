@@ -69,7 +69,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="image">Image with cursor.</param>
         public Cursor(Image image)
-            : base(Native.WxOtherFactory.CreateCursor4(image.NativeImage), true)
+            : base(Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.NativeObject), true)
         {
         }
 

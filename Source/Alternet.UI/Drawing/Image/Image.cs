@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public class Image : BaseComponent, IDisposable
+    public class Image : DisposableObject, IDisposable
     {
         /// <summary>
         /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
@@ -20,19 +20,29 @@ namespace Alternet.Drawing
         /// </summary>
         public static EventHandler<BaseEventArgs<Image>>? GrayScale;
 
-        private bool isDisposed;
-        private UI.Native.Image nativeImage;
+        private object nativeImage;
 
-        internal Image(Stream stream, BitmapType bitmapType = BitmapType.Any)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class from a stream.
+        /// </summary>
+        /// <param name="stream">Stream with bitmap.</param>
+        /// <param name="bitmapType">Type of the bitmap.</param>
+        protected Image(Stream stream, BitmapType bitmapType = BitmapType.Any)
         {
-            nativeImage = new UI.Native.Image();
+            nativeImage = NativeDrawing.Default.CreateImage();
             Load(stream, bitmapType);
         }
 
-        internal Image(ImageSet imageSet, Control control)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class with the image from
+        /// <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="control">Control used to get dpi.</param>
+        protected Image(ImageSet imageSet, Control control)
         {
-            nativeImage = new UI.Native.Image();
-            imageSet.NativeImageSet.InitImageFor(nativeImage, control.WxWidget);
+            nativeImage = NativeDrawing.Default.CreateImage();
+            imageSet.NativeImageSet.InitImageFor((UI.Native.Image)NativeObject, control.WxWidget);
         }
 
         /// <summary>
@@ -43,10 +53,12 @@ namespace Alternet.Drawing
         /// new <see cref="Image" />.</param>
         /// <param name="newSize">The <see cref="SizeI" /> structure that represent the
         /// size of the new <see cref="Bitmap" />.</param>
-        internal Image(Image original, SizeI newSize)
+        protected Image(Image original, SizeI newSize)
         {
-            nativeImage = new UI.Native.Image();
-            nativeImage.InitializeFromImage(original.NativeImage, newSize);
+            nativeImage = NativeDrawing.Default.CreateImage();
+            ((UI.Native.Image)NativeObject).InitializeFromImage(
+                (UI.Native.Image)original.NativeObject,
+                newSize);
         }
 
         /// <summary>
@@ -59,10 +71,10 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
-        internal Image(GenericImage genericImage, int depth = -1)
+        protected Image(GenericImage genericImage, int depth = -1)
         {
-            nativeImage = new UI.Native.Image();
-            NativeImage.LoadFromGenericImage(genericImage.Handle, depth);
+            nativeImage = NativeDrawing.Default.CreateImage();
+            ((UI.Native.Image)NativeObject).LoadFromGenericImage(genericImage.Handle, depth);
         }
 
         /// <summary>
@@ -71,7 +83,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         /// <param name="control">The control from which pixel scaling factor is used.</param>
-        internal Image(SizeI size, Control control)
+        protected Image(SizeI size, Control control)
             : this(size)
         {
             ScaleFactor = control.GetPixelScaleFactor();
@@ -84,11 +96,11 @@ namespace Alternet.Drawing
         /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
-        internal Image(int width, int height, Graphics dc)
+        protected Image(int width, int height, Graphics dc)
         {
-            nativeImage = new UI.Native.Image();
+            nativeImage = NativeDrawing.Default.CreateImage();
             UI.Native.DrawingContext.ImageFromDrawingContext(
-                nativeImage,
+                (UI.Native.Image)NativeObject,
                 width,
                 height,
                 (UI.Native.DrawingContext)dc.NativeObject);
@@ -106,11 +118,11 @@ namespace Alternet.Drawing
         /// must be valid, but inherits the scaling factor from the given device context
         /// instead of simply using the default factor of 1.
         /// </remarks>
-        internal Image(GenericImage genericImage, Graphics dc)
+        protected Image(GenericImage genericImage, Graphics dc)
         {
-            nativeImage = new UI.Native.Image();
+            nativeImage = NativeDrawing.Default.CreateImage();
             UI.Native.DrawingContext.ImageFromGenericImageDC(
-                nativeImage,
+                (UI.Native.Image)NativeObject,
                 genericImage.Handle,
                 (UI.Native.DrawingContext)dc.NativeObject);
         }
@@ -120,13 +132,13 @@ namespace Alternet.Drawing
         /// the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
-        internal Image(Stream? stream)
+        protected Image(Stream? stream)
         {
-            nativeImage = new UI.Native.Image();
+            nativeImage = NativeDrawing.Default.CreateImage();
             if (stream is null)
                 return;
             using var inputStream = new UI.Native.InputStream(stream);
-            NativeImage.LoadFromStream(inputStream);
+            ((UI.Native.Image)NativeObject).LoadFromStream(inputStream);
         }
 
         /// <summary>
@@ -140,10 +152,10 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
-        internal Image(int width, int height, int depth = 32)
+        protected Image(int width, int height, int depth = 32)
         {
-            nativeImage = new UI.Native.Image();
-            NativeImage.Initialize((width, height), depth);
+            nativeImage = NativeDrawing.Default.CreateImage();
+            ((UI.Native.Image)NativeObject).Initialize((width, height), depth);
         }
 
         /// <summary>
@@ -152,7 +164,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
-        internal Image(double width, double height)
+        protected Image(double width, double height)
             : this((int)width, (int)height)
         {
         }
@@ -167,21 +179,31 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
-        internal Image(SizeI size, int depth = 32)
+        protected Image(SizeI size, int depth = 32)
         {
-            nativeImage = new UI.Native.Image();
-            NativeImage.Initialize(size, depth);
+            nativeImage = NativeDrawing.Default.CreateImage();
+            ((UI.Native.Image)NativeObject).Initialize(size, depth);
         }
 
-        internal Image(ImageSet imageSet, SizeI size)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class with the image from
+        /// <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="size">Size of the image in device pixels.</param>
+        protected Image(ImageSet imageSet, SizeI size)
         {
-            nativeImage = new UI.Native.Image();
-            imageSet.NativeImageSet.InitImage(nativeImage, size.Width, size.Height);
+            nativeImage = NativeDrawing.Default.CreateImage();
+            imageSet.NativeImageSet.InitImage((UI.Native.Image)NativeObject, size.Width, size.Height);
         }
 
-        internal Image(string url)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class.
+        /// </summary>
+        /// <param name="url">Url to the image.</param>
+        protected Image(string url)
         {
-            nativeImage = new UI.Native.Image();
+            nativeImage = NativeDrawing.Default.CreateImage();
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
@@ -196,18 +218,22 @@ namespace Alternet.Drawing
                 return;
             }
 
-            NativeImage.LoadFromStream(inputStream);
+            ((UI.Native.Image)NativeObject).LoadFromStream(inputStream);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
-        private protected Image()
-            : this(Drawing.SizeI.Empty)
+        protected Image()
+            : this(SizeI.Empty)
         {
         }
 
-        private protected Image(UI.Native.Image nativeImage)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class.
+        /// </summary>
+        /// <param name="nativeImage">Native image instance.</param>
+        protected Image(object nativeImage)
         {
             this.nativeImage = nativeImage;
         }
@@ -227,25 +253,19 @@ namespace Alternet.Drawing
         {
             get
             {
-                return new GenericImage(NativeImage.ConvertToGenericImage());
+                return new GenericImage(((UI.Native.Image)NativeObject).ConvertToGenericImage());
             }
         }
 
         /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
-        public SizeI PixelSize => NativeImage.PixelSize;
+        public SizeI PixelSize => ((UI.Native.Image)NativeObject).PixelSize;
 
         /// <summary>
         /// Gets whether image is ok (is not disposed and has non-zero width and height).
         /// </summary>
         public bool IsOk => !IsEmpty;
-
-        /// <summary>
-        /// Gets whether image is disposed.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsDisposed => isDisposed;
 
         /// <summary>
         /// Creates texture brush with this image.
@@ -256,7 +276,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether image is empty (is disposed or has an empty width or height).
         /// </summary>
-        public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;
+        public bool IsEmpty => IsDisposed || !IsOk || Size.AnyIsEmpty;
 
         /// <summary>
         /// Gets or sets whether this image has an alpha channel.
@@ -265,12 +285,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.HasAlpha;
+                return ((UI.Native.Image)NativeObject).HasAlpha;
             }
 
             set
             {
-                NativeImage.HasAlpha = value;
+                ((UI.Native.Image)NativeObject).HasAlpha = value;
             }
         }
 
@@ -284,12 +304,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets image width in pixels.
         /// </summary>
-        public int Width => NativeImage.PixelWidth;
+        public int Width => ((UI.Native.Image)NativeObject).PixelWidth;
 
         /// <summary>
         /// Gets image height in pixels.
         /// </summary>
-        public int Height => NativeImage.PixelHeight;
+        public int Height => ((UI.Native.Image)NativeObject).PixelHeight;
 
         /// <summary>
         /// Gets image bounds in pixels. This method returns (0, 0, Width, Height).
@@ -306,17 +326,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets image width in pixels.
         /// </summary>
-        public int PixelWidth => NativeImage.PixelWidth;
+        public int PixelWidth => ((UI.Native.Image)NativeObject).PixelWidth;
 
         /// <summary>
         /// Gets image height in pixels.
         /// </summary>
-        public int PixelHeight => NativeImage.PixelHeight;
+        public int PixelHeight => ((UI.Native.Image)NativeObject).PixelHeight;
 
         /// <summary>
         /// Gets image size in pixels.
         /// </summary>
-        public SizeI Size => (NativeImage.PixelWidth, NativeImage.PixelHeight);
+        public SizeI Size => (PixelWidth, PixelHeight);
 
         /// <summary>
         /// Gets or sets the scale factor of this image.
@@ -339,12 +359,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.ScaleFactor;
+                return ((UI.Native.Image)NativeObject).ScaleFactor;
             }
 
             set
             {
-                NativeImage.ScaleFactor = value;
+                ((UI.Native.Image)NativeObject).ScaleFactor = value;
             }
         }
 
@@ -361,7 +381,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.DipSize;
+                return ((UI.Native.Image)NativeObject).DipSize;
             }
         }
 
@@ -372,7 +392,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.ScaledHeight;
+                return ((UI.Native.Image)NativeObject).ScaledHeight;
             }
         }
 
@@ -383,7 +403,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.ScaledSize;
+                return ((UI.Native.Image)NativeObject).ScaledSize;
             }
         }
 
@@ -394,7 +414,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.ScaledWidth;
+                return ((UI.Native.Image)NativeObject).ScaledWidth;
             }
         }
 
@@ -405,11 +425,11 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeImage.Depth;
+                return ((UI.Native.Image)NativeObject).Depth;
             }
         }
 
-        internal UI.Native.Image NativeImage
+        internal object NativeObject
         {
             get
             {
@@ -652,7 +672,7 @@ namespace Alternet.Drawing
         /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
         public bool Load(string name, BitmapType type)
         {
-            return NativeImage.LoadFile(name, (int)type);
+            return ((UI.Native.Image)NativeObject).LoadFile(name, (int)type);
         }
 
         /// <summary>
@@ -670,7 +690,7 @@ namespace Alternet.Drawing
         /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
         public bool Save(string name, BitmapType type)
         {
-            return NativeImage.SaveFile(name, (int)type);
+            return ((UI.Native.Image)NativeObject).SaveFile(name, (int)type);
         }
 
         /// <summary>
@@ -690,7 +710,7 @@ namespace Alternet.Drawing
         public bool Save(Stream stream, BitmapType type)
         {
             var outputStream = new UI.Native.OutputStream(stream);
-            return NativeImage.SaveStream(outputStream, (int)type);
+            return ((UI.Native.Image)NativeObject).SaveStream(outputStream, (int)type);
         }
 
         /// <summary>
@@ -708,7 +728,7 @@ namespace Alternet.Drawing
         public bool Load(Stream stream, BitmapType type)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            return NativeImage.LoadStream(inputStream, (int)type);
+            return ((UI.Native.Image)NativeObject).LoadStream(inputStream, (int)type);
         }
 
         /// <summary>
@@ -719,7 +739,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Image GetSubBitmap(RectI rect)
         {
-            var converted = NativeImage.GetSubBitmap(rect);
+            var converted = ((UI.Native.Image)NativeObject).GetSubBitmap(rect);
             return new Bitmap(converted);
         }
 
@@ -749,7 +769,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Image ConvertToDisabled(byte brightness = 255)
         {
-            var converted = NativeImage.ConvertToDisabled(brightness);
+            var converted = ((UI.Native.Image)NativeObject).ConvertToDisabled(brightness);
             return new Bitmap(converted);
         }
 
@@ -767,7 +787,7 @@ namespace Alternet.Drawing
         /// <param name="sizeNeeded"></param>
         public void Rescale(SizeI sizeNeeded)
         {
-            NativeImage.Rescale(sizeNeeded);
+            ((UI.Native.Image)NativeObject).Rescale(sizeNeeded);
         }
 
         /// <summary>
@@ -775,7 +795,7 @@ namespace Alternet.Drawing
         /// </summary>
         public void ResetAlpha()
         {
-            NativeImage.ResetAlpha();
+            ((UI.Native.Image)NativeObject).ResetAlpha();
         }
 
         /// <summary>
@@ -792,7 +812,8 @@ namespace Alternet.Drawing
         /// Gets the size of the image in device-independent units (1/96th inch
         /// per unit).
         /// </summary>
-        public SizeD SizeDip(Control control) => control.PixelToDip(NativeImage.PixelSize);
+        public SizeD SizeDip(Control control)
+            => control.PixelToDip(NativeDrawing.Default.GetImagePixelSize(NativeObject));
 
         /// <summary>
         /// Creates a clone of this image with fully copied image data.
@@ -842,8 +863,7 @@ namespace Alternet.Drawing
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
-            var outputStream = new UI.Native.OutputStream(stream);
-            return NativeImage.SaveToStream(outputStream, format.ToString());
+            return NativeDrawing.Default.ImageSave(NativeObject, stream, format);
         }
 
         /// <summary>
@@ -858,41 +878,17 @@ namespace Alternet.Drawing
             if (fileName is null)
                 throw new ArgumentNullException(nameof(fileName));
 
-            return NativeImage.SaveToFile(fileName);
+            return NativeDrawing.Default.ImageSave(NativeObject, fileName);
         }
 
-        /// <summary>
-        /// Releases all resources used by the <see cref="Image"/> object.
-        /// </summary>
-        public void Dispose()
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="Image"/>
-        /// and optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
+            if (nativeImage is not null)
             {
-                if (disposing)
-                {
-                    NativeImage.Dispose();
-                    nativeImage = null!;
-                }
-
-                isDisposed = true;
+                ((IDisposable)nativeImage).Dispose();
+                nativeImage = null!;
             }
-        }
-
-        private void CheckDisposed()
-        {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
         }
     }
 }

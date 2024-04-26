@@ -142,7 +142,7 @@ namespace Alternet.Drawing
         /// <param name="image"></param>
         public void Add(Image image)
         {
-            iconSet?.AddImage(image.NativeImage);
+            iconSet?.AddImage((UI.Native.Image)image.NativeObject);
         }
 
         /// <summary>

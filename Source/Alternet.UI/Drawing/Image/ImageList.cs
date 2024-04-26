@@ -104,7 +104,7 @@ namespace Alternet.Drawing
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
-            NativeImageList.AddImage(item.NativeImage);
+            NativeImageList.AddImage((UI.Native.Image)item.NativeObject);
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)

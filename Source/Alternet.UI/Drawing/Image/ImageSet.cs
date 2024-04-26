@@ -387,12 +387,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public Image AsImage(SizeI size) => new(this, size);
+        public Image AsImage(SizeI size) => new Bitmap(this, size);
 
         /// <summary>
         /// Gets first image with size equal to <see cref="DefaultSize"/>.
         /// </summary>
-        public Image AsImage() => new(this, DefaultSize);
+        public Image AsImage() => new Bitmap(this, DefaultSize);
 
         /// <summary>
         /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
@@ -404,7 +404,7 @@ namespace Alternet.UI
         /// be used at the DPI scaling of the provided control.
         /// </remarks>
         /// <param name="control"></param>
-        public Image AsImageFor(Control control) => new(this, control);
+        public Image AsImageFor(Control control) => new Bitmap(this, control);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at
@@ -477,7 +477,7 @@ namespace Alternet.UI
                     ErrorMessages.Default.CannotChangeReadOnlyObject);
             }
 
-            NativeImageSet.AddImage(item.NativeImage);
+            NativeImageSet.AddImage((UI.Native.Image)item.NativeObject);
             OnChanged();
         }
 

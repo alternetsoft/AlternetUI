@@ -24,10 +24,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Cursor"/> class from a stream.
+        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
+        /// <see cref="ImageSet"/>.
         /// </summary>
-        /// <param name="stream">Stream with cursor.</param>
-        /// <param name="bitmapType">Type of the cursor.</param>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="control">Control used to get dpi.</param>
+        public Bitmap(ImageSet imageSet, Control control)
+            : base(imageSet, control)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from a stream.
+        /// </summary>
+        /// <param name="stream">Stream with bitmap.</param>
+        /// <param name="bitmapType">Type of the bitmap.</param>
         public Bitmap(Stream stream, BitmapType bitmapType = BitmapType.Any)
             : base(stream, bitmapType)
         {
@@ -96,7 +107,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
         public Bitmap()
-            : base(Drawing.SizeI.Empty)
+            : base(SizeI.Empty)
         {
         }
 
@@ -161,7 +172,7 @@ namespace Alternet.Drawing
         public Bitmap(Image image)
             : base()
         {
-            NativeImage.CopyFrom(image.NativeImage);
+            ((UI.Native.Image)NativeObject).CopyFrom((UI.Native.Image)image.NativeObject);
         }
 
         /// <summary>
@@ -189,7 +200,7 @@ namespace Alternet.Drawing
         {
         }
 
-        internal Bitmap(UI.Native.Image nativeImage)
+        internal Bitmap(object nativeImage)
             : base(nativeImage)
         {
         }

@@ -100,7 +100,9 @@ namespace Alternet.Drawing
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
-            return new WxGraphics(UI.Native.DrawingContext.FromImage(image.NativeImage));
+            return new WxGraphics(
+                UI.Native.DrawingContext.FromImage(
+                    (UI.Native.Image)image.NativeObject));
         }
 
         /// <summary>
@@ -528,28 +530,40 @@ namespace Alternet.Drawing
         public override void DrawImage(Image image, PointD origin, bool useMask = false)
         {
             DebugImageAssert(image);
-            dc.DrawImageAtPoint(image.NativeImage, origin, useMask);
+            dc.DrawImageAtPoint(
+                (UI.Native.Image)image.NativeObject,
+                origin,
+                useMask);
         }
 
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect, bool useMask = false)
         {
             DebugImageAssert(image);
-            dc.DrawImageAtRect(image.NativeImage, destinationRect, useMask);
+            dc.DrawImageAtRect(
+                (UI.Native.Image)image.NativeObject,
+                destinationRect,
+                useMask);
         }
 
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
             DebugImageAssert(image);
-            dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
+            dc.DrawImagePortionAtRect(
+                (UI.Native.Image)image.NativeObject,
+                destinationRect,
+                sourceRect);
         }
 
         /// <inheritdoc/>
         public override void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
         {
             DebugImageAssert(image);
-            dc.DrawImagePortionAtPixelRect(image.NativeImage, destinationRect, sourceRect);
+            dc.DrawImagePortionAtPixelRect(
+                (UI.Native.Image)image.NativeObject,
+                destinationRect,
+                sourceRect);
         }
 
         /// <inheritdoc/>
@@ -731,7 +745,7 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.NativeObject,
                 foreColor,
                 backColor,
-                image?.NativeImage,
+                (UI.Native.Image?)image?.NativeObject,
                 rect,
                 (int)alignment,
                 indexAccel);

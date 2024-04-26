@@ -127,7 +127,7 @@ namespace Alternet.UI
             {
                 CheckDisposed();
                 icon = value;
-                nativeNotifyIcon.Icon = value?.NativeImage ?? null;
+                nativeNotifyIcon.Icon = (UI.Native.Image?)value?.NativeObject ?? null;
             }
         }
 
