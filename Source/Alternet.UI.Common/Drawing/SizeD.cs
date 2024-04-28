@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -24,11 +21,6 @@ namespace Alternet.Drawing
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    /* [System.Runtime.CompilerServices.TypeForwardedFrom(
-       "System.Drawing, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b03f5f7f11d50a3a")]
-     [TypeConverter("System.Drawing.SizeFConverter, System.Drawing, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
     public struct SizeD : IEquatable<SizeD>
     {
         /// <summary>
@@ -70,6 +62,7 @@ namespace Alternet.Drawing
         /// from the specified
         /// existing <see cref='Drawing.SizeD'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(SizeD size)
         {
             width = size.width;
@@ -81,6 +74,7 @@ namespace Alternet.Drawing
         /// from the specified
         /// <see cref='Drawing.PointD'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(PointD pt)
         {
             width = pt.X;
@@ -92,6 +86,7 @@ namespace Alternet.Drawing
         /// from the specified
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(Vector2 vector)
         {
             width = vector.X;
@@ -102,6 +97,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
         /// from the specified dimensions.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(double width, double height)
         {
             this.width = width;
@@ -112,6 +108,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="SizeD"/> struct.
         /// </summary>
         /// <param name="widthAndHeight"><see cref="Width"/> and <see cref="Height"/> values.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(double widthAndHeight)
         {
             this.width = widthAndHeight;
@@ -179,19 +176,12 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeD((double, double) d) => new(d.Item1, d.Item2);
 
-        /* TODO: uncommment when Double System.Numerics is availble.
-         See https://github.com/dotnet/runtime/issues/24168
-        /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector2"/> from this
-        /// <see cref="Drawing.Size"/>.
-        /// </summary>
-        public Vector2 ToVector2() => new Vector2(width, height);
-
         /// <summary>
         /// Converts the specified <see cref="Drawing.Size"/> to a
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
-        public static explicit operator Vector2(Size size) => size.ToVector2();*/
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector2(SizeD size) => size.ToVector2();
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to
@@ -406,6 +396,7 @@ namespace Alternet.Drawing
         /// or <see cref="Height"/>.</param>
         /// <returns></returns>
         /// <param name="value">New size value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetSize(bool vert, double value)
         {
             if (vert)
@@ -554,6 +545,14 @@ namespace Alternet.Drawing
                 width,
                 height);
         }
+
+        /// <summary>
+        /// Creates a new <see cref="System.Numerics.Vector2"/> from this
+        /// <see cref="Drawing.Size"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2 ToVector2()
+            => new(RectD.CoordToFloat(width), RectD.CoordToFloat(height));
 
         /// <summary>
         /// Multiplies <see cref="SizeD"/> by a <see cref="double"/>

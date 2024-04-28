@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -49,6 +46,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='Drawing.PointD'/> class with the
         /// specified coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointD(double x, double y)
         {
             this.x = x;
@@ -59,6 +57,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='Drawing.PointD'/> struct from the specified
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointD(Vector2 vector)
         {
             x = vector.X;
@@ -89,19 +88,12 @@ namespace Alternet.Drawing
             set => y = value;
         }
 
-        /* TODO: uncommment when Double System.Numerics is availble.
-         * See https://github.com/dotnet/runtime/issues/24168
-        /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector2"/> from
-        /// this <see cref="System.Drawing.PointF"/>.
-        /// </summary>
-        public Vector2 ToVector2() => new Vector2(x, y);
-
         /// <summary>
         /// Converts the specified <see cref="Drawing.Point"/> to a
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
-        public static explicit operator Vector2(Point point) => point.ToVector2();*/
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector2(PointD point) => point.ToVector2();
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a
@@ -350,6 +342,13 @@ namespace Alternet.Drawing
         {
             return new(Math.Ceiling(x), Math.Ceiling(y));
         }
+
+        /// <summary>
+        /// Creates a new <see cref="System.Numerics.Vector2"/> from
+        /// this <see cref="System.Drawing.PointF"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector2 ToVector2() => new(RectD.CoordToFloat(x), RectD.CoordToFloat(y));
 
         /// <summary>
         /// Serves as the default hash function.

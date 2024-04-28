@@ -37,6 +37,7 @@ namespace Alternet.Drawing
         /// specified location
         /// and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD(double x, double y, double width, double height)
         {
             this.x = x;
@@ -50,6 +51,7 @@ namespace Alternet.Drawing
         /// specified location
         /// and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD(PointD location, SizeD size)
         {
             x = location.X;
@@ -62,6 +64,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='RectD'/> struct from the specified
         /// <see cref="Vector4"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD(Vector4 vector)
         {
             x = vector.X;
@@ -268,18 +271,12 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointD Center => Location + (Size / 2);
 
-        /* TODO: uncommment when Double System.Numerics is availble.
-         * See https://github.com/dotnet/runtime/issues/24168
-        /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Rect"/>.
-        /// </summary>
-        public Vector4 ToVector4() => new Vector4(x, y, width, height);
-
         /// <summary>
         /// Converts the specified <see cref="Rect"/> to a
         /// <see cref="System.Numerics.Vector4"/>.
         /// </summary>
-        public static explicit operator Vector4(Rect rectangle) => rectangle.ToVector4();*/
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector4(RectD rectangle) => rectangle.ToVector4();
 
         /// <summary>
         /// Converts the specified <see cref="Vector2"/> to a
@@ -358,6 +355,29 @@ namespace Alternet.Drawing
             RectD r = rect;
             r.Inflate(x, y);
             return r;
+        }
+
+        /// <summary>
+        /// Converts <see cref="double"/> coordinate to the integer value.
+        /// </summary>
+        /// <param name="value">Coordinate.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int CoordToInt(double value)
+        {
+            int i = (int)Math.Round(value, MidpointRounding.AwayFromZero);
+            return i;
+        }
+
+        /// <summary>
+        /// Converts <see cref="double"/> coordinate to the <see cref="float"/> value.
+        /// </summary>
+        /// <param name="value">Coordinate.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CoordToFloat(double value)
+        {
+            return Convert.ToSingle(value);
         }
 
         /// <summary>
@@ -591,6 +611,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Rect"/>.
+        /// </summary>
+        public readonly Vector4 ToVector4()
+            => new(CoordToFloat(x), CoordToFloat(y), CoordToFloat(width), CoordToFloat(height));
+
+        /// <summary>
         /// Sets <see cref="Width"/> or <see cref="Height"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
@@ -598,6 +624,7 @@ namespace Alternet.Drawing
         /// or <see cref="Height"/>.</param>
         /// <returns></returns>
         /// <param name="value">New size value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetSize(bool vert, double value)
         {
             if (vert)
@@ -841,13 +868,6 @@ namespace Alternet.Drawing
                 y,
                 width,
                 height);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static int CoordToInt(double value)
-        {
-            int i = (int)Math.Round(value, MidpointRounding.AwayFromZero);
-            return i;
         }
     }
 }
