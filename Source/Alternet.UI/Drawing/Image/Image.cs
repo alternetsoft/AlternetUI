@@ -441,6 +441,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Image(GenericImage image) => new Bitmap(image);
+
+        /// <summary>
+        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator GenericImage(Image image) => image.AsGeneric;
+
+        /// <summary>
         /// Indicates whether the specified image is <c>null</c> or has an empty width (or height).
         /// </summary>
         /// <param name="image">The image to test.</param>

@@ -228,6 +228,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Bitmap'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Bitmap(GenericImage image) => new(image);
+
+        /// <summary>
         /// Creates a clone of this image with fully copied image data.
         /// </summary>
         /// <returns></returns>

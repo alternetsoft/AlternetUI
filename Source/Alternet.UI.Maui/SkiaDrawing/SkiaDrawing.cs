@@ -56,5 +56,5 @@ namespace Alternet.Drawing
         {
             return NotImplemented<Color>();
         }
-    }
+   }
 }

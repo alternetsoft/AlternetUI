@@ -348,7 +348,7 @@ namespace Alternet.Drawing
         /// this <see cref="System.Drawing.PointF"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector2 ToVector2() => new(RectD.CoordToFloat(x), RectD.CoordToFloat(y));
+        public readonly Vector2 ToVector2() => new(RectD.CoordToFloat(x), RectD.CoordToFloat(y));
 
         /// <summary>
         /// Serves as the default hash function.
