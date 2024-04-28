@@ -36,6 +36,7 @@ namespace Alternet.Drawing
         /// specified location
         /// and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectI(int x, int y, int width, int height)
         {
             this.x = x;
@@ -48,6 +49,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the Rectangle class with the specified
         /// location and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectI(PointI location, SizeI size)
         {
             x = location.X;

@@ -1,9 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -20,8 +18,6 @@ namespace Alternet.Drawing
     */
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    /*[TypeConverter("System.Drawing.PointConverter, System.Drawing,
-      Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
     public struct PointI : IEquatable<PointI>
     {
         /// <summary>
@@ -46,6 +42,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='Drawing.PointI'/>
         /// class with the specified coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointI(int x, int y)
         {
             this.x = x;
@@ -56,6 +53,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='Drawing.PointI'/>
         /// class from a <see cref='Drawing.SizeD'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointI(SizeI sz)
         {
             x = sz.Width;
@@ -66,10 +64,15 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the Point class using coordinates
         /// specified by an integer value.
         /// </summary>
+        /// <remarks>
+        /// <see cref="X"/> property is assigned with low part of the integer value
+        /// and <see cref="Y"/> property is assigned with high part of the integer value.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointI(int dw)
         {
-            x = LowInt16(dw);
-            y = HighInt16(dw);
+            x = MathUtils.LowInt16(dw);
+            y = MathUtils.HighInt16(dw);
         }
 
         /// <summary>
@@ -101,24 +104,28 @@ namespace Alternet.Drawing
         /// Creates a <see cref='PointD'/> with the coordinates of the
         /// specified <see cref='PointI'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PointD(PointI p) => new(p.X, p.Y);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Point'/> with the coordinates of the
         /// specified <see cref='PointI'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Point(PointI p) => new(p.X, p.Y);
 
         /// <summary>
         /// Creates a <see cref='PointI'/> with the coordinates of the
         /// specified <see cref='System.Drawing.Point'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PointI(System.Drawing.Point p) => new(p.X, p.Y);
 
         /// <summary>
         /// Creates a <see cref='Drawing.SizeI'/> with the coordinates of
         /// the specified <see cref='Drawing.PointI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator SizeI(PointI p) => new(p.X, p.Y);
 
         /// <summary>
@@ -126,53 +133,60 @@ namespace Alternet.Drawing
         /// to <see cref="PointI"/>.
         /// </summary>
         /// <param name="d">New point value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PointI((int, int) d) => new(d.Item1, d.Item2);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointI'/> by a given
-        /// <see cref='Drawing.SizeI'/> .
+        /// Translates a <see cref='PointI'/> by a given
+        /// <see cref='SizeI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI operator +(PointI pt, SizeI sz) =>
             Add(pt, sz);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointI'/> by the negative of
-        /// a given <see cref='Drawing.SizeI'/> .
+        /// Translates a <see cref='PointI'/> by the negative of
+        /// a given <see cref='SizeI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI operator -(PointI pt, SizeI sz) =>
             Subtract(pt, sz);
 
         /// <summary>
-        /// Compares two <see cref='Drawing.PointI'/> objects. The result
+        /// Compares two <see cref='PointI'/> objects. The result
         /// specifies whether the values of the
-        /// <see cref='Drawing.PointI.X'/> and
-        /// <see cref='Drawing.PointI.Y'/> properties of the two
-        /// <see cref='Drawing.PointI'/> objects are equal.
+        /// <see cref='X'/> and
+        /// <see cref='Y'/> properties of the two
+        /// <see cref='PointI'/> objects are equal.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(PointI left, PointI right) =>
             left.X == right.X && left.Y == right.Y;
 
         /// <summary>
-        /// Compares two <see cref='Drawing.PointI'/> objects.
+        /// Compares two <see cref='PointI'/> objects.
         /// The result specifies whether the values of the
-        /// <see cref='Drawing.PointI.X'/> or
-        /// <see cref='Drawing.PointI.Y'/> properties of the two
-        /// <see cref='Drawing.PointI'/>  objects are unequal.
+        /// <see cref='X'/> or
+        /// <see cref='Y'/> properties of the two
+        /// <see cref='PointI'/>  objects are unequal.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(PointI left, PointI right) =>
             !(left == right);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointI'/> by a given
-        /// <see cref='Drawing.SizeI'/> .
+        /// Translates a <see cref='PointI'/> by a given
+        /// <see cref='SizeI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI Add(PointI pt, SizeI sz) =>
             new(unchecked(pt.X + sz.Width), unchecked(pt.Y + sz.Height));
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointI'/> by the negative
-        /// of a given <see cref='Drawing.SizeI'/> .
+        /// Translates a <see cref='PointI'/> by the negative
+        /// of a given <see cref='SizeI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI Subtract(PointI pt, SizeI sz) =>
             new(unchecked(pt.X - sz.Width), unchecked(pt.Y - sz.Height));
 
@@ -188,6 +202,7 @@ namespace Alternet.Drawing
         /// Converts a Point to a Int32Point by performing a truncate operation
         /// on all the coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI Truncate(PointD value) =>
             new(unchecked((int)value.X), unchecked((int)value.Y));
 
@@ -195,6 +210,7 @@ namespace Alternet.Drawing
         /// Converts a PointF to a Point by performing a round operation on
         /// all the coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI Round(PointD value) =>
             new(unchecked((int)Math.Round(value.X)),
                 unchecked((int)Math.Round(value.Y)));
@@ -214,6 +230,7 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(PointI other) => this == other;
 
         /// <summary>
@@ -224,6 +241,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Translates this <see cref='Drawing.PointI'/> by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Offset(int dx, int dy)
         {
             unchecked
@@ -236,6 +254,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Translates this <see cref='Drawing.PointI'/> by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Offset(PointI p) => Offset(p.X, p.Y);
 
         /// <summary>
@@ -248,10 +267,5 @@ namespace Alternet.Drawing
 
             return StringUtils.ToString<int>(names, values);
         }
-
-        private static short HighInt16(int n) =>
-            unchecked((short)((n >> 16) & 0xffff));
-
-        private static short LowInt16(int n) => unchecked((short)(n & 0xffff));
     }
 }

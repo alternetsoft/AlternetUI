@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
+
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -18,6 +20,7 @@ namespace Alternet.Drawing
         /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(int width, int height, Graphics dc)
             : base(width, height, dc)
         {
@@ -29,6 +32,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageSet">Source of the image.</param>
         /// <param name="control">Control used to get dpi.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(ImageSet imageSet, Control control)
             : base(imageSet, control)
         {
@@ -39,6 +43,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="stream">Stream with bitmap.</param>
         /// <param name="bitmapType">Type of the bitmap.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Stream stream, BitmapType bitmapType = BitmapType.Any)
             : base(stream, bitmapType)
         {
@@ -56,6 +61,7 @@ namespace Alternet.Drawing
         /// must be valid, but inherits the scaling factor from the given device context
         /// instead of simply using the default factor of 1.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(GenericImage genericImage, Graphics dc)
             : base(genericImage, dc)
         {
@@ -71,6 +77,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(GenericImage genericImage, int depth = -1)
             : base(genericImage, depth)
         {
@@ -82,6 +89,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width in pixels used to create the image.</param>
         /// <param name="height">The height in pixels used to create the image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(double width, double height)
             : base(width, height)
         {
@@ -98,6 +106,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(int width, int height, int depth = 32)
             : base(width, height, depth)
         {
@@ -106,6 +115,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap()
             : base(SizeI.Empty)
         {
@@ -120,6 +130,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(SizeI size, int depth = 32)
             : base(size, -1)
         {
@@ -131,6 +142,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         /// <param name="control">The control from which pixel scaling factor is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(SizeI size, Control control)
             : base(size, control)
         {
@@ -142,6 +154,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageSet">Source of the image.</param>
         /// <param name="size">Size of the image in device pixels.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(ImageSet imageSet, SizeI size)
             : base(imageSet, size)
         {
@@ -155,6 +168,7 @@ namespace Alternet.Drawing
         /// new <see cref="Bitmap" />.</param>
         /// <param name="newSize">The <see cref="SizeI" /> structure that represent the
         /// size of the new <see cref="Bitmap" />.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Image original, SizeI newSize)
             : base(original, newSize)
         {
@@ -169,6 +183,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Full image data is copied from the original image.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Image image)
             : base()
         {
@@ -180,6 +195,7 @@ namespace Alternet.Drawing
         /// data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the bitmap.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Stream? stream)
             : base(stream)
         {
@@ -195,12 +211,18 @@ namespace Alternet.Drawing
         /// <remarks>
         /// See <see cref="Image.FromUrl(string)"/> for the details.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(string url)
             : base(url)
         {
         }
 
-        internal Bitmap(object nativeImage)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class.
+        /// </summary>
+        /// <param name="nativeImage">Native image instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Bitmap(object nativeImage)
             : base(nativeImage)
         {
         }
@@ -209,6 +231,7 @@ namespace Alternet.Drawing
         /// Creates a clone of this image with fully copied image data.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public new Bitmap Clone()
         {
             return new Bitmap(this);

@@ -30,17 +30,15 @@ namespace Alternet.UI
         public static readonly Thickness Empty = new();
 
         private double left;
-
         private double top;
-
         private double right;
-
         private double bottom;
 
         /// <summary>
         /// This constructur builds a Thickness with a specified value on every side.
         /// </summary>
         /// <param name="uniformLength">The specified uniform length.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Thickness(double uniformLength)
         {
             left = top = right = bottom = uniformLength;
@@ -54,6 +52,7 @@ namespace Alternet.UI
         /// <param name="top">The thickness for the top side.</param>
         /// <param name="right">The thickness for the right side.</param>
         /// <param name="bottom">The thickness for the bottom side.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Thickness(double left, double top, double right, double bottom)
         {
             this.left = left;
@@ -67,6 +66,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="horizontal">The thickness on the left and right.</param>
         /// <param name="vertical">The thickness on the top and bottom.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Thickness(double horizontal, double vertical)
         {
             left = right = horizontal;
@@ -233,6 +233,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">The string.</param>
         /// <returns>The <see cref="Thickness"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Thickness Parse(string s)
         {
             const string exceptionMessage = "Invalid Thickness.";
@@ -283,6 +284,7 @@ namespace Alternet.UI
         /// the same double value.
         /// </summary>
         /// <param name="value"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate(double value = 1)
         {
             left += value;

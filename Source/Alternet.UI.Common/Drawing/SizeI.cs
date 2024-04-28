@@ -1,9 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -21,7 +19,6 @@ namespace Alternet.Drawing
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    /*[TypeConverter("System.Drawing.SizeConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
     public struct SizeI : IEquatable<SizeI>
     {
         /// <summary>
@@ -47,6 +44,7 @@ namespace Alternet.Drawing
         /// class from the specified
         /// <see cref='PointI'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeI(PointI pt)
         {
             width = pt.X;
@@ -57,6 +55,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='SizeI'/>
         /// class from the specified dimensions.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeI(int width, int height)
         {
             this.width = width;
@@ -68,6 +67,7 @@ namespace Alternet.Drawing
         /// equal width and height.
         /// </summary>
         /// <param name="size">Width and Height value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeI(int size)
         {
             this.width = size;
@@ -117,6 +117,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='SizeI'/> to a
         /// <see cref='PointI'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator PointI(SizeI size) =>
             new(size.Width, size.Height);
 
@@ -125,34 +126,40 @@ namespace Alternet.Drawing
         /// to <see cref="SizeI"/>.
         /// </summary>
         /// <param name="d">New size value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeI((int, int) d) => new(d.Item1, d.Item2);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Size'/> with the coordinates of the
         /// specified <see cref='SizeI'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Size(SizeI p) => new(p.Width, p.Height);
 
         /// <summary>
         /// Creates a <see cref='SizeI'/> with the coordinates of the
         /// specified <see cref='System.Drawing.Size'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeI(System.Drawing.Size p) => new(p.Width, p.Height);
 
         /// <summary>
         /// Converts the specified <see cref='SizeI'/> to a <see cref='SizeD'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeD(SizeI p) => new(p.Width, p.Height);
 
         /// <summary>
         /// Converts the specified <see cref='int'/> to a <see cref='SizeI'/>.
         /// Width and height are set to the <paramref name="value"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeI(int value) => new(value, value);
 
         /// <summary>
         /// Performs vector addition of two <see cref='SizeI'/> objects.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI operator +(SizeI sz1, SizeI sz2) =>
             Add(sz1, sz2);
 
@@ -160,6 +167,7 @@ namespace Alternet.Drawing
         /// Contracts a <see cref='SizeI'/> by another
         /// <see cref='SizeI'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI operator -(SizeI sz1, SizeI sz2) =>
             Subtract(sz1, sz2);
 
@@ -170,6 +178,7 @@ namespace Alternet.Drawing
         /// <param name="left">Multiplier of type <see cref="int"/>.</param>
         /// <param name="right">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <returns>Product of type <see cref="SizeI"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI operator *(int left, SizeI right) =>
             Multiply(right, left);
 
@@ -180,6 +189,7 @@ namespace Alternet.Drawing
         /// <param name="left">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <param name="right">Multiplier of type <see cref="int"/>.</param>
         /// <returns>Product of type <see cref="SizeI"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI operator *(SizeI left, int right) =>
             Multiply(left, right);
 
@@ -190,6 +200,7 @@ namespace Alternet.Drawing
         /// <param name="left">Dividend of type <see cref="SizeI"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="SizeI"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI operator /(SizeI left, int right) =>
             new(unchecked(left.width / right), unchecked(left.height / right));
 
@@ -200,6 +211,7 @@ namespace Alternet.Drawing
         /// <param name="left">Multiplier of type <see cref="double"/>.</param>
         /// <param name="right">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <returns>Product of type <see cref="SizeD"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD operator *(double left, SizeI right) =>
             Multiply(right, left);
 
@@ -210,6 +222,7 @@ namespace Alternet.Drawing
         /// <param name="left">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <param name="right">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type <see cref="SizeD"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD operator *(SizeI left, double right) =>
             Multiply(left, right);
 
@@ -220,18 +233,21 @@ namespace Alternet.Drawing
         /// <param name="left">Dividend of type <see cref="SizeI"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="SizeD"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD operator /(SizeI left, double right)
             => new(left.width / right, left.height / right);
 
         /// <summary>
         /// Tests whether two <see cref='SizeI'/> objects are identical.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(SizeI sz1, SizeI sz2) =>
             sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
         /// Tests whether two <see cref='SizeI'/> objects are different.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(SizeI sz1, SizeI sz2) =>
             !(sz1 == sz2);
 

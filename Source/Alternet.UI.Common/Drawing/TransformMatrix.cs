@@ -15,6 +15,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
         /// as the identity matrix.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TransformMatrix()
             : this(NativeDrawing.Default.CreateTransformMatrix())
         {
@@ -36,6 +37,7 @@ namespace Alternet.Drawing
         /// new <see cref="TransformMatrix"/>.</param>
         /// <param name="dy">The value in the third row and second column of the
         /// new <see cref="TransformMatrix"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TransformMatrix(
             double m11,
             double m12,
@@ -59,6 +61,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class.
         /// </summary>
         /// <param name="nativeMatrix">Native transform matrix instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TransformMatrix(object nativeMatrix)
         {
             NativeObject = nativeMatrix;

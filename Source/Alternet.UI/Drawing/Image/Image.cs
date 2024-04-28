@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
+
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -27,6 +29,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="stream">Stream with bitmap.</param>
         /// <param name="bitmapType">Type of the bitmap.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(Stream stream, BitmapType bitmapType = BitmapType.Any)
         {
             nativeImage = NativeDrawing.Default.CreateImage();
@@ -39,6 +42,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageSet">Source of the image.</param>
         /// <param name="control">Control used to get dpi.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(ImageSet imageSet, Control control)
         {
             nativeImage = NativeDrawing.Default.CreateImage();
@@ -52,6 +56,7 @@ namespace Alternet.Drawing
         /// <param name="original">The <see cref="Image" /> from which to create the new image.</param>
         /// <param name="newSize">The <see cref="SizeI" /> structure that represent the
         /// size of the new image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(Image original, SizeI newSize)
         {
             nativeImage = NativeDrawing.Default.CreateImageFromImage(original.NativeObject, newSize);
@@ -67,6 +72,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(GenericImage genericImage, int depth = -1)
         {
             nativeImage = NativeDrawing.Default.CreateImageFromGenericImage(genericImage.Handle, depth);
@@ -78,6 +84,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         /// <param name="control">The control from which pixel scaling factor is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(SizeI size, Control control)
             : this(size)
         {
@@ -91,6 +98,7 @@ namespace Alternet.Drawing
         /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(int width, int height, Graphics dc)
         {
             nativeImage = NativeDrawing.Default.CreateImageFromGraphics(width, height, dc.NativeObject);
@@ -108,6 +116,7 @@ namespace Alternet.Drawing
         /// must be valid, but inherits the scaling factor from the given device context
         /// instead of simply using the default factor of 1.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(GenericImage genericImage, Graphics dc)
         {
             nativeImage = NativeDrawing.Default.CreateImageFromGraphicsAndGenericImage(
@@ -120,6 +129,7 @@ namespace Alternet.Drawing
         /// the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(Stream? stream)
         {
             nativeImage = NativeDrawing.Default.CreateImage();
@@ -140,6 +150,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(int width, int height, int depth = 32)
             : this(new SizeI(width, height), depth)
         {
@@ -151,6 +162,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(double width, double height)
             : this((int)width, (int)height)
         {
@@ -166,6 +178,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(SizeI size, int depth = 32)
         {
             nativeImage = NativeDrawing.Default.CreateImageWithSizeAndDepth(size, depth);
@@ -177,6 +190,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageSet">Source of the image.</param>
         /// <param name="size">Size of the image in device pixels.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(ImageSet imageSet, SizeI size)
         {
             nativeImage = NativeDrawing.Default.CreateImage();
@@ -187,6 +201,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
         /// <param name="url">Url to the image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(string url)
         {
             nativeImage = NativeDrawing.Default.CreateImage();
@@ -209,6 +224,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image()
             : this(SizeI.Empty)
         {
@@ -218,6 +234,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
         /// <param name="nativeImage">Native image instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(object nativeImage)
         {
             this.nativeImage = nativeImage;
@@ -429,6 +446,7 @@ namespace Alternet.Drawing
         /// <param name="image">The image to test.</param>
         /// <returns><c>true</c> if the <paramref name="image"/> parameter is <c>null</c> or
         /// has an empty width (or height); otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNullOrEmpty([NotNullWhen(false)] Image? image)
         {
             return (image is null) || image.IsEmpty;
@@ -440,6 +458,7 @@ namespace Alternet.Drawing
         /// <param name="image">The image to test.</param>
         /// <returns><c>true</c> if the <paramref name="image"/> parameter is not <c>null</c> and
         /// has non-empty width and height; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNotNullAndOk([NotNullWhen(true)] Image? image)
         {
             return (image is not null) && image.IsOk;
