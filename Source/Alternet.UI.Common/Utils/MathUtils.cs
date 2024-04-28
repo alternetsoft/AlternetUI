@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -18,6 +19,23 @@ namespace Alternet.UI
         public const double DegToRad = Math.PI / 180;
 
         /// <summary>
+        /// Gets high <see cref="short"/> of the <see cref="int"/> value.
+        /// </summary>
+        /// <param name="n">Integer value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short HighInt16(int n) =>
+            unchecked((short)((n >> 16) & 0xffff));
+
+        /// <summary>
+        /// Gets low <see cref="short"/> of the <see cref="int"/> value.
+        /// </summary>
+        /// <param name="n">Integer value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short LowInt16(int n) => unchecked((short)(n & 0xffff));
+
+        /// <summary>
         /// Maps value from range specified by
         /// (<paramref name="fromLow"/>, <paramref name="fromHigh"/>)
         /// to range specified by
@@ -29,6 +47,7 @@ namespace Alternet.UI
         /// <param name="toLow"></param>
         /// <param name="toHigh"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double MapRanges(
             double value,
             double fromLow,
@@ -46,6 +65,7 @@ namespace Alternet.UI
         /// <param name="y2">Y coordinate of the second point.</param>
         /// <returns><see cref="double"/> value with distance between point (x1, y1) and
         /// point (x2, y2).</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetDistance(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
@@ -57,6 +77,7 @@ namespace Alternet.UI
         /// <param name="value">Value.</param>
         /// <param name="percent">Value from 0 to 100.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double PercentOf(double value, double percent)
         {
             double result = (percent / 100) * value;
