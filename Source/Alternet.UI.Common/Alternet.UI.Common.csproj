@@ -20,6 +20,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Nullable>enable</Nullable>
     <LangVersion>11.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

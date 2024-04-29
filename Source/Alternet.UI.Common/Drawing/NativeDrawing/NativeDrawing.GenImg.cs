@@ -86,16 +86,25 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the width of the native generic image in pixels.
         /// </summary>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract int GetGenericImageWidth(object genericImage);
 
         /// <summary>
         /// Gets the height of the native generic image in pixels.
         /// </summary>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract int GetGenericImageHeight(object genericImage);
+
+        /// <summary>
+        /// Disposes native generic image.
+        /// </summary>
+        /// <param name="genericImage">Native generic image instance.</param>
+        public abstract void DisposeGenericImage(object genericImage);
 
         /// <summary>
         /// Returns <c>true</c> if image data is present in the native generic image.
         /// </summary>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract bool GetGenericImageIsOk(object genericImage);
 
         /// <summary>
@@ -206,6 +215,7 @@ namespace Alternet.Drawing
         /// This function should only be called if the image has alpha channel data,
         /// use <see cref="HasAlpha"/> to check for this.
         /// </remarks>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract void GenericImageClearAlpha(object genericImage);
 
         /// <summary>
@@ -291,6 +301,7 @@ namespace Alternet.Drawing
         /// Returns an identical copy of this image.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract object GenericImageCopy(object genericImage);
 
         /// <summary>
@@ -311,6 +322,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Destroys the image data.
         /// </summary>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract void GenericImageReset(object genericImage);
 
         /// <summary>
@@ -346,6 +358,7 @@ namespace Alternet.Drawing
         /// alpha data will be by default initialized to all pixels being fully opaque.
         /// But if the image has a mask color, all mask pixels will be completely transparent.
         /// </remarks>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract void GenericImageInitAlpha(object genericImage);
 
         /// <summary>
@@ -481,6 +494,7 @@ namespace Alternet.Drawing
         /// Returns a copy of the image rotated by 180 degrees.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract object GenericImageRotate180(object genericImage);
 
         /// <summary>
@@ -631,6 +645,7 @@ namespace Alternet.Drawing
         /// Returns a greyscale version of the image.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract object GenericImageConvertToGreyscale(object genericImage);
 
         /// <summary>
@@ -737,24 +752,28 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the <see cref="RGBValue"/> value of the mask color.
         /// </summary>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract RGBValue GenericImageGetMaskRGB(object genericImage);
 
         /// <summary>
         /// Gets the red value of the mask color.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract byte GenericImageGetMaskRed(object genericImage);
 
         /// <summary>
         /// Gets the green value of the mask color.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract byte GenericImageGetMaskGreen(object genericImage);
 
         /// <summary>
         /// Gets the blue value of the mask color.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract byte GenericImageGetMaskBlue(object genericImage);
 
         /// <summary>
@@ -788,18 +807,20 @@ namespace Alternet.Drawing
         /// Gets the type of image found when image was loaded or specified when image was saved.
         /// </summary>
         /// <returns></returns>
-        public abstract int GenericImageGetImageType(object genericImage);
+        public abstract BitmapType GenericImageGetImageType(object genericImage);
 
         /// <summary>
         /// Returns <c>true</c> if this image has alpha channel, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract bool GenericImageHasAlpha(object genericImage);
 
         /// <summary>
         /// Returns <c>true</c> if there is a mask active, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract bool GenericImageHasMask(object genericImage);
 
         /// <summary>
@@ -966,6 +987,7 @@ namespace Alternet.Drawing
         /// You should not delete the returned pointer nor pass it to
         /// <see cref="SetNativeData(IntPtr, bool)"/> and similar methods.
         /// </remarks>
+        /// <param name="genericImage">Native generic image instance.</param>
         public abstract IntPtr GenericImageGetNativeData(object genericImage);
 
         /// <summary>
@@ -1048,6 +1070,9 @@ namespace Alternet.Drawing
         /// by the Library, that will be responsible for deleting it. Do not pass to
         /// this function a pointer obtained through GetData().
         /// </remarks>
-        public abstract void GenericImageSetNativeData(object genericImage, IntPtr data, bool staticData = false);
+        public abstract void GenericImageSetNativeData(
+            object genericImage,
+            IntPtr data,
+            bool staticData = false);
     }
 }

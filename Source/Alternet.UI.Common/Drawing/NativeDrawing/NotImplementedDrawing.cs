@@ -757,7 +757,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override int GenericImageGetImageType(object genericImage)
+        public override void DisposeGenericImage(object genericImage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override BitmapType GenericImageGetImageType(object genericImage)
         {
             throw new NotImplementedException();
         }
