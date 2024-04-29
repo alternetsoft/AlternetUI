@@ -1,6 +1,7 @@
 using Alternet.Drawing;
 using Alternet.UI;
 using System;
+using Alternet.UI.Extensions;
 
 namespace PaintSample
 {

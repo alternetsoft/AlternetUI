@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
+using Alternet.UI.Extensions;
 
 namespace Alternet.Drawing
 {

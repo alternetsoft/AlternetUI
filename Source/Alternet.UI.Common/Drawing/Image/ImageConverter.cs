@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+
+using Alternet.UI;
 using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
@@ -35,11 +37,16 @@ namespace Alternet.Drawing
             if (uri.IsAbsoluteUri && uri.IsFile)
             {
                 using var stream = File.OpenRead(uri.LocalPath);
-                return new Bitmap(stream);
+                return new Image(stream);
             }
 
             var assets = new UI.ResourceLoader();
-            return new Bitmap(assets.Open(uri, context.GetContextBaseUri()));
+            return new Image(assets.Open(uri, GetContextBaseUri(context)));
+
+            Uri? GetContextBaseUri(IServiceProvider? ctx)
+                => GetService<IUixmlUriContext>(ctx)?.BaseUri;
+
+            T? GetService<T>(IServiceProvider? sp) => (T?)sp?.GetService(typeof(T));
         }
     }
 }

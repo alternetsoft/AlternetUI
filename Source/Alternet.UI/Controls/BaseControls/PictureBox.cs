@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -131,7 +132,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets <see cref="Graphics"/> for the <see cref="Image"/> on which
         /// you can paint.
         /// </summary>
@@ -142,7 +143,7 @@ namespace Alternet.UI
             {
                 return Image?.GetDrawingContext();
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets or sets whether to center image vertically in the control rectangle.

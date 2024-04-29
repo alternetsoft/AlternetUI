@@ -11,6 +11,8 @@ namespace Alternet.Drawing
 {
     public partial class NativeDrawing
     {
+        public abstract object ImageConvertToGenericImage(object nativeImage);
+
         /// <summary>
         /// Creates native image.
         /// </summary>

@@ -22,8 +22,21 @@ namespace Alternet.Drawing
         /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(int width, int height, Graphics dc)
-            : base(width, height, dc)
+            : base(NativeDrawing.Default.CreateImageFromGraphics(width, height, dc.NativeObject))
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
+        /// <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="size">Size of the image in device pixels.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Bitmap(ImageSet imageSet, SizeI size)
+            : base(size)
+        {
+            imageSet.NativeImageSet.InitImage((UI.Native.Image)NativeObject, size.Width, size.Height);
         }
 
         /// <summary>
@@ -34,8 +47,9 @@ namespace Alternet.Drawing
         /// <param name="control">Control used to get dpi.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(ImageSet imageSet, Control control)
-            : base(imageSet, control)
         {
+            NativeObject = NativeDrawing.Default.CreateImage();
+            imageSet.NativeImageSet.InitImageFor((UI.Native.Image)NativeObject, control.WxWidget);
         }
 
         /// <summary>
@@ -63,7 +77,9 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(GenericImage genericImage, Graphics dc)
-            : base(genericImage, dc)
+            : base(NativeDrawing.Default.CreateImageFromGraphicsAndGenericImage(
+                genericImage.Handle,
+                dc.NativeObject))
         {
         }
 
@@ -144,20 +160,9 @@ namespace Alternet.Drawing
         /// <param name="control">The control from which pixel scaling factor is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(SizeI size, Control control)
-            : base(size, control)
+            : base(size)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
-        /// <see cref="ImageSet"/>.
-        /// </summary>
-        /// <param name="imageSet">Source of the image.</param>
-        /// <param name="size">Size of the image in device pixels.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(ImageSet imageSet, SizeI size)
-            : base(imageSet, size)
-        {
+            ScaleFactor = control.GetPixelScaleFactor();
         }
 
         /// <summary>
@@ -228,10 +233,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="Graphics"/> which allows to draw on the image.
+        /// Same as <see cref="GetDrawingContext"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Graphics Canvas => GetDrawingContext();
+
+        /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Bitmap'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Bitmap(GenericImage image) => new(image);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <remarks>
+        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBar.GetDefaultImageSize(double)"/>
+        /// to get appropriate image size which is best suitable for toolbars.
+        /// </remarks>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.</param>
+        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI.</param>
+        /// <returns><see cref="Image"/> instance loaded from Svg data for use
+        /// on the toolbars.</returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static Image FromSvgUrlForToolbar(string url, Control control, Color? color = null)
+        {
+            SizeD deviceDpi = control.GetDPI();
+            var width = ToolBar.GetDefaultImageSize(deviceDpi.Width);
+            var height = ToolBar.GetDefaultImageSize(deviceDpi.Height);
+            var result = Image.FromSvgUrl(url, width, height, color);
+            return result;
+        }
 
         /// <summary>
         /// Creates a clone of this image with fully copied image data.
@@ -241,6 +279,16 @@ namespace Alternet.Drawing
         public new Bitmap Clone()
         {
             return new Bitmap(this);
+        }
+
+        /// <summary>
+        /// Gets <see cref="Graphics"/> for this image on which you can paint.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Graphics GetDrawingContext()
+        {
+            var dc = WxGraphics.FromImage(this);
+            return dc;
         }
     }
 }

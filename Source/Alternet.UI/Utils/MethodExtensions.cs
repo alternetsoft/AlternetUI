@@ -16,6 +16,22 @@ namespace Alternet.UI.Extensions
     public static class MethodExtensions
     {
         /// <summary>
+        /// Gets the size of the image in device-independent units (1/96th inch
+        /// per unit).
+        /// </summary>
+        public static SizeD SizeDip(this Image image, Control control)
+            => control.PixelToDip(image.PixelSize);
+
+        /// <summary>
+        /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
+        /// </summary>
+        public static RectD BoundsDip(this Image image, Control control)
+        {
+            var size = SizeDip(image, control);
+            return (0, 0, size.Width, size.Height);
+        }
+
+        /// <summary>
         /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
         /// filled with this color.
         /// </summary>

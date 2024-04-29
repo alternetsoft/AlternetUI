@@ -14,6 +14,11 @@ namespace Alternet.Drawing
 {
     public partial class SkiaDrawing : NativeDrawing
     {
+        public override object ImageConvertToGenericImage(object nativeImage)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         public override bool GetImageIsOk(object image)
         {

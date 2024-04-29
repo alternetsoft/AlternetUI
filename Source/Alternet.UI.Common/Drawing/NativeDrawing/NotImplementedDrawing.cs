@@ -1046,5 +1046,15 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override object ImageConvertToGenericImage(object nativeImage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateTextureBrush(TextureBrush brush)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

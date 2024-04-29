@@ -1,4 +1,5 @@
 #nullable disable
+#pragma warning disable
 using System;
 
 namespace Alternet.UI.Markup
@@ -44,18 +45,4 @@ namespace Alternet.UI.Markup
         /// </summary>
         Uri BaseUri { get; set; }
     }
-    
-    //internal interface IXamlTypeResolver
-    //{
-    //    Type Resolve (string qualifiedTypeName);
-    //}
-
-    
-    //internal class ConstructorArgumentAttribute : Attribute
-    //{
-    //    public ConstructorArgumentAttribute(string name)
-    //    {
-            
-    //    }
-    //}
 }

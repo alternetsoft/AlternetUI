@@ -11,6 +11,11 @@ namespace Alternet.Drawing
 {
     internal partial class WxDrawing
     {
+        public override object ImageConvertToGenericImage(object nativeImage)
+        {
+            return ((UI.Native.Image)nativeImage).ConvertToGenericImage();
+        }
+
         /// <inheritdoc/>
         public override object CreateImage()
         {

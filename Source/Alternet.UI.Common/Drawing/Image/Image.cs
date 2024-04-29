@@ -30,23 +30,10 @@ namespace Alternet.Drawing
         /// <param name="stream">Stream with bitmap.</param>
         /// <param name="bitmapType">Type of the bitmap.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(Stream stream, BitmapType bitmapType = BitmapType.Any)
+        public Image(Stream stream, BitmapType bitmapType = BitmapType.Any)
         {
             nativeImage = NativeDrawing.Default.CreateImage();
             Load(stream, bitmapType);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class with the image from
-        /// <see cref="ImageSet"/>.
-        /// </summary>
-        /// <param name="imageSet">Source of the image.</param>
-        /// <param name="control">Control used to get dpi.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(ImageSet imageSet, Control control)
-        {
-            nativeImage = NativeDrawing.Default.CreateImage();
-            imageSet.NativeImageSet.InitImageFor((UI.Native.Image)NativeObject, control.WxWidget);
         }
 
         /// <summary>
@@ -76,52 +63,6 @@ namespace Alternet.Drawing
         protected Image(GenericImage genericImage, int depth = -1)
         {
             nativeImage = NativeDrawing.Default.CreateImageFromGenericImage(genericImage.Handle, depth);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class with the specified size
-        /// amd scaling factor from the <paramref name="control"/>.
-        /// </summary>
-        /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
-        /// <param name="control">The control from which pixel scaling factor is used.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(SizeI size, Control control)
-            : this(size)
-        {
-            ScaleFactor = control.GetPixelScaleFactor();
-        }
-
-        /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="Graphics"/>, inheriting
-        /// its magnification factor.
-        /// </summary>
-        /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
-        /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
-        /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(int width, int height, Graphics dc)
-        {
-            nativeImage = NativeDrawing.Default.CreateImageFromGraphics(width, height, dc.NativeObject);
-        }
-
-        /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="Graphics"/> from
-        /// the given <see cref="GenericImage"/>.
-        /// </summary>
-        /// <param name="genericImage">Platform-independent image object.</param>
-        /// <param name="dc"><see cref="Graphics"/> from which the scaling
-        /// factor is inherited.</param>
-        /// <remarks>
-        /// This constructor initializes the bitmap with the data of the given image, which
-        /// must be valid, but inherits the scaling factor from the given device context
-        /// instead of simply using the default factor of 1.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(GenericImage genericImage, Graphics dc)
-        {
-            nativeImage = NativeDrawing.Default.CreateImageFromGraphicsAndGenericImage(
-                genericImage.Handle,
-                dc.NativeObject);
         }
 
         /// <summary>
@@ -185,19 +126,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class with the image from
-        /// <see cref="ImageSet"/>.
-        /// </summary>
-        /// <param name="imageSet">Source of the image.</param>
-        /// <param name="size">Size of the image in device pixels.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(ImageSet imageSet, SizeI size)
-        {
-            nativeImage = NativeDrawing.Default.CreateImage();
-            imageSet.NativeImageSet.InitImage((UI.Native.Image)NativeObject, size.Width, size.Height);
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
         /// <param name="url">Url to the image.</param>
@@ -208,7 +136,7 @@ namespace Alternet.Drawing
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                Application.LogError($"Image not loaded from: {url}");
+                BaseApplication.LogError($"Image not loaded from: {url}");
                 return;
             }
 
@@ -216,7 +144,7 @@ namespace Alternet.Drawing
 
             if (!result)
             {
-                Application.LogError($"Image not loaded from: {url}");
+                BaseApplication.LogError($"Image not loaded from: {url}");
                 return;
             }
         }
@@ -244,7 +172,6 @@ namespace Alternet.Drawing
         /// Gets default <see cref="BitmapType"/> value for the current operating system.
         /// </summary>
         /// <returns></returns>
-            // !!
         public static BitmapType DefaultBitmapType => NativeDrawing.Default.GetDefaultBitmapType();
 
         /// <summary>
@@ -255,7 +182,8 @@ namespace Alternet.Drawing
         {
             get
             {
-                return new GenericImage(((UI.Native.Image)NativeObject).ConvertToGenericImage());
+                var nativeGenericImage = NativeDrawing.Default.ImageConvertToGenericImage(NativeObject);
+                return new GenericImage(nativeGenericImage);
             }
         }
 
@@ -295,13 +223,6 @@ namespace Alternet.Drawing
                 NativeDrawing.Default.SetImageHasAlpha(NativeObject, value);
             }
         }
-
-        /// <summary>
-        /// Gets <see cref="Graphics"/> which allows to draw on the image.
-        /// Same as <see cref="GetDrawingContext"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Graphics Canvas => GetDrawingContext();
 
         /// <summary>
         /// Gets image width in pixels.
@@ -431,12 +352,20 @@ namespace Alternet.Drawing
             }
         }
 
-        internal object NativeObject
+        /// <summary>
+        /// Gets native image.
+        /// </summary>
+        public object NativeObject
         {
             get
             {
                 CheckDisposed();
                 return nativeImage;
+            }
+
+            protected set
+            {
+                nativeImage = value;
             }
         }
 
@@ -444,7 +373,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Image(GenericImage image) => new Bitmap(image);
+        public static explicit operator Image(GenericImage image) => new(image);
 
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
@@ -494,7 +423,7 @@ namespace Alternet.Drawing
         public static Image FromUrl(string url)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
-            return new Bitmap(stream);
+            return new Image(stream);
         }
 
         /// <summary>
@@ -527,32 +456,6 @@ namespace Alternet.Drawing
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
             var result = FromSvgStream(stream, width, height, color);
-            return result;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class
-        /// from the specified url which points to svg file or resource.
-        /// </summary>
-        /// <remarks>
-        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="ToolBar.GetDefaultImageSize(double)"/>
-        /// to get appropriate image size which is best suitable for toolbars.
-        /// </remarks>
-        /// <param name="url">The file or embedded resource url with Svg data used
-        /// to load the image.</param>
-        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
-        /// is used to get DPI.</param>
-        /// <returns><see cref="Image"/> instance loaded from Svg data for use
-        /// on the toolbars.</returns>
-        /// <param name="color">Svg fill color. Optional.
-        /// If provided, svg fill color is changed to the specified value.</param>
-        public static Image FromSvgUrlForToolbar(string url, Control control, Color? color = null)
-        {
-            SizeD deviceDpi = control.GetDPI();
-            var width = ToolBar.GetDefaultImageSize(deviceDpi.Width);
-            var height = ToolBar.GetDefaultImageSize(deviceDpi.Height);
-            var result = Image.FromSvgUrl(url, width, height, color);
             return result;
         }
 
@@ -595,7 +498,7 @@ namespace Alternet.Drawing
                 width,
                 height,
                 color);
-            var result = new Bitmap(nativeImage);
+            var result = new Image(nativeImage);
             return result;
         }
 
@@ -613,7 +516,7 @@ namespace Alternet.Drawing
         public static Image FromSvgString(string s, int width, int height, Color? color = null)
         {
             var nativeImage = NativeDrawing.Default.CreateImageFromSvgString(s, width, height, color);
-            var result = new Bitmap(nativeImage);
+            var result = new Image(nativeImage);
             return result;
         }
 
@@ -756,7 +659,7 @@ namespace Alternet.Drawing
         public virtual Image GetSubBitmap(RectI rect)
         {
             var converted = NativeDrawing.Default.ImageGetSubBitmap(NativeObject, rect);
-            return new Bitmap(converted);
+            return new Image(converted);
         }
 
         /// <summary>
@@ -770,15 +673,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
-        /// </summary>
-        public virtual RectD BoundsDip(Control control)
-        {
-            var size = SizeDip(control);
-            return (0, 0, size.Width, size.Height);
-        }
-
-        /// <summary>
         /// Returns disabled (dimmed) version of the image.
         /// </summary>
         /// <param name="brightness">Brightness. Default is 255.</param>
@@ -786,7 +680,7 @@ namespace Alternet.Drawing
         public virtual Image ConvertToDisabled(byte brightness = 255)
         {
             var converted = NativeDrawing.Default.ImageConvertToDisabled(NativeObject, brightness);
-            return new Bitmap(converted);
+            return new Image(converted);
         }
 
         /// <summary>
@@ -815,29 +709,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="Graphics"/> for this image on which you can paint.
-        /// </summary>
-        /// <returns></returns>
-        public virtual Graphics GetDrawingContext()
-        {
-            var dc = WxGraphics.FromImage(this);
-            return dc;
-        }
-
-        /// <summary>
-        /// Gets the size of the image in device-independent units (1/96th inch
-        /// per unit).
-        /// </summary>
-        public virtual SizeD SizeDip(Control control)
-            => control.PixelToDip(NativeDrawing.Default.GetImagePixelSize(NativeObject));
-
-        /// <summary>
         /// Creates a clone of this image with fully copied image data.
         /// </summary>
         /// <returns></returns>
         public virtual Image Clone()
         {
-            return new Bitmap(this);
+            return new Image(this);
         }
 
         /// <summary>
@@ -850,7 +727,7 @@ namespace Alternet.Drawing
             {
                 var generic = (GenericImage)this;
                 generic.ChangeToGrayScale();
-                return (Bitmap)generic;
+                return (Image)generic;
             }
             else
             {

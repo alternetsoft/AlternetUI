@@ -10,6 +10,8 @@ namespace Alternet.Drawing
 {
     public partial class NativeDrawing
     {
+        public abstract void UpdateTextureBrush(TextureBrush brush);
+
         /// <summary>
         /// Creates native transparent brush.
         /// </summary>

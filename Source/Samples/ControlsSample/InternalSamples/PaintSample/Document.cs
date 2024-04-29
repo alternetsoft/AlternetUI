@@ -2,6 +2,7 @@ using Alternet.Drawing;
 using System;
 using System.IO;
 using Alternet.UI;
+using Alternet.UI.Extensions;
 
 namespace PaintSample
 {
@@ -10,7 +11,7 @@ namespace PaintSample
         private readonly Control control;
         private bool isDisposed;
 
-        private Image? bitmap;
+        private Bitmap? bitmap;
 
         private Action<Graphics>? previewAction;
 
@@ -61,7 +62,7 @@ namespace PaintSample
 
         public event EventHandler? Changed;
 
-        public Image Bitmap
+        public Bitmap Bitmap
         {
             get => bitmap ?? throw new Exception();
             set

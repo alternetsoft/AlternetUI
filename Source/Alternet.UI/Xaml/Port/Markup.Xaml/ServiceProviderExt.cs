@@ -7,10 +7,9 @@ using Alternet.UI.Markup;
 
 namespace Alternet.UI.Markup
 {
-    internal static class Extensions
+    internal static class ServiceProviderExt
     {
         public static T GetService<T>(this IServiceProvider sp) => (T)sp?.GetService(typeof(T));
-        
         
         public static Uri GetContextBaseUri(this IServiceProvider ctx) => ctx.GetService<IUixmlUriContext>().BaseUri;
 
@@ -23,8 +22,6 @@ namespace Alternet.UI.Markup
         public static IEnumerable<T> GetParents<T>(this IServiceProvider sp)
         {
             return sp.GetService<IUixmlPortXamlIlParentStackProvider>().Parents.OfType<T>();
-            
-            
         }
 
         public static Type ResolveType(this IServiceProvider ctx, string namespacePrefix, string type)
