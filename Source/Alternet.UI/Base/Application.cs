@@ -38,7 +38,7 @@ namespace Alternet.UI
 
         static Application()
         {
-            WxDrawing.Initialize();
+            WxPlatform.Initialize();
         }
 
         /// <summary>
