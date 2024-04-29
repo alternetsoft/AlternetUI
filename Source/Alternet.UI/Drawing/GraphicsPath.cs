@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
 {
@@ -19,25 +20,19 @@ namespace Alternet.Drawing
     /// The starting and ending points of a geometric shape primitive are defined by
     /// the primitive specification.
     /// </remarks>
-    public sealed class GraphicsPath : IDisposable
+    public sealed class GraphicsPath : GraphicsObject
     {
-        private bool isDisposed;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GraphicsPath(Graphics drawingContext)
-            : this(new UI.Native.GraphicsPath())
         {
             if (drawingContext is null)
                 throw new ArgumentNullException(nameof(drawingContext));
 
-            NativePath.Initialize((UI.Native.DrawingContext)drawingContext.NativeObject);
-        }
-
-        private GraphicsPath(UI.Native.GraphicsPath nativePath)
-        {
-            NativePath = nativePath;
+            ((UI.Native.GraphicsPath)NativeObject)
+                .Initialize((UI.Native.DrawingContext)drawingContext.NativeObject);
         }
 
         /// <summary>
@@ -54,17 +49,15 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return (FillMode)NativePath.FillMode;
+                return NativeDrawing.Default.GraphicsPathGetFillMode(NativeObject);
             }
 
             set
             {
                 CheckDisposed();
-                NativePath.FillMode = (UI.Native.FillMode)value;
+                NativeDrawing.Default.GraphicsPathSetFillMode(NativeObject, value);
             }
         }
-
-        internal UI.Native.GraphicsPath NativePath { get; private set; }
 
         /// <summary>
         /// Appends a series of connected line segments to the end of this <see cref="GraphicsPath"/>.
@@ -82,10 +75,11 @@ namespace Alternet.Drawing
         /// the endpoint of a line segment
         /// whose starting point is the endpoint of the previous line.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddLines(PointD[] points)
         {
             CheckDisposed();
-            NativePath.AddLines(points);
+            NativeDrawing.Default.GraphicsPathAddLines(NativeObject, points);
         }
 
         /// <summary>
@@ -102,10 +96,11 @@ namespace Alternet.Drawing
         /// segment is drawn to connect the last point in the
         /// path to the first point in the new line segment.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddLine(PointD pt1, PointD pt2)
         {
             CheckDisposed();
-            NativePath.AddLine(pt1, pt2);
+            NativeDrawing.Default.GraphicsPathAddLine(NativeObject, pt1, pt2);
         }
 
         /// <summary>
@@ -118,10 +113,11 @@ namespace Alternet.Drawing
         /// are no previous lines or curves in the <see cref="GraphicsPath"/>,
         /// a line segment is drawn for the (0, 0) point.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddLineTo(PointD pt)
         {
             CheckDisposed();
-            NativePath.AddLineTo(pt);
+            NativeDrawing.Default.GraphicsPathAddLineTo(NativeObject, pt);
         }
 
         /// <summary>
@@ -129,10 +125,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">A <see cref="RectD"/> that represents the bounding
         /// rectangle that defines the ellipse.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddEllipse(RectD rect)
         {
             CheckDisposed();
-            NativePath.AddEllipse(rect);
+            NativeDrawing.Default.GraphicsPathAddEllipse(NativeObject, rect);
         }
 
         /// <summary>
@@ -153,6 +150,7 @@ namespace Alternet.Drawing
         /// a line is added to connect
         /// the endpoint of the previous segment to the starting point of the cubic curve.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddBezier(
             PointD startPoint,
             PointD controlPoint1,
@@ -160,7 +158,12 @@ namespace Alternet.Drawing
             PointD endPoint)
         {
             CheckDisposed();
-            NativePath.AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
+            NativeDrawing.Default.GraphicsPathAddBezier(
+                NativeObject,
+                startPoint,
+                controlPoint1,
+                controlPoint2,
+                endPoint);
         }
 
         /// <summary>
@@ -179,10 +182,15 @@ namespace Alternet.Drawing
         /// a line is added to connect
         /// the endpoint of the previous segment to the starting point of the cubic curve.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddBezierTo(PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             CheckDisposed();
-            NativePath.AddBezierTo(controlPoint1, controlPoint2, endPoint);
+            NativeDrawing.Default.GraphicsPathAddBezierTo(
+                NativeObject,
+                controlPoint1,
+                controlPoint2,
+                endPoint);
         }
 
         /// <summary>
@@ -206,20 +214,27 @@ namespace Alternet.Drawing
         /// number of degrees in the sweep
         /// angle.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddArc(PointD center, double radius, double startAngle, double sweepAngle)
         {
             CheckDisposed();
-            NativePath.AddArc(center, radius, startAngle, sweepAngle);
+            NativeDrawing.Default.GraphicsPathAddArc(
+                NativeObject,
+                center,
+                radius,
+                startAngle,
+                sweepAngle);
         }
 
         /// <summary>
         /// Adds a rectangle to this path.
         /// </summary>
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddRectangle(RectD rect)
         {
             CheckDisposed();
-            NativePath.AddRectangle(rect);
+            NativeDrawing.Default.GraphicsPathAddRectangle(NativeObject, rect);
         }
 
         /// <summary>
@@ -227,10 +242,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddRoundedRectangle(RectD rect, double cornerRadius)
         {
             CheckDisposed();
-            NativePath.AddRoundedRectangle(rect, cornerRadius);
+            NativeDrawing.Default.GraphicsPathAddRoundedRectangle(NativeObject, rect, cornerRadius);
         }
 
         /// <summary>
@@ -238,20 +254,22 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A <see cref="RectD"/> that represents a rectangle that bounds this
         /// <see cref="GraphicsPath"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD GetBounds()
         {
             CheckDisposed();
-            return NativePath.GetBounds();
+            return NativeDrawing.Default.GraphicsPathGetBounds(NativeObject);
         }
 
         /// <summary>
         /// Starts a new figure without closing the current figure. All subsequent points
         /// added to the path are added to this new figure.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void StartFigure(PointD point)
         {
             CheckDisposed();
-            NativePath.StartFigure(point);
+            NativeDrawing.Default.GraphicsPathStartFigure(NativeObject, point);
         }
 
         /// <summary>
@@ -260,42 +278,17 @@ namespace Alternet.Drawing
         /// lines and curves, the method closes the loop by connecting a line from the
         /// endpoint to the starting point.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void CloseFigure()
         {
             CheckDisposed();
-            NativePath.CloseFigure();
+            NativeDrawing.Default.GraphicsPathCloseFigure(NativeObject);
         }
 
-        /// <summary>
-        /// Releases all resources used by this <see cref="GraphicsPath"/>.
-        /// </summary>
-        public void Dispose()
+        /// <inheritdoc/>
+        protected override object CreateNativeObject()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
-        /// </summary>
-        private void CheckDisposed()
-        {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    NativePath.Dispose();
-                    NativePath = null!;
-                }
-
-                isDisposed = true;
-            }
+            return NativeDrawing.Default.CreateGraphicsPath();
         }
     }
 }

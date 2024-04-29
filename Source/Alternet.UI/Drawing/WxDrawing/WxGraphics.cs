@@ -274,7 +274,7 @@ namespace Alternet.Drawing
             dc.Path(
                 (UI.Native.Pen)pen.NativeObject,
                 (UI.Native.Brush)brush.NativeObject,
-                path.NativePath);
+                (UI.Native.GraphicsPath)path.NativeObject);
         }
 
         /// <inheritdoc/>
@@ -495,14 +495,14 @@ namespace Alternet.Drawing
         public override void DrawPath(Pen pen, GraphicsPath path)
         {
             DebugPenAssert(pen);
-            dc.DrawPath((UI.Native.Pen)pen.NativeObject, path.NativePath);
+            dc.DrawPath((UI.Native.Pen)pen.NativeObject, (UI.Native.GraphicsPath)path.NativeObject);
         }
 
         /// <inheritdoc/>
         public override void FillPath(Brush brush, GraphicsPath path)
         {
             DebugBrushAssert(brush);
-            dc.FillPath((UI.Native.Brush)brush.NativeObject, path.NativePath);
+            dc.FillPath((UI.Native.Brush)brush.NativeObject, (UI.Native.GraphicsPath)path.NativeObject);
         }
 
         /// <inheritdoc/>

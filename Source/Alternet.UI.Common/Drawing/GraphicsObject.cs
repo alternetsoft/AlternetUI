@@ -28,6 +28,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="GraphicsObject"/> class.
+        /// </summary>
+        protected GraphicsObject()
+        {
+        }
+
+        /// <summary>
         /// Gets whether this object is immutable (properties are readonly).
         /// </summary>
         [Browsable(false)]
@@ -71,7 +78,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Updates native object.
         /// </summary>
-        protected abstract void UpdateNativeObject();
+        protected virtual void UpdateNativeObject()
+        {
+        }
 
         /// <inheritdoc/>
         protected override void DisposeManagedResources()

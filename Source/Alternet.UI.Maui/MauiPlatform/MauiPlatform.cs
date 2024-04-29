@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public class MauiPlatform : NativePlatform
+    public partial class MauiPlatform : NativePlatform
     {
         private static bool initialized;
 
