@@ -1,20 +1,22 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Describes the interior of a graphics shape composed of rectangles and paths. This class cannot be inherited.
+    /// Describes the interior of a graphics shape composed of rectangles and paths.
     /// </summary>
-    public sealed class Region : IDisposable
+    public class Region : IDisposable
     {
         private bool isDisposed;
 
         /// <summary>
         /// This constructor creates an invalid (empty, null) <see cref="Region"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region()
         {
-            NativeRegion = new UI.Native.Region();
+            NativeObject = NativeDrawing.Default.CreateRegion();
         }
 
         /// <summary>
@@ -22,10 +24,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">A <see cref="RectD"/> structure that defines the interior
         /// of the new <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(RectD rect)
         {
-            NativeRegion = new UI.Native.Region();
-            NativeRegion.InitializeWithRect(rect);
+            NativeObject = NativeDrawing.Default.CreateRegion(rect);
         }
 
         /// <summary>
@@ -33,10 +35,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="region">A <see cref="Region"/> that defines the interior
         /// of the new <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(Region region)
         {
-            NativeRegion = new UI.Native.Region();
-            NativeRegion.InitializeWithRegion(region.NativeRegion);
+            NativeObject = NativeDrawing.Default.CreateRegion(region.NativeObject);
         }
 
         /// <summary>
@@ -46,36 +48,44 @@ namespace Alternet.Drawing
         /// <param name="points">A <see cref="PointD"/> structures array
         /// describing the polygon.</param>
         /// <param name="fillMode">The polygon fill mode.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(PointD[] points, FillMode fillMode = FillMode.Alternate)
         {
-            NativeRegion = new UI.Native.Region();
-            NativeRegion.InitializeWithPolygon(points, (UI.Native.FillMode)fillMode);
+            NativeObject = NativeDrawing.Default.CreateRegion(points, fillMode);
         }
 
-        internal Region(UI.Native.Region region)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Region"/> class.
+        /// </summary>
+        /// <param name="region">Native region instance.</param>
+        public Region(object region)
         {
-            NativeRegion = region;
+            NativeObject = region;
         }
 
         /// <summary>
         /// Returns true if the region is empty, false otherwise.
         /// </summary>
-        public bool IsEmpty => isDisposed || NativeRegion.IsEmpty();
+        public bool IsEmpty => isDisposed || NativeDrawing.Default.RegionIsEmpty(NativeObject);
 
         /// <summary>
         /// Returns true if the region is ok, false otherwise.
         /// </summary>
-        public bool IsOk => !isDisposed && NativeRegion.IsOk();
+        public bool IsOk => !isDisposed && NativeDrawing.Default.RegionIsOk(NativeObject);
 
-        internal UI.Native.Region NativeRegion { get; private set; }
+        /// <summary>
+        /// Gets native region.
+        /// </summary>
+        public object NativeObject { get; private set; }
 
         /// <summary>
         /// Clears the region.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
             CheckDisposed();
-            NativeRegion.Clear();
+            NativeDrawing.Default.RegionClear(NativeObject);
         }
 
         /// <summary>
@@ -83,10 +93,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="pt">Point to check.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RegionContain Contains(PointD pt)
         {
             CheckDisposed();
-            return (RegionContain)NativeRegion.ContainsPoint(pt);
+            return NativeDrawing.Default.RegionContains(NativeObject, pt);
         }
 
         /// <summary>
@@ -94,10 +105,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">Rectangle to check.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RegionContain Contains(RectD rect)
         {
             CheckDisposed();
-            return (RegionContain)NativeRegion.ContainsRect(rect);
+            return NativeDrawing.Default.RegionContains(NativeObject, rect);
         }
 
         /// <summary>
@@ -106,21 +118,24 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">The <see cref="RectD"/> structure to intersect with this
         /// <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersect(RectD rect)
         {
             CheckDisposed();
-            NativeRegion.IntersectWithRect(rect);
+            NativeDrawing.Default.RegionIntersect(NativeObject, rect);
         }
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the intersection of itself with the
         /// specified <see cref="Region"/>.
         /// </summary>
-        /// <param name="region">The <see cref="Region"/> to intersect with this <see cref="Region"/>.</param>
+        /// <param name="region">The <see cref="Region"/> to intersect
+        /// with this <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersect(Region region)
         {
             CheckDisposed();
-            NativeRegion.IntersectWithRegion(region.NativeRegion);
+            NativeDrawing.Default.RegionIntersect(NativeObject, region.NativeObject);
         }
 
         /// <summary>
@@ -129,10 +144,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">The <see cref="RectD"/> structure to union with
         /// this <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Union(RectD rect)
         {
             CheckDisposed();
-            NativeRegion.UnionWithRect(rect);
+            NativeDrawing.Default.RegionUnion(NativeObject, rect);
         }
 
         /// <summary>
@@ -141,10 +157,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="region">The <see cref="Region"/> to union with this
         /// <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Union(Region region)
         {
             CheckDisposed();
-            NativeRegion.UnionWithRegion(region.NativeRegion);
+            NativeDrawing.Default.RegionUnion(NativeObject, region.NativeObject);
         }
 
         /// <summary>
@@ -153,10 +170,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="region">The <see cref="Region"/> to xor with this
         /// <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Xor(Region region)
         {
             CheckDisposed();
-            NativeRegion.XorWithRegion(region.NativeRegion);
+            NativeDrawing.Default.RegionXor(NativeObject, region.NativeObject);
         }
 
         /// <summary>
@@ -165,10 +183,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">The <see cref="RectD"/> structure to xor with
         /// this <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Xor(RectD rect)
         {
             CheckDisposed();
-            NativeRegion.XorWithRect(rect);
+            NativeDrawing.Default.RegionXor(NativeObject, rect);
         }
 
         /// <summary>
@@ -183,10 +202,11 @@ namespace Alternet.Drawing
         /// This method always fails, i.e.returns false, if this region is invalid but
         /// may nevertheless be safely used even in this case.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Subtract(RectD rect)
         {
             CheckDisposed();
-            NativeRegion.SubtractRect(rect);
+            NativeDrawing.Default.RegionSubtract(NativeObject, rect);
         }
 
         /// <summary>
@@ -201,10 +221,11 @@ namespace Alternet.Drawing
         /// This method always fails, i.e.returns false, if this region is invalid but
         /// may nevertheless be safely used even in this case.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Subtract(Region region)
         {
             CheckDisposed();
-            NativeRegion.SubtractRegion(region.NativeRegion);
+            NativeDrawing.Default.RegionSubtract(NativeObject, region.NativeObject);
         }
 
         /// <summary>
@@ -212,20 +233,22 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="dx">The amount to offset this <see cref="Region"/> horizontally.</param>
         /// <param name="dy">The amount to offset this <see cref="Region"/> vertically.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Translate(double dx, double dy)
         {
             CheckDisposed();
-            NativeRegion.Translate(dx, dy);
+            NativeDrawing.Default.RegionTranslate(NativeObject, dx, dy);
         }
 
         /// <summary>
         /// Gets a <see cref="RectD"/> structure that represents a rectangle that
         /// bounds this <see cref="Region"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD GetBounds()
         {
             CheckDisposed();
-            return NativeRegion.GetBounds();
+            return NativeDrawing.Default.RegionGetBounds(NativeObject);
         }
 
         /// <inheritdoc/>
@@ -236,13 +259,13 @@ namespace Alternet.Drawing
             if (obj is not Region region)
                 return false;
 
-            return NativeRegion.IsEqualTo(region.NativeRegion);
+            return NativeDrawing.Default.RegionEquals(NativeObject, region.NativeObject);
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NativeRegion.GetHashCode_();
+            return NativeDrawing.Default.RegionGetHashCode(NativeObject);
         }
 
         /// <summary>
@@ -269,8 +292,8 @@ namespace Alternet.Drawing
             {
                 if (disposing)
                 {
-                    NativeRegion.Dispose();
-                    NativeRegion = null!;
+                    ((IDisposable)NativeObject).Dispose();
+                    NativeObject = null!;
                 }
 
                 isDisposed = true;

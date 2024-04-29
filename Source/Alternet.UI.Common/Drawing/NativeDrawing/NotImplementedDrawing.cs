@@ -941,5 +941,110 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override object CreateRegion()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateRegion(RectD rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateRegion(object region)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateRegion(PointD[] points, FillMode fillMode = FillMode.Alternate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool RegionIsEmpty(object nativeRegion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool RegionIsOk(object nativeRegion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionClear(object nativeRegion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RegionContain RegionContains(object nativeRegion, PointD pt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RegionContain RegionContains(object nativeRegion, RectD rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionIntersect(object nativeRegion, RectD rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionIntersect(object nativeRegion1, object nativeRegion2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionUnion(object nativeRegion, RectD rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionUnion(object nativeRegion1, object nativeRegion2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionXor(object nativeRegion1, object nativeRegion2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionXor(object nativeRegion, RectD rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionSubtract(object nativeRegion, RectD rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionSubtract(object nativeRegion1, object nativeRegion2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegionTranslate(object nativeRegion, double dx, double dy)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RectD RegionGetBounds(object nativeRegion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool RegionEquals(object nativeRegion1, object nativeRegion2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int RegionGetHashCode(object nativeRegion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
