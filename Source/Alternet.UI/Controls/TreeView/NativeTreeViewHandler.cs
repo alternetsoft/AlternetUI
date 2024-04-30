@@ -544,7 +544,7 @@ namespace Alternet.UI
 
         private void ApplyImageList()
         {
-            NativeControl.ImageList = Control.ImageList?.NativeImageList;
+            NativeControl.ImageList = (UI.Native.ImageList?)Control.ImageList?.NativeObject;
         }
 
         private void ApplyItems()

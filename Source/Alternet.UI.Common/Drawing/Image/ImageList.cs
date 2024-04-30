@@ -8,21 +8,17 @@ namespace Alternet.Drawing
     /// Provides methods to manage a collection of <see cref="Image"/> objects.
     /// </summary>
     /// <remarks>
-    /// ImageList is typically used by other controls, such as the <see cref="Alternet.UI.ListView"/>.
-    /// You can add images to the <see cref="ImageList"/>, and the other controls are
+    /// <see cref="ImageList"/> is used by some controls, such as the tree view and list view.
+    /// You can add images to the <see cref="ImageList"/>, and the controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : BaseComponent, IDisposable
+    public class ImageList : GraphicsObject
     {
-        private bool isDisposed;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageList"/> with default values.
         /// </summary>
-        public ImageList() // todo: lifetime
+        public ImageList()
         {
-            NativeImageList = new UI.Native.ImageList();
-
             Images.ItemInserted += Images_ItemInserted;
             Images.ItemRemoved += Images_ItemRemoved;
         }
@@ -49,8 +45,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public SizeI PixelImageSize
         {
-            get => NativeImageList.PixelImageSize;
-            set => NativeImageList.PixelImageSize = value;
+            get => NativeDrawing.Default.ImageListGetPixelImageSize(NativeObject);
+            set => NativeDrawing.Default.ImageListSetPixelImageSize(NativeObject, value);
         }
 
         /// <summary>
@@ -68,49 +64,24 @@ namespace Alternet.Drawing
         /// </remarks>
         public SizeD ImageSize
         {
-            get => NativeImageList.ImageSize;
-            set => NativeImageList.ImageSize = value;
+            get => NativeDrawing.Default.ImageListGetImageSize(NativeObject);
+            set => NativeDrawing.Default.ImageListSetImageSize(NativeObject, value);
         }
 
-        internal UI.Native.ImageList NativeImageList { get; private set; }
-
-        /// <summary>
-        /// Releases all resources used by the <see cref="ImageList"/> object.
-        /// </summary>
-        public void Dispose()
+        /// <inheritdoc/>
+        protected override object CreateNativeObject()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="ImageList"/> and
-        /// optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    NativeImageList.Dispose();
-                    NativeImageList = null!;
-                }
-
-                isDisposed = true;
-            }
+            return NativeDrawing.Default.CreateImageList();
         }
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
-            NativeImageList.AddImage((UI.Native.Image)item.NativeObject);
+            NativeDrawing.Default.ImageListAdd(NativeObject, index, item);
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
-            // todo
-            throw new NotImplementedException();
+            NativeDrawing.Default.ImageListRemove(NativeObject, index, item);
         }
     }
 }

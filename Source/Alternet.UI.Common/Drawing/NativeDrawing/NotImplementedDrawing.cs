@@ -1061,5 +1061,40 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override SizeI ImageListGetPixelImageSize(object imageList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageListSetPixelImageSize(object imageList, SizeI value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SizeD ImageListGetImageSize(object imageList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageListSetImageSize(object imageList, SizeD value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateImageList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageListAdd(object imageList, int index, Image item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageListRemove(object imageList, int index, Image item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

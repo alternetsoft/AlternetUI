@@ -80,14 +80,14 @@ namespace Alternet.UI
 
             void ConsoleMessageReceived(object? sender, LogMessageEventArgs e)
             {
-                Application.AddIdleTask(() =>
+                BaseApplication.AddIdleTask(() =>
                 {
                     var s = e.Message?.TrimEndEol();
 
                     if (string.IsNullOrWhiteSpace(s))
                         return;
 
-                    Application.Log($"{prefix}{s}");
+                    BaseApplication.Log($"{prefix}{s}");
                 });
             }
         }
