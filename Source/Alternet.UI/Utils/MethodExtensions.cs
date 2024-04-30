@@ -6,15 +6,77 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
-using Alternet.UI;
 
-namespace Alternet.UI.Extensions
+namespace Alternet.UI
 {
     /// <summary>
     /// Contains extension methods for standard classes.
     /// </summary>
     public static class MethodExtensions
     {
+        /// <summary>
+        /// Gets the dimensions of the string using the specified font.
+        /// </summary>
+        /// <param name="graphics">Drawing context.</param>
+        /// <param name="text">The text string to measure.</param>
+        /// <param name="font">The Font used to get text dimensions.</param>
+        /// <param name="control">The control used to get scaling factor. Optional.</param>
+        /// <param name="descent">Dimension from the baseline of the font to
+        /// the bottom of the descender (the size of the tail below the baseline).</param>
+        /// <param name="externalLeading">Any extra vertical space added to the
+        /// font by the font designer (inter-line interval).</param>
+        /// <returns><see cref="SizeD"/> with the total calculated width and height
+        /// of the text.</returns>
+        /// <remarks>
+        /// This function only works with single-line strings.
+        /// It works faster than MeasureText methods.
+        /// </remarks>
+        public static SizeD GetTextExtent(
+            this Graphics graphics,
+            string text,
+            Font font,
+            out double descent,
+            out double externalLeading,
+            Control? control = null)
+        {
+            var dc = (UI.Native.DrawingContext)graphics.NativeObject;
+
+            var result = dc.GetTextExtent(
+                text,
+                (UI.Native.Font)font.NativeObject,
+                control is null ? default : control.WxWidget);
+            descent = result.X;
+            externalLeading = result.Y;
+            return result.Size;
+        }
+
+        /// <summary>
+        /// Gets the dimensions of the string using the specified font.
+        /// </summary>
+        /// <param name="graphics">Drawing context.</param>
+        /// <param name="text">The text string to measure.</param>
+        /// <param name="font">The Font used to get text dimensions.</param>
+        /// <param name="control">The control used to get scaling factor. Can be null.</param>
+        /// <returns><see cref="SizeD"/> with the total calculated width and height
+        /// of the text.</returns>
+        /// <remarks>
+        /// This function only works with single-line strings.
+        /// It works faster than MeasureText methods.
+        /// </remarks>
+        public static SizeD GetTextExtent(
+            this Graphics graphics,
+            string text,
+            Font font,
+            Control? control)
+        {
+            var dc = (UI.Native.DrawingContext)graphics.NativeObject;
+            var result = dc.GetTextExtentSimple(
+                text,
+                (UI.Native.Font)font.NativeObject,
+                control is null ? default : control.WxWidget);
+            return result;
+        }
+
         /// <summary>
         /// Gets the size of the image in device-independent units (1/96th inch
         /// per unit).
@@ -29,75 +91,6 @@ namespace Alternet.UI.Extensions
         {
             var size = SizeDip(image, control);
             return (0, 0, size.Width, size.Height);
-        }
-
-        /// <summary>
-        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
-        /// filled with this color.
-        /// </summary>
-        /// <param name="size">Size of the created image.</param>
-        /// <param name="color">Color.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static GenericImage AsImage(this Color color, SizeI size)
-        {
-            GenericImage image = new(size.Width, size.Height);
-            image.SetRGBRect(color);
-            return image;
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="DockStyle"/> equals <see cref="DockStyle.Top"/> or
-        /// <see cref="DockStyle.Bottom"/>.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsTopOrBottom(this DockStyle dock)
-        {
-            return dock == DockStyle.Bottom || dock == DockStyle.Top;
-        }
-
-        /// <summary>
-        /// Calls <see cref="Stack{T}.Push"/> for the each item in <paramref name="items"/>.
-        /// </summary>
-        /// <typeparam name="T">Type of the item</typeparam>
-        /// <param name="stack"><see cref="Stack{T}"/> instance.</param>
-        /// <param name="items">Items to push.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void PushRange<T>(this Stack<T> stack, IEnumerable<T> items)
-        {
-            foreach (var item in items)
-                stack.Push(item);
-        }
-
-        /// <summary>
-        /// Removes underscore characters ('_') from string.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string RemoveUnderscore(this string s)
-        {
-            return s.Replace("_", string.Empty);
-        }
-
-        /// <summary>
-        /// Trims end of line characters from the string.
-        /// </summary>
-        /// <param name="s">String.</param>
-        /// <returns>String without all end of line characters.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string TrimEndEol(this string s)
-        {
-            return s.TrimEnd('\r', '\n');
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="DockStyle"/> equals <see cref="DockStyle.Left"/> or
-        /// <see cref="DockStyle.Right"/>.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsLeftOrRight(this DockStyle dock)
-        {
-            return dock == DockStyle.Left || dock == DockStyle.Right;
         }
     }
 }

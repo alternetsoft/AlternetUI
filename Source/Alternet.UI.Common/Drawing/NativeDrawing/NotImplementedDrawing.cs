@@ -1056,5 +1056,10 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override object CreateGraphicsPath(object nativeGraphics)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

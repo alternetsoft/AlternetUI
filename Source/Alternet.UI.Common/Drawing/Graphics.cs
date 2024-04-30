@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
-using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
@@ -217,46 +216,6 @@ namespace Alternet.Drawing
             Brush brush,
             RectD rectangle,
             double cornerRadius);
-
-        /// <summary>
-        /// Gets the dimensions of the string using the specified font.
-        /// </summary>
-        /// <param name="text">The text string to measure.</param>
-        /// <param name="font">The Font used to get text dimensions.</param>
-        /// <param name="control">The control used to get scaling factor. Optional.</param>
-        /// <param name="descent">Dimension from the baseline of the font to
-        /// the bottom of the descender (the size of the tail below the baseline).</param>
-        /// <param name="externalLeading">Any extra vertical space added to the
-        /// font by the font designer (inter-line interval).</param>
-        /// <returns><see cref="SizeD"/> with the total calculated width and height
-        /// of the text.</returns>
-        /// <remarks>
-        /// This function only works with single-line strings.
-        /// It works faster than MeasureText methods.
-        /// </remarks>
-        public abstract SizeD GetTextExtent(
-            string text,
-            Font font,
-            out double descent,
-            out double externalLeading,
-            Control? control = null);
-
-        /// <summary>
-        /// Gets the dimensions of the string using the specified font.
-        /// </summary>
-        /// <param name="text">The text string to measure.</param>
-        /// <param name="font">The Font used to get text dimensions.</param>
-        /// <param name="control">The control used to get scaling factor. Can be null.</param>
-        /// <returns><see cref="SizeD"/> with the total calculated width and height
-        /// of the text.</returns>
-        /// <remarks>
-        /// This function only works with single-line strings.
-        /// It works faster than MeasureText methods.
-        /// </remarks>
-        public abstract SizeD GetTextExtent(
-            string text,
-            Font font,
-            Control? control);
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -841,7 +800,7 @@ namespace Alternet.Drawing
         /// <param name="origin"></param>
         public virtual void DrawText(string text, PointD origin)
         {
-            DrawText(text, Control.DefaultFont, Brush.Default, origin);
+            DrawText(text, Font.Default, Brush.Default, origin);
         }
 
         /// <summary>

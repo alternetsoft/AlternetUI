@@ -205,36 +205,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
-            out double descent,
-            out double externalLeading,
-            Control? control = null)
-        {
-            var result = dc.GetTextExtent(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                control is null ? default : control.WxWidget);
-            descent = result.X;
-            externalLeading = result.Y;
-            return result.Size;
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
-            Control? control)
-        {
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.NativeObject,
-                control is null ? default : control.WxWidget);
-            return result;
-        }
-
-        /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
             var result = dc.GetTextExtentSimple(

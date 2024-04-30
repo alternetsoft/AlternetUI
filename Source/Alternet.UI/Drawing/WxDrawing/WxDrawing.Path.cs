@@ -10,6 +10,13 @@ namespace Alternet.Drawing
 {
     internal partial class WxDrawing
     {
+        public override object CreateGraphicsPath(object nativeGraphics)
+        {
+            var result = new UI.Native.GraphicsPath();
+            ((UI.Native.GraphicsPath)result).Initialize((UI.Native.DrawingContext)nativeGraphics);
+            return result;
+        }
+
         public override object CreateGraphicsPath()
         {
             return new UI.Native.GraphicsPath();

@@ -30,9 +30,7 @@ namespace Alternet.Drawing
         {
             if (drawingContext is null)
                 throw new ArgumentNullException(nameof(drawingContext));
-
-            ((UI.Native.GraphicsPath)NativeObject)
-                .Initialize((UI.Native.DrawingContext)drawingContext.NativeObject);
+            NativeObject = NativeDrawing.Default.CreateGraphicsPath(drawingContext.NativeObject);
         }
 
         /// <summary>

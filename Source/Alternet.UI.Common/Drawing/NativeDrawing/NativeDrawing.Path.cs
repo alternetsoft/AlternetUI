@@ -12,6 +12,8 @@ namespace Alternet.Drawing
     {
         public abstract object CreateGraphicsPath();
 
+        public abstract object CreateGraphicsPath(object nativeGraphics);
+
         public abstract FillMode GraphicsPathGetFillMode(object graphicsPath);
 
         public abstract void GraphicsPathSetFillMode(object graphicsPath, FillMode value);

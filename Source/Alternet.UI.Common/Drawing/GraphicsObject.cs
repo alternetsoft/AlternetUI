@@ -62,6 +62,11 @@ namespace Alternet.Drawing
 
                 return nativeObject;
             }
+
+            protected set
+            {
+                nativeObject = value;
+            }
         }
 
         /// <summary>
