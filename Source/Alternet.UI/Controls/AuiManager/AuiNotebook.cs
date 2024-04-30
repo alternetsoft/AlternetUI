@@ -248,7 +248,7 @@ namespace Alternet.UI
                 page.WxWidget,
                 caption,
                 select,
-                bitmap?.NativeImageSet);
+                (UI.Native.ImageSet?)bitmap?.NativeObject);
 
             if (ok)
             {
@@ -292,7 +292,7 @@ namespace Alternet.UI
                 page.WxWidget,
                 caption,
                 select,
-                bitmap?.NativeImageSet);
+                (UI.Native.ImageSet?)bitmap?.NativeObject);
             if (ok)
             {
                 IAuiNotebookPage result = new AuiNotebookPage(this)
@@ -404,13 +404,13 @@ namespace Alternet.UI
         /// Sets the bitmap for the page.
         /// </summary>
         /// <param name="page">Page index.</param>
-        /// <param name="bitmap">Bitmap for the page.</param>
+        /// <param name="imageSet">Bitmap for the page.</param>
         /// <remarks>
         /// To remove a bitmap from the tab caption, pass <c>null</c>.
         /// </remarks>
-        public bool SetPageBitmap(int page, ImageSet? bitmap)
+        public bool SetPageBitmap(int page, ImageSet? imageSet)
         {
-            return NativeControl.SetPageBitmap((ulong)page, bitmap?.NativeImageSet);
+            return NativeControl.SetPageBitmap((ulong)page, (UI.Native.ImageSet?)imageSet?.NativeObject);
         }
 
         /// <summary>

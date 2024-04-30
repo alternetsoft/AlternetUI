@@ -427,7 +427,7 @@ namespace Alternet.UI
                         if (flag11)
                         {
                             char c2 = *ptr;
-                            bool flag6 = (c2 == '\t' || c2 == ' ') ? true : false;
+                            bool flag6 = c2 == '\t' || c2 == ' ';
                             flag11 = flag6;
                         }
 

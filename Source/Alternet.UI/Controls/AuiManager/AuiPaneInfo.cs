@@ -437,7 +437,7 @@ namespace Alternet.UI
 
         public IAuiPaneInfo Image(ImageSet? bitmap)
         {
-            Native.AuiPaneInfo.Image(handle, bitmap?.NativeImageSet);
+            Native.AuiPaneInfo.Image(handle, (UI.Native.ImageSet?)bitmap?.NativeObject);
             return this;
         }
 

@@ -35,7 +35,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether we install the <see cref="SynchronizationContext"/> when we create a control, or
+        /// Determines whether we install the <see cref="SynchronizationContext"/>
+        /// when we create a control, or
         /// when we start a message loop. Default: true.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -72,11 +73,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Uninstalls the currently installed <see cref="SynchronizationContext"/> and replaces it with the previously installed context.
+        /// Uninstalls the currently installed <see cref="SynchronizationContext"/> and
+        /// replaces it with the previously installed context.
         /// </summary>
         /// <remarks>
-        /// If the previously installed <see cref="SynchronizationContext"/> is <c>null</c>, the current context is set to <c>null</c>.
-        /// If the currently installed synchronization context is not a <see cref="SynchronizationContext"/>, this method does nothing.
+        /// If the previously installed <see cref="SynchronizationContext"/> is <c>null</c>,
+        /// the current context is set to <c>null</c>.
+        /// If the currently installed synchronization context is not
+        /// a <see cref="SynchronizationContext"/>, this method does nothing.
         /// </remarks>
         public static void Uninstall() => Uninstall(false);
 
@@ -86,7 +90,9 @@ namespace Alternet.UI
         /// <param name="d">The <see cref="SendOrPostCallback"/> delegate to call.</param>
         /// <param name="state">The object passed to the delegate.</param>
         /// <remarks>
-        /// If the destination thread no longer exists or the value of its Thread.IsAlive property is false, the Send method raises an InvalidAsynchronousStateException.
+        /// If the destination thread no longer exists or the value of its
+        /// Thread.IsAlive property is false, the Send method raises
+        /// an InvalidAsynchronousStateException.
         /// It is up to the caller to determine what further action to take.
         /// </remarks>
         public override void Send(SendOrPostCallback d, object? state)

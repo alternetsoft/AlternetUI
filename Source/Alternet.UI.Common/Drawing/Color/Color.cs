@@ -969,21 +969,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
-        /// filled with this color.
-        /// </summary>
-        /// <param name="size">Size of the created image.</param>
-        /// <param name="color">Color.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage AsImage(SizeI size)
-        {
-            GenericImage image = new(size.Width, size.Height);
-            image.SetRGBRect(this);
-            return image;
-        }
-
-        /// <summary>
         /// Sets a disabled (dimmed) color for specified <see cref="RGBValue"/>.
         /// </summary>
         /// <param name="rgb">Color.</param>
@@ -1209,6 +1194,21 @@ namespace Alternet.Drawing
                 div = (byte.MaxValue * 2) - max - min;
 
             return (max - min) / (double)div;
+        }
+
+        /// <summary>
+        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
+        /// filled with this color.
+        /// </summary>
+        /// <param name="size">Size of the created image.</param>
+        /// <param name="color">Color.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public GenericImage AsImage(SizeI size)
+        {
+            GenericImage image = new(size.Width, size.Height);
+            image.SetRGBRect(this);
+            return image;
         }
 
         /// <summary>

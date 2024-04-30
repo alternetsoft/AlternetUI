@@ -167,7 +167,7 @@ namespace Alternet.UI
                 if (image == value)
                     return;
                 image = value;
-                NativeControl.NormalImage = image?.NativeImageSet;
+                NativeControl.NormalImage = (UI.Native.ImageSet?)image?.NativeObject;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Alternet.UI
                 if (disabledImage == value)
                     return;
                 disabledImage = value;
-                NativeControl.DisabledImage = disabledImage?.NativeImageSet;
+                NativeControl.DisabledImage = (UI.Native.ImageSet?)disabledImage?.NativeObject;
             }
         }
 

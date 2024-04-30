@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
@@ -12,34 +14,37 @@ namespace Alternet.UI
     /// same picture.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : BaseComponent, IDisposable
+    public class ImageSet : GraphicsObject, IDisposable
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
         /// </summary>
-        public static readonly ImageSet Empty;
+        public static readonly ImageSet Empty = new(immutable: true);
 
-        private bool isDisposed;
-        private bool? isReadOnly;
-
-        static ImageSet()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> with default values.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ImageSet()
+            : this(false)
         {
-            Empty = new();
-            Empty.isReadOnly = true;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with default values.
         /// </summary>
-        public ImageSet()
-            : this(new UI.Native.ImageSet())
+        public ImageSet(bool immutable)
+            : base(immutable)
         {
+            Images.ItemInserted += Images_ItemInserted;
+            Images.ItemRemoved += Images_ItemRemoved;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with <see cref="Image"/>.
         /// </summary>
         /// <param name="image">This image will be added to <see cref="Images"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ImageSet(Image image)
             : this()
         {
@@ -51,11 +56,11 @@ namespace Alternet.UI
         /// data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ImageSet(Stream stream)
             : this()
         {
-            using var inputStream = new UI.Native.InputStream(stream);
-            NativeImageSet.LoadFromStream(inputStream);
+            NativeDrawing.Default.ImageSetLoadFromStream(NativeObject, stream);
         }
 
         /// <summary>
@@ -74,26 +79,22 @@ namespace Alternet.UI
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                Application.LogError($"ImageSet not loaded from: {url}");
+                BaseApplication.LogError($"ImageSet not loaded from: {url}");
                 return;
             }
 
-            using var inputStream = new UI.Native.InputStream(stream);
-            if (inputStream is null)
-            {
-                Application.LogError($"ImageSet not loaded from: {url}");
-                return;
-            }
-
-            NativeImageSet.LoadFromStream(inputStream);
+            NativeDrawing.Default.ImageSetLoadFromStream(NativeObject, stream);
         }
 
-        internal ImageSet(UI.Native.ImageSet imageSet)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class.
+        /// </summary>
+        /// <param name="imageSet">Native image set instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ImageSet(object imageSet)
+            : this()
         {
-            NativeImageSet = imageSet;
-
-            Images.ItemInserted += Images_ItemInserted;
-            Images.ItemRemoved += Images_ItemRemoved;
+            NativeObject = imageSet;
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeImageSet.DefaultSize;
+                return NativeDrawing.Default.ImageSetGetDefaultSize(NativeObject);
             }
         }
 
@@ -127,23 +128,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether this <see cref="ImageSet"/> instance is valid and contains image(s).
         /// </summary>
-        public bool IsOk => NativeImageSet.IsOk;
-
-        /// <summary>
-        /// Gets whether this <see cref="ImageSet"/> instance is readonly (no further
-        /// add or load operations are allowed). Same as <see cref="IsReadOnly"/>.
-        /// </summary>
         [Browsable(false)]
-        public bool Immutable => IsReadOnly;
+        public bool IsOk => NativeDrawing.Default.ImageSetIsOk(NativeObject);
 
-        /// <summary>
-        /// Gets whether this <see cref="ImageSet"/> instance is readonly (no further
-        /// add or load operations are allowed).
-        /// </summary>
+        /// <inheritdoc/>
         [Browsable(false)]
-        public bool IsReadOnly => isReadOnly ??= NativeImageSet.IsReadOnly;
-
-        internal UI.Native.ImageSet NativeImageSet { get; private set; }
+        public override bool IsReadOnly
+            => Immutable || NativeDrawing.Default.ImageSetIsReadOnly(NativeObject);
 
         /// <summary>
         /// Converts the specified <see cref='Image'/> to a <see cref='ImageSet'/>.
@@ -193,7 +184,8 @@ namespace Alternet.UI
         /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
         /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
         /// ImageSet imageSet = ImageSet.FromUrl(url); // can raise an exception if file not found
-        /// ImageSet imageSet2 = ImageSet.FromUrlOrNull(url); // return null instead of exception if file not found
+        /// ImageSet imageSet2 = ImageSet.FromUrlOrNull(url); // return null instead of
+        /// exception if file not found
         /// </code>
         /// </example>
         /// <remarks>
@@ -267,9 +259,11 @@ namespace Alternet.UI
         /// <paramref name="stream"/>. </returns>
         public static ImageSet FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
-            var nativeImage = new UI.Native.ImageSet();
-            using var inputStream = new UI.Native.InputStream(stream, false);
-            nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
+            var nativeImage = NativeDrawing.Default.CreateImageSetFromSvgStream(
+                stream,
+                width,
+                height,
+                color);
             var result = new ImageSet(nativeImage);
             return result;
         }
@@ -287,8 +281,11 @@ namespace Alternet.UI
         /// <paramref name="s"/>. </returns>
         public static ImageSet FromSvgString(string s, int width, int height, Color? color = null)
         {
-            var nativeImage = new UI.Native.ImageSet();
-            nativeImage.LoadSvgFromString(s, width, height, color ?? Color.Black);
+            var nativeImage = NativeDrawing.Default.CreateImageSetFromSvgString(
+                s,
+                width,
+                height,
+                color);
             var result = new ImageSet(nativeImage);
             return result;
         }
@@ -395,18 +392,6 @@ namespace Alternet.UI
         public Image AsImage() => new Bitmap(this, DefaultSize);
 
         /// <summary>
-        /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
-        /// </summary>
-        /// <remarks>
-        /// This helper function simply combines <see cref="GetPreferredBitmapSizeFor"/> and
-        /// <see cref="AsImage(SizeI)"/>, i.e.it returns a (normally unscaled) bitmap
-        /// from the <see cref="ImageSet"/> of the closest size to the size that should
-        /// be used at the DPI scaling of the provided control.
-        /// </remarks>
-        /// <param name="control"></param>
-        public Image AsImageFor(Control control) => new Bitmap(this, control);
-
-        /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at
         /// the given DPI scaling factor.
         /// </summary>
@@ -423,75 +408,27 @@ namespace Alternet.UI
         /// <returns></returns>
         public SizeI GetPreferredBitmapSizeAtScale(double scale)
         {
-            return NativeImageSet.GetPreferredBitmapSizeAtScale(scale);
+            return ((UI.Native.ImageSet)NativeObject).GetPreferredBitmapSizeAtScale(scale);
         }
 
-        /// <summary>
-        /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
-        /// scaling factor used by the given control.
-        /// </summary>
-        /// <param name="control">Control to get DPI scaling factor from.</param>
-        /// <returns></returns>
-        /// <remarks>
-        /// This is just a convenient wrapper for <see cref="GetPreferredBitmapSizeAtScale"/> calling
-        /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
-        /// </remarks>
-        public SizeI GetPreferredBitmapSizeFor(Control control)
+        /// <inheritdoc/>
+        protected override object CreateNativeObject()
         {
-            return NativeImageSet.GetPreferredBitmapSizeFor(control.WxWidget);
-        }
-
-        /// <summary>
-        /// Releases all resources used by the <see cref="ImageList"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="ImageList"/> and
-        /// optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    NativeImageSet.Dispose();
-                    NativeImageSet = null!;
-                }
-
-                isDisposed = true;
-            }
+            return NativeDrawing.Default.CreateImageSet();
         }
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException(
-                    ErrorMessages.Default.CannotChangeReadOnlyObject);
-            }
-
-            NativeImageSet.AddImage((UI.Native.Image)item.NativeObject);
+            CheckReadOnly();
+            NativeDrawing.Default.ImageSetAddImage(NativeObject, index, item);
             OnChanged();
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException(
-                    ErrorMessages.Default.CannotChangeReadOnlyObject);
-            }
-
+            CheckReadOnly();
+            NativeDrawing.Default.ImageSetRemoveImage(NativeObject, index, item);
             OnChanged();
-
-            // todo
         }
 
         private void OnChanged()

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods to get and set background color, foreground color and font.
     /// </summary>
-    internal interface IFontAndColor : IReadOnlyFontAndColor
+    public interface IFontAndColor : IReadOnlyFontAndColor
     {
         /// <summary>
         /// Gets or sets background color.

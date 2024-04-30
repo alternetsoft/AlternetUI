@@ -255,7 +255,7 @@ namespace Alternet.UI
 
         private void ApplyIcon(object? sender, EventArgs e)
         {
-            NativeControl.Icon = Control.Icon?.NativeIconSet;
+            NativeControl.Icon = (UI.Native.IconSet?)Control.Icon?.NativeObject;
         }
 
         private void ApplyMenu(object? sender, EventArgs e)

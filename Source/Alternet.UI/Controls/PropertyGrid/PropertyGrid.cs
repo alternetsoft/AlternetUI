@@ -3950,7 +3950,7 @@ namespace Alternet.UI
         /// <param name="bmp">Image.</param>
         public virtual void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp)
         {
-            NativeControl.SetPropertyImage(prop.Handle, bmp?.NativeImageSet);
+            NativeControl.SetPropertyImage(prop.Handle, (UI.Native.ImageSet?)bmp?.NativeObject);
         }
 
         /// <summary>

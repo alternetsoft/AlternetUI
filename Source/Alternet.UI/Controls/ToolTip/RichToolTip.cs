@@ -225,7 +225,7 @@ namespace Alternet.UI
         /// <param name="bitmap">Icon of the tooltip.</param>
         public void SetIcon(ImageSet? bitmap)
         {
-            Native.WxOtherFactory.RichToolTipSetIcon(Handle, bitmap?.NativeImageSet);
+            Native.WxOtherFactory.RichToolTipSetIcon(Handle, (UI.Native.ImageSet?)bitmap?.NativeObject);
         }
 
         /// <summary>

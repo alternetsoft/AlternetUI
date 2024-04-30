@@ -36,7 +36,10 @@ namespace Alternet.Drawing
         public Bitmap(ImageSet imageSet, SizeI size)
             : base(size)
         {
-            imageSet.NativeImageSet.InitImage((UI.Native.Image)NativeObject, size.Width, size.Height);
+            ((UI.Native.ImageSet)imageSet.NativeObject).InitImage(
+                (UI.Native.Image)NativeObject,
+                size.Width,
+                size.Height);
         }
 
         /// <summary>
@@ -49,7 +52,9 @@ namespace Alternet.Drawing
         public Bitmap(ImageSet imageSet, Control control)
         {
             NativeObject = NativeDrawing.Default.CreateImage();
-            imageSet.NativeImageSet.InitImageFor((UI.Native.Image)NativeObject, control.WxWidget);
+            ((UI.Native.ImageSet)imageSet.NativeObject).InitImageFor(
+                (UI.Native.Image)NativeObject,
+                control.WxWidget);
         }
 
         /// <summary>

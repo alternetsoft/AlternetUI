@@ -367,9 +367,9 @@ namespace Alternet.UI
                 return base.GetPreferredSize(availableSize);
             }
 
-            public virtual void SetInactiveBitmap(ImageSet? bitmap)
+            public virtual void SetInactiveBitmap(ImageSet? imageSet)
             {
-                NativeControl.SetInactiveBitmap(bitmap?.NativeImageSet);
+                NativeControl.SetInactiveBitmap((UI.Native.ImageSet?)imageSet?.NativeObject);
             }
 
             internal override ControlHandler CreateHandler()

@@ -1096,5 +1096,80 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override void IconSetAdd(object iconSet, Image image)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void IconSetAdd(object iconSet, Stream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void IconSetClear(object iconSet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateIconSet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IconSetIsOk(object iconSet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(object imageSet, double scale)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageSetAddImage(object imageSet, int index, Image item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageSetRemoveImage(object imageSet, int index, Image item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateImageSet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateImageSetFromSvgStream(Stream stream, int width, int height, Color? color = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateImageSetFromSvgString(string s, int width, int height, Color? color = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SizeI ImageSetGetDefaultSize(object imageSet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ImageSetIsOk(object imageSet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ImageSetIsReadOnly(object imageSet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ImageSetLoadFromStream(object imageSet, Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

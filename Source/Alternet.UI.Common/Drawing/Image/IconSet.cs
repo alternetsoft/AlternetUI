@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
@@ -11,16 +12,15 @@ namespace Alternet.Drawing
     /// <summary>
     /// Allows to use icons in the application.
     /// </summary>
-    public class IconSet : DisposableObject
+    public class IconSet : GraphicsObject
     {
-        private UI.Native.IconSet? iconSet;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
         /// </summary>
-        /// <param name="image">This image will be converted to icon and added to the set of icons.</param>
+        /// <param name="image">This image will be converted to icon and added
+        /// to the set of icons.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet(Image image)
-            : this()
         {
             Add(image);
         }
@@ -30,8 +30,8 @@ namespace Alternet.Drawing
         /// data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the icon.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet(Stream stream)
-            : this()
         {
             Add(stream);
         }
@@ -47,7 +47,6 @@ namespace Alternet.Drawing
         /// If DEBUG is defined, exception info is logged.
         /// </remarks>
         public IconSet(string url)
-            : this()
         {
             try
             {
@@ -63,18 +62,15 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with default values.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet()
-            : base()
         {
-            iconSet = new UI.Native.IconSet();
         }
 
         /// <summary>
         /// Gets whether object is ok.
         /// </summary>
-        public bool IsOk => (iconSet is not null) && iconSet.IsOk();
-
-        internal UI.Native.IconSet? NativeIconSet => iconSet;
+        public bool IsOk => NativeDrawing.Default.IconSetIsOk(NativeObject);
 
         /// <summary>
         /// Creates <see cref="IconSet"/> instance from
@@ -103,7 +99,8 @@ namespace Alternet.Drawing
         /// var ResPrefix = $"embres:ControlsTest.Resources.Icons.";
         /// var url = $"{ResPrefix}default.ico";
         /// var iconSet = IconSet.FromUrl(url); // can raise an exception if file not found
-        /// var iconSet2 = IconSet.FromUrlOrNull(url); // return null instead of exception if file not found
+        /// var iconSet2 = IconSet.FromUrlOrNull(url); // return null instead of exception
+        /// if file not found
         /// </code>
         /// </example>
         /// <remarks>
@@ -139,35 +136,36 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds image.
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">Image to add.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(Image image)
         {
-            iconSet?.AddImage((UI.Native.Image)image.NativeObject);
+            NativeDrawing.Default.IconSetAdd(NativeObject, image);
         }
 
         /// <summary>
-        /// Adds image from stream.
+        /// Adds image from the stream.
         /// </summary>
         /// <param name="stream">Stream with image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(Stream stream)
         {
-            using var inputStream = new UI.Native.InputStream(stream);
-            iconSet?.LoadFromStream(inputStream);
+            NativeDrawing.Default.IconSetAdd(NativeObject, stream);
         }
 
         /// <summary>
         /// Removes all icons from the <see cref="IconSet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
-            iconSet?.Clear();
+            NativeDrawing.Default.IconSetClear(NativeObject);
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override object CreateNativeObject()
         {
-            iconSet?.Dispose();
-            iconSet = null;
+            return NativeDrawing.Default.CreateIconSet();
         }
     }
 }

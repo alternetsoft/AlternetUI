@@ -15,6 +15,38 @@ namespace Alternet.UI
     public static class MethodExtensions
     {
         /// <summary>
+        /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
+        /// </summary>
+        /// <remarks>
+        /// This helper function simply combines
+        /// <see cref="GetPreferredBitmapSizeFor(ImageSet, Control)"/> and
+        /// <see cref="ImageSet.AsImage(SizeI)"/>, i.e.it returns a (normally unscaled) bitmap
+        /// from the <see cref="ImageSet"/> of the closest size to the size that should
+        /// be used at the DPI scaling of the provided control.
+        /// </remarks>
+        /// <param name="control">Control to get DPI scaling factor from.</param>
+        /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
+        public static Image AsImageFor(this ImageSet imageSet, Control control)
+            => new Bitmap(imageSet, control);
+
+        /// <summary>
+        /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
+        /// scaling factor used by the given control.
+        /// </summary>
+        /// <param name="control">Control to get DPI scaling factor from.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// This is just a convenient wrapper for
+        /// <see cref="ImageSet.GetPreferredBitmapSizeAtScale"/> calling
+        /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
+        /// </remarks>
+        /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
+        public static SizeI GetPreferredBitmapSizeFor(this ImageSet imageSet, Control control)
+        {
+            return ((UI.Native.ImageSet)imageSet.NativeObject).GetPreferredBitmapSizeFor(control.WxWidget);
+        }
+
+        /// <summary>
         /// Gets the dimensions of the string using the specified font.
         /// </summary>
         /// <param name="graphics">Drawing context.</param>

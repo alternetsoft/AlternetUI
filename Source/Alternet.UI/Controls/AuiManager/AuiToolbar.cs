@@ -362,8 +362,8 @@ namespace Alternet.UI
             NativeControl.AddTool2(
                 toolId,
                 label,
-                bitmap?.NativeImageSet,
-                disabledBitmap?.NativeImageSet,
+                (UI.Native.ImageSet?)bitmap?.NativeObject,
+                (UI.Native.ImageSet?)disabledBitmap?.NativeObject,
                 (int)itemKind.Value,
                 shortHelpString!,
                 longHelpString!,
@@ -811,7 +811,7 @@ namespace Alternet.UI
         {
             if (toolId <= 0)
                 return;
-            NativeControl.SetToolBitmap(toolId, bitmap?.NativeImageSet);
+            NativeControl.SetToolBitmap(toolId, (UI.Native.ImageSet?)bitmap?.NativeObject);
         }
 
         /// <summary>
