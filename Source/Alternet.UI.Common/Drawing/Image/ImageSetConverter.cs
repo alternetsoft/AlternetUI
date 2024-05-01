@@ -40,7 +40,7 @@ namespace Alternet.Drawing
             }
 
             var assets = new UI.ResourceLoader();
-            return new ImageSet(assets.Open(uri, context.GetContextBaseUri()));
+            return new ImageSet(assets.Open(uri, ImageConverter.GetContextBaseUri(context)));
         }
     }
 }

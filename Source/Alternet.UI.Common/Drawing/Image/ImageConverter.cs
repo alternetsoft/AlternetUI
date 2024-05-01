@@ -42,11 +42,11 @@ namespace Alternet.Drawing
 
             var assets = new UI.ResourceLoader();
             return new Image(assets.Open(uri, GetContextBaseUri(context)));
-
-            Uri? GetContextBaseUri(IServiceProvider? ctx)
-                => GetService<IUixmlUriContext>(ctx)?.BaseUri;
-
-            T? GetService<T>(IServiceProvider? sp) => (T?)sp?.GetService(typeof(T));
         }
+
+        internal static Uri? GetContextBaseUri(IServiceProvider? ctx)
+            => GetService<IUixmlUriContext>(ctx)?.BaseUri;
+
+        internal static T? GetService<T>(IServiceProvider? sp) => (T?)sp?.GetService(typeof(T));
     }
 }

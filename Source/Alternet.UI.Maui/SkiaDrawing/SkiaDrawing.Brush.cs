@@ -14,6 +14,12 @@ namespace Alternet.Drawing
     public partial class SkiaDrawing : NativeDrawing
     {
         /// <inheritdoc/>
+        public override void UpdateTextureBrush(TextureBrush brush)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override object CreateTransparentBrush()
         {
             return new SKPaint();

@@ -11,6 +11,16 @@ namespace Alternet.Drawing
 {
     internal partial class WxDrawing
     {
+        public override object CreateImage(ImageSet imageSet, SizeI size)
+        {
+            var image = new UI.Native.Image();
+            ((UI.Native.ImageSet)imageSet.NativeObject).InitImage(
+                image,
+                size.Width,
+                size.Height);
+            return image;
+        }
+
         public override object ImageConvertToGenericImage(object nativeImage)
         {
             return ((UI.Native.Image)nativeImage).ConvertToGenericImage();

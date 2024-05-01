@@ -37,6 +37,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
+        /// <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="size">Size of the image in device pixels.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Image(ImageSet imageSet, SizeI size)
+        {
+            nativeImage = NativeDrawing.Default.CreateImage(imageSet, size);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Image" /> class from the specified
         /// existing image, scaled to the specified size.
         /// </summary>

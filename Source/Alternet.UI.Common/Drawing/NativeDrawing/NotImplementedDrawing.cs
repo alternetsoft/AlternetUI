@@ -1171,5 +1171,10 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override object CreateImage(ImageSet imageSet, SizeI size)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

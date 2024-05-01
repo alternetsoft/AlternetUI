@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,81 @@ namespace Alternet.UI
     /// </summary>
     public static class DrawingUtils
     {
+        /// <summary>
+        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
+        /// from the specified <see cref="Stream"/> which contains svg data. Images are loaded
+        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// </summary>
+        /// <param name="stream">Stream with svg data.</param>
+        /// <param name="size">Image size in pixels.</param>
+        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// method is called to get color information.</param>
+        /// <returns></returns>
+        public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
+            Stream stream,
+            SizeI size,
+            Control control)
+        {
+            var image = ImageSet.FromSvgStream(
+                stream,
+                size,
+                control.GetSvgColor(KnownSvgColor.Normal),
+                control.GetSvgColor(KnownSvgColor.Disabled));
+            return image;
+        }
+
+        /// <summary>
+        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
+        /// from the specified url which contains svg data. Images are loaded
+        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// </summary>
+        /// <param name="size">Image size in pixels. If it is not specified,
+        /// <see cref="ToolBar.GetDefaultImageSize(Control)"/> is used to get image size.</param>
+        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// method is called to get color information.</param>
+        /// <returns></returns>
+        /// <param name="url">"embres" or "file" url with svg image data.</param>
+        /// <returns></returns>
+        public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
+            string url,
+            Control control,
+            SizeI? size = null)
+        {
+            size ??= ToolBar.GetDefaultImageSize(control);
+
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            var image = ImageSet.FromSvgStream(
+                stream,
+                size.Value,
+                control.GetSvgColor(KnownSvgColor.Normal),
+                control.GetSvgColor(KnownSvgColor.Disabled));
+            return image;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <remarks>
+        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBar.GetDefaultImageSize(double)"/>
+        /// to get appropriate image size which is best suitable for toolbars.
+        /// </remarks>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.</param>
+        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI.</param>
+        /// <returns><see cref="ImageSet"/> instance loaded from Svg data for use
+        /// on the toolbars.</returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static ImageSet FromSvgUrlForToolbar(string url, Control control, Color? color = null)
+        {
+            var imageSize = ToolBar.GetDefaultImageSize(control);
+            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
+            return result;
+        }
+
         /// <summary>
         /// Calculates distance between two points.
         /// </summary>

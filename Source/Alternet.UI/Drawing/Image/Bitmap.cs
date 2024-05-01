@@ -34,12 +34,8 @@ namespace Alternet.Drawing
         /// <param name="size">Size of the image in device pixels.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(ImageSet imageSet, SizeI size)
-            : base(size)
+            : base(imageSet, size)
         {
-            ((UI.Native.ImageSet)imageSet.NativeObject).InitImage(
-                (UI.Native.Image)NativeObject,
-                size.Width,
-                size.Height);
         }
 
         /// <summary>

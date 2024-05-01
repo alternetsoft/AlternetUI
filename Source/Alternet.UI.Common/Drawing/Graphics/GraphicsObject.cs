@@ -105,6 +105,16 @@ namespace Alternet.Drawing
         protected abstract object CreateNativeObject();
 
         /// <summary>
+        /// Dispose native object.
+        /// </summary>
+        protected virtual void DisposeNativeObject()
+        {
+            if(nativeObject is IDisposable disposable)
+                disposable.Dispose();
+            nativeObject = null;
+        }
+
+        /// <summary>
         /// Updates native object.
         /// </summary>
         protected virtual void UpdateNativeObject()
@@ -116,8 +126,7 @@ namespace Alternet.Drawing
         {
             if (nativeObject is not null)
             {
-                ((IDisposable)nativeObject).Dispose();
-                nativeObject = null;
+                DisposeNativeObject();
             }
         }
     }
