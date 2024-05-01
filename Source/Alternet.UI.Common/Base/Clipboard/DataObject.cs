@@ -141,7 +141,7 @@ namespace Alternet.UI
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            this.data[format] = DataObjectHelpers.SetDataTransform(format, data);
+            this.data[format] = ClipboardUtils.SetDataTransform(format, data);
         }
 
         /// <inheritdoc/>
@@ -150,7 +150,7 @@ namespace Alternet.UI
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            SetData(DataObjectHelpers.DetectFormatFromData(data), data);
+            SetData(ClipboardUtils.DetectFormatFromData(data), data);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// Retrieves bitmap data from the data object in the
         /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        public virtual Bitmap? GetBitmap() => GetData(DataFormats.Bitmap) as Bitmap;
+        public virtual Image? GetBitmap() => GetData(DataFormats.Bitmap) as Image;
 
         /// <summary>
         /// Retrieves text data from the data object in the
@@ -182,7 +182,7 @@ namespace Alternet.UI
         /// Adds a bitmap to the data object in the
         /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        public virtual void SetBitmap(Bitmap value) =>
+        public virtual void SetBitmap(Image value) =>
             SetData(DataFormats.Bitmap, value);
 
         /// <summary>

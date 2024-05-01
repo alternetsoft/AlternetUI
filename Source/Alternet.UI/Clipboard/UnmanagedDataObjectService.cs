@@ -37,7 +37,7 @@ namespace Alternet.UI
                 return;
 
             if (format == DataFormats.Text || data is string)
-                dataObject.SetStringData(format, (string)DataObjectHelpers.SetDataTransform(format, data));
+                dataObject.SetStringData(format, (string)ClipboardUtils.SetDataTransform(format, data));
             else if (format == DataFormats.Files || data is FileInfo[])
                 dataObject.SetFileNamesData(format, string.Join("|", GetFileNames(data)));
             else if (format == DataFormats.Bitmap || data is Image)

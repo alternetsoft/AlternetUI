@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether <see cref="Url"/> is in a valid format.
         /// </summary>
-        public bool IsValidUrl => ValueValidatorFactory.IsValidUrl(url);
+        public bool IsValidUrl => ValidationUtils.IsValidUrl(url);
 
         /// <summary>
         /// The set of modifier keys currently pressed.

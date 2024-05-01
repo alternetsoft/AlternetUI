@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the <see cref="Control.DragStart"/> event.
     /// </summary>
-    public class DragStartEventArgs : CancelEventArgs
+    public class DragStartEventArgs : BaseCancelEventArgs
     {
         private readonly MouseEventArgs mouseDownArgs;
         private readonly MouseEventArgs mouseMoveArgs;
@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// <see cref="Control.MouseDown"/> event was fired.</param>
         /// <param name="mouseDownArgs"></param>
         /// <param name="mouseMoveArgs"></param>
-        internal DragStartEventArgs(
+        public DragStartEventArgs(
             PointD mouseClientLocation,
             PointD mouseDownLocation,
             MouseEventArgs mouseDownArgs,
@@ -89,18 +89,18 @@ namespace Alternet.UI
             }
         }
 
-        internal long TimestampStart => mouseDownArgs.Timestamp;
-
-        internal long TimestampEnd => mouseMoveArgs.Timestamp;
-
-        internal long TimePeriod => Math.Abs(TimestampEnd - TimestampStart);
-
-        internal bool TimeIsGreater
+        public bool TimeIsGreater
         {
             get
             {
                 return TimePeriod > 10;
             }
         }
+
+        internal long TimestampStart => mouseDownArgs.Timestamp;
+
+        internal long TimestampEnd => mouseMoveArgs.Timestamp;
+
+        internal long TimePeriod => Math.Abs(TimestampEnd - TimestampStart);
     }
 }

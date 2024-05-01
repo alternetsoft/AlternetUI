@@ -8,7 +8,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Defines parameters for <see cref="DrawingUtils.DrawImageSliced(Graphics, NinePatchImagePaintParams)"/>.
+    /// Defines parameters for <see cref="ControlDrawUtils.DrawImageSliced(Graphics, NinePatchImagePaintParams)"/>.
     /// </summary>
     public class NinePatchImagePaintParams
     {

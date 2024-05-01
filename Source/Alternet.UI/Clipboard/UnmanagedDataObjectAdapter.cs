@@ -44,7 +44,7 @@ namespace Alternet.UI
 
         public void SetData(object data)
         {
-            SetData(DataObjectHelpers.DetectFormatFromData(data), data);
+            SetData(ClipboardUtils.DetectFormatFromData(data), data);
         }
     }
 }

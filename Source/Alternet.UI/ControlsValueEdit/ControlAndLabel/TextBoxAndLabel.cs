@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Gets whether editor contains a valid e-mail address.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsValidMail => ValueValidatorFactory.IsValidMailAddress(Text);
+        public virtual bool IsValidMail => ValidationUtils.IsValidMailAddress(Text);
 
         /// <summary>
         /// Gets or sets <see cref="TextBox.Text"/> property of the main child control.

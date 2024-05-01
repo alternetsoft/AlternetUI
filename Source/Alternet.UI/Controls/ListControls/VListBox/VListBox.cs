@@ -1562,7 +1562,7 @@ namespace Alternet.UI
             result.PartState = Enabled
                 ? GenericControlState.Normal : GenericControlState.Disabled;
             result.CheckState = GetItemCheckState(item);
-            result.CheckSize = DrawingUtils.GetCheckBoxSize(this, result.CheckState, result.PartState);
+            result.CheckSize = ControlDrawUtils.GetCheckBoxSize(this, result.CheckState, result.PartState);
             var (checkRect, textRect) = GetItemImageRect(rect, result.CheckSize);
             result.CheckRect = checkRect;
             result.TextRect = textRect;

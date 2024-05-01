@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// Gets whether editor contains a valid url.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsValidUrl => ValueValidatorFactory.IsValidUrl(Text, UrlKind);
+        public virtual bool IsValidUrl => ValidationUtils.IsValidUrl(Text, UrlKind);
 
         /// <inheritdoc/>
         protected override bool IsValidText => IsValidUrl;

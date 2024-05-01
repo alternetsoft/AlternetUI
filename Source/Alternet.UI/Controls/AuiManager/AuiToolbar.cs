@@ -314,7 +314,7 @@ namespace Alternet.UI
         /// If provided, svg fill color is changed to the specified value.</param>
         public static ImageSet LoadSvgImage(string url, Control dpiControl, Color? color = null)
         {
-            return DrawingUtils.FromSvgUrlForToolbar(url, dpiControl, color);
+            return ControlDrawUtils.FromSvgUrlForToolbar(url, dpiControl, color);
         }
 
         /// <summary>

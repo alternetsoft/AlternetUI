@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal static class DataObjectHelpers
+    public static class ClipboardUtils
     {
         public static object SetDataTransform(string format, object data)
         {
@@ -27,7 +27,7 @@ namespace Alternet.UI
         {
             string _ => DataFormats.Text,
             FileInfo[] _ => DataFormats.Files,
-            Bitmap _ => DataFormats.Bitmap,
+            Image _ => DataFormats.Bitmap,
             _ => data.GetType().FullName ?? throw new InvalidOperationException(),
         };
     }

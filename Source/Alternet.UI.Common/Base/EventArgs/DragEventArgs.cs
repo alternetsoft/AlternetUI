@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Provides data for the <see cref="Control.DragDrop"/>, <see cref="Control.DragEnter"/>,
     /// or <see cref="Control.DragOver"/> events.
     /// </summary>
-    public class DragEventArgs : EventArgs
+    public class DragEventArgs : BaseEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DragEventArgs"/> class.
