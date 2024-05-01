@@ -17,6 +17,11 @@ namespace Alternet.UI
     public class BorderSettings : BaseObject, INotifyPropertyChanged
     {
         /// <summary>
+        /// Default border color.
+        /// </summary>
+        public static readonly Color DefaultBorderColor = SystemColors.GrayText;
+
+        /// <summary>
         /// Default border settings.
         /// </summary>
         public static readonly BorderSettings Default = new();
@@ -311,7 +316,7 @@ namespace Alternet.UI
                 return;
             var dc = args.Graphics;
             var rect = args.ClipRectangle;
-            var defaultColor = GetDefaultBorderColor(null);
+            var defaultColor = DefaultBorderColor;
 
             if (border.Top.Width > 0)
             {
@@ -332,21 +337,6 @@ namespace Alternet.UI
             {
                 DrawVertical(dc, border.Right.GetBrush(defaultColor), border.GetRightRectangle(rect));
             }
-        }
-
-        /// <summary>
-        /// Gets default border color if no colors are specified for the border.
-        /// </summary>
-        /// <param name="control">Control which background color is checked to get whether
-        /// it is dark.</param>
-        /// <returns></returns>
-        public static Color GetDefaultBorderColor(Control? control)
-        {
-            if (control is null)
-                return SystemColors.GrayText;
-            var isDark = control.IsDarkBackground;
-            return Border.DefaultColor?.Get(isDark)
-                ?? TabControl.GetDefaultInteriorBorderColor(isDark);
         }
 
         /// <summary>
@@ -417,54 +407,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws border in the specified rectangle of the drawing context.
+        /// Calls paint event.
         /// </summary>
-        /// <param name="control">Control in which drawing is performed.</param>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public virtual void Draw(Control? control, Graphics dc, RectD rect)
+        public void InvokePaint(Graphics dc, RectD rect)
         {
             Paint?.Invoke(this, new PaintEventArgs(dc, rect));
-
-            if (!DrawDefaultBorder)
-                return;
-
-            var radius = GetUniformCornerRadius(rect);
-            var defaultColor = GetDefaultBorderColor(control);
-
-            if (radius != null)
-            {
-                dc.DrawRoundedRectangle(
-                    Top.GetPen(defaultColor),
-                    rect.InflatedBy(-1, -1),
-                    radius.Value);
-                return;
-            }
-
-            var topColor = Top.Color ?? defaultColor;
-            var bottomColor = Bottom.Color ?? defaultColor;
-            var leftColor = Left.Color ?? defaultColor;
-            var rightColor = Right.Color ?? defaultColor;
-
-            if (Top.Width > 0 && ColorIsOk(topColor))
-            {
-                dc.FillRectangle(topColor.AsBrush, GetTopRectangle(rect));
-            }
-
-            if (Bottom.Width > 0 && ColorIsOk(bottomColor))
-            {
-                dc.FillRectangle(bottomColor.AsBrush, GetBottomRectangle(rect));
-            }
-
-            if (Left.Width > 0 && ColorIsOk(leftColor))
-            {
-                dc.FillRectangle(leftColor.AsBrush, GetLeftRectangle(rect));
-            }
-
-            if (Right.Width > 0 && ColorIsOk(rightColor))
-            {
-                dc.FillRectangle(rightColor.AsBrush, GetRightRectangle(rect));
-            }
         }
 
         /// <summary>

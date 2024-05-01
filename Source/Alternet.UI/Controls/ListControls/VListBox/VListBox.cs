@@ -870,13 +870,13 @@ namespace Alternet.UI
                 if (isCurrent && Focused && currentItemBorderVisible)
                 {
                     var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
-                    border?.Draw(this, e.Graphics, rect);
+                    ControlUtils.DrawBorder(this, e.Graphics, rect, border);
                 }
             }
             else
             {
                 var border = item?.Border?.ToGrayScale();
-                border?.Draw(this, e.Graphics, rect);
+                ControlUtils.DrawBorder(this, e.Graphics, rect, border);
             }
         }
 

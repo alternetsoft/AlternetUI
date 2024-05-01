@@ -107,7 +107,7 @@ namespace Alternet.UI
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return new FontAndColor.ControlStaticDefaultFontAndColor(controlType, renderSize);
+            return new ControlStaticDefaultFontAndColor(controlType, renderSize);
         }
 
         /*/// <summary>Test method.</summary>
@@ -286,7 +286,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual IReadOnlyFontAndColor GetDefaultFontAndColor()
         {
-            return new FontAndColor.ControlDefaultFontAndColor(this);
+            return new ControlDefaultFontAndColor(this);
         }
 
         /// <summary>

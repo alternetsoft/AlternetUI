@@ -15,6 +15,127 @@ namespace Alternet.UI
     public static class ControlUtils
     {
         /// <summary>
+        /// Gets <see cref="IReadOnlyFontAndColor"/> instance for the specified
+        /// <paramref name="method"/>.
+        /// </summary>
+        /// <param name="method">Type of the colors to get.</param>
+        /// <param name="control">Control instance. Used when <paramref name="method"/>
+        /// is <see cref="ResetColorType.DefaultAttributes"/>.</param>
+        /// <param name="renderSize">Rendering size. Used when <paramref name="method"/>
+        /// is <see cref="ResetColorType.DefaultAttributesTextBox"/> or other similar values.
+        /// You can skip this parameter as on most os it is ignored.</param>
+        /// <returns></returns>
+        public static IReadOnlyFontAndColor GetResetColors(
+            ResetColorType method,
+            Control? control = null,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            switch (method)
+            {
+                case ResetColorType.Auto:
+                    return FontAndColor.Null;
+                case ResetColorType.NullColor:
+                    return FontAndColor.Null;
+                case ResetColorType.EmptyColor:
+                    return FontAndColor.Empty;
+                case ResetColorType.DefaultAttributes:
+                    return control?.GetDefaultFontAndColor() ?? FontAndColor.Null;
+                case ResetColorType.DefaultAttributesTextBox:
+                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox, renderSize);
+                case ResetColorType.DefaultAttributesListBox:
+                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.ListBox, renderSize);
+                case ResetColorType.DefaultAttributesButton:
+                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.Button, renderSize);
+                case ResetColorType.ColorMenu:
+                    return FontAndColor.SystemColorMenu;
+                case ResetColorType.ColorActiveCaption:
+                    return FontAndColor.SystemColorActiveCaption;
+                case ResetColorType.ColorInactiveCaption:
+                    return FontAndColor.SystemColorInactiveCaption;
+                case ResetColorType.ColorInfo:
+                    return FontAndColor.SystemColorInfo;
+                case ResetColorType.ColorWindow:
+                    return FontAndColor.SystemColorWindow;
+                case ResetColorType.ColorHighlight:
+                    return FontAndColor.SystemColorHighlight;
+                case ResetColorType.ColorButtonFace:
+                    return FontAndColor.SystemColorButtonFace;
+                default:
+                    return FontAndColor.Null;
+            }
+        }
+
+        /// <summary>
+        /// Draws border in the specified rectangle of the drawing context.
+        /// </summary>
+        /// <param name="control">Control in which drawing is performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle.</param>
+        /// <param name="border">Border settings.</param>
+        public static void DrawBorder(Control? control, Graphics dc, RectD rect, BorderSettings? border)
+        {
+            if (border is null)
+                return;
+
+            border.InvokePaint(dc, rect);
+
+            if (!border.DrawDefaultBorder)
+                return;
+
+            var radius = border.GetUniformCornerRadius(rect);
+            var defaultColor = ControlUtils.GetDefaultBorderColor(control);
+
+            if (radius != null)
+            {
+                dc.DrawRoundedRectangle(
+                    border.Top.GetPen(defaultColor),
+                    rect.InflatedBy(-1, -1),
+                    radius.Value);
+                return;
+            }
+
+            var topColor = border.Top.Color ?? defaultColor;
+            var bottomColor = border.Bottom.Color ?? defaultColor;
+            var leftColor = border.Left.Color ?? defaultColor;
+            var rightColor = border.Right.Color ?? defaultColor;
+
+            if (border.Top.Width > 0 && border.ColorIsOk(topColor))
+            {
+                dc.FillRectangle(topColor.AsBrush, border.GetTopRectangle(rect));
+            }
+
+            if (border.Bottom.Width > 0 && border.ColorIsOk(bottomColor))
+            {
+                dc.FillRectangle(bottomColor.AsBrush, border.GetBottomRectangle(rect));
+            }
+
+            if (border.Left.Width > 0 && border.ColorIsOk(leftColor))
+            {
+                dc.FillRectangle(leftColor.AsBrush, border.GetLeftRectangle(rect));
+            }
+
+            if (border.Right.Width > 0 && border.ColorIsOk(rightColor))
+            {
+                dc.FillRectangle(rightColor.AsBrush, border.GetRightRectangle(rect));
+            }
+        }
+
+        /// <summary>
+        /// Gets default border color if no colors are specified for the border.
+        /// </summary>
+        /// <param name="control">Control which background color is checked to get whether
+        /// it is dark.</param>
+        /// <returns></returns>
+        public static Color GetDefaultBorderColor(Control? control)
+        {
+            if (control is null)
+                return BorderSettings.DefaultBorderColor;
+            var isDark = control.IsDarkBackground;
+            return Border.DefaultColor?.Get(isDark)
+                ?? TabControl.GetDefaultInteriorBorderColor(isDark);
+        }
+
+        /// <summary>
         /// Returns the value of a system metric, or -1 if the metric is not supported on
         /// the current system.
         /// </summary>
@@ -173,9 +294,9 @@ namespace Alternet.UI
                 dc.FillRectangle(brush, rect);
             }
 
-            if (hasBorder)
+            if (hasBorder && border is not null)
             {
-                border?.Draw(control, dc, rect);
+                DrawBorder(control, dc, rect, border);
             }
         }
 

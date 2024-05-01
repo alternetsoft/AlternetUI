@@ -75,7 +75,7 @@ namespace Alternet.UI
                 SetColor(null);
             else
             {
-                var colors = FontAndColor.GetResetColors(method, this);
+                var colors = ControlUtils.GetResetColors(method, this);
                 var color = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
                 SetColor(color);
             }
