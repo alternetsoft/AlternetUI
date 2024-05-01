@@ -42,21 +42,21 @@ namespace Alternet.UI
 
         static AllPlatformDefaults()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS)
             {
                 PlatformCurrent = PlatformWindows;
                 InitWindows();
                 return;
             }
 
-            if (Application.IsLinuxOS)
+            if (BaseApplication.IsLinuxOS)
             {
                 PlatformCurrent = PlatformLinux;
                 InitLinux();
                 return;
             }
 
-            if (Application.IsMacOS)
+            if (BaseApplication.IsMacOS)
             {
                 PlatformCurrent = PlatformMacOs;
                 InitMacOs();
@@ -140,7 +140,7 @@ namespace Alternet.UI
             return result;
         }
 
-        internal static object? GetPropValue(
+        public static object? GetPropValue(
             PlatformDefaults platform,
             ControlTypeId control,
             ControlDefaultsId prop)
@@ -149,7 +149,7 @@ namespace Alternet.UI
             return result;
         }
 
-        internal static Thickness GetAsThickness(
+        public static Thickness GetAsThickness(
             ControlTypeId control,
             ControlDefaultsId prop)
         {

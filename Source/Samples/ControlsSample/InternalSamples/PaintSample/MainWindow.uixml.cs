@@ -172,7 +172,7 @@ namespace PaintSample
                 var url = "embres:ControlsSample.Resources.ToolIcons." +
                     tool.GetType().Name.Replace("Tool", "") + ".svg";
                 var (normalImage, disabledImage) =
-                    ControlDrawUtils.GetNormalAndDisabledSvg(url, this);
+                    ControlUtils.GetNormalAndDisabledSvg(url, this);
                 var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);
 
                 void ClickMe()
@@ -213,7 +213,7 @@ namespace PaintSample
                 throw new InvalidOperationException();
 #pragma warning restore
 
-            var image = ControlDrawUtils.GetNormalAndDisabledSvg(stream, 32, this);
+            var image = ControlUtils.GetNormalAndDisabledSvg(stream, 32, this);
             return image;
         }
 

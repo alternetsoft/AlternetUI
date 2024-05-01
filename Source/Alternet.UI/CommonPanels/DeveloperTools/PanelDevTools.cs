@@ -256,7 +256,7 @@ namespace Alternet.UI
 
         private void InitActions()
         {
-            AddLogAction("Log system settings", SystemSettings.Log);
+            AddLogAction("Log system settings", DebugUtils.LogSystemSettings);
             AddLogAction("Log font families", LogFontFamilies);
             AddLogAction("Log system fonts", SystemSettings.LogSystemFonts);
             AddLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);

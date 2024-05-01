@@ -683,7 +683,7 @@ namespace Alternet.UI
         public virtual void LoadSvg(string url, SizeI imageSize)
         {
             var (normalImage, disabledImage) =
-                ControlDrawUtils.GetNormalAndDisabledSvg(url, this, imageSize);
+                ControlUtils.GetNormalAndDisabledSvg(url, this, imageSize);
             ImageSet = normalImage;
             DisabledImageSet = disabledImage;
         }

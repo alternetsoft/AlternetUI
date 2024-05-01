@@ -17,6 +17,47 @@ namespace Alternet.UI
         private static WindowDeveloperTools? devToolsWindow;
 
         /// <summary>
+        /// Logs <see cref="SystemSettings"/>.
+        /// </summary>
+        public static void LogSystemSettings()
+        {
+            BaseApplication.LogBeginSection();
+            BaseApplication.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
+            BaseApplication.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
+            BaseApplication.Log($"AppearanceName = {SystemSettings.AppearanceName}");
+
+            var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
+            LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
+            LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
+
+            BaseApplication.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
+            BaseApplication.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
+
+            BaseApplication.LogSeparator();
+
+            foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
+            {
+                BaseApplication.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
+            }
+
+            BaseApplication.LogSeparator();
+
+            foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
+            {
+                BaseApplication.Log($"GetMetric({item}) = {ControlUtils.GetMetric(item)}");
+            }
+
+            BaseApplication.LogSeparator();
+
+            foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
+            {
+                BaseApplication.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
+            }
+
+            BaseApplication.LogEndSection();
+        }
+
+        /// <summary>
         /// Hooks exception events for the debug purposes.
         /// </summary>
         public static void HookExceptionEvents()

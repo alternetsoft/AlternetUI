@@ -21,5 +21,17 @@ namespace Alternet.UI
         /// Gets default native drawing implementation.
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
+
+        public abstract string SystemSettingsAppearanceName();
+
+        public abstract bool SystemSettingsAppearanceIsDark();
+
+        public abstract bool SystemSettingsIsUsingDarkBackground();
+
+        public abstract bool SystemSettingsHasFeature(SystemSettingsFeature index);
+
+        public abstract Color SystemSettingsGetColor(SystemSettingsColor index);
+
+        public abstract Font SystemSettingsGetFont(SystemSettingsFont systemFont);
     }
 }

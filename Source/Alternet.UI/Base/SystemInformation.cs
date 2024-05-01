@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// </returns>
         public static int DoubleClickTime
         {
-            get => doubleClickTime ?? SystemSettings.GetMetric(SystemSettingsMetric.DClickMSec);
+            get => doubleClickTime ?? ControlUtils.GetMetric(SystemSettingsMetric.DClickMSec);
 
             set => doubleClickTime = value;
         }

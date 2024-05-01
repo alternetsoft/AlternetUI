@@ -12,8 +12,34 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods related to the control drawing.
     /// </summary>
-    public static class ControlDrawUtils
+    public static class ControlUtils
     {
+        /// <summary>
+        /// Returns the value of a system metric, or -1 if the metric is not supported on
+        /// the current system.
+        /// </summary>
+        /// <param name="index">System metric identifier.</param>
+        /// <param name="control">Control for which metric is requested (optional).</param>
+        /// <remarks>
+        /// The value of <paramref name="control"/> determines if the metric returned is a global
+        /// value or a control based value, in which case it might determine the widget, the
+        /// display the window is on, or something similar. The window given should be as close
+        /// to the metric as possible (e.g.a <see cref="Window"/> in case of
+        /// the <see cref="SystemSettingsMetric.CaptionY"/> metric).
+        /// </remarks>
+        /// <remarks>
+        /// Specifying the <paramref name="control"/> parameter is encouraged, because some
+        /// metrics on some ports are not supported without one,or they might be capable of
+        /// reporting better values if given one. If a control does not make sense for a metric,
+        /// one should still be given, as for example it might determine which displays
+        /// cursor width is requested with <see cref="SystemSettingsMetric.CursorX"/>.
+        /// </remarks>
+        public static int GetMetric(SystemSettingsMetric index, Control? control = default)
+        {
+            IntPtr wx = control?.WxWidget ?? default;
+            return Native.WxOtherFactory.SystemSettingsGetMetric((int)index, wx);
+        }
+
         /// <summary>
         /// Draws sliced image with the specified
         /// <see cref="NinePatchImagePaintParams"/> parameters. This method can be used,
