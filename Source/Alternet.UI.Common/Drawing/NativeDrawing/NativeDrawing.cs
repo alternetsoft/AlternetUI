@@ -22,6 +22,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static NativeDrawing Default = new NotImplementedDrawing();
 
+        public abstract Graphics CreateGraphicsFromScreen();
+
+        public abstract Graphics CreateGraphicsFromImage(Image image);
+
         /// <summary>
         /// Creates native pen.
         /// </summary>

@@ -48,6 +48,37 @@ namespace Alternet.Drawing
         public abstract object NativeObject { get; }
 
         /// <summary>
+        /// Creates a new <see cref="Graphics"/> from the specified
+        /// <see cref="Image"/>.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> from which to create the
+        /// new <see cref="Graphics"/>.</param>
+        /// <returns>A new <see cref="Graphics"/> for the specified
+        /// <see cref="Image"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/>
+        /// is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// Use this method to draw on the specified image.
+        /// You should always call the Dispose() method to release
+        /// the <see cref="Graphics"/> and
+        /// related resources created by the <see cref="FromImage"/> method.
+        /// </remarks>
+        public static Graphics FromImage(Image image)
+        {
+            DebugImageAssert(image);
+            return NativeDrawing.Default.CreateGraphicsFromImage(image);
+        }
+
+        /// <summary>
+        /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
+        /// </summary>
+        /// <returns></returns>
+        public static Graphics FromScreen()
+        {
+            return NativeDrawing.Default.CreateGraphicsFromScreen();
+        }
+
+        /// <summary>
         /// Draws the text rotated by angle degrees (positive angles are counterclockwise;
         /// the full angle is 360 degrees) with the specified font, background and
         /// foreground colors.

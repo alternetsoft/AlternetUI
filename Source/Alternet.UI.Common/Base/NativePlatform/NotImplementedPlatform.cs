@@ -85,6 +85,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override int SystemSettingsGetMetric(SystemSettingsMetric index)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool SystemSettingsHasFeature(SystemSettingsFeature index)
         {
             throw new NotImplementedException();

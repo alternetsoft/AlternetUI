@@ -21,6 +21,11 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override int SystemSettingsGetMetric(SystemSettingsMetric index)
+        {
+            return Native.WxOtherFactory.SystemSettingsGetMetric((int)index, default);
+        }
+
         public override string SystemSettingsAppearanceName()
         {
             return Native.WxOtherFactory.SystemAppearanceGetName();

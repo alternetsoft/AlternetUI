@@ -12,7 +12,7 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    public partial class SkiaDrawing : NativeDrawing
+    public partial class SkiaDrawing
     {
         /// <inheritdoc/>
         public override SizeI ImageSetGetPreferredBitmapSizeAtScale(object imageSet, double scale)

@@ -22,6 +22,8 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
+        public abstract int SystemSettingsGetMetric(SystemSettingsMetric index);
+
         public abstract string SystemSettingsAppearanceName();
 
         public abstract bool SystemSettingsAppearanceIsDark();

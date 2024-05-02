@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -19,13 +20,16 @@ namespace Alternet.UI
     /// <remarks>
     /// Currently, the caret appears as a rectangle of the given size.
     /// </remarks>
-    public class Caret : DisposableObject
+    public class Caret : GraphicsObject
     {
+        private Control? control;
+        private SizeI? size;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Caret"/> class.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Caret()
-            : base(Native.WxOtherFactory.CreateCaret(), true)
         {
         }
 
@@ -36,9 +40,11 @@ namespace Alternet.UI
         /// <param name="control">A control the caret is associated with.</param>
         /// <param name="width">Caret width in pixels.</param>
         /// <param name="height">Caret height in pixels.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Caret(Control control, int width, int height)
-            : base(Native.WxOtherFactory.CreateCaret2(control.WxWidget, width, height), true)
         {
+            this.control = control;
+            size = (width, height);
         }
 
         /// <summary>
@@ -51,14 +57,16 @@ namespace Alternet.UI
         /// </remarks>
         public static int BlinkTime
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return Native.WxOtherFactory.CaretGetBlinkTime();
+                return NativeDrawing.Default.CaretGetBlinkTime();
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                Native.WxOtherFactory.CaretSetBlinkTime(value);
+                NativeDrawing.Default.CaretSetBlinkTime(value);
             }
         }
 
@@ -67,14 +75,16 @@ namespace Alternet.UI
         /// </summary>
         public SizeI Size
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return Native.WxOtherFactory.CaretGetSize(Handle);
+                return NativeDrawing.Default.CaretGetSize(NativeObject);
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                Native.WxOtherFactory.CaretSetSize(Handle, value.Width, value.Height);
+                NativeDrawing.Default.CaretSetSize(NativeObject, value);
             }
         }
 
@@ -83,14 +93,16 @@ namespace Alternet.UI
         /// </summary>
         public PointI Position
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return Native.WxOtherFactory.CaretGetPosition(Handle);
+                return NativeDrawing.Default.CaretGetPosition(NativeObject);
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                Native.WxOtherFactory.CaretMove(Handle, value.X, value.Y);
+                NativeDrawing.Default.CaretSetPosition(NativeObject, value);
             }
         }
 
@@ -99,9 +111,10 @@ namespace Alternet.UI
         /// </summary>
         public bool IsOk
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return Native.WxOtherFactory.CaretIsOk(Handle);
+                return NativeDrawing.Default.CaretIsOk(NativeObject);
             }
         }
 
@@ -115,23 +128,26 @@ namespace Alternet.UI
         /// </remarks>
         public bool Visible
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return Native.WxOtherFactory.CaretIsVisible(Handle);
+                return NativeDrawing.Default.CaretGetVisible(NativeObject);
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                Native.WxOtherFactory.CaretShow(Handle, value);
+                NativeDrawing.Default.CaretSetVisible(NativeObject, value);
             }
         }
 
         /// <summary>
         ///  Hides the caret, same as Show(false).
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Hide()
         {
-            Native.WxOtherFactory.CaretHide(Handle);
+            Visible = false;
         }
 
         /// <summary>
@@ -139,20 +155,24 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="show">A <see cref="bool"/> value indicating whether
         /// the caret is visible.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Show(bool show = true)
         {
-            Native.WxOtherFactory.CaretShow(Handle, show);
-        }
-
-        internal IntPtr GetWindow()
-        {
-            return Native.WxOtherFactory.CaretGetWindow(Handle);
+            Visible = show;
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override object CreateNativeObject()
         {
-            Native.WxOtherFactory.DeleteCaret(Handle);
+            if(control is null || size is null)
+                return NativeDrawing.Default.CreateCaret();
+            return NativeDrawing.Default.CreateCaret(control, size.Value.Width, size.Value.Height);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeNativeObject()
+        {
+            NativeDrawing.Default.DisposeCaret(NativeObject);
         }
     }
 }

@@ -22,12 +22,12 @@ namespace Alternet.Drawing
             if (color is null || !color.IsOk)
                 return NullColor;
 
-            if (color.SkiaColor is not null)
-                return (SKColor)color.SkiaColor;
+            if (color.NativeObject is not null)
+                return (SKColor)color.NativeObject;
 
             color.GetArgbValues(out var a, out var r, out var g, out var b);
             var skColor = new SKColor(r, g, b, a);
-            color.SkiaColor = skColor;
+            color.NativeObject = skColor;
             return skColor;
         }
 
@@ -37,6 +37,18 @@ namespace Alternet.Drawing
                 return;
             NativeDrawing.Default = new SkiaDrawing();
             initialized = true;
+        }
+
+        /// <inheritdoc/>
+        public override Graphics CreateGraphicsFromScreen()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override Graphics CreateGraphicsFromImage(Image image)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -56,5 +68,5 @@ namespace Alternet.Drawing
         {
             return NotImplemented<Color>();
         }
-   }
+    }
 }

@@ -47,6 +47,74 @@ namespace Alternet.UI
     [System.ComponentModel.TypeDescriptionProvider(typeof(DependencyObjectProvider))]
     public class DependencyObject : DispatcherObject
     {
+        // Specialized Type identification
+        private DependencyObjectType _dType;
+
+        // For Freezable:
+        //    To save working set this object will initially reference a
+        //    single delegate/context.  If a second object is added
+        //    of the same type, we will convert to a list/list, which will
+        //    be stored in _contextStorage.  If the user ever adds an object of the
+        //    other type, we will create a HandlerContextStorage class, which _contextStorage
+        //    will then point at.
+
+        // For FrameworkContentElement/FrameworkElement:
+        //    This is the parent whose effective values store would contain the
+        //    value for the inheritable property on you. This change part of the
+        //    performance optimization around inheritable properties whereby you
+        //    wouldn't store the inheritable property on each and every node but
+        //    will hold it only the node that the property was actually set.
+        internal object _contextStorage;
+
+        // The cache of effective values for this DependencyObject
+        // This is an array sorted by DP.GlobalIndex.  This ordering is
+        // maintained via an insertion sort algorithm.
+        private EffectiveValueEntry[] _effectiveValues;
+
+        // Stores:
+        // Bits  0- 9 (0x000003FF): EffectiveValuesCount (0-1023)
+        // Bits 10-18 (0x0007FC00): InheritableEffectiveValuesCount (0-511)
+        //     Bit 19 (0x00080000): CanModifyEffectiveValues, says if you can change the _effectiveValues cache on the current element.
+        //     Bit 20 (0x00100000): IsSelfInheritanceParent, says if all your inheritable property values are built into your effectiveValues store
+        //     Bit 21 (0x00200000): CanBeInheritanceContext, says if you can be an InheritanceContext for someone
+        //     Bit 22 (0x00400000): IsSealed:  whether or not this DO is in readonly mode
+        //     Bit 23 (0x00800000): PropertyInitialization mode
+        //     Bit 24 (0x01000000): IsInheritanceContextSealed, says if you can change InheritanceContext
+        //     Bit 25 (0x02000000): Freezable_HasMultipleInheritanceContexts
+        //     Bit 26 (0x04000000): Freezable_UsingHandlerList
+        //     Bit 27 (0x08000000): Freezable_UsingContextList
+        //     Bit 28 (0x10000000): Freezable_UsingSingletonHandler
+        //     Bit 29 (0x20000000): Freezable_UsingSingletonContext
+        //     Bit 30 (0x40000000): Animatable_IsResourceInvalidationNecessary
+        //     Bit 31 (0x80000000): Animatable_HasAnimatedProperties
+        private UInt32 _packedData = 0;
+
+        // special value in local store meaning that some alternative store (e.g.
+        // the Framework's per-instance StyleData) is holding an Expression to
+        // which we want to delegate SetValue.
+        [FriendAccessAllowed] // Built into Base, also used by Framework.
+        internal static readonly object ExpressionInAlternativeStore
+            = new NamedObject("ExpressionInAlternativeStore");
+
+        // callbacks used for alternative expression storage
+        private static AlternativeExpressionStorageCallback _getExpressionCore;
+
+#if VERBOSE_PROPERTY_EVENT
+        internal static int ValidationCount;
+        internal static int InvalidationCount;
+#endif
+
+        // This field stores the list of dependents in a FrugalMap.
+        // The field is of type object for two reasons:
+        // 1) FrugalMap is a struct, and generics over value types have perf issues
+        // 2) so that we can have the default value of "null" mean Unset.
+        internal static readonly UncommonField<object> DependentListMapField = new UncommonField<object>();
+
+        // Optimization, to avoid calling FromSystemType too often
+        internal static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof(DependencyObject));
+
+        private const int NestedOperationMaximum = 153;
+
         /// <summary>
         ///     Default DependencyObject constructor
         /// </summary>
@@ -3464,82 +3532,6 @@ namespace Alternet.UI
         }
 
         #endregion EffectiveValues
-
-        #region InstanceData
-
-        // Specialized Type identification
-        private DependencyObjectType _dType;
-
-        // For Freezable:
-        //    To save working set this object will initially reference a
-        //    single delegate/context.  If a second object is added
-        //    of the same type, we will convert to a list/list, which will
-        //    be stored in _contextStorage.  If the user ever adds an object of the
-        //    other type, we will create a HandlerContextStorage class, which _contextStorage
-        //    will then point at.
-
-        // For FrameworkContentElement/FrameworkElement:
-        //    This is the parent whose effective values store would contain the
-        //    value for the inheritable property on you. This change part of the
-        //    performance optimization around inheritable properties whereby you
-        //    wouldn't store the inheritable property on each and every node but
-        //    will hold it only the node that the property was actually set.
-        internal object _contextStorage;
-
-        // The cache of effective values for this DependencyObject
-        // This is an array sorted by DP.GlobalIndex.  This ordering is
-        // maintained via an insertion sort algorithm.
-        private EffectiveValueEntry[] _effectiveValues;
-
-        // Stores:
-        // Bits  0- 9 (0x000003FF): EffectiveValuesCount (0-1023)
-        // Bits 10-18 (0x0007FC00): InheritableEffectiveValuesCount (0-511)
-        //     Bit 19 (0x00080000): CanModifyEffectiveValues, says if you can change the _effectiveValues cache on the current element.
-        //     Bit 20 (0x00100000): IsSelfInheritanceParent, says if all your inheritable property values are built into your effectiveValues store
-        //     Bit 21 (0x00200000): CanBeInheritanceContext, says if you can be an InheritanceContext for someone
-        //     Bit 22 (0x00400000): IsSealed:  whether or not this DO is in readonly mode
-        //     Bit 23 (0x00800000): PropertyInitialization mode
-        //     Bit 24 (0x01000000): IsInheritanceContextSealed, says if you can change InheritanceContext
-        //     Bit 25 (0x02000000): Freezable_HasMultipleInheritanceContexts
-        //     Bit 26 (0x04000000): Freezable_UsingHandlerList
-        //     Bit 27 (0x08000000): Freezable_UsingContextList
-        //     Bit 28 (0x10000000): Freezable_UsingSingletonHandler
-        //     Bit 29 (0x20000000): Freezable_UsingSingletonContext
-        //     Bit 30 (0x40000000): Animatable_IsResourceInvalidationNecessary
-        //     Bit 31 (0x80000000): Animatable_HasAnimatedProperties
-
-        private UInt32 _packedData = 0;
-
-        #endregion InstanceData
-
-        #region StaticData
-
-        // special value in local store meaning that some alternative store (e.g.
-        // the Framework's per-instance StyleData) is holding an Expression to
-        // which we want to delegate SetValue.
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
-        internal static readonly object ExpressionInAlternativeStore = new NamedObject("ExpressionInAlternativeStore");
-
-        // callbacks used for alternative expression storage
-        private static AlternativeExpressionStorageCallback _getExpressionCore;
-
-#if VERBOSE_PROPERTY_EVENT
-        internal static int ValidationCount;
-        internal static int InvalidationCount;
-#endif
-
-        // This field stores the list of dependents in a FrugalMap.
-        // The field is of type object for two reasons:
-        // 1) FrugalMap is a struct, and generics over value types have perf issues
-        // 2) so that we can have the default value of "null" mean Unset.
-        internal static readonly UncommonField<object> DependentListMapField = new UncommonField<object>();
-
-        // Optimization, to avoid calling FromSystemType too often
-        internal static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof(DependencyObject));
-
-        private const int NestedOperationMaximum = 153;
-
-        #endregion StaticData
    }
 
     /// <summary> Callback used by the "alternative Expression storage" feature </summary>

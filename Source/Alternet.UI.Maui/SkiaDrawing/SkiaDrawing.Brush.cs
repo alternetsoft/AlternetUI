@@ -11,7 +11,7 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    public partial class SkiaDrawing : NativeDrawing
+    public partial class SkiaDrawing
     {
         /// <inheritdoc/>
         public override void UpdateTextureBrush(TextureBrush brush)

@@ -22,6 +22,9 @@ namespace Alternet.UI.Threading
     /// </remarks>
     public abstract class DispatcherObject : DisposableObject
     {
+        private Dispatcher _dispatcher;
+        private static Dispatcher _sentinelDispatcher;
+
         /// <summary>
         ///     Returns the <see cref="Dispatcher"/> that this
         ///     <see cref="DispatcherObject"/> is associated with.
@@ -129,9 +132,6 @@ namespace Alternet.UI.Threading
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
         }
-
-        private Dispatcher _dispatcher;
-        private static Dispatcher _sentinelDispatcher;
     }
 }
 

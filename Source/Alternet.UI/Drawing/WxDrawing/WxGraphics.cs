@@ -81,39 +81,6 @@ namespace Alternet.Drawing
             get => dc;
         }
 
-        /// <summary>
-        /// Creates a new <see cref="Graphics"/> from the specified
-        /// <see cref="Image"/>.
-        /// </summary>
-        /// <param name="image"><see cref="Image"/> from which to create the
-        /// new <see cref="Graphics"/>.</param>
-        /// <returns>A new <see cref="Graphics"/> for the specified
-        /// <see cref="Image"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="image"/>
-        /// is <see langword="null"/>.</exception>
-        /// <remarks>
-        /// Use this method to draw on the specified image.
-        /// You should always call the Dispose() method to release
-        /// the <see cref="Graphics"/> and
-        /// related resources created by the <see cref="FromImage"/> method.
-        /// </remarks>
-        public static Graphics FromImage(Image image)
-        {
-            DebugImageAssert(image);
-            return new WxGraphics(
-                UI.Native.DrawingContext.FromImage(
-                    (UI.Native.Image)image.NativeObject));
-        }
-
-        /// <summary>
-        /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
-        /// </summary>
-        /// <returns></returns>
-        public static Graphics FromScreen()
-        {
-            return new WxGraphics(UI.Native.DrawingContext.FromScreen());
-        }
-
         /// <inheritdoc/>
         public override void DrawRotatedTextI(
             string text,

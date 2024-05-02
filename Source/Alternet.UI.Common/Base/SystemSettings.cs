@@ -50,6 +50,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the value of a system metric, or -1 if the metric is not supported on
+        /// the current system.
+        /// </summary>
+        /// <param name="index">System metric identifier.</param>
+        public static int GetMetric(SystemSettingsMetric index)
+        {
+            return NativePlatform.Default.SystemSettingsGetMetric(index);
+        }
+
+        /// <summary>
         /// Returns true if <paramref name="backgroundColor"/> is darker
         /// than <paramref name="foregroundColor"/>.
         /// </summary>

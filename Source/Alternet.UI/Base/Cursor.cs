@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <param name="stream">Stream with cursor.</param>
         /// <param name="bitmapType">Type of the cursor.</param>
         public Cursor(Stream stream, BitmapType bitmapType = BitmapType.Any)
-            : this(new Bitmap(stream, bitmapType))
+            : this(new Image(stream, bitmapType))
         {
         }
 

@@ -21,6 +21,18 @@ namespace Alternet.Drawing
             initialized = true;
         }
 
+        public override Graphics CreateGraphicsFromScreen()
+        {
+            return new WxGraphics(UI.Native.DrawingContext.FromScreen());
+        }
+
+        public override Graphics CreateGraphicsFromImage(Image image)
+        {
+            return new WxGraphics(
+                UI.Native.DrawingContext.FromImage(
+                    (UI.Native.Image)image.NativeObject));
+        }
+
         /// <inheritdoc/>
         public override object CreatePen() => new UI.Native.Pen();
 

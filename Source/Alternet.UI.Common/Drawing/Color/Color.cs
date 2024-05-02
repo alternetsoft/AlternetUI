@@ -202,10 +202,10 @@ namespace Alternet.Drawing
         public byte A => unchecked((byte)(Value >> ARGBAlphaShift));
 
         /// <summary>
-        /// Gets or sets reference to the SkiaSharp color.
+        /// Gets or sets reference to the saved native color.
         /// </summary>
         [Browsable(false)]
-        public object? SkiaColor { get; set; }
+        public object? NativeObject { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if color is opaque (<see cref="A"/> is 255).

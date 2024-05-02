@@ -14,18 +14,6 @@ namespace Alternet.UI
     /// </summary>
     public class FrameworkElement : UIElement
     {
-        /*/// <summary>
-        ///     BindingGroup DependencyProperty
-        /// </summary>
-        public static readonly DependencyProperty BindingGroupProperty =
-                    DependencyProperty.Register(
-                                "BindingGroup",
-                                typeof(BindingGroup),
-                                typeof(FrameworkElement),
-                                new FrameworkPropertyMetadata(
-                                    null,
-                                    PropMetadataOption.Inherits));*/
-
         /// <summary>
         /// Language can be specified in xaml at any point using the xml language attribute xml:lang.
         /// This will make the culture pertain to the scope of the element where it is applied.  The
