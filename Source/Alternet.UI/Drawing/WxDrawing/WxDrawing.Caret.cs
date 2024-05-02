@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +69,54 @@ namespace Alternet.Drawing
         public override void DisposeCaret(object nativeCaret)
         {
             UI.Native.WxOtherFactory.DeleteCaret((IntPtr)nativeCaret);
+        }
+
+        public override object CreateCursor()
+        {
+            return UI.Native.WxOtherFactory.CreateCursor();
+        }
+
+        public override object CreateCursor(CursorType cursor)
+        {
+            return UI.Native.WxOtherFactory.CreateCursor2((int)cursor);
+        }
+
+        public override object CreateCursor(
+            string cursorName,
+            BitmapType type,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
+        {
+            return UI.Native.WxOtherFactory.CreateCursor3(
+                    cursorName,
+                    (int)type,
+                    hotSpotX,
+                    hotSpotY);
+        }
+
+        public override object CreateCursor(Image image)
+        {
+            return UI.Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.NativeObject);
+        }
+
+        public override bool CursorIsOk(object nativeCursor)
+        {
+            return UI.Native.WxOtherFactory.CursorIsOk((IntPtr)nativeCursor);
+        }
+
+        public override PointI CursorGetHotSpot(object nativeCursor)
+        {
+            return UI.Native.WxOtherFactory.CursorGetHotSpot((IntPtr)nativeCursor);
+        }
+
+        public override void CursorSetGlobal(object nativeCursor)
+        {
+            UI.Native.WxOtherFactory.SetCursor((IntPtr)nativeCursor);
+        }
+
+        public override void DisposeCursor(object nativeCursor)
+        {
+            UI.Native.WxOtherFactory.DeleteCursor((IntPtr)nativeCursor);
         }
     }
 }

@@ -1246,5 +1246,45 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override object CreateCursor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateCursor(CursorType cursor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateCursor(string cursorName, BitmapType type, int hotSpotX = 0, int hotSpotY = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object CreateCursor(Image image)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool CursorIsOk(object nativeCursor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override PointI CursorGetHotSpot(object nativeCursor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void CursorSetGlobal(object nativeCursor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void DisposeCursor(object nativeCursor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -2209,7 +2209,7 @@ namespace Alternet.UI
         /// </summary>
         public Cursor GetTextCursor()
         {
-            return new Cursor(NativeControl.GetTextCursor(), true);
+            return new Cursor(NativeControl.GetTextCursor());
         }
 
         /// <summary>
@@ -2255,7 +2255,7 @@ namespace Alternet.UI
         /// </summary>
         public Cursor GetURLCursor()
         {
-            return new Cursor(NativeControl.GetURLCursor(), true);
+            return new Cursor(NativeControl.GetURLCursor());
         }
 
         /// <summary>

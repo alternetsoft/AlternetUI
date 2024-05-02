@@ -10,6 +10,26 @@ namespace Alternet.Drawing
 {
     public partial class NativeDrawing
     {
+        public abstract object CreateCursor();
+
+        public abstract object CreateCursor(CursorType cursor);
+
+        public abstract object CreateCursor(
+            string cursorName,
+            BitmapType type,
+            int hotSpotX = 0,
+            int hotSpotY = 0);
+
+        public abstract object CreateCursor(Image image);
+
+        public abstract bool CursorIsOk(object nativeCursor);
+
+        public abstract PointI CursorGetHotSpot(object nativeCursor);
+
+        public abstract void CursorSetGlobal(object nativeCursor);
+
+        public abstract void DisposeCursor(object nativeCursor);
+
         public abstract object CreateCaret();
 
         public abstract object CreateCaret(object control, int width, int height);

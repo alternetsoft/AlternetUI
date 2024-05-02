@@ -12,14 +12,21 @@ namespace Alternet.UI
     /// A cursor is a small bitmap usually used for denoting where the mouse pointer is, with
     /// a picture that might indicate the interpretation of a mouse click.
     /// </summary>
-    public class Cursor : DisposableObject
+    public class Cursor : GraphicsObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
         /// </summary>
         public Cursor()
-            : base(Native.WxOtherFactory.CreateCursor(), true)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cursor"/> class.
+        /// </summary>
+        public Cursor(object nativeCursor)
+        {
+            NativeObject = nativeCursor;
         }
 
         /// <summary>
@@ -28,8 +35,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="cursor">Built in cursor type.</param>
         public Cursor(CursorType cursor)
-            : base(Native.WxOtherFactory.CreateCursor2((int)cursor), true)
         {
+            NativeObject = NativeDrawing.Default.CreateCursor(cursor);
         }
 
         /// <summary>
@@ -42,16 +49,15 @@ namespace Alternet.UI
         /// <param name="hotSpotY"></param>
         public Cursor(
             string cursorName,
-            int type,
+            BitmapType type,
             int hotSpotX = 0,
             int hotSpotY = 0)
-            : base(
-                  Native.WxOtherFactory.CreateCursor3(
-                    cursorName,
-                    (int)type,
-                    hotSpotX,
-                    hotSpotY), true)
         {
+            NativeObject = NativeDrawing.Default.CreateCursor(
+                    cursorName,
+                    type,
+                    hotSpotX,
+                    hotSpotY);
         }
 
         /// <summary>
@@ -69,13 +75,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="image">Image with cursor.</param>
         public Cursor(Image image)
-            : base(Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.NativeObject), true)
         {
-        }
-
-        internal Cursor(IntPtr handle, bool disposeHandle)
-            : base(handle, disposeHandle)
-        {
+            NativeObject = NativeDrawing.Default.CreateCursor(image);
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.WxOtherFactory.CursorIsOk(Handle);
+                return NativeDrawing.Default.CursorIsOk(NativeObject);
             }
         }
 
@@ -96,7 +97,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.WxOtherFactory.CursorGetHotSpot(Handle);
+                return NativeDrawing.Default.CursorGetHotSpot(NativeObject);
             }
         }
 
@@ -111,9 +112,9 @@ namespace Alternet.UI
         public static void SetGlobal(Cursor? cursor = null)
         {
             if (cursor is null)
-                Native.WxOtherFactory.SetCursor(default);
+                NativeDrawing.Default.CursorSetGlobal(default(IntPtr));
             else
-                Native.WxOtherFactory.SetCursor(cursor.Handle);
+                NativeDrawing.Default.CursorSetGlobal(cursor.NativeObject);
         }
 
         /// <summary>
@@ -152,9 +153,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeNativeObject()
         {
-            Native.WxOtherFactory.DeleteCursor(Handle);
+            NativeDrawing.Default.DisposeCursor(NativeObject);
+        }
+
+        /// <inheritdoc/>
+        protected override object CreateNativeObject()
+        {
+            return NativeDrawing.Default.CreateCursor();
         }
     }
 }

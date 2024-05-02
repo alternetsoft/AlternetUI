@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// </remarks>
     public class Caret : GraphicsObject
     {
-        private Control? control;
+        private readonly Control? control;
         private SizeI? size;
 
         /// <summary>
