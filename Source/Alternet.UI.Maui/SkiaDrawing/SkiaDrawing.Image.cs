@@ -21,7 +21,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object ImageConvertToGenericImage(object nativeImage)
+        public override object ImageConvertToGenericImage(Image image)
         {
             throw new NotImplementedException();
         }
@@ -39,25 +39,27 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromGenericImage(object genericImage, int depth = -1)
+        public override object CreateImageFromGenericImage(GenericImage genericImage, int depth = -1)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromGraphics(int width, int height, object dc)
+        public override object CreateImageFromGraphics(int width, int height, Graphics dc)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromGraphicsAndGenericImage(object genericImage, object dc)
+        public override object CreateImageFromGraphicsAndGenericImage(
+            GenericImage genericImage,
+            Graphics dc)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromImage(object original, SizeI newSize)
+        public override object CreateImageFromImage(Image original, SizeI newSize)
         {
             throw new NotImplementedException();
         }

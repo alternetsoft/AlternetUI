@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     {
         public abstract object CreateImage(ImageSet imageSet, SizeI size);
 
-        public abstract object ImageConvertToGenericImage(object nativeImage);
+        public abstract object ImageConvertToGenericImage(Image image);
 
         /// <summary>
         /// Creates native image.
@@ -61,7 +61,9 @@ namespace Alternet.Drawing
         /// <param name="original">The native image from which to create the new image.</param>
         /// <param name="newSize">The <see cref="SizeI" /> structure that represent the
         /// size of the new image.</param>
-        public abstract object CreateImageFromImage(object original, SizeI newSize);
+        public abstract object CreateImageFromImage(Image original, SizeI newSize);
+
+        public abstract object CreateImageFromImage(Image image);
 
         /// <summary>
         /// Initializes a new instance of the native image from
@@ -73,7 +75,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
-        public abstract object CreateImageFromGenericImage(object genericImage, int depth = -1);
+        public abstract object CreateImageFromGenericImage(GenericImage genericImage, int depth = -1);
 
         /// <summary>
         /// Creates a bitmap compatible with the given native graphics, inheriting
@@ -81,8 +83,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
         /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
-        /// <param name="dc">Native graphics from which the scaling factor is inherited.</param>
-        public abstract object CreateImageFromGraphics(int width, int height, object dc);
+        /// <param name="dc">Graphics from which the scaling factor is inherited.</param>
+        public abstract object CreateImageFromGraphics(int width, int height, Graphics dc);
+
+        public abstract object CreateImage(ImageSet imageSet, IControl control);
 
         /// <summary>
         /// Creates a bitmap compatible with the given native grahics and
@@ -96,7 +100,9 @@ namespace Alternet.Drawing
         /// must be valid, but inherits the scaling factor from the given device context
         /// instead of simply using the default factor of 1.
         /// </remarks>
-        public abstract object CreateImageFromGraphicsAndGenericImage(object genericImage, object dc);
+        public abstract object CreateImageFromGraphicsAndGenericImage(
+            GenericImage genericImage,
+            Graphics dc);
 
         /// <summary>
         /// Initializes a new instance of the native image

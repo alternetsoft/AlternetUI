@@ -37,7 +37,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
+        /// Initializes a new instance of the <see cref="Image"/> class with the image from
         /// <see cref="ImageSet"/>.
         /// </summary>
         /// <param name="imageSet">Source of the image.</param>
@@ -46,6 +46,33 @@ namespace Alternet.Drawing
         public Image(ImageSet imageSet, SizeI size)
         {
             nativeImage = NativeDrawing.Default.CreateImage(imageSet, size);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class with the image from
+        /// <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="control">Control used to get dpi.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Image(ImageSet imageSet, IControl control)
+        {
+            nativeImage = NativeDrawing.Default.CreateImage(imageSet, control);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified
+        /// existing image.
+        /// </summary>
+        /// <param name="image">The <see cref="Image"/> from which to create the
+        /// new <see cref="Bitmap"/>.</param>
+        /// <remarks>
+        /// Full image data is copied from the original image.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Image(Image original)
+        {
+            nativeImage = NativeDrawing.Default.CreateImageFromImage(original);
         }
 
         /// <summary>
@@ -58,7 +85,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(Image original, SizeI newSize)
         {
-            nativeImage = NativeDrawing.Default.CreateImageFromImage(original.NativeObject, newSize);
+            nativeImage = NativeDrawing.Default.CreateImageFromImage(original, newSize);
         }
 
         /// <summary>
@@ -74,7 +101,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(GenericImage genericImage, int depth = -1)
         {
-            nativeImage = NativeDrawing.Default.CreateImageFromGenericImage(genericImage.Handle, depth);
+            nativeImage = NativeDrawing.Default.CreateImageFromGenericImage(genericImage, depth);
         }
 
         /// <summary>
@@ -194,7 +221,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                var nativeGenericImage = NativeDrawing.Default.ImageConvertToGenericImage(NativeObject);
+                var nativeGenericImage = NativeDrawing.Default.ImageConvertToGenericImage(this);
                 return new GenericImage(nativeGenericImage);
             }
         }
@@ -380,6 +407,13 @@ namespace Alternet.Drawing
                 nativeImage = value;
             }
         }
+
+        /// <summary>
+        /// Gets <see cref="Graphics"/> which allows to draw on the image.
+        /// Same as <see cref="GetDrawingContext"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Graphics Canvas => GetDrawingContext();
 
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
@@ -585,6 +619,32 @@ namespace Alternet.Drawing
         public static IEnumerable<string> GetExtensionsForSave() => GetExtensionsForLoadSave();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <remarks>
+        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolbarUtils.GetDefaultImageSize(double)"/>
+        /// to get appropriate image size which is best suitable for toolbars.
+        /// </remarks>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.</param>
+        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI.</param>
+        /// <returns><see cref="Image"/> instance loaded from Svg data for use
+        /// on the toolbars.</returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static Image FromSvgUrlForToolbar(string url, IControl control, Color? color = null)
+        {
+            SizeD deviceDpi = control.GetDPI();
+            var width = ToolbarUtils.GetDefaultImageSize(deviceDpi.Width);
+            var height = ToolbarUtils.GetDefaultImageSize(deviceDpi.Height);
+            var result = Image.FromSvgUrl(url, width, height, color);
+            return result;
+        }
+
+        /// <summary>
         /// Loads an image from a file or resource.
         /// </summary>
         /// <param name="name">Either a filename or a resource name. The meaning of name
@@ -784,6 +844,16 @@ namespace Alternet.Drawing
                 throw new ArgumentNullException(nameof(fileName));
 
             return NativeDrawing.Default.ImageSave(NativeObject, fileName);
+        }
+
+        /// <summary>
+        /// Gets <see cref="Graphics"/> for this image on which you can paint.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Graphics GetDrawingContext()
+        {
+            var dc = Graphics.FromImage(this);
+            return dc;
         }
 
         /// <inheritdoc/>

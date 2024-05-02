@@ -489,7 +489,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static SizeI GetBaseToolSvgSize()
         {
-            var imageSize = Math.Max(UI.ToolBar.DefaultImageSize96dpi, DefaultMinToolbarImageSize);
+            var imageSize = Math.Max(ToolbarUtils.DefaultImageSize96dpi, DefaultMinToolbarImageSize);
             return imageSize;
         }
 

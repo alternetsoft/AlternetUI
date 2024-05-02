@@ -2684,6 +2684,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets number of children items.
+        /// </summary>
+        [Browsable(false)]
+        public int ChildCount => Children.Count;
+
         IControl? IControl.NextSibling => NextSibling;
 
         IControl? IControl.Parent
@@ -2730,5 +2736,12 @@ namespace Alternet.UI
             => HasChildren ? Children : Array.Empty<FrameworkElement>();
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
+
+        /// <summary>
+        /// Gets child control at the specified index in the collection of child controls.
+        /// </summary>
+        /// <param name="index">Index of the child control.</param>
+        /// <returns></returns>
+        public IControl GetControl(int index) => Children[index];
     }
 }

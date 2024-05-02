@@ -21,9 +21,9 @@ namespace Alternet.Drawing
             return image;
         }
 
-        public override object ImageConvertToGenericImage(object nativeImage)
+        public override object ImageConvertToGenericImage(Image image)
         {
-            return ((UI.Native.Image)nativeImage).ConvertToGenericImage();
+            return ((UI.Native.Image)image.NativeObject).ConvertToGenericImage();
         }
 
         /// <inheritdoc/>
@@ -68,41 +68,66 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromGenericImage(object genericImage, int depth = -1)
+        public override object CreateImageFromGenericImage(GenericImage genericImage, int depth = -1)
         {
             var nativeImage = CreateImage();
-            ((UI.Native.Image)nativeImage).LoadFromGenericImage((IntPtr)genericImage, depth);
+            ((UI.Native.Image)nativeImage).LoadFromGenericImage((IntPtr)genericImage.Handle, depth);
             return nativeImage;
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromGraphics(int width, int height, object dc)
+        public override object CreateImageFromGraphics(int width, int height, Graphics dc)
         {
             var nativeImage = CreateImage();
             UI.Native.DrawingContext.ImageFromDrawingContext(
                 (UI.Native.Image)nativeImage,
                 width,
                 height,
-                (UI.Native.DrawingContext)dc);
+                (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromGraphicsAndGenericImage(object genericImage, object dc)
+        public override object CreateImage(ImageSet imageSet, IControl control)
+        {
+            if (control is not Control controlObj)
+                throw new ArgumentException(nameof(control));
+
+            var nativeObject = NativeDrawing.Default.CreateImage();
+            ((UI.Native.ImageSet)imageSet.NativeObject).InitImageFor(
+                (UI.Native.Image)nativeObject,
+                controlObj.WxWidget);
+            return nativeObject;
+        }
+
+        /// <inheritdoc/>
+        public override object CreateImageFromGraphicsAndGenericImage(
+            GenericImage genericImage,
+            Graphics dc)
         {
             var nativeImage = CreateImage();
             UI.Native.DrawingContext.ImageFromGenericImageDC(
                 (UI.Native.Image)nativeImage,
-                (IntPtr)genericImage,
-                (UI.Native.DrawingContext)dc);
+                genericImage.Handle,
+                (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
         }
 
         /// <inheritdoc/>
-        public override object CreateImageFromImage(object original, SizeI newSize)
+        public override object CreateImageFromImage(Image image)
         {
             var nativeImage = CreateImage();
-            ((UI.Native.Image)nativeImage).InitializeFromImage((UI.Native.Image)original, newSize);
+            ((UI.Native.Image)nativeImage).CopyFrom((UI.Native.Image)image.NativeObject);
+            return nativeImage;
+        }
+
+        /// <inheritdoc/>
+        public override object CreateImageFromImage(Image original, SizeI newSize)
+        {
+            var nativeImage = CreateImage();
+            ((UI.Native.Image)nativeImage).InitializeFromImage(
+                (UI.Native.Image)original.NativeObject,
+                newSize);
             return nativeImage;
         }
 

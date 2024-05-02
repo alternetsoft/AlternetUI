@@ -816,6 +816,11 @@ namespace Alternet.UI
         bool UserPaint { get; set; }
 
         /// <summary>
+        /// Gets number of children items.
+        /// </summary>
+        int ChildCount { get; }
+
+        /// <summary>
         /// Gets whether left mouse button is over control and is down.
         /// </summary>
         bool IsMouseLeftButtonDown { get; }
@@ -1264,5 +1269,34 @@ namespace Alternet.UI
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
         double PixelToDip(int value);
+
+        /// <summary>
+        /// Gets child control at the specified index in the collection of child controls.
+        /// </summary>
+        /// <param name="index">Index of the child control.</param>
+        /// <returns></returns>
+        IControl GetControl(int index);
+
+        /// <summary>
+        /// Returns the DPI of the display used by this control.
+        /// </summary>
+        /// <remarks>
+        /// The returned value is different for different windows on
+        /// systems with support for per-monitor DPI values,
+        /// such as Microsoft Windows.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Size"/> value that represents DPI of the display
+        /// used by this control. If the DPI is not available,
+        /// returns Size(0,0) object.
+        /// </returns>
+        SizeD GetDPI();
+
+        /// <summary>
+        /// Gets scale factor used in device-independent units (1/96th inch per unit) to/from
+        /// pixels conversions.
+        /// </summary>
+        /// <returns></returns>
+        double GetPixelScaleFactor();
     }
 }
