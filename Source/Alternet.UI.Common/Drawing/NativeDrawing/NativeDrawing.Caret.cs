@@ -32,7 +32,7 @@ namespace Alternet.Drawing
 
         public abstract object CreateCaret();
 
-        public abstract object CreateCaret(object control, int width, int height);
+        public abstract object CreateCaret(IControl control, int width, int height);
 
         public abstract int CaretGetBlinkTime();
 

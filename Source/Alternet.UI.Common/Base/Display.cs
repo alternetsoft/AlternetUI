@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -6,12 +8,12 @@ namespace Alternet.UI
     /// <summary>
     /// Determines the sizes and locations of displays connected to the system.
     /// </summary>
-    public class Display : DisposableObject
+    public class Display : GraphicsObject
     {
         private static Display? primary;
         private static Display[]? allScreens;
 
-        private readonly Control? control;
+        private readonly IControl? control;
 
         static Display()
         {
@@ -22,7 +24,6 @@ namespace Alternet.UI
         /// This constructor creates primary display.
         /// </summary>
         public Display()
-            : base(Native.WxOtherFactory.CreateDisplay(), true)
         {
         }
 
@@ -30,17 +31,19 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Display"/> class.
         /// </summary>
         /// <param name="index">Display index.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Display(int index)
-            : base(Native.WxOtherFactory.CreateDisplay2((uint)index), true)
         {
+            NativeObject = NativeDrawing.Default.CreateDisplay(index);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Display"/> class.
         /// </summary>
         /// <param name="control">Control for which <see cref="Display"/> is created.</param>
-        public Display(Control control)
-            : base(Native.WxOtherFactory.CreateDisplay3(control.WxWidget), true)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Display(IControl control)
+            : this(GetFromControl(control))
         {
             this.control = control;
         }
@@ -48,7 +51,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the number of connected displays.
         /// </summary>
-        public static int Count => (int)Native.WxOtherFactory.DisplayGetCount();
+        public static int Count => NativeDrawing.Default.DisplayGetCount();
 
         /// <summary>
         /// Gets default display resolution for the current platform in pixels per inch.
@@ -58,7 +61,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static int DefaultDPIValue => Native.WxOtherFactory.DisplayGetStdPPIValue();
+        public static int DefaultDPIValue => NativeDrawing.Default.DisplayGetDefaultDPIValue();
 
         /// <summary>
         ///  Gets an array of all of the displays on the system.
@@ -85,6 +88,7 @@ namespace Alternet.UI
         /// </summary>
         public static Display Primary
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return primary ??= new Display();
@@ -99,7 +103,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static SizeI DefaultDPI => Native.WxOtherFactory.DisplayGetStdPPI();
+        public static SizeI DefaultDPI => NativeDrawing.Default.DisplayGetDefaultDPI();
 
         /// <summary>
         /// Gets the display's name.
@@ -111,27 +115,27 @@ namespace Alternet.UI
         /// Gets the display's name.
         /// </summary>
         /// <remarks>Same as <see cref="DeviceName"/></remarks>
-        public string Name => Native.WxOtherFactory.DisplayGetName(Handle);
+        public string Name => NativeDrawing.Default.DisplayGetName(NativeObject);
 
         /// <summary>
         /// Gets display resolution in pixels per inch.
         /// </summary>
-        public SizeI DPI => Native.WxOtherFactory.DisplayGetPPI(Handle);
+        public SizeI DPI => NativeDrawing.Default.DisplayGetDPI(NativeObject);
 
         /// <summary>
         /// Gets scaling factor used by this display.
         /// </summary>
-        public double ScaleFactor => Native.WxOtherFactory.DisplayGetScaleFactor(Handle);
+        public double ScaleFactor => NativeDrawing.Default.DisplayGetScaleFactor(NativeObject);
 
         /// <summary>
         /// Gets <c>true</c> if the display is the primary display.
         /// </summary>
-        public bool IsPrimary => Native.WxOtherFactory.DisplayIsPrimary(Handle);
+        public bool IsPrimary => NativeDrawing.Default.DisplayGetIsPrimary(NativeObject);
 
         /// <summary>
         /// Gets the client area of the display.
         /// </summary>
-        public RectI ClientArea => Native.WxOtherFactory.DisplayGetClientArea(Handle);
+        public RectI ClientArea => NativeDrawing.Default.DisplayGetClientArea(NativeObject);
 
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
@@ -163,6 +167,7 @@ namespace Alternet.UI
         /// </summary>
         public RectD ClientAreaDip
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return PixelToDip(ClientArea);
@@ -172,7 +177,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
         /// </summary>
-        public RectI Geometry => Native.WxOtherFactory.DisplayGetGeometry(Handle);
+        public RectI Geometry => NativeDrawing.Default.DisplayGetGeometry(NativeObject);
 
         /// <summary>
         /// Returns the bounding rectangle of the display in the
@@ -180,6 +185,7 @@ namespace Alternet.UI
         /// </summary>
         public RectD GeometryDip
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return PixelToDip(Geometry);
@@ -191,15 +197,19 @@ namespace Alternet.UI
         /// or -1 if the point is not on any connected display.
         /// </summary>
         /// <param name="pt">Point for which index of display is returned.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetFromPoint(PointI pt) =>
-            Native.WxOtherFactory.DisplayGetFromPoint(pt);
+            NativeDrawing.Default.DisplayGetFromPoint(pt);
 
         /// <summary>
         /// Returns the index of the display on which the given control lies.
         /// </summary>
         /// <param name="control">Control for which index of display is returned.</param>
-        public static int GetFromControl(Control control) =>
-            Native.WxOtherFactory.DisplayGetFromWindow(control.WxWidget);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetFromControl(IControl control)
+        {
+            return NativeDrawing.Default.DisplayGetFromControl(control);
+        }
 
         /// <summary>
         /// Logs display related information.
@@ -284,6 +294,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointI PixelFromDip(PointD value)
         {
             return new(PixelFromDip(value.X), PixelFromDip(value.Y));
@@ -294,6 +305,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectI PixelFromDip(RectD value)
         {
             return new(PixelFromDip(value.Location), PixelFromDip(value.Size));
@@ -304,6 +316,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD PixelToDip(SizeI value)
         {
             return new(PixelToDip(value.Width), PixelToDip(value.Height));
@@ -314,6 +327,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointD PixelToDip(PointI value)
         {
             return new(PixelToDip(value.X), PixelToDip(value.Y));
@@ -324,15 +338,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD PixelToDip(RectI value)
         {
             return new(PixelToDip(value.Location), PixelToDip(value.Size));
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeNativeObject()
         {
-            Native.WxOtherFactory.DeleteDisplay(Handle);
+            NativeDrawing.Default.DisposeDisplay(NativeObject);
+        }
+
+        /// <inheritdoc/>
+        protected override object CreateNativeObject()
+        {
+            return NativeDrawing.Default.CreateDisplay();
         }
     }
 }

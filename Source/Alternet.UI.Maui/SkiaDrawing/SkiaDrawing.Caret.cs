@@ -62,7 +62,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override object CreateCaret(object control, int width, int height)
+        public override object CreateCaret(IControl control, int width, int height)
         {
             throw new NotImplementedException();
         }

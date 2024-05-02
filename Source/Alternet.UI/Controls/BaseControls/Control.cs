@@ -15,7 +15,7 @@ namespace Alternet.UI
     [DefaultEvent("Click")]
     public partial class Control
         : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
-        IWin32Window, ITextProperty, IComponent
+        IWin32Window, ITextProperty, IComponent, IControl
     {
         /// <summary>
         /// Gets or sets min element size.

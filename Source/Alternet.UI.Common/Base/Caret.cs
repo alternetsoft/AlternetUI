@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// </remarks>
     public class Caret : GraphicsObject
     {
-        private readonly Control? control;
+        private readonly IControl? control;
         private SizeI? size;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// <param name="width">Caret width in pixels.</param>
         /// <param name="height">Caret height in pixels.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Caret(Control control, int width, int height)
+        public Caret(IControl control, int width, int height)
         {
             this.control = control;
             size = (width, height);
