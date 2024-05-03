@@ -422,17 +422,17 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override int GetGenericImageWidth(object genericImage)
+        public override int GetGenericImageWidth(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override int GetGenericImageHeight(object genericImage)
+        public override int GetGenericImageHeight(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GetGenericImageIsOk(object genericImage)
+        public override bool GetGenericImageIsOk(GenericImage img)
         {
             throw new NotImplementedException();
         }
@@ -482,387 +482,387 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetAlpha(object genericImage, int x, int y, byte alpha)
+        public override void GenericImageSetAlpha(GenericImage img, int x, int y, byte alpha)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageClearAlpha(object genericImage)
+        public override void GenericImageClearAlpha(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetMask(object genericImage, bool hasMask = true)
+        public override void GenericImageSetMask(GenericImage img, bool hasMask = true)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetMaskColor(object genericImage, RGBValue rgb)
+        public override void GenericImageSetMaskColor(GenericImage img, RGBValue rgb)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageSetMaskFromImage(object image1, object image2, RGBValue mask)
+        public override bool GenericImageSetMaskFromImage(GenericImage img1, GenericImage img2, RGBValue mask)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetOptionAsString(object genericImage, string name, string value)
+        public override void GenericImageSetOptionAsString(GenericImage img, string name, string value)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetOptionAsInt(object genericImage, string name, int value)
+        public override void GenericImageSetOptionAsInt(GenericImage img, string name, int value)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetRGB(object genericImage, int x, int y, RGBValue rgb)
+        public override void GenericImageSetRGB(GenericImage img, int x, int y, RGBValue rgb)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetRGBRect(object genericImage, RGBValue rgb, RectI? rect = null)
+        public override void GenericImageSetRGBRect(GenericImage img, RGBValue rgb, RectI? rect = null)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetImageType(object genericImage, BitmapType type)
+        public override void GenericImageSetImageType(GenericImage img, BitmapType type)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageCopy(object genericImage)
+        public override GenericImage GenericImageCopy(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageReset(object genericImage, int width, int height, bool clear = false)
+        public override bool GenericImageReset(GenericImage img, int width, int height, bool clear = false)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageClear(object genericImage, byte value = 0)
+        public override void GenericImageClear(GenericImage img, byte value = 0)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageReset(object genericImage)
+        public override void GenericImageReset(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override Color GenericImageFindFirstUnusedColor(object genericImage, RGBValue? startRGB = null)
+        public override Color GenericImageFindFirstUnusedColor(GenericImage img, RGBValue? startRGB = null)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageInitAlpha(object genericImage)
+        public override void GenericImageInitAlpha(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageBlur(object genericImage, int blurRadius)
+        public override GenericImage GenericImageBlur(GenericImage img, int blurRadius)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageBlurHorizontal(object genericImage, int blurRadius)
+        public override GenericImage GenericImageBlurHorizontal(GenericImage img, int blurRadius)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageBlurVertical(object genericImage, int blurRadius)
+        public override GenericImage GenericImageBlurVertical(GenericImage img, int blurRadius)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageMirror(object genericImage, bool horizontally = true)
+        public override GenericImage GenericImageMirror(GenericImage img, bool horizontally = true)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImagePaste(object genericImage1, object genericImage2, int x, int y, GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite)
+        public override void GenericImagePaste(GenericImage img1, GenericImage img2, int x, int y, GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageReplace(object genericImage, RGBValue r1, RGBValue r2)
+        public override void GenericImageReplace(GenericImage img, RGBValue r1, RGBValue r2)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageRescale(object genericImage, int width, int height, GenericImageResizeQuality quality = GenericImageResizeQuality.Nearest)
+        public override void GenericImageRescale(GenericImage img, int width, int height, GenericImageResizeQuality quality = GenericImageResizeQuality.Nearest)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageResizeNoScale(object genericImage, SizeI size, PointI pos, RGBValue? color = null)
+        public override void GenericImageResizeNoScale(GenericImage img, SizeI size, PointI pos, RGBValue? color = null)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageSizeNoScale(object genericImage, SizeI size, PointI pos = default, RGBValue? color = null)
+        public override GenericImage GenericImageSizeNoScale(GenericImage img, SizeI size, PointI pos = default, RGBValue? color = null)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageRotate90(object genericImage, bool clockwise = true)
+        public override GenericImage GenericImageRotate90(GenericImage img, bool clockwise = true)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageRotate180(object genericImage)
+        public override GenericImage GenericImageRotate180(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageRotateHue(object genericImage, double angle)
+        public override void GenericImageRotateHue(GenericImage img, double angle)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageChangeSaturation(object genericImage, double factor)
+        public override void GenericImageChangeSaturation(GenericImage img, double factor)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageChangeBrightness(object genericImage, double factor)
+        public override void GenericImageChangeBrightness(GenericImage img, double factor)
         {
             throw new NotImplementedException();
         }
 
-        public override GenericImageLoadFlags GenericImageGetLoadFlags(object genericImage)
+        public override GenericImageLoadFlags GenericImageGetLoadFlags(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetLoadFlags(object genericImage, GenericImageLoadFlags flags)
+        public override void GenericImageSetLoadFlags(GenericImage img, GenericImageLoadFlags flags)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageChangeHSV(object genericImage, double angleH, double factorS, double factorV)
+        public override void GenericImageChangeHSV(GenericImage img, double angleH, double factorS, double factorV)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageScale(object genericImage, int width, int height, GenericImageResizeQuality quality = GenericImageResizeQuality.Nearest)
+        public override GenericImage GenericImageScale(GenericImage img, int width, int height, GenericImageResizeQuality quality = GenericImageResizeQuality.Nearest)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageConvertAlphaToMask(object genericImage, byte threshold)
+        public override bool GenericImageConvertAlphaToMask(GenericImage img, byte threshold)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageConvertAlphaToMask(object genericImage, RGBValue rgb, byte threshold)
+        public override bool GenericImageConvertAlphaToMask(GenericImage img, RGBValue rgb, byte threshold)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageConvertToGreyscale(object genericImage, double weightR, double weightG, double weightB)
+        public override GenericImage GenericImageConvertToGreyscale(GenericImage img, double weightR, double weightG, double weightB)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageConvertToGreyscale(object genericImage)
+        public override GenericImage GenericImageConvertToGreyscale(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageConvertToMono(object genericImage, RGBValue rgb)
+        public override GenericImage GenericImageConvertToMono(GenericImage img, RGBValue rgb)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageConvertToDisabled(object genericImage, byte brightness = 255)
+        public override GenericImage GenericImageConvertToDisabled(GenericImage img, byte brightness = 255)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageChangeLightness(object genericImage, int ialpha)
+        public override GenericImage GenericImageChangeLightness(GenericImage img, int ialpha)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetAlpha(object genericImage, int x, int y)
+        public override byte GenericImageGetAlpha(GenericImage img, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public override RGBValue GenericImageGetRGB(object genericImage, int x, int y)
+        public override RGBValue GenericImageGetRGB(GenericImage img, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public override Color GenericImageGetPixel(object genericImage, int x, int y, bool withAlpha = false)
+        public override Color GenericImageGetPixel(GenericImage img, int x, int y, bool withAlpha = false)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetPixel(object genericImage, int x, int y, Color color, bool withAlpha = false)
+        public override void GenericImageSetPixel(GenericImage img, int x, int y, Color color, bool withAlpha = false)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetRed(object genericImage, int x, int y)
+        public override byte GenericImageGetRed(GenericImage img, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetGreen(object genericImage, int x, int y)
+        public override byte GenericImageGetGreen(GenericImage img, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetBlue(object genericImage, int x, int y)
+        public override byte GenericImageGetBlue(GenericImage img, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public override RGBValue GenericImageGetMaskRGB(object genericImage)
+        public override RGBValue GenericImageGetMaskRGB(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetMaskRed(object genericImage)
+        public override byte GenericImageGetMaskRed(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetMaskGreen(object genericImage)
+        public override byte GenericImageGetMaskGreen(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override byte GenericImageGetMaskBlue(object genericImage)
+        public override byte GenericImageGetMaskBlue(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override string GenericImageGetOptionAsString(object genericImage, string name)
+        public override string GenericImageGetOptionAsString(GenericImage img, string name)
         {
             throw new NotImplementedException();
         }
 
-        public override int GenericImageGetOptionAsInt(object genericImage, string name)
+        public override int GenericImageGetOptionAsInt(GenericImage img, string name)
         {
             throw new NotImplementedException();
         }
 
-        public override object GenericImageGetSubImage(object genericImage, RectI rect)
+        public override GenericImage GenericImageGetSubImage(GenericImage img, RectI rect)
         {
             throw new NotImplementedException();
         }
 
-        public override void DisposeGenericImage(object genericImage)
+        public override void DisposeGenericImage(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override BitmapType GenericImageGetImageType(object genericImage)
+        public override BitmapType GenericImageGetImageType(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageHasAlpha(object genericImage)
+        public override bool GenericImageHasAlpha(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageHasMask(object genericImage)
+        public override bool GenericImageHasMask(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageHasOption(object genericImage, string name)
+        public override bool GenericImageHasOption(GenericImage img, string name)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageIsTransparent(object genericImage, int x, int y, byte threshold)
+        public override bool GenericImageIsTransparent(GenericImage img, int x, int y, byte threshold)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageLoadFromStream(object genericImage, Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        public override bool GenericImageLoadFromStream(GenericImage img, Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageLoadFromFile(object genericImage, string filename, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        public override bool GenericImageLoadFromFile(GenericImage img, string filename, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageLoadFromFile(object genericImage, string name, string mimetype, int index = -1)
+        public override bool GenericImageLoadFromFile(GenericImage img, string name, string mimetype, int index = -1)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageLoadFromStream(object genericImage, Stream stream, string mimetype, int index = -1)
+        public override bool GenericImageLoadFromStream(GenericImage img, Stream stream, string mimetype, int index = -1)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageSaveToStream(object genericImage, Stream stream, string mimetype)
+        public override bool GenericImageSaveToStream(GenericImage img, Stream stream, string mimetype)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageSaveToFile(object genericImage, string filename, BitmapType bitmapType)
+        public override bool GenericImageSaveToFile(GenericImage img, string filename, BitmapType bitmapType)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageSaveToFile(object genericImage, string filename, string mimetype)
+        public override bool GenericImageSaveToFile(GenericImage img, string filename, string mimetype)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageSaveToFile(object genericImage, string filename)
+        public override bool GenericImageSaveToFile(GenericImage img, string filename)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageSaveToStream(object genericImage, Stream stream, BitmapType type)
+        public override bool GenericImageSaveToStream(GenericImage img, Stream stream, BitmapType type)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetNativeData(object genericImage, IntPtr data, int new_width, int new_height, bool static_data = false)
+        public override void GenericImageSetNativeData(GenericImage img, IntPtr data, int new_width, int new_height, bool static_data = false)
         {
             throw new NotImplementedException();
         }
 
-        public override IntPtr GenericImageGetNativeAlphaData(object genericImage)
+        public override IntPtr GenericImageGetNativeAlphaData(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override IntPtr GenericImageGetNativeData(object genericImage)
+        public override IntPtr GenericImageGetNativeData(GenericImage img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageCreateNativeData(object genericImage, int width, int height, IntPtr data, bool staticData = false)
+        public override bool GenericImageCreateNativeData(GenericImage img, int width, int height, IntPtr data, bool staticData = false)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GenericImageCreateNativeData(object genericImage, int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
+        public override bool GenericImageCreateNativeData(GenericImage img, int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetNativeAlphaData(object genericImage, IntPtr alpha = default, bool staticData = false)
+        public override void GenericImageSetNativeAlphaData(GenericImage img, IntPtr alpha = default, bool staticData = false)
         {
             throw new NotImplementedException();
         }
 
-        public override void GenericImageSetNativeData(object genericImage, IntPtr data, bool staticData = false)
+        public override void GenericImageSetNativeData(GenericImage img, IntPtr data, bool staticData = false)
         {
             throw new NotImplementedException();
         }

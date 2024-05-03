@@ -15,6 +15,18 @@ namespace Alternet.Drawing
     public partial class SkiaDrawing
     {
         /// <inheritdoc/>
+        public override object CreateImage(ImageSet imageSet, IControl control)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override object CreateImageFromImage(Image image)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override object CreateImage(ImageSet imageSet, SizeI size)
         {
             throw new NotImplementedException();

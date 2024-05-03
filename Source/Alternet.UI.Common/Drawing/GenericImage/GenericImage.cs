@@ -8,7 +8,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Implements platform independent image.
     /// </summary>
-    public class GenericImage : DisposableObject
+    public class GenericImage : GraphicsObject
     {
         /// <summary>
         /// Constant used to indicate the alpha value conventionally defined as the complete
@@ -33,7 +33,6 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage()
-            : this(NativeDrawing.Default.CreateGenericImage(), true)
         {
         }
 
@@ -47,8 +46,8 @@ namespace Alternet.Drawing
         /// <param name="clear">If true, initialize the image to black.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, bool clear = false)
-            : this(NativeDrawing.Default.CreateGenericImage(width, height, clear), true)
         {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(width, height, clear);
         }
 
         /// <summary>
@@ -60,8 +59,8 @@ namespace Alternet.Drawing
         /// <param name="clear">If true, initialize the image to black.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(SizeI size, bool clear = false)
-            : this(NativeDrawing.Default.CreateGenericImage(size.Width, size.Height, clear), true)
         {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(size.Width, size.Height, clear);
         }
 
         /// <summary>
@@ -80,12 +79,11 @@ namespace Alternet.Drawing
         /// TIFF handler and as the largest and most colorful one by the ICO handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(string fileName, BitmapType bitmapType = BitmapType.Any, int index = -1)
-            : this(
-                  NativeDrawing.Default.CreateGenericImage(
+        {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(
                     fileName,
                     bitmapType,
-                    index), true)
-        {
+                    index);
         }
 
         /// <summary>
@@ -98,8 +96,8 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(string name, string mimetype, int index = -1)
-            : this(NativeDrawing.Default.CreateGenericImage(name, mimetype, index), true)
         {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(name, mimetype, index);
         }
 
         /// <summary>
@@ -114,12 +112,11 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
-            : this(
-                  NativeDrawing.Default.CreateGenericImage(
+        {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(
                       stream,
                       bitmapType,
-                      index), true)
-        {
+                      index);
         }
 
         /// <summary>
@@ -133,12 +130,11 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(Stream stream, string mimeType, int index = -1)
-            : this(
-                  NativeDrawing.Default.CreateGenericImage(
+        {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(
                       stream,
                       mimeType,
-                      index), true)
-        {
+                      index);
         }
 
         /// <summary>
@@ -155,10 +151,8 @@ namespace Alternet.Drawing
         /// malloc.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, bool staticData = false)
-            : this(
-                  NativeDrawing.Default.CreateGenericImage(width, height, data, staticData),
-                  true)
         {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(width, height, data, staticData);
         }
 
         /// <summary>
@@ -176,10 +170,8 @@ namespace Alternet.Drawing
         /// malloc.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
-            : this(
-                  NativeDrawing.Default.CreateGenericImage(width, height, data, alpha, staticData),
-                  true)
         {
+            NativeObject = NativeDrawing.Default.CreateGenericImage(width, height, data, alpha, staticData);
         }
 
         /// <summary>
@@ -187,17 +179,8 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(object handle)
-            : this(handle, true)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(object handle, bool disposeHandle)
-            : base((IntPtr)handle, disposeHandle)
-        {
+            NativeObject = handle;
         }
 
         /// <summary>
@@ -205,7 +188,7 @@ namespace Alternet.Drawing
         /// </summary>
         public int Width
         {
-            get => NativeDrawing.Default.GetGenericImageWidth(Handle);
+            get => NativeDrawing.Default.GetGenericImageWidth(this);
         }
 
         /// <summary>
@@ -213,7 +196,7 @@ namespace Alternet.Drawing
         /// </summary>
         public int Height
         {
-            get => NativeDrawing.Default.GetGenericImageHeight(Handle);
+            get => NativeDrawing.Default.GetGenericImageHeight(this);
         }
 
         /// <summary>
@@ -242,7 +225,7 @@ namespace Alternet.Drawing
         /// </summary>
         public bool IsOk
         {
-            get => NativeDrawing.Default.GetGenericImageIsOk(Handle);
+            get => NativeDrawing.Default.GetGenericImageIsOk(this);
         }
 
         /// <summary>
@@ -383,7 +366,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetAlpha(int x, int y, byte alpha)
         {
-            NativeDrawing.Default.GenericImageSetAlpha(Handle, x, y, alpha);
+            NativeDrawing.Default.GenericImageSetAlpha(this, x, y, alpha);
         }
 
         /// <summary>
@@ -396,7 +379,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ClearAlpha()
         {
-            NativeDrawing.Default.GenericImageClearAlpha(Handle);
+            NativeDrawing.Default.GenericImageClearAlpha(this);
         }
 
         /// <summary>
@@ -406,7 +389,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMask(bool hasMask = true)
         {
-            NativeDrawing.Default.GenericImageSetMask(Handle, hasMask);
+            NativeDrawing.Default.GenericImageSetMask(this, hasMask);
         }
 
         /// <summary>
@@ -416,7 +399,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMaskColor(RGBValue rgb)
         {
-            NativeDrawing.Default.GenericImageSetMaskColor(Handle, rgb);
+            NativeDrawing.Default.GenericImageSetMaskColor(this, rgb);
         }
 
         /// <summary>
@@ -512,7 +495,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SetMaskFromImage(GenericImage image, RGBValue mask)
         {
-            return NativeDrawing.Default.GenericImageSetMaskFromImage(Handle, image.Handle, mask);
+            return NativeDrawing.Default.GenericImageSetMaskFromImage(this, image, mask);
         }
 
         /// <summary>
@@ -526,7 +509,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetOptionAsString(string name, string value)
         {
-            NativeDrawing.Default.GenericImageSetOptionAsString(Handle, name, value);
+            NativeDrawing.Default.GenericImageSetOptionAsString(this, name, value);
         }
 
         /// <summary>
@@ -540,7 +523,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetOptionAsInt(string name, int value)
         {
-            NativeDrawing.Default.GenericImageSetOptionAsInt(Handle, name, value);
+            NativeDrawing.Default.GenericImageSetOptionAsInt(this, name, value);
         }
 
         /// <summary>
@@ -556,7 +539,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetRGB(int x, int y, RGBValue rgb)
         {
-            NativeDrawing.Default.GenericImageSetRGB(Handle, x, y, rgb);
+            NativeDrawing.Default.GenericImageSetRGB(this, x, y, rgb);
         }
 
         /// <summary>
@@ -568,7 +551,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetRGBRect(RGBValue rgb, RectI? rect = null)
         {
-            NativeDrawing.Default.GenericImageSetRGBRect(Handle, rgb, rect);
+            NativeDrawing.Default.GenericImageSetRGBRect(this, rgb, rect);
         }
 
         /// <summary>
@@ -578,7 +561,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetImageType(BitmapType type)
         {
-            NativeDrawing.Default.GenericImageSetImageType(Handle, type);
+            NativeDrawing.Default.GenericImageSetImageType(this, type);
         }
 
         /// <summary>
@@ -588,7 +571,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Copy()
         {
-            return new(NativeDrawing.Default.GenericImageCopy(Handle));
+            return NativeDrawing.Default.GenericImageCopy(this);
         }
 
         /// <summary>
@@ -601,7 +584,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Reset(int width, int height, bool clear = false)
         {
-            return NativeDrawing.Default.GenericImageReset(Handle, width, height, clear);
+            return NativeDrawing.Default.GenericImageReset(this, width, height, clear);
         }
 
         /// <summary>
@@ -611,7 +594,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear(byte value = 0)
         {
-            NativeDrawing.Default.GenericImageClear(Handle, value);
+            NativeDrawing.Default.GenericImageClear(this, value);
         }
 
         /// <summary>
@@ -620,7 +603,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            NativeDrawing.Default.GenericImageReset(Handle);
+            NativeDrawing.Default.GenericImageReset(this);
         }
 
         /// <summary>
@@ -646,7 +629,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Color FindFirstUnusedColor(RGBValue? startRGB = null)
         {
-            return NativeDrawing.Default.GenericImageFindFirstUnusedColor(Handle, startRGB);
+            return NativeDrawing.Default.GenericImageFindFirstUnusedColor(this, startRGB);
         }
 
         /// <summary>
@@ -662,7 +645,7 @@ namespace Alternet.Drawing
         {
             if (HasAlpha())
                 return;
-            NativeDrawing.Default.GenericImageInitAlpha(Handle);
+            NativeDrawing.Default.GenericImageInitAlpha(this);
         }
 
         /// <summary>
@@ -677,7 +660,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Blur(int blurRadius)
         {
-            return new(NativeDrawing.Default.GenericImageBlur(Handle, blurRadius));
+            return NativeDrawing.Default.GenericImageBlur(this, blurRadius);
         }
 
         /// <summary>
@@ -691,7 +674,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage BlurHorizontal(int blurRadius)
         {
-            return new(NativeDrawing.Default.GenericImageBlurHorizontal(Handle, blurRadius));
+            return NativeDrawing.Default.GenericImageBlurHorizontal(this, blurRadius);
         }
 
         /// <summary>
@@ -705,7 +688,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage BlurVertical(int blurRadius)
         {
-            return new(NativeDrawing.Default.GenericImageBlurVertical(Handle, blurRadius));
+            return NativeDrawing.Default.GenericImageBlurVertical(this, blurRadius);
         }
 
         /// <summary>
@@ -716,7 +699,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Mirror(bool horizontally = true)
         {
-            return new(NativeDrawing.Default.GenericImageMirror(Handle, horizontally));
+            return NativeDrawing.Default.GenericImageMirror(this, horizontally);
         }
 
         /// <summary>
@@ -739,7 +722,7 @@ namespace Alternet.Drawing
             int y,
             GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite)
         {
-            NativeDrawing.Default.GenericImagePaste(Handle, image.Handle, x, y, alphaBlend);
+            NativeDrawing.Default.GenericImagePaste(this, image, x, y, alphaBlend);
         }
 
         /// <summary>
@@ -750,7 +733,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Replace(RGBValue r1, RGBValue r2)
         {
-            NativeDrawing.Default.GenericImageReplace(Handle, r1, r2);
+            NativeDrawing.Default.GenericImageReplace(this, r1, r2);
         }
 
         /// <summary>
@@ -766,7 +749,7 @@ namespace Alternet.Drawing
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            NativeDrawing.Default.GenericImageRescale(Handle, width, height, quality);
+            NativeDrawing.Default.GenericImageRescale(this, width, height, quality);
         }
 
         /// <summary>
@@ -788,7 +771,7 @@ namespace Alternet.Drawing
             PointI pos,
             RGBValue? color = null)
         {
-            NativeDrawing.Default.GenericImageResizeNoScale(Handle, size, pos, color);
+            NativeDrawing.Default.GenericImageResizeNoScale(this, size, pos, color);
         }
 
         /// <summary>
@@ -813,8 +796,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage SizeNoScale(SizeI size, PointI pos = default, RGBValue? color = null)
         {
-            var image = NativeDrawing.Default.GenericImageSizeNoScale(Handle, size, pos, color);
-            return new GenericImage(image);
+            return NativeDrawing.Default.GenericImageSizeNoScale(this, size, pos, color);
         }
 
         /// <summary>
@@ -825,7 +807,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Rotate90(bool clockwise = true)
         {
-            return new(NativeDrawing.Default.GenericImageRotate90(Handle, clockwise));
+            return NativeDrawing.Default.GenericImageRotate90(this, clockwise);
         }
 
         /// <summary>
@@ -835,7 +817,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Rotate180()
         {
-            return new(NativeDrawing.Default.GenericImageRotate180(Handle));
+            return NativeDrawing.Default.GenericImageRotate180(this);
         }
 
         /// <summary>
@@ -847,7 +829,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateHue(double angle)
         {
-            NativeDrawing.Default.GenericImageRotateHue(Handle, angle);
+            NativeDrawing.Default.GenericImageRotateHue(this, angle);
         }
 
         /// <summary>
@@ -858,7 +840,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ChangeSaturation(double factor)
         {
-            NativeDrawing.Default.GenericImageChangeSaturation(Handle, factor);
+            NativeDrawing.Default.GenericImageChangeSaturation(this, factor);
         }
 
         /// <summary>
@@ -869,7 +851,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ChangeBrightness(double factor)
         {
-            NativeDrawing.Default.GenericImageChangeBrightness(Handle, factor);
+            NativeDrawing.Default.GenericImageChangeBrightness(this, factor);
         }
 
         /// <summary>
@@ -879,7 +861,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImageLoadFlags GetLoadFlags()
         {
-            return NativeDrawing.Default.GenericImageGetLoadFlags(Handle);
+            return NativeDrawing.Default.GenericImageGetLoadFlags(this);
         }
 
         /// <summary>
@@ -894,7 +876,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetLoadFlags(GenericImageLoadFlags flags)
         {
-            NativeDrawing.Default.GenericImageSetLoadFlags(Handle, flags);
+            NativeDrawing.Default.GenericImageSetLoadFlags(this, flags);
         }
 
         /// <summary>
@@ -910,7 +892,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ChangeHSV(double angleH, double factorS, double factorV)
         {
-            NativeDrawing.Default.GenericImageChangeHSV(Handle, angleH, factorS, factorV);
+            NativeDrawing.Default.GenericImageChangeHSV(this, angleH, factorS, factorV);
         }
 
         /// <summary>
@@ -947,7 +929,7 @@ namespace Alternet.Drawing
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            return new(NativeDrawing.Default.GenericImageScale(Handle, width, height, quality));
+            return NativeDrawing.Default.GenericImageScale(this, width, height, quality);
         }
 
         /// <summary>
@@ -967,7 +949,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ConvertAlphaToMask(byte threshold = AlphaChannelThreshold)
         {
-            return NativeDrawing.Default.GenericImageConvertAlphaToMask(Handle, threshold);
+            return NativeDrawing.Default.GenericImageConvertAlphaToMask(this, threshold);
         }
 
         /// <summary>
@@ -992,7 +974,7 @@ namespace Alternet.Drawing
             byte threshold = AlphaChannelThreshold)
         {
             return NativeDrawing.Default.GenericImageConvertAlphaToMask(
-                Handle,
+                this,
                 rgb,
                 threshold);
         }
@@ -1012,7 +994,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ConvertToGreyscale(double weightR, double weightG, double weightB)
         {
-            return new(NativeDrawing.Default.GenericImageConvertToGreyscale(Handle, weightR, weightG, weightB));
+            return NativeDrawing.Default.GenericImageConvertToGreyscale(this, weightR, weightG, weightB);
         }
 
         /// <summary>
@@ -1022,7 +1004,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ConvertToGreyscale()
         {
-            return new(NativeDrawing.Default.GenericImageConvertToGreyscale(Handle));
+            return NativeDrawing.Default.GenericImageConvertToGreyscale(this);
         }
 
         /// <summary>
@@ -1034,7 +1016,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ConvertToMono(RGBValue rgb)
         {
-            return new(NativeDrawing.Default.GenericImageConvertToMono(Handle, rgb));
+            return NativeDrawing.Default.GenericImageConvertToMono(this, rgb);
         }
 
         /// <summary>
@@ -1045,7 +1027,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ConvertToDisabled(byte brightness = 255)
         {
-            return new(NativeDrawing.Default.GenericImageConvertToDisabled(Handle, brightness));
+            return NativeDrawing.Default.GenericImageConvertToDisabled(this, brightness);
         }
 
         /// <summary>
@@ -1061,7 +1043,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ChangeLightness(int ialpha)
         {
-            return new(NativeDrawing.Default.GenericImageChangeLightness(Handle, ialpha));
+            return NativeDrawing.Default.GenericImageChangeLightness(this, ialpha);
         }
 
         /// <summary>
@@ -1073,7 +1055,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetAlpha(int x, int y)
         {
-            return NativeDrawing.Default.GenericImageGetAlpha(Handle, x, y);
+            return NativeDrawing.Default.GenericImageGetAlpha(this, x, y);
         }
 
         /// <summary>
@@ -1085,7 +1067,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGBValue GetRGB(int x, int y)
         {
-            return NativeDrawing.Default.GenericImageGetRGB(Handle, x, y);
+            return NativeDrawing.Default.GenericImageGetRGB(this, x, y);
         }
 
         /// <summary>
@@ -1103,7 +1085,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color GetPixel(int x, int y, bool withAlpha = false)
         {
-            return NativeDrawing.Default.GenericImageGetPixel(Handle, x, y, withAlpha);
+            return NativeDrawing.Default.GenericImageGetPixel(this, x, y, withAlpha);
         }
 
         /// <summary>
@@ -1120,7 +1102,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetPixel(int x, int y, Color color, bool withAlpha = false)
         {
-            NativeDrawing.Default.GenericImageSetPixel(Handle, x, y, color, withAlpha);
+            NativeDrawing.Default.GenericImageSetPixel(this, x, y, color, withAlpha);
         }
 
         /// <summary>
@@ -1132,7 +1114,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetRed(int x, int y)
         {
-            return NativeDrawing.Default.GenericImageGetRed(Handle, x, y);
+            return NativeDrawing.Default.GenericImageGetRed(this, x, y);
         }
 
         /// <summary>
@@ -1144,7 +1126,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetGreen(int x, int y)
         {
-            return NativeDrawing.Default.GenericImageGetGreen(Handle, x, y);
+            return NativeDrawing.Default.GenericImageGetGreen(this, x, y);
         }
 
         /// <summary>
@@ -1156,7 +1138,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetBlue(int x, int y)
         {
-            return NativeDrawing.Default.GenericImageGetBlue(Handle, x, y);
+            return NativeDrawing.Default.GenericImageGetBlue(this, x, y);
         }
 
         /// <summary>
@@ -1165,7 +1147,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGBValue GetMaskRGB()
         {
-            return NativeDrawing.Default.GenericImageGetMaskRGB(Handle);
+            return NativeDrawing.Default.GenericImageGetMaskRGB(this);
         }
 
         /// <summary>
@@ -1175,7 +1157,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetMaskRed()
         {
-            return NativeDrawing.Default.GenericImageGetMaskRed(Handle);
+            return NativeDrawing.Default.GenericImageGetMaskRed(this);
         }
 
         /// <summary>
@@ -1185,7 +1167,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetMaskGreen()
         {
-            return NativeDrawing.Default.GenericImageGetMaskGreen(Handle);
+            return NativeDrawing.Default.GenericImageGetMaskGreen(this);
         }
 
         /// <summary>
@@ -1195,7 +1177,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetMaskBlue()
         {
-            return NativeDrawing.Default.GenericImageGetMaskBlue(Handle);
+            return NativeDrawing.Default.GenericImageGetMaskBlue(this);
         }
 
         /// <summary>
@@ -1209,7 +1191,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string GetOptionAsString(string name)
         {
-            return NativeDrawing.Default.GenericImageGetOptionAsString(Handle, name);
+            return NativeDrawing.Default.GenericImageGetOptionAsString(this, name);
         }
 
         /// <summary>
@@ -1223,7 +1205,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetOptionAsInt(string name)
         {
-            return NativeDrawing.Default.GenericImageGetOptionAsInt(Handle, name);
+            return NativeDrawing.Default.GenericImageGetOptionAsInt(this, name);
         }
 
         /// <summary>
@@ -1234,7 +1216,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage GetSubImage(RectI rect)
         {
-            return new(NativeDrawing.Default.GenericImageGetSubImage(Handle, rect));
+            return NativeDrawing.Default.GenericImageGetSubImage(this, rect);
         }
 
         /// <summary>
@@ -1244,7 +1226,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public BitmapType GetImageType()
         {
-            return NativeDrawing.Default.GenericImageGetImageType(Handle);
+            return NativeDrawing.Default.GenericImageGetImageType(this);
         }
 
         /// <summary>
@@ -1254,7 +1236,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasAlpha()
         {
-            return NativeDrawing.Default.GenericImageHasAlpha(Handle);
+            return NativeDrawing.Default.GenericImageHasAlpha(this);
         }
 
         /// <summary>
@@ -1264,7 +1246,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasMask()
         {
-            return NativeDrawing.Default.GenericImageHasMask(Handle);
+            return NativeDrawing.Default.GenericImageHasMask(this);
         }
 
         /// <summary>
@@ -1278,7 +1260,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasOption(string name)
         {
-            return NativeDrawing.Default.GenericImageHasOption(Handle, name);
+            return NativeDrawing.Default.GenericImageHasOption(this, name);
         }
 
         /// <summary>
@@ -1293,7 +1275,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsTransparent(int x, int y, byte threshold = AlphaChannelThreshold)
         {
-            return NativeDrawing.Default.GenericImageIsTransparent(Handle, x, y, threshold);
+            return NativeDrawing.Default.GenericImageIsTransparent(this, x, y, threshold);
         }
 
         /// <summary>
@@ -1314,7 +1296,7 @@ namespace Alternet.Drawing
             int index = -1)
         {
             return NativeDrawing.Default.GenericImageLoadFromStream(
-                Handle,
+                this,
                 stream,
                 bitmapType,
                 index);
@@ -1338,7 +1320,7 @@ namespace Alternet.Drawing
             int index = -1)
         {
             return NativeDrawing.Default.GenericImageLoadFromFile(
-                Handle,
+                this,
                 filename,
                 bitmapType,
                 index);
@@ -1355,7 +1337,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromFile(string name, string mimetype, int index = -1)
         {
-            return NativeDrawing.Default.GenericImageLoadFromFile(Handle, name, mimetype, index);
+            return NativeDrawing.Default.GenericImageLoadFromFile(this, name, mimetype, index);
         }
 
         /// <summary>
@@ -1369,7 +1351,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromStream(Stream stream, string mimetype, int index = -1)
         {
-            return NativeDrawing.Default.GenericImageLoadFromStream(Handle, stream, mimetype, index);
+            return NativeDrawing.Default.GenericImageLoadFromStream(this, stream, mimetype, index);
         }
 
         /// <summary>
@@ -1381,7 +1363,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToStream(Stream stream, string mimetype)
         {
-            return NativeDrawing.Default.GenericImageSaveToStream(Handle, stream, mimetype);
+            return NativeDrawing.Default.GenericImageSaveToStream(this, stream, mimetype);
         }
 
         /// <summary>
@@ -1395,7 +1377,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename, BitmapType bitmapType)
         {
-            return NativeDrawing.Default.GenericImageSaveToFile(Handle, filename, bitmapType);
+            return NativeDrawing.Default.GenericImageSaveToFile(this, filename, bitmapType);
         }
 
         /// <summary>
@@ -1407,7 +1389,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename, string mimetype)
         {
-            return NativeDrawing.Default.GenericImageSaveToFile(Handle, filename, mimetype);
+            return NativeDrawing.Default.GenericImageSaveToFile(this, filename, mimetype);
         }
 
         /// <summary>
@@ -1424,7 +1406,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename)
         {
-            return NativeDrawing.Default.GenericImageSaveToFile(Handle, filename);
+            return NativeDrawing.Default.GenericImageSaveToFile(this, filename);
         }
 
         /// <summary>
@@ -1436,7 +1418,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToStream(Stream stream, BitmapType type)
         {
-            return NativeDrawing.Default.GenericImageSaveToStream(Handle, stream, type);
+            return NativeDrawing.Default.GenericImageSaveToStream(this, stream, type);
         }
 
         /// <summary>
@@ -1456,7 +1438,7 @@ namespace Alternet.Drawing
             int height,
             bool staticData = false)
         {
-            NativeDrawing.Default.GenericImageSetNativeData(Handle, data, width, height, staticData);
+            NativeDrawing.Default.GenericImageSetNativeData(this, data, width, height, staticData);
         }
 
         /// <summary>
@@ -1468,7 +1450,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IntPtr GetNativeAlphaData()
         {
-            return NativeDrawing.Default.GenericImageGetNativeAlphaData(Handle);
+            return NativeDrawing.Default.GenericImageGetNativeAlphaData(this);
         }
 
         /// <summary>
@@ -1486,7 +1468,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IntPtr GetNativeData()
         {
-            return NativeDrawing.Default.GenericImageGetNativeData(Handle);
+            return NativeDrawing.Default.GenericImageGetNativeData(this);
         }
 
         /// <summary>
@@ -1504,7 +1486,7 @@ namespace Alternet.Drawing
         public bool CreateNativeData(int width, int height, IntPtr data, bool staticData = false)
         {
             return NativeDrawing.Default.GenericImageCreateNativeData(
-                Handle,
+                this,
                 width,
                 height,
                 data,
@@ -1532,7 +1514,7 @@ namespace Alternet.Drawing
             bool staticData = false)
         {
             return NativeDrawing.Default.GenericImageCreateNativeData(
-                Handle,
+                this,
                 width,
                 height,
                 data,
@@ -1563,7 +1545,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetNativeAlphaData(IntPtr alpha = default, bool staticData = false)
         {
-            NativeDrawing.Default.GenericImageSetNativeAlphaData(Handle, alpha, staticData);
+            NativeDrawing.Default.GenericImageSetNativeAlphaData(this, alpha, staticData);
         }
 
         /// <summary>
@@ -1586,13 +1568,19 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetNativeData(IntPtr data, bool staticData = false)
         {
-            NativeDrawing.Default.GenericImageSetNativeData(Handle, data, staticData);
+            NativeDrawing.Default.GenericImageSetNativeData(this, data, staticData);
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override object CreateNativeObject()
         {
-            NativeDrawing.Default.DisposeGenericImage(Handle);
+            return NativeDrawing.Default.CreateGenericImage();
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeNativeObject()
+        {
+            NativeDrawing.Default.DisposeGenericImage(this);
         }
     }
 }

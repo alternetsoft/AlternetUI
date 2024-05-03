@@ -87,25 +87,25 @@ namespace Alternet.Drawing
         /// Gets the width of the native generic image in pixels.
         /// </summary>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract int GetGenericImageWidth(object genericImage);
+        public abstract int GetGenericImageWidth(GenericImage img);
 
         /// <summary>
         /// Gets the height of the native generic image in pixels.
         /// </summary>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract int GetGenericImageHeight(object genericImage);
+        public abstract int GetGenericImageHeight(GenericImage img);
 
         /// <summary>
         /// Disposes native generic image.
         /// </summary>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract void DisposeGenericImage(object genericImage);
+        public abstract void DisposeGenericImage(GenericImage img);
 
         /// <summary>
         /// Returns <c>true</c> if image data is present in the native generic image.
         /// </summary>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract bool GetGenericImageIsOk(object genericImage);
+        public abstract bool GetGenericImageIsOk(GenericImage img);
 
         /// <summary>
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
@@ -206,7 +206,7 @@ namespace Alternet.Drawing
         /// This function should only be called if the image has alpha channel data,
         /// use <see cref="HasAlpha"/> to check for this.
         /// </remarks>
-        public abstract void GenericImageSetAlpha(object genericImage, int x, int y, byte alpha);
+        public abstract void GenericImageSetAlpha(GenericImage img, int x, int y, byte alpha);
 
         /// <summary>
         /// Removes the alpha channel from the image.
@@ -216,19 +216,19 @@ namespace Alternet.Drawing
         /// use <see cref="HasAlpha"/> to check for this.
         /// </remarks>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract void GenericImageClearAlpha(object genericImage);
+        public abstract void GenericImageClearAlpha(GenericImage img);
 
         /// <summary>
         /// Specifies whether there is a mask or not.
         /// </summary>
         /// <param name="hasMask"></param>
-        public abstract void GenericImageSetMask(object genericImage, bool hasMask = true);
+        public abstract void GenericImageSetMask(GenericImage img, bool hasMask = true);
 
         /// <summary>
         /// Sets the mask color for this image(and tells the image to use the mask).
         /// </summary>
         /// <param name="rgb">Color RGB.</param>
-        public abstract void GenericImageSetMaskColor(object genericImage, RGBValue rgb);
+        public abstract void GenericImageSetMaskColor(GenericImage img, RGBValue rgb);
 
         /// <summary>
         /// Sets image's mask so that the pixels that have RGB value of mr,mg,mb in
@@ -249,7 +249,7 @@ namespace Alternet.Drawing
         /// Note that this method involves computing the histogram, which
         /// is a computationally intensive operation.
         /// </remarks>
-        public abstract bool GenericImageSetMaskFromImage(object image1, object image2, RGBValue mask);
+        public abstract bool GenericImageSetMaskFromImage(GenericImage img1, GenericImage img2, RGBValue mask);
 
         /// <summary>
         /// Sets a user-defined option.
@@ -259,7 +259,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name">The name of the option, case-insensitive.</param>
         /// <param name="value">New option value.</param>
-        public abstract void GenericImageSetOptionAsString(object genericImage, string name, string value);
+        public abstract void GenericImageSetOptionAsString(GenericImage img, string name, string value);
 
         /// <summary>
         /// Sets a user-defined option.
@@ -269,7 +269,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name">The name of the option, case-insensitive.</param>
         /// <param name="value">New option value.</param>
-        public abstract void GenericImageSetOptionAsInt(object genericImage, string name, int value);
+        public abstract void GenericImageSetOptionAsInt(GenericImage img, string name, int value);
 
         /// <summary>
         /// Sets the color of the pixel at the given x and y coordinate.
@@ -281,7 +281,7 @@ namespace Alternet.Drawing
         /// This routine performs bounds-checks for the coordinate so it can be
         /// considered a safe way to manipulate the data.
         /// </remarks>
-        public abstract void GenericImageSetRGB(object genericImage, int x, int y, RGBValue rgb);
+        public abstract void GenericImageSetRGB(GenericImage img, int x, int y, RGBValue rgb);
 
         /// <summary>
         /// Sets the color of the pixels within the given rectangle.
@@ -289,20 +289,20 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle within the image. If rectangle is null,
         /// <see cref="Bounds"/> property is used.</param>
         /// <param name="rgb">RGB Color.</param>
-        public abstract void GenericImageSetRGBRect(object genericImage, RGBValue rgb, RectI? rect = null);
+        public abstract void GenericImageSetRGBRect(GenericImage img, RGBValue rgb, RectI? rect = null);
 
         /// <summary>
         /// Sets the type of image returned by GetType().
         /// </summary>
         /// <param name="type">Type of the bitmap.</param>
-        public abstract void GenericImageSetImageType(object genericImage, BitmapType type);
+        public abstract void GenericImageSetImageType(GenericImage img, BitmapType type);
 
         /// <summary>
         /// Returns an identical copy of this image.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract object GenericImageCopy(object genericImage);
+        public abstract GenericImage GenericImageCopy(GenericImage img);
 
         /// <summary>
         /// Creates a fresh image.
@@ -311,19 +311,19 @@ namespace Alternet.Drawing
         /// <param name="height">New image height</param>
         /// <param name="clear">If true, initialize the image to black.</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public abstract bool GenericImageReset(object genericImage, int width, int height, bool clear = false);
+        public abstract bool GenericImageReset(GenericImage img, int width, int height, bool clear = false);
 
         /// <summary>
         /// Initialize the image data with zeroes (the default) or with the byte value given as value.
         /// </summary>
         /// <param name="value"></param>
-        public abstract void GenericImageClear(object genericImage, byte value = 0);
+        public abstract void GenericImageClear(GenericImage img, byte value = 0);
 
         /// <summary>
         /// Destroys the image data.
         /// </summary>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract void GenericImageReset(object genericImage);
+        public abstract void GenericImageReset(GenericImage img);
 
         /// <summary>
         /// Finds the first color that is never used in the image.
@@ -347,7 +347,7 @@ namespace Alternet.Drawing
         /// intensive operation.
         /// </remarks>
         public abstract Color GenericImageFindFirstUnusedColor(
-            object genericImage,
+            GenericImage img,
             RGBValue? startRGB = null);
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Alternet.Drawing
         /// But if the image has a mask color, all mask pixels will be completely transparent.
         /// </remarks>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract void GenericImageInitAlpha(object genericImage);
+        public abstract void GenericImageInitAlpha(GenericImage img);
 
         /// <summary>
         /// Blurs the image in both horizontal and vertical directions by the specified
@@ -370,7 +370,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This should not be used when using a single mask color for transparency.
         /// </remarks>
-        public abstract object GenericImageBlur(object genericImage, int blurRadius);
+        public abstract GenericImage GenericImageBlur(GenericImage img, int blurRadius);
 
         /// <summary>
         /// Blurs the image in the horizontal direction only.
@@ -380,7 +380,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This should not be used when using a single mask color for transparency.
         /// </remarks>
-        public abstract object GenericImageBlurHorizontal(object genericImage, int blurRadius);
+        public abstract GenericImage GenericImageBlurHorizontal(GenericImage img, int blurRadius);
 
         /// <summary>
         /// Blurs the image in the vertical direction only.
@@ -390,14 +390,14 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This should not be used when using a single mask color for transparency.
         /// </remarks>
-        public abstract object GenericImageBlurVertical(object genericImage, int blurRadius);
+        public abstract GenericImage GenericImageBlurVertical(GenericImage img, int blurRadius);
 
         /// <summary>
         /// Returns a mirrored copy of the image.
         /// </summary>
         /// <param name="horizontally"></param>
         /// <returns>Mirrored copy of the image</returns>
-        public abstract object GenericImageMirror(object genericImage, bool horizontally = true);
+        public abstract GenericImage GenericImageMirror(GenericImage img, bool horizontally = true);
 
         /// <summary>
         /// Copy the data of the given image to the specified position in this image.
@@ -413,8 +413,8 @@ namespace Alternet.Drawing
         /// Takes care of the mask color and out of bounds problems.
         /// </remarks>
         public abstract void GenericImagePaste(
-            object genericImage1,
-            object genericImage2,
+            GenericImage img1,
+            GenericImage img2,
             int x,
             int y,
             GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite);
@@ -424,7 +424,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="r1">RGB Color 1.</param>
         /// <param name="r2">RGB Color 2.</param>
-        public abstract void GenericImageReplace(object genericImage, RGBValue r1, RGBValue r2);
+        public abstract void GenericImageReplace(GenericImage img, RGBValue r1, RGBValue r2);
 
         /// <summary>
         /// Changes the size of the image in-place by scaling it: after a call to this
@@ -434,7 +434,7 @@ namespace Alternet.Drawing
         /// <param name="height">New image height.</param>
         /// <param name="quality">Scaling quality.</param>
         public abstract void GenericImageRescale(
-            object genericImage,
+            GenericImage img,
             int width,
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal);
@@ -453,7 +453,7 @@ namespace Alternet.Drawing
         /// set or find, use, and set a suitable mask color for any newly exposed areas.
         /// </remarks>
         public abstract void GenericImageResizeNoScale(
-            object genericImage,
+            GenericImage img,
             SizeI size,
             PointI pos,
             RGBValue? color = null);
@@ -477,8 +477,8 @@ namespace Alternet.Drawing
         /// color(which will be allocated automatically if it isn't currently set).
         /// Otherwise, the areas will be filled with the color with the specified RGB components.
         /// </remarks>
-        public abstract object GenericImageSizeNoScale(
-            object genericImage,
+        public abstract GenericImage GenericImageSizeNoScale(
+            GenericImage img,
             SizeI size,
             PointI pos = default,
             RGBValue? color = null);
@@ -488,14 +488,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="clockwise">Rotate direction.</param>
         /// <returns></returns>
-        public abstract object GenericImageRotate90(object genericImage, bool clockwise = true);
+        public abstract GenericImage GenericImageRotate90(GenericImage img, bool clockwise = true);
 
         /// <summary>
         /// Returns a copy of the image rotated by 180 degrees.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract object GenericImageRotate180(object genericImage);
+        public abstract GenericImage GenericImageRotate180(GenericImage img);
 
         /// <summary>
         /// Rotates the hue of each pixel in the image by angle, which is a double in the
@@ -503,27 +503,27 @@ namespace Alternet.Drawing
         /// to +360 degrees.
         /// </summary>
         /// <param name="angle"></param>
-        public abstract void GenericImageRotateHue(object genericImage, double angle);
+        public abstract void GenericImageRotateHue(GenericImage img, double angle);
 
         /// <summary>
         /// Changes the saturation of each pixel in the image.
         /// </summary>
         /// <param name="factor">A double in the range [-1.0..+1.0], where -1.0 corresponds
         /// to -100 percent and +1.0 corresponds to +100 percent.</param>
-        public abstract void GenericImageChangeSaturation(object genericImage, double factor);
+        public abstract void GenericImageChangeSaturation(GenericImage img, double factor);
 
         /// <summary>
         /// Changes the brightness(value) of each pixel in the image.
         /// </summary>
         /// <param name="factor">A double in the range [-1.0..+1.0], where -1.0 corresponds
         /// to -100 percent and +1.0 corresponds to +100 percent.</param>
-        public abstract void GenericImageChangeBrightness(object genericImage, double factor);
+        public abstract void GenericImageChangeBrightness(GenericImage img, double factor);
 
         /// <summary>
         /// Returns the file load flags used for this object.
         /// </summary>
         /// <returns></returns>
-        public abstract GenericImageLoadFlags GenericImageGetLoadFlags(object genericImage);
+        public abstract GenericImageLoadFlags GenericImageGetLoadFlags(GenericImage img);
 
         /// <summary>
         /// Sets the flags used for loading image files by this object.
@@ -534,7 +534,7 @@ namespace Alternet.Drawing
         /// before creating any of them.
         /// </remarks>
         /// <param name="flags"></param>
-        public abstract void GenericImageSetLoadFlags(object genericImage, GenericImageLoadFlags flags);
+        public abstract void GenericImageSetLoadFlags(GenericImage img, GenericImageLoadFlags flags);
 
         /// <summary>
         /// Changes the hue, the saturation and the brightness(value) of each pixel in the image.
@@ -547,7 +547,7 @@ namespace Alternet.Drawing
         /// <param name="factorV">A double in the range[-1.0..+1.0], where -1.0 corresponds
         /// to -100 percent and +1.0 corresponds to +100 percent.</param>
         public abstract void GenericImageChangeHSV(
-            object genericImage,
+            GenericImage img,
             double angleH,
             double factorS,
             double factorV);
@@ -580,8 +580,8 @@ namespace Alternet.Drawing
         /// using a single mask color for transparency, as the scaling will blur the image and
         /// will therefore remove the mask partially. Using the alpha channel will work.
         /// </remarks>
-        public abstract object GenericImageScale(
-            object genericImage,
+        public abstract GenericImage GenericImageScale(
+            GenericImage img,
             int width,
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal);
@@ -600,7 +600,7 @@ namespace Alternet.Drawing
         /// The mask color is chosen automatically using <see cref="FindFirstUnusedColor"/>,
         /// see the overload method if this is not appropriate.
         /// </remarks>
-        public abstract bool GenericImageConvertAlphaToMask(object genericImage, byte threshold);
+        public abstract bool GenericImageConvertAlphaToMask(GenericImage img, byte threshold);
 
         /// <summary>
         /// If the image has alpha channel, this method converts it to mask using the
@@ -619,7 +619,7 @@ namespace Alternet.Drawing
         /// with the mask color and the alpha channel is removed.Otherwise nothing is done.
         /// </remarks>
         public abstract bool GenericImageConvertAlphaToMask(
-            object genericImage,
+            GenericImage img,
             RGBValue rgb,
             byte threshold);
 
@@ -635,8 +635,8 @@ namespace Alternet.Drawing
         /// the greyscale. Defaults to using the standard ITU-T BT.601 when converting to
         /// YUV, where every pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
         /// </remarks>
-        public abstract object GenericImageConvertToGreyscale(
-            object genericImage,
+        public abstract GenericImage GenericImageConvertToGreyscale(
+            GenericImage img,
             double weightR,
             double weightG,
             double weightB);
@@ -646,7 +646,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract object GenericImageConvertToGreyscale(object genericImage);
+        public abstract GenericImage GenericImageConvertToGreyscale(GenericImage img);
 
         /// <summary>
         /// Returns monochromatic version of the image.
@@ -654,14 +654,14 @@ namespace Alternet.Drawing
         /// <param name="rgb">RGB color.</param>
         /// <returns> The returned image has white color where the original has (r,g,b)
         /// color and black color everywhere else.</returns>
-        public abstract object GenericImageConvertToMono(object genericImage, RGBValue rgb);
+        public abstract GenericImage GenericImageConvertToMono(GenericImage img, RGBValue rgb);
 
         /// <summary>
         /// Returns disabled(dimmed) version of the image.
         /// </summary>
         /// <param name="brightness"></param>
         /// <returns></returns>
-        public abstract object GenericImageConvertToDisabled(object genericImage, byte brightness = 255);
+        public abstract GenericImage GenericImageConvertToDisabled(GenericImage img, byte brightness = 255);
 
         /// <summary>
         /// Returns a changed version of the image based on the given lightness.
@@ -673,7 +673,7 @@ namespace Alternet.Drawing
         /// 200 completely white and 100 would not change the color.
         /// </remarks>
         /// <returns></returns>
-        public abstract object GenericImageChangeLightness(object genericImage, int ialpha);
+        public abstract GenericImage GenericImageChangeLightness(GenericImage img, int ialpha);
 
         /// <summary>
         /// Return alpha value at given pixel location.
@@ -681,7 +681,7 @@ namespace Alternet.Drawing
         /// <param name="x">X coordinate of the pixel.</param>
         /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
-        public abstract byte GenericImageGetAlpha(object genericImage, int x, int y);
+        public abstract byte GenericImageGetAlpha(GenericImage img, int x, int y);
 
         /// <summary>
         /// Gets <see cref="RGBValue"/> at given pixel location.
@@ -689,7 +689,7 @@ namespace Alternet.Drawing
         /// <param name="x">X coordinate of the pixel.</param>
         /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
-        public abstract RGBValue GenericImageGetRGB(object genericImage, int x, int y);
+        public abstract RGBValue GenericImageGetRGB(GenericImage img, int x, int y);
 
         /// <summary>
         /// Gets <see cref="Color"/> at given pixel location.
@@ -704,7 +704,7 @@ namespace Alternet.Drawing
         /// Some images can have mask color, this method doesn't use this info. You need to add
         /// additional code in order to determine transparency if your image is with mask color.
         /// </remarks>
-        public abstract Color GenericImageGetPixel(object genericImage, int x, int y, bool withAlpha = false);
+        public abstract Color GenericImageGetPixel(GenericImage img, int x, int y, bool withAlpha = false);
 
         /// <summary>
         /// Sets the color of the pixel at the given x and y coordinate.
@@ -719,7 +719,7 @@ namespace Alternet.Drawing
         /// <param name="withAlpha">If true alpha channel
         /// is also set from <paramref name="color"/>.</param>
         public abstract void GenericImageSetPixel(
-            object genericImage,
+            GenericImage img,
             int x,
             int y,
             Color color,
@@ -731,7 +731,7 @@ namespace Alternet.Drawing
         /// <param name="x">X coordinate of the pixel.</param>
         /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
-        public abstract byte GenericImageGetRed(object genericImage, int x, int y);
+        public abstract byte GenericImageGetRed(GenericImage img, int x, int y);
 
         /// <summary>
         /// Returns the green intensity at the given coordinate.
@@ -739,7 +739,7 @@ namespace Alternet.Drawing
         /// <param name="x">X coordinate of the pixel.</param>
         /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
-        public abstract byte GenericImageGetGreen(object genericImage, int x, int y);
+        public abstract byte GenericImageGetGreen(GenericImage img, int x, int y);
 
         /// <summary>
         /// Returns the blue intensity at the given coordinate.
@@ -747,34 +747,34 @@ namespace Alternet.Drawing
         /// <param name="x">X coordinate of the pixel.</param>
         /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
-        public abstract byte GenericImageGetBlue(object genericImage, int x, int y);
+        public abstract byte GenericImageGetBlue(GenericImage img, int x, int y);
 
         /// <summary>
         /// Gets the <see cref="RGBValue"/> value of the mask color.
         /// </summary>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract RGBValue GenericImageGetMaskRGB(object genericImage);
+        public abstract RGBValue GenericImageGetMaskRGB(GenericImage img);
 
         /// <summary>
         /// Gets the red value of the mask color.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract byte GenericImageGetMaskRed(object genericImage);
+        public abstract byte GenericImageGetMaskRed(GenericImage img);
 
         /// <summary>
         /// Gets the green value of the mask color.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract byte GenericImageGetMaskGreen(object genericImage);
+        public abstract byte GenericImageGetMaskGreen(GenericImage img);
 
         /// <summary>
         /// Gets the blue value of the mask color.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract byte GenericImageGetMaskBlue(object genericImage);
+        public abstract byte GenericImageGetMaskBlue(GenericImage img);
 
         /// <summary>
         /// Gets a user-defined string-valued option.
@@ -784,7 +784,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name">The name of the option, case-insensitive.</param>
         /// <returns></returns>
-        public abstract string GenericImageGetOptionAsString(object genericImage, string name);
+        public abstract string GenericImageGetOptionAsString(GenericImage img, string name);
 
         /// <summary>
         /// Gets a user-defined integer-valued option.
@@ -794,34 +794,34 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name">The name of the option, case-insensitive.</param>
         /// <returns></returns>
-        public abstract int GenericImageGetOptionAsInt(object genericImage, string name);
+        public abstract int GenericImageGetOptionAsInt(GenericImage img, string name);
 
         /// <summary>
         /// Returns a sub image of the current one as long as the rect belongs entirely to the image.
         /// </summary>
         /// <param name="rect">Bounds of the sub-image.</param>
         /// <returns></returns>
-        public abstract object GenericImageGetSubImage(object genericImage, RectI rect);
+        public abstract GenericImage GenericImageGetSubImage(GenericImage img, RectI rect);
 
         /// <summary>
         /// Gets the type of image found when image was loaded or specified when image was saved.
         /// </summary>
         /// <returns></returns>
-        public abstract BitmapType GenericImageGetImageType(object genericImage);
+        public abstract BitmapType GenericImageGetImageType(GenericImage img);
 
         /// <summary>
         /// Returns <c>true</c> if this image has alpha channel, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract bool GenericImageHasAlpha(object genericImage);
+        public abstract bool GenericImageHasAlpha(GenericImage img);
 
         /// <summary>
         /// Returns <c>true</c> if there is a mask active, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract bool GenericImageHasMask(object genericImage);
+        public abstract bool GenericImageHasMask(GenericImage img);
 
         /// <summary>
         /// Returns <c>true</c> if the given option is present.
@@ -831,7 +831,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name">The name of the option, case-insensitive.</param>
         /// <returns></returns>
-        public abstract bool GenericImageHasOption(object genericImage, string name);
+        public abstract bool GenericImageHasOption(GenericImage img, string name);
 
         /// <summary>
         /// Returns <c>true</c> if the given pixel is transparent, i.e. either has the mask
@@ -842,7 +842,7 @@ namespace Alternet.Drawing
         /// <param name="y">Y coordinate of the pixel.</param>
         /// <param name="threshold">Alpha value treshold.</param>
         /// <returns></returns>
-        public abstract bool GenericImageIsTransparent(object genericImage, int x, int y, byte threshold);
+        public abstract bool GenericImageIsTransparent(GenericImage img, int x, int y, byte threshold);
 
         /// <summary>
         /// Loads an image from an input stream.
@@ -856,7 +856,7 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public abstract bool GenericImageLoadFromStream(
-            object genericImage,
+            GenericImage img,
             Stream stream,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1);
@@ -873,7 +873,7 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public abstract bool GenericImageLoadFromFile(
-            object genericImage,
+            GenericImage img,
             string filename,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1);
@@ -887,7 +887,7 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public abstract bool GenericImageLoadFromFile(
-            object genericImage,
+            GenericImage img,
             string name,
             string mimetype,
             int index = -1);
@@ -901,7 +901,7 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public abstract bool GenericImageLoadFromStream(
-            object genericImage,
+            GenericImage img,
             Stream stream,
             string mimetype,
             int index = -1);
@@ -912,7 +912,7 @@ namespace Alternet.Drawing
         /// <param name="stream">Output stream.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public abstract bool GenericImageSaveToStream(object genericImage, Stream stream, string mimetype);
+        public abstract bool GenericImageSaveToStream(GenericImage img, Stream stream, string mimetype);
 
         /// <summary>
         /// Saves an image in the named file.
@@ -922,7 +922,7 @@ namespace Alternet.Drawing
         /// has been configured and
         /// by which handlers have been loaded, not all formats may be available.</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public abstract bool GenericImageSaveToFile(object genericImage, string filename, BitmapType bitmapType);
+        public abstract bool GenericImageSaveToFile(GenericImage img, string filename, BitmapType bitmapType);
 
         /// <summary>
         /// Saves an image in the named file.
@@ -930,7 +930,7 @@ namespace Alternet.Drawing
         /// <param name="filename">Name of the file to save the image to.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public abstract bool GenericImageSaveToFile(object genericImage, string filename, string mimetype);
+        public abstract bool GenericImageSaveToFile(GenericImage img, string filename, string mimetype);
 
         /// <summary>
         /// Saves an image in the named file.
@@ -943,7 +943,7 @@ namespace Alternet.Drawing
         /// You can use one of the overload methods to save images to files
         /// with non-standard extensions.
         /// </remarks>
-        public abstract bool GenericImageSaveToFile(object genericImage, string filename);
+        public abstract bool GenericImageSaveToFile(GenericImage img, string filename);
 
         /// <summary>
         /// Saves an image in the given stream.
@@ -951,7 +951,7 @@ namespace Alternet.Drawing
         /// <param name="stream">Output stream</param>
         /// <param name="type"></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public abstract bool GenericImageSaveToStream(object genericImage, Stream stream, BitmapType type);
+        public abstract bool GenericImageSaveToStream(GenericImage img, Stream stream, BitmapType type);
 
         /// <summary>
         /// Sets the image data without performing checks.
@@ -961,7 +961,7 @@ namespace Alternet.Drawing
         /// <param name="new_height"></param>
         /// <param name="static_data"></param>
         public abstract void GenericImageSetNativeData(
-            object genericImage,
+            GenericImage img,
             IntPtr data,
             int new_width,
             int new_height,
@@ -973,7 +973,7 @@ namespace Alternet.Drawing
         /// <returns>This pointer is NULL for the images without the alpha channel.
         /// If the image does have it, this pointer may be used to directly manipulate the
         /// alpha values which are stored as the RGB ones.</returns>
-        public abstract IntPtr GenericImageGetNativeAlphaData(object genericImage);
+        public abstract IntPtr GenericImageGetNativeAlphaData(GenericImage img);
 
         /// <summary>
         /// Returns the image data as an array.
@@ -988,7 +988,7 @@ namespace Alternet.Drawing
         /// <see cref="SetNativeData(IntPtr, bool)"/> and similar methods.
         /// </remarks>
         /// <param name="genericImage">Native generic image instance.</param>
-        public abstract IntPtr GenericImageGetNativeData(object genericImage);
+        public abstract IntPtr GenericImageGetNativeData(GenericImage img);
 
         /// <summary>
         /// Creates a fresh image.
@@ -1002,7 +1002,7 @@ namespace Alternet.Drawing
         /// it has to be allocated with malloc.</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public abstract bool GenericImageCreateNativeData(
-            object genericImage,
+            GenericImage img,
             int width,
             int height,
             IntPtr data,
@@ -1021,7 +1021,7 @@ namespace Alternet.Drawing
         /// <param name="alpha">A pointer to alpha-channel data</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public abstract bool GenericImageCreateNativeData(
-            object genericImage,
+            GenericImage img,
             int width,
             int height,
             IntPtr data,
@@ -1049,7 +1049,7 @@ namespace Alternet.Drawing
         /// to <c>true</c> – in this case the caller should do it.
         /// </remarks>
         public abstract void GenericImageSetNativeAlphaData(
-            object genericImage,
+            GenericImage img,
             IntPtr alpha = default,
             bool staticData = false);
 
@@ -1071,7 +1071,7 @@ namespace Alternet.Drawing
         /// this function a pointer obtained through GetData().
         /// </remarks>
         public abstract void GenericImageSetNativeData(
-            object genericImage,
+            GenericImage img,
             IntPtr data,
             bool staticData = false);
     }

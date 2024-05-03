@@ -15,7 +15,7 @@ namespace Alternet.Drawing
             if (control is Control controlObj)
                 return UI.Native.WxOtherFactory.DisplayGetFromWindow(controlObj.WxWidget);
             else
-                throw new ArgumentException(nameof(control));
+                throw new ArgumentException("Control is required", nameof(control));
         }
 
         public override object CreateDisplay()
