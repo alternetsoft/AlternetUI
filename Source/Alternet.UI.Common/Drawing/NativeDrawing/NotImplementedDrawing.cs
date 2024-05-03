@@ -1312,32 +1312,32 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override string DisplayGetName(object nativeDisplay)
+        public override string DisplayGetName(Display display)
         {
             throw new NotImplementedException();
         }
 
-        public override SizeI DisplayGetDPI(object nativeDisplay)
+        public override SizeI DisplayGetDPI(Display display)
         {
             throw new NotImplementedException();
         }
 
-        public override double DisplayGetScaleFactor(object nativeDisplay)
+        public override double DisplayGetScaleFactor(Display display)
         {
             throw new NotImplementedException();
         }
 
-        public override bool DisplayGetIsPrimary(object nativeDisplay)
+        public override bool DisplayGetIsPrimary(Display display)
         {
             throw new NotImplementedException();
         }
 
-        public override RectI DisplayGetClientArea(object nativeDisplay)
+        public override RectI DisplayGetClientArea(Display display)
         {
             throw new NotImplementedException();
         }
 
-        public override RectI DisplayGetGeometry(object nativeDisplay)
+        public override RectI DisplayGetGeometry(Display display)
         {
             throw new NotImplementedException();
         }
@@ -1347,7 +1347,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DisposeDisplay(object nativeDisplay)
+        public override void DisposeDisplay(Display display)
         {
             throw new NotImplementedException();
         }

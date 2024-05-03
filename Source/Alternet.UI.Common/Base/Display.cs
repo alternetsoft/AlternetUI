@@ -115,27 +115,27 @@ namespace Alternet.UI
         /// Gets the display's name.
         /// </summary>
         /// <remarks>Same as <see cref="DeviceName"/></remarks>
-        public string Name => NativeDrawing.Default.DisplayGetName(NativeObject);
+        public string Name => NativeDrawing.Default.DisplayGetName(this);
 
         /// <summary>
         /// Gets display resolution in pixels per inch.
         /// </summary>
-        public SizeI DPI => NativeDrawing.Default.DisplayGetDPI(NativeObject);
+        public SizeI DPI => NativeDrawing.Default.DisplayGetDPI(this);
 
         /// <summary>
         /// Gets scaling factor used by this display.
         /// </summary>
-        public double ScaleFactor => NativeDrawing.Default.DisplayGetScaleFactor(NativeObject);
+        public double ScaleFactor => NativeDrawing.Default.DisplayGetScaleFactor(this);
 
         /// <summary>
         /// Gets <c>true</c> if the display is the primary display.
         /// </summary>
-        public bool IsPrimary => NativeDrawing.Default.DisplayGetIsPrimary(NativeObject);
+        public bool IsPrimary => NativeDrawing.Default.DisplayGetIsPrimary(this);
 
         /// <summary>
         /// Gets the client area of the display.
         /// </summary>
-        public RectI ClientArea => NativeDrawing.Default.DisplayGetClientArea(NativeObject);
+        public RectI ClientArea => NativeDrawing.Default.DisplayGetClientArea(this);
 
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
@@ -177,7 +177,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
         /// </summary>
-        public RectI Geometry => NativeDrawing.Default.DisplayGetGeometry(NativeObject);
+        public RectI Geometry => NativeDrawing.Default.DisplayGetGeometry(this);
 
         /// <summary>
         /// Returns the bounding rectangle of the display in the
@@ -347,7 +347,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeNativeObject()
         {
-            NativeDrawing.Default.DisposeDisplay(NativeObject);
+            NativeDrawing.Default.DisposeDisplay(this);
         }
 
         /// <inheritdoc/>

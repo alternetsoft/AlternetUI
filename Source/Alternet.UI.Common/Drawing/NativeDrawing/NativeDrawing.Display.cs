@@ -22,20 +22,20 @@ namespace Alternet.Drawing
 
         public abstract SizeI DisplayGetDefaultDPI();
 
-        public abstract string DisplayGetName(object nativeDisplay);
+        public abstract string DisplayGetName(Display display);
 
-        public abstract SizeI DisplayGetDPI(object nativeDisplay);
+        public abstract SizeI DisplayGetDPI(Display display);
 
-        public abstract double DisplayGetScaleFactor(object nativeDisplay);
+        public abstract double DisplayGetScaleFactor(Display display);
 
-        public abstract bool DisplayGetIsPrimary(object nativeDisplay);
+        public abstract bool DisplayGetIsPrimary(Display display);
 
-        public abstract RectI DisplayGetClientArea(object nativeDisplay);
+        public abstract RectI DisplayGetClientArea(Display display);
 
-        public abstract RectI DisplayGetGeometry(object nativeDisplay);
+        public abstract RectI DisplayGetGeometry(Display display);
 
         public abstract int DisplayGetFromPoint(PointI pt);
 
-        public abstract void DisposeDisplay(object nativeDisplay);
+        public abstract void DisposeDisplay(Display display);
     }
 }
