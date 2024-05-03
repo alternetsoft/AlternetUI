@@ -48,55 +48,6 @@ namespace Alternet.UI
         /// </summary>
         public bool IsAttached => control != null;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the user can give the focus to this control
-        /// using the TAB key.
-        /// </summary>
-        public virtual bool TabStop
-        {
-            get
-            {
-                if (NativeControl == null)
-                    return false;
-
-                return NativeControl.TabStop;
-            }
-
-            set
-            {
-                if (NativeControl == null)
-                    return;
-
-                NativeControl.TabStop = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the control has input focus.
-        /// </summary>
-        public virtual bool IsFocused
-        {
-            get
-            {
-                if (NativeControl == null)
-                    return false;
-
-                return NativeControl.IsFocused;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control can accept data that
-        /// the user drags onto it.
-        /// </summary>
-        /// <value><c>true</c> if drag-and-drop operations are allowed in the
-        /// control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
-        public bool AllowDrop
-        {
-            get => NativeControl!.AllowDrop;
-            set => NativeControl!.AllowDrop = value;
-        }
-
         internal Native.Control NativeControl
         {
             get
@@ -114,24 +65,18 @@ namespace Alternet.UI
 
         internal bool NativeControlCreated => nativeControl != null;
 
-        /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if
-        /// no control is focused.
-        /// </summary>
-        public static Control? GetFocusedControl()
+        public void RaiseChildInserted(Control childControl)
         {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
-                return null;
-
-            var handler = NativeControlToHandler(focusedNativeControl);
-            if (handler == null || !handler.IsAttached)
-                return null;
-
-            return handler.Control;
+            Control.RaiseChildInserted(childControl);
+            OnChildInserted(childControl);
         }
 
-        /// <inheritdoc cref="Control.GetDPI"/>
+        public void RaiseChildRemoved(Control childControl)
+        {
+            Control.RaiseChildRemoved(childControl);
+            OnChildRemoved(childControl);
+        }
+
         public SizeD GetDPI()
         {
             if (nativeControl == null)
@@ -182,7 +127,7 @@ namespace Alternet.UI
                 nativeControl.Update();
             else
             {
-                var parent = TryFindClosestParentWithNativeControl();
+                var parent = Control.TryFindClosestParentWithNativeControl();
                 parent?.Update();
             }
         }
@@ -197,7 +142,7 @@ namespace Alternet.UI
                 nativeControl.Invalidate();
             else
             {
-                var parent = TryFindClosestParentWithNativeControl();
+                var parent = Control.TryFindClosestParentWithNativeControl();
                 parent?.Invalidate();
             }
         }
@@ -394,32 +339,6 @@ namespace Alternet.UI
             ApplyEnabled();
         }
 
-        internal void Control_VerticalAlignmentChanged()
-        {
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
-        internal void Control_HorizontalAlignmentChanged()
-        {
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
-        internal void Control_Children_ItemInserted(Control item)
-        {
-            RaiseChildInserted(item);
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
-        internal void Control_Children_ItemRemoved(Control item)
-        {
-            RaiseChildRemoved(item);
-            Control.RaiseLayoutChanged();
-            Control.PerformLayout();
-        }
-
         internal IntPtr GetHandle()
         {
             if (NativeControl == null)
@@ -446,8 +365,6 @@ namespace Alternet.UI
             NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
         }
 
-        internal Graphics CreateGraphics() => CreateDrawingContext();
-
         internal SizeD GetNativeControlSize(SizeD availableSize)
         {
             if (Control.IsDummy)
@@ -457,22 +374,6 @@ namespace Alternet.UI
             return new SizeD(
                 double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
                 double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
-        }
-
-        internal Graphics CreateDrawingContext()
-        {
-            var nativeControl = NativeControl;
-            if (nativeControl == null)
-            {
-                nativeControl =
-                    TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
-
-                // todo: visual offset for handleless controls
-                if (nativeControl == null)
-                    throw new Exception(); // todo: maybe use parking window here?
-            }
-
-            return new WxGraphics(nativeControl.OpenClientDrawingContext());
         }
 
         internal virtual Native.Control CreateNativeControl() =>
@@ -808,18 +709,6 @@ namespace Alternet.UI
             Control.RaiseMouseCaptureLost();
         }
 
-        private void RaiseChildInserted(Control childControl)
-        {
-            Control.RaiseChildInserted(childControl);
-            OnChildInserted(childControl);
-        }
-
-        private void RaiseChildRemoved(Control childControl)
-        {
-            Control.RaiseChildRemoved(childControl);
-            OnChildRemoved(childControl);
-        }
-
         private void ApplyChildren()
         {
             if (!Control.HasChildren)
@@ -827,24 +716,6 @@ namespace Alternet.UI
             for (var i = 0; i < Control.Children.Count; i++)
                 RaiseChildInserted(Control.Children[i]);
         }
-
-        /*private void VisualChildren_ItemInserted(object? sender, int index, Control item)
-        {
-            item.SetParentInternal(Control);
-            item.Handler.IsVisualChild = true;
-
-            RaiseChildInserted(item);
-            Control.PerformLayout();
-        }*/
-
-        /*private void VisualChildren_ItemRemoved(object? sender, int index, Control item)
-        {
-            item.SetParentInternal(null);
-            item.Handler.IsVisualChild = false;
-
-            RaiseChildRemoved(item);
-            Control.PerformLayout();
-        }*/
 
         private void DisposeNativeControl()
         {
@@ -893,7 +764,7 @@ namespace Alternet.UI
 
             var parentNativeControl = NativeControl;
             parentNativeControl ??=
-                TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
+                Control.TryFindClosestParentWithNativeControl()?.NativeControl;
 
             parentNativeControl?.AddChild(childNativeControl);
         }
@@ -902,23 +773,6 @@ namespace Alternet.UI
         {
             if (nativeControl != null && childControl.Handler.nativeControl != null)
                 nativeControl?.RemoveChild(childControl.Handler.nativeControl);
-        }
-
-        private Control? TryFindClosestParentWithNativeControl()
-        {
-            var control = Control;
-            if (control.Handler.NativeControl != null)
-                return control;
-
-            while (true)
-            {
-                control = control.Parent;
-                if (control == null)
-                    return null;
-
-                if (control.Handler.NativeControl != null)
-                    return control;
-            }
         }
 
         private void NativeControl_VisibleChanged()

@@ -136,7 +136,15 @@ namespace Alternet.UI
         /// </summary>
         public static Control? GetFocusedControl()
         {
-            return ControlHandler.GetFocusedControl();
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl == null)
+                return null;
+
+            var handler = ControlHandler.NativeControlToHandler(focusedNativeControl);
+            if (handler == null || !handler.IsAttached)
+                return null;
+
+            return handler.Control;
         }
 
         /// <summary>
@@ -867,15 +875,26 @@ namespace Alternet.UI
         /// that you want to use the <see cref="Graphics"/> object,
         /// and then call its Dispose() when you are finished using it.
         /// </remarks>
-        public virtual Graphics CreateDrawingContext() =>
-            Handler.CreateDrawingContext();
+        public virtual Graphics CreateDrawingContext()
+        {
+            var nativeControl = NativeControl;
+            if (nativeControl == null)
+            {
+                nativeControl = TryFindClosestParentWithNativeControl()?.NativeControl;
+
+                // todo: visual offset for handleless controls
+                if (nativeControl == null)
+                    throw new Exception(); // todo: maybe use parking window here?
+            }
+
+            return new WxGraphics(nativeControl.OpenClientDrawingContext());
+        }
 
         /// <summary>
         /// Same as <see cref="CreateDrawingContext"/>. Added mainly for legacy code.
         /// </summary>
         /// <returns></returns>
-        public virtual Graphics CreateGraphics() =>
-            Handler.CreateGraphics();
+        public virtual Graphics CreateGraphics() => CreateDrawingContext();
 
         /// <summary>
         /// Sets the specified bounds of the control to new location and size.

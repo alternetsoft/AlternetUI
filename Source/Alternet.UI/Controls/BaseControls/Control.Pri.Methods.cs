@@ -37,13 +37,17 @@ namespace Alternet.UI
         private void Children_ItemInserted(object? sender, int index, Control item)
         {
             item.SetParentInternal(this);
-            Handler.Control_Children_ItemInserted(item);
+            Handler.RaiseChildInserted(item);
+            RaiseLayoutChanged();
+            PerformLayout();
         }
 
         private void Children_ItemRemoved(object? sender, int index, Control item)
         {
             item.SetParentInternal(null);
-            Handler.Control_Children_ItemRemoved(item);
+            Handler.RaiseChildRemoved(item);
+            RaiseLayoutChanged();
+            PerformLayout();
         }
 
         private void ResetColor(bool isBackground, ResetColorType method = ResetColorType.Auto)

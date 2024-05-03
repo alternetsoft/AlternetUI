@@ -522,6 +522,23 @@ namespace Alternet.UI
             NativeControl.EndRepositioningChildren();
         }
 
+        internal Control? TryFindClosestParentWithNativeControl()
+        {
+            var control = this;
+            if (control.NativeControl != null)
+                return control;
+
+            while (true)
+            {
+                control = control.Parent;
+                if (control == null)
+                    return null;
+
+                if (control.NativeControl != null)
+                    return control;
+            }
+        }
+
         internal void DoInsideRepositioningChildren(Action action)
         {
             var repositioning = BeginRepositioningChildren();

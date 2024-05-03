@@ -2376,7 +2376,8 @@ namespace Alternet.UI
 
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                Handler.Control_VerticalAlignmentChanged();
+                RaiseLayoutChanged();
+                PerformLayout();
             }
         }
 
@@ -2454,7 +2455,8 @@ namespace Alternet.UI
 
                 horizontalAlignment = value;
                 HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                Handler.Control_HorizontalAlignmentChanged();
+                RaiseLayoutChanged();
+                PerformLayout();
             }
         }
 
@@ -2464,8 +2466,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool TabStop
         {
-            get => Handler.TabStop;
-            set => Handler.TabStop = value;
+            get
+            {
+                return NativeControl.TabStop;
+            }
+
+            set
+            {
+                NativeControl.TabStop = value;
+            }
         }
 
         /// <summary>
@@ -2491,15 +2500,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool AllowDrop
         {
-            get
-            {
-                return Handler.AllowDrop;
-            }
-
-            set
-            {
-                Handler.AllowDrop = value;
-            }
+            get => NativeControl.AllowDrop;
+            set => NativeControl.AllowDrop = value;
         }
 
         /// <summary>
@@ -2605,7 +2607,13 @@ namespace Alternet.UI
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
         [Browsable(false)]
-        public virtual bool Focused => Handler.IsFocused;
+        public virtual bool Focused
+        {
+            get
+            {
+                return NativeControl.IsFocused;
+            }
+        }
 
         /// <summary>
         /// Returns control identifier.
