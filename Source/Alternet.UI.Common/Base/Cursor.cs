@@ -86,7 +86,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeDrawing.Default.CursorIsOk(NativeObject);
+                return NativeDrawing.Default.CursorIsOk(this);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeDrawing.Default.CursorGetHotSpot(NativeObject);
+                return NativeDrawing.Default.CursorGetHotSpot(this);
             }
         }
 
@@ -111,10 +111,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void SetGlobal(Cursor? cursor = null)
         {
-            if (cursor is null)
-                NativeDrawing.Default.CursorSetGlobal(default(IntPtr));
-            else
-                NativeDrawing.Default.CursorSetGlobal(cursor.NativeObject);
+            NativeDrawing.Default.CursorSetGlobal(cursor);
         }
 
         /// <summary>
@@ -155,7 +152,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeNativeObject()
         {
-            NativeDrawing.Default.DisposeCursor(NativeObject);
+            NativeDrawing.Default.DisposeCursor(this);
         }
 
         /// <inheritdoc/>

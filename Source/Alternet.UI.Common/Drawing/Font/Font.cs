@@ -890,7 +890,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Font Clone()
         {
-            var nativeFont = NativeDrawing.Default.CreateFont(NativeObject);
+            var nativeFont = NativeDrawing.Default.CreateFont(this);
             var result = new Font(nativeFont);
             return result;
         }

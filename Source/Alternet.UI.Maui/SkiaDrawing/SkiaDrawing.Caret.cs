@@ -37,22 +37,22 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool CursorIsOk(object nativeCursor)
+        public override bool CursorIsOk(Cursor cursor)
         {
             throw new NotImplementedException();
         }
 
-        public override PointI CursorGetHotSpot(object nativeCursor)
+        public override PointI CursorGetHotSpot(Cursor cursor)
         {
             throw new NotImplementedException();
         }
 
-        public override void CursorSetGlobal(object nativeCursor)
+        public override void CursorSetGlobal(Cursor? cursor)
         {
             throw new NotImplementedException();
         }
 
-        public override void DisposeCursor(object nativeCursor)
+        public override void DisposeCursor(Cursor cursor)
         {
             throw new NotImplementedException();
         }
@@ -77,42 +77,42 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeI CaretGetSize(object nativeCaret)
+        public override SizeI CaretGetSize(Caret caret)
         {
             throw new NotImplementedException();
         }
 
-        public override void CaretSetSize(object nativeCaret, SizeI value)
+        public override void CaretSetSize(Caret caret, SizeI value)
         {
             throw new NotImplementedException();
         }
 
-        public override PointI CaretGetPosition(object nativeCaret)
+        public override PointI CaretGetPosition(Caret caret)
         {
             throw new NotImplementedException();
         }
 
-        public override void CaretSetPosition(object nativeCaret, PointI value)
+        public override void CaretSetPosition(Caret caret, PointI value)
         {
             throw new NotImplementedException();
         }
 
-        public override bool CaretIsOk(object nativeCaret)
+        public override bool CaretIsOk(Caret caret)
         {
             throw new NotImplementedException();
         }
 
-        public override bool CaretGetVisible(object nativeCaret)
+        public override bool CaretGetVisible(Caret caret)
         {
             throw new NotImplementedException();
         }
 
-        public override void CaretSetVisible(object nativeCaret, bool value)
+        public override void CaretSetVisible(Caret caret, bool value)
         {
             throw new NotImplementedException();
         }
 
-        public override void DisposeCaret(object nativeCaret)
+        public override void DisposeCaret(Caret caret)
         {
             throw new NotImplementedException();
         }

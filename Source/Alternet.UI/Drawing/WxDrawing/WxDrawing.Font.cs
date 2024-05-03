@@ -88,10 +88,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateFont(object font)
+        public override object CreateFont(Font font)
         {
             var result = CreateFont();
-            ((UI.Native.Font)result).InitializeFromFont((UI.Native.Font)font);
+            ((UI.Native.Font)result).InitializeFromFont((UI.Native.Font)font.NativeObject);
             return result;
         }
 

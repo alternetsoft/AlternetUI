@@ -78,13 +78,13 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetSize(NativeObject);
+                return NativeDrawing.Default.CaretGetSize(this);
             }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetSize(NativeObject, value);
+                NativeDrawing.Default.CaretSetSize(this, value);
             }
         }
 
@@ -96,13 +96,13 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetPosition(NativeObject);
+                return NativeDrawing.Default.CaretGetPosition(this);
             }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetPosition(NativeObject, value);
+                NativeDrawing.Default.CaretSetPosition(this, value);
             }
         }
 
@@ -114,7 +114,7 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretIsOk(NativeObject);
+                return NativeDrawing.Default.CaretIsOk(this);
             }
         }
 
@@ -131,13 +131,13 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetVisible(NativeObject);
+                return NativeDrawing.Default.CaretGetVisible(this);
             }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetVisible(NativeObject, value);
+                NativeDrawing.Default.CaretSetVisible(this, value);
             }
         }
 
@@ -172,7 +172,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeNativeObject()
         {
-            NativeDrawing.Default.DisposeCaret(NativeObject);
+            NativeDrawing.Default.DisposeCaret(this);
         }
     }
 }

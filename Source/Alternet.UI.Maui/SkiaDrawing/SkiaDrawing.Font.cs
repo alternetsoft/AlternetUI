@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateFont(object font)
+        public override object CreateFont(Font font)
         {
             throw new NotImplementedException();
         }

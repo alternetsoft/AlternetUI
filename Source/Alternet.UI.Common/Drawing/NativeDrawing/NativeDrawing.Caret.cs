@@ -22,13 +22,13 @@ namespace Alternet.Drawing
 
         public abstract object CreateCursor(Image image);
 
-        public abstract bool CursorIsOk(object nativeCursor);
+        public abstract bool CursorIsOk(Cursor cursor);
 
-        public abstract PointI CursorGetHotSpot(object nativeCursor);
+        public abstract PointI CursorGetHotSpot(Cursor cursor);
 
-        public abstract void CursorSetGlobal(object nativeCursor);
+        public abstract void CursorSetGlobal(Cursor? cursor);
 
-        public abstract void DisposeCursor(object nativeCursor);
+        public abstract void DisposeCursor(Cursor cursor);
 
         public abstract object CreateCaret();
 
@@ -38,20 +38,20 @@ namespace Alternet.Drawing
 
         public abstract void CaretSetBlinkTime(int value);
 
-        public abstract SizeI CaretGetSize(object nativeCaret);
+        public abstract SizeI CaretGetSize(Caret caret);
 
-        public abstract void CaretSetSize(object nativeCaret, SizeI value);
+        public abstract void CaretSetSize(Caret caret, SizeI value);
 
-        public abstract PointI CaretGetPosition(object nativeCaret);
+        public abstract PointI CaretGetPosition(Caret caret);
 
-        public abstract void CaretSetPosition(object nativeCaret, PointI value);
+        public abstract void CaretSetPosition(Caret caret, PointI value);
 
-        public abstract bool CaretIsOk(object nativeCaret);
+        public abstract bool CaretIsOk(Caret caret);
 
-        public abstract bool CaretGetVisible(object nativeCaret);
+        public abstract bool CaretGetVisible(Caret caret);
 
-        public abstract void CaretSetVisible(object nativeCaret, bool value);
+        public abstract void CaretSetVisible(Caret caret, bool value);
 
-        public abstract void DisposeCaret(object nativeCaret);
+        public abstract void DisposeCaret(Caret caret);
     }
 }

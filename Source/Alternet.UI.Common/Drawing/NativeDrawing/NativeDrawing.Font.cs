@@ -16,7 +16,7 @@ namespace Alternet.Drawing
         /// <param name="font">Native font instance.</param>
         /// <param name="prm">Font properties.</param>
         /// <returns></returns>
-        public abstract void UpdateFont(object font, FontParams prm);
+        public abstract void UpdateFont(object nativeFont, FontParams prm);
 
         /// <summary>
         /// Creates default native mono font.
@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         /// Creates native font using other font properties.
         /// </summary>
         /// <returns></returns>
-        public abstract object CreateFont(object font);
+        public abstract object CreateFont(Font font);
 
         /// <summary>
         /// Returns a string array that contains all font families names
