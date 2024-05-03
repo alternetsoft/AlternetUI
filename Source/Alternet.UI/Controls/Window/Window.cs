@@ -515,6 +515,12 @@ namespace Alternet.UI
             }
         }
 
+        IWindow? IWindow.Owner
+        {
+            get => Owner;
+            set => Owner = value as Window;
+        }
+
         /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>

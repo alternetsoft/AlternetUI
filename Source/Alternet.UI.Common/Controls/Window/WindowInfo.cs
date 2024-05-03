@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class WindowInfo
+    public class WindowInfo
     {
         public bool MinimizeEnabled = true;
 
