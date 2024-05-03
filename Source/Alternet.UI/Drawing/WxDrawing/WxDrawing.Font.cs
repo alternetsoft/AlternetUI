@@ -46,45 +46,45 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override FontStyle GetFontStyle(object font)
+        public override FontStyle GetFontStyle(Font fnt)
         {
-            return (FontStyle)((UI.Native.Font)font).Style;
+            return (FontStyle)((UI.Native.Font)fnt.NativeObject).Style;
         }
 
         /// <inheritdoc/>
-        public override bool GetFontStrikethrough(object font)
+        public override bool GetFontStrikethrough(Font fnt)
         {
-            return ((UI.Native.Font)font).GetStrikethrough();
+            return ((UI.Native.Font)fnt.NativeObject).GetStrikethrough();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontUnderlined(object font)
+        public override bool GetFontUnderlined(Font fnt)
         {
-            return ((UI.Native.Font)font).GetUnderlined();
+            return ((UI.Native.Font)fnt.NativeObject).GetUnderlined();
         }
 
         /// <inheritdoc/>
-        public override string FontToString(object font)
+        public override string FontToString(Font fnt)
         {
-            return ((UI.Native.Font)font).Description;
+            return ((UI.Native.Font)fnt.NativeObject).Description;
         }
 
         /// <inheritdoc/>
-        public override double GetFontSizeInPoints(object font)
+        public override double GetFontSizeInPoints(Font fnt)
         {
-            return ((UI.Native.Font)font).SizeInPoints;
+            return ((UI.Native.Font)fnt.NativeObject).SizeInPoints;
         }
 
         /// <inheritdoc/>
-        public override bool FontEquals(object font1, object font2)
+        public override bool FontEquals(Font fnt1, Font fnt2)
         {
-            return ((UI.Native.Font)font1).IsEqualTo((UI.Native.Font)font2);
+            return ((UI.Native.Font)fnt1.NativeObject).IsEqualTo((UI.Native.Font)fnt2.NativeObject);
         }
 
         /// <inheritdoc/>
-        public override string GetFontInfoDesc(object font)
+        public override string GetFontInfoDesc(Font fnt)
         {
-            return ((UI.Native.Font)font).Serialize();
+            return ((UI.Native.Font)fnt.NativeObject).Serialize();
         }
 
         /// <inheritdoc/>
@@ -104,7 +104,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void UpdateFont(object font, FontParams prm)
+        public override void UpdateFont(Font fnt, FontParams prm)
         {
             if (prm.Unit != GraphicsUnit.Point)
             {
@@ -123,7 +123,7 @@ namespace Alternet.Drawing
 
             prm.Size = Font.CheckSize(prm.Size);
 
-            ((UI.Native.Font)font).Initialize(
+            ((UI.Native.Font)fnt.NativeObject).Initialize(
                ToNativeGenericFamily(prm.GenericFamily),
                prm.FamilyName,
                prm.Size,
@@ -139,45 +139,45 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeI GetFontSizeInPixels(object font)
+        public override SizeI GetFontSizeInPixels(Font fnt)
         {
-            return ((UI.Native.Font)font).GetPixelSize();
+            return ((UI.Native.Font)fnt.NativeObject).GetPixelSize();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontIsUsingSizeInPixels(object font)
+        public override bool GetFontIsUsingSizeInPixels(Font fnt)
         {
-            return ((UI.Native.Font)font).IsUsingSizeInPixels();
+            return ((UI.Native.Font)fnt.NativeObject).IsUsingSizeInPixels();
         }
 
         /// <inheritdoc/>
-        public override int GetFontNumericWeight(object font)
+        public override int GetFontNumericWeight(Font fnt)
         {
-            return ((UI.Native.Font)font).GetNumericWeight();
+            return ((UI.Native.Font)fnt.NativeObject).GetNumericWeight();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontIsFixedWidth(object font)
+        public override bool GetFontIsFixedWidth(Font fnt)
         {
-            return ((UI.Native.Font)font).IsFixedWidth();
+            return ((UI.Native.Font)fnt.NativeObject).IsFixedWidth();
         }
 
         /// <inheritdoc/>
-        public override FontWeight GetFontWeight(object font)
+        public override FontWeight GetFontWeight(Font fnt)
         {
-            return (FontWeight)((UI.Native.Font)font).GetWeight();
+            return (FontWeight)((UI.Native.Font)fnt.NativeObject).GetWeight();
         }
 
         /// <inheritdoc/>
-        public override string GetFontName(object font)
+        public override string GetFontName(Font fnt)
         {
-            return ((UI.Native.Font)font).Name;
+            return ((UI.Native.Font)fnt.NativeObject).Name;
         }
 
         /// <inheritdoc/>
-        public override int GetFontEncoding(object font)
+        public override int GetFontEncoding(Font fnt)
         {
-            return ((UI.Native.Font)font).GetEncoding();
+            return ((UI.Native.Font)fnt.NativeObject).GetEncoding();
         }
 
         /// <inheritdoc/>

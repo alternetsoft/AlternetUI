@@ -44,7 +44,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void UpdateFont(object font, FontParams prm)
+        public override void UpdateFont(Font font, FontParams prm)
         {
             throw new NotImplementedException();
         }
@@ -80,85 +80,85 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override string GetFontName(object font)
+        public override string GetFontName(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override int GetFontEncoding(object font)
+        public override int GetFontEncoding(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override SizeI GetFontSizeInPixels(object font)
+        public override SizeI GetFontSizeInPixels(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontIsUsingSizeInPixels(object font)
+        public override bool GetFontIsUsingSizeInPixels(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override int GetFontNumericWeight(object font)
+        public override int GetFontNumericWeight(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontIsFixedWidth(object font)
+        public override bool GetFontIsFixedWidth(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override FontWeight GetFontWeight(object font)
+        public override FontWeight GetFontWeight(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override FontStyle GetFontStyle(object font)
+        public override FontStyle GetFontStyle(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontStrikethrough(object font)
+        public override bool GetFontStrikethrough(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool GetFontUnderlined(object font)
+        public override bool GetFontUnderlined(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetFontSizeInPoints(object font)
+        public override double GetFontSizeInPoints(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override string GetFontInfoDesc(object font)
+        public override string GetFontInfoDesc(Font font)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool FontEquals(object font1, object font2)
+        public override bool FontEquals(Font font1, Font font2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override string FontToString(object font)
+        public override string FontToString(Font font)
         {
             throw new NotImplementedException();
         }

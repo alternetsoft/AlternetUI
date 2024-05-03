@@ -43,7 +43,7 @@ namespace Alternet.Drawing
 
         public override void UpdateSolidBrush(SolidBrush brush) => NotImplemented();
 
-        public override void UpdateFont(object font, FontParams prm) => NotImplemented();
+        public override void UpdateFont(Font font, FontParams prm) => NotImplemented();
 
         public override void UpdateHatchBrush(HatchBrush brush) => NotImplemented();
 
@@ -64,33 +64,33 @@ namespace Alternet.Drawing
 
         public override void SetDefaultFontEncoding(int value) => NotImplemented();
 
-        public override string GetFontName(object font) => NotImplemented<string>();
+        public override string GetFontName(Font font) => NotImplemented<string>();
 
-        public override int GetFontEncoding(object font) => NotImplemented<int>();
+        public override int GetFontEncoding(Font font) => NotImplemented<int>();
 
-        public override SizeI GetFontSizeInPixels(object font) => NotImplemented<SizeI>();
+        public override SizeI GetFontSizeInPixels(Font font) => NotImplemented<SizeI>();
 
-        public override bool GetFontIsUsingSizeInPixels(object font) => NotImplemented<bool>();
+        public override bool GetFontIsUsingSizeInPixels(Font font) => NotImplemented<bool>();
 
-        public override int GetFontNumericWeight(object font) => NotImplemented<int>();
+        public override int GetFontNumericWeight(Font font) => NotImplemented<int>();
 
-        public override bool GetFontIsFixedWidth(object font) => NotImplemented<bool>();
+        public override bool GetFontIsFixedWidth(Font font) => NotImplemented<bool>();
 
-        public override FontWeight GetFontWeight(object font) => NotImplemented<FontWeight>();
+        public override FontWeight GetFontWeight(Font font) => NotImplemented<FontWeight>();
 
-        public override FontStyle GetFontStyle(object font) => NotImplemented<FontStyle>();
+        public override FontStyle GetFontStyle(Font font) => NotImplemented<FontStyle>();
 
-        public override bool GetFontStrikethrough(object font) => NotImplemented<bool>();
+        public override bool GetFontStrikethrough(Font font) => NotImplemented<bool>();
 
-        public override bool GetFontUnderlined(object font) => NotImplemented<bool>();
+        public override bool GetFontUnderlined(Font font) => NotImplemented<bool>();
 
-        public override double GetFontSizeInPoints(object font) => NotImplemented<double>();
+        public override double GetFontSizeInPoints(Font font) => NotImplemented<double>();
 
-        public override string GetFontInfoDesc(object font) => NotImplemented<string>();
+        public override string GetFontInfoDesc(Font font) => NotImplemented<string>();
 
-        public override bool FontEquals(object font1, object font2) => NotImplemented<bool>();
+        public override bool FontEquals(Font font1, Font font2) => NotImplemented<bool>();
 
-        public override string FontToString(object font) => NotImplemented<string>();
+        public override string FontToString(Font font) => NotImplemented<string>();
 
         public override void UpdateTransformMatrix(object matrix, double m11, double m12, double m21, double m22, double dx, double dy)
         {

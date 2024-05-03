@@ -13,10 +13,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Updates native font properties.
         /// </summary>
-        /// <param name="font">Native font instance.</param>
-        /// <param name="prm">Font properties.</param>
-        /// <returns></returns>
-        public abstract void UpdateFont(object nativeFont, FontParams prm);
+        public abstract void UpdateFont(Font font, FontParams prm);
 
         /// <summary>
         /// Creates default native mono font.
@@ -80,87 +77,82 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets native font name.
         /// </summary>
-        /// <param name="font">Native font instance.</param>
-        /// <returns></returns>
-        public abstract string GetFontName(object font);
+        public abstract string GetFontName(Font font);
 
         /// <summary>
         /// Gets native font encoding.
         /// </summary>
-        /// <param name="font">Native font instance.</param>
         /// <returns></returns>
-        public abstract int GetFontEncoding(object font);
+        public abstract int GetFontEncoding(Font font);
 
         /// <summary>
         /// Gets native font size in pixels.
         /// </summary>
-        public abstract SizeI GetFontSizeInPixels(object font);
+        public abstract SizeI GetFontSizeInPixels(Font font);
 
         /// <summary>
         /// Gets whether native font is using size in pixels.
         /// </summary>
-        public abstract bool GetFontIsUsingSizeInPixels(object font);
+        public abstract bool GetFontIsUsingSizeInPixels(Font font);
 
         /// <summary>
         /// Gets native font weight.
         /// </summary>
-        /// <param name="font"></param>
         /// <returns></returns>
-        public abstract int GetFontNumericWeight(object font);
+        public abstract int GetFontNumericWeight(Font font);
 
         /// <summary>
         /// Gets whether native font is a fixed width (or monospaced) font.
         /// </summary>
-        public abstract bool GetFontIsFixedWidth(object font);
+        public abstract bool GetFontIsFixedWidth(Font font);
 
         /// <summary>
         /// Gets native font weight.
         /// </summary>
         /// <returns></returns>
-        public abstract FontWeight GetFontWeight(object font);
+        public abstract FontWeight GetFontWeight(Font font);
 
         /// <summary>
         /// Gets style information for the native font.
         /// </summary>
-        /// <param name="font">Native font instance.</param>
         /// <returns></returns>
-        public abstract FontStyle GetFontStyle(object font);
+        public abstract FontStyle GetFontStyle(Font font);
 
         /// <summary>
         /// Gets a value that indicates whether native font is strikethrough.
         /// </summary>
         /// <returns></returns>
-        public abstract bool GetFontStrikethrough(object font);
+        public abstract bool GetFontStrikethrough(Font font);
 
         /// <summary>
         /// Gets a value that indicates whether native font is underlined.
         /// </summary>
         /// <returns></returns>
-        public abstract bool GetFontUnderlined(object font);
+        public abstract bool GetFontUnderlined(Font font);
 
         /// <summary>
         /// Gets the em-size, in points, of the native font.
         /// </summary>
         /// <returns></returns>
-        public abstract double GetFontSizeInPoints(object font);
+        public abstract double GetFontSizeInPoints(Font font);
 
         /// <summary>
         /// Gets native font description string.
         /// </summary>
         /// <returns></returns>
-        public abstract string GetFontInfoDesc(object font);
+        public abstract string GetFontInfoDesc(Font font);
 
         /// <summary>
         /// Indicates whether native font is equal to another native font.
         /// </summary>
         /// <returns></returns>
-        public abstract bool FontEquals(object font1, object font2);
+        public abstract bool FontEquals(Font font1, Font font2);
 
         /// <summary>
         /// Returns a string that represents native font.
         /// </summary>
         /// <returns></returns>
-        public abstract string FontToString(object font);
+        public abstract string FontToString(Font font);
 
         public struct FontParams
         {
