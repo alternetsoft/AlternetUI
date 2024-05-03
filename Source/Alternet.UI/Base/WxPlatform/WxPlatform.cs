@@ -12,6 +12,8 @@ namespace Alternet.UI
     {
         private static bool initialized;
 
+        internal static WxPlatform WxDefault => (WxPlatform)NativePlatform.Default;
+
         public static void Initialize()
         {
             if (initialized)

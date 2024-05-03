@@ -923,8 +923,7 @@ namespace Alternet.UI
             if ((specified & BoundsSpecified.Height) == 0)
                 result.Height = bounds.Height;
 
-            if (result != bounds)
-                Handler.Bounds = result;
+            Bounds = result;
         }
 
         /// <summary>

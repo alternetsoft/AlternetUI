@@ -146,6 +146,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void SetDefaultFont(Font value)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override string GetFontInfoDesc(Font font)
         {
             throw new NotImplementedException();

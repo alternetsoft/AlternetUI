@@ -11,6 +11,12 @@ namespace Alternet.Drawing
     internal partial class WxDrawing
     {
         /// <inheritdoc/>
+        public override void SetDefaultFont(Font value)
+        {
+            UI.Native.Window.SetParkingWindowFont((UI.Native.Font?)value?.NativeObject);
+        }
+
+        /// <inheritdoc/>
         public override object CreateFont() => new UI.Native.Font();
 
         /// <inheritdoc/>

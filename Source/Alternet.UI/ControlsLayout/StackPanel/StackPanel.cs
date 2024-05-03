@@ -311,7 +311,7 @@ namespace Alternet.UI
                     control.HorizontalAlignment);
                 if (bottom)
                 {
-                    control.Handler.Bounds =
+                    control.Bounds =
                         new RectD(
                             alignedPos.Origin,
                             lBounds.Bottom - h - margin.Bottom - preferSize.Height,
@@ -321,7 +321,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    control.Handler.Bounds =
+                    control.Bounds =
                         new RectD(
                             alignedPos.Origin,
                             lBounds.Top + y + margin.Top,

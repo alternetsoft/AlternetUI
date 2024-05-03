@@ -35,44 +35,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the minimum size the window can be resized to.
-        /// </summary>
-        public SizeD MinimumSize
-        {
-            get
-            {
-                return NativeControl.MinimumSize;
-            }
-
-            set
-            {
-                if (MinimumSize == value)
-                    return;
-                NativeControl.MinimumSize = value;
-                Control.PerformLayout();
-            }
-        }
-
-        /// <summary>
-        /// Gets the maximum size the window can be resized to.
-        /// </summary>
-        public SizeD MaximumSize
-        {
-            get
-            {
-                return NativeControl.MaximumSize;
-            }
-
-            set
-            {
-                if (MaximumSize == value)
-                    return;
-                NativeControl.MaximumSize = value;
-                Control.PerformLayout();
-            }
-        }
-
-        /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
         public Control Control
@@ -85,56 +47,6 @@ namespace Alternet.UI
         /// to a <see cref="Control"/>.
         /// </summary>
         public bool IsAttached => control != null;
-
-        /// <summary>
-        /// <inheritdoc cref="Control.IsFocusable"/>
-        /// </summary>
-        public bool IsFocusable => NativeControl != null && NativeControl.IsFocusable;
-
-        /// <summary>
-        /// <inheritdoc cref="Control.CanAcceptFocus"/>
-        /// </summary>
-        public bool CanAcceptFocus => NativeControl != null && NativeControl.CanAcceptFocus;
-
-        /// <summary>
-        /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in
-        /// device-independent units (1/96th inch per unit).
-        /// </summary>
-        public virtual RectD Bounds
-        {
-            get => NativeControl.Bounds;
-            set
-            {
-                if (NativeControl.Bounds == value)
-                    return;
-                NativeControl.Bounds = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets size of the <see cref="Control"/>'s client area, in
-        /// device-independent units (1/96th inch per unit).
-        /// </summary>
-        public SizeD ClientSize
-        {
-            get
-            {
-                if (Control.IsDummy)
-                    return SizeD.Empty;
-                return NativeControl.ClientSize;
-            }
-
-            set
-            {
-                if (ClientSize == value)
-                    return;
-                NativeControl.ClientSize = value;
-                Control.PerformLayout();
-            }
-        }
-
-        /// <inheritdoc cref="Control.DrawClientRectangle"/>
-        public virtual RectD DrawClientRectangle => Control.DrawClientRectangle;
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control
@@ -170,20 +82,6 @@ namespace Alternet.UI
                     return false;
 
                 return NativeControl.IsFocused;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the mouse is captured to this control.
-        /// </summary>
-        public bool IsMouseCaptured
-        {
-            get
-            {
-                if (nativeControl == null)
-                    return false;
-
-                return NativeControl.IsMouseCaptured;
             }
         }
 
@@ -491,12 +389,6 @@ namespace Alternet.UI
             return (ControlHandler?)control.handler;
         }
 
-        internal void Control_VisibleChanged()
-        {
-            ApplyVisible();
-            Control.Parent?.PerformLayout();
-        }
-
         internal void Control_EnabledChanged()
         {
             ApplyEnabled();
@@ -514,11 +406,6 @@ namespace Alternet.UI
             Control.PerformLayout();
         }
 
-        internal void Control_ToolTipChanged()
-        {
-            ApplyToolTip();
-        }
-
         internal void Control_Children_ItemInserted(Control item)
         {
             RaiseChildInserted(item);
@@ -531,11 +418,6 @@ namespace Alternet.UI
             RaiseChildRemoved(item);
             Control.RaiseLayoutChanged();
             Control.PerformLayout();
-        }
-
-        internal void Control_FontChanged()
-        {
-            ApplyFont();
         }
 
         internal IntPtr GetHandle()
@@ -575,16 +457,6 @@ namespace Alternet.UI
             return new SizeD(
                 double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
                 double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
-        }
-
-        internal void Control_MarginChanged()
-        {
-            Control.PerformLayout();
-        }
-
-        internal void Control_PaddingChanged()
-        {
-            Control.PerformLayout();
         }
 
         internal Graphics CreateDrawingContext()
@@ -883,20 +755,6 @@ namespace Alternet.UI
 
             if (sizeChanged)
                 Control.PerformLayout(true);
-        }
-
-        private void ApplyToolTip()
-        {
-            if (NativeControl != null)
-                NativeControl.ToolTip = Control.GetRealToolTip();
-        }
-
-        private void ApplyFont()
-        {
-            if (NativeControl != null)
-                NativeControl.Font = (UI.Native.Font?)Control.Font?.NativeObject;
-
-            Invalidate();
         }
 
         private void NativeControl_GotFocus()

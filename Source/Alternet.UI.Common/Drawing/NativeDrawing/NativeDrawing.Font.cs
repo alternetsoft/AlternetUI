@@ -10,6 +10,8 @@ namespace Alternet.Drawing
 {
     public partial class NativeDrawing
     {
+        public abstract void SetDefaultFont(Font value);
+
         /// <summary>
         /// Updates native font properties.
         /// </summary>

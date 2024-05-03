@@ -528,7 +528,7 @@ namespace Alternet.UI
             set
             {
                 defaultFont = value;
-                Native.Window.SetParkingWindowFont((UI.Native.Font?)value?.NativeObject);
+                NativeDrawing.Default.SetDefaultFont(value);
             }
         }
 
@@ -677,9 +677,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsScrollable
         {
-            get => NativeControl.IsScrollable;
+            get => WxPlatform.WxDefault.ControlGetIsScrollable(this);
 
-            set => NativeControl.IsScrollable = value;
+            set => WxPlatform.WxDefault.ControlSetIsScrollable(this, value);
         }
 
         /// <summary>
@@ -749,10 +749,7 @@ namespace Alternet.UI
                 if (cursor == value)
                     return;
                 cursor = value;
-                if (cursor is null)
-                    NativeControl?.SetCursor(default);
-                else
-                    NativeControl?.SetCursor(cursor.Handle);
+                WxPlatform.WxDefault.ControlSetCursor(this, value);
             }
         }
 
@@ -851,8 +848,20 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SizeD ClientSize
         {
-            get => Handler.ClientSize;
-            set => Handler.ClientSize = value;
+            get
+            {
+                if (IsDummy)
+                    return SizeD.Empty;
+                return WxPlatform.WxDefault.ControlGetClientSize(this);
+            }
+
+            set
+            {
+                if (ClientSize == value)
+                    return;
+                WxPlatform.WxDefault.ControlSetClientSize(this, value);
+                PerformLayout();
+            }
         }
 
         /// <summary>
@@ -929,7 +938,13 @@ namespace Alternet.UI
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsMouseCaptured => Handler.IsMouseCaptured;
+        public virtual bool IsMouseCaptured
+        {
+            get
+            {
+                return NativeControl.IsMouseCaptured;
+            }
+        }
 
         /// <summary>
         /// Gets or sets data (images, colors, borders, pens, brushes, etc.) for different
@@ -989,7 +1004,8 @@ namespace Alternet.UI
         /// Gets whether this control itself can have focus.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsFocusable => Handler.IsFocusable;
+        public virtual bool IsFocusable
+            => NativeControl.IsFocusable;
 
         /// <summary>
         /// Gets the distance, in dips, between the right edge of the control and the left
@@ -1086,7 +1102,7 @@ namespace Alternet.UI
         /// this control accepts focus itself, use <see cref="IsFocusable"/>.
         /// </remarks>
         [Browsable(false)]
-        public virtual bool CanAcceptFocus => Handler.CanAcceptFocus;
+        public virtual bool CanAcceptFocus => NativeControl.CanAcceptFocus;
 
         /// <summary>
         /// Gets or sets the object that contains data about the control.
@@ -1126,7 +1142,7 @@ namespace Alternet.UI
                 toolTip = value;
                 OnToolTipChanged(EventArgs.Empty);
                 ToolTipChanged?.Invoke(this, EventArgs.Empty);
-                Handler.Control_ToolTipChanged();
+                NativeControl.ToolTip = GetRealToolTip();
             }
         }
 
@@ -1137,8 +1153,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual RectD Bounds
         {
-            get => Handler.Bounds;
-            set => Handler.Bounds = value;
+            get => NativeControl.Bounds;
+            set
+            {
+                if (Bounds == value)
+                    return;
+                NativeControl.Bounds = value;
+            }
         }
 
         /// <summary>
@@ -1166,7 +1187,7 @@ namespace Alternet.UI
         /// Can be removed at any time.
         /// </summary>
         [Browsable(false)]
-        public IntPtr WxWidget => NativeControl!.WxWidget;
+        public IntPtr WxWidget => NativeControl.WxWidget;
 
         /// <summary>
         /// Gets or sets the distance between the top edge of the control
@@ -1227,7 +1248,8 @@ namespace Alternet.UI
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
                 Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
-                Handler.Control_VisibleChanged();
+                NativeControl.Visible = value;
+                Parent?.PerformLayout();
                 if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
                 else
@@ -1430,7 +1452,7 @@ namespace Alternet.UI
 
             set
             {
-                Handler.Bounds = new RectD(Bounds.Location, value);
+                Bounds = new RectD(Bounds.Location, value);
             }
         }
 
@@ -1693,7 +1715,7 @@ namespace Alternet.UI
 
                 OnMarginChanged(EventArgs.Empty);
                 MarginChanged?.Invoke(this, EventArgs.Empty);
-                Handler.Control_MarginChanged();
+                PerformLayout();
             }
         }
 
@@ -1730,7 +1752,7 @@ namespace Alternet.UI
 
                 OnPaddingChanged(EventArgs.Empty);
                 PaddingChanged?.Invoke(this, EventArgs.Empty);
-                Handler.Control_PaddingChanged();
+                PerformLayout();
             }
         }
 
@@ -1750,8 +1772,18 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SizeD MinimumSize
         {
-            get => Handler.MinimumSize;
-            set => Handler.MinimumSize = value;
+            get
+            {
+                return NativeControl.MinimumSize;
+            }
+
+            set
+            {
+                if (MinimumSize == value)
+                    return;
+                NativeControl.MinimumSize = value;
+                PerformLayout();
+            }
         }
 
         /// <summary>
@@ -1760,8 +1792,18 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SizeD MaximumSize
         {
-            get => Handler.MaximumSize;
-            set => Handler.MaximumSize = value;
+            get
+            {
+                return NativeControl.MaximumSize;
+            }
+
+            set
+            {
+                if (MaximumSize == value)
+                    return;
+                NativeControl.MaximumSize = value;
+                PerformLayout();
+            }
         }
 
         /// <summary>
@@ -2249,7 +2291,9 @@ namespace Alternet.UI
                     font = value;
                     OnFontChanged(EventArgs.Empty);
                     FontChanged?.Invoke(this, EventArgs.Empty);
-                    Handler.Control_FontChanged();
+
+                    if (NativeControl != null)
+                        NativeControl.Font = (UI.Native.Font?)Font?.NativeObject;
 
                     foreach (var child in Children)
                     {

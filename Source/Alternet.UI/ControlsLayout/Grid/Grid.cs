@@ -436,7 +436,7 @@ namespace Alternet.UI
                         var child = children[i];
                         if (child != null)
                         {
-                            child.Handler.Bounds = new RectD(new PointD(), arrangeSize);
+                            child.Bounds = new RectD(new PointD(), arrangeSize);
                         }
                     }
                 }
@@ -510,7 +510,7 @@ namespace Alternet.UI
                     preferredSize,
                     control.VerticalAlignment);
 
-            control.Handler.Bounds = new RectD(
+            control.Bounds = new RectD(
                 horizontalPosition.Origin,
                 verticalPosition.Origin,
                 horizontalPosition.Size,

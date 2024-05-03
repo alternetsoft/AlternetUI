@@ -1366,5 +1366,10 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override void SetDefaultFont(Font value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

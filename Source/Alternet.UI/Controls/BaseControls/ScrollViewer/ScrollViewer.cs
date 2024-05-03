@@ -73,7 +73,7 @@ namespace Alternet.UI
 
                 var offset = layoutOffset;
 
-                control.Handler.Bounds = new RectD(
+                control.Bounds = new RectD(
                     horizontalPosition.Origin + offset.Width,
                     verticalPosition.Origin + offset.Height,
                     horizontalPosition.Size,

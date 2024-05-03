@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         public override object CreateImageFromGenericImage(GenericImage genericImage, int depth = -1)
         {
             var nativeImage = CreateImage();
-            ((UI.Native.Image)nativeImage).LoadFromGenericImage((IntPtr)genericImage.Handle, depth);
+            ((UI.Native.Image)nativeImage).LoadFromGenericImage((IntPtr)genericImage.NativeObject, depth);
             return nativeImage;
         }
 
@@ -108,7 +108,7 @@ namespace Alternet.Drawing
             var nativeImage = CreateImage();
             UI.Native.DrawingContext.ImageFromGenericImageDC(
                 (UI.Native.Image)nativeImage,
-                genericImage.Handle,
+                (IntPtr)genericImage.NativeObject,
                 (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
         }
