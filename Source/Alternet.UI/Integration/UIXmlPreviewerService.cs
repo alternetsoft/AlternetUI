@@ -120,8 +120,9 @@ namespace Alternet.UI.Integration
         {
             try
             {
-                var targetFilePath = Path.Combine(screenshotsDirectory, Guid.NewGuid().ToString("N") + ".bmp");
-                window.Handler.SaveScreenshot(targetFilePath);
+                var targetFilePath
+                    = Path.Combine(screenshotsDirectory, Guid.NewGuid().ToString("N") + ".bmp");
+                window.SaveScreenshot(targetFilePath);
                 return targetFilePath;
             }
             finally

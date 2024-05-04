@@ -14,7 +14,6 @@ namespace Alternet.UI
     {
         private Control? control;
         private Native.Control? nativeControl;
-        private RectD? reportedBounds;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -77,25 +76,6 @@ namespace Alternet.UI
             OnChildRemoved(childControl);
         }
 
-        public SizeD GetDPI()
-        {
-            if (nativeControl == null)
-                return SizeD.Empty;
-            return NativeControl.GetDPI();
-        }
-
-        /// <inheritdoc cref="Control.BeginIgnoreRecreate"/>
-        public void BeginIgnoreRecreate()
-        {
-            NativeControl?.BeginIgnoreRecreate();
-        }
-
-        /// <inheritdoc cref="Control.EndIgnoreRecreate"/>
-        public void EndIgnoreRecreate()
-        {
-            NativeControl?.EndIgnoreRecreate();
-        }
-
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
         /// </summary>
@@ -147,196 +127,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Maintains performance while performing slow operations on a control
-        /// by preventing the control from
-        /// drawing until the <see cref="EndUpdate"/> method is called.
-        /// </summary>
-        public void BeginUpdate()
-        {
-            NativeControl?.BeginUpdate();
-        }
-
-        /// <summary>
-        /// Resumes painting the control after painting is suspended by the
-        /// <see cref="BeginUpdate"/> method.
-        /// </summary>
-        public void EndUpdate()
-        {
-            NativeControl?.EndUpdate();
-        }
-
-        /// <summary>
-        /// Captures the mouse to the control.
-        /// </summary>
-        public void CaptureMouse()
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            NativeControl.SetMouseCapture(true);
-        }
-
-        /// <summary>
-        /// The ScreenToClient function converts the screen coordinates of a
-        /// specified point on the screen to client-area coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that specifies the
-        /// screen coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public PointD ScreenToClient(PointD point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.ScreenToClient(point);
-        }
-
-        /// <summary>
-        /// Converts the client-area coordinates of a specified point to
-        /// screen coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that contains the
-        /// client coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public PointD ClientToScreen(PointD point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.ClientToScreen(point);
-        }
-
-        /// <summary>
-        /// Converts the screen coordinates of a specified point in
-        /// device-independent units (1/96th inch per unit) to device
-        /// (pixel) coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that specifies the
-        /// screen device-independent coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public PointI ScreenToDevice(PointD point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.ScreenToDevice(point);
-        }
-
-        /// <summary>
-        /// Begins a drag-and-drop operation.
-        /// </summary>
-        /// <remarks>
-        /// Begins a drag operation. The <paramref name="allowedEffects"/>
-        /// determine which drag operations can occur.
-        /// </remarks>
-        /// <param name="data">The data to drag.</param>
-        /// <param name="allowedEffects">One of the
-        /// <see cref="DragDropEffects"/> values.</param>
-        /// <returns>
-        /// A value from the <see cref="DragDropEffects"/>
-        /// enumeration that represents the final effect that was
-        /// performed during the drag-and-drop operation.
-        /// </returns>
-        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
-        {
-            return (DragDropEffects)NativeControl!.DoDragDrop(
-                UnmanagedDataObjectService.GetUnmanagedDataObject(data),
-                (Native.DragDropEffects)allowedEffects);
-        }
-
-        /// <summary>
-        /// Converts the device (pixel) coordinates of a specified point to
-        /// coordinates in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that contains the
-        /// coordinates in device-independent units (1/96th inch per unit)
-        /// to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public PointD DeviceToScreen(PointI point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.DeviceToScreen(point);
-        }
-
-        /// <summary>
-        /// Releases the mouse capture, if the control held the capture.
-        /// </summary>
-        public void ReleaseMouseCapture()
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            NativeControl.SetMouseCapture(false);
-        }
-
-        /// <summary>
-        /// Gets the size of the control specified in its
-        /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
-        /// properties or calculates preferred size from its children.
-        /// </summary>
-        public SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
-        {
-            var specifiedWidth = Control.SuggestedWidth;
-            var specifiedHeight = Control.SuggestedHeight;
-            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
-                return new SizeD(specifiedWidth, specifiedHeight);
-
-            var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
-            var maxWidth = maxSize.Width;
-            var maxHeight = maxSize.Height;
-
-            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
-            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
-
-            return new SizeD(width, height);
-        }
-
-        /// <summary>
-        /// Returns a preferred size of control with an added padding.
-        /// </summary>
-        public SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
-        {
-            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
-        }
-
-        /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
-        /// <returns><see langword="true"/> if the input focus request was successful;
-        /// otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="SetFocus"/> method returns true if the control
-        /// successfully received input focus.</remarks>
-        public bool SetFocus()
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.SetFocus();
-        }
-
-        /// <summary>
-        /// Focuses the next control.
-        /// </summary>
-        public void FocusNextControl(bool forward, bool nested)
-        {
-            if (nativeControl == null)
-                return;
-
-            NativeControl.FocusNextControl(forward, nested);
-        }
-
         internal static ControlHandler? NativeControlToHandler(
             Native.Control control)
         {
             return (ControlHandler?)control.handler;
-        }
-
-        internal void Control_EnabledChanged()
-        {
-            ApplyEnabled();
         }
 
         internal IntPtr GetHandle()
@@ -345,24 +139,6 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             return NativeControl.Handle;
-        }
-
-        internal void SaveScreenshot(string fileName)
-        {
-            Control.ScreenShotCounter++;
-            try
-            {
-                NativeControl.SaveScreenshot(fileName);
-            }
-            finally
-            {
-                Control.ScreenShotCounter--;
-            }
-        }
-
-        internal void ShowPopupMenu(Menu menu, double x, double y)
-        {
-            NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
         }
 
         internal SizeD GetNativeControlSize(SizeD availableSize)
@@ -383,96 +159,6 @@ namespace Alternet.UI
         /// This methods is called when the layout of the control changes.
         /// </summary>
         protected internal virtual void OnLayoutChanged()
-        {
-        }
-
-        /// <summary>
-        /// Starts the initialization process for this control.
-        /// </summary>
-        protected internal virtual void BeginInit()
-        {
-            NativeControl?.BeginInit();
-        }
-
-        /// <summary>
-        /// Ends the initialization process for this control.
-        /// </summary>
-        protected internal virtual void EndInit()
-        {
-            NativeControl?.EndInit();
-        }
-
-        /// <summary>
-        /// Returns the size of the area which can fit all the children of this
-        /// control, with an added padding.
-        /// </summary>
-        protected SizeD GetPaddedPreferredSize(SizeD preferredSize)
-        {
-            var padding = Control.Padding;
-
-            var intrinsicPadding = new Thickness();
-            var nativeControl = NativeControl;
-            if (nativeControl != null)
-                intrinsicPadding = nativeControl.IntrinsicPreferredSizePadding;
-
-            return preferredSize + padding.Size + intrinsicPadding.Size;
-        }
-
-        /// <summary>
-        /// Gets the size of the area which can fit all the children of this control.
-        /// </summary>
-        protected SizeD GetChildrenMaxPreferredSize(SizeD availableSize)
-        {
-            double maxWidth = 0;
-            double maxHeight = 0;
-
-            foreach (var control in Control.AllChildrenInLayout)
-            {
-                var preferredSize =
-                    control.GetPreferredSize(availableSize) + control.Margin.Size;
-                maxWidth = Math.Max(preferredSize.Width, maxWidth);
-                maxHeight = Math.Max(preferredSize.Height, maxHeight);
-            }
-
-            return new SizeD(maxWidth, maxHeight);
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor enters the boundary of the control.
-        /// </summary>
-        protected virtual void OnMouseEnter()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor moves.
-        /// </summary>
-        protected virtual void OnMouseMove()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor leaves the boundary of the control.
-        /// </summary>
-        protected virtual void OnMouseLeave()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse left button is released while the mouse pointer
-        /// is over
-        /// the control or when the control has captured the mouse.
-        /// </summary>
-        protected virtual void OnMouseLeftButtonUp()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse left button is pressed while the mouse pointer
-        /// is over
-        /// the control or when the control has captured the mouse.
-        /// </summary>
-        protected virtual void OnMouseLeftButtonDown()
         {
         }
 
@@ -538,8 +224,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnAttach()
         {
-            ApplyVisible();
-            ApplyEnabled();
+            NativeControl.Visible = Control.Visible;
+            NativeControl.Enabled = Control.Enabled;
             ApplyChildren();
         }
 
@@ -636,26 +322,7 @@ namespace Alternet.UI
         private void NativeControl_SizeChanged()
         {
             NativeControlSizeChanged();
-            ReportBoundsChanged();
-        }
-
-        private void ReportBoundsChanged()
-        {
-            var newBounds = Control.Bounds;
-
-            var locationChanged = reportedBounds?.Location != newBounds.Location;
-            var sizeChanged = reportedBounds?.Size != newBounds.Size;
-
-            reportedBounds = newBounds;
-
-            if (locationChanged)
-                Control.RaiseLocationChanged(EventArgs.Empty);
-
-            if (sizeChanged)
-                Control.RaiseSizeChanged(EventArgs.Empty);
-
-            if (sizeChanged)
-                Control.PerformLayout(true);
+            Control.ReportBoundsChanged();
         }
 
         private void NativeControl_GotFocus()
@@ -738,18 +405,6 @@ namespace Alternet.UI
             var nativeControl = (Native.Control)sender!;
             nativeControl.Destroyed -= NativeControl_Destroyed;
             DisposeNativeControlCore(nativeControl);
-        }
-
-        private void ApplyVisible()
-        {
-            if (NativeControl != null)
-                NativeControl.Visible = Control.Visible;
-        }
-
-        private void ApplyEnabled()
-        {
-            if (NativeControl != null)
-                NativeControl.Enabled = Control.Enabled;
         }
 
         private void TryInsertNativeControl(Control childControl)

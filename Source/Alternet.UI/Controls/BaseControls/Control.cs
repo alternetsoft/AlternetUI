@@ -80,6 +80,7 @@ namespace Alternet.UI
         private DockStyle dock;
         private LayoutStyle? layout;
         private Graphics? measureCanvas;
+        private RectD? reportedBounds;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.

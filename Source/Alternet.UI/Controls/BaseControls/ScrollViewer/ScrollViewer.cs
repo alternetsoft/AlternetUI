@@ -83,7 +83,7 @@ namespace Alternet.UI
 
         private void SetScrollInfo()
         {
-            var preferredSize = Handler.GetChildrenMaxPreferredSizePadded(
+            var preferredSize = GetChildrenMaxPreferredSizePadded(
                 new SizeD(double.PositiveInfinity, double.PositiveInfinity));
             var size = ClientRectangle.Size;
 

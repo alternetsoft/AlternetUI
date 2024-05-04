@@ -566,7 +566,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CaptureMouse()
         {
-            Handler?.CaptureMouse();
+            NativeControl.SetMouseCapture(true);
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ReleaseMouseCapture()
         {
-            Handler?.ReleaseMouseCapture();
+            NativeControl.SetMouseCapture(false);
         }
 
         /// <summary>
@@ -962,7 +962,9 @@ namespace Alternet.UI
         public virtual void Invalidate()
         {
             if (Parent != null || this is Window)
+            {
                 Handler?.Invalidate();
+            }
         }
 
         /// <summary>
@@ -971,7 +973,9 @@ namespace Alternet.UI
         public virtual void Update()
         {
             if (Parent != null || this is Window)
+            {
                 Handler?.Update();
+            }
         }
 
         /// <summary>
@@ -1012,7 +1016,7 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var newSize = Handler.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+            var newSize = GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
             if (newSize != SizeD.Empty)
             {
                 var currentSize = ClientSize;
@@ -1042,7 +1046,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public PointD ScreenToClient(PointD point)
         {
-            return Handler.ScreenToClient(point);
+            return NativeControl.ScreenToClient(point);
         }
 
         /// <summary>
@@ -1054,7 +1058,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public PointD ClientToScreen(PointD point)
         {
-            return Handler.ClientToScreen(point);
+            return NativeControl.ClientToScreen(point);
         }
 
         /// <summary>
@@ -1066,7 +1070,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public PointI ScreenToDevice(PointD point)
         {
-            return Handler.ScreenToDevice(point);
+            return NativeControl.ScreenToDevice(point);
         }
 
         /// <summary>
@@ -1078,7 +1082,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public PointD DeviceToScreen(PointI point)
         {
-            return Handler.DeviceToScreen(point);
+            return NativeControl.DeviceToScreen(point);
         }
 
         /// <summary>
@@ -1172,7 +1176,7 @@ namespace Alternet.UI
         public virtual int BeginUpdate()
         {
             updateCount++;
-            Handler?.BeginUpdate();
+            NativeControl.BeginUpdate();
             return updateCount;
         }
 
@@ -1183,7 +1187,7 @@ namespace Alternet.UI
         public virtual int EndUpdate()
         {
             updateCount--;
-            Handler?.EndUpdate();
+            NativeControl.EndUpdate();
             return updateCount;
         }
 
@@ -1272,7 +1276,7 @@ namespace Alternet.UI
         public virtual void BeginInit()
         {
             SuspendLayout();
-            Handler?.BeginInit();
+            NativeControl.BeginInit();
         }
 
         /// <summary>
@@ -1287,7 +1291,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EndInit()
         {
-            Handler?.EndInit();
+            NativeControl.EndInit();
             ResumeLayout();
         }
 
@@ -1306,7 +1310,7 @@ namespace Alternet.UI
         /// control successfully received input focus.</remarks>
         public virtual bool SetFocus()
         {
-            return Handler.SetFocus();
+            return NativeControl.SetFocus();
         }
 
         /// <summary>
@@ -1341,7 +1345,15 @@ namespace Alternet.UI
         /// <remarks>This function works only on Windows.</remarks>
         public virtual void SaveScreenshot(string fileName)
         {
-            Handler?.SaveScreenshot(fileName);
+            ScreenShotCounter++;
+            try
+            {
+                NativeControl.SaveScreenshot(fileName);
+            }
+            finally
+            {
+                ScreenShotCounter--;
+            }
         }
 
         /// <summary>
@@ -1370,7 +1382,7 @@ namespace Alternet.UI
             menu.RaiseOpening(e);
             if (e.Cancel)
                 return;
-            Handler.ShowPopupMenu(menu, x, y);
+            NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
             menu.RaiseClosing(e);
         }
 
@@ -1513,7 +1525,7 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
-            Handler?.FocusNextControl(forward, nested);
+            NativeControl.FocusNextControl(forward, nested);
         }
 
         /// <summary>
@@ -1534,7 +1546,9 @@ namespace Alternet.UI
         public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             allowedEffects &= ~DragDropEffects.Scroll;
-            return Handler.DoDragDrop(data, allowedEffects);
+            return (DragDropEffects)NativeControl!.DoDragDrop(
+                UnmanagedDataObjectService.GetUnmanagedDataObject(data),
+                (Native.DragDropEffects)allowedEffects);
         }
 
         /// <summary>
@@ -1542,7 +1556,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RecreateWindow()
         {
-            Handler?.NativeControl?.RecreateWindow();
+            NativeControl.RecreateWindow();
         }
 
         /// <summary>
@@ -1560,11 +1574,11 @@ namespace Alternet.UI
         /// </returns>
         public virtual SizeD GetDPI()
         {
-            if (Handler != null)
-                return Handler.GetDPI();
+            if (NativeControl != null)
+                return NativeControl.GetDPI();
             if (Parent != null)
                 return Parent.GetDPI();
-            throw new NotSupportedException();
+            return SizeD.Empty;
         }
 
         /// <summary>
@@ -1583,7 +1597,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool IsTransparentBackgroundSupported()
         {
-            return NativeControl?.IsTransparentBackgroundSupported() ?? false;
+            return NativeControl.IsTransparentBackgroundSupported();
         }
 
         /// <summary>
@@ -1689,7 +1703,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BeginIgnoreRecreate()
         {
-            Handler?.BeginIgnoreRecreate();
+            NativeControl.BeginIgnoreRecreate();
         }
 
         /// <summary>
@@ -1935,7 +1949,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void EndIgnoreRecreate()
         {
-            Handler?.EndIgnoreRecreate();
+            NativeControl.EndIgnoreRecreate();
         }
 
         /// <summary>

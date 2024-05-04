@@ -91,7 +91,7 @@ namespace Alternet.Drawing
         public override object CreateImage(ImageSet imageSet, IControl control)
         {
             if (control is not Control controlObj)
-                throw new ArgumentException(nameof(control));
+                throw new ArgumentException("Control is required.", nameof(control));
 
             var nativeObject = NativeDrawing.Default.CreateImage();
             ((UI.Native.ImageSet)imageSet.NativeObject).InitImageFor(

@@ -97,7 +97,7 @@ namespace Alternet.UI
         {
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
-            handler?.Control_EnabledChanged();
+            NativeControl.Enabled = Enabled;
             Parent?.OnChildPropertyChanged(this, nameof(Enabled));
         }
     }

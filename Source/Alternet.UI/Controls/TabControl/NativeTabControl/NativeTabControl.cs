@@ -142,7 +142,7 @@ namespace Alternet.UI
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
             return NativeControl.GetTotalPreferredSizeFromPageSize(
-                Handler.GetSpecifiedOrChildrenPreferredSize(availableSize));
+                GetSpecifiedOrChildrenPreferredSize(availableSize));
         }
 
         /// <inheritdoc />

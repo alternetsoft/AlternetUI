@@ -63,7 +63,7 @@ namespace Alternet.UI
         internal static SizeD GetPreferredSizeDefaultLayout(Control container, SizeD availableSize)
         {
             if (container.HasChildren)
-                return container.Handler.GetSpecifiedOrChildrenPreferredSize(availableSize);
+                return container.GetSpecifiedOrChildrenPreferredSize(availableSize);
             return container.Handler.GetNativeControlSize(availableSize);
         }
 
@@ -93,6 +93,25 @@ namespace Alternet.UI
                 (int)controlType,
                 (int)renderSize);
             return Font.FromInternal(font);
+        }
+
+        internal void ReportBoundsChanged()
+        {
+            var newBounds = Bounds;
+
+            var locationChanged = reportedBounds?.Location != newBounds.Location;
+            var sizeChanged = reportedBounds?.Size != newBounds.Size;
+
+            reportedBounds = newBounds;
+
+            if (locationChanged)
+                RaiseLocationChanged(EventArgs.Empty);
+
+            if (sizeChanged)
+                RaiseSizeChanged(EventArgs.Empty);
+
+            if (sizeChanged)
+                PerformLayout(true);
         }
 
         /// <summary>

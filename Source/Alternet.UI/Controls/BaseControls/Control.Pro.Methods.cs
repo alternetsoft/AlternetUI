@@ -37,6 +37,71 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the size of the control specified in its
+        /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
+        /// properties or calculates preferred size from its children.
+        /// </summary>
+        protected virtual SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
+        {
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+                return new SizeD(specifiedWidth, specifiedHeight);
+
+            var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
+            var maxWidth = maxSize.Width;
+            var maxHeight = maxSize.Height;
+
+            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
+            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
+
+            return new SizeD(width, height);
+        }
+
+        /// <summary>
+        /// Returns a preferred size of control with an added padding.
+        /// </summary>
+        protected SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
+        {
+            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
+        }
+
+        /// <summary>
+        /// Returns the size of the area which can fit all the children of this
+        /// control, with an added padding.
+        /// </summary>
+        protected virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
+        {
+            var padding = Padding;
+
+            var intrinsicPadding = new Thickness();
+            var nativeControl = NativeControl;
+            if (nativeControl != null)
+                intrinsicPadding = nativeControl.IntrinsicPreferredSizePadding;
+
+            return preferredSize + padding.Size + intrinsicPadding.Size;
+        }
+
+        /// <summary>
+        /// Gets the size of the area which can fit all the children of this control.
+        /// </summary>
+        protected virtual SizeD GetChildrenMaxPreferredSize(SizeD availableSize)
+        {
+            double maxWidth = 0;
+            double maxHeight = 0;
+
+            foreach (var control in AllChildrenInLayout)
+            {
+                var preferredSize =
+                    control.GetPreferredSize(availableSize) + control.Margin.Size;
+                maxWidth = Math.Max(preferredSize.Width, maxWidth);
+                maxHeight = Math.Max(preferredSize.Height, maxHeight);
+            }
+
+            return new SizeD(maxWidth, maxHeight);
+        }
+
+        /// <summary>
         /// Raises the <see cref="SizeChanged"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
