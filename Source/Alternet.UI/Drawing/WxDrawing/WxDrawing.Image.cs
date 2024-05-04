@@ -33,38 +33,38 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool ImageSave(object image, string fileName)
+        public override bool ImageSave(Image img, string fileName)
         {
-            return ((UI.Native.Image)image).SaveToFile(fileName);
+            return ((UI.Native.Image)img.NativeObject).SaveToFile(fileName);
         }
 
         /// <inheritdoc/>
-        public override bool ImageSave(object image, Stream stream, ImageFormat format)
+        public override bool ImageSave(Image img, Stream stream, ImageFormat format)
         {
             var outputStream = new UI.Native.OutputStream(stream);
-            return ((UI.Native.Image)image).SaveToStream(outputStream, format.ToString());
+            return ((UI.Native.Image)img.NativeObject).SaveToStream(outputStream, format.ToString());
         }
 
         /// <inheritdoc/>
-        public override SizeI GetImagePixelSize(object image)
+        public override SizeI GetImagePixelSize(Image img)
         {
-            return ((UI.Native.Image)image).PixelSize;
+            return ((UI.Native.Image)img.NativeObject).PixelSize;
         }
 
         /// <inheritdoc/>
-        public override bool ImageLoadFromStream(object image, Stream stream)
+        public override bool ImageLoadFromStream(Image img, Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);
             if (inputStream is null)
                 return false;
 
-            return ((UI.Native.Image)image).LoadFromStream(inputStream);
+            return ((UI.Native.Image)img.NativeObject).LoadFromStream(inputStream);
         }
 
         /// <inheritdoc/>
-        public override bool GetImageIsOk(object image)
+        public override bool GetImageIsOk(Image img)
         {
-            return ((UI.Native.Image)image).IsOk;
+            return ((UI.Native.Image)img.NativeObject).IsOk;
         }
 
         /// <inheritdoc/>
@@ -146,109 +146,109 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override int GetImageDepth(object image)
+        public override int GetImageDepth(Image img)
         {
-            return ((UI.Native.Image)image).Depth;
+            return ((UI.Native.Image)img.NativeObject).Depth;
         }
 
         /// <inheritdoc/>
-        public override SizeI GetImageDipSize(object image)
+        public override SizeI GetImageDipSize(Image img)
         {
-            return ((UI.Native.Image)image).DipSize;
+            return ((UI.Native.Image)img.NativeObject).DipSize;
         }
 
         /// <inheritdoc/>
-        public override bool GetImageHasAlpha(object image)
+        public override bool GetImageHasAlpha(Image img)
         {
-            return ((UI.Native.Image)image).HasAlpha;
+            return ((UI.Native.Image)img.NativeObject).HasAlpha;
         }
 
         /// <inheritdoc/>
-        public override double GetImageScaledHeight(object image)
+        public override double GetImageScaledHeight(Image img)
         {
-            return ((UI.Native.Image)image).ScaledHeight;
+            return ((UI.Native.Image)img.NativeObject).ScaledHeight;
         }
 
         /// <inheritdoc/>
-        public override SizeI GetImageScaledSize(object image)
+        public override SizeI GetImageScaledSize(Image img)
         {
-            return ((UI.Native.Image)image).ScaledSize;
+            return ((UI.Native.Image)img.NativeObject).ScaledSize;
         }
 
         /// <inheritdoc/>
-        public override double GetImageScaledWidth(object image)
+        public override double GetImageScaledWidth(Image img)
         {
-            return ((UI.Native.Image)image).ScaledWidth;
+            return ((UI.Native.Image)img.NativeObject).ScaledWidth;
         }
 
         /// <inheritdoc/>
-        public override double GetImageScaleFactor(object image)
+        public override double GetImageScaleFactor(Image img)
         {
-            return ((UI.Native.Image)image).ScaleFactor;
+            return ((UI.Native.Image)img.NativeObject).ScaleFactor;
         }
 
         /// <inheritdoc/>
-        public override object ImageConvertToDisabled(object image, byte brightness = 255)
+        public override object ImageConvertToDisabled(Image img, byte brightness = 255)
         {
-            var converted = ((UI.Native.Image)image).ConvertToDisabled(brightness);
+            var converted = ((UI.Native.Image)img.NativeObject).ConvertToDisabled(brightness);
             return converted;
         }
 
         /// <inheritdoc/>
-        public override object ImageGetSubBitmap(object image, RectI rect)
+        public override object ImageGetSubBitmap(Image img, RectI rect)
         {
-            var converted = ((UI.Native.Image)image).GetSubBitmap(rect);
+            var converted = ((UI.Native.Image)img.NativeObject).GetSubBitmap(rect);
             return converted;
         }
 
         /// <inheritdoc/>
-        public override bool ImageLoad(object image, string name, BitmapType type)
+        public override bool ImageLoad(Image img, string name, BitmapType type)
         {
-            return ((UI.Native.Image)image).LoadFile(name, (int)type);
+            return ((UI.Native.Image)img.NativeObject).LoadFile(name, (int)type);
         }
 
         /// <inheritdoc/>
-        public override bool ImageLoadFromStream(object image, Stream stream, BitmapType type)
+        public override bool ImageLoadFromStream(Image img, Stream stream, BitmapType type)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            return ((UI.Native.Image)image).LoadStream(inputStream, (int)type);
+            return ((UI.Native.Image)img.NativeObject).LoadStream(inputStream, (int)type);
         }
 
         /// <inheritdoc/>
-        public override void ImageRescale(object image, SizeI sizeNeeded)
+        public override void ImageRescale(Image img, SizeI sizeNeeded)
         {
-            ((UI.Native.Image)image).Rescale(sizeNeeded);
+            ((UI.Native.Image)img.NativeObject).Rescale(sizeNeeded);
         }
 
         /// <inheritdoc/>
-        public override bool ImageSaveToFile(object image, string name, BitmapType type)
+        public override bool ImageSaveToFile(Image img, string name, BitmapType type)
         {
-            return ((UI.Native.Image)image).SaveFile(name, (int)type);
+            return ((UI.Native.Image)img.NativeObject).SaveFile(name, (int)type);
         }
 
         /// <inheritdoc/>
-        public override bool ImageSaveToStream(object image, Stream stream, BitmapType type)
+        public override bool ImageSaveToStream(Image img, Stream stream, BitmapType type)
         {
             using var outputStream = new UI.Native.OutputStream(stream);
-            return ((UI.Native.Image)image).SaveStream(outputStream, (int)type);
+            return ((UI.Native.Image)img.NativeObject).SaveStream(outputStream, (int)type);
         }
 
         /// <inheritdoc/>
-        public override void ImageResetAlpha(object image)
+        public override void ImageResetAlpha(Image img)
         {
-            ((UI.Native.Image)image).ResetAlpha();
+            ((UI.Native.Image)img.NativeObject).ResetAlpha();
         }
 
         /// <inheritdoc/>
-        public override void SetImageHasAlpha(object image, bool hasAlpha)
+        public override void SetImageHasAlpha(Image img, bool hasAlpha)
         {
-            ((UI.Native.Image)image).HasAlpha = hasAlpha;
+            ((UI.Native.Image)img.NativeObject).HasAlpha = hasAlpha;
         }
 
         /// <inheritdoc/>
-        public override void SetImageScaleFactor(object image, double value)
+        public override void SetImageScaleFactor(Image img, double value)
         {
-            ((UI.Native.Image)image).ScaleFactor = value;
+            ((UI.Native.Image)img.NativeObject).ScaleFactor = value;
         }
 
         /// <inheritdoc/>

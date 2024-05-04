@@ -222,22 +222,22 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool ImageSave(object image, string fileName)
+        public override bool ImageSave(Image img, string fileName)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageSave(object image, Stream stream, ImageFormat format)
+        public override bool ImageSave(Image img, Stream stream, ImageFormat format)
         {
             throw new NotImplementedException();
         }
 
-        public override SizeI GetImagePixelSize(object image)
+        public override SizeI GetImagePixelSize(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageLoadFromStream(object image, Stream stream)
+        public override bool ImageLoadFromStream(Image img, Stream stream)
         {
             throw new NotImplementedException();
         }
@@ -272,47 +272,47 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool GetImageHasAlpha(object image)
+        public override bool GetImageHasAlpha(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override void SetImageHasAlpha(object image, bool hasAlpha)
+        public override void SetImageHasAlpha(Image img, bool hasAlpha)
         {
             throw new NotImplementedException();
         }
 
-        public override double GetImageScaleFactor(object image)
+        public override double GetImageScaleFactor(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override void SetImageScaleFactor(object image, double value)
+        public override void SetImageScaleFactor(Image img, double value)
         {
             throw new NotImplementedException();
         }
 
-        public override SizeI GetImageDipSize(object image)
+        public override SizeI GetImageDipSize(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override double GetImageScaledHeight(object image)
+        public override double GetImageScaledHeight(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override SizeI GetImageScaledSize(object image)
+        public override SizeI GetImageScaledSize(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override double GetImageScaledWidth(object image)
+        public override double GetImageScaledWidth(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override int GetImageDepth(object image)
+        public override int GetImageDepth(Image img)
         {
             throw new NotImplementedException();
         }
@@ -332,47 +332,47 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool ImageLoad(object image, string name, BitmapType type)
+        public override bool ImageLoad(Image img, string name, BitmapType type)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageSaveToFile(object image, string name, BitmapType type)
+        public override bool ImageSaveToFile(Image img, string name, BitmapType type)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageSaveToStream(object image, Stream stream, BitmapType type)
+        public override bool ImageSaveToStream(Image img, Stream stream, BitmapType type)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageLoadFromStream(object image, Stream stream, BitmapType type)
+        public override bool ImageLoadFromStream(Image img, Stream stream, BitmapType type)
         {
             throw new NotImplementedException();
         }
 
-        public override object ImageGetSubBitmap(object image, RectI rect)
+        public override object ImageGetSubBitmap(Image img, RectI rect)
         {
             throw new NotImplementedException();
         }
 
-        public override object ImageConvertToDisabled(object image, byte brightness = 255)
+        public override object ImageConvertToDisabled(Image img, byte brightness = 255)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageRescale(object image, SizeI sizeNeeded)
+        public override void ImageRescale(Image img, SizeI sizeNeeded)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageResetAlpha(object image)
+        public override void ImageResetAlpha(Image img)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GetImageIsOk(object image)
+        public override bool GetImageIsOk(Image img)
         {
             throw new NotImplementedException();
         }

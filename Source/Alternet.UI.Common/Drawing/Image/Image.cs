@@ -116,7 +116,7 @@ namespace Alternet.Drawing
             if (stream is null)
                 return;
 
-            NativeDrawing.Default.ImageLoadFromStream(NativeObject, stream);
+            NativeDrawing.Default.ImageLoadFromStream(this, stream);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Alternet.Drawing
                 return;
             }
 
-            var result = NativeDrawing.Default.ImageLoadFromStream(NativeObject, stream);
+            var result = NativeDrawing.Default.ImageLoadFromStream(this, stream);
 
             if (!result)
             {
@@ -229,12 +229,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
-        public virtual SizeI PixelSize => NativeDrawing.Default.GetImagePixelSize(NativeObject);
+        public virtual SizeI PixelSize => NativeDrawing.Default.GetImagePixelSize(this);
 
         /// <summary>
         /// Gets whether image is ok (is not disposed and has non-zero width and height).
         /// </summary>
-        public virtual bool IsOk => !IsDisposed && NativeDrawing.Default.GetImageIsOk(NativeObject);
+        public virtual bool IsOk => !IsDisposed && NativeDrawing.Default.GetImageIsOk(this);
 
         /// <summary>
         /// Creates texture brush with this image.
@@ -254,24 +254,24 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageHasAlpha(NativeObject);
+                return NativeDrawing.Default.GetImageHasAlpha(this);
             }
 
             set
             {
-                NativeDrawing.Default.SetImageHasAlpha(NativeObject, value);
+                NativeDrawing.Default.SetImageHasAlpha(this, value);
             }
         }
 
         /// <summary>
         /// Gets image width in pixels.
         /// </summary>
-        public virtual int Width => NativeDrawing.Default.GetImagePixelSize(NativeObject).Width;
+        public virtual int Width => NativeDrawing.Default.GetImagePixelSize(this).Width;
 
         /// <summary>
         /// Gets image height in pixels.
         /// </summary>
-        public virtual int Height => NativeDrawing.Default.GetImagePixelSize(NativeObject).Height;
+        public virtual int Height => NativeDrawing.Default.GetImagePixelSize(this).Height;
 
         /// <summary>
         /// Gets image bounds in pixels. This method returns (0, 0, Width, Height).
@@ -321,12 +321,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageScaleFactor(NativeObject);
+                return NativeDrawing.Default.GetImageScaleFactor(this);
             }
 
             set
             {
-                NativeDrawing.Default.SetImageScaleFactor(NativeObject, value);
+                NativeDrawing.Default.SetImageScaleFactor(this, value);
             }
         }
 
@@ -343,7 +343,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageDipSize(NativeObject);
+                return NativeDrawing.Default.GetImageDipSize(this);
             }
         }
 
@@ -354,7 +354,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageScaledHeight(NativeObject);
+                return NativeDrawing.Default.GetImageScaledHeight(this);
             }
         }
 
@@ -365,7 +365,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageScaledSize(NativeObject);
+                return NativeDrawing.Default.GetImageScaledSize(this);
             }
         }
 
@@ -376,7 +376,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageScaledWidth(NativeObject);
+                return NativeDrawing.Default.GetImageScaledWidth(this);
             }
         }
 
@@ -387,7 +387,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return NativeDrawing.Default.GetImageDepth(NativeObject);
+                return NativeDrawing.Default.GetImageDepth(this);
             }
         }
 
@@ -662,7 +662,7 @@ namespace Alternet.Drawing
         /// for the load operation.</remarks>
         public virtual bool Load(string name, BitmapType type)
         {
-            return NativeDrawing.Default.ImageLoad(NativeObject, name, type);
+            return NativeDrawing.Default.ImageLoad(this, name, type);
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Alternet.Drawing
         /// the save operation.</remarks>
         public virtual bool Save(string name, BitmapType type)
         {
-            return NativeDrawing.Default.ImageSaveToFile(NativeObject, name, type);
+            return NativeDrawing.Default.ImageSaveToFile(this, name, type);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Alternet.Drawing
         /// the save operation.</remarks>
         public virtual bool Save(Stream stream, BitmapType type)
         {
-            return NativeDrawing.Default.ImageSaveToStream(NativeObject, stream, type);
+            return NativeDrawing.Default.ImageSaveToStream(this, stream, type);
         }
 
         /// <summary>
@@ -719,7 +719,7 @@ namespace Alternet.Drawing
         /// for the load operation.</remarks>
         public virtual bool Load(Stream stream, BitmapType type)
         {
-            return NativeDrawing.Default.ImageLoadFromStream(NativeObject, stream, type);
+            return NativeDrawing.Default.ImageLoadFromStream(this, stream, type);
         }
 
         /// <summary>
@@ -730,7 +730,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image GetSubBitmap(RectI rect)
         {
-            var converted = NativeDrawing.Default.ImageGetSubBitmap(NativeObject, rect);
+            var converted = NativeDrawing.Default.ImageGetSubBitmap(this, rect);
             return new Image(converted);
         }
 
@@ -751,7 +751,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image ConvertToDisabled(byte brightness = 255)
         {
-            var converted = NativeDrawing.Default.ImageConvertToDisabled(NativeObject, brightness);
+            var converted = NativeDrawing.Default.ImageConvertToDisabled(this, brightness);
             return new Image(converted);
         }
 
@@ -769,7 +769,7 @@ namespace Alternet.Drawing
         /// <param name="sizeNeeded"></param>
         public virtual void Rescale(SizeI sizeNeeded)
         {
-            NativeDrawing.Default.ImageRescale(NativeObject, sizeNeeded);
+            NativeDrawing.Default.ImageRescale(this, sizeNeeded);
         }
 
         /// <summary>
@@ -777,7 +777,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void ResetAlpha()
         {
-            NativeDrawing.Default.ImageResetAlpha(NativeObject);
+            NativeDrawing.Default.ImageResetAlpha(this);
         }
 
         /// <summary>
@@ -828,7 +828,7 @@ namespace Alternet.Drawing
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
-            return NativeDrawing.Default.ImageSave(NativeObject, stream, format);
+            return NativeDrawing.Default.ImageSave(this, stream, format);
         }
 
         /// <summary>
@@ -843,7 +843,7 @@ namespace Alternet.Drawing
             if (fileName is null)
                 throw new ArgumentNullException(nameof(fileName));
 
-            return NativeDrawing.Default.ImageSave(NativeObject, fileName);
+            return NativeDrawing.Default.ImageSave(this, fileName);
         }
 
         /// <summary>

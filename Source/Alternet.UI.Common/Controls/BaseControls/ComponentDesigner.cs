@@ -74,31 +74,31 @@ namespace Alternet.UI
         /// Notifiers designer when control got focus.
         /// </summary>
         /// <param name="control">Control which received focus.</param>
-        public void RaiseGotFocus(Control control)
+        public void RaiseGotFocus(object control)
         {
             ControlGotFocus?.Invoke(control, EventArgs.Empty);
         }
 
         /// <see cref="IComponentDesigner.RaiseCreated"/>
-        public void RaiseCreated(Control control)
+        public void RaiseCreated(object control)
         {
             ControlCreated?.Invoke(control, EventArgs.Empty);
         }
 
         /// <see cref="IComponentDesigner.RaiseDisposed"/>
-        public void RaiseDisposed(Control control)
+        public void RaiseDisposed(object control)
         {
             ControlDisposed?.Invoke(control, EventArgs.Empty);
         }
 
         /// <see cref="IComponentDesigner.RaiseParentChanged"/>
-        public void RaiseParentChanged(Control control)
+        public void RaiseParentChanged(object control)
         {
             ControlParentChanged?.Invoke(control, EventArgs.Empty);
         }
 
         /// <see cref="IComponentDesigner.RaiseMouseLeftButtonDown"/>
-        public void RaiseMouseLeftButtonDown(Control control, MouseEventArgs e)
+        public void RaiseMouseLeftButtonDown(object control, MouseEventArgs e)
         {
             MouseLeftButtonDown?.Invoke(control, e);
         }

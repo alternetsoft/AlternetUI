@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         /// to which to save the image.</param>
         /// <param name="image">Native image instance.</param>
         /// <returns></returns>
-        public abstract bool ImageSave(object image, string fileName);
+        public abstract bool ImageSave(Image img, string fileName);
 
         /// <summary>
         /// Saves native image to stream.
@@ -38,21 +38,21 @@ namespace Alternet.Drawing
         /// <param name="format">Image format.</param>
         /// <param name="image">Native image instance.</param>
         /// <returns></returns>
-        public abstract bool ImageSave(object image, Stream stream, ImageFormat format);
+        public abstract bool ImageSave(Image img, Stream stream, ImageFormat format);
 
         /// <summary>
         /// Gets native image size in pixels.
         /// </summary>
         /// <param name="image">Native image instance.</param>
         /// <returns></returns>
-        public abstract SizeI GetImagePixelSize(object image);
+        public abstract SizeI GetImagePixelSize(Image img);
 
         /// <summary>
         /// Loads native image from the stream.
         /// </summary>
         /// <param name="image">Native image instance.</param>
         /// <param name="stream">Stream with image data.</param>
-        public abstract bool ImageLoadFromStream(object image, Stream stream);
+        public abstract bool ImageLoadFromStream(Image img, Stream stream);
 
         /// <summary>
         /// Initializes a new instance of the native image from the specified
@@ -125,27 +125,27 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether native image has an alpha channel.
         /// </summary>
-        public abstract bool GetImageHasAlpha(object image);
+        public abstract bool GetImageHasAlpha(Image img);
 
         /// <summary>
         /// Gets whether native image is ok.
         /// </summary>
-        public abstract bool GetImageIsOk(object image);
+        public abstract bool GetImageIsOk(Image img);
 
         /// <summary>
         /// Sets whether this image has an alpha channel.
         /// </summary>
-        public abstract void SetImageHasAlpha(object image, bool hasAlpha);
+        public abstract void SetImageHasAlpha(Image img, bool hasAlpha);
 
         /// <summary>
         /// Gets the scale factor of the native image.
         /// </summary>
-        public abstract double GetImageScaleFactor(object image);
+        public abstract double GetImageScaleFactor(Image img);
 
         /// <summary>
         /// Sets the scale factor of the native image.
         /// </summary>
-        public abstract void SetImageScaleFactor(object image, double value);
+        public abstract void SetImageScaleFactor(Image img, double value);
 
         /// <summary>
         /// Gets the size of bitmap in DPI-independent units.
@@ -156,27 +156,27 @@ namespace Alternet.Drawing
         /// Unlike LogicalSize, this function returns the same value under all platforms
         /// and so its result should not be used as window or device context coordinates.
         /// </remarks>
-        public abstract SizeI GetImageDipSize(object image);
+        public abstract SizeI GetImageDipSize(Image img);
 
         /// <summary>
         /// Gets the height of the native image in logical pixels.
         /// </summary>
-        public abstract double GetImageScaledHeight(object image);
+        public abstract double GetImageScaledHeight(Image img);
 
         /// <summary>
         /// Gets the size of the native image in logical pixels.
         /// </summary>
-        public abstract SizeI GetImageScaledSize(object image);
+        public abstract SizeI GetImageScaledSize(Image img);
 
         /// <summary>
         /// Gets the width of the native image in logical pixels.
         /// </summary>
-        public abstract double GetImageScaledWidth(object image);
+        public abstract double GetImageScaledWidth(Image img);
 
         /// <summary>
         /// Gets the color depth of the image. Returned value is 32, 24, or other.
         /// </summary>
-        public abstract int GetImageDepth(object image);
+        public abstract int GetImageDepth(Image img);
 
         /// <summary>
         /// Creates images with screen pixels.
@@ -232,7 +232,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// You can specify <see cref="BitmapType.Any"/> to guess image type using file extension.
         /// </remarks>
-        public abstract bool ImageLoad(object image, string name, BitmapType type);
+        public abstract bool ImageLoad(Image img, string name, BitmapType type);
 
         /// <summary>
         /// Saves native image to the specified file.
@@ -246,7 +246,7 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the save operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        public abstract bool ImageSaveToFile(object image, string name, BitmapType type);
+        public abstract bool ImageSaveToFile(Image img, string name, BitmapType type);
 
         /// <summary>
         /// Saves this image to the specified stream in the specified format defined
@@ -263,7 +263,7 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for
         /// the save operation.</remarks>
-        public abstract bool ImageSaveToStream(object image, Stream stream, BitmapType type);
+        public abstract bool ImageSaveToStream(Image img, Stream stream, BitmapType type);
 
         /// <summary>
         /// Loads an image from an input stream.
@@ -278,7 +278,7 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats
         /// for the load operation.</remarks>
-        public abstract bool ImageLoadFromStream(object image, Stream stream, BitmapType type);
+        public abstract bool ImageLoadFromStream(Image img, Stream stream, BitmapType type);
 
         /// <summary>
         /// Returns a sub image of the current one as long as the <paramref name="rect"/> belongs
@@ -286,24 +286,24 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">Rectangle in this image.</param>
         /// <returns></returns>
-        public abstract object ImageGetSubBitmap(object image, RectI rect);
+        public abstract object ImageGetSubBitmap(Image img, RectI rect);
 
         /// <summary>
         /// Returns disabled (dimmed) version of the native image.
         /// </summary>
         /// <param name="brightness">Brightness. Default is 255.</param>
         /// <returns></returns>
-        public abstract object ImageConvertToDisabled(object image, byte brightness = 255);
+        public abstract object ImageConvertToDisabled(Image img, byte brightness = 255);
 
         /// <summary>
         /// Rescales native image to the requested size.
         /// </summary>
         /// <param name="sizeNeeded">New image size.</param>
-        public abstract void ImageRescale(object image, SizeI sizeNeeded);
+        public abstract void ImageRescale(Image img, SizeI sizeNeeded);
 
         /// <summary>
         /// Resets alpha channel.
         /// </summary>
-        public abstract void ImageResetAlpha(object image);
+        public abstract void ImageResetAlpha(Image img);
     }
 }
