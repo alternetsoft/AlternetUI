@@ -14,145 +14,145 @@ namespace Alternet.Drawing
     public partial class SkiaDrawing
     {
         /// <inheritdoc/>
-        public override void UpdateTransformMatrix(object matrix, double m11, double m12, double m21, double m22, double dx, double dy)
+        public override void UpdateTransformMatrix(TransformMatrix mtrx, double m11, double m12, double m21, double m22, double dx, double dy)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetTransformMatrixM11(object matrix)
+        public override double GetTransformMatrixM11(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetTransformMatrixM12(object matrix)
+        public override double GetTransformMatrixM12(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetTransformMatrixM21(object matrix)
+        public override double GetTransformMatrixM21(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetTransformMatrixM22(object matrix)
+        public override double GetTransformMatrixM22(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetTransformMatrixDX(object matrix)
+        public override double GetTransformMatrixDX(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override double GetTransformMatrixDY(object matrix)
+        public override double GetTransformMatrixDY(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool GetTransformMatrixIsIdentity(object matrix)
+        public override bool GetTransformMatrixIsIdentity(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void ResetTransformMatrix(object matrix)
+        public override void ResetTransformMatrix(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void MultiplyTransformMatrix(object matrix1, object matrix2)
+        public override void MultiplyTransformMatrix(TransformMatrix mtrx1, TransformMatrix mtrx2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void TranslateTransformMatrix(object matrix, double offsetX, double offsetY)
+        public override void TranslateTransformMatrix(TransformMatrix mtrx, double offsetX, double offsetY)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void ScaleTransformMatrix(object matrix, double scaleX, double scaleY)
+        public override void ScaleTransformMatrix(TransformMatrix mtrx, double scaleX, double scaleY)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RotateTransformMatrix(object matrix, double angle)
+        public override void RotateTransformMatrix(TransformMatrix mtrx, double angle)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void InvertTransformMatrix(object matrix)
+        public override void InvertTransformMatrix(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetTransformMatrixM11(object matrix, double value)
+        public override void SetTransformMatrixM11(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetTransformMatrixM12(object matrix, double value)
+        public override void SetTransformMatrixM12(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetTransformMatrixM21(object matrix, double value)
+        public override void SetTransformMatrixM21(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetTransformMatrixM22(object matrix, double value)
+        public override void SetTransformMatrixM22(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetTransformMatrixDX(object matrix, double value)
+        public override void SetTransformMatrixDX(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetTransformMatrixDY(object matrix, double value)
+        public override void SetTransformMatrixDY(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override PointD TransformMatrixOnPoint(object matrix, PointD point)
+        public override PointD TransformMatrixOnPoint(TransformMatrix mtrx, PointD point)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override SizeD TransformMatrixOnSize(object matrix, SizeD size)
+        public override SizeD TransformMatrixOnSize(TransformMatrix mtrx, SizeD size)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool TransformMatrixEquals(object matrix1, object matrix2)
+        public override bool TransformMatrixEquals(TransformMatrix mtrx1, TransformMatrix mtrx2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override int TransformMatrixGetHashCode(object matrix)
+        public override int TransformMatrixGetHashCode(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }

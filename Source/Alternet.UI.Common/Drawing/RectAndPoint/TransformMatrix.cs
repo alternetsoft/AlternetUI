@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
     /// This class cannot be inherited.
     /// </summary>
-    public sealed class TransformMatrix : DisposableObject
+    public sealed class TransformMatrix : GraphicsObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
@@ -17,7 +17,6 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TransformMatrix()
-            : this(NativeDrawing.Default.CreateTransformMatrix())
         {
         }
 
@@ -45,10 +44,9 @@ namespace Alternet.Drawing
             double m22,
             double dx,
             double dy)
-            : this()
         {
             NativeDrawing.Default.UpdateTransformMatrix(
-                NativeObject,
+                this,
                 m11,
                 m12,
                 m21,
@@ -84,7 +82,7 @@ namespace Alternet.Drawing
             set
             {
                 NativeDrawing.Default.UpdateTransformMatrix(
-                    NativeObject,
+                    this,
                     value[0],
                     value[1],
                     value[2],
@@ -103,13 +101,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM11(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixM11(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM11(NativeObject, value);
+                NativeDrawing.Default.SetTransformMatrixM11(this, value);
             }
         }
 
@@ -122,13 +120,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM12(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixM12(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM12(NativeObject, value);
+                NativeDrawing.Default.SetTransformMatrixM12(this, value);
             }
         }
 
@@ -141,13 +139,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM21(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixM21(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM21(NativeObject, value);
+                NativeDrawing.Default.SetTransformMatrixM21(this, value);
             }
         }
 
@@ -160,13 +158,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM22(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixM22(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM22(NativeObject, value);
+                NativeDrawing.Default.SetTransformMatrixM22(this, value);
             }
         }
 
@@ -180,13 +178,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixDX(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixDX(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixDX(NativeObject, value);
+                NativeDrawing.Default.SetTransformMatrixDX(this, value);
             }
         }
 
@@ -200,13 +198,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixDY(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixDY(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixDY(NativeObject, value);
+                NativeDrawing.Default.SetTransformMatrixDY(this, value);
             }
         }
 
@@ -222,14 +220,9 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixIsIdentity(NativeObject);
+                return NativeDrawing.Default.GetTransformMatrixIsIdentity(this);
             }
         }
-
-        /// <summary>
-        /// Gets native matrix.
-        /// </summary>
-        public object NativeObject { get; private set; }
 
         /// <summary>
         /// Creates a <see cref="TransformMatrix"/> with the specified translation vector.
@@ -281,7 +274,7 @@ namespace Alternet.Drawing
         public void Reset()
         {
             CheckDisposed();
-            NativeDrawing.Default.ResetTransformMatrix(NativeObject);
+            NativeDrawing.Default.ResetTransformMatrix(this);
         }
 
         /// <summary>
@@ -295,7 +288,7 @@ namespace Alternet.Drawing
         public void Multiply(TransformMatrix matrix)
         {
             CheckDisposed();
-            NativeDrawing.Default.MultiplyTransformMatrix(NativeObject, matrix.NativeObject);
+            NativeDrawing.Default.MultiplyTransformMatrix(this, matrix);
         }
 
         /// <summary>
@@ -310,7 +303,7 @@ namespace Alternet.Drawing
         public void Translate(double offsetX, double offsetY)
         {
             CheckDisposed();
-            NativeDrawing.Default.TranslateTransformMatrix(NativeObject, offsetX, offsetY);
+            NativeDrawing.Default.TranslateTransformMatrix(this, offsetX, offsetY);
         }
 
         /// <summary>
@@ -325,7 +318,7 @@ namespace Alternet.Drawing
         public void Scale(double scaleX, double scaleY)
         {
             CheckDisposed();
-            NativeDrawing.Default.ScaleTransformMatrix(NativeObject, scaleX, scaleY);
+            NativeDrawing.Default.ScaleTransformMatrix(this, scaleX, scaleY);
         }
 
         /// <summary>
@@ -337,7 +330,7 @@ namespace Alternet.Drawing
         public void Rotate(double angle)
         {
             CheckDisposed();
-            NativeDrawing.Default.RotateTransformMatrix(NativeObject, angle);
+            NativeDrawing.Default.RotateTransformMatrix(this, angle);
         }
 
         /// <summary>
@@ -347,7 +340,7 @@ namespace Alternet.Drawing
         public void Invert()
         {
             CheckDisposed();
-            NativeDrawing.Default.InvertTransformMatrix(NativeObject);
+            NativeDrawing.Default.InvertTransformMatrix(this);
         }
 
         /// <summary>
@@ -358,7 +351,7 @@ namespace Alternet.Drawing
         public PointD TransformPoint(PointD point)
         {
             CheckDisposed();
-            return NativeDrawing.Default.TransformMatrixOnPoint(NativeObject, point);
+            return NativeDrawing.Default.TransformMatrixOnPoint(this, point);
         }
 
         /// <summary>
@@ -369,7 +362,7 @@ namespace Alternet.Drawing
         public SizeD TransformSize(SizeD size)
         {
             CheckDisposed();
-            return NativeDrawing.Default.TransformMatrixOnSize(NativeObject, size);
+            return NativeDrawing.Default.TransformMatrixOnSize(this, size);
         }
 
         /// <inheritdoc/>
@@ -378,23 +371,19 @@ namespace Alternet.Drawing
             if (obj is not TransformMatrix matrix2)
                 return false;
             CheckDisposed();
-            return NativeDrawing.Default.TransformMatrixEquals(NativeObject, matrix2.NativeObject);
+            return NativeDrawing.Default.TransformMatrixEquals(this, matrix2);
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NativeDrawing.Default.TransformMatrixGetHashCode(NativeObject);
+            return NativeDrawing.Default.TransformMatrixGetHashCode(this);
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override object CreateNativeObject()
         {
-            if (NativeObject is not null)
-            {
-                ((IDisposable)NativeObject).Dispose();
-                NativeObject = null!;
-            }
+            return NativeDrawing.Default.CreateTransformMatrix();
         }
     }
 }
