@@ -22,10 +22,10 @@ namespace Alternet.Drawing
             return nativeObject;
         }
 
-        public override object CreateRegion(object region)
+        public override object CreateRegion(Region region)
         {
             var nativeObject = new UI.Native.Region();
-            ((UI.Native.Region)nativeObject).InitializeWithRegion((UI.Native.Region)region);
+            ((UI.Native.Region)nativeObject).InitializeWithRegion((UI.Native.Region)region.NativeObject);
             return nativeObject;
         }
 
@@ -36,84 +36,90 @@ namespace Alternet.Drawing
             return nativeObject;
         }
 
-        public override bool RegionIsEmpty(object nativeRegion)
-            => ((UI.Native.Region)nativeRegion).IsEmpty();
+        public override bool RegionIsEmpty(Region region)
+            => ((UI.Native.Region)region.NativeObject).IsEmpty();
 
-        public override bool RegionIsOk(object nativeRegion) => ((UI.Native.Region)nativeRegion).IsOk();
+        public override bool RegionIsOk(Region region)
+            => ((UI.Native.Region)region.NativeObject).IsOk();
 
-        public override void RegionClear(object nativeRegion)
+        public override void RegionClear(Region region)
         {
-            ((UI.Native.Region)nativeRegion).Clear();
+            ((UI.Native.Region)region.NativeObject).Clear();
         }
 
-        public override RegionContain RegionContains(object nativeRegion, PointD pt)
+        public override RegionContain RegionContains(Region region, PointD pt)
         {
-            return (RegionContain)((UI.Native.Region)nativeRegion).ContainsPoint(pt);
+            return (RegionContain)((UI.Native.Region)region.NativeObject).ContainsPoint(pt);
         }
 
-        public override RegionContain RegionContains(object nativeRegion, RectD rect)
+        public override RegionContain RegionContains(Region region, RectD rect)
         {
-            return (RegionContain)((UI.Native.Region)nativeRegion).ContainsRect(rect);
+            return (RegionContain)((UI.Native.Region)region.NativeObject).ContainsRect(rect);
         }
 
-        public override void RegionIntersect(object nativeRegion, RectD rect)
+        public override void RegionIntersect(Region region, RectD rect)
         {
-            ((UI.Native.Region)nativeRegion).IntersectWithRect(rect);
+            ((UI.Native.Region)region.NativeObject).IntersectWithRect(rect);
         }
 
-        public override void RegionIntersect(object nativeRegion1, object nativeRegion2)
+        public override void RegionIntersect(Region region1, Region region2)
         {
-            ((UI.Native.Region)nativeRegion1).IntersectWithRegion((UI.Native.Region)nativeRegion2);
+            ((UI.Native.Region)region1.NativeObject)
+                .IntersectWithRegion((UI.Native.Region)region2.NativeObject);
         }
 
-        public override void RegionUnion(object nativeRegion, RectD rect)
+        public override void RegionUnion(Region region, RectD rect)
         {
-            ((UI.Native.Region)nativeRegion).UnionWithRect(rect);
+            ((UI.Native.Region)region.NativeObject).UnionWithRect(rect);
         }
 
-        public override void RegionUnion(object nativeRegion1, object nativeRegion2)
+        public override void RegionUnion(Region region1, Region region2)
         {
-            ((UI.Native.Region)nativeRegion1).UnionWithRegion((UI.Native.Region)nativeRegion2);
+            ((UI.Native.Region)region1.NativeObject)
+                .UnionWithRegion((UI.Native.Region)region2.NativeObject);
         }
 
-        public override void RegionXor(object nativeRegion1, object nativeRegion2)
+        public override void RegionXor(Region region1, Region region2)
         {
-            ((UI.Native.Region)nativeRegion1).XorWithRegion((UI.Native.Region)nativeRegion2);
+            ((UI.Native.Region)region1.NativeObject)
+                .XorWithRegion((UI.Native.Region)region2.NativeObject);
         }
 
-        public override void RegionXor(object nativeRegion, RectD rect)
+        public override void RegionXor(Region region, RectD rect)
         {
-            ((UI.Native.Region)nativeRegion).XorWithRect(rect);
+            ((UI.Native.Region)region.NativeObject).XorWithRect(rect);
         }
 
-        public override void RegionSubtract(object nativeRegion, RectD rect)
+        public override void RegionSubtract(Region region, RectD rect)
         {
-            ((UI.Native.Region)nativeRegion).SubtractRect(rect);
+            ((UI.Native.Region)region.NativeObject).SubtractRect(rect);
         }
 
-        public override void RegionSubtract(object nativeRegion1, object nativeRegion2)
+        public override void RegionSubtract(Region region1, Region region2)
         {
-            ((UI.Native.Region)nativeRegion1).SubtractRegion((UI.Native.Region)nativeRegion2);
+            ((UI.Native.Region)region1.NativeObject)
+                .SubtractRegion((UI.Native.Region)region2.NativeObject);
         }
 
-        public override void RegionTranslate(object nativeRegion, double dx, double dy)
+        public override void RegionTranslate(Region region, double dx, double dy)
         {
-            ((UI.Native.Region)nativeRegion).Translate(dx, dy);
+            ((UI.Native.Region)region.NativeObject).Translate(dx, dy);
         }
 
-        public override RectD RegionGetBounds(object nativeRegion)
+        public override RectD RegionGetBounds(Region region)
         {
-            return ((UI.Native.Region)nativeRegion).GetBounds();
+            return ((UI.Native.Region)region.NativeObject).GetBounds();
         }
 
-        public override bool RegionEquals(object nativeRegion1, object nativeRegion2)
+        public override bool RegionEquals(Region region1, Region region2)
         {
-            return ((UI.Native.Region)nativeRegion1).IsEqualTo((UI.Native.Region)nativeRegion2);
+            return ((UI.Native.Region)region1.NativeObject)
+                .IsEqualTo((UI.Native.Region)region2.NativeObject);
         }
 
-        public override int RegionGetHashCode(object nativeRegion)
+        public override int RegionGetHashCode(Region region)
         {
-            return ((UI.Native.Region)nativeRegion).GetHashCode_();
+            return ((UI.Native.Region)region.NativeObject).GetHashCode_();
         }
     }
 }

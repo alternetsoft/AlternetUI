@@ -26,7 +26,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateRegion(object region)
+        public override object CreateRegion(Region region)
         {
             throw new NotImplementedException();
         }
@@ -38,103 +38,103 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool RegionIsEmpty(object nativeRegion)
+        public override bool RegionIsEmpty(Region region)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool RegionIsOk(object nativeRegion)
+        public override bool RegionIsOk(Region region)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionClear(object nativeRegion)
+        public override void RegionClear(Region region)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override RegionContain RegionContains(object nativeRegion, PointD pt)
+        public override RegionContain RegionContains(Region region, PointD pt)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override RegionContain RegionContains(object nativeRegion, RectD rect)
+        public override RegionContain RegionContains(Region region, RectD rect)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionIntersect(object nativeRegion, RectD rect)
+        public override void RegionIntersect(Region region, RectD rect)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionIntersect(object nativeRegion1, object nativeRegion2)
+        public override void RegionIntersect(Region region1, Region region2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionUnion(object nativeRegion, RectD rect)
+        public override void RegionUnion(Region region, RectD rect)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionUnion(object nativeRegion1, object nativeRegion2)
+        public override void RegionUnion(Region region1, Region region2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionXor(object nativeRegion1, object nativeRegion2)
+        public override void RegionXor(Region region1, Region region2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionXor(object nativeRegion, RectD rect)
+        public override void RegionXor(Region region, RectD rect)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionSubtract(object nativeRegion, RectD rect)
+        public override void RegionSubtract(Region region, RectD rect)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionSubtract(object nativeRegion1, object nativeRegion2)
+        public override void RegionSubtract(Region region1, Region region2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void RegionTranslate(object nativeRegion, double dx, double dy)
+        public override void RegionTranslate(Region region, double dx, double dy)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override RectD RegionGetBounds(object nativeRegion)
+        public override RectD RegionGetBounds(Region region)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool RegionEquals(object nativeRegion1, object nativeRegion2)
+        public override bool RegionEquals(Region region1, Region region2)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override int RegionGetHashCode(object nativeRegion)
+        public override int RegionGetHashCode(Region region)
         {
             throw new NotImplementedException();
         }

@@ -38,7 +38,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(Region region)
         {
-            NativeObject = NativeDrawing.Default.CreateRegion(region.NativeObject);
+            NativeObject = NativeDrawing.Default.CreateRegion(region);
         }
 
         /// <summary>
@@ -66,12 +66,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns true if the region is empty, false otherwise.
         /// </summary>
-        public bool IsEmpty => isDisposed || NativeDrawing.Default.RegionIsEmpty(NativeObject);
+        public bool IsEmpty => isDisposed || NativeDrawing.Default.RegionIsEmpty(this);
 
         /// <summary>
         /// Returns true if the region is ok, false otherwise.
         /// </summary>
-        public bool IsOk => !isDisposed && NativeDrawing.Default.RegionIsOk(NativeObject);
+        public bool IsOk => !isDisposed && NativeDrawing.Default.RegionIsOk(this);
 
         /// <summary>
         /// Gets native region.
@@ -85,7 +85,7 @@ namespace Alternet.Drawing
         public void Clear()
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionClear(NativeObject);
+            NativeDrawing.Default.RegionClear(this);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Alternet.Drawing
         public RegionContain Contains(PointD pt)
         {
             CheckDisposed();
-            return NativeDrawing.Default.RegionContains(NativeObject, pt);
+            return NativeDrawing.Default.RegionContains(this, pt);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
         public RegionContain Contains(RectD rect)
         {
             CheckDisposed();
-            return NativeDrawing.Default.RegionContains(NativeObject, rect);
+            return NativeDrawing.Default.RegionContains(this, rect);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Alternet.Drawing
         public void Intersect(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionIntersect(NativeObject, rect);
+            NativeDrawing.Default.RegionIntersect(this, rect);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Alternet.Drawing
         public void Intersect(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionIntersect(NativeObject, region.NativeObject);
+            NativeDrawing.Default.RegionIntersect(this, region);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Alternet.Drawing
         public void Union(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionUnion(NativeObject, rect);
+            NativeDrawing.Default.RegionUnion(this, rect);
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Alternet.Drawing
         public void Union(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionUnion(NativeObject, region.NativeObject);
+            NativeDrawing.Default.RegionUnion(this, region);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Alternet.Drawing
         public void Xor(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionXor(NativeObject, region.NativeObject);
+            NativeDrawing.Default.RegionXor(this, region);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Alternet.Drawing
         public void Xor(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionXor(NativeObject, rect);
+            NativeDrawing.Default.RegionXor(this, rect);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Alternet.Drawing
         public void Subtract(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionSubtract(NativeObject, rect);
+            NativeDrawing.Default.RegionSubtract(this, rect);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Alternet.Drawing
         public void Subtract(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionSubtract(NativeObject, region.NativeObject);
+            NativeDrawing.Default.RegionSubtract(this, region);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Alternet.Drawing
         public void Translate(double dx, double dy)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionTranslate(NativeObject, dx, dy);
+            NativeDrawing.Default.RegionTranslate(this, dx, dy);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Alternet.Drawing
         public RectD GetBounds()
         {
             CheckDisposed();
-            return NativeDrawing.Default.RegionGetBounds(NativeObject);
+            return NativeDrawing.Default.RegionGetBounds(this);
         }
 
         /// <inheritdoc/>
@@ -259,13 +259,13 @@ namespace Alternet.Drawing
             if (obj is not Region region)
                 return false;
 
-            return NativeDrawing.Default.RegionEquals(NativeObject, region.NativeObject);
+            return NativeDrawing.Default.RegionEquals(this, region);
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NativeDrawing.Default.RegionGetHashCode(NativeObject);
+            return NativeDrawing.Default.RegionGetHashCode(this);
         }
 
         /// <summary>
