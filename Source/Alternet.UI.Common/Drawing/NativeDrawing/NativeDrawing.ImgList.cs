@@ -11,11 +11,11 @@ namespace Alternet.Drawing
 {
     public partial class NativeDrawing
     {
-        public abstract SizeI ImageSetGetPreferredBitmapSizeAtScale(object imageSet, double scale);
+        public abstract SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imageSet, double scale);
 
-        public abstract void ImageSetAddImage(object imageSet, int index, Image item);
+        public abstract void ImageSetAddImage(ImageSet imageSet, int index, Image item);
 
-        public abstract void ImageSetRemoveImage(object imageSet, int index, Image item);
+        public abstract void ImageSetRemoveImage(ImageSet imageSet, int index, Image item);
 
         public abstract object CreateImageSet();
 
@@ -31,36 +31,36 @@ namespace Alternet.Drawing
             int height,
             Color? color = null);
 
-        public abstract SizeI ImageSetGetDefaultSize(object imageSet);
+        public abstract SizeI ImageSetGetDefaultSize(ImageSet imageSet);
 
-        public abstract bool ImageSetIsOk(object imageSet);
+        public abstract bool ImageSetIsOk(ImageSet imageSet);
 
-        public abstract bool ImageSetIsReadOnly(object imageSet);
+        public abstract bool ImageSetIsReadOnly(ImageSet imageSet);
 
-        public abstract void ImageSetLoadFromStream(object imageSet, Stream stream);
+        public abstract void ImageSetLoadFromStream(ImageSet imageSet, Stream stream);
 
-        public abstract bool IconSetIsOk(object iconSet);
+        public abstract bool IconSetIsOk(IconSet iconSet);
 
-        public abstract void IconSetAdd(object iconSet, Image image);
+        public abstract void IconSetAdd(IconSet iconSet, Image image);
 
-        public abstract void IconSetAdd(object iconSet, Stream stream);
+        public abstract void IconSetAdd(IconSet iconSet, Stream stream);
 
-        public abstract void IconSetClear(object iconSet);
+        public abstract void IconSetClear(IconSet iconSet);
 
         public abstract object CreateIconSet();
 
-        public abstract SizeI ImageListGetPixelImageSize(object imageList);
+        public abstract SizeI ImageListGetPixelImageSize(ImageList imgList);
 
-        public abstract void ImageListSetPixelImageSize(object imageList, SizeI value);
+        public abstract void ImageListSetPixelImageSize(ImageList imgList, SizeI value);
 
-        public abstract SizeD ImageListGetImageSize(object imageList);
+        public abstract SizeD ImageListGetImageSize(ImageList imgList);
 
-        public abstract void ImageListSetImageSize(object imageList, SizeD value);
+        public abstract void ImageListSetImageSize(ImageList imgList, SizeD value);
 
         public abstract object CreateImageList();
 
-        public abstract void ImageListAdd(object imageList, int index, Image item);
+        public abstract void ImageListAdd(ImageList imgList, int index, Image item);
 
-        public abstract void ImageListRemove(object imageList, int index, Image item);
+        public abstract void ImageListRemove(ImageList imgList, int index, Image item);
     }
 }

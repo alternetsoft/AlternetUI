@@ -60,7 +60,7 @@ namespace Alternet.UI
         public ImageSet(Stream stream)
             : this()
         {
-            NativeDrawing.Default.ImageSetLoadFromStream(NativeObject, stream);
+            NativeDrawing.Default.ImageSetLoadFromStream(this, stream);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Alternet.UI
                 return;
             }
 
-            NativeDrawing.Default.ImageSetLoadFromStream(NativeObject, stream);
+            NativeDrawing.Default.ImageSetLoadFromStream(this, stream);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeDrawing.Default.ImageSetGetDefaultSize(NativeObject);
+                return NativeDrawing.Default.ImageSetGetDefaultSize(this);
             }
         }
 
@@ -129,12 +129,12 @@ namespace Alternet.UI
         /// Gets whether this <see cref="ImageSet"/> instance is valid and contains image(s).
         /// </summary>
         [Browsable(false)]
-        public bool IsOk => NativeDrawing.Default.ImageSetIsOk(NativeObject);
+        public bool IsOk => NativeDrawing.Default.ImageSetIsOk(this);
 
         /// <inheritdoc/>
         [Browsable(false)]
         public override bool IsReadOnly
-            => Immutable || NativeDrawing.Default.ImageSetIsReadOnly(NativeObject);
+            => Immutable || NativeDrawing.Default.ImageSetIsReadOnly(this);
 
         /// <summary>
         /// Converts the specified <see cref='Image'/> to a <see cref='ImageSet'/>.
@@ -333,7 +333,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public SizeI GetPreferredBitmapSizeAtScale(double scale)
         {
-            return NativeDrawing.Default.ImageSetGetPreferredBitmapSizeAtScale(NativeObject, scale);
+            return NativeDrawing.Default.ImageSetGetPreferredBitmapSizeAtScale(this, scale);
         }
 
         /// <inheritdoc/>
@@ -345,14 +345,14 @@ namespace Alternet.UI
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
             CheckReadOnly();
-            NativeDrawing.Default.ImageSetAddImage(NativeObject, index, item);
+            NativeDrawing.Default.ImageSetAddImage(this, index, item);
             OnChanged();
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
             CheckReadOnly();
-            NativeDrawing.Default.ImageSetRemoveImage(NativeObject, index, item);
+            NativeDrawing.Default.ImageSetRemoveImage(this, index, item);
             OnChanged();
         }
 

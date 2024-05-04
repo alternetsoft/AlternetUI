@@ -1062,22 +1062,22 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeI ImageListGetPixelImageSize(object imageList)
+        public override SizeI ImageListGetPixelImageSize(ImageList imageList)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageListSetPixelImageSize(object imageList, SizeI value)
+        public override void ImageListSetPixelImageSize(ImageList imageList, SizeI value)
         {
             throw new NotImplementedException();
         }
 
-        public override SizeD ImageListGetImageSize(object imageList)
+        public override SizeD ImageListGetImageSize(ImageList imageList)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageListSetImageSize(object imageList, SizeD value)
+        public override void ImageListSetImageSize(ImageList imageList, SizeD value)
         {
             throw new NotImplementedException();
         }
@@ -1087,27 +1087,27 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void ImageListAdd(object imageList, int index, Image item)
+        public override void ImageListAdd(ImageList imageList, int index, Image item)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageListRemove(object imageList, int index, Image item)
+        public override void ImageListRemove(ImageList imageList, int index, Image item)
         {
             throw new NotImplementedException();
         }
 
-        public override void IconSetAdd(object iconSet, Image image)
+        public override void IconSetAdd(IconSet iconSet, Image image)
         {
             throw new NotImplementedException();
         }
 
-        public override void IconSetAdd(object iconSet, Stream stream)
+        public override void IconSetAdd(IconSet iconSet, Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public override void IconSetClear(object iconSet)
+        public override void IconSetClear(IconSet iconSet)
         {
             throw new NotImplementedException();
         }
@@ -1117,22 +1117,22 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool IconSetIsOk(object iconSet)
+        public override bool IconSetIsOk(IconSet iconSet)
         {
             throw new NotImplementedException();
         }
 
-        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(object imageSet, double scale)
+        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imageSet, double scale)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageSetAddImage(object imageSet, int index, Image item)
+        public override void ImageSetAddImage(ImageSet imageSet, int index, Image item)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageSetRemoveImage(object imageSet, int index, Image item)
+        public override void ImageSetRemoveImage(ImageSet imageSet, int index, Image item)
         {
             throw new NotImplementedException();
         }
@@ -1152,22 +1152,22 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeI ImageSetGetDefaultSize(object imageSet)
+        public override SizeI ImageSetGetDefaultSize(ImageSet imageSet)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageSetIsOk(object imageSet)
+        public override bool ImageSetIsOk(ImageSet imageSet)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ImageSetIsReadOnly(object imageSet)
+        public override bool ImageSetIsReadOnly(ImageSet imageSet)
         {
             throw new NotImplementedException();
         }
 
-        public override void ImageSetLoadFromStream(object imageSet, Stream stream)
+        public override void ImageSetLoadFromStream(ImageSet imageSet, Stream stream)
         {
             throw new NotImplementedException();
         }

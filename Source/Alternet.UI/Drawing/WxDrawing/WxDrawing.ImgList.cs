@@ -12,19 +12,19 @@ namespace Alternet.Drawing
     internal partial class WxDrawing
     {
         /// <inheritdoc/>
-        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(object imageSet, double scale)
+        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imgSet, double scale)
         {
-            return ((UI.Native.ImageSet)imageSet).GetPreferredBitmapSizeAtScale(scale);
+            return ((UI.Native.ImageSet)imgSet.NativeObject).GetPreferredBitmapSizeAtScale(scale);
         }
 
         /// <inheritdoc/>
-        public override void ImageSetAddImage(object imageSet, int index, Image item)
+        public override void ImageSetAddImage(ImageSet imgSet, int index, Image item)
         {
-            ((UI.Native.ImageSet)imageSet).AddImage((UI.Native.Image)item.NativeObject);
+            ((UI.Native.ImageSet)imgSet.NativeObject).AddImage((UI.Native.Image)item.NativeObject);
         }
 
         /// <inheritdoc/>
-        public override void ImageSetRemoveImage(object imageSet, int index, Image item)
+        public override void ImageSetRemoveImage(ImageSet imgSet, int index, Image item)
         {
             throw new NotImplementedException();
         }
@@ -61,51 +61,51 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeI ImageSetGetDefaultSize(object imageSet)
+        public override SizeI ImageSetGetDefaultSize(ImageSet imgSet)
         {
-            return ((UI.Native.ImageSet)imageSet).DefaultSize;
+            return ((UI.Native.ImageSet)imgSet.NativeObject).DefaultSize;
         }
 
         /// <inheritdoc/>
-        public override bool ImageSetIsOk(object imageSet)
-            => ((UI.Native.ImageSet)imageSet).IsOk;
+        public override bool ImageSetIsOk(ImageSet imgSet)
+            => ((UI.Native.ImageSet)imgSet.NativeObject).IsOk;
 
         /// <inheritdoc/>
-        public override bool ImageSetIsReadOnly(object imageSet)
-            => ((UI.Native.ImageSet)imageSet).IsReadOnly;
+        public override bool ImageSetIsReadOnly(ImageSet imgSet)
+            => ((UI.Native.ImageSet)imgSet.NativeObject).IsReadOnly;
 
         /// <inheritdoc/>
-        public override void ImageSetLoadFromStream(object imageSet, Stream stream)
+        public override void ImageSetLoadFromStream(ImageSet imgSet, Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            ((UI.Native.ImageSet)imageSet).LoadFromStream(inputStream);
+            ((UI.Native.ImageSet)imgSet.NativeObject).LoadFromStream(inputStream);
         }
 
         /// <inheritdoc/>
-        public override bool IconSetIsOk(object iconSet) => ((UI.Native.IconSet)iconSet).IsOk();
+        public override bool IconSetIsOk(IconSet icnSet) => ((UI.Native.IconSet)icnSet.NativeObject).IsOk();
 
         /// <inheritdoc/>
-        public override SizeI ImageListGetPixelImageSize(object imageList)
+        public override SizeI ImageListGetPixelImageSize(ImageList imgList)
         {
-            return ((UI.Native.ImageList)imageList).PixelImageSize;
+            return ((UI.Native.ImageList)imgList.NativeObject).PixelImageSize;
         }
 
         /// <inheritdoc/>
-        public override void ImageListSetPixelImageSize(object imageList, SizeI value)
+        public override void ImageListSetPixelImageSize(ImageList imgList, SizeI value)
         {
-            ((UI.Native.ImageList)imageList).PixelImageSize = value;
+            ((UI.Native.ImageList)imgList.NativeObject).PixelImageSize = value;
         }
 
         /// <inheritdoc/>
-        public override SizeD ImageListGetImageSize(object imageList)
+        public override SizeD ImageListGetImageSize(ImageList imgList)
         {
-            return ((UI.Native.ImageList)imageList).ImageSize;
+            return ((UI.Native.ImageList)imgList.NativeObject).ImageSize;
         }
 
         /// <inheritdoc/>
-        public override void ImageListSetImageSize(object imageList, SizeD value)
+        public override void ImageListSetImageSize(ImageList imgList, SizeD value)
         {
-            ((UI.Native.ImageList)imageList).ImageSize = value;
+            ((UI.Native.ImageList)imgList.NativeObject).ImageSize = value;
         }
 
         /// <inheritdoc/>
@@ -115,34 +115,34 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void ImageListAdd(object imageList, int index, Image item)
+        public override void ImageListAdd(ImageList imgList, int index, Image item)
         {
-            ((UI.Native.ImageList)imageList).AddImage((UI.Native.Image)item.NativeObject);
+            ((UI.Native.ImageList)imgList.NativeObject).AddImage((UI.Native.Image)item.NativeObject);
         }
 
         /// <inheritdoc/>
-        public override void ImageListRemove(object imageList, int index, Image item)
+        public override void ImageListRemove(ImageList imgList, int index, Image item)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void IconSetAdd(object iconSet, Image image)
+        public override void IconSetAdd(IconSet icnSet, Image image)
         {
-            ((UI.Native.IconSet)iconSet).AddImage((UI.Native.Image)image.NativeObject);
+            ((UI.Native.IconSet)icnSet.NativeObject).AddImage((UI.Native.Image)image.NativeObject);
         }
 
         /// <inheritdoc/>
-        public override void IconSetAdd(object iconSet, Stream stream)
+        public override void IconSetAdd(IconSet icnSet, Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            ((UI.Native.IconSet)iconSet).LoadFromStream(inputStream);
+            ((UI.Native.IconSet)icnSet.NativeObject).LoadFromStream(inputStream);
         }
 
         /// <inheritdoc/>
-        public override void IconSetClear(object iconSet)
+        public override void IconSetClear(IconSet icnSet)
         {
-            ((UI.Native.IconSet)iconSet).Clear();
+            ((UI.Native.IconSet)icnSet.NativeObject).Clear();
         }
 
         /// <inheritdoc/>

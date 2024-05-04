@@ -70,7 +70,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether object is ok.
         /// </summary>
-        public bool IsOk => NativeDrawing.Default.IconSetIsOk(NativeObject);
+        public bool IsOk => NativeDrawing.Default.IconSetIsOk(this);
 
         /// <summary>
         /// Creates <see cref="IconSet"/> instance from
@@ -140,7 +140,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(Image image)
         {
-            NativeDrawing.Default.IconSetAdd(NativeObject, image);
+            NativeDrawing.Default.IconSetAdd(this, image);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(Stream stream)
         {
-            NativeDrawing.Default.IconSetAdd(NativeObject, stream);
+            NativeDrawing.Default.IconSetAdd(this, stream);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
-            NativeDrawing.Default.IconSetClear(NativeObject);
+            NativeDrawing.Default.IconSetClear(this);
         }
 
         /// <inheritdoc/>

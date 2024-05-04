@@ -45,8 +45,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public SizeI PixelImageSize
         {
-            get => NativeDrawing.Default.ImageListGetPixelImageSize(NativeObject);
-            set => NativeDrawing.Default.ImageListSetPixelImageSize(NativeObject, value);
+            get => NativeDrawing.Default.ImageListGetPixelImageSize(this);
+            set => NativeDrawing.Default.ImageListSetPixelImageSize(this, value);
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public SizeD ImageSize
         {
-            get => NativeDrawing.Default.ImageListGetImageSize(NativeObject);
-            set => NativeDrawing.Default.ImageListSetImageSize(NativeObject, value);
+            get => NativeDrawing.Default.ImageListGetImageSize(this);
+            set => NativeDrawing.Default.ImageListSetImageSize(this, value);
         }
 
         /// <inheritdoc/>
@@ -76,12 +76,12 @@ namespace Alternet.Drawing
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
-            NativeDrawing.Default.ImageListAdd(NativeObject, index, item);
+            NativeDrawing.Default.ImageListAdd(this, index, item);
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
-            NativeDrawing.Default.ImageListRemove(NativeObject, index, item);
+            NativeDrawing.Default.ImageListRemove(this, index, item);
         }
     }
 }
