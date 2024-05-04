@@ -10,10 +10,10 @@ namespace Alternet.Drawing
 {
     internal partial class WxDrawing
     {
-        public override object CreateGraphicsPath(object nativeGraphics)
+        public override object CreateGraphicsPath(Graphics graphics)
         {
             var result = new UI.Native.GraphicsPath();
-            ((UI.Native.GraphicsPath)result).Initialize((UI.Native.DrawingContext)nativeGraphics);
+            ((UI.Native.GraphicsPath)result).Initialize((UI.Native.DrawingContext)graphics.NativeObject);
             return result;
         }
 
@@ -22,44 +22,44 @@ namespace Alternet.Drawing
             return new UI.Native.GraphicsPath();
         }
 
-        public override FillMode GraphicsPathGetFillMode(object graphicsPath)
+        public override FillMode GraphicsPathGetFillMode(GraphicsPath graphicsPath)
         {
-            return (FillMode)((UI.Native.GraphicsPath)graphicsPath).FillMode;
+            return (FillMode)((UI.Native.GraphicsPath)graphicsPath.NativeObject).FillMode;
         }
 
-        public override void GraphicsPathSetFillMode(object graphicsPath, FillMode value)
+        public override void GraphicsPathSetFillMode(GraphicsPath graphicsPath, FillMode value)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).FillMode = (UI.Native.FillMode)value;
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).FillMode = (UI.Native.FillMode)value;
         }
 
-        public override void GraphicsPathAddLines(object graphicsPath, PointD[] points)
+        public override void GraphicsPathAddLines(GraphicsPath graphicsPath, PointD[] points)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddLines(points);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddLines(points);
         }
 
-        public override void GraphicsPathAddLine(object graphicsPath, PointD pt1, PointD pt2)
+        public override void GraphicsPathAddLine(GraphicsPath graphicsPath, PointD pt1, PointD pt2)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddLine(pt1, pt2);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddLine(pt1, pt2);
         }
 
-        public override void GraphicsPathAddLineTo(object graphicsPath, PointD pt)
+        public override void GraphicsPathAddLineTo(GraphicsPath graphicsPath, PointD pt)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddLineTo(pt);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddLineTo(pt);
         }
 
-        public override void GraphicsPathAddEllipse(object graphicsPath, RectD rect)
+        public override void GraphicsPathAddEllipse(GraphicsPath graphicsPath, RectD rect)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddEllipse(rect);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddEllipse(rect);
         }
 
         public override void GraphicsPathAddBezier(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             PointD startPoint,
             PointD controlPoint1,
             PointD controlPoint2,
             PointD endPoint)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddBezier(
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddBezier(
                 startPoint,
                 controlPoint1,
                 controlPoint2,
@@ -67,50 +67,50 @@ namespace Alternet.Drawing
         }
 
         public override void GraphicsPathAddBezierTo(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             PointD controlPoint1,
             PointD controlPoint2,
             PointD endPoint)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddBezierTo(controlPoint1, controlPoint2, endPoint);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddBezierTo(controlPoint1, controlPoint2, endPoint);
         }
 
         public override void GraphicsPathAddArc(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             PointD center,
             double radius,
             double startAngle,
             double sweepAngle)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddArc(center, radius, startAngle, sweepAngle);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddArc(center, radius, startAngle, sweepAngle);
         }
 
-        public override void GraphicsPathAddRectangle(object graphicsPath, RectD rect)
+        public override void GraphicsPathAddRectangle(GraphicsPath graphicsPath, RectD rect)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddRectangle(rect);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddRectangle(rect);
         }
 
         public override void GraphicsPathAddRoundedRectangle(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             RectD rect,
             double cornerRadius)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).AddRoundedRectangle(rect, cornerRadius);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).AddRoundedRectangle(rect, cornerRadius);
         }
 
-        public override RectD GraphicsPathGetBounds(object graphicsPath)
+        public override RectD GraphicsPathGetBounds(GraphicsPath graphicsPath)
         {
-            return ((UI.Native.GraphicsPath)graphicsPath).GetBounds();
+            return ((UI.Native.GraphicsPath)graphicsPath.NativeObject).GetBounds();
         }
 
-        public override void GraphicsPathStartFigure(object graphicsPath, PointD point)
+        public override void GraphicsPathStartFigure(GraphicsPath graphicsPath, PointD point)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).StartFigure(point);
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).StartFigure(point);
         }
 
-        public override void GraphicsPathCloseFigure(object graphicsPath)
+        public override void GraphicsPathCloseFigure(GraphicsPath graphicsPath)
         {
-            ((UI.Native.GraphicsPath)graphicsPath).CloseFigure();
+            ((UI.Native.GraphicsPath)graphicsPath.NativeObject).CloseFigure();
         }
     }
 }

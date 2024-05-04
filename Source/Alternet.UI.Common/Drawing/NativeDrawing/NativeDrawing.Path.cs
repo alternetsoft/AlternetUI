@@ -12,51 +12,51 @@ namespace Alternet.Drawing
     {
         public abstract object CreateGraphicsPath();
 
-        public abstract object CreateGraphicsPath(object nativeGraphics);
+        public abstract object CreateGraphicsPath(Graphics graphics);
 
-        public abstract FillMode GraphicsPathGetFillMode(object graphicsPath);
+        public abstract FillMode GraphicsPathGetFillMode(GraphicsPath graphicsPath);
 
-        public abstract void GraphicsPathSetFillMode(object graphicsPath, FillMode value);
+        public abstract void GraphicsPathSetFillMode(GraphicsPath graphicsPath, FillMode value);
 
-        public abstract void GraphicsPathAddLines(object graphicsPath, PointD[] points);
+        public abstract void GraphicsPathAddLines(GraphicsPath graphicsPath, PointD[] points);
 
-        public abstract void GraphicsPathAddLine(object graphicsPath, PointD pt1, PointD pt2);
+        public abstract void GraphicsPathAddLine(GraphicsPath graphicsPath, PointD pt1, PointD pt2);
 
-        public abstract void GraphicsPathAddLineTo(object graphicsPath, PointD pt);
+        public abstract void GraphicsPathAddLineTo(GraphicsPath graphicsPath, PointD pt);
 
-        public abstract void GraphicsPathAddEllipse(object graphicsPath, RectD rect);
+        public abstract void GraphicsPathAddEllipse(GraphicsPath graphicsPath, RectD rect);
 
         public abstract void GraphicsPathAddBezier(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             PointD startPoint,
             PointD controlPoint1,
             PointD controlPoint2,
             PointD endPoint);
 
         public abstract void GraphicsPathAddBezierTo(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             PointD controlPoint1,
             PointD controlPoint2,
             PointD endPoint);
 
         public abstract void GraphicsPathAddArc(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             PointD center,
             double radius,
             double startAngle,
             double sweepAngle);
 
-        public abstract void GraphicsPathAddRectangle(object graphicsPath, RectD rect);
+        public abstract void GraphicsPathAddRectangle(GraphicsPath graphicsPath, RectD rect);
 
         public abstract void GraphicsPathAddRoundedRectangle(
-            object graphicsPath,
+            GraphicsPath graphicsPath,
             RectD rect,
             double cornerRadius);
 
-        public abstract RectD GraphicsPathGetBounds(object graphicsPath);
+        public abstract RectD GraphicsPathGetBounds(GraphicsPath graphicsPath);
 
-        public abstract void GraphicsPathStartFigure(object graphicsPath, PointD point);
+        public abstract void GraphicsPathStartFigure(GraphicsPath graphicsPath, PointD point);
 
-        public abstract void GraphicsPathCloseFigure(object graphicsPath);
+        public abstract void GraphicsPathCloseFigure(GraphicsPath graphicsPath);
     }
 }

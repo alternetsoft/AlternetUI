@@ -867,72 +867,72 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override FillMode GraphicsPathGetFillMode(object graphicsPath)
+        public override FillMode GraphicsPathGetFillMode(GraphicsPath graphicsPath)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathSetFillMode(object graphicsPath, FillMode value)
+        public override void GraphicsPathSetFillMode(GraphicsPath graphicsPath, FillMode value)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddLines(object graphicsPath, PointD[] points)
+        public override void GraphicsPathAddLines(GraphicsPath graphicsPath, PointD[] points)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddLine(object graphicsPath, PointD pt1, PointD pt2)
+        public override void GraphicsPathAddLine(GraphicsPath graphicsPath, PointD pt1, PointD pt2)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddLineTo(object graphicsPath, PointD pt)
+        public override void GraphicsPathAddLineTo(GraphicsPath graphicsPath, PointD pt)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddEllipse(object graphicsPath, RectD rect)
+        public override void GraphicsPathAddEllipse(GraphicsPath graphicsPath, RectD rect)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddBezier(object graphicsPath, PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
+        public override void GraphicsPathAddBezier(GraphicsPath graphicsPath, PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddBezierTo(object graphicsPath, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
+        public override void GraphicsPathAddBezierTo(GraphicsPath graphicsPath, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddArc(object graphicsPath, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void GraphicsPathAddArc(GraphicsPath graphicsPath, PointD center, double radius, double startAngle, double sweepAngle)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddRectangle(object graphicsPath, RectD rect)
+        public override void GraphicsPathAddRectangle(GraphicsPath graphicsPath, RectD rect)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathAddRoundedRectangle(object graphicsPath, RectD rect, double cornerRadius)
+        public override void GraphicsPathAddRoundedRectangle(GraphicsPath graphicsPath, RectD rect, double cornerRadius)
         {
             throw new NotImplementedException();
         }
 
-        public override RectD GraphicsPathGetBounds(object graphicsPath)
+        public override RectD GraphicsPathGetBounds(GraphicsPath graphicsPath)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathStartFigure(object graphicsPath, PointD point)
+        public override void GraphicsPathStartFigure(GraphicsPath graphicsPath, PointD point)
         {
             throw new NotImplementedException();
         }
 
-        public override void GraphicsPathCloseFigure(object graphicsPath)
+        public override void GraphicsPathCloseFigure(GraphicsPath graphicsPath)
         {
             throw new NotImplementedException();
         }
@@ -1057,7 +1057,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override object CreateGraphicsPath(object nativeGraphics)
+        public override object CreateGraphicsPath(Graphics graphics)
         {
             throw new NotImplementedException();
         }
