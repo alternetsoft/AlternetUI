@@ -551,6 +551,8 @@ namespace Alternet.UI
             }
         }
 
+        object IControl.NativeControl => NativeControl;
+
         /// <summary>
         /// Gets <see cref="Graphics"/> which can be used to measure text size
         /// and for other measure purposes.
@@ -678,9 +680,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsScrollable
         {
-            get => WxPlatform.WxDefault.ControlGetIsScrollable(this);
+            get => GetNative().GetIsScrollable(this);
 
-            set => WxPlatform.WxDefault.ControlSetIsScrollable(this, value);
+            set => GetNative().SetIsScrollable(this, value);
         }
 
         /// <summary>
@@ -750,7 +752,7 @@ namespace Alternet.UI
                 if (cursor == value)
                     return;
                 cursor = value;
-                WxPlatform.WxDefault.ControlSetCursor(this, value);
+                GetNative().SetCursor(this, value);
             }
         }
 
@@ -853,14 +855,14 @@ namespace Alternet.UI
             {
                 if (IsDummy)
                     return SizeD.Empty;
-                return WxPlatform.WxDefault.ControlGetClientSize(this);
+                return GetNative().GetClientSize(this);
             }
 
             set
             {
                 if (ClientSize == value)
                     return;
-                WxPlatform.WxDefault.ControlSetClientSize(this, value);
+                GetNative().SetClientSize(this, value);
                 PerformLayout();
             }
         }
@@ -931,7 +933,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.IsMouseOver;
+                return GetNative().IsMouseOver(this);
             }
         }
 
@@ -943,7 +945,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.IsMouseCaptured;
+                return GetNative().IsMouseCaptured(this);
             }
         }
 
@@ -1006,7 +1008,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IsFocusable
-            => NativeControl.IsFocusable;
+        {
+            get
+            {
+                return GetNative().IsFocusable(this);
+            }
+        }
 
         /// <summary>
         /// Gets the distance, in dips, between the right edge of the control and the left
@@ -1103,7 +1110,13 @@ namespace Alternet.UI
         /// this control accepts focus itself, use <see cref="IsFocusable"/>.
         /// </remarks>
         [Browsable(false)]
-        public virtual bool CanAcceptFocus => NativeControl.CanAcceptFocus;
+        public virtual bool CanAcceptFocus
+        {
+            get
+            {
+                return GetNative().CanAcceptFocus(this);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the object that contains data about the control.
@@ -1143,7 +1156,7 @@ namespace Alternet.UI
                 toolTip = value;
                 OnToolTipChanged(EventArgs.Empty);
                 ToolTipChanged?.Invoke(this, EventArgs.Empty);
-                NativeControl.ToolTip = GetRealToolTip();
+                GetNative().SetToolTip(this, GetRealToolTip());
             }
         }
 
@@ -1154,12 +1167,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual RectD Bounds
         {
-            get => NativeControl.Bounds;
+            get => GetNative().GetBounds(this);
             set
             {
                 if (Bounds == value)
                     return;
-                NativeControl.Bounds = value;
+                GetNative().SetBounds(this, value);
             }
         }
 
@@ -1249,7 +1262,7 @@ namespace Alternet.UI
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
                 Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
-                NativeControl.Visible = value;
+                GetNative().SetVisible(this, value);
                 Parent?.PerformLayout();
                 if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
@@ -1298,7 +1311,7 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// </remarks>
         [Browsable(false)]
-        public IFileSystem? FileSystem { get; set; }
+        public virtual IFileSystem? FileSystem { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the control has a native window
@@ -1308,12 +1321,12 @@ namespace Alternet.UI
         /// <see langword="true" /> if a native window handle has been assigned to the
         /// control; otherwise, <see langword="false" />.</returns>
         [Browsable(false)]
-        public bool IsHandleCreated
+        public virtual bool IsHandleCreated
         {
             get
             {
                 return (handler is not null) && handler.IsNativeControlCreated
-                    && NativeControl.IsHandleCreated;
+                    && GetNative().IsHandleCreated(this);
             }
         }
 
@@ -1587,12 +1600,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool UserPaint
         {
-            get => NativeControl.UserPaint;
+            get => GetNative().GetUserPaint(this);
             set
             {
                 if (value && !CanUserPaint)
                     return;
-                NativeControl.UserPaint = value;
+                GetNative().SetUserPaint(this, value);
             }
         }
 
@@ -1775,14 +1788,14 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.MinimumSize;
+                return GetNative().GetMinimumSize(this);
             }
 
             set
             {
                 if (MinimumSize == value)
                     return;
-                NativeControl.MinimumSize = value;
+                GetNative().SetMinimumSize(this, value);
                 PerformLayout();
             }
         }
@@ -1795,14 +1808,14 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.MaximumSize;
+                return GetNative().GetMaximumSize(this);
             }
 
             set
             {
                 if (MaximumSize == value)
                     return;
-                NativeControl.MaximumSize = value;
+                GetNative().SetMaximumSize(this, value);
                 PerformLayout();
             }
         }
@@ -1917,7 +1930,7 @@ namespace Alternet.UI
                     if (backgroundColor is null)
                         ResetBackgroundColor(ResetColorType.Auto);
                     else
-                        NativeControl.BackgroundColor = backgroundColor;
+                        GetNative().SetBackgroundColor(this, backgroundColor);
                     Refresh();
                 }
 
@@ -1998,7 +2011,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl.BackgroundColor;
+                var result = GetNative().GetBackgroundColor(this);
                 return result;
             }
         }
@@ -2015,7 +2028,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl.ForegroundColor;
+                var result = GetNative().GetForegroundColor(this);
                 return result;
             }
         }
@@ -2086,7 +2099,7 @@ namespace Alternet.UI
                     if (foregroundColor is null)
                         ResetForegroundColor(ResetColorType.Auto);
                     else
-                        NativeControl.ForegroundColor = foregroundColor;
+                        GetNative().SetForegroundColor(this, foregroundColor);
                     Invalidate();
                 }
 
@@ -2136,7 +2149,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Thickness IntrinsicLayoutPadding
         {
-            get => NativeControl.IntrinsicLayoutPadding;
+            get => GetNative().GetIntrinsicLayoutPadding(this);
         }
 
         /// <summary>
@@ -2144,7 +2157,7 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Thickness IntrinsicPreferredSizePadding
-            => NativeControl.IntrinsicPreferredSizePadding;
+            => GetNative().GetIntrinsicPreferredSizePadding(this);
 
         /// <summary>
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
@@ -2293,8 +2306,7 @@ namespace Alternet.UI
                     OnFontChanged(EventArgs.Empty);
                     FontChanged?.Invoke(this, EventArgs.Empty);
 
-                    if (NativeControl != null)
-                        NativeControl.Font = (UI.Native.Font?)Font?.NativeObject;
+                    GetNative().SetFont(this, value);
 
                     foreach (var child in Children)
                     {
@@ -2314,7 +2326,7 @@ namespace Alternet.UI
         /// Returns font even if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Font? RealFont => Font.FromInternal(NativeControl?.Font);
+        public virtual Font? RealFont => GetNative().GetFont(this);
 
         /// <summary>
         /// Gets or sets whether control's font is bold.
@@ -2515,7 +2527,7 @@ namespace Alternet.UI
         {
             get
             {
-                return (ControlBackgroundStyle?)NativeControl?.GetBackgroundStyle()
+                return (ControlBackgroundStyle?)NativeControl.GetBackgroundStyle()
                     ?? ControlBackgroundStyle.System;
             }
 
@@ -2523,7 +2535,7 @@ namespace Alternet.UI
             {
                 if (value == ControlBackgroundStyle.Transparent)
                     return;
-                NativeControl?.SetBackgroundStyle((int)value);
+                NativeControl.SetBackgroundStyle((int)value);
             }
         }
 
@@ -2634,8 +2646,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl?.AcceptsFocus;
-                return result ?? false;
+                return NativeControl.AcceptsFocus;
             }
 
             set
@@ -2664,14 +2675,11 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl?.AcceptsFocusFromKeyboard;
-                return result ?? false;
+                return NativeControl.AcceptsFocusFromKeyboard;
             }
 
             set
             {
-                if (NativeControl is null)
-                    return;
                 NativeControl.AcceptsFocusFromKeyboard = value;
             }
         }
@@ -2687,14 +2695,11 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl?.AcceptsFocusRecursively;
-                return result ?? false;
+                return NativeControl.AcceptsFocusRecursively;
             }
 
             set
             {
-                if (NativeControl is null)
-                    return;
                 NativeControl.AcceptsFocusRecursively = value;
             }
         }
@@ -2708,14 +2713,11 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl?.AcceptsFocusAll;
-                return result ?? false;
+                return NativeControl.AcceptsFocusAll;
             }
 
             set
             {
-                if (NativeControl is null)
-                    return;
                 NativeControl.AcceptsFocusAll = value;
             }
         }

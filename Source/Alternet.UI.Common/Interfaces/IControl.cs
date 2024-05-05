@@ -1003,6 +1003,11 @@ namespace Alternet.UI
         Thickness IntrinsicPreferredSizePadding { get; }
 
         /// <summary>
+        /// Gets native control instance.
+        /// </summary>
+        object NativeControl { get; }
+
+        /// <summary>
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
         /// by the <see cref="Grid"/> control.
         /// </summary>
