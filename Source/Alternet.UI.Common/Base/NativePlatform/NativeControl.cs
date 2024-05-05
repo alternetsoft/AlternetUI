@@ -69,4 +69,12 @@ public abstract class NativeControl
     public abstract Font? GetFont(IControl control);
 
     public abstract void SetFont(IControl control, Font? value);
+
+    public abstract bool GetIsBold(IControl control);
+
+    public abstract void SetIsBold(IControl control, bool value);
+
+    public abstract bool GetTabStop(IControl control);
+
+    public abstract void SetTabStop(IControl control, bool value);
 }

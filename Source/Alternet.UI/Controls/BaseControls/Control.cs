@@ -2335,7 +2335,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.IsBold;
+                return GetNative().GetIsBold(this);
             }
 
             set
@@ -2344,7 +2344,7 @@ namespace Alternet.UI
                     return;
                 DoInsideLayout(() =>
                 {
-                    NativeControl.IsBold = value;
+                    GetNative().SetIsBold(this, value);
                     RaiseLayoutChanged();
                     PerformLayout();
                 });
@@ -2481,12 +2481,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.TabStop;
+                return GetNative().GetTabStop(this);
             }
 
             set
             {
-                NativeControl.TabStop = value;
+                GetNative().SetTabStop(this, value);
             }
         }
 

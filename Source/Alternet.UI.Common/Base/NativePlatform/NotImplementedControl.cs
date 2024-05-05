@@ -50,6 +50,11 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
+    public override bool GetIsBold(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
     public override bool GetIsScrollable(IControl control)
     {
         throw new NotImplementedException();
@@ -61,6 +66,11 @@ internal class NotImplementedControl : NativeControl
     }
 
     public override SizeD GetMinimumSize(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetTabStop(IControl control)
     {
         throw new NotImplementedException();
     }
@@ -125,6 +135,11 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
+    public override void SetIsBold(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
     public override void SetIsScrollable(IControl control, bool value)
     {
         throw new NotImplementedException();
@@ -136,6 +151,11 @@ internal class NotImplementedControl : NativeControl
     }
 
     public override void SetMinimumSize(IControl control, SizeD value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetTabStop(IControl control, bool value)
     {
         throw new NotImplementedException();
     }

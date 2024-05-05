@@ -10,6 +10,26 @@ namespace Alternet.UI
 {
     internal class WxPlatformControl : NativeControl
     {
+        public override bool GetTabStop(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).TabStop;
+        }
+
+        public override void SetTabStop(IControl control, bool value)
+        {
+            ((UI.Native.Control)control.NativeControl).TabStop = value;
+        }
+
+        public override bool GetIsBold(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).IsBold;
+        }
+
+        public override void SetIsBold(IControl control, bool value)
+        {
+            ((UI.Native.Control)control.NativeControl).IsBold = value;
+        }
+
         public override Font? GetFont(IControl control)
         {
             var font = ((UI.Native.Control)control.NativeControl).Font;
