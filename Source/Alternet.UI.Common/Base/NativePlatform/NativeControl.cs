@@ -121,4 +121,49 @@ public abstract class NativeControl
     public abstract void SendSizeEvent(IControl control);
 
     public abstract void UnsetToolTip(IControl control);
+
+    public abstract void RefreshRect(IControl control, RectD rect, bool eraseBackground = true);
+
+    public abstract void HandleNeeded(IControl control);
+
+    public abstract void CaptureMouse(IControl control);
+
+    public abstract void ReleaseMouseCapture(IControl control);
+
+    public abstract void DisableRecreate(IControl control);
+
+    public abstract void EnableRecreate(IControl control);
+
+    public abstract Graphics CreateDrawingContext(IControl control);
+
+    public abstract PointD ScreenToClient(IControl control, PointD point);
+
+    public abstract PointD ClientToScreen(IControl control, PointD point);
+
+    public abstract PointI ScreenToDevice(IControl control, PointD point);
+
+    public abstract PointD DeviceToScreen(IControl control, PointI point);
+
+    public abstract void FocusNextControl(IControl control, bool forward = true, bool nested = true);
+
+    public abstract DragDropEffects DoDragDrop(
+        IControl control,
+        object data,
+        DragDropEffects allowedEffects);
+
+    public abstract void RecreateWindow(IControl control);
+
+    public abstract void BeginUpdate(IControl control);
+
+    public abstract void EndUpdate(IControl control);
+
+    public abstract void SetBounds(IControl control, RectD rect, SetBoundsFlags flags);
+
+    public abstract void BeginInit(IControl control);
+
+    public abstract void EndInit(IControl control);
+
+    public abstract bool SetFocus(IControl control);
+
+    public abstract void SaveScreenshot(IControl control, string fileName);
 }

@@ -398,7 +398,7 @@ namespace Alternet.UI
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
         public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
-            NativeControl.RefreshRect(rect, eraseBackground);
+            GetNative().RefreshRect(this, rect, eraseBackground);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HandleNeeded()
         {
-            NativeControl?.Required();
+            GetNative().HandleNeeded(this);
         }
 
         /// <summary>
@@ -564,7 +564,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CaptureMouse()
         {
-            NativeControl.SetMouseCapture(true);
+            GetNative().CaptureMouse(this);
         }
 
         /// <summary>
@@ -572,7 +572,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ReleaseMouseCapture()
         {
-            NativeControl.SetMouseCapture(false);
+            GetNative().ReleaseMouseCapture(this);
         }
 
         /// <summary>
@@ -584,9 +584,7 @@ namespace Alternet.UI
         /// data.</param>
         public virtual void RaiseClick(EventArgs e)
         {
-            /*Application.Log("RaiseClick");*/
             OnClick(e);
-            /*Application.Log("RaiseClick2");*/
             Click?.Invoke(this, e);
         }
 
@@ -689,9 +687,12 @@ namespace Alternet.UI
         /// Sets or releases mouse capture.
         /// </summary>
         /// <param name="value"><c>true</c> to set mouse capture; <c>false</c> to release it.</param>
-        public virtual void SetMouseCapture(bool value)
+        public void SetMouseCapture(bool value)
         {
-            NativeControl.SetMouseCapture(value);
+            if (value)
+                CaptureMouse();
+            else
+                ReleaseMouseCapture();
         }
 
         /// <summary>
@@ -765,18 +766,18 @@ namespace Alternet.UI
         /// Sometimes it is not desired.
         /// This method sets a restriction on a control recreate, so debug message will be logged.
         /// </remarks>
-        public void DisableRecreate()
+        public virtual void DisableRecreate()
         {
-            NativeControl.DisableRecreate();
+            GetNative().DisableRecreate(this);
         }
 
         /// <summary>
         /// Allows control recreate which was previously disabled using <see cref="DisableRecreate"/>.
         /// </summary>
         /// See more details in <see cref="DisableRecreate"/>.
-        public void EnableRecreate()
+        public virtual void EnableRecreate()
         {
-            NativeControl.EnableRecreate();
+            GetNative().EnableRecreate(this);
         }
 
         /// <summary>
@@ -875,17 +876,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Graphics CreateDrawingContext()
         {
-            var nativeControl = NativeControl;
-            if (nativeControl == null)
-            {
-                nativeControl = TryFindClosestParentWithNativeControl()?.NativeControl;
-
-                // todo: visual offset for handleless controls
-                if (nativeControl == null)
-                    throw new Exception(); // todo: maybe use parking window here?
-            }
-
-            return new WxGraphics(nativeControl.OpenClientDrawingContext());
+            return GetNative().CreateDrawingContext(this);
         }
 
         /// <summary>
@@ -1031,7 +1022,7 @@ namespace Alternet.UI
                 ClientSize = newSize + new SizeD(1, 0);
                 ClientSize = newSize;
                 Refresh();
-                NativeControl.SendSizeEvent();
+                SendSizeEvent();
             }
         }
 
@@ -1042,9 +1033,9 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public PointD ScreenToClient(PointD point)
+        public virtual PointD ScreenToClient(PointD point)
         {
-            return NativeControl.ScreenToClient(point);
+            return GetNative().ScreenToClient(this, point);
         }
 
         /// <summary>
@@ -1054,9 +1045,9 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that contains the
         /// client coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public PointD ClientToScreen(PointD point)
+        public virtual PointD ClientToScreen(PointD point)
         {
-            return NativeControl.ClientToScreen(point);
+            return GetNative().ClientToScreen(this, point);
         }
 
         /// <summary>
@@ -1066,9 +1057,9 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen device-independent coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public PointI ScreenToDevice(PointD point)
+        public virtual PointI ScreenToDevice(PointD point)
         {
-            return NativeControl.ScreenToDevice(point);
+            return GetNative().ScreenToDevice(this, point);
         }
 
         /// <summary>
@@ -1078,9 +1069,9 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that contains the coordinates
         /// in device-independent units (1/96th inch per unit) to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public PointD DeviceToScreen(PointI point)
+        public virtual PointD DeviceToScreen(PointI point)
         {
-            return NativeControl.DeviceToScreen(point);
+            return GetNative().DeviceToScreen(this, point);
         }
 
         /// <summary>
@@ -1174,7 +1165,7 @@ namespace Alternet.UI
         public virtual int BeginUpdate()
         {
             updateCount++;
-            NativeControl.BeginUpdate();
+            GetNative().BeginUpdate(this);
             return updateCount;
         }
 
@@ -1185,7 +1176,7 @@ namespace Alternet.UI
         public virtual int EndUpdate()
         {
             updateCount--;
-            NativeControl.EndUpdate();
+            GetNative().EndUpdate(this);
             return updateCount;
         }
 
@@ -1258,7 +1249,7 @@ namespace Alternet.UI
         /// <param name="flags">Flags.</param>
         public virtual void SetBounds(RectD rect, SetBoundsFlags flags)
         {
-            NativeControl.SetBoundsEx(rect, (int)flags);
+            GetNative().SetBounds(this, rect, flags);
         }
 
         /// <summary>
@@ -1274,7 +1265,7 @@ namespace Alternet.UI
         public virtual void BeginInit()
         {
             SuspendLayout();
-            NativeControl.BeginInit();
+            GetNative().BeginInit(this);
         }
 
         /// <summary>
@@ -1289,7 +1280,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EndInit()
         {
-            NativeControl.EndInit();
+            GetNative().EndInit(this);
             ResumeLayout();
         }
 
@@ -1308,7 +1299,7 @@ namespace Alternet.UI
         /// control successfully received input focus.</remarks>
         public virtual bool SetFocus()
         {
-            return NativeControl.SetFocus();
+            return GetNative().SetFocus(this);
         }
 
         /// <summary>
@@ -1346,7 +1337,7 @@ namespace Alternet.UI
             ScreenShotCounter++;
             try
             {
-                NativeControl.SaveScreenshot(fileName);
+                GetNative().SaveScreenshot(this, fileName);
             }
             finally
             {
@@ -1523,7 +1514,7 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
-            NativeControl.FocusNextControl(forward, nested);
+            GetNative().FocusNextControl(this, forward, nested);
         }
 
         /// <summary>
@@ -1543,10 +1534,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
-            allowedEffects &= ~DragDropEffects.Scroll;
-            return (DragDropEffects)NativeControl!.DoDragDrop(
-                UnmanagedDataObjectService.GetUnmanagedDataObject(data),
-                (Native.DragDropEffects)allowedEffects);
+            return GetNative().DoDragDrop(this, data, allowedEffects);
         }
 
         /// <summary>
@@ -1554,7 +1542,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RecreateWindow()
         {
-            NativeControl.RecreateWindow();
+            GetNative().RecreateWindow(this);
         }
 
         /// <summary>

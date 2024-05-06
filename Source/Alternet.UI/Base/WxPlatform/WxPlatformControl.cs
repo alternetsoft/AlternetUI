@@ -11,6 +11,138 @@ namespace Alternet.UI
     internal class WxPlatformControl : NativeControl
     {
         /// <inheritdoc/>
+        public override void BeginUpdate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).BeginUpdate();
+        }
+
+        /// <inheritdoc/>
+        public override void EndUpdate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).EndUpdate();
+        }
+
+        /// <inheritdoc/>
+        public override void SetBounds(IControl control, RectD rect, SetBoundsFlags flags)
+        {
+            ((UI.Native.Control)control.NativeControl).SetBoundsEx(rect, (int)flags);
+        }
+
+        /// <inheritdoc/>
+        public override void BeginInit(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).BeginInit();
+        }
+
+        /// <inheritdoc/>
+        public override void EndInit(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).EndInit();
+        }
+
+        /// <inheritdoc/>
+        public override bool SetFocus(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).SetFocus();
+        }
+
+        /// <inheritdoc/>
+        public override void SaveScreenshot(IControl control, string fileName)
+        {
+            ((UI.Native.Control)control.NativeControl).SaveScreenshot(fileName);
+        }
+
+        /// <inheritdoc/>
+        public override void FocusNextControl(IControl control, bool forward = true, bool nested = true)
+        {
+            ((UI.Native.Control)control.NativeControl).FocusNextControl(forward, nested);
+        }
+
+        /// <inheritdoc/>
+        public override DragDropEffects DoDragDrop(
+            IControl control,
+            object data,
+            DragDropEffects allowedEffects)
+        {
+            allowedEffects &= ~DragDropEffects.Scroll;
+            return (DragDropEffects)((UI.Native.Control)control.NativeControl).DoDragDrop(
+                UnmanagedDataObjectService.GetUnmanagedDataObject(data),
+                (Native.DragDropEffects)allowedEffects);
+        }
+
+        /// <inheritdoc/>
+        public override void RecreateWindow(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).RecreateWindow();
+        }
+
+        /// <inheritdoc/>
+        public override PointD ScreenToClient(IControl control, PointD point)
+        {
+            return ((UI.Native.Control)control.NativeControl).ScreenToClient(point);
+        }
+
+        /// <inheritdoc/>
+        public override PointD ClientToScreen(IControl control, PointD point)
+        {
+            return ((UI.Native.Control)control.NativeControl).ClientToScreen(point);
+        }
+
+        /// <inheritdoc/>
+        public override PointI ScreenToDevice(IControl control, PointD point)
+        {
+            return ((UI.Native.Control)control.NativeControl).ScreenToDevice(point);
+        }
+
+        /// <inheritdoc/>
+        public override PointD DeviceToScreen(IControl control, PointI point)
+        {
+            return ((UI.Native.Control)control.NativeControl).DeviceToScreen(point);
+        }
+
+        /// <inheritdoc/>
+        public override void DisableRecreate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).DisableRecreate();
+        }
+
+        /// <inheritdoc/>
+        public override void EnableRecreate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).EnableRecreate();
+        }
+
+        /// <inheritdoc/>
+        public override Graphics CreateDrawingContext(IControl control)
+        {
+            return new WxGraphics(((UI.Native.Control)control.NativeControl).OpenClientDrawingContext());
+        }
+
+        /// <inheritdoc/>
+        public override void CaptureMouse(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).SetMouseCapture(true);
+        }
+
+        /// <inheritdoc/>
+        public override void ReleaseMouseCapture(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).SetMouseCapture(false);
+        }
+
+        /// <inheritdoc/>
+        public override void RefreshRect(IControl control, RectD rect, bool eraseBackground = true)
+        {
+            ((UI.Native.Control)control.NativeControl).RefreshRect(rect, eraseBackground);
+        }
+
+        /// <inheritdoc/>
+        public override void HandleNeeded(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).Required();
+        }
+
+        /// <inheritdoc/>
         public override void Raise(IControl control)
         {
             ((UI.Native.Control)control.NativeControl).Raise();

@@ -284,7 +284,7 @@ namespace Alternet.UI
             protected set => isDisposed = value;
         }
 
-        protected internal virtual bool InvokeRequired => false;
+        protected internal virtual bool InvokeRequired => throw new NotImplementedException();
 
         /// <summary>
         /// Logs name and value pair as "{name} = {value}".
@@ -626,6 +626,7 @@ namespace Alternet.UI
 
         protected internal virtual void BeginInvoke(Action action)
         {
+            throw new NotImplementedException();
         }
 
         /// <summary>

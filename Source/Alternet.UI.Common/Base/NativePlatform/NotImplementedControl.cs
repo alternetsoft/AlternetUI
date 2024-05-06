@@ -284,4 +284,109 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override void RefreshRect(IControl control, RectD rect, bool eraseBackground = true)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void HandleNeeded(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void CaptureMouse(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ReleaseMouseCapture(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void DisableRecreate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void EnableRecreate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Graphics CreateDrawingContext(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override PointD ScreenToClient(IControl control, PointD point)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override PointD ClientToScreen(IControl control, PointD point)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override PointI ScreenToDevice(IControl control, PointD point)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override PointD DeviceToScreen(IControl control, PointI point)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void FocusNextControl(IControl control, bool forward = true, bool nested = true)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override DragDropEffects DoDragDrop(IControl control, object data, DragDropEffects allowedEffects)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void RecreateWindow(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void BeginUpdate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void EndUpdate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetBounds(IControl control, RectD rect, SetBoundsFlags flags)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void BeginInit(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void EndInit(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool SetFocus(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SaveScreenshot(IControl control, string fileName)
+    {
+        throw new NotImplementedException();
+    }
 }
