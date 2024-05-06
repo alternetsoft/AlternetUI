@@ -22,6 +22,13 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control)
+        {
+            return Native.WxOtherFactory.SystemSettingsGetMetric(
+                (int)index,
+                WxPlatformControl.WxWidget(control));
+        }
+
         public override int SystemSettingsGetMetric(SystemSettingsMetric index)
         {
             return Native.WxOtherFactory.SystemSettingsGetMetric((int)index, default);

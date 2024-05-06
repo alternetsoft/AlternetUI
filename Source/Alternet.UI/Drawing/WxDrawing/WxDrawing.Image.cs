@@ -90,13 +90,10 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreateImage(ImageSet imageSet, IControl control)
         {
-            if (control is not Control controlObj)
-                throw new ArgumentException("Control is required.", nameof(control));
-
             var nativeObject = NativeDrawing.Default.CreateImage();
             ((UI.Native.ImageSet)imageSet.NativeObject).InitImageFor(
                 (UI.Native.Image)nativeObject,
-                controlObj.WxWidget);
+                WxPlatformControl.WxWidget(control));
             return nativeObject;
         }
 

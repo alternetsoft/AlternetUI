@@ -258,10 +258,8 @@ namespace Alternet.UI
         /// <param name="rect">Area of the tooltip.</param>
         public void Show(Control control, RectI? rect = null)
         {
-            if (rect is null)
-                Native.WxOtherFactory.RichToolTipShowFor(Handle, control.WxWidget, RectI.Empty);
-            else
-                Native.WxOtherFactory.RichToolTipShowFor(Handle, control.WxWidget, rect.Value);
+            var wxWidget = WxPlatformControl.WxWidget(control);
+            Native.WxOtherFactory.RichToolTipShowFor(Handle, wxWidget, rect ?? RectI.Empty);
         }
 
         /// <summary>

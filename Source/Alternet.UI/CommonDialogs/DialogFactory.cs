@@ -39,7 +39,7 @@ namespace Alternet.UI
             int y = -1,
             bool centre = true)
         {
-            var handle = parent?.WxWidget ?? IntPtr.Zero;
+            var handle = WxPlatformControl.WxWidget(parent);
             defaultValue ??= string.Empty;
             message ??= string.Empty;
             caption ??= CommonStrings.Default.WindowTitleInput;
@@ -99,7 +99,7 @@ namespace Alternet.UI
             caption ??= CommonStrings.Default.WindowTitleInput;
 
             pos ??= PointI.MinusOne;
-            var handle = parent?.WxWidget ?? IntPtr.Zero;
+            var handle = WxPlatformControl.WxWidget(parent);
 
             var result = Native.WxOtherFactory.GetNumberFromUser(
                 message,

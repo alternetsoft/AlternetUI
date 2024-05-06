@@ -18,9 +18,10 @@ namespace Alternet.Drawing
 
         public override object CreateCaret(IControl control, int width, int height)
         {
-            if(control is Control controlObj)
-                return UI.Native.WxOtherFactory.CreateCaret2(controlObj.WxWidget, width, height);
-            throw new ArgumentException("Control is required", nameof(control));
+            return UI.Native.WxOtherFactory.CreateCaret2(
+                WxPlatformControl.WxWidget(control),
+                width,
+                height);
         }
 
         public override int CaretGetBlinkTime()

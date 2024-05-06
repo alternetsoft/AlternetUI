@@ -245,7 +245,7 @@ namespace Alternet.UI
             ImageSet? bitmap = null)
         {
             var ok = NativeControl.AddPage(
-                page.WxWidget,
+                WxPlatformControl.WxWidget(page),
                 caption,
                 select,
                 (UI.Native.ImageSet?)bitmap?.NativeObject);
@@ -289,7 +289,7 @@ namespace Alternet.UI
         {
             var ok = NativeControl.InsertPage(
                 (ulong)pageIdx,
-                page.WxWidget,
+                WxPlatformControl.WxWidget(page),
                 caption,
                 select,
                 (UI.Native.ImageSet?)bitmap?.NativeObject);
@@ -353,7 +353,7 @@ namespace Alternet.UI
         {
             if (page is null)
                 return null;
-            var result = NativeControl.FindPage(page.WxWidget);
+            var result = NativeControl.FindPage(WxPlatformControl.WxWidget(page));
             if (result < 0)
                 return null;
             return result;

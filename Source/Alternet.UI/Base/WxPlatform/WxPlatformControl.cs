@@ -10,6 +10,118 @@ namespace Alternet.UI
 {
     internal class WxPlatformControl : NativeControl
     {
+        public static IntPtr WxWidget(IControl? control)
+        {
+            if (control is null)
+                return default;
+            return ((UI.Native.Control)control.NativeControl).WxWidget;
+        }
+
+        /// <inheritdoc/>
+        public override int PixelFromDip(IControl control, double value)
+        {
+            var wxWidget = ((UI.Native.Control)control.NativeControl).WxWidget;
+            return Native.Control.DrawingFromDip(value, wxWidget);
+        }
+
+        /// <inheritdoc/>
+        public override void SetScrollBar(
+            IControl control,
+            bool isVertical,
+            bool visible,
+            int value,
+            int largeChange,
+            int maximum)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            ((UI.Native.Control)control.NativeControl)
+                .SetScrollBar(orientation, visible, value, largeChange, maximum);
+        }
+
+        /// <inheritdoc/>
+        public override bool IsScrollBarVisible(IControl control, bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return ((UI.Native.Control)control.NativeControl).IsScrollBarVisible(orientation);
+        }
+
+        /// <inheritdoc/>
+        public override int GetScrollBarValue(IControl control, bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return ((UI.Native.Control)control.NativeControl).GetScrollBarValue(orientation);
+        }
+
+        /// <inheritdoc/>
+        public override int GetScrollBarLargeChange(IControl control, bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return ((UI.Native.Control)control.NativeControl).GetScrollBarLargeChange(orientation);
+        }
+
+        /// <inheritdoc/>
+        public override int GetScrollBarMaximum(IControl control, bool isVertical)
+        {
+            Native.ScrollBarOrientation orientation = isVertical
+                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            return ((UI.Native.Control)control.NativeControl).GetScrollBarMaximum(orientation);
+        }
+
+        /// <inheritdoc/>
+        public override double PixelToDip(IControl control, int value)
+        {
+            var wxWidget = ((UI.Native.Control)control.NativeControl).WxWidget;
+            return Native.Control.DrawingToDip(value, wxWidget);
+        }
+
+        /// <inheritdoc/>
+        public override double PixelFromDipF(IControl control, double value)
+        {
+            var wxWidget = ((UI.Native.Control)control.NativeControl).WxWidget;
+            return Native.Control.DrawingFromDipF(value, wxWidget);
+        }
+
+        /// <inheritdoc/>
+        public override RectI GetUpdateClientRectI(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).GetUpdateClientRect();
+        }
+
+        /// <inheritdoc/>
+        public override double GetPixelScaleFactor(IControl control)
+        {
+            var wxWidget = ((UI.Native.Control)control.NativeControl).WxWidget;
+            return Native.Control.DrawingDPIScaleFactor(wxWidget);
+        }
+
+        /// <inheritdoc/>
+        public override void EndIgnoreRecreate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).EndIgnoreRecreate();
+        }
+
+        /// <inheritdoc/>
+        public override void BeginIgnoreRecreate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).BeginIgnoreRecreate();
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetDPI(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).GetDPI();
+        }
+
+        /// <inheritdoc/>
+        public override bool IsTransparentBackgroundSupported(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).IsTransparentBackgroundSupported();
+        }
+
         /// <inheritdoc/>
         public override void BeginUpdate(IControl control)
         {

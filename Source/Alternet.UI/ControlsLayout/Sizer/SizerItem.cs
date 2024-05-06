@@ -16,7 +16,7 @@ namespace Alternet.UI
             int border = 0)
             : this(
                   Native.SizerItem.CreateSizerItem(
-                    window.WxWidget,
+                    WxPlatformControl.WxWidget(window),
                     proportion,
                     (int)flag,
                     border,
@@ -25,7 +25,7 @@ namespace Alternet.UI
         }
 
         public SizerItem(Control window, ISizerFlags sizerFlags)
-            : this(Native.SizerItem.CreateSizerItem2(window.WxWidget, sizerFlags.Handle), true)
+            : this(Native.SizerItem.CreateSizerItem2(WxPlatformControl.WxWidget(window), sizerFlags.Handle), true)
         {
         }
 
@@ -297,7 +297,7 @@ namespace Alternet.UI
 
         public void SetControl(Control control)
         {
-            Native.SizerItem.AssignWindow(Handle, control.WxWidget);
+            Native.SizerItem.AssignWindow(Handle, WxPlatformControl.WxWidget(control));
         }
 
         public void SetSizer(ISizer sizer)

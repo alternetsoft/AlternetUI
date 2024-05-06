@@ -44,7 +44,7 @@ namespace Alternet.UI
 
             foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
             {
-                BaseApplication.Log($"GetMetric({item}) = {ControlUtils.GetMetric(item)}");
+                BaseApplication.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
             }
 
             BaseApplication.LogSeparator();

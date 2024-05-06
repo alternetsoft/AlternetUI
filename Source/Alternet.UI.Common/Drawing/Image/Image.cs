@@ -847,6 +847,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the size of the image in device-independent units (1/96th inch
+        /// per unit).
+        /// </summary>
+        public virtual SizeD SizeDip(IControl control)
+            => control.PixelToDip(PixelSize);
+
+        /// <summary>
+        /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
+        /// </summary>
+        public virtual RectD BoundsDip(IControl control)
+        {
+            var size = SizeDip(control);
+            return (0, 0, size.Width, size.Height);
+        }
+
+        /// <summary>
         /// Gets <see cref="Graphics"/> for this image on which you can paint.
         /// </summary>
         /// <returns></returns>
