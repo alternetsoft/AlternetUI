@@ -49,5 +49,11 @@ namespace Alternet.UI
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
         public T NotImplemented<T>() => throw new NotImplementedException();
+
+        /// <summary>
+        /// Same as <see cref="BaseApplication.Log"/>.
+        /// </summary>
+        /// <param name="s">Object to log.</param>
+        public void Log(object? s) => BaseApplication.Log(s);
     }
 }
