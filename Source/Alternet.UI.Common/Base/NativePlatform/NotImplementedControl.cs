@@ -389,4 +389,74 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override SizeD GetDPI(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool IsTransparentBackgroundSupported(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void EndIgnoreRecreate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void BeginIgnoreRecreate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override double GetPixelScaleFactor(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override RectI GetUpdateClientRectI(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override double PixelToDip(IControl control, int value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override double PixelFromDipF(IControl control, double value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetScrollBar(IControl control, bool isVertical, bool visible, int value, int largeChange, int maximum)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool IsScrollBarVisible(IControl control, bool isVertical)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override int GetScrollBarValue(IControl control, bool isVertical)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override int GetScrollBarLargeChange(IControl control, bool isVertical)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override int GetScrollBarMaximum(IControl control, bool isVertical)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override int PixelFromDip(IControl control, double value)
+    {
+        throw new NotImplementedException();
+    }
 }

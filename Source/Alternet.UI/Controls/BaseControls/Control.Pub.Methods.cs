@@ -1561,7 +1561,7 @@ namespace Alternet.UI
         public virtual SizeD GetDPI()
         {
             if (NativeControl != null)
-                return NativeControl.GetDPI();
+                return GetNative().GetDPI(this);
             if (Parent != null)
                 return Parent.GetDPI();
             return SizeD.Empty;
@@ -1581,9 +1581,9 @@ namespace Alternet.UI
         /// control you want to set transparent background style for as the control for
         /// which this method is called must be fully created.
         /// </remarks>
-        public bool IsTransparentBackgroundSupported()
+        public virtual bool IsTransparentBackgroundSupported()
         {
-            return NativeControl.IsTransparentBackgroundSupported();
+            return GetNative().IsTransparentBackgroundSupported(this);
         }
 
         /// <summary>
@@ -1689,7 +1689,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BeginIgnoreRecreate()
         {
-            NativeControl.BeginIgnoreRecreate();
+            GetNative().BeginIgnoreRecreate(this);
         }
 
         /// <summary>
@@ -1935,7 +1935,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void EndIgnoreRecreate()
         {
-            NativeControl.EndIgnoreRecreate();
+            GetNative().EndIgnoreRecreate(this);
         }
 
         /// <summary>
@@ -1945,7 +1945,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public int PixelFromDip(double value)
         {
-            return Native.Control.DrawingFromDip(value, this.WxWidget);
+            return GetNative().PixelFromDip(this, value);
         }
 
         /// <summary>
@@ -1979,19 +1979,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="BaseApplication.Log"/>.
-        /// </summary>
-        /// <param name="s"></param>
-        public void Log(object? s) => Application.Log(s);
-
-        /// <summary>
         /// Gets scale factor used in device-independent units (1/96th inch per unit) to/from
         /// pixels conversions.
         /// </summary>
         /// <returns></returns>
-        public double GetPixelScaleFactor()
+        public virtual double GetPixelScaleFactor()
         {
-            return Native.Control.DrawingDPIScaleFactor(this.WxWidget);
+            return GetNative().GetPixelScaleFactor(this);
         }
 
         /// <summary>
@@ -2019,9 +2013,9 @@ namespace Alternet.UI
         /// can be used in paint events. Returns rectangle in pixels.
         /// </summary>
         /// <returns></returns>
-        public RectI GetUpdateClientRectI()
+        public virtual RectI GetUpdateClientRectI()
         {
-            return NativeControl.GetUpdateClientRect();
+            return GetNative().GetUpdateClientRectI(this);
         }
 
         /// <summary>
@@ -2029,9 +2023,9 @@ namespace Alternet.UI
         /// can be used in paint events. Returns rectangle in dips (1/96 inch).
         /// </summary>
         /// <returns></returns>
-        public RectD GetUpdateClientRect()
+        public virtual RectD GetUpdateClientRect()
         {
-            var resultI = NativeControl.GetUpdateClientRect();
+            var resultI = GetUpdateClientRectI();
             var resultD = PixelToDip(resultI);
             return resultD;
         }
@@ -2044,16 +2038,6 @@ namespace Alternet.UI
         public RectD PixelToDip(RectI value)
         {
             return new(PixelToDip(value.Location), PixelToDip(value.Size));
-        }
-
-        /// <summary>
-        /// Converts pixels to device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="value">Value in pixels.</param>
-        /// <returns></returns>
-        public double PixelToDip(int value)
-        {
-            return Native.Control.DrawingToDip(value, this.WxWidget);
         }
 
         /// <summary>
@@ -2140,13 +2124,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts pixels to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value">Value in pixels.</param>
+        /// <returns></returns>
+        public double PixelToDip(int value)
+        {
+            return GetNative().PixelToDip(this, value);
+        }
+
+        /// <summary>
         /// Converts device-independent units (1/96th inch per unit) to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         public double PixelFromDipF(double value)
         {
-            return Native.Control.DrawingFromDipF(value, this.WxWidget);
+            return GetNative().PixelFromDipF(this, value);
         }
 
         /// <summary>
@@ -2158,7 +2152,7 @@ namespace Alternet.UI
         /// <param name="invalidateChildren">
         /// <see langword="true" /> to invalidate the control's child controls;
         /// otherwise, <see langword="false"/>.</param>
-        public void Invalidate(Region? region, bool invalidateChildren = false)
+        public virtual void Invalidate(Region? region, bool invalidateChildren = false)
         {
             if (region is null || !region.IsOk || region.IsEmpty)
                 return;
@@ -2174,11 +2168,14 @@ namespace Alternet.UI
         /// <param name="value">Thumb position.</param>
         /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
         /// <param name="maximum">Scrollbar Range.</param>
-        public void SetScrollBar(bool isVertical, bool visible, int value, int largeChange, int maximum)
+        public virtual void SetScrollBar(
+            bool isVertical,
+            bool visible,
+            int value,
+            int largeChange,
+            int maximum)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
-            NativeControl.SetScrollBar(orientation, visible, value, largeChange, maximum);
+            GetNative().SetScrollBar(this, isVertical, visible, value, largeChange, maximum);
         }
 
         /// <summary>
@@ -2186,11 +2183,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
         /// <returns></returns>
-        public bool IsScrollBarVisible(bool isVertical)
+        public virtual bool IsScrollBarVisible(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
-            return NativeControl.IsScrollBarVisible(orientation);
+            return GetNative().IsScrollBarVisible(this, isVertical);
         }
 
         /// <summary>
@@ -2198,11 +2193,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
         /// <returns></returns>
-        public int GetScrollBarValue(bool isVertical)
+        public virtual int GetScrollBarValue(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
-            return NativeControl.GetScrollBarValue(orientation);
+            return GetNative().GetScrollBarValue(this, isVertical);
         }
 
         /// <summary>
@@ -2210,11 +2203,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
         /// <returns></returns>
-        public int GetScrollBarLargeChange(bool isVertical)
+        public virtual int GetScrollBarLargeChange(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
-            return NativeControl.GetScrollBarLargeChange(orientation);
+            return GetNative().GetScrollBarLargeChange(this, isVertical);
         }
 
         /// <summary>
@@ -2222,14 +2213,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
         /// <returns></returns>
-        public int GetScrollBarMaximum(bool isVertical)
+        public virtual int GetScrollBarMaximum(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
-            return NativeControl.GetScrollBarMaximum(orientation);
+            return GetNative().GetScrollBarMaximum(this, isVertical);
         }
 
-        private class SubsControl : Control
+        /*private class SubsControl : Control
         {
             public SubsControl()
             {
@@ -2259,6 +2248,6 @@ namespace Alternet.UI
                     Application.AddIdleTask(Control.OnLayout);
                 }
             }
-        }
+        }*/
     }
 }

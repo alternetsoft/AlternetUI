@@ -166,4 +166,38 @@ public abstract class NativeControl
     public abstract bool SetFocus(IControl control);
 
     public abstract void SaveScreenshot(IControl control, string fileName);
+
+    public abstract SizeD GetDPI(IControl control);
+
+    public abstract bool IsTransparentBackgroundSupported(IControl control);
+
+    public abstract void EndIgnoreRecreate(IControl control);
+
+    public abstract void BeginIgnoreRecreate(IControl control);
+
+    public abstract double GetPixelScaleFactor(IControl control);
+
+    public abstract RectI GetUpdateClientRectI(IControl control);
+
+    public abstract double PixelToDip(IControl control, int value);
+
+    public abstract int PixelFromDip(IControl control, double value);
+
+    public abstract double PixelFromDipF(IControl control, double value);
+
+    public abstract void SetScrollBar(
+        IControl control,
+        bool isVertical,
+        bool visible,
+        int value,
+        int largeChange,
+        int maximum);
+
+    public abstract bool IsScrollBarVisible(IControl control, bool isVertical);
+
+    public abstract int GetScrollBarValue(IControl control, bool isVertical);
+
+    public abstract int GetScrollBarLargeChange(IControl control, bool isVertical);
+
+    public abstract int GetScrollBarMaximum(IControl control, bool isVertical);
 }
