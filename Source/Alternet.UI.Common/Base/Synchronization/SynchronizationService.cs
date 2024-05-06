@@ -3,13 +3,13 @@ using System.Threading;
 
 namespace Alternet.UI
 {
-    internal static class SynchronizationService
+    public static class SynchronizationService
     {
         public static bool InvokeRequired
         {
             get
             {
-                var currentApplication = Application.Current;
+                var currentApplication = BaseApplication.Current;
                 if (currentApplication?.IsDisposed ?? true)
                     return false;
 
@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         public static IAsyncResult BeginInvoke(Delegate method, object?[] args)
         {
-            var currentApplication = Application.Current;
+            var currentApplication = BaseApplication.Current;
             if (currentApplication?.IsDisposed ?? true)
                 throw new InvalidOperationException();
 

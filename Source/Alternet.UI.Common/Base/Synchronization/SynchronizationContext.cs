@@ -85,6 +85,40 @@ namespace Alternet.UI
         public static void Uninstall() => Uninstall(false);
 
         /// <summary>
+        /// Instantiate and install a op sync context, and save off the old one.
+        /// </summary>
+        public static void InstallIfNeeded()
+        {
+            if (!AutoInstall || contextInstallationInProgress)
+                return;
+
+            if (Current == null)
+                previousSynchronizationContext = null;
+
+            if (previousSynchronizationContext != null)
+                return;
+
+            contextInstallationInProgress = true;
+            try
+            {
+                var currentContext = AsyncOperationManager.SynchronizationContext;
+
+                // Make sure we either have no sync context or that we have
+                // one of type SynchronizationContext
+                if (currentContext == null
+                    || currentContext.GetType() == typeof(System.Threading.SynchronizationContext))
+                {
+                    previousSynchronizationContext = currentContext;
+                    AsyncOperationManager.SynchronizationContext = new SynchronizationContext();
+                }
+            }
+            finally
+            {
+                contextInstallationInProgress = false;
+            }
+        }
+
+        /// <summary>
         /// Dispatches a synchronous message to a synchronization context
         /// </summary>
         /// <param name="d">The <see cref="SendOrPostCallback"/> delegate to call.</param>
@@ -122,40 +156,6 @@ namespace Alternet.UI
         public override void Post(SendOrPostCallback d, object? state)
         {
             SynchronizationService.BeginInvoke(d, new object?[] { state });
-        }
-
-        /// <summary>
-        /// Instantiate and install a op sync context, and save off the old one.
-        /// </summary>
-        internal static void InstallIfNeeded()
-        {
-            if (!AutoInstall || contextInstallationInProgress)
-                return;
-
-            if (Current == null)
-                previousSynchronizationContext = null;
-
-            if (previousSynchronizationContext != null)
-                return;
-
-            contextInstallationInProgress = true;
-            try
-            {
-                var currentContext = AsyncOperationManager.SynchronizationContext;
-
-                // Make sure we either have no sync context or that we have
-                // one of type SynchronizationContext
-                if (currentContext == null
-                    || currentContext.GetType() == typeof(System.Threading.SynchronizationContext))
-                {
-                    previousSynchronizationContext = currentContext;
-                    AsyncOperationManager.SynchronizationContext = new SynchronizationContext();
-                }
-            }
-            finally
-            {
-                contextInstallationInProgress = false;
-            }
         }
 
         internal static void Uninstall(bool turnOffAutoInstall)

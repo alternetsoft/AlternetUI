@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     public class BaseApplication : BaseObject
@@ -94,6 +96,9 @@ namespace Alternet.UI
         private static bool terminating = false;
         private static int logUpdateCount;
         private static bool logFileIsEnabled;
+        private static BaseApplication? current;
+
+        private volatile bool isDisposed;
 
         static BaseApplication()
         {
@@ -166,6 +171,26 @@ namespace Alternet.UI
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static bool DebugWriteLine { get; set; } = false;
+
+        /// <summary>
+        /// Gets the <see cref="Application"/> object for the currently
+        /// runnning application.
+        /// </summary>
+        public static BaseApplication Current
+        {
+            get
+            {
+                // maybe make it thread static?
+                // maybe move this to native?
+                return current ?? throw new InvalidOperationException(
+                    ErrorMessages.Default.CurrentApplicationIsNotSet);
+            }
+
+            protected set
+            {
+                current = value;
+            }
+        }
 
         /// <summary>
         /// Gets how the application responds to unhandled exceptions.
@@ -244,6 +269,22 @@ namespace Alternet.UI
         ///  value is true.
         /// </remarks>
         public static bool SupressDiagnostics { get; set; } = true;
+
+        /// <summary>
+        /// Gets whether application was created and <see cref="Current"/> property is assigned.
+        /// </summary>
+        public static bool HasApplication => current is not null;
+
+        /// <summary>
+        /// Gets whether <see cref="Dispose(bool)"/> has been called.
+        /// </summary>
+        public virtual bool IsDisposed
+        {
+            get => isDisposed;
+            protected set => isDisposed = value;
+        }
+
+        protected internal virtual bool InvokeRequired => false;
 
         /// <summary>
         /// Logs name and value pair as "{name} = {value}".
@@ -581,6 +622,10 @@ namespace Alternet.UI
         public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
         {
             unhandledExceptionModeDebug = mode;
+        }
+
+        protected internal virtual void BeginInvoke(Action action)
+        {
         }
 
         /// <summary>

@@ -24,14 +24,12 @@ namespace Alternet.UI
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
-        private static Application? current;
         private static IconSet? icon;
         private static bool inOnThreadException;
 
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
-        private volatile bool isDisposed;
         private Native.Application nativeApplication;
         private VisualTheme visualTheme = StockVisualThemes.Native;
         private Window? window;
@@ -54,7 +52,7 @@ namespace Alternet.UI
             nativeApplication.LogMessage += NativeApplication_LogMessage;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
-            current = this;
+            BaseApplication.Current = this;
 
             keyboardInputProvider = new KeyboardInputProvider(
                 nativeApplication.Keyboard);
@@ -132,7 +130,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether application has forms.
         /// </summary>
-        public static bool HasForms => Application.current?.Windows.Count > 0;
+        public static bool HasForms => HasApplication && Current.Windows.Count > 0;
 
         /// <summary>
         /// Gets whether application was initialized;
@@ -158,14 +156,11 @@ namespace Alternet.UI
         /// Gets the <see cref="Application"/> object for the currently
         /// runnning application.
         /// </summary>
-        public static Application Current
+        public static new Application Current
         {
             get
             {
-                // maybe make it thread static?
-                // maybe move this to native?
-                return current ?? throw new InvalidOperationException(
-                    ErrorMessages.Default.CurrentApplicationIsNotSet);
+                return (Application)BaseApplication.Current;
             }
         }
 
@@ -188,15 +183,6 @@ namespace Alternet.UI
                 var result = Windows.Where(x => x.Visible);
                 return result;
             }
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="Dispose(bool)"/> has been called.
-        /// </summary>
-        public virtual bool IsDisposed
-        {
-            get => isDisposed;
-            private set => isDisposed = value;
         }
 
         /// <summary>
@@ -355,9 +341,10 @@ namespace Alternet.UI
             set => nativeApplication.InUixmlPreviewerMode = value;
         }
 
-        internal bool InvokeRequired => nativeApplication.InvokeRequired;
-
         internal string EventArgString => NativeApplication.EventArgString;
+
+        /// <inheritdoc/>
+        protected override bool InvokeRequired => nativeApplication.InvokeRequired;
 
         /// <summary>
         /// Instructs the application to display a dialog with an optional
@@ -547,7 +534,8 @@ namespace Alternet.UI
         /// </summary>
         public static void Exit()
         {
-            current?.nativeApplication.Exit();
+            if(HasApplication)
+                Current.nativeApplication.Exit();
         }
 
         /// <summary>
@@ -751,7 +739,8 @@ namespace Alternet.UI
             windows.Remove(window);
         }
 
-        internal void BeginInvoke(Action action)
+        /// <inheritdoc/>
+        protected override void BeginInvoke(Action action)
         {
             nativeApplication.BeginInvoke(action);
         }
@@ -765,7 +754,7 @@ namespace Alternet.UI
         /// resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!isDisposed)
+            if (!IsDisposed)
             {
                 if (disposing)
                 {
@@ -776,7 +765,7 @@ namespace Alternet.UI
                     nativeApplication.Dispose();
                     nativeApplication = null!;
 
-                    current = null;
+                    BaseApplication.Current = null!;
                 }
 
                 IsDisposed = true;
