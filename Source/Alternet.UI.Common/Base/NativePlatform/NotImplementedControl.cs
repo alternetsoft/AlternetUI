@@ -15,7 +15,22 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
+    public override bool GetAllowDrop(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
     public override Color GetBackgroundColor(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ControlBackgroundStyle GetBackgroundStyle(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetBackgroundStyle(IControl control, ControlBackgroundStyle value)
     {
         throw new NotImplementedException();
     }
@@ -105,6 +120,11 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
+    public override void SetAllowDrop(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
     public override void SetBackgroundColor(IControl control, Color value)
     {
         throw new NotImplementedException();
@@ -171,6 +191,71 @@ internal class NotImplementedControl : NativeControl
     }
 
     public override void SetVisible(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool IsFocused(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetAcceptsFocus(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetAcceptsFocus(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetAcceptsFocusFromKeyboard(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetAcceptsFocusFromKeyboard(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetAcceptsFocusRecursively(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetAcceptsFocusRecursively(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetAcceptsFocusAll(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetAcceptsFocusAll(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetProcessIdle(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetProcessIdle(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetBindScrollEvents(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetBindScrollEvents(IControl control, bool value)
     {
         throw new NotImplementedException();
     }

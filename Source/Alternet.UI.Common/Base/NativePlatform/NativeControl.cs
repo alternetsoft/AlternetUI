@@ -77,4 +77,38 @@ public abstract class NativeControl
     public abstract bool GetTabStop(IControl control);
 
     public abstract void SetTabStop(IControl control, bool value);
+
+    public abstract bool GetAllowDrop(IControl control);
+
+    public abstract void SetAllowDrop(IControl control, bool value);
+
+    public abstract ControlBackgroundStyle GetBackgroundStyle(IControl control);
+
+    public abstract void SetBackgroundStyle(IControl control, ControlBackgroundStyle value);
+
+    public abstract bool IsFocused(IControl control);
+
+    public abstract bool GetAcceptsFocus(IControl control);
+
+    public abstract void SetAcceptsFocus(IControl control, bool value);
+
+    public abstract bool GetAcceptsFocusFromKeyboard(IControl control);
+
+    public abstract void SetAcceptsFocusFromKeyboard(IControl control, bool value);
+
+    public abstract bool GetAcceptsFocusRecursively(IControl control);
+
+    public abstract void SetAcceptsFocusRecursively(IControl control, bool value);
+
+    public abstract bool GetAcceptsFocusAll(IControl control);
+
+    public abstract void SetAcceptsFocusAll(IControl control, bool value);
+
+    public abstract bool GetProcessIdle(IControl control);
+
+    public abstract void SetProcessIdle(IControl control, bool value);
+
+    public abstract bool GetBindScrollEvents(IControl control);
+
+    public abstract void SetBindScrollEvents(IControl control, bool value);
 }

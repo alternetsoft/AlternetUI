@@ -2513,8 +2513,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool AllowDrop
         {
-            get => NativeControl.AllowDrop;
-            set => NativeControl.AllowDrop = value;
+            get => GetNative().GetAllowDrop(this);
+            set => GetNative().SetAllowDrop(this, value);
         }
 
         /// <summary>
@@ -2527,15 +2527,14 @@ namespace Alternet.UI
         {
             get
             {
-                return (ControlBackgroundStyle?)NativeControl.GetBackgroundStyle()
-                    ?? ControlBackgroundStyle.System;
+                return GetNative().GetBackgroundStyle(this);
             }
 
             set
             {
                 if (value == ControlBackgroundStyle.Transparent)
                     return;
-                NativeControl.SetBackgroundStyle((int)value);
+                GetNative().SetBackgroundStyle(this, value);
             }
         }
 
@@ -2563,7 +2562,7 @@ namespace Alternet.UI
                     return RectD.Empty;
 
                 var padding = Padding;
-                var intrinsicPadding = NativeControl.IntrinsicLayoutPadding;
+                var intrinsicPadding = GetNative().GetIntrinsicLayoutPadding(this);
 
                 return new RectD(
                     new PointD(
@@ -2624,7 +2623,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.IsFocused;
+                return GetNative().IsFocused(this);
             }
         }
 
@@ -2646,14 +2645,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.AcceptsFocus;
+                return GetNative().GetAcceptsFocusAll(this);
             }
 
             set
             {
-                if (NativeControl is null)
-                    return;
-                NativeControl.AcceptsFocus = value;
+                GetNative().SetAcceptsFocusAll(this, value);
             }
         }
 
@@ -2675,12 +2672,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.AcceptsFocusFromKeyboard;
+                return GetNative().GetAcceptsFocusFromKeyboard(this);
             }
 
             set
             {
-                NativeControl.AcceptsFocusFromKeyboard = value;
+                GetNative().SetAcceptsFocusFromKeyboard(this, value);
             }
         }
 
@@ -2695,12 +2692,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.AcceptsFocusRecursively;
+                return GetNative().GetAcceptsFocusRecursively(this);
             }
 
             set
             {
-                NativeControl.AcceptsFocusRecursively = value;
+                GetNative().SetAcceptsFocusRecursively(this, value);
             }
         }
 
@@ -2713,12 +2710,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.AcceptsFocusAll;
+                return GetNative().GetAcceptsFocusAll(this);
             }
 
             set
             {
-                NativeControl.AcceptsFocusAll = value;
+                GetNative().SetAcceptsFocusAll(this, value);
             }
         }
 
@@ -2730,12 +2727,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.ProcessIdle;
+                return GetNative().GetProcessIdle(this);
             }
 
             set
             {
-                NativeControl.ProcessIdle = value;
+                GetNative().SetProcessIdle(this, value);
             }
         }
 
@@ -2777,12 +2774,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.BindScrollEvents;
+                return GetNative().GetBindScrollEvents(this);
             }
 
             set
             {
-                NativeControl.BindScrollEvents = value;
+                GetNative().SetBindScrollEvents(this, value);
             }
         }
 
