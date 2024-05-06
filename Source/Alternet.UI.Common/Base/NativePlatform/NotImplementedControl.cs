@@ -259,4 +259,29 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override void Raise(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void CenterOnParent(IControl control, GenericOrientation direction)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Lower(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SendSizeEvent(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void UnsetToolTip(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }

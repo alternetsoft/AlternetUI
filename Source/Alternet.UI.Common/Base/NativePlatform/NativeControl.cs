@@ -111,4 +111,14 @@ public abstract class NativeControl
     public abstract bool GetBindScrollEvents(IControl control);
 
     public abstract void SetBindScrollEvents(IControl control, bool value);
+
+    public abstract void Raise(IControl control);
+
+    public abstract void CenterOnParent(IControl control, GenericOrientation direction);
+
+    public abstract void Lower(IControl control);
+
+    public abstract void SendSizeEvent(IControl control);
+
+    public abstract void UnsetToolTip(IControl control);
 }

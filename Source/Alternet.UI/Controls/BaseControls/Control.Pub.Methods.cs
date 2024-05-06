@@ -170,7 +170,7 @@ namespace Alternet.UI
         /// raise the window, not do it at all or indicate that a window requested to be
         /// raised in some other way, e.g.by flashing its icon if it is minimized.
         /// </remarks>
-        public virtual void Raise() => NativeControl.Raise();
+        public virtual void Raise() => GetNative().Raise(this);
 
         /// <summary>
         /// Called by the child control when its property is changed.
@@ -213,7 +213,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void CenterOnParent(GenericOrientation direction)
         {
-            NativeControl.CenterOnParent((int)direction);
+            GetNative().CenterOnParent(this, direction);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Alternet.UI
         /// Lowers the window to the bottom of the window hierarchy (Z-order).
         /// This function only works for top level windows.
         /// </summary>
-        public virtual void Lower() => NativeControl.Lower();
+        public virtual void Lower() => GetNative().Lower(this);
 
         /// <summary>
         /// Gets the background brush for specified state of the control.
@@ -274,9 +274,9 @@ namespace Alternet.UI
         /// <summary>
         /// Sends size event.
         /// </summary>
-        public void SendSizeEvent()
+        public virtual void SendSizeEvent()
         {
-            NativeControl.SendSizeEvent();
+            GetNative().SendSizeEvent(this);
         }
 
         /// <summary>
@@ -303,10 +303,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HideToolTip()
         {
-            if (NativeControl is null)
-                return;
-            NativeControl.UnsetToolTip();
-            NativeControl.ToolTip = GetRealToolTip();
+            GetNative().UnsetToolTip(this);
+            GetNative().SetToolTip(this, GetRealToolTip());
         }
 
         /// <summary>
@@ -387,9 +385,9 @@ namespace Alternet.UI
         /// paint operation), and causes a paint message to be sent to the
         /// control.</summary>
         /// <param name="rect">A <see cref="RectD" /> that represents the region to invalidate.</param>
-        public void Invalidate(RectD rect)
+        public virtual void Invalidate(RectD rect)
         {
-            NativeControl.RefreshRect(rect, true);
+            RefreshRect(rect, true);
         }
 
         /// <summary>
@@ -398,7 +396,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">A <see cref="RectD" /> that represents the region to invalidate.</param>
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
-        public void RefreshRect(RectD rect, bool eraseBackground = true)
+        public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
             NativeControl.RefreshRect(rect, eraseBackground);
         }

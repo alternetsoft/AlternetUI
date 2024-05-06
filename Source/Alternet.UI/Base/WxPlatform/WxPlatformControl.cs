@@ -11,6 +11,36 @@ namespace Alternet.UI
     internal class WxPlatformControl : NativeControl
     {
         /// <inheritdoc/>
+        public override void Raise(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).Raise();
+        }
+
+        /// <inheritdoc/>
+        public override void CenterOnParent(IControl control, GenericOrientation direction)
+        {
+            ((UI.Native.Control)control.NativeControl).CenterOnParent((int)direction);
+        }
+
+        /// <inheritdoc/>
+        public override void Lower(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).Lower();
+        }
+
+        /// <inheritdoc/>
+        public override void SendSizeEvent(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).SendSizeEvent();
+        }
+
+        /// <inheritdoc/>
+        public override void UnsetToolTip(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).UnsetToolTip();
+        }
+
+        /// <inheritdoc/>
         public override bool GetBindScrollEvents(IControl control)
         {
             return ((UI.Native.Control)control.NativeControl).BindScrollEvents;
