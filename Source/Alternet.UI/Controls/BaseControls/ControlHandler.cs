@@ -145,7 +145,7 @@ namespace Alternet.UI
         {
             if (Control.IsDummy)
                 return SizeD.Empty;
-            var s = NativeControl?.GetPreferredSize(availableSize) ?? SizeD.Empty;
+            var s = NativeControl.GetPreferredSize(availableSize);
             s += Control.Padding.Size;
             return new SizeD(
                 double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
@@ -410,7 +410,7 @@ namespace Alternet.UI
         private void TryInsertNativeControl(Control childControl)
         {
             // todo: use index
-            var childNativeControl = childControl.Handler.NativeControl;
+            var childNativeControl = childControl.NativeControl;
             if (childNativeControl == null)
                 return;
 
@@ -432,23 +432,20 @@ namespace Alternet.UI
 
         private void NativeControl_VisibleChanged()
         {
-            if (NativeControl != null)
-            {
-                bool visible = NativeControl.Visible;
-                Control.Visible = visible;
+            bool visible = Control.GetNative().GetVisible(Control);
+            Control.Visible = visible;
 
-                if (Application.IsLinuxOS && visible)
-                {
-                    // todo: this is a workaround for a problem on Linux when
-                    // ClientSize is not reported correctly until the window is shown
-                    // So we need to relayout all after the proper client size is available
-                    // This should be changed later in respect to RedrawOnResize functionality.
-                    // Also we may need to do this for top-level windows.
-                    // Doing this on Windows results in strange glitches like disappearing
-                    // tab controls' tab.
-                    // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
-                    Control.PerformLayout();
-                }
+            if (BaseApplication.IsLinuxOS && visible)
+            {
+                // todo: this is a workaround for a problem on Linux when
+                // ClientSize is not reported correctly until the window is shown
+                // So we need to relayout all after the proper client size is available
+                // This should be changed later in respect to RedrawOnResize functionality.
+                // Also we may need to do this for top-level windows.
+                // Doing this on Windows results in strange glitches like disappearing
+                // tab controls' tab.
+                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                Control.PerformLayout();
             }
         }
 

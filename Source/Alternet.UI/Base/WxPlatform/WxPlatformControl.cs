@@ -18,6 +18,84 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool BeginRepositioningChildren(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).BeginRepositioningChildren();
+        }
+
+        /// <inheritdoc/>
+        public override void AlwaysShowScrollbars(IControl control, bool hflag = true, bool vflag = true)
+        {
+            ((UI.Native.Control)control.NativeControl).AlwaysShowScrollbars(hflag, vflag);
+        }
+
+        /// <inheritdoc/>
+        public override void EndRepositioningChildren(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).EndRepositioningChildren();
+        }
+
+        /// <inheritdoc/>
+        public override void SendMouseDownEvent(IControl control, int x, int y)
+        {
+            ((UI.Native.Control)control.NativeControl).SendMouseDownEvent(x, y);
+        }
+
+        /// <inheritdoc/>
+        public override void SendMouseUpEvent(IControl control, int x, int y)
+        {
+            ((UI.Native.Control)control.NativeControl).SendMouseUpEvent(x, y);
+        }
+
+        /// <inheritdoc/>
+        public override Color GetDefaultAttributesBgColor(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).GetDefaultAttributesBgColor();
+        }
+
+        /// <inheritdoc/>
+        public override Color GetDefaultAttributesFgColor(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).GetDefaultAttributesFgColor();
+        }
+
+        /// <inheritdoc/>
+        public override Font? GetDefaultAttributesFont(IControl control)
+        {
+            return Font.FromInternal(((UI.Native.Control)control.NativeControl).GetDefaultAttributesFont());
+        }
+
+        /// <inheritdoc/>
+        public override bool GetProcessUIUpdates(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).ProcessUIUpdates;
+        }
+
+        /// <inheritdoc/>
+        public override void SetProcessUIUpdates(IControl control, bool value)
+        {
+            ((UI.Native.Control)control.NativeControl).ProcessUIUpdates = value;
+        }
+
+        /// <inheritdoc/>
+        public override void SetEnabled(IControl control, bool value)
+        {
+            ((UI.Native.Control)control.NativeControl).Enabled = value;
+        }
+
+        /// <inheritdoc/>
+        public override void ResetBackgroundColor(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).ResetBackgroundColor();
+        }
+
+        /// <inheritdoc/>
+        public override void ResetForegroundColor(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).ResetForegroundColor();
+        }
+
+        /// <inheritdoc/>
         public override int PixelFromDip(IControl control, double value)
         {
             var wxWidget = ((UI.Native.Control)control.NativeControl).WxWidget;

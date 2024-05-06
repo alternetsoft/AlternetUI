@@ -459,4 +459,69 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override void ResetBackgroundColor(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ResetForegroundColor(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetEnabled(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool GetProcessUIUpdates(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetProcessUIUpdates(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Color GetDefaultAttributesBgColor(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Color GetDefaultAttributesFgColor(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Font? GetDefaultAttributesFont(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SendMouseDownEvent(IControl control, int x, int y)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SendMouseUpEvent(IControl control, int x, int y)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool BeginRepositioningChildren(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void EndRepositioningChildren(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void AlwaysShowScrollbars(IControl control, bool hflag = true, bool vflag = true)
+    {
+        throw new NotImplementedException();
+    }
 }

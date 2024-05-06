@@ -106,17 +106,16 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl?.SelectedPageIndex;
-                if (result is null || result < 0 || result >= Pages.Count)
+                var result = NativeControl.SelectedPageIndex;
+                if (result < 0 || result >= Pages.Count)
                     return null;
-                return result.Value;
+                return result;
             }
 
             set
             {
                 value ??= -1;
-                if (NativeControl is not null)
-                    NativeControl.SelectedPageIndex = value.Value;
+                NativeControl.SelectedPageIndex = value.Value;
             }
         }
 

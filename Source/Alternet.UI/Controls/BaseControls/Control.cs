@@ -1196,13 +1196,6 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <summary>
-        /// Gets pointer to WxWindow. Do not use it. Added here only for test purposes.
-        /// Can be removed at any time.
-        /// </summary>
-        [Browsable(false)]
-        public IntPtr WxWidget => NativeControl.WxWidget;*/
-
         /// <summary>
         /// Gets or sets the distance between the top edge of the control
         /// and the top edge of its container's client area.

@@ -329,7 +329,7 @@ namespace Alternet.UI
             ClientSize = newSize + new SizeD(1, 0);
             ClientSize = newSize;
             Refresh();
-            NativeControl.SendSizeEvent();
+            SendSizeEvent();
         }
 
         /// <summary>

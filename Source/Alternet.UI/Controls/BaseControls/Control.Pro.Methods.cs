@@ -79,7 +79,7 @@ namespace Alternet.UI
             var intrinsicPadding = new Thickness();
             var nativeControl = NativeControl;
             if (nativeControl != null)
-                intrinsicPadding = nativeControl.IntrinsicPreferredSizePadding;
+                intrinsicPadding = GetNative().GetIntrinsicPreferredSizePadding(this);
 
             return preferredSize + padding.Size + intrinsicPadding.Size;
         }
@@ -175,9 +175,9 @@ namespace Alternet.UI
         protected virtual void OnHandleCreated(EventArgs e)
         {
             if (BackgroundColor is not null)
-                NativeControl.BackgroundColor = BackgroundColor;
+                GetNative().SetBackgroundColor(this, BackgroundColor);
             if (ForegroundColor is not null)
-                NativeControl.ForegroundColor = ForegroundColor;
+                GetNative().SetForegroundColor(this, ForegroundColor);
         }
 
         /// <summary>

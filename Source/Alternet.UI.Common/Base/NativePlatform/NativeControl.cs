@@ -200,4 +200,30 @@ public abstract class NativeControl
     public abstract int GetScrollBarLargeChange(IControl control, bool isVertical);
 
     public abstract int GetScrollBarMaximum(IControl control, bool isVertical);
+
+    public abstract void ResetBackgroundColor(IControl control);
+
+    public abstract void ResetForegroundColor(IControl control);
+
+    public abstract void SetEnabled(IControl control, bool value);
+
+    public abstract bool GetProcessUIUpdates(IControl control);
+
+    public abstract void SetProcessUIUpdates(IControl control, bool value);
+
+    public abstract Color GetDefaultAttributesBgColor(IControl control);
+
+    public abstract Color GetDefaultAttributesFgColor(IControl control);
+
+    public abstract Font? GetDefaultAttributesFont(IControl control);
+
+    public abstract void SendMouseDownEvent(IControl control, int x, int y);
+
+    public abstract void SendMouseUpEvent(IControl control, int x, int y);
+
+    public abstract bool BeginRepositioningChildren(IControl control);
+
+    public abstract void EndRepositioningChildren(IControl control);
+
+    public abstract void AlwaysShowScrollbars(IControl control, bool hflag = true, bool vflag = true);
 }

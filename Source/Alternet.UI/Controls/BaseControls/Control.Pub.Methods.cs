@@ -1655,7 +1655,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
+        public virtual SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
         /// Call this function to force one or both scrollbars to be always shown, even if
@@ -1666,9 +1666,9 @@ namespace Alternet.UI
         /// <remarks>
         /// This function is currently only implemented under Mac/Carbon.
         /// </remarks>
-        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
+        public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
-            NativeControl?.AlwaysShowScrollbars(hflag, vflag);
+            GetNative().AlwaysShowScrollbars(this, hflag, vflag);
         }
 
         /// <summary>

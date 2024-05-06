@@ -29,13 +29,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl?.ProcessUIUpdates ?? false;
+                return GetNative().GetProcessUIUpdates(this);
             }
 
             set
             {
-                if (NativeControl is not null)
-                    NativeControl.ProcessUIUpdates = value;
+                GetNative().SetProcessUIUpdates(this, value);
             }
         }
 
