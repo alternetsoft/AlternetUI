@@ -22,17 +22,17 @@ namespace ControlsSample
             MinChildMargin = 5;
             Size = (800, 600);
 
-            AddLabels(
+            ControlUtils.AddLabels(this,
                 "This demo send mouse clicks and key presses to operating system",
                 "in order to control user interface of the application.",
                 "Press F5 to start.");
 
-            button1 = AddButton("Button 1", () =>
+            button1 = ControlUtils.AddButton(this, "Button 1", () =>
             {
                 Application.Log("Button 1 clicked");
             });
 
-            button2 = AddButton("Button 2", () =>
+            button2 = ControlUtils.AddButton(this, "Button 2", () =>
             {
                 Application.Log("Button 2 clicked");
             });
@@ -43,14 +43,13 @@ namespace ControlsSample
             editor2 = new TextBox();
             editor2.Parent = this;
 
-            AddLabels(
+            ControlUtils.AddLabels(this,
                 "Simulator moves mouse to 'Button1' and clicks it.",
                 "After that, it moves mouse to the editor, clicks it",
                 "and enters 'Hello' text.");
 
-            AddLabels(
+            ControlUtils.AddLabels(this,
                 "Simulator currently doesn't work when using Wayland on Linux.");
-
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

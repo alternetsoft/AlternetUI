@@ -40,7 +40,7 @@ namespace ControlsSample
 
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
 
-            AddVerticalStackPanel()
+            ControlUtils.AddVerticalStackPanel(this)
             .AddButtons(
                 ("Play", Play),
                 ("Stop", Stop))

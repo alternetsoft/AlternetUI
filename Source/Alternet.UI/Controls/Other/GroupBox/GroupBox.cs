@@ -64,7 +64,7 @@ namespace Alternet.UI
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
             // Ensure the group box label is included in the size.
-            var nativeControlSize = Handler.GetNativeControlSize(availableSize);
+            var nativeControlSize = GetNativeControlSize(availableSize);
             var calculatedSize = base.GetPreferredSize(availableSize);
 
             return new SizeD(

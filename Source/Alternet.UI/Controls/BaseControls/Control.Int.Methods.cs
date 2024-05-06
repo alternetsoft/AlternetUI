@@ -64,7 +64,7 @@ namespace Alternet.UI
         {
             if (container.HasChildren)
                 return container.GetSpecifiedOrChildrenPreferredSize(availableSize);
-            return container.Handler.GetNativeControlSize(availableSize);
+            return container.GetNativeControlSize(availableSize);
         }
 
         internal static Color GetClassDefaultAttributesBgColor(
@@ -442,6 +442,22 @@ namespace Alternet.UI
         internal void EndRepositioningChildren()
         {
             GetNative().EndRepositioningChildren(this);
+        }
+
+        internal IntPtr GetHandle()
+        {
+            return GetNative().GetHandle(this);
+        }
+
+        internal SizeD GetNativeControlSize(SizeD availableSize)
+        {
+            if (IsDummy)
+                return SizeD.Empty;
+            var s = GetNative().GetPreferredSize(this, availableSize);
+            s += Padding.Size;
+            return new SizeD(
+                double.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
+                double.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
         }
 
         internal Control? TryFindClosestParentWithNativeControl()

@@ -17,6 +17,28 @@ namespace Alternet.UI
             return ((UI.Native.Control)control.NativeControl).WxWidget;
         }
 
+        public override IntPtr GetHandle(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).Handle;
+        }
+
+        public override SizeD GetPreferredSize(IControl control, SizeD availableSize)
+        {
+            return ((UI.Native.Control)control.NativeControl).GetPreferredSize(availableSize);
+        }
+
+        /// <inheritdoc/>
+        public override void Update(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).Update();
+        }
+
+        /// <inheritdoc/>
+        public override void Invalidate(IControl control)
+        {
+            ((UI.Native.Control)control.NativeControl).Invalidate();
+        }
+
         /// <inheritdoc/>
         public override bool BeginRepositioningChildren(IControl control)
         {

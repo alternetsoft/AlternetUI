@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// your application.</remarks>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    public partial class Window : Control, IWindow
+    public partial class Window : WxBaseControl, IWindow
     {
         private static RectD defaultBounds = new(100, 100, 400, 400);
         private static int incFontSizeHighDpi = 2;

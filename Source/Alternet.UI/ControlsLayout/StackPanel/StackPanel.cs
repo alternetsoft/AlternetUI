@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// horizontally or vertically.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class StackPanel : Control
+    public partial class StackPanel : WxBaseControl
     {
         private StackPanelOrientation orientation;
 

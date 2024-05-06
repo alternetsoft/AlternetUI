@@ -7,13 +7,13 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class SystemSoundsPage : Control
+    internal class SystemSoundsPage : WxBaseControl
     {
         public SystemSoundsPage()
         {
             Layout = LayoutStyle.Vertical;
 
-            AddButtons(
+            ControlUtils.AddButtons(this,
                 ("Play Beep", SystemSounds.Beep.Play),
                 ("Play Asterisk", SystemSounds.Asterisk.Play),
                 ("Play Exclamation", SystemSounds.Exclamation.Play),

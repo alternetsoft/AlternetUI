@@ -226,4 +226,12 @@ public abstract class NativeControl
     public abstract void EndRepositioningChildren(IControl control);
 
     public abstract void AlwaysShowScrollbars(IControl control, bool hflag = true, bool vflag = true);
+
+    public abstract void Update(IControl control);
+
+    public abstract void Invalidate(IControl control);
+
+    public abstract IntPtr GetHandle(IControl control);
+
+    public abstract SizeD GetPreferredSize(IControl control, SizeD availableSize);
 }

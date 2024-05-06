@@ -132,7 +132,7 @@ namespace Alternet.UI.Integration
 
         private void MoveWindowToScreenUnderneath(Window window, System.Drawing.Point ownerWindowLocation)
         {
-            var hwnd = window.Handler.GetHandle();
+            var hwnd = window.GetHandle();
             PInvoke.User32.GetWindowRect(hwnd, out var rect);
 
             var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);

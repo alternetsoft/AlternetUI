@@ -104,7 +104,7 @@ namespace Alternet.UI
         public void Update()
         {
             if (nativeControl != null)
-                nativeControl.Update();
+                Control.GetNative().Update(Control);
             else
             {
                 var parent = Control.TryFindClosestParentWithNativeControl();
@@ -119,7 +119,7 @@ namespace Alternet.UI
         public void Invalidate()
         {
             if (nativeControl != null)
-                nativeControl.Invalidate();
+                Control.GetNative().Invalidate(Control);
             else
             {
                 var parent = Control.TryFindClosestParentWithNativeControl();
@@ -131,25 +131,6 @@ namespace Alternet.UI
             Native.Control control)
         {
             return (ControlHandler?)control.handler;
-        }
-
-        internal IntPtr GetHandle()
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.Handle;
-        }
-
-        internal SizeD GetNativeControlSize(SizeD availableSize)
-        {
-            if (Control.IsDummy)
-                return SizeD.Empty;
-            var s = NativeControl.GetPreferredSize(availableSize);
-            s += Control.Padding.Size;
-            return new SizeD(
-                double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
-                double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
         }
 
         internal virtual Native.Control CreateNativeControl() =>

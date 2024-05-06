@@ -524,4 +524,24 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override void Update(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Invalidate(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IntPtr GetHandle(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override SizeD GetPreferredSize(IControl control, SizeD availableSize)
+    {
+        throw new NotImplementedException();
+    }
 }

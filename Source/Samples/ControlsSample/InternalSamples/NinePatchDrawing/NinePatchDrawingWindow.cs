@@ -48,7 +48,7 @@ namespace ControlsSample
 
             Size = (600, 600);
 
-            var buttonPanel = AddHorizontalStackPanel();
+            var buttonPanel = ControlUtils.AddHorizontalStackPanel(this);
 
             button.Margin = 10;
             button.VerticalAlignment = VerticalAlignment.Bottom;
