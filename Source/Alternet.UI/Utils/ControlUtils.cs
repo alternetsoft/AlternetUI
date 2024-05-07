@@ -337,7 +337,7 @@ namespace Alternet.UI
                 return BorderSettings.DefaultBorderColor;
             var isDark = control.IsDarkBackground;
             return Border.DefaultColor?.Get(isDark)
-                ?? TabControl.GetDefaultInteriorBorderColor(isDark);
+                ?? ColorUtils.GetTabControlInteriorBorderColor(isDark);
         }
 
         /// <summary>

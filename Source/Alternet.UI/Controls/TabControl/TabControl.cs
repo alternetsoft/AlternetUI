@@ -416,32 +416,14 @@ namespace Alternet.UI
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
 
         /// <summary>
-        /// Gets default interior border color.
-        /// </summary>
-        /// <returns></returns>
-        public static Color GetDefaultInteriorBorderColor(bool isDark)
-        {
-            if (isDark)
-            {
-                return Color.FromRgb(123, 123, 123);
-            }
-            else
-            {
-                // This is used to get default disabled svg image color for light theme.
-                // So please do not change this value unless you completely sure.
-                return Color.FromRgb(204, 206, 219);
-            }
-        }
-
-        /// <summary>
         /// Gets default interior border color as <see cref="LightDarkColor"/>.
         /// </summary>
         /// <returns></returns>
         public static LightDarkColor GetDefaultInteriorBorderColor()
         {
             return new(
-                light: GetDefaultInteriorBorderColor(false),
-                dark: GetDefaultInteriorBorderColor(true));
+                light: ColorUtils.GetTabControlInteriorBorderColor(false),
+                dark: ColorUtils.GetTabControlInteriorBorderColor(true));
         }
 
         /// <summary>
@@ -792,7 +774,7 @@ namespace Alternet.UI
         protected virtual Color GetInteriorBorderColor()
         {
             var color = Borders?.GetObjectOrNull(GenericControlState.Normal)?.Color;
-            color ??= GetDefaultInteriorBorderColor(IsDarkBackground);
+            color ??= ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
             return color;
         }
 

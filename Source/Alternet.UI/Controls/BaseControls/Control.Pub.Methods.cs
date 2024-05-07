@@ -110,41 +110,14 @@ namespace Alternet.UI
             return new ControlStaticDefaultFontAndColor(controlType, renderSize);
         }
 
-        /*/// <summary>Test method.</summary>
-        public static void TestPopupWindow(Control control, PointI pos, SizeI sz)
-        {
-            Native.WxOtherFactory.TestPopupWindow(control.WxWidget, pos, sz);
-        }*/
-
-        /*/// <summary>
-        /// Substitutes <paramref name="control"/> with dummy <see cref="Control"/>, adding
-        /// <paramref name="control"/> as its child.
-        /// </summary>
-        /// <param name="control">Control to substitute.</param>
-        /// <returns></returns>
-        public static Control SubstituteControl(Control control)
-        {
-            var parent = new SubsControl();
-            control.Parent = parent;
-            control = parent;
-            return control;
-        }*/
-
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
         /// </summary>
         public static Control? GetFocusedControl()
         {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
-                return null;
-
-            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
-            if (handler == null || !handler.IsAttached)
-                return null;
-
-            return handler.Control;
+            var result = NativeControl.Default.GetFocusedControl();
+            return (Control?)result;
         }
 
         /// <summary>

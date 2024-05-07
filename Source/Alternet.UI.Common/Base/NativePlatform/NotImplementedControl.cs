@@ -579,4 +579,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override IControl? GetFocusedControl()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -173,7 +173,7 @@ namespace Alternet.UI
             get
             {
                 return Normal.Color ?? DefaultColor?.Get(IsDarkBackground) ??
-                        TabControl.GetDefaultInteriorBorderColor(IsDarkBackground);
+                        ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
             }
 
             set
@@ -181,7 +181,7 @@ namespace Alternet.UI
                 if (value == null)
                 {
                     Normal.Color = DefaultColor?.Get(IsDarkBackground) ??
-                        TabControl.GetDefaultInteriorBorderColor(IsDarkBackground);
+                        ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
                 }
                 else
                     Normal.Color = (Color)value;

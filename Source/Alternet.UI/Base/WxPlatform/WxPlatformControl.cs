@@ -17,6 +17,19 @@ namespace Alternet.UI
             return ((UI.Native.Control)control.NativeControl).WxWidget;
         }
 
+        public override IControl? GetFocusedControl()
+        {
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl == null)
+                return null;
+
+            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
+            if (handler == null || !handler.IsAttached)
+                return null;
+
+            return handler.Control;
+        }
+
         /// <inheritdoc/>
         public override LangDirection GetLangDirection(IControl control)
         {

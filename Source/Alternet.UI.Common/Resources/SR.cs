@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Alternet.UI
 {
-    internal partial class SR
+    public partial class SR
     {
         private static ResourceManager ResourceManager => SRID.ResourceManager;
 

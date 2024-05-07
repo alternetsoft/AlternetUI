@@ -112,7 +112,7 @@ namespace Alternet.UI
                 Warning = Normal;
 
                 // SystemColors.GrayText is too dark for this
-                Disabled = TabControl.GetDefaultInteriorBorderColor(false);
+                Disabled = ColorUtils.GetTabControlInteriorBorderColor(false);
             }
         }
     }

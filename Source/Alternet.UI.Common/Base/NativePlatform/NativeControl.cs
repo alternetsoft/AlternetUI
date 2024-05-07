@@ -248,4 +248,6 @@ public abstract class NativeControl
     public abstract LangDirection GetLangDirection(IControl control);
 
     public abstract void SetLangDirection(IControl control, LangDirection value);
+
+    public abstract IControl? GetFocusedControl();
 }

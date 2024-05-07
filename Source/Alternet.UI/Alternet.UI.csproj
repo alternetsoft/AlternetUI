@@ -313,12 +313,6 @@
 -->	
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Strings.resx">
-      <Generator>MSBuild:_GenerateResxSource</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
   <!-- ================================================= -->
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
