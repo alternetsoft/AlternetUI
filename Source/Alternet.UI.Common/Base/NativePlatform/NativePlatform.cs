@@ -57,5 +57,10 @@ namespace Alternet.UI
         public abstract Color SystemSettingsGetColor(SystemSettingsColor index);
 
         public abstract Font SystemSettingsGetFont(SystemSettingsFont systemFont);
+
+        public abstract bool ShowExceptionWindow(
+            Exception exception,
+            string? additionalInfo = null,
+            bool canContinue = true);
     }
 }

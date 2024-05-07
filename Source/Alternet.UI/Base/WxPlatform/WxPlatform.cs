@@ -64,5 +64,13 @@ namespace Alternet.UI
             var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
             return new Font(fnt);
         }
+
+        public override bool ShowExceptionWindow(
+            Exception exception,
+            string? additionalInfo = null,
+            bool canContinue = true)
+        {
+            return ThreadExceptionWindow.Show(exception, additionalInfo, canContinue);
+        }
     }
 }

@@ -99,12 +99,6 @@ namespace Alternet.UI
         public static event ThreadExceptionEventHandler? ThreadException;
 
         /// <summary>
-        /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        public event EventHandler? Idle;
-
-        /// <summary>
         /// Gets or sets default icon for the application.
         /// </summary>
         /// <remarks>
@@ -131,15 +125,6 @@ namespace Alternet.UI
         /// Gets whether application has forms.
         /// </summary>
         public static bool HasForms => HasApplication && Current.Windows.Count > 0;
-
-        /// <summary>
-        /// Gets whether application was initialized;
-        /// </summary>
-        public static bool Initialized
-        {
-            get;
-            private set;
-        }
 
         /// <summary>
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
@@ -302,6 +287,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsActive => nativeApplication.IsActive();
 
+        /// <inheritdoc/>
+        public override bool InUixmlPreviewerMode
+        {
+            get => nativeApplication.InUixmlPreviewerMode;
+            set => nativeApplication.InUixmlPreviewerMode = value;
+        }
+
         /// <summary>
         /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by
         /// UI controls in the application.
@@ -334,12 +326,6 @@ namespace Alternet.UI
         internal Native.Application NativeApplication => nativeApplication;
 
         internal Native.Mouse NativeMouse => nativeApplication.Mouse;
-
-        internal bool InUixmlPreviewerMode
-        {
-            get => nativeApplication.InUixmlPreviewerMode;
-            set => nativeApplication.InUixmlPreviewerMode = value;
-        }
 
         internal string EventArgString => NativeApplication.EventArgString;
 
@@ -815,7 +801,7 @@ namespace Alternet.UI
                 ProcessIdleTasks();
             }
 
-            Idle?.Invoke(this, EventArgs.Empty);
+            RaiseIdle();
         }
 
         private void OnVisualThemeChanged()

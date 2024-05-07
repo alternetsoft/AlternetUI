@@ -167,6 +167,12 @@ namespace Alternet.UI
         public static event EventHandler<LogMessageEventArgs>? LogMessage;
 
         /// <summary>
+        /// Occurs when the application finishes processing events and is
+        /// about to enter the idle state.
+        /// </summary>
+        public event EventHandler? Idle;
+
+        /// <summary>
         /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when\
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
@@ -276,12 +282,32 @@ namespace Alternet.UI
         public static bool HasApplication => current is not null;
 
         /// <summary>
+        /// Gets whether application was initialized;
+        /// </summary>
+        public static bool Initialized
+        {
+            get;
+            protected set;
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
         public virtual bool IsDisposed
         {
             get => isDisposed;
             protected set => isDisposed = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether application in uixml preview mode.
+        /// </summary>
+        public virtual bool InUixmlPreviewerMode
+        {
+            get => false;
+            set
+            {
+            }
         }
 
         protected internal virtual bool InvokeRequired => throw new NotImplementedException();
@@ -611,6 +637,14 @@ namespace Alternet.UI
         public virtual void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
         {
             unhandledExceptionMode = mode;
+        }
+
+        /// <summary>
+        /// Raises <see cref="Idle"/> event.
+        /// </summary>
+        public void RaiseIdle()
+        {
+            Idle?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

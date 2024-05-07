@@ -176,7 +176,6 @@
     <None Remove="Resources\Svg\toggle-on.svg" />
     <None Remove="Resources\Svg\trash-can.svg" />
     <None Remove="Resources\Svg\triangle-exclamation.svg" />
-    <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
