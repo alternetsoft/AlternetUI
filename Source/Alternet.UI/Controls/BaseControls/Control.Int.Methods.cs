@@ -156,24 +156,6 @@ namespace Alternet.UI
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
-        internal Color? GetDefaultAttributesBgColor()
-        {
-            CheckDisposed();
-            return GetNative().GetDefaultAttributesBgColor(this);
-        }
-
-        internal Color? GetDefaultAttributesFgColor()
-        {
-            CheckDisposed();
-            return GetNative().GetDefaultAttributesFgColor(this);
-        }
-
-        internal Font? GetDefaultAttributesFont()
-        {
-            CheckDisposed();
-            return GetNative().GetDefaultAttributesFont(this);
-        }
-
         /// <summary>
         /// Forces the re-creation of the handler for the control.
         /// </summary>

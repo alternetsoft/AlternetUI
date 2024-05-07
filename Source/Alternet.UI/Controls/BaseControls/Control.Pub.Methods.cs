@@ -1943,6 +1943,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets background color from the default attributes.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Color? GetDefaultAttributesBgColor()
+        {
+            CheckDisposed();
+            return GetNative().GetDefaultAttributesBgColor(this);
+        }
+
+        /// <summary>
+        /// Gets foreground color from the default attributes.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Color? GetDefaultAttributesFgColor()
+        {
+            CheckDisposed();
+            return GetNative().GetDefaultAttributesFgColor(this);
+        }
+
+        /// <summary>
+        /// Gets font from the default attributes.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Font? GetDefaultAttributesFont()
+        {
+            CheckDisposed();
+            return GetNative().GetDefaultAttributesFont(this);
+        }
+
+        /// <summary>
         /// Gets system scrollbar max range.
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>

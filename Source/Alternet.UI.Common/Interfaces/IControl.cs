@@ -2204,5 +2204,23 @@ namespace Alternet.UI
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
         /// <returns></returns>
         int GetScrollBarMaximum(bool isVertical);
+
+        /// <summary>
+        /// Gets background color from the default attributes.
+        /// </summary>
+        /// <returns></returns>
+        Color? GetDefaultAttributesBgColor();
+
+        /// <summary>
+        /// Gets foreground color from the default attributes.
+        /// </summary>
+        /// <returns></returns>
+        Color? GetDefaultAttributesFgColor();
+
+        /// <summary>
+        /// Gets font from the default attributes.
+        /// </summary>
+        /// <returns></returns>
+        Font? GetDefaultAttributesFont();
     }
 }

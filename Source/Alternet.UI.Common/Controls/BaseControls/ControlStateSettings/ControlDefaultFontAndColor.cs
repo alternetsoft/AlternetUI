@@ -8,11 +8,11 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ControlDefaultFontAndColor : IReadOnlyFontAndColor
+    public class ControlDefaultFontAndColor : IReadOnlyFontAndColor
     {
-        private readonly Control control;
+        private readonly IControl control;
 
-        public ControlDefaultFontAndColor(Control control)
+        public ControlDefaultFontAndColor(IControl control)
         {
             this.control = control;
         }
