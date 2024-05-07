@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for date editors.
     /// </summary>
-    public abstract class CustomDateEdit : Control
+    public abstract class CustomDateEdit : WxBaseControl
     {
         /// <summary>Specifies the maximum date value of the
         /// <see cref="DateTimePicker"/> and other date editors.

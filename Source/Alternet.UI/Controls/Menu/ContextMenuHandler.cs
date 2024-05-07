@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
         /// These coordinates are specified relative
         /// to the client coordinates of the control specified in the control parameter.</param>
-        public void Show(Control control, PointD position)
+        public void Show(WxBaseControl control, PointD position)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));

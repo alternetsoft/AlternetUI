@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Represents a scrollable area that can contain other visible elements.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class ScrollViewer : Control
+    public partial class ScrollViewer : WxBaseControl
     {
         private bool settingLayoutOffset;
         private bool scrollInfoValid;
@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateScrollViewerHandler(this);
@@ -116,7 +116,7 @@ namespace Alternet.UI
             scrollInfoValid = true;
         }
 
-        internal class NativeScrollViewerHandler : ControlHandler
+        internal class NativeScrollViewerHandler : WxControlHandler
         {
             public new Native.Panel NativeControl => (Native.Panel)base.NativeControl!;
 

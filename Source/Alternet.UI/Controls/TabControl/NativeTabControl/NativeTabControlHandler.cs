@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Provides functionality for implementing
     /// a specific <see cref="NativeTabControl"/> behavior and appearance.
     /// </summary>
-    internal class NativeTabControlHandler : ControlHandler
+    internal class NativeTabControlHandler : WxControlHandler
     {
         private bool skipChildrenInsertionCheck;
         /*private bool skipLinuxFix;*/

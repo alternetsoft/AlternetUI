@@ -12,7 +12,7 @@ namespace Alternet.UI
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedPageChanged")]
     [ControlCategory("Containers")]
-    internal partial class NativeTabControl : Control
+    internal partial class NativeTabControl : WxBaseControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeTabControl"/> class.
@@ -156,7 +156,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateTabControlHandler(this);
         }

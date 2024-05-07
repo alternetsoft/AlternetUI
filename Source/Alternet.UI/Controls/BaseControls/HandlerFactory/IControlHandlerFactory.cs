@@ -2,158 +2,158 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents an interface that can be implemented by classes providing
-    /// creating <see cref="ControlHandler"/> instances for specified controls.
+    /// creating <see cref="WxControlHandler"/> instances for specified controls.
     /// </summary>
     internal interface IControlHandlerFactory
     {
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="Button"/> control.
         /// </summary>
-        ControlHandler CreateButtonHandler(Control control);
+        WxControlHandler CreateButtonHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="TextBox"/> control.
         /// </summary>
-        ControlHandler CreateTextBoxHandler(Control control);
+        WxControlHandler CreateTextBoxHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="CheckBox"/> control.
         /// </summary>
-        ControlHandler CreateCheckBoxHandler(Control control);
+        WxControlHandler CreateCheckBoxHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="RadioButton"/> control.
         /// </summary>
-        ControlHandler CreateRadioButtonHandler(Control control);
+        WxControlHandler CreateRadioButtonHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="NativeTabControl"/> control.
         /// </summary>
-        ControlHandler CreateTabControlHandler(Control control);
+        WxControlHandler CreateTabControlHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="GroupBox"/>control.
         /// </summary>
-        ControlHandler CreateGroupBoxHandler(Control control);
+        WxControlHandler CreateGroupBoxHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ProgressBar"/> control.
         /// </summary>
-        ControlHandler CreateProgressBarHandler(Control control);
+        WxControlHandler CreateProgressBarHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="Slider"/> control.
         /// </summary>
-        ControlHandler CreateSliderHandler(Control control);
+        WxControlHandler CreateSliderHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="NumericUpDown"/> control.
         /// </summary>
-        ControlHandler CreateNumericUpDownHandler(Control control);
+        WxControlHandler CreateNumericUpDownHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="CheckListBox"/> control.
         /// </summary>
-        ControlHandler CreateCheckListBoxHandler(Control control);
+        WxControlHandler CreateCheckListBoxHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ListBox"/> control.
         /// </summary>
-        ControlHandler CreateListBoxHandler(Control control);
+        WxControlHandler CreateListBoxHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ComboBox"/> control.
         /// </summary>
-        ControlHandler CreateComboBoxHandler(Control control);
+        WxControlHandler CreateComboBoxHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ListView"/> control.
         /// </summary>
-        ControlHandler CreateListViewHandler(Control control);
+        WxControlHandler CreateListViewHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="TreeView"/> control.
         /// </summary>
-        ControlHandler CreateTreeViewHandler(Control control);
+        WxControlHandler CreateTreeViewHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="MainMenu"/> control.
         /// </summary>
-        ControlHandler CreateMainMenuHandler(Control control);
+        WxControlHandler CreateMainMenuHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="MenuItem"/> control.
         /// </summary>
-        ControlHandler CreateMenuItemHandler(Control control);
+        WxControlHandler CreateMenuItemHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ContextMenu"/> control.
         /// </summary>
-        ControlHandler CreateContextMenuHandler(Control control);
+        WxControlHandler CreateContextMenuHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ToolBar"/> control.
         /// </summary>
-        ControlHandler CreateToolbarHandler(Control control);
+        WxControlHandler CreateToolbarHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="AuiToolbar"/> control.
         /// </summary>
-        ControlHandler CreateAuiToolbarHandler(Control control);
+        WxControlHandler CreateAuiToolbarHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="PropertyGrid"/> control.
         /// </summary>
-        ControlHandler CreatePropertyGridHandler(Control control);
+        WxControlHandler CreatePropertyGridHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="AuiNotebook"/> control.
         /// </summary>
-        ControlHandler CreateAuiNotebookHandler(Control control);
+        WxControlHandler CreateAuiNotebookHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ToolBarItem"/> control.
         /// </summary>
-        ControlHandler CreateToolbarItemHandler(Control control);
+        WxControlHandler CreateToolbarItemHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ColorPicker"/> control.
         /// </summary>
-        ControlHandler CreateColorPickerHandler(Control control);
+        WxControlHandler CreateColorPickerHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="DateTimePicker"/> control.
         /// </summary>
-        ControlHandler CreateDateTimePickerHandler(Control control);
+        WxControlHandler CreateDateTimePickerHandler(Control control);
 
         /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
+        /// Creates a <see cref="WxControlHandler"/> for
         /// <see cref="ScrollViewer"/> control.
         /// </summary>
-        ControlHandler CreateScrollViewerHandler(Control control);
+        WxControlHandler CreateScrollViewerHandler(Control control);
     }
 }

@@ -40,7 +40,7 @@ namespace Alternet.UI
     /// arbitrary per-property attributes.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class PropertyGrid : Control, IPropertyGrid
+    public partial class PropertyGrid : WxBaseControl, IPropertyGrid
     {
         internal const string PropEditClassCheckBox = "CheckBox";
         internal const string PropEditClassChoice = "Choice";
@@ -4838,7 +4838,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
         }

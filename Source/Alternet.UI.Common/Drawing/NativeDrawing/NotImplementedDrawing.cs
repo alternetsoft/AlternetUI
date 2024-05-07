@@ -1371,5 +1371,10 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
+
+        public override SizeI ImageSetGetPreferredBitmapSizeFor(ImageSet imageSet, IControl control)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

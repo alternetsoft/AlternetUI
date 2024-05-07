@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class WindowHandler : ControlHandler
+    internal class WindowHandler : WxControlHandler
     {
         public static Window? ActiveWindow
         {

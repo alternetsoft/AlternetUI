@@ -317,6 +317,23 @@ namespace Alternet.UI
         public Image AsImage() => new(this, DefaultSize);
 
         /// <summary>
+        /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
+        /// scaling factor used by the given control.
+        /// </summary>
+        /// <param name="control">Control to get DPI scaling factor from.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// This is just a convenient wrapper for
+        /// <see cref="ImageSet.GetPreferredBitmapSizeAtScale"/> calling
+        /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
+        /// </remarks>
+        /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
+        public SizeI GetPreferredBitmapSizeFor(IControl control)
+        {
+            return NativeDrawing.Default.ImageSetGetPreferredBitmapSizeFor(this, control);
+        }
+
+        /// <summary>
         /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
         /// </summary>
         /// <remarks>

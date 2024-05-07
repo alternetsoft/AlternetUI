@@ -32,7 +32,7 @@ namespace Alternet.UI
     /// the view, object and page size according to the size of the window and the size of the data.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ScrollBar : Control
+    public partial class ScrollBar : WxBaseControl
     {
         private int minimum;
         private int maximum = 100;
@@ -313,7 +313,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return new ScrollBarHandler();
         }

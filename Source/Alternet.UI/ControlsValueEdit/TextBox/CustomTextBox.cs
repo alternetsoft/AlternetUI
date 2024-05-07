@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </summary>
     [ControlCategory("Hidden")]
     public abstract class CustomTextBox
-        : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions
+        : WxBaseControl, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions
     {
         private StringSearch? search;
         private int minLength;

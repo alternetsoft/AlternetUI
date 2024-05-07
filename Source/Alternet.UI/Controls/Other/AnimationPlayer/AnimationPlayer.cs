@@ -264,7 +264,7 @@ namespace Alternet.UI
             driver.SetInactiveBitmap(bitmap);
         }
 
-        internal class NativeAnimationPlayer : Control, IAnimationPlayer
+        internal class NativeAnimationPlayer : WxBaseControl, IAnimationPlayer
         {
             public NativeAnimationPlayer()
             {
@@ -372,7 +372,7 @@ namespace Alternet.UI
                 NativeControl.SetInactiveBitmap((UI.Native.ImageSet?)imageSet?.NativeObject);
             }
 
-            internal override ControlHandler CreateHandler()
+            internal override BaseControlHandler CreateHandler()
             {
                 return new NativeAnimationControlHandler();
             }

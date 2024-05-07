@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class ToolBarItemHandler : ControlHandler
+    internal class ToolBarItemHandler : WxControlHandler
     {
         private Menu? dropDownMenu;
 

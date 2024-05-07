@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Parent class for all owner draw controls.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class UserControl : Control
+    public partial class UserControl : WxBaseControl
     {
         private bool hasBorder = true; // !! to border settings
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;

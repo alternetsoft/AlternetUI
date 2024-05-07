@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeAnimationControlHandler : ControlHandler
+    internal class NativeAnimationControlHandler : WxControlHandler
     {
         public new Native.AnimationControl NativeControl => (Native.AnimationControl)base.NativeControl!;
 

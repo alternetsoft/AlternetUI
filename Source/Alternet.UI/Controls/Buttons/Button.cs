@@ -261,7 +261,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateButtonHandler(this);
         }

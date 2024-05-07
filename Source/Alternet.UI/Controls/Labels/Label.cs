@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public partial class Label : Control
+    public partial class Label : WxBaseControl
     {
         private string text = string.Empty;
 
@@ -95,7 +95,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return new NativeLabelHandler();
         }

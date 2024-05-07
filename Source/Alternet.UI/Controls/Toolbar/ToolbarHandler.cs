@@ -3,7 +3,7 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class ToolBarHandler : ControlHandler
+    internal class ToolBarHandler : WxControlHandler
     {
         private readonly bool mainToolbar = false;
 

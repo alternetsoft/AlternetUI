@@ -530,9 +530,8 @@ namespace Alternet.UI
         public virtual bool CanRemoveSelectedItem()
         {
             var item = SelectedItem;
-            var item2 = item as ListControlItem;
 
-            if(item2 is null)
+            if (item is not ListControlItem item2)
                 return item != null;
 
             return item2.CanRemove;
@@ -564,7 +563,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateListBoxHandler(this);
         }

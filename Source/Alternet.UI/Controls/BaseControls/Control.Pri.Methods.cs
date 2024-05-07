@@ -52,9 +52,6 @@ namespace Alternet.UI
 
         private void ResetColor(bool isBackground, ResetColorType method = ResetColorType.Auto)
         {
-            if (NativeControl is null)
-                return;
-
             void SetColor(Color? color)
             {
                 if (isBackground)

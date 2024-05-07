@@ -234,4 +234,18 @@ public abstract class NativeControl
     public abstract IntPtr GetHandle(IControl control);
 
     public abstract SizeD GetPreferredSize(IControl control, SizeD availableSize);
+
+    public abstract int GetScrollBarEvtPosition(IControl control);
+
+    public abstract ScrollEventType GetScrollBarEvtKind(IControl control);
+
+    public abstract Graphics OpenPaintDrawingContext(IControl control);
+
+    public abstract ControlBorderStyle GetBorderStyle(IControl control);
+
+    public abstract void SetBorderStyle(IControl control, ControlBorderStyle value);
+
+    public abstract LangDirection GetLangDirection(IControl control);
+
+    public abstract void SetLangDirection(IControl control, LangDirection value);
 }

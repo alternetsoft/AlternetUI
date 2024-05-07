@@ -10,7 +10,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public partial class LinkLabel : Control
+    public partial class LinkLabel : WxBaseControl
     {
         private string? text;
 
@@ -155,7 +155,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return new NativeLinkLabelHandler();
         }

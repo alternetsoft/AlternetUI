@@ -199,7 +199,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="control">New control reference.</param>
         /// <returns>Returns this pane info instance.</returns>
-        IAuiPaneInfo Window(Control control);
+        IAuiPaneInfo Window(WxBaseControl control);
 
         /// <summary>
         /// Sets the name of the pane so it can be referenced in lookup functions.

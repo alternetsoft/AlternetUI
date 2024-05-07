@@ -30,7 +30,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class ProgressBar : Control
+    public partial class ProgressBar : WxBaseControl
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -221,7 +221,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateProgressBarHandler(this);

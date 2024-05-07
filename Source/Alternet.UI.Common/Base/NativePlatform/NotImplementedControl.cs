@@ -544,4 +544,39 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override int GetScrollBarEvtPosition(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ScrollEventType GetScrollBarEvtKind(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Graphics OpenPaintDrawingContext(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ControlBorderStyle GetBorderStyle(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetBorderStyle(IControl control, ControlBorderStyle value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override LangDirection GetLangDirection(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetLangDirection(IControl control, LangDirection value)
+    {
+        throw new NotImplementedException();
+    }
 }

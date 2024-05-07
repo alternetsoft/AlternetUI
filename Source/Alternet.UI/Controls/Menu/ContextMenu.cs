@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// If <paramref name="position"/> is <c>null</c> (default value), popup menu is shown
         /// under the control specified in the <paramref name="control"/> parameter.
         /// </remarks>
-        public void Show(Control control, PointD? position = null)
+        public void Show(WxBaseControl control, PointD? position = null)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
@@ -122,7 +122,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateContextMenuHandler(this);

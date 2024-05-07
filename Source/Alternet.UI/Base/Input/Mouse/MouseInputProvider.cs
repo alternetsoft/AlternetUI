@@ -60,7 +60,7 @@ namespace Alternet.UI
             /*if (!c.IsMouseCaptured)
                 return null;*/
 
-            return ControlHandler.NativeControlToHandler(c)?.Control;
+            return WxControlHandler.NativeControlToHandler(c)?.Control;
         }
 
         private void NativeMouse_MouseDoubleClick(

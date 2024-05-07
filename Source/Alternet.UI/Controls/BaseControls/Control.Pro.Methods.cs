@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// <summary>
         /// Disconnects the current control <see cref="Handler"/> from
         /// the control.
-        /// This method calls <see cref="ControlHandler.Detach"/>.
+        /// This method calls <see cref="WxControlHandler.Detach"/>.
         /// </summary>
         protected internal void DetachHandler()
         {
@@ -75,12 +75,7 @@ namespace Alternet.UI
         protected virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
         {
             var padding = Padding;
-
-            var intrinsicPadding = new Thickness();
-            var nativeControl = NativeControl;
-            if (nativeControl != null)
-                intrinsicPadding = GetNative().GetIntrinsicPreferredSizePadding(this);
-
+            var intrinsicPadding = GetNative().GetIntrinsicPreferredSizePadding(this);
             return preferredSize + padding.Size + intrinsicPadding.Size;
         }
 
@@ -348,7 +343,6 @@ namespace Alternet.UI
         protected virtual void OnMouseRightButtonDown(MouseEventArgs e)
         {
             MouseRightButtonDown?.Invoke(this, e);
-            ShowPopupMenu(ContextMenuStrip);
         }
 
         /// <summary>

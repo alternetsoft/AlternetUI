@@ -6,103 +6,103 @@ namespace Alternet.UI
     internal class NativeControlHandlerFactory : IControlHandlerFactory
     {
         /// <inheritdoc/>
-        public ControlHandler CreateAuiToolbarHandler(Control control) =>
+        public WxControlHandler CreateAuiToolbarHandler(Control control) =>
             new NativeAuiToolbarHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreatePropertyGridHandler(Control control) =>
+        public WxControlHandler CreatePropertyGridHandler(Control control) =>
             new PropertyGridHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateAuiNotebookHandler(Control control) =>
+        public WxControlHandler CreateAuiNotebookHandler(Control control) =>
             new NativeAuiNotebookHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateButtonHandler(Control control) =>
+        public WxControlHandler CreateButtonHandler(Control control) =>
             new NativeButtonHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateTextBoxHandler(Control control) =>
+        public WxControlHandler CreateTextBoxHandler(Control control) =>
             new NativeTextBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateCheckBoxHandler(Control control) =>
+        public WxControlHandler CreateCheckBoxHandler(Control control) =>
             new NativeCheckBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateRadioButtonHandler(Control control) =>
+        public WxControlHandler CreateRadioButtonHandler(Control control) =>
             new NativeRadioButtonHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateTabControlHandler(Control control) =>
+        public WxControlHandler CreateTabControlHandler(Control control) =>
             new NativeTabControlHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateGroupBoxHandler(Control control) =>
+        public WxControlHandler CreateGroupBoxHandler(Control control) =>
             new GroupBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateProgressBarHandler(Control control) =>
+        public WxControlHandler CreateProgressBarHandler(Control control) =>
             new ProgressBarHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateSliderHandler(Control control) =>
+        public WxControlHandler CreateSliderHandler(Control control) =>
             new SliderHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateNumericUpDownHandler(Control control) =>
+        public WxControlHandler CreateNumericUpDownHandler(Control control) =>
             new NativeNumericUpDownHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateCheckListBoxHandler(Control control) =>
+        public WxControlHandler CreateCheckListBoxHandler(Control control) =>
             new NativeCheckListBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateListBoxHandler(Control control) =>
+        public WxControlHandler CreateListBoxHandler(Control control) =>
             new NativeListBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateComboBoxHandler(Control control) =>
+        public WxControlHandler CreateComboBoxHandler(Control control) =>
             new NativeComboBoxHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateListViewHandler(Control control) =>
+        public WxControlHandler CreateListViewHandler(Control control) =>
             new NativeListViewHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateTreeViewHandler(Control control) =>
+        public WxControlHandler CreateTreeViewHandler(Control control) =>
             new NativeTreeViewHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateMainMenuHandler(Control control) =>
+        public WxControlHandler CreateMainMenuHandler(Control control) =>
             new MainMenuHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateMenuItemHandler(Control control) =>
+        public WxControlHandler CreateMenuItemHandler(Control control) =>
             new MenuItemHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateContextMenuHandler(Control control) =>
+        public WxControlHandler CreateContextMenuHandler(Control control) =>
             new ContextMenuHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateToolbarHandler(Control control) =>
+        public WxControlHandler CreateToolbarHandler(Control control) =>
             new ToolBarHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateToolbarItemHandler(Control control) =>
+        public WxControlHandler CreateToolbarItemHandler(Control control) =>
             new ToolBarItemHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateColorPickerHandler(Control control) =>
+        public WxControlHandler CreateColorPickerHandler(Control control) =>
             new NativeColorPickerHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateDateTimePickerHandler(Control control) =>
+        public WxControlHandler CreateDateTimePickerHandler(Control control) =>
             new NativeDateTimePickerHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateScrollViewerHandler(Control control) =>
+        public WxControlHandler CreateScrollViewerHandler(Control control) =>
             new ScrollViewer.NativeScrollViewerHandler();
     }
 }

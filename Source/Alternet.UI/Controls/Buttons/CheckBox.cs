@@ -206,7 +206,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.CheckBox;
 
         /// <summary>
-        /// Gets a <see cref="ControlHandler"/> associated with this class.
+        /// Gets a <see cref="WxControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal NativeCheckBoxHandler? NativeHandler => Handler as NativeCheckBoxHandler;
@@ -274,7 +274,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateCheckBoxHandler(this);
         }

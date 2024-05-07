@@ -1560,9 +1560,7 @@ namespace Alternet.UI
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        void RaiseIdle(EventArgs e);
+        void RaiseIdle();
 
         /// <summary>
         /// Displays the control to the user.

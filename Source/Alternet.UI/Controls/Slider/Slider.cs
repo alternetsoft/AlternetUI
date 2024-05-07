@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class Slider : Control
+    public partial class Slider : WxBaseControl
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -466,7 +466,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateSliderHandler(this);
         }

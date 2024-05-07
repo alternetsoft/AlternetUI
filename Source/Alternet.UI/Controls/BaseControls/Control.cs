@@ -59,7 +59,7 @@ namespace Alternet.UI
         private Thickness margin;
         private Thickness padding;
         private string title = string.Empty;
-        private ControlHandler? handler;
+        private BaseControlHandler? handler;
         private ControlStateSettings? stateObjects;
         private Font? font;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
@@ -551,7 +551,7 @@ namespace Alternet.UI
             }
         }
 
-        object IControl.NativeControl => NativeControl;
+        object IControl.NativeControl => Handler.GetNativeControl();
 
         /// <summary>
         /// Gets <see cref="Graphics"/> which can be used to measure text size
@@ -1918,14 +1918,11 @@ namespace Alternet.UI
                     return;
                 backgroundColor = value;
 
-                if (NativeControl is not null)
-                {
-                    if (backgroundColor is null)
-                        ResetBackgroundColor(ResetColorType.Auto);
-                    else
-                        GetNative().SetBackgroundColor(this, backgroundColor);
-                    Refresh();
-                }
+                if (backgroundColor is null)
+                    ResetBackgroundColor(ResetColorType.Auto);
+                else
+                    GetNative().SetBackgroundColor(this, backgroundColor);
+                Refresh();
 
                 foreach(var child in Children)
                 {
@@ -2087,14 +2084,11 @@ namespace Alternet.UI
                     return;
                 foregroundColor = value;
 
-                if (NativeControl is not null)
-                {
-                    if (foregroundColor is null)
-                        ResetForegroundColor(ResetColorType.Auto);
-                    else
-                        GetNative().SetForegroundColor(this, foregroundColor);
-                    Invalidate();
-                }
+                if (foregroundColor is null)
+                    ResetForegroundColor(ResetColorType.Auto);
+                else
+                    GetNative().SetForegroundColor(this, foregroundColor);
+                Refresh();
 
                 foreach (var child in Children)
                 {
@@ -2577,21 +2571,14 @@ namespace Alternet.UI
         {
             get
             {
-                var control = NativeControl;
-                if (control is null)
-                    return LangDirection.Default;
-
-                return (LangDirection)control.LayoutDirection;
+                return GetNative().GetLangDirection(this);
             }
 
             set
             {
                 if (value == LangDirection.Default)
                     return;
-                var control = NativeControl;
-                if (control is null)
-                    return;
-                control.LayoutDirection = (int)value;
+                GetNative().SetLangDirection(this, value);
             }
         }
 

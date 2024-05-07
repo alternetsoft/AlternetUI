@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
     [ControlCategory("Containers")]
-    public partial class GroupBox : Control
+    public partial class GroupBox : WxBaseControl
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
@@ -73,7 +73,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
         }

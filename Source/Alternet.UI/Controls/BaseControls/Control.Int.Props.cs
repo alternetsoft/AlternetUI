@@ -13,10 +13,10 @@ namespace Alternet.UI
         internal static int ScreenShotCounter { get; set; } = 0;
 
         /// <summary>
-        /// Gets a <see cref="ControlHandler"/> associated with this class.
+        /// Gets a <see cref="WxControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal virtual ControlHandler Handler
+        internal virtual BaseControlHandler Handler
         {
             get
             {
@@ -77,25 +77,14 @@ namespace Alternet.UI
         {
             get
             {
-                var nc = NativeControl;
-                if (nc is null)
-                    return ControlBorderStyle.Default;
-                return (ControlBorderStyle)nc.BorderStyle;
+                return GetNative().GetBorderStyle(this);
             }
 
             set
             {
-                var nc = NativeControl;
-                if (nc is null)
-                    return;
-                nc.BorderStyle = (int)value;
+                GetNative().SetBorderStyle(this, value);
             }
         }
-
-        /// <summary>
-        /// Gets <see cref="NativeControl"/> attached to this control.
-        /// </summary>
-        internal Native.Control NativeControl => Handler.NativeControl;
 
         internal ControlExtendedProps ExtendedProps
         {

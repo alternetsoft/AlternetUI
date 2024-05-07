@@ -936,7 +936,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler() => new WindowHandler();
+        internal override BaseControlHandler CreateHandler() => new WindowHandler();
 
         /// <summary>
         /// Raises the <see cref="Closing"/> event and calls

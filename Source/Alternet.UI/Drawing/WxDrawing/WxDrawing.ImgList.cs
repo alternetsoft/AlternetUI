@@ -12,6 +12,13 @@ namespace Alternet.Drawing
     internal partial class WxDrawing
     {
         /// <inheritdoc/>
+        public override SizeI ImageSetGetPreferredBitmapSizeFor(ImageSet imageSet, IControl control)
+        {
+            return ((UI.Native.ImageSet)imageSet.NativeObject)
+                .GetPreferredBitmapSizeFor(WxPlatformControl.WxWidget(control));
+        }
+
+        /// <inheritdoc/>
         public override SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imgSet, double scale)
         {
             return ((UI.Native.ImageSet)imgSet.NativeObject).GetPreferredBitmapSizeAtScale(scale);

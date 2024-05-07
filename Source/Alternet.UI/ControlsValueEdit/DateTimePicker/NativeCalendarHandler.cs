@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeCalendarHandler : ControlHandler
+    internal class NativeCalendarHandler : WxControlHandler
     {
         public new Native.Calendar NativeControl => (Native.Calendar)base.NativeControl!;
 

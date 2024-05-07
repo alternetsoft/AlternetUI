@@ -52,7 +52,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class TreeView : Control
+    public partial class TreeView : WxBaseControl
     {
         /// <summary>
         /// The set of flags that are closest to the defaults for the native control under Linux.
@@ -1012,7 +1012,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
         }

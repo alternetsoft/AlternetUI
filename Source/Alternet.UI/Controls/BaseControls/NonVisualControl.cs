@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="StatusBar"/> and other.
     /// </summary>
     [ControlCategory("Hidden")]
-    public partial class NonVisualControl : Control
+    public partial class NonVisualControl : WxBaseControl
     {
         /// <summary>
         /// This property has no meaning in the <see cref="NonVisualControl"/> descendants.

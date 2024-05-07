@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements custom abstract button.
     /// </summary>
-    public abstract class CustomButton : Control, ITextProperty
+    public abstract class CustomButton : WxBaseControl, ITextProperty
     {
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.

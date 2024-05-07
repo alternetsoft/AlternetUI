@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Dockable toolbar, managed by <see cref="AuiManager"/>.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    internal partial class AuiToolbar : Control
+    internal partial class AuiToolbar : WxBaseControl
     {
         /// <summary>
         /// Defines spacer width which is used in <see cref="AddSpacer"/>.
@@ -1344,7 +1344,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateAuiToolbarHandler(this);
         }

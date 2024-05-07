@@ -140,7 +140,7 @@ namespace Alternet.UI
             if (focusedNativeControl == null)
                 return null;
 
-            var handler = ControlHandler.NativeControlToHandler(focusedNativeControl);
+            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
             if (handler == null || !handler.IsAttached)
                 return null;
 
@@ -593,12 +593,10 @@ namespace Alternet.UI
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        public virtual void RaiseIdle(EventArgs e)
+        public virtual void RaiseIdle()
         {
-            OnIdle(e);
-            Idle?.Invoke(this, e);
+            OnIdle(EventArgs.Empty);
+            Idle?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -952,7 +950,7 @@ namespace Alternet.UI
         {
             if (Parent != null || this is Window)
             {
-                Handler?.Invalidate();
+                GetNative().Invalidate(this);
             }
         }
 
@@ -963,7 +961,7 @@ namespace Alternet.UI
         {
             if (Parent != null || this is Window)
             {
-                Handler?.Update();
+                GetNative().Update(this);
             }
         }
 
@@ -1346,36 +1344,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Pops up the given menu at the specified coordinates, relative to this window,
-        /// and returns control when the user has dismissed the menu.
-        /// </summary>
-        /// <remarks>
-        /// If a menu item is selected, the corresponding menu event is generated and will
-        /// be processed as usual. If coordinates are not specified (-1,-1), the current
-        /// mouse cursor position is used.
-        /// </remarks>
-        /// <remarks>
-        /// It is recommended to not explicitly specify coordinates when calling PopupMenu
-        /// in response to mouse click, because some of the ports(namely, on Linux)
-        /// can do a better job of positioning the menu in that case.
-        /// </remarks>
-        /// <param name="menu">The menu to pop up.</param>
-        /// <param name="x">The X position in dips where the menu will appear.</param>
-        /// <param name="y">The Y position in dips where the menu will appear.</param>
-        /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
-        public virtual void ShowPopupMenu(ContextMenu? menu, double x = -1, double y = -1)
-        {
-            if (menu is null || menu.Items.Count == 0)
-                return;
-            var e = new CancelEventArgs();
-            menu.RaiseOpening(e);
-            if (e.Cancel)
-                return;
-            NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
-            menu.RaiseClosing(e);
-        }
-
-        /// <summary>
         /// Gets children as <see cref="ControlSet"/>.
         /// </summary>
         /// <param name="recursive">Whether to get all children recurively.</param>
@@ -1560,11 +1528,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual SizeD GetDPI()
         {
-            if (NativeControl != null)
-                return GetNative().GetDPI(this);
-            if (Parent != null)
-                return Parent.GetDPI();
-            return SizeD.Empty;
+            return GetNative().GetDPI(this);
         }
 
         /// <summary>

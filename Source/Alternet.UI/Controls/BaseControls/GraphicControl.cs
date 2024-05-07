@@ -13,12 +13,12 @@ namespace Alternet.UI
     public class GraphicControl : UserControl
     {
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return new GraphicControlHandler();
         }
 
-        internal class GraphicControlHandler : ControlHandler
+        internal class GraphicControlHandler : WxControlHandler
         {
             internal override Native.Control CreateNativeControl()
             {

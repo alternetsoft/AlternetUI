@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// Gets the sizer of which this control is a member, if any, otherwise <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public static ISizer? ControlGetContainingSizer(Control control)
+        public static ISizer? ControlGetContainingSizer(WxBaseControl control)
         {
             var sizer = control.NativeControl.GetContainingSizer();
 
@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// pre-existing sizer. Pass <c>false</c> if you wish to handle deleting
         /// the old sizer yourself but remember to do it yourself in this case
         /// to avoid memory leaks.</param>
-        public static void SetSizerAndFit(Control control, ISizer? sizer, bool deleteOld = false)
+        public static void SetSizerAndFit(WxBaseControl control, ISizer? sizer, bool deleteOld = false)
         {
             var nativeControl = control.NativeControl;
 
@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// Gets the sizer associated with the control by a previous call to <see cref="ControlSetSizer"/>,
         /// or <c>null</c>.
         /// </summary>
-        public static ISizer? ControlGetSizer(Control control)
+        public static ISizer? ControlGetSizer(WxBaseControl control)
         {
             var nativeControl = control.NativeControl;
 
@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// This function enables and disables Layout automatically.
         /// </remarks>
         /// <param name="control">Affected control.</param>
-        public static void ControlSetSizer(Control control, ISizer? sizer, bool deleteOld = true)
+        public static void ControlSetSizer(WxBaseControl control, ISizer? sizer, bool deleteOld = true)
         {
             var nativeControl = control.NativeControl;
 

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Provides a common implementation of members for the ListBox and
     /// ComboBox classes.
     /// </summary>
-    public abstract class ListControl : Control, IReadOnlyStrings
+    public abstract class ListControl : WxBaseControl, IReadOnlyStrings
     {
         private StringSearch? search;
         private ListControlItems<object>? items;

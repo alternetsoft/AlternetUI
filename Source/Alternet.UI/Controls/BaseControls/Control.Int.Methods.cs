@@ -124,7 +124,7 @@ namespace Alternet.UI
         /// <see cref="EnsureHandlerCreated"/> method, which forces a handler
         /// to be created for the control.
         /// </remarks>
-        internal virtual ControlHandler CreateHandler()
+        internal virtual BaseControlHandler CreateHandler()
         {
             return new GenericControlHandler();
         }
@@ -384,18 +384,18 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        internal void RaiseGotFocus(EventArgs e)
+        internal void RaiseGotFocus()
         {
-            OnGotFocus(e);
-            GotFocus?.Invoke(this, e);
+            OnGotFocus(EventArgs.Empty);
+            GotFocus?.Invoke(this, EventArgs.Empty);
             Designer?.RaiseGotFocus(this);
             RaiseCurrentStateChanged();
         }
 
-        internal void RaiseLostFocus(EventArgs e)
+        internal void RaiseLostFocus()
         {
-            OnLostFocus(e);
-            LostFocus?.Invoke(this, e);
+            OnLostFocus(EventArgs.Empty);
+            LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseCurrentStateChanged();
         }
 
@@ -460,23 +460,6 @@ namespace Alternet.UI
                 double.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
         }
 
-        internal Control? TryFindClosestParentWithNativeControl()
-        {
-            var control = this;
-            if (control.NativeControl != null)
-                return control;
-
-            while (true)
-            {
-                control = control.Parent;
-                if (control == null)
-                    return null;
-
-                if (control.NativeControl != null)
-                    return control;
-            }
-        }
-
         internal void DoInsideRepositioningChildren(Action action)
         {
             var repositioning = BeginRepositioningChildren();
@@ -493,6 +476,57 @@ namespace Alternet.UI
             }
             else
                 action();
+        }
+
+        internal void NativeControl_Paint()
+        {
+            if (!UserPaint)
+                return;
+
+            using var dc = GetNative().OpenPaintDrawingContext(this);
+
+            RaisePaint(new PaintEventArgs(dc, ClientRectangle));
+        }
+
+        internal void NativeControl_HorizontalScrollBarValueChanged()
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.HorizontalScroll,
+                NewValue = GetNative().GetScrollBarEvtPosition(this),
+                Type = GetNative().GetScrollBarEvtKind(this),
+            };
+            RaiseScroll(args);
+        }
+
+        internal void NativeControl_VerticalScrollBarValueChanged()
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.VerticalScroll,
+                NewValue = GetNative().GetScrollBarEvtPosition(this),
+                Type = GetNative().GetScrollBarEvtKind(this),
+            };
+            RaiseScroll(args);
+        }
+
+        internal void NativeControl_VisibleChanged()
+        {
+            bool visible = GetNative().GetVisible(this);
+            Visible = visible;
+
+            if (BaseApplication.IsLinuxOS && visible)
+            {
+                // todo: this is a workaround for a problem on Linux when
+                // ClientSize is not reported correctly until the window is shown
+                // So we need to relayout all after the proper client size is available
+                // This should be changed later in respect to RedrawOnResize functionality.
+                // Also we may need to do this for top-level windows.
+                // Doing this on Windows results in strange glitches like disappearing
+                // tab controls' tab.
+                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                PerformLayout();
+            }
         }
     }
 }

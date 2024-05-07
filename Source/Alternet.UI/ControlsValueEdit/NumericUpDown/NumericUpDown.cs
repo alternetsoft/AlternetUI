@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class NumericUpDown : Control
+    public partial class NumericUpDown : WxBaseControl
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -221,7 +221,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateNumericUpDownHandler(this);

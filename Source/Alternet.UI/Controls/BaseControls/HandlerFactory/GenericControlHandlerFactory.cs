@@ -6,103 +6,103 @@ namespace Alternet.UI
     internal class GenericControlHandlerFactory : IControlHandlerFactory
     {
         /// <inheritdoc/>
-        public ControlHandler CreateButtonHandler(Control control) =>
+        public WxControlHandler CreateButtonHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateButtonHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateTextBoxHandler(Control control) =>
+        public WxControlHandler CreateTextBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateTextBoxHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateCheckBoxHandler(Control control) =>
+        public WxControlHandler CreateCheckBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateCheckBoxHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateRadioButtonHandler(Control control) =>
+        public WxControlHandler CreateRadioButtonHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateRadioButtonHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateAuiToolbarHandler(Control control) =>
+        public WxControlHandler CreateAuiToolbarHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateAuiToolbarHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateAuiNotebookHandler(Control control) =>
+        public WxControlHandler CreateAuiNotebookHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateAuiNotebookHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateTabControlHandler(Control control) =>
+        public WxControlHandler CreateTabControlHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateTabControlHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateGroupBoxHandler(Control control) =>
+        public WxControlHandler CreateGroupBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateGroupBoxHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreatePropertyGridHandler(Control control) =>
+        public WxControlHandler CreatePropertyGridHandler(Control control) =>
             StockControlHandlerFactories.Native.CreatePropertyGridHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateProgressBarHandler(Control control) =>
+        public WxControlHandler CreateProgressBarHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateProgressBarHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateSliderHandler(Control control) =>
+        public WxControlHandler CreateSliderHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateSliderHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateNumericUpDownHandler(Control control) =>
+        public WxControlHandler CreateNumericUpDownHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateNumericUpDownHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateCheckListBoxHandler(Control control) =>
+        public WxControlHandler CreateCheckListBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateCheckListBoxHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateListBoxHandler(Control control) =>
+        public WxControlHandler CreateListBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateListBoxHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateComboBoxHandler(Control control) =>
+        public WxControlHandler CreateComboBoxHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateComboBoxHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateListViewHandler(Control control) =>
+        public WxControlHandler CreateListViewHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateListViewHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateTreeViewHandler(Control control) =>
+        public WxControlHandler CreateTreeViewHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateTreeViewHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateMainMenuHandler(Control control) =>
+        public WxControlHandler CreateMainMenuHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateMainMenuHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateMenuItemHandler(Control control) =>
+        public WxControlHandler CreateMenuItemHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateMenuItemHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateContextMenuHandler(Control control) =>
+        public WxControlHandler CreateContextMenuHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateContextMenuHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateToolbarHandler(Control control) =>
+        public WxControlHandler CreateToolbarHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateToolbarHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateToolbarItemHandler(Control control) =>
+        public WxControlHandler CreateToolbarItemHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateToolbarItemHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateColorPickerHandler(Control control) =>
+        public WxControlHandler CreateColorPickerHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateColorPickerHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateDateTimePickerHandler(Control control) =>
+        public WxControlHandler CreateDateTimePickerHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateDateTimePickerHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateScrollViewerHandler(Control control) =>
+        public WxControlHandler CreateScrollViewerHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateScrollViewerHandler(control);
     }
 }

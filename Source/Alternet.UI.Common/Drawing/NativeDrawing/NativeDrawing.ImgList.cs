@@ -11,6 +11,8 @@ namespace Alternet.Drawing
 {
     public partial class NativeDrawing
     {
+        public abstract SizeI ImageSetGetPreferredBitmapSizeFor(ImageSet imageSet, IControl control);
+
         public abstract SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imageSet, double scale);
 
         public abstract void ImageSetAddImage(ImageSet imageSet, int index, Image item);

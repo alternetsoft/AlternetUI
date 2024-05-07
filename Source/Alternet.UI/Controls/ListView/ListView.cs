@@ -24,7 +24,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class ListView : Control
+    public partial class ListView : WxBaseControl
     {
         private HashSet<long>? selectedIndices = null;
 
@@ -787,7 +787,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateListViewHandler(this);
         }

@@ -78,7 +78,7 @@ namespace Alternet.UI
             if (controlUnderMouse == null)
                 return null;
 
-            var handler = ControlHandler.NativeControlToHandler(controlUnderMouse);
+            var handler = WxControlHandler.NativeControlToHandler(controlUnderMouse);
             if (handler == null)
                 return null;
 

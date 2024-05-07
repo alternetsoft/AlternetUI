@@ -15,7 +15,7 @@ namespace Alternet.UI
     [DefaultProperty("Name")]
     [DefaultEvent("Enter")]
     [ControlCategory("Common")]
-    public partial class WebBrowser : Control, IWebBrowser
+    public partial class WebBrowser : WxBaseControl, IWebBrowser
     {
         private static Brush? uixmlPreviewerBrush = null;
         private readonly string defaultUrl = "about:blank";
@@ -1252,7 +1252,7 @@ namespace Alternet.UI
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CreateHandler/*'/>
-        internal override ControlHandler CreateHandler()
+        internal override BaseControlHandler CreateHandler()
         {
             return new WebBrowserHandler();
         }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Alternet.UI
 {
-    internal class SplitterPanelHandler : ControlHandler
+    internal class SplitterPanelHandler : WxControlHandler
     {
         public new Native.SplitterPanel NativeControl =>
             (Native.SplitterPanel)base.NativeControl!;

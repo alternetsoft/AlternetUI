@@ -17,11 +17,55 @@ namespace Alternet.UI
             return ((UI.Native.Control)control.NativeControl).WxWidget;
         }
 
+        /// <inheritdoc/>
+        public override LangDirection GetLangDirection(IControl control)
+        {
+            return (LangDirection)((UI.Native.Control)control.NativeControl).LayoutDirection;
+        }
+
+        /// <inheritdoc/>
+        public override void SetLangDirection(IControl control, LangDirection value)
+        {
+            ((UI.Native.Control)control.NativeControl).LayoutDirection = (int)value;
+        }
+
+        /// <inheritdoc/>
+        public override ControlBorderStyle GetBorderStyle(IControl control)
+        {
+            return (ControlBorderStyle)((UI.Native.Control)control.NativeControl).BorderStyle;
+        }
+
+        /// <inheritdoc/>
+        public override void SetBorderStyle(IControl control, ControlBorderStyle value)
+        {
+            ((UI.Native.Control)control.NativeControl).BorderStyle = (int)value;
+        }
+
+        /// <inheritdoc/>
+        public override Graphics OpenPaintDrawingContext(IControl control)
+        {
+            return new WxGraphics(((UI.Native.Control)control.NativeControl).OpenPaintDrawingContext());
+        }
+
+        /// <inheritdoc/>
+        public override int GetScrollBarEvtPosition(IControl control)
+        {
+            return ((UI.Native.Control)control.NativeControl).GetScrollBarEvtPosition();
+        }
+
+        /// <inheritdoc/>
+        public override ScrollEventType GetScrollBarEvtKind(IControl control)
+        {
+            return (ScrollEventType)((UI.Native.Control)control.NativeControl).GetScrollBarEvtKind();
+        }
+
+        /// <inheritdoc/>
         public override IntPtr GetHandle(IControl control)
         {
             return ((UI.Native.Control)control.NativeControl).Handle;
         }
 
+        /// <inheritdoc/>
         public override SizeD GetPreferredSize(IControl control, SizeD availableSize)
         {
             return ((UI.Native.Control)control.NativeControl).GetPreferredSize(availableSize);
