@@ -2763,6 +2763,11 @@ namespace Alternet.UI
             }
         }
 
+        /*/// <summary>
+        /// Gets whether control is abstract control.
+        /// </summary>
+        protected abstract bool IsAbstract { get; }*/
+
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
             => HasChildren ? Children : Array.Empty<FrameworkElement>();

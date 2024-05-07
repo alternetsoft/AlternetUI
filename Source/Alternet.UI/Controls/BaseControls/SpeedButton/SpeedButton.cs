@@ -60,7 +60,7 @@ namespace Alternet.UI
             HorizontalAlignment = HorizontalAlignment.Center,
         };
 
-        private readonly Control spacer = new()
+        private readonly Control spacer = new Panel()
         {
             SuggestedSize = DefaultImageLabelDistance,
             Visible = false,

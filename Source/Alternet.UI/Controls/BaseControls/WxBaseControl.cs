@@ -18,6 +18,9 @@ public class WxBaseControl : Control
 
     internal new WxControlHandler Handler => (WxControlHandler)base.Handler;
 
+    /*/// <inheritdoc/>
+    protected override bool IsAbstract => false;*/
+
     /// <summary>
     /// Pops up the given menu at the specified coordinates, relative to this window,
     /// and returns control when the user has dismissed the menu.

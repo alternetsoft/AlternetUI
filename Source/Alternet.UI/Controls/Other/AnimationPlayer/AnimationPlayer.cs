@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// support all of them.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class AnimationPlayer : Control, IAnimationPlayer
+    public partial class AnimationPlayer : WxBaseControl, IAnimationPlayer
     {
         /// <summary>
         /// Gets or sets type of the default driver used inside the <see cref="AnimationPlayer"/>.

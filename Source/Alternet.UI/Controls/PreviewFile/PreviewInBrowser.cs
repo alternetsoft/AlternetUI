@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements preview control which uses <see cref="WebBrowser"/> for the preview
     /// of the files.
     /// </summary>
-    public class PreviewInBrowser : Control, IFilePreview
+    public class PreviewInBrowser : WxBaseControl, IFilePreview
     {
         /// <summary>
         /// Gets or sets list of file extension which

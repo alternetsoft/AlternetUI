@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to preview the file using one of the registered preview controls.
     /// </summary>
-    public class PreviewFile : Control, IFilePreview
+    public class PreviewFile : WxBaseControl, IFilePreview
     {
         private readonly Label label = new()
         {

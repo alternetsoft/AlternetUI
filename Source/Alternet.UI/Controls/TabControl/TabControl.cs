@@ -19,7 +19,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedIndexChanged")]
-    public partial class TabControl : Control
+    public partial class TabControl : WxBaseControl
     {
         /// <summary>
         /// Gets or sets default minimal tab size in the header.

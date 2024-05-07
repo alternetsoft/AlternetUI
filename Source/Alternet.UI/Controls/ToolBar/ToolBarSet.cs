@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements multiple <see cref="GenericToolBar"/> controls.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBarSet : Control
+    public partial class ToolBarSet : WxBaseControl
     {
         /// <summary>
         /// Gets or sets default distance (in dips) between toolbars.

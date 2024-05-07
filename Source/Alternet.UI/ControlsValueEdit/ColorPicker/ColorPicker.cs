@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class ColorPicker : Control
+    public partial class ColorPicker : WxBaseControl
     {
         private Color color = Color.Black;
 

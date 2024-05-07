@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class GenericToolBar : Control
+    public partial class GenericToolBar : WxBaseControl
     {
         private double itemSize;
         private bool textVisible = false;

@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// There is also <see cref="PreviewUixmlSplitted"/> class which allows to preview
     /// uixml together with its source code.
     /// </summary>
-    public class PreviewUixml : Control, IFilePreview
+    public class PreviewUixml : WxBaseControl, IFilePreview
     {
         private static HiddenWindow? previewWindow;
 
