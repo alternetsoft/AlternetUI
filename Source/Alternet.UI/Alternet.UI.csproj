@@ -329,7 +329,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\BaseControls\ControlStateSettings\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
 

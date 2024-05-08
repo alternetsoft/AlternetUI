@@ -12,7 +12,17 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
+    public abstract bool GetWantChars(IControl control);
+
+    public abstract void SetWantChars(IControl control, bool value);
+
     public abstract BaseControlHandler CreateControlHandler(IControl control);
+
+    public abstract void SetShowHorzScrollBar(IControl control, bool value);
+
+    public abstract void SetShowVertScrollBar(IControl control, bool value);
+
+    public abstract void SetScrollBarAlwaysVisible(IControl control, bool value);
 
     public abstract void NotifyCaptureLost();
 

@@ -609,4 +609,29 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override bool GetWantChars(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetWantChars(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetShowHorzScrollBar(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetShowVertScrollBar(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetScrollBarAlwaysVisible(IControl control, bool value)
+    {
+        throw new NotImplementedException();
+    }
 }

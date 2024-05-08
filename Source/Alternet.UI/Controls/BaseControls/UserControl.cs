@@ -40,13 +40,13 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
         /// </summary>
         [Browsable(false)]
-        public ContextMenu? DropDownMenu { get; set; }
+        public virtual ContextMenu? DropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets the type of scroll bars displayed in the control.
         /// </summary>
         [Browsable(false)]
-        public RichTextBoxScrollBars ScrollBars
+        public virtual RichTextBoxScrollBars ScrollBars
         {
             get
             {
@@ -98,23 +98,23 @@ namespace Alternet.UI
         /// for Tab and Shift-Tab.
         /// </remarks>
         [Browsable(false)]
-        public bool WantChars
+        public virtual bool WantChars
         {
             get
             {
-                return NativeControl.WantChars;
+                return GetNative().GetWantChars(this);
             }
 
             set
             {
-                NativeControl.WantChars = value;
+                GetNative().SetWantChars(this, value);
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public bool HasBorder
+        public virtual bool HasBorder
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="Caret"/> associated with this control.
         /// </summary>
         [Browsable(false)]
-        public Caret? Caret
+        public virtual Caret? Caret
         {
             get
             {
@@ -146,8 +146,6 @@ namespace Alternet.UI
                 caret = value;
             }
         }
-
-        internal new Native.Panel NativeControl => (Native.Panel)base.NativeControl;
 
         /// <summary>
         /// Sets <see cref="Control.StateObjects"/> colors and backgrounds for the state specified
@@ -230,11 +228,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            /*Application.Log($"{GetType()}.OnMouseLeftButtonDown");*/
             base.OnMouseLeftButtonDown(e);
             if (!Enabled)
                 return;
-            /*Application.Log($"{GetType()}.OnMouseLeftButtonDown 2");*/
             RaiseClick(EventArgs.Empty);
             ShowDropDownMenu();
             Invalidate();
@@ -288,11 +284,17 @@ namespace Alternet.UI
                 Refresh();
         }
 
-        private void SetScrollbars(bool horz, bool vert, bool always)
+        /// <summary>
+        /// Sets scrollbar settings.
+        /// </summary>
+        /// <param name="horz">Whether to show horizontal scrollbar.</param>
+        /// <param name="vert">Whether to show vertical scrollbar.</param>
+        /// <param name="always">Whether scrollbars are always visible.</param>
+        protected virtual void SetScrollbars(bool horz, bool vert, bool always)
         {
-            NativeControl.ShowHorzScrollBar = horz;
-            NativeControl.ShowVertScrollBar = vert;
-            NativeControl.ScrollBarAlwaysVisible = always;
+            GetNative().SetShowHorzScrollBar(this, horz);
+            GetNative().SetShowVertScrollBar(this, vert);
+            GetNative().SetScrollBarAlwaysVisible(this, always);
         }
     }
 }

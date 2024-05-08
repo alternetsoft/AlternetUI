@@ -10,7 +10,11 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        internal virtual NativeControl GetNative() => Alternet.UI.NativeControl.Default;
+        /// <summary>
+        /// Gets native control adapter.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual NativeControl GetNative() => Alternet.UI.NativeControl.Default;
 
         /// <summary>
         /// Ensures that the control <see cref="Handler"/> is created,

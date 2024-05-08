@@ -18,6 +18,36 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool GetWantChars(IControl control)
+        {
+            return ((UI.Native.Panel)control.NativeControl).WantChars;
+        }
+
+        /// <inheritdoc/>
+        public override void SetWantChars(IControl control, bool value)
+        {
+            ((UI.Native.Panel)control.NativeControl).WantChars = value;
+        }
+
+        /// <inheritdoc/>
+        public override void SetShowHorzScrollBar(IControl control, bool value)
+        {
+            ((UI.Native.Panel)control.NativeControl).ShowHorzScrollBar = value;
+        }
+
+        /// <inheritdoc/>
+        public override void SetShowVertScrollBar(IControl control, bool value)
+        {
+            ((UI.Native.Panel)control.NativeControl).ShowVertScrollBar = value;
+        }
+
+        /// <inheritdoc/>
+        public override void SetScrollBarAlwaysVisible(IControl control, bool value)
+        {
+            ((UI.Native.Panel)control.NativeControl).ScrollBarAlwaysVisible = value;
+        }
+
+        /// <inheritdoc/>
         public override void NotifyCaptureLost()
         {
             Native.Control.NotifyCaptureLost();
