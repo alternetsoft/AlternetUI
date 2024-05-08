@@ -15,13 +15,13 @@ namespace Alternet.UI
         /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
         /// These coordinates are specified relative
         /// to the client coordinates of the control specified in the control parameter.</param>
-        public void Show(WxBaseControl control, PointD position)
+        public void Show(IControl control, PointD position)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
             NativeControl.ShowContextMenu(
-                control.Handler.NativeControl ?? throw new Exception(), position);
+                (UI.Native.Control)control.NativeControl ?? throw new Exception(), position);
         }
 
         internal override Native.Control CreateNativeControl()

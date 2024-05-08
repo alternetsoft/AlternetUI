@@ -212,6 +212,18 @@ namespace Alternet.UI
             set => Handler.TextAlign = value;
         }
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+        }
+
+        [Browsable(false)]
+        internal new Thickness Padding
+        {
+            get => base.Padding;
+        }
+
         /// <summary>
         /// Gets a <see cref="ButtonHandler"/> associated with this class.
         /// </summary>

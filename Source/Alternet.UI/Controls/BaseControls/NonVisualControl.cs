@@ -10,8 +10,7 @@ using Alternet.UI;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Base class for all non visual controls like <see cref="Menu"/>,
-    /// <see cref="StatusBar"/> and other.
+    /// Base class for all non visual controls.
     /// </summary>
     [ControlCategory("Hidden")]
     public partial class NonVisualControl : WxBaseControl

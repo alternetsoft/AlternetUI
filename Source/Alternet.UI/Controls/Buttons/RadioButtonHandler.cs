@@ -1,6 +1,6 @@
 namespace Alternet.UI
 {
-    internal class NativeRadioButtonHandler : NativeControlHandler<RadioButton, Native.RadioButton>
+    internal class RadioButtonHandler : NativeControlHandler<RadioButton, Native.RadioButton>
     {
         internal override Native.Control CreateNativeControl()
         {

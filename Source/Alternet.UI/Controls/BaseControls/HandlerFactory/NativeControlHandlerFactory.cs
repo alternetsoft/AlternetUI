@@ -27,11 +27,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateCheckBoxHandler(Control control) =>
-            new NativeCheckBoxHandler();
+            new CheckBoxHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateRadioButtonHandler(Control control) =>
-            new NativeRadioButtonHandler();
+            new RadioButtonHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateTabControlHandler(Control control) =>

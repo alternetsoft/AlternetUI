@@ -11,12 +11,6 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
-        /// Gets native control adapter.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual NativeControl GetNative() => Alternet.UI.NativeControl.Default;
-
-        /// <summary>
         /// Ensures that the control <see cref="Handler"/> is created,
         /// creating and attaching it if necessary.
         /// </summary>
@@ -63,6 +57,12 @@ namespace Alternet.UI
 
             return new SizeD(width, height);
         }
+
+        /// <summary>
+        /// Gets native control adapter.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual NativeControl GetNative() => Alternet.UI.NativeControl.Default;
 
         /// <summary>
         /// Returns a preferred size of control with an added padding.

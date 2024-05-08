@@ -209,7 +209,7 @@ namespace Alternet.UI
         /// Gets a <see cref="WxControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal NativeCheckBoxHandler? NativeHandler => Handler as NativeCheckBoxHandler;
+        internal CheckBoxHandler? NativeHandler => Handler as CheckBoxHandler;
 
         internal new Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
 

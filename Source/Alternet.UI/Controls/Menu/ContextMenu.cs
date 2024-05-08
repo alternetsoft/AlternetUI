@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// If <paramref name="position"/> is <c>null</c> (default value), popup menu is shown
         /// under the control specified in the <paramref name="control"/> parameter.
         /// </remarks>
-        public void Show(WxBaseControl control, PointD? position = null)
+        public void Show(IControl control, PointD? position = null)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
@@ -101,7 +101,7 @@ namespace Alternet.UI
 
             void ShowUnder()
             {
-                Window? window = control.ParentWindow;
+                var window = control.ParentWindow;
                 if (window == null)
                     return;
                 RectD toolRect = control.Bounds;

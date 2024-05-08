@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Parent class for all owner draw controls.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class UserControl : WxBaseControl
+    public partial class UserControl : Control
     {
         private bool hasBorder = true; // !! to border settings
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
@@ -244,7 +244,7 @@ namespace Alternet.UI
             if (DropDownMenu is null)
                 return;
             PointD pt = (0, Bounds.Height);
-            this.ShowPopupMenu(DropDownMenu, pt.X, pt.Y);
+            ControlUtils.ShowPopupMenu(this, DropDownMenu, pt.X, pt.Y);
         }
 
         /// <inheritdoc/>

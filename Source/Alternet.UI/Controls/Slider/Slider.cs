@@ -311,6 +311,13 @@ namespace Alternet.UI
             }
         }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the
         /// <see cref="FrameworkElement.DataContext"/>
