@@ -824,7 +824,7 @@ namespace Alternet.UI
         /// <summary>
         /// Shows window and focuses it.
         /// </summary>
-        /// <param name="useIdle">Whether to use <see cref="Application.Idle"/>
+        /// <param name="useIdle">Whether to use <see cref="BaseApplication.Idle"/>
         /// event to show the window.</param>
         public virtual void ShowAndFocus(bool useIdle = false)
         {

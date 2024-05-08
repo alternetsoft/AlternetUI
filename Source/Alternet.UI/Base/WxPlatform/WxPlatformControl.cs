@@ -17,6 +17,38 @@ namespace Alternet.UI
             return ((UI.Native.Control)control.NativeControl).WxWidget;
         }
 
+        /// <inheritdoc/>
+        public override Color GetClassDefaultAttributesBgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesBgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        /// <inheritdoc/>
+        public override Color GetClassDefaultAttributesFgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesFgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        /// <inheritdoc/>
+        public override Font? GetClassDefaultAttributesFont(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            var font = Native.Control.GetClassDefaultAttributesFont(
+                (int)controlType,
+                (int)renderSize);
+            return Font.FromInternal(font);
+        }
+
+        /// <inheritdoc/>
         public override IControl? GetFocusedControl()
         {
             var focusedNativeControl = Native.Control.GetFocusedControl();

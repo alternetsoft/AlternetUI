@@ -71,28 +71,21 @@ namespace Alternet.UI
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return Native.Control.GetClassDefaultAttributesBgColor(
-                (int)controlType,
-                (int)renderSize);
+            return NativeControl.Default.GetClassDefaultAttributesBgColor(controlType, renderSize);
         }
 
         internal static Color GetClassDefaultAttributesFgColor(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return Native.Control.GetClassDefaultAttributesFgColor(
-                (int)controlType,
-                (int)renderSize);
+            return NativeControl.Default.GetClassDefaultAttributesFgColor(controlType, renderSize);
         }
 
         internal static Font? GetClassDefaultAttributesFont(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            var font = Native.Control.GetClassDefaultAttributesFont(
-                (int)controlType,
-                (int)renderSize);
-            return Font.FromInternal(font);
+            return NativeControl.Default.GetClassDefaultAttributesFont(controlType, renderSize);
         }
 
         internal void ReportBoundsChanged()

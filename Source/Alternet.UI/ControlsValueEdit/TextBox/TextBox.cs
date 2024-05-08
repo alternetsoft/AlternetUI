@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// You need to call <see cref="IdleAction"/> in the
-        /// <see cref="Application.Idle"/> event handler in order to enable
+        /// <see cref="BaseApplication.Idle"/> event handler in order to enable
         /// <see cref="CurrentPositionChanged"/> event firing.
         /// </remarks>
         public event EventHandler? CurrentPositionChanged;
@@ -1228,7 +1228,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Call this method in <see cref="Application.Idle"/> event handler
+        /// Call this method in <see cref="BaseApplication.Idle"/> event handler
         /// in order to update information related to the current selection and caret position.
         /// </summary>
         public virtual void IdleAction()

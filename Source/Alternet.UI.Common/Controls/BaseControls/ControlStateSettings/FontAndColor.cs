@@ -182,5 +182,44 @@ namespace Alternet.UI
             colors = result;
             action?.Invoke();
         }
+
+        public class ControlDefaultFontAndColor : IReadOnlyFontAndColor
+        {
+            private readonly IControl control;
+
+            public ControlDefaultFontAndColor(IControl control)
+            {
+                this.control = control;
+            }
+
+            public Color? BackgroundColor => control.GetDefaultAttributesBgColor();
+
+            public Color? ForegroundColor => control.GetDefaultAttributesFgColor();
+
+            public Font? Font => control.GetDefaultAttributesFont();
+        }
+
+        public class ControlStaticDefaultFontAndColor : IReadOnlyFontAndColor
+        {
+            private readonly ControlTypeId controlType;
+            private readonly ControlRenderSizeVariant renderSize;
+
+            public ControlStaticDefaultFontAndColor(
+                ControlTypeId controlType,
+                ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+            {
+                this.controlType = controlType;
+                this.renderSize = renderSize;
+            }
+
+            public Color? BackgroundColor =>
+                NativeControl.Default.GetClassDefaultAttributesBgColor(controlType, renderSize);
+
+            public Color? ForegroundColor =>
+                NativeControl.Default.GetClassDefaultAttributesFgColor(controlType, renderSize);
+
+            public Font? Font =>
+                NativeControl.Default.GetClassDefaultAttributesFont(controlType, renderSize);
+        }
     }
 }

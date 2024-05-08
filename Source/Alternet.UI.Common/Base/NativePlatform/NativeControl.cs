@@ -250,4 +250,16 @@ public abstract class NativeControl
     public abstract void SetLangDirection(IControl control, LangDirection value);
 
     public abstract IControl? GetFocusedControl();
+
+    public abstract Color GetClassDefaultAttributesBgColor(
+        ControlTypeId controlType,
+        ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
+    public abstract Color GetClassDefaultAttributesFgColor(
+        ControlTypeId controlType,
+        ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
+    public abstract Font? GetClassDefaultAttributesFont(
+        ControlTypeId controlType,
+        ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
 }
