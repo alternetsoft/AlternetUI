@@ -11,16 +11,6 @@ namespace Alternet.Drawing
 {
     internal partial class WxDrawing : NativeDrawing
     {
-        private static bool initialized;
-
-        public static void Initialize()
-        {
-            if (initialized)
-                return;
-            NativeDrawing.Default = new WxDrawing();
-            initialized = true;
-        }
-
         public override Graphics CreateGraphicsFromScreen()
         {
             return new WxGraphics(UI.Native.DrawingContext.FromScreen());

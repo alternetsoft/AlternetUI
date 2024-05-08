@@ -23,7 +23,7 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeControl.Modal;
+                return GetNativeWindow().GetModal(this);
             }
         }
 
@@ -57,13 +57,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return (ModalResult)NativeControl.ModalResult;
+                return GetNativeWindow().GetModalResult(this);
             }
 
             set
             {
                 CheckDisposed();
-                NativeControl.ModalResult = (Native.ModalResult)value;
+                GetNativeWindow().SetModalResult(this, value);
             }
         }
 
@@ -96,13 +96,9 @@ namespace Alternet.UI
         public virtual ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
-
             ModalResult = ModalResult.None;
-
             ApplyStartLocationOnce(owner);
-            NativeControl.ShowModal(WxPlatformControl.WxWidget(owner));
-
-            return ModalResult;
+            return GetNativeWindow().ShowModal(this, owner);
         }
 
         internal override WindowKind GetWindowKind() => WindowKind.Dialog;

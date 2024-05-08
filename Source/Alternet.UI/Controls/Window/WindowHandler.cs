@@ -29,52 +29,6 @@ namespace Alternet.UI
         public new Native.Window NativeControl => (Native.Window)base.NativeControl!;
 
         /// <summary>
-        /// Gets an array of <see cref="Window"/> objects that represent
-        /// all windows that are owned by this window.
-        /// </summary>
-        /// <value>
-        /// A <see cref="Window"/> array that represents the owned windows for
-        /// this window.
-        /// </value>
-        /// <remarks>
-        /// This property returns an array that contains all windows that are
-        /// owned by this window. To make a window owned by another window, se
-        /// the <see cref="Window.Owner"/> property.
-        /// </remarks>
-        public Window[] OwnedWindows
-        {
-            get
-            {
-                return NativeControl.OwnedWindows.Select(
-                    x => ((WindowHandler)(NativeControlToHandler(x) ??
-                    throw new Exception())).Control).ToArray();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the position of the window when first shown.
-        /// </summary>
-        /// <value>A <see cref="WindowStartLocation"/> that represents the
-        /// starting position of the window.</value>
-        /// <remarks>
-        /// This property enables you to set the starting position of the window
-        /// when it is first shown.
-        /// This property should be set before the window is shown.
-        /// </remarks>
-        public WindowStartLocation StartLocation
-        {
-            get
-            {
-                return (WindowStartLocation)NativeControl.WindowStartLocation;
-            }
-
-            set
-            {
-                NativeControl.WindowStartLocation = (Native.WindowStartLocation)value;
-            }
-        }
-
-        /// <summary>
         /// Closes the window.
         /// </summary>
         /// <remarks>
@@ -237,9 +191,9 @@ namespace Alternet.UI
 
         private void NativeControl_SizeChanged()
         {
-            if (!Application.IsLinuxOS)
+            if (!BaseApplication.IsLinuxOS)
                 Control.PerformLayout();
-            Application.AddIdleTask(() =>
+            BaseApplication.AddIdleTask(() =>
             {
                 if (Control.IsDisposed)
                     return;

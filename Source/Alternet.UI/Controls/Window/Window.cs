@@ -172,12 +172,13 @@ namespace Alternet.UI
             set
             {
                 defaultBounds = value;
-                Native.Window.SetDefaultBounds(defaultBounds);
+                NativeWindow.Default.SetDefaultBounds(defaultBounds);
             }
         }
 
         /// <summary>
-        /// Gets or sets default control font size increment (in points) on high dpi displays (DPI greater than 96).
+        /// Gets or sets default control font size increment
+        /// (in points) on high dpi displays (DPI greater than 96).
         /// Default value is 2.
         /// </summary>
         public static int IncFontSizeHighDpi
@@ -220,7 +221,7 @@ namespace Alternet.UI
         /// this application.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsActive => NativeControl.IsActive;
+        public virtual bool IsActive => GetNativeWindow().IsActive(this);
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -368,7 +369,7 @@ namespace Alternet.UI
                 if (info.IsPopupWindow == value)
                     return;
                 info.IsPopupWindow = value;
-                Handler.NativeControl.IsPopupWindow = value;
+                GetNativeWindow().SetIsPopupWindow(this, value);
             }
         }
 
@@ -539,7 +540,7 @@ namespace Alternet.UI
                 if (info.StartLocation == value)
                     return;
                 info.StartLocation = value;
-                Handler.StartLocation = value;
+                GetNativeWindow().SetStartLocation(this, value);
             }
         }
 
@@ -558,7 +559,13 @@ namespace Alternet.UI
         /// with the owner window.
         /// </remarks>
         [Browsable(false)]
-        public virtual Window[] OwnedWindows { get => Handler.OwnedWindows; }
+        public virtual IWindow[] OwnedWindows
+        {
+            get
+            {
+                return GetNativeWindow().GetOwnedWindows(this);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value that indicates whether window is minimized,
@@ -566,7 +573,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual WindowState State
         {
-            get => (WindowState)NativeControl.State;
+            get => GetNativeWindow().GetState(this);
 
             set
             {
@@ -575,7 +582,7 @@ namespace Alternet.UI
 
                 if (IsDisposed)
                     return;
-                NativeControl.State = (Native.WindowState)value;
+                GetNativeWindow().SetState(this, value);
                 OnStateChanged(EventArgs.Empty);
                 StateChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -606,31 +613,8 @@ namespace Alternet.UI
                     return;
                 }
 
-                if (value is StatusBar asStatusBar)
-                {
-                    if (value.IsDisposed)
-                        throw new ObjectDisposedException(nameof(StatusBar));
-                    if (asStatusBar.Window is not null && asStatusBar.Window != this)
-                    {
-                        throw new ArgumentException(
-                            "Object is already attached to the window",
-                            nameof(StatusBar));
-                    }
-                }
-
-                if (statusBar is StatusBar asStatusBar2)
-                {
-                    asStatusBar2.Window = null;
-                    var oldHandle = Handler.NativeControl.WxStatusBar;
-                    if (oldHandle != default)
-                        Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
-                }
-
+                GetNativeWindow().SetStatusBar(this, statusBar, value);
                 statusBar = value;
-                if (statusBar is StatusBar asStatusBar3)
-                    asStatusBar3.Window = this;
-                else
-                    Handler.NativeControl.WxStatusBar = default;
 
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);
@@ -772,15 +756,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
-        /// <summary>
-        /// Gets a <see cref="WindowHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal new WindowHandler Handler => (WindowHandler)base.Handler;
-
-        [Browsable(false)]
-        internal new Native.Window NativeControl => (Native.Window)base.NativeControl;
-
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
@@ -806,7 +781,7 @@ namespace Alternet.UI
         /// </summary>
         public static void UpdateDefaultFont()
         {
-            if (!Application.Initialized)
+            if (!BaseApplication.Initialized)
                 return;
 
             var dpi = Display.Primary.DPI;
@@ -829,7 +804,7 @@ namespace Alternet.UI
         public virtual void ShowAndFocus(bool useIdle = false)
         {
             if (useIdle)
-                Application.AddIdleTask(Fn);
+                BaseApplication.AddIdleTask(Fn);
             else
                 Fn();
 
@@ -849,7 +824,7 @@ namespace Alternet.UI
         /// Activating a window brings it to the front if this is the active application,
         /// or it flashes the window caption if this is not the active application.
         /// </remarks>
-        public virtual void Activate() => NativeControl.Activate();
+        public virtual void Activate() => GetNativeWindow().Activate(this);
 
         /// <summary>
         /// Gets default bounds assigned to the window.
@@ -882,7 +857,7 @@ namespace Alternet.UI
 
             CheckDisposed();
 
-            Handler.Close();
+            GetNativeWindow().Close(this);
         }
 
         internal static Window? GetParentWindow(DependencyObject dp)
@@ -936,7 +911,8 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler() => new WindowHandler();
+        internal override BaseControlHandler CreateHandler()
+            => (BaseControlHandler)GetNativeWindow().CreateWindowHandler();
 
         /// <summary>
         /// Raises the <see cref="Closing"/> event and calls
@@ -1178,5 +1154,11 @@ namespace Alternet.UI
         protected virtual void OnStateChanged(EventArgs e)
         {
         }
+
+        /// <summary>
+        /// Gets native window adapter.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual NativeWindow GetNativeWindow() => NativeWindow.Default;
     }
 }

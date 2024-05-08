@@ -132,7 +132,15 @@ namespace Alternet.UI
                     return default;
                 }
 
-                return window.Handler.NativeControl.WxStatusBar;
+                return ((WindowHandler)window.Handler).NativeControl.WxStatusBar;
+            }
+
+            set
+            {
+                if (window is null || window.IsDisposed)
+                    return;
+
+                ((WindowHandler)window.Handler).NativeControl.WxStatusBar = value;
             }
         }
 
@@ -551,11 +559,11 @@ namespace Alternet.UI
             var handle = StatusBarHandle;
             if (window != null)
             {
-                window.Handler.NativeControl.WxStatusBar = default;
+                StatusBarHandle = default;
                 if(handle != default)
                     Native.WxStatusBarFactory.DeleteStatusBar(handle);
 
-                window.Handler.NativeControl.WxStatusBar =
+                StatusBarHandle =
                     Native.WxStatusBarFactory.CreateStatusBar(
                         window.Handler.NativeControl.WxWidget,
                         GetStyle());
