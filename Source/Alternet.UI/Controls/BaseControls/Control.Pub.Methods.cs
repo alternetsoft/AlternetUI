@@ -90,11 +90,11 @@ namespace Alternet.UI
                 default:
                     return GetPreferredSizeDefaultLayout(container, availableSize);
                 case LayoutStyle.Basic:
-                    return UI.Control.GetPreferredSizeDefaultLayout(container, availableSize);
+                    return Control.GetPreferredSizeDefaultLayout(container, availableSize);
                 case LayoutStyle.Vertical:
-                    return StackPanel.GetPreferredSizeVerticalStackPanel(container, availableSize);
+                    return Control.GetPreferredSizeVerticalStackPanel(container, availableSize);
                 case LayoutStyle.Horizontal:
-                    return StackPanel.GetPreferredSizeHorizontalStackPanel(container, availableSize);
+                    return Control.GetPreferredSizeHorizontalStackPanel(container, availableSize);
             }
         }
 

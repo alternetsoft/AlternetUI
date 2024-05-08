@@ -2772,8 +2772,6 @@ namespace Alternet.UI
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
             => HasChildren ? Children : Array.Empty<FrameworkElement>();
 
-        private IControlHandlerFactory? ControlHandlerFactory { get; set; }
-
         /// <summary>
         /// Gets child control at the specified index in the collection of child controls.
         /// </summary>

@@ -18,6 +18,8 @@ public class WxBaseControl : Control
 
     internal new WxControlHandler Handler => (WxControlHandler)base.Handler;
 
+    internal IControlHandlerFactory? ControlHandlerFactory { get; set; }
+
     /*/// <inheritdoc/>
     protected override bool IsAbstract => false;*/
 
@@ -50,6 +52,14 @@ public class WxBaseControl : Control
         NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
         menu.RaiseClosing(e);
     }
+
+    /// <summary>
+    /// Gets an <see cref="IControlHandlerFactory"/> to use when creating
+    /// new control handlers for this control.
+    /// </summary>
+    internal IControlHandlerFactory GetEffectiveControlHandlerHactory() =>
+        ControlHandlerFactory ??
+            Application.Current.VisualTheme.ControlHandlerFactory;
 
     /// <summary>
     ///     Virtual method reporting the right mouse button was pressed

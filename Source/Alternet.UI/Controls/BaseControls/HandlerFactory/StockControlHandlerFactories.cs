@@ -8,11 +8,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a stock <see cref="IControlHandlerFactory"/> object.
         /// </summary>
-        public static IControlHandlerFactory Native { get; } = new NativeControlHandlerFactory();
+        public static IControlHandlerFactory Native { get; set; } = new NativeControlHandlerFactory();
 
         /// <summary>
         /// Gets a stock <see cref="IControlHandlerFactory"/> object.
         /// </summary>
-        public static IControlHandlerFactory Generic { get; } = new GenericControlHandlerFactory();
+        public static IControlHandlerFactory Generic { get; set; } = new GenericControlHandlerFactory();
     }
 }
