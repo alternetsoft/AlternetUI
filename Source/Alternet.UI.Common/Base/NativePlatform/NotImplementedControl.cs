@@ -599,4 +599,14 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateControlHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void NotifyCaptureLost()
+    {
+        throw new NotImplementedException();
+    }
 }

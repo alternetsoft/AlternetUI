@@ -101,7 +101,8 @@ namespace Alternet.UI
             return GetNativeWindow().ShowModal(this, owner);
         }
 
-        internal override WindowKind GetWindowKind() => WindowKind.Dialog;
+        /// <inheritdoc/>
+        public override WindowKind GetWindowKind() => WindowKind.Dialog;
 
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)

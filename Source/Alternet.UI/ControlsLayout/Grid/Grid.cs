@@ -89,6 +89,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnCellChanged()
+        {
+            base.OnCellChanged();
+            OnCellAttachedPropertyChanged(this);
+        }
+
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e); // todo: draw grid lines.
@@ -498,13 +505,13 @@ namespace Alternet.UI
             var preferredSize = control.GetPreferredSize(bounds.Size);
 
             var horizontalPosition =
-                LayoutFactory.AlignHorizontal(
+                AlignHorizontal(
                     bounds,
                     control,
                     preferredSize,
                     control.HorizontalAlignment);
             var verticalPosition =
-                LayoutFactory.AlignVertical(
+                AlignVertical(
                     bounds,
                     control,
                     preferredSize,

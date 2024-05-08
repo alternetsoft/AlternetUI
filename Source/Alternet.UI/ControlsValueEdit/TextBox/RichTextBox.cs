@@ -2986,7 +2986,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return new NativeRichTextBoxHandler();
         }

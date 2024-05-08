@@ -12,6 +12,10 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
+    public abstract BaseControlHandler CreateControlHandler(IControl control);
+
+    public abstract void NotifyCaptureLost();
+
     public abstract bool CanAcceptFocus(IControl control);
 
     public abstract SizeD GetClientSize(IControl control);

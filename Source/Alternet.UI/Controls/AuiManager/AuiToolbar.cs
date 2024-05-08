@@ -742,7 +742,7 @@ namespace Alternet.UI
                     {
                         SetToolSticky(toolId, true);
                         var menuLocation = window.ScreenToClient(pt.Value);
-                        window.ShowPopupMenu(contextMenu, (int)menuLocation.X, (int)menuLocation.Y);
+                        ControlUtils.ShowPopupMenu(window, contextMenu, (int)menuLocation.X, (int)menuLocation.Y);
                         SetToolSticky(toolId, false);
                     }
                 }
@@ -1344,7 +1344,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateAuiToolbarHandler(this);
         }

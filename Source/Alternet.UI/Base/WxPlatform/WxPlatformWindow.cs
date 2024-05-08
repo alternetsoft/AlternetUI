@@ -11,12 +11,24 @@ namespace Alternet.UI
     internal class WxPlatformWindow : NativeWindow
     {
         /// <inheritdoc/>
-        public override IWindow[] GetOwnedWindows(IWindow window)
+        public override Window? GetActiveWindow()
+        {
+            var activeWindow = Native.Window.ActiveWindow;
+            if (activeWindow == null)
+                return null;
+
+            var handler = WxControlHandler.NativeControlToHandler(activeWindow) ??
+                throw new InvalidOperationException();
+            return ((WindowHandler)handler).Control;
+        }
+
+        /// <inheritdoc/>
+        public override Window[] GetOwnedWindows(IWindow window)
         {
             var nc = (UI.Native.Window)window.NativeControl;
             var result = nc.OwnedWindows.Select(
                 x => ((WindowHandler)(WxControlHandler.NativeControlToHandler(x) ??
-                throw new Exception())).Control as IWindow).ToArray();
+                throw new Exception())).Control).ToArray();
             return result;
         }
 
@@ -120,9 +132,7 @@ namespace Alternet.UI
                     throw new ObjectDisposedException(nameof(StatusBar));
                 if (asStatusBar.Window is not null && asStatusBar.Window != thisWindow)
                 {
-                    throw new ArgumentException(
-                        "Object is already attached to the window",
-                        nameof(StatusBar));
+                    throw new Exception("Object is already attached to the window");
                 }
             }
 

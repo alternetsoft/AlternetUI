@@ -44,6 +44,8 @@ namespace Alternet.UI
         /// </remarks>
         public abstract int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control);
 
+        public abstract void ExitMainLoop();
+
         public abstract int SystemSettingsGetMetric(SystemSettingsMetric index);
 
         public abstract string SystemSettingsAppearanceName();

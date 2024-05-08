@@ -136,8 +136,8 @@ namespace Alternet.UI
             NativeControl.HandleDestroyed = Control.RaiseHandleDestroyed;
             NativeControl.Activated = Control.RaiseActivated;
             NativeControl.Deactivated = Control.RaiseDeactivated;
-            NativeControl.Paint = Control.NativeControl_Paint;
-            NativeControl.VisibleChanged = Control.NativeControl_VisibleChanged;
+            NativeControl.Paint = Control.OnNativeControlPaint;
+            NativeControl.VisibleChanged = Control.OnNativeControlVisibleChanged;
             NativeControl.MouseEnter = NativeControl_MouseEnter;
             NativeControl.MouseLeave = NativeControl_MouseLeave;
             NativeControl.MouseCaptureLost = Control.RaiseMouseCaptureLost;
@@ -150,9 +150,9 @@ namespace Alternet.UI
             NativeControl.SizeChanged = NativeControl_SizeChanged;
             NativeControl.Idle = Control.RaiseIdle;
             NativeControl.VerticalScrollBarValueChanged =
-                Control.NativeControl_VerticalScrollBarValueChanged;
+                Control.OnNativeControlVerticalScrollBarValueChanged;
             NativeControl.HorizontalScrollBarValueChanged =
-                Control.NativeControl_HorizontalScrollBarValueChanged;
+                Control.OnNativeControlHorizontalScrollBarValueChanged;
         }
 
         private static void DisposeNativeControlCore(Native.Control control)

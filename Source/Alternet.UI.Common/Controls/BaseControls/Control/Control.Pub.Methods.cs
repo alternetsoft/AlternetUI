@@ -11,6 +11,148 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Sets a value that indicates which column child control within a <see cref="Grid"/>
+        /// should appear in.
+        /// </summary>
+        /// <param name="control">The control on which to set the column index.</param>
+        /// <param name="value">The 0-based column index to set.</param>
+        public static void SetColumn(Control control, int value)
+        {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            control.columnIndex = value;
+            control.OnCellChanged();
+        }
+
+        /// <summary>
+        /// Sets a value that indicates which row and column child control within
+        /// a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control on which to set the column index.</param>
+        /// <param name="row">The 0-based row index to set.</param>
+        /// <param name="col">The 0-based column index to set.</param>
+        public static void SetRowColumn(Control control, int row, int col)
+        {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+            if (row < 0)
+                throw new ArgumentOutOfRangeException(nameof(row));
+            if (col < 0)
+                throw new ArgumentOutOfRangeException(nameof(col));
+            control.rowIndex = row;
+            control.columnIndex = col;
+            control.OnCellChanged();
+        }
+
+        /// <summary>
+        /// Gets a value that indicates which column child control within a <see cref="Grid"/>
+        /// should appear in.
+        /// </summary>
+        /// <param name="control">The control for which to get the column index.</param>
+        /// <remarks>The 0-based column index.</remarks>
+        public static int GetColumn(Control control)
+        {
+            if (control is null)
+                throw new ArgumentNullException(nameof(control));
+            return control.columnIndex;
+        }
+
+        /// <summary>
+        /// Sets a value that indicates which row child control within a <see cref="Grid"/>
+        /// should appear in.
+        /// </summary>
+        /// <param name="control">The control on which to set the row index.</param>
+        /// <param name="value">The 0-based row index to set.</param>
+        public static void SetRow(Control control, int value)
+        {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            control.rowIndex = value;
+            control.OnCellChanged();
+        }
+
+        /// <summary>
+        /// Gets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control for which to get the row index.</param>
+        /// <remarks>The 0-based row index.</remarks>
+        public static int GetRow(Control control)
+        {
+            if (control is null)
+                throw new ArgumentNullException(nameof(control));
+            return control.rowIndex;
+        }
+
+        /// <summary>
+        /// Gets a value that indicates the total number of rows that child content spans
+        /// within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to get the row span.</param>
+        /// <returns>The total number of rows that child content spans within a
+        /// <see cref="Grid"/>.</returns>
+        public static int GetRowSpan(Control control)
+        {
+            if (control is null)
+                throw new ArgumentNullException(nameof(control));
+            return control.rowSpan;
+        }
+
+        /// <summary>
+        /// Sets a value that indicates the total number of rows that child content spans
+        /// within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to set the row span.</param>
+        /// <param name="value">The total number of rows that child content spans within
+        /// a <see cref="Grid"/>.</param>
+        public static void SetRowSpan(Control control, int value)
+        {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+            if (value < 1)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            control.rowSpan = value;
+            control.OnCellChanged();
+        }
+
+        /// <summary>
+        /// Gets a value that indicates the total number of columns that child content
+        /// spans within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to get the column span.</param>
+        /// <returns>The total number of columns that child content spans within a
+        /// <see cref="Grid"/>.</returns>
+        public static int GetColumnSpan(Control control)
+        {
+            if (control is null)
+                throw new ArgumentNullException(nameof(control));
+            return control.columnSpan;
+        }
+
+        /// <summary>
+        /// Sets a value that indicates the total number of columns that child content
+        /// spans within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to set the column span.</param>
+        /// <param name="value">The total number of columns that child content spans
+        /// within a <see cref="Grid"/>.</param>
+        public static void SetColumnSpan(Control control, int value)
+        {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+            if (value < 1)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            control.columnSpan = value;
+            control.OnCellChanged();
+        }
+
+        /// <summary>
         /// Called when the control should
         /// reposition its child controls.
         /// </summary>
@@ -28,7 +170,7 @@ namespace Alternet.UI
             RectD space,
             IReadOnlyList<Control> items)
         {
-            var number = LayoutPanel.LayoutDockedChildren(
+            var number = LayoutDockedChildren(
                 container,
                 ref space,
                 items);
@@ -55,11 +197,11 @@ namespace Alternet.UI
                     break;
                 case LayoutStyle.Vertical:
                     UpdateItems();
-                    StackPanel.LayoutVerticalStackPanel(container, space, items);
+                    LayoutVerticalStackPanel(container, space, items);
                     break;
                 case LayoutStyle.Horizontal:
                     UpdateItems();
-                    StackPanel.LayoutHorizontalStackPanel(container, space, items);
+                    LayoutHorizontalStackPanel(container, space, items);
                     break;
             }
         }
@@ -1168,6 +1310,132 @@ namespace Alternet.UI
             return null;
         }
 
+        public void RaiseMouseWheel(MouseEventArgs e)
+        {
+            OnMouseWheel(e);
+        }
+
+        public void RaiseMouseDoubleClick(MouseEventArgs e)
+        {
+            OnMouseDoubleClick(e);
+        }
+
+        public void RaiseKeyDown(KeyEventArgs e)
+        {
+            var control = this;
+            var form = ParentWindow;
+            if (form is not null)
+            {
+                if (form.KeyPreview)
+                {
+                    e.CurrentTarget = form;
+                    form.OnKeyDown(e);
+                    if (e.Handled)
+                        return;
+                }
+                else
+                    form = null;
+            }
+
+            while (control is not null && control != form)
+            {
+                e.CurrentTarget = control;
+                control.OnKeyDown(e);
+
+                if (e.Handled)
+                    return;
+                control = control.Parent;
+            }
+        }
+
+        public IntPtr GetHandle()
+        {
+            return GetNative().GetHandle(this);
+        }
+
+        public void RaiseKeyUp(KeyEventArgs e)
+        {
+            var control = this;
+            var form = ParentWindow;
+            if (form is not null && form.KeyPreview)
+            {
+                e.CurrentTarget = form;
+                form.OnKeyUp(e);
+                if (e.Handled)
+                    return;
+            }
+            else
+                form = null;
+
+            while (control is not null && control != form)
+            {
+                e.CurrentTarget = control;
+                control.OnKeyUp(e);
+                if (e.Handled)
+                    return;
+                control = control.Parent;
+            }
+        }
+
+        public void RaiseKeyPress(KeyPressEventArgs e)
+        {
+            var control = this;
+            var form = ParentWindow;
+            if (form is not null && form.KeyPreview)
+            {
+                form.OnKeyPress(e);
+                if (e.Handled)
+                    return;
+            }
+            else
+                form = null;
+
+            while (control is not null && control != form)
+            {
+                control.OnKeyPress(e);
+
+                if (e.Handled)
+                    return;
+                control = control.Parent;
+            }
+        }
+
+        public void RaiseMouseMove(MouseEventArgs e)
+        {
+            OnMouseMove(e);
+        }
+
+        public void RaiseMouseUp(MouseEventArgs e)
+        {
+            OnMouseUp(e);
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                OnMouseLeftButtonUp(e);
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                OnMouseRightButtonUp(e);
+            }
+        }
+
+        public void RaiseMouseDown(MouseEventArgs e)
+        {
+            /*Application.Log($"{GetType()}.RaiseMouseDown");*/
+            OnMouseDown(e);
+            /*Application.Log($"{GetType()}.RaiseMouseDown 2: {e}");*/
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                /*Application.Log($"{GetType()}.RaiseMouseDown 3");*/
+                OnMouseLeftButtonDown(e);
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                OnMouseRightButtonDown(e);
+            }
+        }
+
         /// <summary>
         /// Initiates invocation of layout changed nethods for this and
         /// all parent controls.
@@ -1980,6 +2248,187 @@ namespace Alternet.UI
         public virtual int GetScrollBarMaximum(bool isVertical)
         {
             return GetNative().GetScrollBarMaximum(this, isVertical);
+        }
+
+        public void RaiseNativeSizeChanged()
+        {
+            OnNativeSizeChanged(EventArgs.Empty);
+        }
+
+        public void RaiseDeactivated()
+        {
+            Deactivated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseHandleCreated()
+        {
+            OnHandleCreated(EventArgs.Empty);
+            HandleCreated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseHandleDestroyed()
+        {
+            OnHandleDestroyed(EventArgs.Empty);
+            HandleDestroyed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseMouseCaptureLost()
+        {
+            OnMouseCaptureLost(EventArgs.Empty);
+            MouseCaptureLost?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
+
+        public void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
+
+        public void RaiseScroll(ScrollEventArgs e) => OnScroll(e);
+
+        public void RaiseMouseEnter()
+        {
+            RaiseIsMouseOverChanged();
+            OnMouseEnter(EventArgs.Empty);
+            MouseEnter?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseCurrentStateChanged()
+        {
+            OnCurrentStateChanged(EventArgs.Empty);
+            CurrentStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseIsMouseOverChanged()
+        {
+            OnIsMouseOverChanged(EventArgs.Empty);
+            IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
+            RaiseCurrentStateChanged();
+        }
+
+        public void RaiseMouseLeave()
+        {
+            RaiseIsMouseOverChanged();
+            OnMouseLeave(EventArgs.Empty);
+            MouseLeave?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseChildInserted(Control childControl)
+        {
+            OnChildInserted(childControl);
+            ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
+        }
+
+        public void RaiseChildRemoved(Control childControl)
+        {
+            OnChildInserted(childControl);
+            ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
+        }
+
+        public void RaisePaint(PaintEventArgs e)
+        {
+            OnPaint(e);
+            Paint?.Invoke(this, e);
+        }
+
+        public void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
+
+        public void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
+
+        public void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
+
+        public void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
+
+        public void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
+
+        public void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
+
+        public void ReportBoundsChanged()
+        {
+            var newBounds = Bounds;
+
+            var locationChanged = reportedBounds?.Location != newBounds.Location;
+            var sizeChanged = reportedBounds?.Size != newBounds.Size;
+
+            reportedBounds = newBounds;
+
+            if (locationChanged)
+                RaiseLocationChanged(EventArgs.Empty);
+
+            if (sizeChanged)
+                RaiseSizeChanged(EventArgs.Empty);
+
+            if (sizeChanged)
+                PerformLayout(true);
+        }
+
+        public void RaiseGotFocus()
+        {
+            OnGotFocus(EventArgs.Empty);
+            GotFocus?.Invoke(this, EventArgs.Empty);
+            Designer?.RaiseGotFocus(this);
+            RaiseCurrentStateChanged();
+        }
+
+        public void RaiseLostFocus()
+        {
+            OnLostFocus(EventArgs.Empty);
+            LostFocus?.Invoke(this, EventArgs.Empty);
+            RaiseCurrentStateChanged();
+        }
+
+        public void RaiseActivated()
+        {
+            Activated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public virtual void OnNativeControlPaint()
+        {
+            if (!UserPaint)
+                return;
+
+            using var dc = GetNative().OpenPaintDrawingContext(this);
+
+            RaisePaint(new PaintEventArgs(dc, ClientRectangle));
+        }
+
+        public virtual void OnNativeControlHorizontalScrollBarValueChanged()
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.HorizontalScroll,
+                NewValue = GetNative().GetScrollBarEvtPosition(this),
+                Type = GetNative().GetScrollBarEvtKind(this),
+            };
+            RaiseScroll(args);
+        }
+
+        public virtual void OnNativeControlVerticalScrollBarValueChanged()
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.VerticalScroll,
+                NewValue = GetNative().GetScrollBarEvtPosition(this),
+                Type = GetNative().GetScrollBarEvtKind(this),
+            };
+            RaiseScroll(args);
+        }
+
+        public virtual void OnNativeControlVisibleChanged()
+        {
+            bool visible = GetNative().GetVisible(this);
+            Visible = visible;
+
+            if (BaseApplication.IsLinuxOS && visible)
+            {
+                // todo: this is a workaround for a problem on Linux when
+                // ClientSize is not reported correctly until the window is shown
+                // So we need to relayout all after the proper client size is available
+                // This should be changed later in respect to RedrawOnResize functionality.
+                // Also we may need to do this for top-level windows.
+                // Doing this on Windows results in strange glitches like disappearing
+                // tab controls' tab.
+                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                PerformLayout();
+            }
         }
     }
 }

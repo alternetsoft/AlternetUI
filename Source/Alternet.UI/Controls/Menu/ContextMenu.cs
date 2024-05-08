@@ -107,7 +107,7 @@ namespace Alternet.UI
                 RectD toolRect = control.Bounds;
                 PointD pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
                 pt = window.ScreenToClient(pt);
-                window.ShowPopupMenu(this, (int)pt.X, (int)pt.Y);
+                ControlUtils.ShowPopupMenu(window, this, (int)pt.X, (int)pt.Y);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateContextMenuHandler(this);

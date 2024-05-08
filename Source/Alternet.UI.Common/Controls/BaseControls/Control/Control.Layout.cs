@@ -43,9 +43,9 @@ namespace Alternet.UI
             bool isVertical)
         {
             if (isVertical)
-                return StackPanel.GetPreferredSizeVerticalStackPanel(container, availableSize);
+                return GetPreferredSizeVerticalStackPanel(container, availableSize);
             else
-                return StackPanel.GetPreferredSizeHorizontalStackPanel(container, availableSize);
+                return GetPreferredSizeHorizontalStackPanel(container, availableSize);
         }
 
         internal static SizeD GetPreferredSizeVerticalStackPanel(
@@ -131,7 +131,7 @@ namespace Alternet.UI
                         childrenLayoutBounds.Width - x - horizontalMargin - w,
                         childrenLayoutBounds.Height));
                 var alignedPosition =
-                    LayoutFactory.AlignVertical(
+                    AlignVertical(
                         childrenLayoutBounds,
                         control,
                         preferredSize,
@@ -179,9 +179,9 @@ namespace Alternet.UI
             IReadOnlyList<Control> items)
         {
             if (isVertical)
-                StackPanel.LayoutVerticalStackPanel(container, space, items);
+                LayoutVerticalStackPanel(container, space, items);
             else
-                StackPanel.LayoutHorizontalStackPanel(container, space, items);
+                LayoutHorizontalStackPanel(container, space, items);
         }
 
         internal static void LayoutVerticalStackPanel(
@@ -253,7 +253,7 @@ namespace Alternet.UI
                 var preferSize = control.GetPreferredSizeLimited(freeSize);
                 if (stretch)
                     preferSize.Height = stretchedSize - vertMargin;
-                var alignedPos = LayoutFactory.AlignHorizontal(
+                var alignedPos = AlignHorizontal(
                     lBounds,
                     control,
                     preferSize,

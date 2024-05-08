@@ -14,6 +14,7 @@ namespace Alternet.UI
     /// </remarks>
     public partial class MiniFrameWindow : Window
     {
-        internal override WindowKind GetWindowKind() => WindowKind.MiniFrame;
+        /// <inheritdoc />
+        public override WindowKind GetWindowKind() => WindowKind.MiniFrame;
     }
 }

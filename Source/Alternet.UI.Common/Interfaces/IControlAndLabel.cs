@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal interface IControlAndLabel
+    public interface IControlAndLabel
     {
         Control Label { get; }
 

@@ -9,14 +9,12 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        private protected void SetVisibleValue(bool value) => visible = value;
-
         private void CreateAndAttachHandler()
         {
             if (GetRequiredHandlerType() == HandlerType.Native)
                 handler = CreateHandler();
             else
-                handler = new GenericControlHandler();
+                handler = GetNative().CreateControlHandler(this);
 
             handler?.Attach(this);
             OnHandlerAttached(EventArgs.Empty);
@@ -76,7 +74,7 @@ namespace Alternet.UI
                 SetColor(null);
             else
             {
-                var colors = ControlUtils.GetResetColors(method, this);
+                var colors = ColorUtils.GetResetColors(method, this);
                 var color = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
                 SetColor(color);
             }

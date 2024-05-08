@@ -165,7 +165,8 @@ namespace Alternet.UI
             }
         }
 
-        internal override bool IsDummy => true;
+        /// <inheritdoc />
+        protected override bool IsDummy => true;
 
         /// <inheritdoc />
         protected override
@@ -210,7 +211,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
         }

@@ -372,7 +372,7 @@ namespace Alternet.UI
                 NativeControl.SetInactiveBitmap((UI.Native.ImageSet?)imageSet?.NativeObject);
             }
 
-            internal override BaseControlHandler CreateHandler()
+            protected override BaseControlHandler CreateHandler()
             {
                 return new NativeAnimationControlHandler();
             }

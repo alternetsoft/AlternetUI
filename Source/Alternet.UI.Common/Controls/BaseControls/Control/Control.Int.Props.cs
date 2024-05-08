@@ -10,13 +10,11 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        internal static int ScreenShotCounter { get; set; } = 0;
-
         /// <summary>
         /// Gets a <see cref="WxControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal virtual BaseControlHandler Handler
+        public virtual BaseControlHandler Handler
         {
             get
             {
@@ -24,6 +22,8 @@ namespace Alternet.UI
                 return handler ?? throw new InvalidOperationException();
             }
         }
+
+        internal static int ScreenShotCounter { get; set; } = 0;
 
         internal bool ProcessUIUpdates
         {
@@ -37,8 +37,6 @@ namespace Alternet.UI
                 GetNative().SetProcessUIUpdates(this, value);
             }
         }
-
-        internal virtual bool IsDummy => false;
 
         internal Thickness MinMargin
         {
@@ -69,22 +67,6 @@ namespace Alternet.UI
         }
 
         internal bool HasExtendedProps => extendedProps != null;
-
-        /// <summary>
-        /// Gets or sets border style of the control.
-        /// </summary>
-        internal virtual ControlBorderStyle BorderStyle
-        {
-            get
-            {
-                return GetNative().GetBorderStyle(this);
-            }
-
-            set
-            {
-                GetNative().SetBorderStyle(this, value);
-            }
-        }
 
         internal ControlExtendedProps ExtendedProps
         {

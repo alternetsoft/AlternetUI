@@ -53,7 +53,7 @@ namespace PaintSample
             Size = (750, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            var menu = Menu!;
+            var menu = (Menu as Menu)!;
 
             fileMainMenu = menu.Add("_File");
             editMainMenu = menu.Add("_Edit");

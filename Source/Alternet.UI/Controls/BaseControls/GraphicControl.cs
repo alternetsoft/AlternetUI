@@ -13,7 +13,7 @@ namespace Alternet.UI
     public class GraphicControl : UserControl
     {
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return new GraphicControlHandler();
         }

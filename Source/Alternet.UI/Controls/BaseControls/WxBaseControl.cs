@@ -12,6 +12,21 @@ namespace Alternet.UI;
 public class WxBaseControl : Control
 {
     /// <summary>
+    /// Gets or sets the <see cref="ContextMenuStrip" /> associated
+    /// with this control.</summary>
+    /// <returns>The <see cref="ContextMenuStrip" /> for this control,
+    /// or <see langword="null" /> if there is no attached <see cref="ContextMenuStrip"/>.
+    /// The default is <see langword="null" />.</returns>
+    [Category("Behavior")]
+    [DefaultValue(null)]
+    [Browsable(false)]
+    public virtual ContextMenuStrip? ContextMenuStrip
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// Gets <see cref="NativeControl"/> attached to this control.
     /// </summary>
     internal Native.Control NativeControl => ((WxControlHandler)Handler).NativeControl;
@@ -43,14 +58,7 @@ public class WxBaseControl : Control
     /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
     public virtual void ShowPopupMenu(ContextMenu? menu, double x = -1, double y = -1)
     {
-        if (menu is null || menu.Items.Count == 0)
-            return;
-        var e = new CancelEventArgs();
-        menu.RaiseOpening(e);
-        if (e.Cancel)
-            return;
-        NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
-        menu.RaiseClosing(e);
+        ControlUtils.ShowPopupMenu(this, menu, x, y);
     }
 
     /// <summary>
@@ -60,6 +68,15 @@ public class WxBaseControl : Control
     internal IControlHandlerFactory GetEffectiveControlHandlerHactory() =>
         ControlHandlerFactory ??
             Application.Current.VisualTheme.ControlHandlerFactory;
+
+    /// <inheritdoc/>
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+#if DEBUG
+        KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DebugUtils.ShowDeveloperTools);
+#endif
+    }
 
     /// <summary>
     ///     Virtual method reporting the right mouse button was pressed

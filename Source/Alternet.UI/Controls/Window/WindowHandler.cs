@@ -7,20 +7,6 @@ namespace Alternet.UI
 {
     internal class WindowHandler : WxControlHandler
     {
-        public static Window? ActiveWindow
-        {
-            get
-            {
-                var activeWindow = Native.Window.ActiveWindow;
-                if (activeWindow == null)
-                    return null;
-
-                var handler = NativeControlToHandler(activeWindow) ??
-                    throw new InvalidOperationException();
-                return ((WindowHandler)handler).Control;
-            }
-        }
-
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
@@ -231,7 +217,7 @@ namespace Alternet.UI
 
         private void ApplyOwner(object? sender, EventArgs e)
         {
-            var newOwner = Control.Owner?.Handler?.NativeControl;
+            var newOwner = (Control.Owner as IControl)?.NativeControl as UI.Native.Control;
             var oldOwner = NativeControl.ParentRefCounted;
             if (newOwner == oldOwner)
                 return;

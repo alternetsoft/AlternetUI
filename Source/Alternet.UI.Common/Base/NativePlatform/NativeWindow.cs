@@ -12,7 +12,9 @@ namespace Alternet.UI
     {
         public static NativeWindow Default = new NotImplementedWindow();
 
-        public abstract IWindow[] GetOwnedWindows(IWindow window);
+        public abstract Window? GetActiveWindow();
+
+        public abstract Window[] GetOwnedWindows(IWindow window);
 
         public abstract ModalResult ShowModal(IWindow window, IWindow? owner);
 

@@ -228,7 +228,7 @@ namespace MenuSample
             if (dynamicItemsMenuItem == null)
             {
                 dynamicItemsMenuItem = new MenuItem("Dynamic Items");
-                Menu!.Items.Add(dynamicItemsMenuItem);
+                (Menu as Menu)?.Items.Add(dynamicItemsMenuItem);
             }
 
             return dynamicItemsMenuItem;
@@ -261,7 +261,7 @@ namespace MenuSample
 
             if (parent.Items.Count == 0)
             {
-                Menu!.Items.Remove(parent);
+                (Menu as Menu)?.Items.Remove(parent);
                 dynamicItemsMenuItem = null;
             }
         }

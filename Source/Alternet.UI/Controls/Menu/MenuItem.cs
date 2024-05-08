@@ -369,11 +369,12 @@ namespace Alternet.UI
             set { SetValue(CommandTargetProperty, value); }
         }
 
-        internal override bool IsDummy => true;
-
         internal new MenuItemHandler Handler => (MenuItemHandler)base.Handler;
 
         internal new Native.MenuItem NativeControl => (Native.MenuItem)base.NativeControl;
+
+        /// <inheritdoc/>
+        protected override bool IsDummy => true;
 
         /// <summary>
         /// Implicit conversion operator from <see cref="string"/> to
@@ -403,7 +404,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateMenuItemHandler(this);
         }

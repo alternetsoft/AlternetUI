@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// your application.</remarks>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    public partial class Window : WxBaseControl, IWindow
+    public partial class Window : Control, IWindow
     {
         private static RectD defaultBounds = new(100, 100, 400, 400);
         private static int incFontSizeHighDpi = 2;
@@ -24,7 +24,7 @@ namespace Alternet.UI
         private Control? toolbar = null;
         private FrameworkElement? statusBar = null;
         private IconSet? icon = null;
-        private MainMenu? menu = null;
+        private Control? menu = null;
         private Window? owner;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// </summary>
         public Window()
         {
-            Application.Current.RegisterWindow(this);
+            BaseApplication.Current.RegisterWindow(this);
             SetVisibleValue(false);
             Bounds = GetDefaultBounds();
 
@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
-        public static Window? ActiveWindow => WindowHandler.ActiveWindow;
+        public static Window? ActiveWindow => NativeWindow.Default.GetActiveWindow();
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -214,7 +214,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets DPI of the first created window.
         /// </summary>
-        public static SizeD? DefaultDPI => Application.FirstWindow()?.GetDPI();
+        public static SizeD? DefaultDPI => BaseApplication.FirstWindow()?.GetDPI();
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for
@@ -643,7 +643,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use this property to switch between complete menu sets at run time.
         /// </remarks>
-        public virtual MainMenu? Menu
+        public virtual Control? Menu
         {
             get => menu;
 
@@ -713,7 +713,7 @@ namespace Alternet.UI
                     return;
 
                 var oldValue = toolbar;
-                toolbar = value as ToolBar;
+                toolbar = value;
 
                 if (GetWindowKind() == WindowKind.Dialog)
                     return;
@@ -860,27 +860,16 @@ namespace Alternet.UI
             GetNativeWindow().Close(this);
         }
 
-        internal static Window? GetParentWindow(DependencyObject dp)
-        {
-            if (dp is Window w)
-                return w;
+        public void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 
-            if (dp is not Control c)
-                return null;
+        public void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);
 
-            if (c.Parent == null)
-                return null;
+        public virtual WindowKind GetWindowKind() => WindowKind.Window;
 
-            return GetParentWindow(c.Parent);
-        }
-
-        internal virtual WindowKind GetWindowKind() => WindowKind.Window;
-
-        internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
-
-        internal void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);
-
-        internal void RecreateAllHandlers()
+        /// <summary>
+        /// Recreates all native controls in all windows.
+        /// </summary>
+        public virtual void RecreateAllHandlers()
         {
             void GetAllChildren(Control control, List<Control> result)
             {
@@ -901,7 +890,25 @@ namespace Alternet.UI
                 child.EnsureHandlerCreated();
         }
 
-        internal void ApplyStartLocationOnce(Control? owner)
+        internal static Window? GetParentWindow(DependencyObject dp)
+        {
+            if (dp is Window w)
+                return w;
+
+            if (dp is not Control c)
+                return null;
+
+            if (c.Parent == null)
+                return null;
+
+            return GetParentWindow(c.Parent);
+        }
+
+        /// <inheritdoc/>
+        protected override BaseControlHandler CreateHandler()
+            => (BaseControlHandler)GetNativeWindow().CreateWindowHandler();
+
+        protected void ApplyStartLocationOnce(Control? owner)
         {
             if (!StateFlags.HasFlag(IControl.ControlFlags.StartLocationApplied))
             {
@@ -909,10 +916,6 @@ namespace Alternet.UI
                 ApplyStartLocation(owner);
             }
         }
-
-        /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
-            => (BaseControlHandler)GetNativeWindow().CreateWindowHandler();
 
         /// <summary>
         /// Raises the <see cref="Closing"/> event and calls
@@ -992,9 +995,9 @@ namespace Alternet.UI
 
             if (disposing)
             {
-                Application.Current.UnregisterWindow(this);
-                if (!Application.Current.VisibleWindows.Any())
-                    Application.Current.NativeApplication.ExitMainLoop();
+                BaseApplication.Current.UnregisterWindow(this);
+                if (!BaseApplication.Current.VisibleWindows.Any())
+                    NativePlatform.Default.ExitMainLoop();
             }
         }
 

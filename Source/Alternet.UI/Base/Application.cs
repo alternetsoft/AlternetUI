@@ -27,12 +27,10 @@ namespace Alternet.UI
         private static IconSet? icon;
         private static bool inOnThreadException;
 
-        private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
         private Native.Application nativeApplication;
         private VisualTheme visualTheme = StockVisualThemes.Native;
-        private Window? window;
 
         static Application()
         {
@@ -122,11 +120,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether application has forms.
-        /// </summary>
-        public static bool HasForms => HasApplication && Current.Windows.Count > 0;
-
-        /// <summary>
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
         /// <see cref="EndBusyCursor"/> calls.
         /// </summary>
@@ -146,27 +139,6 @@ namespace Alternet.UI
             get
             {
                 return (Application)BaseApplication.Current;
-            }
-        }
-
-        /// <summary>
-        /// Gets the instantiated windows in an application.
-        /// </summary>
-        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
-        /// references to all window objects in the current application.</value>
-        public IReadOnlyList<Window> Windows => windows;
-
-        /// <summary>
-        /// Gets all visible windows in an application.
-        /// </summary>
-        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
-        /// references to all visible window objects in the current application.</value>
-        public virtual IEnumerable<Window> VisibleWindows
-        {
-            get
-            {
-                var result = Windows.Where(x => x.Visible);
-                return result;
             }
         }
 
@@ -311,12 +283,6 @@ namespace Alternet.UI
                 OnVisualThemeChanged();
                 VisualThemeChanged?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        internal Window? MainWindow
-        {
-            get => window;
-            set => window = value;
         }
 
         internal Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
@@ -492,29 +458,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns first window or <c>null</c> if there are no windows or window is not
-        /// of the <typeparamref name="T"/> type.
-        /// </summary>
-        /// <typeparam name="T">Type of the window to return.</typeparam>
-        public static T? FirstWindow<T>()
-            where T : class
-        {
-            var windows = Current.Windows;
-
-            if (windows.Count == 0)
-                return null;
-            return windows[0] as T;
-        }
-
-        /// <summary>
-        /// Returns first window or <c>null</c> if there are no windows.
-        /// </summary>
-        public static Window? FirstWindow()
-        {
-            return FirstWindow<Window>();
-        }
-
-        /// <summary>
         /// Informs all message pumps that they must terminate, and then closes
         /// all application windows after the messages have been processed.
         /// </summary>
@@ -577,7 +520,7 @@ namespace Alternet.UI
 
             try
             {
-                this.window = window ?? throw new ArgumentNullException(nameof(window));
+                this.MainWindow = window ?? throw new ArgumentNullException(nameof(window));
                 CheckDisposed();
                 window.Show();
 
@@ -596,7 +539,7 @@ namespace Alternet.UI
                 }
 
                 SynchronizationContext.Uninstall();
-                this.window = null;
+                this.MainWindow = null;
             }
             finally
             {
@@ -711,18 +654,6 @@ namespace Alternet.UI
         internal void WakeUpIdle()
         {
             nativeApplication.WakeUpIdle();
-        }
-
-        internal void RegisterWindow(Window window)
-        {
-            windows.Add(window);
-        }
-
-        internal void UnregisterWindow(Window window)
-        {
-            if (this.window == window)
-                this.window = null;
-            windows.Remove(window);
         }
 
         /// <inheritdoc/>

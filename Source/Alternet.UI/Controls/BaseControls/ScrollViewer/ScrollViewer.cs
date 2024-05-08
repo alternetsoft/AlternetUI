@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateScrollViewerHandler(this);
@@ -59,13 +59,13 @@ namespace Alternet.UI
                 }
 
                 var horizontalPosition =
-                    LayoutFactory.AlignHorizontal(
+                    AlignHorizontal(
                         childrenLayoutBounds,
                         control,
                         boundedPreferredSize,
                         horizontalAlignment);
                 var verticalPosition =
-                    LayoutFactory.AlignVertical(
+                    AlignVertical(
                         childrenLayoutBounds,
                         control,
                         boundedPreferredSize,
@@ -125,15 +125,15 @@ namespace Alternet.UI
             /// </summary>
             public new ScrollViewer Control => (ScrollViewer)base.Control;
 
-            internal override Native.Control CreateNativeControl()
-            {
-                return new Native.Panel();
-            }
-
-            protected internal override void OnLayoutChanged()
+            public override void OnLayoutChanged()
             {
                 base.OnLayoutChanged();
                 Control.scrollInfoValid = false;
+            }
+
+            internal override Native.Control CreateNativeControl()
+            {
+                return new Native.Panel();
             }
 
             protected override void OnAttach()

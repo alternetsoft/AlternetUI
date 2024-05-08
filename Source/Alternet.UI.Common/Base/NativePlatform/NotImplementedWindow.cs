@@ -25,6 +25,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override Window? GetActiveWindow()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool GetModal(IWindow window)
         {
             throw new NotImplementedException();
@@ -35,7 +40,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override IWindow[] GetOwnedWindows(IWindow window)
+        public override Window[] GetOwnedWindows(IWindow window)
         {
             throw new NotImplementedException();
         }

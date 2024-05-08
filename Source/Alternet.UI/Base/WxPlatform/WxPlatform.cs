@@ -23,6 +23,11 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override void ExitMainLoop()
+        {
+            Application.Current.NativeApplication.ExitMainLoop();
+        }
+
         public override int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control)
         {
             return Native.WxOtherFactory.SystemSettingsGetMetric(

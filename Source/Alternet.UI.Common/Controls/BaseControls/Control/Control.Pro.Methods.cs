@@ -401,9 +401,14 @@ namespace Alternet.UI
         protected virtual void OnKeyDown(KeyEventArgs e)
         {
             KeyDown?.Invoke(this, e);
-#if DEBUG
-            KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DebugUtils.ShowDeveloperTools);
-#endif
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CellChanged" /> event.
+        /// </summary>
+        protected virtual void OnCellChanged()
+        {
+            CellChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>
@@ -668,6 +673,34 @@ namespace Alternet.UI
             if (!e.Handled)
                 Parent?.OnHelpRequested(e);
         }
+
+        protected virtual SizeD GetNativeControlSize(SizeD availableSize)
+        {
+            if (IsDummy)
+                return SizeD.Empty;
+            var s = GetNative().GetPreferredSize(this, availableSize);
+            s += Padding.Size;
+            return new SizeD(
+                double.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
+                double.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
+        }
+
+        /// <summary>
+        /// Creates a handler for the control.
+        /// </summary>
+        /// <remarks>
+        /// You typically should not call the <see cref="CreateHandler"/>
+        /// method directly.
+        /// The preferred method is to call the
+        /// <see cref="EnsureHandlerCreated"/> method, which forces a handler
+        /// to be created for the control.
+        /// </remarks>
+        protected virtual BaseControlHandler CreateHandler()
+        {
+            return GetNative().CreateControlHandler(this);
+        }
+
+        protected void SetVisibleValue(bool value) => visible = value;
 
         /// <summary>
         /// Called when the enabled of the <see cref="Enabled"/> property changes.

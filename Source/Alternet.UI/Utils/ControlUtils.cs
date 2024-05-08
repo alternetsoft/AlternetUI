@@ -15,6 +15,42 @@ namespace Alternet.UI
     public static class ControlUtils
     {
         /// <summary>
+        /// Shows popup menu.
+        /// </summary>
+        public static void ShowPopupMenu(
+            IControl control,
+            ContextMenu? menu,
+            double x = -1,
+            double y = -1)
+        {
+            if (menu is null || menu.Items.Count == 0)
+                return;
+            var e = new CancelEventArgs();
+            menu.RaiseOpening(e);
+            if (e.Cancel)
+                return;
+            ((UI.Native.Control)control.NativeControl).ShowPopupMenu(menu.MenuHandle, x, y);
+            menu.RaiseClosing(e);
+        }
+
+        /// <summary>
+        /// Sets <see cref="ComboBox.IsEditable"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value"><c>true</c> enables editing of the text;
+        /// <c>false</c> disables it.</param>
+        /// <param name="controlSet">Set of controls.</param>
+        public static ControlSet IsEditable(this ControlSet controlSet, bool value)
+        {
+            foreach (var item in controlSet.Items)
+            {
+                if (item is ComboBox comboBox)
+                    comboBox.IsEditable = value;
+            }
+
+            return controlSet;
+        }
+
+        /// <summary>
         /// Creates new <see cref="HorizontalStackPanel"/> and adds
         /// it to the <see cref="Control.Children"/>.
         /// </summary>
@@ -217,57 +253,6 @@ namespace Alternet.UI
                 Orientation = orientation,
             };
             return result;
-        }
-
-        /// <summary>
-        /// Gets <see cref="IReadOnlyFontAndColor"/> instance for the specified
-        /// <paramref name="method"/>.
-        /// </summary>
-        /// <param name="method">Type of the colors to get.</param>
-        /// <param name="control">Control instance. Used when <paramref name="method"/>
-        /// is <see cref="ResetColorType.DefaultAttributes"/>.</param>
-        /// <param name="renderSize">Rendering size. Used when <paramref name="method"/>
-        /// is <see cref="ResetColorType.DefaultAttributesTextBox"/> or other similar values.
-        /// You can skip this parameter as on most os it is ignored.</param>
-        /// <returns></returns>
-        public static IReadOnlyFontAndColor GetResetColors(
-            ResetColorType method,
-            Control? control = null,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            switch (method)
-            {
-                case ResetColorType.Auto:
-                    return FontAndColor.Null;
-                case ResetColorType.NullColor:
-                    return FontAndColor.Null;
-                case ResetColorType.EmptyColor:
-                    return FontAndColor.Empty;
-                case ResetColorType.DefaultAttributes:
-                    return control?.GetDefaultFontAndColor() ?? FontAndColor.Null;
-                case ResetColorType.DefaultAttributesTextBox:
-                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox, renderSize);
-                case ResetColorType.DefaultAttributesListBox:
-                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.ListBox, renderSize);
-                case ResetColorType.DefaultAttributesButton:
-                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.Button, renderSize);
-                case ResetColorType.ColorMenu:
-                    return FontAndColor.SystemColorMenu;
-                case ResetColorType.ColorActiveCaption:
-                    return FontAndColor.SystemColorActiveCaption;
-                case ResetColorType.ColorInactiveCaption:
-                    return FontAndColor.SystemColorInactiveCaption;
-                case ResetColorType.ColorInfo:
-                    return FontAndColor.SystemColorInfo;
-                case ResetColorType.ColorWindow:
-                    return FontAndColor.SystemColorWindow;
-                case ResetColorType.ColorHighlight:
-                    return FontAndColor.SystemColorHighlight;
-                case ResetColorType.ColorButtonFace:
-                    return FontAndColor.SystemColorButtonFace;
-                default:
-                    return FontAndColor.Null;
-            }
         }
 
         /// <summary>

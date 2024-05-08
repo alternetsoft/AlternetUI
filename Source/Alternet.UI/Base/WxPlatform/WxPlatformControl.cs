@@ -18,6 +18,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void NotifyCaptureLost()
+        {
+            Native.Control.NotifyCaptureLost();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateControlHandler(IControl control)
+        {
+            return new GenericControlHandler();
+        }
+
+        /// <inheritdoc/>
         public override Color GetClassDefaultAttributesBgColor(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)

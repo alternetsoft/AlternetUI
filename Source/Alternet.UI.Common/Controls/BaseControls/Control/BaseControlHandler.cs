@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal abstract class BaseControlHandler : BaseObject
+    public abstract class BaseControlHandler : BaseObject
     {
         private Control? control;
 
@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <summary>
         /// This methods is called when the layout of the control changes.
         /// </summary>
-        protected internal virtual void OnLayoutChanged()
+        public virtual void OnLayoutChanged()
         {
         }
 

@@ -10,6 +10,11 @@ namespace Alternet.UI
 {
     internal class NotImplementedPlatform : NativePlatform
     {
+        public override void ExitMainLoop()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IntPtr MemoryAlloc(int size)
         {
             throw new NotImplementedException();

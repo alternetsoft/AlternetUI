@@ -246,7 +246,8 @@ namespace Alternet.UI
             }
         }
 
-        internal override bool IsDummy => true;
+        /// <inheritdoc />
+        protected override bool IsDummy => true;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
@@ -275,7 +276,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        internal override BaseControlHandler CreateHandler()
+        protected override BaseControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().
                 CreateToolbarItemHandler(this);

@@ -98,6 +98,8 @@ namespace Alternet.UI
         private static bool logFileIsEnabled;
         private static BaseApplication? current;
 
+        private readonly List<Window> windows = new();
+        private Window? window;
         private volatile bool isDisposed;
 
         static BaseApplication()
@@ -291,6 +293,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether application has forms.
+        /// </summary>
+        public static bool HasForms => HasApplication && Current.Windows.Count > 0;
+
+        /// <summary>
+        /// Gets the instantiated windows in an application.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
+        /// references to all window objects in the current application.</value>
+        public IReadOnlyList<Window> Windows => windows;
+
+        /// <summary>
+        /// Gets all visible windows in an application.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
+        /// references to all visible window objects in the current application.</value>
+        public virtual IEnumerable<Window> VisibleWindows
+        {
+            get
+            {
+                var result = Windows.Where(x => x.Visible);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
         public virtual bool IsDisposed
@@ -311,6 +339,12 @@ namespace Alternet.UI
         }
 
         protected internal virtual bool InvokeRequired => throw new NotImplementedException();
+
+        protected Window? MainWindow
+        {
+            get => window;
+            set => window = value;
+        }
 
         /// <summary>
         /// Logs name and value pair as "{name} = {value}".
@@ -468,6 +502,29 @@ namespace Alternet.UI
         {
             if (condition)
                 Log(obj);
+        }
+
+        /// <summary>
+        /// Returns first window or <c>null</c> if there are no windows or window is not
+        /// of the <typeparamref name="T"/> type.
+        /// </summary>
+        /// <typeparam name="T">Type of the window to return.</typeparam>
+        public static T? FirstWindow<T>()
+            where T : class
+        {
+            var windows = Current.Windows;
+
+            if (windows.Count == 0)
+                return null;
+            return windows[0] as T;
+        }
+
+        /// <summary>
+        /// Returns first window or <c>null</c> if there are no windows.
+        /// </summary>
+        public static Window? FirstWindow()
+        {
+            return FirstWindow<Window>();
         }
 
         /// <summary>
@@ -656,6 +713,18 @@ namespace Alternet.UI
         public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
         {
             unhandledExceptionModeDebug = mode;
+        }
+
+        internal void RegisterWindow(Window window)
+        {
+            windows.Add(window);
+        }
+
+        internal void UnregisterWindow(Window window)
+        {
+            if (this.window == window)
+                this.window = null;
+            windows.Remove(window);
         }
 
         protected internal virtual void BeginInvoke(Action action)

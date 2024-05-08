@@ -118,6 +118,15 @@ namespace Alternet.UI
         public event ScrollEventHandler? Scroll;
 
         /// <summary>
+        /// Occurs when cell settings are changed.
+        /// </summary>
+        /// <remarks>
+        /// Cell settings include <see cref="RowIndex"/>, <see cref="ColumnIndex"/>,
+        /// <see cref="RowSpan"/>, <see cref="ColumnSpan"/> and other properties.
+        /// </remarks>
+        public event EventHandler? CellChanged;
+
+        /// <summary>
         /// Occurs when the window is activated in code or by the user.
         /// </summary>
         /// <remarks>
@@ -1058,21 +1067,6 @@ namespace Alternet.UI
                 var index = Parent?.children?.IndexOf(this);
                 return index;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="ContextMenuStrip" /> associated
-        /// with this control.</summary>
-        /// <returns>The <see cref="ContextMenuStrip" /> for this control,
-        /// or <see langword="null" /> if there is no attached <see cref="ContextMenuStrip"/>.
-        /// The default is <see langword="null" />.</returns>
-        [Category("Behavior")]
-        [DefaultValue(null)]
-        [Browsable(false)]
-        public virtual ContextMenuStrip? ContextMenuStrip
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -2157,7 +2151,7 @@ namespace Alternet.UI
         public virtual int ColumnIndex
         {
             get => columnIndex;
-            set => Grid.SetColumn(this, value);
+            set => SetColumn(this, value);
         }
 
         /// <summary>
@@ -2171,7 +2165,7 @@ namespace Alternet.UI
         public virtual int RowIndex
         {
             get => rowIndex;
-            set => Grid.SetRow(this, value);
+            set => SetRow(this, value);
         }
 
         /// <summary>
@@ -2185,7 +2179,7 @@ namespace Alternet.UI
         public virtual int ColumnSpan
         {
             get => columnSpan;
-            set => Grid.SetColumnSpan(this, value);
+            set => SetColumnSpan(this, value);
         }
 
         /// <summary>
@@ -2199,7 +2193,7 @@ namespace Alternet.UI
         public virtual int RowSpan
         {
             get => rowSpan;
-            set => Grid.SetRowSpan(this, value);
+            set => SetRowSpan(this, value);
         }
 
         /// <summary>
@@ -2767,6 +2761,24 @@ namespace Alternet.UI
         /// Gets whether control is abstract control.
         /// </summary>
         protected abstract bool IsAbstract { get; }*/
+
+        /// <summary>
+        /// Gets or sets border style of the control.
+        /// </summary>
+        protected virtual ControlBorderStyle BorderStyle
+        {
+            get
+            {
+                return GetNative().GetBorderStyle(this);
+            }
+
+            set
+            {
+                GetNative().SetBorderStyle(this, value);
+            }
+        }
+
+        protected virtual bool IsDummy => false;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection

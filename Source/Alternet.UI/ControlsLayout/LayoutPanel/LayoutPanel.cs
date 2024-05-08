@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;
 
-        internal static void SetAnchor(Control control, AnchorStyles value)
+        /*internal static void SetAnchor(Control control, AnchorStyles value)
         {
             if (control == null)
                 return;
@@ -99,7 +99,7 @@ namespace Alternet.UI
             if (control == null || !control.HasExtendedProps)
                 return AutoSizeMode.GrowOnly;
             return control.ExtendedProps.AutoSizeMode;
-        }
+        }*/
 
         /// <inheritdoc/>
         protected override LayoutStyle GetDefaultLayout()
