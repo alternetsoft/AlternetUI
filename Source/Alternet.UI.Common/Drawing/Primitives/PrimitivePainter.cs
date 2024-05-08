@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    internal class PrimitivePainter
+    public class PrimitivePainter
     {
         public bool Visible = true;
     }

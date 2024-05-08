@@ -11,12 +11,6 @@ namespace Alternet.UI
     public partial class Border : UserControl
     {
         /// <summary>
-        /// Gets or sets default border color. If not specified (default),
-        /// <see cref="TabControl.GetDefaultInteriorBorderColor()"/> is used.
-        /// </summary>
-        public static LightDarkColor? DefaultColor;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
         public Border()
@@ -165,14 +159,14 @@ namespace Alternet.UI
         /// Gets or sets the border color for the <see cref="Border"/> control.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="DefaultColor"/> is used
+        /// If this property is null, <see cref="BorderSettings.DefaultColor"/> is used
         /// for the border color.
         /// </remarks>
         public Color? BorderColor
         {
             get
             {
-                return Normal.Color ?? DefaultColor?.Get(IsDarkBackground) ??
+                return Normal.Color ?? BorderSettings.DefaultColor?.Get(IsDarkBackground) ??
                         ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
             }
 
@@ -180,7 +174,7 @@ namespace Alternet.UI
             {
                 if (value == null)
                 {
-                    Normal.Color = DefaultColor?.Get(IsDarkBackground) ??
+                    Normal.Color = BorderSettings.DefaultColor?.Get(IsDarkBackground) ??
                         ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
                 }
                 else

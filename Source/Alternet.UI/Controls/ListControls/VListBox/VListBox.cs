@@ -870,13 +870,13 @@ namespace Alternet.UI
                 if (isCurrent && Focused && currentItemBorderVisible)
                 {
                     var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
-                    ControlUtils.DrawBorder(this, e.Graphics, rect, border);
+                    DrawingUtils.DrawBorder(this, e.Graphics, rect, border);
                 }
             }
             else
             {
                 var border = item?.Border?.ToGrayScale();
-                ControlUtils.DrawBorder(this, e.Graphics, rect, border);
+                DrawingUtils.DrawBorder(this, e.Graphics, rect, border);
             }
         }
 
@@ -1397,12 +1397,6 @@ namespace Alternet.UI
                 e.ItemAlignment);
         }
 
-        /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
-        {
-            return new VListBoxHandler();
-        }
-
         internal ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
         {
             var item = SafeItem(itemIndex);
@@ -1417,6 +1411,12 @@ namespace Alternet.UI
             if (itemIndex is null)
                 return;
             ToggleItemCheckState(itemIndex.Value);
+        }
+
+        /// <inheritdoc/>
+        protected override BaseControlHandler CreateHandler()
+        {
+            return new VListBoxHandler();
         }
 
         /// <summary>

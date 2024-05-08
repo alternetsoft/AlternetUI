@@ -17,11 +17,6 @@ namespace Alternet.UI
     public class BorderSettings : BaseObject, INotifyPropertyChanged
     {
         /// <summary>
-        /// Default border color.
-        /// </summary>
-        public static readonly Color DefaultBorderColor = SystemColors.GrayText;
-
-        /// <summary>
         /// Default border settings.
         /// </summary>
         public static readonly BorderSettings Default = new();
@@ -30,6 +25,16 @@ namespace Alternet.UI
         /// Temporary border used for calculations.
         /// </summary>
         public static readonly BorderSettings Temp = new();
+
+        /// <summary>
+        /// Gets or sets default border color.
+        /// </summary>
+        public static LightDarkColor? DefaultColor;
+
+        /// <summary>
+        /// Default border color.
+        /// </summary>
+        public static Color DefaultCommonBorderColor = SystemColors.GrayText;
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
@@ -316,7 +321,7 @@ namespace Alternet.UI
                 return;
             var dc = args.Graphics;
             var rect = args.ClipRectangle;
-            var defaultColor = DefaultBorderColor;
+            var defaultColor = DefaultCommonBorderColor;
 
             if (border.Top.Width > 0)
             {

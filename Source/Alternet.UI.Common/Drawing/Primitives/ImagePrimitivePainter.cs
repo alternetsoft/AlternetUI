@@ -8,7 +8,7 @@ using Alternet.UI.Extensions;
 
 namespace Alternet.Drawing
 {
-    internal class ImagePrimitivePainter : PrimitivePainter
+    public class ImagePrimitivePainter : PrimitivePainter
     {
         public Image? Image;
 

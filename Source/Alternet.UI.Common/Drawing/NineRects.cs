@@ -225,7 +225,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sample preview control for the <see cref="NineRects"/> structure.
         /// </summary>
-        public class PreviewControl : UserControl
+        public class PreviewControl : Control
         {
             private VerticalAlignment selectedVert = VerticalAlignment.Top;
             private HorizontalAlignment selectedHorz = HorizontalAlignment.Left;
@@ -235,6 +235,7 @@ namespace Alternet.Drawing
             /// </summary>
             public PreviewControl()
             {
+                UserPaint = true;
                 SuggestedSize = 300;
             }
 

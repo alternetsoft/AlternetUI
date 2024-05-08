@@ -14,6 +14,175 @@ namespace Alternet.UI
     public static class DrawingUtils
     {
         /// <summary>
+        /// Fills rectangle background and draws its border using the specified border settings.
+        /// </summary>
+        /// <param name="dc"><see cref="Graphics"/> where to draw.</param>
+        /// <param name="rect">Rectangle.</param>
+        /// <param name="brush">Brush to fill the rectangle.</param>
+        /// <param name="border">Border settings.</param>
+        /// <param name="hasBorder">Whether border is painted.</param>
+        /// <param name="control">Control in which border is painted. Optional.</param>
+        public static void FillBorderRectangle(
+            this Graphics dc,
+            RectD rect,
+            Brush? brush,
+            BorderSettings? border,
+            bool hasBorder = true,
+            Control? control = null)
+        {
+            if (brush is null && border is null)
+                return;
+
+            var radius = border?.GetUniformCornerRadius(rect);
+
+            if (radius is not null && brush is not null)
+            {
+                var color = border?.Color;
+                if (border is null || color is null || !hasBorder)
+                {
+                    dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
+                }
+                else
+                {
+                    dc.RoundedRectangle(
+                        color.AsPen,
+                        brush,
+                        rect.InflatedBy(-1, -1),
+                        radius.Value);
+                }
+
+                return;
+            }
+
+            if (brush != null)
+            {
+                dc.FillRectangle(brush, rect);
+            }
+
+            if (hasBorder && border is not null)
+            {
+                DrawBorder(control, dc, rect, border);
+            }
+        }
+
+        /// <summary>
+        /// Draws border in the specified rectangle of the drawing context.
+        /// </summary>
+        /// <param name="control">Control in which drawing is performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle.</param>
+        /// <param name="border">Border settings.</param>
+        public static void DrawBorder(Control? control, Graphics dc, RectD rect, BorderSettings? border)
+        {
+            if (border is null)
+                return;
+
+            border.InvokePaint(dc, rect);
+
+            if (!border.DrawDefaultBorder)
+                return;
+
+            var radius = border.GetUniformCornerRadius(rect);
+            var defaultColor = ColorUtils.GetDefaultBorderColor(control);
+
+            if (radius != null)
+            {
+                dc.DrawRoundedRectangle(
+                    border.Top.GetPen(defaultColor),
+                    rect.InflatedBy(-1, -1),
+                    radius.Value);
+                return;
+            }
+
+            var topColor = border.Top.Color ?? defaultColor;
+            var bottomColor = border.Bottom.Color ?? defaultColor;
+            var leftColor = border.Left.Color ?? defaultColor;
+            var rightColor = border.Right.Color ?? defaultColor;
+
+            if (border.Top.Width > 0 && border.ColorIsOk(topColor))
+            {
+                dc.FillRectangle(topColor.AsBrush, border.GetTopRectangle(rect));
+            }
+
+            if (border.Bottom.Width > 0 && border.ColorIsOk(bottomColor))
+            {
+                dc.FillRectangle(bottomColor.AsBrush, border.GetBottomRectangle(rect));
+            }
+
+            if (border.Left.Width > 0 && border.ColorIsOk(leftColor))
+            {
+                dc.FillRectangle(leftColor.AsBrush, border.GetLeftRectangle(rect));
+            }
+
+            if (border.Right.Width > 0 && border.ColorIsOk(rightColor))
+            {
+                dc.FillRectangle(rightColor.AsBrush, border.GetRightRectangle(rect));
+            }
+        }
+
+        /// <summary>
+        /// Draws sliced image with the specified
+        /// <see cref="NinePatchImagePaintParams"/> parameters. This method can be used,
+        /// for example, for drawing complex button bakgrounds using predefined templates.
+        /// </summary>
+        /// <param name="canvas"><see cref="Graphics"/> where to draw.</param>
+        /// <param name="e">Draw parameters.</param>
+        /// <remarks>
+        /// Source image is sliced into 9 pieces. All parts of the image except corners
+        /// (top-left, top-right, bottom-right, bottom-left parts) are used
+        /// by <see cref="TextureBrush"/> to fill larger destination rectangle.
+        /// </remarks>
+        /// <remarks>
+        /// Issue with details is here:
+        /// <see href="https://github.com/alternetsoft/AlternetUI/issues/115"/>.
+        /// </remarks>
+        public static void DrawImageSliced(this Graphics canvas, NinePatchImagePaintParams e)
+        {
+            var src = e.SourceRect;
+            var dst = e.DestRect;
+            var patchSrc = e.PatchRect;
+
+            var offsetX = patchSrc.X - src.X;
+            var offsetY = patchSrc.Y - src.Y;
+
+            RectI patchDst = patchSrc;
+
+            NineRects srcNine = new(src, patchSrc);
+
+            patchDst.X = dst.X + offsetX;
+            patchDst.Y = dst.Y + offsetY;
+            patchDst.Width = dst.Width - (src.Width - patchSrc.Width);
+            patchDst.Height = dst.Height - (src.Height - patchSrc.Height);
+
+            NineRects dstNine = new(dst, patchDst);
+
+            CopyRect(srcNine.Center, dstNine.Center);
+            CopyRect(srcNine.TopCenter, dstNine.TopCenter);
+            CopyRect(srcNine.BottomCenter, dstNine.BottomCenter);
+            CopyRect(srcNine.CenterLeft, dstNine.CenterLeft);
+            CopyRect(srcNine.CenterRight, dstNine.CenterRight);
+
+            canvas.DrawImageI(e.Image, dstNine.TopLeft, srcNine.TopLeft);
+            canvas.DrawImageI(e.Image, dstNine.TopRight, srcNine.TopRight);
+            canvas.DrawImageI(e.Image, dstNine.BottomLeft, srcNine.BottomLeft);
+            canvas.DrawImageI(e.Image, dstNine.BottomRight, srcNine.BottomRight);
+
+            void CopyRect(RectI srcRect, RectI dstRect)
+            {
+                if (e.Tile)
+                {
+                    var subImage = e.Image.GetSubBitmap(srcRect);
+                    var brush = subImage.AsBrush;
+                    canvas.FillRectangleI(brush, dstRect);
+                }
+                else
+                {
+                    canvas.DrawImageI(e.Image, dstRect, srcRect);
+                }
+            }
+        }
+
+        /// <summary>
         /// Calculates distance between two points.
         /// </summary>
         /// <param name="p1">First point.</param>
