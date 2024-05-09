@@ -2520,6 +2520,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether control is graphic control. Graphic controls do not accept focus
+        /// and ignore keyboard.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsGraphicControl => false;
+
+        /// <summary>
         /// Gets a rectangle which describes the client area inside of the
         /// <see cref="Control"/>,
         /// in device-independent units (1/96th inch per unit).
@@ -2756,11 +2763,6 @@ namespace Alternet.UI
                 GetNative().SetBindScrollEvents(this, value);
             }
         }
-
-        /*/// <summary>
-        /// Gets whether control is abstract control.
-        /// </summary>
-        protected abstract bool IsAbstract { get; }*/
 
         /// <summary>
         /// Gets or sets border style of the control.

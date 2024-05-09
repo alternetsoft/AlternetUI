@@ -19,7 +19,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedIndexChanged")]
-    public partial class TabControl : WxBaseControl
+    public partial class TabControl : Control
     {
         /// <summary>
         /// Gets or sets default minimal tab size in the header.
@@ -397,6 +397,61 @@ namespace Alternet.UI
                     TabAlignment = TabAlignment.Top;
                 else
                     TabAlignment = TabAlignment.Left;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override Thickness Padding
+        {
+            get => base.Padding;
+            set
+            {
+            }
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set
+            {
+            }
+        }
+
+        [Browsable(false)]
+        internal new string? ToolTip
+        {
+            get => base.ToolTip;
+            set
+            {
+            }
+        }
+
+        [Browsable(false)]
+        internal new bool IsBold
+        {
+            get => base.IsBold;
+            set
+            {
+            }
+        }
+
+        [Browsable(false)]
+        internal new Font? Font
+        {
+            get => base.Font;
+            set
+            {
+            }
+        }
+
+        [Browsable(false)]
+        internal new Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+            set
+            {
             }
         }
 

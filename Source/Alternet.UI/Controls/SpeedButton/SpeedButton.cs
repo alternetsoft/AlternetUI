@@ -540,6 +540,12 @@ namespace Alternet.UI
             }
         }
 
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
         /// <summary>
         /// Gets inner <see cref="PictureBox"/> control.
         /// </summary>

@@ -164,6 +164,18 @@ namespace Alternet.UI
             }
         }
 
+        internal new Image? Image
+        {
+            get => base.Image;
+            set => base.Image = value;
+        }
+
+        internal new Image? DisabledImage
+        {
+            get => base.DisabledImage;
+            set => base.DisabledImage = value;
+        }
+
         /// <inheritdoc/>
         protected override void OnClick(EventArgs e)
         {

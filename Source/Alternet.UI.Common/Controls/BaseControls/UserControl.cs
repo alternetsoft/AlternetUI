@@ -241,10 +241,10 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ShowDropDownMenu()
         {
-            if (DropDownMenu is null)
-                return;
-            PointD pt = (0, Bounds.Height);
-            ControlUtils.ShowPopupMenu(this, DropDownMenu, pt.X, pt.Y);
+            DropDownMenu?.Show(this);
+
+            /*PointD pt = (0, Bounds.Height);
+            ControlUtils.ShowPopupMenu(this, DropDownMenu, pt.X, pt.Y);*/
         }
 
         /// <inheritdoc/>

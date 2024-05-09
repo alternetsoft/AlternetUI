@@ -66,8 +66,15 @@ namespace Alternet.UI
             return (WxControlHandler?)control.handler;
         }
 
-        internal virtual Native.Control CreateNativeControl() =>
-            new Native.Panel();
+        internal virtual Native.Control CreateNativeControl()
+        {
+            var result = new Native.Panel();
+
+            if(Control.IsGraphicControl)
+                result.AcceptsFocusAll = false;
+
+            return result;
+        }
 
         protected override void OnChildInserted(Control childControl)
         {
