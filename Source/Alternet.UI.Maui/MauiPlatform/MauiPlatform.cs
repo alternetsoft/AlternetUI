@@ -23,6 +23,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void ProcessPendingEvents()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override LangDirection GetLangDirection()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override bool SystemSettingsAppearanceIsDark()
         {
             throw new NotImplementedException();

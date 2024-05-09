@@ -70,5 +70,9 @@ namespace Alternet.UI
         public abstract void BeginBusyCursor();
 
         public abstract void EndBusyCursor();
+
+        public abstract void ProcessPendingEvents();
+
+        public abstract LangDirection GetLangDirection();
     }
 }

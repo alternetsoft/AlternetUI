@@ -344,6 +344,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the layout direction for the current locale or <see cref="LangDirection.Default"/>
+        /// if it's unknown.
+        /// </summary>
+        public virtual LangDirection LangDirection
+        {
+            get
+            {
+                return NativePlatform.Default.GetLangDirection();
+            }
+        }
+
         protected internal virtual bool InvokeRequired => throw new NotImplementedException();
 
         protected Window? MainWindow
@@ -725,6 +737,20 @@ namespace Alternet.UI
             logUpdateCount--;
             if (logUpdateCount == 0)
                 OnLogRefresh();
+        }
+
+        /// <summary>Processes all messages currently in the message queue.</summary>
+        public static void DoEvents()
+        {
+            Current?.ProcessPendingEvents();
+        }
+
+        /// <summary>
+        /// Processes all pending events.
+        /// </summary>
+        public virtual void ProcessPendingEvents()
+        {
+            NativePlatform.Default.ProcessPendingEvents();
         }
 
         /// <summary>

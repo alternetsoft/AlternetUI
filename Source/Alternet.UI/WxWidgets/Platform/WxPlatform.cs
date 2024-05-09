@@ -23,6 +23,17 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override LangDirection GetLangDirection()
+        {
+            return (LangDirection?)Application.Current?.nativeApplication.GetLayoutDirection()
+                ?? LangDirection.LeftToRight;
+        }
+
+        public override void ProcessPendingEvents()
+        {
+            Application.Current?.nativeApplication.ProcessPendingEvents();
+        }
+
         public override bool IsBusyCursor() => Native.WxOtherFactory.IsBusyCursor();
 
         public override void BeginBusyCursor() => Native.WxOtherFactory.BeginBusyCursor();

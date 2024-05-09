@@ -25,6 +25,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override LangDirection GetLangDirection()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool IsBusyCursor()
         {
             throw new NotImplementedException();
@@ -81,6 +86,11 @@ namespace Alternet.UI
         }
 
         public override IntPtr MemorySetLong(IntPtr dest, byte fillByte, ulong count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ProcessPendingEvents()
         {
             throw new NotImplementedException();
         }

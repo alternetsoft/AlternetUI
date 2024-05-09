@@ -24,12 +24,13 @@ namespace Alternet.UI
         internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
+        internal Native.Application nativeApplication;
+
         private static IconSet? icon;
         private static bool inOnThreadException;
 
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
-        private Native.Application nativeApplication;
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
         static Application()
@@ -223,18 +224,6 @@ namespace Alternet.UI
         {
             get => nativeApplication.GetExitOnFrameDelete();
             set => nativeApplication.SetExitOnFrameDelete(value);
-        }
-
-        /// <summary>
-        /// Gets the layout direction for the current locale or <see cref="LangDirection.Default"/>
-        /// if it's unknown.
-        /// </summary>
-        public virtual LangDirection LangDirection
-        {
-            get
-            {
-                return (LangDirection)nativeApplication.GetLayoutDirection();
-            }
         }
 
         /// <summary>
@@ -437,20 +426,6 @@ namespace Alternet.UI
         {
             Exit();
             Environment.Exit(exitCode);
-        }
-
-        /// <summary>Processes all messages currently in the message queue.</summary>
-        public static void DoEvents()
-        {
-            Current?.ProcessPendingEvents();
-        }
-
-        /// <summary>
-        /// Processes all pending events.
-        /// </summary>
-        public virtual void ProcessPendingEvents()
-        {
-            nativeApplication.ProcessPendingEvents();
         }
 
         /// <summary>

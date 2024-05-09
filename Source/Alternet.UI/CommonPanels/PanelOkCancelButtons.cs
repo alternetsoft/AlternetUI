@@ -103,6 +103,13 @@ namespace Alternet.UI
         /// </summary>
         public bool UseModalResult { get; set; }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         internal double SuggestedMinHeight
         {
             get

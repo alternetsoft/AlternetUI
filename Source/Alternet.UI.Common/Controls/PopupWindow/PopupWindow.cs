@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Generic popup control.
     /// </summary>
-    public class PopupWindow : PopupWindow<WxBaseControl>
+    public class PopupWindow : PopupWindow<Control>
     {
     }
 }

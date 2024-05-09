@@ -5,7 +5,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="ListView"/> behavior and appearance.
+    /// Provides base functionality for implementing a specific <see cref="ListView"/>
+    /// behavior and appearance.
     /// </summary>
     internal abstract class ListViewHandler : WxControlHandler
     {
@@ -20,7 +21,8 @@ namespace Alternet.UI
         public abstract long? FocusedItemIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
+        /// Gets or sets a boolean value which specifies whether the column header
+        /// is visible in <see
         /// cref="ListViewView.Details"/> view.
         /// </summary>
         public abstract bool ColumnHeaderVisible { get; set; }
@@ -33,7 +35,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the first fully-visible item in the list view control.
         /// </summary>
-        /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item in the list view control.</value>
+        /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible
+        /// item in the list view control.</value>
         public abstract ListViewItem? TopItem { get; }
 
         /// <summary>
@@ -41,17 +44,17 @@ namespace Alternet.UI
         /// </summary>
         public abstract ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
-
         /// <summary>
-        /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
+        /// Provides list view item information, at a given client point,
+        /// in device-independent units (1/96th inch per
         /// unit).
         /// </summary>
-        /// <param name="point">The <see cref="PointD"/> at which to retrieve item information.</param>
+        /// <param name="point">The <see cref="PointD"/> at which to retrieve
+        /// item information.</param>
         /// <returns>The hit test result information.</returns>
         /// <remarks>
-        /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/> and where within the
+        /// Use this method to determine whether a point is located in a
+        /// <see cref="ListViewItem"/> and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
         public abstract ListViewHitTestInfo HitTest(PointD point);
@@ -59,18 +62,22 @@ namespace Alternet.UI
         /// <summary>
         /// Initiates the editing of the list view item label.
         /// </summary>
-        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
+        /// <param name="itemIndex">The zero-based index of the item within the
+        /// <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
         public abstract void BeginLabelEdit(long itemIndex);
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
         /// </summary>
-        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
+        /// <param name="itemIndex">The zero-based index of the item within the
+        /// <see cref="ListView.Items"/> collection
         /// whose bounding rectangle you want to get.</param>
-        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
+        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/>
+        /// values that represents a portion of
         /// the item for which to retrieve the bounding rectangle.</param>
-        /// <returns>A <see cref="RectD"/> that represents the bounding rectangle for the specified portion of the
+        /// <returns>A <see cref="RectD"/> that represents the bounding rectangle
+        /// for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
         public abstract RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion);
 
@@ -91,7 +98,8 @@ namespace Alternet.UI
         public abstract void Clear();
 
         /// <summary>
-        /// Ensures that the specified item is visible within the control, scrolling the contents of the control, if necessary.
+        /// Ensures that the specified item is visible within the control, scrolling the contents
+        /// of the control, if necessary.
         /// </summary>
         public abstract void EnsureItemVisible(long itemIndex);
 
