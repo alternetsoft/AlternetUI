@@ -10,7 +10,22 @@ namespace Alternet.UI
 {
     internal class NotImplementedPlatform : NativePlatform
     {
+        public override void BeginBusyCursor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void EndBusyCursor()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void ExitMainLoop()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsBusyCursor()
         {
             throw new NotImplementedException();
         }

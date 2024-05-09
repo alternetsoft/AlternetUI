@@ -64,5 +64,11 @@ namespace Alternet.UI
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true);
+
+        public abstract bool IsBusyCursor();
+
+        public abstract void BeginBusyCursor();
+
+        public abstract void EndBusyCursor();
     }
 }

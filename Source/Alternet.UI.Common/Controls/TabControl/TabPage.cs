@@ -1,5 +1,7 @@
 using System;
 
+using Alternet.Base.Collections;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -12,7 +14,7 @@ namespace Alternet.UI
     /// not parts of the individual <see cref="TabPage"/> controls.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public partial class TabPage : WxBaseControl
+    public partial class TabPage : Control
     {
         private int? index;
 
@@ -55,6 +57,25 @@ namespace Alternet.UI
             {
                 index = value;
             }
+        }
+
+        /// <summary>
+        /// Updates tabpage indexes starting from the specified index.
+        /// </summary>
+        /// <param name="controls">List of <see cref="TabPage"/> controls.</param>
+        /// <param name="startIndex">Starting index.</param>
+        public static void UpdatePageIndexes(Collection<TabPage> controls, int startIndex)
+        {
+            for (int i = startIndex; i < controls.Count; i++)
+                controls[i].Index = i;
+        }
+
+        /// <summary>
+        /// Do not use this method.
+        /// </summary>
+        public static void SetPageIndexInternal(TabPage tab, int? index)
+        {
+            tab.Index = index;
         }
 
         /// <inheritdoc/>

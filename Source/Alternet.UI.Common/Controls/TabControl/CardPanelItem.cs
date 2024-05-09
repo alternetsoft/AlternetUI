@@ -55,7 +55,7 @@ namespace Alternet.UI
             get
             {
                 var oldControl = control;
-                control ??= action?.Invoke() ?? new WxBaseControl();
+                control ??= action?.Invoke() ?? new Control();
                 if(oldControl != control)
                     RaisePropertyChanged(nameof(Control));
                 return control;

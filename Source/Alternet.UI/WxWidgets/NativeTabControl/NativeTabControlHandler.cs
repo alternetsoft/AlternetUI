@@ -55,8 +55,8 @@ namespace Alternet.UI
         {
             page.TitleChanged -= Page_TitleChanged;
             RemovePage(index, page);
-            page.Index = null;
-            UpdatePageIndices(index);
+            TabPage.SetPageIndexInternal(page, null);
+            TabPage.UpdatePageIndexes(Control.Pages, index);
         }
 
         protected override void OnAttach()
@@ -72,10 +72,10 @@ namespace Alternet.UI
 
         protected virtual void OnPageInserted(int index, TabPage page)
         {
-            page.Index = index;
+            TabPage.SetPageIndexInternal(page, index);
             InsertPage(index, page);
             page.TitleChanged += Page_TitleChanged;
-            UpdatePageIndices(index + 1);
+            TabPage.UpdatePageIndexes(Control.Pages, index + 1);
         }
 
         protected override void OnDetach()
@@ -107,7 +107,7 @@ namespace Alternet.UI
                 skipChildrenInsertionCheck = false;
             }
 
-            var pageNativeControl = page.Handler.NativeControl
+            var pageNativeControl = (page.Handler as WxControlHandler)?.NativeControl
                 ?? throw new InvalidOperationException();
             NativeControl.InsertPage(index, pageNativeControl, page.Title);
             Control.PerformLayout();
@@ -115,16 +115,10 @@ namespace Alternet.UI
 
         private void RemovePage(int index, TabPage page)
         {
-            var pageNativeControl = page.Handler.NativeControl ??
+            var pageNativeControl = (page.Handler as WxControlHandler)?.NativeControl ??
                 throw new InvalidOperationException();
             NativeControl.RemovePage(index, pageNativeControl);
             Control.Children.RemoveAt(index);
-        }
-
-        private void UpdatePageIndices(int startIndex)
-        {
-            for (int i = startIndex; i < Control.Pages.Count; i++)
-                Control.Pages[i].Index = i;
         }
 
         private void Page_TitleChanged(object? sender, EventArgs e)

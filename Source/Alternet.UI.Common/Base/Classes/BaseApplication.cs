@@ -270,6 +270,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns true if between two <see cref="BeginBusyCursor"/> and
+        /// <see cref="EndBusyCursor"/> calls.
+        /// </summary>
+        public static bool IsBusyCursor => NativePlatform.Default.IsBusyCursor();
+
+        /// <summary>
         /// Allows to suppress some debug messages.
         /// </summary>
         /// <remarks>
@@ -578,6 +584,42 @@ namespace Alternet.UI
                     task.Action(task.Data);
                 else
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Changes the cursor to the given cursor for all windows in the application.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="IsBusyCursor"/> to get current busy cursor state.
+        /// Use <see cref="EndBusyCursor"/> to revert the cursor back to its previous state.
+        /// These two calls can be nested, and a counter ensures that only the outer calls take effect.
+        /// </remarks>
+        public static void BeginBusyCursor() => NativePlatform.Default.BeginBusyCursor();
+
+        /// <summary>
+        /// Changes the cursor back to the original cursor, for all windows in the application.
+        /// </summary>
+        /// <remarks>
+        /// Use with <see cref="BeginBusyCursor"/> and <see cref="IsBusyCursor"/>.
+        /// </remarks>
+        public static void EndBusyCursor() => NativePlatform.Default.EndBusyCursor();
+
+        /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginBusyCursor"/>
+        /// and <see cref="EndBusyCursor"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public static void DoInsideBusyCursor(Action action)
+        {
+            BeginBusyCursor();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndBusyCursor();
             }
         }
 

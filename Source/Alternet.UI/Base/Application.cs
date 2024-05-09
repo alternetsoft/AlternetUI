@@ -120,12 +120,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns true if between two <see cref="BeginBusyCursor"/> and
-        /// <see cref="EndBusyCursor"/> calls.
-        /// </summary>
-        public static bool IsBusyCursor => Native.WxOtherFactory.IsBusyCursor();
-
-        /// <summary>
         /// Gets whether execution is inside the <see cref="Run"/> method.
         /// </summary>
         public static bool IsRunning { get; internal set; }
@@ -316,24 +310,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Changes the cursor to the given cursor for all windows in the application.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="IsBusyCursor"/> to get current busy cursor state.
-        /// Use <see cref="EndBusyCursor"/> to revert the cursor back to its previous state.
-        /// These two calls can be nested, and a counter ensures that only the outer calls take effect.
-        /// </remarks>
-        public static void BeginBusyCursor() => Native.WxOtherFactory.BeginBusyCursor();
-
-        /// <summary>
-        /// Changes the cursor back to the original cursor, for all windows in the application.
-        /// </summary>
-        /// <remarks>
-        /// Use with <see cref="BeginBusyCursor"/> and <see cref="IsBusyCursor"/>.
-        /// </remarks>
-        public static void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
-
-        /// <summary>
         /// Sets wxSystemOptions value.
         /// </summary>
         /// <param name="name">Option name.</param>
@@ -437,24 +413,6 @@ namespace Alternet.UI
             {
                 AddIdleTask(action);
             });
-        }
-
-        /// <summary>
-        /// Executes <paramref name="action"/> between calls to <see cref="BeginBusyCursor"/>
-        /// and <see cref="EndBusyCursor"/>.
-        /// </summary>
-        /// <param name="action">Action that will be executed.</param>
-        public static void DoInsideBusyCursor(Action action)
-        {
-            BeginBusyCursor();
-            try
-            {
-                action();
-            }
-            finally
-            {
-                EndBusyCursor();
-            }
         }
 
         /// <summary>

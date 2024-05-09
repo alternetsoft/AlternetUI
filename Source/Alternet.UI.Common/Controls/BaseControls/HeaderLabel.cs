@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements label control that looks like header.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class HeaderLabel : WxBaseControl
+    public partial class HeaderLabel : Control
     {
         /// <summary>
         /// Gets or sets function which creates inner label.

@@ -23,6 +23,12 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override bool IsBusyCursor() => Native.WxOtherFactory.IsBusyCursor();
+
+        public override void BeginBusyCursor() => Native.WxOtherFactory.BeginBusyCursor();
+
+        public override void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
+
         public override void ExitMainLoop()
         {
             Application.Current.NativeApplication.ExitMainLoop();
