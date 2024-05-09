@@ -305,7 +305,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Gets DPI settings from <paramref name="dpiControl"/> and selects appropriate
-        /// images size using <see cref="ToolBar.GetDefaultImageSize(Control)"/>.
+        /// images size using <see cref="ToolBarUtils.GetDefaultImageSize(Control)"/>.
         /// </remarks>
         /// <param name="url">File or resource url with Svg data.</param>
         /// <param name="dpiControl">Control which <see cref="Control.GetDPI"/> method
@@ -314,7 +314,7 @@ namespace Alternet.UI
         /// If provided, svg fill color is changed to the specified value.</param>
         public static ImageSet LoadSvgImage(string url, Control dpiControl, Color? color = null)
         {
-            return ControlUtils.FromSvgUrlForToolbar(url, dpiControl, color);
+            return ToolBarUtils.FromSvgUrlForToolbar(url, dpiControl, color);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class GenericToolBar : WxBaseControl
+    public partial class GenericToolBar : Control
     {
         private double itemSize;
         private bool textVisible = false;
@@ -126,7 +127,7 @@ namespace Alternet.UI
         /// Gets or sets default image size.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="ToolBar.GetDefaultImageSize(Control)"/> is used.
+        /// If this property is null, <see cref="ToolBarUtils.GetDefaultImageSize(Control)"/> is used.
         /// </remarks>
         public static int? DefaultImageSize { get; set; }
 
@@ -1319,7 +1320,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         public virtual int GetImageSize() =>
-            ImageSize ?? DefaultImageSize ?? ToolBar.GetDefaultImageSize(this).Width;
+            ImageSize ?? DefaultImageSize ?? ToolBarUtils.GetDefaultImageSize(this).Width;
 
         /// <summary>
         /// Gets image color in the normal state taking into account <see cref="NormalImageColor"/>
@@ -1373,14 +1374,15 @@ namespace Alternet.UI
                 typeof(SpeedButton),
                 typeof(GenericLabel),
                 typeof(PictureBox),
-                typeof(Label),
                 typeof(StackPanel),
                 typeof(Panel),
                 typeof(Grid),
                 typeof(Border),
             };
 
-            if (Array.IndexOf(types, control.GetType()) >= 0)
+            var controlType = control.GetType();
+
+            if (Array.IndexOf(types, controlType) >= 0)
                 return true;
             return false;
         }

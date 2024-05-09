@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <param name="size">Image size.</param>
         public static Image? GetErrorImage(int? size = null)
         {
-            size ??= ToolBar.GetDefaultImageSize().Width;
+            size ??= ToolBarUtils.GetDefaultImageSize().Width;
             var imageSet = KnownColorSvgImages.ImgError.AsImageSet(size.Value);
             var image = imageSet?.AsImage(size.Value);
             return image;

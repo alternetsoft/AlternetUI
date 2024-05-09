@@ -173,31 +173,12 @@ namespace Alternet.UI
             IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
 
         /// <summary>
-        /// Returns suggested toolbar image size in pixels depending on the given DPI value.
-        /// </summary>
-        /// <param name="control">Control's <see cref="Control.GetDPI"/> method
-        /// is used to get DPI settings.</param>
-        public static SizeI GetDefaultImageSize(Control? control = null)
-        {
-            control ??= Application.FirstWindow();
-            SizeD? dpi;
-            if (control is null)
-                dpi = Window.DefaultDPI ?? Display.Primary.DPI;
-            else
-                dpi = control.GetDPI();
-            if (dpi is null)
-                throw new ArgumentNullException(nameof(control));
-            var result = ToolbarUtils.GetDefaultImageSize(dpi.Value);
-            return result;
-        }
-
-        /// <summary>
         /// Returns suggested toolbar image size depending on the current DPI.
         /// </summary>
         public int GetDefaultImageSize()
         {
             SizeD deviceDpi = GetDPI();
-            return ToolbarUtils.GetDefaultImageSize(deviceDpi.Width);
+            return ToolBarUtils.GetDefaultImageSize(deviceDpi.Width);
         }
 
         /// <summary>

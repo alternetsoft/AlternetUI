@@ -994,7 +994,7 @@ namespace Alternet.UI
             if (svgImage is not null)
             {
                 var imageSize = item.SvgImageSize ?? SvgImageSize
-                    ?? ToolBar.GetDefaultImageSize(this);
+                    ?? ToolBarUtils.GetDefaultImageSize(this);
                 var imageHeight = imageSize.Height;
                 item.Image ??= svgImage.AsNormalImage(imageHeight, IsDarkBackground);
                 item.DisabledImage ??= svgImage.AsDisabledImage(imageHeight, IsDarkBackground);

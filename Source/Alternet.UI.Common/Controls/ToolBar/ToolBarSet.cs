@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Alternet.UI
     /// Implements multiple <see cref="GenericToolBar"/> controls.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBarSet : WxBaseControl
+    public partial class ToolBarSet : Control
     {
         /// <summary>
         /// Gets or sets default distance (in dips) between toolbars.

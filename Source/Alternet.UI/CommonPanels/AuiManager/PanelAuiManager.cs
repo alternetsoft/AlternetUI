@@ -489,7 +489,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static SizeI GetBaseToolSvgSize()
         {
-            var imageSize = Math.Max(ToolbarUtils.DefaultImageSize96dpi, DefaultMinToolbarImageSize);
+            var imageSize = Math.Max(ToolBarUtils.DefaultImageSize96dpi, DefaultMinToolbarImageSize);
             return imageSize;
         }
 
@@ -572,7 +572,7 @@ namespace Alternet.UI
         public virtual SizeI GetToolBitmapSize()
         {
             var imageSize = SizeI.Max(
-                UI.ToolBar.GetDefaultImageSize(this),
+                ToolBarUtils.GetDefaultImageSize(this),
                 new SizeI(DefaultMinToolbarImageSize));
             return imageSize;
         }

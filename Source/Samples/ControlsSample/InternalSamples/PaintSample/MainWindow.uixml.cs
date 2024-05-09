@@ -172,7 +172,7 @@ namespace PaintSample
                 var url = "embres:ControlsSample.Resources.ToolIcons." +
                     tool.GetType().Name.Replace("Tool", "") + ".svg";
                 var (normalImage, disabledImage) =
-                    ControlUtils.GetNormalAndDisabledSvg(url, this);
+                    ToolBarUtils.GetNormalAndDisabledSvg(url, this);
                 var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);
 
                 void ClickMe()

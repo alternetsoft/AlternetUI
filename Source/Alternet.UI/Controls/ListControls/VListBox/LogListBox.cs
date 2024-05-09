@@ -310,7 +310,7 @@ namespace Alternet.UI
                         return;
                     kind = value;
 
-                    var size = ToolBar.GetDefaultImageSize();
+                    var size = ToolBarUtils.GetDefaultImageSize();
 
                     switch (kind)
                     {

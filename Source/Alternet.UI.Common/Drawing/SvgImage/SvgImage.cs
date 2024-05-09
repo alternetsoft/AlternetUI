@@ -76,13 +76,13 @@ namespace Alternet.Drawing
         /// Gets svg image as <see cref="ImageSet"/> with default toolbar image size.
         /// </summary>
         public virtual ImageSet? AsImageSet()
-            => AsImageSet(ToolBar.GetDefaultImageSize().Width);
+            => AsImageSet(ToolBarUtils.GetDefaultImageSize().Width);
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/> with default toolbar image size.
         /// </summary>
         public virtual Image? AsImage()
-            => AsImage(ToolBar.GetDefaultImageSize().Width);
+            => AsImage(ToolBarUtils.GetDefaultImageSize().Width);
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/>.

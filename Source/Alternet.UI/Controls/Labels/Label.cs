@@ -68,14 +68,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlTypeId ControlKind => ControlTypeId.Label;
+
         [Browsable(false)]
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
         }
-
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Label;
 
         /// <summary>
         /// Wraps <see cref="Text"/> so that each of its lines becomes at most width

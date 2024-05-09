@@ -624,7 +624,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="ToolbarUtils.GetDefaultImageSize(double)"/>
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(double)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
@@ -638,8 +638,8 @@ namespace Alternet.Drawing
         public static Image FromSvgUrlForToolbar(string url, IControl control, Color? color = null)
         {
             SizeD deviceDpi = control.GetDPI();
-            var width = ToolbarUtils.GetDefaultImageSize(deviceDpi.Width);
-            var height = ToolbarUtils.GetDefaultImageSize(deviceDpi.Height);
+            var width = ToolBarUtils.GetDefaultImageSize(deviceDpi.Width);
+            var height = ToolBarUtils.GetDefaultImageSize(deviceDpi.Height);
             var result = Image.FromSvgUrl(url, width, height, color);
             return result;
         }

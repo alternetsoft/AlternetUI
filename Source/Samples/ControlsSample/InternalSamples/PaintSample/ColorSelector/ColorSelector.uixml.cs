@@ -55,7 +55,7 @@ namespace PaintSample
             if (container == null)
                 return;
 
-            var sizePixels = Alternet.UI.ToolBar.GetDefaultImageSize(this).Width;
+            var sizePixels = ToolBarUtils.GetDefaultImageSize(this).Width;
             var sizeDips = PixelToDip(sizePixels);
 
             var biggerSize = sizeDips * 2;

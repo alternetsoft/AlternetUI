@@ -335,7 +335,7 @@ namespace Alternet.UI
 
         private void LogControlInfo()
         {
-            Application.Log($"Toolbar images: {UI.ToolBar.GetDefaultImageSize(this)}");
+            Application.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(this)}");
             Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
             Log($"Font.Default: {Font.Default.ToInfoString()}");
             Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
