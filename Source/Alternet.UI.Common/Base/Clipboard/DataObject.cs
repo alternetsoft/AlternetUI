@@ -14,6 +14,8 @@ namespace Alternet.UI
     [DebuggerDisplay("{ToDebugString()}")]
     public class DataObject : IDataObject
     {
+        public static readonly DataObject Empty = new EmptyDataObject();
+
         private readonly Dictionary<string, object> data = new(StringComparer.Ordinal);
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public object? GetData(string format)
+        public virtual object? GetData(string format)
         {
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
@@ -119,7 +121,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool GetDataPresent(string format)
+        public virtual bool GetDataPresent(string format)
         {
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
@@ -128,13 +130,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public string[] GetFormats()
+        public virtual string[] GetFormats()
         {
             return data.Keys.Cast<string>().ToArray();
         }
 
         /// <inheritdoc/>
-        public void SetData(string format, object data)
+        public virtual void SetData(string format, object data)
         {
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
@@ -145,7 +147,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SetData(object data)
+        public virtual void SetData(object data)
         {
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
@@ -190,5 +192,18 @@ namespace Alternet.UI
         /// <see cref="DataFormats.Text"/> format.
         /// </summary>
         public virtual void SetText(string value) => SetData(DataFormats.Text, value);
+
+        internal class EmptyDataObject : DataObject
+        {
+            /// <inheritdoc/>
+            public override void SetData(string format, object data)
+            {
+            }
+
+            /// <inheritdoc/>
+            public override void SetData(object data)
+            {
+            }
+        }
     }
 }

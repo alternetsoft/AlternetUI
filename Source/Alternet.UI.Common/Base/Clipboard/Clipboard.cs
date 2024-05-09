@@ -45,12 +45,7 @@ namespace Alternet.UI
         /// </summary>
         public static IDataObject? GetDataObject()
         {
-            var unmanagedDataObject =
-                Application.Current.NativeClipboard.GetDataObject();
-            if (unmanagedDataObject == null)
-                return null;
-
-            return new UnmanagedDataObjectAdapter(unmanagedDataObject);
+            return NativePlatform.Default.ClipboardGetDataObject();
         }
 
         /// <summary>
@@ -59,14 +54,13 @@ namespace Alternet.UI
         /// <param name="value">The data to place on the Clipboard.</param>
         public static void SetDataObject(IDataObject value)
         {
-            Application.Current.NativeClipboard.SetDataObject(
-                UnmanagedDataObjectService.GetUnmanagedDataObject(value));
+            NativePlatform.Default.ClipboardSetDataObject(value);
         }
 
         /// <summary>
         /// Removes all data from the <see cref='Clipboard'/>.
         /// </summary>
-        public static void Clear() => SetDataObject(new DataObject());
+        public static void Clear() => SetDataObject(DataObject.Empty);
 
         /// <summary>
         /// Indicates whether there is data on the <see cref='Clipboard'/>

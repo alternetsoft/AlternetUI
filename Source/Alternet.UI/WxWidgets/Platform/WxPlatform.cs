@@ -23,6 +23,22 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override IDataObject? ClipboardGetDataObject()
+        {
+            var unmanagedDataObject =
+                Application.Current.NativeClipboard.GetDataObject();
+            if (unmanagedDataObject == null)
+                return null;
+
+            return new UnmanagedDataObjectAdapter(unmanagedDataObject);
+        }
+
+        public override void ClipboardSetDataObject(IDataObject value)
+        {
+            Application.Current.NativeClipboard.SetDataObject(
+                UnmanagedDataObjectService.GetUnmanagedDataObject(value));
+        }
+
         public override LangDirection GetLangDirection()
         {
             return (LangDirection?)Application.Current?.nativeApplication.GetLayoutDirection()

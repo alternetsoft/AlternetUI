@@ -74,5 +74,9 @@ namespace Alternet.UI
         public abstract void ProcessPendingEvents();
 
         public abstract LangDirection GetLangDirection();
+
+        public abstract IDataObject? ClipboardGetDataObject();
+
+        public abstract void ClipboardSetDataObject(IDataObject value);
     }
 }
