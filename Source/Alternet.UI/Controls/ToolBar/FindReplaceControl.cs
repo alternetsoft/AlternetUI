@@ -838,6 +838,20 @@ namespace Alternet.UI
             }
         }
 
+        [Browsable(false)]
+        internal new Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+            set => base.ForegroundColor = value;
+        }
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         private bool CanFindNext =>
             FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindNext);
 

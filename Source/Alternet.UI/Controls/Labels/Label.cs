@@ -68,6 +68,12 @@ namespace Alternet.UI
             }
         }
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Label;
 

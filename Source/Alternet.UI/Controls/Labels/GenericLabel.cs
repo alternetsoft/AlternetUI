@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// Value of this property is shown at the end of <see cref="Text"/>
         /// when control is painted.
         /// </remarks>
-        public string? TextSuffix
+        public virtual string? TextSuffix
         {
             get
             {
@@ -279,6 +279,12 @@ namespace Alternet.UI
                 imageVisible = value;
                 PerformLayoutAndInvalidate();
             }
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
         }
 
         /// <summary>

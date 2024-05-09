@@ -136,6 +136,12 @@ namespace Alternet.UI
             set => NativeControl.Visited = value;
         }
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+        }
+
         internal new Native.LinkLabel NativeControl =>
              (Native.LinkLabel)base.NativeControl;
 
