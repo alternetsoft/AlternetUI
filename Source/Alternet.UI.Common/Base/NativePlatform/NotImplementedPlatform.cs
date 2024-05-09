@@ -15,6 +15,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override void Bell()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IDataObject? ClipboardGetDataObject()
         {
             throw new NotImplementedException();
@@ -100,12 +105,27 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override void MessageBeep(SystemSoundType soundType)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void ProcessPendingEvents()
         {
             throw new NotImplementedException();
         }
 
         public override bool ShowExceptionWindow(Exception exception, string? additionalInfo = null, bool canContinue = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override DialogResult ShowMessageBox(MessageBoxInfo info)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void StopSound()
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,37 @@ namespace Alternet.UI
             NativeWindow.Default = new WxPlatformWindow();
             Default = new WxPlatform();
             initialized = true;
+        }
+
+        public override void StopSound()
+        {
+            Native.WxOtherFactory.SoundStop();
+        }
+
+        public override void MessageBeep(SystemSoundType soundType)
+        {
+            if (BaseApplication.IsWindowsOS)
+                SafeNativeMethods.MessageBeep((int)soundType);
+            else
+                Bell();
+        }
+
+        public override void Bell()
+        {
+            Native.WxOtherFactory.Bell();
+        }
+
+        public override DialogResult ShowMessageBox(MessageBoxInfo info)
+        {
+            var nativeOwner = info.Owner == null ? null :
+                ((WindowHandler)info.Owner.Handler).NativeControl;
+            return (DialogResult)Native.MessageBox.Show(
+                nativeOwner,
+                info.Text?.ToString() ?? string.Empty,
+                info.Caption ?? string.Empty,
+                (Native.MessageBoxButtons)info.Buttons,
+                (Native.MessageBoxIcon)info.Icon,
+                (Native.MessageBoxDefaultButton)info.DefaultButton);
         }
 
         public override IDataObject? ClipboardGetDataObject()
@@ -110,6 +142,12 @@ namespace Alternet.UI
             bool canContinue = true)
         {
             return ThreadExceptionWindow.Show(exception, additionalInfo, canContinue);
+        }
+
+        private class SafeNativeMethods
+        {
+            [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+            internal static extern bool MessageBeep(int type);
         }
     }
 }

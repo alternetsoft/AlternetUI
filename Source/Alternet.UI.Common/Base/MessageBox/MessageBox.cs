@@ -604,7 +604,7 @@ namespace Alternet.UI
 
             if (info.Buttons == MessageBoxButtons.AbortRetryIgnore || info.Buttons == MessageBoxButtons.RetryCancel)
             {
-                Application.Alert("AbortRetryIgnore and RetryCancel are not implemented");
+                BaseApplication.Alert("AbortRetryIgnore and RetryCancel are not implemented");
                 return DialogResult.None;
             }
 
@@ -654,15 +654,7 @@ namespace Alternet.UI
 
             ValidateButtons(info.Buttons, info.DefaultButton);
 
-            var nativeOwner = info.Owner == null ? null :
-                ((WindowHandler)info.Owner.Handler).NativeControl;
-            return (DialogResult)Native.MessageBox.Show(
-                nativeOwner,
-                info.Text?.ToString() ?? string.Empty,
-                info.Caption ?? string.Empty,
-                (Native.MessageBoxButtons)info.Buttons,
-                (Native.MessageBoxIcon)info.Icon,
-                (Native.MessageBoxDefaultButton)info.DefaultButton);
+            return NativePlatform.Default.ShowMessageBox(info);
         }
 
         internal static MessageBoxIcon ValidateIcon(MessageBoxIcon icon)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class NativeDateTimePickerHandler : NativeControlHandler<DateTimePicker, Native.DateTimePicker>
+    internal class DateTimePickerHandler : NativeControlHandler<DateTimePicker, Native.DateTimePicker>
     {
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.

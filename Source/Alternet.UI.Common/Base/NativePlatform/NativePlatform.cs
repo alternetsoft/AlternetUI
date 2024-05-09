@@ -78,5 +78,13 @@ namespace Alternet.UI
         public abstract IDataObject? ClipboardGetDataObject();
 
         public abstract void ClipboardSetDataObject(IDataObject value);
+
+        public abstract DialogResult ShowMessageBox(MessageBoxInfo info);
+
+        public abstract void StopSound();
+
+        public abstract void Bell();
+
+        public abstract void MessageBeep(SystemSoundType soundType);
     }
 }

@@ -53,7 +53,7 @@ namespace Alternet.UI
             if (IsSilent)
                 return;
 
-            if(PlaySound is not null)
+            if (PlaySound is not null)
             {
                 HandledEventArgs e = new();
                 PlaySound(this, e);
@@ -61,16 +61,7 @@ namespace Alternet.UI
                     return;
             }
 
-            if(Application.IsWindowsOS)
-                SafeNativeMethods.MessageBeep((int)soundType);
-            else
-                Native.WxOtherFactory.Bell();
-        }
-
-        private class SafeNativeMethods
-        {
-            [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-            internal static extern bool MessageBeep(int type);
+            NativePlatform.Default.MessageBeep(soundType);
         }
     }
 }

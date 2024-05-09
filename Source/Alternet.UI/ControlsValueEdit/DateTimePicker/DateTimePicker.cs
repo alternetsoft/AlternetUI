@@ -113,8 +113,8 @@ namespace Alternet.UI
             set => Handler.HasBorder = value;
         }
 
-        internal new NativeDateTimePickerHandler Handler =>
-            (NativeDateTimePickerHandler)base.Handler;
+        internal new DateTimePickerHandler Handler =>
+            (DateTimePickerHandler)base.Handler;
 
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls

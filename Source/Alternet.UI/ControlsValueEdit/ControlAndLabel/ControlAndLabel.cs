@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
     /// in order to implement your own custom labeled control.</remarks>
     [ControlCategory("Hidden")]
-    public abstract partial class ControlAndLabel : WxBaseControl, IControlAndLabel
+    public abstract partial class ControlAndLabel : Control, IControlAndLabel
     {
         /// <summary>
         /// Gets or sets default distance between control and label.

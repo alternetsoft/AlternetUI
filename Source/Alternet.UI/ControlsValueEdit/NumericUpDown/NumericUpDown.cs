@@ -172,8 +172,8 @@ namespace Alternet.UI
             set => Handler.HasBorder = value;
         }
 
-        internal new NativeNumericUpDownHandler Handler =>
-            (NativeNumericUpDownHandler)base.Handler;
+        internal new NumericUpDownHandler Handler =>
+            (NumericUpDownHandler)base.Handler;
 
         /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the

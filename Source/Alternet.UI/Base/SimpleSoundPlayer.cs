@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Stop()
         {
-            Native.WxOtherFactory.SoundStop();
+            NativePlatform.Default.StopSound();
         }
 
         /// <summary>

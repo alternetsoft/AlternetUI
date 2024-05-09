@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </summary>
         public static void StopSound()
         {
-            Native.WxOtherFactory.SoundStop();
+            NativePlatform.Default.StopSound();
         }
 
         /// <summary>

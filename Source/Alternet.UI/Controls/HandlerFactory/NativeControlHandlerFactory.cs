@@ -51,7 +51,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateNumericUpDownHandler(Control control) =>
-            new NativeNumericUpDownHandler();
+            new NumericUpDownHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateCheckListBoxHandler(Control control) =>
@@ -99,7 +99,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateDateTimePickerHandler(Control control) =>
-            new NativeDateTimePickerHandler();
+            new DateTimePickerHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateScrollViewerHandler(Control control) =>

@@ -459,12 +459,12 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new NativeCalendarHandler Handler
+        internal new CalendarHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativeCalendarHandler)base.Handler;
+                return (CalendarHandler)base.Handler;
             }
         }
 
@@ -652,7 +652,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NativeCalendarHandler();
+            return new CalendarHandler();
         }
 
         /// <inheritdoc/>

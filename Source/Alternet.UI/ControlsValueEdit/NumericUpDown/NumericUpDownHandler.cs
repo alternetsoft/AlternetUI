@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
-    internal class NativeNumericUpDownHandler :
+    internal class NumericUpDownHandler :
         NativeControlHandler<NumericUpDown, Native.NumericUpDown>
     {
         public bool HasBorder
