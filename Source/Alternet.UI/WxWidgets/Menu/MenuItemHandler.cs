@@ -5,6 +5,12 @@ namespace Alternet.UI
 {
     internal class MenuItemHandler : NativeControlHandler<MenuItem, Native.MenuItem>
     {
+        internal static IntPtr GetMenuHandle(IControl control)
+        {
+            var ncontrol = (UI.Native.Menu)control.NativeControl;
+            return ncontrol.MenuHandle;
+        }
+
         internal Native.Menu EnsureNativeSubmenuCreated()
         {
             if (NativeControl.Submenu == null)
@@ -26,6 +32,8 @@ namespace Alternet.UI
             Control.TextChanged -= Control_TextChanged;
             Control.ShortcutChanged -= Control_ShortcutChanged;
             Control.RoleChanged -= Control_RoleChanged;
+            Control.ImageChanged -= Control_ImageChanged;
+            Control.DisabledImageChanged -= Control_DisabledImageChanged;
 
             NativeControl.Click = null;
 
@@ -42,16 +50,40 @@ namespace Alternet.UI
             ApplyItems();
             ApplyShortcut();
             ApplyRole();
+            ApplyImage();
+            ApplyDisabledImage();
 
             Control.TextChanged += Control_TextChanged;
             Control.CheckedChanged += Control_CheckedChanged;
             Control.ShortcutChanged += Control_ShortcutChanged;
             Control.RoleChanged += Control_RoleChanged;
+            Control.ImageChanged += Control_ImageChanged;
+            Control.DisabledImageChanged += Control_DisabledImageChanged;
 
             NativeControl.Click = NativeControl_Click;
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        private void ApplyDisabledImage()
+        {
+            NativeControl.DisabledImage = (UI.Native.ImageSet?)Control.DisabledImage?.NativeObject;
+        }
+
+        private void ApplyImage()
+        {
+            NativeControl.NormalImage = (UI.Native.ImageSet?)Control.Image?.NativeObject;
+        }
+
+        private void Control_DisabledImageChanged(object? sender, EventArgs e)
+        {
+            ApplyDisabledImage();
+        }
+
+        private void Control_ImageChanged(object? sender, EventArgs e)
+        {
+            ApplyImage();
         }
 
         private void Control_RoleChanged(object? sender, EventArgs e)

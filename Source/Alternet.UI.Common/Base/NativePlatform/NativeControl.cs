@@ -12,11 +12,19 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
+    public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
+
     public abstract CustomControlPainter GetPainter();
 
     public abstract bool GetWantChars(IControl control);
 
     public abstract void SetWantChars(IControl control, bool value);
+
+    public abstract BaseControlHandler CreateMenuItemHandler(IControl control);
+
+    public abstract BaseControlHandler CreateContextMenuHandler(IControl control);
+
+    public abstract BaseControlHandler CreateMainMenuHandler(IControl control);
 
     public abstract BaseControlHandler CreateControlHandler(IControl control);
 

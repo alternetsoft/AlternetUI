@@ -149,6 +149,16 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? RoleChanged;
 
+        /// <summary>
+        /// Occurs when the <see cref="Image"/> property changes.
+        /// </summary>
+        public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Occurs when the <see cref="DisabledImage"/> property changes.
+        /// </summary>
+        public event EventHandler? DisabledImageChanged;
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
 
@@ -167,7 +177,7 @@ namespace Alternet.UI
                 if (image == value)
                     return;
                 image = value;
-                NativeControl.NormalImage = (UI.Native.ImageSet?)image?.NativeObject;
+                ImageChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -186,7 +196,7 @@ namespace Alternet.UI
                 if (disabledImage == value)
                     return;
                 disabledImage = value;
-                NativeControl.DisabledImage = (UI.Native.ImageSet?)disabledImage?.NativeObject;
+                DisabledImageChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -369,9 +379,9 @@ namespace Alternet.UI
             set { SetValue(CommandTargetProperty, value); }
         }
 
-        internal new MenuItemHandler Handler => (MenuItemHandler)base.Handler;
+        /*internal new MenuItemHandler Handler => (MenuItemHandler)base.Handler;
 
-        internal new Native.MenuItem NativeControl => (Native.MenuItem)base.NativeControl;
+        internal Native.MenuItem NativeControl => Handler.NativeControl;*/
 
         /// <inheritdoc/>
         protected override bool IsDummy => true;
@@ -387,7 +397,10 @@ namespace Alternet.UI
             return new(s);
         }
 
-        /// <inheritdoc cref="ListControlItem.ToString"/>
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(Text))
@@ -406,7 +419,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateMenuItemHandler(this);
+            return UI.NativeControl.Default.CreateMenuItemHandler(this);
         }
 
         private static void OnCommandChanged(

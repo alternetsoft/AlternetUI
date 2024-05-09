@@ -51,8 +51,6 @@ namespace Alternet.UI
             }
         }
 
-        internal IntPtr MenuHandle => (Handler.NativeControl as Native.Menu)!.MenuHandle;
-
         /// <inheritdoc />
         protected override bool IsDummy => true;
 

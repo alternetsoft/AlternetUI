@@ -57,7 +57,10 @@ namespace Alternet.UI
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => Name.GetHashCode();
 
-        /// <inheritdoc cref="ListControlItem.ToString"/>
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
         public override string ToString() => Name;
     }
 }

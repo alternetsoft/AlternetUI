@@ -18,6 +18,29 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null)
+        {
+            if (position == null)
+                ShowUnder();
+            else
+                ((ContextMenuHandler)menu.Handler).Show(control, (PointD)position);
+
+            void ShowUnder()
+            {
+                var window = control.ParentWindow;
+                if (window == null)
+                    return;
+                RectD toolRect = control.Bounds;
+                PointD pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
+                pt = window.ScreenToClient(pt);
+                ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
+                    MenuItemHandler.GetMenuHandle(menu),
+                    (int)pt.X,
+                    (int)pt.Y);
+            }
+        }
+
+        /// <inheritdoc/>
         public override CustomControlPainter GetPainter()
         {
             return NativeControlPainter.Default;
@@ -57,6 +80,24 @@ namespace Alternet.UI
         public override void NotifyCaptureLost()
         {
             Native.Control.NotifyCaptureLost();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateMenuItemHandler(IControl control)
+        {
+            return new MenuItemHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateContextMenuHandler(IControl control)
+        {
+            return new ContextMenuHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateMainMenuHandler(IControl control)
+        {
+            return new MainMenuHandler();
         }
 
         /// <inheritdoc/>

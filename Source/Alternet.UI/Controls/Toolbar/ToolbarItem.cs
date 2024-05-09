@@ -278,8 +278,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateToolbarItemHandler(this);
+            return new ToolBarItemHandler();
         }
 
         /// <summary>

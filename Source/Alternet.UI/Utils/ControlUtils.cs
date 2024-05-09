@@ -29,7 +29,10 @@ namespace Alternet.UI
             menu.RaiseOpening(e);
             if (e.Cancel)
                 return;
-            ((UI.Native.Control)control.NativeControl).ShowPopupMenu(menu.MenuHandle, x, y);
+            ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
+                MenuItemHandler.GetMenuHandle(menu),
+                x,
+                y);
             menu.RaiseClosing(e);
         }
 

@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Base class for all non visual controls.
     /// </summary>
     [ControlCategory("Hidden")]
-    public partial class NonVisualControl : WxBaseControl
+    public partial class NonVisualControl : Control
     {
         /// <summary>
         /// This property has no meaning in the <see cref="NonVisualControl"/> descendants.

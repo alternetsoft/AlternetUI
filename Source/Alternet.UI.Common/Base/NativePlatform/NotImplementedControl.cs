@@ -639,4 +639,24 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateMenuItemHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateContextMenuHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateMainMenuHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null)
+    {
+        throw new NotImplementedException();
+    }
 }

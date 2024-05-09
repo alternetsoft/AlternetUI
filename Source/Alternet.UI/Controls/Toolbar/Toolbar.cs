@@ -213,7 +213,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
+            return new ToolBarHandler();
         }
 
         private void Items_ItemInserted(object? sender, int index, ToolBarItem item)

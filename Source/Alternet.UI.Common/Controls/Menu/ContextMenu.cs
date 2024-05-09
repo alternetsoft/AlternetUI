@@ -61,6 +61,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
 
+        public void RaiseClosing(EventArgs e)
+        {
+            OnClosing(e);
+        }
+
+        public void RaiseOpening(CancelEventArgs e)
+        {
+            OnOpening(e);
+        }
+
         /// <summary>
         /// Displays the menu at the specified position.
         /// </summary>
@@ -84,48 +94,23 @@ namespace Alternet.UI
         /// </remarks>
         public void Show(IControl control, PointD? position = null)
         {
+            if (Items.Count == 0)
+                return;
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
-            if (position == null)
-                ShowUnder();
-            else
-            {
-                var e = new CancelEventArgs();
-                RaiseOpening(e);
-                if (e.Cancel)
-                    return;
-                ((ContextMenuHandler)Handler).Show(control, (PointD)position);
-                RaiseClosing(EventArgs.Empty);
-            }
-
-            void ShowUnder()
-            {
-                var window = control.ParentWindow;
-                if (window == null)
-                    return;
-                RectD toolRect = control.Bounds;
-                PointD pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
-                pt = window.ScreenToClient(pt);
-                ControlUtils.ShowPopupMenu(window, this, (int)pt.X, (int)pt.Y);
-            }
-        }
-
-        internal void RaiseClosing(EventArgs e)
-        {
-            OnClosing(e);
-        }
-
-        internal void RaiseOpening(CancelEventArgs e)
-        {
-            OnOpening(e);
+            var e = new CancelEventArgs();
+            RaiseOpening(e);
+            if (e.Cancel)
+                return;
+            NativeControl.Default.ShowContextMenu(this, control, position);
+            RaiseClosing(EventArgs.Empty);
         }
 
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateContextMenuHandler(this);
+            return NativeControl.Default.CreateContextMenuHandler(this);
         }
 
         /// <summary>
