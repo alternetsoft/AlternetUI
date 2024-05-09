@@ -15,8 +15,6 @@ namespace Alternet.Drawing
     {
         public static SKColor NullColor = new();
 
-        private static bool initialized;
-
         public static SKColor Convert(Color color)
         {
             if (color is null || !color.IsOk)
@@ -29,14 +27,6 @@ namespace Alternet.Drawing
             var skColor = new SKColor(r, g, b, a);
             color.NativeObject = skColor;
             return skColor;
-        }
-
-        public static void Initialize()
-        {
-            if (initialized)
-                return;
-            NativeDrawing.Default = new SkiaDrawing();
-            initialized = true;
         }
 
         /// <inheritdoc/>

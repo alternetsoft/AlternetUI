@@ -15,19 +15,25 @@ namespace Alternet.Drawing
     public partial class SkiaDrawing
     {
         /// <inheritdoc/>
-        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(object imageSet, double scale)
+        public override SizeI ImageSetGetPreferredBitmapSizeFor(ImageSet imageSet, IControl control)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void ImageSetAddImage(object imageSet, int index, Image item)
+        public override SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imageSet, double scale)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void ImageSetAddImage(ImageSet imageSet, int index, Image item)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override void ImageSetRemoveImage(object imageSet, int index, Image item)
+        public override void ImageSetRemoveImage(ImageSet imageSet, int index, Image item)
         {
             NotImplemented();
         }
@@ -59,55 +65,55 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeI ImageSetGetDefaultSize(object imageSet)
+        public override SizeI ImageSetGetDefaultSize(ImageSet imageSet)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool ImageSetIsOk(object imageSet)
+        public override bool ImageSetIsOk(ImageSet imageSet)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override bool ImageSetIsReadOnly(object imageSet)
+        public override bool ImageSetIsReadOnly(ImageSet imageSet)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void ImageSetLoadFromStream(object imageSet, Stream stream)
+        public override void ImageSetLoadFromStream(ImageSet imageSet, Stream stream)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override bool IconSetIsOk(object iconSet)
+        public override bool IconSetIsOk(IconSet iconSet)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override SizeI ImageListGetPixelImageSize(object imageList)
+        public override SizeI ImageListGetPixelImageSize(ImageList imageList)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void ImageListSetPixelImageSize(object imageList, SizeI value)
+        public override void ImageListSetPixelImageSize(ImageList imageList, SizeI value)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override SizeD ImageListGetImageSize(object imageList)
+        public override SizeD ImageListGetImageSize(ImageList imageList)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void ImageListSetImageSize(object imageList, SizeD value)
+        public override void ImageListSetImageSize(ImageList imageList, SizeD value)
         {
             NotImplemented();
         }
@@ -119,31 +125,31 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void ImageListAdd(object imageList, int index, Image item)
+        public override void ImageListAdd(ImageList imageList, int index, Image item)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override void ImageListRemove(object imageList, int index, Image item)
+        public override void ImageListRemove(ImageList imageList, int index, Image item)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void IconSetAdd(object iconSet, Image image)
+        public override void IconSetAdd(IconSet iconSet, Image image)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override void IconSetAdd(object iconSet, Stream stream)
+        public override void IconSetAdd(IconSet iconSet, Stream stream)
         {
             NotImplemented();
         }
 
         /// <inheritdoc/>
-        public override void IconSetClear(object iconSet)
+        public override void IconSetClear(IconSet iconSet)
         {
             NotImplemented();
         }
