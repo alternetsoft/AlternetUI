@@ -304,6 +304,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets background of the control's parents to Red, Green, Blue and
+        /// Yellow colors.
+        /// </summary>
+        /// <param name="control">Specifies the control which parent's background
+        /// is changed</param>
+        public static void SetDebugBackgroundToParents(Control? control)
+        {
+            static Control? SetParentBackground(Control? control, Brush brush)
+            {
+                if (control == null)
+                    return null;
+                Control? parent = control?.Parent;
+                if (parent != null)
+                    parent.Background = brush;
+                return parent;
+            }
+
+            control = SetParentBackground(control, Brushes.Red);
+            control = SetParentBackground(control, Brushes.Green);
+            control = SetParentBackground(control, Brushes.Blue);
+            SetParentBackground(control, Brushes.Yellow);
+        }
+
+        /// <summary>
         /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
         /// from the specified url which contains svg data. Images are loaded
         /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.

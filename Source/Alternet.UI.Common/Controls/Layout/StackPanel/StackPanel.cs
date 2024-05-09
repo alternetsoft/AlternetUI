@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -8,7 +10,7 @@ namespace Alternet.UI
     /// horizontally or vertically.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class StackPanel : WxBaseControl
+    public partial class StackPanel : Control
     {
         private StackPanelOrientation orientation;
 
@@ -60,6 +62,14 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.StackPanel;
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
 
         /// <inheritdoc/>
         protected override LayoutStyle GetDefaultLayout()

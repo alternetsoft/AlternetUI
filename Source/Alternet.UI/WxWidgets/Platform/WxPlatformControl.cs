@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override BaseControlHandler CreateControlHandler(IControl control)
         {
-            return new GenericControlHandler();
+            return new ControlHandler<Control>();
         }
 
         /// <inheritdoc/>

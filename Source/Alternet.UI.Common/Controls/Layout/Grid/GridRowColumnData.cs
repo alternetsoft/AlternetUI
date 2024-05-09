@@ -52,6 +52,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes <see cref="Grid"/> rows and columns for the specified controls.
+        /// </summary>
+        /// <param name="grid">Grid instance.</param>
+        /// <param name="controls">Grid controls.</param>
+        /// <remarks>
+        /// Dimensions for all rows and columns are set to <see cref="GridLength.Auto"/>.
+        /// <see cref="Control.SetRowColumn"/> is called for the each control with row and column
+        /// indexes equal to position in the <paramref name="controls"/> array.
+        /// </remarks>
+        public void Setup(Control[,] controls)
+        {
+            var rowCount = controls.GetLength(0);
+            var colCount = controls.GetLength(1);
+
+            this.DoInsideLayout(() =>
+            {
+                for (int i = 0; i < rowCount; i++)
+                    this.AddAutoRow();
+                for (int i = 0; i < colCount; i++)
+                    this.AddAutoColumn();
+
+                for (int i = 0; i < rowCount; i++)
+                {
+                    for (int j = 0; j < colCount; j++)
+                    {
+                        var control = controls[i, j];
+                        control.Parent ??= this;
+                        Grid.SetRowColumn(control, i, j);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// Adds <see cref="RowDefinition"/> instance with
         /// <see cref="RowDefinition.Height"/> equal to
         /// <see cref="GridLength.Auto"/>.

@@ -27,7 +27,7 @@ namespace DrawingSample
                 comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
 
-                LayoutFactory.SetupGrid(propGrid, gridControls);
+                propGrid.Setup(gridControls);
             });
         }
 

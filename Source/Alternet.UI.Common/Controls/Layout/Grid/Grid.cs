@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// Defines a flexible grid area that consists of columns and rows.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class Grid : WxBaseControl
+    public partial class Grid : Control
     {
         /// <summary>
         /// Initializes a new instance of <see cref="Grid"/>.

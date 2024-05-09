@@ -28,7 +28,7 @@ namespace Alternet.UI
     /// </remarks>
     internal class AuiManager : BaseComponent, IDisposable
     {
-        private WxBaseControl? managedControl;
+        private Control? managedControl;
         private IntPtr handle;
 
         /// <summary>
@@ -162,14 +162,14 @@ namespace Alternet.UI
         /// Called after any number of changes are made to any of the managed panes.
         /// </summary>
         /// <remarks>
-        /// Must be invoked after <see cref="AddPane(WxBaseControl, IAuiPaneInfo)"/>
+        /// Must be invoked after <see cref="AddPane(Control, IAuiPaneInfo)"/>
         /// or <see cref="InsertPane"/>
         /// are called in order to "realize" or "commit" the changes.
         /// </remarks>
         /// <remarks>
         /// In addition, any number of changes may be made to
         /// <see cref="IAuiPaneInfo"/> structures (retrieved with
-        /// <see cref="GetPane(WxBaseControl)"/>, but to realize the changes,
+        /// <see cref="GetPane(Control)"/>, but to realize the changes,
         /// <see cref="Update"/> must be called. This construction allows pane
         /// flicker to be avoided by updating the whole layout at one time.
         /// </remarks>
@@ -260,7 +260,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="control">Control for which pane was previously created.</param>
         /// <returns></returns>
-        public IAuiPaneInfo GetPane(WxBaseControl control)
+        public IAuiPaneInfo GetPane(Control control)
         {
             return ToPaneInfo(Native.AuiManager.GetPane(handle, ToHandle(control)));
         }
@@ -326,7 +326,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="control">Control which pane will be detached.</param>
         /// <returns></returns>
-        public bool DetachPane(WxBaseControl control)
+        public bool DetachPane(Control control)
         {
             return Native.AuiManager.DetachPane(handle, ToHandle(control));
         }
@@ -337,7 +337,7 @@ namespace Alternet.UI
         /// <param name="control">Child control to manage.</param>
         /// <param name="paneInfo">Pane information with settings.</param>
         /// <returns></returns>
-        public bool AddPane(WxBaseControl control, IAuiPaneInfo paneInfo)
+        public bool AddPane(Control control, IAuiPaneInfo paneInfo)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -365,7 +365,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if new pane was added successfully,
         /// <c>false</c> otherwise.</returns>
         public bool AddPane(
-            WxBaseControl control,
+            Control control,
             IAuiPaneInfo paneInfo,
             PointD dropPos)
         {
@@ -384,7 +384,7 @@ namespace Alternet.UI
         /// <param name="direction">Position where new pane will be added.</param>
         /// <param name="caption">Pane caption.</param>
         /// <returns></returns>
-        public bool AddPane(WxBaseControl control, GenericDirection direction, string caption)
+        public bool AddPane(Control control, GenericDirection direction, string caption)
         {
             return Native.AuiManager.AddPane3(
                 handle,
@@ -412,7 +412,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if pane was inserted successfully,
         /// <c>false</c> otherwise.</returns>
         public bool InsertPane(
-            WxBaseControl control,
+            Control control,
             IAuiPaneInfo insertLoc,
             AuiPaneInsertLevel insertLevel)
         {
@@ -532,9 +532,9 @@ namespace Alternet.UI
             return paneInfo.Handle;
         }
 
-        internal static IntPtr ToHandle(WxBaseControl window)
+        internal static IntPtr ToHandle(Control window)
         {
-            return window.Handler.NativeControl!.WxWidget;
+            return WxPlatformControl.WxWidget(window);
         }
 
         internal IAuiPaneInfo ToPaneInfo(IntPtr handle)

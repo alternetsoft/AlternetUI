@@ -217,6 +217,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual Thickness DefaultPanelSize => (50, 30, 50, 30);
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         /// <summary>
         /// Creates right panel.
         /// </summary>
