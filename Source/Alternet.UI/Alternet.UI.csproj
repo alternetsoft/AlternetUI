@@ -329,6 +329,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Drawing\ControlPainter\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
 

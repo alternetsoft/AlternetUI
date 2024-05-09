@@ -12,6 +12,8 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
+    public abstract CustomControlPainter GetPainter();
+
     public abstract bool GetWantChars(IControl control);
 
     public abstract void SetWantChars(IControl control, bool value);

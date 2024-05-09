@@ -18,6 +18,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override CustomControlPainter GetPainter()
+        {
+            return NativeControlPainter.Default;
+        }
+
+        /// <inheritdoc/>
         public override bool GetWantChars(IControl control)
         {
             return ((UI.Native.Panel)control.NativeControl).WantChars;

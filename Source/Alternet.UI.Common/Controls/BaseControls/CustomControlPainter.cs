@@ -16,13 +16,7 @@ namespace Alternet.Drawing
         /// Gets or sets current control painter.
         /// See also <see cref="NativeControlPainter.Default"/>.
         /// </summary>
-        public static CustomControlPainter Current;
-
-        static CustomControlPainter()
-        {
-            NativeControlPainter.Default = new();
-            Current = NativeControlPainter.Default;
-        }
+        public static CustomControlPainter Current => NativeControl.Default.GetPainter();
 
         /// <summary>
         /// Gets default checkbox size.

@@ -634,4 +634,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override CustomControlPainter GetPainter()
+    {
+        throw new NotImplementedException();
+    }
 }
