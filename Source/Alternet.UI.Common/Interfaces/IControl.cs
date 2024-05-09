@@ -1688,11 +1688,6 @@ namespace Alternet.UI
         void Invalidate();
 
         /// <summary>
-        /// Causes the control to redraw the invalidated regions.
-        /// </summary>
-        void Update();
-
-        /// <summary>
         /// Temporarily suspends the layout logic for the control.
         /// </summary>
         /// <remarks>

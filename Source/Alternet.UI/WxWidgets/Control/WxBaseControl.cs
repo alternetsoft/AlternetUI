@@ -12,21 +12,6 @@ namespace Alternet.UI;
 public class WxBaseControl : Control
 {
     /// <summary>
-    /// Gets or sets the <see cref="ContextMenuStrip" /> associated
-    /// with this control.</summary>
-    /// <returns>The <see cref="ContextMenuStrip" /> for this control,
-    /// or <see langword="null" /> if there is no attached <see cref="ContextMenuStrip"/>.
-    /// The default is <see langword="null" />.</returns>
-    [Category("Behavior")]
-    [DefaultValue(null)]
-    [Browsable(false)]
-    public virtual ContextMenuStrip? ContextMenuStrip
-    {
-        get;
-        set;
-    }
-
-    /// <summary>
     /// Gets <see cref="NativeControl"/> attached to this control.
     /// </summary>
     internal Native.Control NativeControl => ((WxControlHandler)Handler).NativeControl;
