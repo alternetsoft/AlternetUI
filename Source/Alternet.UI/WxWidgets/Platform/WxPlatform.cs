@@ -29,7 +29,7 @@ namespace Alternet.UI
 
         public override IPropertyGridChoices CreateChoices()
         {
-            return PropertyGrid.CreateChoices();
+            return new PropertyGridChoices();
         }
 
         public override bool TimerGetEnabled(Timer timer)

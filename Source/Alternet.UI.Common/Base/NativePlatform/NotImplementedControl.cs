@@ -669,4 +669,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateComboBoxHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }

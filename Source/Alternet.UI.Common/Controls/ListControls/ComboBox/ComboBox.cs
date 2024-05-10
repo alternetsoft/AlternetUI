@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -89,7 +91,7 @@ namespace Alternet.UI
         /// </summary>
         public ComboBox()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
             {
                 UserPaint = true;
             }
@@ -115,10 +117,20 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? IsEditableChanged;
 
+        /// <summary>
+        /// Enumerates possible owner draw flags.
+        /// </summary>
         [Flags]
-        internal enum OwnerDrawFlags
+        public enum OwnerDrawFlags
         {
+            /// <summary>
+            /// Specifies whether to draw background.
+            /// </summary>
             ItemBackground = 1,
+
+            /// <summary>
+            /// Specifies whether to draw item.
+            /// </summary>
             Item = 2,
         }
 
@@ -127,14 +139,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the first character in the string
         /// of the current text selection.</value>
-        public int TextSelectionStart => Handler.TextSelectionStart;
+        public virtual int TextSelectionStart => Handler.TextSelectionStart;
 
         /// <summary>
         /// Gets the number of characters selected in the editable portion
         /// of the combo box.
         /// </summary>
         /// <value>The number of characters selected in the combo box.</value>
-        public int TextSelectionLength => Handler.TextSelectionLength;
+        public virtual int TextSelectionLength => Handler.TextSelectionLength;
 
         /// <summary>
         /// Gets or sets a hint shown in an empty unfocused text control.
@@ -143,13 +155,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.EmptyTextHint;
+                return Handler.EmptyTextHint;
             }
 
             set
             {
-                value ??= string.Empty;
-                NativeControl.EmptyTextHint = value;
+                Handler.EmptyTextHint = value;
             }
         }
 
@@ -335,7 +346,7 @@ namespace Alternet.UI
         {
             get
             {
-                var margins = NativeControl.TextMargins;
+                var margins = Handler.TextMargins;
                 var result = PixelToDip(margins);
                 return result;
             }
@@ -379,26 +390,24 @@ namespace Alternet.UI
         {
             get
             {
-                return (OwnerDrawFlags)NativeControl.OwnerDrawStyle;
+                return Handler.OwnerDrawStyle;
             }
 
             set
             {
                 if (OwnerDrawStyle == value)
                     return;
-                NativeControl.OwnerDrawStyle = (int)value;
+                Handler.OwnerDrawStyle = value;
                 Invalidate();
             }
         }
 
-        internal Native.ComboBox NativeControl => ((ComboBoxHandler)Handler).NativeControl;
-
-        internal new ComboBoxHandler Handler
+        internal new IComboBoxHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (ComboBoxHandler)base.Handler;
+                return (IComboBoxHandler)base.Handler;
             }
         }
 
@@ -469,7 +478,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void BindEnumProp(object instance, string propName)
         {
-            var choices = PropertyGrid.GetPropChoices(instance, propName);
+            var choices = BasePropertyGrid.GetPropChoices(instance, propName);
             if (choices is null)
                 return;
             IsEditable = false;
@@ -605,7 +614,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new ComboBoxHandler();
+            return GetNative().CreateComboBoxHandler(this);
         }
 
         /// <summary>

@@ -59,9 +59,9 @@ namespace Alternet.UI
         public void DefaultPaint()
         {
             if (IsPaintingBackground)
-                ComboBox.NativeControl.DefaultOnDrawBackground();
+                ComboBox.Handler.DefaultOnDrawBackground();
             else
-                ComboBox.NativeControl.DefaultOnDrawItem();
+                ComboBox.Handler.DefaultOnDrawItem();
         }
     }
 }

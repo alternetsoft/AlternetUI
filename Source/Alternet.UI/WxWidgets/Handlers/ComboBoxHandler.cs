@@ -6,7 +6,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ComboBoxHandler : WxControlHandler
+    internal class ComboBoxHandler : WxControlHandler, IComboBoxHandler
     {
         private ComboBoxItemPaintEventArgs? paintEventArgs;
 
@@ -34,10 +34,36 @@ namespace Alternet.UI
 
         public int TextSelectionLength => NativeControl.TextSelectionLength;
 
-        internal new Native.ComboBox NativeControl =>
-            (Native.ComboBox)base.NativeControl!;
+        public ComboBox.OwnerDrawFlags OwnerDrawStyle
+        {
+            get
+            {
+                return (ComboBox.OwnerDrawFlags)NativeControl.OwnerDrawStyle;
+            }
 
-        internal bool HasBorder
+            set
+            {
+                if (OwnerDrawStyle == value)
+                    return;
+                NativeControl.OwnerDrawStyle = (int)value;
+            }
+        }
+
+        public virtual string? EmptyTextHint
+        {
+            get
+            {
+                return NativeControl.EmptyTextHint;
+            }
+
+            set
+            {
+                value ??= string.Empty;
+                NativeControl.EmptyTextHint = value;
+            }
+        }
+
+        public bool HasBorder
         {
             get
             {
@@ -49,6 +75,15 @@ namespace Alternet.UI
                 NativeControl.HasBorder = value;
             }
         }
+
+        public PointI TextMargins => NativeControl.TextMargins;
+
+        internal new Native.ComboBox NativeControl =>
+            (Native.ComboBox)base.NativeControl!;
+
+        public void DefaultOnDrawBackground() => NativeControl.DefaultOnDrawBackground();
+
+        public void DefaultOnDrawItem() => NativeControl.DefaultOnDrawItem();
 
         public void SelectTextRange(int start, int length) =>
             NativeControl.SelectTextRange(start, length);

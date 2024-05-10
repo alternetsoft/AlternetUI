@@ -39,7 +39,6 @@ namespace Alternet.UI
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
 
         private static StaticStateFlags staticStateFlags;
-        private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private static PropertyGridEditKindColor defaultEditKindColor =
             PropertyGridEditKindColor.ComboBox;
 
@@ -734,119 +733,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "constructed" <see cref="IPropertyGridNewItemParams"/> for the given
-        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
-        /// </summary>
-        /// <param name="type">Object type.</param>
-        /// <param name="propInfo">Property information.</param>
-        /// <remarks>
-        /// See <see cref="IPropertyGridNewItemParams.Constructed"/> for the details.
-        /// </remarks>
-        public static IPropertyGridNewItemParams ConstructNewItemParams(
-            Type type,
-            PropertyInfo propInfo)
-        {
-            var prm = GetNewItemParams(type, propInfo);
-            return prm.Constructed;
-        }
-
-        /// Gets "constructed" <see cref="IPropertyGridNewItemParams"/> for the given
-        /// object instance and <see cref="PropertyInfo"/>.
-        /// <param name="instance">Object instance.</param>
-        /// <param name="propInfo">Property information.</param>
-        /// <remarks>
-        /// See <see cref="IPropertyGridNewItemParams.Constructed"/> for the details.
-        /// </remarks>
-        public static IPropertyGridNewItemParams ConstructNewItemParams(
-            object instance,
-            PropertyInfo propInfo)
-        {
-            if (instance == null)
-                return PropertyGridNewItemParams.Default;
-            var type = instance.GetType();
-            return ConstructNewItemParams(type, propInfo);
-        }
-
-        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
-        /// object instance and <see cref="PropertyInfo"/>.
-        /// <param name="instance">Object instance.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static IPropertyGridNewItemParams GetNewItemParams(
-            object instance,
-            PropertyInfo propInfo)
-        {
-            if (instance == null)
-                return PropertyGridNewItemParams.Default;
-            var type = instance.GetType();
-            return GetNewItemParams(type, propInfo);
-        }
-
-        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
-        /// <see cref="Type"/> and <see cref="PropertyInfo"/> if its available,
-        /// otherwise returns <c>null</c>.
-        /// <param name="type">Object type.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static IPropertyGridNewItemParams? GetNewItemParamsOrNull(
-            Type type,
-            PropertyInfo propInfo)
-        {
-            var registry = GetTypeRegistryOrNull(type);
-            if (registry == null)
-                return null;
-            var propRegistry = registry.GetPropRegistryOrNull(propInfo);
-            if (propRegistry == null)
-                return null;
-            if (propRegistry.HasNewItemParams)
-                return propRegistry.NewItemParams;
-            return null;
-        }
-
-        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
-        /// object instance and <see cref="PropertyInfo"/> if its available,
-        /// otherwise returns <c>null</c>.
-        /// <param name="instance">Object instance.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static IPropertyGridNewItemParams? GetNewItemParamsOrNull(
-            object instance,
-            PropertyInfo propInfo)
-        {
-            if (instance == null)
-                return null;
-            var type = instance.GetType();
-            return GetNewItemParamsOrNull(type, propInfo);
-        }
-
-        /// <summary>
-        /// Gets <see cref="IPropertyGridPropInfoRegistry"/> for the given
-        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
-        /// </summary>
-        /// <param name="type">Object type.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static IPropertyGridPropInfoRegistry GetPropRegistry(Type type, PropertyInfo propInfo)
-        {
-            var registry = GetTypeRegistry(type);
-            var propRegistry = registry.GetPropRegistry(propInfo);
-            return propRegistry;
-        }
-
-        /// <summary>
-        /// Gets custom label for the given
-        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
-        /// </summary>
-        /// <typeparam name="T">Object type.</typeparam>
-        /// <param name="propName">Property name.</param>
-        public static string? GetCustomLabel<T>(string propName)
-            where T : class
-        {
-            var propInfo = typeof(T).GetProperty(propName);
-            if (propInfo == null)
-                return null;
-
-            var propRegistry = GetPropRegistry(typeof(T), propInfo);
-            return propRegistry.NewItemParams.Label;
-        }
-
-        /// <summary>
         /// Checks system screen design used for laying out various dialogs.
         /// </summary>
         public static bool IsSmallScreen()
@@ -855,98 +741,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates property choices list for use with <see cref="CreateFlagsItem"/> and
-        /// <see cref="CreateChoicesItem"/>.
-        /// </summary>
-        public static IPropertyGridChoices CreateChoices()
-        {
-            return new PropertyGridChoices();
-        }
-
-        /// <summary>
         /// Creates new variant instance for use with <see cref="PropertyGrid"/>
         /// </summary>
         public static IPropertyGridVariant CreateVariant()
         {
             return new PropertyGridVariant();
-        }
-
-        /// <summary>
-        /// Returns <see cref="IPropertyGridChoices"/> for the specified <paramref name="instance"/>
-        /// and <paramref name="propName"/>.
-        /// </summary>
-        /// <param name="instance">Object.</param>
-        /// <param name="propName">Property name.</param>
-        /// <returns></returns>
-        public static IPropertyGridChoices? GetPropChoices(object instance, string propName)
-        {
-            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
-            if (propInfo is null)
-                return null;
-            var propType = propInfo.PropertyType;
-            var prm = PropertyGrid.ConstructNewItemParams(instance, propInfo);
-            var choices = prm.Choices;
-            var realType = AssemblyUtils.GetRealType(propType);
-            choices ??= PropertyGrid.CreateChoicesOnce(realType);
-            return choices;
-        }
-
-        /// <summary>
-        /// Returns <see cref="IPropertyGridChoices"/> for the given enumeration type.
-        /// </summary>
-        /// <typeparam name="T">Type of the enumeration.</typeparam>
-        public static IPropertyGridChoices GetChoices<T>()
-            where T : Enum
-        {
-            return CreateChoicesOnce(typeof(T));
-        }
-
-        /// <summary>
-        /// Creates property choices list for the given enumeration type or returns it from
-        /// the internal cache if it was previously created.
-        /// </summary>
-        /// <remarks>
-        /// Result can be used in <see cref="CreateFlagsItem"/> and
-        /// <see cref="CreateChoicesItem"/>.
-        /// </remarks>
-        public static IPropertyGridChoices CreateChoicesOnce(Type enumType)
-        {
-            choicesCache ??= new();
-            if (choicesCache.TryGetValue(enumType, out IPropertyGridChoices? result))
-                return result;
-            result = CreateChoices(enumType);
-            choicesCache.Add(enumType, result);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates property choices list for the given enumeration type.
-        /// </summary>
-        /// <remarks>
-        /// Result can be used in <see cref="CreateFlagsItem"/> and
-        /// <see cref="CreateChoicesItem"/>.
-        /// </remarks>
-        public static IPropertyGridChoices CreateChoices(Type enumType)
-        {
-            var result = CreateChoices();
-
-            if (!enumType.IsEnum)
-                return result;
-
-            var values = Enum.GetValues(enumType);
-            var names = Enum.GetNames(enumType);
-
-            bool isFlags = AssemblyUtils.EnumIsFlags(enumType);
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                var value = (int)values.GetValue(i)!;
-                if (isFlags && value == 0)
-                    continue;
-                result.Add(names[i], value);
-            }
-
-            return result;
         }
 
         /// <summary>
