@@ -4,13 +4,18 @@ using System.ComponentModel;
 namespace Alternet.Drawing.Printing
 {
     /// <summary>
-    /// Defines a reusable object that sends output to a printer, when printing from an AlterNET UI application.
+    /// Defines a reusable object that sends output to a printer, when printing from
+    /// an AlterNET UI application.
     /// </summary>
     /// <remarks>
-    /// Typically, you create an instance of the <see cref="PrintDocument"/> class, set properties such as the
-    /// <see cref="DocumentName"/> and <see cref="PrinterSettings"/>, and call the <see cref="Print"/> method to start the
-    /// printing process. Handle the <see cref="PrintPage"/> event where you specify the output to print, by using the
-    /// <see cref="PrintPageEventArgs.DrawingContext"/> property of the <see cref="PrintPageEventArgs"/>.
+    /// Typically, you create an instance of the <see cref="PrintDocument"/> class,
+    /// set properties such as the
+    /// <see cref="DocumentName"/> and <see cref="PrinterSettings"/>, and call
+    /// the <see cref="Print"/> method to start the
+    /// printing process. Handle the <see cref="PrintPage"/> event where you
+    /// specify the output to print, by using the
+    /// <see cref="PrintPageEventArgs.DrawingContext"/> property of the
+    /// <see cref="PrintPageEventArgs"/>.
     /// </remarks>
     public class PrintDocument : IDisposable
     {
@@ -100,7 +105,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The document name to display while printing the document.
         /// </value>
-        public string DocumentName
+        public virtual string DocumentName
         {
             get
             {
@@ -125,7 +130,7 @@ namespace Alternet.Drawing.Printing
         /// <see langword="false"/> if the graphics origin is at the top-left
         /// corner of the printable page. The default is false.
         /// </value>
-        public bool OriginAtMargins
+        public virtual bool OriginAtMargins
         {
             get
             {
@@ -147,7 +152,7 @@ namespace Alternet.Drawing.Printing
         /// The default is a <see cref="PrinterSettings"/> with its properties set to
         /// their default values.
         /// </value>
-        public PrinterSettings PrinterSettings
+        public virtual PrinterSettings PrinterSettings
         {
             get
             {
@@ -171,7 +176,7 @@ namespace Alternet.Drawing.Printing
         /// property specifies the margins of
         /// the page.
         /// </remarks>
-        public PageSettings PageSettings
+        public virtual PageSettings PageSettings
         {
             get
             {
@@ -190,7 +195,7 @@ namespace Alternet.Drawing.Printing
         /// <see cref="PrintPageEventArgs.DrawingContext"/> included in the
         /// <see cref="PrintPageEventArgs"/>.
         /// </remarks>
-        public void Print()
+        public virtual void Print()
         {
             if (currentDrawingContext != null)
                 throw new InvalidOperationException("Another printing operation is in progress.");
