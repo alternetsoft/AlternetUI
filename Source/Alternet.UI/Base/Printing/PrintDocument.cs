@@ -15,11 +15,8 @@ namespace Alternet.Drawing.Printing
     public class PrintDocument : IDisposable
     {
         private bool isDisposed;
-
         private Graphics? currentDrawingContext;
-
         private PrinterSettings? printerSettings;
-
         private PageSettings? pageSettings;
 
         /// <summary>
@@ -44,26 +41,35 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <remarks>
         /// <para>
-        /// To specify the output to print, use the <see cref="PrintPageEventArgs.DrawingContext"/> property of the <see
-        /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be printed, draw the text
+        /// To specify the output to print, use the <see cref="PrintPageEventArgs.DrawingContext"/>
+        /// property of the <see
+        /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be
+        /// printed, draw the text
         /// using the <see cref="Graphics.DrawText(string, Font, Brush, PointD)"/> method.
         /// </para>
         /// <para>
-        /// In addition to specifying the output, you can indicate if there are additional pages to print by setting the
-        /// <see cref="PrintPageEventArgs.HasMorePages"/> property to <see langword="true"/>. The default is <see
-        /// langword="false"/>, which indicates that there are no more pages to print. Individual page settings can also
-        /// be modified through the <see cref="Printing.PageSettings"/> and the print job can be canceled by setting the
-        /// <see cref="CancelEventArgs.Cancel"/> property of the <see cref="PrintPageEventArgs"/> object to
+        /// In addition to specifying the output, you can indicate if there are additional pages
+        /// to print by setting the
+        /// <see cref="PrintPageEventArgs.HasMorePages"/> property to <see langword="true"/>.
+        /// The default is <see
+        /// langword="false"/>, which indicates that there are no more pages to print. Individual
+        /// page settings can also
+        /// be modified through the <see cref="Printing.PageSettings"/> and the print job can be
+        /// canceled by setting the
+        /// <see cref="CancelEventArgs.Cancel"/> property of the <see cref="PrintPageEventArgs"/>
+        /// object to
         /// <see langword="true"/>.
         /// </para>
         /// </remarks>
         public event EventHandler<PrintPageEventArgs>? PrintPage;
 
         /// <summary>
-        /// Occurs when the <see cref="Print()"/> method is called and before the first page of the document prints.
+        /// Occurs when the <see cref="Print()"/> method is called and before the first page of
+        /// the document prints.
         /// </summary>
         /// <remarks>
-        /// Typically, you handle the <see cref="BeginPrint"/> event to initialize fonts, file streams,
+        /// Typically, you handle the <see cref="BeginPrint"/> event to initialize fonts, file
+        /// streams,
         /// and other resources used during the printing process.
         /// </remarks>
         public event EventHandler<PrintEventArgs>? BeginPrint;
@@ -73,19 +79,23 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Typically, you handle the <see cref="EndPrint"/> event to release fonts, file streams, and other resources
+        /// Typically, you handle the <see cref="EndPrint"/> event to release fonts, file
+        /// streams, and other resources
         /// used during the printing process, like fonts.
         /// </para>
         /// <para>
-        /// You indicate that there are no more pages to print by setting the <see cref="PrintPageEventArgs.HasMorePages"/> property
-        /// to false in the <see cref="PrintPage"/> event. The <see cref="EndPrint"/> event also occurs if the printing process is canceled or an
+        /// You indicate that there are no more pages to print by setting the
+        /// <see cref="PrintPageEventArgs.HasMorePages"/> property
+        /// to false in the <see cref="PrintPage"/> event. The <see cref="EndPrint"/>
+        /// event also occurs if the printing process is canceled or an
         /// exception occurs during the printing process.
         /// </para>
         /// </remarks>
         public event EventHandler<PrintEventArgs>? EndPrint;
 
         /// <summary>
-        /// Gets or sets the document name to display (for example, in a print status dialog box or printer queue) while printing the document.
+        /// Gets or sets the document name to display (for example, in a print status dialog
+        /// box or printer queue) while printing the document.
         /// </summary>
         /// <value>
         /// The document name to display while printing the document.
@@ -105,11 +115,14 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the position of a graphics object associated with a page is located
-        /// just inside the user-specified margins or at the top-left corner of the printable area of the page.
+        /// Gets or sets a value indicating whether the position of a graphics object
+        /// associated with a page is located
+        /// just inside the user-specified margins or at the top-left corner of the
+        /// printable area of the page.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the graphics origin starts at the page margins; <see langword="false"/> if the graphics origin is at the top-left
+        /// <see langword="true"/> if the graphics origin starts at the page margins;
+        /// <see langword="false"/> if the graphics origin is at the top-left
         /// corner of the printable page. The default is false.
         /// </value>
         public bool OriginAtMargins
@@ -129,8 +142,10 @@ namespace Alternet.Drawing.Printing
         /// Gets the printer settings for this document.
         /// </summary>
         /// <value>
-        /// A <see cref="PrinterSettings"/> that specifies where and how the document is printed.
-        /// The default is a <see cref="PrinterSettings"/> with its properties set to their default values.
+        /// A <see cref="PrinterSettings"/> that specifies where and how the document
+        /// is printed.
+        /// The default is a <see cref="PrinterSettings"/> with its properties set to
+        /// their default values.
         /// </value>
         public PrinterSettings PrinterSettings
         {
@@ -147,9 +162,12 @@ namespace Alternet.Drawing.Printing
         /// A <see cref="Printing.PageSettings"/> that specifies the page settings for the document.
         /// </value>
         /// <remarks>
-        /// You can specify several page settings through the <see cref="PageSettings"/> property. For example, the
-        /// <see cref="PageSettings.Color"/> property specifies whether the page prints in color, the <see cref="PageSettings.Landscape"/> property
-        /// specifies landscape or portrait orientation, and the <see cref="PageSettings.Margins"/> property specifies the margins of
+        /// You can specify several page settings through the <see cref="PageSettings"/> property.
+        /// For example, the
+        /// <see cref="PageSettings.Color"/> property specifies whether the page prints in color,
+        /// the <see cref="PageSettings.Landscape"/> property
+        /// specifies landscape or portrait orientation, and the <see cref="PageSettings.Margins"/>
+        /// property specifies the margins of
         /// the page.
         /// </remarks>
         public PageSettings PageSettings
@@ -166,8 +184,10 @@ namespace Alternet.Drawing.Printing
         /// Starts the document's printing process.
         /// </summary>
         /// <remarks>
-        /// Specify the output to print by handling the <see cref="PrintPage"/> event and by using the
-        /// <see cref="PrintPageEventArgs.DrawingContext"/> included in the <see cref="PrintPageEventArgs"/>.
+        /// Specify the output to print by handling the <see cref="PrintPage"/> event and by
+        /// using the
+        /// <see cref="PrintPageEventArgs.DrawingContext"/> included in the
+        /// <see cref="PrintPageEventArgs"/>.
         /// </remarks>
         public void Print()
         {
@@ -187,12 +207,14 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Raises the <see cref="BeginPrint"/> event. It is called after the <see cref="Print()"/> method is called and
+        /// Raises the <see cref="BeginPrint"/> event. It is called after the
+        /// <see cref="Print()"/> method is called and
         /// before the first page of the document prints.
         /// </summary>
         /// <param name="e">A <see cref="PrintEventArgs"/> that contains the event data.</param>
         /// <remarks>
-        /// The <see cref="OnBeginPrint"/> method allows derived classes to handle the event without attaching a
+        /// The <see cref="OnBeginPrint"/> method allows derived classes to handle the
+        /// event without attaching a
         /// delegate. This is the preferred technique for handling the event in a derived class.
         /// </remarks>
         protected virtual void OnBeginPrint(PrintEventArgs e)
@@ -201,12 +223,15 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Raises the <see cref="EndPrint"/> event. It is called when the last page of the document has printed.
+        /// Raises the <see cref="EndPrint"/> event. It is called when the last page of the
+        /// document has printed.
         /// </summary>
         /// <param name="e">A <see cref="PrintEventArgs"/> that contains the event data.</param>
         /// <remarks>
-        /// The <see cref="OnEndPrint"/> method allows derived classes to handle the event without attaching a delegate. This is the
-        /// preferred technique for handling the event in a derived class. The <see cref="OnEndPrint"/> method is also called if the
+        /// The <see cref="OnEndPrint"/> method allows derived classes to handle the event
+        /// without attaching a delegate. This is the
+        /// preferred technique for handling the event in a derived class. The
+        /// <see cref="OnEndPrint"/> method is also called if the
         /// printing process is canceled or an exception occurs during the printing process.
         /// </remarks>
         protected virtual void OnEndPrint(PrintEventArgs e)
@@ -219,7 +244,8 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <param name="e">A <see cref="PrintPageEventArgs"/> that contains the event data.</param>
         /// <remarks>
-        /// The <see cref="OnPrintPage"/> method allows derived classes to handle the event without attaching a delegate.
+        /// The <see cref="OnPrintPage"/> method allows derived classes to handle the event
+        /// without attaching a delegate.
         /// This is the preferred technique for handling the event in a derived class.
         /// </remarks>
         protected virtual void OnPrintPage(PrintPageEventArgs e)
@@ -228,7 +254,8 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="PrintDocument"/> and optionally releases the managed resources.
+        /// Releases the unmanaged resources used by the <see cref="PrintDocument"/> and
+        /// optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -275,7 +302,7 @@ namespace Alternet.Drawing.Printing
             if (currentDrawingContext == null)
                 throw new InvalidOperationException();
 
-            var ea = new PrintPageEventArgs(NativePrintDocument, currentDrawingContext);
+            var ea = new PrintPageEventArgs(this, currentDrawingContext);
             OnPrintPage(ea);
             e.Cancel = ea.Cancel;
         }

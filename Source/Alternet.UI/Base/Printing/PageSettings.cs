@@ -128,7 +128,8 @@ namespace Alternet.Drawing.Printing
         /// </value>
         /// <remarks>
         /// A <see cref="PrinterResolution"/> represents the printer resolution of through the
-        /// <see cref="PrinterResolution.Kind"/> property, which contains one of the <see cref="PrinterResolutionKind"/>
+        /// <see cref="PrinterResolution.Kind"/> property, which contains one of
+        /// the <see cref="PrinterResolutionKind"/>
         /// values.
         /// </remarks>
         public PrinterResolution PrinterResolution
@@ -159,7 +160,8 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
+        /// Releases the unmanaged resources used by the object and optionally releases
+        /// the managed resources.
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
