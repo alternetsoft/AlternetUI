@@ -347,6 +347,7 @@ namespace Alternet.UI
         protected virtual void OnMouseRightButtonDown(MouseEventArgs e)
         {
             MouseRightButtonDown?.Invoke(this, e);
+            ShowPopupMenu(ContextMenuStrip);
         }
 
         /// <summary>

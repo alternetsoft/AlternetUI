@@ -15,28 +15,6 @@ namespace Alternet.UI
     public static class ControlUtils
     {
         /// <summary>
-        /// Shows popup menu.
-        /// </summary>
-        public static void ShowPopupMenu(
-            IControl control,
-            ContextMenu? menu,
-            double x = -1,
-            double y = -1)
-        {
-            if (menu is null || menu.Items.Count == 0)
-                return;
-            var e = new CancelEventArgs();
-            menu.RaiseOpening(e);
-            if (e.Cancel)
-                return;
-            ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
-                MenuItemHandler.GetMenuHandle(menu),
-                x,
-                y);
-            menu.RaiseClosing(e);
-        }
-
-        /// <summary>
         /// Sets <see cref="ComboBox.IsEditable"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value"><c>true</c> enables editing of the text;
@@ -51,31 +29,6 @@ namespace Alternet.UI
             }
 
             return controlSet;
-        }
-
-        /// <summary>
-        /// Creates new <see cref="HorizontalStackPanel"/> and adds
-        /// it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static HorizontalStackPanel AddHorizontalStackPanel(this Control control)
-        {
-            var result = new HorizontalStackPanel
-            {
-                Parent = control,
-            };
-            return result;
-        }
-
-        /// <summary>
-        /// Creates new <see cref="TabControl"/> and adds it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static TabControl AddTabControl(this Control control)
-        {
-            var result = new TabControl
-            {
-                Parent = control,
-            };
-            return result;
         }
 
         /// <summary>
@@ -178,18 +131,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="VerticalStackPanel"/> and adds it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static VerticalStackPanel AddVerticalStackPanel(this Control control)
-        {
-            var result = new VerticalStackPanel
-            {
-                Parent = control,
-            };
-            return result;
-        }
-
-        /// <summary>
         /// Creates new <see cref="GroupBox"/> and adds it to the <see cref="Control.Children"/>.
         /// </summary>
         public static GroupBox AddGroupBox(this Control control, string? title = default)
@@ -236,98 +177,6 @@ namespace Alternet.UI
             if (title is not null)
                 result.Title = title;
             return result;
-        }
-
-        /// <summary>
-        /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static StackPanel AddStackPanel(this Control control, bool isVertical = true)
-        {
-            StackPanelOrientation orientation;
-
-            if (isVertical)
-                orientation = StackPanelOrientation.Vertical;
-            else
-                orientation = StackPanelOrientation.Horizontal;
-
-            var result = new StackPanel
-            {
-                Parent = control,
-                Orientation = orientation,
-            };
-            return result;
-        }
-
-        /// <inheritdoc cref="CustomControlPainter.GetCheckBoxSize"/>
-        public static SizeD GetCheckBoxSize(
-            Control control,
-            CheckState checkState,
-            GenericControlState controlState)
-        {
-            return CustomControlPainter.Current.GetCheckBoxSize(control, checkState, controlState);
-        }
-
-        /// <inheritdoc cref="CustomControlPainter.DrawCheckBox"/>
-        public static void DrawCheckBox(
-            this Graphics canvas,
-            Control control,
-            RectD rect,
-            CheckState checkState,
-            GenericControlState controlState)
-        {
-            CustomControlPainter.Current.DrawCheckBox(
-                control,
-                canvas,
-                rect,
-                checkState,
-                controlState);
-        }
-
-        /// <summary>
-        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
-        /// from the specified <see cref="Stream"/> which contains svg data. Images are loaded
-        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
-        /// </summary>
-        /// <param name="stream">Stream with svg data.</param>
-        /// <param name="size">Image size in pixels.</param>
-        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
-        /// method is called to get color information.</param>
-        /// <returns></returns>
-        public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
-            Stream stream,
-            SizeI size,
-            Control control)
-        {
-            var image = ImageSet.FromSvgStream(
-                stream,
-                size,
-                control.GetSvgColor(KnownSvgColor.Normal),
-                control.GetSvgColor(KnownSvgColor.Disabled));
-            return image;
-        }
-
-        /// <summary>
-        /// Sets background of the control's parents to Red, Green, Blue and
-        /// Yellow colors.
-        /// </summary>
-        /// <param name="control">Specifies the control which parent's background
-        /// is changed</param>
-        public static void SetDebugBackgroundToParents(Control? control)
-        {
-            static Control? SetParentBackground(Control? control, Brush brush)
-            {
-                if (control == null)
-                    return null;
-                Control? parent = control?.Parent;
-                if (parent != null)
-                    parent.Background = brush;
-                return parent;
-            }
-
-            control = SetParentBackground(control, Brushes.Red);
-            control = SetParentBackground(control, Brushes.Green);
-            control = SetParentBackground(control, Brushes.Blue);
-            SetParentBackground(control, Brushes.Yellow);
         }
     }
 }

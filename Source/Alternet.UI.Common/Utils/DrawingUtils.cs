@@ -14,6 +14,55 @@ namespace Alternet.UI
     public static class DrawingUtils
     {
         /// <summary>
+        /// Sets background of the control's parents to Red, Green, Blue and
+        /// Yellow colors.
+        /// </summary>
+        /// <param name="control">Specifies the control which parent's background
+        /// is changed</param>
+        public static void SetDebugBackgroundToParents(Control? control)
+        {
+            static Control? SetParentBackground(Control? control, Brush brush)
+            {
+                if (control == null)
+                    return null;
+                Control? parent = control?.Parent;
+                if (parent != null)
+                    parent.Background = brush;
+                return parent;
+            }
+
+            control = SetParentBackground(control, Brushes.Red);
+            control = SetParentBackground(control, Brushes.Green);
+            control = SetParentBackground(control, Brushes.Blue);
+            SetParentBackground(control, Brushes.Yellow);
+        }
+
+        /// <inheritdoc cref="CustomControlPainter.GetCheckBoxSize"/>
+        public static SizeD GetCheckBoxSize(
+            Control control,
+            CheckState checkState,
+            GenericControlState controlState)
+        {
+            return CustomControlPainter.Current.GetCheckBoxSize(control, checkState, controlState);
+        }
+
+        /// <inheritdoc cref="CustomControlPainter.DrawCheckBox"/>
+        public static void DrawCheckBox(
+            this Graphics canvas,
+            Control control,
+            RectD rect,
+            CheckState checkState,
+            GenericControlState controlState)
+        {
+            CustomControlPainter.Current.DrawCheckBox(
+                control,
+                canvas,
+                rect,
+                checkState,
+                controlState);
+        }
+
+        /// <summary>
         /// Fills rectangle background and draws its border using the specified border settings.
         /// </summary>
         /// <param name="dc"><see cref="Graphics"/> where to draw.</param>

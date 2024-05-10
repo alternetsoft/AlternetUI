@@ -742,7 +742,7 @@ namespace Alternet.UI
                     {
                         SetToolSticky(toolId, true);
                         var menuLocation = window.ScreenToClient(pt.Value);
-                        ControlUtils.ShowPopupMenu(window, contextMenu, (int)menuLocation.X, (int)menuLocation.Y);
+                        contextMenu?.Show(window, (menuLocation.X, menuLocation.Y));
                         SetToolSticky(toolId, false);
                     }
                 }

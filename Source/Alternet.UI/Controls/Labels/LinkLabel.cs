@@ -145,8 +145,8 @@ namespace Alternet.UI
         internal new Native.LinkLabel NativeControl =>
              (Native.LinkLabel)base.NativeControl;
 
-        internal new NativeLinkLabelHandler Handler =>
-            (NativeLinkLabelHandler)base.Handler;
+        internal new LinkLabelHandler Handler =>
+            (LinkLabelHandler)base.Handler;
 
         internal void RaiseLinkClicked(CancelEventArgs e)
         {
@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NativeLinkLabelHandler();
+            return new LinkLabelHandler();
         }
 
         /// <summary>

@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeLabelHandler : NativeControlHandler<Label, Native.Label>
+    internal class LabelHandler : NativeControlHandler<Label, Native.Label>
     {
         internal override Native.Control CreateNativeControl()
         {

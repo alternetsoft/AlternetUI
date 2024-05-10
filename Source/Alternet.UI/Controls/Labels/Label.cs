@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS)
                 UserPaint = true;
         }
 
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NativeLabelHandler();
+            return new LabelHandler();
         }
     }
 }

@@ -23,7 +23,17 @@ namespace Alternet.UI
             if (position == null)
                 ShowUnder();
             else
-                ((ContextMenuHandler)menu.Handler).Show(control, (PointD)position);
+            {
+                if (position != PointD.MinusOne)
+                    ((ContextMenuHandler)menu.Handler).Show(control, (PointD)position);
+                else
+                {
+                    ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
+                        MenuItemHandler.GetMenuHandle(menu),
+                        -1,
+                        -1);
+                }
+            }
 
             void ShowUnder()
             {

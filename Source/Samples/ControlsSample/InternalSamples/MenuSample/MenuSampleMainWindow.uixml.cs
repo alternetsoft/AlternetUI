@@ -131,7 +131,7 @@ namespace MenuSample
             if (!IsDebugBackground)
                 return;
             control.Background = new SolidBrush(Color.Purple);
-            ControlUtils.SetDebugBackgroundToParents(control);
+            DrawingUtils.SetDebugBackgroundToParents(control);
         }
 
         private void MainWindow_Closing(object? sender, WindowClosingEventArgs e)

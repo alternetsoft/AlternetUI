@@ -213,7 +213,7 @@ namespace PaintSample
                 throw new InvalidOperationException();
 #pragma warning restore
 
-            var image = ControlUtils.GetNormalAndDisabledSvg(stream, 32, this);
+            var image = SvgUtils.GetNormalAndDisabledSvg(stream, 32, this);
             return image;
         }
 

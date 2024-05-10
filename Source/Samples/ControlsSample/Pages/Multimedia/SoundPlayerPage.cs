@@ -40,8 +40,7 @@ namespace ControlsSample
 
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
 
-            ControlUtils.AddVerticalStackPanel(this)
-            .AddButtons(
+            AddVerticalStackPanel().AddButtons(
                 ("Play", Play),
                 ("Stop", Stop))
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax();
