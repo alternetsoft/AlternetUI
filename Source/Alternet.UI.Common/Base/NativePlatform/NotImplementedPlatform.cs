@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
@@ -31,6 +32,11 @@ namespace Alternet.UI
         }
 
         public override IPropertyGridChoices CreateChoices()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IPrinterSettingsHandler CreatePrinterSettingsHandler()
         {
             throw new NotImplementedException();
         }

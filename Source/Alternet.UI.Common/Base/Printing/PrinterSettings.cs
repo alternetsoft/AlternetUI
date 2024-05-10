@@ -1,5 +1,5 @@
 using System;
-using Alternet.UI.Native;
+using Alternet.UI;
 
 namespace Alternet.Drawing.Printing
 {
@@ -20,28 +20,28 @@ namespace Alternet.Drawing.Printing
         /// Initializes a new instance of the <see cref="PrinterSettings"/> class.
         /// </summary>
         public PrinterSettings()
-            : this(new UI.Native.PrinterSettings())
+            : this(NativePlatform.Default.CreatePrinterSettingsHandler())
         {
         }
 
-        internal PrinterSettings(UI.Native.PrinterSettings nativePrinterSettings)
+        public PrinterSettings(IPrinterSettingsHandler nativePrinterSettings)
         {
-            NativePrinterSettings = nativePrinterSettings;
+            Handler = nativePrinterSettings;
         }
 
         /// <summary>
         /// Gets or sets the printer setting for double-sided printing.
         /// </summary>
-        public Duplex Duplex
+        public virtual Duplex Duplex
         {
             get
             {
-                return (Duplex)NativePrinterSettings.Duplex;
+                return Handler.Duplex;
             }
 
             set
             {
-                NativePrinterSettings.Duplex = (UI.Native.Duplex)value;
+                Handler.Duplex = value;
             }
         }
 
@@ -72,16 +72,16 @@ namespace Alternet.Drawing.Printing
         /// then specify output only for the selected pages.
         /// </para>
         /// </remarks>
-        public int FromPage
+        public virtual int FromPage
         {
             get
             {
-                return NativePrinterSettings.FromPage;
+                return Handler.FromPage;
             }
 
             set
             {
-                NativePrinterSettings.FromPage = value;
+                Handler.FromPage = value;
             }
         }
 
@@ -112,16 +112,16 @@ namespace Alternet.Drawing.Printing
         /// then specify output only for the selected pages.
         /// </para>
         /// </remarks>
-        public int ToPage
+        public virtual int ToPage
         {
             get
             {
-                return NativePrinterSettings.ToPage;
+                return Handler.ToPage;
             }
 
             set
             {
-                NativePrinterSettings.ToPage = value;
+                Handler.ToPage = value;
             }
         }
 
@@ -136,16 +136,16 @@ namespace Alternet.Drawing.Printing
         /// <see cref="PrintDialog.AllowSomePages"/> property must be set to true to
         /// enable the user to specify a print range.
         /// </remarks>
-        public int MinimumPage
+        public virtual int MinimumPage
         {
             get
             {
-                return NativePrinterSettings.MinimumPage;
+                return Handler.MinimumPage;
             }
 
             set
             {
-                NativePrinterSettings.MinimumPage = value;
+                Handler.MinimumPage = value;
             }
         }
 
@@ -159,16 +159,16 @@ namespace Alternet.Drawing.Printing
         /// <see cref="PrintDialog.AllowSomePages"/> property must be set to true
         /// to enable the user to specify a print range.
         /// </remarks>
-        public int MaximumPage
+        public virtual int MaximumPage
         {
             get
             {
-                return NativePrinterSettings.MaximumPage;
+                return Handler.MaximumPage;
             }
 
             set
             {
-                NativePrinterSettings.MaximumPage = value;
+                Handler.MaximumPage = value;
             }
         }
 
@@ -197,16 +197,16 @@ namespace Alternet.Drawing.Printing
         /// the selected pages.
         /// </para>
         /// </remarks>
-        public PrintRange PrintRange
+        public virtual PrintRange PrintRange
         {
             get
             {
-                return (PrintRange)NativePrinterSettings.PrintRange;
+                return Handler.PrintRange;
             }
 
             set
             {
-                NativePrinterSettings.PrintRange = (UI.Native.PrintRange)value;
+                Handler.PrintRange = value;
             }
         }
 
@@ -225,16 +225,16 @@ namespace Alternet.Drawing.Printing
         /// of copies specified before
         /// printing the next page.
         /// </remarks>
-        public bool Collate
+        public virtual bool Collate
         {
             get
             {
-                return NativePrinterSettings.Collate;
+                return Handler.Collate;
             }
 
             set
             {
-                NativePrinterSettings.Collate = value;
+                Handler.Collate = value;
             }
         }
 
@@ -244,16 +244,16 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The number of copies to print. The default is 1.
         /// </value>
-        public int Copies
+        public virtual int Copies
         {
             get
             {
-                return NativePrinterSettings.Copies;
+                return Handler.Copies;
             }
 
             set
             {
-                NativePrinterSettings.Copies = value;
+                Handler.Copies = value;
             }
         }
 
@@ -267,16 +267,16 @@ namespace Alternet.Drawing.Printing
         /// The <see cref="PrintToFile"/> property is used by the <see cref="PrintDialog"/>
         /// when the user selects the <b>Print to file</b> option.
         /// </remarks>
-        public bool PrintToFile
+        public virtual bool PrintToFile
         {
             get
             {
-                return NativePrinterSettings.PrintToFile;
+                return Handler.PrintToFile;
             }
 
             set
             {
-                NativePrinterSettings.PrintToFile = value;
+                Handler.PrintToFile = value;
             }
         }
 
@@ -289,16 +289,16 @@ namespace Alternet.Drawing.Printing
         /// After setting the printer name, call <see cref="IsValid"/> to determine if the
         /// printer name is recognized as a valid printer on the system.
         /// </remarks>
-        public string? PrinterName
+        public virtual string? PrinterName
         {
             get
             {
-                return NativePrinterSettings.PrinterName;
+                return Handler.PrinterName;
             }
 
             set
             {
-                NativePrinterSettings.PrinterName = value;
+                Handler.PrinterName = value;
             }
         }
 
@@ -310,7 +310,10 @@ namespace Alternet.Drawing.Printing
         /// <see langword="true"/> if the <see cref="PrinterName"/> property designates a
         /// valid printer; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsValid { get => NativePrinterSettings.IsValid; }
+        public virtual bool IsValid
+        {
+            get => Handler.IsValid;
+        }
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="PrinterName"/> property designates
@@ -323,25 +326,32 @@ namespace Alternet.Drawing.Printing
         /// explicitly set the <see
         /// cref="PrinterName"/> property to a string value other than <see langword="null"/>.
         /// </remarks>
-        public bool IsDefaultPrinter { get => NativePrinterSettings.IsDefaultPrinter; }
+        public virtual bool IsDefaultPrinter
+        {
+            get => Handler.IsDefaultPrinter;
+        }
 
         /// <summary>
         /// Gets or sets the file name, when printing to a file.
         /// </summary>
-        public string? PrintFileName
+        public virtual string? PrintFileName
         {
             get
             {
-                return NativePrinterSettings.PrintFileName;
+                return Handler.PrintFileName;
             }
 
             set
             {
-                NativePrinterSettings.PrintFileName = value;
+                Handler.PrintFileName = value;
             }
         }
 
-        internal UI.Native.PrinterSettings NativePrinterSettings { get; private set; }
+        internal IPrinterSettingsHandler Handler
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Releases all resources used by the object.
@@ -363,8 +373,8 @@ namespace Alternet.Drawing.Printing
             {
                 if (disposing)
                 {
-                    NativePrinterSettings.Dispose();
-                    NativePrinterSettings = null!;
+                    Handler.Dispose();
+                    Handler = null!;
                 }
 
                 isDisposed = true;

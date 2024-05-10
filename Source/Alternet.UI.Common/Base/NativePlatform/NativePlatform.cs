@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
@@ -102,6 +103,8 @@ namespace Alternet.UI
         public abstract UIPlatformKind GetPlatformKind();
 
         public abstract IPropertyGridChoices CreateChoices();
+
+        public abstract IPrinterSettingsHandler CreatePrinterSettingsHandler();
 
         public abstract string? GetTextFromUser(
             string message,

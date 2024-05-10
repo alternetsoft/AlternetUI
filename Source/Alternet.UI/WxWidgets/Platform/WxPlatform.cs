@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.Drawing.Printing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -274,6 +275,11 @@ namespace Alternet.UI
             if (result < 0)
                 return null;
             return result;
+        }
+
+        public override IPrinterSettingsHandler CreatePrinterSettingsHandler()
+        {
+            return new PrinterSettingsHandler();
         }
 
         private class SafeNativeMethods
