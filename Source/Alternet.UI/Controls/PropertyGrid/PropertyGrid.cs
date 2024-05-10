@@ -705,34 +705,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
-        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
-        /// </summary>
-        /// <param name="type">Object type.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static IPropertyGridNewItemParams GetNewItemParams(
-            Type type,
-            PropertyInfo propInfo)
-        {
-            var registry = GetTypeRegistry(type);
-            var propRegistry = registry.GetPropRegistry(propInfo);
-            return propRegistry.NewItemParams;
-        }
-
-        /// <summary>
-        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
-        /// <see cref="Type"/> and property name.
-        /// </summary>
-        /// <param name="type">Object type.</param>
-        /// <param name="propName">Property name.</param>
-        public static IPropertyGridNewItemParams GetNewItemParams(Type type, string propName)
-        {
-            var registry = GetTypeRegistry(type);
-            var propRegistry = registry.GetPropRegistry(propName);
-            return propRegistry.NewItemParams;
-        }
-
-        /// <summary>
         /// Checks system screen design used for laying out various dialogs.
         /// </summary>
         public static bool IsSmallScreen()

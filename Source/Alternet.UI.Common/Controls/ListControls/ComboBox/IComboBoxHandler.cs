@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
         ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
 
-        public PointI TextMargins { get; }
+        PointI TextMargins { get; }
 
         string? EmptyTextHint { get; set; }
 

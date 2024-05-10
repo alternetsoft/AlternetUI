@@ -472,6 +472,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="ComboBox.IsEditable"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value"><c>true</c> enables editing of the text;
+        /// <c>false</c> disables it.</param>
+        /// <param name="controlSet">Set of controls.</param>
+        public ControlSet IsEditable(bool value)
+        {
+            foreach (var item in Items)
+            {
+                if (item is ComboBox comboBox)
+                    comboBox.IsEditable = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>

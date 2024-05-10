@@ -22,7 +22,7 @@ namespace ControlsSample
             MinChildMargin = 5;
             Size = (800, 600);
 
-            ControlUtils.AddLabels(this,
+            AddLabels(
                 "This demo send mouse clicks and key presses to operating system",
                 "in order to control user interface of the application.",
                 "Press F5 to start.");
@@ -43,12 +43,12 @@ namespace ControlsSample
             editor2 = new TextBox();
             editor2.Parent = this;
 
-            ControlUtils.AddLabels(this,
+            AddLabels(
                 "Simulator moves mouse to 'Button1' and clicks it.",
                 "After that, it moves mouse to the editor, clicks it",
                 "and enters 'Hello' text.");
 
-            ControlUtils.AddLabels(this,
+            AddLabels(
                 "Simulator currently doesn't work when using Wayland on Linux.");
         }
 

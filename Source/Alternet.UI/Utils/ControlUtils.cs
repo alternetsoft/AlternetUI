@@ -15,23 +15,6 @@ namespace Alternet.UI
     public static class ControlUtils
     {
         /// <summary>
-        /// Sets <see cref="ComboBox.IsEditable"/> property for all the controls in the set.
-        /// </summary>
-        /// <param name="value"><c>true</c> enables editing of the text;
-        /// <c>false</c> disables it.</param>
-        /// <param name="controlSet">Set of controls.</param>
-        public static ControlSet IsEditable(this ControlSet controlSet, bool value)
-        {
-            foreach (var item in controlSet.Items)
-            {
-                if (item is ComboBox comboBox)
-                    comboBox.IsEditable = value;
-            }
-
-            return controlSet;
-        }
-
-        /// <summary>
         /// Creates new <see cref="Button"/> and adds it to the <see cref="Control.Children"/>.
         /// </summary>
         public static Button AddButton(this Control control, string text, Action? action = null)
@@ -75,28 +58,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds multiple labels.
-        /// </summary>
-        /// <param name="control">Parent control.</param>
-        /// <param name="text">Array of label text.</param>
-        /// <returns><see cref="ControlSet"/> with list of created labels.</returns>
-        public static ControlSet AddLabels(this Control control, params string[] text)
-        {
-            List<Control> result = new();
-
-            control.DoInsideLayout(() =>
-            {
-                foreach (var item in text)
-                {
-                    var label = AddLabel(control, item);
-                    result.Add(label);
-                }
-            });
-
-            return new(result);
-        }
-
-        /// <summary>
         /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="Control.Children"/>.
         /// </summary>
         public static CheckBox AddCheckBox(this Control control, string text, Action? action = null)
@@ -115,19 +76,6 @@ namespace Alternet.UI
             {
                 action.Invoke();
             }
-        }
-
-        /// <summary>
-        /// Creates new <see cref="Label"/> and adds it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static Label AddLabel(this Control control, string text)
-        {
-            var result = new Label(text)
-            {
-                Parent = control,
-            };
-
-            return result;
         }
 
         /// <summary>
