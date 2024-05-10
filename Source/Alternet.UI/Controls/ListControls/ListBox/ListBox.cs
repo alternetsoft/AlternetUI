@@ -393,6 +393,13 @@ namespace Alternet.UI
             }
         }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         /// <summary>
         /// Removes selected items from the <see cref="ListBox"/>.
         /// </summary>
@@ -565,7 +572,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateListBoxHandler(this);
+            return new NativeListBoxHandler();
         }
 
         /// <summary>

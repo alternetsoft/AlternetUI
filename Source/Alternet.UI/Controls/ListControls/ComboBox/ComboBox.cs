@@ -391,7 +391,7 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.ComboBox NativeControl => (Native.ComboBox)base.NativeControl;
+        internal Native.ComboBox NativeControl => ((ComboBoxHandler)Handler).NativeControl;
 
         internal new ComboBoxHandler Handler
         {
@@ -605,7 +605,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateComboBoxHandler(this);
+            return new ComboBoxHandler();
         }
 
         /// <summary>

@@ -55,7 +55,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateCheckListBoxHandler(Control control) =>
-            new NativeCheckListBoxHandler();
+            new CheckListBoxHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateListBoxHandler(Control control) =>
@@ -63,7 +63,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateComboBoxHandler(Control control) =>
-            new NativeComboBoxHandler();
+            new ComboBoxHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateListViewHandler(Control control) =>

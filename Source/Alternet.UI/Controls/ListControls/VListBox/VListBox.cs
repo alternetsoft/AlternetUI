@@ -650,7 +650,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="NativeControl"/> attached to this control.
         /// </summary>
-        internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
+        internal Native.VListBox NativeControl => ((VListBoxHandler)Handler).NativeControl;
 
         /// <summary>
         /// Gets item font. It must not be <c>null</c>.
