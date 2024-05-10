@@ -11,26 +11,6 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the method that will handle creation of the property.
-    /// </summary>
-    /// <param name="sender"><see cref="PropertyGrid"/> instance.</param>
-    /// <param name="label">Property label.</param>
-    /// <param name="name">Property name.</param>
-    /// <param name="instance">Object instance which contains the property.</param>
-    /// <param name="propInfo">Property information.</param>
-    /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-    /// <remarks>
-    /// If <paramref name="label"/> or <paramref name="name"/> is null,
-    /// <paramref name="propInfo"/> is used to get them.
-    /// </remarks>
-    public delegate IPropertyGridItem PropertyGridItemCreate(
-            IPropertyGrid sender,
-            string label,
-            string? name,
-            object instance,
-            PropertyInfo propInfo);
-
-    /// <summary>
     /// Specialized grid for editing properties - in other words name = value pairs.
     /// </summary>
     /// <remarks>
@@ -40,7 +20,7 @@ namespace Alternet.UI
     /// arbitrary per-property attributes.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class PropertyGrid : WxBaseControl, IPropertyGrid
+    public partial class PropertyGrid : BasePropertyGrid, IPropertyGrid
     {
         internal const string PropEditClassCheckBox = "CheckBox";
         internal const string PropEditClassChoice = "Choice";
@@ -57,8 +37,6 @@ namespace Alternet.UI
         private const int PGSORTTOPLEVELONLY = 0x00000200;
 
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
-        private static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
-            TypeRegistry = new();
 
         private static StaticStateFlags staticStateFlags;
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
@@ -537,7 +515,7 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.PropertyGrid NativeControl => Handler.NativeControl;
+        internal Native.PropertyGrid NativeControl => Handler.NativeControl;
 
         /// <summary>
         /// Creates new <see cref="IPropertyGrid"/> instance.
@@ -545,15 +523,6 @@ namespace Alternet.UI
         public static IPropertyGrid CreatePropertyGrid()
         {
             return new PropertyGrid();
-        }
-
-        /// <summary>
-        /// Creates new <see cref="IPropertyGridNewItemParams"/> instance.
-        /// </summary>
-        public static IPropertyGridNewItemParams CreateNewItemParams(
-            PropertyInfo? propInfo = null)
-        {
-            return new PropertyGridNewItemParams(null, propInfo);
         }
 
         /// <summary>
@@ -646,49 +615,6 @@ namespace Alternet.UI
                 typeof(PropertyGridAdapterBrush),
                 nameof(PropertyGridAdapterBrush.GradientStops),
                 typeof(ListEditSourceGradientStops));
-        }
-
-        /// <summary>
-        /// Gets <see cref="IPropertyGridPropInfoRegistry"/> item for the specified
-        /// <paramref name="type"/> and <paramref name="propInfo"/>. Uses validator
-        /// functions to check whether results is ok.
-        /// </summary>
-        /// <param name="type">Type which contains the property.</param>
-        /// <param name="propInfo">Property information.</param>
-        /// <param name="validatorFunc">Validator function.</param>
-        /// <remarks>
-        /// This method also searches for the result in all base types of
-        /// the <paramref name="type"/>.
-        /// </remarks>
-        public static IPropertyGridPropInfoRegistry? GetValidBasePropRegistry(
-            Type? type,
-            PropertyInfo? propInfo,
-            Func<IPropertyGridPropInfoRegistry, bool> validatorFunc)
-        {
-            if (type == null || propInfo == null)
-                return null;
-            var registry = PropertyGrid.GetTypeRegistry(type);
-
-            while (true)
-            {
-                if (registry == null)
-                    return null;
-                var propRegistry = registry.GetPropRegistryOrNull(propInfo.Name);
-                if (propRegistry == null)
-                {
-                    registry = registry.BaseTypeRegistry;
-                    continue;
-                }
-
-                var isOk = validatorFunc(propRegistry);
-                if (!isOk)
-                {
-                    registry = registry.BaseTypeRegistry;
-                    continue;
-                }
-
-                return propRegistry;
-            }
         }
 
         /// <summary>
@@ -918,28 +844,6 @@ namespace Alternet.UI
 
             var propRegistry = GetPropRegistry(typeof(T), propInfo);
             return propRegistry.NewItemParams.Label;
-        }
-
-        /// <summary>
-        /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>.
-        /// </summary>
-        /// <param name="type">Type value.</param>
-        public static IPropertyGridTypeRegistry GetTypeRegistry(Type type)
-        {
-            return TypeRegistry.GetOrCreateCached(type, () =>
-            {
-                return new PropertyGridTypeRegistry(type);
-            });
-        }
-
-        /// <summary>
-        /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>
-        /// if its available, othewise returns <c>null</c>.
-        /// </summary>
-        /// <param name="type">Type value.</param>
-        public static IPropertyGridTypeRegistry? GetTypeRegistryOrNull(Type type)
-        {
-            return TypeRegistry.GetValueOrDefaultCached(type);
         }
 
         /// <summary>
@@ -4665,12 +4569,6 @@ namespace Alternet.UI
             Native.PropertyGrid.KnownColorsApply();
         }
 
-        internal static IPropertyGridNewItemParams CreateNewItemParams(
-           IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo = null)
-        {
-            return new PropertyGridNewItemParams(owner, propInfo);
-        }
-
         internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValidator(prop.Handle);
@@ -4840,7 +4738,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
+            return new PropertyGridHandler();
         }
 
         /// <summary>

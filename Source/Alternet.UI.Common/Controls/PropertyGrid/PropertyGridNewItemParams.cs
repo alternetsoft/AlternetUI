@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class PropertyGridNewItemParams : IPropertyGridNewItemParams
+    public class PropertyGridNewItemParams : IPropertyGridNewItemParams
     {
         public static readonly IPropertyGridNewItemParams Default =
-            PropertyGrid.CreateNewItemParams(null!);
+            BasePropertyGrid.CreateNewItemParams(null!);
 
         private readonly IPropertyGridPropInfoRegistry? owner;
         private PropertyInfo? propInfo;
@@ -354,7 +354,7 @@ namespace Alternet.UI
                     return registry.HasNewItemParams && func(registry) is not null;
                 }
 
-                var pr = PropertyGrid.GetValidBasePropRegistry(
+                var pr = BasePropertyGrid.GetValidBasePropRegistry(
                             OwnerInstanceType,
                             PropInfo,
                             ValidatorFunc);

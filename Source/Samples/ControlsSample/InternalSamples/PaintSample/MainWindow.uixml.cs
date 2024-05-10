@@ -488,7 +488,7 @@ namespace PaintSample
 
         public void DoChangeLightness()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
+            var result = MessageBox.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
             if (result is null)
                 return;
             Application.Log($"Image.ChangeLightness: {result}");
@@ -500,7 +500,7 @@ namespace PaintSample
 
         public void DoChangeLightnessUseGetData()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
+            var result = MessageBox.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
             if (result is null)
                 return;
             Application.Log($"Change lightness using GenericImage.GetData");
@@ -513,7 +513,7 @@ namespace PaintSample
 
         public unsafe void DoFillRedUseSetData()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
+            var result = MessageBox.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
             if (result is null)
                 return;
 

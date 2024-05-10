@@ -130,7 +130,7 @@ namespace ControlsSample
 
         private void ImageMarginsButton_Click(object? sender, EventArgs e)
         {
-            var value = DialogFactory.GetNumberFromUser("Image Margin", null, null, imageMargins);
+            var value = MessageBox.GetNumberFromUser("Image Margin", null, null, imageMargins);
             if (value is null)
                 return;
             imageMargins = (int)value;

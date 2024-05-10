@@ -6,10 +6,26 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : CustomButton
+    public abstract class ButtonBase : WxBaseControl, ITextProperty
     {
         private string text = string.Empty;
         private Action? clickAction;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasBorder
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
 
         /// <summary>
         /// Gets or sets the text displayed on this button.

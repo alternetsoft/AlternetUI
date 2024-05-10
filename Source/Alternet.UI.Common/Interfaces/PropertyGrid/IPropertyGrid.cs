@@ -9,6 +9,26 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents the method that will handle creation of the property.
+    /// </summary>
+    /// <param name="sender"><see cref="PropertyGrid"/> instance.</param>
+    /// <param name="label">Property label.</param>
+    /// <param name="name">Property name.</param>
+    /// <param name="instance">Object instance which contains the property.</param>
+    /// <param name="propInfo">Property information.</param>
+    /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+    /// <remarks>
+    /// If <paramref name="label"/> or <paramref name="name"/> is null,
+    /// <paramref name="propInfo"/> is used to get them.
+    /// </remarks>
+    public delegate IPropertyGridItem PropertyGridItemCreate(
+            IPropertyGrid sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo);
+
     /// <inheritdoc cref="PropertyGrid"/>
     public interface IPropertyGrid
     {

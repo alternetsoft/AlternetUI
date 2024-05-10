@@ -100,5 +100,26 @@ namespace Alternet.UI
         public abstract void TimerSetInterval(Timer timer, int value);
 
         public abstract UIPlatformKind GetPlatformKind();
+
+        public abstract IPropertyGridChoices CreateChoices();
+
+        public abstract string? GetTextFromUser(
+            string message,
+            string caption,
+            string defaultValue,
+            Control? parent,
+            int x,
+            int y,
+            bool centre);
+
+        public abstract long? GetNumberFromUser(
+            string message,
+            string prompt,
+            string caption,
+            long value,
+            long min,
+            long max,
+            Control? parent,
+            PointI pos);
     }
 }

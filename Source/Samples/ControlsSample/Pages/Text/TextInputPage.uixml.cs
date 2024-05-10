@@ -123,7 +123,7 @@ namespace ControlsSample
 
         private void ChangeTextButton_Click(object? sender, EventArgs e)
         {
-            var result = DialogFactory.GetTextFromUser("Text", "Enter text value", textBox.Text);
+            var result = MessageBox.GetTextFromUser("Text", "Enter text value", textBox.Text);
             if(result is not null)
                 textBox.Text = result;
         }

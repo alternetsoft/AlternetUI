@@ -50,7 +50,7 @@ namespace Alternet.UI
                     if (baseType == null)
                         return null;
                     else
-                        baseTypeRegistry = PropertyGrid.GetTypeRegistry(baseType);
+                        baseTypeRegistry = BasePropertyGrid.GetTypeRegistry(baseType);
                     return baseTypeRegistry;
                 }
 

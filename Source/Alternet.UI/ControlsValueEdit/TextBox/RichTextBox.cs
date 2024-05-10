@@ -604,7 +604,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ShowDialogGoToLine()
         {
-            TextBoxUtils.ShowDialogGoToLine(this);
+            MessageBox.ShowDialogGoToLine(this);
         }
 
         /// <summary>
