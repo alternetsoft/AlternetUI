@@ -32,7 +32,7 @@ namespace Alternet.UI
     /// the view, object and page size according to the size of the window and the size of the data.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ScrollBar : WxBaseControl
+    public partial class ScrollBar : Control
     {
         private int minimum;
         private int maximum = 100;
@@ -63,7 +63,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [DefaultValue(10)]
         [RefreshProperties(RefreshProperties.Repaint)]
-        public int LargeChange
+        public virtual int LargeChange
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [DefaultValue(100)]
         [RefreshProperties(RefreshProperties.Repaint)]
-        public int Maximum
+        public virtual int Maximum
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [DefaultValue(0)]
         [RefreshProperties(RefreshProperties.Repaint)]
-        public int Minimum
+        public virtual int Minimum
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [DefaultValue(1)]
         [SRDescription("ScrollBarSmallChangeDescr")]
-        public int SmallChange
+        public virtual int SmallChange
         {
             get
             {
@@ -234,7 +234,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [DefaultValue(0)]
         [Bindable(true)]
-        public int Value
+        public virtual int Value
         {
             get
             {
@@ -267,24 +267,31 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="ScrollBar"/> is vertical.
         /// </summary>
-        public bool IsVertical
+        public virtual bool IsVertical
         {
             get
             {
-                return NativeControl.IsVertical;
+                return Handler.IsVertical;
             }
 
             set
             {
                 if (IsVertical == value)
                     return;
-                NativeControl.IsVertical = value;
+                Handler.IsVertical = value;
                 IsVerticalChanged?.Invoke(this, EventArgs.Empty);
                 UpdateScrollInfo();
             }
         }
 
-        internal new Native.ScrollBar NativeControl => (Native.ScrollBar)base.NativeControl;
+        internal new IScrollBarHandler Handler => (IScrollBarHandler)base.Handler;
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
 
         /// <summary>
         /// Returns a string that represents the <see cref="ScrollBar" /> control.
@@ -300,22 +307,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs scroll info.
+        /// Logs scrollbar info
         /// </summary>
-        public void LogScrollbarInfo()
+        public virtual void LogInfo()
         {
-            Application.Log(ToString());
-            var position = $"Position: {NativeControl.ThumbPosition}";
-            var thumbSize = $"ThumbSize: {NativeControl.ThumbSize}";
-            var range = $"Range: {NativeControl.Range}";
-            var pageSize = $"PageSize: {NativeControl.PageSize}";
-            Application.Log($"Native ScrollBar: {position}, {thumbSize}, {range}, {pageSize}");
+            Handler.Log();
+        }
+
+        /// <summary>
+        /// Updates scroll info and calls <see cref="SetScrollbar"/> to update native control.
+        /// </summary>
+        public virtual void UpdateScrollInfo()
+        {
+            var range = (Maximum - Minimum) * SmallChange;
+            var pageSize = LargeChange * SmallChange;
+            var position = (Value - Minimum) * SmallChange;
+            var thumbSize = pageSize;
+
+            SetScrollbar(position, thumbSize, range, pageSize);
+        }
+
+        /// <summary>
+        /// Raises scroll events.
+        /// </summary>
+        public virtual void RaiseScroll()
+        {
+            var pos = (Handler.EventNewPos / SmallChange) + Minimum;
+            var oldPos = Value;
+            pos = MathUtils.ApplyMinMax(pos, minimum, maximum);
+            if (pos == oldPos)
+                return;
+            value = pos;
+            var eventType = Handler.EventTypeID;
+            var orientation = Handler.IsVertical ? ScrollOrientation.VerticalScroll
+                : ScrollOrientation.HorizontalScroll;
+            RaiseScroll(new ScrollEventArgs(eventType, oldPos, pos, orientation));
+            OnValueChanged(EventArgs.Empty);
         }
 
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new ScrollBarHandler();
+            return GetNative().CreateScrollBarHandler(this);
         }
 
         /// <summary>
@@ -350,7 +383,7 @@ namespace Alternet.UI
             int pageSize,
             bool refresh = true)
         {
-            NativeControl.SetScrollbar(
+            Handler.SetScrollbar(
                 position,
                 thumbSize,
                 range,
@@ -364,61 +397,6 @@ namespace Alternet.UI
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Updates scroll info and calls <see cref="SetScrollbar"/> to update native control.
-        /// </summary>
-        protected virtual void UpdateScrollInfo()
-        {
-            var range = (Maximum - Minimum) * SmallChange;
-            var pageSize = LargeChange * SmallChange;
-            var position = (Value - Minimum) * SmallChange;
-            var thumbSize = pageSize;
-
-            SetScrollbar(position, thumbSize, range, pageSize);
-        }
-
-        private void RaiseScroll()
-        {
-            var pos = (NativeControl.EventNewPos / SmallChange) + Minimum;
-            var oldPos = Value;
-            pos = MathUtils.ApplyMinMax(pos, minimum, maximum);
-            if (pos == oldPos)
-                return;
-            value = pos;
-            var eventType = (ScrollEventType)NativeControl.EventTypeID;
-            var orientation = NativeControl.IsVertical ? ScrollOrientation.VerticalScroll
-                : ScrollOrientation.HorizontalScroll;
-            RaiseScroll(new ScrollEventArgs(eventType, oldPos, pos, orientation));
-            OnValueChanged(EventArgs.Empty);
-        }
-
-        internal class ScrollBarHandler : NativeControlHandler<ScrollBar, Native.ScrollBar>
-        {
-            internal override Native.Control CreateNativeControl()
-            {
-                var result = new Native.ScrollBar();
-                return result;
-            }
-
-            protected override void OnDetach()
-            {
-                base.OnDetach();
-                NativeControl.Scroll = null;
-            }
-
-            protected override void OnAttach()
-            {
-                base.OnAttach();
-                Control.UpdateScrollInfo();
-                NativeControl.Scroll = NativeControl_Scroll;
-            }
-
-            private void NativeControl_Scroll()
-            {
-                Control.RaiseScroll();
-            }
         }
     }
 }

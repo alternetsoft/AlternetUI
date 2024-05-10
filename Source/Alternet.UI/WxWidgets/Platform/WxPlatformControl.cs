@@ -83,6 +83,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateScrollBarHandler(IControl control)
+        {
+            return new ScrollBarHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateMenuItemHandler(IControl control)
         {
             return new MenuItemHandler();

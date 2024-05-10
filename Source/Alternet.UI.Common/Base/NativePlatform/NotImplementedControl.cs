@@ -659,4 +659,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateScrollBarHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -21,7 +21,7 @@ namespace PropertyGridSample
             {
                 Application.LogBeginSection();
                 Application.Log($"Scrollbar Event {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
-                (sender as ScrollBar)?.LogScrollbarInfo();
+                (sender as ScrollBar)?.LogInfo();
                 Application.LogEndSection();
             }
 
