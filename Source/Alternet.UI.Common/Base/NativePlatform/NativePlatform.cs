@@ -86,5 +86,17 @@ namespace Alternet.UI
         public abstract void Bell();
 
         public abstract void MessageBeep(SystemSoundType soundType);
+
+        public abstract void TimerSetTick(Timer timer, Action? value);
+
+        public abstract object CreateTimer();
+
+        public abstract bool TimerGetEnabled(Timer timer);
+
+        public abstract void TimerSetEnabled(Timer timer, bool value);
+
+        public abstract int TimerGetInterval(Timer timer);
+
+        public abstract void TimerSetInterval(Timer timer, int value);
     }
 }

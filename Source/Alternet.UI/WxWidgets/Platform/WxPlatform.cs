@@ -24,6 +24,36 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        public override bool TimerGetEnabled(Timer timer)
+        {
+            return ((Native.Timer)timer.NativeTimer).Enabled;
+        }
+
+        public override void TimerSetEnabled(Timer timer, bool value)
+        {
+            ((Native.Timer)timer.NativeTimer).Enabled = value;
+        }
+
+        public override int TimerGetInterval(Timer timer)
+        {
+            return ((Native.Timer)timer.NativeTimer).Interval;
+        }
+
+        public override void TimerSetInterval(Timer timer, int value)
+        {
+            ((Native.Timer)timer.NativeTimer).Interval = value;
+        }
+
+        public override object CreateTimer()
+        {
+            return new Native.Timer();
+        }
+
+        public override void TimerSetTick(Timer timer, Action? value)
+        {
+            ((Native.Timer)timer.NativeTimer).Tick = value;
+        }
+
         public override void StopSound()
         {
             Native.WxOtherFactory.SoundStop();

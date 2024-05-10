@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to the <see cref="RichTextBox"/> methods and properties.
     /// </summary>
-    internal interface IRichTextBox : ISimpleRichTextBox
+    public interface IRichTextBox : ISimpleRichTextBox
     {
     }
 }

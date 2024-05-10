@@ -20,9 +20,6 @@ public class WxBaseControl : Control
 
     internal IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
-    /*/// <inheritdoc/>
-    protected override bool IsAbstract => false;*/
-
     /// <summary>
     /// Pops up the given menu at the specified coordinates, relative to this window,
     /// and returns control when the user has dismissed the menu.

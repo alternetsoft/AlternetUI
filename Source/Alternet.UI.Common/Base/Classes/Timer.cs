@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public class Timer : DisposableObject, IComponent, IDisposable
     {
-        private Native.Timer nativeTimer;
+        private object? nativeTimer;
         private bool autoReset = true;
 
         /// <summary>
@@ -19,8 +19,6 @@ namespace Alternet.UI
         /// </summary>
         public Timer()
         {
-            nativeTimer = new Native.Timer();
-            nativeTimer.Tick = NativeTimer_Tick;
         }
 
         /// <summary>
@@ -32,7 +30,6 @@ namespace Alternet.UI
         /// relative to the last occurrence of the <see cref="Tick"/> event.
         /// </param>
         public Timer(TimeSpan interval)
-            : this()
         {
             IntervalAsTimeSpan = interval;
         }
@@ -45,7 +42,6 @@ namespace Alternet.UI
         /// The time duration before the <see cref="Tick"/> event is raised.
         /// </param>
         public Timer(int interval)
-            : this()
         {
             Interval = interval;
         }
@@ -63,7 +59,6 @@ namespace Alternet.UI
         /// has elapsed and the timer is enabled.
         /// </param>
         public Timer(TimeSpan interval, EventHandler tickHandler)
-            : this()
         {
             IntervalAsTimeSpan = interval;
             Tick += tickHandler;
@@ -81,7 +76,6 @@ namespace Alternet.UI
         /// has elapsed and the timer is enabled.
         /// </param>
         public Timer(int interval, EventHandler tickHandler)
-            : this()
         {
             Interval = interval;
             Tick += tickHandler;
@@ -99,6 +93,23 @@ namespace Alternet.UI
         public event ElapsedEventHandler? Elapsed;
 
         /// <summary>
+        /// Gets native timer.
+        /// </summary>
+        public virtual object NativeTimer
+        {
+            get
+            {
+                if(nativeTimer is null)
+                {
+                    nativeTimer = NativePlatform.Default.CreateTimer();
+                    NativePlatform.Default.TimerSetTick(this, NativeTimer_Tick);
+                }
+
+                return nativeTimer;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="ISite"/> associated with the object; or null,
         /// if the object does not have a site.
         /// </summary>
@@ -113,18 +124,16 @@ namespace Alternet.UI
         /// event is raised
         /// relative to the last occurrence of the <see cref="Tick"/> event.
         /// </value>
-        public TimeSpan IntervalAsTimeSpan
+        public virtual TimeSpan IntervalAsTimeSpan
         {
             get
             {
-                CheckDisposed();
-                return TimeSpan.FromMilliseconds(nativeTimer.Interval);
+                return TimeSpan.FromMilliseconds(Interval);
             }
 
             set
             {
-                CheckDisposed();
-                nativeTimer.Interval = (int)value.TotalMilliseconds;
+                Interval = (int)value.TotalMilliseconds;
             }
         }
 
@@ -136,18 +145,18 @@ namespace Alternet.UI
         /// An <see cref="int"/> specifying the time duration before the <see cref="Tick"/>
         /// event is raised.
         /// </value>
-        public int Interval
+        public virtual int Interval
         {
             get
             {
                 CheckDisposed();
-                return nativeTimer.Interval;
+                return NativePlatform.Default.TimerGetInterval(this);
             }
 
             set
             {
                 CheckDisposed();
-                nativeTimer.Interval = value;
+                NativePlatform.Default.TimerSetInterval(this, value);
             }
         }
 
@@ -162,7 +171,7 @@ namespace Alternet.UI
         /// The default is <see langword="true"/>.</returns>
         [Category("Behavior")]
         [DefaultValue(true)]
-        public bool AutoReset
+        public virtual bool AutoReset
         {
             get
             {
@@ -192,18 +201,18 @@ namespace Alternet.UI
         /// Likewise, calling the <see cref="Stop"/> method is the same as setting
         /// <see cref="Enabled"/> to <see langword="false"/>.
         /// </remarks>
-        public bool Enabled
+        public virtual bool Enabled
         {
             get
             {
                 CheckDisposed();
-                return nativeTimer.Enabled;
+                return NativePlatform.Default.TimerGetEnabled(this);
             }
 
             set
             {
                 CheckDisposed();
-                nativeTimer.Enabled = value;
+                NativePlatform.Default.TimerSetEnabled(this, value);
             }
         }
 
@@ -267,8 +276,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeResources()
         {
-            nativeTimer.Tick = null;
-            nativeTimer.Dispose();
+            NativePlatform.Default.TimerSetTick(this, null);
+            ((IDisposable?)nativeTimer)?.Dispose();
             nativeTimer = null!;
         }
 

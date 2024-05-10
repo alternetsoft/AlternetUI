@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Provides access to the <see cref="RichTextBox"/> or <see cref="TextBox"/> methods
     /// and properties.
     /// </summary>
-    internal interface ISimpleRichTextBox
+    public interface ISimpleRichTextBox
     {
         /// <inheritdoc cref="RichTextBox.CurrentPositionChanged"/>
         event EventHandler? CurrentPositionChanged;

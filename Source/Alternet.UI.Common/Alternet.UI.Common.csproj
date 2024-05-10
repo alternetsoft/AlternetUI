@@ -49,4 +49,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\TextBox\" />
+  </ItemGroup>
+
 </Project>

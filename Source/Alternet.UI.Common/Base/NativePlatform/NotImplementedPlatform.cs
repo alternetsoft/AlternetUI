@@ -30,6 +30,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override object CreateTimer()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void EndBusyCursor()
         {
             throw new NotImplementedException();
@@ -166,6 +171,31 @@ namespace Alternet.UI
         }
 
         public override bool SystemSettingsIsUsingDarkBackground()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool TimerGetEnabled(Timer timer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int TimerGetInterval(Timer timer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void TimerSetEnabled(Timer timer, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void TimerSetInterval(Timer timer, int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void TimerSetTick(Timer timer, Action? value)
         {
             throw new NotImplementedException();
         }
