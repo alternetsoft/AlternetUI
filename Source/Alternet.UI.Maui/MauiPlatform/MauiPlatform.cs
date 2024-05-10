@@ -29,6 +29,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override UIPlatformKind GetPlatformKind()
+        {
+            return UIPlatformKind.Maui;
+        }
+
+        /// <inheritdoc/>
         public override LangDirection GetLangDirection()
         {
             throw new NotImplementedException();

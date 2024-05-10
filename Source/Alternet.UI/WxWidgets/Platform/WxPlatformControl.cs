@@ -93,6 +93,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateLabelHandler(IControl control)
+        {
+            return new LabelHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateScrollBarHandler(IControl control)
         {
             return new ScrollBarHandler();

@@ -1375,6 +1375,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets last time when mouse double click was done.
         /// </summary>
+        [Browsable(false)]
         public long? LastDoubleClickTimestamp { get; set; }
 
         /// <summary>

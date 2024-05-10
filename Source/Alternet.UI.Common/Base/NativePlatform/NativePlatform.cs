@@ -98,5 +98,7 @@ namespace Alternet.UI
         public abstract int TimerGetInterval(Timer timer);
 
         public abstract void TimerSetInterval(Timer timer, int value);
+
+        public abstract UIPlatformKind GetPlatformKind();
     }
 }

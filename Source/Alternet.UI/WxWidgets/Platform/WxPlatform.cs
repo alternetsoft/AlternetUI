@@ -34,6 +34,11 @@ namespace Alternet.UI
             ((Native.Timer)timer.NativeTimer).Enabled = value;
         }
 
+        public override UIPlatformKind GetPlatformKind()
+        {
+            return UIPlatformKind.WxWidgets;
+        }
+
         public override int TimerGetInterval(Timer timer)
         {
             return ((Native.Timer)timer.NativeTimer).Interval;

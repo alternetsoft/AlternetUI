@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public partial class Label : WxBaseControl
+    public partial class Label : Control
     {
         private string text = string.Empty;
 
@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
-            if (BaseApplication.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
         }
 
@@ -77,7 +77,7 @@ namespace Alternet.UI
             get => base.Layout;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Wraps <see cref="Text"/> so that each of its lines becomes at most width
         /// pixels wide if possible (the lines are broken at words boundaries so it
         /// might not be the case if words are too long).
@@ -98,12 +98,12 @@ namespace Alternet.UI
 
             Native.Label label = (Native.Label)(Handler.NativeControl!);
             label?.Wrap((int)v);
-        }
+        }*/
 
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new LabelHandler();
+            return UI.NativeControl.Default.CreateLabelHandler(this);
         }
     }
 }

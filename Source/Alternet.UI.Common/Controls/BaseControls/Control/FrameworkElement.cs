@@ -107,6 +107,7 @@ namespace Alternet.UI
         public virtual IReadOnlyList<FrameworkElement> ContentElements =>
             LogicalChildrenCollection.ToArray();
 
+        [Browsable(false)]
         public FrameworkElement? LogicalParent
         {
             get => logicalParent;

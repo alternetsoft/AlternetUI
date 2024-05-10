@@ -181,6 +181,11 @@ namespace Alternet.UI
         public static bool DebugWriteLine { get; set; } = false;
 
         /// <summary>
+        /// Gets currently used platform.
+        /// </summary>
+        public static UIPlatformKind PlatformKind => NativePlatform.Default.GetPlatformKind();
+
+        /// <summary>
         /// Gets the <see cref="Application"/> object for the currently
         /// runnning application.
         /// </summary>

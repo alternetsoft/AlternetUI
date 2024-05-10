@@ -664,4 +664,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateLabelHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }
