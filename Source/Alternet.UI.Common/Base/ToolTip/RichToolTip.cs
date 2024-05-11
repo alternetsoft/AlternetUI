@@ -13,26 +13,29 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image, tip kind and some other options.
     /// </summary>
-    public class RichToolTip : DisposableObject, IRichToolTip
+    public class RichToolTip : DisposableObject
     {
+        private static bool useGeneric = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
         /// </summary>
         /// <param name="title">Tooltip title.</param>
         /// <param name="message">Tooltip message.</param>
         public RichToolTip(string? title, string? message)
-            : base(
-                  Native.WxOtherFactory.CreateRichToolTip(
-                    title ?? string.Empty,
-                    message ?? string.Empty),
-                  true)
         {
+            Handler = NativePlatform.Default.CreateRichToolTipHandler(
+                title ?? string.Empty,
+                message ?? string.Empty,
+                useGeneric);
+
             var platform = AllPlatformDefaults.PlatformCurrent;
 
             var backgroundColor = DefaultBackgroundColor ?? platform.RichToolTipBackgroundColor;
             var backgroundColorEnd = DefaultBackgroundColorEnd ?? platform.RichToolTipBackgroundColorEnd;
             var foregroundColor = DefaultForegroundColor ?? platform.RichToolTipForegroundColor;
-            var titleForegroundColor = DefaultTitleForegroundColor ?? platform.RichToolTipTitleForegroundColor;
+            var titleForegroundColor = DefaultTitleForegroundColor
+                ?? platform.RichToolTipTitleForegroundColor;
 
             if (backgroundColor is not null)
                 SetBackgroundColor(backgroundColor, backgroundColorEnd);
@@ -57,12 +60,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.WxOtherFactory.RichToolTipUseGeneric;
+                return useGeneric;
             }
 
             set
             {
-                Native.WxOtherFactory.RichToolTipUseGeneric = value;
+                useGeneric = value;
             }
         }
 
@@ -96,10 +99,12 @@ namespace Alternet.UI
         /// </summary>
         public static RichToolTip? Default { get; set; }
 
+        public IRichToolTipHandler Handler { get; private set; }
+
         /// <summary>
         /// Gets or sets whether to ignore image in tooltip, even if it is specified.
         /// </summary>
-        public bool IgnoreImages { get; set; }
+        public virtual bool IgnoreImages { get; set; }
 
         /// <summary>
         /// Shows simple tooltip on the screen.
@@ -161,7 +166,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Background color.</param>
         /// <param name="endColor">Second background color.</param>
-        public void SetBackgroundColor(Color? color, Color? endColor = null)
+        public virtual void SetBackgroundColor(Color? color, Color? endColor = null)
         {
             if (color is null)
                 return;
@@ -171,7 +176,7 @@ namespace Alternet.UI
                 color2 = Color.Empty;
             else
                 color2 = endColor;
-            Native.WxOtherFactory.RichToolTipSetBkColor(Handle, color, color2);
+            Handler.SetBackgroundColor(color, color2);
         }
 
         /// <summary>
@@ -181,11 +186,11 @@ namespace Alternet.UI
         /// <remarks>
         /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
         /// </remarks>
-        public void SetForegroundColor(Color? color)
+        public virtual void SetForegroundColor(Color? color)
         {
             if (color is null)
                 return;
-            Native.WxOtherFactory.RichToolTipSetFgColor(Handle, color);
+            Handler.SetForegroundColor(color);
         }
 
         /// <summary>
@@ -195,11 +200,11 @@ namespace Alternet.UI
         /// <remarks>
         /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
         /// </remarks>
-        public void SetTitleForegroundColor(Color? color)
+        public virtual void SetTitleForegroundColor(Color? color)
         {
             if (color is null)
                 return;
-            Native.WxOtherFactory.RichToolTipSetTitleFgColor(Handle, color);
+            Handler.SetTitleForegroundColor(color);
         }
 
         /// <summary>
@@ -214,18 +219,18 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="milliseconds">Timeout value.</param>
         /// <param name="millisecondsShowdelay">Show delay value.</param>
-        public void SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
+        public virtual void SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
         {
-            Native.WxOtherFactory.RichToolTipSetTimeout(Handle, milliseconds, millisecondsShowdelay);
+            Handler.SetTimeout(milliseconds, millisecondsShowdelay);
         }
 
         /// <summary>
         /// Sets the small icon to show in the tooltip.
         /// </summary>
         /// <param name="bitmap">Icon of the tooltip.</param>
-        public void SetIcon(ImageSet? bitmap)
+        public virtual void SetIcon(ImageSet? bitmap)
         {
-            Native.WxOtherFactory.RichToolTipSetIcon(Handle, (UI.Native.ImageSet?)bitmap?.NativeObject);
+            Handler.SetIcon(bitmap);
         }
 
         /// <summary>
@@ -236,9 +241,9 @@ namespace Alternet.UI
         /// or colour appropriate for the current platform.
         /// </remarks>
         /// <param name="font">Font of the title.</param>
-        public void SetTitleFont(Font? font)
+        public virtual void SetTitleFont(Font? font)
         {
-            Native.WxOtherFactory.RichToolTipSetTitleFont(Handle, (UI.Native.Font?)font?.NativeObject);
+            Handler.SetTitleFont(font);
         }
 
         /// <summary>
@@ -246,9 +251,9 @@ namespace Alternet.UI
         /// automatically, as if <see cref="RichToolTipKind.Auto"/> was used.
         /// </summary>
         /// <param name="tipKind">Tip kind.</param>
-        public void SetTipKind(RichToolTipKind tipKind)
+        public virtual void SetTipKind(RichToolTipKind tipKind)
         {
-            Native.WxOtherFactory.RichToolTipSetTipKind(Handle, (int)tipKind);
+            Handler.SetTipKind(tipKind);
         }
 
         /// <summary>
@@ -256,10 +261,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which tooltip is shown.</param>
         /// <param name="rect">Area of the tooltip.</param>
-        public void Show(Control control, RectI? rect = null)
+        public virtual void Show(Control control, RectI? rect = null)
         {
-            var wxWidget = WxPlatformControl.WxWidget(control);
-            Native.WxOtherFactory.RichToolTipShowFor(Handle, wxWidget, rect ?? RectI.Empty);
+            Handler.Show(control, rect);
         }
 
         /// <summary>
@@ -267,44 +271,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">One of the standard information/warning/error icons
         /// (the question icon doesn't make sense for a tooltip)</param>
-        public void SetIcon(MessageBoxIcon icon)
+        public virtual void SetIcon(MessageBoxIcon icon)
         {
-            const int wxICON_WARNING = 0x00000100;
-            const int wxICON_ERROR = 0x00000200;
-            const int wxICON_INFORMATION = 0x00000800;
-            const int wxICON_NONE = 0x00040000;
-
-            int style;
-
             if(IgnoreImages)
-                style = wxICON_NONE;
-            else
-            {
-                switch (icon)
-                {
-                    default:
-                    case MessageBoxIcon.None:
-                        style = wxICON_NONE;
-                        break;
-                    case MessageBoxIcon.Information:
-                        style = wxICON_INFORMATION;
-                        break;
-                    case MessageBoxIcon.Warning:
-                        style = wxICON_WARNING;
-                        break;
-                    case MessageBoxIcon.Error:
-                        style = wxICON_ERROR;
-                        break;
-                }
-            }
-
-            Native.WxOtherFactory.RichToolTipSetIcon2(Handle, style);
+                icon = MessageBoxIcon.None;
+            Handler.SetIcon(icon);
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeManagedResources()
         {
-            Native.WxOtherFactory.DeleteRichToolTip(Handle);
+            Handler?.Dispose();
+            Handler = null!;
         }
     }
 }

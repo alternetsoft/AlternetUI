@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </summary>
     [ControlCategory("Hidden")]
     public abstract class CustomTextBox
-        : WxBaseControl, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions
+        : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions
     {
         private StringSearch? search;
         private int minLength;
@@ -778,12 +778,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <paramref name="value"/> to <see cref="string"/> and assigns <see cref="Control.Text"/>
+        /// Converts <paramref name="value"/> to <see cref="string"/> and assigns
+        /// <see cref="Control.Text"/>
         /// property with the converted value.
         /// </summary>
         /// <param name="value">Value.</param>
         /// <remarks>
-        /// This method uses <see cref="CustomTextBox.Converter"/>, <see cref="CustomTextBox.DefaultFormat"/> and
+        /// This method uses <see cref="CustomTextBox.Converter"/>,
+        /// <see cref="CustomTextBox.DefaultFormat"/> and
         /// <see cref="CustomTextBox.FormatProvider"/> propertties. Depending
         /// on the values of these properties, different conversion methods are used.
         /// </remarks>
@@ -845,12 +847,15 @@ namespace Alternet.UI
         /// <param name="showError">Indicates whether to show/hide error.</param>
         /// <param name="errorText">Specifies error text.</param>
         /// <remarks>
-        /// Uses <see cref="CustomTextBox.DefaultErrorBackgroundColor"/>, <see cref="CustomTextBox.DefaultErrorForegroundColor"/>,
-        /// <see cref="CustomTextBox.ValidatorErrorText"/>, <see cref="CustomTextBox.DefaultValidatorErrorText"/> and
+        /// Uses <see cref="CustomTextBox.DefaultErrorBackgroundColor"/>,
+        /// <see cref="CustomTextBox.DefaultErrorForegroundColor"/>,
+        /// <see cref="CustomTextBox.ValidatorErrorText"/>,
+        /// <see cref="CustomTextBox.DefaultValidatorErrorText"/> and
         /// <see cref="CustomTextBox.ValidatorReporter"/> properties.
         /// </remarks>
         /// <remarks>
-        /// <see cref="CustomTextBox.ValidatorReporter"/> property must support <see cref="IValidatorReporter"/>
+        /// <see cref="CustomTextBox.ValidatorReporter"/> property must support
+        /// <see cref="IValidatorReporter"/>
         /// interface in order to be used in this method. <see cref="PictureBox"/> supports
         /// this interface.
         /// </remarks>

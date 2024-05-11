@@ -66,6 +66,14 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IRichToolTipHandler CreateRichToolTipHandler(
+            string title,
+            string message,
+            bool useGeneric)
+        {
+            throw new NotImplementedException();
+        }
+
         public override object CreateTimer()
         {
             throw new NotImplementedException();

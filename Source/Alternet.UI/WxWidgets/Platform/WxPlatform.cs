@@ -287,6 +287,15 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public override IRichToolTipHandler CreateRichToolTipHandler(
+            string title,
+            string message,
+            bool useGeneric)
+        {
+            Native.WxOtherFactory.RichToolTipUseGeneric = useGeneric;
+            return new RichToolTipHandler(title, message);
+        }
+
         public override IPrintDocumentHandler CreatePrintDocumentHandler()
         {
             return new PrintDocumentHandler();

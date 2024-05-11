@@ -116,6 +116,11 @@ namespace Alternet.UI
 
         public abstract IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
 
+        public abstract IRichToolTipHandler CreateRichToolTipHandler(
+            string title,
+            string message,
+            bool useGeneric);
+
         public abstract string? GetTextFromUser(
             string message,
             string caption,
