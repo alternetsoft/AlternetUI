@@ -15,6 +15,8 @@ namespace Alternet.UI
     /// </remarks>
     public class ValueValidatorFactory
     {
+        private static bool isSilent;
+
         private IValueValidatorText? decimalValidator;
 
         static ValueValidatorFactory()
@@ -39,12 +41,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.Validator.IsSilent();
+                return isSilent;
             }
 
             set
             {
-                Native.Validator.SuppressBellOnError(value);
+                isSilent = value;
+                NativePlatform.Default.ValidatorSuppressBellOnError(value);
             }
         }
 
@@ -116,7 +119,7 @@ namespace Alternet.UI
         /// <param name="style">Text format style.</param>
         public virtual IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
         {
-            return new ValueValidatorText(style);
+            return NativePlatform.Default.CreateValueValidatorText(style);
         }
 
         /// <summary>
@@ -129,7 +132,7 @@ namespace Alternet.UI
             ValueValidatorNumStyle numericType,
             int valueBase = 10)
         {
-            return new ValueValidatorNumProp(numericType, valueBase);
+            return NativePlatform.Default.CreateValueValidatorNum(numericType, valueBase);
         }
     }
 }

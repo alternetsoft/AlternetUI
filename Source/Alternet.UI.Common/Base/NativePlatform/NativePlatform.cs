@@ -112,7 +112,15 @@ namespace Alternet.UI
 
         public abstract IPageSettingsHandler CreatePageSettingsHandler();
 
+        public abstract IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style);
+
+        public abstract IValueValidatorText CreateValueValidatorNum(
+            ValueValidatorNumStyle numericType,
+            int valueBase = 10);
+
         public abstract IPageSetupDialogHandler CreatePageSetupDialogHandler();
+
+        public abstract void ValidatorSuppressBellOnError(bool value);
 
         public abstract IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
 

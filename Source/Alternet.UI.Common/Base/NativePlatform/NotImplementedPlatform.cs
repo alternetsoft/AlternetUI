@@ -79,6 +79,16 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IValueValidatorText CreateValueValidatorNum(ValueValidatorNumStyle numericType, int valueBase = 10)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void EndBusyCursor()
         {
             throw new NotImplementedException();
@@ -255,6 +265,11 @@ namespace Alternet.UI
         }
 
         public override void TimerSetTick(Timer timer, Action? value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ValidatorSuppressBellOnError(bool value)
         {
             throw new NotImplementedException();
         }

@@ -287,6 +287,23 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
+        {
+            return new ValueValidatorText(style);
+        }
+
+        public override void ValidatorSuppressBellOnError(bool value)
+        {
+            Native.Validator.SuppressBellOnError(value);
+        }
+
+        public override IValueValidatorText CreateValueValidatorNum(
+            ValueValidatorNumStyle numericType,
+            int valueBase = 10)
+        {
+            return new ValueValidatorNumProp(numericType, valueBase);
+        }
+
         public override IRichToolTipHandler CreateRichToolTipHandler(
             string title,
             string message,

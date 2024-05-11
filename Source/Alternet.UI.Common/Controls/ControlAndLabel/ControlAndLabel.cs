@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace Alternet.UI
             mainControl = CreateControl();
             mainControl.VerticalAlignment = UI.VerticalAlignment.Center;
             mainControl.Parent = this;
-            TextBox.InitErrorPicture(errorPicture);
+            CustomTextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;
         }
 
