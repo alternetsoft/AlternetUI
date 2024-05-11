@@ -509,7 +509,7 @@ namespace ControlsSample
                 FileName = richPanel.TextBox.FileName,
             };
 
-            if (dialog.ShowModal(this) != ModalResult.Accepted)
+            if (dialog.ShowModal(this.ParentWindow) != ModalResult.Accepted)
                 return;
 
             if (SaveFile(dialog.FileName!))
@@ -546,7 +546,7 @@ namespace ControlsSample
                 FileMustExist = true,
             };
 
-            if (dialog.ShowModal(this) != ModalResult.Accepted)
+            if (dialog.ShowModal(this.ParentWindow) != ModalResult.Accepted)
                 return;
 
             if (LoadFile(dialog.FileName!))

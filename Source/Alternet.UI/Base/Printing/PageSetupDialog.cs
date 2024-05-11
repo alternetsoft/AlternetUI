@@ -28,31 +28,35 @@ namespace Alternet.UI
     /// <see cref="PageSettings"/> property before calling <see cref="CommonDialog.ShowModal()"/>.
     /// </para>
     /// </remarks>
-    public sealed class PageSetupDialog : CommonDialog
+    public class PageSetupDialog : CommonDialog
     {
-        private readonly Native.PageSetupDialog nativeDialog;
+        private PrintDocument? document;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PageSetupDialog"/>.
         /// </summary>
         public PageSetupDialog()
         {
-            nativeDialog = new Native.PageSetupDialog();
+            Handler = new Native.PageSetupDialog();
         }
 
         /// <summary>
         /// Gets or sets a value indicating the <see cref="PrintDocument"/> to get page settings from.
         /// </summary>
-        public PrintDocument? Document
+        [Browsable(false)]
+        public virtual PrintDocument? Document
         {
             get
             {
-                return nativeDialog.Document == null ? null : new PrintDocument(nativeDialog.Document);
+                return document;
             }
 
             set
             {
-                nativeDialog.Document = value?.NativePrintDocument;
+                if (document == value)
+                    return;
+                document = value;
+                Handler.Document = value?.Handler;
             }
         }
 
@@ -60,35 +64,35 @@ namespace Alternet.UI
         /// Gets or sets a value indicating the minimum margins, in millimeters, the user is
         /// allowed to select.
         /// </summary>
-        public Thickness? MinMargins
+        public virtual Thickness? MinMargins
         {
             get
             {
-                return nativeDialog.MinMarginsValueSet ? nativeDialog.MinMargins : null;
+                return Handler.MinMarginsValueSet ? Handler.MinMargins : null;
             }
 
             set
             {
-                nativeDialog.MinMarginsValueSet = value != null;
+                Handler.MinMarginsValueSet = value != null;
 
                 if (value != null)
-                    nativeDialog.MinMargins = value.Value;
+                    Handler.MinMargins = value.Value;
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the margins section of the dialog box is enabled.
         /// </summary>
-        public bool AllowMargins
+        public virtual bool AllowMargins
         {
             get
             {
-                return nativeDialog.AllowMargins;
+                return Handler.AllowMargins;
             }
 
             set
             {
-                nativeDialog.AllowMargins = value;
+                Handler.AllowMargins = value;
             }
         }
 
@@ -97,16 +101,16 @@ namespace Alternet.UI
         /// (landscape versus
         /// portrait) is enabled.
         /// </summary>
-        public bool AllowOrientation
+        public virtual bool AllowOrientation
         {
             get
             {
-                return nativeDialog.AllowOrientation;
+                return Handler.AllowOrientation;
             }
 
             set
             {
-                nativeDialog.AllowOrientation = value;
+                Handler.AllowOrientation = value;
             }
         }
 
@@ -115,43 +119,60 @@ namespace Alternet.UI
         /// (paper size and paper source) is
         /// enabled.
         /// </summary>
-        public bool AllowPaper
+        public virtual bool AllowPaper
         {
             get
             {
-                return nativeDialog.AllowPaper;
+                return Handler.AllowPaper;
             }
 
             set
             {
-                nativeDialog.AllowPaper = value;
+                Handler.AllowPaper = value;
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Printer button</b> is enabled.
         /// </summary>
-        public bool AllowPrinter
+        public virtual bool AllowPrinter
         {
             get
             {
-                return nativeDialog.AllowPrinter;
+                return Handler.AllowPrinter;
             }
 
             set
             {
-                nativeDialog.AllowPrinter = value;
+                Handler.AllowPrinter = value;
             }
         }
 
-        private protected override string? TitleCore { get; set; }
+        /// <inheritdoc/>
+        public override string? Title { get; set; }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        internal Native.PageSetupDialog Handler { get; private set; }
+
+        /// <inheritdoc/>
+        public override ModalResult ShowModal(Window? owner)
         {
+            if (Document == null)
+            {
+                BaseApplication.Alert("Cannot show the PageSetup dialog when the Document is null.");
+                return ModalResult.Canceled;
+            }
+
             CheckDisposed();
             var nativeOwner = owner == null ? null
                 : ((WindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            return (ModalResult)Handler.ShowModal(nativeOwner);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
+        {
+            Handler.Dispose();
+            Handler = null!;
         }
     }
 }

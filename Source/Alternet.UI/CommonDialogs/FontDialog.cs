@@ -32,7 +32,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return true;
 
                 CheckDisposed();
@@ -41,7 +41,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return;
                 CheckDisposed();
                 nativeDialog.AllowSymbols = value;
@@ -58,7 +58,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return false;
 
                 CheckDisposed();
@@ -67,7 +67,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return;
 
                 CheckDisposed();
@@ -86,7 +86,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return true;
 
                 CheckDisposed();
@@ -95,7 +95,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return;
 
                 CheckDisposed();
@@ -122,7 +122,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!Application.IsWindowsOS)
+                if (!BaseApplication.IsWindowsOS)
                     return;
 
                 CheckDisposed();
@@ -169,7 +169,8 @@ namespace Alternet.UI
             }
         }
 
-        private protected override string? TitleCore
+        /// <inheritdoc/>
+        public override string? Title
         {
             get
             {
@@ -196,14 +197,15 @@ namespace Alternet.UI
         /// </remarks>
         public void SetRange(int minRange, int maxRange)
         {
-            if (!Application.IsWindowsOS)
+            if (!BaseApplication.IsWindowsOS)
                 return;
 
             CheckDisposed();
             nativeDialog.SetRange(minRange, maxRange);
         }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        /// <inheritdoc/>
+        public override ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             var nativeOwner = owner == null ?

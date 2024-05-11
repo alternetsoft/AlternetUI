@@ -192,9 +192,8 @@ namespace Alternet.UI
             }
         }
 
-        private protected Native.FileDialog NativeDialog => nativeDialog;
-
-        private protected override string? TitleCore
+        /// <inheritdoc/>
+        public override string? Title
         {
             get
             {
@@ -209,9 +208,12 @@ namespace Alternet.UI
             }
         }
 
+        private protected Native.FileDialog NativeDialog => nativeDialog;
+
         private protected abstract Native.FileDialogMode Mode { get; }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        /// <inheritdoc/>
+        public override ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             var nativeOwner = owner == null ? null

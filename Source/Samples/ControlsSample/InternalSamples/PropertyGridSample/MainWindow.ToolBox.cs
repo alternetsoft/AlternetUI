@@ -114,6 +114,10 @@ namespace PropertyGridSample
                 items.Add(CreateDialogItem<SelectDirectoryDialog>());
                 items.Add(CreateDialogItem<FontDialog>());
 
+                items.Add(CreateDialogItem<PageSetupDialog>());
+                items.Add(CreateDialogItem<PrintPreviewDialog>());
+                items.Add(CreateDialogItem<PrintDialog>());
+
                 items.Sort();
 
                 foreach (var elem in items)

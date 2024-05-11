@@ -52,7 +52,8 @@ namespace Alternet.UI
             }
         }
 
-        private protected override string? TitleCore
+        /// <inheritdoc/>
+        public override string? Title
         {
             get
             {
@@ -67,7 +68,8 @@ namespace Alternet.UI
             }
         }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        /// <inheritdoc/>
+        public override ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             var nativeOwner = owner == null ?

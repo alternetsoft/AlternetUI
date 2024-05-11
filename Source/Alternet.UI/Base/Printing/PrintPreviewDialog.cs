@@ -8,59 +8,48 @@ namespace Alternet.UI
     /// from an Alternet.UI application.
     /// </summary>
     [ControlCategory("Printing")]
-    public class PrintPreviewDialog : BaseComponent, IDisposable
+    public class PrintPreviewDialog : CommonDialog, IDisposable
     {
-        private bool isDisposed;
+        private PrintDocument? document;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PrintPreviewDialog"/> class.
         /// </summary>
         public PrintPreviewDialog()
-            : this(new Native.PrintPreviewDialog())
         {
-        }
-
-        internal PrintPreviewDialog(Native.PrintPreviewDialog nativePrintPreviewDialog)
-        {
-            NativePrintPreviewDialog = nativePrintPreviewDialog;
+            Handler = new Native.PrintPreviewDialog();
         }
 
         /// <summary>
         /// Gets or sets the document to preview.
         /// </summary>
+        [Browsable(false)]
         public PrintDocument? Document
         {
             get
             {
-                return NativePrintPreviewDialog.Document == null
-                    ? null : new PrintDocument(NativePrintPreviewDialog.Document);
+                return document;
             }
 
             set
             {
-                NativePrintPreviewDialog.Document = value?.NativePrintDocument;
+                if (document == value)
+                    return;
+                document = value;
+                Handler.Document = value?.Handler;
             }
         }
 
         /// <summary>
         /// Gets or sets the title of this <see cref="PrintPreviewDialog"/>.
         /// </summary>
-        public string? Title
+        public override string? Title
         {
-            get => NativePrintPreviewDialog.Title;
-            set => NativePrintPreviewDialog.Title = value;
+            get => Handler.Title;
+            set => Handler.Title = value;
         }
 
-        internal Native.PrintPreviewDialog NativePrintPreviewDialog { get; private set; }
-
-        /// <summary>
-        /// Releases all resources used by the <see cref="PrintDocument"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+        internal Native.PrintPreviewDialog Handler { get; private set; }
 
         /// <summary>
         /// Shows the <see cref="PrintPreviewDialog"/> with the specified optional owner window.
@@ -68,36 +57,25 @@ namespace Alternet.UI
         /// <param name="owner">The owner window for the dialog.</param>
         /// <exception cref="InvalidOperationException">The <see cref="Document"/> property
         /// value is <see langword="null"/>.</exception>
-        public void ShowModal(Window? owner = null)
+        public override ModalResult ShowModal(Window? owner = null)
         {
-            if (NativePrintPreviewDialog.Document == null)
+            if (Document == null)
             {
-                throw new InvalidOperationException(
-                    "Cannot show the print preview dialog when the Document is null.");
+                BaseApplication.Alert("Cannot show the print preview dialog when the Document is null.");
+                return ModalResult.Canceled;
             }
 
             var nativeOwner = owner == null
                 ? null : ((WindowHandler)owner.Handler).NativeControl;
-            NativePrintPreviewDialog.ShowModal(nativeOwner);
+            Handler.ShowModal(nativeOwner);
+            return ModalResult.Accepted;
         }
 
-        /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="PrintPreviewDialog"/>
-        /// and optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
         {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    NativePrintPreviewDialog.Dispose();
-                    NativePrintPreviewDialog = null!;
-                }
-
-                isDisposed = true;
-            }
+            Handler.Dispose();
+            Handler = null!;
         }
     }
 }

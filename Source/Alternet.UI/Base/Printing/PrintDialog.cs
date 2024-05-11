@@ -13,79 +13,79 @@ namespace Alternet.UI
     /// <see cref="PrintDialog"/>, use the <see cref="PrinterSettings"/> property.
     /// </remarks>
     [ControlCategory("Printing")]
-    public sealed class PrintDialog : CommonDialog
+    public class PrintDialog : CommonDialog
     {
-        private readonly Native.PrintDialog nativeDialog;
+        private PrintDocument? document;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PrintDialog"/>.
         /// </summary>
         public PrintDialog()
         {
-            nativeDialog = new Native.PrintDialog();
+            Handler = new Native.PrintDialog();
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Pages</b> option button is enabled.
         /// </summary>
-        public bool AllowSomePages
+        public virtual bool AllowSomePages
         {
             get
             {
-                return nativeDialog.AllowSomePages;
+                return Handler.AllowSomePages;
             }
 
             set
             {
-                nativeDialog.AllowSomePages = value;
+                Handler.AllowSomePages = value;
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Selection</b> option button is enabled.
         /// </summary>
-        public bool AllowSelection
+        public virtual bool AllowSelection
         {
             get
             {
-                return nativeDialog.AllowSelection;
+                return Handler.AllowSelection;
             }
 
             set
             {
-                nativeDialog.AllowSelection = value;
+                Handler.AllowSelection = value;
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Print to file</b> option button is enabled.
         /// </summary>
-        public bool AllowPrintToFile
+        public virtual bool AllowPrintToFile
         {
             get
             {
-                return nativeDialog.AllowPrintToFile;
+                return Handler.AllowPrintToFile;
             }
 
             set
             {
-                nativeDialog.AllowPrintToFile = value;
+                Handler.AllowPrintToFile = value;
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the the <b>Help</b> button is displayed.
         /// </summary>
-        public bool ShowHelp
+        public virtual bool ShowHelp
         {
             get
             {
-                return nativeDialog.ShowHelp;
+                return Handler.ShowHelp;
             }
 
             set
             {
-                nativeDialog.ShowHelp = value;
+                Handler.ShowHelp = value;
             }
         }
 
@@ -95,27 +95,47 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The <see cref="PrintDocument"/> used to obtain <see cref="PrinterSettings"/>.
         /// The default is <see langword="null"/>.</value>
-        public PrintDocument? Document
+        [Browsable(false)]
+        public virtual PrintDocument? Document
         {
             get
             {
-                return nativeDialog.Document == null
-                    ? null : new PrintDocument(nativeDialog.Document);
+                return document;
             }
 
             set
             {
-                nativeDialog.Document = value?.NativePrintDocument;
+                if (document == value)
+                    return;
+                document = value;
+                Handler.Document = value?.Handler;
             }
         }
 
-        private protected override string? TitleCore { get; set; }
+        /// <inheritdoc/>
+        public override string? Title { get; set; }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        internal Native.PrintDialog Handler { get; private set; }
+
+        /// <inheritdoc/>
+        public override ModalResult ShowModal(Window? owner)
         {
+            if (Document == null)
+            {
+                BaseApplication.Alert("Cannot show the print dialog when the Document is null.");
+                return ModalResult.Canceled;
+            }
+
             var nativeOwner = owner == null
                 ? null : ((WindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            return (ModalResult)Handler.ShowModal(nativeOwner);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
+        {
+            Handler.Dispose();
+            Handler = null!;
         }
     }
 }

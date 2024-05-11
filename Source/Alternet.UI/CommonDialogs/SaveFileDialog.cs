@@ -42,9 +42,10 @@ namespace Alternet.UI
 
         private protected override Native.FileDialogMode Mode => Native.FileDialogMode.Save;
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        /// <inheritdoc/>
+        public override ModalResult ShowModal(Window? owner)
         {
-            var result = base.ShowModalCore(owner);
+            var result = base.ShowModal(owner);
             if (result == ModalResult.Accepted)
             {
                 if (!AllowNullFileName)
