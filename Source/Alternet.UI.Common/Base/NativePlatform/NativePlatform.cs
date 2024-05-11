@@ -114,6 +114,8 @@ namespace Alternet.UI
 
         public abstract IPageSetupDialogHandler CreatePageSetupDialogHandler();
 
+        public abstract IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
+
         public abstract string? GetTextFromUser(
             string message,
             string caption,

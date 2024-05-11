@@ -297,6 +297,11 @@ namespace Alternet.UI
             return new PrintDialogHandler();
         }
 
+        public override IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler()
+        {
+            return new PrintPreviewDialogHandler();
+        }
+
         public override IPageSetupDialogHandler CreatePageSetupDialogHandler()
         {
             return new PageSetupDialogHandler();

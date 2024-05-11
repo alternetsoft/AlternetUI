@@ -61,6 +61,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public override object CreateTimer()
         {
             throw new NotImplementedException();

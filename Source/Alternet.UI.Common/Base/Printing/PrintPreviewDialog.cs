@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
@@ -17,7 +19,7 @@ namespace Alternet.UI
         /// </summary>
         public PrintPreviewDialog()
         {
-            Handler = new Native.PrintPreviewDialog();
+            Handler = NativePlatform.Default.CreatePrintPreviewDialogHandler();
         }
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace Alternet.UI
                 if (document == value)
                     return;
                 document = value;
-                Handler.Document = value?.Handler as PrintDocumentHandler;
+                Handler.SetDocument(value?.Handler);
             }
         }
 
@@ -49,7 +51,7 @@ namespace Alternet.UI
             set => Handler.Title = value;
         }
 
-        internal Native.PrintPreviewDialog Handler { get; private set; }
+        internal IPrintPreviewDialogHandler Handler { get; private set; }
 
         /// <summary>
         /// Shows the <see cref="PrintPreviewDialog"/> with the specified optional owner window.
@@ -65,16 +67,13 @@ namespace Alternet.UI
                 return ModalResult.Canceled;
             }
 
-            var nativeOwner = owner == null
-                ? null : ((WindowHandler)owner.Handler).NativeControl;
-            Handler.ShowModal(nativeOwner);
-            return ModalResult.Accepted;
+            return Handler.ShowModal(owner);
         }
 
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
-            Handler.Dispose();
+            Handler?.Dispose();
             Handler = null!;
         }
     }
