@@ -279,7 +279,7 @@ namespace Alternet.UI
 
         public override IPrinterSettingsHandler CreatePrinterSettingsHandler()
         {
-            return new PrinterSettingsHandler();
+            return new UI.Native.PrinterSettings();
         }
 
         private class SafeNativeMethods

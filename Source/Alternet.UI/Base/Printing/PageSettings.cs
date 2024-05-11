@@ -115,7 +115,7 @@ namespace Alternet.Drawing.Printing
                 }
                 else
                 {
-                    NativePageSettings.PaperSize = (UI.Native.PaperKind)value.Kind;
+                    NativePageSettings.PaperSize = value.Kind;
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace Alternet.Drawing.Printing
                 if (value == null)
                     throw new ArgumentNullException(nameof(PrinterResolution));
 
-                NativePageSettings.PrinterResolution = (UI.Native.PrinterResolutionKind)value.Kind;
+                NativePageSettings.PrinterResolution = value.Kind;
             }
         }
 

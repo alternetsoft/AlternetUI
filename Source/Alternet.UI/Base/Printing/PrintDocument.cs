@@ -156,8 +156,7 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return printerSettings??= new PrinterSettings(
-                        new PrinterSettingsHandler(NativePrintDocument.PrinterSettings));
+                return printerSettings??= new PrinterSettings(NativePrintDocument.PrinterSettings);
             }
         }
 

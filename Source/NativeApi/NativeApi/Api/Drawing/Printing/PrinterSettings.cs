@@ -1,8 +1,11 @@
 ﻿#pragma warning disable
 using System;
 
+using ApiCommon;
+
 namespace NativeApi.Api
 {
+    [ManagedInterface("Alternet.Drawing.Printing.IPrinterSettingsHandler")]
     public class PrinterSettings
     {
         public Duplex Duplex { get => throw new Exception(); set => throw new Exception(); }

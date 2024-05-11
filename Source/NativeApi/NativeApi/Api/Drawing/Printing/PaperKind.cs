@@ -1,6 +1,10 @@
 #pragma warning disable
+using ApiCommon;
+
 namespace NativeApi.Api
 {
+    [ManagedExternName("Alternet.Drawing.Printing.PaperKind")]
+    [ManagedName("Alternet.Drawing.Printing.PaperKind")]
     public enum PaperKind
     {
         /// <summary>

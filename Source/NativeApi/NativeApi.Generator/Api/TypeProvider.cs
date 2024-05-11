@@ -103,6 +103,15 @@ namespace ApiGenerator.Api
             return nativeNameAttributes.Cast<NativeNameAttribute>().Single().Name;
         }
 
+        public static string? GetAdditionalInterfaceName(Type type)
+        {
+            var nativeNameAttributes = type.GetCustomAttributes(typeof(ManagedInterfaceAttribute), false);
+            if (nativeNameAttributes.Length == 0)
+                return null;
+
+            return nativeNameAttributes.Cast<ManagedInterfaceAttribute>().Single().Name;
+        }
+
         public static bool IsFlagsEnum(Type type)
         {
             if (!type.IsEnum)
