@@ -126,7 +126,7 @@ namespace Alternet.UI
             ContextMenu.Required();
             Application.LogMessage += Application_LogMessage;
             Application.LogRefresh += Application_LogRefresh;
-            AppUtils.DebugLogVersion();
+            DebugUtils.DebugLogVersion();
         }
 
         /// <summary>

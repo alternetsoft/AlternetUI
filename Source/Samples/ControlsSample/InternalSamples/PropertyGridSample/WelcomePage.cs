@@ -26,7 +26,7 @@ namespace PropertyGridSample
             richText.Parent = this;
             var r = richText;
 
-            r.SetDefaultStyle(TextBox.CreateTextAttr());
+            r.SetDefaultStyle(r.CreateTextAttr());
 
             r.BeginUpdate();
             r.BeginSuppressUndo();

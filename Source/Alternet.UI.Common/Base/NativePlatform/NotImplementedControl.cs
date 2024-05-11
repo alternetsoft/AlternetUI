@@ -674,4 +674,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateTextBoxHandler()
+    {
+        throw new NotImplementedException();
+    }
 }

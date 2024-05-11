@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,6 +16,33 @@ namespace Alternet.UI
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
         private static WindowDeveloperTools? devToolsWindow;
+
+        /// <summary>
+        /// Logs environment versions.
+        /// </summary>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogVersion()
+        {
+            if (!LogUtils.ShowDebugWelcomeMessage)
+                return;
+            if (LogUtils.Flags.HasFlag(LogUtils.LogFlags.VersionLogged))
+                return;
+            LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
+            var wxWidgets = WebBrowser.GetLibraryVersionString();
+            var bitsOS = BaseApplication.Is64BitOS ? "x64" : "x86";
+            var bitsApp = BaseApplication.Is64BitProcess ? "x64" : "x86";
+            var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
+            var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
+            var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
+            var counterStr = $"Counter: {Application.BuildCounter}";
+            var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
+            BaseApplication.Log(s);
+            if (BaseApplication.LogFileIsEnabled)
+                BaseApplication.DebugLog($"Log File = {BaseApplication.LogFilePath}");
+        }
 
         /// <summary>
         /// Logs <see cref="SystemSettings"/>.

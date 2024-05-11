@@ -50,46 +50,48 @@ namespace ControlsSample
 
         internal void InitRichEdit()
         {
+            var richEdit = richPanel.TextBox;
+
             var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
 
-            var taTextColorRed = TextBox.CreateTextAttr();
+            var taTextColorRed = richEdit.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);
 
-            var taBackColorYellow = TextBox.CreateTextAttr();
+            var taBackColorYellow = richEdit.CreateTextAttr();
             taBackColorYellow.SetBackgroundColor(Color.Yellow);
             taBackColorYellow.SetTextColor(Color.Black);
 
-            var taUnderlined = TextBox.CreateTextAttr();
+            var taUnderlined = richEdit.CreateTextAttr();
             taUnderlined.SetFontUnderlined();
 
-            var taItalic = TextBox.CreateTextAttr();
+            var taItalic = richEdit.CreateTextAttr();
             taItalic.SetFontItalic();
 
-            var taBold = TextBox.CreateTextAttr();
+            var taBold = richEdit.CreateTextAttr();
             taBold.SetFontWeight(FontWeight.Bold);
 
-            var taStrikeOut = TextBox.CreateTextAttr();
+            var taStrikeOut = richEdit.CreateTextAttr();
             taStrikeOut.SetFontStrikethrough();
 
             var homePage = @"https://www.alternet-ui.com/";
 
-            var taUrl = TextBox.CreateTextAttr();
+            var taUrl = richEdit.CreateTextAttr();
             taUrl.SetURL(homePage);
 
-            var taDefault = TextBox.CreateTextAttr();
+            var taDefault = richEdit.CreateTextAttr();
 
-            var taUnorderedList = TextBox.CreateTextAttr();
+            var taUnorderedList = richEdit.CreateTextAttr();
             taUnorderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Standard);
             taUnorderedList.SetBulletName("standard/circle");
 
-            var taOrderedList = TextBox.CreateTextAttr();
+            var taOrderedList = richEdit.CreateTextAttr();
             taOrderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Arabic);
             taOrderedList.SetBulletNumber(1);
 
-            var taBig = TextBox.CreateTextAttr();
+            var taBig = richEdit.CreateTextAttr();
             taBig.SetFontPointSize(baseFontSize + 15);
 
-            var taUnderlined2 = TextBox.CreateTextAttr();
+            var taUnderlined2 = richEdit.CreateTextAttr();
             taUnderlined2.SetFontUnderlinedEx(
                 TextBoxTextAttrUnderlineType.Special,
                 Color.Red);
@@ -146,8 +148,6 @@ namespace ControlsSample
 
             // richEdit.AutoUrl = true;
 
-            var richEdit = richPanel.TextBox;
-
             richEdit.DoInsideUpdate(() =>
             {
                 richEdit.AppendTextAndStyles(list);
@@ -194,7 +194,7 @@ namespace ControlsSample
 
             var r = richPanel.TextBox;
 
-            r.SetDefaultStyle(TextBox.CreateTextAttr());
+            r.SetDefaultStyle(r.CreateTextAttr());
 
             r.BeginUpdate();
             r.BeginSuppressUndo();

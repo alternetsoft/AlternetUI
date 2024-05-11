@@ -4,7 +4,8 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeTextBoxHandler : NativeControlHandler<TextBox, Native.TextBox>
+    internal class TextBoxHandler
+        : NativeControlHandler<TextBox, Native.TextBox>, ITextBoxHandler
     {
         private bool handlingNativeControlTextChanged;
 
@@ -323,6 +324,43 @@ namespace Alternet.UI
         public void SetInsertionPointEnd()
         {
             NativeControl.SetInsertionPointEnd();
+        }
+
+        public ITextBoxTextAttr CreateTextAttr()
+        {
+            return new TextBoxTextAttr();
+        }
+
+        ITextBoxTextAttr ITextBoxHandler.GetDefaultStyle()
+        {
+            return new TextBoxTextAttr(NativeControl.GetDefaultStyle());
+        }
+
+        void ITextBoxHandler.SetValidator(IValueValidator? value)
+        {
+            if (value == null)
+                NativeControl.Validator = IntPtr.Zero;
+            else
+                NativeControl.Validator = value.Handle;
+        }
+
+        bool ITextBoxHandler.SetStyle(long start, long end, ITextBoxTextAttr style)
+        {
+            if (style is not TextBoxTextAttr s)
+                return false;
+            return SetStyle(start, end, s.Handle);
+        }
+
+        bool ITextBoxHandler.SetDefaultStyle(ITextBoxTextAttr style)
+        {
+            if (style is not TextBoxTextAttr s)
+                return false;
+            return SetDefaultStyle(s.Handle);
+        }
+
+        ITextBoxTextAttr ITextBoxHandler.GetStyle(long pos)
+        {
+            return new TextBoxTextAttr(NativeControl.GetStyle(pos));
         }
 
         public void SetMaxLength(ulong len)

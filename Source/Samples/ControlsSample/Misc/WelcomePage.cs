@@ -25,7 +25,7 @@ namespace ControlsSample
 
             r.TextUrl += RichTextBox_TextUrl;
 
-            r.SetDefaultStyle(TextBox.CreateTextAttr());
+            r.SetDefaultStyle(r.CreateTextAttr());
 
             r.BeginUpdate();
             r.BeginSuppressUndo();

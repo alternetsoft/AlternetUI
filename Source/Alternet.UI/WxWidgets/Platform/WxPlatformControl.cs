@@ -93,6 +93,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateTextBoxHandler()
+        {
+            return new TextBoxHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateComboBoxHandler(IControl control)
         {
             return new ComboBoxHandler();

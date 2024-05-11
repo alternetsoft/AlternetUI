@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeRichTextBoxHandler : WxControlHandler
+    internal class RichTextBoxHandler : WxControlHandler
     {
         public new Native.RichTextBox NativeControl => (Native.RichTextBox)base.NativeControl!;
 

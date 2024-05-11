@@ -45,11 +45,11 @@ namespace Alternet.UI
 
         static TextBox()
         {
-            var choices = PropertyGrid.CreateChoices();
+            var choices = BasePropertyGrid.CreateChoices();
             choices.Add(PropNameStrings.Default.Left, GenericAlignment.Left);
             choices.Add(PropNameStrings.Default.Right, GenericAlignment.Right);
             choices.Add(PropNameStrings.Default.Center, GenericAlignment.CenterHorizontal);
-            var prm = PropertyGrid.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
+            var prm = BasePropertyGrid.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
             prm.EnumIsFlags = false;
             prm.Choices = choices;
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// </summary>
         public TextBox()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
         }
 
@@ -169,10 +169,7 @@ namespace Alternet.UI
                 if (validator == value)
                     return;
                 validator = value;
-                if (validator == null)
-                    Handler.NativeControl.Validator = IntPtr.Zero;
-                else
-                    Handler.NativeControl.Validator = validator.Handle;
+                Handler.SetValidator(value);
             }
         }
 
@@ -742,16 +739,15 @@ namespace Alternet.UI
             }
         }
 
-        internal new NativeTextBoxHandler Handler =>
-            (NativeTextBoxHandler)base.Handler;
+        internal new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
 
         /// <summary>
         /// Creates new custom text style.
         /// </summary>
         /// <returns></returns>
-        public static ITextBoxTextAttr CreateTextAttr()
+        public virtual ITextBoxTextAttr CreateTextAttr()
         {
-            return new TextBoxTextAttr();
+            return Handler.CreateTextAttr();
         }
 
         /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(ValueValidatorKind)"/>
@@ -821,7 +817,7 @@ namespace Alternet.UI
             var style = fs.GetFontStyle();
             style = Font.ChangeFontStyle(style, toggle, !style.HasFlag(toggle));
 
-            var newStyle = TextBox.CreateTextAttr();
+            var newStyle = CreateTextAttr();
             newStyle.Copy(fs);
             newStyle.SetFontStyle(style);
             SetSelectionStyle(newStyle);
@@ -858,7 +854,7 @@ namespace Alternet.UI
         {
             var position = GetInsertionPoint();
             var fs = GetStyle(position);
-            var newStyle = TextBox.CreateTextAttr();
+            var newStyle = CreateTextAttr();
             newStyle.Copy(fs);
             if (backColor is not null)
                 newStyle.SetBackgroundColor(backColor);
@@ -952,7 +948,7 @@ namespace Alternet.UI
         {
             // Under MacOs url parameter of the event data is always empty,
             // so event is not fired. Also on MacOs url is opened automatically.
-            if (Application.IsMacOS)
+            if (BaseApplication.IsMacOS)
                 return;
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
@@ -1421,7 +1417,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual ITextBoxTextAttr GetDefaultStyle()
         {
-            return new TextBoxTextAttr(Handler.GetDefaultStyle());
+            return Handler.GetDefaultStyle();
         }
 
         /// <summary>
@@ -1434,7 +1430,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual ITextBoxTextAttr GetStyle(long pos)
         {
-            return new TextBoxTextAttr(Handler.GetStyle(pos));
+            return Handler.GetStyle(pos);
         }
 
         /// <summary>
@@ -1458,9 +1454,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
-                return false;
-            return Handler.SetDefaultStyle(s.Handle);
+            return Handler.SetDefaultStyle(style);
         }
 
         /// <summary>
@@ -1482,9 +1476,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
-                return false;
-            return Handler.SetStyle(start, end, s.Handle);
+            return Handler.SetStyle(start, end, style);
         }
 
         /// <summary>
@@ -1578,7 +1570,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NativeTextBoxHandler();
+            return GetNative().CreateTextBoxHandler();
         }
 
         /// <inheritdoc/>

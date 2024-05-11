@@ -20,37 +20,10 @@ namespace Alternet.UI
         /// </summary>
         public static void OpenLogFile()
         {
-            if (!File.Exists(Application.LogFilePath))
+            if (!File.Exists(BaseApplication.LogFilePath))
                 LogUtils.LogToFileAppStarted();
 
-            AppUtils.ShellExecute(Application.LogFilePath);
-        }
-
-        /// <summary>
-        /// Logs environment versions.
-        /// </summary>
-        /// <remarks>
-        /// Works only if DEBUG conditional is defined.
-        /// </remarks>
-        [Conditional("DEBUG")]
-        public static void DebugLogVersion()
-        {
-            if (!LogUtils.ShowDebugWelcomeMessage)
-                return;
-            if (LogUtils.Flags.HasFlag(LogUtils.LogFlags.VersionLogged))
-                return;
-            LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
-            var wxWidgets = WebBrowser.GetLibraryVersionString();
-            var bitsOS = BaseApplication.Is64BitOS ? "x64" : "x86";
-            var bitsApp = BaseApplication.Is64BitProcess ? "x64" : "x86";
-            var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
-            var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
-            var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
-            var counterStr = $"Counter: {Application.BuildCounter}";
-            var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
-            BaseApplication.Log(s);
-            if (BaseApplication.LogFileIsEnabled)
-                BaseApplication.DebugLog($"Log File = {BaseApplication.LogFilePath}");
+            ShellExecute(BaseApplication.LogFilePath);
         }
 
         /// <summary>
@@ -97,7 +70,7 @@ namespace Alternet.UI
             bool waitResult = false,
             bool logStdOut = true)
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS)
                 return ExecuteApp("cmd.exe", "/c " + command, folder, waitResult, logStdOut);
             else
                 return ExecuteApp("/bin/bash", "-c \"" + command + "\"", folder, waitResult, logStdOut);
@@ -118,7 +91,7 @@ namespace Alternet.UI
 
             Process process = new();
             if(logStdOut)
-                Application.IdleLog("Run: " + fileName + " " + arguments);
+                BaseApplication.IdleLog("Run: " + fileName + " " + arguments);
             ProcessStartInfo processInfo = new(fileName, arguments)
             {
                 // If the UseShellExecute property is true,
@@ -142,7 +115,7 @@ namespace Alternet.UI
                     return;
                 if (logStdOut)
                 {
-                    Application.IdleLog($"Output> {y.Data}");
+                    BaseApplication.IdleLog($"Output> {y.Data}");
                 }
             };
             process.ErrorDataReceived += (x, y) =>
@@ -152,7 +125,7 @@ namespace Alternet.UI
                     return;
                 if (logStdOut)
                 {
-                    Application.IdleLog($"Error> {y.Data}");
+                    BaseApplication.IdleLog($"Error> {y.Data}");
                 }
             };
             process.Start();

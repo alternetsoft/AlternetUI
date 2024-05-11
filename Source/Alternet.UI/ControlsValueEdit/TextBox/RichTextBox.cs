@@ -257,12 +257,12 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.RichTextBox;
 
         [Browsable(false)]
-        internal new NativeRichTextBoxHandler Handler
+        internal new RichTextBoxHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativeRichTextBoxHandler)base.Handler;
+                return (RichTextBoxHandler)base.Handler;
             }
         }
 
@@ -2403,6 +2403,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates text attributes object.
+        /// </summary>
+        /// <returns></returns>
+        public ITextBoxTextAttr CreateTextAttr()
+        {
+            return new TextBoxTextAttr();
+        }
+
+        /// <summary>
         /// Deletes content if there is a selection, e.g. when pressing a key.
         /// Returns the new caret position in @e newPos, or leaves it if there
         /// was no action. This is undoable.
@@ -2988,7 +2997,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NativeRichTextBoxHandler();
+            return new RichTextBoxHandler();
         }
 
         /// <inheritdoc/>

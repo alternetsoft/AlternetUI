@@ -23,7 +23,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateTextBoxHandler(Control control) =>
-            new NativeTextBoxHandler();
+            new TextBoxHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateCheckBoxHandler(Control control) =>

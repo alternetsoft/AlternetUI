@@ -20,6 +20,8 @@ public abstract class NativeControl
 
     public abstract void SetWantChars(IControl control, bool value);
 
+    public abstract BaseControlHandler CreateTextBoxHandler();
+
     public abstract BaseControlHandler CreateComboBoxHandler(IControl control);
 
     public abstract BaseControlHandler CreateLabelHandler(IControl control);

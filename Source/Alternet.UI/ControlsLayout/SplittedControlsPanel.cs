@@ -208,7 +208,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public virtual void WriteWelcomeLogMessages()
         {
-            AppUtils.DebugLogVersion();
+            DebugUtils.DebugLogVersion();
         }
 
         /// <summary>
