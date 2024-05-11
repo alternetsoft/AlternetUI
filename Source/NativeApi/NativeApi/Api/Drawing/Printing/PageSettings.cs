@@ -3,8 +3,11 @@ using System;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using ApiCommon;
+
 namespace NativeApi.Api
 {
+    [ManagedInterface("Alternet.Drawing.Printing.IPageSettingsHandler")]
     public class PageSettings
     {
         public bool Color { get; set; }

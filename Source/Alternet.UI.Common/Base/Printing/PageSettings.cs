@@ -24,13 +24,16 @@ namespace Alternet.Drawing.Printing
         /// Initializes a new instance of the <see cref="PageSettings"/> class.
         /// </summary>
         public PageSettings()
-            : this(new UI.Native.PageSettings())
+            : this(NativePlatform.Default.CreatePageSettingsHandler())
         {
         }
 
-        internal PageSettings(UI.Native.PageSettings nativePageSettings)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageSettings"/> class.
+        /// </summary>
+        public PageSettings(IPageSettingsHandler nativePageSettings)
         {
-            NativePageSettings = nativePageSettings;
+            Handler = nativePageSettings;
         }
 
         /// <summary>
@@ -42,12 +45,12 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return NativePageSettings.Color;
+                return Handler.Color;
             }
 
             set
             {
-                NativePageSettings.Color = value;
+                Handler.Color = value;
             }
         }
 
@@ -61,12 +64,12 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return NativePageSettings.Landscape;
+                return Handler.Landscape;
             }
 
             set
             {
-                NativePageSettings.Landscape = value;
+                Handler.Landscape = value;
             }
         }
 
@@ -79,12 +82,12 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return NativePageSettings.Margins;
+                return Handler.Margins;
             }
 
             set
             {
-                NativePageSettings.Margins = value;
+                Handler.Margins = value;
             }
         }
 
@@ -96,10 +99,10 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                if (NativePageSettings.UseCustomPaperSize)
-                    return new PaperSize(NativePageSettings.CustomPaperSize);
+                if (Handler.UseCustomPaperSize)
+                    return new PaperSize(Handler.CustomPaperSize);
 
-                return new PaperSize((PaperKind)NativePageSettings.PaperSize);
+                return new PaperSize((PaperKind)Handler.PaperSize);
             }
 
             set
@@ -107,15 +110,15 @@ namespace Alternet.Drawing.Printing
                 if (value == null)
                     throw new ArgumentNullException(nameof(PaperSize));
 
-                NativePageSettings.UseCustomPaperSize = value.IsCustom;
+                Handler.UseCustomPaperSize = value.IsCustom;
 
                 if (value.IsCustom)
                 {
-                    NativePageSettings.CustomPaperSize = value.CustomSize;
+                    Handler.CustomPaperSize = value.CustomSize;
                 }
                 else
                 {
-                    NativePageSettings.PaperSize = value.Kind;
+                    Handler.PaperSize = value.Kind;
                 }
             }
         }
@@ -136,7 +139,7 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return new PrinterResolution((PrinterResolutionKind)NativePageSettings.PrinterResolution);
+                return new PrinterResolution((PrinterResolutionKind)Handler.PrinterResolution);
             }
 
             set
@@ -144,11 +147,11 @@ namespace Alternet.Drawing.Printing
                 if (value == null)
                     throw new ArgumentNullException(nameof(PrinterResolution));
 
-                NativePageSettings.PrinterResolution = value.Kind;
+                Handler.PrinterResolution = value.Kind;
             }
         }
 
-        internal UI.Native.PageSettings NativePageSettings { get; private set; }
+        internal IPageSettingsHandler Handler { get; private set; }
 
         /// <summary>
         /// Releases all resources used by the object.
@@ -170,8 +173,8 @@ namespace Alternet.Drawing.Printing
             {
                 if (disposing)
                 {
-                    NativePageSettings.Dispose();
-                    NativePageSettings = null!;
+                    Handler.Dispose();
+                    Handler = null!;
                 }
 
                 isDisposed = true;

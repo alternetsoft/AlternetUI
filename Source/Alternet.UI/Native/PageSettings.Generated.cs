@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class PageSettings : NativeObject
+    internal partial class PageSettings : NativeObject, Alternet.Drawing.Printing.IPageSettingsHandler
     {
         static PageSettings()
         {

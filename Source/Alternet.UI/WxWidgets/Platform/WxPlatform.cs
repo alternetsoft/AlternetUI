@@ -282,6 +282,11 @@ namespace Alternet.UI
             return new UI.Native.PrinterSettings();
         }
 
+        public override IPageSettingsHandler CreatePageSettingsHandler()
+        {
+            return new UI.Native.PageSettings();
+        }
+
         private class SafeNativeMethods
         {
             [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]

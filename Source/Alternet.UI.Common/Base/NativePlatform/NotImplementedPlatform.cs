@@ -36,6 +36,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IPageSettingsHandler CreatePageSettingsHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IPrinterSettingsHandler CreatePrinterSettingsHandler()
         {
             throw new NotImplementedException();
