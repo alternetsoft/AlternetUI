@@ -108,7 +108,11 @@ namespace Alternet.UI
 
         public abstract IPrinterSettingsHandler CreatePrinterSettingsHandler();
 
+        public abstract IPrintDialogHandler CreatePrintDialogHandler();
+
         public abstract IPageSettingsHandler CreatePageSettingsHandler();
+
+        public abstract IPageSetupDialogHandler CreatePageSetupDialogHandler();
 
         public abstract string? GetTextFromUser(
             string message,

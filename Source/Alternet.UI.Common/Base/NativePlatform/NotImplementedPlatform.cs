@@ -41,6 +41,16 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IPageSetupDialogHandler CreatePageSetupDialogHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IPrintDialogHandler CreatePrintDialogHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IPrintDocumentHandler CreatePrintDocumentHandler()
         {
             throw new NotImplementedException();

@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
@@ -22,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         public PrintDialog()
         {
-            Handler = new Native.PrintDialog();
+            Handler = NativePlatform.Default.CreatePrintDialogHandler();
         }
 
         /// <summary>
@@ -108,14 +110,18 @@ namespace Alternet.UI
                 if (document == value)
                     return;
                 document = value;
-                Handler.Document = value?.Handler as PrintDocumentHandler;
+                Handler.SetDocument(value?.Handler);
             }
         }
 
         /// <inheritdoc/>
-        public override string? Title { get; set; }
+        public override string? Title
+        {
+            get => Handler.Title;
+            set => Handler.Title = value;
+        }
 
-        internal Native.PrintDialog Handler { get; private set; }
+        internal IPrintDialogHandler Handler { get; private set; }
 
         /// <inheritdoc/>
         public override ModalResult ShowModal(Window? owner)
@@ -126,15 +132,13 @@ namespace Alternet.UI
                 return ModalResult.Canceled;
             }
 
-            var nativeOwner = owner == null
-                ? null : ((WindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)Handler.ShowModal(nativeOwner);
+            return Handler.ShowModal(owner);
         }
 
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
-            Handler.Dispose();
+            Handler?.Dispose();
             Handler = null!;
         }
     }

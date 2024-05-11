@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
@@ -37,7 +39,7 @@ namespace Alternet.UI
         /// </summary>
         public PageSetupDialog()
         {
-            Handler = new Native.PageSetupDialog();
+            Handler = NativePlatform.Default.CreatePageSetupDialogHandler();
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Alternet.UI
                 if (document == value)
                     return;
                 document = value;
-                Handler.Document = value?.Handler as PrintDocumentHandler;
+                Handler.SetDocument(value?.Handler);
             }
         }
 
@@ -68,15 +70,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.MinMarginsValueSet ? Handler.MinMargins : null;
+                return Handler.MinMargins;
             }
 
             set
             {
-                Handler.MinMarginsValueSet = value != null;
-
-                if (value != null)
-                    Handler.MinMargins = value.Value;
+                Handler.MinMargins = value;
             }
         }
 
@@ -151,7 +150,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override string? Title { get; set; }
 
-        internal Native.PageSetupDialog Handler { get; private set; }
+        internal IPageSetupDialogHandler Handler { get; private set; }
 
         /// <inheritdoc/>
         public override ModalResult ShowModal(Window? owner)
@@ -163,15 +162,13 @@ namespace Alternet.UI
             }
 
             CheckDisposed();
-            var nativeOwner = owner == null ? null
-                : ((WindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)Handler.ShowModal(nativeOwner);
+            return Handler.ShowModal(owner);
         }
 
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
-            Handler.Dispose();
+            Handler?.Dispose();
             Handler = null!;
         }
     }

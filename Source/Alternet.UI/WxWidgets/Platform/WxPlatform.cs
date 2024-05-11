@@ -292,6 +292,16 @@ namespace Alternet.UI
             return new PrintDocumentHandler();
         }
 
+        public override IPrintDialogHandler CreatePrintDialogHandler()
+        {
+            return new PrintDialogHandler();
+        }
+
+        public override IPageSetupDialogHandler CreatePageSetupDialogHandler()
+        {
+            return new PageSetupDialogHandler();
+        }
+
         private class SafeNativeMethods
         {
             [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
