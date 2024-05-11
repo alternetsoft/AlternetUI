@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing.Printing
 {
     /// <summary>
@@ -17,9 +19,8 @@ namespace Alternet.Drawing.Printing
     /// <see cref="PrintPageEventArgs.DrawingContext"/> property of the
     /// <see cref="PrintPageEventArgs"/>.
     /// </remarks>
-    public class PrintDocument : IDisposable
+    public class PrintDocument : DisposableObject
     {
-        private bool isDisposed;
         private Graphics? currentDrawingContext;
         private PrinterSettings? printerSettings;
         private PageSettings? pageSettings;
@@ -28,17 +29,12 @@ namespace Alternet.Drawing.Printing
         /// Initializes a new instance of the <see cref="PrintDocument"/> class.
         /// </summary>
         public PrintDocument()
-            : this(new UI.Native.PrintDocument())
         {
-        }
+            Handler = NativePlatform.Default.CreatePrintDocumentHandler();
 
-        internal PrintDocument(UI.Native.PrintDocument nativePrintDocument)
-        {
-            Handler = nativePrintDocument;
-
-            nativePrintDocument.PrintPage += NativePrintDocument_PrintPage;
-            nativePrintDocument.BeginPrint += NativePrintDocument_BeginPrint;
-            nativePrintDocument.EndPrint += NativePrintDocument_EndPrint;
+            Handler.PrintPage += NativePrintDocument_PrintPage;
+            Handler.BeginPrint += NativePrintDocument_BeginPrint;
+            Handler.EndPrint += NativePrintDocument_EndPrint;
         }
 
         /// <summary>
@@ -114,8 +110,7 @@ namespace Alternet.Drawing.Printing
 
             set
             {
-                Handler.DocumentName = value
-                    ?? throw new ArgumentNullException(nameof(DocumentName));
+                Handler.DocumentName = value ?? string.Empty;
             }
         }
 
@@ -156,7 +151,7 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return printerSettings??= new PrinterSettings(Handler.PrinterSettings);
+                return printerSettings ??= new PrinterSettings(Handler.PrinterSettings);
             }
         }
 
@@ -183,7 +178,7 @@ namespace Alternet.Drawing.Printing
             }
         }
 
-        internal UI.Native.PrintDocument Handler { get; private set; }
+        public IPrintDocumentHandler Handler { get; private set; }
 
         /// <summary>
         /// Starts the document's printing process.
@@ -200,15 +195,6 @@ namespace Alternet.Drawing.Printing
                 throw new InvalidOperationException("Another printing operation is in progress.");
 
             Handler.Print();
-        }
-
-        /// <summary>
-        /// Releases all resources used by the <see cref="PrintDocument"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -258,27 +244,18 @@ namespace Alternet.Drawing.Printing
             PrintPage?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="PrintDocument"/> and
-        /// optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
         {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    Handler.PrintPage -= NativePrintDocument_PrintPage;
-                    Handler.BeginPrint -= NativePrintDocument_BeginPrint;
-                    Handler.EndPrint -= NativePrintDocument_EndPrint;
+            if (Handler is null)
+                return;
 
-                    Handler.Dispose();
-                    Handler = null!;
-                }
+            Handler.PrintPage -= NativePrintDocument_PrintPage;
+            Handler.BeginPrint -= NativePrintDocument_BeginPrint;
+            Handler.EndPrint -= NativePrintDocument_EndPrint;
 
-                isDisposed = true;
-            }
+            Handler.Dispose();
+            Handler = null!;
         }
 
         private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
@@ -295,7 +272,7 @@ namespace Alternet.Drawing.Printing
             if (currentDrawingContext != null)
                 throw new InvalidOperationException();
 
-            currentDrawingContext = new WxGraphics(Handler.PrintPage_DrawingContext);
+            currentDrawingContext = Handler.DrawingContext;
 
             var ea = new PrintEventArgs();
             OnBeginPrint(ea);

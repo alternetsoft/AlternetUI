@@ -104,6 +104,8 @@ namespace Alternet.UI
 
         public abstract IPropertyGridChoices CreateChoices();
 
+        public abstract IPrintDocumentHandler CreatePrintDocumentHandler();
+
         public abstract IPrinterSettingsHandler CreatePrinterSettingsHandler();
 
         public abstract IPageSettingsHandler CreatePageSettingsHandler();

@@ -46,8 +46,8 @@ namespace Alternet.Drawing.Printing
         /// </value>
         public bool HasMorePages
         {
-            get => printDocument.Handler.PrintPage_HasMorePages;
-            set => printDocument.Handler.PrintPage_HasMorePages = value;
+            get => printDocument.Handler.HasMorePages;
+            set => printDocument.Handler.HasMorePages = value;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         public RectD MarginBounds
         {
-            get => printDocument.Handler.PrintPage_MarginBounds;
+            get => printDocument.Handler.MarginBounds;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         public RectD PhysicalPageBounds
         {
-            get => printDocument.Handler.PrintPage_PhysicalPageBounds;
+            get => printDocument.Handler.PhysicalPageBounds;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Alternet.Drawing.Printing
         /// </value>
         public RectD PageBounds
         {
-            get => printDocument.Handler.PrintPage_PageBounds;
+            get => printDocument.Handler.PageBounds;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Alternet.Drawing.Printing
         /// </value>
         public RectD PrintablePageBounds
         {
-            get => printDocument.Handler.PrintPage_PrintablePageBounds;
+            get => printDocument.Handler.PrintablePageBounds;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         public int PageNumber
         {
-            get => printDocument.Handler.PrintPage_PageNumber;
+            get => printDocument.Handler.PrintedPageNumber;
         }
     }
 }

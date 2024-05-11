@@ -36,7 +36,7 @@ namespace Alternet.UI
                 if (document == value)
                     return;
                 document = value;
-                Handler.Document = value?.Handler;
+                Handler.Document = value?.Handler as PrintDocumentHandler;
             }
         }
 

@@ -287,6 +287,11 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public override IPrintDocumentHandler CreatePrintDocumentHandler()
+        {
+            return new PrintDocumentHandler();
+        }
+
         private class SafeNativeMethods
         {
             [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
