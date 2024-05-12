@@ -5,17 +5,51 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ListViewHandler : WxControlHandler
+    internal class ListViewHandler : WxControlHandler, IListViewHandler
     {
         private int receivingSelection = 0;
         private int applyingSelection = 0;
         private int clearing = 0;
+
+        /// <summary>
+        /// Tells <see cref="ListView"/> to use the generic control even
+        /// when it is capable of using the native control instead.
+        /// </summary>
+        public static bool UseGenericOnMacOs
+        {
+            set
+            {
+                int v = value ? 1 : 0;
+
+                BaseApplication.SetSystemOption("mac.listctrl.always_use_generic", v);
+            }
+        }
 
         public bool ColumnHeaderVisible
         {
             get => NativeControl.ColumnHeaderVisible;
             set => NativeControl.ColumnHeaderVisible = value;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeControl.HasBorder;
+            }
+
+            set
+            {
+                CheckDisposed();
+                NativeControl.HasBorder = value;
+            }
+        }
+
+        public long[] SelectedIndices => NativeControl.SelectedIndices;
 
         public long? FocusedItemIndex
         {
@@ -353,8 +387,7 @@ namespace Alternet.UI
 
         private void InsertItem(long itemIndex, ListViewItem item)
         {
-            item.ListView = Control;
-            item.Index = itemIndex;
+            item.InternalSetListViewAndIndex(Control, itemIndex);
             for (var columnIndex = 0; columnIndex < item.Cells.Count; columnIndex++)
             {
                 var cell = item.Cells[columnIndex];
@@ -378,15 +411,14 @@ namespace Alternet.UI
         private void UpdateItemIndices(int startIndex)
         {
             for (int i = startIndex; i < Control.Items.Count; i++)
-                Control.Items[i].Index = i;
+                Control.Items[i].InternalSetListViewAndIndex(Control, i);
         }
 
         private void Items_ItemRemoved(object? sender, int index, ListViewItem item)
         {
             if (clearing == 0)
                 NativeControl.RemoveItemAt(index);
-            item.Index = null;
-            item.ListView = null;
+            item.InternalSetListViewAndIndex(null, null);
 
             UpdateItemIndices(index);
         }
@@ -417,8 +449,7 @@ namespace Alternet.UI
                 ApplyColumnsChangeToItems();
             }
 
-            item.ListView = Control;
-            item.Index = index;
+            item.InternalSetListViewAndIndex(Control, index);
         }
 
         private void Columns_ItemRemoved(object? sender, int index, ListViewColumn item)
@@ -429,8 +460,7 @@ namespace Alternet.UI
                 ApplyColumnsChangeToItems();
             }
 
-            item.ListView = null;
-            item.Index = null;
+            item.InternalSetListViewAndIndex(null, null);
         }
 
         private void ApplyColumnsChangeToItems()

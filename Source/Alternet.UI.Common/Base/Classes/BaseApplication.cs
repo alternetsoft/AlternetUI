@@ -516,6 +516,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets system option value by name.
+        /// </summary>
+        /// <param name="name">Option name.</param>
+        /// <param name="value">Option value.</param>
+        public static void SetSystemOption(string name, int value)
+        {
+            NativePlatform.Default.SetSystemOption(name, value);
+        }
+
+        /// <summary>
         /// Logs an empty string.
         /// </summary>
         public static void LogEmptyLine()

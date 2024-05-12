@@ -194,6 +194,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override void SetSystemOption(string name, int value)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool ShowExceptionWindow(Exception exception, string? additionalInfo = null, bool canContinue = true)
         {
             throw new NotImplementedException();

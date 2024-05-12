@@ -24,7 +24,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class ListView : WxBaseControl
+    public partial class ListView : Control
     {
         private HashSet<long>? selectedIndices = null;
 
@@ -103,20 +103,6 @@ namespace Alternet.UI
         /// Occurs after the item label text is edited. This event can be canceled.
         /// </summary>
         public event EventHandler<ListViewItemLabelEditEventArgs>? AfterLabelEdit;
-
-        /// <summary>
-        /// Tells <see cref="ListView"/> to use the generic control even
-        /// when it is capable of using the native control instead.
-        /// </summary>
-        public static bool UseGenericOnMacOs
-        {
-            set
-            {
-                int v = value ? 1 : 0;
-
-                Application.SetSystemOption("mac.listctrl.always_use_generic", v);
-            }
-        }
 
         /// <summary>
         /// Gets or sets a boolean value which specifies whether the column header is visible in
@@ -593,22 +579,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public bool HasBorder
+        public virtual bool HasBorder
         {
             get
             {
-                CheckDisposed();
-                if (Handler is not ListViewHandler handler)
-                    return true;
-                return handler.NativeControl.HasBorder;
+                return Handler.HasBorder;
             }
 
             set
             {
-                CheckDisposed();
-                if (Handler is not ListViewHandler handler)
-                    return;
-                handler.NativeControl.HasBorder = value;
+                Handler.HasBorder = value;
             }
         }
 
@@ -623,22 +603,12 @@ namespace Alternet.UI
         /// Gets a <see cref="ListViewHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new ListViewHandler Handler
+        internal new IListViewHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (ListViewHandler)base.Handler;
-            }
-        }
-
-        internal long NativeItemsCount
-        {
-            get
-            {
-                if (Handler is ListViewHandler handler)
-                    return handler.NativeControl.ItemsCount;
-                return 0;
+                return (IListViewHandler)base.Handler;
             }
         }
 
@@ -843,7 +813,7 @@ namespace Alternet.UI
             RaiseSelectionChanged(EventArgs.Empty);
         }
 
-        internal void SelectedIndicesAreDirty()
+        public virtual void SelectedIndicesAreDirty()
         {
             selectedIndices = null;
         }
@@ -851,7 +821,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new ListViewHandler();
+            return GetNative().CreateListViewHandler(this);
         }
 
         /// <summary>
@@ -903,9 +873,7 @@ namespace Alternet.UI
             if (selectedIndices == null)
             {
                 selectedIndices = new();
-                if (Handler is not ListViewHandler handler)
-                    return;
-                var indices = handler.NativeControl.SelectedIndices;
+                var indices = Handler.SelectedIndices;
                 selectedIndices.UnionWith(indices);
             }
         }

@@ -287,6 +287,11 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public override void SetSystemOption(string name, int value)
+        {
+            Native.Application.SetSystemOptionInt(name, value);
+        }
+
         public override void RegisterDefaultPreviewControls(PreviewFile preview)
         {
             preview.RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));

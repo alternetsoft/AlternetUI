@@ -12,6 +12,8 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
+    public abstract BaseControlHandler CreateListViewHandler(IControl control);
+
     public abstract BaseControlHandler CreateDateTimePickerHandler(IControl control);
 
     public abstract BaseControlHandler CreateNumericUpDownHandler(IControl control);

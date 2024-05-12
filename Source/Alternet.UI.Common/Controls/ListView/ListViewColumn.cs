@@ -180,6 +180,17 @@ namespace Alternet.UI
                 return Title;
         }
 
+        public void InternalSetListViewAndIndex(ListView? control, int? newIndex)
+        {
+            var changed = listView != control || index != newIndex;
+            if (changed)
+            {
+                listView = control;
+                index = newIndex;
+                ApplyAll();
+            }
+        }
+
         internal void ApplyWidth()
         {
             if (TryGetColumnIndex(out var listView, out var columnIndex))

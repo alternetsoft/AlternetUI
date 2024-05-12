@@ -308,16 +308,27 @@ namespace Alternet.UI
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
                 => RequiredListView.GetItemBounds(RequiredIndex, portion);
 
-        internal void ResizeCells(int count)
+        public void InternalSetListViewAndIndex(ListView? control, long? newIndex)
         {
-            Cells.SetCount(count, () => new ListViewItemCell());
+            var changed = listView != control || Index != newIndex;
+            if (changed)
+            {
+                listView = control;
+                Index = newIndex;
+                ApplyColumns();
+            }
         }
 
-        internal void ApplyColumns()
+        public void ApplyColumns()
         {
             if (listView == null)
                 return;
             ResizeCells(listView.Columns.Count);
+        }
+
+        internal void ResizeCells(int count)
+        {
+            Cells.SetCount(count, () => new ListViewItemCell());
         }
 
         private void Cells_ItemInserted(object? sender, int index, ListViewItemCell item)

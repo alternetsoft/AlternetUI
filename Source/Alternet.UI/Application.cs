@@ -257,16 +257,6 @@ namespace Alternet.UI
         protected override bool InvokeRequired => nativeApplication.InvokeRequired;
 
         /// <summary>
-        /// Sets wxSystemOptions value.
-        /// </summary>
-        /// <param name="name">Option name.</param>
-        /// <param name="value">Option value.</param>
-        public static void SetSystemOption(string name, int value)
-        {
-            Native.Application.SetSystemOptionInt(name, value);
-        }
-
-        /// <summary>
         /// Creates application and main form, runs and disposes them.
         /// </summary>
         /// <param name="createFunc">Function which creates main form.</param>
