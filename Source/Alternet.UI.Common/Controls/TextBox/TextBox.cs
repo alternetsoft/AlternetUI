@@ -19,22 +19,6 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class TextBox : CustomTextBox, ISimpleRichTextBox
     {
-        /// <summary>
-        /// Identifies the <see cref="Text"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(
-                "Text",
-                typeof(string),
-                typeof(TextBox),
-                new FrameworkPropertyMetadata(
-                        string.Empty,
-                        PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                        new PropertyChangedCallback(OnTextPropertyChanged),
-                        new CoerceValueCallback(CoerceText),
-                        true, // IsAnimationProhibited
-                        UpdateSourceTrigger.PropertyChanged));
-
         private bool isRichEdit = false;
         private bool multiline = false;
         private bool hasBorder = true;
@@ -170,31 +154,6 @@ namespace Alternet.UI
                     return;
                 validator = value;
                 Handler.SetValidator(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the text contents of the text box.
-        /// </summary>
-        /// <value>A string containing the text contents of the text box. The
-        /// default is an empty string ("").</value>
-        /// <remarks>
-        /// Getting this property returns a string copy of the contents of the
-        /// text box. Setting this property replaces the contents of the text box
-        /// with the specified string.
-        /// </remarks>
-        [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
-        public override string Text
-        {
-            get
-            {
-                return (string)GetValue(TextProperty);
-            }
-
-            set
-            {
-                SetValue(TextProperty, value);
             }
         }
 
@@ -1548,17 +1507,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Binds <see cref="Text"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
-        /// </summary>
-        /// <param name="propName">Property name.</param>
-        public void BindText(string propName)
-        {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, TextBox.TextProperty, myBinding);
-        }
-
-        /// <summary>
         /// Sets text alignment in the current position to
         /// <see cref="TextBoxTextAttrAlignment.Justified"/>
         /// </summary>
@@ -1579,20 +1527,6 @@ namespace Alternet.UI
             base.OnTextChanged(e);
             if (Options.HasFlag(TextBoxOptions.DefaultValidation))
                 RunDefaultValidation();
-        }
-
-        private static object CoerceText(DependencyObject d, object value) =>
-            value ?? string.Empty;
-
-        /// <summary>
-        /// Callback for changes to the Text property
-        /// </summary>
-        private static void OnTextPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            TextBox textBox = (TextBox)d;
-            textBox.OnTextChanged(EventArgs.Empty);
         }
     }
 }

@@ -750,7 +750,11 @@ namespace Alternet.UI
 
             set
             {
-                text = value ?? string.Empty;
+                value ??= string.Empty;
+                if (text == value)
+                    return;
+                text = value;
+                RaiseTextChanged(EventArgs.Empty);
             }
         }
 

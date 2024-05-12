@@ -13,7 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class GenericLabel : GraphicControl
     {
-        private string text = string.Empty;
         private Color? textBackColor;
         private bool imageVisible = true;
         private int? mnemonicCharIndex = null;
@@ -26,10 +25,10 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
         /// </summary>
         /// <param name="text">Value of the <see cref="Text"/> property.</param>
-        public GenericLabel(string text)
+        public GenericLabel(string? text)
             : this()
         {
-            this.text = text ?? string.Empty;
+            Text = text ?? string.Empty;
         }
 
         /// <summary>
@@ -249,15 +248,14 @@ namespace Alternet.UI
         {
             get
             {
-                return text;
+                return base.Text;
             }
 
             set
             {
-                if (text == value)
+                if (Text == value)
                     return;
-                text = value ?? string.Empty;
-                RaiseTextChanged(EventArgs.Empty);
+                base.Text = value;
                 PerformLayoutAndInvalidate();
             }
         }

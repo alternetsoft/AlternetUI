@@ -29,13 +29,11 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class Label : Control
     {
-        private string text = string.Empty;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class with specified text.
         /// </summary>
         /// <param name="text">Text displayed on this label.</param>
-        public Label(string text)
+        public Label(string? text)
             : this()
         {
             Text = text ?? string.Empty;
@@ -48,24 +46,6 @@ namespace Alternet.UI
         {
             if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
-        }
-
-        /// <inheritdoc/>
-        public override string Text
-        {
-            get
-            {
-                return text;
-            }
-
-            set
-            {
-                if (text == value)
-                    return;
-                value ??= string.Empty;
-                text = value;
-                OnTextChanged(EventArgs.Empty);
-            }
         }
 
         /// <inheritdoc/>

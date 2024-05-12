@@ -8,7 +8,6 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ButtonBase : Control, ITextProperty
     {
-        private string text = string.Empty;
         private Action? clickAction;
 
         /// <summary>
@@ -34,18 +33,15 @@ namespace Alternet.UI
         {
             get
             {
-                return text;
+                return base.Text;
             }
 
             set
             {
-                if (text == value)
+                if (Text == value)
                     return;
-                CheckDisposed();
-
-                text = value;
-                OnTextChanged(EventArgs.Empty);
-                PerformLayout();
+                base.Text = value;
+                PerformLayoutAndInvalidate();
             }
         }
 

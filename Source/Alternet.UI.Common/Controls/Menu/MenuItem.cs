@@ -46,7 +46,6 @@ namespace Alternet.UI
                 new PropertyMetadata(null));
 
         private KeyGesture? shortcut;
-        private string text = string.Empty;
         private MenuItemRole? role;
         private bool preCommandEnabledValue = true;
         private bool isChecked;
@@ -69,9 +68,9 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref='MenuItem'/> class with
         /// the specified <paramref name="text"/> and <paramref name="shortcut"/> for the menu item.
         /// </summary>
-        public MenuItem(string text, KeyGesture shortcut)
+        public MenuItem(string? text, KeyGesture shortcut)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
             this.shortcut = shortcut;
         }
 
@@ -83,9 +82,9 @@ namespace Alternet.UI
         /// <param name="image">The <see cref="Image" /> to display on the control.</param>
         /// <param name="onClick">An event handler that raises the <see cref="Control.Click" />
         /// event when the control is clicked.</param>
-        public MenuItem(string text, Image image, EventHandler onClick)
+        public MenuItem(string? text, Image image, EventHandler onClick)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
             Click += onClick;
         }
 
@@ -93,9 +92,9 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref='MenuItem'/> class with
         /// the specified <paramref name="text"/> for the menu item.
         /// </summary>
-        public MenuItem(string text)
+        public MenuItem(string? text)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
         }
 
         /// <summary>
@@ -103,9 +102,9 @@ namespace Alternet.UI
         /// the specified <paramref name="text"/>, <paramref name="onClick"/> and
         /// <paramref name="shortcut"/> for the menu item.
         /// </summary>
-        public MenuItem(string text, EventHandler? onClick = null, KeyGesture? shortcut = null)
+        public MenuItem(string? text, EventHandler? onClick = null, KeyGesture? shortcut = null)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
             this.shortcut = shortcut;
             if (onClick != null)
                 Click += onClick;
@@ -116,9 +115,9 @@ namespace Alternet.UI
         /// the specified <paramref name="text"/> and <paramref name="onClick"/>
         /// for the menu item.
         /// </summary>
-        public MenuItem(string text, Action? onClick)
+        public MenuItem(string? text, Action? onClick)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
             ClickAction = onClick;
         }
 
@@ -127,9 +126,9 @@ namespace Alternet.UI
         /// the specified <paramref name="text"/>, <paramref name="onClick"/> and
         /// <paramref name="shortcut"/> for the menu item.
         /// </summary>
-        public MenuItem(string text, Action? onClick, KeyGesture? shortcut)
+        public MenuItem(string? text, Action? onClick, KeyGesture? shortcut)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
             this.shortcut = shortcut;
             ClickAction = onClick;
         }
@@ -268,16 +267,15 @@ namespace Alternet.UI
         {
             get
             {
-                return text;
+                return base.Text;
             }
 
             set
             {
-                if (value == text)
+                if (value == Text)
                     return;
 
-                text = value;
-                OnTextChanged(EventArgs.Empty);
+                base.Text = value;
             }
         }
 

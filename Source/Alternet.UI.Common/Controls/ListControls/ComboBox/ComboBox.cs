@@ -81,7 +81,6 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultImageBorderColor = SystemColors.GrayText;
 
-        private string text = string.Empty;
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
@@ -184,25 +183,23 @@ namespace Alternet.UI
         {
             get
             {
-                return text;
+                return base.Text;
             }
 
             set
             {
-                if (text == value)
+                if (Text == value)
                     return;
-                CheckDisposed();
 
-                text = value ?? throw new ArgumentNullException(nameof(value));
+                value ??= string.Empty;
+                base.Text = value;
 
-                if (text == string.Empty)
+                if (value == string.Empty)
                     SelectedIndex = null;
 
-                var foundIndex = FindStringExact(text);
+                var foundIndex = FindStringExact(value);
                 if (foundIndex != null)
                     SelectedIndex = foundIndex.Value;
-
-                OnTextChanged(EventArgs.Empty);
             }
         }
 

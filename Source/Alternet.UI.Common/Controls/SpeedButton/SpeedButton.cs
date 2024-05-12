@@ -439,7 +439,6 @@ namespace Alternet.UI
                     return;
                 base.Text = value;
                 Label.Text = value;
-                RaiseTextChanged(EventArgs.Empty);
                 if (TextVisible)
                     PerformLayoutAndInvalidate();
             }

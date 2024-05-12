@@ -68,7 +68,6 @@ namespace Alternet.UI
                 if (base.Text == value)
                     return;
                 base.Text = value;
-                RaiseTextChanged(EventArgs.Empty);
                 if (!ImageVisible)
                     PerformLayoutAndInvalidate();
             }
