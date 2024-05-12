@@ -13,7 +13,7 @@ namespace ControlsSample
         {
             Layout = LayoutStyle.Vertical;
 
-            ControlUtils.AddButtons(this,
+            AddButtons(
                 ("Play Beep", SystemSounds.Beep.Play),
                 ("Play Asterisk", SystemSounds.Asterisk.Play),
                 ("Play Exclamation", SystemSounds.Exclamation.Play),

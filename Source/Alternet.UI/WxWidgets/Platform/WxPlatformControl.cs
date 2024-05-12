@@ -105,6 +105,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateButtonHandler(IControl control)
+        {
+            return new ButtonHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateSliderHandler(IControl control)
         {
             return new SliderHandler();

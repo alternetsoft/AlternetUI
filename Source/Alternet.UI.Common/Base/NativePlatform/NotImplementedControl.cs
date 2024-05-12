@@ -704,4 +704,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateButtonHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }

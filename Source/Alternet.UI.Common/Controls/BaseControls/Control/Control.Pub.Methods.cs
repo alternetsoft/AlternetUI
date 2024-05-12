@@ -2576,6 +2576,49 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Creates new <see cref="Button"/> and adds it to the <see cref="Control.Children"/>.
+        /// </summary>
+        public virtual Button AddButton(string text, Action? action = null)
+        {
+            var result = new Button(text)
+            {
+                Parent = this,
+            };
+
+            if (action is not null)
+                result.Click += Result_Click;
+
+            return result;
+
+            void Result_Click(object? sender, EventArgs e)
+            {
+                action.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Adds multiple buttons.
+        /// </summary>
+        /// <param name="buttons">Array of title and action.</param>
+        /// <returns><see cref="ControlSet"/> with list of created buttons.</returns>
+        /// <param name="control">Parent control.</param>
+        public virtual ControlSet AddButtons(params (string, Action?)[] buttons)
+        {
+            List<Control> result = new();
+
+            this.DoInsideLayout(() =>
+            {
+                foreach (var item in buttons)
+                {
+                    var button = AddButton(item.Item1, item.Item2);
+                    result.Add(button);
+                }
+            });
+
+            return new(result);
+        }
+
         public virtual void OnNativeControlVisibleChanged()
         {
             bool visible = GetNative().GetVisible(this);

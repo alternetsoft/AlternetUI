@@ -20,6 +20,8 @@ public abstract class NativeControl
 
     public abstract void SetWantChars(IControl control, bool value);
 
+    public abstract BaseControlHandler CreateButtonHandler(IControl control);
+
     public abstract BaseControlHandler CreateColorPickerHandler(IControl control);
 
     public abstract BaseControlHandler CreateSliderHandler(IControl control);

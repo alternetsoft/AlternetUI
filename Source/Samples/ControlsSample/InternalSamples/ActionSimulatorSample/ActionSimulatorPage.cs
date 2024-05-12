@@ -27,12 +27,12 @@ namespace ControlsSample
                 "in order to control user interface of the application.",
                 "Press F5 to start.");
 
-            button1 = ControlUtils.AddButton(this, "Button 1", () =>
+            button1 = AddButton("Button 1", () =>
             {
                 Application.Log("Button 1 clicked");
             });
 
-            button2 = ControlUtils.AddButton(this, "Button 2", () =>
+            button2 = AddButton("Button 2", () =>
             {
                 Application.Log("Button 2 clicked");
             });

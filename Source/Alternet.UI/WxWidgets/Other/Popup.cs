@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI

@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.UI
 {
     internal class ProgressBarHandler : ControlHandler<ProgressBar>

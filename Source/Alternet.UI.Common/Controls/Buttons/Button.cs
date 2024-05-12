@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -10,6 +11,8 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class Button : ButtonBase
     {
+        private static bool imagesEnabled = true;
+
         /// <summary>
         /// Initializes a new <see cref="Button"/> instance.
         /// </summary>
@@ -40,12 +43,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.Button.ImagesEnabled;
+                return imagesEnabled;
             }
 
             set
             {
-                Native.Button.ImagesEnabled = value;
+                imagesEnabled = value;
             }
         }
 
@@ -59,7 +62,7 @@ namespace Alternet.UI
 
             set
             {
-                if (Handler.StateImages == value)
+                if (!imagesEnabled || Handler.StateImages == value)
                     return;
                 Handler.StateImages = value ?? throw new ArgumentNullException(nameof(StateImages));
             }
@@ -101,6 +104,8 @@ namespace Alternet.UI
 
             set
             {
+                if (!imagesEnabled)
+                    return;
                 StateImages.Normal = value;
             }
         }
@@ -111,7 +116,13 @@ namespace Alternet.UI
         public virtual Image? HoveredImage
         {
             get => StateImages.Hovered;
-            set => StateImages.Hovered = value;
+
+            set
+            {
+                if (!imagesEnabled)
+                    return;
+                StateImages.Hovered = value;
+            }
         }
 
         /// <summary>
@@ -120,7 +131,13 @@ namespace Alternet.UI
         public virtual Image? FocusedImage
         {
             get => StateImages.Focused;
-            set => StateImages.Focused = value;
+
+            set
+            {
+                if (!imagesEnabled)
+                    return;
+                StateImages.Focused = value;
+            }
         }
 
         /// <summary>
@@ -129,7 +146,13 @@ namespace Alternet.UI
         public virtual Image? PressedImage
         {
             get => StateImages.Pressed;
-            set => StateImages.Pressed = value;
+
+            set
+            {
+                if (!imagesEnabled)
+                    return;
+                StateImages.Pressed = value;
+            }
         }
 
         /// <summary>
@@ -138,7 +161,13 @@ namespace Alternet.UI
         public virtual Image? DisabledImage
         {
             get => StateImages.Disabled;
-            set => StateImages.Disabled = value;
+
+            set
+            {
+                if (!imagesEnabled)
+                    return;
+                StateImages.Disabled = value;
+            }
         }
 
         /// <summary>
@@ -228,7 +257,7 @@ namespace Alternet.UI
         /// Gets a <see cref="ButtonHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new ButtonHandler Handler => (ButtonHandler)base.Handler;
+        internal new IButtonHandler Handler => (IButtonHandler)base.Handler;
 
         /// <summary>
         /// Sets the position at which the image is displayed.
@@ -242,7 +271,7 @@ namespace Alternet.UI
         {
             if (dir == GenericDirection.Left || dir == GenericDirection.Right ||
                 dir == GenericDirection.Top || dir == GenericDirection.Bottom)
-            Handler.SetImagePosition(dir);
+                Handler.SetImagePosition(dir);
         }
 
         /// <summary>
@@ -258,7 +287,7 @@ namespace Alternet.UI
         public virtual void SetImageMargins(double x, double? y = null)
         {
             y ??= x;
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS)
             {
                 var xPixels = PixelFromDip(x);
                 var yPixels = PixelFromDip(y.Value);
@@ -269,7 +298,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new ButtonHandler();
+            return NativeControl.Default.CreateButtonHandler(this);
         }
     }
 }
