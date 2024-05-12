@@ -78,7 +78,7 @@ namespace Alternet.UI
         {
             get
             {
-                return (CheckState)Handler.NativeControl.CheckState;
+                return Handler.CheckState;
             }
 
             set
@@ -87,7 +87,7 @@ namespace Alternet.UI
                     value = CheckState.Unchecked;
                 if (CheckState == value)
                     return;
-                Handler.NativeControl.CheckState = (int)value;
+                Handler.CheckState = value;
                 RaiseCheckedChanged(EventArgs.Empty);
             }
         }
@@ -119,7 +119,7 @@ namespace Alternet.UI
                 }
 
                 threeState = value;
-                Handler.NativeControl.ThreeState = value;
+                Handler.ThreeState = value;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Alternet.UI
                 if (alignRight == value)
                     return;
                 alignRight = value;
-                Handler.NativeControl.AlignRight = value;
+                Handler.AlignRight = value;
             }
         }
 
@@ -165,7 +165,7 @@ namespace Alternet.UI
                 if (allowAllStatesForUser == value)
                     return;
                 allowAllStatesForUser = value;
-                Handler.NativeControl.AllowAllStatesForUser = value;
+                Handler.AllowAllStatesForUser = value;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Alternet.UI
         /// Gets a <see cref="WxControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new CheckBoxHandler Handler => (CheckBoxHandler)base.Handler;
+        internal new ICheckBoxHandler Handler => (ICheckBoxHandler)base.Handler;
 
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
@@ -249,7 +249,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        internal void RaiseCheckedChanged(EventArgs e)
+        public void RaiseCheckedChanged(EventArgs e)
         {
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
@@ -267,7 +267,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new CheckBoxHandler();
+            return NativeControl.Default.CreateCheckBoxHandler(this);
         }
 
         /// <summary>

@@ -2598,6 +2598,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="Control.Children"/>.
+        /// </summary>
+        public virtual CheckBox AddCheckBox(string text, Action? action = null)
+        {
+            var result = new CheckBox(text)
+            {
+                Parent = this,
+            };
+
+            if (action is not null)
+                result.CheckedChanged += Result_CheckedChanged;
+
+            return result;
+
+            void Result_CheckedChanged(object? sender, EventArgs e)
+            {
+                action.Invoke();
+            }
+        }
+
+        /// <summary>
         /// Adds multiple buttons.
         /// </summary>
         /// <param name="buttons">Array of title and action.</param>

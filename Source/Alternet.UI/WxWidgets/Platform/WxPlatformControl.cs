@@ -105,6 +105,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateCheckBoxHandler(IControl control)
+        {
+            return new CheckBoxHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateButtonHandler(IControl control)
         {
             return new ButtonHandler();

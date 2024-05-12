@@ -709,4 +709,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateCheckBoxHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }
