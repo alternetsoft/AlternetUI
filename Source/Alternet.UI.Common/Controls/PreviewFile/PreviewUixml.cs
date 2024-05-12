@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// There is also <see cref="PreviewUixmlSplitted"/> class which allows to preview
     /// uixml together with its source code.
     /// </summary>
-    public class PreviewUixml : WxBaseControl, IFilePreview
+    public class PreviewUixml : Control, IFilePreview
     {
         private static HiddenWindow? previewWindow;
 
@@ -78,15 +78,15 @@ namespace Alternet.UI
         /// <summary>
         /// Reloads previewed file.
         /// </summary>
-        public void Reload()
+        public virtual void Reload()
         {
-            Application.DoInsideBusyCursor(ReloadInternal);
+            BaseApplication.DoInsideBusyCursor(ReloadInternal);
         }
 
         /// <summary>
         /// Resets this object unloading the file which is currently previewed.
         /// </summary>
-        public void Reset()
+        public virtual void Reset()
         {
             if (previewWindow is null)
                 return;
@@ -171,7 +171,7 @@ namespace Alternet.UI
 
         private void PreviewWindow_Disposed(object? sender, EventArgs e)
         {
-            Application.LogIf("PreviewWindow.Disposed", false);
+            BaseApplication.LogIf("PreviewWindow.Disposed", false);
         }
     }
 }

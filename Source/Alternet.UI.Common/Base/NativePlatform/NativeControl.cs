@@ -20,7 +20,13 @@ public abstract class NativeControl
 
     public abstract void SetWantChars(IControl control, bool value);
 
-    public abstract BaseControlHandler CreateTextBoxHandler();
+    public abstract BaseControlHandler CreateProgressBarHandler(IControl control);
+
+    public abstract BaseControlHandler CreateGroupBoxHandler(IControl control);
+
+    public abstract BaseControlHandler CreateRadioButtonHandler(IControl control);
+
+    public abstract BaseControlHandler CreateTextBoxHandler(IControl control);
 
     public abstract BaseControlHandler CreateComboBoxHandler(IControl control);
 

@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : WxBaseControl, ITextProperty
+    public abstract class ButtonBase : Control, ITextProperty
     {
         private string text = string.Empty;
         private Action? clickAction;

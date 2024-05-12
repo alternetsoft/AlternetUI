@@ -3,8 +3,18 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class GroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>
+    internal class GroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>, IGroupBoxHandler
     {
+        public int GetTopBorderForSizer()
+        {
+            return NativeControl.GetTopBorderForSizer();
+        }
+
+        public int GetOtherBorderForSizer()
+        {
+            return NativeControl.GetOtherBorderForSizer();
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.GroupBox();

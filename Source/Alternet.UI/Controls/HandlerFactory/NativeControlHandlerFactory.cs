@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateButtonHandler(Control control) =>
-            new NativeButtonHandler();
+            new ButtonHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateTextBoxHandler(Control control) =>

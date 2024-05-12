@@ -1,7 +1,9 @@
+#pragma warning disable
 #nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using XamlX.Ast;
 using XamlX.TypeSystem;
 namespace XamlX.Transform.Transformers
@@ -36,18 +38,21 @@ namespace XamlX.Transform.Transformers
                 var res = ResolveTypeCore(context, xmlns, name, isMarkupExtension, typeArguments, lineInfo, strict);
                 cache.CacheDictionary[cacheKey] = res?.Type;
                 return res;
-
             }
             else
                 return ResolveTypeCore(context, xmlns, name, isMarkupExtension, typeArguments, lineInfo, strict);
         }
 
-        static XamlAstClrTypeReference ResolveTypeCore(AstTransformationContext context,
-            string xmlns, string name, bool isMarkupExtension, List<XamlAstXmlTypeReference> typeArguments, IXamlLineInfo lineInfo,
+        private static XamlAstClrTypeReference ResolveTypeCore(
+            AstTransformationContext context,
+            string xmlns,
+            string name,
+            bool isMarkupExtension,
+            List<XamlAstXmlTypeReference> typeArguments,
+            IXamlLineInfo lineInfo,
             bool strict)
         {
-            if (typeArguments == null)
-                typeArguments = new List<XamlAstXmlTypeReference>();
+            typeArguments ??= new List<XamlAstXmlTypeReference>();
             var targs = typeArguments
                 .Select(ta =>
                     ResolveType(context, ta.XmlNamespace, ta.Name, false, ta.GenericArguments, lineInfo, strict)
@@ -56,7 +61,7 @@ namespace XamlX.Transform.Transformers
 
             IXamlType Attempt(Func<string, IXamlType> cb, string xname)
             {
-                var suffix = (typeArguments.Count != 0) ? ("`" + typeArguments.Count) : "";
+                var suffix = (typeArguments.Count != 0) ? ("`" + typeArguments.Count) : string.Empty;
                 if (isMarkupExtension)
                     return cb(xname + "Extension" + suffix) ?? cb(xname + suffix);
                 else
@@ -69,36 +74,40 @@ namespace XamlX.Transform.Transformers
             if (xmlns == XamlNamespaces.Xaml2006)
                 found = context.Configuration.TypeSystem.FindType("System." + name);
 
-
             if (found == null)
             {
                 var resolvedNamespaces = NamespaceInfoHelper.TryResolve(context.Configuration, xmlns);
                 if (resolvedNamespaces?.Count > 0)
-                    found = Attempt(formedName =>
-                    {
-                        foreach (var resolvedNs in resolvedNamespaces)
+                {
+                    found = Attempt(
+                        formedName =>
                         {
-                            var rname = resolvedNs.ClrNamespace + "." + formedName;
-                            IXamlType subRes = null;
-                            if (resolvedNs.Assembly != null)
-                                subRes = resolvedNs.Assembly.FindType(rname);
-                            else if (resolvedNs.AssemblyName != null)
-                                subRes = context.Configuration.TypeSystem.FindType(rname, resolvedNs.AssemblyName);
-                            else
+                            foreach (var resolvedNs in resolvedNamespaces)
                             {
-                                foreach (var assembly in context.Configuration.TypeSystem.Assemblies)
+                                var rname = resolvedNs.ClrNamespace + "." + formedName;
+                                IXamlType subRes = null;
+                                if (resolvedNs.Assembly != null)
+                                    subRes = resolvedNs.Assembly.FindType(rname);
+                                else if (resolvedNs.AssemblyName != null)
+                                    subRes = context.Configuration.TypeSystem.FindType(rname, resolvedNs.AssemblyName);
+                                else
                                 {
-                                    subRes = assembly.FindType(rname);
-                                    if (subRes != null)
-                                        break;
+                                    foreach (var assembly in context.Configuration.TypeSystem.Assemblies)
+                                    {
+                                        subRes = assembly.FindType(rname);
+                                        if (subRes != null)
+                                            break;
+                                    }
                                 }
-                            }
-                            if (subRes != null)
-                                return subRes;
-                        }
 
-                        return null;
-                    }, name);
+                                if (subRes != null)
+                                    return subRes;
+                            }
+
+                            return null;
+                        },
+                        name);
+                }
             }
 
             if (typeArguments.Count != 0)

@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// </summary>
         public Button()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
         }
 
@@ -228,13 +228,7 @@ namespace Alternet.UI
         /// Gets a <see cref="ButtonHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new ButtonHandler Handler
-        {
-            get
-            {
-                return (ButtonHandler)base.Handler;
-            }
-        }
+        internal new ButtonHandler Handler => (ButtonHandler)base.Handler;
 
         /// <summary>
         /// Sets the position at which the image is displayed.
@@ -275,7 +269,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateButtonHandler(this);
+            return new ButtonHandler();
         }
     }
 }

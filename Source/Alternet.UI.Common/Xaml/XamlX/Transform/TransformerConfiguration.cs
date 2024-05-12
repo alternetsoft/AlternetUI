@@ -1,8 +1,10 @@
 #nullable disable
+#pragma warning disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using XamlX.Ast;
 using XamlX.TypeSystem;
 
@@ -14,10 +16,12 @@ namespace XamlX.Transform
     class TransformerConfiguration
     {
         private Dictionary<Type, object> _extras = new Dictionary<Type, object>();
+
         /// <summary>
         /// Gets extension configuration section
         /// </summary>
-        public T GetExtra<T>() => (T) _extras[typeof(T)];
+        public T GetExtra<T>() => (T)_extras[typeof(T)];
+
         /// <summary>
         /// Gets or create extension configuration section
         /// </summary>
@@ -28,6 +32,7 @@ namespace XamlX.Transform
                 _extras[typeof(T)] = rv = new T();
             return (T)rv;
         }
+
         /// <summary>
         /// Adds extension configuration section
         /// </summary>
@@ -37,17 +42,24 @@ namespace XamlX.Transform
 
         public delegate bool XamlValueConverter(AstTransformationContext context,
             IXamlAstValueNode node, IXamlType type, out IXamlAstValueNode result);
-        
+
         public IXamlTypeSystem TypeSystem { get; }
+
         public IXamlAssembly DefaultAssembly { get; }
+
         public XamlLanguageTypeMappings TypeMappings { get; }
+
         public XamlXmlnsMappings XmlnsMappings { get; }
+
         public XamlTypeWellKnownTypes WellKnownTypes { get; }
+
         public XamlValueConverter CustomValueConverter { get; }
+
         public IXamlIdentifierGenerator IdentifierGenerator { get; }
+
         public List<(string ns, string name)> KnownDirectives { get; } = new List<(string, string)>
         {
-            
+
         };
 
         public TransformerConfiguration(IXamlTypeSystem typeSystem, IXamlAssembly defaultAssembly,
@@ -97,7 +109,7 @@ namespace XamlX.Transform
                     found = contentProperty;
                 }
             }
-            
+
             foreach (var p in type.Properties)
             {
                 if (GetCustomAttribute(p, TypeMappings.ContentAttributes).Any())
@@ -113,41 +125,41 @@ namespace XamlX.Transform
 
             return _contentPropertyCache[type.Id] = found;
         }
-        
+
 
         public IEnumerable<IXamlCustomAttribute> GetCustomAttribute(IXamlType type, IXamlType attributeType)
         {
             var custom = TypeMappings.CustomAttributeResolver?.GetCustomAttribute(type, attributeType);
             if (custom != null)
                 yield return custom;
-            foreach(var attr in type.CustomAttributes)
+            foreach (var attr in type.CustomAttributes)
                 if (attr.Type == attributeType)
                     yield return attr;
         }
-        
+
         public IEnumerable<IXamlCustomAttribute> GetCustomAttribute(IXamlType type, IEnumerable<IXamlType> types)
         {
-            foreach(var t in types)
-            foreach (var a in GetCustomAttribute(type, t))
-                yield return a;
+            foreach (var t in types)
+                foreach (var a in GetCustomAttribute(type, t))
+                    yield return a;
         }
-        
-        
+
+
         public IEnumerable<IXamlCustomAttribute> GetCustomAttribute(IXamlProperty prop, IXamlType attributeType)
         {
             var custom = TypeMappings.CustomAttributeResolver?.GetCustomAttribute(prop, attributeType);
             if (custom != null)
                 yield return custom;
-            foreach(var attr in prop.CustomAttributes)
+            foreach (var attr in prop.CustomAttributes)
                 if (attr.Type.Equals(attributeType))
                     yield return attr;
         }
-        
+
         public IEnumerable<IXamlCustomAttribute> GetCustomAttribute(IXamlProperty prop, IEnumerable<IXamlType> types)
         {
-            foreach(var t in types)
-            foreach (var a in GetCustomAttribute(prop, t))
-                yield return a;
+            foreach (var t in types)
+                foreach (var a in GetCustomAttribute(prop, t))
+                    yield return a;
         }
     }
 
@@ -157,17 +169,29 @@ namespace XamlX.Transform
     class XamlTypeWellKnownTypes
     {
         public IXamlType IList { get; }
+
         public IXamlType IEnumerable { get; }
+
         public IXamlType IEnumerableT { get; }
+
         public IXamlType IListOfT { get; }
+
         public IXamlType Object { get; }
+
         public IXamlType String { get; }
+
         public IXamlType Void { get; }
+
         public IXamlType Boolean { get; }
+
         public IXamlType Double { get; }
+
         public IXamlType NullableT { get; }
+
         public IXamlType CultureInfo { get; }
+
         public IXamlType IFormatProvider { get; }
+
         public IXamlType Delegate { get; }
 
         public XamlTypeWellKnownTypes(IXamlTypeSystem typeSystem)

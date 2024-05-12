@@ -1,7 +1,9 @@
 #nullable disable
+#pragma warning disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using XamlX.TypeSystem;
 
 namespace XamlX.Transform
@@ -14,18 +16,22 @@ namespace XamlX.Transform
         public class NamespaceResolveResult
         {
             public string ClrNamespace { get; set; }
+
             public IXamlAssembly Assembly { get; set; }
+
             public string AssemblyName { get; set; }
         }
 
-        public static List<NamespaceResolveResult> TryResolve(TransformerConfiguration config, string xmlns)
+        public static List<NamespaceResolveResult> TryResolve(
+            TransformerConfiguration config,
+            string xmlns)
         {
             if (config.XmlnsMappings.Namespaces.TryGetValue(xmlns, out var lst))
             {
                 return lst.Select(p => new NamespaceResolveResult
                 {
                     ClrNamespace = p.ns,
-                    Assembly = p.asm
+                    Assembly = p.asm,
                 }).ToList();
             }
 
@@ -44,13 +50,14 @@ namespace XamlX.Transform
                     asm = ns.Substring(indexOfAssemblyPrefix + assemblyNamePrefix.Length).Trim();
                     ns = ns.Substring(0, indexOfAssemblyPrefix);
                 }
+
                 return new List<NamespaceResolveResult>
                 {
                     new NamespaceResolveResult
                     {
                         ClrNamespace = ns,
-                        AssemblyName = asm
-                    }
+                        AssemblyName = asm,
+                    },
                 };
             }
 
@@ -62,8 +69,8 @@ namespace XamlX.Transform
                 {
                     new NamespaceResolveResult
                     {
-                        ClrNamespace = ns
-                    }
+                        ClrNamespace = ns,
+                    },
                 };
             }
 

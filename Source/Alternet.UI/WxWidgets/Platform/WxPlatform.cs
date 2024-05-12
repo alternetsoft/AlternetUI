@@ -287,6 +287,13 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public override void RegisterDefaultPreviewControls(PreviewFile preview)
+        {
+            preview.RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
+            preview.RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
+            preview.RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
+        }
+
         public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
         {
             return new ValueValidatorText(style);

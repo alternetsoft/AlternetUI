@@ -1,4 +1,5 @@
-﻿#nullable disable
+﻿#pragma warning disable
+#nullable disable
 #pragma warning disable SA1649
 #pragma warning disable SA1402 // File may only contain a single type
 using System;

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// and uses <see cref="First"/> and <see cref="Second"/> preview sub-controls there.
     /// When <see cref="FileName"/> is changed, preview sub-controls are also updated.
     /// </summary>
-    public class PreviewFileSplitted : WxBaseControl, IFilePreview
+    public class PreviewFileSplitted : Control, IFilePreview
     {
         private readonly SplittedPanel panel = new()
         {
@@ -44,17 +44,17 @@ namespace Alternet.UI
         /// <summary>
         /// First preview sub-control which default docking position is at the center.
         /// </summary>
-        public IFilePreview First => first;
+        public virtual IFilePreview First => first;
 
         /// <summary>
         /// First preview sub-control which default docking position is at the right.
         /// </summary>
-        public IFilePreview Second => second;
+        public virtual IFilePreview Second => second;
 
         /// <summary>
         /// <inheritdoc cref="IFilePreview.FileName"/>
         /// </summary>
-        public string? FileName
+        public virtual string? FileName
         {
             get => first.FileName;
 

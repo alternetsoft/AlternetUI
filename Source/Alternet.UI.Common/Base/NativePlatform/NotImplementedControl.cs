@@ -675,7 +675,22 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateTextBoxHandler()
+    public override BaseControlHandler CreateTextBoxHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateRadioButtonHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateProgressBarHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateGroupBoxHandler(IControl control)
     {
         throw new NotImplementedException();
     }

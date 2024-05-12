@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,6 @@ namespace XamlX.TypeSystem
 
         public sealed class PooledLocal : IDisposable
         {
-            public IXamlLocal Local { get; private set; }
             private readonly XamlLocalsPool _parent;
             private readonly IXamlType _type;
 
@@ -27,6 +27,8 @@ namespace XamlX.TypeSystem
                 _type = type;
             }
 
+            public IXamlLocal Local { get; private set; }
+
             public void Dispose()
             {
                 if (Local == null)
@@ -35,12 +37,12 @@ namespace XamlX.TypeSystem
                 Local = null;
             }
         }
-        
+
         public XamlLocalsPool(Func<IXamlType, IXamlLocal> localFactory)
         {
             _localFactory = localFactory;
         }
-        
+
         public PooledLocal GetLocal(IXamlType type)
         {
             for (var c = 0; c < _localsPool.Count; c++)
@@ -54,7 +56,6 @@ namespace XamlX.TypeSystem
             }
 
             return new PooledLocal(this, type, _localFactory(type));
-
         }
     }
 }

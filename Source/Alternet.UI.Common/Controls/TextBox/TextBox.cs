@@ -741,15 +741,6 @@ namespace Alternet.UI
 
         internal new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
 
-        /// <summary>
-        /// Creates new custom text style.
-        /// </summary>
-        /// <returns></returns>
-        public virtual ITextBoxTextAttr CreateTextAttr()
-        {
-            return Handler.CreateTextAttr();
-        }
-
         /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(ValueValidatorKind)"/>
         public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
         {
@@ -803,6 +794,15 @@ namespace Alternet.UI
                 var result = SetStyle(position, position, style);
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Creates new custom text style.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ITextBoxTextAttr CreateTextAttr()
+        {
+            return Handler.CreateTextAttr();
         }
 
         /// <summary>
@@ -1570,7 +1570,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetNative().CreateTextBoxHandler();
+            return GetNative().CreateTextBoxHandler(this);
         }
 
         /// <inheritdoc/>

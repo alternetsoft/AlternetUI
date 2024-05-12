@@ -27,24 +27,24 @@ namespace Alternet.UI
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
     [ControlCategory("Containers")]
-    public partial class GroupBox : WxBaseControl
+    public partial class GroupBox : Control
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
-        internal new Native.GroupBox NativeControl => (Native.GroupBox)base.NativeControl;
+        internal new IGroupBoxHandler Handler => (IGroupBoxHandler)base.Handler;
 
         /// <summary>
-        /// Gets the top border ( it is the margin at the top where the title is).
+        /// Gets the top border (it is the margin at the top where the title is).
         /// </summary>
         /// <returns></returns>
         /// <remarks>
         /// This is used to account for the
         /// need for extra space taken by the <see cref="GroupBox"/>.
         /// </remarks>
-        public int GetTopBorderForSizer()
+        public virtual int GetTopBorderForSizer()
         {
-            return NativeControl.GetTopBorderForSizer();
+            return Handler.GetTopBorderForSizer();
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace Alternet.UI
         /// This is used to account for the
         /// need for extra space taken by the <see cref="GroupBox"/>.
         /// </remarks>
-        public int GetOtherBorderForSizer()
+        public virtual int GetOtherBorderForSizer()
         {
-            return NativeControl.GetOtherBorderForSizer();
+            return Handler.GetOtherBorderForSizer();
         }
 
         /// <inheritdoc/>
@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
+            return NativeControl.Default.CreateGroupBoxHandler(this);
         }
     }
 }

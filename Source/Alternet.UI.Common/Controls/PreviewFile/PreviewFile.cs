@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to preview the file using one of the registered preview controls.
     /// </summary>
-    public class PreviewFile : WxBaseControl, IFilePreview
+    public class PreviewFile : Control, IFilePreview
     {
         private readonly Label label = new()
         {
@@ -49,12 +49,12 @@ namespace Alternet.UI
         /// Gets list of registered preview controls. One of these
         /// controls will be used to preview the file.
         /// </summary>
-        public IList<PreviewFileRegisterItem> Register => register;
+        public virtual IList<PreviewFileRegisterItem> Register => register;
 
         /// <summary>
         /// Gets or sets path to the file which will be previewed in the control.
         /// </summary>
-        public string? FileName
+        public virtual string? FileName
         {
             get => fileName;
 
@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <summary>
         /// Shows text "No preview available".
         /// </summary>
-        public void ShowNoPreview()
+        public virtual void ShowNoPreview()
         {
             string noPreviewText = CommonStrings.Default.NoPreviewAvailable;
             ShowLabel(noPreviewText);
@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Shows custom text.
         /// </summary>
-        public void ShowLabel(string text)
+        public virtual void ShowLabel(string text)
         {
             label.Text = text;
             cardPanel.SelectCard(0);
@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets preview control unloading any data.
         /// </summary>
-        public void Reset()
+        public virtual void Reset()
         {
             fileName = null;
             ShowNoFile();
@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// <summary>
         /// Shows text "Select a file to preview".
         /// </summary>
-        public void ShowNoFile()
+        public virtual void ShowNoFile()
         {
             string selectFileToPreviewText = CommonStrings.Default.SelectFileToPreview;
             ShowLabel(selectFileToPreviewText);
@@ -117,7 +117,7 @@ namespace Alternet.UI
         /// <summary>
         /// Reloads current previewed file.
         /// </summary>
-        public void Reload()
+        public virtual void Reload()
         {
             if(fileName is null || !File.Exists(fileName))
             {
@@ -154,7 +154,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="fileName">Path to file.</param>
         /// <returns></returns>
-        public PreviewFileRegisterItem? GetItem(string? fileName)
+        public virtual PreviewFileRegisterItem? GetItem(string? fileName)
         {
             if (fileName is null)
                 return null;
@@ -171,18 +171,16 @@ namespace Alternet.UI
         /// <summary>
         /// Registers default preview controls for use with this object.
         /// </summary>
-        public void RegisterDefaultPreviewControls()
+        public virtual void RegisterDefaultPreviewControls()
         {
-            RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
-            RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
-            RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
+            NativePlatform.Default.RegisterDefaultPreviewControls(this);
         }
 
         /// <summary>
         /// Registeres preview control for use with this object.
         /// </summary>
         /// <param name="item">Preview control information.</param>
-        public void RegisterPreview(PreviewFileRegisterItem item)
+        public virtual void RegisterPreview(PreviewFileRegisterItem item)
         {
             register.Add(item);
         }
@@ -212,7 +210,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets whether control is created.
             /// </summary>
-            public bool ControlCreated
+            public virtual bool ControlCreated
             {
                 get => control is not null;
             }
@@ -220,7 +218,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets preview control.
             /// </summary>
-            public Control Control
+            public virtual Control Control
             {
                 get
                 {
@@ -240,7 +238,7 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="fileName">Path to file.</param>
             /// <returns></returns>
-            public bool IsSupportedFile(string? fileName)
+            public virtual bool IsSupportedFile(string? fileName)
             {
                 if (fileName is null)
                     return false;

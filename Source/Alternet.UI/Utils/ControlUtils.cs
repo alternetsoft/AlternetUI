@@ -77,54 +77,5 @@ namespace Alternet.UI
                 action.Invoke();
             }
         }
-
-        /// <summary>
-        /// Creates new <see cref="GroupBox"/> and adds it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static GroupBox AddGroupBox(this Control control, string? title = default)
-        {
-            var result = new GroupBox
-            {
-                Parent = control,
-            };
-
-            if (title is not null)
-                result.Title = title;
-            return result;
-        }
-
-        /// <summary>
-        /// Creates new <see cref="GroupBox"/> with vertical layout and adds
-        /// it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static GroupBox AddVerticalGroupBox(this Control control, string? title = default)
-        {
-            var result = new GroupBox
-            {
-                Layout = LayoutStyle.Vertical,
-                Parent = control,
-            };
-
-            if (title is not null)
-                result.Title = title;
-            return result;
-        }
-
-        /// <summary>
-        /// Creates new <see cref="GroupBox"/> with horizontal layout and adds
-        /// it to the <see cref="Control.Children"/>.
-        /// </summary>
-        public static GroupBox AddHorizontalGroupBox(this Control control, string? title = default)
-        {
-            var result = new GroupBox
-            {
-                Layout = LayoutStyle.Horizontal,
-                Parent = control,
-            };
-
-            if (title is not null)
-                result.Title = title;
-            return result;
-        }
     }
 }

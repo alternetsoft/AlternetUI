@@ -189,6 +189,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override void RegisterDefaultPreviewControls(PreviewFile preview)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool ShowExceptionWindow(Exception exception, string? additionalInfo = null, bool canContinue = true)
         {
             throw new NotImplementedException();

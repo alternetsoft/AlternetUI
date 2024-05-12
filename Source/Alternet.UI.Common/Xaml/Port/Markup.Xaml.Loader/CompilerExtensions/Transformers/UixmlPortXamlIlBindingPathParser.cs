@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 using Alternet.UI.Markup.Parsers;
 using Alternet.UI.Utilities;

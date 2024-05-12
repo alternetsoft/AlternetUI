@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// </summary>
         public CheckBox()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
         }
 
@@ -78,9 +78,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (NativeControl is not null)
-                    return (CheckState)NativeControl.CheckState;
-                return CheckState.Unchecked;
+                return (CheckState)Handler.NativeControl.CheckState;
             }
 
             set
@@ -89,8 +87,7 @@ namespace Alternet.UI
                     value = CheckState.Unchecked;
                 if (CheckState == value)
                     return;
-                if (NativeControl is not null)
-                    NativeControl.CheckState = (int)value;
+                Handler.NativeControl.CheckState = (int)value;
                 RaiseCheckedChanged(EventArgs.Empty);
             }
         }
@@ -122,9 +119,7 @@ namespace Alternet.UI
                 }
 
                 threeState = value;
-
-                if(NativeControl is not null)
-                    NativeControl.ThreeState = value;
+                Handler.NativeControl.ThreeState = value;
             }
         }
 
@@ -144,8 +139,7 @@ namespace Alternet.UI
                 if (alignRight == value)
                     return;
                 alignRight = value;
-                if(NativeControl is not null)
-                    NativeControl.AlignRight = value;
+                Handler.NativeControl.AlignRight = value;
             }
         }
 
@@ -171,8 +165,7 @@ namespace Alternet.UI
                 if (allowAllStatesForUser == value)
                     return;
                 allowAllStatesForUser = value;
-                if (NativeControl is not null)
-                    NativeControl.AllowAllStatesForUser = value;
+                Handler.NativeControl.AllowAllStatesForUser = value;
             }
         }
 
@@ -209,9 +202,7 @@ namespace Alternet.UI
         /// Gets a <see cref="WxControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal CheckBoxHandler? NativeHandler => Handler as CheckBoxHandler;
-
-        internal new Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
+        internal new CheckBoxHandler Handler => (CheckBoxHandler)base.Handler;
 
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
@@ -276,7 +267,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateCheckBoxHandler(this);
+            return new CheckBoxHandler();
         }
 
         /// <summary>

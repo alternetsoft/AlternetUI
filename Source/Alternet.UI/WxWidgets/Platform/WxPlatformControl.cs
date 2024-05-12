@@ -93,7 +93,25 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateTextBoxHandler()
+        public override BaseControlHandler CreateProgressBarHandler(IControl control)
+        {
+            return new ProgressBarHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateRadioButtonHandler(IControl control)
+        {
+            return new RadioButtonHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateGroupBoxHandler(IControl control)
+        {
+            return new GroupBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateTextBoxHandler(IControl control)
         {
             return new TextBoxHandler();
         }

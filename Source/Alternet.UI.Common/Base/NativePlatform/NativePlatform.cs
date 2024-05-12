@@ -122,6 +122,8 @@ namespace Alternet.UI
 
         public abstract void ValidatorSuppressBellOnError(bool value);
 
+        public abstract void RegisterDefaultPreviewControls(PreviewFile preview);
+
         public abstract IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
 
         public abstract IRichToolTipHandler CreateRichToolTipHandler(

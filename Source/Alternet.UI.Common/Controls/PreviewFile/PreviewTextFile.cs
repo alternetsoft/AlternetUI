@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements preview control which uses <see cref="MultilineTextBox"/> for the preview
     /// of the files.
     /// </summary>
-    public class PreviewTextFile : WxBaseControl, IFilePreview
+    public class PreviewTextFile : Control, IFilePreview
     {
         /// <summary>
         /// Gets or sets default encoding for the "txt" files.
@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFilePreview.FileName"/>
         /// </summary>
-        public string? FileName
+        public virtual string? FileName
         {
             get => fileName;
             set
@@ -126,7 +126,7 @@ namespace Alternet.UI
         /// <summary>
         /// Reloads the file which is currently previewed.
         /// </summary>
-        public void Reload()
+        public virtual void Reload()
         {
             textBox.Text = string.Empty;
 
