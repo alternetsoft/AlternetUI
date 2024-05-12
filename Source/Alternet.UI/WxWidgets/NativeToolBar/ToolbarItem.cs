@@ -14,41 +14,9 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class ToolBarItem : NonVisualControl, ICommandSource
     {
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the
-        /// <see cref="Command"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register(
-                "Command",
-                typeof(ICommand),
-                typeof(ToolBarItem),
-                new FrameworkPropertyMetadata(
-                    null, new PropertyChangedCallback(OnCommandChanged)));
-
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the
-        /// <see cref="CommandParameter"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register(
-                "CommandParameter",
-                typeof(object),
-                typeof(ToolBarItem),
-                new PropertyMetadata(null));
-
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the
-        /// <see cref="CommandTarget"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register(
-                "CommandTarget",
-                typeof(object),
-                typeof(ToolBarItem),
-                new PropertyMetadata(null));
-
-        private string text = string.Empty;
+        private object? commandTarget;
+        private object? commandParameter;
+        private ICommand? command;
         private ImageSet? image = null;
         private ImageSet? disabledImage = null;
         private bool isChecked;
@@ -126,31 +94,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the caption of the toolbar item.
-        /// </summary>
-        /// <remarks>
-        /// Setting this property to "-" makes the item a separator.
-        /// Use underscore (<c>_</c>) symbol before a character to make it
-        /// an access key.
-        /// </remarks>
-        public override string Text
-        {
-            get
-            {
-                return text;
-            }
-
-            set
-            {
-                if (value == text)
-                    return;
-
-                text = value;
-                OnTextChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the image for the toolbar item.
         /// </summary>
         /// <value>
@@ -217,22 +160,51 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public object? CommandParameter
         {
-            get { return (object?)GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
+            get
+            {
+                return commandParameter;
+            }
+
+            set
+            {
+                if (commandParameter == value)
+                    return;
+                commandParameter = value;
+            }
         }
 
         /// <inheritdoc/>
-        public object CommandTarget
+        public object? CommandTarget
         {
-            get { return GetValue(CommandTargetProperty); }
-            set { SetValue(CommandTargetProperty, value); }
+            get
+            {
+                return commandTarget;
+            }
+
+            set
+            {
+                if (commandTarget == value)
+                    return;
+                commandTarget = value;
+            }
         }
 
         /// <inheritdoc/>
         public ICommand? Command
         {
-            get { return (ICommand?)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
+            get
+            {
+                return command;
+            }
+
+            set
+            {
+                if (command == value)
+                    return;
+                var oldCommand = command;
+                command = value;
+                OnCommandChanged(oldCommand, value);
+            }
         }
 
         /// <summary>
@@ -290,15 +262,7 @@ namespace Alternet.UI
         {
         }
 
-        private static void OnCommandChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-           ToolBarItem b = (ToolBarItem)d;
-           b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
-        }
-
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
                 UnhookCommand(oldCommand);
