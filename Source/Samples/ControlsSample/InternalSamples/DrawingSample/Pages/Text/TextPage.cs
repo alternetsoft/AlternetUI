@@ -210,17 +210,46 @@ namespace DrawingSample
                 else
                 {
                     if (TextWidthLimitEnabled)
-                        textHeight = dc.MeasureText(LoremIpsum, paragraph.Font, TextWidthLimit, GetTextFormat()).Height;
+                    {
+                        textHeight = dc.MeasureText(
+                            LoremIpsum,
+                            paragraph.Font,
+                            TextWidthLimit,
+                            GetTextFormat()).Height;
+                    }
                     else
                         textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height;
                 }
 
                 if (TextWidthLimitEnabled)
-                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new RectD(x, y, TextWidthLimit, textHeight), textFormat);
-                else if (TextHeightSet)
-                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new RectD(x, y, TextWidthLimitEnabled ? TextWidthLimit : double.MaxValue, textHeight), textFormat);
+                {
+                    dc.DrawText(
+                        LoremIpsum,
+                        paragraph.Font,
+                        color.AsBrush,
+                        new RectD(x, y, TextWidthLimit, textHeight),
+                        textFormat);
+                }
                 else
-                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new PointD(x, y), textFormat);
+                if (TextHeightSet)
+                {
+                    var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
+                    dc.DrawText(
+                        LoremIpsum,
+                        paragraph.Font,
+                        color.AsBrush,
+                        new RectD(x, y, width, textHeight),
+                        textFormat);
+                }
+                else
+                {
+                    dc.DrawText(
+                        LoremIpsum,
+                        paragraph.Font,
+                        color.AsBrush,
+                        new PointD(x, y),
+                        textFormat);
+                }
 
                 y += textHeight + 20;
 

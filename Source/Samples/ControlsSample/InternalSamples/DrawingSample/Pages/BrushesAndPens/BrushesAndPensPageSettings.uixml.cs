@@ -44,6 +44,44 @@ namespace DrawingSample
             dashStyleComboBox.BindSelectedItem(nameof(BrushesAndPensPage.PenDashStyle));
             lineCapComboBox.BindSelectedItem(nameof(BrushesAndPensPage.LineCap));
             lineJoinComboBox.BindSelectedItem(nameof(BrushesAndPensPage.LineJoin));
+            hatchStyleComboBox.BindSelectedItem(nameof(BrushesAndPensPage.HatchStyle));
+            brushComboBox.BindSelectedItem(nameof(BrushesAndPensPage.Brush));
+
+            shapeCountSlider.Value = page.ShapeCount;
+            shapeCountSlider.ValueChanged += (s, e) =>
+            {
+                page.ShapeCount = shapeCountSlider.Value;
+            };
+
+            brushColorHueSlider.Value = page.BrushColorHue;
+            brushColorHueSlider.ValueChanged += (s, e) =>
+            {
+                page.BrushColorHue = brushColorHueSlider.Value;
+            };
+
+            penColorHueSlider.Value = page.PenColorHue;
+            penColorHueSlider.ValueChanged += (s, e) =>
+            {
+                page.PenColorHue = penColorHueSlider.Value;
+            };
+
+            penWidthSlider.Value = page.PenWidth;
+            penWidthSlider.ValueChanged += (s, e) =>
+            {
+                page.PenWidth = penWidthSlider.Value;
+            };
+
+            rectanglesIncludedCheckBox.IsChecked = page.RectanglesIncluded;
+            rectanglesIncludedCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.RectanglesIncluded = rectanglesIncludedCheckBox.IsChecked;
+            };
+
+            ellipsesIncludedCheckBox.IsChecked = page.EllipsesIncluded;
+            ellipsesIncludedCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.EllipsesIncluded = ellipsesIncludedCheckBox.IsChecked;
+            };
         }
 
         private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)

@@ -21,8 +21,8 @@ namespace DrawingSample
             {
                 InitializeComponent();
 
-                ControlSet labels = new(horzAlignLabel, vertAlignLabel, trimmingLabel, wrappingLabel);
-                ControlSet comboBoxes = new(
+                var labels = Group(horzAlignLabel, vertAlignLabel, trimmingLabel, wrappingLabel);
+                var comboBoxes = Group(
                     horizontalAlignmentComboBox,
                     verticalAlignmentComboBox,
                     trimmingComboBox,
@@ -49,6 +49,64 @@ namespace DrawingSample
             verticalAlignmentComboBox.BindSelectedItem(nameof(TextPage.VerticalAlignment));
             wrappingComboBox.BindSelectedItem(nameof(TextPage.Wrapping));
             trimmingComboBox.BindSelectedItem(nameof(TextPage.Trimming));
+
+            fontSizeSlider.Value = (int)page.FontSize;
+            fontSizeSlider.ValueChanged += (s, e) =>
+            {
+                page.FontSize = fontSizeSlider.Value;
+            };
+
+            boldCheckBox.IsChecked = page.Bold;
+            boldCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Bold = boldCheckBox.IsChecked;
+            };
+
+            italicCheckBox.IsChecked = page.Italic;
+            italicCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Italic = italicCheckBox.IsChecked;
+            };
+
+            underlinedCheckBox.IsChecked = page.Underlined;
+            underlinedCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Underlined = underlinedCheckBox.IsChecked;
+            };
+
+            strikethroughCheckBox.IsChecked = page.Strikethrough;
+            strikethroughCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Strikethrough = strikethroughCheckBox.IsChecked;
+            };
+
+            textWidthLimitEnabledCheckBox.IsChecked = page.TextWidthLimitEnabled;
+            textWidthLimitEnabledCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.TextWidthLimitEnabled = textWidthLimitEnabledCheckBox.IsChecked;
+            };
+
+            textHeightSetCheckBox.IsChecked = page.TextHeightSet;
+            textHeightSetCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.TextHeightSet = textHeightSetCheckBox.IsChecked;
+            };
+
+            textWidthLimitSlider.Minimum = page.MinTextWidthLimit;
+            textWidthLimitSlider.Maximum = page.MaxTextWidthLimit;
+            textWidthLimitSlider.Value = page.TextWidthLimit;
+            textWidthLimitSlider.ValueChanged += (s, e) => {
+                page.TextWidthLimit = textWidthLimitSlider.Value;
+            };
+
+            textHeightValueSlider.Minimum = page.MinTextHeightValue;
+            textHeightValueSlider.Maximum = page.MaxTextHeightValue;
+            textHeightValueSlider.Value= page.TextHeightValue;
+            textHeightValueSlider.ValueChanged += (s, e) => {
+                page.TextHeightValue = textHeightValueSlider.Value;
+            };
+
+            customFontFamilyComboBox.BindSelectedItem(nameof(TextPage.CustomFontFamilyName));
 
             GetChildrenRecursive().Action<Slider>((c) => c.ClearTicks());
         }
