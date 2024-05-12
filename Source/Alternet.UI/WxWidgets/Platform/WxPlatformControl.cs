@@ -105,6 +105,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateDateTimePickerHandler(IControl control)
+        {
+            return new DateTimePickerHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateNumericUpDownHandler(IControl control)
         {
             return new NumericUpDownHandler();

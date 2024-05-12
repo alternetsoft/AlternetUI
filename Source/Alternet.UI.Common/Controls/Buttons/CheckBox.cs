@@ -267,7 +267,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return NativeControl.Default.CreateCheckBoxHandler(this);
+            return GetNative().CreateCheckBoxHandler(this);
         }
 
         /// <summary>

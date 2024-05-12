@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return NativeControl.Default.CreateGroupBoxHandler(this);
+            return GetNative().CreateGroupBoxHandler(this);
         }
     }
 }

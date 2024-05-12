@@ -168,12 +168,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.Value;
+                return Handler.NativeControl.Value;
             }
 
             set
             {
-                NativeControl.Value = value;
+                Handler.NativeControl.Value = value;
             }
         }
 
@@ -188,12 +188,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.ShowHolidays;
+                return Handler.NativeControl.ShowHolidays;
             }
 
             set
             {
-                NativeControl.EnableHolidayDisplay(value);
+                Handler.NativeControl.EnableHolidayDisplay(value);
                 PerformLayout();
             }
         }
@@ -206,12 +206,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.NoMonthChange;
+                return Handler.NativeControl.NoMonthChange;
             }
 
             set
             {
-                NativeControl.EnableMonthChange(!value);
+                Handler.NativeControl.EnableMonthChange(!value);
                 PerformLayout();
             }
         }
@@ -228,12 +228,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.SequentalMonthSelect;
+                return Handler.NativeControl.SequentalMonthSelect;
             }
 
             set
             {
-                NativeControl.SequentalMonthSelect = value;
+                Handler.NativeControl.SequentalMonthSelect = value;
                 PerformLayout();
             }
         }
@@ -254,12 +254,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.ShowSurroundWeeks;
+                return Handler.NativeControl.ShowSurroundWeeks;
             }
 
             set
             {
-                NativeControl.ShowSurroundWeeks = value;
+                Handler.NativeControl.ShowSurroundWeeks = value;
                 PerformLayout();
             }
         }
@@ -276,12 +276,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.ShowWeekNumbers;
+                return Handler.NativeControl.ShowWeekNumbers;
             }
 
             set
             {
-                NativeControl.ShowWeekNumbers = value;
+                Handler.NativeControl.ShowWeekNumbers = value;
                 PerformLayout();
             }
         }
@@ -293,12 +293,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.UseGeneric;
+                return Handler.NativeControl.UseGeneric;
             }
 
             set
             {
-                NativeControl.UseGeneric = value;
+                Handler.NativeControl.UseGeneric = value;
                 SetRange();
                 PerformLayout();
             }
@@ -311,12 +311,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.HasBorder;
+                return Handler.NativeControl.HasBorder;
             }
 
             set
             {
-                NativeControl.HasBorder = value;
+                Handler.NativeControl.HasBorder = value;
                 PerformLayout();
             }
         }
@@ -334,9 +334,9 @@ namespace Alternet.UI
         {
             get
             {
-                if (NativeControl.SundayFirst)
+                if (Handler.NativeControl.SundayFirst)
                     return DayOfWeek.Sunday;
-                if (NativeControl.MondayFirst)
+                if (Handler.NativeControl.MondayFirst)
                     return DayOfWeek.Monday;
                 return null;
             }
@@ -348,19 +348,19 @@ namespace Alternet.UI
 
                 if (value == DayOfWeek.Sunday)
                 {
-                    NativeControl.SundayFirst = true;
-                    NativeControl.MondayFirst = false;
+                    Handler.NativeControl.SundayFirst = true;
+                    Handler.NativeControl.MondayFirst = false;
                 }
                 else
                 if (value == DayOfWeek.Monday)
                 {
-                    NativeControl.SundayFirst = false;
-                    NativeControl.MondayFirst = true;
+                    Handler.NativeControl.SundayFirst = false;
+                    Handler.NativeControl.MondayFirst = true;
                 }
                 else
                 {
-                    NativeControl.SundayFirst = false;
-                    NativeControl.MondayFirst = false;
+                    Handler.NativeControl.SundayFirst = false;
+                    Handler.NativeControl.MondayFirst = false;
                 }
             }
         }
@@ -379,7 +379,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HolidayColorFg
         {
-            get => NativeControl.GetHolidayColorFg();
+            get => Handler.NativeControl.GetHolidayColorFg();
             set => SetHolidayColors(value, HolidayColorBg);
         }
 
@@ -394,7 +394,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HolidayColorBg
         {
-            get => NativeControl.GetHolidayColorBg();
+            get => Handler.NativeControl.GetHolidayColorBg();
             set => SetHolidayColors(HolidayColorFg, value);
         }
 
@@ -409,7 +409,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HeaderColorFg
         {
-            get => NativeControl.GetHeaderColorFg();
+            get => Handler.NativeControl.GetHeaderColorFg();
             set => SetHeaderColors(value, HeaderColorBg);
         }
 
@@ -424,7 +424,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HeaderColorBg
         {
-            get => NativeControl.GetHeaderColorBg();
+            get => Handler.NativeControl.GetHeaderColorBg();
             set => SetHeaderColors(HeaderColorFg, value);
         }
 
@@ -439,7 +439,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HighlightColorFg
         {
-            get => NativeControl.GetHighlightColorFg();
+            get => Handler.NativeControl.GetHighlightColorFg();
             set => SetHighlightColors(value, HighlightColorBg);
         }
 
@@ -454,7 +454,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HighlightColorBg
         {
-            get => NativeControl.GetHighlightColorBg();
+            get => Handler.NativeControl.GetHighlightColorBg();
             set => SetHighlightColors(HighlightColorFg, value);
         }
 
@@ -520,8 +520,6 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.Calendar NativeControl => Handler.NativeControl;
-
         internal DayOfWeek FirstDayOfWeekUseGlobalization =>
             System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
 
@@ -544,7 +542,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="mark"><c>true</c> to mark the day, <c>false</c> to unmark it.</param>
-        public virtual void Mark(int day, bool mark = true) => NativeControl.Mark(day, mark);
+        public virtual void Mark(int day, bool mark = true) => Handler.NativeControl.Mark(day, mark);
 
         /// <summary>
         /// Clears any attributes associated with the given day.
@@ -554,7 +552,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public virtual void ResetAttr(int day) => NativeControl.ResetAttr(day);
+        public virtual void ResetAttr(int day) => Handler.NativeControl.ResetAttr(day);
 
         /// <summary>
         /// Marks the specified day as being a holiday in the current month.
@@ -564,7 +562,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public virtual void SetHoliday(int day) => NativeControl.SetHoliday(day);
+        public virtual void SetHoliday(int day) => Handler.NativeControl.SetHoliday(day);
 
         /// <summary>
         /// Sets values for <see cref="HighlightColorBg"/> and
@@ -578,7 +576,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHighlightColors(Color colorFg, Color colorBg)
         {
-            NativeControl.SetHighlightColors(colorFg, colorBg);
+            Handler.NativeControl.SetHighlightColors(colorFg, colorBg);
         }
 
         /// <summary>
@@ -593,7 +591,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHolidayColors(Color colorFg, Color colorBg)
         {
-            NativeControl.SetHolidayColors(colorFg, colorBg);
+            Handler.NativeControl.SetHolidayColors(colorFg, colorBg);
         }
 
         /// <summary>
@@ -608,7 +606,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHeaderColors(Color colorFg, Color colorBg)
         {
-            NativeControl.SetHeaderColors(colorFg, colorBg);
+            Handler.NativeControl.SetHeaderColors(colorFg, colorBg);
         }
 
         /// <summary>
@@ -633,7 +631,7 @@ namespace Alternet.UI
                 return HitTestResult.None;
 
             var pointi = PixelFromDip(point);
-            var result = NativeControl.HitTest(pointi);
+            var result = Handler.NativeControl.HitTest(pointi);
             return (HitTestResult)result;
         }
 
@@ -644,7 +642,7 @@ namespace Alternet.UI
         /// <param name="day">Day (in the range 1...31).</param>
         public virtual ICalendarDateAttr? GetAttr(int day)
         {
-            var result = NativeControl.GetAttr(day);
+            var result = Handler.NativeControl.GetAttr(day);
             if (result == default)
                 return null;
             return new CalendarDateAttr(result, false);
@@ -658,18 +656,18 @@ namespace Alternet.UI
         public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
         {
             if (dateAttr is null)
-                NativeControl.ResetAttr(day);
+                Handler.NativeControl.ResetAttr(day);
             else
-                NativeControl.SetAttr(day, dateAttr.Handle);
+                Handler.NativeControl.SetAttr(day, dateAttr.Handle);
         }
 
-        internal bool AllowMonthChange() => NativeControl.AllowMonthChange();
+        internal bool AllowMonthChange() => Handler.NativeControl.AllowMonthChange();
 
         internal bool EnableMonthChange(bool enable = true) =>
-            NativeControl.EnableMonthChange(enable);
+            Handler.NativeControl.EnableMonthChange(enable);
 
         internal void EnableHolidayDisplay(bool display = true) =>
-            NativeControl.EnableHolidayDisplay(display);
+            Handler.NativeControl.EnableHolidayDisplay(display);
 
         internal void RaiseSelectionChanged(EventArgs e)
         {
@@ -710,9 +708,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void SetRange(DateTime min, DateTime max)
         {
-            NativeControl.MinValue = min;
-            NativeControl.MaxValue = max;
-            NativeControl.SetRange(UseMinDate, UseMaxDate);
+            Handler.NativeControl.MinValue = min;
+            Handler.NativeControl.MaxValue = max;
+            Handler.NativeControl.SetRange(UseMinDate, UseMaxDate);
             Refresh();
         }
 

@@ -470,7 +470,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return NativeControl.Default.CreateSliderHandler(this);
+            return GetNative().CreateSliderHandler(this);
         }
 
         private static object CoerceMaximum(DependencyObject d, object value)

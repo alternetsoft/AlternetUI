@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return UI.NativeControl.Default.CreateNumericUpDownHandler(this);
+            return GetNative().CreateNumericUpDownHandler(this);
         }
 
         /// <summary>

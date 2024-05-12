@@ -230,7 +230,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return NativeControl.Default.CreateProgressBarHandler(this);
+            return GetNative().CreateProgressBarHandler(this);
         }
 
         /// <summary>

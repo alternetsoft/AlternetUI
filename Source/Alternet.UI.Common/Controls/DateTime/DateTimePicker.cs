@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// </summary>
         public DateTimePicker()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
         }
 
@@ -95,11 +95,6 @@ namespace Alternet.UI
 
             set
             {
-                if(!Application.IsWindowsOS)
-                {
-                    value = DateTimePickerPopupKind.Default;
-                }
-
                 Handler.PopupKind = value;
             }
         }
@@ -120,8 +115,8 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        internal new DateTimePickerHandler Handler =>
-            (DateTimePickerHandler)base.Handler;
+        internal new IDateTimePickerHandler Handler =>
+            (IDateTimePickerHandler)base.Handler;
 
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
@@ -152,7 +147,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new DateTimePickerHandler();
+            return GetNative().CreateDateTimePickerHandler(this);
         }
 
         /// <summary>

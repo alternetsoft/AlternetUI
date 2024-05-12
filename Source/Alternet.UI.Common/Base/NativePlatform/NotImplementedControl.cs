@@ -719,4 +719,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateDateTimePickerHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }
