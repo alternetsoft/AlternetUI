@@ -89,7 +89,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnCellChanged()
+        public override void OnCellChanged()
         {
             base.OnCellChanged();
             OnCellAttachedPropertyChanged(this);

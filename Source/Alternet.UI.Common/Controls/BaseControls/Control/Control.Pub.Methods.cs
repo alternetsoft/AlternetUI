@@ -11,148 +11,6 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
-        /// Sets a value that indicates which column child control within a <see cref="Grid"/>
-        /// should appear in.
-        /// </summary>
-        /// <param name="control">The control on which to set the column index.</param>
-        /// <param name="value">The 0-based column index to set.</param>
-        public static void SetColumn(Control control, int value)
-        {
-            if (control == null)
-                throw new ArgumentNullException(nameof(control));
-
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(value));
-            control.columnIndex = value;
-            control.OnCellChanged();
-        }
-
-        /// <summary>
-        /// Sets a value that indicates which row and column child control within
-        /// a <see cref="Grid"/> should appear in.
-        /// </summary>
-        /// <param name="control">The control on which to set the column index.</param>
-        /// <param name="row">The 0-based row index to set.</param>
-        /// <param name="col">The 0-based column index to set.</param>
-        public static void SetRowColumn(Control control, int row, int col)
-        {
-            if (control == null)
-                throw new ArgumentNullException(nameof(control));
-            if (row < 0)
-                throw new ArgumentOutOfRangeException(nameof(row));
-            if (col < 0)
-                throw new ArgumentOutOfRangeException(nameof(col));
-            control.rowIndex = row;
-            control.columnIndex = col;
-            control.OnCellChanged();
-        }
-
-        /// <summary>
-        /// Gets a value that indicates which column child control within a <see cref="Grid"/>
-        /// should appear in.
-        /// </summary>
-        /// <param name="control">The control for which to get the column index.</param>
-        /// <remarks>The 0-based column index.</remarks>
-        public static int GetColumn(Control control)
-        {
-            if (control is null)
-                throw new ArgumentNullException(nameof(control));
-            return control.columnIndex;
-        }
-
-        /// <summary>
-        /// Sets a value that indicates which row child control within a <see cref="Grid"/>
-        /// should appear in.
-        /// </summary>
-        /// <param name="control">The control on which to set the row index.</param>
-        /// <param name="value">The 0-based row index to set.</param>
-        public static void SetRow(Control control, int value)
-        {
-            if (control == null)
-                throw new ArgumentNullException(nameof(control));
-
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(value));
-            control.rowIndex = value;
-            control.OnCellChanged();
-        }
-
-        /// <summary>
-        /// Gets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
-        /// </summary>
-        /// <param name="control">The control for which to get the row index.</param>
-        /// <remarks>The 0-based row index.</remarks>
-        public static int GetRow(Control control)
-        {
-            if (control is null)
-                throw new ArgumentNullException(nameof(control));
-            return control.rowIndex;
-        }
-
-        /// <summary>
-        /// Gets a value that indicates the total number of rows that child content spans
-        /// within a <see cref="Grid"/>.
-        /// </summary>
-        /// <param name="control">The control for which to get the row span.</param>
-        /// <returns>The total number of rows that child content spans within a
-        /// <see cref="Grid"/>.</returns>
-        public static int GetRowSpan(Control control)
-        {
-            if (control is null)
-                throw new ArgumentNullException(nameof(control));
-            return control.rowSpan;
-        }
-
-        /// <summary>
-        /// Sets a value that indicates the total number of rows that child content spans
-        /// within a <see cref="Grid"/>.
-        /// </summary>
-        /// <param name="control">The control for which to set the row span.</param>
-        /// <param name="value">The total number of rows that child content spans within
-        /// a <see cref="Grid"/>.</param>
-        public static void SetRowSpan(Control control, int value)
-        {
-            if (control == null)
-                throw new ArgumentNullException(nameof(control));
-            if (value < 1)
-                throw new ArgumentOutOfRangeException(nameof(value));
-
-            control.rowSpan = value;
-            control.OnCellChanged();
-        }
-
-        /// <summary>
-        /// Gets a value that indicates the total number of columns that child content
-        /// spans within a <see cref="Grid"/>.
-        /// </summary>
-        /// <param name="control">The control for which to get the column span.</param>
-        /// <returns>The total number of columns that child content spans within a
-        /// <see cref="Grid"/>.</returns>
-        public static int GetColumnSpan(Control control)
-        {
-            if (control is null)
-                throw new ArgumentNullException(nameof(control));
-            return control.columnSpan;
-        }
-
-        /// <summary>
-        /// Sets a value that indicates the total number of columns that child content
-        /// spans within a <see cref="Grid"/>.
-        /// </summary>
-        /// <param name="control">The control for which to set the column span.</param>
-        /// <param name="value">The total number of columns that child content spans
-        /// within a <see cref="Grid"/>.</param>
-        public static void SetColumnSpan(Control control, int value)
-        {
-            if (control == null)
-                throw new ArgumentNullException(nameof(control));
-            if (value < 1)
-                throw new ArgumentOutOfRangeException(nameof(value));
-            control.columnSpan = value;
-            control.OnCellChanged();
-        }
-
-        /// <summary>
         /// Called when the control should
         /// reposition its child controls.
         /// </summary>
@@ -2638,6 +2496,34 @@ namespace Alternet.UI
             });
 
             return new(result);
+        }
+
+        /// <summary>
+        /// Sets a value that indicates which row and column control should appear in.
+        /// </summary>
+        /// <param name="row">The 0-based row index to set.</param>
+        /// <param name="col">The 0-based column index to set.</param>
+        public virtual void SetRowColumn(int row, int col)
+        {
+            if (row < 0)
+                row = 0;
+            if (col < 0)
+                col = 0;
+            var changed = (col != columnIndex) || (row != rowIndex);
+            if (changed)
+            {
+                rowIndex = row;
+                columnIndex = col;
+                OnCellChanged();
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CellChanged" /> event.
+        /// </summary>
+        public virtual void OnCellChanged()
+        {
+            CellChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void OnNativeControlVisibleChanged()

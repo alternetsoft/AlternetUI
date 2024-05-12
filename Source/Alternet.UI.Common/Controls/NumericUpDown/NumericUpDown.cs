@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class NumericUpDown : WxBaseControl
+    public partial class NumericUpDown : Control
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public NumericUpDown()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
         }
 
@@ -180,8 +180,8 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        internal new NumericUpDownHandler Handler =>
-            (NumericUpDownHandler)base.Handler;
+        internal new INumericUpDownHandler Handler =>
+            (INumericUpDownHandler)base.Handler;
 
         /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NumericUpDownHandler();
+            return UI.NativeControl.Default.CreateNumericUpDownHandler(this);
         }
 
         /// <summary>

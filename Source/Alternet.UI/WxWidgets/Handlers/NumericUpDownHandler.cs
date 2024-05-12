@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Alternet.UI
 {
     internal class NumericUpDownHandler :
-        NativeControlHandler<NumericUpDown, Native.NumericUpDown>
+        NativeControlHandler<NumericUpDown, Native.NumericUpDown>, INumericUpDownHandler
     {
         public bool HasBorder
         {

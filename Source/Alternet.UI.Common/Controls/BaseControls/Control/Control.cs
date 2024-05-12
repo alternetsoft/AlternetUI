@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -27,10 +28,6 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
 
-        internal int rowIndex;
-        internal int columnIndex;
-        internal int columnSpan = 1;
-        internal int rowSpan = 1;
         internal bool enabled = true;
 
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
@@ -42,6 +39,10 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private int rowIndex;
+        private int columnIndex;
+        private int columnSpan = 1;
+        private int rowSpan = 1;
         private ISite? site;
         private bool isMouseLeftButtonDown;
         private int layoutSuspendCount;
@@ -1712,7 +1713,7 @@ namespace Alternet.UI
             {
                 if (minMargin == null)
                     margin.ApplyMin(MinMargin);
-                if(Parent is not null && Parent.MinChildMargin is not null)
+                if (Parent is not null && Parent.MinChildMargin is not null)
                 {
                     var result = margin;
                     result.ApplyMin(Parent.MinChildMargin.Value);
@@ -1934,7 +1935,7 @@ namespace Alternet.UI
                     GetNative().SetBackgroundColor(this, backgroundColor);
                 Refresh();
 
-                foreach(var child in Children)
+                foreach (var child in Children)
                 {
                     if (child.ParentBackColor)
                         child.BackgroundColor = value;
@@ -2167,7 +2168,16 @@ namespace Alternet.UI
         public virtual int ColumnIndex
         {
             get => columnIndex;
-            set => SetColumn(this, value);
+
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (value == columnIndex)
+                    return;
+                columnIndex = value;
+                OnCellChanged();
+            }
         }
 
         /// <summary>
@@ -2181,7 +2191,16 @@ namespace Alternet.UI
         public virtual int RowIndex
         {
             get => rowIndex;
-            set => SetRow(this, value);
+
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (value == rowIndex)
+                    return;
+                rowIndex = value;
+                OnCellChanged();
+            }
         }
 
         /// <summary>
@@ -2195,7 +2214,15 @@ namespace Alternet.UI
         public virtual int ColumnSpan
         {
             get => columnSpan;
-            set => SetColumnSpan(this, value);
+            set
+            {
+                if (value < 1)
+                    value = 1;
+                if (value == columnSpan)
+                    return;
+                columnSpan = value;
+                OnCellChanged();
+            }
         }
 
         /// <summary>
@@ -2209,7 +2236,16 @@ namespace Alternet.UI
         public virtual int RowSpan
         {
             get => rowSpan;
-            set => SetRowSpan(this, value);
+
+            set
+            {
+                if (value < 1)
+                    value = 1;
+                if (value == rowSpan)
+                    return;
+                rowSpan = value;
+                OnCellChanged();
+            }
         }
 
         /// <summary>

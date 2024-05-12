@@ -408,14 +408,6 @@ namespace Alternet.UI
             KeyDown?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="CellChanged" /> event.
-        /// </summary>
-        protected virtual void OnCellChanged()
-        {
-            CellChanged?.Invoke(this, EventArgs.Empty);
-        }
-
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {

@@ -12,13 +12,7 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
-    public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
-
-    public abstract CustomControlPainter GetPainter();
-
-    public abstract bool GetWantChars(IControl control);
-
-    public abstract void SetWantChars(IControl control, bool value);
+    public abstract BaseControlHandler CreateNumericUpDownHandler(IControl control);
 
     public abstract BaseControlHandler CreateCheckBoxHandler(IControl control);
 
@@ -49,6 +43,14 @@ public abstract class NativeControl
     public abstract BaseControlHandler CreateMainMenuHandler(IControl control);
 
     public abstract BaseControlHandler CreateControlHandler(IControl control);
+
+    public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
+
+    public abstract CustomControlPainter GetPainter();
+
+    public abstract bool GetWantChars(IControl control);
+
+    public abstract void SetWantChars(IControl control, bool value);
 
     public abstract void SetShowHorzScrollBar(IControl control, bool value);
 

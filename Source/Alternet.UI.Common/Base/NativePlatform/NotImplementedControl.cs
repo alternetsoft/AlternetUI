@@ -714,4 +714,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateNumericUpDownHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }
