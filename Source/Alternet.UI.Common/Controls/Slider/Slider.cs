@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -29,54 +30,9 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class Slider : Control
     {
-        /// <summary>
-        /// Identifies the <see cref="Value"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(
-                    "Value",
-                    typeof(int),
-                    typeof(Slider),
-                    new FrameworkPropertyMetadata(
-                            0,
-                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),
-                            new CoerceValueCallback(CoerceValue),
-                            true,
-                            UpdateSourceTrigger.PropertyChanged));
-
-        /// <summary>
-        /// Identifies the <see cref="Minimum"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register(
-                    "Minimum",
-                    typeof(int),
-                    typeof(Slider),
-                    new FrameworkPropertyMetadata(
-                            0,
-                            PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnMinimumPropertyChanged),
-                            null,
-                            true,
-                            UpdateSourceTrigger.PropertyChanged));
-
-        /// <summary>
-        /// Identifies the <see cref="Maximum"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register(
-                    "Maximum",
-                    typeof(int),
-                    typeof(Slider),
-                    new FrameworkPropertyMetadata(
-                            10,
-                            PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnMaximumPropertyChanged),
-                            CoerceMaximum,
-                            true,
-                            UpdateSourceTrigger.PropertyChanged));
-
+        private int maximum = 10;
+        private int minimum = 0;
+        private int value = 0;
         private int smallChange = 1;
         private int largeChange = 5;
         private int tickFrequency = 1;
@@ -183,8 +139,19 @@ namespace Alternet.UI
         /// the current position of the scroll box on the slider.</remarks>
         public virtual int Value
         {
-            get { return (int)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get
+            {
+                return value;
+            }
+
+            set
+            {
+                value = CoerceValue(value);
+                if (this.value == value)
+                    return;
+                this.value = value;
+                RaiseValueChanged(EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -203,8 +170,19 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int Minimum
         {
-            get { return (int)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get
+            {
+                return minimum;
+            }
+
+            set
+            {
+                if (minimum == value)
+                    return;
+                minimum = value;
+                RaiseMinimumChanged(EventArgs.Empty);
+                Maximum = maximum;
+            }
         }
 
         /// <summary>
@@ -223,8 +201,20 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int Maximum
         {
-            get { return (int)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get
+            {
+                return maximum;
+            }
+
+            set
+            {
+                value = CoerceMaximum(value);
+                if (maximum == value)
+                    return;
+                maximum = value;
+                RaiseMaximumChanged(EventArgs.Empty);
+                Value = value;
+            }
         }
 
         /// <summary>
@@ -237,20 +227,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return smallChange;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (value < 0)
-                    throw new ArgumentException(nameof(SmallChange));
-
+                    value = 0;
                 if (smallChange == value)
                     return;
-
                 smallChange = value;
                 SmallChangeChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -266,23 +251,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return largeChange;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (value < 0)
-                {
-                    throw new ArgumentException(
-                        ErrorMessages.Default.InvalidParameter, nameof(LargeChange));
-                }
-
+                    value = 0;
                 if (largeChange == value)
                     return;
-
                 largeChange = value;
                 LargeChangeChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -296,16 +273,13 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return tickFrequency;
             }
 
             set
             {
-                CheckDisposed();
                 if (tickFrequency == value)
                     return;
-
                 tickFrequency = value;
                 TickFrequencyChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -319,17 +293,6 @@ namespace Alternet.UI
         }
 
         internal new ISliderHandler Handler => (ISliderHandler)base.Handler;
-
-        /// <summary>
-        /// Binds <see cref="Value"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
-        /// </summary>
-        /// <param name="propName">Property name.</param>
-        public virtual void BindValue(string propName)
-        {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, Slider.ValueProperty, myBinding);
-        }
 
         /// <summary>
         /// Clears the ticks.
@@ -349,9 +312,7 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public virtual void RaiseValueChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
+            Designer?.RaisePropertyChanged(this, nameof(Value));
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
         }
@@ -365,71 +326,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Callback for changes to the Value property
-        /// </summary>
-        private static void OnValuePropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            Slider control = (Slider)d;
-            control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
-        }
-
-        private static object CoerceValue(DependencyObject d, object value)
-        {
-            var o = (Slider)d;
-
-            var intValue = (int)value;
-            if (intValue < o.Minimum)
-                return o.Minimum;
-
-            if (intValue > o.Maximum)
-                return o.Maximum;
-
-            return value;
-        }
-
-#pragma warning disable
-        private void OnValuePropertyChanged(int oldValue, int newValue)
-#pragma warning enable
-        {
-            RaiseValueChanged(EventArgs.Empty);
-            Designer?.RaisePropertyChanged(this, nameof(Value));
-        }
-
-        /// <summary>
         /// Called when the minimum of the <see cref="Minimum"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnMinimumChanged(EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Callback for changes to the Minimum property
-        /// </summary>
-        private static void OnMinimumPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            Slider control = (Slider)d;
-            control.OnMinimumPropertyChanged((int)e.OldValue, (int)e.NewValue);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="MinimumChanged"/> event and calls
-        /// <see cref="OnMinimumChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        void RaiseMinimumChanged(EventArgs e)
-        {
-            OnMinimumChanged(e);
-            MinimumChanged?.Invoke(this, e);
-        }
-
-        private void OnMinimumPropertyChanged(int oldValue, int newValue)
-        {
-            RaiseMinimumChanged(EventArgs.Empty);
         }
 
         /// <summary>
@@ -440,15 +341,21 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Callback for changes to the Maximum property
-        /// </summary>
-        private static void OnMaximumPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override BaseControlHandler CreateHandler()
         {
-            Slider control = (Slider)d;
-            control.OnMaximumPropertyChanged((int)e.OldValue, (int)e.NewValue);
+            return GetNative().CreateSliderHandler(this);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MinimumChanged"/> event and calls
+        /// <see cref="OnMinimumChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        private void RaiseMinimumChanged(EventArgs e)
+        {
+            OnMinimumChanged(e);
+            MinimumChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -462,27 +369,22 @@ namespace Alternet.UI
             MaximumChanged?.Invoke(this, e);
         }
 
-        private void OnMaximumPropertyChanged(int oldValue, int newValue)
+        private int CoerceValue(int value)
         {
-            RaiseMaximumChanged(EventArgs.Empty);
+            if (value < Minimum)
+                return Minimum;
+
+            if (value > Maximum)
+                return Maximum;
+
+            return value;
         }
 
-        /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        private int CoerceMaximum(int value)
         {
-            return GetNative().CreateSliderHandler(this);
-        }
-
-        private static object CoerceMaximum(DependencyObject d, object value)
-        {
-            var o = (Slider)d;
-
-            int min = o.Minimum;
-            if ((int)value < min)
-            {
+            int min = Minimum;
+            if (value < min)
                 return min;
-            }
-
             return value;
         }
     }
