@@ -105,6 +105,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateSliderHandler(IControl control)
+        {
+            return new SliderHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateColorPickerHandler(IControl control)
+        {
+            return new ColorPickerHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateGroupBoxHandler(IControl control)
         {
             return new GroupBoxHandler();

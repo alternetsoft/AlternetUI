@@ -694,4 +694,14 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateColorPickerHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateSliderHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }

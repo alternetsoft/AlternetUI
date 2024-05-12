@@ -2,9 +2,15 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class SliderHandler : ControlHandler<Slider>
+    internal class SliderHandler : ControlHandler<Slider>, ISliderHandler
     {
         public new Native.Slider NativeControl => (Native.Slider)base.NativeControl!;
+
+        public virtual void ClearTicks()
+        {
+            if (Application.IsWindowsOS || Application.IsLinuxOS)
+                NativeControl.ClearTicks();
+        }
 
         internal override Native.Control CreateNativeControl()
         {

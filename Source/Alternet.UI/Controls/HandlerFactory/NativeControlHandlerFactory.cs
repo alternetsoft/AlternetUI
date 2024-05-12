@@ -95,7 +95,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public BaseControlHandler CreateColorPickerHandler(Control control) =>
-            new NativeColorPickerHandler();
+            new ColorPickerHandler();
 
         /// <inheritdoc/>
         public BaseControlHandler CreateDateTimePickerHandler(Control control) =>

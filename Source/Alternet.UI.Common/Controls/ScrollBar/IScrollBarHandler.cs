@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to methods and properties of the native scrollbar control.
     /// </summary>
-    public interface IScrollBarHandler
+    public interface IScrollBarHandler : IControlHandler
     {
         /// <summary>
         /// Gets or sets whether scrollbar is vertical.

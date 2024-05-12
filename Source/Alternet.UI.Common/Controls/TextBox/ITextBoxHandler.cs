@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public interface ITextBoxHandler
+    public interface ITextBoxHandler : IControlHandler
     {
         string ReportedUrl { get; }
 

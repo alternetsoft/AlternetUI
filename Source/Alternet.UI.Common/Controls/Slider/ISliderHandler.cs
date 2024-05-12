@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public interface IGroupBoxHandler : IControlHandler
+    public interface ISliderHandler : IControlHandler
     {
-        int GetTopBorderForSizer();
-
-        int GetOtherBorderForSizer();
+        void ClearTicks();
     }
 }

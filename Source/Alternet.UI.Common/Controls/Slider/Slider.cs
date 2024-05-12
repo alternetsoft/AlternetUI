@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class Slider : WxBaseControl
+    public partial class Slider : Control
     {
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
@@ -318,6 +318,8 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
+        internal new ISliderHandler Handler => (ISliderHandler)base.Handler;
+
         /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the
         /// <see cref="FrameworkElement.DataContext"/>
@@ -337,8 +339,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void ClearTicks()
         {
-            if(Application.IsWindowsOS || Application.IsLinuxOS)
-                (Handler.NativeControl as Native.Slider)?.ClearTicks();
+            Handler.ClearTicks();
         }
 
         /// <summary>
@@ -422,9 +423,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         void RaiseMinimumChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnMinimumChanged(e);
             MinimumChanged?.Invoke(this, e);
         }
@@ -460,9 +458,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         private void RaiseMaximumChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnMaximumChanged(e);
             MaximumChanged?.Invoke(this, e);
         }
@@ -475,7 +470,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateSliderHandler(this);
+            return NativeControl.Default.CreateSliderHandler(this);
         }
 
         private static object CoerceMaximum(DependencyObject d, object value)

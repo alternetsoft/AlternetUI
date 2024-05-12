@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to methods and properties of the native combobox control.
     /// </summary>
-    public interface IComboBoxHandler
+    public interface IComboBoxHandler : IControlHandler
     {
         ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
 

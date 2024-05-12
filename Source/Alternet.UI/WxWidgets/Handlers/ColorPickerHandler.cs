@@ -3,7 +3,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeColorPickerHandler : NativeControlHandler<ColorPicker, Native.ColorPicker>
+    internal class ColorPickerHandler : NativeControlHandler<ColorPicker, Native.ColorPicker>
     {
         internal override Native.Control CreateNativeControl()
         {

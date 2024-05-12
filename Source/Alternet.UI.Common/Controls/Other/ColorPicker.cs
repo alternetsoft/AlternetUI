@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -7,7 +9,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class ColorPicker : WxBaseControl
+    public partial class ColorPicker : Control
     {
         private Color color = Color.Black;
 
@@ -50,6 +52,13 @@ namespace Alternet.UI
             }
         }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
@@ -65,8 +74,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateColorPickerHandler(this);
+            return NativeControl.Default.CreateColorPickerHandler(this);
         }
 
         /// <summary>
