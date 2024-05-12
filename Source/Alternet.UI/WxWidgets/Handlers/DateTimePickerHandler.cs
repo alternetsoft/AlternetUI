@@ -68,7 +68,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Value = (DateTime)Control.Value;
+            NativeControl.Value = Control.Value;
 
             Control.ValueChanged += Control_ValueChanged;
 

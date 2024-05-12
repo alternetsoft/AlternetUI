@@ -142,8 +142,18 @@ namespace EmployeeFormSample
             prefixComboBox.BindSelectedItem(nameof(Employee.Prefix));
             stateComboBox.BindSelectedItem(nameof(Employee.State));
             departmentComboBox.BindSelectedItem(nameof(Employee.Department));
-            birthDatePicker.BindValue(nameof(Employee.BirthDate));
-            hireDatePicker.BindValue(nameof(Employee.HireDate));
+            
+            birthDatePicker.Value = employee.BirthDate;
+            birthDatePicker.ValueChanged += (s, e) =>
+            {
+                employee.BirthDate = birthDatePicker.Value;
+            };
+
+            hireDatePicker.Value = employee.HireDate;
+            hireDatePicker.ValueChanged += (s, e) =>
+            {
+                employee.HireDate = hireDatePicker.Value;
+            };
 
             this.SetSizeToContent();
         }

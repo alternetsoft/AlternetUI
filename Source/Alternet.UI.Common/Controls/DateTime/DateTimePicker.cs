@@ -18,21 +18,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class DateTimePicker : CustomDateEdit
     {
-        /// <summary>
-        /// Identifies the <see cref="Value"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(
-                "Value",
-                typeof(DateTime),
-                typeof(DateTimePicker),
-                new FrameworkPropertyMetadata(
-                    DateTime.Now, // default value
-                    PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                    new PropertyChangedCallback(OnValuePropertyChanged),
-                    null, // CoerseValueCallback
-                    true, // IsAnimationProhibited
-                    UpdateSourceTrigger.PropertyChanged));
+        private DateTime value = DateTime.Now;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
@@ -62,15 +48,25 @@ namespace Alternet.UI
         /// </summary>
         public override DateTime Value
         {
-            get { return (DateTime)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get
+            {
+                return value;
+            }
+
+            set
+            {
+                if (value == this.value)
+                    return;
+                this.value = value;
+                RaiseValueChanged(EventArgs.Empty);
+            }
         }
 
         /// <summary>
         /// Gets or sets whether to edit date part or time part of
         /// the <see cref="DateTime"/> value.
         /// </summary>
-        public DateTimePickerKind Kind
+        public virtual DateTimePickerKind Kind
         {
             get
             {
@@ -86,7 +82,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to show calendar popup or edit date with spin control.
         /// </summary>
-        public DateTimePickerPopupKind PopupKind
+        public virtual DateTimePickerPopupKind PopupKind
         {
             get
             {
@@ -126,22 +122,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Binds <see cref="Value"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
-        /// </summary>
-        /// <param name="propName">Property name.</param>
-        public void BindValue(string propName)
-        {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, DateTimePicker.ValueProperty, myBinding);
         }
 
         /// <inheritdoc/>
@@ -163,17 +145,6 @@ namespace Alternet.UI
         protected override void SetRange(DateTime min, DateTime max)
         {
             Handler.SetRange(min, max, UseMinDate, UseMaxDate);
-        }
-
-        /// <summary>
-        /// Callback for changes to the Value property
-        /// </summary>
-        private static void OnValuePropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            DateTimePicker control = (DateTimePicker)d;
-            control.RaiseValueChanged(EventArgs.Empty);
         }
     }
 }
