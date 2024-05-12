@@ -1,16 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Provides base functionality for implementing a specific
-    /// <see cref="TreeView"/> behavior and appearance.
-    /// </summary>
-    internal abstract class TreeViewHandler : WxControlHandler
+    internal class TreeViewHandler : WxControlHandler
     {
-        /// <inheritdoc cref="TreeView.HasBorder"/>
-        public abstract bool HasBorder { get; set; }
+        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
+        private bool skipSetItemText;
+        private bool receivingSelection;
+        private bool applyingSelection;
 
         /// <summary>
         /// Gets a <see cref="TreeView"/> this handler provides the implementation for.
@@ -18,152 +18,628 @@ namespace Alternet.UI
         public new TreeView Control => (TreeView)base.Control;
 
         /// <inheritdoc cref="TreeView.HideRoot"/>
-        public abstract bool HideRoot { get; set; }
+        public bool HideRoot
+        {
+            get
+            {
+                return NativeControl.HideRoot;
+            }
+
+            set
+            {
+                NativeControl.HideRoot = value;
+            }
+        }
+
+        /// <inheritdoc cref="TreeView.HasBorder"/>
+        public bool HasBorder
+        {
+            get
+            {
+                return NativeControl.HasBorder;
+            }
+
+            set
+            {
+                NativeControl.HasBorder = value;
+            }
+        }
 
         /// <inheritdoc cref="TreeView.VariableRowHeight"/>
-        public abstract bool VariableRowHeight { get; set; }
+        public bool VariableRowHeight
+        {
+            get
+            {
+                return NativeControl.VariableRowHeight;
+            }
+
+            set
+            {
+                NativeControl.VariableRowHeight = value;
+            }
+        }
 
         /// <inheritdoc cref="TreeView.TwistButtons"/>
-        public abstract bool TwistButtons { get; set; }
+        public bool TwistButtons
+        {
+            get
+            {
+                return NativeControl.TwistButtons;
+            }
+
+            set
+            {
+                NativeControl.TwistButtons = value;
+            }
+        }
 
         /// <inheritdoc cref="TreeView.StateImageSpacing"/>
-        public abstract uint StateImageSpacing { get; set; }
+        public uint StateImageSpacing
+        {
+            get
+            {
+                return NativeControl.StateImageSpacing;
+            }
+
+            set
+            {
+                NativeControl.StateImageSpacing = value;
+            }
+        }
 
         /// <inheritdoc cref="TreeView.Indentation"/>
-        public abstract uint Indentation { get; set; }
+        public uint Indentation
+        {
+            get
+            {
+                return NativeControl.Indentation;
+            }
+
+            set
+            {
+                NativeControl.Indentation = value;
+            }
+        }
 
         /// <inheritdoc cref="TreeView.RowLines"/>
-        public abstract bool RowLines { get; set; }
+        public bool RowLines
+        {
+            get
+            {
+                return NativeControl.RowLines;
+            }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between tree
-        /// nodes in the tree view control.
-        /// </summary>
-        public abstract bool ShowLines { get; set; }
+            set
+            {
+                NativeControl.RowLines = value;
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between the
-        /// tree nodes that are at the root of the tree view.
-        /// </summary>
-        public abstract bool ShowRootLines { get; set; }
+        public new NativeTreeView NativeControl =>
+            (NativeTreeView)base.NativeControl!;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether expand buttons are displayed
-        /// next to tree nodes that contain child
-        /// tree nodes.
-        /// </summary>
-        public abstract bool ShowExpandButtons { get; set; }
+        /// <inheritdoc cref="TreeView.ShowLines"/>
+        public bool ShowLines
+        {
+            get => NativeControl.ShowLines;
+            set => NativeControl.ShowLines = value;
+        }
 
-        /// <summary>
-        /// Gets or sets the first fully-visible tree item in the tree view control.
-        /// </summary>
-        public abstract TreeViewItem? TopItem { get; }
+        /// <inheritdoc cref="TreeView.ShowRootLines"/>
+        public bool ShowRootLines
+        {
+            get => NativeControl.ShowRootLines;
+            set => NativeControl.ShowRootLines = value;
+        }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the selection highlight spans
-        /// the width of the tree view control.
-        /// </summary>
-        public abstract bool FullRowSelect { get; set; }
+        public bool ShowExpandButtons
+        {
+            get => NativeControl.ShowExpandButtons;
+            set => NativeControl.ShowExpandButtons = value;
+        }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the label text of the tree
-        /// nodes can be edited.
-        /// </summary>
-        public abstract bool AllowLabelEdit { get; set; }
+        /// <inheritdoc cref="TreeView.TopItem"/>
+        public TreeViewItem? TopItem
+        {
+            get
+            {
+                var item = NativeControl.TopItem;
+                if (item == IntPtr.Zero)
+                    return null;
 
-        /*/// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;*/
+                return GetItemFromHandle(item);
+            }
+        }
 
-        /// <summary>
-        /// Expands all child tree items.
-        /// </summary>
-        public abstract void ExpandAll();
+        /// <inheritdoc cref="TreeView.FullRowSelect"/>
+        public bool FullRowSelect
+        {
+            get => NativeControl.FullRowSelect;
+            set => NativeControl.FullRowSelect = value;
+        }
 
-        /// <summary>
-        /// Collapses all child tree items.
-        /// </summary>
-        public abstract void CollapseAll();
+        /// <inheritdoc cref="TreeView.AllowLabelEdit"/>
+        public bool AllowLabelEdit
+        {
+            get => NativeControl.AllowLabelEdit;
+            set => NativeControl.AllowLabelEdit = value;
+        }
 
-        /// <summary>
-        /// Provides tree view item information, at a given client point, in
-        /// device-independent units (1/96th inch per
-        /// unit).
-        /// </summary>
-        public abstract TreeViewHitTestInfo HitTest(PointD point);
+        public void ExpandAll() => NativeControl.ExpandAll();
 
-        /// <summary>
-        /// Gets a value indicating whether the specified tree item is in the
-        /// selected state.
-        /// </summary>
-        public abstract bool IsItemSelected(TreeViewItem treeViewItem);
+        public void CollapseAll() => NativeControl.CollapseAll();
 
-        /// <summary>
-        /// Initiates the editing of the tree node label.
-        /// </summary>
-        public abstract void BeginLabelEdit(TreeViewItem treeViewItem);
+        public TreeViewHitTestInfo HitTest(PointD point)
+        {
+            var result = NativeControl.ItemHitTest(point);
+            if (result == IntPtr.Zero)
+                throw new Exception();
 
-        /// <summary>
-        /// Ends the editing of the tree node label.
-        /// </summary>
-        public abstract void EndLabelEdit(TreeViewItem treeViewItem, bool cancel);
+            try
+            {
+                var itemHandle = NativeControl.GetHitTestResultItem(result);
+                return new TreeViewHitTestInfo(
+                    (TreeViewHitTestLocations)NativeControl.
+                        GetHitTestResultLocations(result),
+                    itemHandle == IntPtr.Zero ? null : GetItemFromHandle(itemHandle));
+            }
+            finally
+            {
+                NativeControl.FreeHitTestResult(result);
+            }
+        }
 
-        /// <summary>
-        /// Expands this <see cref="TreeViewItem"/> and all the child tree items.
-        /// </summary>
-        public abstract void ExpandAllChildren(TreeViewItem treeViewItem);
+        public bool IsItemSelected(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return false;
+            return NativeControl.IsItemSelected(p);
+        }
 
-        /// <summary>
-        /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
-        /// </summary>
-        public abstract void CollapseAllChildren(TreeViewItem treeViewItem);
+        public void BeginLabelEdit(TreeViewItem item)
+        {
+            if (!Control.AllowLabelEdit)
+            {
+                throw new InvalidOperationException(
+                    "Label editing is not allowed.");
+            }
 
-        /// <summary>
-        /// Ensures that the tree item is visible, expanding tree items and
-        /// scrolling the tree view control as
-        /// necessary.
-        /// </summary>
-        public abstract void EnsureVisible(TreeViewItem treeViewItem);
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.BeginLabelEdit(p);
+        }
 
-        /// <summary>
-        /// Scrolls the item into view.
-        /// </summary>
-        public abstract void ScrollIntoView(TreeViewItem treeViewItem);
+        public void EndLabelEdit(TreeViewItem item, bool cancel)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.EndLabelEdit(p, cancel);
+        }
 
-        /// <summary>
-        /// Sets a value indicating whether the tree item is in the focused state.
-        /// </summary>
-        public abstract void SetFocused(TreeViewItem treeViewItem, bool value);
+        public void ExpandAllChildren(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.ExpandAllChildren(p);
+        }
 
-        /// <summary>
-        /// Gets a value indicating whether the tree item is in the focused state.
-        /// </summary>
-        public abstract bool IsItemFocused(TreeViewItem treeViewItem);
+        public void CollapseAllChildren(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.CollapseAllChildren(p);
+        }
 
-        /// <summary>
-        /// Sets the specified item text.
-        /// </summary>
-        public abstract void SetItemText(TreeViewItem treeViewItem, string text);
+        public void EnsureVisible(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.EnsureVisible(p);
+        }
 
-        /// <summary>
-        /// Sets whether item is shown in bold font.
-        /// </summary>
-        public abstract void SetItemIsBold(TreeViewItem treeViewItem, bool isBold);
+        public void ScrollIntoView(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.ScrollIntoView(p);
+        }
 
-        /// <summary>
-        /// Sets background color of the specified item.
-        /// </summary>
-        public abstract void SetItemBackgroundColor(TreeViewItem treeViewItem, Color? color);
+        public void SetFocused(TreeViewItem item, bool value)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetFocused(p, value);
+        }
 
-        /// <summary>
-        /// Sets text color of the specified item.
-        /// </summary>
-        public abstract void SetItemTextColor(TreeViewItem treeViewItem, Color? color);
+        public bool IsItemFocused(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return false;
+            return NativeControl.IsItemFocused(p);
+        }
 
-        /// <summary>
-        /// Sets the specified item image index.
-        /// </summary>
-        public abstract void SetItemImageIndex(
-            TreeViewItem treeViewItem,
-            int? imageIndex);
+        public void SetItemIsBold(TreeViewItem item, bool isBold)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            Native.WxTreeViewFactory.SetItemBold(NativeControl.WxWidget, p, isBold);
+        }
+
+        public void SetItemBackgroundColor(TreeViewItem item, Color? color)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            if (color is null)
+                Native.WxTreeViewFactory.ResetItemBackgroundColor(NativeControl.WxWidget, p);
+            else
+                Native.WxTreeViewFactory.SetItemBackgroundColor(NativeControl.WxWidget, p, color);
+        }
+
+        public void SetItemTextColor(TreeViewItem item, Color? color)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            if (color is null)
+                Native.WxTreeViewFactory.ResetItemTextColor(NativeControl.WxWidget, p);
+            else
+                Native.WxTreeViewFactory.SetItemTextColor(NativeControl.WxWidget, p, color);
+        }
+
+        public void SetItemText(TreeViewItem item, string text)
+        {
+            if (skipSetItemText)
+                return;
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetItemText(p, text);
+        }
+
+        public void SetItemImageIndex(
+            TreeViewItem item,
+            int? imageIndex)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetItemImageIndex(p, imageIndex ?? -1);
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new NativeTreeView();
+        }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            ApplyItems();
+            ApplyImageList();
+            ApplySelectionMode();
+            ApplySelection();
+
+            Control.ItemAdded += Control_ItemAdded;
+            Control.ItemRemoved += Control_ItemRemoved;
+            Control.ImageListChanged += Control_ImageListChanged;
+            Control.SelectionModeChanged += Control_SelectionModeChanged;
+
+            Control.SelectionChanged += Control_SelectionChanged;
+            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
+            NativeControl.ControlRecreated = NativeControl_ControlRecreated;
+            NativeControl.ItemExpanded += NativeControl_ItemExpanded;
+            NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
+            NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
+            NativeControl.ItemExpanding += NativeControl_ItemExpanding;
+            NativeControl.ItemCollapsing += NativeControl_ItemCollapsing;
+        }
+
+        protected override void OnDetach()
+        {
+            Control.ItemAdded -= Control_ItemAdded;
+            Control.ItemRemoved -= Control_ItemRemoved;
+            Control.ImageListChanged -= Control_ImageListChanged;
+            Control.SelectionModeChanged -= Control_SelectionModeChanged;
+
+            Control.SelectionChanged -= Control_SelectionChanged;
+            NativeControl.SelectionChanged = null;
+            NativeControl.ControlRecreated = null;
+            NativeControl.ItemExpanded -= NativeControl_ItemExpanded;
+            NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
+            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
+            NativeControl.ItemExpanding -= NativeControl_ItemExpanding;
+            NativeControl.ItemCollapsing -= NativeControl_ItemCollapsing;
+
+            base.OnDetach();
+        }
+
+        private void NativeControl_ItemCollapsing(
+            object? sender,
+            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+            var ea = new TreeViewCancelEventArgs(item);
+            Control.RaiseBeforeCollapse(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        private void NativeControl_ItemExpanding(
+            object? sender,
+            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+            var ea = new TreeViewCancelEventArgs(item);
+            Control.RaiseBeforeExpand(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        private void NativeControl_AfterItemLabelEdit(
+            object? sender,
+            Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+            var ea = new TreeViewEditEventArgs(
+                item,
+                e.Data.editCancelled ? null : e.Data.label);
+
+            Control.RaiseAfterLabelEdit(ea);
+
+            if (!e.Data.editCancelled && !ea.Cancel)
+            {
+                skipSetItemText = true;
+                ea.Item.Text = e.Data.label;
+                skipSetItemText = false;
+            }
+
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        private void NativeControl_BeforeItemLabelEdit(
+            object? sender,
+            Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+
+            var ea = new TreeViewEditEventArgs(
+                item,
+                e.Data.editCancelled ? null : e.Data.label);
+            Control.RaiseBeforeLabelEdit(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        private void NativeControl_ItemCollapsed(
+            object? sender,
+            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+            var ea = new TreeViewEventArgs(item);
+            Control.RaiseAfterCollapse(ea);
+            Control.RaiseExpandedChanged(ea);
+        }
+
+        private void NativeControl_ItemExpanded(
+            object? sender,
+            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+            var ea = new TreeViewEventArgs(item);
+            Control.RaiseAfterExpand(ea);
+            Control.RaiseExpandedChanged(ea);
+        }
+
+        private void NativeControl_ControlRecreated()
+        {
+            itemsByHandles.Clear();
+            ApplyItems();
+            ApplySelection();
+        }
+
+        private void Control_ImageListChanged(object? sender, EventArgs e)
+        {
+            ApplyImageList();
+        }
+
+        private void NativeControl_SelectionChanged()
+        {
+            if (applyingSelection)
+                return;
+
+            ReceiveSelection();
+        }
+
+        private void Control_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (receivingSelection)
+                return;
+
+            ApplySelection();
+        }
+
+        private void Control_SelectionModeChanged(object? sender, EventArgs e)
+        {
+            ApplySelectionMode();
+        }
+
+        private void ApplySelectionMode()
+        {
+            NativeControl.SelectionMode =
+                (Native.TreeViewSelectionMode)Control.SelectionMode;
+        }
+
+        private IntPtr GetHandleFromItem(TreeViewItem item)
+        {
+            return item.Handle;
+        }
+
+        private TreeViewItem GetItemFromHandle(IntPtr handle)
+        {
+            if (itemsByHandles.TryGetValue(handle, out TreeViewItem? result))
+                return result;
+            return null!;
+        }
+
+        private void ApplySelection()
+        {
+            applyingSelection = true;
+
+            try
+            {
+                var nativeControl = NativeControl;
+                nativeControl.ClearSelected();
+
+                var control = Control;
+                var handles = control.SelectedItems.Select(GetHandleFromItem);
+
+                foreach (var handle in handles)
+                {
+                    if (handle == IntPtr.Zero)
+                        continue;
+                    NativeControl.SetSelected(handle, true);
+                }
+            }
+            finally
+            {
+                applyingSelection = false;
+            }
+        }
+
+        private void ReceiveSelection()
+        {
+            receivingSelection = true;
+
+            try
+            {
+                Control.SelectedItems =
+                    NativeControl.SelectedItems.Select(GetItemFromHandle).ToArray();
+            }
+            finally
+            {
+                receivingSelection = false;
+            }
+        }
+
+        private void ApplyImageList()
+        {
+            NativeControl.ImageList = (UI.Native.ImageList?)Control.ImageList?.NativeObject;
+        }
+
+        private void ApplyItems()
+        {
+            var nativeControl = NativeControl;
+            nativeControl.ClearItems(nativeControl.RootItem);
+
+            foreach (var item in Control.Items)
+                InsertItemAndChildren(item);
+        }
+
+        private void InsertItem(TreeViewItem item)
+        {
+            var parentCollection = item.Parent == null ?
+                Control.Items : item.Parent.Items;
+            IntPtr insertAfter = IntPtr.Zero;
+            if (item.Index > 0)
+            {
+                insertAfter = GetHandleFromItem(
+                    parentCollection[item.Index.Value - 1]);
+            }
+
+            var handle = NativeControl.InsertItem(
+                            item.Parent == null ?
+                            NativeControl.RootItem : GetHandleFromItem(item.Parent),
+                            insertAfter,
+                            item.Text,
+                            item.ImageIndex ?? Control.ImageIndex ?? -1,
+                            item.Parent?.IsExpanded ?? false);
+
+            itemsByHandles.Add(handle, item);
+            item.Handle = handle;
+        }
+
+        private void InsertItemAndChildren(TreeViewItem item)
+        {
+            InsertItem(item);
+
+            void Apply(IEnumerable<TreeViewItem> items)
+            {
+                foreach (var item in items)
+                {
+                    InsertItem(item);
+                    Apply(item.Items);
+                }
+            }
+
+            if (item.HasItems)
+                Apply(item.Items);
+        }
+
+        private void Control_ItemAdded(
+            object? sender,
+            TreeViewEventArgs e)
+        {
+            InsertItemAndChildren(e.Item);
+        }
+
+        private void Control_ItemRemoved(
+            object? sender,
+            TreeViewEventArgs e)
+        {
+            var item = e.Item;
+
+            /*Application.DebugLog($"Native TreeViewItem Removed: {item.Text}");*/
+
+            var p = GetHandleFromItem(item);
+            RemoveItemAndChildrenFromDictionaries(item);
+            if (p != IntPtr.Zero)
+            {
+                NativeControl.RemoveItem(p);
+            }
+
+            void RemoveItemAndChildrenFromDictionaries(TreeViewItem parentItem)
+            {
+                if (parentItem.HasItems)
+                {
+                    foreach (var childItem in parentItem.Items)
+                        RemoveItemAndChildrenFromDictionaries(childItem);
+                }
+
+                var handle = GetHandleFromItem(parentItem);
+                parentItem.Handle = default;
+                itemsByHandles.Remove(handle);
+            }
+        }
+
+        public class NativeTreeView : Native.TreeView
+        {
+            public NativeTreeView()
+                : base()
+            {
+            }
+        }
     }
 }

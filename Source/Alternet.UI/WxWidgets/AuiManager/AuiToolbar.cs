@@ -250,12 +250,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.AuiToolbar;
 
-        internal new NativeAuiToolbarHandler Handler
+        internal new AuiToolbarHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativeAuiToolbarHandler)base.Handler;
+                return (AuiToolbarHandler)base.Handler;
             }
         }
 
@@ -1346,7 +1346,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateAuiToolbarHandler(this);
+            return new AuiToolbarHandler();
         }
 
         /// <summary>

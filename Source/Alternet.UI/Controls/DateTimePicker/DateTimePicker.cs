@@ -113,6 +113,13 @@ namespace Alternet.UI
             set => Handler.HasBorder = value;
         }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         internal new DateTimePickerHandler Handler =>
             (DateTimePickerHandler)base.Handler;
 
@@ -145,8 +152,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateDateTimePickerHandler(this);
+            return new DateTimePickerHandler();
         }
 
         /// <summary>

@@ -176,12 +176,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.AuiNotebook;
 
-        internal new NativeAuiNotebookHandler Handler
+        internal new AuiNotebookHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativeAuiNotebookHandler)base.Handler;
+                return (AuiNotebookHandler)base.Handler;
             }
         }
 
@@ -721,7 +721,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateAuiNotebookHandler(this);
+            return new AuiNotebookHandler();
         }
 
         /// <summary>

@@ -275,17 +275,23 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the currently selected item in the ListView.
         /// </summary>
-        /// <value>A <see cref="ListViewItem"/> object that represents the current selection in the control, or <c>null</c> if no item is selected.</value>
+        /// <value>A <see cref="ListViewItem"/> object that represents the current selection
+        /// in the control, or <c>null</c> if no item is selected.</value>
         /// <remarks>
         /// <para>
-        /// You can use this property to determine the item that is selected in the <see cref="ListView"/>.
+        /// You can use this property to determine the item that is selected in the
+        /// <see cref="ListView"/>.
         /// If the <see cref="SelectionMode"/> property of the <see cref="ListView"/> is set to
-        /// <see cref="ListViewSelectionMode.Multiple"/> and multiple items are selected in the list, this property can return any selected item.
+        /// <see cref="ListViewSelectionMode.Multiple"/> and multiple items are selected in the
+        /// list, this property can return any selected item.
         /// </para>
         /// <para>
-        /// To retrieve a collection containing all selected items in a multiple-selection <see cref="ListView"/>, use the <see cref="SelectedItems"/> property.
-        /// If you want to obtain the index position of the currently selected item in the <see cref="ListView"/>, use the <see cref="SelectedIndex"/> property.
-        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListView"/>.
+        /// To retrieve a collection containing all selected items in a multiple-selection
+        /// <see cref="ListView"/>, use the <see cref="SelectedItems"/> property.
+        /// If you want to obtain the index position of the currently selected item in the
+        /// <see cref="ListView"/>, use the <see cref="SelectedIndex"/> property.
+        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain
+        /// all the selected indexes in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
         [Browsable(false)]
@@ -331,14 +337,19 @@ namespace Alternet.UI
         /// <remarks>
         /// For a multiple-selection <see cref="ListView"/>, this property returns a collection
         /// containing all the items that are selected
-        /// in the <see cref="ListView"/>. For a single-selection <see cref="ListView"/>, this property returns a collection containing a
+        /// in the <see cref="ListView"/>. For a single-selection <see cref="ListView"/>, this
+        /// property returns a collection containing a
         /// single element containing the index of the only selected item in the <see cref="ListView"/>.
         /// <para>
-        /// The <see cref="ListView"/> class provides a number of ways to reference selected items. Instead of using the <see cref="SelectedIndices"/>
-        /// property to obtain the index position of the currently selected item in a single-selection <see cref="ListView"/>, you
-        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain the item that is currently selected in the <see cref="ListView"/>,
+        /// The <see cref="ListView"/> class provides a number of ways to reference selected
+        /// items. Instead of using the <see cref="SelectedIndices"/>
+        /// property to obtain the index position of the currently selected item in a
+        /// single-selection <see cref="ListView"/>, you
+        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain the
+        /// item that is currently selected in the <see cref="ListView"/>,
         /// instead of the index position of the item, use the <see cref="SelectedItem"/> property.
-        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListView"/>.
+        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain
+        /// all the selected indexes in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
         [Browsable(false)]
@@ -429,28 +440,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ImageList"/> to use when displaying items as small icons in the control.
+        /// Gets or sets the <see cref="ImageList"/> to use when displaying items as small icons
+        /// in the control.
         /// </summary>
-        /// <value>An <see cref="ImageList"/> that contains the icons to use when the <see cref="View"/> property
-        /// is set to any value other than <see cref="ListViewView.LargeIcon"/>. The default is <c>null</c>.</value>
+        /// <value>An <see cref="ImageList"/> that contains the icons to use when
+        /// the <see cref="View"/> property
+        /// is set to any value other than <see cref="ListViewView.LargeIcon"/>.
+        /// The default is <c>null</c>.</value>
         /// <remarks>
         /// <para>
-        /// The <see cref="SmallImageList"/> property allows you to specify an <see cref="ImageList"/> object that contains icons to use when displaying
-        /// items with small icons (when the <see cref="View"/> property is set to any value other than <see cref="ListViewView.LargeIcon"/>). The <see cref="ListView"/> control
-        /// can accept any graphics format that the <see cref="ImageList"/> control supports when displaying icons. The <see cref="ListView"/> control
-        /// is not limited to .ico files. Once an <see cref="ImageList"/> is assigned to the <see cref="SmallImageList"/> property, you can set the
-        /// <see cref="ListViewItem.ImageIndex"/> property of each <see cref="ListViewItem"/> in the <see cref="ListView"/> control to the index position of the appropriate
-        /// image in the <see cref="ImageList"/>. The size of the icons for the <see cref="SmallImageList"/> is specified by the <see cref="ImageList.PixelImageSize"/> property.
+        /// The <see cref="SmallImageList"/> property allows you to specify
+        /// an <see cref="ImageList"/> object that contains icons to use when displaying
+        /// items with small icons (when the <see cref="View"/> property is
+        /// set to any value other than <see cref="ListViewView.LargeIcon"/>). The <see cref="ListView"/> control
+        /// can accept any graphics format that the <see cref="ImageList"/> control
+        /// supports when displaying icons. The <see cref="ListView"/> control
+        /// is not limited to .ico files. Once an <see cref="ImageList"/> is assigned
+        /// to the <see cref="SmallImageList"/> property, you can set the
+        /// <see cref="ListViewItem.ImageIndex"/> property of each <see cref="ListViewItem"/>
+        /// in the <see cref="ListView"/> control to the index position of the appropriate
+        /// image in the <see cref="ImageList"/>. The size of the icons for the
+        /// <see cref="SmallImageList"/> is specified by the <see cref="ImageList.PixelImageSize"/>
+        /// property.
         /// </para>
         /// <para>
-        /// Because only one index can be specified for the <see cref="ListViewItem.ImageIndex"/> property, the <see cref="ImageList"/> objects
-        /// specified in the <see cref="LargeImageList"/> and <see cref="SmallImageList"/> properties should have the same index positions for the
-        /// images to display. For example, if the <see cref="ListViewItem.ImageIndex"/> property of a <see cref="ListViewItem"/> is set to 0, the images to use
-        /// for both small and large icons should be at the same index position in the <see cref="ImageList"/> objects specified in
+        /// Because only one index can be specified for the <see cref="ListViewItem.ImageIndex"/>
+        /// property, the <see cref="ImageList"/> objects
+        /// specified in the <see cref="LargeImageList"/> and <see cref="SmallImageList"/>
+        /// properties should have the same index positions for the
+        /// images to display. For example, if the <see cref="ListViewItem.ImageIndex"/>
+        /// property of a <see cref="ListViewItem"/> is set to 0, the images to use
+        /// for both small and large icons should be at the same index position
+        /// in the <see cref="ImageList"/> objects specified in
         /// the <see cref="LargeImageList"/> and <see cref="SmallImageList"/> properties.
         /// </para>
         /// <para>
-        /// To set the <see cref="ImageList"/> to use when displaying items with large icons (when the <see cref="View"/> property is set to <see cref="ListViewView.LargeIcon"/>),
+        /// To set the <see cref="ImageList"/> to use when displaying items with large
+        /// icons (when the <see cref="View"/> property is set to <see cref="ListViewView.LargeIcon"/>),
         /// use the <see cref="LargeImageList"/> property.
         /// </para>
         /// </remarks>
@@ -475,30 +501,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ImageList"/> to use when displaying items as large icons in the control.
+        /// Gets or sets the <see cref="ImageList"/> to use when displaying items as large
+        /// icons in the control.
         /// </summary>
         /// <value>
-        /// An <see cref="ImageList"/> that contains the icons to use when the <see cref="View"/> property
+        /// An <see cref="ImageList"/> that contains the icons to use when the <see cref="View"/>
+        /// property
         /// is set to <see cref="ListViewView.LargeIcon"/>. The default is <c>null</c>.
         /// </value>
         /// <remarks>
         /// <para>
-        /// The <see cref="LargeImageList"/> property allows you to specify an <see cref="ImageList"/> object that contains icons to use when displaying
-        /// items with large icons (when the <see cref="View"/> property is set to <see cref="ListViewView.LargeIcon"/>). The <see cref="ListView"/> control
-        /// can accept any graphics format that the <see cref="ImageList"/> control supports when displaying icons. The <see cref="ListView"/> control
-        /// is not limited to .ico files. Once an <see cref="ImageList"/> is assigned to the <see cref="LargeImageList"/> property, you can set the
-        /// <see cref="ListViewItem.ImageIndex"/> property of each <see cref="ListViewItem"/> in the <see cref="ListView"/> control to the index position of the appropriate
-        /// image in the <see cref="ImageList"/>. The size of the icons for the <see cref="LargeImageList"/> is specified by the <see cref="ImageList.PixelImageSize"/> property.
+        /// The <see cref="LargeImageList"/> property allows you to specify an
+        /// <see cref="ImageList"/> object that contains icons to use when displaying
+        /// items with large icons (when the <see cref="View"/> property is set
+        /// to <see cref="ListViewView.LargeIcon"/>). The <see cref="ListView"/> control
+        /// can accept any graphics format that the <see cref="ImageList"/> control
+        /// supports when displaying icons. The <see cref="ListView"/> control
+        /// is not limited to .ico files. Once an <see cref="ImageList"/> is assigned
+        /// to the <see cref="LargeImageList"/> property, you can set the
+        /// <see cref="ListViewItem.ImageIndex"/> property of each <see cref="ListViewItem"/>
+        /// in the <see cref="ListView"/> control to the index position of the appropriate
+        /// image in the <see cref="ImageList"/>. The size of the icons for the
+        /// <see cref="LargeImageList"/> is specified by the <see cref="ImageList.PixelImageSize"/>
+        /// property.
         /// </para>
         /// <para>
-        /// Because only one index can be specified for the <see cref="ListViewItem.ImageIndex"/> property, the <see cref="ImageList"/> objects
-        /// specified in the <see cref="LargeImageList"/> and <see cref="SmallImageList"/> properties should have the same index positions for the
-        /// images to display. For example, if the <see cref="ListViewItem.ImageIndex"/> property of a <see cref="ListViewItem"/> is set to 0, the images to use
-        /// for both small and large icons should be at the same index position in the <see cref="ImageList"/> objects specified in
+        /// Because only one index can be specified for the <see cref="ListViewItem.ImageIndex"/>
+        /// property, the <see cref="ImageList"/> objects
+        /// specified in the <see cref="LargeImageList"/> and <see cref="SmallImageList"/>
+        /// properties should have the same index positions for the
+        /// images to display. For example, if the <see cref="ListViewItem.ImageIndex"/>
+        /// property of a <see cref="ListViewItem"/> is set to 0, the images to use
+        /// for both small and large icons should be at the same index position in the
+        /// <see cref="ImageList"/> objects specified in
         /// the <see cref="LargeImageList"/> and <see cref="SmallImageList"/> properties.
         /// </para>
         /// <para>
-        /// To set the <see cref="ImageList"/> to use when displaying items with small icons (when the <see cref="View"/>
+        /// To set the <see cref="ImageList"/> to use when displaying items with small
+        /// icons (when the <see cref="View"/>
         /// property is set to any value other than <see cref="ListViewView.LargeIcon"/>),
         /// use the <see cref="SmallImageList"/> property.
         /// </para>
@@ -558,7 +598,7 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                if (Handler is not NativeListViewHandler handler)
+                if (Handler is not ListViewHandler handler)
                     return true;
                 return handler.NativeControl.HasBorder;
             }
@@ -566,10 +606,17 @@ namespace Alternet.UI
             set
             {
                 CheckDisposed();
-                if (Handler is not NativeListViewHandler handler)
+                if (Handler is not ListViewHandler handler)
                     return;
                 handler.NativeControl.HasBorder = value;
             }
+        }
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
         }
 
         /// <summary>
@@ -589,7 +636,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (Handler is NativeListViewHandler handler)
+                if (Handler is ListViewHandler handler)
                     return handler.NativeControl.ItemsCount;
                 return 0;
             }
@@ -630,13 +677,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
+        /// Provides list view item information, at a given client point, in
+        /// device-independent units (1/96th inch per
         /// unit).
         /// </summary>
         /// <param name="point">The <see cref="PointD"/> at which to retrieve item information.</param>
         /// <returns>The hit test result information.</returns>
         /// <remarks>
-        /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/> and where within the
+        /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/>
+        /// and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
         public ListViewHitTestInfo HitTest(PointD point) => Handler.HitTest(point);
@@ -644,18 +693,22 @@ namespace Alternet.UI
         /// <summary>
         /// Initiates the editing of the list view item label.
         /// </summary>
-        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
+        /// <param name="itemIndex">The zero-based index of the item within the
+        /// <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
         public void BeginLabelEdit(long itemIndex) => Handler.BeginLabelEdit(itemIndex);
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
         /// </summary>
-        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
+        /// <param name="itemIndex">The zero-based index of the item within the
+        /// <see cref="ListView.Items"/> collection
         /// whose bounding rectangle you want to get.</param>
-        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
+        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/>
+        /// values that represents a portion of
         /// the item for which to retrieve the bounding rectangle.</param>
-        /// <returns>A <see cref="RectD"/> that represents the bounding rectangle for the specified portion of the
+        /// <returns>A <see cref="RectD"/> that represents the bounding rectangle
+        /// for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
         public RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
             Handler.GetItemBounds(itemIndex, portion);
@@ -679,7 +732,8 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="ColumnClick"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains
+        /// the event data.</param>
         public void RaiseColumnClick(ListViewColumnEventArgs e)
         {
             OnColumnClick(e);
@@ -689,7 +743,8 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="BeforeLabelEdit"/> event and calls <see cref="OnBeforeLabelEdit"/>.
         /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that
+        /// contains the event data.</param>
         public void RaiseBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
         {
             OnBeforeLabelEdit(e);
@@ -699,13 +754,17 @@ namespace Alternet.UI
         /// <summary>
         /// Selects or clears the selection for the specified item in a <see cref="ListView"/>.
         /// </summary>
-        /// <param name="index">The zero-based index of the item in a <see cref="ListView"/> to select or clear the selection for.</param>
+        /// <param name="index">The zero-based index of the item in a <see cref="ListView"/>
+        /// to select or clear the selection for.</param>
         /// <param name="value"><c>true</c> to select the specified item; otherwise, false.</param>
         /// <remarks>
-        /// You can use this method to set the selection of items in a multiple-selection <see cref="ListView"/>.
-        /// To select an item in a single-selection <see cref="ListView"/>, use the <see cref="SelectedIndex"/> property.
+        /// You can use this method to set the selection of items in a multiple-selection
+        /// <see cref="ListView"/>.
+        /// To select an item in a single-selection <see cref="ListView"/>, use
+        /// the <see cref="SelectedIndex"/> property.
         /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">The specified index was outside the range of valid values.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The specified index was
+        /// outside the range of valid values.</exception>
         public void SetSelected(long index, bool value)
         {
             if (index < 0 || index >= Items.Count)
@@ -720,7 +779,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="SelectionChanged"/> event and calls <see cref="OnSelectionChanged(EventArgs)"/>.
+        /// Raises the <see cref="SelectionChanged"/> event and calls
+        /// <see cref="OnSelectionChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public void RaiseSelectionChanged(EventArgs e)
@@ -732,7 +792,8 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="AfterLabelEdit"/> event and calls <see cref="OnAfterLabelEdit"/>.
         /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains
+        /// the event data.</param>
         public void RaiseAfterLabelEdit(ListViewItemLabelEditEventArgs e)
         {
             OnAfterLabelEdit(e);
@@ -772,7 +833,8 @@ namespace Alternet.UI
         /// Unselects all items in the <see cref="ListView"/>.
         /// </summary>
         /// <remarks>
-        /// Calling this method is equivalent to setting the <see cref="SelectedIndex"/> property to <c>null</c>.
+        /// Calling this method is equivalent to setting the <see cref="SelectedIndex"/>
+        /// property to <c>null</c>.
         /// You can use this method to quickly unselect all items in the list.
         /// </remarks>
         public void ClearSelected()
@@ -789,13 +851,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateListViewHandler(this);
+            return new ListViewHandler();
         }
 
         /// <summary>
         /// Called when the user clicks a column header within the list view control.
         /// </summary>
-        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the
+        /// event data.</param>
         protected virtual void OnColumnClick(ListViewColumnEventArgs e)
         {
         }
@@ -803,7 +866,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called before a list view item label is edited.
         /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains
+        /// the event data.</param>
         protected virtual void OnBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
         {
         }
@@ -811,13 +875,15 @@ namespace Alternet.UI
         /// <summary>
         /// Called after a list view item label is edited.
         /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains
+        /// the event data.</param>
         protected virtual void OnAfterLabelEdit(ListViewItemLabelEditEventArgs e)
         {
         }
 
         /// <summary>
-        /// Called when the <see cref="SelectedIndex"/> property or the <see cref="SelectedIndices"/> collection has changed.
+        /// Called when the <see cref="SelectedIndex"/> property or the
+        /// <see cref="SelectedIndices"/> collection has changed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
@@ -837,7 +903,7 @@ namespace Alternet.UI
             if (selectedIndices == null)
             {
                 selectedIndices = new();
-                if (Handler is not NativeListViewHandler handler)
+                if (Handler is not ListViewHandler handler)
                     return;
                 var indices = handler.NativeControl.SelectedIndices;
                 selectedIndices.UnionWith(indices);

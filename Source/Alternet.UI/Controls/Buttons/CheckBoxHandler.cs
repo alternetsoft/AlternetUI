@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class CheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>
+    internal class CheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>, ICheckBoxHandler
     {
         internal override Native.Control CreateNativeControl()
         {

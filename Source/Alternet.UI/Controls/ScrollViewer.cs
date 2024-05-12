@@ -31,8 +31,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateScrollViewerHandler(this);
+            return new NativeScrollViewerHandler();
         }
 
         private void LayoutCore()

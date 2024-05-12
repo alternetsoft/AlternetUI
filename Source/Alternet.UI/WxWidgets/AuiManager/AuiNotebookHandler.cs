@@ -6,9 +6,9 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class NativeAuiNotebookHandler : ControlHandler<AuiNotebook>
+    internal class AuiNotebookHandler : ControlHandler<AuiNotebook>
     {
-        public NativeAuiNotebookHandler()
+        public AuiNotebookHandler()
             : base()
         {
         }

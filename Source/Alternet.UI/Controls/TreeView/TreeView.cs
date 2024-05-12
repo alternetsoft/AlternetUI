@@ -279,7 +279,7 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                if (Handler is not NativeTreeViewHandler handler)
+                if (Handler is not TreeViewHandler handler)
                     return true;
                 return handler.NativeControl.HasBorder;
             }
@@ -287,7 +287,7 @@ namespace Alternet.UI
             set
             {
                 CheckDisposed();
-                if (Handler is not NativeTreeViewHandler handler)
+                if (Handler is not TreeViewHandler handler)
                     return;
                 handler.NativeControl.HasBorder = value;
             }
@@ -653,6 +653,13 @@ namespace Alternet.UI
             set => Handler.AllowLabelEdit = value;
         }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         /// <summary>
         /// Gets a <see cref="TreeViewHandler"/> associated with this class.
         /// </summary>
@@ -966,7 +973,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void MakeAsListBox()
         {
-            (Handler.NativeControl as NativeTreeViewHandler.NativeTreeView)?.MakeAsListBox();
+            (Handler.NativeControl as TreeViewHandler.NativeTreeView)?.MakeAsListBox();
         }
 
         /// <summary>
@@ -1014,7 +1021,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
+            return new TreeViewHandler();
         }
 
         /// <summary>

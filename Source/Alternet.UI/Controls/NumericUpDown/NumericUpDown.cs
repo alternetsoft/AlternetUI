@@ -172,6 +172,13 @@ namespace Alternet.UI
             set => Handler.HasBorder = value;
         }
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         internal new NumericUpDownHandler Handler =>
             (NumericUpDownHandler)base.Handler;
 
@@ -223,8 +230,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateNumericUpDownHandler(this);
+            return new NumericUpDownHandler();
         }
 
         /// <summary>

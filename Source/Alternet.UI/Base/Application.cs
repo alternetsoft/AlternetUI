@@ -31,7 +31,6 @@ namespace Alternet.UI
 
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
-        private VisualTheme visualTheme = StockVisualThemes.Native;
 
         static Application()
         {
@@ -70,11 +69,6 @@ namespace Alternet.UI
             Initialized = true;
             Window.UpdateDefaultFont();
         }
-
-        /// <summary>
-        /// Occurs when the <see cref="VisualTheme"/> property changes.
-        /// </summary>
-        public static event EventHandler? VisualThemeChanged;
 
         /// <summary>
         /// Occurs before native debug message needs to be displayed.
@@ -247,25 +241,6 @@ namespace Alternet.UI
         {
             get => nativeApplication.InUixmlPreviewerMode;
             set => nativeApplication.InUixmlPreviewerMode = value;
-        }
-
-        /// <summary>
-        /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by
-        /// UI controls in the application.
-        /// </summary>
-        internal virtual VisualTheme VisualTheme
-        {
-            get => visualTheme;
-            set
-            {
-                if (visualTheme == value)
-                    return;
-
-                visualTheme = value;
-
-                OnVisualThemeChanged();
-                VisualThemeChanged?.Invoke(this, EventArgs.Empty);
-            }
         }
 
         internal Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
@@ -572,6 +547,12 @@ namespace Alternet.UI
             nativeApplication.WakeUpIdle();
         }
 
+        internal void RecreateAllHandlers()
+        {
+            foreach (var window in Windows)
+                window.RecreateAllHandlers();
+        }
+
         /// <inheritdoc/>
         protected override void BeginInvoke(Action action)
         {
@@ -649,12 +630,6 @@ namespace Alternet.UI
             }
 
             RaiseIdle();
-        }
-
-        private void OnVisualThemeChanged()
-        {
-            foreach (var window in Windows)
-                window.RecreateAllHandlers();
         }
 
         private void NativeApplication_LogMessage()

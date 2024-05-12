@@ -5,9 +5,9 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class NativeAuiToolbarHandler : ControlHandler<AuiToolbar>
+    internal class AuiToolbarHandler : ControlHandler<AuiToolbar>
     {
-        public NativeAuiToolbarHandler()
+        public AuiToolbarHandler()
             : base()
         {
         }

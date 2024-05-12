@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().CreateTabControlHandler(this);
+            return new NativeTabControlHandler();
         }
 
         /// <summary>

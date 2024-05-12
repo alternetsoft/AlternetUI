@@ -306,12 +306,12 @@ namespace Alternet.UI
             }
 
             [Browsable(false)]
-            internal new NativeAnimationControlHandler Handler
+            internal new AnimationControlHandler Handler
             {
                 get
                 {
                     CheckDisposed();
-                    return (NativeAnimationControlHandler)base.Handler;
+                    return (AnimationControlHandler)base.Handler;
                 }
             }
 
@@ -374,7 +374,7 @@ namespace Alternet.UI
 
             protected override BaseControlHandler CreateHandler()
             {
-                return new NativeAnimationControlHandler();
+                return new AnimationControlHandler();
             }
         }
     }
