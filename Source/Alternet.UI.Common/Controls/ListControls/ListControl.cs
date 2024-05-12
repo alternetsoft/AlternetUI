@@ -456,6 +456,8 @@ namespace Alternet.UI
             AddEnumValues(typeof(T));
         }
 
+        public T? SelectedItemAs<T>() => (T?)SelectedItem;
+
         /// <summary>
         /// Adds enum values to <see cref="Items"/> property of the control.
         /// </summary>

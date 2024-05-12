@@ -19,7 +19,9 @@ namespace EmployeeFormSample
             employeeFoto.Image = Image.FromUrl(
                 "embres:ControlsSample.Resources.EmployeePhoto.jpg");
 
-            PopulateComboBoxes();
+            prefixComboBox.AddEnumValues<EmployeePrefix>();
+            stateComboBox.AddEnumValues<State>();
+            departmentComboBox.AddEnumValues<Department>();
 
             var employee = new Employee
             {
@@ -139,10 +141,24 @@ namespace EmployeeFormSample
                 employee.MobilePhone = mobilePhone.Text;
             };
 
-            prefixComboBox.BindSelectedItem(nameof(Employee.Prefix));
-            stateComboBox.BindSelectedItem(nameof(Employee.State));
-            departmentComboBox.BindSelectedItem(nameof(Employee.Department));
-            
+            prefixComboBox.SelectedItem = employee.Prefix;
+            prefixComboBox.SelectedItemChanged += (s, e) =>
+            {
+                employee.Prefix = prefixComboBox.SelectedItemAs<EmployeePrefix>();
+            };
+
+            stateComboBox.SelectedItem = employee.State;
+            stateComboBox.SelectedItemChanged += (s, e) =>
+            {
+                employee.State = stateComboBox.SelectedItemAs<State>();
+            };
+
+            departmentComboBox.SelectedItem = employee.Department;
+            departmentComboBox.SelectedItemChanged += (s, e) =>
+            {
+                employee.Department = departmentComboBox.SelectedItemAs<Department>();
+            };
+
             birthDatePicker.Value = employee.BirthDate;
             birthDatePicker.ValueChanged += (s, e) =>
             {
@@ -156,22 +172,6 @@ namespace EmployeeFormSample
             };
 
             this.SetSizeToContent();
-        }
-
-        private void PopulateComboBoxes()
-        {
-            static void FillComboBoxWithEnumValues(ComboBox cb, Type enumType)
-            {
-                cb.BeginInit();
-                cb.BeginUpdate();
-                cb.Items.AddRange(Enum.GetValues(enumType).Cast<object>());
-                cb.EndUpdate();
-                cb.EndInit();
-            }
-
-            FillComboBoxWithEnumValues(prefixComboBox, typeof(EmployeePrefix));
-            FillComboBoxWithEnumValues(stateComboBox, typeof(State));
-            FillComboBoxWithEnumValues(departmentComboBox, typeof(Department));
         }
     }
 }

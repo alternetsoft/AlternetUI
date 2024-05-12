@@ -45,10 +45,29 @@ namespace DrawingSample
             verticalAlignmentComboBox.AddEnumValues<TextVerticalAlignment>();
             horizontalAlignmentComboBox.AddEnumValues<TextHorizontalAlignment>();
 
-            horizontalAlignmentComboBox.BindSelectedItem(nameof(TextPage.HorizontalAlignment));
-            verticalAlignmentComboBox.BindSelectedItem(nameof(TextPage.VerticalAlignment));
-            wrappingComboBox.BindSelectedItem(nameof(TextPage.Wrapping));
-            trimmingComboBox.BindSelectedItem(nameof(TextPage.Trimming));
+            horizontalAlignmentComboBox.SelectedItem = page.HorizontalAlignment;
+            horizontalAlignmentComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.HorizontalAlignment = horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
+            };
+
+            verticalAlignmentComboBox.SelectedItem = page.VerticalAlignment;
+            verticalAlignmentComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.VerticalAlignment = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
+            };
+
+            wrappingComboBox.SelectedItem = page.Wrapping;
+            wrappingComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.Wrapping = wrappingComboBox.SelectedItemAs<TextWrapping>();
+            };
+
+            trimmingComboBox.SelectedItem = page.Trimming;
+            trimmingComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.Trimming = trimmingComboBox.SelectedItemAs<TextTrimming>();
+            };
 
             fontSizeSlider.Value = (int)page.FontSize;
             fontSizeSlider.ValueChanged += (s, e) =>
@@ -106,7 +125,12 @@ namespace DrawingSample
                 page.TextHeightValue = textHeightValueSlider.Value;
             };
 
-            customFontFamilyComboBox.BindSelectedItem(nameof(TextPage.CustomFontFamilyName));
+            customFontFamilyComboBox.SelectedItem = page.CustomFontFamilyName;
+            customFontFamilyComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.CustomFontFamilyName = customFontFamilyComboBox.SelectedItemAs<string>()
+                    ?? Font.Default.Name;
+            };
 
             GetChildrenRecursive().Action<Slider>((c) => c.ClearTicks());
         }

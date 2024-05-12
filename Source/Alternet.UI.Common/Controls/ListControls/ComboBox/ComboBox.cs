@@ -51,22 +51,6 @@ namespace Alternet.UI
     public partial class ComboBox : ListControl
     {
         /// <summary>
-        /// Identifies the <see cref="SelectedItem"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register(
-                "SelectedItem",
-                typeof(object),
-                typeof(ComboBox),
-                new FrameworkPropertyMetadata(
-                        null,
-                        PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                        new PropertyChangedCallback(OnSelectedItemPropertyChanged),
-                        new CoerceValueCallback(CoerceSelectedItem),
-                        true, // IsAnimationProhibited
-                        UpdateSourceTrigger.PropertyChanged));
-
-        /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
         /// </summary>
         public static double DefaultImageVerticalOffset = 3;
@@ -215,35 +199,22 @@ namespace Alternet.UI
         /// the currently selected item in the combo box list.
         /// Setting a new index raises the <see cref="SelectedItemChanged"/>
         /// event.</remarks>
-        /// <exception cref="ArgumentOutOfRangeException">The assigned value
-        /// is less than 0 or greater than or equal to the item count.</exception>
         public override int? SelectedIndex
         {
             get
             {
-                CheckDisposed();
                 return selectedIndex;
             }
 
             set
             {
                 CheckDisposed();
-
-                if (value != null && (value < 0 || value >= Items.Count))
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
+                if (value < 0 || value >= Items.Count)
+                    value = null;
                 if (selectedIndex == value)
                     return;
-
                 selectedIndex = value;
-
-                SelectedItem = selectedIndex == null ?
-                    null : Items[selectedIndex.Value];
-
-                var selectedItem = SelectedItem;
-                Text = selectedItem == null ?
-                    string.Empty : GetItemText(selectedItem);
-
+                Text = GetItemText(SelectedItem);
                 RaiseSelectedItemChanged(EventArgs.Empty);
             }
         }
@@ -268,12 +239,24 @@ namespace Alternet.UI
         {
             get
             {
-                return GetValue(SelectedItemProperty);
+                if (selectedIndex == null || selectedIndex < 0 || selectedIndex >= Items.Count)
+                    return null;
+                return Items[selectedIndex.Value];
             }
 
             set
             {
-                SetValue(SelectedItemProperty, value);
+                if (SelectedItem == value)
+                    return;
+                if (value == null)
+                {
+                    SelectedIndex = null;
+                    return;
+                }
+
+                var index = Items.IndexOf(value);
+                if (index != -1)
+                    SelectedIndex = index;
             }
         }
 
@@ -424,17 +407,6 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SelectTextRange(int start, int length)
             => Handler.SelectTextRange(start, length);
-
-        /// <summary>
-        /// Binds <see cref="SelectedItem"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
-        /// </summary>
-        /// <param name="propName">Property name.</param>
-        public virtual void BindSelectedItem(string propName)
-        {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, ComboBox.SelectedItemProperty, myBinding);
-        }
 
         /// <summary>
         /// Selects all the text in the editable portion of the ComboBox.
@@ -621,35 +593,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
-        }
-
-        private static object CoerceSelectedItem(DependencyObject d, object value)
-            => value;
-
-        /// <summary>
-        /// Callback for changes to the SelectedItem property
-        /// </summary>
-        private static void OnSelectedItemPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            var control = (ComboBox)d;
-            control.OnSelectedItemPropertyChanged(e.OldValue, e.NewValue);
-        }
-
-#pragma warning disable
-        private void OnSelectedItemPropertyChanged(object oldValue, object newValue)
-#pragma warning restore
-        {
-            if (newValue == null)
-            {
-                SelectedIndex = null;
-                return;
-            }
-
-            var index = Items.IndexOf(newValue);
-            if (index != -1)
-                SelectedIndex = index;
         }
     }
 }

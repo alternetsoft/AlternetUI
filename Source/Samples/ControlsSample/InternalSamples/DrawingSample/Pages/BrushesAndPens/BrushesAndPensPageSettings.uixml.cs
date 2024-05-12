@@ -41,11 +41,35 @@ namespace DrawingSample
             lineJoinComboBox.AddEnumValues<LineJoin>();
             lineCapComboBox.AddEnumValues<LineCap>();
 
-            dashStyleComboBox.BindSelectedItem(nameof(BrushesAndPensPage.PenDashStyle));
-            lineCapComboBox.BindSelectedItem(nameof(BrushesAndPensPage.LineCap));
-            lineJoinComboBox.BindSelectedItem(nameof(BrushesAndPensPage.LineJoin));
-            hatchStyleComboBox.BindSelectedItem(nameof(BrushesAndPensPage.HatchStyle));
-            brushComboBox.BindSelectedItem(nameof(BrushesAndPensPage.Brush));
+            dashStyleComboBox.SelectedItem = page.PenDashStyle;
+            dashStyleComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.PenDashStyle = dashStyleComboBox.SelectedItemAs<DashStyle>();
+            };
+
+            lineCapComboBox.SelectedItem = page.LineCap;
+            lineCapComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.LineCap = lineCapComboBox.SelectedItemAs<LineCap>();
+            };
+
+            lineJoinComboBox.SelectedItem = page.LineJoin;
+            lineJoinComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.LineJoin = lineJoinComboBox.SelectedItemAs<LineJoin>();
+            };
+
+            hatchStyleComboBox.SelectedItem = page.HatchStyle;
+            hatchStyleComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.HatchStyle = hatchStyleComboBox.SelectedItemAs<BrushHatchStyle>();
+            };
+
+            brushComboBox.SelectedItem = page.Brush;
+            brushComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.Brush = brushComboBox.SelectedItemAs<BrushesAndPensPage.BrushType>();
+            };
 
             shapeCountSlider.Value = page.ShapeCount;
             shapeCountSlider.ValueChanged += (s, e) =>
