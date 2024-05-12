@@ -8,15 +8,37 @@ namespace PaintSample
         public AirbrushToolOptionsControl()
         {
             InitializeComponent();
-
-            sizeNumericUpDown.BindValue("Size");
-            flowNumericUpDown.BindValue("Flow");
         }
 
         public AirbrushTool? Tool
         {
             get => (AirbrushTool?)DataContext;
-            set => DataContext = value;
+
+            set
+            {
+                sizeNumericUpDown.ValueChanged -= SizeNumericUpDown_ValueChanged;
+                flowNumericUpDown.ValueChanged -= FlowNumericUpDown_ValueChanged;
+                DataContext = value;
+                if(Tool is not null)
+                {
+                    sizeNumericUpDown.Value = (int)Tool.Size;
+                    flowNumericUpDown.Value = (int)Tool.Flow;
+                    sizeNumericUpDown.ValueChanged += SizeNumericUpDown_ValueChanged;
+                    flowNumericUpDown.ValueChanged += FlowNumericUpDown_ValueChanged;
+                }
+            }
+        }
+
+        private void FlowNumericUpDown_ValueChanged(object? sender, EventArgs e)
+        {
+            if(Tool is not null)
+                Tool.Flow = flowNumericUpDown.Value;
+        }
+
+        private void SizeNumericUpDown_ValueChanged(object? sender, EventArgs e)
+        {
+            if (Tool is not null)
+                Tool.Size = sizeNumericUpDown.Value;
         }
     }
 }

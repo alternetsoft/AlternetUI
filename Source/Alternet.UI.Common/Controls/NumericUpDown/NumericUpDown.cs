@@ -17,24 +17,9 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class NumericUpDown : Control
     {
-        /// <summary>
-        /// Identifies the <see cref="Value"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(
-                    "Value",
-                    typeof(int),
-                    typeof(NumericUpDown),
-                    new FrameworkPropertyMetadata(
-                            0,
-                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),
-                            new CoerceValueCallback(CoerceValue),
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));
-
         private int minimum = 0;
         private int maximum = 100;
+        private int value = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
@@ -83,12 +68,16 @@ namespace Alternet.UI
         {
             get
             {
-                return (int)GetValue(ValueProperty);
+                return value;
             }
 
             set
             {
-                SetValue(ValueProperty, value);
+                value = CoerceValue(value);
+                if (this.value == value)
+                    return;
+                this.value = value;
+                RaiseValueChanged(EventArgs.Empty);
             }
         }
 
@@ -184,17 +173,6 @@ namespace Alternet.UI
             (INumericUpDownHandler)base.Handler;
 
         /// <summary>
-        /// Binds <see cref="Value"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
-        /// </summary>
-        /// <param name="propName">Property name.</param>
-        public void BindValue(string propName)
-        {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, NumericUpDown.ValueProperty, myBinding);
-        }
-
-        /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
@@ -202,9 +180,6 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
             Refresh();
@@ -261,36 +236,15 @@ namespace Alternet.UI
         {
         }
 
-        private static object CoerceValue(DependencyObject d, object value)
+        private int CoerceValue(int value)
         {
-            var o = (NumericUpDown)d;
+            if (value < Minimum)
+                return Minimum;
 
-            var intValue = (int)value;
-            if (intValue < o.Minimum)
-                return o.Minimum;
-
-            if (intValue > o.Maximum)
-                return o.Maximum;
+            if (value > Maximum)
+                return Maximum;
 
             return value;
-        }
-
-        /// <summary>
-        /// Callback for changes to the Value property
-        /// </summary>
-        private static void OnValuePropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            NumericUpDown control = (NumericUpDown)d;
-            control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
-        }
-
-#pragma warning disable
-        private void OnValuePropertyChanged(int oldValue, int newValue)
-#pragma warning restore
-        {
-            RaiseValueChanged(EventArgs.Empty);
         }
 
         /// <summary>
