@@ -5,15 +5,21 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeListBoxHandler : ListBoxHandler
+    internal class ListBoxHandler : WxControlHandler, IListBoxHandler
     {
         private bool receivingSelection;
         private bool applyingSelection;
 
         /// <summary>
+        /// Gets a <see cref="ListBox"/> this handler provides the
+        /// implementation for.
+        /// </summary>
+        public new ListBox Control => (ListBox)base.Control;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public override bool HasBorder
+        public virtual bool HasBorder
         {
             get
             {
@@ -26,17 +32,14 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.ListBox NativeControl =>
-            (Native.ListBox)base.NativeControl!;
+        internal new Native.ListBox NativeControl => (Native.ListBox)base.NativeControl;
 
-        /// <inheritdoc/>
-        public override void EnsureVisible(int itemIndex)
+        public virtual void EnsureVisible(int itemIndex)
         {
             NativeControl.EnsureVisible(itemIndex);
         }
 
-        /// <inheritdoc/>
-        public override int? HitTest(PointD position)
+        public virtual int? HitTest(PointD position)
         {
             int index = NativeControl.ItemHitTest(position);
             return index == -1 ? null : index;

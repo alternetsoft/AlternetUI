@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// </summary>
         public ListBox()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
 
             bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
@@ -385,11 +385,11 @@ namespace Alternet.UI
         /// Gets a <see cref="ListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new ListBoxHandler Handler
+        internal new IListBoxHandler Handler
         {
             get
             {
-                return (ListBoxHandler)base.Handler;
+                return (IListBoxHandler)base.Handler;
             }
         }
 
@@ -572,7 +572,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new NativeListBoxHandler();
+            return GetNative().CreateListBoxHandler(this);
         }
 
         /// <summary>

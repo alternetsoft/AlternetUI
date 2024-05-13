@@ -207,6 +207,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateListBoxHandler(ListBox control)
+        {
+            return new ListBoxHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateControlHandler(Control control)
         {
             return new ControlHandler<Control>();

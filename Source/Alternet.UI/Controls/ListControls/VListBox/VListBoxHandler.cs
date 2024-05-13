@@ -6,7 +6,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class VListBoxHandler : ListBoxHandler
+    internal class VListBoxHandler : WxControlHandler, IListBoxHandler
     {
         private bool receivingSelection;
         private bool applyingSelection;
@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public override bool HasBorder
+        public bool HasBorder
         {
             get
             {
@@ -33,18 +33,15 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.VListBox NativeControl =>
-            (Native.VListBox)base.NativeControl!;
+        internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
 
-        /// <inheritdoc/>
-        public override void EnsureVisible(int itemIndex)
+        public void EnsureVisible(int itemIndex)
         {
             if(itemIndex >= 0 && NativeControl.ItemsCount > 0)
                 NativeControl.EnsureVisible(itemIndex);
         }
 
-        /// <inheritdoc/>
-        public override int? HitTest(PointD position)
+        public int? HitTest(PointD position)
         {
             int index = NativeControl.ItemHitTest(position);
             return index == -1 ? null : index;

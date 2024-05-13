@@ -739,4 +739,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateListBoxHandler(ListBox control)
+    {
+        throw new NotImplementedException();
+    }
 }

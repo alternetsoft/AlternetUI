@@ -48,6 +48,8 @@ public abstract class NativeControl
 
     public abstract BaseControlHandler CreateMainMenuHandler(MainMenu control);
 
+    public abstract BaseControlHandler CreateListBoxHandler(ListBox control);
+
     public abstract BaseControlHandler CreateTreeViewHandler(TreeView control);
 
     public abstract BaseControlHandler CreateControlHandler(Control control);

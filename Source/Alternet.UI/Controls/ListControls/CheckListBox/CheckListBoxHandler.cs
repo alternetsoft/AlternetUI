@@ -34,7 +34,7 @@ namespace Alternet.UI
             }
         }
 
-        public new Native.CheckListBox NativeControl => (Native.CheckListBox)base.NativeControl!;
+        public new Native.CheckListBox NativeControl => (Native.CheckListBox)base.NativeControl;
 
         /// <inheritdoc/>
         public override void EnsureVisible(int itemIndex)
