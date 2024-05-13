@@ -12,43 +12,43 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
-    public abstract BaseControlHandler CreateCalendarHandler(IControl control);
+    public abstract BaseControlHandler CreateCalendarHandler(Calendar control);
 
-    public abstract BaseControlHandler CreateListViewHandler(IControl control);
+    public abstract BaseControlHandler CreateListViewHandler(ListView control);
 
-    public abstract BaseControlHandler CreateDateTimePickerHandler(IControl control);
+    public abstract BaseControlHandler CreateDateTimePickerHandler(DateTimePicker control);
 
-    public abstract BaseControlHandler CreateNumericUpDownHandler(IControl control);
+    public abstract BaseControlHandler CreateNumericUpDownHandler(NumericUpDown control);
 
-    public abstract BaseControlHandler CreateCheckBoxHandler(IControl control);
+    public abstract BaseControlHandler CreateCheckBoxHandler(CheckBox control);
 
-    public abstract BaseControlHandler CreateButtonHandler(IControl control);
+    public abstract BaseControlHandler CreateButtonHandler(Button control);
 
-    public abstract BaseControlHandler CreateColorPickerHandler(IControl control);
+    public abstract BaseControlHandler CreateColorPickerHandler(ColorPicker control);
 
-    public abstract BaseControlHandler CreateSliderHandler(IControl control);
+    public abstract BaseControlHandler CreateSliderHandler(Slider control);
 
-    public abstract BaseControlHandler CreateProgressBarHandler(IControl control);
+    public abstract BaseControlHandler CreateProgressBarHandler(ProgressBar control);
 
-    public abstract BaseControlHandler CreateGroupBoxHandler(IControl control);
+    public abstract BaseControlHandler CreateGroupBoxHandler(GroupBox control);
 
-    public abstract BaseControlHandler CreateRadioButtonHandler(IControl control);
+    public abstract BaseControlHandler CreateRadioButtonHandler(RadioButton control);
 
-    public abstract BaseControlHandler CreateTextBoxHandler(IControl control);
+    public abstract BaseControlHandler CreateTextBoxHandler(TextBox control);
 
-    public abstract BaseControlHandler CreateComboBoxHandler(IControl control);
+    public abstract BaseControlHandler CreateComboBoxHandler(ComboBox control);
 
-    public abstract BaseControlHandler CreateLabelHandler(IControl control);
+    public abstract BaseControlHandler CreateLabelHandler(Label control);
 
-    public abstract BaseControlHandler CreateScrollBarHandler(IControl control);
+    public abstract BaseControlHandler CreateScrollBarHandler(ScrollBar control);
 
-    public abstract BaseControlHandler CreateMenuItemHandler(IControl control);
+    public abstract BaseControlHandler CreateMenuItemHandler(MenuItem control);
 
-    public abstract BaseControlHandler CreateContextMenuHandler(IControl control);
+    public abstract BaseControlHandler CreateContextMenuHandler(ContextMenu control);
 
-    public abstract BaseControlHandler CreateMainMenuHandler(IControl control);
+    public abstract BaseControlHandler CreateMainMenuHandler(MainMenu control);
 
-    public abstract BaseControlHandler CreateControlHandler(IControl control);
+    public abstract BaseControlHandler CreateControlHandler(Control control);
 
     public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
 

@@ -93,115 +93,115 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateCalendarHandler(IControl control)
+        public override BaseControlHandler CreateCalendarHandler(Calendar control)
         {
             return new CalendarHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateProgressBarHandler(IControl control)
+        public override BaseControlHandler CreateProgressBarHandler(ProgressBar control)
         {
             return new ProgressBarHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateRadioButtonHandler(IControl control)
+        public override BaseControlHandler CreateRadioButtonHandler(RadioButton control)
         {
             return new RadioButtonHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateListViewHandler(IControl control)
+        public override BaseControlHandler CreateListViewHandler(ListView control)
         {
             return new ListViewHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateDateTimePickerHandler(IControl control)
+        public override BaseControlHandler CreateDateTimePickerHandler(DateTimePicker control)
         {
             return new DateTimePickerHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateNumericUpDownHandler(IControl control)
+        public override BaseControlHandler CreateNumericUpDownHandler(NumericUpDown control)
         {
             return new NumericUpDownHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateCheckBoxHandler(IControl control)
+        public override BaseControlHandler CreateCheckBoxHandler(CheckBox control)
         {
             return new CheckBoxHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateButtonHandler(IControl control)
+        public override BaseControlHandler CreateButtonHandler(Button control)
         {
             return new ButtonHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateSliderHandler(IControl control)
+        public override BaseControlHandler CreateSliderHandler(Slider control)
         {
             return new SliderHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateColorPickerHandler(IControl control)
+        public override BaseControlHandler CreateColorPickerHandler(ColorPicker control)
         {
             return new ColorPickerHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateGroupBoxHandler(IControl control)
+        public override BaseControlHandler CreateGroupBoxHandler(GroupBox control)
         {
             return new GroupBoxHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateTextBoxHandler(IControl control)
+        public override BaseControlHandler CreateTextBoxHandler(TextBox control)
         {
             return new TextBoxHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateComboBoxHandler(IControl control)
+        public override BaseControlHandler CreateComboBoxHandler(ComboBox control)
         {
             return new ComboBoxHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateLabelHandler(IControl control)
+        public override BaseControlHandler CreateLabelHandler(Label control)
         {
             return new LabelHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateScrollBarHandler(IControl control)
+        public override BaseControlHandler CreateScrollBarHandler(ScrollBar control)
         {
             return new ScrollBarHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateMenuItemHandler(IControl control)
+        public override BaseControlHandler CreateMenuItemHandler(MenuItem control)
         {
             return new MenuItemHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateContextMenuHandler(IControl control)
+        public override BaseControlHandler CreateContextMenuHandler(ContextMenu control)
         {
             return new ContextMenuHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateMainMenuHandler(IControl control)
+        public override BaseControlHandler CreateMainMenuHandler(MainMenu control)
         {
             return new MainMenuHandler();
         }
 
         /// <inheritdoc/>
-        public override BaseControlHandler CreateControlHandler(IControl control)
+        public override BaseControlHandler CreateControlHandler(Control control)
         {
             return new ControlHandler<Control>();
         }

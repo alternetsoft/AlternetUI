@@ -600,7 +600,7 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateControlHandler(IControl control)
+    public override BaseControlHandler CreateControlHandler(Control control)
     {
         throw new NotImplementedException();
     }
@@ -640,17 +640,17 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateMenuItemHandler(IControl control)
+    public override BaseControlHandler CreateMenuItemHandler(MenuItem control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateContextMenuHandler(IControl control)
+    public override BaseControlHandler CreateContextMenuHandler(ContextMenu control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateMainMenuHandler(IControl control)
+    public override BaseControlHandler CreateMainMenuHandler(MainMenu control)
     {
         throw new NotImplementedException();
     }
@@ -660,77 +660,77 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateScrollBarHandler(IControl control)
+    public override BaseControlHandler CreateScrollBarHandler(ScrollBar control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateLabelHandler(IControl control)
+    public override BaseControlHandler CreateLabelHandler(Label control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateComboBoxHandler(IControl control)
+    public override BaseControlHandler CreateComboBoxHandler(ComboBox control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateTextBoxHandler(IControl control)
+    public override BaseControlHandler CreateTextBoxHandler(TextBox control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateRadioButtonHandler(IControl control)
+    public override BaseControlHandler CreateRadioButtonHandler(RadioButton control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateProgressBarHandler(IControl control)
+    public override BaseControlHandler CreateProgressBarHandler(ProgressBar control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateGroupBoxHandler(IControl control)
+    public override BaseControlHandler CreateGroupBoxHandler(GroupBox control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateColorPickerHandler(IControl control)
+    public override BaseControlHandler CreateColorPickerHandler(ColorPicker control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateSliderHandler(IControl control)
+    public override BaseControlHandler CreateSliderHandler(Slider control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateButtonHandler(IControl control)
+    public override BaseControlHandler CreateButtonHandler(Button control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateCheckBoxHandler(IControl control)
+    public override BaseControlHandler CreateCheckBoxHandler(CheckBox control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateNumericUpDownHandler(IControl control)
+    public override BaseControlHandler CreateNumericUpDownHandler(NumericUpDown control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateDateTimePickerHandler(IControl control)
+    public override BaseControlHandler CreateDateTimePickerHandler(DateTimePicker control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateListViewHandler(IControl control)
+    public override BaseControlHandler CreateListViewHandler(ListView control)
     {
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateCalendarHandler(IControl control)
+    public override BaseControlHandler CreateCalendarHandler(Calendar control)
     {
         throw new NotImplementedException();
     }
