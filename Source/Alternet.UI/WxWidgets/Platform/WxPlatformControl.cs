@@ -946,7 +946,7 @@ namespace Alternet.UI
             if (value is null)
                 ((UI.Native.Control)control.NativeControl).SetCursor(default);
             else
-                ((UI.Native.Control)control.NativeControl).SetCursor((IntPtr)value.NativeObject);
+                ((UI.Native.Control)control.NativeControl).SetCursor((IntPtr)value.Handler);
         }
 
         /// <inheritdoc/>

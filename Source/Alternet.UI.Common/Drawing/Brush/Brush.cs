@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     /// <see cref="HatchBrush" />.
     /// </remarks>
     [TypeConverter(typeof(BrushConverter))]
-    public class Brush : GraphicsObject, IEquatable<Brush>
+    public class Brush : HandledObject<object>, IEquatable<Brush>
     {
         /// <summary>
         /// Gets transparent brush.
@@ -137,13 +137,13 @@ namespace Alternet.Drawing
         public override int GetHashCode() => base.GetHashCode();
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateTransparentBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeObject()
+        protected override void UpdateHandler()
         {
         }
     }

@@ -71,7 +71,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
             Handler?.Dispose();
             Handler = null!;

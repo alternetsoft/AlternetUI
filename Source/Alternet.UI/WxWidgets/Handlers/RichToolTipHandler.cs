@@ -8,11 +8,11 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class RichToolTipHandler : DisposableObject, IRichToolTipHandler
+    internal class RichToolTipHandler : DisposableObject<IntPtr>, IRichToolTipHandler
     {
         public RichToolTipHandler(string title, string message)
+            : base(Native.WxOtherFactory.CreateRichToolTip(title, message), true)
         {
-            Handle = Native.WxOtherFactory.CreateRichToolTip(title, message);
         }
 
         public void SetTipKind(RichToolTipKind tipKind)
@@ -62,7 +62,7 @@ namespace Alternet.UI
 
         public void SetIcon(ImageSet? bitmap)
         {
-            Native.WxOtherFactory.RichToolTipSetIcon(Handle, (UI.Native.ImageSet?)bitmap?.NativeObject);
+            Native.WxOtherFactory.RichToolTipSetIcon(Handle, (UI.Native.ImageSet?)bitmap?.Handler);
         }
 
         public void SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
@@ -86,7 +86,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.WxOtherFactory.DeleteRichToolTip(Handle);
         }

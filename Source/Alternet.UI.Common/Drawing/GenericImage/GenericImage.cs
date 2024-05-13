@@ -8,7 +8,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Implements platform independent image.
     /// </summary>
-    public class GenericImage : GraphicsObject
+    public class GenericImage : HandledObject<object>
     {
         /// <summary>
         /// Constant used to indicate the alpha value conventionally defined as the complete
@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, bool clear = false)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(width, height, clear);
+            Handler = NativeDrawing.Default.CreateGenericImage(width, height, clear);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(SizeI size, bool clear = false)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(size.Width, size.Height, clear);
+            Handler = NativeDrawing.Default.CreateGenericImage(size.Width, size.Height, clear);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(string fileName, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(
+            Handler = NativeDrawing.Default.CreateGenericImage(
                     fileName,
                     bitmapType,
                     index);
@@ -97,7 +97,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(string name, string mimetype, int index = -1)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(name, mimetype, index);
+            Handler = NativeDrawing.Default.CreateGenericImage(name, mimetype, index);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(
+            Handler = NativeDrawing.Default.CreateGenericImage(
                       stream,
                       bitmapType,
                       index);
@@ -131,7 +131,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(Stream stream, string mimeType, int index = -1)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(
+            Handler = NativeDrawing.Default.CreateGenericImage(
                       stream,
                       mimeType,
                       index);
@@ -152,7 +152,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, bool staticData = false)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(width, height, data, staticData);
+            Handler = NativeDrawing.Default.CreateGenericImage(width, height, data, staticData);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
         {
-            NativeObject = NativeDrawing.Default.CreateGenericImage(width, height, data, alpha, staticData);
+            Handler = NativeDrawing.Default.CreateGenericImage(width, height, data, alpha, staticData);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(object handle)
         {
-            NativeObject = handle;
+            Handler = handle;
         }
 
         /// <summary>
@@ -1572,13 +1572,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateGenericImage();
         }
 
         /// <inheritdoc/>
-        protected override void DisposeNativeObject()
+        protected override void DisposeManaged()
         {
             NativeDrawing.Default.DisposeGenericImage(this);
         }

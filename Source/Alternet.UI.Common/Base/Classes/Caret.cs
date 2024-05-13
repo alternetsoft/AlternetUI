@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// <remarks>
     /// Currently, the caret appears as a rectangle of the given size.
     /// </remarks>
-    public class Caret : GraphicsObject
+    public class Caret : HandledObject<object>
     {
         private readonly IControl? control;
         private SizeI? size;
@@ -162,7 +162,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             if(control is null || size is null)
                 return NativeDrawing.Default.CreateCaret();
@@ -170,7 +170,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeNativeObject()
+        protected override void DisposeManaged()
         {
             NativeDrawing.Default.DisposeCaret(this);
         }

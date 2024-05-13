@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class Sizer : DisposableObject, ISizer
+    internal class Sizer : DisposableObject<IntPtr>, ISizer
     {
         private const bool DisposeItemHandle = false;
 
@@ -42,7 +42,7 @@ namespace Alternet.UI
         {
             var result = Native.Sizer.AddSizer(
                 Handle,
-                sizer.Handle,
+                ((Sizer)sizer).Handle,
                 proportion,
                 (int)flag,
                 border,
@@ -103,7 +103,7 @@ namespace Alternet.UI
             var result = Native.Sizer.InsertSizer(
                 Handle,
                 index,
-                sizer.Handle,
+                ((Sizer)sizer).Handle,
                 proportion,
                 (int)flag,
                 border,
@@ -167,7 +167,7 @@ namespace Alternet.UI
         {
             var result = Native.Sizer.PrependSizer(
                 Handle,
-                sizer.Handle,
+                ((Sizer)sizer).Handle,
                 proportion,
                 (int)flag,
                 border,
@@ -207,7 +207,7 @@ namespace Alternet.UI
 
         public bool Remove(ISizer sizer)
         {
-            return Native.Sizer.Remove(Handle, sizer.Handle);
+            return Native.Sizer.Remove(Handle, ((Sizer)sizer).Handle);
         }
 
         public bool Remove(int index)
@@ -222,7 +222,7 @@ namespace Alternet.UI
 
         public bool Detach(ISizer sizer)
         {
-            return Native.Sizer.DetachSizer(Handle, sizer.Handle);
+            return Native.Sizer.DetachSizer(Handle, ((Sizer)sizer).Handle);
         }
 
         public bool Detach(int index)
@@ -241,7 +241,7 @@ namespace Alternet.UI
 
         public bool Replace(ISizer oldsz, ISizer newsz, bool recursive)
         {
-            return Native.Sizer.ReplaceSizer(Handle, oldsz.Handle, newsz.Handle, recursive);
+            return Native.Sizer.ReplaceSizer(Handle, ((Sizer)oldsz).Handle, ((Sizer)newsz).Handle, recursive);
         }
 
         public void Clear()
@@ -271,7 +271,7 @@ namespace Alternet.UI
 
         public bool SetItemMinSize(ISizer sizer, int width, int height)
         {
-            return Native.Sizer.SetSizerItemMinSize(Handle, sizer.Handle, width, height);
+            return Native.Sizer.SetSizerItemMinSize(Handle, ((Sizer)sizer).Handle, width, height);
         }
 
         public bool SetItemMinSize(int index, int width, int height)
@@ -351,7 +351,7 @@ namespace Alternet.UI
 
         public bool Show(ISizer sizer, bool show, bool recursive)
         {
-            return Native.Sizer.ShowSizer(Handle, sizer.Handle, show, recursive);
+            return Native.Sizer.ShowSizer(Handle, ((Sizer)sizer).Handle, show, recursive);
         }
 
         public bool Show(int index, bool show)
@@ -361,7 +361,7 @@ namespace Alternet.UI
 
         public bool Hide(ISizer sizer, bool recursive)
         {
-            return Native.Sizer.HideSizer(Handle, sizer.Handle, recursive);
+            return Native.Sizer.HideSizer(Handle, ((Sizer)sizer).Handle, recursive);
         }
 
         public bool Hide(Control window, bool recursive)
@@ -381,7 +381,7 @@ namespace Alternet.UI
 
         public bool IsShown(ISizer sizer)
         {
-            return Native.Sizer.IsShownSizer(Handle, sizer.Handle);
+            return Native.Sizer.IsShownSizer(Handle, ((Sizer)sizer).Handle);
         }
 
         public bool IsShown(int index)
@@ -406,25 +406,25 @@ namespace Alternet.UI
 
         public ISizerItem Insert(int index, ISizerItem item)
         {
-            var result = Native.Sizer.InsertItem(Handle, index, item.Handle);
+            var result = Native.Sizer.InsertItem(Handle, index, ((SizerItem)item).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Prepend(ISizerItem item)
         {
-            var result = Native.Sizer.PrependItem(Handle, item.Handle);
+            var result = Native.Sizer.PrependItem(Handle, ((SizerItem)item).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Add(ISizerItem item)
         {
-            var result = Native.Sizer.AddItem(Handle, item.Handle);
+            var result = Native.Sizer.AddItem(Handle, ((SizerItem)item).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public bool Replace(int index, ISizerItem newitem)
         {
-            return Native.Sizer.ReplaceItem(Handle, index, newitem.Handle);
+            return Native.Sizer.ReplaceItem(Handle, index, ((SizerItem)newitem).Handle);
         }
 
         public ISizerItem? GetItem(Control window, bool recursive)
@@ -437,7 +437,7 @@ namespace Alternet.UI
 
         public ISizerItem? GetItem(ISizer sizer, bool recursive)
         {
-            var result = Native.Sizer.GetItemSizer(Handle, sizer.Handle, recursive);
+            var result = Native.Sizer.GetItemSizer(Handle, ((Sizer)sizer).Handle, recursive);
             if (result == default)
                 return null;
             return new SizerItem(result, DisposeItemHandle);
@@ -461,55 +461,58 @@ namespace Alternet.UI
 
         public ISizerItem Prepend(Control window, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.PrependWindow2(Handle, WxPlatformControl.WxWidget(window), sizerFlags.Handle);
+            var result = Native.Sizer.PrependWindow2(
+                Handle,
+                WxPlatformControl.WxWidget(window),
+                ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Prepend(ISizer sizer, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.PrependSizer2(Handle, sizer.Handle, sizerFlags.Handle);
+            var result = Native.Sizer.PrependSizer2(Handle, ((Sizer)sizer).Handle, ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Prepend(int width, int height, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.PrependCustomBox2(Handle, width, height, sizerFlags.Handle);
+            var result = Native.Sizer.PrependCustomBox2(Handle, width, height, ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Insert(int index, Control window, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.InsertWindow2(Handle, index, WxPlatformControl.WxWidget(window), sizerFlags.Handle);
+            var result = Native.Sizer.InsertWindow2(Handle, index, WxPlatformControl.WxWidget(window), ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Insert(int index, ISizer sizer, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.InsertSizer2(Handle, index, sizer.Handle, sizerFlags.Handle);
+            var result = Native.Sizer.InsertSizer2(Handle, index, ((Sizer)sizer).Handle, ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Insert(int index, int width, int height, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.InsertCustomBox2(Handle, index, width, height, sizerFlags.Handle);
+            var result = Native.Sizer.InsertCustomBox2(Handle, index, width, height, ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Add(Control window, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.AddWindow2(Handle, WxPlatformControl.WxWidget(window), sizerFlags.Handle);
+            var result = Native.Sizer.AddWindow2(Handle, WxPlatformControl.WxWidget(window), ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Add(ISizer sizer, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.AddSizer2(Handle, sizer.Handle, sizerFlags.Handle);
+            var result = Native.Sizer.AddSizer2(Handle, ((Sizer)sizer).Handle, ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
         public ISizerItem Add(int width, int height, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.AddCustomBox2(Handle, width, height, sizerFlags.Handle);
+            var result = Native.Sizer.AddCustomBox2(Handle, width, height, ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
     }

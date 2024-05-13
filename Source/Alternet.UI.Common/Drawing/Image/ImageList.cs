@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// You can add images to the <see cref="ImageList"/>, and the controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : GraphicsObject
+    public class ImageList : HandledObject<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageList"/> with default values.
@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateImageList();
         }

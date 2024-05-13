@@ -2201,7 +2201,7 @@ namespace Alternet.UI
             if (cursor is null)
                 NativeControl.SetTextCursor(default);
             else
-                NativeControl.SetTextCursor(cursor.Handle);
+                NativeControl.SetTextCursor((IntPtr)cursor.Handler);
         }
 
         /// <summary>
@@ -2220,7 +2220,7 @@ namespace Alternet.UI
             if (cursor is null)
                 NativeControl.SetURLCursor(default);
             else
-                NativeControl.SetURLCursor(cursor.Handle);
+                NativeControl.SetURLCursor((IntPtr)cursor.Handler);
         }
 
         /// <summary>

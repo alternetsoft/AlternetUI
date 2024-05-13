@@ -13,7 +13,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void UpdateHatchBrush(HatchBrush brush)
         {
-            ((UI.Native.HatchBrush)brush.NativeObject).Initialize(
+            ((UI.Native.HatchBrush)brush.Handler).Initialize(
                 (UI.Native.BrushHatchStyle)brush.HatchStyle,
                 brush.Color);
         }
@@ -21,7 +21,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void UpdateLinearGradientBrush(LinearGradientBrush brush)
         {
-            ((UI.Native.LinearGradientBrush)brush.NativeObject).Initialize(
+            ((UI.Native.LinearGradientBrush)brush.Handler).Initialize(
                 brush.StartPoint,
                 brush.EndPoint,
                 brush.GradientStops.Select(x => x.Color).ToArray(),
@@ -31,7 +31,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void UpdateRadialGradientBrush(RadialGradientBrush brush)
         {
-            ((UI.Native.RadialGradientBrush)brush.NativeObject).Initialize(
+            ((UI.Native.RadialGradientBrush)brush.Handler).Initialize(
                 brush.Center,
                 brush.Radius,
                 brush.GradientOrigin,
@@ -42,12 +42,12 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void UpdateSolidBrush(SolidBrush brush)
         {
-            ((UI.Native.SolidBrush)brush.NativeObject).Initialize(brush.Color);
+            ((UI.Native.SolidBrush)brush.Handler).Initialize(brush.Color);
         }
 
         public override void UpdateTextureBrush(TextureBrush brush)
         {
-            ((UI.Native.TextureBrush)brush.NativeObject).Initialize(
+            ((UI.Native.TextureBrush)brush.Handler).Initialize(
                 (UI.Native.Image)brush.Image.NativeObject);
         }
 

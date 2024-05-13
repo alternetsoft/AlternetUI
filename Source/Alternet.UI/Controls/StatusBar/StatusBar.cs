@@ -594,10 +594,5 @@ namespace Alternet.UI
                 return result;
             }
         }
-
-        /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
-        {
-        }
     }
 }

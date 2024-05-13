@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Allows to use icons in the application.
     /// </summary>
-    public class IconSet : GraphicsObject
+    public class IconSet : HandledObject<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
@@ -163,7 +163,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateIconSet();
         }

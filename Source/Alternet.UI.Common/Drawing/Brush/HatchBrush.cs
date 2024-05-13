@@ -73,13 +73,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateHatchBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeObject()
+        protected override void UpdateHandler()
         {
             NativeDrawing.Default.UpdateHatchBrush(this);
         }

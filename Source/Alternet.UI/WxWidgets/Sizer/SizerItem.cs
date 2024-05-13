@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class SizerItem : DisposableObject, ISizerItem
+    internal class SizerItem : DisposableObject<IntPtr>, ISizerItem
     {
         public SizerItem(
             Control window,
@@ -25,7 +25,11 @@ namespace Alternet.UI
         }
 
         public SizerItem(Control window, ISizerFlags sizerFlags)
-            : this(Native.SizerItem.CreateSizerItem2(WxPlatformControl.WxWidget(window), sizerFlags.Handle), true)
+            : this(
+                  Native.SizerItem.CreateSizerItem2(
+                WxPlatformControl.WxWidget(window),
+                ((SizerFlags)sizerFlags).Handle),
+                  true)
         {
         }
 
@@ -36,7 +40,7 @@ namespace Alternet.UI
             int border = 0)
             : this(
                   Native.SizerItem.CreateSizerItem3(
-                      sizer.Handle,
+                      ((Sizer)sizer).Handle,
                       proportion,
                       (int)flag,
                       border,
@@ -45,7 +49,7 @@ namespace Alternet.UI
         }
 
         public SizerItem(ISizer sizer, ISizerFlags sizerFlags)
-            : this(Native.SizerItem.CreateSizerItem4(sizer.Handle, sizerFlags.Handle), true)
+            : this(Native.SizerItem.CreateSizerItem4(((Sizer)sizer).Handle, ((SizerFlags)sizerFlags).Handle), true)
         {
         }
 
@@ -67,7 +71,7 @@ namespace Alternet.UI
         }
 
         public SizerItem(int width, int height, ISizerFlags sizerFlags)
-            : this(Native.SizerItem.CreateSizerItem6(width, height, sizerFlags.Handle), true)
+            : this(Native.SizerItem.CreateSizerItem6(width, height, ((SizerFlags)sizerFlags).Handle), true)
         {
         }
 
@@ -305,7 +309,7 @@ namespace Alternet.UI
             if(sizer is null)
                 Native.SizerItem.AssignSizer(Handle, default);
             else
-                Native.SizerItem.AssignSizer(Handle, sizer.Handle);
+                Native.SizerItem.AssignSizer(Handle, ((Sizer)sizer).Handle);
         }
 
         public void SetSpacer(int w, int h)

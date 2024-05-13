@@ -369,7 +369,7 @@ namespace Alternet.UI
 
             public virtual void SetInactiveBitmap(ImageSet? imageSet)
             {
-                NativeControl.SetInactiveBitmap((UI.Native.ImageSet?)imageSet?.NativeObject);
+                NativeControl.SetInactiveBitmap((UI.Native.ImageSet?)imageSet?.Handler);
             }
 
             protected override BaseControlHandler CreateHandler()

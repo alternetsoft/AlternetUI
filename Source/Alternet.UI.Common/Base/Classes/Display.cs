@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Determines the sizes and locations of displays connected to the system.
     /// </summary>
-    public class Display : GraphicsObject
+    public class Display : HandledObject<object>
     {
         private static Display? primary;
         private static Display[]? allScreens;
@@ -34,7 +34,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Display(int index)
         {
-            NativeObject = NativeDrawing.Default.CreateDisplay(index);
+            Handler = NativeDrawing.Default.CreateDisplay(index);
         }
 
         /// <summary>
@@ -345,13 +345,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeNativeObject()
+        protected override void DisposeManaged()
         {
             NativeDrawing.Default.DisposeDisplay(this);
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateDisplay();
         }

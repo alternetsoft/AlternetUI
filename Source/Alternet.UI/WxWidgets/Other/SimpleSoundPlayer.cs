@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Controls playback of a sound from a audio file. This player supports only wav files.
     /// On Linux requires package osspd.
     /// </summary>
-    public class SimpleSoundPlayer : DisposableObject
+    public class SimpleSoundPlayer : DisposableObject<IntPtr>
     {
         private readonly string fileName;
 
@@ -19,9 +19,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="fileName">Path to audio file.</param>
         public SimpleSoundPlayer(string fileName)
+            : base(Native.WxOtherFactory.SoundCreate2(fileName, false), true)
         {
             this.fileName = fileName;
-            Initialize();
         }
 
         /// <summary>
@@ -94,17 +94,8 @@ namespace Alternet.UI
             return Native.WxOtherFactory.SoundPlay(Handle, (uint)flags);
         }
 
-        /// <summary>
-        /// Initializes sound player object. Called from constructor.
-        /// </summary>
-        protected virtual void Initialize()
-        {
-            Handle = Native.WxOtherFactory.SoundCreate2(fileName, false);
-            DisposeHandle = true;
-        }
-
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.WxOtherFactory.SoundDelete(Handle);
         }

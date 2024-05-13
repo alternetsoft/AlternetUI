@@ -65,13 +65,13 @@
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateTextureBrush();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateNativeObject()
+        protected override void UpdateHandler()
         {
             NativeDrawing.Default.UpdateTextureBrush(this);
         }

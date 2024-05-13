@@ -245,7 +245,7 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
             if (Handler is null)
                 return;

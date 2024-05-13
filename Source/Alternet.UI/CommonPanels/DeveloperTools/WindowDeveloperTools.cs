@@ -59,9 +59,9 @@ namespace Alternet.UI
             panel.PropGrid.SuggestedInitDefaults();
         }
 
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
-            base.DisposeManagedResources();
+            base.DisposeManaged();
             ComponentDesigner.SafeDefault.ControlGotFocus -= Designer_ControlGotFocus;
             ComponentDesigner.SafeDefault.ControlCreated -= Designer_ControlCreated;
             ComponentDesigner.SafeDefault.ControlDisposed -= Designer_ControlDisposed;

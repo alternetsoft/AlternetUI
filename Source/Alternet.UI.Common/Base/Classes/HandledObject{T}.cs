@@ -11,27 +11,28 @@ using Alternet.UI.Localization;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Implements base class for <see cref="Brush"/>, <see cref="Pen"/>
+    /// Implements base class that pass calls to it's handler.
     /// and other graphics objects.
     /// </summary>
-    public abstract class GraphicsObject : DisposableObject
+    public abstract class HandledObject<T> : DisposableObject
+        where T : class
     {
         private bool immutable;
-        private object? nativeObject;
+        private T? handler;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GraphicsObject"/> class.
+        /// Initializes a new instance of the <see cref="HandledObject"/> class.
         /// </summary>
         /// <param name="immutable">Whether this object is immutable (properties are readonly).</param>
-        protected GraphicsObject(bool immutable)
+        protected HandledObject(bool immutable)
         {
             this.immutable = immutable;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GraphicsObject"/> class.
+        /// Initializes a new instance of the <see cref="HandledObject"/> class.
         /// </summary>
-        protected GraphicsObject()
+        protected HandledObject()
         {
         }
 
@@ -52,36 +53,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets native graphics object.
+        /// Gets handler.
         /// </summary>
         [Browsable(false)]
-        public virtual object NativeObject
+        public virtual T Handler
         {
             get
             {
-                if (nativeObject is null)
+                if (handler is null)
                 {
-                    nativeObject = CreateNativeObject();
-                    UpdateNativeObject();
+                    handler = CreateHandler();
+                    UpdateHandler();
                 }
                 else
                 if (UpdateRequired)
                 {
                     UpdateRequired = false;
-                    UpdateNativeObject();
+                    UpdateHandler();
                 }
 
-                return nativeObject;
+                return handler;
             }
 
             protected set
             {
-                nativeObject = value;
+                handler = value;
             }
         }
 
         /// <summary>
-        /// Gets whether native object update is required.
+        /// Gets whether handler update is required.
         /// </summary>
         protected bool UpdateRequired { get; set; }
 
@@ -99,35 +100,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates native object.
+        /// Creates handler.
         /// </summary>
         /// <returns></returns>
-        protected abstract object CreateNativeObject();
+        protected abstract T CreateHandler();
 
         /// <summary>
-        /// Dispose native object.
+        /// Updates handler.
         /// </summary>
-        protected virtual void DisposeNativeObject()
-        {
-            if(nativeObject is IDisposable disposable)
-                disposable.Dispose();
-            nativeObject = null;
-        }
-
-        /// <summary>
-        /// Updates native object.
-        /// </summary>
-        protected virtual void UpdateNativeObject()
+        protected virtual void UpdateHandler()
         {
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
-            if (nativeObject is not null)
-            {
-                DisposeNativeObject();
-            }
+            (handler as IDisposable)?.Dispose();
+            handler = null;
         }
     }
 }

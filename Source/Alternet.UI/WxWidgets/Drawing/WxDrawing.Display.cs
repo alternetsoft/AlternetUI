@@ -35,29 +35,29 @@ namespace Alternet.Drawing
             => UI.Native.WxOtherFactory.DisplayGetStdPPI();
 
         public override string DisplayGetName(Display display)
-            => UI.Native.WxOtherFactory.DisplayGetName((IntPtr)display.NativeObject);
+            => UI.Native.WxOtherFactory.DisplayGetName((IntPtr)display.Handler);
 
         public override SizeI DisplayGetDPI(Display display)
-            => UI.Native.WxOtherFactory.DisplayGetPPI((IntPtr)display.NativeObject);
+            => UI.Native.WxOtherFactory.DisplayGetPPI((IntPtr)display.Handler);
 
         public override double DisplayGetScaleFactor(Display display)
-            => UI.Native.WxOtherFactory.DisplayGetScaleFactor((IntPtr)display.NativeObject);
+            => UI.Native.WxOtherFactory.DisplayGetScaleFactor((IntPtr)display.Handler);
 
         public override bool DisplayGetIsPrimary(Display display)
-            => UI.Native.WxOtherFactory.DisplayIsPrimary((IntPtr)display.NativeObject);
+            => UI.Native.WxOtherFactory.DisplayIsPrimary((IntPtr)display.Handler);
 
         public override RectI DisplayGetClientArea(Display display)
-            => UI.Native.WxOtherFactory.DisplayGetClientArea((IntPtr)display.NativeObject);
+            => UI.Native.WxOtherFactory.DisplayGetClientArea((IntPtr)display.Handler);
 
         public override RectI DisplayGetGeometry(Display display)
-            => UI.Native.WxOtherFactory.DisplayGetGeometry((IntPtr)display.NativeObject);
+            => UI.Native.WxOtherFactory.DisplayGetGeometry((IntPtr)display.Handler);
 
         public override int DisplayGetFromPoint(PointI pt) =>
             UI.Native.WxOtherFactory.DisplayGetFromPoint(pt);
 
         public override void DisposeDisplay(Display display)
         {
-            UI.Native.WxOtherFactory.DeleteDisplay((IntPtr)display.NativeObject);
+            UI.Native.WxOtherFactory.DeleteDisplay((IntPtr)display.Handler);
         }
     }
 }

@@ -166,11 +166,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeResources()
+        protected override void DisposeManaged()
         {
             Application.LogMessage -= Application_LogMessage;
             Application.LogRefresh -= Application_LogRefresh;
-            base.DisposeResources();
+            base.DisposeManaged();
         }
 
         /// <summary>

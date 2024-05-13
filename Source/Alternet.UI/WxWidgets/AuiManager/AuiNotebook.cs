@@ -248,7 +248,7 @@ namespace Alternet.UI
                 WxPlatformControl.WxWidget(page),
                 caption,
                 select,
-                (UI.Native.ImageSet?)bitmap?.NativeObject);
+                (UI.Native.ImageSet?)bitmap?.Handler);
 
             if (ok)
             {
@@ -292,7 +292,7 @@ namespace Alternet.UI
                 WxPlatformControl.WxWidget(page),
                 caption,
                 select,
-                (UI.Native.ImageSet?)bitmap?.NativeObject);
+                (UI.Native.ImageSet?)bitmap?.Handler);
             if (ok)
             {
                 IAuiNotebookPage result = new AuiNotebookPage(this)
@@ -410,7 +410,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool SetPageBitmap(int page, ImageSet? imageSet)
         {
-            return NativeControl.SetPageBitmap((ulong)page, (UI.Native.ImageSet?)imageSet?.NativeObject);
+            return NativeControl.SetPageBitmap((ulong)page, (UI.Native.ImageSet?)imageSet?.Handler);
         }
 
         /// <summary>

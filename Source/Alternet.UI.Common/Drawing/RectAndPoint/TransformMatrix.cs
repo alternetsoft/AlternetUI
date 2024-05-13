@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
     /// This class cannot be inherited.
     /// </summary>
-    public sealed class TransformMatrix : GraphicsObject
+    public sealed class TransformMatrix : HandledObject<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
@@ -62,7 +62,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TransformMatrix(object nativeMatrix)
         {
-            NativeObject = nativeMatrix;
+            Handler = nativeMatrix;
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateTransformMatrix();
         }

@@ -133,7 +133,7 @@ namespace Alternet.UI
         public void SetBitmap(int index, ImageSet? bitmap)
         {
             hasBitmaps = true;
-            Native.PropertyGridChoices.SetBitmap(handle, (uint)index, (UI.Native.ImageSet?)bitmap?.NativeObject);
+            Native.PropertyGridChoices.SetBitmap(handle, (uint)index, (UI.Native.ImageSet?)bitmap?.Handler);
             ChoicesChanged();
         }
 
@@ -221,7 +221,7 @@ namespace Alternet.UI
                 handle,
                 text,
                 value,
-                (UI.Native.ImageSet?)bitmap?.NativeObject);
+                (UI.Native.ImageSet?)bitmap?.Handler);
             ChoicesChanged();
             return Count - 1;
         }
@@ -249,7 +249,7 @@ namespace Alternet.UI
                 index,
                 text,
                 value,
-                (UI.Native.ImageSet?)bitmap?.NativeObject);
+                (UI.Native.ImageSet?)bitmap?.Handler);
             ChoicesChanged();
         }
 

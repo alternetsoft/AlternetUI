@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class CalendarDateAttr : DisposableObject, ICalendarDateAttr
+    internal class CalendarDateAttr : DisposableObject<IntPtr>, ICalendarDateAttr
     {
         private bool immutable;
 
@@ -158,7 +158,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.Calendar.DeleteDateAttr(Handle);
         }

@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <remarks>
     /// The static methods can be used to globally alter tooltips behaviour.
     /// </remarks>
-    public class ToolTip : DisposableObject
+    public class ToolTip : DisposableObject<IntPtr>
     {
         internal ToolTip(string message)
             : base(Native.WxOtherFactory.CreateToolTip(message), false)
@@ -110,7 +110,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.WxOtherFactory.DeleteToolTip(Handle);
         }

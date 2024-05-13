@@ -71,7 +71,7 @@ namespace Alternet.UI
 
             set
             {
-                Native.AuiManager.SetArtProvider(handle, value.Handle);
+                Native.AuiManager.SetArtProvider(handle, ((AuiDockArt)value).Handle);
             }
         }
 

@@ -409,7 +409,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
             Designer?.RaiseDisposed(this);
             /*var children = Handler.AllChildren.ToArray();*/

@@ -14,20 +14,20 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override SizeI ImageSetGetPreferredBitmapSizeFor(ImageSet imageSet, IControl control)
         {
-            return ((UI.Native.ImageSet)imageSet.NativeObject)
+            return ((UI.Native.ImageSet)imageSet.Handler)
                 .GetPreferredBitmapSizeFor(WxPlatformControl.WxWidget(control));
         }
 
         /// <inheritdoc/>
         public override SizeI ImageSetGetPreferredBitmapSizeAtScale(ImageSet imgSet, double scale)
         {
-            return ((UI.Native.ImageSet)imgSet.NativeObject).GetPreferredBitmapSizeAtScale(scale);
+            return ((UI.Native.ImageSet)imgSet.Handler).GetPreferredBitmapSizeAtScale(scale);
         }
 
         /// <inheritdoc/>
         public override void ImageSetAddImage(ImageSet imgSet, int index, Image item)
         {
-            ((UI.Native.ImageSet)imgSet.NativeObject).AddImage((UI.Native.Image)item.NativeObject);
+            ((UI.Native.ImageSet)imgSet.Handler).AddImage((UI.Native.Image)item.NativeObject);
         }
 
         /// <inheritdoc/>
@@ -70,49 +70,49 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override SizeI ImageSetGetDefaultSize(ImageSet imgSet)
         {
-            return ((UI.Native.ImageSet)imgSet.NativeObject).DefaultSize;
+            return ((UI.Native.ImageSet)imgSet.Handler).DefaultSize;
         }
 
         /// <inheritdoc/>
         public override bool ImageSetIsOk(ImageSet imgSet)
-            => ((UI.Native.ImageSet)imgSet.NativeObject).IsOk;
+            => ((UI.Native.ImageSet)imgSet.Handler).IsOk;
 
         /// <inheritdoc/>
         public override bool ImageSetIsReadOnly(ImageSet imgSet)
-            => ((UI.Native.ImageSet)imgSet.NativeObject).IsReadOnly;
+            => ((UI.Native.ImageSet)imgSet.Handler).IsReadOnly;
 
         /// <inheritdoc/>
         public override void ImageSetLoadFromStream(ImageSet imgSet, Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            ((UI.Native.ImageSet)imgSet.NativeObject).LoadFromStream(inputStream);
+            ((UI.Native.ImageSet)imgSet.Handler).LoadFromStream(inputStream);
         }
 
         /// <inheritdoc/>
-        public override bool IconSetIsOk(IconSet icnSet) => ((UI.Native.IconSet)icnSet.NativeObject).IsOk();
+        public override bool IconSetIsOk(IconSet icnSet) => ((UI.Native.IconSet)icnSet.Handler).IsOk();
 
         /// <inheritdoc/>
         public override SizeI ImageListGetPixelImageSize(ImageList imgList)
         {
-            return ((UI.Native.ImageList)imgList.NativeObject).PixelImageSize;
+            return ((UI.Native.ImageList)imgList.Handler).PixelImageSize;
         }
 
         /// <inheritdoc/>
         public override void ImageListSetPixelImageSize(ImageList imgList, SizeI value)
         {
-            ((UI.Native.ImageList)imgList.NativeObject).PixelImageSize = value;
+            ((UI.Native.ImageList)imgList.Handler).PixelImageSize = value;
         }
 
         /// <inheritdoc/>
         public override SizeD ImageListGetImageSize(ImageList imgList)
         {
-            return ((UI.Native.ImageList)imgList.NativeObject).ImageSize;
+            return ((UI.Native.ImageList)imgList.Handler).ImageSize;
         }
 
         /// <inheritdoc/>
         public override void ImageListSetImageSize(ImageList imgList, SizeD value)
         {
-            ((UI.Native.ImageList)imgList.NativeObject).ImageSize = value;
+            ((UI.Native.ImageList)imgList.Handler).ImageSize = value;
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void ImageListAdd(ImageList imgList, int index, Image item)
         {
-            ((UI.Native.ImageList)imgList.NativeObject).AddImage((UI.Native.Image)item.NativeObject);
+            ((UI.Native.ImageList)imgList.Handler).AddImage((UI.Native.Image)item.NativeObject);
         }
 
         /// <inheritdoc/>
@@ -136,20 +136,20 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void IconSetAdd(IconSet icnSet, Image image)
         {
-            ((UI.Native.IconSet)icnSet.NativeObject).AddImage((UI.Native.Image)image.NativeObject);
+            ((UI.Native.IconSet)icnSet.Handler).AddImage((UI.Native.Image)image.NativeObject);
         }
 
         /// <inheritdoc/>
         public override void IconSetAdd(IconSet icnSet, Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            ((UI.Native.IconSet)icnSet.NativeObject).LoadFromStream(inputStream);
+            ((UI.Native.IconSet)icnSet.Handler).LoadFromStream(inputStream);
         }
 
         /// <inheritdoc/>
         public override void IconSetClear(IconSet icnSet)
         {
-            ((UI.Native.IconSet)icnSet.NativeObject).Clear();
+            ((UI.Native.IconSet)icnSet.Handler).Clear();
         }
 
         /// <inheritdoc/>

@@ -36,42 +36,42 @@ namespace Alternet.Drawing
 
         public override SizeI CaretGetSize(Caret caret)
         {
-            return UI.Native.WxOtherFactory.CaretGetSize((IntPtr)caret.NativeObject);
+            return UI.Native.WxOtherFactory.CaretGetSize((IntPtr)caret.Handler);
         }
 
         public override void CaretSetSize(Caret caret, SizeI value)
         {
-            UI.Native.WxOtherFactory.CaretSetSize((IntPtr)caret.NativeObject, value.Width, value.Height);
+            UI.Native.WxOtherFactory.CaretSetSize((IntPtr)caret.Handler, value.Width, value.Height);
         }
 
         public override PointI CaretGetPosition(Caret caret)
         {
-            return UI.Native.WxOtherFactory.CaretGetPosition((IntPtr)caret.NativeObject);
+            return UI.Native.WxOtherFactory.CaretGetPosition((IntPtr)caret.Handler);
         }
 
         public override void CaretSetPosition(Caret caret, PointI value)
         {
-            UI.Native.WxOtherFactory.CaretMove((IntPtr)caret.NativeObject, value.X, value.Y);
+            UI.Native.WxOtherFactory.CaretMove((IntPtr)caret.Handler, value.X, value.Y);
         }
 
         public override bool CaretIsOk(Caret caret)
         {
-            return UI.Native.WxOtherFactory.CaretIsOk((IntPtr)caret.NativeObject);
+            return UI.Native.WxOtherFactory.CaretIsOk((IntPtr)caret.Handler);
         }
 
         public override bool CaretGetVisible(Caret caret)
         {
-            return UI.Native.WxOtherFactory.CaretIsVisible((IntPtr)caret.NativeObject);
+            return UI.Native.WxOtherFactory.CaretIsVisible((IntPtr)caret.Handler);
         }
 
         public override void CaretSetVisible(Caret caret, bool value)
         {
-            UI.Native.WxOtherFactory.CaretShow((IntPtr)caret.NativeObject, value);
+            UI.Native.WxOtherFactory.CaretShow((IntPtr)caret.Handler, value);
         }
 
         public override void DisposeCaret(Caret caret)
         {
-            UI.Native.WxOtherFactory.DeleteCaret((IntPtr)caret.NativeObject);
+            UI.Native.WxOtherFactory.DeleteCaret((IntPtr)caret.Handler);
         }
 
         public override object CreateCursor()
@@ -104,12 +104,12 @@ namespace Alternet.Drawing
 
         public override bool CursorIsOk(Cursor cursor)
         {
-            return UI.Native.WxOtherFactory.CursorIsOk((IntPtr)cursor.NativeObject);
+            return UI.Native.WxOtherFactory.CursorIsOk((IntPtr)cursor.Handler);
         }
 
         public override PointI CursorGetHotSpot(Cursor cursor)
         {
-            return UI.Native.WxOtherFactory.CursorGetHotSpot((IntPtr)cursor.NativeObject);
+            return UI.Native.WxOtherFactory.CursorGetHotSpot((IntPtr)cursor.Handler);
         }
 
         public override void CursorSetGlobal(Cursor? cursor)
@@ -117,12 +117,12 @@ namespace Alternet.Drawing
             if (cursor is null)
                 UI.Native.WxOtherFactory.SetCursor(default);
             else
-                UI.Native.WxOtherFactory.SetCursor((IntPtr)cursor.NativeObject);
+                UI.Native.WxOtherFactory.SetCursor((IntPtr)cursor.Handler);
         }
 
         public override void DisposeCursor(Cursor cursor)
         {
-            UI.Native.WxOtherFactory.DeleteCursor((IntPtr)cursor.NativeObject);
+            UI.Native.WxOtherFactory.DeleteCursor((IntPtr)cursor.Handler);
         }
     }
 }

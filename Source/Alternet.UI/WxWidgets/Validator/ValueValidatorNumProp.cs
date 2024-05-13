@@ -19,7 +19,7 @@ namespace Alternet.UI
         {
         }
 
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.ValidatorNumericProperty.DeleteValidatorNumericProperty(Handle);
         }

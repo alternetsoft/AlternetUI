@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class TextBoxTextAttr : DisposableObject, ITextBoxTextAttr
+    internal class TextBoxTextAttr : DisposableObject<IntPtr>, ITextBoxTextAttr
     {
         public TextBoxTextAttr()
             : base(Native.TextBoxTextAttr.CreateTextAttr(), true)
@@ -569,7 +569,7 @@ namespace Alternet.UI
             return this;
         }
 
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.TextBoxTextAttr.Delete(Handle);
         }

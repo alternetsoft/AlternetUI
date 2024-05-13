@@ -14,7 +14,7 @@ namespace Alternet.Drawing
         public override object CreateImage(ImageSet imageSet, SizeI size)
         {
             var image = new UI.Native.Image();
-            ((UI.Native.ImageSet)imageSet.NativeObject).InitImage(
+            ((UI.Native.ImageSet)imageSet.Handler).InitImage(
                 image,
                 size.Width,
                 size.Height);
@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         public override object CreateImageFromGenericImage(GenericImage genericImage, int depth = -1)
         {
             var nativeImage = CreateImage();
-            ((UI.Native.Image)nativeImage).LoadFromGenericImage((IntPtr)genericImage.NativeObject, depth);
+            ((UI.Native.Image)nativeImage).LoadFromGenericImage((IntPtr)genericImage.Handler, depth);
             return nativeImage;
         }
 
@@ -91,7 +91,7 @@ namespace Alternet.Drawing
         public override object CreateImage(ImageSet imageSet, IControl control)
         {
             var nativeObject = NativeDrawing.Default.CreateImage();
-            ((UI.Native.ImageSet)imageSet.NativeObject).InitImageFor(
+            ((UI.Native.ImageSet)imageSet.Handler).InitImageFor(
                 (UI.Native.Image)nativeObject,
                 WxPlatformControl.WxWidget(control));
             return nativeObject;
@@ -105,7 +105,7 @@ namespace Alternet.Drawing
             var nativeImage = CreateImage();
             UI.Native.DrawingContext.ImageFromGenericImageDC(
                 (UI.Native.Image)nativeImage,
-                (IntPtr)genericImage.NativeObject,
+                (IntPtr)genericImage.Handler,
                 (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
         }

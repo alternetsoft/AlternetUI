@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for <see cref="IValueValidator"/> implementation.
     /// </summary>
-    public class ValueValidator : DisposableObject, IValueValidator
+    public class ValueValidator : DisposableObject<IntPtr>, IValueValidator
     {
         internal ValueValidator(IntPtr handle = default, bool disposeHandle = true)
             : base(handle, disposeHandle)

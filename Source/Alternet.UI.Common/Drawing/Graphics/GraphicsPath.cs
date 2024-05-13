@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// The starting and ending points of a geometric shape primitive are defined by
     /// the primitive specification.
     /// </remarks>
-    public sealed class GraphicsPath : GraphicsObject
+    public sealed class GraphicsPath : HandledObject<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
@@ -30,7 +30,7 @@ namespace Alternet.Drawing
         {
             if (drawingContext is null)
                 throw new ArgumentNullException(nameof(drawingContext));
-            NativeObject = NativeDrawing.Default.CreateGraphicsPath(drawingContext);
+            Handler = NativeDrawing.Default.CreateGraphicsPath(drawingContext);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateGraphicsPath();
         }

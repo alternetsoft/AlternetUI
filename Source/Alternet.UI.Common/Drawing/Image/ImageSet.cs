@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// same picture.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : GraphicsObject, IDisposable
+    public class ImageSet : HandledObject<object>, IDisposable
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
@@ -94,7 +94,7 @@ namespace Alternet.UI
         public ImageSet(object imageSet)
             : this()
         {
-            NativeObject = imageSet;
+            Handler = imageSet;
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateImageSet();
         }

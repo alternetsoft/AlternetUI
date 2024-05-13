@@ -16,19 +16,16 @@ namespace Alternet.UI
     public class DisposableObject : BaseObject, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
-        private bool disposing;
-        private bool disposed = false;
-        private IntPtr handle;
+        private bool insideDisposing;
+        private bool disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableObject"/> class.
         /// </summary>
-        /// <param name="handle">Handle to unmanaged resources.</param>
         /// <param name="disposeHandle">Specifies whether to dispose handle using
-        /// <see cref="DisposeUnmanagedResources"/>.</param>
-        public DisposableObject(IntPtr handle, bool disposeHandle)
+        /// <see cref="DisposeUnmanaged"/>.</param>
+        public DisposableObject(bool disposeHandle)
         {
-            this.handle = handle;
             this.disposeHandle = disposeHandle;
         }
 
@@ -37,6 +34,7 @@ namespace Alternet.UI
         /// </summary>
         public DisposableObject()
         {
+            this.disposeHandle = true;
         }
 
         /// <summary>
@@ -65,22 +63,20 @@ namespace Alternet.UI
         /// Gets whether object is disposed.
         /// </summary>
         [Browsable(false)]
-        public bool IsDisposed => disposed;
+        public bool IsDisposed
+        {
+            get => disposed;
+            private set => disposed = true;
+        }
 
         /// <summary>
         /// Gets whether object is currently disposing.
         /// </summary>
         [Browsable(false)]
-        public bool Disposing => disposing;
-
-        /// <summary>
-        /// Gets handle to unmanaged resources.
-        /// </summary>
-        [Browsable(false)]
-        public IntPtr Handle
+        public bool Disposing
         {
-            get => handle;
-            protected set => handle = value;
+            get => insideDisposing;
+            private set => insideDisposing = value;
         }
 
         /// <summary>
@@ -131,57 +127,46 @@ namespace Alternet.UI
         /// <param name="disposing">Disposing scenario</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (IsDisposed)
+                return;
+
+            Disposing = true;
+
+            try
             {
-                this.disposing = true;
+                Disposed?.Invoke(this, EventArgs.Empty);
 
-                try
+                if (disposing)
+                    DisposeManaged();
+
+                // Call the appropriate methods to clean up
+                // unmanaged resources here.
+                // If disposing is false,
+                // only the following code is executed.
+                if (disposeHandle)
                 {
-                    Disposed?.Invoke(this, EventArgs.Empty);
-
-                    // If disposing equals true, dispose all managed
-                    // and unmanaged resources.
-                    if (disposing)
-                        DisposeManagedResources();
-
-                    DisposeResources();
-
-                    // Call the appropriate methods to clean up
-                    // unmanaged resources here.
-                    // If disposing is false,
-                    // only the following code is executed.
-                    if (handle != default && disposeHandle)
-                    {
-                        DisposeUnmanagedResources();
-                        handle = default;
-                    }
+                    DisposeUnmanaged();
                 }
-                finally
-                {
-                    this.disposing = false;
-                    disposed = true;
-                }
+            }
+            finally
+            {
+                Disposing = false;
+                IsDisposed = true;
             }
         }
 
         /// <summary>
         /// Override to dispose managed resources.
+        /// Here we dispose all used object references.
         /// </summary>
-        protected virtual void DisposeManagedResources()
+        protected virtual void DisposeManaged()
         {
         }
 
         /// <summary>
-        /// Override to dispose resources.
+        /// Override to dispose unmanaged resources.
         /// </summary>
-        protected virtual void DisposeResources()
-        {
-        }
-
-        /// <summary>
-        /// Override to dispose <see cref="Handle"/> or other unmanaged resources.
-        /// </summary>
-        protected virtual void DisposeUnmanagedResources()
+        protected virtual void DisposeUnmanaged()
         {
         }
     }

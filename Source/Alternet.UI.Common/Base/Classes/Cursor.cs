@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// A cursor is a small bitmap usually used for denoting where the mouse pointer is, with
     /// a picture that might indicate the interpretation of a mouse click.
     /// </summary>
-    public class Cursor : GraphicsObject
+    public class Cursor : HandledObject<object>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </summary>
         public Cursor(object nativeCursor)
         {
-            NativeObject = nativeCursor;
+            Handler = nativeCursor;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <param name="cursor">Built in cursor type.</param>
         public Cursor(CursorType cursor)
         {
-            NativeObject = NativeDrawing.Default.CreateCursor(cursor);
+            Handler = NativeDrawing.Default.CreateCursor(cursor);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            NativeObject = NativeDrawing.Default.CreateCursor(
+            Handler = NativeDrawing.Default.CreateCursor(
                     cursorName,
                     type,
                     hotSpotX,
@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// <param name="image">Image with cursor.</param>
         public Cursor(Image image)
         {
-            NativeObject = NativeDrawing.Default.CreateCursor(image);
+            Handler = NativeDrawing.Default.CreateCursor(image);
         }
 
         /// <summary>
@@ -150,13 +150,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeNativeObject()
+        protected override void DisposeManaged()
         {
             NativeDrawing.Default.DisposeCursor(this);
         }
 
         /// <inheritdoc/>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreateCursor();
         }

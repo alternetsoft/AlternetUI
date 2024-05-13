@@ -42,7 +42,7 @@ namespace Alternet.UI
 
         public ISizerItem FindItem(ISizer sizer)
         {
-            var itemHandle = Native.GridBagSizer.FindItem2(Handle, sizer.Handle);
+            var itemHandle = Native.GridBagSizer.FindItem2(Handle, ((Sizer)sizer).Handle);
             return new SizerItem(itemHandle, false);
         }
 
@@ -53,7 +53,7 @@ namespace Alternet.UI
 
         public PointI GetItemPosition(ISizer sizer)
         {
-            return Native.GridBagSizer.GetItemPosition2(Handle, sizer.Handle);
+            return Native.GridBagSizer.GetItemPosition2(Handle, ((Sizer)sizer).Handle);
         }
 
         public PointI GetItemPosition(int index)
@@ -68,7 +68,7 @@ namespace Alternet.UI
 
         public PointI GetItemSpan(ISizer sizer)
         {
-            return Native.GridBagSizer.GetItemSpan2(Handle, sizer.Handle);
+            return Native.GridBagSizer.GetItemSpan2(Handle, ((Sizer)sizer).Handle);
         }
 
         public PointI GetItemSpan(int index)
@@ -83,7 +83,7 @@ namespace Alternet.UI
 
         public bool SetItemPosition(ISizer sizer, PointI pos)
         {
-            return Native.GridBagSizer.SetItemPosition2(Handle, sizer.Handle, pos);
+            return Native.GridBagSizer.SetItemPosition2(Handle, ((Sizer)sizer).Handle, pos);
         }
 
         public bool SetItemPosition(int index, PointI pos)
@@ -98,7 +98,7 @@ namespace Alternet.UI
 
         public bool SetItemSpan(ISizer sizer, SizeI span)
         {
-            return Native.GridBagSizer.SetItemSpan2(Handle, sizer.Handle, span);
+            return Native.GridBagSizer.SetItemSpan2(Handle, ((Sizer)sizer).Handle, span);
         }
 
         public bool SetItemSpan(int index, SizeI span)
@@ -149,7 +149,7 @@ namespace Alternet.UI
         {
             var result = Native.GridBagSizer.Add2(
                 Handle,
-                sizer.Handle,
+                ((Sizer)sizer).Handle,
                 pos,
                 span,
                 (int)flag,
@@ -181,15 +181,18 @@ namespace Alternet.UI
         public bool CheckForIntersection(ISizerItem item, ISizerItem? excludeItem)
         {
             if(excludeItem is null)
-                return Native.GridBagSizer.CheckForIntersection(Handle, item.Handle, default);
-            return Native.GridBagSizer.CheckForIntersection(Handle, item.Handle, excludeItem.Handle);
+                return Native.GridBagSizer.CheckForIntersection(Handle, ((SizerItem)item).Handle, default);
+            return Native.GridBagSizer.CheckForIntersection(
+                Handle,
+                ((SizerItem)item).Handle,
+                ((SizerItem)excludeItem).Handle);
         }
 
         public bool CheckForIntersection(PointI pos, SizeI span, ISizerItem? excludeItem)
         {
             if (excludeItem is null)
                 return Native.GridBagSizer.CheckForIntersection2(Handle, pos, span, default);
-            return Native.GridBagSizer.CheckForIntersection2(Handle, pos, span, excludeItem.Handle);
+            return Native.GridBagSizer.CheckForIntersection2(Handle, pos, span, ((SizerItem)excludeItem).Handle);
         }
     }
 }

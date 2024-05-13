@@ -68,12 +68,12 @@ namespace Alternet.UI
 
         private void ApplyDisabledImage()
         {
-            NativeControl.DisabledImage = (UI.Native.ImageSet?)Control.DisabledImage?.NativeObject;
+            NativeControl.DisabledImage = (UI.Native.ImageSet?)Control.DisabledImage?.Handler;
         }
 
         private void ApplyImage()
         {
-            NativeControl.NormalImage = (UI.Native.ImageSet?)Control.Image?.NativeObject;
+            NativeControl.NormalImage = (UI.Native.ImageSet?)Control.Image?.Handler;
         }
 
         private void Control_DisabledImageChanged(object? sender, EventArgs e)

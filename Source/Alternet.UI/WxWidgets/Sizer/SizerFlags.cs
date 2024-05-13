@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     // https://docs.wxwidgets.org/3.2/classwx_sizer_flags.html
-    internal class SizerFlags : DisposableObject, ISizerFlags
+    internal class SizerFlags : DisposableObject<IntPtr>, ISizerFlags
     {
         internal SizerFlags(int proportion = 0)
             : base(Native.SizerFlags.CreateSizerFlags(proportion), true)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class AuiToolbarArt : DisposableObject, IAuiToolbarArt
+    internal class AuiToolbarArt : DisposableObject<IntPtr>, IAuiToolbarArt
     {
         internal AuiToolbarArt(IntPtr handle, bool disposeHandle)
             : base(handle, disposeHandle)

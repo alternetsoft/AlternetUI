@@ -39,7 +39,7 @@ namespace Alternet.Drawing
 
             set
             {
-                dc.Transform = (UI.Native.TransformMatrix)value.NativeObject;
+                dc.Transform = (UI.Native.TransformMatrix)value.Handler;
             }
         }
 
@@ -198,8 +198,8 @@ namespace Alternet.Drawing
         public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius)
         {
             dc.RoundedRectangle(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
                 rectangle,
                 cornerRadius);
         }
@@ -220,8 +220,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Rectangle(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
                 rectangle);
         }
 
@@ -231,8 +231,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Ellipse(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
                 rectangle);
         }
 
@@ -242,9 +242,9 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Path(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
-                (UI.Native.GraphicsPath)path.NativeObject);
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
+                (UI.Native.GraphicsPath)path.Handler);
         }
 
         /// <inheritdoc/>
@@ -259,8 +259,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Pie(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
                 center,
                 radius,
                 startAngle,
@@ -273,8 +273,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Circle(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
                 center,
                 radius);
         }
@@ -285,8 +285,8 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
             dc.Polygon(
-                (UI.Native.Pen)pen.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Pen)pen.Handler,
+                (UI.Native.Brush)brush.Handler,
                 points,
                 (UI.Native.FillMode)fillMode);
         }
@@ -295,14 +295,14 @@ namespace Alternet.Drawing
         public override void FillRectangle(Brush brush, RectD rectangle)
         {
             DebugBrushAssert(brush);
-            dc.FillRectangle((UI.Native.Brush)brush.NativeObject, rectangle);
+            dc.FillRectangle((UI.Native.Brush)brush.Handler, rectangle);
         }
 
         /// <inheritdoc/>
         public override void FillRectangleI(Brush brush, RectI rectangle)
         {
             DebugBrushAssert(brush);
-            dc.FillRectangleI((UI.Native.Brush)brush.NativeObject, rectangle);
+            dc.FillRectangleI((UI.Native.Brush)brush.Handler, rectangle);
         }
 
         /// <inheritdoc/>
@@ -315,7 +315,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             dc.DrawArc(
-                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Pen)pen.Handler,
                 center,
                 radius,
                 startAngle,
@@ -326,7 +326,7 @@ namespace Alternet.Drawing
         public override void DrawPoint(Pen pen, double x, double y)
         {
             DebugPenAssert(pen);
-            dc.DrawPoint((UI.Native.Pen)pen.NativeObject, x, y);
+            dc.DrawPoint((UI.Native.Pen)pen.Handler, x, y);
         }
 
         /// <inheritdoc/>
@@ -338,7 +338,7 @@ namespace Alternet.Drawing
             double sweepAngle)
         {
             DebugBrushAssert(brush);
-            dc.FillPie((UI.Native.Brush)brush.NativeObject, center, radius, startAngle, sweepAngle);
+            dc.FillPie((UI.Native.Brush)brush.Handler, center, radius, startAngle, sweepAngle);
         }
 
         /// <inheritdoc/>
@@ -350,7 +350,7 @@ namespace Alternet.Drawing
             double sweepAngle)
         {
             DebugPenAssert(pen);
-            dc.DrawPie((UI.Native.Pen)pen.NativeObject, center, radius, startAngle, sweepAngle);
+            dc.DrawPie((UI.Native.Pen)pen.Handler, center, radius, startAngle, sweepAngle);
         }
 
         /// <inheritdoc/>
@@ -363,7 +363,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             dc.DrawBezier(
-                (UI.Native.Pen)pen.NativeObject,
+                (UI.Native.Pen)pen.Handler,
                 startPoint,
                 controlPoint1,
                 controlPoint2,
@@ -375,42 +375,42 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             DebugBezierPointsAssert(points);
-            dc.DrawBeziers((UI.Native.Pen)pen.NativeObject, points);
+            dc.DrawBeziers((UI.Native.Pen)pen.Handler, points);
         }
 
         /// <inheritdoc/>
         public override void DrawCircle(Pen pen, PointD center, double radius)
         {
             DebugPenAssert(pen);
-            dc.DrawCircle((UI.Native.Pen)pen.NativeObject, center, radius);
+            dc.DrawCircle((UI.Native.Pen)pen.Handler, center, radius);
         }
 
         /// <inheritdoc/>
         public override void FillCircle(Brush brush, PointD center, double radius)
         {
             DebugBrushAssert(brush);
-            dc.FillCircle((UI.Native.Brush)brush.NativeObject, center, radius);
+            dc.FillCircle((UI.Native.Brush)brush.Handler, center, radius);
         }
 
         /// <inheritdoc/>
         public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
         {
             DebugPenAssert(pen);
-            dc.DrawRoundedRectangle((UI.Native.Pen)pen.NativeObject, rect, cornerRadius);
+            dc.DrawRoundedRectangle((UI.Native.Pen)pen.Handler, rect, cornerRadius);
         }
 
         /// <inheritdoc/>
         public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
         {
             DebugBrushAssert(brush);
-            dc.FillRoundedRectangle((UI.Native.Brush)brush.NativeObject, rect, cornerRadius);
+            dc.FillRoundedRectangle((UI.Native.Brush)brush.Handler, rect, cornerRadius);
         }
 
         /// <inheritdoc/>
         public override void DrawPolygon(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            dc.DrawPolygon((UI.Native.Pen)pen.NativeObject, points);
+            dc.DrawPolygon((UI.Native.Pen)pen.Handler, points);
         }
 
         /// <inheritdoc/>
@@ -421,7 +421,7 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             dc.FillPolygon(
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Brush)brush.Handler,
                 points,
                 (UI.Native.FillMode)fillMode);
         }
@@ -430,70 +430,70 @@ namespace Alternet.Drawing
         public override void DrawRectangles(Pen pen, RectD[] rects)
         {
             DebugPenAssert(pen);
-            dc.DrawRectangles((UI.Native.Pen)pen.NativeObject, rects);
+            dc.DrawRectangles((UI.Native.Pen)pen.Handler, rects);
         }
 
         /// <inheritdoc/>
         public override void FillRectangles(Brush brush, RectD[] rects)
         {
             DebugBrushAssert(brush);
-            dc.FillRectangles((UI.Native.Brush)brush.NativeObject, rects);
+            dc.FillRectangles((UI.Native.Brush)brush.Handler, rects);
         }
 
         /// <inheritdoc/>
         public override void FillEllipse(Brush brush, RectD bounds)
         {
             DebugBrushAssert(brush);
-            dc.FillEllipse((UI.Native.Brush)brush.NativeObject, bounds);
+            dc.FillEllipse((UI.Native.Brush)brush.Handler, bounds);
         }
 
         /// <inheritdoc/>
         public override void FloodFill(Brush brush, PointD point)
         {
             DebugSolidBrushAssert(brush);
-            dc.FloodFill((UI.Native.Brush)brush.NativeObject, point);
+            dc.FloodFill((UI.Native.Brush)brush.Handler, point);
         }
 
         /// <inheritdoc/>
         public override void DrawRectangle(Pen pen, RectD rectangle)
         {
             DebugPenAssert(pen);
-            dc.DrawRectangle((UI.Native.Pen)pen.NativeObject, rectangle);
+            dc.DrawRectangle((UI.Native.Pen)pen.Handler, rectangle);
         }
 
         /// <inheritdoc/>
         public override void DrawPath(Pen pen, GraphicsPath path)
         {
             DebugPenAssert(pen);
-            dc.DrawPath((UI.Native.Pen)pen.NativeObject, (UI.Native.GraphicsPath)path.NativeObject);
+            dc.DrawPath((UI.Native.Pen)pen.Handler, (UI.Native.GraphicsPath)path.Handler);
         }
 
         /// <inheritdoc/>
         public override void FillPath(Brush brush, GraphicsPath path)
         {
             DebugBrushAssert(brush);
-            dc.FillPath((UI.Native.Brush)brush.NativeObject, (UI.Native.GraphicsPath)path.NativeObject);
+            dc.FillPath((UI.Native.Brush)brush.Handler, (UI.Native.GraphicsPath)path.Handler);
         }
 
         /// <inheritdoc/>
         public override void DrawLine(Pen pen, PointD a, PointD b)
         {
             DebugPenAssert(pen);
-            dc.DrawLine((UI.Native.Pen)pen.NativeObject, a, b);
+            dc.DrawLine((UI.Native.Pen)pen.Handler, a, b);
         }
 
         /// <inheritdoc/>
         public override void DrawLines(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            dc.DrawLines((UI.Native.Pen)pen.NativeObject, points);
+            dc.DrawLines((UI.Native.Pen)pen.Handler, points);
         }
 
         /// <inheritdoc/>
         public override void DrawEllipse(Pen pen, RectD bounds)
         {
             DebugPenAssert(pen);
-            dc.DrawEllipse((UI.Native.Pen)pen.NativeObject, bounds);
+            dc.DrawEllipse((UI.Native.Pen)pen.Handler, bounds);
         }
 
         /// <inheritdoc/>
@@ -540,21 +540,21 @@ namespace Alternet.Drawing
         public override void SetPixel(PointD point, Pen pen)
         {
             DebugPenAssert(pen);
-            dc.SetPixel(point, (UI.Native.Pen)pen.NativeObject);
+            dc.SetPixel(point, (UI.Native.Pen)pen.Handler);
         }
 
         /// <inheritdoc/>
         public override void SetPixel(double x, double y, Pen pen)
         {
             DebugPenAssert(pen);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.NativeObject);
+            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.Handler);
         }
 
         /// <inheritdoc/>
         public override void SetPixel(double x, double y, Color color)
         {
             DebugColorAssert(color);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.NativeObject);
+            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.Handler);
         }
 
         /// <inheritdoc/>
@@ -606,7 +606,7 @@ namespace Alternet.Drawing
                 text,
                 origin,
                 (UI.Native.Font)font.NativeObject,
-                (UI.Native.Brush)brush.NativeObject);
+                (UI.Native.Brush)brush.Handler);
         }
 
         /// <inheritdoc/>
@@ -623,7 +623,7 @@ namespace Alternet.Drawing
                 text,
                 bounds,
                 (UI.Native.Font)font.NativeObject,
-                (UI.Native.Brush)brush.NativeObject,
+                (UI.Native.Brush)brush.Handler,
                 (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
                 (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
                 (UI.Native.TextTrimming)format.Trimming,
@@ -761,9 +761,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
-            base.DisposeManagedResources();
+            base.DisposeManaged();
             if (dispose)
                 dc.Dispose();
             dc = null!;

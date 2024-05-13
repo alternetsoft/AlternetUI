@@ -35,7 +35,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void UpdatePen(Pen pen)
         {
-            ((UI.Native.Pen)pen.NativeObject).Initialize(
+            ((UI.Native.Pen)pen.Handler).Initialize(
                 (UI.Native.PenDashStyle)pen.DashStyle,
                 pen.Color,
                 pen.Width,

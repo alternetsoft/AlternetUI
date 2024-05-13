@@ -272,7 +272,7 @@ namespace Alternet.UI
 
             set
             {
-                NativeControl.SetArtProvider(value.Handle);
+                NativeControl.SetArtProvider(((AuiToolbarArt)value).Handle);
             }
         }
 
@@ -362,8 +362,8 @@ namespace Alternet.UI
             NativeControl.AddTool2(
                 toolId,
                 label,
-                (UI.Native.ImageSet?)bitmap?.NativeObject,
-                (UI.Native.ImageSet?)disabledBitmap?.NativeObject,
+                (UI.Native.ImageSet?)bitmap?.Handler,
+                (UI.Native.ImageSet?)disabledBitmap?.Handler,
                 (int)itemKind.Value,
                 shortHelpString!,
                 longHelpString!,
@@ -811,7 +811,7 @@ namespace Alternet.UI
         {
             if (toolId <= 0)
                 return;
-            NativeControl.SetToolBitmap(toolId, (UI.Native.ImageSet?)bitmap?.NativeObject);
+            NativeControl.SetToolBitmap(toolId, (UI.Native.ImageSet?)bitmap?.Handler);
         }
 
         /// <summary>

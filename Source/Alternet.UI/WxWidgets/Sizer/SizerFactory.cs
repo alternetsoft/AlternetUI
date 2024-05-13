@@ -64,7 +64,7 @@ namespace Alternet.UI
             if (sizer is null)
                 nativeControl.SetSizerAndFit(IntPtr.Zero, deleteOld);
             else
-                nativeControl.SetSizerAndFit(sizer.Handle, deleteOld);
+                nativeControl.SetSizerAndFit(((Sizer)sizer).Handle, deleteOld);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Alternet.UI
             if (sizer is null)
                 nativeControl.SetSizer(IntPtr.Zero, deleteOld);
             else
-                nativeControl.SetSizer(sizer.Handle, deleteOld);
+                nativeControl.SetSizer(((Sizer)sizer).Handle, deleteOld);
         }
 
         /// <inheritdoc cref="ISizerFactory.CreateSizerFlags"/>

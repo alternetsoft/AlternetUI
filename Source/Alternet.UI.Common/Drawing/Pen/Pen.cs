@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// A <see cref="Pen"/> draws a line of specified width and style.
     /// Use the <see cref="DashStyle"/> property to draw several varieties of dashed lines.
     /// </remarks>
-    public class Pen : GraphicsObject, IEquatable<Pen>
+    public class Pen : HandledObject<object>, IEquatable<Pen>
     {
         private static Pen? defaultPen;
 
@@ -314,7 +314,7 @@ namespace Alternet.Drawing
         /// Creates native pen.
         /// </summary>
         /// <returns></returns>
-        protected override object CreateNativeObject()
+        protected override object CreateHandler()
         {
             return NativeDrawing.Default.CreatePen();
         }
@@ -322,7 +322,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Updates native pen.
         /// </summary>
-        protected override void UpdateNativeObject()
+        protected override void UpdateHandler()
         {
             NativeDrawing.Default.UpdatePen(this);
         }

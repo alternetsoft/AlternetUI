@@ -74,43 +74,43 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void GenericImageSetAlpha(GenericImage img, int x, int y, byte alpha)
         {
-            UI.Native.GenericImage.SetAlpha((IntPtr)img.NativeObject, x, y, alpha);
+            UI.Native.GenericImage.SetAlpha((IntPtr)img.Handler, x, y, alpha);
         }
 
         /// <inheritdoc/>
         public override void GenericImageClearAlpha(GenericImage img)
         {
-            UI.Native.GenericImage.ClearAlpha((IntPtr)img.NativeObject);
+            UI.Native.GenericImage.ClearAlpha((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override void GenericImageSetMask(GenericImage img, bool hasMask = true)
         {
-            UI.Native.GenericImage.SetMask((IntPtr)img.NativeObject, hasMask);
+            UI.Native.GenericImage.SetMask((IntPtr)img.Handler, hasMask);
         }
 
         /// <inheritdoc/>
         public override void GenericImageSetMaskColor(GenericImage img, RGBValue rgb)
         {
-            UI.Native.GenericImage.SetMaskColor((IntPtr)img.NativeObject, rgb.R, rgb.G, rgb.B);
+            UI.Native.GenericImage.SetMaskColor((IntPtr)img.Handler, rgb.R, rgb.G, rgb.B);
         }
 
         /// <inheritdoc/>
         public override int GetGenericImageWidth(GenericImage img)
         {
-            return UI.Native.GenericImage.GetWidth((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetWidth((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override int GetGenericImageHeight(GenericImage img)
         {
-            return UI.Native.GenericImage.GetHeight((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetHeight((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override bool GetGenericImageIsOk(GenericImage img)
         {
-            return UI.Native.GenericImage.IsOk((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.IsOk((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
@@ -201,8 +201,8 @@ namespace Alternet.Drawing
             RGBValue mask)
         {
             return UI.Native.GenericImage.SetMaskFromImage(
-                (IntPtr)image1.NativeObject,
-                (IntPtr)image2.NativeObject,
+                (IntPtr)image1.Handler,
+                (IntPtr)image2.Handler,
                 mask.R,
                 mask.G,
                 mask.B);
@@ -211,19 +211,19 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void GenericImageSetOptionAsString(GenericImage img, string name, string value)
         {
-            UI.Native.GenericImage.SetOptionString((IntPtr)img.NativeObject, name, value);
+            UI.Native.GenericImage.SetOptionString((IntPtr)img.Handler, name, value);
         }
 
         /// <inheritdoc/>
         public override void GenericImageSetOptionAsInt(GenericImage img, string name, int value)
         {
-            UI.Native.GenericImage.SetOptionInt((IntPtr)img.NativeObject, name, value);
+            UI.Native.GenericImage.SetOptionInt((IntPtr)img.Handler, name, value);
         }
 
         /// <inheritdoc/>
         public override void GenericImageSetRGB(GenericImage img, int x, int y, RGBValue rgb)
         {
-            UI.Native.GenericImage.SetRGB((IntPtr)img.NativeObject, x, y, rgb.R, rgb.G, rgb.B);
+            UI.Native.GenericImage.SetRGB((IntPtr)img.Handler, x, y, rgb.R, rgb.G, rgb.B);
         }
 
         /// <inheritdoc/>
@@ -236,37 +236,37 @@ namespace Alternet.Drawing
                 rect = (0, 0, width, height);
             }
 
-            UI.Native.GenericImage.SetRGBRect((IntPtr)img.NativeObject, rect.Value, rgb.R, rgb.G, rgb.B);
+            UI.Native.GenericImage.SetRGBRect((IntPtr)img.Handler, rect.Value, rgb.R, rgb.G, rgb.B);
         }
 
         /// <inheritdoc/>
         public override void GenericImageSetImageType(GenericImage img, BitmapType type)
         {
-            UI.Native.GenericImage.SetImageType((IntPtr)img.NativeObject, (int)type);
+            UI.Native.GenericImage.SetImageType((IntPtr)img.Handler, (int)type);
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageCopy(GenericImage img)
         {
-            return new(UI.Native.GenericImage.Copy((IntPtr)img.NativeObject));
+            return new(UI.Native.GenericImage.Copy((IntPtr)img.Handler));
         }
 
         /// <inheritdoc/>
         public override bool GenericImageReset(GenericImage img, int width, int height, bool clear = false)
         {
-            return UI.Native.GenericImage.CreateFreshImage((IntPtr)img.NativeObject, width, height, clear);
+            return UI.Native.GenericImage.CreateFreshImage((IntPtr)img.Handler, width, height, clear);
         }
 
         /// <inheritdoc/>
         public override void GenericImageClear(GenericImage img, byte value = 0)
         {
-            UI.Native.GenericImage.Clear((IntPtr)img.NativeObject, value);
+            UI.Native.GenericImage.Clear((IntPtr)img.Handler, value);
         }
 
         /// <inheritdoc/>
         public override void GenericImageReset(GenericImage img)
         {
-            UI.Native.GenericImage.DestroyImageData((IntPtr)img.NativeObject);
+            UI.Native.GenericImage.DestroyImageData((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
@@ -277,7 +277,7 @@ namespace Alternet.Drawing
             var value = startRGB ?? new(1, 0, 0);
 
             return UI.Native.GenericImage.FindFirstUnusedColor(
-                (IntPtr)img.NativeObject,
+                (IntPtr)img.Handler,
                 value.R,
                 value.G,
                 value.B);
@@ -288,31 +288,31 @@ namespace Alternet.Drawing
         {
             if (GenericImageHasAlpha(img))
                 return;
-            UI.Native.GenericImage.InitAlpha((IntPtr)img.NativeObject);
+            UI.Native.GenericImage.InitAlpha((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageBlur(GenericImage img, int blurRadius)
         {
-            return new(UI.Native.GenericImage.Blur((IntPtr)img.NativeObject, blurRadius));
+            return new(UI.Native.GenericImage.Blur((IntPtr)img.Handler, blurRadius));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageBlurHorizontal(GenericImage img, int blurRadius)
         {
-            return new(UI.Native.GenericImage.BlurHorizontal((IntPtr)img.NativeObject, blurRadius));
+            return new(UI.Native.GenericImage.BlurHorizontal((IntPtr)img.Handler, blurRadius));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageBlurVertical(GenericImage img, int blurRadius)
         {
-            return new(UI.Native.GenericImage.BlurVertical((IntPtr)img.NativeObject, blurRadius));
+            return new(UI.Native.GenericImage.BlurVertical((IntPtr)img.Handler, blurRadius));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageMirror(GenericImage img, bool horizontally = true)
         {
-            return new(UI.Native.GenericImage.Mirror((IntPtr)img.NativeObject, horizontally));
+            return new(UI.Native.GenericImage.Mirror((IntPtr)img.Handler, horizontally));
         }
 
         /// <inheritdoc/>
@@ -324,8 +324,8 @@ namespace Alternet.Drawing
             GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite)
         {
             UI.Native.GenericImage.Paste(
-                (IntPtr)img1.NativeObject,
-                (IntPtr)img2.NativeObject,
+                (IntPtr)img1.Handler,
+                (IntPtr)img2.Handler,
                 x,
                 y,
                 (int)alphaBlend);
@@ -334,7 +334,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void GenericImageReplace(GenericImage img, RGBValue r1, RGBValue r2)
         {
-            UI.Native.GenericImage.Replace((IntPtr)img.NativeObject, r1.R, r1.G, r1.B, r2.R, r2.G, r2.B);
+            UI.Native.GenericImage.Replace((IntPtr)img.Handler, r1.R, r1.G, r1.B, r2.R, r2.G, r2.B);
         }
 
         /// <inheritdoc/>
@@ -344,7 +344,7 @@ namespace Alternet.Drawing
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            UI.Native.GenericImage.Rescale((IntPtr)img.NativeObject, width, height, (int)quality);
+            UI.Native.GenericImage.Rescale((IntPtr)img.Handler, width, height, (int)quality);
         }
 
         /// <inheritdoc/>
@@ -356,7 +356,7 @@ namespace Alternet.Drawing
         {
             if (color is null)
             {
-                UI.Native.GenericImage.Resize((IntPtr)img.NativeObject, size, pos, -1, -1, -1);
+                UI.Native.GenericImage.Resize((IntPtr)img.Handler, size, pos, -1, -1, -1);
                 return;
             }
 
@@ -364,7 +364,7 @@ namespace Alternet.Drawing
             var green = color.Value.G;
             var blue = color.Value.G;
 
-            UI.Native.GenericImage.Resize((IntPtr)img.NativeObject, size, pos, red, green, blue);
+            UI.Native.GenericImage.Resize((IntPtr)img.Handler, size, pos, red, green, blue);
         }
 
         /// <inheritdoc/>
@@ -378,50 +378,50 @@ namespace Alternet.Drawing
             var green = color?.G ?? -1;
             var blue = color?.G ?? -1;
 
-            var image = UI.Native.GenericImage.Size((IntPtr)img.NativeObject, size, pos, red, green, blue);
+            var image = UI.Native.GenericImage.Size((IntPtr)img.Handler, size, pos, red, green, blue);
             return new(image);
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageRotate90(GenericImage img, bool clockwise = true)
         {
-            return new(UI.Native.GenericImage.Rotate90((IntPtr)img.NativeObject, clockwise));
+            return new(UI.Native.GenericImage.Rotate90((IntPtr)img.Handler, clockwise));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageRotate180(GenericImage img)
         {
-            return new(UI.Native.GenericImage.Rotate180((IntPtr)img.NativeObject));
+            return new(UI.Native.GenericImage.Rotate180((IntPtr)img.Handler));
         }
 
         /// <inheritdoc/>
         public override void GenericImageRotateHue(GenericImage img, double angle)
         {
-            UI.Native.GenericImage.RotateHue((IntPtr)img.NativeObject, angle);
+            UI.Native.GenericImage.RotateHue((IntPtr)img.Handler, angle);
         }
 
         /// <inheritdoc/>
         public override void GenericImageChangeSaturation(GenericImage img, double factor)
         {
-            UI.Native.GenericImage.ChangeSaturation((IntPtr)img.NativeObject, factor);
+            UI.Native.GenericImage.ChangeSaturation((IntPtr)img.Handler, factor);
         }
 
         /// <inheritdoc/>
         public override void GenericImageChangeBrightness(GenericImage img, double factor)
         {
-            UI.Native.GenericImage.ChangeBrightness((IntPtr)img.NativeObject, factor);
+            UI.Native.GenericImage.ChangeBrightness((IntPtr)img.Handler, factor);
         }
 
         /// <inheritdoc/>
         public override GenericImageLoadFlags GenericImageGetLoadFlags(GenericImage img)
         {
-            return (GenericImageLoadFlags)UI.Native.GenericImage.GetLoadFlags((IntPtr)img.NativeObject);
+            return (GenericImageLoadFlags)UI.Native.GenericImage.GetLoadFlags((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override void GenericImageSetLoadFlags(GenericImage img, GenericImageLoadFlags flags)
         {
-            UI.Native.GenericImage.SetLoadFlags((IntPtr)img.NativeObject, (int)flags);
+            UI.Native.GenericImage.SetLoadFlags((IntPtr)img.Handler, (int)flags);
         }
 
         /// <inheritdoc/>
@@ -431,7 +431,7 @@ namespace Alternet.Drawing
             double factorS,
             double factorV)
         {
-            UI.Native.GenericImage.ChangeHSV((IntPtr)img.NativeObject, angleH, factorS, factorV);
+            UI.Native.GenericImage.ChangeHSV((IntPtr)img.Handler, angleH, factorS, factorV);
         }
 
         /// <inheritdoc/>
@@ -441,13 +441,13 @@ namespace Alternet.Drawing
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            return new(UI.Native.GenericImage.Scale((IntPtr)img.NativeObject, width, height, (int)quality));
+            return new(UI.Native.GenericImage.Scale((IntPtr)img.Handler, width, height, (int)quality));
         }
 
         /// <inheritdoc/>
         public override bool GenericImageConvertAlphaToMask(GenericImage img, byte threshold)
         {
-            return UI.Native.GenericImage.ConvertAlphaToMask((IntPtr)img.NativeObject, threshold);
+            return UI.Native.GenericImage.ConvertAlphaToMask((IntPtr)img.Handler, threshold);
         }
 
         /// <inheritdoc/>
@@ -457,7 +457,7 @@ namespace Alternet.Drawing
             byte threshold)
         {
             return UI.Native.GenericImage.ConvertAlphaToMaskUseColor(
-                (IntPtr)img.NativeObject,
+                (IntPtr)img.Handler,
                 rgb.R,
                 rgb.G,
                 rgb.B,
@@ -472,7 +472,7 @@ namespace Alternet.Drawing
             double weightB)
         {
             return new(UI.Native.GenericImage.ConvertToGreyscaleEx(
-                (IntPtr)img.NativeObject,
+                (IntPtr)img.Handler,
                 weightR,
                 weightG,
                 weightB));
@@ -481,31 +481,31 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override GenericImage GenericImageConvertToGreyscale(GenericImage img)
         {
-            return new(UI.Native.GenericImage.ConvertToGreyscale((IntPtr)img.NativeObject));
+            return new(UI.Native.GenericImage.ConvertToGreyscale((IntPtr)img.Handler));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageConvertToMono(GenericImage img, RGBValue rgb)
         {
-            return new(UI.Native.GenericImage.ConvertToMono((IntPtr)img.NativeObject, rgb.R, rgb.G, rgb.B));
+            return new(UI.Native.GenericImage.ConvertToMono((IntPtr)img.Handler, rgb.R, rgb.G, rgb.B));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageConvertToDisabled(GenericImage img, byte brightness = 255)
         {
-            return new(UI.Native.GenericImage.ConvertToDisabled((IntPtr)img.NativeObject, brightness));
+            return new(UI.Native.GenericImage.ConvertToDisabled((IntPtr)img.Handler, brightness));
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageChangeLightness(GenericImage img, int ialpha)
         {
-            return new(UI.Native.GenericImage.ChangeLightness((IntPtr)img.NativeObject, ialpha));
+            return new(UI.Native.GenericImage.ChangeLightness((IntPtr)img.Handler, ialpha));
         }
 
         /// <inheritdoc/>
         public override byte GenericImageGetAlpha(GenericImage img, int x, int y)
         {
-            return UI.Native.GenericImage.GetAlpha((IntPtr)img.NativeObject, x, y);
+            return UI.Native.GenericImage.GetAlpha((IntPtr)img.Handler, x, y);
         }
 
         /// <inheritdoc/>
@@ -550,19 +550,19 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override byte GenericImageGetRed(GenericImage img, int x, int y)
         {
-            return UI.Native.GenericImage.GetRed((IntPtr)img.NativeObject, x, y);
+            return UI.Native.GenericImage.GetRed((IntPtr)img.Handler, x, y);
         }
 
         /// <inheritdoc/>
         public override byte GenericImageGetGreen(GenericImage img, int x, int y)
         {
-            return UI.Native.GenericImage.GetGreen((IntPtr)img.NativeObject, x, y);
+            return UI.Native.GenericImage.GetGreen((IntPtr)img.Handler, x, y);
         }
 
         /// <inheritdoc/>
         public override byte GenericImageGetBlue(GenericImage img, int x, int y)
         {
-            return UI.Native.GenericImage.GetBlue((IntPtr)img.NativeObject, x, y);
+            return UI.Native.GenericImage.GetBlue((IntPtr)img.Handler, x, y);
         }
 
         /// <inheritdoc/>
@@ -577,73 +577,73 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override byte GenericImageGetMaskRed(GenericImage img)
         {
-            return UI.Native.GenericImage.GetMaskRed((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetMaskRed((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override byte GenericImageGetMaskGreen(GenericImage img)
         {
-            return UI.Native.GenericImage.GetMaskGreen((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetMaskGreen((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override byte GenericImageGetMaskBlue(GenericImage img)
         {
-            return UI.Native.GenericImage.GetMaskBlue((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetMaskBlue((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override string GenericImageGetOptionAsString(GenericImage img, string name)
         {
-            return UI.Native.GenericImage.GetOptionString((IntPtr)img.NativeObject, name);
+            return UI.Native.GenericImage.GetOptionString((IntPtr)img.Handler, name);
         }
 
         /// <inheritdoc/>
         public override int GenericImageGetOptionAsInt(GenericImage img, string name)
         {
-            return UI.Native.GenericImage.GetOptionInt((IntPtr)img.NativeObject, name);
+            return UI.Native.GenericImage.GetOptionInt((IntPtr)img.Handler, name);
         }
 
         /// <inheritdoc/>
         public override GenericImage GenericImageGetSubImage(GenericImage img, RectI rect)
         {
-            return new(UI.Native.GenericImage.GetSubImage((IntPtr)img.NativeObject, rect));
+            return new(UI.Native.GenericImage.GetSubImage((IntPtr)img.Handler, rect));
         }
 
         /// <inheritdoc/>
         public override BitmapType GenericImageGetImageType(GenericImage img)
         {
-            return (BitmapType)UI.Native.GenericImage.GetImageType((IntPtr)img.NativeObject);
+            return (BitmapType)UI.Native.GenericImage.GetImageType((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override void DisposeGenericImage(GenericImage img)
         {
-            UI.Native.GenericImage.DeleteImage((IntPtr)img.NativeObject);
+            UI.Native.GenericImage.DeleteImage((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageHasAlpha(GenericImage img)
         {
-            return UI.Native.GenericImage.HasAlpha((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.HasAlpha((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageHasMask(GenericImage img)
         {
-            return UI.Native.GenericImage.HasMask((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.HasMask((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageHasOption(GenericImage img, string name)
         {
-            return UI.Native.GenericImage.HasOption((IntPtr)img.NativeObject, name);
+            return UI.Native.GenericImage.HasOption((IntPtr)img.Handler, name);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageIsTransparent(GenericImage img, int x, int y, byte threshold)
         {
-            return UI.Native.GenericImage.IsTransparent((IntPtr)img.NativeObject, x, y, threshold);
+            return UI.Native.GenericImage.IsTransparent((IntPtr)img.Handler, x, y, threshold);
         }
 
         /// <inheritdoc/>
@@ -655,7 +655,7 @@ namespace Alternet.Drawing
         {
             var inputStream = new UI.Native.InputStream(stream);
             return UI.Native.GenericImage.LoadStreamWithBitmapType(
-                (IntPtr)img.NativeObject,
+                (IntPtr)img.Handler,
                 inputStream,
                 (int)bitmapType,
                 index);
@@ -669,7 +669,7 @@ namespace Alternet.Drawing
             int index = -1)
         {
             return UI.Native.GenericImage.LoadFileWithBitmapType(
-                (IntPtr)img.NativeObject,
+                (IntPtr)img.Handler,
                 filename,
                 (int)bitmapType,
                 index);
@@ -682,7 +682,7 @@ namespace Alternet.Drawing
             string mimetype,
             int index = -1)
         {
-            return UI.Native.GenericImage.LoadFileWithMimeType((IntPtr)img.NativeObject, name, mimetype, index);
+            return UI.Native.GenericImage.LoadFileWithMimeType((IntPtr)img.Handler, name, mimetype, index);
         }
 
         /// <inheritdoc/>
@@ -693,39 +693,39 @@ namespace Alternet.Drawing
             int index = -1)
         {
             var inputStream = new UI.Native.InputStream(stream);
-            return UI.Native.GenericImage.LoadStreamWithMimeType((IntPtr)img.NativeObject, inputStream, mimetype, index);
+            return UI.Native.GenericImage.LoadStreamWithMimeType((IntPtr)img.Handler, inputStream, mimetype, index);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageSaveToStream(GenericImage img, Stream stream, string mimetype)
         {
             var outputStream = new UI.Native.OutputStream(stream);
-            return UI.Native.GenericImage.SaveStreamWithMimeType((IntPtr)img.NativeObject, outputStream, mimetype);
+            return UI.Native.GenericImage.SaveStreamWithMimeType((IntPtr)img.Handler, outputStream, mimetype);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageSaveToFile(GenericImage img, string filename, BitmapType bitmapType)
         {
-            return UI.Native.GenericImage.SaveFileWithBitmapType((IntPtr)img.NativeObject, filename, (int)bitmapType);
+            return UI.Native.GenericImage.SaveFileWithBitmapType((IntPtr)img.Handler, filename, (int)bitmapType);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageSaveToFile(GenericImage img, string filename, string mimetype)
         {
-            return UI.Native.GenericImage.SaveFileWithMimeType((IntPtr)img.NativeObject, filename, mimetype);
+            return UI.Native.GenericImage.SaveFileWithMimeType((IntPtr)img.Handler, filename, mimetype);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageSaveToFile(GenericImage img, string filename)
         {
-            return UI.Native.GenericImage.SaveFile((IntPtr)img.NativeObject, filename);
+            return UI.Native.GenericImage.SaveFile((IntPtr)img.Handler, filename);
         }
 
         /// <inheritdoc/>
         public override bool GenericImageSaveToStream(GenericImage img, Stream stream, BitmapType type)
         {
             var outputStream = new UI.Native.OutputStream(stream);
-            return UI.Native.GenericImage.SaveStreamWithBitmapType((IntPtr)img.NativeObject, outputStream, (int)type);
+            return UI.Native.GenericImage.SaveStreamWithBitmapType((IntPtr)img.Handler, outputStream, (int)type);
         }
 
         /// <inheritdoc/>
@@ -736,19 +736,19 @@ namespace Alternet.Drawing
             int new_height,
             bool static_data = false)
         {
-            UI.Native.GenericImage.SetDataWithSize((IntPtr)img.NativeObject, data, new_width, new_height, static_data);
+            UI.Native.GenericImage.SetDataWithSize((IntPtr)img.Handler, data, new_width, new_height, static_data);
         }
 
         /// <inheritdoc/>
         public override IntPtr GenericImageGetNativeAlphaData(GenericImage img)
         {
-            return UI.Native.GenericImage.GetAlphaData((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetAlphaData((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
         public override IntPtr GenericImageGetNativeData(GenericImage img)
         {
-            return UI.Native.GenericImage.GetData((IntPtr)img.NativeObject);
+            return UI.Native.GenericImage.GetData((IntPtr)img.Handler);
         }
 
         /// <inheritdoc/>
@@ -759,7 +759,7 @@ namespace Alternet.Drawing
             IntPtr data,
             bool staticData = false)
         {
-            return UI.Native.GenericImage.CreateData((IntPtr)img.NativeObject, width, height, data, staticData);
+            return UI.Native.GenericImage.CreateData((IntPtr)img.Handler, width, height, data, staticData);
         }
 
         /// <inheritdoc/>
@@ -771,7 +771,7 @@ namespace Alternet.Drawing
             IntPtr alpha,
             bool staticData = false)
         {
-            return UI.Native.GenericImage.CreateAlphaData((IntPtr)img.NativeObject, width, height, data, alpha, staticData);
+            return UI.Native.GenericImage.CreateAlphaData((IntPtr)img.Handler, width, height, data, alpha, staticData);
         }
 
         /// <inheritdoc/>
@@ -780,12 +780,12 @@ namespace Alternet.Drawing
             IntPtr alpha = default,
             bool staticData = false)
         {
-            UI.Native.GenericImage.SetAlphaData((IntPtr)img.NativeObject, alpha, staticData);
+            UI.Native.GenericImage.SetAlphaData((IntPtr)img.Handler, alpha, staticData);
         }
 
         public override void GenericImageSetNativeData(GenericImage img, IntPtr data, bool staticData = false)
         {
-            UI.Native.GenericImage.SetData((IntPtr)img.NativeObject, data, staticData);
+            UI.Native.GenericImage.SetData((IntPtr)img.Handler, data, staticData);
         }
     }
 }

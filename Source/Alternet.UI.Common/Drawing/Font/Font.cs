@@ -927,13 +927,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        protected override void DisposeManaged()
         {
-            if (NativeObject is not null)
-            {
-                ((IDisposable)NativeObject).Dispose();
-                NativeObject = null;
-            }
+            (NativeObject as IDisposable)?.Dispose();
+            NativeObject = null;
         }
     }
 }

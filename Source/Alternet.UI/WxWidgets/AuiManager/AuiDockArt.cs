@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class AuiDockArt : DisposableObject, IAuiDockArt
+    internal class AuiDockArt : DisposableObject<IntPtr>, IAuiDockArt
     {
         internal AuiDockArt(IntPtr handle, bool disposeHandle)
             : base(handle, disposeHandle)

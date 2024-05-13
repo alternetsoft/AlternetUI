@@ -15,14 +15,14 @@ namespace Alternet.UI
     /// functionality for users, or to drive unit tests by simulating user sessions.
     /// This class currently doesn't work when using Wayland with Linux.
     /// </summary>
-    public class UIActionSimulator : DisposableObject
+    public class UIActionSimulator : DisposableObject<IntPtr>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UIActionSimulator"/> class.
         /// </summary>
         public UIActionSimulator()
+            : base(Native.WxOtherFactory.UIActionSimulatorCreate(), true)
         {
-            Initialize();
         }
 
         /// <summary>
@@ -513,17 +513,8 @@ namespace Alternet.UI
             Native.WxOtherFactory.UIActionSimulatorYield();
         }
 
-        /// <summary>
-        /// Initializes object. Called from constructor.
-        /// </summary>
-        protected virtual void Initialize()
-        {
-            Handle = Native.WxOtherFactory.UIActionSimulatorCreate();
-            DisposeHandle = true;
-        }
-
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.WxOtherFactory.UIActionSimulatorDelete(Handle);
         }

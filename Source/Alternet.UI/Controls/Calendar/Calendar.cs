@@ -156,7 +156,7 @@ namespace Alternet.UI
                 if (value is null)
                     Native.Calendar.SetMarkDateAttr(default);
                 else
-                    Native.Calendar.SetMarkDateAttr(value.Handle);
+                    Native.Calendar.SetMarkDateAttr(((CalendarDateAttr)value).Handle);
             }
         }
 
@@ -658,7 +658,7 @@ namespace Alternet.UI
             if (dateAttr is null)
                 Handler.NativeControl.ResetAttr(day);
             else
-                Handler.NativeControl.SetAttr(day, dateAttr.Handle);
+                Handler.NativeControl.SetAttr(day, ((CalendarDateAttr)dateAttr).Handle);
         }
 
         internal bool AllowMonthChange() => Handler.NativeControl.AllowMonthChange();

@@ -274,7 +274,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeResources()
+        protected override void DisposeManaged()
         {
             NativePlatform.Default.TimerSetTick(this, null);
             ((IDisposable?)nativeTimer)?.Dispose();

@@ -291,7 +291,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanagedResources()
+        protected override void DisposeUnmanaged()
         {
             Native.ValidatorText.DeleteValidatorText(Handle);
         }

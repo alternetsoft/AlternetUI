@@ -22,12 +22,7 @@ namespace Alternet.UI
         bool IsDisposed { get; }
 
         /// <summary>
-        /// Gets handle to unmanaged resources.
-        /// </summary>
-        IntPtr Handle { get; }
-
-        /// <summary>
-        /// Gets or sets whether to dispose <see cref="Handle"/>.
+        /// Gets or sets whether to dispose resources.
         /// </summary>
         bool DisposeHandle { get; }
 
