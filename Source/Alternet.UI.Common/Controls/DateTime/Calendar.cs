@@ -44,25 +44,12 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class Calendar : CustomDateEdit
     {
-        static Calendar()
-        {
-            Application.BeforeNativeLogMessage += Application_BeforeNativeLogMessage;
-
-            static void Application_BeforeNativeLogMessage(object? sender, LogMessageEventArgs e)
-            {
-                const string s1 = "'MonthCal_SetDayState'";
-
-                if (e.Message?.Contains(s1) ?? false)
-                    e.Cancel = true;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Calendar"/> class.
         /// </summary>
         public Calendar()
         {
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
             BackgroundColor = SystemColors.Window;
         }
@@ -137,26 +124,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for the marked days.
         /// </summary>
-        public static ICalendarDateAttr? MarkDateAttr
+        public ICalendarDateAttr? MarkDateAttr
         {
             get
             {
-                var result = Native.Calendar.GetMarkDateAttr();
-                if (result == default)
-                    return null;
-                var resultIntf = new CalendarDateAttr(result, true)
-                {
-                    Immutable = true,
-                };
-                return resultIntf;
+                return Handler.MarkDateAttr;
             }
 
             set
             {
-                if (value is null)
-                    Native.Calendar.SetMarkDateAttr(default);
-                else
-                    Native.Calendar.SetMarkDateAttr(((CalendarDateAttr)value).Handle);
+                Handler.MarkDateAttr = value;
             }
         }
 
@@ -168,12 +145,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.NativeControl.Value;
+                return Handler.Value;
             }
 
             set
             {
-                Handler.NativeControl.Value = value;
+                Handler.Value = value;
             }
         }
 
@@ -184,16 +161,18 @@ namespace Alternet.UI
         /// This feature is implemented only in generic calendar. In order to use
         /// generic calendar, set <see cref="UseGeneric"/> property.
         /// </remarks>
-        public bool ShowHolidays
+        public virtual bool ShowHolidays
         {
             get
             {
-                return Handler.NativeControl.ShowHolidays;
+                return Handler.ShowHolidays;
             }
 
             set
             {
-                Handler.NativeControl.EnableHolidayDisplay(value);
+                if (ShowHolidays == value)
+                    return;
+                Handler.EnableHolidayDisplay(value);
                 PerformLayout();
             }
         }
@@ -202,16 +181,18 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether to disable the month
         /// (and, implicitly, the year) changing. Not implemented on all platforms.
         /// </summary>
-        public bool NoMonthChange
+        public virtual bool NoMonthChange
         {
             get
             {
-                return Handler.NativeControl.NoMonthChange;
+                return Handler.NoMonthChange;
             }
 
             set
             {
-                Handler.NativeControl.EnableMonthChange(!value);
+                if (NoMonthChange == value)
+                    return;
+                Handler.EnableMonthChange(!value);
                 PerformLayout();
             }
         }
@@ -224,16 +205,18 @@ namespace Alternet.UI
         /// This feature is implemented only in generic calendar. In order to use
         /// generic calendar, set <see cref="UseGeneric"/> property.
         /// </remarks>
-        public bool SequentalMonthSelect
+        public virtual bool SequentalMonthSelect
         {
             get
             {
-                return Handler.NativeControl.SequentalMonthSelect;
+                return Handler.SequentalMonthSelect;
             }
 
             set
             {
-                Handler.NativeControl.SequentalMonthSelect = value;
+                if (SequentalMonthSelect == value)
+                    return;
+                Handler.SequentalMonthSelect = value;
                 PerformLayout();
             }
         }
@@ -250,16 +233,18 @@ namespace Alternet.UI
         /// In the native calendar neighbouring weeks for the
         /// previous and next months are always shown.
         /// </remarks>
-        public bool ShowSurroundWeeks
+        public virtual bool ShowSurroundWeeks
         {
             get
             {
-                return Handler.NativeControl.ShowSurroundWeeks;
+                return Handler.ShowSurroundWeeks;
             }
 
             set
             {
-                Handler.NativeControl.ShowSurroundWeeks = value;
+                if (ShowSurroundWeeks == value)
+                    return;
+                Handler.ShowSurroundWeeks = value;
                 PerformLayout();
             }
         }
@@ -272,16 +257,18 @@ namespace Alternet.UI
         /// This feature is implemented only in the native calendar. In order to use
         /// native calendar, set <see cref="UseGeneric"/> property to <c>false</c>.
         /// </remarks>
-        public bool ShowWeekNumbers
+        public virtual bool ShowWeekNumbers
         {
             get
             {
-                return Handler.NativeControl.ShowWeekNumbers;
+                return Handler.ShowWeekNumbers;
             }
 
             set
             {
-                Handler.NativeControl.ShowWeekNumbers = value;
+                if (ShowWeekNumbers == value)
+                    return;
+                Handler.ShowWeekNumbers = value;
                 PerformLayout();
             }
         }
@@ -289,16 +276,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether to use generic calendar or native calendar.
         /// </summary>
-        public bool UseGeneric
+        public virtual bool UseGeneric
         {
             get
             {
-                return Handler.NativeControl.UseGeneric;
+                return Handler.UseGeneric;
             }
 
             set
             {
-                Handler.NativeControl.UseGeneric = value;
+                if (UseGeneric == value)
+                    return;
+                Handler.UseGeneric = value;
                 SetRange();
                 PerformLayout();
             }
@@ -307,16 +296,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public bool HasBorder
+        public virtual bool HasBorder
         {
             get
             {
-                return Handler.NativeControl.HasBorder;
+                return Handler.HasBorder;
             }
 
             set
             {
-                Handler.NativeControl.HasBorder = value;
+                if (HasBorder == value)
+                    return;
+                Handler.HasBorder = value;
                 PerformLayout();
             }
         }
@@ -330,13 +321,13 @@ namespace Alternet.UI
         /// <see cref="Calendar"/> supports only <see cref="DayOfWeek.Sunday"/>,
         /// <see cref="DayOfWeek.Monday"/> or <c>null</c> values for this property.
         /// </remarks>
-        public DayOfWeek? FirstDayOfWeek
+        public virtual DayOfWeek? FirstDayOfWeek
         {
             get
             {
-                if (Handler.NativeControl.SundayFirst)
+                if (Handler.SundayFirst)
                     return DayOfWeek.Sunday;
-                if (Handler.NativeControl.MondayFirst)
+                if (Handler.MondayFirst)
                     return DayOfWeek.Monday;
                 return null;
             }
@@ -348,19 +339,19 @@ namespace Alternet.UI
 
                 if (value == DayOfWeek.Sunday)
                 {
-                    Handler.NativeControl.SundayFirst = true;
-                    Handler.NativeControl.MondayFirst = false;
+                    Handler.SundayFirst = true;
+                    Handler.MondayFirst = false;
                 }
                 else
                 if (value == DayOfWeek.Monday)
                 {
-                    Handler.NativeControl.SundayFirst = false;
-                    Handler.NativeControl.MondayFirst = true;
+                    Handler.SundayFirst = false;
+                    Handler.MondayFirst = true;
                 }
                 else
                 {
-                    Handler.NativeControl.SundayFirst = false;
-                    Handler.NativeControl.MondayFirst = false;
+                    Handler.SundayFirst = false;
+                    Handler.MondayFirst = false;
                 }
             }
         }
@@ -377,9 +368,9 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
         [Browsable(false)]
-        public Color HolidayColorFg
+        public virtual Color HolidayColorFg
         {
-            get => Handler.NativeControl.GetHolidayColorFg();
+            get => Handler.GetHolidayColorFg();
             set => SetHolidayColors(value, HolidayColorBg);
         }
 
@@ -392,9 +383,9 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
         [Browsable(false)]
-        public Color HolidayColorBg
+        public virtual Color HolidayColorBg
         {
-            get => Handler.NativeControl.GetHolidayColorBg();
+            get => Handler.GetHolidayColorBg();
             set => SetHolidayColors(HolidayColorFg, value);
         }
 
@@ -407,9 +398,9 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
         [Browsable(false)]
-        public Color HeaderColorFg
+        public virtual Color HeaderColorFg
         {
-            get => Handler.NativeControl.GetHeaderColorFg();
+            get => Handler.GetHeaderColorFg();
             set => SetHeaderColors(value, HeaderColorBg);
         }
 
@@ -422,9 +413,9 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
         [Browsable(false)]
-        public Color HeaderColorBg
+        public virtual Color HeaderColorBg
         {
-            get => Handler.NativeControl.GetHeaderColorBg();
+            get => Handler.GetHeaderColorBg();
             set => SetHeaderColors(HeaderColorFg, value);
         }
 
@@ -437,9 +428,9 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
         [Browsable(false)]
-        public Color HighlightColorFg
+        public virtual Color HighlightColorFg
         {
-            get => Handler.NativeControl.GetHighlightColorFg();
+            get => Handler.GetHighlightColorFg();
             set => SetHighlightColors(value, HighlightColorBg);
         }
 
@@ -452,9 +443,9 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
         [Browsable(false)]
-        public Color HighlightColorBg
+        public virtual Color HighlightColorBg
         {
-            get => Handler.NativeControl.GetHighlightColorBg();
+            get => Handler.GetHighlightColorBg();
             set => SetHighlightColors(HighlightColorFg, value);
         }
 
@@ -511,12 +502,12 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new CalendarHandler Handler
+        internal new ICalendarHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (CalendarHandler)base.Handler;
+                return (ICalendarHandler)base.Handler;
             }
         }
 
@@ -527,10 +518,10 @@ namespace Alternet.UI
         /// Creates <see cref="ICalendarDateAttr"/> instance.
         /// </summary>
         /// <param name="border">Date border settings.</param>
-        public static ICalendarDateAttr CreateDateAttr(int border = 0)
+        public virtual ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0)
         {
-            var result = Native.Calendar.CreateDateAttr(border);
-            return new CalendarDateAttr(result, true);
+            var result = Handler.CreateDateAttr(border);
+            return result;
         }
 
         /// <summary>
@@ -542,7 +533,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="mark"><c>true</c> to mark the day, <c>false</c> to unmark it.</param>
-        public virtual void Mark(int day, bool mark = true) => Handler.NativeControl.Mark(day, mark);
+        public virtual void Mark(int day, bool mark = true) => Handler.Mark(day, mark);
 
         /// <summary>
         /// Clears any attributes associated with the given day.
@@ -552,7 +543,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public virtual void ResetAttr(int day) => Handler.NativeControl.ResetAttr(day);
+        public virtual void ResetAttr(int day) => Handler.ResetAttr(day);
 
         /// <summary>
         /// Marks the specified day as being a holiday in the current month.
@@ -562,7 +553,7 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public virtual void SetHoliday(int day) => Handler.NativeControl.SetHoliday(day);
+        public virtual void SetHoliday(int day) => Handler.SetHoliday(day);
 
         /// <summary>
         /// Sets values for <see cref="HighlightColorBg"/> and
@@ -576,7 +567,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHighlightColors(Color colorFg, Color colorBg)
         {
-            Handler.NativeControl.SetHighlightColors(colorFg, colorBg);
+            Handler.SetHighlightColors(colorFg, colorBg);
         }
 
         /// <summary>
@@ -591,7 +582,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHolidayColors(Color colorFg, Color colorBg)
         {
-            Handler.NativeControl.SetHolidayColors(colorFg, colorBg);
+            Handler.SetHolidayColors(colorFg, colorBg);
         }
 
         /// <summary>
@@ -606,7 +597,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHeaderColors(Color colorFg, Color colorBg)
         {
-            Handler.NativeControl.SetHeaderColors(colorFg, colorBg);
+            Handler.SetHeaderColors(colorFg, colorBg);
         }
 
         /// <summary>
@@ -625,13 +616,9 @@ namespace Alternet.UI
         /// <remarks>
         /// Not implemented on Linux currently.
         /// </remarks>
-        public HitTestResult HitTest(PointD point)
+        public virtual HitTestResult HitTest(PointD point)
         {
-            if (Application.IsLinuxOS)
-                return HitTestResult.None;
-
-            var pointi = PixelFromDip(point);
-            var result = Handler.NativeControl.HitTest(pointi);
+            var result = Handler.HitTest(point);
             return (HitTestResult)result;
         }
 
@@ -642,10 +629,8 @@ namespace Alternet.UI
         /// <param name="day">Day (in the range 1...31).</param>
         public virtual ICalendarDateAttr? GetAttr(int day)
         {
-            var result = Handler.NativeControl.GetAttr(day);
-            if (result == default)
-                return null;
-            return new CalendarDateAttr(result, false);
+            var result = Handler.GetAttr(day);
+            return result;
         }
 
         /// <summary>
@@ -655,62 +640,59 @@ namespace Alternet.UI
         /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
         public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
         {
-            if (dateAttr is null)
-                Handler.NativeControl.ResetAttr(day);
-            else
-                Handler.NativeControl.SetAttr(day, ((CalendarDateAttr)dateAttr).Handle);
+            Handler.SetAttr(day, dateAttr);
         }
 
-        internal bool AllowMonthChange() => Handler.NativeControl.AllowMonthChange();
-
-        internal bool EnableMonthChange(bool enable = true) =>
-            Handler.NativeControl.EnableMonthChange(enable);
-
-        internal void EnableHolidayDisplay(bool display = true) =>
-            Handler.NativeControl.EnableHolidayDisplay(display);
-
-        internal void RaiseSelectionChanged(EventArgs e)
+        public void RaiseSelectionChanged(EventArgs e)
         {
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
         }
 
-        internal void RaisePageChanged(EventArgs e)
+        public void RaisePageChanged(EventArgs e)
         {
             OnPageChanged(e);
             PageChanged?.Invoke(this, e);
         }
 
-        internal void RaiseWeekNumberClick(EventArgs e)
+        public void RaiseWeekNumberClick(EventArgs e)
         {
             OnWeekNumberClick(e);
             WeekNumberClick?.Invoke(this, e);
         }
 
-        internal void RaiseDayHeaderClick(EventArgs e)
+        public void RaiseDayHeaderClick(EventArgs e)
         {
             OnDayHeaderClick(e);
             DayHeaderClick?.Invoke(this, e);
         }
 
-        internal void RaiseDayDoubleClick(EventArgs e)
+        public void RaiseDayDoubleClick(EventArgs e)
         {
             OnDayDoubleClick(e);
             DayDoubleClick?.Invoke(this, e);
         }
 
+        internal bool AllowMonthChange() => Handler.AllowMonthChange();
+
+        internal bool EnableMonthChange(bool enable = true) =>
+            Handler.EnableMonthChange(enable);
+
+        internal void EnableHolidayDisplay(bool display = true) =>
+            Handler.EnableHolidayDisplay(display);
+
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new CalendarHandler();
+            return GetNative().CreateCalendarHandler(this);
         }
 
         /// <inheritdoc/>
         protected override void SetRange(DateTime min, DateTime max)
         {
-            Handler.NativeControl.MinValue = min;
-            Handler.NativeControl.MaxValue = max;
-            Handler.NativeControl.SetRange(UseMinDate, UseMaxDate);
+            Handler.MinValue = min;
+            Handler.MaxValue = max;
+            Handler.SetRange(UseMinDate, UseMaxDate);
             Refresh();
         }
 

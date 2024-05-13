@@ -729,4 +729,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateCalendarHandler(IControl control)
+    {
+        throw new NotImplementedException();
+    }
 }

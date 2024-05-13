@@ -93,6 +93,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateCalendarHandler(IControl control)
+        {
+            return new CalendarHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateProgressBarHandler(IControl control)
         {
             return new ProgressBarHandler();
