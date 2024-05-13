@@ -84,7 +84,7 @@ namespace ControlsSample
             AddPage("Multimedia", CreateMultimediaPage);
             AddPage("Samples", CreateOtherPage);
 
-            DebugUtils.DebugLogVersion();
+            LogUtils.DebugLogVersion();
 
             splitterPanel.Parent = panel;
             pageContainer.Dock = DockStyle.Fill;

@@ -54,6 +54,10 @@ public abstract class NativeControl
 
     public abstract BaseControlHandler CreateControlHandler(Control control);
 
+    public abstract BaseControlHandler CreateCheckListBoxHandler(CheckListBox control);
+
+    public abstract BaseControlHandler CreateVListBoxHandler(VListBox control);
+
     public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
 
     public abstract CustomControlPainter GetPainter();

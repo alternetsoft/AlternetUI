@@ -406,6 +406,9 @@ namespace Alternet.UI
         protected virtual void OnKeyDown(KeyEventArgs e)
         {
             KeyDown?.Invoke(this, e);
+#if DEBUG
+            KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, NativePlatform.Default.ShowDeveloperTools);
+#endif
         }
 
         /// <inheritdoc/>

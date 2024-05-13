@@ -23,6 +23,12 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
+        public abstract void ShowDeveloperTools();
+
+        public abstract string GetLibraryVersionString();
+
+        public abstract string? GetUIVersion();
+
         public abstract int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control);
 
         public abstract void SetSystemOption(string name, int value);

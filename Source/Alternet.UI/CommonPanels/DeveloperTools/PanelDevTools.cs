@@ -13,6 +13,8 @@ namespace Alternet.UI
 {
     internal class PanelDevTools : PanelAuiManager
     {
+        private static WindowDeveloperTools? devToolsWindow;
+
         private readonly IAuiNotebookPage? mainLogPage;
 
         private readonly LogListBox mainLogListBox = new()
@@ -121,6 +123,71 @@ namespace Alternet.UI
                 }
 
                 return controlsListBox;
+            }
+        }
+
+        /// <summary>
+        /// Logs <see cref="SystemSettings"/>.
+        /// </summary>
+        public static void LogSystemSettings()
+        {
+            BaseApplication.LogBeginSection();
+            BaseApplication.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
+            BaseApplication.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
+            BaseApplication.Log($"AppearanceName = {SystemSettings.AppearanceName}");
+
+            var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
+            LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
+            LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
+
+            BaseApplication.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
+            BaseApplication.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
+
+            BaseApplication.LogSeparator();
+
+            foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
+            {
+                BaseApplication.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
+            }
+
+            BaseApplication.LogSeparator();
+
+            foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
+            {
+                BaseApplication.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
+            }
+
+            BaseApplication.LogSeparator();
+
+            foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
+            {
+                BaseApplication.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
+            }
+
+            BaseApplication.LogEndSection();
+        }
+
+        /// <summary>
+        /// Shows developer tools window.
+        /// </summary>
+        public static void ShowDeveloperTools()
+        {
+            if (devToolsWindow is null)
+            {
+                devToolsWindow = new();
+                devToolsWindow.Closing += DevToolsWindow_Closing;
+                devToolsWindow.Disposed += DevToolsWindow_Disposed;
+            }
+
+            devToolsWindow.Show();
+
+            static void DevToolsWindow_Closing(object? sender, WindowClosingEventArgs e)
+            {
+            }
+
+            static void DevToolsWindow_Disposed(object? sender, EventArgs e)
+            {
+                devToolsWindow = null;
             }
         }
 
@@ -256,7 +323,7 @@ namespace Alternet.UI
 
         private void InitActions()
         {
-            AddLogAction("Log system settings", DebugUtils.LogSystemSettings);
+            AddLogAction("Log system settings", LogSystemSettings);
             AddLogAction("Log font families", LogFontFamilies);
             AddLogAction("Log system fonts", SystemSettings.LogSystemFonts);
             AddLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);

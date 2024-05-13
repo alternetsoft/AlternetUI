@@ -41,17 +41,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                if (Handler is not CheckListBoxHandler handler)
-                    return true;
-                return handler.NativeControl.HasBorder;
+                return Handler.HasBorder;
             }
 
             set
             {
                 CheckDisposed();
-                if (Handler is not CheckListBoxHandler handler)
-                    return;
-                handler.NativeControl.HasBorder = value;
+                Handler.HasBorder = value;
             }
         }
 
@@ -163,11 +159,11 @@ namespace Alternet.UI
         /// Gets a <see cref="CheckListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new CheckListBoxHandler Handler
+        internal new ICheckListBoxHandler Handler
         {
             get
             {
-                return (CheckListBoxHandler)base.Handler;
+                return (ICheckListBoxHandler)base.Handler;
             }
         }
 
@@ -259,7 +255,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new CheckListBoxHandler();
+            return GetNative().CreateCheckListBoxHandler(this);
         }
 
         /// <summary>

@@ -744,4 +744,14 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateCheckListBoxHandler(CheckListBox control)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override BaseControlHandler CreateVListBoxHandler(VListBox control)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -207,6 +207,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateVListBoxHandler(VListBox control)
+        {
+            return new VListBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override BaseControlHandler CreateCheckListBoxHandler(CheckListBox control)
+        {
+            return new CheckListBoxHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateListBoxHandler(ListBox control)
         {
             return new ListBoxHandler();

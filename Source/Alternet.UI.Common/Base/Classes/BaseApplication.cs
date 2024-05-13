@@ -159,6 +159,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///  Occurs when an untrapped thread exception is thrown.
+        /// </summary>
+        /// <remarks>
+        /// This event allows your application to handle otherwise
+        /// unhandled exceptions that occur in UI threads. Attach
+        /// your event handler to the <see cref="ThreadException"/> event
+        /// to deal with these exceptions, which will
+        /// leave your application in an unknown state. Where possible,
+        /// exceptions should be handled by a structured
+        /// exception handling block. You can change whether this callback
+        /// is used for unhandled Windows Forms thread
+        /// exceptions by setting <see cref="BaseApplication.SetUnhandledExceptionMode"/>.
+        /// </remarks>
+        public static event ThreadExceptionEventHandler? ThreadException;
+
+        /// <summary>
         /// Occurs when controls which display log messages need to be refreshed.
         /// </summary>
         public static event EventHandler? LogRefresh;
@@ -179,6 +195,8 @@ namespace Alternet.UI
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static bool DebugWriteLine { get; set; } = false;
+
+        public static bool ThreadExceptionAssigned => ThreadException is not null;
 
         /// <summary>
         /// Gets currently used platform.
@@ -697,6 +715,11 @@ namespace Alternet.UI
             Log(LogUtils.SectionSeparator, kind);
         }
 
+        public static void RaiseThreadException(object sender, ThreadExceptionEventArgs args)
+        {
+            ThreadException?.Invoke(sender, args);
+        }
+
         /// <summary>
         /// Calls <see cref="Log"/> method with <paramref name="obj"/> parameter
         /// when application becomes idle.
@@ -898,5 +921,12 @@ namespace Alternet.UI
             {
             }
         }
+
+        /// <summary>
+        /// Build counter for the test purposes.
+        /// </summary>
+#pragma warning disable
+        public static int BuildCounter = 6;
+#pragma warning restore
     }
 }

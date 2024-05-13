@@ -6,10 +6,16 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class VListBoxHandler : WxControlHandler, IListBoxHandler
+    internal class VListBoxHandler : WxControlHandler, IVListBoxHandler
     {
         private bool receivingSelection;
         private bool applyingSelection;
+
+        public int ItemsCount
+        {
+            get => NativeControl.ItemsCount;
+            set => NativeControl.ItemsCount = value;
+        }
 
         /// <summary>
         /// Gets a <see cref="VListBox"/> this handler provides the
@@ -33,6 +39,24 @@ namespace Alternet.UI
             }
         }
 
+        bool IVListBoxHandler.HScrollBarVisible
+        {
+            get => NativeControl.HScrollBarVisible;
+            set => NativeControl.HScrollBarVisible = value;
+        }
+
+        bool IVListBoxHandler.VScrollBarVisible
+        {
+            get => NativeControl.VScrollBarVisible;
+            set => NativeControl.VScrollBarVisible = value;
+        }
+
+        ListBoxSelectionMode IVListBoxHandler.SelectionMode
+        {
+            get => (ListBoxSelectionMode)NativeControl.SelectionMode;
+            set => NativeControl.SelectionMode = (Native.ListBoxSelectionMode)value;
+        }
+
         internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
 
         public void EnsureVisible(int itemIndex)
@@ -45,6 +69,115 @@ namespace Alternet.UI
         {
             int index = NativeControl.ItemHitTest(position);
             return index == -1 ? null : index;
+        }
+
+        RectD? IVListBoxHandler.GetItemRect(int index)
+        {
+            var resultI = NativeControl.GetItemRectI(index);
+            if (resultI.SizeIsEmpty)
+                return null;
+            var resultD = Control.PixelToDip(resultI);
+            return resultD;
+        }
+
+        bool IVListBoxHandler.ScrollRows(int rows)
+        {
+            return NativeControl.ScrollRows(rows);
+        }
+
+        bool IVListBoxHandler.ScrollRowPages(int pages)
+        {
+            return NativeControl.ScrollRowPages(pages);
+        }
+
+        void IVListBoxHandler.RefreshRow(int row)
+        {
+            NativeControl.RefreshRow(row);
+        }
+
+        void IVListBoxHandler.RefreshRows(int from, int to)
+        {
+            NativeControl.RefreshRows(from, to);
+        }
+
+        int IVListBoxHandler.GetVisibleEnd()
+        {
+            return NativeControl.GetVisibleEnd();
+        }
+
+        int IVListBoxHandler.GetVisibleBegin()
+        {
+            return NativeControl.GetVisibleBegin();
+        }
+
+        bool IVListBoxHandler.IsSelected(int line)
+        {
+            return NativeControl.IsSelected(line);
+        }
+
+        bool IVListBoxHandler.IsVisible(int line)
+        {
+            return NativeControl.IsVisible(line);
+        }
+
+        void IVListBoxHandler.ClearItems()
+        {
+            NativeControl.ClearItems();
+        }
+
+        void IVListBoxHandler.ClearSelected()
+        {
+            NativeControl.ClearSelected();
+        }
+
+        void IVListBoxHandler.SetSelected(int index, bool value)
+        {
+            NativeControl.SetSelected(index, value);
+        }
+
+        int IVListBoxHandler.GetFirstSelected()
+        {
+            return NativeControl.GetFirstSelected();
+        }
+
+        int IVListBoxHandler.GetNextSelected()
+        {
+            return NativeControl.GetNextSelected();
+        }
+
+        int IVListBoxHandler.GetSelectedCount()
+        {
+            return NativeControl.GetSelectedCount();
+        }
+
+        int IVListBoxHandler.GetSelection()
+        {
+            return NativeControl.GetSelection();
+        }
+
+        int IVListBoxHandler.ItemHitTest(PointD position)
+        {
+            return NativeControl.ItemHitTest(position);
+        }
+
+        void IVListBoxHandler.SetSelection(int selection)
+        {
+            NativeControl.SetSelection(selection);
+        }
+
+        void IVListBoxHandler.SetSelectionBackground(Color color)
+        {
+            NativeControl.SetSelectionBackground(color);
+        }
+
+        bool IVListBoxHandler.IsCurrent(int current)
+        {
+            return NativeControl.IsCurrent(current);
+        }
+
+        bool IVListBoxHandler.DoSetCurrent(int current)
+        {
+            return NativeControl.DoSetCurrent(current);
         }
 
         internal override Native.Control CreateNativeControl()

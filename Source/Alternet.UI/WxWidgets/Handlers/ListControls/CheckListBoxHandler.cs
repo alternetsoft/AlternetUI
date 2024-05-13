@@ -4,7 +4,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class CheckListBoxHandler : ListBoxHandler
+    internal class CheckListBoxHandler : ListBoxHandler, ICheckListBoxHandler
     {
         private bool recreateCalled = false;
         private bool applyingCheckedIndices;

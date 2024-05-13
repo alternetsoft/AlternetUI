@@ -115,13 +115,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool HScrollBarVisible
         {
-            get => NativeControl.HScrollBarVisible;
+            get => Handler.HScrollBarVisible;
 
             set
             {
                 if (HScrollBarVisible == value)
                     return;
-                NativeControl.HScrollBarVisible = value;
+                Handler.HScrollBarVisible = value;
                 Refresh();
             }
         }
@@ -532,14 +532,14 @@ namespace Alternet.UI
             {
                 if (SelectionMode == ListBoxSelectionMode.Single)
                 {
-                    var result = NativeControl.GetSelection();
+                    var result = Handler.GetSelection();
                     if (result < 0)
                         return null;
                     return result;
                 }
                 else
                 {
-                    var result = NativeControl.GetFirstSelected();
+                    var result = Handler.GetFirstSelected();
                     if (result < 0)
                         return null;
                     return result;
@@ -552,13 +552,13 @@ namespace Alternet.UI
                     return;
                 if (SelectionMode == ListBoxSelectionMode.Single)
                 {
-                    NativeControl.SetSelection(value ?? -1);
+                    Handler.SetSelection(value ?? -1);
                 }
                 else
                 {
-                    NativeControl.ClearSelected();
+                    Handler.ClearSelected();
                     if (value is not null && value >= 0)
-                        NativeControl.SetSelected(value.Value, true);
+                        Handler.SetSelected(value.Value, true);
                 }
             }
         }
@@ -610,13 +610,13 @@ namespace Alternet.UI
         {
             get
             {
-                var result = NativeControl.ItemsCount;
+                var result = Handler.ItemsCount;
                 return result;
             }
 
             set
             {
-                NativeControl.ItemsCount = value;
+                Handler.ItemsCount = value;
             }
         }
 
@@ -624,11 +624,11 @@ namespace Alternet.UI
         /// Gets a <see cref="VListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new VListBoxHandler Handler
+        internal new IVListBoxHandler Handler
         {
             get
             {
-                return (VListBoxHandler)base.Handler;
+                return (IVListBoxHandler)base.Handler;
             }
         }
 
@@ -637,20 +637,15 @@ namespace Alternet.UI
         /// </summary>
         internal virtual bool VScrollBarVisible
         {
-            get => NativeControl.VScrollBarVisible;
+            get => Handler.VScrollBarVisible;
             set
             {
                 if (VScrollBarVisible == value)
                     return;
-                NativeControl.VScrollBarVisible = value;
+                Handler.VScrollBarVisible = value;
                 Refresh();
             }
         }
-
-        /// <summary>
-        /// Gets <see cref="NativeControl"/> attached to this control.
-        /// </summary>
-        internal Native.VListBox NativeControl => ((VListBoxHandler)Handler).NativeControl;
 
         /// <summary>
         /// Gets item font. It must not be <c>null</c>.
@@ -751,7 +746,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsSelected(int index)
         {
-            return NativeControl.IsSelected(index);
+            return Handler.IsSelected(index);
         }
 
         /// <summary>
@@ -761,7 +756,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsVisible(int index)
         {
-            return NativeControl.IsVisible(index);
+            return Handler.IsVisible(index);
         }
 
         /// <summary>
@@ -774,7 +769,7 @@ namespace Alternet.UI
         /// showing the last row).</returns>
         public virtual bool ScrollRows(int rows)
         {
-            return NativeControl.ScrollRows(rows);
+            return Handler.ScrollRows(rows);
         }
 
         /// <summary>
@@ -787,7 +782,7 @@ namespace Alternet.UI
         /// showing the last row).</returns>
         public virtual bool ScrollRowPages(int pages)
         {
-            return NativeControl.ScrollRowPages(pages);
+            return Handler.ScrollRowPages(pages);
         }
 
         /// <summary>
@@ -796,7 +791,7 @@ namespace Alternet.UI
         /// <param name="row">Item index.</param>
         public virtual void RefreshRow(int row)
         {
-            NativeControl.RefreshRow(row);
+            Handler.RefreshRow(row);
         }
 
         /// <summary>
@@ -806,7 +801,7 @@ namespace Alternet.UI
         /// <param name="to">Last item index.</param>
         public virtual void RefreshRows(int from, int to)
         {
-            NativeControl.RefreshRows(from, to);
+            Handler.RefreshRows(from, to);
         }
 
         /// <summary>
@@ -816,7 +811,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsCurrent(int index)
         {
-            return NativeControl.IsCurrent(index);
+            return Handler.IsCurrent(index);
         }
 
         /// <summary>
@@ -905,7 +900,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetVisibleBegin()
         {
-            return NativeControl.GetVisibleBegin();
+            return Handler.GetVisibleBegin();
         }
 
         /// <summary>
@@ -914,7 +909,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetVisibleEnd()
         {
-            return NativeControl.GetVisibleEnd();
+            return Handler.GetVisibleEnd();
         }
 
         /// <summary>
@@ -1236,11 +1231,8 @@ namespace Alternet.UI
         {
             if (index is null)
                 return null;
-            var resultI = NativeControl.GetItemRectI(index.Value);
-            if (resultI.SizeIsEmpty)
-                return null;
-            var resultD = PixelToDip(resultI);
-            return resultD;
+            var result = Handler.GetItemRect(index.Value);
+            return result;
         }
 
         /// <summary>
@@ -1416,7 +1408,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new VListBoxHandler();
+            return GetNative().CreateVListBoxHandler(this);
         }
 
         /// <summary>
@@ -1459,8 +1451,8 @@ namespace Alternet.UI
             RectD rectRow = RectD.Empty;
             rectRow.Width = clientSize.Width;
 
-            int lineMax = NativeControl.GetVisibleEnd();
-            for (int line = NativeControl.GetVisibleBegin(); line < lineMax; line++)
+            int lineMax = Handler.GetVisibleEnd();
+            for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
                 var hRow = MeasureItemSize(line).Height;
 

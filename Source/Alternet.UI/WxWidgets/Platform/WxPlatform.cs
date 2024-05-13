@@ -287,6 +287,22 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public override void ShowDeveloperTools()
+        {
+            PanelDevTools.ShowDeveloperTools();
+        }
+
+        public override string? GetUIVersion()
+        {
+            var ui = WebBrowser.DoCommandGlobal("UIVersion");
+            return ui;
+        }
+
+        public override string GetLibraryVersionString()
+        {
+            return WebBrowser.GetLibraryVersionString();
+        }
+
         public override void SetSystemOption(string name, int value)
         {
             Native.Application.SetSystemOptionInt(name, value);

@@ -21,7 +21,6 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : BaseApplication, IDisposable
     {
-        internal const int BuildCounter = 6;
         internal static readonly Destructor MyDestructor = new();
 
         internal Native.Application nativeApplication;
@@ -74,22 +73,6 @@ namespace Alternet.UI
         /// Occurs before native debug message needs to be displayed.
         /// </summary>
         public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
-
-        /// <summary>
-        ///  Occurs when an untrapped thread exception is thrown.
-        /// </summary>
-        /// <remarks>
-        /// This event allows your application to handle otherwise
-        /// unhandled exceptions that occur in UI threads. Attach
-        /// your event handler to the <see cref="ThreadException"/> event
-        /// to deal with these exceptions, which will
-        /// leave your application in an unknown state. Where possible,
-        /// exceptions should be handled by a structured
-        /// exception handling block. You can change whether this callback
-        /// is used for unhandled Windows Forms thread
-        /// exceptions by setting <see cref="BaseApplication.SetUnhandledExceptionMode"/>.
-        /// </remarks>
-        public static event ThreadExceptionEventHandler? ThreadException;
 
         /// <summary>
         /// Gets or sets default icon for the application.
@@ -492,10 +475,10 @@ namespace Alternet.UI
                 if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
                     throw exception;
 
-                if (ThreadException is not null)
+                if (ThreadExceptionAssigned)
                 {
                     var args = new ThreadExceptionEventArgs(exception);
-                    ThreadException(Thread.CurrentThread, args);
+                    RaiseThreadException(Thread.CurrentThread, args);
                 }
                 else
                 {

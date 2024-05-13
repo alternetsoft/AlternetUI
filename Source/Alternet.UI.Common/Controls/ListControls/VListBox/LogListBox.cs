@@ -124,9 +124,9 @@ namespace Alternet.UI
         {
             BoundToApplicationLog = true;
             ContextMenu.Required();
-            Application.LogMessage += Application_LogMessage;
-            Application.LogRefresh += Application_LogRefresh;
-            DebugUtils.DebugLogVersion();
+            BaseApplication.LogMessage += Application_LogMessage;
+            BaseApplication.LogRefresh += Application_LogRefresh;
+            LogUtils.DebugLogVersion();
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            Application.LogMessage -= Application_LogMessage;
-            Application.LogRefresh -= Application_LogRefresh;
+            BaseApplication.LogMessage -= Application_LogMessage;
+            BaseApplication.LogRefresh -= Application_LogRefresh;
             base.DisposeManaged();
         }
 
@@ -200,16 +200,16 @@ namespace Alternet.UI
 
             void AlsoLogToFile()
             {
-                if (Application.LogFileIsEnabled)
+                if (BaseApplication.LogFileIsEnabled)
                     return;
-                Application.LogFileIsEnabled = true;
+                BaseApplication.LogFileIsEnabled = true;
                 logToFileItem.Checked = true;
                 logToFileItem.Enabled = false;
             }
 
             void ShowDevTools()
             {
-                DebugUtils.ShowDeveloperTools();
+                NativePlatform.Default.ShowDeveloperTools();
             }
         }
 
@@ -219,7 +219,7 @@ namespace Alternet.UI
 
             void Fn()
             {
-                if (!Application.LogInUpdates() || !BoundToApplicationLog)
+                if (!BaseApplication.LogInUpdates() || !BoundToApplicationLog)
                 {
                     var index = Items.Count - 1;
                     SelectedIndex = index;

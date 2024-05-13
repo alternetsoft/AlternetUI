@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is current.
         /// </summary>
-        public bool IsCurrent => ListBox.NativeControl.IsCurrent(ItemIndex);
+        public bool IsCurrent => ListBox.Handler.IsCurrent(ItemIndex);
 
         /// <summary>
         /// Gets font of the item.

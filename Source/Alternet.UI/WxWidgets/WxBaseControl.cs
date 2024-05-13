@@ -17,13 +17,4 @@ public class WxBaseControl : Control
     internal Native.Control NativeControl => ((WxControlHandler)Handler).NativeControl;
 
     internal new WxControlHandler Handler => (WxControlHandler)base.Handler;
-
-    /// <inheritdoc/>
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-#if DEBUG
-        KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DebugUtils.ShowDeveloperTools);
-#endif
-    }
 }

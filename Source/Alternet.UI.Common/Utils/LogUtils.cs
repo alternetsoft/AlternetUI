@@ -83,6 +83,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs environment versions.
+        /// </summary>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogVersion()
+        {
+            if (!LogUtils.ShowDebugWelcomeMessage)
+                return;
+            if (LogUtils.Flags.HasFlag(LogUtils.LogFlags.VersionLogged))
+                return;
+            LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
+            var wxWidgets = NativePlatform.Default.GetLibraryVersionString();
+            var bitsOS = BaseApplication.Is64BitOS ? "x64" : "x86";
+            var bitsApp = BaseApplication.Is64BitProcess ? "x64" : "x86";
+            var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
+            var dpi = $"DPI: {BaseApplication.FirstWindow()?.GetDPI().Width}";
+            var ui = $"UI: {NativePlatform.Default.GetUIVersion()}";
+            var counterStr = $"Counter: {BaseApplication.BuildCounter}";
+            var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
+            BaseApplication.Log(s);
+            if (BaseApplication.LogFileIsEnabled)
+                BaseApplication.DebugLog($"Log File = {BaseApplication.LogFilePath}");
+        }
+
+        /// <summary>
         /// Logs all system colors.
         /// </summary>
         public static void LogSystemColors()
