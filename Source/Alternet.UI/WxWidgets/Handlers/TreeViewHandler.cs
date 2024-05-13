@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class TreeViewHandler : WxControlHandler
+    internal class TreeViewHandler : WxControlHandler, ITreeViewHandler
     {
         private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
         private bool skipSetItemText;
@@ -297,6 +297,11 @@ namespace Alternet.UI
                 Native.WxTreeViewFactory.SetItemTextColor(NativeControl.WxWidget, p, color);
         }
 
+        public void MakeAsListBox()
+        {
+            NativeControl.MakeAsListBox();
+        }
+
         public void SetItemText(TreeViewItem item, string text)
         {
             if (skipSetItemText)
@@ -494,7 +499,7 @@ namespace Alternet.UI
 
         private IntPtr GetHandleFromItem(TreeViewItem item)
         {
-            return item.Handle;
+            return (IntPtr?)item.Handle ?? default;
         }
 
         private TreeViewItem GetItemFromHandle(IntPtr handle)

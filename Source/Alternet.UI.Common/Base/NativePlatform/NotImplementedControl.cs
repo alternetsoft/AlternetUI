@@ -734,4 +734,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateTreeViewHandler(TreeView control)
+    {
+        throw new NotImplementedException();
+    }
 }

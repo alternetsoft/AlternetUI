@@ -66,7 +66,7 @@ namespace Alternet.UI
         private bool isBold;
         private Color? textColor;
         private Color? backgroundColor;
-        private IntPtr handle;
+        private object? handle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class
@@ -406,7 +406,7 @@ namespace Alternet.UI
         /// Gets or sets item handle
         /// </summary>
         [Browsable(false)]
-        internal IntPtr Handle
+        public object? Handle
         {
             get
             {

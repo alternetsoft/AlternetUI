@@ -8,7 +8,7 @@ namespace ControlsSample
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
-        private TabControl tabControl = new();
+        private readonly TabControl tabControl = new();
 
         static CalendarPage()
         {

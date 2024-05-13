@@ -52,7 +52,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class TreeView : WxBaseControl
+    public partial class TreeView : Control
     {
         /// <summary>
         /// The set of flags that are closest to the defaults for the native control under Linux.
@@ -85,7 +85,7 @@ namespace Alternet.UI
         {
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
-            if (Application.IsWindowsOS)
+            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
                 UserPaint = true;
 
             bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
@@ -279,17 +279,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                if (Handler is not TreeViewHandler handler)
-                    return true;
-                return handler.NativeControl.HasBorder;
+                return Handler.HasBorder;
             }
 
             set
             {
                 CheckDisposed();
-                if (Handler is not TreeViewHandler handler)
-                    return;
-                handler.NativeControl.HasBorder = value;
+                Handler.HasBorder = value;
             }
         }
 
@@ -664,11 +660,11 @@ namespace Alternet.UI
         /// Gets a <see cref="TreeViewHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new TreeViewHandler Handler
+        internal new ITreeViewHandler Handler
         {
             get
             {
-                return (TreeViewHandler)base.Handler;
+                return (ITreeViewHandler)base.Handler;
             }
         }
 
@@ -973,7 +969,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void MakeAsListBox()
         {
-            (Handler.NativeControl as TreeViewHandler.NativeTreeView)?.MakeAsListBox();
+            Handler.MakeAsListBox();
         }
 
         /// <summary>
@@ -1021,7 +1017,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseControlHandler CreateHandler()
         {
-            return new TreeViewHandler();
+            return GetNative().CreateTreeViewHandler(this);
         }
 
         /// <summary>
@@ -1122,7 +1118,6 @@ namespace Alternet.UI
 
         private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)
         {
-            /*Application.DebugLog($"TreeViewItem Removed: {item.Text}");*/
             TreeViewItem.OnChildItemRemoved(item);
         }
 
