@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.ColorDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
@@ -81,7 +81,7 @@ namespace Alternet.UI.Native
             public static extern void ColorDialog_SetTitle_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult ColorDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern Alternet.UI.ModalResult ColorDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

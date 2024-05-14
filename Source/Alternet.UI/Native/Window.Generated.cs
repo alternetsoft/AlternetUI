@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public WindowStartLocation WindowStartLocation
+        public Alternet.UI.WindowStartLocation WindowStartLocation
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ModalResult
+        public Alternet.UI.ModalResult ModalResult
         {
             get
             {
@@ -283,7 +283,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public WindowState State
+        public Alternet.UI.WindowState State
         {
             get
             {
@@ -501,10 +501,10 @@ namespace Alternet.UI.Native
             public static extern void Window_SetTitle_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern WindowStartLocation Window_GetWindowStartLocation_(IntPtr obj);
+            public static extern Alternet.UI.WindowStartLocation Window_GetWindowStartLocation_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetWindowStartLocation_(IntPtr obj, WindowStartLocation value);
+            public static extern void Window_SetWindowStartLocation_(IntPtr obj, Alternet.UI.WindowStartLocation value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetShowInTaskbar_(IntPtr obj);
@@ -573,10 +573,10 @@ namespace Alternet.UI.Native
             public static extern void Window_SetIsPopupWindow_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult Window_GetModalResult_(IntPtr obj);
+            public static extern Alternet.UI.ModalResult Window_GetModalResult_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetModalResult_(IntPtr obj, ModalResult value);
+            public static extern void Window_SetModalResult_(IntPtr obj, Alternet.UI.ModalResult value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetModal_(IntPtr obj);
@@ -585,10 +585,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr Window_GetActiveWindow_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern WindowState Window_GetState_(IntPtr obj);
+            public static extern Alternet.UI.WindowState Window_GetState_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetState_(IntPtr obj, WindowState value);
+            public static extern void Window_SetState_(IntPtr obj, Alternet.UI.WindowState value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_GetIcon_(IntPtr obj);

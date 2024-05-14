@@ -13,12 +13,12 @@ namespace Alternet.UI
         {
             get
             {
-                return (WindowStartLocation)NativeControl.WindowStartLocation;
+                return NativeControl.WindowStartLocation;
             }
 
             set
             {
-                NativeControl.WindowStartLocation = (Native.WindowStartLocation)value;
+                NativeControl.WindowStartLocation = value;
             }
         }
 
@@ -26,12 +26,12 @@ namespace Alternet.UI
         {
             get
             {
-                return (WindowState)NativeControl.State;
+                return NativeControl.State;
             }
 
             set
             {
-                NativeControl.State = (Native.WindowState)value;
+                NativeControl.State = value;
             }
         }
 
@@ -50,12 +50,12 @@ namespace Alternet.UI
         {
             get
             {
-                return (ModalResult)NativeControl.ModalResult;
+                return NativeControl.ModalResult;
             }
 
             set
             {
-                NativeControl.ModalResult = (Native.ModalResult)value;
+                NativeControl.ModalResult = value;
             }
         }
 

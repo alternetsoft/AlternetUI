@@ -143,7 +143,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.FontDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
@@ -216,7 +216,7 @@ namespace Alternet.UI.Native
             public static extern void FontDialog_SetTitle_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult FontDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern Alternet.UI.ModalResult FontDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FontDialog_SetRange_(IntPtr obj, int minRange, int maxRange);

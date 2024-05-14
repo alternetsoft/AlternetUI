@@ -244,7 +244,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.FileDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
@@ -350,7 +350,7 @@ namespace Alternet.UI.Native
             public static extern void FileDialog_CloseFileNamesArray_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult FileDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern Alternet.UI.ModalResult FileDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }
