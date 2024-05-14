@@ -90,7 +90,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the scroll bar orientation that raised the <see langword="Scroll" /> event.
+        /// Gets or sets whether the scroll bar orientation that raised
+        /// the <see langword="Scroll" /> event is vertical.
+        /// </summary>
+        public bool IsVertical
+        {
+            get => ScrollOrientation == ScrollOrientation.VerticalScroll;
+
+            set
+            {
+                if (value)
+                    ScrollOrientation = ScrollOrientation.VerticalScroll;
+                else
+                    ScrollOrientation = ScrollOrientation.HorizontalScroll;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the scroll bar orientation that raised
+        /// the <see langword="Scroll" /> event is horizontal.
+        /// </summary>
+        public bool IsHorizontal
+        {
+            get => ScrollOrientation == ScrollOrientation.HorizontalScroll;
+
+            set
+            {
+                if (value)
+                    ScrollOrientation = ScrollOrientation.HorizontalScroll;
+                else
+                    ScrollOrientation = ScrollOrientation.VerticalScroll;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the scroll bar orientation that raised the <see langword="Scroll" /> event.
         /// </summary>
         /// <returns>One of the <see cref="ScrollOrientation" /> values.</returns>
         public ScrollOrientation ScrollOrientation
@@ -100,7 +134,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the type of scroll event that occurred.
+        /// Gets or sets the type of scroll event that occurred.
         /// </summary>
         /// <returns>One of the <see cref="ScrollEventType" /> values.</returns>
         public ScrollEventType Type
@@ -109,9 +143,13 @@ namespace Alternet.UI
             set => type = value;
         }
 
-        /// <summary>Gets or sets the new <see cref="ScrollBar.Value" /> of the scroll bar.</summary>
-        /// <returns>The numeric value that the <see cref="ScrollBar.Value" /> property
-        /// will be changed to.</returns>
+        /// <summary>
+        /// Gets or sets the new <see cref="ScrollBar.Value" /> of the scroll bar.
+        /// </summary>
+        /// <returns>
+        /// The numeric value that the <see cref="ScrollBar.Value" /> property
+        /// will be changed to.
+        /// </returns>
         public int NewValue
         {
             get
@@ -125,9 +163,13 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets the old <see cref="ScrollBar.Value" /> of the scroll bar.</summary>
-        /// <returns>The numeric value that the <see cref="ScrollBar.Value" /> property
-        /// contained before it changed.</returns>
+        /// <summary>
+        /// Gets the old <see cref="ScrollBar.Value" /> of the scroll bar.
+        /// </summary>
+        /// <returns>
+        /// The numeric value that the <see cref="ScrollBar.Value" /> property
+        /// contained before it changed.
+        /// </returns>
         public int OldValue
         {
             get => oldValue;
