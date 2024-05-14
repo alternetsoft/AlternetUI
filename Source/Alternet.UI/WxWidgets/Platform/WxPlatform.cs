@@ -23,9 +23,20 @@ namespace Alternet.UI
                 return;
             NativeDrawing.Default = new WxDrawing();
             NativeControl.Default = new WxPlatformControl();
-            NativeWindow.Default = new WxPlatformWindow();
             Default = new WxPlatform();
             initialized = true;
+        }
+
+        /// <inheritdoc/>
+        public override Window? GetActiveWindow()
+        {
+            var activeWindow = Native.Window.ActiveWindow;
+            if (activeWindow == null)
+                return null;
+
+            var handler = WxControlHandler.NativeControlToHandler(activeWindow) ??
+                throw new InvalidOperationException();
+            return ((WindowHandler)handler).Control;
         }
 
         /// <inheritdoc/>

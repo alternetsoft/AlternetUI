@@ -7,6 +7,86 @@ namespace Alternet.UI
 {
     internal class WindowHandler : WxControlHandler, IWindowHandler
     {
+        private object? statusBar;
+
+        public WindowStartLocation StartLocation
+        {
+            get
+            {
+                return (WindowStartLocation)NativeControl.WindowStartLocation;
+            }
+
+            set
+            {
+                NativeControl.WindowStartLocation = (Native.WindowStartLocation)value;
+            }
+        }
+
+        public WindowState State
+        {
+            get
+            {
+                return (WindowState)NativeControl.State;
+            }
+
+            set
+            {
+                NativeControl.State = (Native.WindowState)value;
+            }
+        }
+
+        public Window[] OwnedWindows
+        {
+            get
+            {
+                var result = NativeControl.OwnedWindows.Select(
+                    x => ((WindowHandler)(WxControlHandler.NativeControlToHandler(x) ??
+                    throw new Exception())).Control).ToArray();
+                return result;
+            }
+        }
+
+        public ModalResult ModalResult
+        {
+            get
+            {
+                return (ModalResult)NativeControl.ModalResult;
+            }
+
+            set
+            {
+                NativeControl.ModalResult = (Native.ModalResult)value;
+            }
+        }
+
+        public object? StatusBar
+        {
+            get
+            {
+                return statusBar;
+            }
+
+            set
+            {
+                if (Control.GetWindowKind() == WindowKind.Dialog)
+                {
+                    statusBar = value;
+                    return;
+                }
+
+                SetStatusBar(statusBar, value);
+                statusBar = value;
+            }
+        }
+
+        public bool IsModal
+        {
+            get
+            {
+                return NativeControl.Modal;
+            }
+        }
+
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
@@ -14,23 +94,48 @@ namespace Alternet.UI
 
         public new Native.Window NativeControl => (Native.Window)base.NativeControl!;
 
-        /// <summary>
-        /// Closes the window.
-        /// </summary>
-        /// <remarks>
-        /// When a window is closed, all resources created within the object are
-        /// closed and the window is disposed.
-        /// You can prevent the closing of a window at run time by handling the
-        /// <see cref="Window.Closing"/> event and
-        /// setting the <c>Cancel</c> property of the
-        /// <see cref="CancelEventArgs"/> passed as a parameter to your event handler.
-        /// If the window you are closing is the last open window of your
-        /// application, your application ends.
-        /// The window is not disposed on <see cref="Close"/> is when you have
-        /// displayed the window using <see cref="DialogWindow.ShowModal()"/>.
-        /// In this case, you will need to call
-        /// <see cref="IDisposable.Dispose"/> manually.
-        /// </remarks>
+        public bool IsPopupWindow
+        {
+            get
+            {
+                return NativeControl.IsPopupWindow;
+            }
+
+            set
+            {
+                NativeControl.IsPopupWindow = value;
+            }
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                return NativeControl.IsActive;
+            }
+        }
+
+        public static void SetDefaultBounds(RectD defaultBounds)
+        {
+            Native.Window.SetDefaultBounds(defaultBounds);
+        }
+
+        public void SetIsPopupWindow(bool value)
+        {
+            NativeControl.IsPopupWindow = value;
+        }
+
+        public ModalResult ShowModal(IWindow? owner)
+        {
+            NativeControl.ShowModal(WxPlatformControl.WxWidget(owner));
+            return ModalResult;
+        }
+
+        public void Activate()
+        {
+            NativeControl.Activate();
+        }
+
         public void Close()
         {
             if (NativeControlCreated)
@@ -127,6 +232,34 @@ namespace Alternet.UI
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
+        private void SetStatusBar(object? oldValue, object? value)
+        {
+            var nc = NativeControl;
+
+            if (value is StatusBar asStatusBar)
+            {
+                if ((value as IDisposableObject)?.IsDisposed ?? false)
+                    throw new ObjectDisposedException(nameof(StatusBar));
+                if (asStatusBar.Window is not null && asStatusBar.Window != Control)
+                {
+                    throw new Exception("Object is already attached to the window");
+                }
+            }
+
+            if (oldValue is StatusBar asStatusBar2)
+            {
+                asStatusBar2.Window = null;
+                var oldHandle = nc.WxStatusBar;
+                if (oldHandle != default)
+                    Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
+            }
+
+            if (value is StatusBar asStatusBar3)
+                asStatusBar3.Window = Control;
+            else
+                nc.WxStatusBar = default;
+        }
+
         private void NativeControl_InputBindingCommandExecuted(
             object? sender,
             Native.NativeEventArgs<Native.CommandEventData> e)
@@ -200,14 +333,12 @@ namespace Alternet.UI
 
         private void ApplyMenu(object? sender, EventArgs e)
         {
-            NativeControl.Menu =
-                (Control.Menu?.Handler as MainMenuHandler)?.NativeControl;
+            NativeControl.Menu = (Control.Menu as IControl)?.NativeControl as Native.MainMenu;
         }
 
         private void ApplyToolbar(object? sender, EventArgs e)
         {
-            NativeControl.Toolbar =
-                (Control.ToolBar?.Handler as ToolBarHandler)?.NativeControl;
+            NativeControl.Toolbar = (Control.ToolBar as IControl)?.NativeControl as Native.Toolbar;
         }
 
         private void ApplyStatusBar(object? sender, EventArgs e)

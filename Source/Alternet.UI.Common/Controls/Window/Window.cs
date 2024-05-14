@@ -21,10 +21,9 @@ namespace Alternet.UI
         private static int incFontSize = 0;
 
         private readonly WindowInfo info = new();
-        private Control? toolbar = null;
-        private FrameworkElement? statusBar = null;
+        private object? toolbar = null;
         private IconSet? icon = null;
-        private Control? menu = null;
+        private object? menu = null;
         private Window? owner;
 
         /// <summary>
@@ -157,7 +156,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
-        public static Window? ActiveWindow => NativeWindow.Default.GetActiveWindow();
+        public static Window? ActiveWindow => NativePlatform.Default.GetActiveWindow();
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -172,7 +171,6 @@ namespace Alternet.UI
             set
             {
                 defaultBounds = value;
-                NativeWindow.Default.SetDefaultBounds(defaultBounds);
             }
         }
 
@@ -221,7 +219,10 @@ namespace Alternet.UI
         /// this application.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsActive => GetNativeWindow().IsActive(this);
+        public virtual bool IsActive => Handler.IsActive;
+
+        [Browsable(false)]
+        public new IWindowHandler Handler => (IWindowHandler)base.Handler;
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -369,7 +370,7 @@ namespace Alternet.UI
                 if (info.IsPopupWindow == value)
                     return;
                 info.IsPopupWindow = value;
-                GetNativeWindow().SetIsPopupWindow(this, value);
+                Handler.IsPopupWindow = value;
             }
         }
 
@@ -540,7 +541,7 @@ namespace Alternet.UI
                 if (info.StartLocation == value)
                     return;
                 info.StartLocation = value;
-                GetNativeWindow().SetStartLocation(this, value);
+                Handler.StartLocation = value;
             }
         }
 
@@ -563,7 +564,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNativeWindow().GetOwnedWindows(this);
+                return Handler.OwnedWindows;
             }
         }
 
@@ -573,7 +574,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual WindowState State
         {
-            get => GetNativeWindow().GetState(this);
+            get => Handler.State;
 
             set
             {
@@ -582,7 +583,7 @@ namespace Alternet.UI
 
                 if (IsDisposed)
                     return;
-                GetNativeWindow().SetState(this, value);
+                Handler.State = value;
                 OnStateChanged(EventArgs.Empty);
                 StateChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -598,24 +599,15 @@ namespace Alternet.UI
         /// You can use this property to switch between complete status bar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual FrameworkElement? StatusBar
+        public virtual object? StatusBar
         {
-            get => statusBar;
+            get => Handler.StatusBar;
 
             set
             {
-                if (statusBar == value)
+                if (StatusBar == value)
                     return;
-
-                if(GetWindowKind() == WindowKind.Dialog)
-                {
-                    statusBar = value;
-                    return;
-                }
-
-                GetNativeWindow().SetStatusBar(this, statusBar, value);
-                statusBar = value;
-
+                Handler.StatusBar = value;
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);
                 PerformLayout();
@@ -643,7 +635,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use this property to switch between complete menu sets at run time.
         /// </remarks>
-        public virtual Control? Menu
+        public virtual object? Menu
         {
             get => menu;
 
@@ -658,8 +650,8 @@ namespace Alternet.UI
                 if (GetWindowKind() == WindowKind.Dialog)
                     return;
 
-                oldValue?.SetParentInternal(null);
-                menu?.SetParentInternal(this);
+                (oldValue as Control)?.SetParentInternal(null);
+                (menu as Control)?.SetParentInternal(this);
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
@@ -703,7 +695,7 @@ namespace Alternet.UI
         /// You can use this property to switch between complete toolbar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual Control? ToolBar
+        public virtual object? ToolBar
         {
             get => toolbar;
 
@@ -718,8 +710,8 @@ namespace Alternet.UI
                 if (GetWindowKind() == WindowKind.Dialog)
                     return;
 
-                oldValue?.SetParentInternal(null);
-                toolbar?.SetParentInternal(this);
+                (oldValue as Control)?.SetParentInternal(null);
+                (toolbar as Control)?.SetParentInternal(this);
 
                 OnToolBarChanged(EventArgs.Empty);
                 ToolBarChanged?.Invoke(this, EventArgs.Empty);
@@ -764,14 +756,14 @@ namespace Alternet.UI
                 foreach (var item in base.LogicalChildrenCollection)
                     yield return item;
 
-                if (Menu != null)
-                    yield return Menu;
+                if (Menu is FrameworkElement m)
+                    yield return m;
 
-                if (ToolBar != null)
-                    yield return ToolBar;
+                if (ToolBar is FrameworkElement t)
+                    yield return t;
 
-                if (StatusBar != null)
-                    yield return StatusBar;
+                if (StatusBar is FrameworkElement s)
+                    yield return s;
             }
         }
 
@@ -824,7 +816,7 @@ namespace Alternet.UI
         /// Activating a window brings it to the front if this is the active application,
         /// or it flashes the window caption if this is not the active application.
         /// </remarks>
-        public virtual void Activate() => GetNativeWindow().Activate(this);
+        public virtual void Activate() => Handler.Activate();
 
         /// <summary>
         /// Gets default bounds assigned to the window.
@@ -857,7 +849,7 @@ namespace Alternet.UI
 
             CheckDisposed();
 
-            GetNativeWindow().Close(this);
+            Handler.Close();
         }
 
         public void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
@@ -1157,11 +1149,5 @@ namespace Alternet.UI
         protected virtual void OnStateChanged(EventArgs e)
         {
         }
-
-        /// <summary>
-        /// Gets native window adapter.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual NativeWindow GetNativeWindow() => NativeWindow.Default;
     }
 }

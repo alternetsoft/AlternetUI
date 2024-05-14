@@ -24,7 +24,7 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return GetNativeWindow().GetModal(this);
+                return Handler.IsModal;
             }
         }
 
@@ -58,13 +58,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return GetNativeWindow().GetModalResult(this);
+                return Handler.ModalResult;
             }
 
             set
             {
                 CheckDisposed();
-                GetNativeWindow().SetModalResult(this, value);
+                Handler.ModalResult = value;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Alternet.UI
             CheckDisposed();
             ModalResult = ModalResult.None;
             ApplyStartLocationOnce(owner);
-            return GetNativeWindow().ShowModal(this, owner);
+            return Handler.ShowModal(owner);
         }
 
         /// <inheritdoc/>

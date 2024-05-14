@@ -73,6 +73,8 @@ namespace Alternet.UI
 
         public abstract IVListBoxHandler CreateVListBoxHandler(VListBox control);
 
+        public abstract Window? GetActiveWindow();
+
         public abstract void ShowDeveloperTools();
 
         public abstract string GetLibraryVersionString();

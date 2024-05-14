@@ -224,6 +224,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override Window? GetActiveWindow()
+        {
+            throw new NotImplementedException();
+        }
+
         public override LangDirection GetLangDirection()
         {
             throw new NotImplementedException();
