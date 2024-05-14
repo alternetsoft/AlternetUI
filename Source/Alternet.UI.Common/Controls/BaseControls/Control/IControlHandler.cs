@@ -8,6 +8,40 @@ namespace Alternet.UI
 {
     public interface IControlHandler : IDisposableObject
     {
+        Action? Idle { get; set; }
+
+        Action? Paint { get; set; }
+
+        Action? MouseEnter { get; set; }
+
+        Action? MouseLeave { get; set; }
+
+        Action? MouseClick { get; set; }
+
+        Action? VisibleChanged { get; set; }
+
+        Action? MouseCaptureLost { get; set; }
+
+        Action? GotFocus { get; set; }
+
+        Action? LostFocus { get; set; }
+
+        Action? DragLeave { get; set; }
+
+        Action? VerticalScrollBarValueChanged { get; set; }
+
+        Action? HorizontalScrollBarValueChanged { get; set; }
+
+        Action? SizeChanged { get; set; }
+
+        Action? Activated { get; set; }
+
+        Action? Deactivated { get; set; }
+
+        Action? HandleCreated { get; set; }
+
+        Action? HandleDestroyed { get; set; }
+
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>

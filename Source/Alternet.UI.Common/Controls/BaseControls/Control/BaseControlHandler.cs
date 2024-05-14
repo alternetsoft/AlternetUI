@@ -18,6 +18,40 @@ namespace Alternet.UI
             get => control ?? throw new InvalidOperationException();
         }
 
+        public abstract Action? Idle { get; set; }
+
+        public abstract Action? Paint { get; set; }
+
+        public abstract Action? MouseEnter { get; set; }
+
+        public abstract Action? MouseLeave { get; set; }
+
+        public abstract Action? MouseClick { get; set; }
+
+        public abstract Action? VisibleChanged { get; set; }
+
+        public abstract Action? MouseCaptureLost { get; set; }
+
+        public abstract Action? GotFocus { get; set; }
+
+        public abstract Action? LostFocus { get; set; }
+
+        public abstract Action? DragLeave { get; set; }
+
+        public abstract Action? VerticalScrollBarValueChanged { get; set; }
+
+        public abstract Action? HorizontalScrollBarValueChanged { get; set; }
+
+        public abstract Action? SizeChanged { get; set; }
+
+        public abstract Action? Activated { get; set; }
+
+        public abstract Action? Deactivated { get; set; }
+
+        public abstract Action? HandleCreated { get; set; }
+
+        public abstract Action? HandleDestroyed { get; set; }
+
         /// <summary>
         /// Gets a value indicating whether this <see cref="WxControlHandler"/> is attached
         /// to a <see cref="Control"/>.

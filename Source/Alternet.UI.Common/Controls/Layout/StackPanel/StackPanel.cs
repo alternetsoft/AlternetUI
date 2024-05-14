@@ -36,7 +36,6 @@ namespace Alternet.UI
 
                 OnOrientationChanged(EventArgs.Empty);
                 PerformLayout();
-                RaiseLayoutChanged();
             }
         }
 

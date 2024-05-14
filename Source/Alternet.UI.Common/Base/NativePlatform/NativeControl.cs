@@ -50,6 +50,8 @@ public abstract class NativeControl
 
     public abstract BaseControlHandler CreateListBoxHandler(ListBox control);
 
+    public abstract BaseControlHandler CreateScrollViewerHandler(ScrollViewer control);
+
     public abstract BaseControlHandler CreateTreeViewHandler(TreeView control);
 
     public abstract BaseControlHandler CreateControlHandler(Control control);

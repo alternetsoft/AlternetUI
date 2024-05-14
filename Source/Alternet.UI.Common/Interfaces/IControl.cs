@@ -1824,12 +1824,6 @@ namespace Alternet.UI
         int EndUpdate();
 
         /// <summary>
-        /// Initiates invocation of layout changed nethods for this and
-        /// all parent controls.
-        /// </summary>
-        void RaiseLayoutChanged();
-
-        /// <summary>
         /// Forces the control to apply layout logic to child controls.
         /// </summary>
         /// <remarks>

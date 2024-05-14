@@ -22,6 +22,108 @@ namespace Alternet.UI
         {
         }
 
+        public override Action? Idle
+        {
+            get => NativeControl.Idle;
+            set => NativeControl.Idle = value;
+        }
+
+        public override Action? Paint
+        {
+            get => NativeControl.Paint;
+            set => NativeControl.Paint = value;
+        }
+
+        public override Action? MouseEnter
+        {
+            get => NativeControl.MouseEnter;
+            set => NativeControl.MouseEnter = value;
+        }
+
+        public override Action? MouseLeave
+        {
+            get => NativeControl.MouseLeave;
+            set => NativeControl.MouseLeave = value;
+        }
+
+        public override Action? MouseClick
+        {
+            get => NativeControl.MouseClick;
+            set => NativeControl.MouseClick = value;
+        }
+
+        public override Action? VisibleChanged
+        {
+            get => NativeControl.VisibleChanged;
+            set => NativeControl.VisibleChanged = value;
+        }
+
+        public override Action? MouseCaptureLost
+        {
+            get => NativeControl.MouseCaptureLost;
+            set => NativeControl.MouseCaptureLost = value;
+        }
+
+        public override Action? GotFocus
+        {
+            get => NativeControl.GotFocus;
+            set => NativeControl.GotFocus = value;
+        }
+
+        public override Action? LostFocus
+        {
+            get => NativeControl.LostFocus;
+            set => NativeControl.LostFocus = value;
+        }
+
+        public override Action? DragLeave
+        {
+            get => NativeControl.DragLeave;
+            set => NativeControl.DragLeave = value;
+        }
+
+        public override Action? VerticalScrollBarValueChanged
+        {
+            get => NativeControl.VerticalScrollBarValueChanged;
+            set => NativeControl.VerticalScrollBarValueChanged = value;
+        }
+
+        public override Action? HorizontalScrollBarValueChanged
+        {
+            get => NativeControl.HorizontalScrollBarValueChanged;
+            set => NativeControl.HorizontalScrollBarValueChanged = value;
+        }
+
+        public override Action? SizeChanged
+        {
+            get => NativeControl.SizeChanged;
+            set => NativeControl.SizeChanged = value;
+        }
+
+        public override Action? Activated
+        {
+            get => NativeControl.Activated;
+            set => NativeControl.Activated = value;
+        }
+
+        public override Action? Deactivated
+        {
+            get => NativeControl.Deactivated;
+            set => NativeControl.Deactivated = value;
+        }
+
+        public override Action? HandleCreated
+        {
+            get => NativeControl.HandleCreated;
+            set => NativeControl.HandleCreated = value;
+        }
+
+        public override Action? HandleDestroyed
+        {
+            get => NativeControl.HandleDestroyed;
+            set => NativeControl.HandleDestroyed = value;
+        }
+
         /// <summary>
         /// Gets a value indicating whether the control has a native control associated with it.
         /// </summary>

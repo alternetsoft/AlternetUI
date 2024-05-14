@@ -22,7 +22,6 @@ namespace LayoutSample
             set
             {
                 zoom = value;
-                RaiseLayoutChanged();
                 PerformLayout();
             }
         }

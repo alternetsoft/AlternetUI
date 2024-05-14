@@ -36,7 +36,6 @@ namespace Alternet.UI
         {
             item.SetParentInternal(this);
             Handler.RaiseChildInserted(item);
-            RaiseLayoutChanged();
             PerformLayout();
         }
 
@@ -44,7 +43,6 @@ namespace Alternet.UI
         {
             item.SetParentInternal(null);
             Handler.RaiseChildRemoved(item);
-            RaiseLayoutChanged();
             PerformLayout();
         }
 

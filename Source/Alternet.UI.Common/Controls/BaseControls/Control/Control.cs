@@ -2337,7 +2337,7 @@ namespace Alternet.UI
                 if (font == value)
                     return;
 
-                DoInsideLayout(() =>
+                PerformLayoutAndInvalidate(() =>
                 {
                     font = value;
                     OnFontChanged(EventArgs.Empty);
@@ -2351,8 +2351,6 @@ namespace Alternet.UI
                             child.Font = value;
                     }
                 });
-                RaiseLayoutChanged();
-                Invalidate();
             }
         }
 
@@ -2379,13 +2377,11 @@ namespace Alternet.UI
             {
                 if (IsBold == value)
                     return;
-                DoInsideLayout(() =>
+                PerformLayoutAndInvalidate(() =>
                 {
                     GetNative().SetIsBold(this, value);
-                    RaiseLayoutChanged();
                     PerformLayout();
                 });
-                Invalidate();
             }
         }
 
@@ -2426,7 +2422,6 @@ namespace Alternet.UI
 
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                RaiseLayoutChanged();
                 PerformLayout();
             }
         }
@@ -2505,7 +2500,6 @@ namespace Alternet.UI
 
                 horizontalAlignment = value;
                 HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                RaiseLayoutChanged();
                 PerformLayout();
             }
         }

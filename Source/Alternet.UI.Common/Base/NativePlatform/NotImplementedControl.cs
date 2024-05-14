@@ -754,4 +754,9 @@ internal class NotImplementedControl : NativeControl
     {
         throw new NotImplementedException();
     }
+
+    public override BaseControlHandler CreateScrollViewerHandler(ScrollViewer control)
+    {
+        throw new NotImplementedException();
+    }
 }

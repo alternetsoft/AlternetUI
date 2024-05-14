@@ -207,6 +207,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BaseControlHandler CreateScrollViewerHandler(ScrollViewer control)
+        {
+            return new WxControlHandler();
+        }
+
+        /// <inheritdoc/>
         public override BaseControlHandler CreateVListBoxHandler(VListBox control)
         {
             return new VListBoxHandler();
