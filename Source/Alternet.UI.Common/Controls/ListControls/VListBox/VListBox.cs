@@ -1406,9 +1406,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateVListBoxHandler(this);
+            return NativePlatform.Default.CreateVListBoxHandler(this);
         }
 
         /// <summary>

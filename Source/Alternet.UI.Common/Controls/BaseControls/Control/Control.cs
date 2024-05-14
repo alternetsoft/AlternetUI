@@ -60,7 +60,7 @@ namespace Alternet.UI
         private Thickness margin;
         private Thickness padding;
         private string title = string.Empty;
-        private BaseControlHandler? handler;
+        private IControlHandler? handler;
         private ControlStateSettings? stateObjects;
         private Font? font;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
@@ -2607,6 +2607,19 @@ namespace Alternet.UI
                         padding.Left + intrinsicPadding.Left,
                         padding.Top + intrinsicPadding.Top),
                     childrenBounds.Size - padding.Size - intrinsicPadding.Size);
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="WxControlHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IControlHandler Handler
+        {
+            get
+            {
+                EnsureHandlerCreated();
+                return handler ?? throw new InvalidOperationException();
             }
         }
 

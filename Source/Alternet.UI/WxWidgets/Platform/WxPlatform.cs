@@ -28,6 +28,153 @@ namespace Alternet.UI
             initialized = true;
         }
 
+        /// <inheritdoc/>
+        public override ICalendarHandler CreateCalendarHandler(Calendar control)
+        {
+            return new CalendarHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IProgressBarHandler CreateProgressBarHandler(ProgressBar control)
+        {
+            return new ProgressBarHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IRadioButtonHandler CreateRadioButtonHandler(RadioButton control)
+        {
+            return new RadioButtonHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IWindowHandler CreateWindowHandler(Window window) => new WindowHandler();
+
+        /// <inheritdoc/>
+        public override IListViewHandler CreateListViewHandler(ListView control)
+        {
+            return new ListViewHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control)
+        {
+            return new DateTimePickerHandler();
+        }
+
+        /// <inheritdoc/>
+        public override INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control)
+        {
+            return new NumericUpDownHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ICheckBoxHandler CreateCheckBoxHandler(CheckBox control)
+        {
+            return new CheckBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IButtonHandler CreateButtonHandler(Button control)
+        {
+            return new ButtonHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ISliderHandler CreateSliderHandler(Slider control)
+        {
+            return new SliderHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IColorPickerHandler CreateColorPickerHandler(ColorPicker control)
+        {
+            return new ColorPickerHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IGroupBoxHandler CreateGroupBoxHandler(GroupBox control)
+        {
+            return new GroupBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ITextBoxHandler CreateTextBoxHandler(TextBox control)
+        {
+            return new TextBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IComboBoxHandler CreateComboBoxHandler(ComboBox control)
+        {
+            return new ComboBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ILabelHandler CreateLabelHandler(Label control)
+        {
+            return new LabelHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
+        {
+            return new ScrollBarHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IMenuItemHandler CreateMenuItemHandler(MenuItem control)
+        {
+            return new MenuItemHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
+        {
+            return new ContextMenuHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IMainMenuHandler CreateMainMenuHandler(MainMenu control)
+        {
+            return new MainMenuHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ITreeViewHandler CreateTreeViewHandler(TreeView control)
+        {
+            return new TreeViewHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control)
+        {
+            return new ScrollViewerHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IVListBoxHandler CreateVListBoxHandler(VListBox control)
+        {
+            return new VListBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control)
+        {
+            return new CheckListBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IListBoxHandler CreateListBoxHandler(ListBox control)
+        {
+            return new ListBoxHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IControlHandler CreateControlHandler(Control control)
+        {
+            return new ControlHandler<Control>();
+        }
+
         public override IPropertyGridChoices CreateChoices()
         {
             return new PropertyGridChoices();

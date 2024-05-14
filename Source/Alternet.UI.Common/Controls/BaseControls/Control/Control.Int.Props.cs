@@ -10,19 +10,6 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        /// <summary>
-        /// Gets a <see cref="WxControlHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public virtual BaseControlHandler Handler
-        {
-            get
-            {
-                EnsureHandlerCreated();
-                return handler ?? throw new InvalidOperationException();
-            }
-        }
-
         internal static int ScreenShotCounter { get; set; } = 0;
 
         internal bool ProcessUIUpdates

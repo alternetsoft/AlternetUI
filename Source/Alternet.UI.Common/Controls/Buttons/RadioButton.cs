@@ -59,9 +59,9 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.RadioButton;
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateRadioButtonHandler(this);
+            return NativePlatform.Default.CreateRadioButtonHandler(this);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class ProgressBarHandler : ControlHandler<ProgressBar>
+    internal class ProgressBarHandler : ControlHandler<ProgressBar>, IProgressBarHandler
     {
         public new Native.ProgressBar NativeControl => (Native.ProgressBar)base.NativeControl!;
 

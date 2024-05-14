@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public abstract class BaseControlHandler : DisposableObject, IControlHandler
+    internal abstract class BaseControlHandler : DisposableObject, IControlHandler
     {
         private Control? control;
 

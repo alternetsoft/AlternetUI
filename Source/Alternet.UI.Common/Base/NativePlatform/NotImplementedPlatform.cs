@@ -31,7 +31,87 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IButtonHandler CreateButtonHandler(Button control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ICalendarHandler CreateCalendarHandler(Calendar control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ICheckBoxHandler CreateCheckBoxHandler(CheckBox control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IPropertyGridChoices CreateChoices()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IColorPickerHandler CreateColorPickerHandler(ColorPicker control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IComboBoxHandler CreateComboBoxHandler(ComboBox control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IControlHandler CreateControlHandler(Control control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IGroupBoxHandler CreateGroupBoxHandler(GroupBox control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ILabelHandler CreateLabelHandler(Label control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IListBoxHandler CreateListBoxHandler(ListBox control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IListViewHandler CreateListViewHandler(ListView control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IMainMenuHandler CreateMainMenuHandler(MainMenu control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IMenuItemHandler CreateMenuItemHandler(MenuItem control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control)
         {
             throw new NotImplementedException();
         }
@@ -66,6 +146,16 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IProgressBarHandler CreateProgressBarHandler(ProgressBar control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRadioButtonHandler CreateRadioButtonHandler(RadioButton control)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IRichToolTipHandler CreateRichToolTipHandler(
             string title,
             string message,
@@ -74,7 +164,32 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ISliderHandler CreateSliderHandler(Slider control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ITextBoxHandler CreateTextBoxHandler(TextBox control)
+        {
+            throw new NotImplementedException();
+        }
+
         public override object CreateTimer()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ITreeViewHandler CreateTreeViewHandler(TreeView control)
         {
             throw new NotImplementedException();
         }
@@ -85,6 +200,16 @@ namespace Alternet.UI
         }
 
         public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IVListBoxHandler CreateVListBoxHandler(VListBox control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IWindowHandler CreateWindowHandler(Window window)
         {
             throw new NotImplementedException();
         }

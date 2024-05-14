@@ -682,9 +682,9 @@ namespace Alternet.UI
             Handler.EnableHolidayDisplay(display);
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateCalendarHandler(this);
+            return NativePlatform.Default.CreateCalendarHandler(this);
         }
 
         /// <inheritdoc/>

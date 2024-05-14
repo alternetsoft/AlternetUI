@@ -127,9 +127,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateDateTimePickerHandler(this);
+            return NativePlatform.Default.CreateDateTimePickerHandler(this);
         }
 
         /// <summary>

@@ -600,11 +600,6 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateControlHandler(Control control)
-    {
-        throw new NotImplementedException();
-    }
-
     public override void NotifyCaptureLost()
     {
         throw new NotImplementedException();
@@ -640,122 +635,7 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override BaseControlHandler CreateMenuItemHandler(MenuItem control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateContextMenuHandler(ContextMenu control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateMainMenuHandler(MainMenu control)
-    {
-        throw new NotImplementedException();
-    }
-
     public override void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateScrollBarHandler(ScrollBar control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateLabelHandler(Label control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateComboBoxHandler(ComboBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateTextBoxHandler(TextBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateRadioButtonHandler(RadioButton control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateProgressBarHandler(ProgressBar control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateGroupBoxHandler(GroupBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateColorPickerHandler(ColorPicker control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateSliderHandler(Slider control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateButtonHandler(Button control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateCheckBoxHandler(CheckBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateNumericUpDownHandler(NumericUpDown control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateDateTimePickerHandler(DateTimePicker control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateListViewHandler(ListView control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateCalendarHandler(Calendar control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateTreeViewHandler(TreeView control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateListBoxHandler(ListBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateCheckListBoxHandler(CheckListBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateVListBoxHandler(VListBox control)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override BaseControlHandler CreateScrollViewerHandler(ScrollViewer control)
     {
         throw new NotImplementedException();
     }

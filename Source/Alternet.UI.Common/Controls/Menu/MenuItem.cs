@@ -415,9 +415,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateMenuItemHandler(this);
+            return NativePlatform.Default.CreateMenuItemHandler(this);
         }
 
         private static void OnCommandChanged(

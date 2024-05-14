@@ -46,9 +46,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateScrollViewerHandler(this);
+            return NativePlatform.Default.CreateScrollViewerHandler(this);
         }
 
         /// <inheritdoc/>

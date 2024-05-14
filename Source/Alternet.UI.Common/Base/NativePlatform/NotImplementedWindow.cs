@@ -20,11 +20,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override object CreateWindowHandler()
-        {
-            throw new NotImplementedException();
-        }
-
         public override Window? GetActiveWindow()
         {
             throw new NotImplementedException();

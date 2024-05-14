@@ -4,7 +4,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ContextMenuHandler : NativeControlHandler<ContextMenu, Native.Menu>
+    internal class ContextMenuHandler : NativeControlHandler<ContextMenu, Native.Menu>, IContextMenuHandler
     {
         /// <summary>
         /// Displays the shortcut menu at the specified position.

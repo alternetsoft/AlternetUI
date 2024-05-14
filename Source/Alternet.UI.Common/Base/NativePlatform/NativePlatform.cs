@@ -23,6 +23,56 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
+        public abstract ICalendarHandler CreateCalendarHandler(Calendar control);
+
+        public abstract IListViewHandler CreateListViewHandler(ListView control);
+
+        public abstract IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control);
+
+        public abstract INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control);
+
+        public abstract ICheckBoxHandler CreateCheckBoxHandler(CheckBox control);
+
+        public abstract IButtonHandler CreateButtonHandler(Button control);
+
+        public abstract IColorPickerHandler CreateColorPickerHandler(ColorPicker control);
+
+        public abstract ISliderHandler CreateSliderHandler(Slider control);
+
+        public abstract IProgressBarHandler CreateProgressBarHandler(ProgressBar control);
+
+        public abstract IGroupBoxHandler CreateGroupBoxHandler(GroupBox control);
+
+        public abstract IRadioButtonHandler CreateRadioButtonHandler(RadioButton control);
+
+        public abstract ITextBoxHandler CreateTextBoxHandler(TextBox control);
+
+        public abstract IComboBoxHandler CreateComboBoxHandler(ComboBox control);
+
+        public abstract ILabelHandler CreateLabelHandler(Label control);
+
+        public abstract IScrollBarHandler CreateScrollBarHandler(ScrollBar control);
+
+        public abstract IMenuItemHandler CreateMenuItemHandler(MenuItem control);
+
+        public abstract IContextMenuHandler CreateContextMenuHandler(ContextMenu control);
+
+        public abstract IMainMenuHandler CreateMainMenuHandler(MainMenu control);
+
+        public abstract IListBoxHandler CreateListBoxHandler(ListBox control);
+
+        public abstract IWindowHandler CreateWindowHandler(Window window);
+
+        public abstract IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control);
+
+        public abstract ITreeViewHandler CreateTreeViewHandler(TreeView control);
+
+        public abstract IControlHandler CreateControlHandler(Control control);
+
+        public abstract ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control);
+
+        public abstract IVListBoxHandler CreateVListBoxHandler(VListBox control);
+
         public abstract void ShowDeveloperTools();
 
         public abstract string GetLibraryVersionString();

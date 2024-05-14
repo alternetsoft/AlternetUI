@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class WindowHandler : WxControlHandler
+    internal class WindowHandler : WxControlHandler, IWindowHandler
     {
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.

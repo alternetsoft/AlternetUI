@@ -296,9 +296,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateButtonHandler(this);
+            return NativePlatform.Default.CreateButtonHandler(this);
         }
     }
 }

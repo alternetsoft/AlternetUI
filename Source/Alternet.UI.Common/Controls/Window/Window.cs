@@ -905,8 +905,8 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
-            => (BaseControlHandler)GetNativeWindow().CreateWindowHandler();
+        protected override IControlHandler CreateHandler()
+            => NativePlatform.Default.CreateWindowHandler(this);
 
         protected void ApplyStartLocationOnce(Control? owner)
         {

@@ -19,9 +19,9 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.MainMenu;
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateMainMenuHandler(this);
+            return NativePlatform.Default.CreateMainMenuHandler(this);
         }
     }
 }

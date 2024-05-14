@@ -3,7 +3,8 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class MenuItemHandler : NativeControlHandler<MenuItem, Native.MenuItem>
+    internal class MenuItemHandler
+        : NativeControlHandler<MenuItem, Native.MenuItem>, IMenuItemHandler
     {
         internal static IntPtr GetMenuHandle(IControl control)
         {

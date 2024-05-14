@@ -66,9 +66,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object CreateWindowHandler() => new WindowHandler();
-
-        /// <inheritdoc/>
         public override void SetDefaultBounds(RectD defaultBounds)
         {
             Native.Window.SetDefaultBounds(defaultBounds);

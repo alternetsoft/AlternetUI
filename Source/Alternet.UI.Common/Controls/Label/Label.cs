@@ -81,9 +81,9 @@ namespace Alternet.UI
         }*/
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateLabelHandler(this);
+            return NativePlatform.Default.CreateLabelHandler(this);
         }
     }
 }

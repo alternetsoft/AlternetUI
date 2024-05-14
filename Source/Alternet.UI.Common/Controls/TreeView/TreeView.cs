@@ -1015,9 +1015,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseControlHandler CreateHandler()
+        protected override IControlHandler CreateHandler()
         {
-            return GetNative().CreateTreeViewHandler(this);
+            return NativePlatform.Default.CreateTreeViewHandler(this);
         }
 
         /// <summary>

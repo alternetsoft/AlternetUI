@@ -12,54 +12,6 @@ public abstract class NativeControl
 {
     public static NativeControl Default = new NotImplementedControl();
 
-    public abstract BaseControlHandler CreateCalendarHandler(Calendar control);
-
-    public abstract BaseControlHandler CreateListViewHandler(ListView control);
-
-    public abstract BaseControlHandler CreateDateTimePickerHandler(DateTimePicker control);
-
-    public abstract BaseControlHandler CreateNumericUpDownHandler(NumericUpDown control);
-
-    public abstract BaseControlHandler CreateCheckBoxHandler(CheckBox control);
-
-    public abstract BaseControlHandler CreateButtonHandler(Button control);
-
-    public abstract BaseControlHandler CreateColorPickerHandler(ColorPicker control);
-
-    public abstract BaseControlHandler CreateSliderHandler(Slider control);
-
-    public abstract BaseControlHandler CreateProgressBarHandler(ProgressBar control);
-
-    public abstract BaseControlHandler CreateGroupBoxHandler(GroupBox control);
-
-    public abstract BaseControlHandler CreateRadioButtonHandler(RadioButton control);
-
-    public abstract BaseControlHandler CreateTextBoxHandler(TextBox control);
-
-    public abstract BaseControlHandler CreateComboBoxHandler(ComboBox control);
-
-    public abstract BaseControlHandler CreateLabelHandler(Label control);
-
-    public abstract BaseControlHandler CreateScrollBarHandler(ScrollBar control);
-
-    public abstract BaseControlHandler CreateMenuItemHandler(MenuItem control);
-
-    public abstract BaseControlHandler CreateContextMenuHandler(ContextMenu control);
-
-    public abstract BaseControlHandler CreateMainMenuHandler(MainMenu control);
-
-    public abstract BaseControlHandler CreateListBoxHandler(ListBox control);
-
-    public abstract BaseControlHandler CreateScrollViewerHandler(ScrollViewer control);
-
-    public abstract BaseControlHandler CreateTreeViewHandler(TreeView control);
-
-    public abstract BaseControlHandler CreateControlHandler(Control control);
-
-    public abstract BaseControlHandler CreateCheckListBoxHandler(CheckListBox control);
-
-    public abstract BaseControlHandler CreateVListBoxHandler(VListBox control);
-
     public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
 
     public abstract CustomControlPainter GetPainter();

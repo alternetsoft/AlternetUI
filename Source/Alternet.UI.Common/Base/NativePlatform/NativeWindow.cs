@@ -26,8 +26,6 @@ namespace Alternet.UI
 
         public abstract bool GetModal(IWindow window);
 
-        public abstract object CreateWindowHandler();
-
         public abstract void SetDefaultBounds(RectD defaultBounds);
 
         public abstract bool IsActive(IWindow window);

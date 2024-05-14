@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Disconnects the current control <see cref="Handler"/> from
         /// the control.
-        /// This method calls <see cref="WxControlHandler.Detach"/>.
+        /// This method calls <see cref="IControlHandler.Detach"/>.
         /// </summary>
         protected internal void DetachHandler()
         {
@@ -420,8 +420,6 @@ namespace Alternet.UI
             SuspendLayout();
             if (HasChildren)
                 Children.Clear();
-            /*if (Handler.HasVisualChildren)
-                Handler.VisualChildren.Clear();*/
             ResumeLayout(performLayout: false);
 
             // TODO
@@ -695,9 +693,9 @@ namespace Alternet.UI
         /// <see cref="EnsureHandlerCreated"/> method, which forces a handler
         /// to be created for the control.
         /// </remarks>
-        protected virtual BaseControlHandler CreateHandler()
+        protected virtual IControlHandler CreateHandler()
         {
-            return GetNative().CreateControlHandler(this);
+            return NativePlatform.Default.CreateControlHandler(this);
         }
 
         protected void SetVisibleValue(bool value) => visible = value;
