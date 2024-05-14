@@ -73,6 +73,24 @@ namespace Alternet.UI
 
         public abstract IVListBoxHandler CreateVListBoxHandler(VListBox control);
 
+        public abstract IControl? GetFocusedControl();
+
+        public abstract CustomControlPainter GetPainter();
+
+        public abstract void NotifyCaptureLost();
+
+        public abstract Color GetClassDefaultAttributesBgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
+        public abstract Color GetClassDefaultAttributesFgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
+        public abstract Font? GetClassDefaultAttributesFont(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
         public abstract Window? GetActiveWindow();
 
         public abstract void ShowDeveloperTools();

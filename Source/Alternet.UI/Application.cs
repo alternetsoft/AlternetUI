@@ -512,7 +512,7 @@ namespace Alternet.UI
         /// <param name="window">New 'top' window.</param>
         internal virtual void SetTopWindow(Window window)
         {
-            nativeApplication.SetTopWindow(WxPlatformControl.WxWidget(window));
+            nativeApplication.SetTopWindow(WxPlatform.WxWidget(window));
         }
 
         internal void WakeUpIdle()

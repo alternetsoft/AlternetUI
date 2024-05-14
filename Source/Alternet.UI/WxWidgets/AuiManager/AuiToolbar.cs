@@ -421,7 +421,7 @@ namespace Alternet.UI
                 throw new ArgumentNullException(nameof(control));
             control.Parent = this;
             int toolId = GenNewId();
-            NativeControl.AddControl(toolId, WxPlatformControl.WxWidget(control), string.Empty);
+            NativeControl.AddControl(toolId, WxPlatform.WxWidget(control), string.Empty);
             return toolId;
         }
 

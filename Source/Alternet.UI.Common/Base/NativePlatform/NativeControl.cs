@@ -14,8 +14,6 @@ public abstract class NativeControl
 
     public abstract void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null);
 
-    public abstract CustomControlPainter GetPainter();
-
     public abstract bool GetWantChars(IControl control);
 
     public abstract void SetWantChars(IControl control, bool value);
@@ -25,8 +23,6 @@ public abstract class NativeControl
     public abstract void SetShowVertScrollBar(IControl control, bool value);
 
     public abstract void SetScrollBarAlwaysVisible(IControl control, bool value);
-
-    public abstract void NotifyCaptureLost();
 
     public abstract bool CanAcceptFocus(IControl control);
 
@@ -264,18 +260,4 @@ public abstract class NativeControl
     public abstract LangDirection GetLangDirection(IControl control);
 
     public abstract void SetLangDirection(IControl control, LangDirection value);
-
-    public abstract IControl? GetFocusedControl();
-
-    public abstract Color GetClassDefaultAttributesBgColor(
-        ControlTypeId controlType,
-        ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
-    public abstract Color GetClassDefaultAttributesFgColor(
-        ControlTypeId controlType,
-        ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
-    public abstract Font? GetClassDefaultAttributesFont(
-        ControlTypeId controlType,
-        ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
 }

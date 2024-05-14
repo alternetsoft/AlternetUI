@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     {
         public override int DisplayGetFromControl(IControl control)
         {
-            return UI.Native.WxOtherFactory.DisplayGetFromWindow(WxPlatformControl.WxWidget(control));
+            return UI.Native.WxOtherFactory.DisplayGetFromWindow(WxPlatform.WxWidget(control));
         }
 
         public override object CreateDisplay()

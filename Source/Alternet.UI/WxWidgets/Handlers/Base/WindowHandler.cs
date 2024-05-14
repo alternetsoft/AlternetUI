@@ -127,7 +127,7 @@ namespace Alternet.UI
 
         public ModalResult ShowModal(IWindow? owner)
         {
-            NativeControl.ShowModal(WxPlatformControl.WxWidget(owner));
+            NativeControl.ShowModal(WxPlatform.WxWidget(owner));
             return ModalResult;
         }
 

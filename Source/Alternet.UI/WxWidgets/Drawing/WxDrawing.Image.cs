@@ -93,7 +93,7 @@ namespace Alternet.Drawing
             var nativeObject = NativeDrawing.Default.CreateImage();
             ((UI.Native.ImageSet)imageSet.Handler).InitImageFor(
                 (UI.Native.Image)nativeObject,
-                WxPlatformControl.WxWidget(control));
+                WxPlatform.WxWidget(control));
             return nativeObject;
         }
 

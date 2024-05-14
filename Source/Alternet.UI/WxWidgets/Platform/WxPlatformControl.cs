@@ -10,13 +10,6 @@ namespace Alternet.UI
 {
     internal class WxPlatformControl : NativeControl
     {
-        public static IntPtr WxWidget(IControl? control)
-        {
-            if (control is null)
-                return default;
-            return ((UI.Native.Control)control.NativeControl).WxWidget;
-        }
-
         /// <inheritdoc/>
         public override void ShowContextMenu(ContextMenu menu, IControl control, PointD? position = null)
         {
@@ -51,12 +44,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override CustomControlPainter GetPainter()
-        {
-            return NativeControlPainter.Default;
-        }
-
-        /// <inheritdoc/>
         public override bool GetWantChars(IControl control)
         {
             return ((UI.Native.Panel)control.NativeControl).WantChars;
@@ -84,57 +71,6 @@ namespace Alternet.UI
         public override void SetScrollBarAlwaysVisible(IControl control, bool value)
         {
             ((UI.Native.Panel)control.NativeControl).ScrollBarAlwaysVisible = value;
-        }
-
-        /// <inheritdoc/>
-        public override void NotifyCaptureLost()
-        {
-            Native.Control.NotifyCaptureLost();
-        }
-
-        /// <inheritdoc/>
-        public override Color GetClassDefaultAttributesBgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return Native.Control.GetClassDefaultAttributesBgColor(
-                (int)controlType,
-                (int)renderSize);
-        }
-
-        /// <inheritdoc/>
-        public override Color GetClassDefaultAttributesFgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return Native.Control.GetClassDefaultAttributesFgColor(
-                (int)controlType,
-                (int)renderSize);
-        }
-
-        /// <inheritdoc/>
-        public override Font? GetClassDefaultAttributesFont(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            var font = Native.Control.GetClassDefaultAttributesFont(
-                (int)controlType,
-                (int)renderSize);
-            return Font.FromInternal(font);
-        }
-
-        /// <inheritdoc/>
-        public override IControl? GetFocusedControl()
-        {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
-                return null;
-
-            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
-            if (handler == null || !handler.IsAttached)
-                return null;
-
-            return handler.Control;
         }
 
         /// <inheritdoc/>

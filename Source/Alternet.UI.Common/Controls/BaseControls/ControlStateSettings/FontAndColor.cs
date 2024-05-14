@@ -213,13 +213,13 @@ namespace Alternet.UI
             }
 
             public Color? BackgroundColor =>
-                NativeControl.Default.GetClassDefaultAttributesBgColor(controlType, renderSize);
+                Control.GetClassDefaultAttributesBgColor(controlType, renderSize);
 
             public Color? ForegroundColor =>
-                NativeControl.Default.GetClassDefaultAttributesFgColor(controlType, renderSize);
+                Control.GetClassDefaultAttributesFgColor(controlType, renderSize);
 
             public Font? Font =>
-                NativeControl.Default.GetClassDefaultAttributesFont(controlType, renderSize);
+                Control.GetClassDefaultAttributesFont(controlType, renderSize);
         }
     }
 }

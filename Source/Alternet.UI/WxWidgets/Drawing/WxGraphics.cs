@@ -94,7 +94,7 @@ namespace Alternet.Drawing
             var result = dc.GetTextExtent(
                 text,
                 (UI.Native.Font)font.NativeObject,
-                WxPlatformControl.WxWidget(control));
+                WxPlatform.WxWidget(control));
             descent = result.X;
             externalLeading = result.Y;
             return result.Size;
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
             var result = dc.GetTextExtentSimple(
                 text,
                 (UI.Native.Font)font.NativeObject,
-                WxPlatformControl.WxWidget(control));
+                WxPlatform.WxWidget(control));
             return result;
         }
 

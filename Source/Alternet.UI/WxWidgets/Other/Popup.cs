@@ -143,7 +143,7 @@ namespace Alternet.UI
             if (focusControl is null)
                 Handler.NativeControl.DoPopup(default);
             else
-                Handler.NativeControl.DoPopup(WxPlatformControl.WxWidget(focusControl));
+                Handler.NativeControl.DoPopup(WxPlatform.WxWidget(focusControl));
         }
 
         /// <summary>

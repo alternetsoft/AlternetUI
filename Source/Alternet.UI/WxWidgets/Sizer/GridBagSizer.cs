@@ -36,7 +36,7 @@ namespace Alternet.UI
 
         public ISizerItem FindItem(Control window)
         {
-            var itemHandle = Native.GridBagSizer.FindItem(Handle, WxPlatformControl.WxWidget(window));
+            var itemHandle = Native.GridBagSizer.FindItem(Handle, WxPlatform.WxWidget(window));
             return new SizerItem(itemHandle, false);
         }
 
@@ -48,7 +48,7 @@ namespace Alternet.UI
 
         public PointI GetItemPosition(Control window)
         {
-            return Native.GridBagSizer.GetItemPosition(Handle, WxPlatformControl.WxWidget(window));
+            return Native.GridBagSizer.GetItemPosition(Handle, WxPlatform.WxWidget(window));
         }
 
         public PointI GetItemPosition(ISizer sizer)
@@ -63,7 +63,7 @@ namespace Alternet.UI
 
         public PointI GetItemSpan(Control window)
         {
-            return Native.GridBagSizer.GetItemSpan(Handle, WxPlatformControl.WxWidget(window));
+            return Native.GridBagSizer.GetItemSpan(Handle, WxPlatform.WxWidget(window));
         }
 
         public PointI GetItemSpan(ISizer sizer)
@@ -78,7 +78,7 @@ namespace Alternet.UI
 
         public bool SetItemPosition(Control window, PointI pos)
         {
-            return Native.GridBagSizer.SetItemPosition(Handle, WxPlatformControl.WxWidget(window), pos);
+            return Native.GridBagSizer.SetItemPosition(Handle, WxPlatform.WxWidget(window), pos);
         }
 
         public bool SetItemPosition(ISizer sizer, PointI pos)
@@ -93,7 +93,7 @@ namespace Alternet.UI
 
         public bool SetItemSpan(Control window, SizeI span)
         {
-            return Native.GridBagSizer.SetItemSpan(Handle, WxPlatformControl.WxWidget(window), span);
+            return Native.GridBagSizer.SetItemSpan(Handle, WxPlatform.WxWidget(window), span);
         }
 
         public bool SetItemSpan(ISizer sizer, SizeI span)
@@ -131,7 +131,7 @@ namespace Alternet.UI
         {
             var result = Native.GridBagSizer.Add(
                 Handle,
-                WxPlatformControl.WxWidget(control),
+                WxPlatform.WxWidget(control),
                 pos,
                 span,
                 (int)flag,

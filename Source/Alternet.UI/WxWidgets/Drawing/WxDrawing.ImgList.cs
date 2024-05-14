@@ -15,7 +15,7 @@ namespace Alternet.Drawing
         public override SizeI ImageSetGetPreferredBitmapSizeFor(ImageSet imageSet, IControl control)
         {
             return ((UI.Native.ImageSet)imageSet.Handler)
-                .GetPreferredBitmapSizeFor(WxPlatformControl.WxWidget(control));
+                .GetPreferredBitmapSizeFor(WxPlatform.WxWidget(control));
         }
 
         /// <inheritdoc/>

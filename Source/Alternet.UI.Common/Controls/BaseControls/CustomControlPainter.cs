@@ -12,11 +12,16 @@ namespace Alternet.Drawing
     /// </summary>
     public abstract class CustomControlPainter : DisposableObject
     {
+        private static CustomControlPainter? current;
+
         /// <summary>
         /// Gets or sets current control painter.
-        /// See also <see cref="NativeControlPainter.Default"/>.
         /// </summary>
-        public static CustomControlPainter Current => NativeControl.Default.GetPainter();
+        public static CustomControlPainter Current
+        {
+            get => current ??= NativePlatform.Default.GetPainter();
+            set => current = value;
+        }
 
         /// <summary>
         /// Gets default checkbox size.

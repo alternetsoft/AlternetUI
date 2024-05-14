@@ -30,7 +30,7 @@ namespace Alternet.UI
         {
             var result = Native.Sizer.AddWindow(
                 Handle,
-                WxPlatformControl.WxWidget(window),
+                WxPlatform.WxWidget(window),
                 proportion,
                 (int)flag,
                 border,
@@ -85,7 +85,7 @@ namespace Alternet.UI
             var result = Native.Sizer.InsertWindow(
                 Handle,
                 index,
-                WxPlatformControl.WxWidget(window),
+                WxPlatform.WxWidget(window),
                 proportion,
                 (int)flag,
                 border,
@@ -151,7 +151,7 @@ namespace Alternet.UI
         {
             var result = Native.Sizer.PrependWindow(
                 Handle,
-                WxPlatformControl.WxWidget(window),
+                WxPlatform.WxWidget(window),
                 proportion,
                 (int)flag,
                 border,
@@ -217,7 +217,7 @@ namespace Alternet.UI
 
         public bool Detach(Control window)
         {
-            return Native.Sizer.DetachWindow(Handle, WxPlatformControl.WxWidget(window));
+            return Native.Sizer.DetachWindow(Handle, WxPlatform.WxWidget(window));
         }
 
         public bool Detach(ISizer sizer)
@@ -234,8 +234,8 @@ namespace Alternet.UI
         {
             return Native.Sizer.ReplaceWindow(
                 Handle,
-                WxPlatformControl.WxWidget(oldwin),
-                WxPlatformControl.WxWidget(newwin),
+                WxPlatform.WxWidget(oldwin),
+                WxPlatform.WxWidget(newwin),
                 recursive);
         }
 
@@ -266,7 +266,7 @@ namespace Alternet.UI
 
         public bool SetItemMinSize(Control window, int width, int height)
         {
-            return Native.Sizer.SetWindowItemMinSize(Handle, WxPlatformControl.WxWidget(window), width, height);
+            return Native.Sizer.SetWindowItemMinSize(Handle, WxPlatform.WxWidget(window), width, height);
         }
 
         public bool SetItemMinSize(ISizer sizer, int width, int height)
@@ -306,27 +306,27 @@ namespace Alternet.UI
 
         public SizeI ComputeFittingClientSize(Control window)
         {
-            return Native.Sizer.ComputeFittingClientSize(Handle, WxPlatformControl.WxWidget(window));
+            return Native.Sizer.ComputeFittingClientSize(Handle, WxPlatform.WxWidget(window));
         }
 
         public SizeI ComputeFittingWindowSize(Control window)
         {
-            return Native.Sizer.ComputeFittingWindowSize(Handle, WxPlatformControl.WxWidget(window));
+            return Native.Sizer.ComputeFittingWindowSize(Handle, WxPlatform.WxWidget(window));
         }
 
         public SizeI Fit(Control window)
         {
-            return Native.Sizer.Fit(Handle, WxPlatformControl.WxWidget(window));
+            return Native.Sizer.Fit(Handle, WxPlatform.WxWidget(window));
         }
 
         public void FitInside(Control window)
         {
-            Native.Sizer.FitInside(Handle, WxPlatformControl.WxWidget(window));
+            Native.Sizer.FitInside(Handle, WxPlatform.WxWidget(window));
         }
 
         public void SetSizeHints(Control window)
         {
-            Native.Sizer.SetSizeHints(Handle, WxPlatformControl.WxWidget(window));
+            Native.Sizer.SetSizeHints(Handle, WxPlatform.WxWidget(window));
         }
 
         public void SetDimension(int x, int y, int width, int height)
@@ -346,7 +346,7 @@ namespace Alternet.UI
 
         public bool Show(Control window, bool show, bool recursive)
         {
-            return Native.Sizer.ShowWindow(Handle, WxPlatformControl.WxWidget(window), show, recursive);
+            return Native.Sizer.ShowWindow(Handle, WxPlatform.WxWidget(window), show, recursive);
         }
 
         public bool Show(ISizer sizer, bool show, bool recursive)
@@ -366,7 +366,7 @@ namespace Alternet.UI
 
         public bool Hide(Control window, bool recursive)
         {
-            return Native.Sizer.HideWindow(Handle, WxPlatformControl.WxWidget(window), recursive);
+            return Native.Sizer.HideWindow(Handle, WxPlatform.WxWidget(window), recursive);
         }
 
         public bool Hide(int index)
@@ -376,7 +376,7 @@ namespace Alternet.UI
 
         public bool IsShown(Control window)
         {
-            return Native.Sizer.IsShownWindow(Handle, WxPlatformControl.WxWidget(window));
+            return Native.Sizer.IsShownWindow(Handle, WxPlatform.WxWidget(window));
         }
 
         public bool IsShown(ISizer sizer)
@@ -429,7 +429,7 @@ namespace Alternet.UI
 
         public ISizerItem? GetItem(Control window, bool recursive)
         {
-            var result = Native.Sizer.GetItemWindow(Handle, WxPlatformControl.WxWidget(window), recursive);
+            var result = Native.Sizer.GetItemWindow(Handle, WxPlatform.WxWidget(window), recursive);
             if (result == default)
                 return null;
             return new SizerItem(result, DisposeItemHandle);
@@ -463,7 +463,7 @@ namespace Alternet.UI
         {
             var result = Native.Sizer.PrependWindow2(
                 Handle,
-                WxPlatformControl.WxWidget(window),
+                WxPlatform.WxWidget(window),
                 ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
@@ -482,7 +482,7 @@ namespace Alternet.UI
 
         public ISizerItem Insert(int index, Control window, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.InsertWindow2(Handle, index, WxPlatformControl.WxWidget(window), ((SizerFlags)sizerFlags).Handle);
+            var result = Native.Sizer.InsertWindow2(Handle, index, WxPlatform.WxWidget(window), ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 
@@ -500,7 +500,7 @@ namespace Alternet.UI
 
         public ISizerItem Add(Control window, ISizerFlags sizerFlags)
         {
-            var result = Native.Sizer.AddWindow2(Handle, WxPlatformControl.WxWidget(window), ((SizerFlags)sizerFlags).Handle);
+            var result = Native.Sizer.AddWindow2(Handle, WxPlatform.WxWidget(window), ((SizerFlags)sizerFlags).Handle);
             return new SizerItem(result, DisposeItemHandle);
         }
 

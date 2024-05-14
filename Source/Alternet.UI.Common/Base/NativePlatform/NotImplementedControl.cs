@@ -580,31 +580,6 @@ internal class NotImplementedControl : NativeControl
         throw new NotImplementedException();
     }
 
-    public override IControl? GetFocusedControl()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Color GetClassDefaultAttributesBgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Color GetClassDefaultAttributesFgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Font? GetClassDefaultAttributesFont(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void NotifyCaptureLost()
-    {
-        throw new NotImplementedException();
-    }
-
     public override bool GetWantChars(IControl control)
     {
         throw new NotImplementedException();
@@ -626,11 +601,6 @@ internal class NotImplementedControl : NativeControl
     }
 
     public override void SetScrollBarAlwaysVisible(IControl control, bool value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override CustomControlPainter GetPainter()
     {
         throw new NotImplementedException();
     }

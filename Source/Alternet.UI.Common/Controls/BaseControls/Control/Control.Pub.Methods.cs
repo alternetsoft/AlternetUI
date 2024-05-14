@@ -116,7 +116,7 @@ namespace Alternet.UI
         /// </summary>
         public static Control? GetFocusedControl()
         {
-            var result = NativeControl.Default.GetFocusedControl();
+            var result = NativePlatform.Default.GetFocusedControl();
             return (Control?)result;
         }
 

@@ -17,6 +17,13 @@ namespace Alternet.UI
 
         private static bool initialized;
 
+        public static IntPtr WxWidget(IControl? control)
+        {
+            if (control is null)
+                return default;
+            return ((UI.Native.Control)control.NativeControl).WxWidget;
+        }
+
         public static void Initialize()
         {
             if (initialized)
@@ -37,6 +44,63 @@ namespace Alternet.UI
             var handler = WxControlHandler.NativeControlToHandler(activeWindow) ??
                 throw new InvalidOperationException();
             return ((WindowHandler)handler).Control;
+        }
+
+        /// <inheritdoc/>
+        public override CustomControlPainter GetPainter()
+        {
+            return NativeControlPainter.Default;
+        }
+
+        /// <inheritdoc/>
+        public override void NotifyCaptureLost()
+        {
+            Native.Control.NotifyCaptureLost();
+        }
+
+        /// <inheritdoc/>
+        public override Color GetClassDefaultAttributesBgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesBgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        /// <inheritdoc/>
+        public override Color GetClassDefaultAttributesFgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesFgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        /// <inheritdoc/>
+        public override Font? GetClassDefaultAttributesFont(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            var font = Native.Control.GetClassDefaultAttributesFont(
+                (int)controlType,
+                (int)renderSize);
+            return Font.FromInternal(font);
+        }
+
+        /// <inheritdoc/>
+        public override IControl? GetFocusedControl()
+        {
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl == null)
+                return null;
+
+            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
+            if (handler == null || !handler.IsAttached)
+                return null;
+
+            return handler.Control;
         }
 
         /// <inheritdoc/>
@@ -299,7 +363,7 @@ namespace Alternet.UI
         {
             return Native.WxOtherFactory.SystemSettingsGetMetric(
                 (int)index,
-                WxPlatformControl.WxWidget(control));
+                WxPlatform.WxWidget(control));
         }
 
         public override int SystemSettingsGetMetric(SystemSettingsMetric index)
@@ -369,7 +433,7 @@ namespace Alternet.UI
             int y,
             bool centre)
         {
-            var handle = WxPlatformControl.WxWidget(parent);
+            var handle = WxPlatform.WxWidget(parent);
             var result = Native.WxOtherFactory.GetTextFromUser(
                 message,
                 caption,
@@ -420,7 +484,7 @@ namespace Alternet.UI
             Control? parent,
             PointI pos)
         {
-            var handle = WxPlatformControl.WxWidget(parent);
+            var handle = WxPlatform.WxWidget(parent);
             var result = Native.WxOtherFactory.GetNumberFromUser(
                 message,
                 prompt,

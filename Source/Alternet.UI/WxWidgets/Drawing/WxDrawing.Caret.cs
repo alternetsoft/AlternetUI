@@ -19,7 +19,7 @@ namespace Alternet.Drawing
         public override object CreateCaret(IControl control, int width, int height)
         {
             return UI.Native.WxOtherFactory.CreateCaret2(
-                WxPlatformControl.WxWidget(control),
+                WxPlatform.WxWidget(control),
                 width,
                 height);
         }

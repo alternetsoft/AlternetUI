@@ -534,7 +534,7 @@ namespace Alternet.UI
 
         internal static IntPtr ToHandle(Control window)
         {
-            return WxPlatformControl.WxWidget(window);
+            return WxPlatform.WxWidget(window);
         }
 
         internal IAuiPaneInfo ToPaneInfo(IntPtr handle)

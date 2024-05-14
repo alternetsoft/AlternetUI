@@ -91,7 +91,7 @@ namespace Alternet.UI
 
         internal static void NotifyCaptureLost()
         {
-            NativeControl.Default.NotifyCaptureLost();
+            NativePlatform.Default.NotifyCaptureLost();
         }
 
         internal static void PerformDefaultLayout(
@@ -135,21 +135,21 @@ namespace Alternet.UI
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return NativeControl.Default.GetClassDefaultAttributesBgColor(controlType, renderSize);
+            return NativePlatform.Default.GetClassDefaultAttributesBgColor(controlType, renderSize);
         }
 
         internal static Color GetClassDefaultAttributesFgColor(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return NativeControl.Default.GetClassDefaultAttributesFgColor(controlType, renderSize);
+            return NativePlatform.Default.GetClassDefaultAttributesFgColor(controlType, renderSize);
         }
 
         internal static Font? GetClassDefaultAttributesFont(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return NativeControl.Default.GetClassDefaultAttributesFont(controlType, renderSize);
+            return NativePlatform.Default.GetClassDefaultAttributesFont(controlType, renderSize);
         }
 
         /// <summary>

@@ -229,6 +229,26 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override Color GetClassDefaultAttributesBgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Color GetClassDefaultAttributesFgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Font? GetClassDefaultAttributesFont(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IControl? GetFocusedControl()
+        {
+            throw new NotImplementedException();
+        }
+
         public override LangDirection GetLangDirection()
         {
             throw new NotImplementedException();
@@ -240,6 +260,11 @@ namespace Alternet.UI
         }
 
         public override long? GetNumberFromUser(string message, string prompt, string caption, long value, long min, long max, Control? parent, PointI pos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override CustomControlPainter GetPainter()
         {
             throw new NotImplementedException();
         }
@@ -320,6 +345,11 @@ namespace Alternet.UI
         }
 
         public override void MessageBeep(SystemSoundType soundType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void NotifyCaptureLost()
         {
             throw new NotImplementedException();
         }
