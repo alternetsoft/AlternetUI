@@ -16,7 +16,7 @@ namespace ApiGenerator.Managed
             var types = new PInvokeTypes();
 
             var type = apiType.Type;
-            var typeName = type.Name;
+            /*var typeName = type.Name;*/
 
             w.WriteLine("[SuppressUnmanagedCodeSecurity]");
             w.WriteLine("public class NativeApi : NativeApiProvider");

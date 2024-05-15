@@ -21,12 +21,13 @@ namespace Alternet.UI.Versioning
             foreach (var file in locator.GetVSPackageManifestFiles())
             {
                 const string Selector = "/x:PackageManifest/x:Metadata/x:Identity";
-                var namespaceBindings = new Dictionary<string, string> { { "x", XmlNamespaces.VSManifest.NamespaceName } };
+                var namespaceBindings
+                    = new Dictionary<string, string> { { "x", XmlNamespaces.VSManifest.NamespaceName } };
                 const string AttributeName = "Version";
 
-                var versionString = XmlValueReader.ReadAttributeValue(file, Selector, AttributeName, namespaceBindings);
-                if (versionString == null)
-                    throw new InvalidOperationException();
+                var versionString
+                    = XmlValueReader.ReadAttributeValue(file, Selector, AttributeName, namespaceBindings)
+                    ?? throw new InvalidOperationException();
 
                 var version = Version.Parse(versionString);
 

@@ -73,7 +73,7 @@ namespace Alternet.UI
         protected virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
         {
             var padding = Padding;
-            var intrinsicPadding = Handler.GetIntrinsicPreferredSizePadding();
+            var intrinsicPadding = Handler.IntrinsicPreferredSizePadding;
             return preferredSize + padding.Size + intrinsicPadding.Size;
         }
 

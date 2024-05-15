@@ -44,6 +44,14 @@ namespace Alternet.UI
 
         Action? HandleDestroyed { get; set; }
 
+        bool WantChars { get; set; }
+
+        bool ShowHorzScrollBar { get; set; }
+
+        bool ShowVertScrollBar { get; set; }
+
+        bool ScrollBarAlwaysVisible { get; set; }
+
         LangDirection LangDirection { get; set; }
 
         ControlBorderStyle BorderStyle { get; set; }
@@ -61,15 +69,11 @@ namespace Alternet.UI
 
         bool IsNativeControlCreated { get; }
 
-        bool WantChars { get; set; }
-
         bool IsFocused { get; }
 
-        bool ShowHorzScrollBar { get; set; }
+        Thickness IntrinsicLayoutPadding { get; }
 
-        bool ShowVertScrollBar { get; set; }
-
-        bool ScrollBarAlwaysVisible { get; set; }
+        Thickness IntrinsicPreferredSizePadding { get; }
 
         bool IsScrollable { get; set; }
 
@@ -136,10 +140,6 @@ namespace Alternet.UI
         void SendSizeEvent();
 
         void UnsetToolTip();
-
-        Thickness GetIntrinsicLayoutPadding();
-
-        Thickness GetIntrinsicPreferredSizePadding();
 
         void RefreshRect(RectD rect, bool eraseBackground = true);
 

@@ -76,11 +76,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override IControlHandler CreateControlHandler(Control control)
-        {
-            throw new NotImplementedException();
-        }
-
         public override IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control)
         {
             throw new NotImplementedException();
@@ -132,6 +127,11 @@ namespace Alternet.UI
         }
 
         public override IPageSetupDialogHandler CreatePageSetupDialogHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IControlHandler CreateControlHandler(Control control)
         {
             throw new NotImplementedException();
         }

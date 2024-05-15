@@ -8,7 +8,6 @@ namespace Alternet.UI
     internal class AuiToolbarHandler : ControlHandler<AuiToolbar>
     {
         public AuiToolbarHandler()
-            : base()
         {
         }
 

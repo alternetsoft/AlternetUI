@@ -269,7 +269,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IControlHandler CreateControlHandler(Control control)
         {
-            return new ControlHandler<Control>();
+            return new WxControlHandler();
         }
 
         public override IPropertyGridChoices CreateChoices()

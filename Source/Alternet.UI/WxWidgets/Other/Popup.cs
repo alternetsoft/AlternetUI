@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler() => new PopupHandler();
 
-        internal class PopupHandler : WxControlHandler
+        internal class PopupHandler : WxControlHandler, IControlHandler
         {
             /// <summary>
             /// Gets a <see cref="Popup"/> this handler provides the implementation for.

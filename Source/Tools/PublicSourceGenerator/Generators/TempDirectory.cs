@@ -31,7 +31,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators
 
             var targetFileDirectory = System.IO.Path.GetDirectoryName(targetArchiveFilePath);
             if (!Directory.Exists(targetFileDirectory))
-                Directory.CreateDirectory(targetFileDirectory);
+                Directory.CreateDirectory(targetFileDirectory!);
 
             ZipFile.CreateFromDirectory(Path, targetArchiveFilePath, CompressionLevel.Optimal, includeBaseDirectory: false);
         }

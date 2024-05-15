@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific <see cref="Control"/> behavior
     /// and appearance.
     /// </summary>
-    internal class WxControlHandler : BaseControlHandler
+    internal class WxControlHandler : BaseControlHandler, IControlHandler
     {
         private Native.Control? nativeControl;
 
@@ -23,103 +23,103 @@ namespace Alternet.UI
         {
         }
 
-        public override Action? Idle
+        public Action? Idle
         {
             get => NativeControl.Idle;
             set => NativeControl.Idle = value;
         }
 
-        public override Action? Paint
+        public Action? Paint
         {
             get => NativeControl.Paint;
             set => NativeControl.Paint = value;
         }
 
-        public override Action? MouseEnter
+        public Action? MouseEnter
         {
             get => NativeControl.MouseEnter;
             set => NativeControl.MouseEnter = value;
         }
 
-        public override Action? MouseLeave
+        public Action? MouseLeave
         {
             get => NativeControl.MouseLeave;
             set => NativeControl.MouseLeave = value;
         }
 
-        public override Action? MouseClick
+        public Action? MouseClick
         {
             get => NativeControl.MouseClick;
             set => NativeControl.MouseClick = value;
         }
 
-        public override Action? VisibleChanged
+        public Action? VisibleChanged
         {
             get => NativeControl.VisibleChanged;
             set => NativeControl.VisibleChanged = value;
         }
 
-        public override Action? MouseCaptureLost
+        public Action? MouseCaptureLost
         {
             get => NativeControl.MouseCaptureLost;
             set => NativeControl.MouseCaptureLost = value;
         }
 
-        public override Action? GotFocus
+        public Action? GotFocus
         {
             get => NativeControl.GotFocus;
             set => NativeControl.GotFocus = value;
         }
 
-        public override Action? LostFocus
+        public Action? LostFocus
         {
             get => NativeControl.LostFocus;
             set => NativeControl.LostFocus = value;
         }
 
-        public override Action? DragLeave
+        public Action? DragLeave
         {
             get => NativeControl.DragLeave;
             set => NativeControl.DragLeave = value;
         }
 
-        public override Action? VerticalScrollBarValueChanged
+        public Action? VerticalScrollBarValueChanged
         {
             get => NativeControl.VerticalScrollBarValueChanged;
             set => NativeControl.VerticalScrollBarValueChanged = value;
         }
 
-        public override Action? HorizontalScrollBarValueChanged
+        public Action? HorizontalScrollBarValueChanged
         {
             get => NativeControl.HorizontalScrollBarValueChanged;
             set => NativeControl.HorizontalScrollBarValueChanged = value;
         }
 
-        public override Action? SizeChanged
+        public Action? SizeChanged
         {
             get => NativeControl.SizeChanged;
             set => NativeControl.SizeChanged = value;
         }
 
-        public override Action? Activated
+        public Action? Activated
         {
             get => NativeControl.Activated;
             set => NativeControl.Activated = value;
         }
 
-        public override Action? Deactivated
+        public Action? Deactivated
         {
             get => NativeControl.Deactivated;
             set => NativeControl.Deactivated = value;
         }
 
-        public override Action? HandleCreated
+        public Action? HandleCreated
         {
             get => NativeControl.HandleCreated;
             set => NativeControl.HandleCreated = value;
         }
 
-        public override Action? HandleDestroyed
+        public Action? HandleDestroyed
         {
             get => NativeControl.HandleDestroyed;
             set => NativeControl.HandleDestroyed = value;
@@ -131,128 +131,158 @@ namespace Alternet.UI
         /// <returns>
         /// <see langword="true" /> if a native control has been assigned to the
         /// control; otherwise, <see langword="false" />.</returns>
-        public override bool IsNativeControlCreated
+        public bool IsNativeControlCreated
         {
             get => nativeControl is not null;
         }
 
-        public override LangDirection LangDirection
+        public LangDirection LangDirection
         {
             get => (LangDirection)NativeControl.LayoutDirection;
             set => NativeControl.LayoutDirection = (int)value;
         }
 
-        public override ControlBorderStyle BorderStyle
+        public ControlBorderStyle BorderStyle
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => (ControlBorderStyle)NativeControl.BorderStyle;
+            set => NativeControl.BorderStyle = (int)value;
         }
 
-        public override bool WantChars
+        public bool IsFocused => NativeControl.IsFocused;
+
+        public bool IsScrollable
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.IsScrollable;
+            set => NativeControl.IsScrollable = value;
         }
 
-        public override bool IsFocused => throw new NotImplementedException();
-
-        public override bool ShowHorzScrollBar
+        public RectD Bounds
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.Bounds;
+            set => NativeControl.Bounds = value;
         }
 
-        public override bool ShowVertScrollBar
+        public Thickness IntrinsicLayoutPadding
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.IntrinsicLayoutPadding;
         }
 
-        public override bool ScrollBarAlwaysVisible
+        public Thickness IntrinsicPreferredSizePadding
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.IntrinsicPreferredSizePadding;
         }
 
-        public override bool IsScrollable
+        public bool Visible
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.Visible;
+            set => NativeControl.Visible = value;
         }
 
-        public override RectD Bounds
+        public bool UserPaint
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.UserPaint;
+            set => NativeControl.UserPaint = value;
         }
 
-        public override bool Visible
+        public SizeD MinimumSize
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.MinimumSize;
+            set => NativeControl.MinimumSize = value;
         }
 
-        public override bool UserPaint
+        public SizeD MaximumSize
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.MaximumSize;
+            set => NativeControl.MaximumSize = value;
         }
 
-        public override SizeD MinimumSize
+        public Color BackgroundColor
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.BackgroundColor;
+            set => NativeControl.BackgroundColor = value;
         }
 
-        public override SizeD MaximumSize
+        public Color ForegroundColor
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.ForegroundColor;
+            set => NativeControl.ForegroundColor = value;
         }
 
-        public override Color BackgroundColor
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        public override Color ForegroundColor
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        public override Font? Font
+        public Font? Font
         {
             get => Font.FromInternal(NativeControl.Font);
             set => NativeControl.Font = (UI.Native.Font?)value?.NativeObject;
         }
 
-        public override bool IsBold
+        public bool IsBold
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.IsBold;
+            set => NativeControl.IsBold = value;
         }
 
-        public override bool TabStop
+        public bool WantChars
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => (NativeControl as Native.Panel)?.WantChars ?? true;
+
+            set
+            {
+                if (NativeControl is Native.Panel panel)
+                    panel.WantChars = value;
+            }
         }
 
-        public override bool AllowDrop
+        public bool ShowHorzScrollBar
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => (NativeControl as Native.Panel)?.ShowHorzScrollBar ?? false;
+
+            set
+            {
+                if (NativeControl is Native.Panel panel)
+                    panel.ShowHorzScrollBar = value;
+            }
         }
 
-        public override bool AcceptsFocus
+        public bool ShowVertScrollBar
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => (NativeControl as Native.Panel)?.ShowVertScrollBar ?? false;
+
+            set
+            {
+                if (NativeControl is Native.Panel panel)
+                    panel.ShowVertScrollBar = value;
+            }
         }
 
-        public override ControlBackgroundStyle BackgroundStyle
+        public bool ScrollBarAlwaysVisible
+        {
+            get => (NativeControl as Native.Panel)?.ScrollBarAlwaysVisible ?? false;
+
+            set
+            {
+                if (NativeControl is Native.Panel panel)
+                    panel.ScrollBarAlwaysVisible = value;
+            }
+        }
+
+        public bool TabStop
+        {
+            get => NativeControl.TabStop;
+            set => NativeControl.TabStop = value;
+        }
+
+        public bool AllowDrop
+        {
+            get => NativeControl.AllowDrop;
+            set => NativeControl.AllowDrop = value;
+        }
+
+        public bool AcceptsFocus
+        {
+            get => NativeControl.AcceptsFocus;
+            set => NativeControl.AcceptsFocus = value;
+        }
+
+        public ControlBackgroundStyle BackgroundStyle
         {
             get
             {
@@ -263,57 +293,57 @@ namespace Alternet.UI
             set => NativeControl.SetBackgroundStyle((int)value);
         }
 
-        public override bool AcceptsFocusFromKeyboard
+        public bool AcceptsFocusFromKeyboard
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.AcceptsFocusFromKeyboard;
+            set => NativeControl.AcceptsFocusFromKeyboard = value;
         }
 
-        public override bool AcceptsFocusRecursively
+        public bool AcceptsFocusRecursively
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.AcceptsFocusRecursively;
+            set => NativeControl.AcceptsFocusRecursively = value;
         }
 
-        public override bool AcceptsFocusAll
+        public bool AcceptsFocusAll
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.AcceptsFocusAll;
+            set => NativeControl.AcceptsFocusAll = value;
         }
 
-        public override bool ProcessIdle
+        public bool ProcessIdle
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.ProcessIdle;
+            set => NativeControl.ProcessIdle = value;
         }
 
-        public override bool BindScrollEvents
+        public bool BindScrollEvents
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.BindScrollEvents;
+            set => NativeControl.BindScrollEvents = value;
         }
 
-        public override SizeD ClientSize
+        public SizeD ClientSize
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.ClientSize;
+            set => NativeControl.ClientSize = value;
         }
 
-        public override bool CanAcceptFocus => throw new NotImplementedException();
+        public bool CanAcceptFocus => NativeControl.CanAcceptFocus;
 
-        public override bool IsMouseOver => throw new NotImplementedException();
+        public bool IsMouseOver => NativeControl.IsMouseOver;
 
-        public override bool ProcessUIUpdates
+        public bool ProcessUIUpdates
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => NativeControl.ProcessUIUpdates;
+            set => NativeControl.ProcessUIUpdates = value;
         }
 
-        public override bool IsMouseCaptured => throw new NotImplementedException();
+        public bool IsMouseCaptured => NativeControl.IsMouseCaptured;
 
-        public override bool IsHandleCreated => throw new NotImplementedException();
+        public bool IsHandleCreated => NativeControl.IsHandleCreated;
 
-        public override bool IsFocusable => throw new NotImplementedException();
+        public bool IsFocusable => NativeControl.IsFocusable;
 
         internal Native.Control NativeControl
         {
@@ -332,24 +362,24 @@ namespace Alternet.UI
 
         internal bool NativeControlCreated => nativeControl != null;
 
-        public override object GetNativeControl() => NativeControl;
+        public object GetNativeControl() => NativeControl;
 
         public override void OnLayoutChanged()
         {
             base.OnLayoutChanged();
         }
 
-        public override void Raise()
+        public void Raise()
         {
-            throw new NotImplementedException();
+            NativeControl.Raise();
         }
 
-        public override void CenterOnParent(GenericOrientation direction)
+        public void CenterOnParent(GenericOrientation direction)
         {
-            throw new NotImplementedException();
+            NativeControl.CenterOnParent((int)direction);
         }
 
-        public override void SetCursor(Cursor? value)
+        public void SetCursor(Cursor? value)
         {
             if (value is null)
                 NativeControl.SetCursor(default);
@@ -357,97 +387,87 @@ namespace Alternet.UI
                 NativeControl.SetCursor((IntPtr)value.Handler);
         }
 
-        public override void SetToolTip(string? value)
+        public void SetToolTip(string? value)
         {
-            throw new NotImplementedException();
+            NativeControl.ToolTip = value;
         }
 
-        public override void Lower()
+        public void Lower()
         {
-            throw new NotImplementedException();
+            NativeControl.Lower();
         }
 
-        public override void SendSizeEvent()
+        public void SendSizeEvent()
         {
-            throw new NotImplementedException();
+            NativeControl.SendSizeEvent();
         }
 
-        public override void UnsetToolTip()
+        public void UnsetToolTip()
         {
-            throw new NotImplementedException();
+            NativeControl.UnsetToolTip();
         }
 
-        public override Thickness GetIntrinsicLayoutPadding()
+        public void RefreshRect(RectD rect, bool eraseBackground = true)
         {
-            throw new NotImplementedException();
+            NativeControl.RefreshRect(rect, eraseBackground);
         }
 
-        public override Thickness GetIntrinsicPreferredSizePadding()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RefreshRect(RectD rect, bool eraseBackground = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void HandleNeeded()
+        public void HandleNeeded()
         {
             NativeControl.Required();
         }
 
-        public override void CaptureMouse()
+        public void CaptureMouse()
         {
             NativeControl.SetMouseCapture(true);
         }
 
-        public override void ReleaseMouseCapture()
+        public void ReleaseMouseCapture()
         {
             NativeControl.SetMouseCapture(false);
         }
 
-        public override void DisableRecreate()
+        public void DisableRecreate()
         {
-            throw new NotImplementedException();
+            NativeControl.DisableRecreate();
         }
 
-        public override void EnableRecreate()
+        public void EnableRecreate()
         {
-            throw new NotImplementedException();
+            NativeControl.EnableRecreate();
         }
 
-        public override Graphics CreateDrawingContext()
+        public Graphics CreateDrawingContext()
         {
             return new WxGraphics(NativeControl.OpenClientDrawingContext());
         }
 
-        public override PointD ScreenToClient(PointD point)
+        public PointD ScreenToClient(PointD point)
         {
-            throw new NotImplementedException();
+            return NativeControl.ScreenToClient(point);
         }
 
-        public override PointD ClientToScreen(PointD point)
+        public PointD ClientToScreen(PointD point)
         {
-            throw new NotImplementedException();
+            return NativeControl.ClientToScreen(point);
         }
 
-        public override PointI ScreenToDevice(PointD point)
+        public PointI ScreenToDevice(PointD point)
         {
-            throw new NotImplementedException();
+            return NativeControl.ScreenToDevice(point);
         }
 
-        public override PointD DeviceToScreen(PointI point)
+        public PointD DeviceToScreen(PointI point)
         {
-            throw new NotImplementedException();
+            return NativeControl.DeviceToScreen(point);
         }
 
-        public override void FocusNextControl(bool forward = true, bool nested = true)
+        public void FocusNextControl(bool forward = true, bool nested = true)
         {
-            throw new NotImplementedException();
+            NativeControl.FocusNextControl(forward, nested);
         }
 
-        public override DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
+        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             allowedEffects &= ~DragDropEffects.Scroll;
             return (DragDropEffects)NativeControl.DoDragDrop(
@@ -455,92 +475,92 @@ namespace Alternet.UI
                 (Native.DragDropEffects)allowedEffects);
         }
 
-        public override void RecreateWindow()
+        public void RecreateWindow()
         {
-            throw new NotImplementedException();
+            NativeControl.RecreateWindow();
         }
 
-        public override void BeginUpdate()
+        public void BeginUpdate()
         {
-            throw new NotImplementedException();
+            NativeControl.BeginUpdate();
         }
 
-        public override void EndUpdate()
+        public void EndUpdate()
         {
-            throw new NotImplementedException();
+            NativeControl.EndUpdate();
         }
 
-        public override void SetBounds(RectD rect, SetBoundsFlags flags)
+        public void SetBounds(RectD rect, SetBoundsFlags flags)
         {
             NativeControl.SetBoundsEx(rect, (int)flags);
         }
 
-        public override void BeginInit()
+        public void BeginInit()
         {
-            throw new NotImplementedException();
+            NativeControl.BeginInit();
         }
 
-        public override void EndInit()
+        public void EndInit()
         {
-            throw new NotImplementedException();
+            NativeControl.EndInit();
         }
 
-        public override bool SetFocus()
+        public bool SetFocus()
         {
-            throw new NotImplementedException();
+            return NativeControl.SetFocus();
         }
 
-        public override void SaveScreenshot(string fileName)
+        public void SaveScreenshot(string fileName)
         {
-            throw new NotImplementedException();
+            NativeControl.SaveScreenshot(fileName);
         }
 
-        public override SizeD GetDPI()
+        public SizeD GetDPI()
         {
-            throw new NotImplementedException();
+            return NativeControl.GetDPI();
         }
 
-        public override bool IsTransparentBackgroundSupported()
+        public bool IsTransparentBackgroundSupported()
         {
-            throw new NotImplementedException();
+            return NativeControl.IsTransparentBackgroundSupported();
         }
 
-        public override void EndIgnoreRecreate()
+        public void EndIgnoreRecreate()
         {
-            throw new NotImplementedException();
+            NativeControl.EndIgnoreRecreate();
         }
 
-        public override void BeginIgnoreRecreate()
+        public void BeginIgnoreRecreate()
         {
-            throw new NotImplementedException();
+            NativeControl.BeginIgnoreRecreate();
         }
 
-        public override double GetPixelScaleFactor()
+        public double GetPixelScaleFactor()
         {
             return Native.Control.DrawingDPIScaleFactor(NativeControl.WxWidget);
         }
 
-        public override RectI GetUpdateClientRectI()
+        public RectI GetUpdateClientRectI()
         {
-            throw new NotImplementedException();
+            return NativeControl.GetUpdateClientRect();
         }
 
-        public override double PixelToDip(int value)
+        public double PixelToDip(int value)
         {
             return Native.Control.DrawingToDip(value, NativeControl.WxWidget);
         }
 
-        public override int PixelFromDip(double value)
+        public int PixelFromDip(double value)
         {
             return Native.Control.DrawingFromDip(value, NativeControl.WxWidget);
         }
 
-        public override double PixelFromDipF(double value)
+        public double PixelFromDipF(double value)
         {
             return Native.Control.DrawingFromDipF(value, NativeControl.WxWidget);
         }
 
-        public override void SetScrollBar(
+        public void SetScrollBar(
             IControl control,
             bool isVertical,
             bool visible,
@@ -553,120 +573,120 @@ namespace Alternet.UI
             NativeControl.SetScrollBar(orientation, visible, value, largeChange, maximum);
         }
 
-        public override bool IsScrollBarVisible(bool isVertical)
+        public bool IsScrollBarVisible(bool isVertical)
         {
             Native.ScrollBarOrientation orientation = isVertical
                 ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
             return NativeControl.IsScrollBarVisible(orientation);
         }
 
-        public override int GetScrollBarValue(bool isVertical)
+        public int GetScrollBarValue(bool isVertical)
         {
             Native.ScrollBarOrientation orientation = isVertical
                 ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarValue(orientation);
         }
 
-        public override int GetScrollBarLargeChange(bool isVertical)
+        public int GetScrollBarLargeChange(bool isVertical)
         {
             Native.ScrollBarOrientation orientation = isVertical
                 ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarLargeChange(orientation);
         }
 
-        public override int GetScrollBarMaximum(bool isVertical)
+        public int GetScrollBarMaximum(bool isVertical)
         {
             Native.ScrollBarOrientation orientation = isVertical
                 ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarMaximum(orientation);
         }
 
-        public override void ResetBackgroundColor()
+        public void ResetBackgroundColor()
         {
-            throw new NotImplementedException();
+            NativeControl.ResetBackgroundColor();
         }
 
-        public override void ResetForegroundColor()
+        public void ResetForegroundColor()
         {
-            throw new NotImplementedException();
+            NativeControl.ResetForegroundColor();
         }
 
-        public override void SetEnabled(bool value)
+        public void SetEnabled(bool value)
         {
-            throw new NotImplementedException();
+            NativeControl.Enabled = value;
         }
 
-        public override Color GetDefaultAttributesBgColor()
+        public Color GetDefaultAttributesBgColor()
         {
-            throw new NotImplementedException();
+            return NativeControl.GetDefaultAttributesBgColor();
         }
 
-        public override Color GetDefaultAttributesFgColor()
+        public Color GetDefaultAttributesFgColor()
         {
-            throw new NotImplementedException();
+            return NativeControl.GetDefaultAttributesFgColor();
         }
 
-        public override Font? GetDefaultAttributesFont()
+        public Font? GetDefaultAttributesFont()
         {
             return Font.FromInternal(NativeControl.GetDefaultAttributesFont());
         }
 
-        public override void SendMouseDownEvent(int x, int y)
+        public void SendMouseDownEvent(int x, int y)
         {
-            throw new NotImplementedException();
+            NativeControl.SendMouseDownEvent(x, y);
         }
 
-        public override void SendMouseUpEvent(int x, int y)
+        public void SendMouseUpEvent(int x, int y)
         {
-            throw new NotImplementedException();
+            NativeControl.SendMouseUpEvent(x, y);
         }
 
-        public override bool BeginRepositioningChildren()
+        public bool BeginRepositioningChildren()
         {
-            throw new NotImplementedException();
+            return NativeControl.BeginRepositioningChildren();
         }
 
-        public override void EndRepositioningChildren()
+        public void EndRepositioningChildren()
         {
-            throw new NotImplementedException();
+            NativeControl.EndRepositioningChildren();
         }
 
-        public override void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
+        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
-            throw new NotImplementedException();
+            NativeControl.AlwaysShowScrollbars(hflag, vflag);
         }
 
-        public override void Update()
+        public void Update()
         {
-            throw new NotImplementedException();
+            NativeControl.Update();
         }
 
-        public override void Invalidate()
+        public void Invalidate()
         {
-            throw new NotImplementedException();
+            NativeControl.Invalidate();
         }
 
-        public override nint GetHandle()
+        public nint GetHandle()
         {
-            throw new NotImplementedException();
+            return NativeControl.Handle;
         }
 
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public SizeD GetPreferredSize(SizeD availableSize)
         {
-            throw new NotImplementedException();
+            return NativeControl.GetPreferredSize(availableSize);
         }
 
-        public override int GetScrollBarEvtPosition()
+        public int GetScrollBarEvtPosition()
         {
-            throw new NotImplementedException();
+            return NativeControl.GetScrollBarEvtPosition();
         }
 
-        public override ScrollEventType GetScrollBarEvtKind()
+        public ScrollEventType GetScrollBarEvtKind()
         {
-            throw new NotImplementedException();
+            return (ScrollEventType)NativeControl.GetScrollBarEvtKind();
         }
 
-        public override Graphics OpenPaintDrawingContext()
+        public Graphics OpenPaintDrawingContext()
         {
             return new WxGraphics(NativeControl.OpenPaintDrawingContext());
         }

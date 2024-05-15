@@ -7,7 +7,8 @@ namespace Alternet.UI.Versioning
 {
     static class MasterVersionFileService
     {
-        private static Regex informationalVersionRegex = new Regex(@"^(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+) \(\d+\.\d+\ (?<type>\w+) build \d+\)$");
+        private static readonly Regex informationalVersionRegex
+            = new(@"^(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+) \(\d+\.\d+\ (?<type>\w+) build \d+\)$");
 
         public static ProductVersion GetVersion(string versionFilePath)
         {

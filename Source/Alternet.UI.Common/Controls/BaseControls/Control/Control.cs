@@ -2149,7 +2149,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Thickness IntrinsicLayoutPadding
         {
-            get => Handler.GetIntrinsicLayoutPadding();
+            get => Handler.IntrinsicLayoutPadding;
         }
 
         /// <summary>
@@ -2157,7 +2157,7 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Thickness IntrinsicPreferredSizePadding
-            => Handler.GetIntrinsicPreferredSizePadding();
+            => Handler.IntrinsicPreferredSizePadding;
 
         /// <summary>
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
@@ -2597,7 +2597,7 @@ namespace Alternet.UI
                     return RectD.Empty;
 
                 var padding = Padding;
-                var intrinsicPadding = Handler.GetIntrinsicLayoutPadding();
+                var intrinsicPadding = Handler.IntrinsicLayoutPadding;
 
                 return new RectD(
                     new PointD(

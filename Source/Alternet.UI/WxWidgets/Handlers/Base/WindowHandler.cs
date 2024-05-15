@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// </summary>
         public new Window Control => (Window)base.Control;
 
-        public new Native.Window NativeControl => (Native.Window)base.NativeControl!;
+        public new Native.Window NativeControl => (Native.Window)base.NativeControl;
 
         public bool IsPopupWindow
         {
@@ -416,11 +416,8 @@ namespace Alternet.UI
             Control.RaiseLocationChanged(EventArgs.Empty);
         }
 
-        private void NativeControl_Closing(object? sender, CancelEventArgs? e)
+        private void NativeControl_Closing(object? sender, CancelEventArgs e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
             // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
             var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
             Control.RaiseClosing(closingEventArgs);

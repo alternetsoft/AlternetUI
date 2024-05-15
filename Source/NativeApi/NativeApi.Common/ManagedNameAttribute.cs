@@ -2,6 +2,7 @@
 
 namespace ApiCommon
 {
+    [AttributeUsage(AttributeTargets.All)]
     public class ManagedNameAttribute : Attribute
     {
         public ManagedNameAttribute(string name)

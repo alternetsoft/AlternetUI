@@ -25,7 +25,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators
             if (privateAssets != null)
                 reference.Add(new XElement("PrivateAssets", new XText(privateAssets)));
             
-            document.Root.Add(new XElement("ItemGroup", reference));
+            document.Root?.Add(new XElement("ItemGroup", reference));
         }
 
         public void RemovePackageReferenceCondition(string name)

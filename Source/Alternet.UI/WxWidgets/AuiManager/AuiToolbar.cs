@@ -276,7 +276,7 @@ namespace Alternet.UI
             }
         }
 
-        internal new Native.AuiToolBar NativeControl => Handler.NativeControl;
+        internal Native.AuiToolBar NativeControl => Handler.NativeControl;
 
         /// <summary>
         /// Creates <see cref="ImageSet"/> and loads Svg data from the specified
