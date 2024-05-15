@@ -15,7 +15,7 @@ void GenerateCSharpOutput(string filename)
         stream,
         WellKnownApiInfo.Provider);
 
-    var output = CSharpUIXmlCodeGenerator.Generate(document);
+    var output = CSharpUIXmlCodeGenerator.Generate(document, null!, null!);
 
     File.WriteAllText(CommonUtils.GetAppFolder()+"output.g.cs", output);
 }

@@ -135,7 +135,9 @@ using System;
             }
         }
 
-        private static string GetIndexedObjectRetreivalExpression(string objectTypeFullName, IReadOnlyList<UIXmlDocument.AccessorInfo> accessors)
+        private static string GetIndexedObjectRetreivalExpression(
+            string objectTypeFullName,
+            IReadOnlyList<UIXmlDocument.AccessorInfo> accessors)
         {
             var result = new StringBuilder();
             result.Append($"(({objectTypeFullName})(");
