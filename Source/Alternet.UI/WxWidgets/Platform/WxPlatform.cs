@@ -267,6 +267,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IStatusBarHandler CreateStatusBarHandler(StatusBar control)
+        {
+            return new StatusBarHandler(control);
+        }
+
+        /// <inheritdoc/>
         public override IControlHandler CreateControlHandler(Control control)
         {
             return new WxControlHandler();

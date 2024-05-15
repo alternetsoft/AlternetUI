@@ -71,6 +71,8 @@ namespace Alternet.UI
 
         public abstract ITreeViewHandler CreateTreeViewHandler(TreeView control);
 
+        public abstract IStatusBarHandler CreateStatusBarHandler(StatusBar control);
+
         public abstract IControlHandler CreateControlHandler(Control control);
 
         public abstract ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control);

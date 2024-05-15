@@ -13,10 +13,8 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public class StatusBar : FrameworkElement
     {
-        private Window? window;
+        private IStatusBarHandler? handler;
         private int updateCount = 0;
-        private bool sizingGripVisible = true;
-        private TextEllipsizeType textEllipsize = TextEllipsizeType.End;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
@@ -30,7 +28,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text of the first status bar panel.
         /// </summary>
-        public string? Text
+        public virtual string? Text
         {
             get
             {
@@ -49,7 +47,7 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
         /// </summary>
         [Content]
-        public Collection<StatusBarPanel> Panels { get; } = new() { ThrowOnNullAdd = true };
+        public virtual Collection<StatusBarPanel> Panels { get; } = new() { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets whether to ignore <see cref="Panels"/>.
@@ -58,20 +56,14 @@ namespace Alternet.UI
         /// When <see cref="Panels"/> are ignored, they are not automatically assigned to
         /// the native control. Default value is <c>false</c>.
         /// </remarks>
-        public bool IgnorePanels { get; set; }
+        public virtual bool IgnorePanels { get; set; }
 
         /// <summary>
         /// Gets <see cref="Window"/> to which this control is attached.
         /// </summary>
-        public Window? Window
+        public virtual Window? Window
         {
-            get => window;
-            internal set
-            {
-                if (window == value)
-                    return;
-                window = value;
-            }
+            get => Handler.Window;
         }
 
         /// <summary>
@@ -80,14 +72,13 @@ namespace Alternet.UI
         /// </summary>
         public bool SizingGripVisible
         {
-            get => sizingGripVisible;
+            get => Handler.SizingGripVisible;
 
             set
             {
-                if (sizingGripVisible == value)
+                if (SizingGripVisible == value)
                     return;
-                sizingGripVisible = value;
-                RecreateWidget();
+                Handler.SizingGripVisible = value;
             }
         }
 
@@ -95,57 +86,34 @@ namespace Alternet.UI
         /// Gets or sets status texts replacement method when the text widths exceed the
         /// container's widths.
         /// </summary>
-        public TextEllipsizeType TextEllipsize
+        public virtual TextEllipsizeType TextEllipsize
         {
             get
             {
-                return textEllipsize;
+                return Handler.TextEllipsize;
             }
 
             set
             {
-                if (textEllipsize == value)
+                if (TextEllipsize == value)
                     return;
-                textEllipsize = value;
-                RecreateWidget();
+                Handler.TextEllipsize = value;
             }
         }
 
         /// <inheritdoc cref="Control.InUpdates"/>
         public bool InUpdates => updateCount > 0;
 
-        /*/// <inheritdoc/>
-        public override IReadOnlyList<FrameworkElement> ContentElements => Panels;*/
-
         /// <summary>
         /// Gets whether control is fully active and is attached to the window.
         /// </summary>
-        public bool IsOk => StatusBarHandle != IntPtr.Zero && !IsDisposed;
+        public bool IsOk => Handler.IsOk;
 
-        internal IntPtr StatusBarHandle
-        {
-            get
-            {
-                if (window is null || window.IsDisposed)
-                {
-                    window = null;
-                    return default;
-                }
-
-                return ((WindowHandler)window.Handler).NativeControl.WxStatusBar;
-            }
-
-            set
-            {
-                if (window is null || window.IsDisposed)
-                    return;
-
-                ((WindowHandler)window.Handler).NativeControl.WxStatusBar = value;
-            }
-        }
-
-        /*/// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Panels;*/
+        /// <summary>
+        /// Gets handler for the control.
+        /// </summary>
+        public IStatusBarHandler Handler
+            => handler ??= NativePlatform.Default.CreateStatusBarHandler(this);
 
         /// <inheritdoc cref="Control.BeginUpdate"/>
         public virtual void BeginUpdate()
@@ -237,7 +205,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return Native.WxStatusBarFactory.GetFieldsCount(StatusBarHandle);
+            return Handler.GetFieldsCount();
         }
 
         /// <summary>
@@ -265,7 +233,7 @@ namespace Alternet.UI
             if (!IsOk)
                 return false;
             text ??= string.Empty;
-            Native.WxStatusBarFactory.SetStatusText(StatusBarHandle, text, index);
+            Handler.SetStatusText(text, index);
             return true;
         }
 
@@ -283,7 +251,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return Native.WxStatusBarFactory.GetStatusText(StatusBarHandle, index);
+            return Handler.GetStatusText(index);
         }
 
         /// <summary>
@@ -302,7 +270,7 @@ namespace Alternet.UI
             if (!IsOk)
                 return false;
             text ??= string.Empty;
-            Native.WxStatusBarFactory.PushStatusText(StatusBarHandle, text, index);
+            Handler.PushStatusText(text, index);
             return true;
         }
 
@@ -325,7 +293,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return false;
-            Native.WxStatusBarFactory.PopStatusText(StatusBarHandle, index);
+            Handler.PopStatusText(index);
             return true;
         }
 
@@ -365,7 +333,7 @@ namespace Alternet.UI
         {
             if (!IsOk || widths.Length == 0)
                 return false;
-            Native.WxStatusBarFactory.SetStatusWidths(StatusBarHandle, widths);
+            Handler.SetStatusWidths(widths);
             return true;
         }
 
@@ -385,7 +353,7 @@ namespace Alternet.UI
         {
             if (!IsOk || count < 1)
                 return false;
-            Native.WxStatusBarFactory.SetFieldsCount(StatusBarHandle, count);
+            Handler.SetFieldsCount(count);
             return true;
         }
 
@@ -403,7 +371,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return Native.WxStatusBarFactory.GetStatusWidth(StatusBarHandle, index);
+            return Handler.GetStatusWidth(index);
         }
 
         /// <summary>
@@ -418,8 +386,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return
-                (StatusBarPanelStyle)Native.WxStatusBarFactory.GetStatusStyle(StatusBarHandle, index);
+            return Handler.GetStatusStyle(index);
         }
 
         /// <summary>
@@ -440,8 +407,7 @@ namespace Alternet.UI
         {
             if (!IsOk || styles.Length == 0)
                 return false;
-            var result = styles.Cast<int>().ToArray();
-            Native.WxStatusBarFactory.SetStatusStyles(StatusBarHandle, result);
+            Handler.SetStatusStyles(styles);
             return true;
         }
 
@@ -459,7 +425,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            var result = Native.WxStatusBarFactory.GetFieldRect(StatusBarHandle, index);
+            var result = Handler.GetFieldRect(index);
             if (result == RectI.Empty)
                 return null;
             return result;
@@ -478,7 +444,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return false;
-            Native.WxStatusBarFactory.SetMinHeight(StatusBarHandle, height);
+            Handler.SetMinHeight(height);
             return true;
         }
 
@@ -495,7 +461,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return Native.WxStatusBarFactory.GetBorderX(StatusBarHandle);
+            return Handler.GetBorderX();
         }
 
         /// <summary>
@@ -511,7 +477,7 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return Native.WxStatusBarFactory.GetBorderY(StatusBarHandle);
+            return Handler.GetBorderY();
         }
 
         /// <summary>
@@ -545,54 +511,6 @@ namespace Alternet.UI
         {
             item.PropertyChanged -= OnItemPropertyChanged;
             ApplyPanels();
-        }
-
-        internal void RecreateWidget()
-        {
-            const int SIZEGRIP = 0x0010;
-            const int SHOWTIPS = 0x0020;
-            const int ELLIPSIZESTART = 0x0040;
-            const int ELLIPSIZEMIDDLE = 0x0080;
-            const int ELLIPSIZEEND = 0x0100;
-            const int FULLREPAINTONRESIZE = 0x00010000;
-
-            var handle = StatusBarHandle;
-            if (window != null)
-            {
-                StatusBarHandle = default;
-                if(handle != default)
-                    Native.WxStatusBarFactory.DeleteStatusBar(handle);
-
-                StatusBarHandle =
-                    Native.WxStatusBarFactory.CreateStatusBar(
-                        WxPlatform.WxWidget(window),
-                        GetStyle());
-                ApplyPanels();
-            }
-
-            long GetStyle()
-            {
-                long ellipsizeStyle = 0;
-                switch (textEllipsize)
-                {
-                    case TextEllipsizeType.End:
-                        ellipsizeStyle = ELLIPSIZEEND;
-                        break;
-                    case TextEllipsizeType.Start:
-                        ellipsizeStyle = ELLIPSIZESTART;
-                        break;
-                    case TextEllipsizeType.Middle:
-                        ellipsizeStyle = ELLIPSIZEMIDDLE;
-                        break;
-                    default:
-                        break;
-                }
-
-                var result = ellipsizeStyle | SHOWTIPS | FULLREPAINTONRESIZE;
-                if (sizingGripVisible)
-                    result |= SIZEGRIP;
-                return result;
-            }
         }
     }
 }

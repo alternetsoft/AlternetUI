@@ -248,16 +248,22 @@ namespace Alternet.UI
 
             if (oldValue is StatusBar asStatusBar2)
             {
-                asStatusBar2.Window = null;
+                SetWindow(asStatusBar2, null);
                 var oldHandle = nc.WxStatusBar;
                 if (oldHandle != default)
                     Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
             }
 
             if (value is StatusBar asStatusBar3)
-                asStatusBar3.Window = Control;
+                SetWindow(asStatusBar3, Control);
             else
                 nc.WxStatusBar = default;
+
+            void SetWindow(StatusBar sb, Window? window)
+            {
+                if(sb.Handler is StatusBarHandler handler)
+                    handler.Window = window;
+            }
         }
 
         private void NativeControl_InputBindingCommandExecuted(
@@ -343,7 +349,7 @@ namespace Alternet.UI
 
         private void ApplyStatusBar(object? sender, EventArgs e)
         {
-            (Control.StatusBar as StatusBar)?.RecreateWidget();
+            ((Control.StatusBar as StatusBar)?.Handler as StatusBarHandler)?.RecreateWidget();
         }
 
         private void ApplyOwner(object? sender, EventArgs e)

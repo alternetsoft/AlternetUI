@@ -468,5 +468,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IStatusBarHandler CreateStatusBarHandler(StatusBar control)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
