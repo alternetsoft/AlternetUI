@@ -1,5 +1,4 @@
-#nullable disable
-#nullable enable
+#pragma warning disable
 
 namespace Alternet.UI.Controls
 {

@@ -1,3 +1,4 @@
+#pragma warning disable
 namespace Alternet.UI.Logging
 {
     /// <summary>

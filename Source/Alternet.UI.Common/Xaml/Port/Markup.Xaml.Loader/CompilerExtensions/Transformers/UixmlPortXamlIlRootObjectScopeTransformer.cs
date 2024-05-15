@@ -1,4 +1,5 @@
 #nullable disable
+#pragma warning disable
 using System.Linq;
 using XamlX.Ast;
 using XamlX.Transform;

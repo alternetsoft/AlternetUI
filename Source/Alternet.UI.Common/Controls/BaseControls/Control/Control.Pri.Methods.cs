@@ -54,17 +54,17 @@ namespace Alternet.UI
                 {
                     backgroundColor = color;
                     if (color is null)
-                        GetNative().ResetBackgroundColor(this);
+                        Handler.ResetBackgroundColor();
                     else
-                        GetNative().SetBackgroundColor(this, color);
+                        Handler.BackgroundColor = color;
                 }
                 else
                 {
                     foregroundColor = color;
                     if (color is null)
-                        GetNative().ResetForegroundColor(this);
+                        Handler.ResetForegroundColor();
                     else
-                        GetNative().SetForegroundColor(this, color);
+                        Handler.ForegroundColor = color;
                 }
             }
 
@@ -90,7 +90,7 @@ namespace Alternet.UI
         {
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
-            GetNative().SetEnabled(this, Enabled);
+            Handler.SetEnabled(Enabled);
             Parent?.OnChildPropertyChanged(this, nameof(Enabled));
         }
     }

@@ -61,6 +61,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
 
+        internal new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
+
         public void RaiseClosing(EventArgs e)
         {
             OnClosing(e);
@@ -103,7 +105,7 @@ namespace Alternet.UI
             RaiseOpening(e);
             if (e.Cancel)
                 return;
-            NativeControl.Default.ShowContextMenu(this, control, position);
+            Handler.Show(control, position);
             RaiseClosing(EventArgs.Empty);
         }
 

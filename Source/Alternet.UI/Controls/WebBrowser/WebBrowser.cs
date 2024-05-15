@@ -15,7 +15,7 @@ namespace Alternet.UI
     [DefaultProperty("Name")]
     [DefaultEvent("Enter")]
     [ControlCategory("Common")]
-    public partial class WebBrowser : WxBaseControl, IWebBrowser
+    public partial class WebBrowser : Control, IWebBrowser
     {
         private static Brush? uixmlPreviewerBrush = null;
         private readonly string defaultUrl = "about:blank";

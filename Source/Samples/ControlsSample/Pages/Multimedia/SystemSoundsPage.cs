@@ -7,7 +7,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class SystemSoundsPage : WxBaseControl
+    internal class SystemSoundsPage : Control
     {
         public SystemSoundsPage()
         {

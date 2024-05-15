@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 using System.Collections.Generic;
 using XamlX.TypeSystem;

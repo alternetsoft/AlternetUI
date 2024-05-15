@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    internal partial class Popup : WxBaseControl
+    internal partial class Popup : Control
     {
         /*private Window? owner;*/
 

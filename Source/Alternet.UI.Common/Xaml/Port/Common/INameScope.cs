@@ -1,3 +1,4 @@
+#pragma warning disable
 using Alternet.UI.Utilities;
 
 namespace Alternet.UI.Markup

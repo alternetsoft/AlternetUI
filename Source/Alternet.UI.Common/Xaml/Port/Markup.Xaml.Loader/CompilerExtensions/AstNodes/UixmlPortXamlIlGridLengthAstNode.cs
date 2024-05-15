@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 using Alternet.UI;
 using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;

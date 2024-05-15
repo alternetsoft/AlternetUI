@@ -10,7 +10,39 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
+        public void Show(IControl control, PointD? position = null)
+        {
+            if (position == null)
+                ShowUnder();
+            else
+            {
+                if (position != PointD.MinusOne)
+                    Show(control, (PointD)position);
+                else
+                {
+                    ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
+                        MenuItemHandler.GetMenuHandle(Control),
+                        -1,
+                        -1);
+                }
+            }
+
+            void ShowUnder()
+            {
+                var window = control.ParentWindow;
+                if (window == null)
+                    return;
+                RectD toolRect = control.Bounds;
+                PointD pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
+                pt = window.ScreenToClient(pt);
+                ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
+                    MenuItemHandler.GetMenuHandle(Control),
+                    (int)pt.X,
+                    (int)pt.Y);
+            }
+        }
+
+        /*/// <summary>
         /// Displays the shortcut menu at the specified position.
         /// </summary>
         /// <param name="control">A <see cref="Control"/> that specifies the control with which
@@ -26,7 +58,7 @@ namespace Alternet.UI
 
             NativeControl.ShowContextMenu(
                 (UI.Native.Control)control.NativeControl ?? throw new Exception(), position);
-        }
+        }*/
 
         internal override Native.Control CreateNativeControl()
         {

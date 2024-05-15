@@ -1,3 +1,4 @@
+#pragma warning disable
 using System;
 
 namespace Alternet.UI.Data.Core

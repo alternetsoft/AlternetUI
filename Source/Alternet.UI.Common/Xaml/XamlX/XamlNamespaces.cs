@@ -1,3 +1,4 @@
+#pragma warning disable
 namespace XamlX
 {
 #if !XAMLX_INTERNAL

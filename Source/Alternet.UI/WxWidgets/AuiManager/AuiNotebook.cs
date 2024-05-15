@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Used with <see cref="AuiManager"/>.
     /// </summary>
     [ControlCategory("Containers")]
-    internal partial class AuiNotebook : WxBaseControl
+    internal partial class AuiNotebook : Control
     {
         private readonly Collection<IAuiNotebookPage> pages = new();
 

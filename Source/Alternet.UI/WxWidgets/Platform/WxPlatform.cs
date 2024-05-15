@@ -29,7 +29,6 @@ namespace Alternet.UI
             if (initialized)
                 return;
             NativeDrawing.Default = new WxDrawing();
-            NativeControl.Default = new WxPlatformControl();
             Default = new WxPlatform();
             initialized = true;
         }

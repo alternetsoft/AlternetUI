@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 using Alternet.UI.Data.Core;
 using Alternet.UI.Utilities;

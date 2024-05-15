@@ -1,3 +1,4 @@
+#pragma warning disable
 using XamlX.Ast;
 
 namespace XamlX.Transform.Transformers

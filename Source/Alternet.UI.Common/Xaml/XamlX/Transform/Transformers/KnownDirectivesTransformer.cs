@@ -1,3 +1,4 @@
+#pragma warning disable
 using System.Collections.Generic;
 using XamlX.Ast;
 

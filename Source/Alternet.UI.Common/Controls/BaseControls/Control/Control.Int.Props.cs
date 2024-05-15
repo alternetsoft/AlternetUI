@@ -16,12 +16,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetProcessUIUpdates(this);
+                return Handler.ProcessUIUpdates;
             }
 
             set
             {
-                GetNative().SetProcessUIUpdates(this, value);
+                Handler.ProcessUIUpdates = value;
             }
         }
 

@@ -1,4 +1,4 @@
-#nullable disable
+#pragma warning disable
 #nullable disable
 
 using System;

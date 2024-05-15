@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// See <see cref="SplittedTreeAndCards"/> source code for the example.
     /// </remarks>
     [ControlCategory("Containers")]
-    internal partial class SplitterPanel : WxBaseControl
+    internal partial class SplitterPanel : Control
     {
         /// <summary>
         /// Gets or sets whether to check sash size and make it at least equal to
@@ -35,8 +35,8 @@ namespace Alternet.UI
 
         private static bool minSashSizeApplied;
 
-        private WxBaseControl? control1;
-        private WxBaseControl? control2;
+        private Control? control1;
+        private Control? control2;
         private bool initAutoSplit = false;
         private SplitterPanelSplitMethod splitMethod =
             SplitterPanelSplitMethod.Manual;
@@ -155,12 +155,12 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the left/top or only pane.
         /// </summary>
-        public WxBaseControl? Control1 => control1;
+        public Control? Control1 => control1;
 
         /// <summary>
         /// Returns the right/bottom pane.
         /// </summary>
-        public WxBaseControl? Control2 => control2;
+        public Control? Control2 => control2;
 
         /// <summary>
         /// Gets or sets the minimum pane size in pixels (defaults to zero).
@@ -504,14 +504,14 @@ namespace Alternet.UI
         /// This should be called if you wish to initially view only a single
         /// pane in the control.
         /// </remarks>
-        public virtual bool InitUnsplitted(WxBaseControl window)
+        public virtual bool InitUnsplitted(Control window)
         {
             if (window is null)
                 return false;
             if (window.Parent != this)
                 return false;
 
-            Native.Control? nc1 = window.Handler.NativeControl;
+            Native.Control? nc1 = (window.Handler as WxControlHandler)?.NativeControl;
             if (nc1 == null)
                 return false;
 
@@ -553,7 +553,7 @@ namespace Alternet.UI
         /// Both parameters should be non-NULL and winOld must specify one
         /// of the controls managed by the <see cref="SplitterPanel"/>.
         /// </remarks>
-        public virtual bool ReplaceControl(WxBaseControl? winOld, WxBaseControl? winNew)
+        public virtual bool ReplaceControl(Control? winOld, Control? winNew)
         {
             if (winOld == null || winNew == null)
                 return false;
@@ -562,8 +562,8 @@ namespace Alternet.UI
             if (winNew.Parent != this)
                 return false;
 
-            Native.Control? nc1 = winOld.Handler.NativeControl;
-            Native.Control? nc2 = winNew.Handler.NativeControl;
+            Native.Control? nc1 = (winOld.Handler as WxControlHandler)?.NativeControl;
+            Native.Control? nc2 = (winNew.Handler as WxControlHandler)?.NativeControl;
 
             if (nc1 == null || nc2 == null)
                 return false;
@@ -607,8 +607,8 @@ namespace Alternet.UI
         /// control is not currently split using <see cref="IsSplit"/>.
         /// </remarks>
         public virtual bool SplitHorizontal(
-            WxBaseControl? window1,
-            WxBaseControl? window2,
+            Control? window1,
+            Control? window2,
             int sashPosition = 0)
         {
             if (IsSplit)
@@ -619,8 +619,8 @@ namespace Alternet.UI
             window1.Parent = this;
             window2.Parent = this;
 
-            Native.Control? nc1 = window1.Handler.NativeControl;
-            Native.Control? nc2 = window2.Handler.NativeControl;
+            Native.Control? nc1 = (window1.Handler as WxControlHandler)?.NativeControl;
+            Native.Control? nc2 = (window2.Handler as WxControlHandler)?.NativeControl;
 
             if (nc1 == null || nc2 == null)
                 return false;
@@ -664,8 +664,8 @@ namespace Alternet.UI
         /// control is not currently split using <see cref="IsSplit"/>.
         /// </remarks>
         public virtual bool SplitVertical(
-            WxBaseControl? window1,
-            WxBaseControl? window2,
+            Control? window1,
+            Control? window2,
             int sashPosition = 0)
         {
             if (IsSplit)
@@ -676,8 +676,8 @@ namespace Alternet.UI
             window1.Parent = this;
             window2.Parent = this;
 
-            Native.Control? nc1 = window1.NativeControl;
-            Native.Control? nc2 = window2.NativeControl;
+            Native.Control? nc1 = (window1.Handler as WxControlHandler)?.NativeControl;
+            Native.Control? nc2 = (window2.Handler as WxControlHandler)?.NativeControl;
 
             if (nc1 == null || nc2 == null)
                 return false;
@@ -700,8 +700,8 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per unit).
         /// </remarks>
         public virtual bool SplitVerticalDip(
-            WxBaseControl? window1,
-            WxBaseControl? window2,
+            Control? window1,
+            Control? window2,
             double sashPosition = 0)
         {
             return SplitVertical(window1, window2, PixelFromDip(sashPosition));
@@ -713,8 +713,8 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per unit).
         /// </remarks>
         public virtual bool SplitHorizontalDip(
-            WxBaseControl? window1,
-            WxBaseControl? window2,
+            Control? window1,
+            Control? window2,
             double sashPosition = 0)
         {
             return SplitHorizontal(window1, window2, PixelFromDip(sashPosition));
@@ -738,14 +738,14 @@ namespace Alternet.UI
         /// This call will not actually delete the control being removed.
         /// By default, the control being removed is hidden.
         /// </remarks>
-        public virtual bool DoUnsplit(WxBaseControl? toRemove = null)
+        public virtual bool DoUnsplit(Control? toRemove = null)
         {
             if (!IsSplit)
                 return true;
             toRemove ??= control2;
             if (toRemove == null)
                 return false;
-            Native.Control? nc1 = toRemove.Handler.NativeControl;
+            Native.Control? nc1 = (toRemove.Handler as WxControlHandler)?.NativeControl;
             if (nc1 == null)
                 return false;
             var r = Handler.NativeControl.DoUnsplit(nc1);
@@ -886,10 +886,10 @@ namespace Alternet.UI
                 return;
             if (IsSplit || control1 != null)
                 return;
-#pragma warning disable
-            WxBaseControl? newControl1 = GetVisibleChildOrNull(0) as WxBaseControl;
-            WxBaseControl? newControl2 = GetVisibleChildOrNull(1) as WxBaseControl;
-#pragma warning restore
+
+            Control? newControl1 = GetVisibleChildOrNull(0);
+            Control? newControl2 = GetVisibleChildOrNull(1);
+
             if (newControl1 == null)
                 return;
 

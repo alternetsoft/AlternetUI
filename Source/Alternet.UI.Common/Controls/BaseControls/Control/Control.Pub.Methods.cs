@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// raise the window, not do it at all or indicate that a window requested to be
         /// raised in some other way, e.g.by flashing its icon if it is minimized.
         /// </remarks>
-        public virtual void Raise() => GetNative().Raise(this);
+        public virtual void Raise() => Handler.Raise();
 
         /// <summary>
         /// Called by the child control when its property is changed.
@@ -186,7 +186,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void CenterOnParent(GenericOrientation direction)
         {
-            GetNative().CenterOnParent(this, direction);
+            Handler.CenterOnParent(direction);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Alternet.UI
         /// Lowers the window to the bottom of the window hierarchy (Z-order).
         /// This function only works for top level windows.
         /// </summary>
-        public virtual void Lower() => GetNative().Lower(this);
+        public virtual void Lower() => Handler.Lower();
 
         /// <summary>
         /// Gets the background brush for specified state of the control.
@@ -249,7 +249,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SendSizeEvent()
         {
-            GetNative().SendSizeEvent(this);
+            Handler.SendSizeEvent();
         }
 
         /// <summary>
@@ -276,8 +276,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HideToolTip()
         {
-            GetNative().UnsetToolTip(this);
-            GetNative().SetToolTip(this, GetRealToolTip());
+            Handler.UnsetToolTip();
+            Handler.SetToolTip(GetRealToolTip());
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Alternet.UI
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
         public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
-            GetNative().RefreshRect(this, rect, eraseBackground);
+            Handler.RefreshRect(rect, eraseBackground);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HandleNeeded()
         {
-            GetNative().HandleNeeded(this);
+            Handler.HandleNeeded();
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CaptureMouse()
         {
-            GetNative().CaptureMouse(this);
+            Handler.CaptureMouse();
         }
 
         /// <summary>
@@ -545,7 +545,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ReleaseMouseCapture()
         {
-            GetNative().ReleaseMouseCapture(this);
+            Handler.ReleaseMouseCapture();
         }
 
         /// <summary>
@@ -739,7 +739,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DisableRecreate()
         {
-            GetNative().DisableRecreate(this);
+            Handler.DisableRecreate();
         }
 
         /// <summary>
@@ -748,7 +748,7 @@ namespace Alternet.UI
         /// See more details in <see cref="DisableRecreate"/>.
         public virtual void EnableRecreate()
         {
-            GetNative().EnableRecreate(this);
+            Handler.EnableRecreate();
         }
 
         /// <summary>
@@ -847,7 +847,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Graphics CreateDrawingContext()
         {
-            return GetNative().CreateDrawingContext(this);
+            return Handler.CreateDrawingContext();
         }
 
         /// <summary>
@@ -923,7 +923,7 @@ namespace Alternet.UI
         {
             if (Parent != null || this is Window)
             {
-                GetNative().Invalidate(this);
+                Handler.Invalidate();
             }
         }
 
@@ -934,7 +934,7 @@ namespace Alternet.UI
         {
             if (Parent != null || this is Window)
             {
-                GetNative().Update(this);
+                Handler.Update();
             }
         }
 
@@ -1006,7 +1006,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public virtual PointD ScreenToClient(PointD point)
         {
-            return GetNative().ScreenToClient(this, point);
+            return Handler.ScreenToClient(point);
         }
 
         /// <summary>
@@ -1018,7 +1018,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public virtual PointD ClientToScreen(PointD point)
         {
-            return GetNative().ClientToScreen(this, point);
+            return Handler.ClientToScreen(point);
         }
 
         /// <summary>
@@ -1030,7 +1030,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public virtual PointI ScreenToDevice(PointD point)
         {
-            return GetNative().ScreenToDevice(this, point);
+            return Handler.ScreenToDevice(point);
         }
 
         /// <summary>
@@ -1042,7 +1042,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public virtual PointD DeviceToScreen(PointI point)
         {
-            return GetNative().DeviceToScreen(this, point);
+            return Handler.DeviceToScreen(point);
         }
 
         /// <summary>
@@ -1136,7 +1136,7 @@ namespace Alternet.UI
         public virtual int BeginUpdate()
         {
             updateCount++;
-            GetNative().BeginUpdate(this);
+            Handler.BeginUpdate();
             return updateCount;
         }
 
@@ -1147,7 +1147,7 @@ namespace Alternet.UI
         public virtual int EndUpdate()
         {
             updateCount--;
-            GetNative().EndUpdate(this);
+            Handler.EndUpdate();
             return updateCount;
         }
 
@@ -1208,7 +1208,7 @@ namespace Alternet.UI
 
         public IntPtr GetHandle()
         {
-            return GetNative().GetHandle(this);
+            return Handler.GetHandle();
         }
 
         public void RaiseKeyUp(KeyEventArgs e)
@@ -1279,13 +1279,10 @@ namespace Alternet.UI
 
         public void RaiseMouseDown(MouseEventArgs e)
         {
-            /*Application.Log($"{GetType()}.RaiseMouseDown");*/
             OnMouseDown(e);
-            /*Application.Log($"{GetType()}.RaiseMouseDown 2: {e}");*/
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                /*Application.Log($"{GetType()}.RaiseMouseDown 3");*/
                 OnMouseLeftButtonDown(e);
             }
             else if (e.ChangedButton == MouseButton.Right)
@@ -1332,7 +1329,7 @@ namespace Alternet.UI
         /// <param name="flags">Flags.</param>
         public virtual void SetBounds(RectD rect, SetBoundsFlags flags)
         {
-            GetNative().SetBounds(this, rect, flags);
+            Handler.SetBounds(rect, flags);
         }
 
         /// <summary>
@@ -1348,7 +1345,7 @@ namespace Alternet.UI
         public virtual void BeginInit()
         {
             SuspendLayout();
-            GetNative().BeginInit(this);
+            Handler.BeginInit();
         }
 
         /// <summary>
@@ -1363,7 +1360,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EndInit()
         {
-            GetNative().EndInit(this);
+            Handler.EndInit();
             ResumeLayout();
         }
 
@@ -1382,7 +1379,7 @@ namespace Alternet.UI
         /// control successfully received input focus.</remarks>
         public virtual bool SetFocus()
         {
-            return GetNative().SetFocus(this);
+            return Handler.SetFocus();
         }
 
         /// <summary>
@@ -1420,7 +1417,7 @@ namespace Alternet.UI
             ScreenShotCounter++;
             try
             {
-                GetNative().SaveScreenshot(this, fileName);
+                Handler.SaveScreenshot(fileName);
             }
             finally
             {
@@ -1567,7 +1564,7 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
-            GetNative().FocusNextControl(this, forward, nested);
+            Handler.FocusNextControl(forward, nested);
         }
 
         /// <summary>
@@ -1587,7 +1584,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
-            return GetNative().DoDragDrop(this, data, allowedEffects);
+            return Handler.DoDragDrop(data, allowedEffects);
         }
 
         /// <summary>
@@ -1595,7 +1592,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RecreateWindow()
         {
-            GetNative().RecreateWindow(this);
+            Handler.RecreateWindow();
         }
 
         /// <summary>
@@ -1613,7 +1610,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual SizeD GetDPI()
         {
-            return GetNative().GetDPI(this);
+            return Handler.GetDPI();
         }
 
         /// <summary>
@@ -1632,7 +1629,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool IsTransparentBackgroundSupported()
         {
-            return GetNative().IsTransparentBackgroundSupported(this);
+            return Handler.IsTransparentBackgroundSupported();
         }
 
         /// <summary>
@@ -1717,7 +1714,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
-            GetNative().AlwaysShowScrollbars(this, hflag, vflag);
+            Handler.AlwaysShowScrollbars(hflag, vflag);
         }
 
         /// <summary>
@@ -1738,7 +1735,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BeginIgnoreRecreate()
         {
-            GetNative().BeginIgnoreRecreate(this);
+            Handler.BeginIgnoreRecreate();
         }
 
         /// <summary>
@@ -1781,7 +1778,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void EndIgnoreRecreate()
         {
-            GetNative().EndIgnoreRecreate(this);
+            Handler.EndIgnoreRecreate();
         }
 
         /// <summary>
@@ -1791,7 +1788,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public int PixelFromDip(double value)
         {
-            return GetNative().PixelFromDip(this, value);
+            return Handler.PixelFromDip(value);
         }
 
         /// <summary>
@@ -1831,7 +1828,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual double GetPixelScaleFactor()
         {
-            return GetNative().GetPixelScaleFactor(this);
+            return Handler.GetPixelScaleFactor();
         }
 
         /// <summary>
@@ -1861,7 +1858,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual RectI GetUpdateClientRectI()
         {
-            return GetNative().GetUpdateClientRectI(this);
+            return Handler.GetUpdateClientRectI();
         }
 
         /// <summary>
@@ -1976,7 +1973,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public double PixelToDip(int value)
         {
-            return GetNative().PixelToDip(this, value);
+            return Handler.PixelToDip(value);
         }
 
         /// <summary>
@@ -1986,7 +1983,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public double PixelFromDipF(double value)
         {
-            return GetNative().PixelFromDipF(this, value);
+            return Handler.PixelFromDipF(value);
         }
 
         /// <summary>
@@ -2021,7 +2018,7 @@ namespace Alternet.UI
             int largeChange,
             int maximum)
         {
-            GetNative().SetScrollBar(this, isVertical, visible, value, largeChange, maximum);
+            Handler.SetScrollBar(this, isVertical, visible, value, largeChange, maximum);
         }
 
         /// <summary>
@@ -2031,7 +2028,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsScrollBarVisible(bool isVertical)
         {
-            return GetNative().IsScrollBarVisible(this, isVertical);
+            return Handler.IsScrollBarVisible(isVertical);
         }
 
         /// <summary>
@@ -2041,7 +2038,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetScrollBarValue(bool isVertical)
         {
-            return GetNative().GetScrollBarValue(this, isVertical);
+            return Handler.GetScrollBarValue(isVertical);
         }
 
         /// <summary>
@@ -2051,7 +2048,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetScrollBarLargeChange(bool isVertical)
         {
-            return GetNative().GetScrollBarLargeChange(this, isVertical);
+            return Handler.GetScrollBarLargeChange(isVertical);
         }
 
         /// <summary>
@@ -2061,7 +2058,7 @@ namespace Alternet.UI
         public virtual Color? GetDefaultAttributesBgColor()
         {
             CheckDisposed();
-            return GetNative().GetDefaultAttributesBgColor(this);
+            return Handler.GetDefaultAttributesBgColor();
         }
 
         /// <summary>
@@ -2071,7 +2068,7 @@ namespace Alternet.UI
         public virtual Color? GetDefaultAttributesFgColor()
         {
             CheckDisposed();
-            return GetNative().GetDefaultAttributesFgColor(this);
+            return Handler.GetDefaultAttributesFgColor();
         }
 
         /// <summary>
@@ -2081,7 +2078,7 @@ namespace Alternet.UI
         public virtual Font? GetDefaultAttributesFont()
         {
             CheckDisposed();
-            return GetNative().GetDefaultAttributesFont(this);
+            return Handler.GetDefaultAttributesFont();
         }
 
         /// <summary>
@@ -2091,7 +2088,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetScrollBarMaximum(bool isVertical)
         {
-            return GetNative().GetScrollBarMaximum(this, isVertical);
+            return Handler.GetScrollBarMaximum(isVertical);
         }
 
         public void RaiseNativeSizeChanged()
@@ -2229,7 +2226,7 @@ namespace Alternet.UI
             if (!UserPaint)
                 return;
 
-            using var dc = GetNative().OpenPaintDrawingContext(this);
+            using var dc = Handler.OpenPaintDrawingContext();
 
             RaisePaint(new PaintEventArgs(dc, ClientRectangle));
         }
@@ -2239,8 +2236,8 @@ namespace Alternet.UI
             var args = new ScrollEventArgs
             {
                 ScrollOrientation = ScrollOrientation.HorizontalScroll,
-                NewValue = GetNative().GetScrollBarEvtPosition(this),
-                Type = GetNative().GetScrollBarEvtKind(this),
+                NewValue = Handler.GetScrollBarEvtPosition(),
+                Type = Handler.GetScrollBarEvtKind(),
             };
             RaiseScroll(args);
         }
@@ -2250,8 +2247,8 @@ namespace Alternet.UI
             var args = new ScrollEventArgs
             {
                 ScrollOrientation = ScrollOrientation.VerticalScroll,
-                NewValue = GetNative().GetScrollBarEvtPosition(this),
-                Type = GetNative().GetScrollBarEvtKind(this),
+                NewValue = Handler.GetScrollBarEvtPosition(),
+                Type = Handler.GetScrollBarEvtKind(),
             };
             RaiseScroll(args);
         }
@@ -2514,7 +2511,7 @@ namespace Alternet.UI
 
         public virtual void OnNativeControlVisibleChanged()
         {
-            bool visible = GetNative().GetVisible(this);
+            bool visible = Handler.Visible;
             Visible = visible;
 
             if (BaseApplication.IsLinuxOS && visible)

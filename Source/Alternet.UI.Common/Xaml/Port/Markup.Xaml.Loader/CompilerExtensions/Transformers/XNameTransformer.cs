@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 using XamlX;
 using XamlX.Ast;

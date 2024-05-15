@@ -102,12 +102,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetWantChars(this);
+                return Handler.WantChars;
             }
 
             set
             {
-                GetNative().SetWantChars(this, value);
+                Handler.WantChars = value;
             }
         }
 
@@ -290,9 +290,9 @@ namespace Alternet.UI
         /// <param name="always">Whether scrollbars are always visible.</param>
         protected virtual void SetScrollbars(bool horz, bool vert, bool always)
         {
-            GetNative().SetShowHorzScrollBar(this, horz);
-            GetNative().SetShowVertScrollBar(this, vert);
-            GetNative().SetScrollBarAlwaysVisible(this, always);
+            Handler.ShowHorzScrollBar = horz;
+            Handler.ShowVertScrollBar = vert;
+            Handler.ScrollBarAlwaysVisible = always;
         }
     }
 }

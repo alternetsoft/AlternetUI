@@ -25,7 +25,7 @@ namespace Alternet.UI
 
                 void Fn(string strFlag, out bool boolFlag)
                 {
-                    boolFlag = text.ToLower() == strFlag;
+                    boolFlag = text.Equals(strFlag, StringComparison.CurrentCultureIgnoreCase);
                 }
             }
         }

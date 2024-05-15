@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 using System.Linq;
 using XamlX.TypeSystem;
 

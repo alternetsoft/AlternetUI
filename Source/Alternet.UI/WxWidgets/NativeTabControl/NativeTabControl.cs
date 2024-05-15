@@ -12,7 +12,7 @@ namespace Alternet.UI
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedPageChanged")]
     [ControlCategory("Containers")]
-    internal partial class NativeTabControl : WxBaseControl
+    internal partial class NativeTabControl : Control
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeTabControl"/> class.

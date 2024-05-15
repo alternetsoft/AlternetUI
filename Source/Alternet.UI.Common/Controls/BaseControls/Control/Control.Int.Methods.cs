@@ -191,22 +191,22 @@ namespace Alternet.UI
 
         internal void SendMouseDownEvent(int x, int y)
         {
-            GetNative().SendMouseDownEvent(this, x, y);
+            Handler.SendMouseDownEvent(x, y);
         }
 
         internal void SendMouseUpEvent(int x, int y)
         {
-            GetNative().SendMouseUpEvent(this, x, y);
+            Handler.SendMouseUpEvent(x, y);
         }
 
         internal bool BeginRepositioningChildren()
         {
-            return GetNative().BeginRepositioningChildren(this);
+            return Handler.BeginRepositioningChildren();
         }
 
         internal void EndRepositioningChildren()
         {
-            GetNative().EndRepositioningChildren(this);
+            Handler.EndRepositioningChildren();
         }
 
         internal void DoInsideRepositioningChildren(Action action)

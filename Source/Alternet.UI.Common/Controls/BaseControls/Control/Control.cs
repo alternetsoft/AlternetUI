@@ -705,9 +705,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsScrollable
         {
-            get => GetNative().GetIsScrollable(this);
+            get => Handler.IsScrollable;
 
-            set => GetNative().SetIsScrollable(this, value);
+            set => Handler.IsScrollable = value;
         }
 
         /// <summary>
@@ -781,7 +781,7 @@ namespace Alternet.UI
                 if (cursor == value)
                     return;
                 cursor = value;
-                GetNative().SetCursor(this, value);
+                Handler.SetCursor(value);
             }
         }
 
@@ -884,14 +884,14 @@ namespace Alternet.UI
             {
                 if (IsDummy)
                     return SizeD.Empty;
-                return GetNative().GetClientSize(this);
+                return Handler.ClientSize;
             }
 
             set
             {
                 if (ClientSize == value)
                     return;
-                GetNative().SetClientSize(this, value);
+                Handler.ClientSize = value;
                 PerformLayout();
             }
         }
@@ -962,7 +962,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().IsMouseOver(this);
+                return Handler.IsMouseOver;
             }
         }
 
@@ -974,7 +974,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().IsMouseCaptured(this);
+                return Handler.IsMouseCaptured;
             }
         }
 
@@ -1040,7 +1040,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().IsFocusable(this);
+                return Handler.IsFocusable;
             }
         }
 
@@ -1128,7 +1128,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().CanAcceptFocus(this);
+                return Handler.CanAcceptFocus;
             }
         }
 
@@ -1170,7 +1170,7 @@ namespace Alternet.UI
                 toolTip = value;
                 OnToolTipChanged(EventArgs.Empty);
                 ToolTipChanged?.Invoke(this, EventArgs.Empty);
-                GetNative().SetToolTip(this, GetRealToolTip());
+                Handler.SetToolTip(GetRealToolTip());
             }
         }
 
@@ -1181,12 +1181,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual RectD Bounds
         {
-            get => GetNative().GetBounds(this);
+            get => Handler.Bounds;
             set
             {
                 if (Bounds == value)
                     return;
-                GetNative().SetBounds(this, value);
+                Handler.Bounds = value;
             }
         }
 
@@ -1269,7 +1269,7 @@ namespace Alternet.UI
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
                 Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
-                GetNative().SetVisible(this, value);
+                Handler.Visible = value;
                 Parent?.PerformLayout();
                 if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
@@ -1333,7 +1333,7 @@ namespace Alternet.UI
             get
             {
                 return (handler is not null) && handler.IsNativeControlCreated
-                    && GetNative().IsHandleCreated(this);
+                    && Handler.IsHandleCreated;
             }
         }
 
@@ -1608,12 +1608,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool UserPaint
         {
-            get => GetNative().GetUserPaint(this);
+            get => Handler.UserPaint;
             set
             {
                 if (value && !CanUserPaint)
                     return;
-                GetNative().SetUserPaint(this, value);
+                Handler.UserPaint = value;
             }
         }
 
@@ -1796,14 +1796,14 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetMinimumSize(this);
+                return Handler.MinimumSize;
             }
 
             set
             {
                 if (MinimumSize == value)
                     return;
-                GetNative().SetMinimumSize(this, value);
+                Handler.MinimumSize = value;
                 PerformLayout();
             }
         }
@@ -1816,14 +1816,14 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetMaximumSize(this);
+                return Handler.MaximumSize;
             }
 
             set
             {
                 if (MaximumSize == value)
                     return;
-                GetNative().SetMaximumSize(this, value);
+                Handler.MaximumSize = value;
                 PerformLayout();
             }
         }
@@ -1936,7 +1936,7 @@ namespace Alternet.UI
                 if (backgroundColor is null)
                     ResetBackgroundColor(ResetColorType.Auto);
                 else
-                    GetNative().SetBackgroundColor(this, backgroundColor);
+                    Handler.BackgroundColor = backgroundColor;
                 Refresh();
 
                 foreach (var child in Children)
@@ -2016,8 +2016,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = GetNative().GetBackgroundColor(this);
-                return result;
+                return Handler.BackgroundColor;
             }
         }
 
@@ -2033,8 +2032,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = GetNative().GetForegroundColor(this);
-                return result;
+                return Handler.ForegroundColor;
             }
         }
 
@@ -2102,7 +2100,7 @@ namespace Alternet.UI
                 if (foregroundColor is null)
                     ResetForegroundColor(ResetColorType.Auto);
                 else
-                    GetNative().SetForegroundColor(this, foregroundColor);
+                    Handler.ForegroundColor = foregroundColor;
                 Refresh();
 
                 foreach (var child in Children)
@@ -2151,7 +2149,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Thickness IntrinsicLayoutPadding
         {
-            get => GetNative().GetIntrinsicLayoutPadding(this);
+            get => Handler.GetIntrinsicLayoutPadding();
         }
 
         /// <summary>
@@ -2159,7 +2157,7 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Thickness IntrinsicPreferredSizePadding
-            => GetNative().GetIntrinsicPreferredSizePadding(this);
+            => Handler.GetIntrinsicPreferredSizePadding();
 
         /// <summary>
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
@@ -2343,7 +2341,7 @@ namespace Alternet.UI
                     OnFontChanged(EventArgs.Empty);
                     FontChanged?.Invoke(this, EventArgs.Empty);
 
-                    GetNative().SetFont(this, value);
+                    Handler.Font = value;
 
                     foreach (var child in Children)
                     {
@@ -2361,7 +2359,7 @@ namespace Alternet.UI
         /// Returns font even if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Font? RealFont => GetNative().GetFont(this);
+        public virtual Font? RealFont => Handler.Font;
 
         /// <summary>
         /// Gets or sets whether control's font is bold.
@@ -2370,7 +2368,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetIsBold(this);
+                return Handler.IsBold;
             }
 
             set
@@ -2379,8 +2377,7 @@ namespace Alternet.UI
                     return;
                 PerformLayoutAndInvalidate(() =>
                 {
-                    GetNative().SetIsBold(this, value);
-                    PerformLayout();
+                    Handler.IsBold = value;
                 });
             }
         }
@@ -2512,12 +2509,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetTabStop(this);
+                return Handler.TabStop;
             }
 
             set
             {
-                GetNative().SetTabStop(this, value);
+                Handler.TabStop = value;
             }
         }
 
@@ -2544,8 +2541,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool AllowDrop
         {
-            get => GetNative().GetAllowDrop(this);
-            set => GetNative().SetAllowDrop(this, value);
+            get => Handler.AllowDrop;
+            set => Handler.AllowDrop = value;
         }
 
         /// <summary>
@@ -2558,14 +2555,14 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetBackgroundStyle(this);
+                return Handler.BackgroundStyle;
             }
 
             set
             {
                 if (value == ControlBackgroundStyle.Transparent)
                     return;
-                GetNative().SetBackgroundStyle(this, value);
+                Handler.BackgroundStyle = value;
             }
         }
 
@@ -2600,7 +2597,7 @@ namespace Alternet.UI
                     return RectD.Empty;
 
                 var padding = Padding;
-                var intrinsicPadding = GetNative().GetIntrinsicLayoutPadding(this);
+                var intrinsicPadding = Handler.GetIntrinsicLayoutPadding();
 
                 return new RectD(
                     new PointD(
@@ -2635,14 +2632,14 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetLangDirection(this);
+                return Handler.LangDirection;
             }
 
             set
             {
                 if (value == LangDirection.Default)
                     return;
-                GetNative().SetLangDirection(this, value);
+                Handler.LangDirection = value;
             }
         }
 
@@ -2667,7 +2664,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().IsFocused(this);
+                return Handler.IsFocused;
             }
         }
 
@@ -2689,12 +2686,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetAcceptsFocusAll(this);
+                return Handler.AcceptsFocusAll;
             }
 
             set
             {
-                GetNative().SetAcceptsFocusAll(this, value);
+                Handler.AcceptsFocusAll = value;
             }
         }
 
@@ -2716,12 +2713,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetAcceptsFocusFromKeyboard(this);
+                return Handler.AcceptsFocusFromKeyboard;
             }
 
             set
             {
-                GetNative().SetAcceptsFocusFromKeyboard(this, value);
+                Handler.AcceptsFocusFromKeyboard = value;
             }
         }
 
@@ -2736,12 +2733,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetAcceptsFocusRecursively(this);
+                return Handler.AcceptsFocusRecursively;
             }
 
             set
             {
-                GetNative().SetAcceptsFocusRecursively(this, value);
+                Handler.AcceptsFocusRecursively = value;
             }
         }
 
@@ -2754,12 +2751,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetAcceptsFocusAll(this);
+                return Handler.AcceptsFocusAll;
             }
 
             set
             {
-                GetNative().SetAcceptsFocusAll(this, value);
+                Handler.AcceptsFocusAll = value;
             }
         }
 
@@ -2771,12 +2768,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetProcessIdle(this);
+                return Handler.ProcessIdle;
             }
 
             set
             {
-                GetNative().SetProcessIdle(this, value);
+                Handler.ProcessIdle = value;
             }
         }
 
@@ -2818,12 +2815,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetBindScrollEvents(this);
+                return Handler.BindScrollEvents;
             }
 
             set
             {
-                GetNative().SetBindScrollEvents(this, value);
+                Handler.BindScrollEvents = value;
             }
         }
 
@@ -2834,12 +2831,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetNative().GetBorderStyle(this);
+                return Handler.BorderStyle;
             }
 
             set
             {
-                GetNative().SetBorderStyle(this, value);
+                Handler.BorderStyle = value;
             }
         }
 

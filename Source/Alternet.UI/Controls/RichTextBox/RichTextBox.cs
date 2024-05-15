@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements rich text editor functionality.
     /// </summary>
     [ControlCategory("Common")]
-    public partial class RichTextBox : WxBaseControl, IReadOnlyStrings, IRichTextBox
+    public partial class RichTextBox : Control, IReadOnlyStrings, IRichTextBox
     {
         private bool hasBorder = true;
         private StringSearch? search;

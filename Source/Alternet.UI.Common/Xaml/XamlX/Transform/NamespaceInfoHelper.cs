@@ -1,3 +1,4 @@
+#pragma warning disable
 #nullable disable
 #pragma warning disable
 using System;

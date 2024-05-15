@@ -181,7 +181,7 @@ namespace Alternet.UI
             return Native.AuiPaneInfo.HasGripperTop(handle);
         }
 
-        public IAuiPaneInfo Window(WxBaseControl window)
+        public IAuiPaneInfo Window(Control window)
         {
             Native.AuiPaneInfo.Window(handle, AuiManager.ToHandle(window));
             return this;

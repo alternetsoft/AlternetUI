@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿#pragma warning disable
+using System.Reflection.Emit;
 using XamlX.Emit;
 using XamlX.TypeSystem;
 

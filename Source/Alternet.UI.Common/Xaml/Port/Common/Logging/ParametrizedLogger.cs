@@ -1,3 +1,4 @@
+#pragma warning disable
 using System.Runtime.CompilerServices;
 
 namespace Alternet.UI.Logging

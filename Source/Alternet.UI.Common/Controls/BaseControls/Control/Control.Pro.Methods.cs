@@ -59,12 +59,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets native control adapter.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual NativeControl GetNative() => Alternet.UI.NativeControl.Default;
-
-        /// <summary>
         /// Returns a preferred size of control with an added padding.
         /// </summary>
         protected SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
@@ -79,7 +73,7 @@ namespace Alternet.UI
         protected virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
         {
             var padding = Padding;
-            var intrinsicPadding = GetNative().GetIntrinsicPreferredSizePadding(this);
+            var intrinsicPadding = Handler.GetIntrinsicPreferredSizePadding();
             return preferredSize + padding.Size + intrinsicPadding.Size;
         }
 
@@ -174,9 +168,9 @@ namespace Alternet.UI
         protected virtual void OnHandleCreated(EventArgs e)
         {
             if (BackgroundColor is not null)
-                GetNative().SetBackgroundColor(this, BackgroundColor);
+                Handler.BackgroundColor = BackgroundColor;
             if (ForegroundColor is not null)
-                GetNative().SetForegroundColor(this, ForegroundColor);
+                Handler.ForegroundColor = ForegroundColor;
         }
 
         /// <summary>
@@ -676,7 +670,7 @@ namespace Alternet.UI
         {
             if (IsDummy)
                 return SizeD.Empty;
-            var s = GetNative().GetPreferredSize(this, availableSize);
+            var s = Handler.GetPreferredSize(availableSize);
             s += Padding.Size;
             return new SizeD(
                 double.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,

@@ -31,9 +31,9 @@ namespace Alternet.UI
         /// Gets the sizer of which this control is a member, if any, otherwise <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public static ISizer? ControlGetContainingSizer(WxBaseControl control)
+        public static ISizer? ControlGetContainingSizer(IControl control)
         {
-            var sizer = control.NativeControl.GetContainingSizer();
+            var sizer = ((UI.Native.Control)control.NativeControl).GetContainingSizer();
 
             if (sizer == IntPtr.Zero)
                 return null;
@@ -54,9 +54,9 @@ namespace Alternet.UI
         /// pre-existing sizer. Pass <c>false</c> if you wish to handle deleting
         /// the old sizer yourself but remember to do it yourself in this case
         /// to avoid memory leaks.</param>
-        public static void SetSizerAndFit(WxBaseControl control, ISizer? sizer, bool deleteOld = false)
+        public static void SetSizerAndFit(IControl control, ISizer? sizer, bool deleteOld = false)
         {
-            var nativeControl = control.NativeControl;
+            var nativeControl = (UI.Native.Control)control.NativeControl;
 
             if (nativeControl is null)
                 return;
@@ -71,9 +71,9 @@ namespace Alternet.UI
         /// Gets the sizer associated with the control by a previous call to <see cref="ControlSetSizer"/>,
         /// or <c>null</c>.
         /// </summary>
-        public static ISizer? ControlGetSizer(WxBaseControl control)
+        public static ISizer? ControlGetSizer(IControl control)
         {
-            var nativeControl = control.NativeControl;
+            var nativeControl = (UI.Native.Control)control.NativeControl;
 
             if (nativeControl is null)
                 return null;
@@ -108,9 +108,9 @@ namespace Alternet.UI
         /// This function enables and disables Layout automatically.
         /// </remarks>
         /// <param name="control">Affected control.</param>
-        public static void ControlSetSizer(WxBaseControl control, ISizer? sizer, bool deleteOld = true)
+        public static void ControlSetSizer(IControl control, ISizer? sizer, bool deleteOld = true)
         {
-            var nativeControl = control.NativeControl;
+            var nativeControl = (UI.Native.Control)control.NativeControl;
 
             if (nativeControl is null)
                 return;
