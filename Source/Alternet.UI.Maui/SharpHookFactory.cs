@@ -10,7 +10,7 @@ namespace Alternet.UI.Maui
 {
     internal class SharpHookFactory
     {
-        private TaskPoolGlobalHook? hook;
+        private readonly TaskPoolGlobalHook? hook;
 
         public SharpHookFactory()
         {
@@ -32,13 +32,13 @@ namespace Alternet.UI.Maui
 
         private void Hook_KeyTyped(object? sender, KeyboardHookEventArgs e)
         {
-            char keyChar = e.Data.KeyChar;
+            /*char keyChar = e.Data.KeyChar;*/
         }
 
         private void Hook_KeyPressed(object? sender, KeyboardHookEventArgs e)
         {
-            SharpHook.Native.KeyCode keyCode = e.Data.KeyCode;
-            SharpHook.Native.ModifierMask mask = e.RawEvent.Mask;
+            /*SharpHook.Native.KeyCode keyCode = e.Data.KeyCode;
+            SharpHook.Native.ModifierMask mask = e.RawEvent.Mask;*/
         }
 
         private void Hook_KeyReleased(object? sender, KeyboardHookEventArgs e)

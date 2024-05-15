@@ -54,14 +54,12 @@ namespace Alternet.UI
             findClearButton.Click += FindClearButton_Click;
             closeButton.Click += CloseButton_Click;
 
-            ControlSet optionControls = new(
+            Group(
                 findWrapCheckBox,
                 findEntireWordCheckBox,
                 findMatchCaseCheckBox,
                 findHighlightResultCheckBox,
-                findBackwardsCheckBox);
-
-            optionControls.Margin(5).Parent(findPanel);
+                findBackwardsCheckBox).Margin(5).Parent(findPanel);
 
             HorizontalStackPanel buttonPanel = new()
             {
@@ -69,8 +67,7 @@ namespace Alternet.UI
                 HorizontalAlignment = UI.HorizontalAlignment.Right,
             };
 
-            ControlSet buttons = new(findButton, findClearButton, closeButton);
-            buttons.Margin(5).Parent(buttonPanel);
+            Group(findButton, findClearButton, closeButton).Margin(5).Parent(buttonPanel);
 
             FindParamsToControls();
 

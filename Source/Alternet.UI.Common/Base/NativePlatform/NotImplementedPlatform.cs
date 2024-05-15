@@ -96,6 +96,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IListBoxHandler CreateListBoxHandler(ListBox control)
         {
             throw new NotImplementedException();

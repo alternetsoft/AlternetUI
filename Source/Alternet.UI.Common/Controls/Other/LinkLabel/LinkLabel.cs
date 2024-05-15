@@ -10,10 +10,8 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public partial class LinkLabel : WxBaseControl
+    public partial class LinkLabel : Control
     {
-        private string? text;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
@@ -26,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         public LinkLabel(string? text)
         {
-            this.text = text;
+            Text = text ?? string.Empty;
         }
 
         /// <summary>
@@ -37,11 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to use generic or native control for <see cref="LinkLabel"/>.
         /// </summary>
-        public static bool UseGenericControl
-        {
-            get => Native.LinkLabel.UseGenericControl;
-            set => Native.LinkLabel.UseGenericControl = value;
-        }
+        public static bool UseGenericControl { get; set; }
 
         /// <summary>
         /// Gets or sets whether to use our <see cref="AppUtils.ShellExecute"/>
@@ -58,16 +52,16 @@ namespace Alternet.UI
         {
             get
             {
-                return text ?? string.Empty;
+                return base.Text;
             }
 
             set
             {
-                if (text == value)
+                value ??= " ";
+                if (Text == value)
                     return;
-                text = value;
-                NativeControl.Text = text ?? " ";
-                OnTextChanged(EventArgs.Empty);
+                base.Text = value;
+                Handler.Text = value;
             }
         }
 
@@ -81,12 +75,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.Url;
+                return Handler.Url;
             }
 
             set
             {
-                NativeControl.Url = value;
+                Handler.Url = value;
             }
         }
 
@@ -97,8 +91,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HoverColor
         {
-            get => NativeControl.HoverColor;
-            set => NativeControl.HoverColor = value;
+            get => Handler.HoverColor;
+            set => Handler.HoverColor = value;
         }
 
         /// <summary>
@@ -109,8 +103,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color NormalColor
         {
-            get => NativeControl.NormalColor;
-            set => NativeControl.NormalColor = value;
+            get => Handler.NormalColor;
+            set => Handler.NormalColor = value;
         }
 
         /// <summary>
@@ -121,8 +115,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color VisitedColor
         {
-            get => NativeControl.VisitedColor;
-            set => NativeControl.VisitedColor = value;
+            get => Handler.VisitedColor;
+            set => Handler.VisitedColor = value;
         }
 
         /// <summary>
@@ -132,8 +126,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool Visited
         {
-            get => NativeControl.Visited;
-            set => NativeControl.Visited = value;
+            get => Handler.Visited;
+            set => Handler.Visited = value;
         }
 
         [Browsable(false)]
@@ -142,13 +136,14 @@ namespace Alternet.UI
             get => base.Layout;
         }
 
-        internal new Native.LinkLabel NativeControl =>
-             (Native.LinkLabel)base.NativeControl;
+        internal new ILinkLabelHandler Handler =>
+            (ILinkLabelHandler)base.Handler;
 
-        internal new LinkLabelHandler Handler =>
-            (LinkLabelHandler)base.Handler;
-
-        internal void RaiseLinkClicked(CancelEventArgs e)
+        /// <summary>
+        /// Raises <see cref="LinkClicked"/> event.
+        /// </summary>
+        /// <param name="e"></param>
+        public void RaiseLinkClicked(CancelEventArgs e)
         {
             OnLinkClicked(e);
             if (!e.Cancel)
@@ -163,7 +158,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return new LinkLabelHandler();
+            return NativePlatform.Default.CreateLinkLabelHandler(this);
         }
 
         /// <summary>

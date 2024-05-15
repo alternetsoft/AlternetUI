@@ -155,6 +155,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control)
+        {
+            Native.LinkLabel.UseGenericControl = LinkLabel.UseGenericControl;
+            return new LinkLabelHandler();
+        }
+
+        /// <inheritdoc/>
         public override IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control)
         {
             switch (AnimationPlayer.DefaultHandlerKind)

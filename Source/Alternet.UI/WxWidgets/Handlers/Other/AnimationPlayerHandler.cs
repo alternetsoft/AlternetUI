@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     internal class AnimationPlayerHandler : WxControlHandler, IAnimationPlayerHandler
     {
-        private bool useGeneric;
+        private readonly bool useGeneric;
 
         public AnimationPlayerHandler(bool useGeneric)
         {

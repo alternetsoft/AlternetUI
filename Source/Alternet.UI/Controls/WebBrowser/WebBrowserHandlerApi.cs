@@ -8,7 +8,7 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-#pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
+#pragma warning disable
     [SuppressUnmanagedCodeSecurity]
     internal class WebBrowserHandlerApi
     {

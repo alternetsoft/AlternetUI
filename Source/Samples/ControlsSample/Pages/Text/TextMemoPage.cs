@@ -16,11 +16,11 @@ namespace ControlsSample
             "Proin fermentum rhoncus dictum.\n";
 
         private readonly PanelMultilineTextBox memoPanel = new();
-        private readonly TextMemoPageProperties properties;
+        /*private readonly TextMemoPageProperties properties;*/
 
         public TextMemoPage()
         {
-            properties = new(this);
+            /*properties = new(this);*/
             Margin = 10;
             memoPanel.DefaultRightPaneBestSize = 250;
             memoPanel.DefaultRightPaneMinSize = 250;

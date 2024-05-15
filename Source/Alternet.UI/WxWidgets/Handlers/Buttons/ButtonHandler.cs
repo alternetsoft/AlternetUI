@@ -108,6 +108,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                Control.UserPaint = true;
+
             NativeControl.Text = Control.Text;
 
             InitializeStateImages();

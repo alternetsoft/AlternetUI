@@ -18,8 +18,6 @@ namespace Alternet.UI
         /// </summary>
         public Button()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
         }
 
         /// <summary>
