@@ -26,7 +26,6 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         public WebBrowser()
-            : base()
         {
         }
 
@@ -34,7 +33,6 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         public WebBrowser(string url)
-            : base()
         {
             defaultUrl = url;
         }

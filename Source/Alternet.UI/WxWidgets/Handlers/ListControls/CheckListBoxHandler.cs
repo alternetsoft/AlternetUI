@@ -12,6 +12,10 @@ namespace Alternet.UI
         private bool receivingSelection;
         private bool applyingSelection;
 
+        public CheckListBoxHandler()
+        {
+        }
+
         /// <summary>
         /// Gets a <see cref="CheckListBox"/> this handler provides
         /// the implementation for.

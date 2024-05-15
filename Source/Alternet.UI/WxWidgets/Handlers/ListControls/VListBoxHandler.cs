@@ -11,6 +11,10 @@ namespace Alternet.UI
         private bool receivingSelection;
         private bool applyingSelection;
 
+        public VListBoxHandler()
+        {
+        }
+
         public int ItemsCount
         {
             get => NativeControl.ItemsCount;

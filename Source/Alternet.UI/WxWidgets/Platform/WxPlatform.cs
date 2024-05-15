@@ -155,6 +155,22 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control)
+        {
+            switch (AnimationPlayer.DefaultHandlerKind)
+            {
+                case AnimationPlayer.KnownHandler.Native:
+                    return new AnimationPlayerHandler(false);
+                case AnimationPlayer.KnownHandler.Generic:
+                default:
+                    return new AnimationPlayerHandler(true);
+                case AnimationPlayer.KnownHandler.WebBrowser:
+                    throw new NotImplementedException(
+                        "KnownDriver.WebBrowser is not currently supported.");
+            }
+        }
+
+        /// <inheritdoc/>
         public override ISliderHandler CreateSliderHandler(Slider control)
         {
             return new SliderHandler();

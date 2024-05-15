@@ -10,6 +10,10 @@ namespace Alternet.UI
     {
         private ComboBoxItemPaintEventArgs? paintEventArgs;
 
+        public ComboBoxHandler()
+        {
+        }
+
         [Flags]
         private enum DrawItemFlags
         {

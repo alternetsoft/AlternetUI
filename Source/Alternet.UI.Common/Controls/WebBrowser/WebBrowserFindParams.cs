@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Customization flags for text search operations in the WebBrowser control.
+    /// Customization flags for text search operations in the WebBrowser control.
     /// </summary>
     public class WebBrowserFindParams
     {
         /// <summary>
-        ///     Causes the search to restart when end or beginning reached.
+        /// Causes the search to restart when end or beginning reached.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if the search will be restarted when end or
@@ -21,7 +21,7 @@ namespace Alternet.UI
         public bool Wrap { get; set; } = true;
 
         /// <summary>
-        ///     Matches an entire word when searching.
+        /// Matches an entire word when searching.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if an entire word will be matched when search
@@ -30,7 +30,7 @@ namespace Alternet.UI
         public bool EntireWord { get; set; } = false;
 
         /// <summary>
-        ///     Match case, i.e. case sensitive searching.
+        /// Match case, i.e. case sensitive searching.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if case sensitive searching will be
@@ -39,7 +39,7 @@ namespace Alternet.UI
         public bool MatchCase { get; set; } = false;
 
         /// <summary>
-        ///     Highlights the search results.
+        /// Highlights the search results.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if the search results will be highlighted;
@@ -48,7 +48,7 @@ namespace Alternet.UI
         public bool HighlightResult { get; set; } = true;
 
         /// <summary>
-        ///     Searches for phrase in backward direction.
+        /// Searches for phrase in backward direction.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if search is done in backward direction;
@@ -56,22 +56,19 @@ namespace Alternet.UI
         /// </returns>
         public bool Backwards { get; set; } = false;
 
-        internal int ToWebViewParams()
+        /// <summary>
+        /// Gets search parameters as int value.
+        /// </summary>
+        /// <returns></returns>
+        public static explicit operator WebBrowserSearchFlags(WebBrowserFindParams value)
         {
-            const int FindWrap = 0x0001;
-            const int FindEntireWord = 0x0002;
-            const int FindMatchCase = 0x0004;
-            const int FindHighlightResult = 0x0008;
-            const int FindBackwards = 0x0010;
-            const int FindDefault = 0;
+            var result = WebBrowserSearchFlags.Default;
 
-            int result = FindDefault;
-
-            if (Wrap) result |= FindWrap;
-            if (EntireWord) result |= FindEntireWord;
-            if (MatchCase) result |= FindMatchCase;
-            if (HighlightResult) result |= FindHighlightResult;
-            if (Backwards) result |= FindBackwards;
+            if (value.Wrap) result |= WebBrowserSearchFlags.Wrap;
+            if (value.EntireWord) result |= WebBrowserSearchFlags.EntireWord;
+            if (value.MatchCase) result |= WebBrowserSearchFlags.MatchCase;
+            if (value.HighlightResult) result |= WebBrowserSearchFlags.HighlightResult;
+            if (value.Backwards) result |= WebBrowserSearchFlags.Backwards;
             return result;
         }
     }

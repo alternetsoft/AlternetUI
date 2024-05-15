@@ -6,6 +6,10 @@ namespace Alternet.UI
     internal class NumericUpDownHandler :
         NativeControlHandler<NumericUpDown, Native.NumericUpDown>, INumericUpDownHandler
     {
+        public NumericUpDownHandler()
+        {
+        }
+
         public bool HasBorder
         {
             get => NativeControl.HasBorder;

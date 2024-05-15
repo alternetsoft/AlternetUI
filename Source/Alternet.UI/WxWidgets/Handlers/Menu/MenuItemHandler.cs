@@ -6,6 +6,10 @@ namespace Alternet.UI
     internal class MenuItemHandler
         : NativeControlHandler<MenuItem, Native.MenuItem>, IMenuItemHandler
     {
+        public MenuItemHandler()
+        {
+        }
+
         internal static IntPtr GetMenuHandle(IControl control)
         {
             var ncontrol = (UI.Native.Menu)control.NativeControl;

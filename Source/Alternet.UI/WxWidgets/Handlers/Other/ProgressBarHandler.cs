@@ -4,6 +4,10 @@ namespace Alternet.UI
 {
     internal class ProgressBarHandler : ControlHandler<ProgressBar>, IProgressBarHandler
     {
+        public ProgressBarHandler()
+        {
+        }
+
         public new Native.ProgressBar NativeControl => (Native.ProgressBar)base.NativeControl!;
 
         internal override Native.Control CreateNativeControl()

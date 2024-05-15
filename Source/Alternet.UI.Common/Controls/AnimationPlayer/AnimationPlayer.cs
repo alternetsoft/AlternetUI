@@ -24,43 +24,34 @@ namespace Alternet.UI
     /// support all of them.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class AnimationPlayer : WxBaseControl, IAnimationPlayer
+    public partial class AnimationPlayer : Control
     {
         /// <summary>
         /// Gets or sets type of the default driver used inside the <see cref="AnimationPlayer"/>.
         /// </summary>
-        public static KnownDriver DefaultDriver = KnownDriver.Generic;
+        public static KnownHandler DefaultHandlerKind = KnownHandler.Generic;
 
         /// <summary>
         /// Gets or sets function which creates animation player driver used in
         /// the <see cref="AnimationPlayer"/>.
         /// </summary>
         /// <remarks>
-        /// If this field is <c>null</c>, <see cref="CreateDefaultPlayerDriver"/>
-        /// is used to create animation player driver.
+        /// If this field is <c>null</c>, <see cref="CreateHandler"/>
+        /// is used to create animation player handler.
         /// </remarks>
-        public static Func<IAnimationPlayer>? CreatePlayerDriver;
-
-        private readonly IAnimationPlayer driver;
+        public static Func<AnimationPlayer, IAnimationPlayerHandler>? CreateHandlerOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
         /// </summary>
         public AnimationPlayer()
         {
-            VerticalAlignment = VerticalAlignment.Top;
-            HorizontalAlignment = HorizontalAlignment.Left;
-
-            var fn = CreatePlayerDriver ?? CreateDefaultPlayerDriver;
-
-            driver = fn();
-            driver.Control.Parent = this;
         }
 
         /// <summary>
         /// Enumerates known <see cref="AnimationPlayer"/> drivers.
         /// </summary>
-        public enum KnownDriver
+        public enum KnownHandler
         {
             /// <summary>
             /// Native control is used inside the <see cref="AnimationPlayer"/>.
@@ -74,11 +65,10 @@ namespace Alternet.UI
 
             /// <summary>
             /// <see cref="WebBrowser"/> control is used inside the <see cref="AnimationPlayer"/>.
+            /// Currently is not implemented.
             /// </summary>
             WebBrowser,
         }
-
-        Control IAnimationPlayer.Control { get => this; }
 
         /// <summary>
         /// Gets the number of frames for this animation.
@@ -87,7 +77,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual uint FrameCount
         {
-            get => driver.FrameCount;
+            get => Handler.FrameCount;
         }
 
         /// <summary>
@@ -97,7 +87,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SizeI AnimationSize
         {
-            get => driver.AnimationSize;
+            get => Handler.AnimationSize;
         }
 
         /// <summary>
@@ -107,29 +97,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsOk
         {
-            get => driver.IsOk;
+            get => Handler.IsOk;
         }
 
-        /// <summary>
-        /// Creates default native animation player driver.
-        /// </summary>
-        /// <returns></returns>
-        public static IAnimationPlayer CreateDefaultPlayerDriver()
-        {
-            switch (DefaultDriver)
-            {
-                case KnownDriver.Native:
-                    return new NativeAnimationPlayer();
-                case KnownDriver.Generic:
-                    var result = new NativeAnimationPlayer();
-                    result.UseGeneric = true;
-                    return result;
-                case KnownDriver.WebBrowser:
-                default:
-                    throw new NotImplementedException(
-                        "KnownDriver.WebBrowser is not currently supported.");
-            }
-        }
+        internal new IAnimationPlayerHandler Handler => (IAnimationPlayerHandler)base.Handler;
 
         /// <summary>
         /// Starts playing the animation.
@@ -142,7 +113,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Play()
         {
-            return driver.Play();
+            return Handler.Play();
         }
 
         /// <summary>
@@ -155,7 +126,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Stop()
         {
-            driver.Stop();
+            Handler.Stop();
         }
 
         /// <summary>
@@ -164,7 +135,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the animation is being played; <c>false</c> otherwise.</returns>
         public virtual bool IsPlaying()
         {
-            return driver.IsPlaying();
+            return Handler.IsPlaying();
         }
 
         /// <summary>
@@ -178,7 +149,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any)
         {
-            return driver.LoadFile(filename, type);
+            return Handler.LoadFile(filename, type);
         }
 
         /// <summary>
@@ -195,7 +166,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
         {
-            return driver.Load(stream, type);
+            return Handler.Load(stream, type);
         }
 
         /// <summary>
@@ -205,7 +176,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetDelay(uint i)
         {
-            return driver.GetDelay(i);
+            return Handler.GetDelay(i);
         }
 
         /// <summary>
@@ -215,7 +186,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual GenericImage GetFrame(uint i)
         {
-            return driver.GetFrame(i);
+            return Handler.GetFrame(i);
         }
 
         /// <summary>
@@ -238,7 +209,7 @@ namespace Alternet.UI
         public virtual bool LoadFromUrl(string url, AnimationType type = AnimationType.Any)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
-            return driver.Load(stream, type);
+            return Handler.Load(stream, type);
         }
 
         /// <summary>
@@ -261,121 +232,31 @@ namespace Alternet.UI
         /// <param name="bitmap"></param>
         public virtual void SetInactiveBitmap(ImageSet? bitmap)
         {
-            driver.SetInactiveBitmap(bitmap);
+            Handler.SetInactiveBitmap(bitmap);
         }
 
-        internal class NativeAnimationPlayer : WxBaseControl, IAnimationPlayer
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            public NativeAnimationPlayer()
+            if (IsOk)
             {
+                var size = AnimationSize;
+                var sizeDips = PixelToDip(size);
+                return sizeDips;
             }
 
-            Control IAnimationPlayer.Control { get => this; }
+            return base.GetPreferredSize(availableSize);
+        }
 
-            public override ControlTypeId ControlKind => ControlTypeId.AnimationPlayer;
-
-            [Browsable(false)]
-            public virtual uint FrameCount
+        /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
+        {
+            if(CreateHandlerOverride is not null)
             {
-                get => NativeControl.GetFrameCount();
+                return CreateHandlerOverride(this);
             }
 
-            public virtual bool UseGeneric
-            {
-                get
-                {
-                    return NativeControl.UseGeneric;
-                }
-
-                set
-                {
-                    NativeControl.UseGeneric = value;
-                }
-            }
-
-            [Browsable(false)]
-            public virtual SizeI AnimationSize
-            {
-                get => NativeControl.GetSize();
-            }
-
-            [Browsable(false)]
-            public virtual bool IsOk
-            {
-                get => NativeControl.IsOk();
-            }
-
-            [Browsable(false)]
-            internal new AnimationControlHandler Handler
-            {
-                get
-                {
-                    CheckDisposed();
-                    return (AnimationControlHandler)base.Handler;
-                }
-            }
-
-            internal new Native.AnimationControl NativeControl => Handler.NativeControl;
-
-            public virtual bool Play()
-            {
-                return NativeControl.Play();
-            }
-
-            public virtual void Stop()
-            {
-                NativeControl.Stop();
-            }
-
-            public virtual bool IsPlaying()
-            {
-                return NativeControl.IsPlaying();
-            }
-
-            public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any)
-            {
-                return NativeControl.LoadFile(filename, (int)type);
-            }
-
-            public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
-            {
-                using var inputStream = new UI.Native.InputStream(stream);
-                return NativeControl.Load(inputStream, (int)type);
-            }
-
-            public virtual int GetDelay(uint i)
-            {
-                return NativeControl.GetDelay(i);
-            }
-
-            public virtual GenericImage GetFrame(uint i)
-            {
-                var ptr = NativeControl.GetFrame(i);
-                var result = new GenericImage(ptr);
-                return result;
-            }
-
-            public override SizeD GetPreferredSize(SizeD availableSize)
-            {
-                if (IsOk)
-                {
-                    var size = AnimationSize;
-                    var sizeDips = PixelToDip(size);
-                    return sizeDips;
-                }
-
-                return base.GetPreferredSize(availableSize);
-            }
-
-            public virtual void SetInactiveBitmap(ImageSet? imageSet)
-            {
-                NativeControl.SetInactiveBitmap((UI.Native.ImageSet?)imageSet?.Handler);
-            }
-
-            protected override IControlHandler CreateHandler()
-            {
-                return new AnimationControlHandler();
-            }
+            return NativePlatform.Default.CreateAnimationPlayerHandler(this);
         }
     }
 }

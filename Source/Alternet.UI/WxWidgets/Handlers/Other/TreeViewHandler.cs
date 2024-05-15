@@ -12,6 +12,10 @@ namespace Alternet.UI
         private bool receivingSelection;
         private bool applyingSelection;
 
+        public TreeViewHandler()
+        {
+        }
+
         /// <summary>
         /// Gets a <see cref="TreeView"/> this handler provides the implementation for.
         /// </summary>

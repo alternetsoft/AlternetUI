@@ -4,6 +4,10 @@ namespace Alternet.UI
 {
     internal class CheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>, ICheckBoxHandler
     {
+        public CheckBoxHandler()
+        {
+        }
+
         public CheckState CheckState
         {
             get

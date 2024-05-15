@@ -3,8 +3,13 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class LinkLabelHandler : NativeControlHandler<LinkLabel, Native.LinkLabel>
+    internal class LinkLabelHandler
+        : NativeControlHandler<LinkLabel, Native.LinkLabel>, ILinkLabelHandler
     {
+        public LinkLabelHandler()
+        {
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.LinkLabel();

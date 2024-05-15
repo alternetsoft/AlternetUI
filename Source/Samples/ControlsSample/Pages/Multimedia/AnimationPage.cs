@@ -33,7 +33,7 @@ namespace ControlsSample
 
         static AnimationPage()
         {
-            AnimationPlayer.DefaultDriver = AnimationPlayer.KnownDriver.Generic;
+            AnimationPlayer.DefaultHandlerKind = AnimationPlayer.KnownHandler.Generic;
         }
 
         public AnimationPage()

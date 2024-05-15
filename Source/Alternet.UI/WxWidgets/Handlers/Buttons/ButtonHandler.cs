@@ -9,6 +9,10 @@ namespace Alternet.UI
     {
         private ControlStateImages? stateImages;
 
+        public ButtonHandler()
+        {
+        }
+
         /// <summary>
         /// Gets a <see cref="Button"/> this handler provides the implementation for.
         /// </summary>

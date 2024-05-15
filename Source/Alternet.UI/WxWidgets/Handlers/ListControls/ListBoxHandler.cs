@@ -10,6 +10,10 @@ namespace Alternet.UI
         private bool receivingSelection;
         private bool applyingSelection;
 
+        public ListBoxHandler()
+        {
+        }
+
         /// <summary>
         /// Gets a <see cref="ListBox"/> this handler provides the
         /// implementation for.

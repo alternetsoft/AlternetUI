@@ -6,6 +6,10 @@ namespace Alternet.UI
     internal class ColorPickerHandler
         : NativeControlHandler<ColorPicker, Native.ColorPicker>, IColorPickerHandler
     {
+        public ColorPickerHandler()
+        {
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ColorPicker();

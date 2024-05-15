@@ -19,6 +19,10 @@ namespace Alternet.UI
             }
         }
 
+        public CalendarHandler()
+        {
+        }
+
         public ICalendarDateAttr? MarkDateAttr
         {
             get

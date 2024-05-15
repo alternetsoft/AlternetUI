@@ -9,6 +9,10 @@ namespace Alternet.UI
     {
         private bool handlingNativeControlTextChanged;
 
+        public TextBoxHandler()
+        {
+        }
+
         public string ReportedUrl
         {
             get

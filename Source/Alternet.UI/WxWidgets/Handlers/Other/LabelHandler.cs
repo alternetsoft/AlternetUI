@@ -5,6 +5,10 @@ namespace Alternet.UI
     internal class LabelHandler
         : NativeControlHandler<Label, Native.Label>, ILabelHandler
     {
+        public LabelHandler()
+        {
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Label() { Text = Control.Text };

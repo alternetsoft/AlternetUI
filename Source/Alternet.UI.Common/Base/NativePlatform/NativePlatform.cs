@@ -23,6 +23,8 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
+        public abstract IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control);
+
         public abstract ICalendarHandler CreateCalendarHandler(Calendar control);
 
         public abstract IListViewHandler CreateListViewHandler(ListView control);

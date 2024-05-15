@@ -5,6 +5,10 @@ namespace Alternet.UI
 {
     internal class GroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>, IGroupBoxHandler
     {
+        public GroupBoxHandler()
+        {
+        }
+
         public int GetTopBorderForSizer()
         {
             return NativeControl.GetTopBorderForSizer();

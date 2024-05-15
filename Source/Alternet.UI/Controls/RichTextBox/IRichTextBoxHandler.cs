@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class ScrollViewerHandler : WxControlHandler, IScrollViewerHandler
+    public interface IRichTextBoxHandler : IControlHandler
     {
-        public ScrollViewerHandler()
-        {
-        }
     }
 }

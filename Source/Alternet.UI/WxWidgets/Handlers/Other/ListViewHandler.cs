@@ -11,6 +11,10 @@ namespace Alternet.UI
         private int applyingSelection = 0;
         private int clearing = 0;
 
+        public ListViewHandler()
+        {
+        }
+
         /// <summary>
         /// Tells <see cref="ListView"/> to use the generic control even
         /// when it is capable of using the native control instead.

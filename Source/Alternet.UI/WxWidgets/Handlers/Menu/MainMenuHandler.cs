@@ -5,6 +5,10 @@ namespace Alternet.UI
 {
     internal class MainMenuHandler : NativeControlHandler<MainMenu, Native.MainMenu>, IMainMenuHandler
     {
+        public MainMenuHandler()
+        {
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.MainMenu();

@@ -31,6 +31,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public override IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IButtonHandler CreateButtonHandler(Button control)
         {
             throw new NotImplementedException();

@@ -9,6 +9,10 @@ namespace Alternet.UI
     internal class ScrollBarHandler
         : NativeControlHandler<ScrollBar, Native.ScrollBar>, IScrollBarHandler
     {
+        public ScrollBarHandler()
+        {
+        }
+
         public ScrollEventType EventTypeID
         {
             get

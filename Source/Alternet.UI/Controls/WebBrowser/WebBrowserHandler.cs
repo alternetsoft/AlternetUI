@@ -253,8 +253,8 @@ namespace Alternet.UI
         {
             prm ??= new ();
 
-            int flags = prm.ToWebViewParams();
-            int result = WebBrowserHandlerApi.WebBrowser_Find_(NativePointer, text, flags);
+            var flags = (WebBrowserSearchFlags)prm;
+            int result = WebBrowserHandlerApi.WebBrowser_Find_(NativePointer, text, (int)flags);
             return result;
         }
 

@@ -49,4 +49,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\RichTextBox\" />
+  </ItemGroup>
+
 </Project>

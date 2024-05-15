@@ -4,6 +4,10 @@ namespace Alternet.UI
 {
     internal class SliderHandler : ControlHandler<Slider>, ISliderHandler
     {
+        public SliderHandler()
+        {
+        }
+
         public new Native.Slider NativeControl => (Native.Slider)base.NativeControl!;
 
         public virtual void ClearTicks()
