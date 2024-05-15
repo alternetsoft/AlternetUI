@@ -73,7 +73,7 @@ namespace Alternet.UI
         private bool visible = true;
         private Control? parent;
         private int updateCount = 0;
-        private IControl.ControlFlags stateFlags;
+        private ControlFlags stateFlags;
         private Cursor? cursor;
         private string? toolTip;
         private ObjectUniqueId? uniqueId;
@@ -900,7 +900,7 @@ namespace Alternet.UI
         /// Gets control flags.
         /// </summary>
         [Browsable(false)]
-        public virtual IControl.ControlFlags StateFlags
+        public virtual ControlFlags StateFlags
         {
             get => stateFlags;
             internal set => stateFlags = value;
@@ -1427,7 +1427,7 @@ namespace Alternet.UI
                 parent?.Children.Remove(this);
                 value?.Children.Add(this);
                 OnParentChanged(EventArgs.Empty);
-                stateFlags |= IControl.ControlFlags.ParentAssigned;
+                stateFlags |= ControlFlags.ParentAssigned;
             }
         }
 

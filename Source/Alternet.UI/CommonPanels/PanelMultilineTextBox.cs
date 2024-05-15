@@ -94,7 +94,7 @@ namespace Alternet.UI
         {
             base.OnParentChanged(e);
 
-            if (Parent == null || StateFlags.HasFlag(IControl.ControlFlags.ParentAssigned))
+            if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
                 return;
 
             var control = TextBox;

@@ -902,9 +902,9 @@ namespace Alternet.UI
 
         protected void ApplyStartLocationOnce(Control? owner)
         {
-            if (!StateFlags.HasFlag(IControl.ControlFlags.StartLocationApplied))
+            if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
             {
-                StateFlags |= IControl.ControlFlags.StartLocationApplied;
+                StateFlags |= ControlFlags.StartLocationApplied;
                 ApplyStartLocation(owner);
             }
         }
