@@ -17,7 +17,7 @@ namespace Alternet.UI
             else
             {
                 if (position != PointD.MinusOne)
-                    Show(control, (PointD)position);
+                    ShowContextMenu(control, (PointD)position);
                 else
                 {
                     ((UI.Native.Control)control.NativeControl).ShowPopupMenu(
@@ -42,7 +42,7 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Displays the shortcut menu at the specified position.
         /// </summary>
         /// <param name="control">A <see cref="Control"/> that specifies the control with which
@@ -51,14 +51,14 @@ namespace Alternet.UI
         /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
         /// These coordinates are specified relative
         /// to the client coordinates of the control specified in the control parameter.</param>
-        public void Show(IControl control, PointD position)
+        public void ShowContextMenu(IControl control, PointD position)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
             NativeControl.ShowContextMenu(
                 (UI.Native.Control)control.NativeControl ?? throw new Exception(), position);
-        }*/
+        }
 
         internal override Native.Control CreateNativeControl()
         {
