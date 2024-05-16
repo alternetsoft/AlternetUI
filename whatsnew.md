@@ -1,3 +1,13 @@
+# 0.9.600 (2024 May 16)
+
+- Alternet.UI is now fully crossplatform. It was separated from WxWidgets. 
+We also started to port Alternet.UI to MAUI and Avalonia.UI. 
+It will be possible to use any Alternet.UI.Control descendant with these libraries.
+We plan to support at least three platforms: WxWidgets (Window, Linux, MacOs), MAUI (Windows, Android, iOS), Avalonia.UI.
+- Added ContainerControl - base class for all container controls.
+- Renamed GenericToolbar to ToolBar. Old toolbar worked only with WxWidgets, the new one is crossplatform.
+- Speedup of property handling in controls: ComboBox, NumericUpDown, Slider, DateTimePicker, TextBox. 
+
 # 0.9.527 (2024 April 4)
 
 - Added FileSystem, DefaultFileSystem classes and IFileSystem interface.
