@@ -57,7 +57,7 @@ namespace Alternet.Drawing
 
         public string GetFontFamilyName(GenericFontFamily genericFamily)
         {
-            return UI.Native.Font.GetGenericFamilyName((UI.Native.GenericFontFamily)genericFamily);
+            return UI.Native.Font.GetGenericFamilyName(genericFamily);
         }
 
         public bool IsFontFamilyValid(string name)

@@ -11,14 +11,6 @@ namespace Alternet.UI.Native
 {
     internal partial class Font : IFontHandler
     {
-        Alternet.Drawing.FontStyle IFontHandler.Style
-        {
-            get
-            {
-                return (Alternet.Drawing.FontStyle)Style;
-            }
-        }
-
         void IFontHandler.Update(IFontHandler.FontParams prm)
         {
             if (prm.Unit != GraphicsUnit.Point)
@@ -39,23 +31,15 @@ namespace Alternet.UI.Native
             prm.Size = Alternet.Drawing.Font.CheckSize(prm.Size);
 
             Initialize(
-               ToNativeGenericFamily(prm.GenericFamily),
+               prm.GenericFamily ?? 0,
                prm.FamilyName,
                prm.Size,
-               (UI.Native.FontStyle)prm.Style);
-
-            static UI.Native.GenericFontFamily ToNativeGenericFamily(
-                Alternet.Drawing.GenericFontFamily? value)
-            {
-                return value == null ?
-                    UI.Native.GenericFontFamily.None :
-                    (UI.Native.GenericFontFamily)value;
-            }
+               prm.Style);
         }
 
         bool IFontHandler.Equals(Alternet.Drawing.Font font)
         {
-            if (font.Handler is not Font handler)
+            if (font.Handler is not UI.Native.Font handler)
                 return false;
             return IsEqualTo(handler);
         }

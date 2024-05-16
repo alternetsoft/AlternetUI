@@ -212,8 +212,8 @@ namespace Alternet.UI
                 null : ((WindowHandler)owner.Handler).NativeControl;
 
             var fontName = fontInfo.Name;
-            var style = (UI.Native.FontStyle)fontInfo.Style;
-            var genericFamily = ToNativeGenericFamily(fontInfo.FontFamily.GenericFamily);
+            var style = fontInfo.Style;
+            var genericFamily = fontInfo.FontFamily.GenericFamily ?? GenericFontFamily.None;
 
             nativeDialog.SetInitialFont(
                 genericFamily,
@@ -228,14 +228,6 @@ namespace Alternet.UI
             fontInfo.Name = nativeDialog.ResultFontName;
 
             return result;
-
-            static UI.Native.GenericFontFamily ToNativeGenericFamily(
-                 GenericFontFamily? value)
-            {
-                return value == null ?
-                    UI.Native.GenericFontFamily.None :
-                    (UI.Native.GenericFontFamily)value;
-            }
         }
     }
 }

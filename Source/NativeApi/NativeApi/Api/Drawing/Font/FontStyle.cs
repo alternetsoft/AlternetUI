@@ -1,9 +1,13 @@
 ﻿
 using System;
 
+using ApiCommon;
+
 namespace NativeApi.Api
 {
     [Flags]
+    [ManagedExternName("Alternet.Drawing.FontStyle")]
+    [ManagedName("Alternet.Drawing.FontStyle")]
     public enum FontStyle
     {
         Regular = 0,

@@ -6,6 +6,11 @@ namespace Alternet.Drawing
     public enum GenericFontFamily
     {
         /// <summary>
+        /// Not specified.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// A generic Sans Serif <see cref="FontFamily"/> object.
         /// </summary>
         SansSerif = 1,

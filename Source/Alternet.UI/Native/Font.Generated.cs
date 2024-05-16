@@ -68,7 +68,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public FontStyle Style
+        public Alternet.Drawing.FontStyle Style
         {
             get
             {
@@ -146,7 +146,7 @@ namespace Alternet.UI.Native
             return NativeApi.Font_GetWeight_(NativePointer);
         }
         
-        public void Initialize(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style)
+        public void Initialize(Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, Alternet.Drawing.FontStyle style)
         {
             CheckDisposed();
             NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
@@ -175,7 +175,7 @@ namespace Alternet.UI.Native
             return NativeApi.Font_IsFamilyValid_(fontFamily);
         }
         
-        public static string GetGenericFamilyName(GenericFontFamily genericFamily)
+        public static string GetGenericFamilyName(Alternet.Drawing.GenericFontFamily genericFamily)
         {
             return NativeApi.Font_GetGenericFamilyName_(genericFamily);
         }
@@ -208,7 +208,7 @@ namespace Alternet.UI.Native
             public static extern double Font_GetSizeInPoints_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern FontStyle Font_GetStyle_(IntPtr obj);
+            public static extern Alternet.Drawing.FontStyle Font_GetStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Font_GetDescription_(IntPtr obj);
@@ -256,7 +256,7 @@ namespace Alternet.UI.Native
             public static extern int Font_GetWeight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style);
+            public static extern void Font_Initialize_(IntPtr obj, Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, Alternet.Drawing.FontStyle style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_InitializeWithDefaultFont_(IntPtr obj);
@@ -271,7 +271,7 @@ namespace Alternet.UI.Native
             public static extern bool Font_IsFamilyValid_(string fontFamily);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_GetGenericFamilyName_(GenericFontFamily genericFamily);
+            public static extern string Font_GetGenericFamilyName_(Alternet.Drawing.GenericFontFamily genericFamily);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsEqualTo_(IntPtr obj, IntPtr other);
