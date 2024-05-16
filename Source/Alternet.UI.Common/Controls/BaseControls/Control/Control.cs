@@ -539,7 +539,7 @@ namespace Alternet.UI
             set
             {
                 defaultFont = value;
-                NativeDrawing.Default.SetDefaultFont(value);
+                NativePlatform.Default.FontFactory.SetDefaultFont(value);
             }
         }
 

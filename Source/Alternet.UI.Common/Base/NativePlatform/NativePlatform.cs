@@ -23,6 +23,8 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
+        public abstract IFontFactoryHandler FontFactory { get; }
+
         public abstract ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control);
 
         public abstract IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control);

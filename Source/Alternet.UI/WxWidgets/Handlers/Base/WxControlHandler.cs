@@ -211,7 +211,7 @@ namespace Alternet.UI
         public Font? Font
         {
             get => Font.FromInternal(NativeControl.Font);
-            set => NativeControl.Font = (UI.Native.Font?)value?.NativeObject;
+            set => NativeControl.Font = (UI.Native.Font?)value?.Handler;
         }
 
         public bool IsBold

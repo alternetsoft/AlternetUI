@@ -57,7 +57,7 @@ namespace Alternet.UI
 
         public void SetTitleFont(Font? font)
         {
-            Native.WxOtherFactory.RichToolTipSetTitleFont(Handle, (UI.Native.Font?)font?.NativeObject);
+            Native.WxOtherFactory.RichToolTipSetTitleFont(Handle, (UI.Native.Font?)font?.Handler);
         }
 
         public void SetIcon(ImageSet? bitmap)

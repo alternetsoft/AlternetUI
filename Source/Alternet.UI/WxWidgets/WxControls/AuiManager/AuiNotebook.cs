@@ -539,7 +539,7 @@ namespace Alternet.UI
         {
             if (font == null)
                 font = Font.Default;
-            NativeControl.SetMeasuringFont((UI.Native.Font)font.NativeObject);
+            NativeControl.SetMeasuringFont((UI.Native.Font)font.Handler);
         }
 
         /// <inheritdoc/>
@@ -567,7 +567,7 @@ namespace Alternet.UI
         {
             if (font == null)
                 font = Font.Default;
-            NativeControl.SetNormalFont((UI.Native.Font)font.NativeObject);
+            NativeControl.SetNormalFont((UI.Native.Font)font.Handler);
         }
 
         /// <summary>
@@ -578,7 +578,7 @@ namespace Alternet.UI
         {
             if (font == null)
                 font = Font.Default;
-            NativeControl.SetSelectedFont((UI.Native.Font)font.NativeObject);
+            NativeControl.SetSelectedFont((UI.Native.Font)font.Handler);
         }
 
         /// <summary>

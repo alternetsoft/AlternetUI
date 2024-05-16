@@ -40,7 +40,8 @@ namespace Alternet.Drawing
 
             if (!IsFamilyValid(name))
             {
-                BaseApplication.LogError($"'{name}' font family is not installed on this computer, using default font.");
+                BaseApplication.LogError(
+                    $"'{name}' font family is not installed on this computer, using default font.");
                 GenericFamily = GenericFontFamily.Default;
                 return;
             }
@@ -111,7 +112,7 @@ namespace Alternet.Drawing
         /// A string array of <see cref="FontFamily"/> names currently available
         /// in the system.
         /// </value>
-        public static string[] FamiliesNames => NativeDrawing.Default.GetFontFamiliesNames();
+        public static string[] FamiliesNames => NativePlatform.Default.FontFactory.GetFontFamiliesNames();
 
         /// <summary>
         /// Returns a string array that contains all names of the
@@ -139,7 +140,7 @@ namespace Alternet.Drawing
         /// <value>A string that represents the name of this
         /// <see cref="FontFamily"/>.</value>
         public string Name => name ??=
-            NativeDrawing.Default.GetFontFamilyName(GenericFamily ?? throw new Exception());
+            NativePlatform.Default.FontFactory.GetFontFamilyName(GenericFamily ?? throw new Exception());
 
         /// <summary>
         /// Gets generic font family type.
@@ -150,6 +151,6 @@ namespace Alternet.Drawing
         /// Gets whether font family is installed on this computer.
         /// </summary>
         public static bool IsFamilyValid(string name) =>
-            NativeDrawing.Default.IsFontFamilyValid(name);
+            NativePlatform.Default.FontFactory.IsFontFamilyValid(name);
     }
 }

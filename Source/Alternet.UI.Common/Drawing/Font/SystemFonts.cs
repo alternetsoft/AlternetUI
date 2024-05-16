@@ -22,32 +22,32 @@ namespace Alternet.UI
         /// Original equipment manufacturer dependent fixed-pitch font.
         /// </summary>
         public static Font OemFixed =>
-            oemFixed ??= NativeDrawing.Default.CreateSystemFont(SystemSettingsFont.OemFixed);
+            oemFixed ??= NativePlatform.Default.FontFactory.CreateSystemFont(SystemSettingsFont.OemFixed);
 
         /// <summary>
         /// Windows fixed-pitch (monospaced) font.
         /// </summary>
         public static Font AnsiFixed =>
-            ansiFixed ??= NativeDrawing.Default.CreateSystemFont(SystemSettingsFont.AnsiFixed);
+            ansiFixed ??= NativePlatform.Default.FontFactory.CreateSystemFont(SystemSettingsFont.AnsiFixed);
 
         /// <summary>
         /// Windows variable-pitch (proportional) font.
         /// </summary>
         public static Font AnsiVar =>
-            ansiVar ??= NativeDrawing.Default.CreateSystemFont(SystemSettingsFont.AnsiVar);
+            ansiVar ??= NativePlatform.Default.FontFactory.CreateSystemFont(SystemSettingsFont.AnsiVar);
 
         /// <summary>
         /// System font. By default, the system uses the system font to draw menus,
         /// dialog box controls, and text.
         /// </summary>
         public static Font System =>
-            system ??= NativeDrawing.Default.CreateSystemFont(SystemSettingsFont.System);
+            system ??= NativePlatform.Default.FontFactory.CreateSystemFont(SystemSettingsFont.System);
 
         /// <summary>
         /// Device-dependent font.
         /// </summary>
         public static Font DeviceDefault =>
-            deviceDefault ??= NativeDrawing.Default.CreateSystemFont(SystemSettingsFont.DeviceDefault);
+            deviceDefault ??= NativePlatform.Default.FontFactory.CreateSystemFont(SystemSettingsFont.DeviceDefault);
 
         /// <summary>
         /// Default font for user interface objects such as menus and dialog boxes.

@@ -11,6 +11,8 @@ namespace Alternet.UI
 {
     internal class NotImplementedPlatform : NativePlatform
     {
+        public override IFontFactoryHandler FontFactory => throw new NotImplementedException();
+
         public override void BeginBusyCursor()
         {
             throw new NotImplementedException();
