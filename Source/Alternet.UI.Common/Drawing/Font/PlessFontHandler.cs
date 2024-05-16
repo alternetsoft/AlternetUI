@@ -4,27 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Alternet.Drawing;
+using Alternet.UI;
 
-using SkiaSharp;
-
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
-    public class SkiaFontHandler : DisposableObject, IFontHandler
+    /// <summary>
+    /// Platformless <see cref="IFontHandler"/> implementation.
+    /// </summary>
+    public class PlessFontHandler : DisposableObject, IFontHandler
     {
-        private readonly SKFont font;
-
-        public SkiaFontHandler()
-            : this(new SKFont())
-        {
-        }
-
-        public SkiaFontHandler(SKFont font)
-        {
-            this.font = font;
-        }
-
-        string IFontHandler.Description
+        public string Description
         {
             get
             {
@@ -32,15 +21,7 @@ namespace Alternet.UI
             }
         }
 
-        string IFontHandler.Name
-        {
-            get
-            {
-                return font.Name;
-            }
-        }
-
-        FontStyle IFontHandler.Style
+        public string Name
         {
             get
             {
@@ -48,7 +29,7 @@ namespace Alternet.UI
             }
         }
 
-        double IFontHandler.SizeInPoints
+        public FontStyle Style
         {
             get
             {
@@ -56,57 +37,65 @@ namespace Alternet.UI
             }
         }
 
-        bool IFontHandler.Equals(Font font)
+        public double SizeInPoints
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool Equals(Font font)
         {
             throw new NotImplementedException();
         }
 
-        int IFontHandler.GetEncoding()
+        public int GetEncoding()
         {
             throw new NotImplementedException();
         }
 
-        int IFontHandler.GetNumericWeight()
+        public int GetNumericWeight()
         {
             throw new NotImplementedException();
         }
 
-        SizeI IFontHandler.GetPixelSize()
+        public SizeI GetPixelSize()
         {
             throw new NotImplementedException();
         }
 
-        bool IFontHandler.GetStrikethrough()
+        public bool GetStrikethrough()
         {
             throw new NotImplementedException();
         }
 
-        bool IFontHandler.GetUnderlined()
+        public bool GetUnderlined()
         {
             throw new NotImplementedException();
         }
 
-        FontWeight IFontHandler.GetWeight()
+        public FontWeight GetWeight()
         {
             throw new NotImplementedException();
         }
 
-        bool IFontHandler.IsFixedWidth()
+        public bool IsFixedWidth()
         {
             throw new NotImplementedException();
         }
 
-        bool IFontHandler.IsUsingSizeInPixels()
+        public bool IsUsingSizeInPixels()
         {
             throw new NotImplementedException();
         }
 
-        string IFontHandler.Serialize()
+        public string Serialize()
         {
             throw new NotImplementedException();
         }
 
-        void IFontHandler.Update(IFontHandler.FontParams prm)
+        public void Update(IFontHandler.FontParams prm)
         {
             throw new NotImplementedException();
         }
