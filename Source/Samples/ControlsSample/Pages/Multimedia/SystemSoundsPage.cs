@@ -7,7 +7,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class SystemSoundsPage : Control
+    internal class SystemSoundsPage : Panel
     {
         public SystemSoundsPage()
         {

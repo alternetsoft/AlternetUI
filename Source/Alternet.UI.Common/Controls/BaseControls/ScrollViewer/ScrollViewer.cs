@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Represents a scrollable area that can contain other visible elements.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class ScrollViewer : Control
+    public partial class ScrollViewer : ContainerControl
     {
         private PointD layoutOffset;
 

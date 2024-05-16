@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// not parts of the individual <see cref="TabPage"/> controls.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public partial class TabPage : Control
+    public partial class TabPage : ContainerControl
     {
         private int? index;
 

@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
     [ControlCategory("Containers")]
-    public partial class GroupBox : Control
+    public partial class GroupBox : ContainerControl
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;

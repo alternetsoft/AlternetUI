@@ -17,11 +17,8 @@ namespace MenuSample
 
         private int newItemIndex = 0;
 
-        ObjectUniqueId calendarToolbarItem;
-        ObjectUniqueId photoToolbarItem;
         ObjectUniqueId checkableToolbarItem;
         ObjectUniqueId graphDropDownToolbarItem;
-        ObjectUniqueId dynamicToolbarItemsSeparator;
 
         static MainWindow()
         {
@@ -148,6 +145,10 @@ namespace MenuSample
 
         private void InitToolbar()
         {
+            ObjectUniqueId calendarToolbarItem;
+            ObjectUniqueId photoToolbarItem;
+            ObjectUniqueId dynamicToolbarItemsSeparator;
+
             calendarToolbarItem = toolbar.AddSpeedBtn(
                 "Calendar",
                 ImageSet.FromUrl(Calendar16Url),

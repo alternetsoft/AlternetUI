@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <see cref="Control.Bounds"/>.
     /// </remarks>
     [ControlCategory("Containers")]
-    public partial class LayoutPanel : Control
+    public partial class LayoutPanel : ContainerControl
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Used as a container for other controls.
     /// </summary>
     [ControlCategory("Containers")]
-    public partial class Panel : Control
+    public partial class Panel : ContainerControl
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Panel;
