@@ -3,20 +3,20 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class ToolBarHandler : WxControlHandler
+    internal class WxToolBarHandler : WxControlHandler
     {
         private readonly bool mainToolbar = false;
 
-        public ToolBarHandler(bool mainToolbar = true)
+        public WxToolBarHandler(bool mainToolbar = true)
             : base()
         {
             this.mainToolbar = mainToolbar;
         }
 
         /// <summary>
-        /// Gets a <see cref="ToolBar"/> this handler provides the implementation for.
+        /// Gets a <see cref="WxToolBar"/> this handler provides the implementation for.
         /// </summary>
-        public new ToolBar Control => (ToolBar)base.Control;
+        public new WxToolBar Control => (WxToolBar)base.Control;
 
         public new Native.Toolbar NativeControl => (Native.Toolbar)base.NativeControl!;
 
@@ -110,19 +110,19 @@ namespace Alternet.UI
                 InsertItem(Control.Items[i], i);
         }
 
-        private void InsertItem(ToolBarItem item, int index)
+        private void InsertItem(WxToolBarItem item, int index)
         {
-            var handler = item.Handler as ToolBarItemHandler ??
+            var handler = item.Handler as WxToolBarItemHandler ??
                 throw new InvalidOperationException();
             NativeControl.InsertItemAt(index, handler.NativeControl);
         }
 
-        private void Items_ItemInserted(object? sender, int index, ToolBarItem item)
+        private void Items_ItemInserted(object? sender, int index, WxToolBarItem item)
         {
             InsertItem(item, index);
         }
 
-        private void Items_ItemRemoved(object? sender, int index, ToolBarItem item)
+        private void Items_ItemRemoved(object? sender, int index, WxToolBarItem item)
         {
             NativeControl.RemoveItemAt(index);
         }

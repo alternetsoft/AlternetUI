@@ -12,12 +12,12 @@ namespace Alternet.UI
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedPageChanged")]
     [ControlCategory("Containers")]
-    internal partial class NativeTabControl : Control
+    internal partial class WxTabControl : Control
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NativeTabControl"/> class.
+        /// Initializes a new instance of the <see cref="WxTabControl"/> class.
         /// </summary>
-        public NativeTabControl()
+        public WxTabControl()
         {
             if (Application.IsWindowsOS)
                 UserPaint = true;
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// Gets the collection of tab pages in this tab control.
         /// </summary>
         /// <value>A <see cref="Collection{TabPage}"/> that contains the <see cref="TabPage"/>
-        /// objects in this <see cref="NativeTabControl"/>.</value>
+        /// objects in this <see cref="WxTabControl"/>.</value>
         /// <remarks>The order of tab pages in this collection reflects the order the tabs appear
         /// in the control.</remarks>
         [Content]
@@ -120,15 +120,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="NativeTabControlHandler"/> associated with this class.
+        /// Gets a <see cref="WxTabControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new NativeTabControlHandler Handler
+        internal new WxTabControlHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativeTabControlHandler)base.Handler;
+                return (WxTabControlHandler)base.Handler;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return new NativeTabControlHandler();
+            return new WxTabControlHandler();
         }
 
         /// <summary>

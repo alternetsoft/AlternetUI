@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class GenericToolBar : Control
+    public partial class ToolBar : Control
     {
         private double itemSize;
         private bool textVisible = false;
@@ -22,9 +22,9 @@ namespace Alternet.UI
         private ImageToText imageToText = ImageToText.Horizontal;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericToolBar"/> class.
+        /// Initializes a new instance of the <see cref="ToolBar"/> class.
         /// </summary>
-        public GenericToolBar()
+        public ToolBar()
         {
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, 24);
@@ -1073,7 +1073,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method disposes tool control if <paramref name="dispose"/> is <c>true</c>.
         /// </remarks>
-        public virtual void DeleteTool(ObjectUniqueId id, bool dispose = true)
+        public virtual void DeleteTool(ObjectUniqueId id, bool dispose = false)
         {
             var item = GetToolControl(id);
             if (item is null)

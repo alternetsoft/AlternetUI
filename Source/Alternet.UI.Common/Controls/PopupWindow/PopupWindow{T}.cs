@@ -17,7 +17,7 @@ namespace Alternet.UI
         where T : Control, new()
     {
         private readonly VerticalStackPanel mainPanel = new();
-        private readonly GenericToolBar bottomToolBar = new();
+        private readonly ToolBar bottomToolBar = new();
         private ModalResult popupResult;
         private T? mainControl;
 
@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
         /// </summary>
         [Browsable(false)]
-        public GenericToolBar BottomToolBar => bottomToolBar;
+        public ToolBar BottomToolBar => bottomToolBar;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.MinimizeEnabled"/> property.

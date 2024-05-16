@@ -769,22 +769,22 @@ namespace Alternet.UI
         public ComboBox ReplaceEdit => replaceEdit;
 
         /// <summary>
-        /// Gets <see cref="GenericToolBar"/> with find buttons.
+        /// Gets <see cref="ToolBar"/> with find buttons.
         /// </summary>
         [Browsable(false)]
-        public GenericToolBar FindToolBar => GetToolBar(0);
+        public ToolBar FindToolBar => GetToolBar(0);
 
         /// <summary>
-        /// Gets <see cref="GenericToolBar"/> with replace buttons.
+        /// Gets <see cref="ToolBar"/> with replace buttons.
         /// </summary>
         [Browsable(false)]
-        public GenericToolBar ReplaceToolBar => GetToolBar(1);
+        public ToolBar ReplaceToolBar => GetToolBar(1);
 
         /// <summary>
-        /// Gets <see cref="GenericToolBar"/> with option buttons.
+        /// Gets <see cref="ToolBar"/> with option buttons.
         /// </summary>
         [Browsable(false)]
-        public GenericToolBar OptionsToolBar => GetToolBar(2);
+        public ToolBar OptionsToolBar => GetToolBar(2);
 
         /// <summary>
         /// Gets or sets width of <see cref="FindEdit"/> and <see cref="ReplaceEdit"/>

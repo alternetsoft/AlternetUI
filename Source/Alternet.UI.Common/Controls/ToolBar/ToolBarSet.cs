@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements multiple <see cref="GenericToolBar"/> controls.
+    /// Implements multiple <see cref="ToolBar"/> controls.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
     public partial class ToolBarSet : Control
@@ -56,7 +56,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="GenericToolBar.ItemSize"/> for the child toolbars.
+        /// Gets or sets <see cref="ToolBar.ItemSize"/> for the child toolbars.
         /// </summary>
         public virtual double ItemSize
         {
@@ -107,7 +107,7 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the toolbar
         /// to get.</param>
         /// <returns>The toolbar at the specified index.</returns>
-        public GenericToolBar this[int index]
+        public ToolBar this[int index]
         {
             get => GetToolBar(index);
         }
@@ -117,11 +117,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Toolbar index.</param>
         /// <returns></returns>
-        public virtual GenericToolBar GetToolBar(int index)
+        public virtual ToolBar GetToolBar(int index)
         {
             if (ToolBarCount <= index)
                 ToolBarCount = index + 1;
-            return (GenericToolBar)Children[index];
+            return (ToolBar)Children[index];
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace Alternet.UI
         /// and new toolbars need to be created.
         /// </remarks>
         /// <returns></returns>
-        protected virtual GenericToolBar CreateToolBar()
+        protected virtual ToolBar CreateToolBar()
         {
-            GenericToolBar result = new();
+            ToolBar result = new();
             result.ParentBackColor = true;
             result.ParentFont = true;
             result.ParentForeColor = true;

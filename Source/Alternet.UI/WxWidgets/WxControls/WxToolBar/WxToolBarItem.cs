@@ -9,10 +9,10 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
-    /// <see cref="ToolBar"/> as it is deprecated and has limited functionality.
+    /// <see cref="WxToolBar"/> as it is deprecated and has limited functionality.
     /// </remarks>
     [ControlCategory("Hidden")]
-    public partial class ToolBarItem : NonVisualControl, ICommandSource
+    internal partial class WxToolBarItem : NonVisualControl, ICommandSource
     {
         private object? commandTarget;
         private object? commandParameter;
@@ -23,27 +23,27 @@ namespace Alternet.UI
         private bool preCommandEnabledValue = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolBarItem'/> class.
+        /// Initializes a new instance of the <see cref='WxToolBarItem'/> class.
         /// </summary>
-        public ToolBarItem()
+        public WxToolBarItem()
             : this(string.Empty, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolBarItem'/> class
+        /// Initializes a new instance of the <see cref='WxToolBarItem'/> class
         /// with the specified text for the toolbar item.
         /// </summary>
-        public ToolBarItem(string text)
+        public WxToolBarItem(string text)
             : this(text, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolBarItem'/> class
+        /// Initializes a new instance of the <see cref='WxToolBarItem'/> class
         /// with a specified properties for the toolbar item.
         /// </summary>
-        public ToolBarItem(string text, EventHandler? onClick)
+        public WxToolBarItem(string text, EventHandler? onClick)
         {
             this.Text = text;
             if (onClick != null)
@@ -208,13 +208,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref='ToolBarItemHandler'/> associated with this class.
+        /// Gets a <see cref='WxToolBarItemHandler'/> associated with this class.
         /// </summary>
-        internal new ToolBarItemHandler Handler
+        internal new WxToolBarItemHandler Handler
         {
             get
             {
-                return (ToolBarItemHandler)base.Handler;
+                return (WxToolBarItemHandler)base.Handler;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Alternet.UI
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(Text))
-                return base.ToString() ?? nameof(ToolBarItem);
+                return base.ToString() ?? nameof(WxToolBarItem);
             else
                 return Text;
         }
@@ -250,7 +250,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return new ToolBarItemHandler();
+            return new WxToolBarItemHandler();
         }
 
         /// <summary>

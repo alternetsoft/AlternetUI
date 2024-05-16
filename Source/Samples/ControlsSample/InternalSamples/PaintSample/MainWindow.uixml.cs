@@ -15,7 +15,7 @@ namespace PaintSample
         private readonly UndoService? undoService;
 
         private readonly CanvasControl canvasControl;
-        private readonly GenericToolBar toolbar = new();
+        private readonly ToolBar toolbar = new();
         private readonly ColorSelector colorSelector;
         private readonly Border border;
         private readonly Grid mainGrid;

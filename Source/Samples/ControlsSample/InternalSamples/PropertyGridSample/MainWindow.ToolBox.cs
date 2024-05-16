@@ -49,7 +49,7 @@ namespace PropertyGridSample
                     typeof(Border),
                     typeof(PictureBox),
                     typeof(Button),
-                    typeof(GenericToolBar),
+                    typeof(ToolBar),
                     typeof(SplittedPanel),
                     typeof(Calendar),
                     typeof(CheckBox),

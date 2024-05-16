@@ -11,16 +11,16 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
-    /// <see cref="ToolBar"/> as it is deprecated and has limited functionality.
+    /// <see cref="WxToolBar"/> as it is deprecated and has limited functionality.
     /// </remarks>
     [DefaultProperty("Items")]
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBar : NonVisualControl
+    internal partial class WxToolBar : NonVisualControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToolBar"/> class.
+        /// Initializes a new instance of the <see cref="WxToolBar"/> class.
         /// </summary>
-        public ToolBar()
+        public WxToolBar()
         {
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
@@ -151,17 +151,17 @@ namespace Alternet.UI
         /// with the menu.
         /// </summary>
         [Content]
-        public Collection<ToolBarItem> Items { get; } = new() { ThrowOnNullAdd = true };
+        public Collection<WxToolBarItem> Items { get; } = new() { ThrowOnNullAdd = true };
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
 
-        internal new ToolBarHandler Handler
+        internal new WxToolBarHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (ToolBarHandler)base.Handler;
+                return (WxToolBarHandler)base.Handler;
             }
         }
 
@@ -194,17 +194,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return new ToolBarHandler();
+            return new WxToolBarHandler();
         }
 
-        private void Items_ItemInserted(object? sender, int index, ToolBarItem item)
+        private void Items_ItemInserted(object? sender, int index, WxToolBarItem item)
         {
             // This is required for data binding inheritance. ???
             // This commented out as added additional dummy toolbar items
             // Children.Add(e.Item);
         }
 
-        private void Items_ItemRemoved(object? sender, int index, ToolBarItem item)
+        private void Items_ItemRemoved(object? sender, int index, WxToolBarItem item)
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);

@@ -2,14 +2,14 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class ToolBarItemHandler : WxControlHandler
+    internal class WxToolBarItemHandler : WxControlHandler
     {
         private Menu? dropDownMenu;
 
         /// <summary>
-        /// Gets a <see cref="ToolBarItem"/> this handler provides the implementation for.
+        /// Gets a <see cref="WxToolBarItem"/> this handler provides the implementation for.
         /// </summary>
-        public new ToolBarItem Control => (ToolBarItem)base.Control;
+        public new WxToolBarItem Control => (WxToolBarItem)base.Control;
 
         public new Native.ToolbarItem NativeControl => (Native.ToolbarItem)base.NativeControl!;
 

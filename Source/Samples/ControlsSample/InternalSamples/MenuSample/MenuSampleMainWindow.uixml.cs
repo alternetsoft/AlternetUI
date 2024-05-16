@@ -8,14 +8,20 @@ namespace MenuSample
 {
     public partial class MainWindow : Window
     {
-        private const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Small.";
-        private readonly string Calendar16Url = $"{ResPrefix}Calendar16.png";
+        private const string ResPrefix = "embres:ControlsSample.Resources.ToolBarPng.Large.";
+
+        private readonly string Calendar16Url = $"{ResPrefix}Calendar32.png";
         private readonly int dynamicToolbarItemsSeparatorIndex;
-        private int newItemIndex = 0;
-        ToolBar? toolbar;
-        ToolBarItem? dynamicToolbarItemsSeparator;
-        ToolBarItem? checkableToolbarItem;
         private readonly bool IsDebugBackground = false;
+        private readonly ToolBar toolbar = new();
+
+        private int newItemIndex = 0;
+
+        ObjectUniqueId calendarToolbarItem;
+        ObjectUniqueId photoToolbarItem;
+        ObjectUniqueId checkableToolbarItem;
+        ObjectUniqueId graphDropDownToolbarItem;
+        ObjectUniqueId dynamicToolbarItemsSeparator;
 
         static MainWindow()
         {
@@ -34,7 +40,21 @@ namespace MenuSample
         public MainWindow()
         {
             Icon = Application.DefaultIcon;
+            Layout = LayoutStyle.Vertical;
+
+            toolbar.TextVisible = true;
+            toolbar.ItemSize = 32;
+            toolbar.Margin = (0, 0, 0, 4);
+
+            toolbar.Parent = this;
+
             InitializeComponent();
+
+            noDividerCheckBox.Enabled = false;
+            verticalCheckBox.Enabled = false;
+            isRightCheckBox.Enabled = false;
+            isBottomCheckBox.Enabled = false;
+            imageToTextDisplayModeComboBox.Enabled = false;
 
             InitToolbar();
 
@@ -45,8 +65,8 @@ namespace MenuSample
             PlatformSpecificInitialize();
             UpdateControls();
 
-            dynamicToolbarItemsSeparatorIndex =
-                toolbar!.Items.IndexOf(dynamicToolbarItemsSeparator!);
+            dynamicToolbarItemsSeparatorIndex = toolbar.Children.Count;
+
             AddDynamicToolbarItem();
 
             foreach (var value in Enum.GetValues(typeof(ImageToText)))
@@ -114,18 +134,6 @@ namespace MenuSample
             GetStatusBar()?.Panels.Clear();
         }
 
-        private void ImageTextVertical()
-        {
-            if (toolbar == null)
-                return;
-            if (toolbar.IsVertical || toolbar.IsRight)
-            {
-                imageToTextDisplayModeComboBox.SelectedItem =
-                    ImageToText.Vertical;
-                toolbar.ImageToText = ImageToText.Vertical;
-            }
-        }
-
         internal void SetDebugBackground(Control control)
         {
             if (!IsDebugBackground)
@@ -140,40 +148,38 @@ namespace MenuSample
 
         private void InitToolbar()
         {
-            toolbar = (ToolBar as ToolBar) ?? new();
+            calendarToolbarItem = toolbar.AddSpeedBtn(
+                "Calendar",
+                ImageSet.FromUrl(Calendar16Url),
+                null,
+                "Calendar Toolbar Item",
+                ToolbarItem_Click);
 
-            var calendarToolbarItem = new ToolBarItem("Calendar", ToolbarItem_Click)
-            {
-                ToolTip = "Calendar Toolbar Item",
-                Image = ImageSet.FromUrl(Calendar16Url)
-            };
+            photoToolbarItem = toolbar.AddSpeedBtn(
+                "Photo",
+                ImageSet.FromUrl($"{ResPrefix}Photo32.png"),
+                null,
+                "Photo Toolbar Item",
+                ToolbarItem_Click);
 
-            var photoToolbarItem = new ToolBarItem("Photo", ToolbarItem_Click)
-            {
-                ToolTip = "Photo Toolbar Item",
-                Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
-            };
+            toolbar.AddSeparator();
 
-            checkableToolbarItem =
-                new ToolBarItem("Pencil", ToggleToolbarItem_Click)
-                {
-                    ToolTip = "Pencil Toolbar Item",
-                    IsCheckable = true,
-                    Image = ImageSet.FromUrl($"{ResPrefix}Pencil16.png")
-                };
+            checkableToolbarItem = toolbar.AddStickyBtn(
+                "Pencil",
+                ImageSet.FromUrl($"{ResPrefix}Pencil32.png"),
+                null,
+                "Pencil Toolbar Item",
+                ToggleToolbarItem_Click);
+            toolbar.SetToolSticky(checkableToolbarItem, true);
 
-            toolbar?.Items.Add(calendarToolbarItem);
-            toolbar?.Items.Add(photoToolbarItem);
-            toolbar?.Items.Add(new ToolBarItem("-"));
-            toolbar?.Items.Add(checkableToolbarItem);
-            toolbar?.Items.Add(new ToolBarItem("-"));
+            toolbar.AddSeparator();
 
-            var graphDropDownToolbarItem =
-                new ToolBarItem("Graph", ToolbarItem_Click)
-                {
-                    ToolTip = "Graph Toolbar Item",
-                    Image = ImageSet.FromUrl($"{ResPrefix}LineGraph16.png")
-                };
+            graphDropDownToolbarItem = toolbar.AddSpeedBtn(
+                "Graph",
+                ImageSet.FromUrl($"{ResPrefix}LineGraph32.png"),
+                null,
+                "Graph Toolbar Item",
+                ToolbarItem_Click);
 
             var contextMenu = new ContextMenu();
 
@@ -186,12 +192,10 @@ namespace MenuSample
             contextMenu.Items.Add(openToolbarMenuItem);
             contextMenu.Items.Add(saveToolbarMenuItem);
             contextMenu.Items.Add(exportToolbarMenuItem);
-            graphDropDownToolbarItem.DropDownMenu = contextMenu;
 
-            toolbar?.Items.Add(graphDropDownToolbarItem);
-
-            dynamicToolbarItemsSeparator = new ToolBarItem("-");
-            toolbar?.Items.Add(dynamicToolbarItemsSeparator);
+            toolbar.SetToolDropDownMenu(graphDropDownToolbarItem, contextMenu);
+            
+            dynamicToolbarItemsSeparator = toolbar.AddSeparator();
         }
 
         private void PlatformSpecificInitialize()
@@ -331,13 +335,18 @@ namespace MenuSample
 
         private void ToolbarItem_Click(object? sender, EventArgs e)
         {
-            LogEvent("Toolbar item clicked: " + ((ToolBarItem)sender!).Text);
+            if (sender is not Control button)
+                return;
+            LogEvent("Toolbar item clicked: " + button.ToolTip);
         }
 
         private void ToggleToolbarItem_Click(object? sender, EventArgs e)
         {
-            ToolBarItem? item = sender as ToolBarItem;
-            LogEvent($"Toggle toolbar item clicked: {item?.Text}. Is checked: {item?.Checked}");
+            if (sender is not Control button)
+                return;
+            toolbar.ToggleToolSticky(button.UniqueId);
+            var sticky = toolbar.GetToolSticky(button.UniqueId);
+            LogEvent($"Toggle toolbar item clicked: {button.ToolTip}. Is checked: {sticky}");
         }
 
         void LogEvent(string? message)
@@ -347,28 +356,28 @@ namespace MenuSample
 
         private void ToggleToolbarItemCheckButton_Click(object? sender, EventArgs e)
         {
-            checkableToolbarItem!.Checked = !checkableToolbarItem.Checked;
+            toolbar.ToggleToolSticky(checkableToolbarItem);
         }
 
         private void ToggleFirstToolbarEnabledButton_Click(object? sender, EventArgs e)
         {
-            var item = toolbar?.Items[0];
-            item!.Enabled = !item.Enabled;
+            var control = toolbar.Children[0];
+            var enabled = toolbar.GetToolEnabled(control.UniqueId);
+            enabled = !enabled;
+            toolbar.SetToolEnabled(control.UniqueId, enabled);
         }
 
         private void AddDynamicToolbarItem()
         {
             int number = GenItemIndex();
-
             string text = "Item " + number;
-            var item = new ToolBarItem(text)
-            {
-                Image = toolbar!.Items[0].Image,
-                ToolTip = text + " Description"
-            };
-
-            item.Click += ToolbarItem_Click;
-            toolbar.Items.Add(item);
+            var image = toolbar.GetToolImage(toolbar.Children[0].UniqueId);
+            var item = toolbar.AddSpeedBtn(
+                text,
+                image,
+                null,
+                text + " Description",
+                ToolbarItem_Click);
         }
 
         private void AddDynamicToolbarItemButton_Click(object? sender, EventArgs e)
@@ -378,51 +387,62 @@ namespace MenuSample
 
         private void RemoveLastDynamicToolbarItemButton_Click(object? sender, EventArgs e)
         {
-            if (toolbar!.Items.Count == dynamicToolbarItemsSeparatorIndex + 1)
+            var count = toolbar.Children.Count;
+            if (count <= dynamicToolbarItemsSeparatorIndex)
                 return;
-            toolbar.Items.RemoveAt(toolbar.Items.Count - 1);
+            toolbar.DeleteTool(toolbar.Children[count - 1].UniqueId);
         }
 
         private void ShowToolbarTextCheckBox_CheckedChanged(
             object? sender,
             EventArgs e)
         {
-            if (toolbar != null)
-                toolbar.ItemTextVisible = showToolbarTextCheckBox.IsChecked;
+            toolbar.TextVisible = showToolbarTextCheckBox.IsChecked;
         }
+
+        /*private void ImageTextVertical()
+        {
+            if (toolbar == null)
+                return;
+            if (toolbar.IsVertical || toolbar.IsRight)
+            {
+                imageToTextDisplayModeComboBox.SelectedItem =
+                    ImageToText.Vertical;
+                toolbar.ImageToText = ImageToText.Vertical;
+            }
+        }*/
 
         private void IsRightCheckBox_Changed(object? sender, EventArgs e)
         {
-            if (toolbar != null)
+            /*if (toolbar != null)
                 toolbar.IsRight = isRightCheckBox.IsChecked;
-            ImageTextVertical();
+            ImageTextVertical();*/
         }
 
         private void IsBottomCheckBox_Changed(object? sender, EventArgs e)
         {
-            if (toolbar != null)
-                toolbar.IsBottom = isBottomCheckBox.IsChecked;
+            /*if (toolbar != null)
+                toolbar.IsBottom = isBottomCheckBox.IsChecked;*/
         }
 
         private void NoDividerCheckBox_Changed(object? sender, EventArgs e)
         {
-            if (toolbar != null)
-                toolbar.NoDivider = noDividerCheckBox.IsChecked;
+            /*if (toolbar != null)
+                toolbar.NoDivider = noDividerCheckBox.IsChecked;*/
         }
 
         private void VerticalCheckBox_Changed(object? sender, EventArgs e)
         {
-            if (toolbar != null)
+            /*if (toolbar != null)
                 toolbar.IsVertical = verticalCheckBox.IsChecked;
-            ImageTextVertical();
+            ImageTextVertical();*/
         }
 
         private void ShowToolbarImagesCheckBox_CheckedChanged(
             object? sender,
             EventArgs e)
         {
-            if (toolbar != null)
-                toolbar.ItemImagesVisible = showToolbarImagesCheckBox.IsChecked;
+            toolbar.ImageVisible = showToolbarImagesCheckBox.IsChecked;
         }
 
         private void ToolbarDropDownMenuItem_Click(object? sender, EventArgs e)
@@ -433,7 +453,7 @@ namespace MenuSample
 
         private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            toolbar!.ImageToText = (ImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
+            toolbar.ImageToText = (ImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
         }
 
         private int GenItemIndex()

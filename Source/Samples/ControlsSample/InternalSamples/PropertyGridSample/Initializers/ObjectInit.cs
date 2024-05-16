@@ -133,7 +133,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(ScrollBar), InitScrollBar);
             Actions.Add(typeof(SpeedButton), InitSpeedButton);
             Actions.Add(typeof(PictureBox), InitPictureBox);
-            Actions.Add(typeof(GenericToolBar), InitGenericToolBar);
+            Actions.Add(typeof(ToolBar), InitGenericToolBar);
             Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
             Actions.Add(typeof(ToolBarSet), InitGenericToolBarSet);
             Actions.Add(typeof(CardPanel), InitCardPanel);

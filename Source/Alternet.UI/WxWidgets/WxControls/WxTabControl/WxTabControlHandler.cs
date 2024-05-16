@@ -6,17 +6,17 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Provides functionality for implementing
-    /// a specific <see cref="NativeTabControl"/> behavior and appearance.
+    /// a specific <see cref="WxTabControl"/> behavior and appearance.
     /// </summary>
-    internal class NativeTabControlHandler : WxControlHandler
+    internal class WxTabControlHandler : WxControlHandler
     {
         private bool skipChildrenInsertionCheck;
         /*private bool skipLinuxFix;*/
 
         /// <summary>
-        /// Gets a <see cref="NativeTabControl"/> this handler provides the implementation for.
+        /// Gets a <see cref="WxTabControl"/> this handler provides the implementation for.
         /// </summary>
-        public new NativeTabControl Control => (NativeTabControl)base.Control;
+        public new WxTabControl Control => (WxTabControl)base.Control;
 
         /// <summary>
         /// Gets or sets the area of the control (for example, along the top) where the tabs are aligned.
