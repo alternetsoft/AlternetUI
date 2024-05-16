@@ -685,39 +685,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the toolbar that is displayed in the window.
-        /// </summary>
-        /// <value>
-        /// A <see cref="ToolBar"/> that represents the toolbar to display in the window.
-        /// </value>
-        /// <remarks>
-        /// You can use this property to switch between complete toolbar sets at run time.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual object? ToolBar
-        {
-            get => toolbar;
-
-            set
-            {
-                if (toolbar == value)
-                    return;
-
-                var oldValue = toolbar;
-                toolbar = value;
-
-                if (GetWindowKind() == WindowKind.Dialog)
-                    return;
-
-                (oldValue as Control)?.SetParentInternal(null);
-                (toolbar as Control)?.SetParentInternal(this);
-
-                OnToolBarChanged(EventArgs.Empty);
-                ToolBarChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         /// <inheritdoc/>
         public override bool Visible
         {
@@ -747,6 +714,39 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
+
+        /// <summary>
+        /// Gets the toolbar that is displayed in the window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="ToolBar"/> that represents the toolbar to display in the window.
+        /// </value>
+        /// <remarks>
+        /// You can use this property to switch between complete toolbar sets at run time.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual object? ToolBar
+        {
+            get => toolbar;
+
+            internal set
+            {
+                if (toolbar == value)
+                    return;
+
+                var oldValue = toolbar;
+                toolbar = value;
+
+                if (GetWindowKind() == WindowKind.Dialog)
+                    return;
+
+                (oldValue as Control)?.SetParentInternal(null);
+                (toolbar as Control)?.SetParentInternal(this);
+
+                OnToolBarChanged(EventArgs.Empty);
+                ToolBarChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
