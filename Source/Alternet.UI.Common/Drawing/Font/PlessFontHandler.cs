@@ -11,93 +11,163 @@ namespace Alternet.Drawing
     /// <summary>
     /// Platformless <see cref="IFontHandler"/> implementation.
     /// </summary>
-    public class PlessFontHandler : DisposableObject, IFontHandler
+    public class PlessFontHandler : DisposableObject, IPlessFontHandler
     {
-        public string Description
+        private string description = string.Empty;
+        private string name = string.Empty;
+        private FontStyle style;
+        private double sizeInPoints;
+        private int sizeInPixels;
+        private FontWeight weight;
+        private int encoding = 1;
+        private bool isFixedWidth;
+
+        public PlessFontHandler()
+        {
+        }
+
+        public virtual string Description
         {
             get
             {
-                throw new NotImplementedException();
+                return description;
+            }
+
+            set
+            {
+                if (description == value)
+                    return;
+                description = value;
             }
         }
 
-        public string Name
+        public virtual string Name
         {
             get
             {
-                throw new NotImplementedException();
+                return name;
+            }
+
+            set
+            {
+                if (name == value)
+                    return;
+                name = value;
             }
         }
 
-        public FontStyle Style
+        public virtual FontStyle Style
         {
             get
             {
-                throw new NotImplementedException();
+                return style;
+            }
+
+            set
+            {
+                if (style == value)
+                    return;
+                style = value;
             }
         }
 
-        public double SizeInPoints
+        public virtual double SizeInPoints
         {
             get
             {
-                throw new NotImplementedException();
+                return sizeInPoints;
+            }
+
+            set
+            {
+                if (sizeInPoints == value)
+                    return;
+                sizeInPoints = value;
             }
         }
 
-        public bool Equals(Font font)
+        public virtual int GetEncoding()
+        {
+            return encoding;
+        }
+
+        public virtual void SetEncoding(int value)
+        {
+            encoding = value;
+        }
+
+        public virtual int GetNumericWeight()
+        {
+            return Font.GetNumericWeightOf(weight);
+        }
+
+        public virtual int GetPixelSize()
+        {
+            return sizeInPixels;
+        }
+
+        public virtual bool GetStrikethrough()
+        {
+            return style.HasFlag(FontStyle.Strikeout);
+        }
+
+        public virtual bool GetUnderlined()
+        {
+            return style.HasFlag(FontStyle.Underline);
+        }
+
+        public virtual FontWeight GetWeight()
+        {
+            return weight;
+        }
+
+        public virtual bool IsFixedWidth()
+        {
+            return isFixedWidth;
+        }
+
+        public virtual void SetIsFixedWidth(bool value)
+        {
+            isFixedWidth = value;
+        }
+
+        public virtual bool IsUsingSizeInPixels()
+        {
+            return false;
+        }
+
+        public virtual bool Equals(Font font)
         {
             throw new NotImplementedException();
         }
 
-        public int GetEncoding()
+        public virtual string Serialize()
         {
             throw new NotImplementedException();
         }
 
-        public int GetNumericWeight()
+        public virtual void Update(IFontHandler.FontParams prm)
         {
-            throw new NotImplementedException();
-        }
+            Alternet.Drawing.Font.CoerceFontParams(ref prm);
 
-        public SizeI GetPixelSize()
-        {
             throw new NotImplementedException();
-        }
 
-        public bool GetStrikethrough()
-        {
-            throw new NotImplementedException();
-        }
+            /*
+            public GenericFontFamily? GenericFamily;
+            public string? FamilyName;
+            public double Size;
+            public FontStyle Style = FontStyle.Regular;
+            public GraphicsUnit Unit = GraphicsUnit.Point;
+            public byte GdiCharSet = 1;
+            */
 
-        public bool GetUnderlined()
-        {
-            throw new NotImplementedException();
-        }
-
-        public FontWeight GetWeight()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsFixedWidth()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsUsingSizeInPixels()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Serialize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(IFontHandler.FontParams prm)
-        {
-            throw new NotImplementedException();
+            /*
+            Initialize(
+               prm.GenericFamily ?? 0,
+               prm.FamilyName,
+               prm.Size,
+               prm.Style);
+            */
         }
     }
 }

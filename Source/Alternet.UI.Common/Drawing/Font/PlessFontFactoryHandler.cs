@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Platformless <see cref="IFontFactoryHandler"/> implementation.
     /// </summary>
-    public class PlessFontFactoryHandler : IFontFactoryHandler
+    public class PlessFontFactoryHandler : IPlessFontFactoryHandler
     {
         private static IFontHandler? defaultFont;
         private static IFontHandler? defaultMonoFont;

@@ -383,7 +383,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the pixel size.
         /// </summary>
-        public SizeI SizeInPixels => Handler.GetPixelSize();
+        public int SizeInPixels => Handler.GetPixelSize();
 
         /// <summary>
         /// Gets whether font size is in pixels.
@@ -400,7 +400,7 @@ namespace Alternet.Drawing
             get
             {
                 if (IsUsingSizeInPixels)
-                    return SizeInPixels.Height;
+                    return SizeInPixels;
                 else
                     return SizeInPoints;
             }
@@ -905,6 +905,76 @@ namespace Alternet.Drawing
             if (font is null)
                 return null;
             return new Font(font);
+        }
+
+        /// <summary>
+        /// Helper function for converting <see cref="FontWeight"/> enum value
+        /// to the numeric weight.
+        /// </summary>
+        /// <param name="value">Font weight.</param>
+        /// <returns></returns>
+        public static int GetNumericWeightOf(FontWeight value)
+        {
+            int weight = ConvertFromLegacyWeightIfNecessary((int)value);
+
+            Debug.Assert(weight > (int)FontWeight.Invalid);
+            Debug.Assert(weight <= (int)FontWeight.Max);
+            Debug.Assert(weight % 100 == 0);
+
+            return weight;
+
+            int ConvertFromLegacyWeightIfNecessary(int weight)
+            {
+                switch (weight)
+                {
+                    case 90: return (int)FontWeight.Normal;
+                    case 91: return (int)FontWeight.Light;
+                    case 92: return (int)FontWeight.Bold;
+                    default: return weight;
+                }
+            }
+        }
+
+        public static void CoerceFontParams(ref IFontHandler.FontParams prm)
+        {
+            if (prm.Unit != GraphicsUnit.Point)
+            {
+                prm.Size = GraphicsUnitConverter.Convert(
+                    prm.Unit,
+                    GraphicsUnit.Point,
+                    Display.Primary.DPI.Height,
+                    prm.Size);
+            }
+
+            if (prm.GenericFamily == null && prm.FamilyName == null)
+            {
+                BaseApplication.LogError("Font name and family are null, using default font.");
+                prm.GenericFamily = Alternet.Drawing.GenericFontFamily.Default;
+            }
+
+            prm.Size = Alternet.Drawing.Font.CheckSize(prm.Size);
+        }
+
+        /// <summary>
+        /// Helper function for converting arbitrary numeric weight to the closest
+        /// value of <see cref="FontWeight"/> enum.
+        /// </summary>
+        /// <param name="numWeight">Numeric weight.</param>
+        /// <returns></returns>
+        public static FontWeight GetWeightClosestToNumericValue(int numWeight)
+        {
+            Debug.Assert(numWeight > 0);
+            Debug.Assert(numWeight <= 1000);
+
+            // round to nearest hundredth = FontWeight.* constant
+            int weight = ((numWeight + 50) / 100) * 100;
+
+            if (weight < (int)FontWeight.Thin)
+                weight = (int)FontWeight.Thin;
+            if (weight > (int)FontWeight.Max)
+                weight = (int)FontWeight.Max;
+
+            return (FontWeight)weight;
         }
 
         internal static Font CreateDefaultMonoFont()

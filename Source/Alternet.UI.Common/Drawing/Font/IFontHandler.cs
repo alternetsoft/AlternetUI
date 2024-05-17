@@ -11,86 +11,86 @@ namespace Alternet.Drawing
     public interface IFontHandler : IDisposable
     {
         /// <summary>
-        /// Returns a string that represents native font.
+        /// Gets a description string that represents the font.
         /// </summary>
         /// <returns></returns>
         string Description { get; }
 
         /// <summary>
-        /// Gets native font name.
+        /// Gets name of the font.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Gets style information for the native font.
+        /// Gets style information for the font.
         /// </summary>
         /// <returns></returns>
         FontStyle Style { get; }
 
         /// <summary>
-        /// Gets the em-size, in points, of the native font.
+        /// Gets the em-size, in points, of the font.
         /// </summary>
         /// <returns></returns>
         double SizeInPoints { get; }
 
         /// <summary>
-        /// Gets native font encoding.
+        /// Gets font encoding.
         /// </summary>
         /// <returns></returns>
         int GetEncoding();
 
         /// <summary>
-        /// Gets native font size in pixels.
+        /// Gets font size in pixels.
         /// </summary>
-        SizeI GetPixelSize();
+        int GetPixelSize();
 
         /// <summary>
-        /// Gets whether native font is using size in pixels.
+        /// Gets whether font is using size in pixels.
         /// </summary>
         bool IsUsingSizeInPixels();
 
         /// <summary>
-        /// Gets native font weight.
+        /// Gets font weight.
         /// </summary>
         /// <returns></returns>
         int GetNumericWeight();
 
         /// <summary>
-        /// Gets whether native font is a fixed width (or monospaced) font.
+        /// Gets whether font is a fixed width (monospaced) font.
         /// </summary>
         bool IsFixedWidth();
 
         /// <summary>
-        /// Gets native font weight.
+        /// Gets font weight.
         /// </summary>
         /// <returns></returns>
         FontWeight GetWeight();
 
         /// <summary>
-        /// Gets a value that indicates whether native font is strikethrough.
+        /// Gets a value that indicates whether font is strikethrough.
         /// </summary>
         /// <returns></returns>
         bool GetStrikethrough();
 
         /// <summary>
-        /// Gets a value that indicates whether native font is underlined.
+        /// Gets a value that indicates whether font is underlined.
         /// </summary>
         /// <returns></returns>
         bool GetUnderlined();
 
         /// <summary>
-        /// Gets native font description string.
+        /// Gets font as serialized string.
         /// </summary>
         /// <returns></returns>
         string Serialize();
 
         /// <summary>
-        /// Updates native font properties.
+        /// Updates font properties.
         /// </summary>
         void Update(FontParams prm);
 
         /// <summary>
-        /// Indicates whether native font is equal to another native font.
+        /// Indicates whether font is equal to another font.
         /// </summary>
         /// <returns></returns>
         bool Equals(Font font);
@@ -98,10 +98,15 @@ namespace Alternet.Drawing
         public struct FontParams
         {
             public GenericFontFamily? GenericFamily;
+
             public string? FamilyName;
+
             public double Size;
+
             public FontStyle Style = FontStyle.Regular;
+
             public GraphicsUnit Unit = GraphicsUnit.Point;
+
             public byte GdiCharSet = 1;
 
             public FontParams()

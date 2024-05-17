@@ -13,23 +13,7 @@ namespace Alternet.UI.Native
     {
         void IFontHandler.Update(IFontHandler.FontParams prm)
         {
-            if (prm.Unit != GraphicsUnit.Point)
-            {
-                prm.Size = GraphicsUnitConverter.Convert(
-                    prm.Unit,
-                    GraphicsUnit.Point,
-                    Display.Primary.DPI.Height,
-                    prm.Size);
-            }
-
-            if (prm.GenericFamily == null && prm.FamilyName == null)
-            {
-                BaseApplication.LogError("Font name and family are null, using default font.");
-                prm.GenericFamily = Alternet.Drawing.GenericFontFamily.Default;
-            }
-
-            prm.Size = Alternet.Drawing.Font.CheckSize(prm.Size);
-
+            Alternet.Drawing.Font.CoerceFontParams(ref prm);
             Initialize(
                prm.GenericFamily ?? 0,
                prm.FamilyName,
@@ -47,6 +31,11 @@ namespace Alternet.UI.Native
         FontWeight IFontHandler.GetWeight()
         {
             return (FontWeight)GetWeight();
+        }
+
+        int IFontHandler.GetPixelSize()
+        {
+            return GetPixelSize().Height;
         }
     }
 }
