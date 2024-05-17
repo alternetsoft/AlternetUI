@@ -62,5 +62,33 @@ namespace Alternet.UI.Extensions
         {
             return dock == DockStyle.Left || dock == DockStyle.Right;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ContainsChar(this string s, char ch)
+        {
+#if NET5_0_OR_GREATER
+            return s.Contains(ch);
+#else
+            return s.Contains(ch);
+#endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ContainsSpace(this string s)
+        {
+            return ContainsChar(s, ' ');
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ContainsSemicolon(this string s)
+        {
+            return ContainsChar(s, ';');
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ContainsComma(this string s)
+        {
+            return ContainsChar(s, ',');
+        }
     }
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
+using Alternet.UI.Extensions;
 
 namespace Alternet.Drawing
 {
@@ -977,7 +979,145 @@ namespace Alternet.Drawing
             return (FontWeight)weight;
         }
 
-        internal static Font CreateDefaultMonoFont()
+        public static string ToUserString(FontWeight weight)
+        {
+            switch (weight)
+            {
+                default:
+                    throw new ArgumentException("Unknown font weight", nameof(weight));
+                case FontWeight.Normal:
+                    return string.Empty;
+                case FontWeight.Thin:
+                    return "thin";
+                case FontWeight.ExtraLight:
+                    return "extra light";
+                case FontWeight.Light:
+                    return "light";
+                case FontWeight.Medium:
+                    return "medium";
+                case FontWeight.SemiBold:
+                    return "semi bold";
+                case FontWeight.Bold:
+                    return "bold";
+                case FontWeight.ExtraBold:
+                    return "extra bold";
+                case FontWeight.Heavy:
+                    return "heavy";
+                case FontWeight.ExtraHeavy:
+                    return "extra heavy";
+            }
+        }
+
+        public static List<string> ToUserString(FontStyle style, FontWeight weight)
+        {
+            List<string> result = new();
+
+            if(style.HasFlag(FontStyle.Underline))
+                result.Add("underlined");
+            if (style.HasFlag(FontStyle.Strikeout))
+                result.Add("strikethrough");
+            if (style.HasFlag(FontStyle.Bold))
+                result.Add(ToUserString(weight));
+            if (style.HasFlag(FontStyle.Italic))
+                result.Add("italic");
+
+            return result;
+        }
+
+        public static string ToUserString(GenericFontFamily family)
+        {
+            switch (family)
+            {
+                case GenericFontFamily.None:
+                case GenericFontFamily.Default:
+                    return string.Empty;
+                case GenericFontFamily.SansSerif:
+                    return "swiss";
+                case GenericFontFamily.Serif:
+                    return "roman";
+                case GenericFontFamily.Monospace:
+                    return "teletype";
+                default:
+                    throw new ArgumentException("Unknown font family");
+            }
+        }
+
+        public static List<string> ToUserString(IFontHandler font)
+        {
+            var result = ToUserString(font.Style, font.GetWeight());
+
+            string face = font.Name;
+            if (!string.IsNullOrEmpty(face))
+            {
+                if (face.ContainsSpace() || face.ContainsSemicolon() || face.ContainsComma())
+                {
+                    // eventually remove quote characters: most systems do not
+                    // allow them in a facename anyway so this usually does nothing
+                    face = face.Replace("'", "");
+
+                    // make it possible for FromUserString() function to understand
+                    // that the different words which compose this facename are
+                    // not different adjectives or other data but rather all parts
+                    // of the facename
+                    face = "'" + face + "'";
+                }
+
+                result.Add(face);
+            }
+
+
+            return result;
+        }
+
+            /*
+                 List<string> desc = new();
+
+
+     wxString face = GetFaceName();
+     if (!face.empty())
+     {
+         if (face.Contains(' ') || face.Contains(';') || face.Contains(','))
+         {
+             face.Replace("'", "");
+             // eventually remove quote characters: most systems do not
+             // allow them in a facename anyway so this usually does nothing
+
+             // make it possible for FromUserString() function to understand
+             // that the different words which compose this facename are
+             // not different adjectives or other data but rather all parts
+             // of the facename
+             desc << wxT(" '") << face << wxT("'");
+         }
+         else
+             desc << wxT(' ') << face;
+     }
+     else // no face name specified
+     {
+
+         if (!familyStr.empty())
+             desc << " '" << familyStr << " family'";
+     }
+
+     int size = GetPointSize();
+     if (size != wxNORMAL_FONT->GetPointSize())
+     {
+         desc << wxT(' ') << size;
+     }
+
+                 ///ToUserString(GenericFontFamily family)
+
+     #if wxUSE_FONTMAP
+         wxFontEncoding enc = GetEncoding();
+         if ( enc != wxFONTENCODING_DEFAULT && enc != wxFONTENCODING_SYSTEM )
+         {
+             desc << wxT(' ') << wxFontMapper::GetEncodingName(enc);
+         }
+     #endif // wxUSE_FONTMAP
+
+     return desc.Strip(wxString::both).MakeLower();
+     }*/
+
+            internal static Font CreateDefaultMonoFont()
         {
             var family = FontFamily.GenericMonospace;
             var fontGenericMonospace = new Font(family, Default.SizeInPoints);

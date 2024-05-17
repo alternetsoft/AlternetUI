@@ -17,7 +17,6 @@ namespace Alternet.Drawing
         private string name = string.Empty;
         private FontStyle style;
         private double sizeInPoints;
-        private int sizeInPixels;
         private FontWeight weight;
         private int encoding = 1;
         private bool isFixedWidth;
@@ -103,7 +102,12 @@ namespace Alternet.Drawing
 
         public virtual int GetPixelSize()
         {
-            return sizeInPixels;
+            var result = GraphicsUnitConverter.Convert(
+                GraphicsUnit.Point,
+                GraphicsUnit.Pixel,
+                Display.Primary.DPI.Height,
+                sizeInPoints);
+            return (int)result;
         }
 
         public virtual bool GetStrikethrough()
