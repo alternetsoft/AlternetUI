@@ -13,7 +13,18 @@ namespace Alternet.UI
     {
         private static bool initialized;
 
-        public override IFontFactoryHandler FontFactory => throw new NotImplementedException();
+        public static bool UseSkia { get; set; } = true;
+
+        public override IFontFactoryHandler FontFactory
+        {
+            get
+            {
+                if (UseSkia)
+                    return new SkiaFontFactoryHandler();
+                else
+                    return new MauiFontFactoryHandler();
+            }
+        }
 
         public static void Initialize()
         {
