@@ -112,6 +112,12 @@ namespace Alternet.UI.Native
             return NativeApi.Font_GetUnderlined_(NativePointer);
         }
         
+        public bool GetItalic()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetItalic_(NativePointer);
+        }
+        
         public bool GetStrikethrough()
         {
             CheckDisposed();
@@ -236,6 +242,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_GetUnderlined_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Font_GetItalic_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_GetStrikethrough_(IntPtr obj);

@@ -107,6 +107,11 @@ namespace Alternet.Drawing
             return (int)result;
         }
 
+        public virtual bool GetItalic()
+        {
+            return style.HasFlag(FontStyle.Italic);
+        }
+
         public virtual bool GetStrikethrough()
         {
             return style.HasFlag(FontStyle.Strikeout);

@@ -11,6 +11,7 @@ namespace NativeApi.Api
         public bool IsUsingSizeInPixels() => default;
         public int GetNumericWeight() => default;
         public bool GetUnderlined() => default;
+        public bool GetItalic() => default;
         public bool GetStrikethrough() => default;
         public int GetEncoding() => default;
         public bool IsFixedWidth() => default;

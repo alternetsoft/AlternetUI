@@ -127,6 +127,12 @@ namespace Alternet::UI
         return _font.GetUnderlined();
     }
 
+    bool Font::GetItalic()
+    {
+        auto style = _font.GetStyle();
+        return style == wxFontStyle::wxFONTSTYLE_ITALIC;
+    }
+
     bool Font::GetStrikethrough()
     {
         return _font.GetStrikethrough();

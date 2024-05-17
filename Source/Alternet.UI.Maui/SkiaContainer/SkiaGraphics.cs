@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    public interface IPlessFontHandler : IFontHandler
+    public abstract class SkiaGraphics : Graphics
     {
-        void SetEncoding(FontEncoding value);
-
-        void SetIsFixedWidth(bool value);
     }
 }

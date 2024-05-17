@@ -22,12 +22,6 @@ namespace Alternet.Drawing
         string Name { get; }
 
         /// <summary>
-        /// Gets style information for the font.
-        /// </summary>
-        /// <returns></returns>
-        FontStyle Style { get; }
-
-        /// <summary>
         /// Gets the em-size, in points, of the font.
         /// </summary>
         /// <returns></returns>
@@ -77,6 +71,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         bool GetUnderlined();
+
+        /// <summary>
+        /// Gets a value that indicates whether font is italic.
+        /// </summary>
+        /// <returns></returns>
+        bool GetItalic();
 
         /// <summary>
         /// Gets font as serialized string.

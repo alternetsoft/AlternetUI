@@ -20,6 +20,7 @@ namespace Alternet.Drawing
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
 
+        private FontStyle? style;
         private int? hashCode;
         private bool? gdiVerticalFont;
         private Font[]? fonts;
@@ -380,24 +381,24 @@ namespace Alternet.Drawing
         /// The string representing the name of the font originally specified.
         /// </returns>
         [Browsable(false)]
-        public string? OriginalFontName => baseFont?.Name ?? Name;
+        public virtual string? OriginalFontName => baseFont?.Name ?? Name;
 
         /// <summary>
         /// Gets the pixel size.
         /// </summary>
-        public int SizeInPixels => Handler.GetPixelSize();
+        public virtual int SizeInPixels => Handler.GetPixelSize();
 
         /// <summary>
         /// Gets whether font size is in pixels.
         /// </summary>
         /// <returns></returns>
-        public bool IsUsingSizeInPixels => Handler.IsUsingSizeInPixels();
+        public virtual bool IsUsingSizeInPixels => Handler.IsUsingSizeInPixels();
 
         /// <summary>
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
         /// the <see cref="Font.Unit" /> property.</summary>
         /// <returns>The em-size of this <see cref="Font" />.</returns>
-        public double Size
+        public virtual double Size
         {
             get
             {
@@ -414,13 +415,13 @@ namespace Alternet.Drawing
         /// <returns>
         /// A byte value that specifies the GDI character set that this
         /// <see cref="Font" /> uses. The default is 1. Currently always returns 1. </returns>
-        public byte GdiCharSet => 1;
+        public virtual byte GdiCharSet => 1;
 
         /// <summary>
         /// Gets the unit of measure for this <see cref="Font" />.</summary>
         /// <returns>A value that represents the unit of
         /// measure for this <see cref="Font" />.</returns>
-        public GraphicsUnit Unit
+        public virtual GraphicsUnit Unit
         {
             get
             {
@@ -434,7 +435,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets this font with <see cref="FontStyle.Regular"/> style.
         /// </summary>
-        public Font Base
+        public virtual Font Base
         {
             get
             {
@@ -450,7 +451,7 @@ namespace Alternet.Drawing
         /// <remarks>
         ///  See <see cref="FontWeight"/> for the numeric weight values.
         /// </remarks>
-        public int NumericWeight => Handler.GetNumericWeight();
+        public virtual int NumericWeight => Handler.GetNumericWeight();
 
         /// <summary>
         /// Gets whether this font is a fixed width (or monospaced) font.
@@ -463,13 +464,13 @@ namespace Alternet.Drawing
         /// platform-specific functions are used for the check (resulting in a more accurate
         /// return value).
         /// </remarks>
-        public bool IsFixedWidth => Handler.IsFixedWidth();
+        public virtual bool IsFixedWidth => Handler.IsFixedWidth();
 
         /// <summary>
         /// Gets the font weight.
         /// </summary>
         /// <returns></returns>
-        public FontWeight Weight => Handler.GetWeight();
+        public virtual FontWeight Weight => Handler.GetWeight();
 
         /// <summary>
         /// Returns bold version of the font.
@@ -479,7 +480,7 @@ namespace Alternet.Drawing
         /// this property will return both italic and bold font.
         /// </remarks>
         [Browsable(false)]
-        public Font AsBold
+        public virtual Font AsBold
         {
             get
             {
@@ -495,7 +496,7 @@ namespace Alternet.Drawing
         /// this property will return both italic and underlined font.
         /// </remarks>
         [Browsable(false)]
-        public Font AsUnderlined
+        public virtual Font AsUnderlined
         {
             get
             {
@@ -508,12 +509,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>A <see cref="FontStyle"/> enumeration that contains
         /// style information for this <see cref="Font"/>.</value>
-        public FontStyle Style
+        public virtual FontStyle Style
         {
             get
             {
-                CheckDisposed();
-                return Handler.Style;
+                return style ??= GetStyle(Handler);
             }
         }
 
@@ -522,14 +522,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is bold;
         /// otherwise, <c>false</c>.</value>
-        public bool IsBold => (Style & FontStyle.Bold) != 0;
+        public virtual bool IsBold => GetIsBold(Handler);
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/> is italic.
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is italic;
         /// otherwise, <c>false</c>.</value>
-        public bool IsItalic => (Style & FontStyle.Italic) != 0;
+        public virtual bool IsItalic => Handler.GetItalic();
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -537,7 +537,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
-        public bool IsStrikethrough => Handler.GetStrikethrough();
+        public virtual bool IsStrikethrough => Handler.GetStrikethrough();
+
+        /// <summary>
+        /// Same as <see cref="IsStrikethrough"/>.
+        /// </summary>
+        public bool IsStrikeout => Handler.GetStrikethrough();
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -545,13 +550,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
-        public bool IsUnderlined => Handler.GetUnderlined();
+        public virtual bool IsUnderlined => Handler.GetUnderlined();
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
         /// </summary>
         /// <value>The em-size, in points, of this <see cref="Font"/>.</value>
-        public double SizeInPoints
+        public virtual double SizeInPoints
         {
             get
             {
@@ -566,7 +571,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>The <see cref="FontFamily"/> associated with this
         /// <see cref="Font"/>.</value>
-        public FontFamily FontFamily
+        public virtual FontFamily FontFamily
         {
             get
             {
@@ -577,7 +582,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets native font.
         /// </summary>
-        public IFontHandler Handler { get; private set; }
+        public virtual IFontHandler Handler { get; private set; }
 
         /// <summary>
         /// Gets a <see cref="bool"/> value that indicates whether this
@@ -587,14 +592,14 @@ namespace Alternet.Drawing
         /// <see langword="true" /> if this <see cref="Font" /> is derived from a vertical font;
         /// otherwise, <see langword="false" />.</returns>
         [Browsable(false)]
-        public bool GdiVerticalFont => gdiVerticalFont ??= IsVerticalName(Name);
+        public virtual bool GdiVerticalFont => gdiVerticalFont ??= IsVerticalName(Name);
 
         /// <summary>
         /// Gets the font family name of this <see cref="Font"/>.
         /// </summary>
         /// <value>A string representation of the font family name
         /// of this <see cref="Font"/>.</value>
-        public string Name
+        public virtual string Name
         {
             get
             {
@@ -838,7 +843,7 @@ namespace Alternet.Drawing
         public override string ToString()
         {
             CheckDisposed();
-            return Handler.Description;
+            return ToUserString(Handler);
         }
 
         /// <summary>
@@ -1055,9 +1060,33 @@ namespace Alternet.Drawing
             return result;
         }
 
+        public static bool GetIsBold(IFontHandler font)
+        {
+            return font.GetWeight() > FontWeight.Normal;
+        }
+
+        public static FontStyle GetStyle(IFontHandler font)
+        {
+            FontStyle result = FontStyle.Regular;
+
+            if (GetIsBold(font))
+                result |= FontStyle.Bold;
+
+            if (font.GetItalic())
+                result |= FontStyle.Italic;
+
+            if (font.GetUnderlined())
+                result |= FontStyle.Underline;
+
+            if (font.GetStrikethrough())
+                result |= FontStyle.Strikeout;
+
+            return result;
+        }
+
         public static List<string> ToUserAsList(IFontHandler font)
         {
-            var result = ToUserString(font.Style, font.GetWeight());
+            var result = ToUserString(GetStyle(font), font.GetWeight());
 
             string face = font.Name;
             if (!string.IsNullOrEmpty(face))
