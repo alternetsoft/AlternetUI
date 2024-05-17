@@ -112,6 +112,14 @@ namespace Alternet.Drawing
             public FontParams()
             {
             }
+
+            public FontParams(Font font)
+            {
+                FamilyName = font.Name;
+                Size = font.SizeInPoints;
+                Style = font.Style;
+                GdiCharSet = font.GdiCharSet;
+            }
         }
     }
 }

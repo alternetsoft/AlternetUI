@@ -17,55 +17,58 @@ namespace Alternet.Drawing
         private static IFontHandler? defaultMonoFont;
         private static FontEncoding defaultFontEncoding = FontEncoding.Default;
 
-        public FontEncoding DefaultFontEncoding
+        public virtual FontEncoding DefaultFontEncoding
         {
             get => defaultFontEncoding;
             set => defaultFontEncoding = value;
         }
 
-        public IFontHandler CreateDefaultFont()
+        public virtual IFontHandler CreateDefaultFont()
         {
             defaultFont ??= new PlessFontHandler();
             return defaultFont;
         }
 
-        public IFontHandler CreateDefaultMonoFont()
+        public virtual IFontHandler CreateDefaultMonoFont()
         {
             defaultMonoFont ??= new PlessFontHandler();
             return defaultMonoFont;
         }
 
-        public IFontHandler CreateFont()
+        public virtual IFontHandler CreateFont()
         {
             return new PlessFontHandler();
         }
 
-        public IFontHandler CreateFont(Font font)
+        public virtual IFontHandler CreateFont(Font font)
+        {
+            var result = CreateFont();
+            IFontHandler.FontParams prm = new(font);
+            result.Update(prm);
+            return result;
+        }
+
+        public virtual Font CreateSystemFont(SystemSettingsFont systemFont)
         {
             throw new NotImplementedException();
         }
 
-        public Font CreateSystemFont(SystemSettingsFont systemFont)
+        public virtual string[] GetFontFamiliesNames()
         {
             throw new NotImplementedException();
         }
 
-        public string[] GetFontFamiliesNames()
+        public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
         {
             throw new NotImplementedException();
         }
 
-        public string GetFontFamilyName(GenericFontFamily genericFamily)
+        public virtual bool IsFontFamilyValid(string name)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsFontFamilyValid(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetDefaultFont(Font value)
+        public virtual void SetDefaultFont(Font value)
         {
             defaultFont = value.Handler;
         }
