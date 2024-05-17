@@ -9,12 +9,6 @@ namespace Alternet.Drawing
     public interface IPlessFontHandler : IFontHandler
     {
         /// <summary>
-        /// Gets or sets a description string that represents the font.
-        /// </summary>
-        /// <returns></returns>
-        new string Description { get; set; }
-
-        /// <summary>
         /// Gets of sets name of the font.
         /// </summary>
         new string Name { get; set; }

@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
-using Alternet.UI.Localization;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
 {
@@ -1042,7 +1042,20 @@ namespace Alternet.Drawing
             }
         }
 
-        public static List<string> ToUserString(IFontHandler font)
+        public static string ToUserString(IFontHandler font)
+        {
+            List<string> list = ToUserAsList(font);
+
+            var result = StringUtils.ToString(
+                list,
+                null,
+                null,
+                StringUtils.OneSpace);
+
+            return result;
+        }
+
+        public static List<string> ToUserAsList(IFontHandler font)
         {
             var result = ToUserString(font.Style, font.GetWeight());
 
@@ -1071,20 +1084,7 @@ namespace Alternet.Drawing
             return result;
         }
 
-            /*
-
-     #if wxUSE_FONTMAP
-         wxFontEncoding enc = GetEncoding();
-         if ( enc != wxFONTENCODING_DEFAULT && enc != wxFONTENCODING_SYSTEM )
-         {
-             desc << wxT(' ') << wxFontMapper::GetEncodingName(enc);
-         }
-     #endif // wxUSE_FONTMAP
-
-     return desc.Strip(wxString::both).MakeLower();
-     }*/
-
-            internal static Font CreateDefaultMonoFont()
+        internal static Font CreateDefaultMonoFont()
         {
             var family = FontFamily.GenericMonospace;
             var fontGenericMonospace = new Font(family, Default.SizeInPoints);

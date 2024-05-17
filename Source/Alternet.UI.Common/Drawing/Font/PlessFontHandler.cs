@@ -13,13 +13,13 @@ namespace Alternet.Drawing
     /// </summary>
     public class PlessFontHandler : DisposableObject, IPlessFontHandler
     {
-        private string description = string.Empty;
         private string name = string.Empty;
         private FontStyle style;
         private double sizeInPoints;
         private FontWeight weight;
         private FontEncoding encoding = FontEncoding.Default;
         private bool isFixedWidth;
+        private string? serialized;
 
         public PlessFontHandler()
         {
@@ -29,14 +29,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return description;
-            }
-
-            set
-            {
-                if (description == value)
-                    return;
-                description = value;
+                return Serialize();
             }
         }
 
@@ -52,6 +45,7 @@ namespace Alternet.Drawing
                 if (name == value)
                     return;
                 name = value;
+                Changed();
             }
         }
 
@@ -67,6 +61,7 @@ namespace Alternet.Drawing
                 if (style == value)
                     return;
                 style = value;
+                Changed();
             }
         }
 
@@ -82,6 +77,7 @@ namespace Alternet.Drawing
                 if (sizeInPoints == value)
                     return;
                 sizeInPoints = value;
+                Changed();
             }
         }
 
@@ -93,6 +89,7 @@ namespace Alternet.Drawing
         public virtual void SetEncoding(FontEncoding value)
         {
             encoding = value;
+            Changed();
         }
 
         public virtual int GetNumericWeight()
@@ -133,6 +130,7 @@ namespace Alternet.Drawing
         public virtual void SetIsFixedWidth(bool value)
         {
             isFixedWidth = value;
+            Changed();
         }
 
         public virtual bool IsUsingSizeInPixels()
@@ -142,17 +140,26 @@ namespace Alternet.Drawing
 
         public virtual bool Equals(Font font)
         {
-            throw new NotImplementedException();
+            var thisSerialized = Serialize();
+            var otherSerialized = font.Handler.Serialize();
+            return thisSerialized == otherSerialized;
         }
 
         public virtual string Serialize()
         {
-            throw new NotImplementedException();
+            return serialized ??= Font.ToUserString(this);
+        }
+
+        public virtual void Changed()
+        {
+            serialized = null;
         }
 
         public virtual void Update(IFontHandler.FontParams prm)
         {
             Alternet.Drawing.Font.CoerceFontParams(ref prm);
+
+            Changed();
 
             throw new NotImplementedException();
 
