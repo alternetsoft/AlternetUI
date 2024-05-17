@@ -15,9 +15,9 @@ namespace Alternet.Drawing
     {
         private static IFontHandler? defaultFont;
         private static IFontHandler? defaultMonoFont;
-        private static int defaultFontEncoding;
+        private static FontEncoding defaultFontEncoding = FontEncoding.Default;
 
-        public int DefaultFontEncoding
+        public FontEncoding DefaultFontEncoding
         {
             get => defaultFontEncoding;
             set => defaultFontEncoding = value;

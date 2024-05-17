@@ -14,7 +14,7 @@ namespace Alternet.Drawing
         /// Gets or sets default font encoding.
         /// </summary>
         /// <returns></returns>
-        int DefaultFontEncoding { get; set; }
+        FontEncoding DefaultFontEncoding { get; set; }
 
         /// <summary>
         /// Sets default font.

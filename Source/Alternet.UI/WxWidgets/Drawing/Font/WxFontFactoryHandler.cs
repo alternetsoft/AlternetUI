@@ -12,10 +12,10 @@ namespace Alternet.Drawing
     {
         public static readonly IFontFactoryHandler Default = new WxFontFactoryHandler();
 
-        public int DefaultFontEncoding
+        public FontEncoding DefaultFontEncoding
         {
-            get => UI.Native.Font.GetDefaultEncoding();
-            set => UI.Native.Font.SetDefaultEncoding(value);
+            get => (FontEncoding)UI.Native.Font.GetDefaultEncoding();
+            set => UI.Native.Font.SetDefaultEncoding((int)value);
         }
 
         public IFontHandler CreateDefaultFont()

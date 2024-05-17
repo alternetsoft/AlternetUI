@@ -37,5 +37,10 @@ namespace Alternet.UI.Native
         {
             return GetPixelSize().Height;
         }
+
+        FontEncoding IFontHandler.GetEncoding()
+        {
+            return (FontEncoding)GetEncoding();
+        }
     }
 }

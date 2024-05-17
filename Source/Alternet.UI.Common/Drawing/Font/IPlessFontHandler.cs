@@ -30,7 +30,7 @@ namespace Alternet.Drawing
         /// </summary>
         new double SizeInPoints { get; set; }
 
-        void SetEncoding(int value);
+        void SetEncoding(FontEncoding value);
 
         void SetIsFixedWidth(bool value);
     }

@@ -606,7 +606,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default font encoding.
         /// </summary>
-        internal static int DefaultEncoding
+        internal static FontEncoding DefaultEncoding
         {
             get => NativePlatform.Default.FontFactory.DefaultFontEncoding;
             set => NativePlatform.Default.FontFactory.DefaultFontEncoding = value;
@@ -618,7 +618,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
-        internal int Encoding => Handler.GetEncoding();
+        internal FontEncoding Encoding => Handler.GetEncoding();
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -1065,46 +1065,13 @@ namespace Alternet.Drawing
                 result.Add(face);
             }
 
+            int size = (int)font.SizeInPoints;
+            result.Add(size.ToString());
 
             return result;
         }
 
             /*
-                 List<string> desc = new();
-
-
-     wxString face = GetFaceName();
-     if (!face.empty())
-     {
-         if (face.Contains(' ') || face.Contains(';') || face.Contains(','))
-         {
-             face.Replace("'", "");
-             // eventually remove quote characters: most systems do not
-             // allow them in a facename anyway so this usually does nothing
-
-             // make it possible for FromUserString() function to understand
-             // that the different words which compose this facename are
-             // not different adjectives or other data but rather all parts
-             // of the facename
-             desc << wxT(" '") << face << wxT("'");
-         }
-         else
-             desc << wxT(' ') << face;
-     }
-     else // no face name specified
-     {
-
-         if (!familyStr.empty())
-             desc << " '" << familyStr << " family'";
-     }
-
-     int size = GetPointSize();
-     if (size != wxNORMAL_FONT->GetPointSize())
-     {
-         desc << wxT(' ') << size;
-     }
-
-                 ///ToUserString(GenericFontFamily family)
 
      #if wxUSE_FONTMAP
          wxFontEncoding enc = GetEncoding();

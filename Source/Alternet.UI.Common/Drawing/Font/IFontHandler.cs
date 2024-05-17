@@ -37,7 +37,7 @@ namespace Alternet.Drawing
         /// Gets font encoding.
         /// </summary>
         /// <returns></returns>
-        int GetEncoding();
+        FontEncoding GetEncoding();
 
         /// <summary>
         /// Gets font size in pixels.

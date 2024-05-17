@@ -18,7 +18,7 @@ namespace Alternet.Drawing
         private FontStyle style;
         private double sizeInPoints;
         private FontWeight weight;
-        private int encoding = 1;
+        private FontEncoding encoding = FontEncoding.Default;
         private bool isFixedWidth;
 
         public PlessFontHandler()
@@ -85,12 +85,12 @@ namespace Alternet.Drawing
             }
         }
 
-        public virtual int GetEncoding()
+        public virtual FontEncoding GetEncoding()
         {
             return encoding;
         }
 
-        public virtual void SetEncoding(int value)
+        public virtual void SetEncoding(FontEncoding value)
         {
             encoding = value;
         }
