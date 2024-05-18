@@ -152,5 +152,17 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool IsFamilyValid(string name) =>
             NativePlatform.Default.FontFactory.IsFontFamilyValid(name);
+
+        /// <summary>
+        /// Gets name of the font family specified with <see cref="GenericFontFamily"/> enum.
+        /// </summary>
+        /// <param name="family"></param>
+        /// <returns></returns>
+        public static string GetName(GenericFontFamily family)
+        {
+            if (family == GenericFontFamily.None)
+                family = GenericFontFamily.Default;
+            return NativePlatform.Default.FontFactory.GetFontFamilyName(family);
+        }
     }
 }
