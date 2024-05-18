@@ -90,7 +90,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void UpdateHandler()
         {
-            NativeDrawing.Default.UpdateSolidBrush(this);
+            ((ISolidBrushHandler)Handler).Initialize(color);
         }
     }
 }

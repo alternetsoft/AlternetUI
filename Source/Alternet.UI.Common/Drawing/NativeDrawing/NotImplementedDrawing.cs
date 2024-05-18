@@ -25,13 +25,11 @@ namespace Alternet.Drawing
 
         public override object CreateRadialGradientBrush() => NotImplemented();
 
-        public override object CreateSolidBrush() => NotImplemented();
+        public override ISolidBrushHandler CreateSolidBrush() => NotImplemented<ISolidBrushHandler>();
 
         public override object CreateTextureBrush() => NotImplemented();
 
         public override void UpdatePen(Pen pen) => NotImplemented();
-
-        public override void UpdateSolidBrush(SolidBrush brush) => NotImplemented();
 
         public override void UpdateHatchBrush(HatchBrush brush) => NotImplemented();
 

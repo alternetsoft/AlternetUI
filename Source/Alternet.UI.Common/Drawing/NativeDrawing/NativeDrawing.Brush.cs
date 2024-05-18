@@ -40,19 +40,13 @@ namespace Alternet.Drawing
         /// Creates native solid brush.
         /// </summary>
         /// <returns></returns>
-        public abstract object CreateSolidBrush();
+        public abstract ISolidBrushHandler CreateSolidBrush();
 
         /// <summary>
         /// Creates native texture brush.
         /// </summary>
         /// <returns></returns>
         public abstract object CreateTextureBrush();
-
-        /// <summary>
-        /// Updates native solid brush properties.
-        /// </summary>
-        /// <returns></returns>
-        public abstract void UpdateSolidBrush(SolidBrush brush);
 
         /// <summary>
         /// Updates native hatch brush properties.

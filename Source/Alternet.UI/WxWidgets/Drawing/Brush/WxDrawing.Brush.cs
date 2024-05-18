@@ -39,12 +39,6 @@ namespace Alternet.Drawing
                 brush.GradientStops.Select(x => x.Offset).ToArray());
         }
 
-        /// <inheritdoc/>
-        public override void UpdateSolidBrush(SolidBrush brush)
-        {
-            ((UI.Native.SolidBrush)brush.Handler).Initialize(brush.Color);
-        }
-
         public override void UpdateTextureBrush(TextureBrush brush)
         {
             ((UI.Native.TextureBrush)brush.Handler).Initialize(
@@ -64,7 +58,7 @@ namespace Alternet.Drawing
         public override object CreateRadialGradientBrush() => new UI.Native.RadialGradientBrush();
 
         /// <inheritdoc/>
-        public override object CreateSolidBrush() => new UI.Native.SolidBrush();
+        public override ISolidBrushHandler CreateSolidBrush() => new UI.Native.SolidBrush();
 
         /// <inheritdoc/>
         public override object CreateTextureBrush() => new UI.Native.TextureBrush();
