@@ -5,11 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.UI;
+using Alternet.UI.Extensions;
 
 using Microsoft.Maui.Graphics;
 
 #pragma warning disable
 /*
+    public enum TextFlow
+    {
+	    ClipBounds,
+	    OverflowBounds
+    }
+
+    public enum HorizontalAlignment
+    {
+	    Left,
+	    Center,
+	    Right,
+	    Justified
+    }
+
+    public enum VerticalAlignment
+    {
+	    Top,
+	    Center,
+	    Bottom
+    }
+
     Microsoft.Maui.Graphics.Font
 
     IFontCollection
@@ -58,9 +80,12 @@ public void DrawString(string value, float x, float y, HorizontalAlignment horiz
 /// <param name="y">Starting <c>y</c> coordinate of the bounding box.</param>
 /// <param name="width">Width of the bounding box.</param>
 /// <param name="height">Height of the bounding box.</param>
-/// <param name="horizontalAlignment">Horizontal alignment options to align the string within the bounding box.</param>
-/// <param name="verticalAlignment">Vertical alignment options to align the string within the bounding box.</param>
-/// <param name="textFlow">Specifies whether text will be clipped in case it overflows the bounding box. Default is <see cref="TextFlow.ClipBounds"/>.</param>
+/// <param name="horizontalAlignment">Horizontal alignment options to align the
+/// string within the bounding box.</param>
+/// <param name="verticalAlignment">Vertical alignment options to align the
+/// string within the bounding box.</param>
+/// <param name="textFlow">Specifies whether text will be clipped in case it overflows
+/// the bounding box. Default is <see cref="TextFlow.ClipBounds"/>.</param>
 /// <param name="lineSpacingAdjustment">Spacing adjustment between lines. Default is 0.</param>
 public void DrawString(
 	string value,
@@ -106,7 +131,12 @@ public SizeF GetStringSize(string value, IFont font, float fontSize);
 /// <param name="horizontalAlignment">Horizontal alignment options for the string.</param>
 /// <param name="verticalAlignment">Vertical alignment options for the string.</param>
 /// <returns>The area the string would occupy on the canvas.</returns>
-public SizeF GetStringSize(string value, IFont font, float fontSize, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment);
+public SizeF GetStringSize(
+    string value,
+    IFont font,
+    float fontSize,
+    HorizontalAlignment horizontalAlignment,
+    VerticalAlignment verticalAlignment);
 
 */
 #pragma warning enable
@@ -116,10 +146,26 @@ namespace Alternet.Drawing
     public class MauiGraphics : NotImplementedGraphics
     {
         private ICanvas canvas;
+        private RectF dirtyRect;
+        private MauiContainer container;
 
-        public MauiGraphics(ICanvas canvas)
+        public MauiGraphics(MauiContainer container, ICanvas canvas, RectF dirtyRect)
         {
             this.canvas = canvas;
+            this.dirtyRect = dirtyRect;
+            this.container = container;
+        }
+
+        public MauiContainer Container
+        {
+            get => container;
+            set => container = value;
+        }
+
+        public RectF DirtyRect
+        {
+            get => dirtyRect;
+            set => dirtyRect = value;
         }
 
         public ICanvas Canvas
@@ -128,6 +174,7 @@ namespace Alternet.Drawing
             set => canvas = value;
         }
 
+        /// <inheritdoc/>
         public override SizeD GetTextExtent(
             string text,
             Font font,
@@ -140,6 +187,7 @@ namespace Alternet.Drawing
             return SizeD.Empty;
         }
 
+        /// <inheritdoc/>
         public override SizeD GetTextExtent(
             string text,
             Font font,
@@ -148,21 +196,19 @@ namespace Alternet.Drawing
             return SizeD.Empty;
         }
 
-        public override SizeD GetTextExtent(string text, Font font)
-        {
-            return SizeD.Empty;
-        }
-
+        /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, PointD origin)
         {
             DrawText(text, font, brush, origin, TextFormat.Default);
         }
 
+        /// <inheritdoc/>
         public override void DrawText(string text, PointD origin)
         {
             DrawText(text, Font.Default, Brush.Default, origin);
         }
 
+        /// <inheritdoc/>
         public override void DrawText(
             string text,
             Font font,
@@ -172,11 +218,13 @@ namespace Alternet.Drawing
         {
         }
 
+        /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
             DrawText(text, font, brush, bounds, TextFormat.Default);
         }
 
+        /// <inheritdoc/>
         public override void DrawText(
             string text,
             Font font,
@@ -186,16 +234,19 @@ namespace Alternet.Drawing
         {
         }
 
+        /// <inheritdoc/>
         public override SizeD MeasureText(string text, Font font)
         {
             return SizeD.Empty;
         }
 
+        /// <inheritdoc/>
         public override SizeD MeasureText(string text, Font font, double maximumWidth)
         {
             return SizeD.Empty;
         }
 
+        /// <inheritdoc/>
         public override SizeD MeasureText(
             string text,
             Font font,
@@ -205,12 +256,87 @@ namespace Alternet.Drawing
             return SizeD.Empty;
         }
 
+        // Used in editor
+        /// <inheritdoc/>
+        public override SizeD GetTextExtent(string text, Font font)
+        {
+            return SizeD.Empty;
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void SetPixel(double x, double y, Color color)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
         public override void DrawText(
             string text,
             PointD location,
             Font font,
             Color foreColor,
             Color backColor)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void PushTransform(TransformMatrix transform)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void FillRectangle(Brush brush, RectD rectangle)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void Pop()
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void DrawBeziers(Pen pen, PointD[] points)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void DrawPolygon(Pen pen, PointD[] points)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void DrawRectangle(Pen pen, RectD rectangle)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void DrawImage(Image image, PointD origin, bool useMask = false)
+        {
+        }
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override void DrawLine(Pen pen, PointD a, PointD b)
         {
         }
     }
