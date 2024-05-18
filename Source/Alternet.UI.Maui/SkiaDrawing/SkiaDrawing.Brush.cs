@@ -22,68 +22,37 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override object CreateTransparentBrush()
         {
-            return new SKPaint();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object CreateSolidBrush()
+        public override ISolidBrushHandler CreateSolidBrush()
         {
-            return new SKPaint();
+            return new PlessSolidBrushHandler();
         }
 
         /// <inheritdoc/>
         public override object CreateHatchBrush()
         {
-            return new SKPaint();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override object CreateLinearGradientBrush()
         {
-            return new SKPaint();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override object CreateRadialGradientBrush()
         {
-            return new SKPaint();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override object CreateTextureBrush()
         {
-            return new SKPaint();
-        }
-
-        /*
-         var paint1 = new SKPaint {
-                TextSize = 64.0f,
-                IsAntialias = true,
-                Color = new SKColor(255, 0, 0),
-                Style = SKPaintStyle.Fill
-            };
-
-            var paint2 = new SKPaint {
-                TextSize = 64.0f,
-                IsAntialias = true,
-                Color = new SKColor(0, 136, 0),
-                Style = SKPaintStyle.Stroke,
-                StrokeWidth = 3
-            };
-
-            var paint3 = new SKPaint {
-                TextSize = 64.0f,
-                IsAntialias = true,
-                Color = new SKColor(136, 136, 136),
-                TextScaleX = 1.5f
-            };
-
-        */
-
-        /// <inheritdoc/>
-        public override void UpdateSolidBrush(SolidBrush brush)
-        {
-            NotImplemented();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
