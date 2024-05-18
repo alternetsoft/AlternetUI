@@ -20,6 +20,14 @@ namespace Alternet.UI
         public MauiContainer()
         {
             Drawable = this;
+
+            StartHoverInteraction += OnStartHoverInteraction;
+            MoveHoverInteraction += OnMoveHoverInteraction;
+            EndHoverInteraction += OnEndHoverInteraction;
+            StartInteraction += OnStartInteraction;
+            DragInteraction += OnDragInteraction;
+            EndInteraction += OnEndInteraction;
+            CancelInteraction += OnCancelInteraction;
         }
 
         public Alternet.UI.Control? Control
@@ -45,6 +53,34 @@ namespace Alternet.UI
             }
 
             control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect.ToRectD()));
+        }
+
+        protected virtual void OnCancelInteraction(object? sender, EventArgs e)
+        {
+        }
+
+        protected virtual void OnEndInteraction(object? sender, TouchEventArgs e)
+        {
+        }
+
+        protected virtual void OnDragInteraction(object? sender, TouchEventArgs e)
+        {
+        }
+
+        protected virtual void OnStartInteraction(object? sender, TouchEventArgs e)
+        {
+        }
+
+        protected virtual void OnEndHoverInteraction(object? sender, EventArgs e)
+        {
+        }
+
+        protected virtual void OnMoveHoverInteraction(object? sender, TouchEventArgs e)
+        {
+        }
+
+        protected virtual void OnStartHoverInteraction(object? sender, TouchEventArgs e)
+        {
         }
     }
 }

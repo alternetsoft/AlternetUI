@@ -13,16 +13,11 @@ namespace Alternet.UI
     {
         private static bool initialized;
 
-        public static bool UseSkia { get; set; } = true;
-
         public override IFontFactoryHandler FontFactory
         {
             get
             {
-                if (UseSkia)
-                    return new SkiaFontFactoryHandler();
-                else
-                    return new MauiFontFactoryHandler();
+                return new MauiFontFactoryHandler();
             }
         }
 
@@ -260,7 +255,7 @@ namespace Alternet.UI
 
         public override IControlHandler CreateControlHandler(Control control)
         {
-            throw new NotImplementedException();
+            return new MauiControlHandler();
         }
 
         public override ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control)

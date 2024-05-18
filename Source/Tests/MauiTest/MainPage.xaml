@@ -4,7 +4,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              x:Class="SpinPaint.MainPage"
              Title="Spin Paint">
-  <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*,Auto">
         <ListView x:Name="ListView1" 
                            Grid.Row="0"
                   HeightRequest="200"
@@ -15,16 +15,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <skia:SKCanvasView x:Name="canvasView"
-                           Grid.Row="1"
-                           PaintSurface="OnCanvasViewPaintSurface"
-                           EnableTouchEvents="True"
-                           Touch="OnTouch"
-                           IgnorePixelScaling="True" />         
+        <FlexLayout x:Name="panel"
+                           Grid.Row="1"/>
         <Button Grid.Row="3"
                 Margin="0,20"
-                Text="Clear"
-                Clicked="OnClearButtonClicked"
+                Text="Action"
                 HorizontalOptions="Center" />
     </Grid>
 </ContentPage>

@@ -188,7 +188,7 @@ namespace Alternet.UI
         /// Occurs when the application finishes processing events and is
         /// about to enter the idle state.
         /// </summary>
-        public event EventHandler? Idle;
+        public static event EventHandler? Idle;
 
         /// <summary>
         /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when\

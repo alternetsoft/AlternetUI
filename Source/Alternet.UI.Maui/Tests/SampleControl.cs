@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Alternet.Drawing;
-
 namespace Alternet.UI
 {
-    public class SkiaFontFactoryHandler : PlessFontFactoryHandler
+    public class SampleControl : UserControl
     {
+        protected override void OnPaint(PaintEventArgs e)
+        {
+        }
     }
 }

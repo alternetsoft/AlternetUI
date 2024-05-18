@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 
+using SkiaSharp;
+
 #pragma warning disable
 /*
 	public struct Font : IFont, IEquatable<IFont>
@@ -35,6 +37,7 @@ namespace Alternet.Drawing
     public class MauiFontHandler : PlessFontHandler
     {
         private Microsoft.Maui.Graphics.Font font;
+        private SKFont? skiaFont;
 
         public MauiFontHandler()
             : this(Microsoft.Maui.Graphics.Font.Default)
@@ -45,6 +48,12 @@ namespace Alternet.Drawing
         {
             this.font = font;
         }
+
+		public SKFont? SkiaFont
+		{
+			get => skiaFont;
+			set => skiaFont = value;
+		}
 
         public TextDecorations TextDecorations
 		{

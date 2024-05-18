@@ -1764,7 +1764,7 @@ namespace Alternet.UI.Threading
 
         private Dispatcher()
         {
-            BaseApplication.Current.Idle += Application_Idle;
+            BaseApplication.Idle += Application_Idle;
 
             _queue = new PriorityQueue<DispatcherOperation>();
 
