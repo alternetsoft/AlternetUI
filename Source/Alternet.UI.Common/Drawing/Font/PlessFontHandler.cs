@@ -14,11 +14,11 @@ namespace Alternet.Drawing
     public class PlessFontHandler : DisposableObject, IPlessFontHandler
     {
         private string name = string.Empty;
-        private FontStyle style;
-        private double sizeInPoints;
-        private FontWeight weight;
+        private FontStyle style = FontStyle.Regular;
+        private double sizeInPoints = 12;
+        private FontWeight weight = FontWeight.Normal;
         private FontEncoding encoding = FontEncoding.Default;
-        private bool isFixedWidth;
+        private bool isFixedWidth = false;
         private string? serialized;
 
         public PlessFontHandler()
@@ -162,28 +162,20 @@ namespace Alternet.Drawing
 
         public virtual void Update(IFontHandler.FontParams prm)
         {
-            Alternet.Drawing.Font.CoerceFontParams(ref prm);
+            Font.CoerceFontParams(ref prm);
+            if (prm.GenericFamily is null)
+                name = prm.FamilyName ?? FontFamily.GetName(GenericFontFamily.Default);
+            else
+                name = FontFamily.GetName(prm.GenericFamily ?? GenericFontFamily.Default);
+            style = prm.Style;
+            sizeInPoints = prm.Size;
+            if (style.HasFlag(FontStyle.Bold))
+                weight = FontWeight.Bold;
+            else
+                weight = FontWeight.Normal;
 
             Changed();
-
             throw new NotImplementedException();
-
-            /*
-            public GenericFontFamily? GenericFamily;
-            public string? FamilyName;
-            public double Size;
-            public FontStyle Style = FontStyle.Regular;
-            public GraphicsUnit Unit = GraphicsUnit.Point;
-            public byte GdiCharSet = 1;
-            */
-
-            /*
-            Initialize(
-               prm.GenericFamily ?? 0,
-               prm.FamilyName,
-               prm.Size,
-               prm.Style);
-            */
         }
     }
 }
