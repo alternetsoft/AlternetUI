@@ -50,7 +50,7 @@ namespace Alternet.UI.Integration
             application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             application.InUixmlPreviewerMode = true;
 
-            application.Idle += Application_Idle;
+            Application.Idle += Application_Idle;
 
             queueTimer = new Timer(TimeSpan.FromMilliseconds(100), OnQueueTimerTick);
 

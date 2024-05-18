@@ -16,7 +16,7 @@ namespace InputSample
 
             SetSizeToContent();
 
-            Application.Current.Idle += Current_Idle;
+            Application.Idle += Current_Idle;
 
             lb.BindApplicationLog();
 

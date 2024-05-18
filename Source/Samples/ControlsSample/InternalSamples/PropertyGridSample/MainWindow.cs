@@ -163,7 +163,7 @@ namespace PropertyGridSample
 
                 ToolBox.SelectedItem = ToolBox.FirstItem;
 
-                Application.Current.Idle += ApplicationIdle;
+                Application.Idle += ApplicationIdle;
                 RunTests();
 
                 ComponentDesigner.InitDefault();
