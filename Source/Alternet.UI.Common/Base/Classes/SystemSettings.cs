@@ -154,7 +154,7 @@ namespace Alternet.UI
         /// <param name="index">System color identifier.</param>
         public static Color GetColor(SystemSettingsColor index)
         {
-            return NativePlatform.Default.SystemSettingsGetColor(index);
+            return NativeDrawing.Default.GetColor(index);
         }
 
         /// <summary>

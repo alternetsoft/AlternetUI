@@ -425,11 +425,6 @@ namespace Alternet.UI
             return Native.WxOtherFactory.SystemSettingsHasFeature((int)index);
         }
 
-        public override Color SystemSettingsGetColor(SystemSettingsColor index)
-        {
-            return Native.WxOtherFactory.SystemSettingsGetColor((int)index);
-        }
-
         public override Font SystemSettingsGetFont(SystemSettingsFont systemFont)
         {
             var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);

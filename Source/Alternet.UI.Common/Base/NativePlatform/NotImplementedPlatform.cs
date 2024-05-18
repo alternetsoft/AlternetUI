@@ -411,11 +411,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override Color SystemSettingsGetColor(SystemSettingsColor index)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Font SystemSettingsGetFont(SystemSettingsFont systemFont)
         {
             throw new NotImplementedException();

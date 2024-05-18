@@ -29,7 +29,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override Color GetColor(SystemSettingsColor index)
         {
-            return SystemSettings.GetColor(index);
+            return UI.Native.WxOtherFactory.SystemSettingsGetColor((int)index);
         }
 
         /// <inheritdoc/>

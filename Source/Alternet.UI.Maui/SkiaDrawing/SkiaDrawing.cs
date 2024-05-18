@@ -56,6 +56,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override Color GetColor(SystemSettingsColor index)
         {
+            !!
             return NotImplemented<Color>();
         }
    }

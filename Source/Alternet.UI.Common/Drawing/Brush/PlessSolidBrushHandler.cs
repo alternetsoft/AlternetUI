@@ -12,6 +12,8 @@ namespace Alternet.Drawing
     {
         private Color color = Color.Black;
 
+        public Color Color => color;
+
         public void Initialize(Color color)
         {
             this.color = color;

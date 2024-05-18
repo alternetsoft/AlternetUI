@@ -123,8 +123,6 @@ namespace Alternet.UI
 
         public abstract bool SystemSettingsHasFeature(SystemSettingsFeature index);
 
-        public abstract Color SystemSettingsGetColor(SystemSettingsColor index);
-
         public abstract Font SystemSettingsGetFont(SystemSettingsFont systemFont);
 
         public abstract bool ShowExceptionWindow(
