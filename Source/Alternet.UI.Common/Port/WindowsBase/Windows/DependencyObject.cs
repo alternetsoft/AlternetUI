@@ -232,7 +232,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <returns>The computed value</returns>
-        protected internal object GetValue(DependencyProperty dp)
+        internal object GetValue(DependencyProperty dp)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -485,7 +485,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        public void SetValue(DependencyProperty dp, object value)
+        internal void SetValue(DependencyProperty dp, object value)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -512,7 +512,7 @@ namespace Alternet.UI
         ///     existing triggers, data-binding, styles, etc. will continue to
         ///     work.
         /// </remarks>
-        public void SetCurrentValue(DependencyProperty dp, object value)
+        internal void SetCurrentValue(DependencyProperty dp, object value)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -645,7 +645,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Sets the local value of a property
         /// </summary>
-        public void SetValue(DependencyPropertyKey key, object value)
+        internal void SetValue(DependencyPropertyKey key, object value)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -1018,7 +1018,7 @@ namespace Alternet.UI
         ///     Clears the local value of a property
         /// </summary>
         /// <param name="dp">Dependency property</param>
-        public void ClearValue(DependencyProperty dp)
+        internal void ClearValue(DependencyProperty dp)
         {
             // Do not allow foreign threads to clear properties.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -1036,7 +1036,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Clears the local value of a property
         /// </summary>
-        public void ClearValue(DependencyPropertyKey key)
+        internal void ClearValue(DependencyPropertyKey key)
         {
             // Do not allow foreign threads to clear properties.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -1164,7 +1164,7 @@ namespace Alternet.UI
         ///     Coerce a property value
         /// </summary>
         /// <param name="dp">Dependency property</param>
-        public void CoerceValue(DependencyProperty dp)
+        internal void CoerceValue(DependencyProperty dp)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -1255,7 +1255,7 @@ namespace Alternet.UI
         ///     Invalidates a property
         /// </summary>
         /// <param name="dp">Dependency property</param>
-        public void InvalidateProperty(DependencyProperty dp)
+        internal void InvalidateProperty(DependencyProperty dp)
         {
             InvalidateProperty(dp, preserveCurrentValue:false);
         }
@@ -2241,7 +2241,7 @@ namespace Alternet.UI
         ///     The local value. DependencyProperty.UnsetValue if no local value was
         ///     set via <cref see="SetValue"/>.
         /// </returns>
-        public object ReadLocalValue(DependencyProperty dp)
+        internal object ReadLocalValue(DependencyProperty dp)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
@@ -2302,7 +2302,7 @@ namespace Alternet.UI
         ///     Create a local value enumerator for this instance
         /// </summary>
         /// <returns>Local value enumerator (stack based)</returns>
-        public LocalValueEnumerator GetLocalValueEnumerator()
+        internal LocalValueEnumerator GetLocalValueEnumerator()
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
