@@ -4264,7 +4264,7 @@ namespace Alternet.UI
                     return value;
                 else
                 {
-                    KnownColor knownColor = ColorUtils.Convert((SystemSettingsColor)kind);
+                    KnownColor knownColor = WxColorUtils.Convert((SystemSettingsColor)kind);
                     if (knownColor == 0)
                         return value;
                     Color result = Color.FromKnownColor(knownColor);
@@ -4289,7 +4289,7 @@ namespace Alternet.UI
             if (value.IsKnownColor)
             {
                 KnownColor knownColor = value.ToKnownColor();
-                SystemSettingsColor converted = ColorUtils.Convert(knownColor);
+                SystemSettingsColor converted = WxColorUtils.Convert(knownColor);
                 if (converted != SystemSettingsColor.Max)
                     kind = (uint)converted;
             }

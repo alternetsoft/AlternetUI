@@ -449,8 +449,7 @@ namespace Alternet.Drawing
 
         public static uint GetSystemColorArgbUseSystemSettings(KnownColor knownColor)
         {
-            var systemSettingsColor = ColorUtils.Convert(knownColor);
-            var color = NativeDrawing.Default.GetColor(systemSettingsColor);
+            var color = NativeDrawing.Default.GetColor((KnownSystemColor)knownColor);
             var result = color.AsUInt();
             return result;
         }

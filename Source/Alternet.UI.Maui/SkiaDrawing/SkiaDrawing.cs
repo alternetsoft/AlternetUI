@@ -26,9 +26,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override Color GetColor(SystemSettingsColor index)
+        public override Color GetColor(KnownSystemColor index)
         {
-            return NotImplemented<Color>();
+            return PlessSystemColors.GetColor(index);
         }
    }
 }

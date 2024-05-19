@@ -30,6 +30,6 @@ namespace Alternet.Drawing
         /// Gets a standard system color.
         /// </summary>
         /// <param name="index">System color identifier.</param>
-        public abstract Color GetColor(SystemSettingsColor index);
+        public abstract Color GetColor(KnownSystemColor index);
     }
 }

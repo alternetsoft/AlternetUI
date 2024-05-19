@@ -24,9 +24,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override Color GetColor(SystemSettingsColor index)
+        public override Color GetColor(KnownSystemColor index)
         {
-            return UI.Native.WxOtherFactory.SystemSettingsGetColor((int)index);
+            SystemSettingsColor systemSettingsColor = WxColorUtils.Convert(index);
+            return UI.Native.WxOtherFactory.SystemSettingsGetColor((int)systemSettingsColor);
         }
     }
 }

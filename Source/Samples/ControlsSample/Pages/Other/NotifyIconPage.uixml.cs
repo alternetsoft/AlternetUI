@@ -62,9 +62,9 @@ namespace ControlsSample
         internal void LogColors()
         {
             LogUtils.LogColor("Info", SystemColors.Info);
-            LogUtils.LogColor("SystemSettings.Info", SystemSettings.GetColor(SystemSettingsColor.Info));
+            LogUtils.LogColor("SystemSettings.Info", SystemSettings.GetColor(KnownSystemColor.Info));
             LogUtils.LogColor("InfoText", SystemColors.InfoText);
-            LogUtils.LogColor("SystemSettings.InfoText", SystemSettings.GetColor(SystemSettingsColor.InfoText));
+            LogUtils.LogColor("SystemSettings.InfoText", SystemSettings.GetColor(KnownSystemColor.InfoText));
             LogUtils.LogColor("BkColor", RealBackgroundColor);
             LogUtils.LogColor("FgColor", RealForegroundColor);
         }
