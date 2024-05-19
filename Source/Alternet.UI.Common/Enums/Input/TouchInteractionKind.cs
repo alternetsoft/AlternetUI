@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Alternet.UI
+{
+    public enum TouchInteractionKind
+    {
+        Cancel,
+
+        End,
+
+        Drag,
+
+        Start,
+
+        EndHover,
+
+        MoveHover,
+
+        StartHover,
+    }
+}

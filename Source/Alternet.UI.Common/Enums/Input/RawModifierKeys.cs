@@ -13,7 +13,7 @@ namespace Alternet.UI
     ///     used to modify other input operations, including macOS-specific keys.
     /// </summary>
     [TypeConverter(typeof(ModifierKeysConverter))]
-    [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
+    [ValueSerializer(typeof(ModifierKeysValueSerializer))]
     [Flags]
     public enum RawModifierKeys
     {

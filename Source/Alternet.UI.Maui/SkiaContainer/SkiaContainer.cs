@@ -63,6 +63,12 @@ namespace Alternet.UI
         protected override void OnTouch(SKTouchEventArgs e)
         {
             base.OnTouch(e);
+            if(control is not null)
+            {
+                TouchEventArgs args = MauiTouchUtils.Convert(e);
+                control.RaiseTouch(args);
+                e.Handled = args.Handled;
+            }
         }
     }
 }

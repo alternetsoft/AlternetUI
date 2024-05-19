@@ -34,5 +34,10 @@ namespace Alternet.UI
         ///    The fifth mouse button.
         /// </summary>
         XButton2,
+
+        /// <summary>
+        /// Mouse button not specified.
+        /// </summary>
+        Unknown,
     }
 }

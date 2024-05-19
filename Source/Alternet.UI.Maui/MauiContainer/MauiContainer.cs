@@ -55,32 +55,48 @@ namespace Alternet.UI
             control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect.ToRectD()));
         }
 
+        /// <param name="Touches"></param>
+        /// <param name="IsInsideBounds">This is only used for EndInteraction.</param>
+        protected virtual void OnTouchInteraction(
+            TouchInteractionKind kind,
+            PointF[]? touches = null,
+            bool isInsideBounds = true)
+        {
+        }
+
         protected virtual void OnCancelInteraction(object? sender, EventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.Cancel);
         }
 
-        protected virtual void OnEndInteraction(object? sender, TouchEventArgs e)
+        protected virtual void OnEndInteraction(object? sender, Microsoft.Maui.Controls.TouchEventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.End, e.Touches, e.IsInsideBounds);
         }
 
-        protected virtual void OnDragInteraction(object? sender, TouchEventArgs e)
+        protected virtual void OnDragInteraction(object? sender, Microsoft.Maui.Controls.TouchEventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.Drag, e.Touches, e.IsInsideBounds);
         }
 
-        protected virtual void OnStartInteraction(object? sender, TouchEventArgs e)
+        protected virtual void OnStartInteraction(object? sender, Microsoft.Maui.Controls.TouchEventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.Start, e.Touches, e.IsInsideBounds);
         }
 
         protected virtual void OnEndHoverInteraction(object? sender, EventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.EndHover);
         }
 
-        protected virtual void OnMoveHoverInteraction(object? sender, TouchEventArgs e)
+        protected virtual void OnMoveHoverInteraction(object? sender, Microsoft.Maui.Controls.TouchEventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.MoveHover, e.Touches, e.IsInsideBounds);
         }
 
-        protected virtual void OnStartHoverInteraction(object? sender, TouchEventArgs e)
+        protected virtual void OnStartHoverInteraction(object? sender, Microsoft.Maui.Controls.TouchEventArgs e)
         {
+            OnTouchInteraction(TouchInteractionKind.Drag, e.Touches, e.IsInsideBounds);
         }
     }
 }

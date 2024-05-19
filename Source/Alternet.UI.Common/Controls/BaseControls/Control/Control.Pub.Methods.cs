@@ -562,6 +562,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="Touch"/> event and calls
+        /// <see cref="OnTouch()"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TouchEventArgs"/> that contains the event
+        /// data.</param>
+        public virtual void RaiseTouch(TouchEventArgs e)
+        {
+            OnTouch(e);
+            Touch?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Idle"/> event and calls
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.

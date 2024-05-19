@@ -14,7 +14,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets keys used to show 'Developer Tools' in debug mode.
         /// </summary>
-        public static KeyInfo[] ShowDeveloperTools { get; set; } = { new(Key.F12, ModifierKeys.ControlShiftAlt) };
+        public static KeyInfo[] ShowDeveloperTools { get; set; }
+            = { new(Key.F12, ModifierKeys.ControlShiftAlt) };
 
         /// <summary>
         /// Gets or sets keys used to run test action.

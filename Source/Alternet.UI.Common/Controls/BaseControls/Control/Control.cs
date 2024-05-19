@@ -150,6 +150,14 @@ namespace Alternet.UI
         public event MouseEventHandler? MouseMove;
 
         /// <summary>
+        /// Occurs when screen is touched by the user's finger.
+        /// </summary>
+        /// <remarks>
+        /// This event is not fired on all platforms.
+        /// </remarks>
+        public event EventHandler<TouchEventArgs>? Touch;
+
+        /// <summary>
         /// Occurs when the mouse pointer is over the control and a
         /// mouse button is pressed.
         /// </summary>

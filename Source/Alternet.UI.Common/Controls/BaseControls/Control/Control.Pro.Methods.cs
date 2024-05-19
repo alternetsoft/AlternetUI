@@ -666,6 +666,15 @@ namespace Alternet.UI
                 Parent?.OnHelpRequested(e);
         }
 
+        /// <summary>
+        /// Called when <see cref="Touch"/> event is raised.</summary>
+        /// <param name="e">A <see cref="TouchEventArgs" /> that
+        /// contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnTouch(TouchEventArgs e)
+        {
+        }
+
         protected virtual SizeD GetNativeControlSize(SizeD availableSize)
         {
             if (IsDummy)

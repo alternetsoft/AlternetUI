@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// Can be set on properties of KeyBinding.
     /// </summary>
     [TypeConverter(typeof(KeyGestureConverter))]
-    [ValueSerializer("Alternet.UI.KeyGestureValueSerializer")]
+    [ValueSerializer(typeof(KeyGestureValueSerializer))]
     public class KeyGesture : InputGesture
     {
         private const char MultipleGestureDelimiter = ';';

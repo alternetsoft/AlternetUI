@@ -18,8 +18,8 @@ namespace Alternet.UI
     ///     An enumeration of all of the possible key values on a keyboard.
     /// </summary>
 #if !ALTERNET_UI_INTEGRATION_REMOTING
-    [TypeConverter("Alternet.UI.KeyConverter")]
-    [ValueSerializer("Alternet.UI.KeyValueSerializer")]
+    [TypeConverter(typeof(KeyConverter))]
+    [ValueSerializer(typeof(KeyValueSerializer))]
 #endif
     public enum Key
     {
