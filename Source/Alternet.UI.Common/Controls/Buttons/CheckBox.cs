@@ -20,26 +20,9 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class CheckBox : ButtonBase
     {
-        /// <summary>
-        /// Identifies the <see cref="IsChecked"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register(
-                    "IsChecked",
-                    typeof(bool),
-                    typeof(CheckBox),
-                    new FrameworkPropertyMetadata(
-                            false,
-                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnIsCheckedPropertyChanged),
-                            new CoerceValueCallback(CoerceIsChecked),
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));
-
         private bool allowAllStatesForUser;
         private bool alignRight;
         private bool threeState;
-        private bool ignoreEvent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckBox"/> class with the specified text.
@@ -233,17 +216,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Binds <see cref="IsChecked"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
-        /// </summary>
-        /// <param name="propName">Property name.</param>
-        public void BindIsChecked(string propName)
-        {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, CheckBox.IsCheckedProperty, myBinding);
-        }
-
-        /// <summary>
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
@@ -253,15 +225,6 @@ namespace Alternet.UI
         {
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
-            ignoreEvent = true;
-            try
-            {
-                SetValue(IsCheckedProperty, IsChecked);
-            }
-            finally
-            {
-                ignoreEvent = false;
-            }
         }
 
         /// <inheritdoc/>
@@ -278,20 +241,5 @@ namespace Alternet.UI
         protected virtual void OnCheckedChanged(EventArgs e)
         {
         }
-
-        /// <summary>
-        /// Callback for changes to the IsChecked property
-        /// </summary>
-        private static void OnIsCheckedPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            CheckBox control = (CheckBox)d;
-            if (control.ignoreEvent)
-                return;
-            control.IsChecked = (bool)e.NewValue;
-        }
-
-        private static object CoerceIsChecked(DependencyObject d, object value) => value;
     }
 }
