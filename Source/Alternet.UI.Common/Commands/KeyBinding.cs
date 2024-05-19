@@ -22,31 +22,14 @@ namespace Alternet.UI
     /// </summary>
     public class KeyBinding : InputBinding
     {
-        /// <summary>
-        ///     Dependency Property for Modifiers
-        /// </summary>
-        public static readonly DependencyProperty ModifiersProperty =
-            DependencyProperty.Register("Modifiers", typeof(ModifierKeys), typeof(KeyBinding), new UIPropertyMetadata(ModifierKeys.None, new PropertyChangedCallback(OnModifiersPropertyChanged)));
-
-        /// <summary>
-        ///     Dependency Property for Key
-        /// </summary>
-        public static readonly DependencyProperty KeyProperty =
-            DependencyProperty.Register(
-                "Key",
-                typeof(Key),
-                typeof(KeyBinding),
-                new UIPropertyMetadata(
-                    Key.None,
-                    new PropertyChangedCallback(OnKeyPropertyChanged)));
-
         private bool settingGesture = false;
+        private ModifierKeys modifiers = ModifierKeys.None;
+        private Key key = Key.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyBinding"/> class.
         /// </summary>
         public KeyBinding()
-            : base()
         {
         }
 
@@ -79,12 +62,15 @@ namespace Alternet.UI
         {
             get
             {
-                return (Key)GetValue(KeyProperty);
+                return key;
             }
 
             set
             {
-                SetValue(KeyProperty, value);
+                if (key == value)
+                    return;
+                key = value;
+                SynchronizeGestureFromProperties(value, Modifiers);
             }
         }
 
@@ -123,27 +109,16 @@ namespace Alternet.UI
         {
             get
             {
-                return (ModifierKeys)GetValue(ModifiersProperty);
+                return modifiers;
             }
 
             set
             {
-                SetValue(ModifiersProperty, value);
+                if (modifiers == value)
+                    return;
+                modifiers = value;
+                SynchronizeGestureFromProperties(Key, value);
             }
-        }
-
-        private static void OnModifiersPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            KeyBinding keyBinding = (KeyBinding)d;
-            keyBinding.SynchronizeGestureFromProperties(keyBinding.Key, (ModifierKeys)e.NewValue);
-        }
-
-        private static void OnKeyPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            KeyBinding keyBinding = (KeyBinding)d;
-            keyBinding.SynchronizeGestureFromProperties((Key)e.NewValue, keyBinding.Modifiers);
         }
 
         /// <summary>
