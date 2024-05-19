@@ -1,8 +1,12 @@
+using ApiCommon;
+
 namespace NativeApi.Api
 {
     /// <summary>
     /// Specifies a portion of the list view item from which to retrieve the bounding rectangle.
     /// </summary>
+    [ManagedExternName("Alternet.UI.ListViewItemBoundsPortion")]
+    [ManagedName("Alternet.UI.ListViewItemBoundsPortion")]
     public enum ListViewItemBoundsPortion
     {
         /// <summary>

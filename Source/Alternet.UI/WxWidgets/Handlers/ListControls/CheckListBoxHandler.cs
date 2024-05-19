@@ -130,7 +130,7 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode = (Native.ListBoxSelectionMode)Control.SelectionMode;
+            NativeControl.SelectionMode = Control.SelectionMode;
         }
 
         private void ApplyItems()

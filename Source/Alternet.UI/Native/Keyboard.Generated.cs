@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public KeyStates GetKeyState(Key key)
+        public Alternet.UI.KeyStates GetKeyState(Alternet.UI.Key key)
         {
             CheckDisposed();
             return NativeApi.Keyboard_GetKeyState_(NativePointer, key);
@@ -99,7 +99,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Keyboard_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern KeyStates Keyboard_GetKeyState_(IntPtr obj, Key key);
+            public static extern Alternet.UI.KeyStates Keyboard_GetKeyState_(IntPtr obj, Alternet.UI.Key key);
             
         }
     }

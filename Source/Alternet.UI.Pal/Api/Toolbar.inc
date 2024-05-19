@@ -28,8 +28,8 @@ bool GetIsRight();
 void SetIsRight(bool value);
 
 
-ToolbarItemImageToTextDisplayMode GetImageToTextDisplayMode();
-void SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value);
+ImageToText GetImageToTextDisplayMode();
+void SetImageToTextDisplayMode(ImageToText value);
 
 static void* CreateEx(bool mainToolbar);
 void InsertItemAt(int index, ToolbarItem* item);

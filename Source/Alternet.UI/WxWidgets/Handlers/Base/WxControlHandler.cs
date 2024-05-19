@@ -472,7 +472,7 @@ namespace Alternet.UI
             allowedEffects &= ~DragDropEffects.Scroll;
             return (DragDropEffects)NativeControl.DoDragDrop(
                 UnmanagedDataObjectService.GetUnmanagedDataObject(data),
-                (Native.DragDropEffects)allowedEffects);
+                allowedEffects);
         }
 
         public void RecreateWindow()
@@ -568,36 +568,36 @@ namespace Alternet.UI
             int largeChange,
             int maximum)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            ScrollBarOrientation orientation = isVertical
+                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
             NativeControl.SetScrollBar(orientation, visible, value, largeChange, maximum);
         }
 
         public bool IsScrollBarVisible(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            ScrollBarOrientation orientation = isVertical
+                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
             return NativeControl.IsScrollBarVisible(orientation);
         }
 
         public int GetScrollBarValue(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            ScrollBarOrientation orientation = isVertical
+                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarValue(orientation);
         }
 
         public int GetScrollBarLargeChange(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            ScrollBarOrientation orientation = isVertical
+                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarLargeChange(orientation);
         }
 
         public int GetScrollBarMaximum(bool isVertical)
         {
-            Native.ScrollBarOrientation orientation = isVertical
-                ? Native.ScrollBarOrientation.Vertical : Native.ScrollBarOrientation.Horizontal;
+            ScrollBarOrientation orientation = isVertical
+                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
             return NativeControl.GetScrollBarMaximum(orientation);
         }
 

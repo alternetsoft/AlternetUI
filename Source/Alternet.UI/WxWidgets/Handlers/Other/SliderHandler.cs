@@ -31,8 +31,8 @@ namespace Alternet.UI
             NativeControl.SmallChange = Control.SmallChange;
             NativeControl.LargeChange = Control.LargeChange;
             NativeControl.TickFrequency = Control.TickFrequency;
-            NativeControl.Orientation = (Native.SliderOrientation)Control.Orientation;
-            NativeControl.TickStyle = (Native.SliderTickStyle)Control.TickStyle;
+            NativeControl.Orientation = Control.Orientation;
+            NativeControl.TickStyle = Control.TickStyle;
 
             Control.MinimumChanged += Control_MinimumChanged;
             Control.MaximumChanged += Control_MaximumChanged;
@@ -64,12 +64,12 @@ namespace Alternet.UI
 
         private void Control_TickStyleChanged(object? sender, EventArgs e)
         {
-            NativeControl.TickStyle = (Native.SliderTickStyle)Control.TickStyle;
+            NativeControl.TickStyle = Control.TickStyle;
         }
 
         private void Control_OrientationChanged(object? sender, EventArgs e)
         {
-            NativeControl.Orientation = (Native.SliderOrientation)Control.Orientation;
+            NativeControl.Orientation = Control.Orientation;
         }
 
         private void NativeControl_ValueChanged()

@@ -72,8 +72,8 @@ namespace Alternet.UI
 
         public ImageToText ImageToText
         {
-            get => (ImageToText)NativeControl.ImageToTextDisplayMode;
-            set => NativeControl.ImageToTextDisplayMode = (Native.ToolbarItemImageToTextDisplayMode)value;
+            get => NativeControl.ImageToTextDisplayMode;
+            set => NativeControl.ImageToTextDisplayMode = value;
         }
 
         public void Realize()

@@ -1,9 +1,13 @@
+using ApiCommon;
+
 namespace NativeApi.Api
 {
     /// <summary>
     /// Specifies the list view column width behavior of a list view.
     /// </summary>
     /// <remarks>This enumeration is used by the <see cref="ListView"/> class.</remarks>
+    [ManagedExternName("Alternet.UI.ListViewColumnWidthMode")]
+    [ManagedName("Alternet.UI.ListViewColumnWidthMode")]
     public enum ListViewColumnWidthMode
     {
         /// <summary>

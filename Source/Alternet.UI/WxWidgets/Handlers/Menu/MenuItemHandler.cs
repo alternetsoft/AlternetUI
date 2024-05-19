@@ -121,18 +121,18 @@ namespace Alternet.UI
         {
             var shortcut = Control.Shortcut;
 
-            Native.Key key;
-            Native.ModifierKeys modifierKeys;
+            Key key;
+            ModifierKeys modifierKeys;
 
             if (shortcut == null)
             {
-                key = Native.Key.None;
-                modifierKeys = Native.ModifierKeys.None;
+                key = Key.None;
+                modifierKeys = ModifierKeys.None;
             }
             else
             {
-                key = (Native.Key)shortcut.Key;
-                modifierKeys = (Native.ModifierKeys)shortcut.Modifiers;
+                key = shortcut.Key;
+                modifierKeys = shortcut.Modifiers;
             }
 
             NativeControl.SetShortcut(key, modifierKeys);

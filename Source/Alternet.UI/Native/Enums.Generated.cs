@@ -538,6 +538,12 @@ namespace Alternet.UI.Native
         Link = 4,
     }
     
+    enum ImageToText
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
     enum ListBoxSelectionMode
     {
         Single = 0,
@@ -576,12 +582,6 @@ namespace Alternet.UI.Native
         Bottom = 1,
         Left = 2,
         Right = 3,
-    }
-    
-    enum ToolbarItemImageToTextDisplayMode
-    {
-        Horizontal = 0,
-        Vertical = 1,
     }
     
     enum TreeViewHitTestLocations

@@ -49,7 +49,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public TabAlignment TabAlignment
+        public Alternet.UI.TabAlignment TabAlignment
         {
             get
             {
@@ -158,10 +158,10 @@ namespace Alternet.UI.Native
             public static extern void TabControl_SetSelectedPageIndex_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern TabAlignment TabControl_GetTabAlignment_(IntPtr obj);
+            public static extern Alternet.UI.TabAlignment TabControl_GetTabAlignment_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TabControl_SetTabAlignment_(IntPtr obj, TabAlignment value);
+            public static extern void TabControl_SetTabAlignment_(IntPtr obj, Alternet.UI.TabAlignment value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TabControl_InsertPage_(IntPtr obj, int index, IntPtr page, string title);

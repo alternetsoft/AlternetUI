@@ -539,6 +539,12 @@ namespace Alternet::UI
         Link = 4,
     };
     
+    enum class ImageToText
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
     enum class ListBoxSelectionMode
     {
         Single = 0,
@@ -577,12 +583,6 @@ namespace Alternet::UI
         Bottom = 1,
         Left = 2,
         Right = 3,
-    };
-    
-    enum class ToolbarItemImageToTextDisplayMode
-    {
-        Horizontal = 0,
-        Vertical = 1,
     };
     
     enum class TreeViewHitTestLocations

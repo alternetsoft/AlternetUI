@@ -4,6 +4,8 @@ using System;
 namespace NativeApi.Api
 {
     [Flags]
+    [ManagedExternName("Alternet.UI.DragDropEffects")]
+    [ManagedName("Alternet.UI.DragDropEffects")]
     public enum DragDropEffects
     {
         None = 0,

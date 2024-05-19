@@ -23,7 +23,7 @@ namespace NativeApi.Api
         public bool IsBottom { get; set; }
         public bool IsRight { get; set; }
 
-        public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }
+        public ImageToText ImageToTextDisplayMode { get; set; }
 
         public void Realize() => throw new Exception();
     }

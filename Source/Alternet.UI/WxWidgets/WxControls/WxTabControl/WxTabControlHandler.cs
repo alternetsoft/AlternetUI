@@ -23,8 +23,8 @@ namespace Alternet.UI
         /// </summary>
         public TabAlignment TabAlignment
         {
-            get => (TabAlignment)NativeControl.TabAlignment;
-            set => NativeControl.TabAlignment = (Native.TabAlignment)value;
+            get => NativeControl.TabAlignment;
+            set => NativeControl.TabAlignment = value;
         }
 
         internal new Native.TabControl NativeControl =>

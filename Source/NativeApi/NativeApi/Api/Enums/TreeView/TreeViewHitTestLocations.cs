@@ -1,5 +1,7 @@
 using System;
 
+using ApiCommon;
+
 namespace NativeApi.Api
 {
     /// <summary>
@@ -9,6 +11,8 @@ namespace NativeApi.Api
     /// This enumeration supports a bitwise combination of its member values.
     /// </remarks>
     [Flags]
+    [ManagedExternName("Alternet.UI.TreeViewHitTestLocations")]
+    [ManagedName("Alternet.UI.TreeViewHitTestLocations")]
     public enum TreeViewHitTestLocations
     {
         /// <summary>

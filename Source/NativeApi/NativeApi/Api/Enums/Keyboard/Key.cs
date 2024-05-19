@@ -4,6 +4,8 @@ using System;
 
 namespace NativeApi.Api
 {
+    [ManagedExternName("Alternet.UI.Key")]
+    [ManagedName("Alternet.UI.Key")]
     public enum Key
     {
         /// <summary>

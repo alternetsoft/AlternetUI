@@ -1,5 +1,7 @@
 using System;
 
+using ApiCommon;
+
 
 namespace NativeApi.Api
 {
@@ -8,6 +10,8 @@ namespace NativeApi.Api
     ///     used to modify other input operations.
     /// </summary>
     [Flags]
+    [ManagedExternName("Alternet.UI.ModifierKeys")]
+    [ManagedName("Alternet.UI.ModifierKeys")]
     public enum ModifierKeys
     {
         /// <summary>

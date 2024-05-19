@@ -304,8 +304,8 @@ namespace Alternet.UI
             var keyBinding = (KeyBinding)value;
             NativeControl.AddInputBinding(
                 keyBinding.ManagedCommandId,
-                (Native.Key)keyBinding.Key,
-                (Native.ModifierKeys)keyBinding.Modifiers);
+                keyBinding.Key,
+                keyBinding.Modifiers);
         }
 
         private void InputBindings_ItemRemoved(object? sender, int index, InputBinding item)

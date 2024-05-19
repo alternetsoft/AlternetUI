@@ -86,9 +86,8 @@ namespace Alternet.UI
 
         public ListViewGridLinesDisplayMode GridLinesDisplayMode
         {
-            get => (ListViewGridLinesDisplayMode)NativeControl.GridLinesDisplayMode;
-            set => NativeControl.GridLinesDisplayMode =
-                (Native.ListViewGridLinesDisplayMode)value;
+            get => NativeControl.GridLinesDisplayMode;
+            set => NativeControl.GridLinesDisplayMode = value;
         }
 
         /// <summary>
@@ -125,12 +124,8 @@ namespace Alternet.UI
         public void BeginLabelEdit(long itemIndex) =>
             NativeControl.BeginLabelEdit(itemIndex);
 
-        public RectD GetItemBounds(
-            long itemIndex,
-            ListViewItemBoundsPortion portion) =>
-            NativeControl.GetItemBounds(
-                itemIndex,
-                (Native.ListViewItemBoundsPortion)portion);
+        public RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion) =>
+            NativeControl.GetItemBounds(itemIndex, portion);
 
         public void Clear()
         {
@@ -155,10 +150,7 @@ namespace Alternet.UI
             double width,
             ListViewColumnWidthMode widthMode)
         {
-            NativeControl.SetColumnWidth(
-                columnIndex,
-                width,
-                (Native.ListViewColumnWidthMode)widthMode);
+            NativeControl.SetColumnWidth(columnIndex, width, widthMode);
         }
 
         public void SetColumnTitle(long columnIndex, string title)
@@ -320,8 +312,7 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode =
-                (Native.ListViewSelectionMode)Control.SelectionMode;
+            NativeControl.SelectionMode = Control.SelectionMode;
         }
 
         private void ApplySelection()
@@ -361,7 +352,7 @@ namespace Alternet.UI
 
         private void ApplyView()
         {
-            NativeControl.CurrentView = (Native.ListViewView)Control.View;
+            NativeControl.CurrentView = Control.View;
         }
 
         private void ApplySmallImageList()
@@ -436,7 +427,7 @@ namespace Alternet.UI
                     i,
                     col.Title,
                     col.Width,
-                    (Native.ListViewColumnWidthMode)col.WidthMode);
+                    col.WidthMode);
             }
         }
 
@@ -448,7 +439,7 @@ namespace Alternet.UI
                     index,
                     item.Title,
                     item.Width,
-                    (Native.ListViewColumnWidthMode)item.WidthMode);
+                    item.WidthMode);
 
                 ApplyColumnsChangeToItems();
             }

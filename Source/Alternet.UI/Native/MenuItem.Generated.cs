@@ -138,7 +138,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void SetShortcut(Key key, ModifierKeys modifierKeys)
+        public void SetShortcut(Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys)
         {
             CheckDisposed();
             NativeApi.MenuItem_SetShortcut_(NativePointer, key, modifierKeys);
@@ -240,7 +240,7 @@ namespace Alternet.UI.Native
             public static extern void MenuItem_SetDisabledImage_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MenuItem_SetShortcut_(IntPtr obj, Key key, ModifierKeys modifierKeys);
+            public static extern void MenuItem_SetShortcut_(IntPtr obj, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys);
             
         }
     }

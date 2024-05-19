@@ -33,8 +33,7 @@ namespace Alternet.UI
         /// </returns>
         protected override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
         {
-            return (MouseButtonState)Application.Current.NativeMouse.GetButtonState(
-                (Native.MouseButton)mouseButton);
+            return Application.Current.NativeMouse.GetButtonState(mouseButton);
         }
 
         protected override PointD GetScreenPositionFromSystem()

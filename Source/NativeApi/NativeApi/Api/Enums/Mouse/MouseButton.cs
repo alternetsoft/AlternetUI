@@ -5,6 +5,8 @@ using ApiCommon;
 
 namespace NativeApi.Api
 {
+    [ManagedExternName("Alternet.UI.MouseButton")]
+    [ManagedName("Alternet.UI.MouseButton")]
     public enum MouseButton
     {
         Left,

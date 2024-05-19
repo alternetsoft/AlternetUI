@@ -58,7 +58,7 @@ namespace Alternet.UI
         ListBoxSelectionMode IVListBoxHandler.SelectionMode
         {
             get => (ListBoxSelectionMode)NativeControl.SelectionMode;
-            set => NativeControl.SelectionMode = (Native.ListBoxSelectionMode)value;
+            set => NativeControl.SelectionMode = value;
         }
 
         internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
@@ -251,7 +251,7 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode = (Native.ListBoxSelectionMode)Control.SelectionMode;
+            NativeControl.SelectionMode = Control.SelectionMode;
         }
 
         private void ApplySelection()

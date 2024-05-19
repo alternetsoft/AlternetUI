@@ -123,7 +123,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
+        public Alternet.UI.ImageToText ImageToTextDisplayMode
         {
             get
             {
@@ -210,10 +210,10 @@ namespace Alternet.UI.Native
             public static extern void Toolbar_SetIsRight_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(IntPtr obj);
+            public static extern Alternet.UI.ImageToText Toolbar_GetImageToTextDisplayMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Toolbar_SetImageToTextDisplayMode_(IntPtr obj, ToolbarItemImageToTextDisplayMode value);
+            public static extern void Toolbar_SetImageToTextDisplayMode_(IntPtr obj, Alternet.UI.ImageToText value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Toolbar_CreateEx_(bool mainToolbar);

@@ -1,9 +1,13 @@
+using ApiCommon;
+
 namespace NativeApi.Api
 {
     /// <summary>
     /// Specifies the sorting behavior of a list view.
     /// </summary>
     /// <remarks>This enumeration is used by the <see cref="ListView"/> class.</remarks>
+    [ManagedExternName("Alternet.UI.ListViewSortMode")]
+    [ManagedName("Alternet.UI.ListViewSortMode")]
     public enum ListViewSortMode
     {
         /// <summary>

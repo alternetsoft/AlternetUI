@@ -644,31 +644,31 @@ namespace Alternet.UI.Native
             NativeApi.Control_SetSizerAndFit_(NativePointer, sizer, deleteOld);
         }
         
-        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
+        public void SetScrollBar(Alternet.UI.ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
         {
             CheckDisposed();
             NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
         }
         
-        public bool IsScrollBarVisible(ScrollBarOrientation orientation)
+        public bool IsScrollBarVisible(Alternet.UI.ScrollBarOrientation orientation)
         {
             CheckDisposed();
             return NativeApi.Control_IsScrollBarVisible_(NativePointer, orientation);
         }
         
-        public int GetScrollBarValue(ScrollBarOrientation orientation)
+        public int GetScrollBarValue(Alternet.UI.ScrollBarOrientation orientation)
         {
             CheckDisposed();
             return NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
         }
         
-        public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
+        public int GetScrollBarLargeChange(Alternet.UI.ScrollBarOrientation orientation)
         {
             CheckDisposed();
             return NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
         }
         
-        public int GetScrollBarMaximum(ScrollBarOrientation orientation)
+        public int GetScrollBarMaximum(Alternet.UI.ScrollBarOrientation orientation)
         {
             CheckDisposed();
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
@@ -779,7 +779,7 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
         }
         
-        public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects)
+        public Alternet.UI.DragDropEffects DoDragDrop(UnmanagedDataObject data, Alternet.UI.DragDropEffects allowedEffects)
         {
             CheckDisposed();
             return NativeApi.Control_DoDragDrop_(NativePointer, data.NativePointer, allowedEffects);
@@ -1475,19 +1475,19 @@ namespace Alternet.UI.Native
             public static extern void Control_SetSizerAndFit_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+            public static extern void Control_SetScrollBar_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_IsScrollBarVisible_(IntPtr obj, ScrollBarOrientation orientation);
+            public static extern bool Control_IsScrollBarVisible_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarValue_(IntPtr obj, ScrollBarOrientation orientation);
+            public static extern int Control_GetScrollBarValue_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
+            public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            public static extern int Control_GetScrollBarMaximum_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarEvtKind_(IntPtr obj);
@@ -1541,7 +1541,7 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.SizeD Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.SizeD availableSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, DragDropEffects allowedEffects);
+            public static extern Alternet.UI.DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, Alternet.UI.DragDropEffects allowedEffects);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenPaintDrawingContext_(IntPtr obj);

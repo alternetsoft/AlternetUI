@@ -370,7 +370,7 @@ namespace Alternet.UI.Native
             return NativeApi.TreeView_ItemHitTest_(NativePointer, point);
         }
         
-        public TreeViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
+        public Alternet.UI.TreeViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
         {
             CheckDisposed();
             return NativeApi.TreeView_GetHitTestResultLocations_(NativePointer, hitTestResult);
@@ -712,7 +712,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr TreeView_ItemHitTest_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);
+            public static extern Alternet.UI.TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TreeView_GetHitTestResultItem_(IntPtr obj, System.IntPtr hitTestResult);

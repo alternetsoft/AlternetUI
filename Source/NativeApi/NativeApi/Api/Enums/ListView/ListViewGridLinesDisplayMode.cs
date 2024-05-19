@@ -1,9 +1,13 @@
+using ApiCommon;
+
 namespace NativeApi.Api
 {
     /// <summary>
     /// Specifies the grid line display mode for a list view.
     /// </summary>
     /// <remarks>This enumeration is used by the <see cref="ListView"/> class.</remarks>
+    [ManagedExternName("Alternet.UI.ListViewGridLinesDisplayMode")]
+    [ManagedName("Alternet.UI.ListViewGridLinesDisplayMode")]
     public enum ListViewGridLinesDisplayMode
     {
         /// <summary>
