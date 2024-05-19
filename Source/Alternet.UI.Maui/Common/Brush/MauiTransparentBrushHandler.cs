@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    public interface ISolidBrushHandler : IBrushHandler
+    public class MauiTransparentBrushHandler : PlessBrushHandler
     {
-        void Initialize(Color color);
     }
 }

@@ -84,13 +84,13 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateSolidBrush();
+            return NativeDrawing.Default.CreateSolidBrushHandler();
         }
 
         /// <inheritdoc/>
         protected override void UpdateHandler()
         {
-            ((ISolidBrushHandler)Handler).Initialize(color);
+            ((ISolidBrushHandler)Handler).Update(this);
         }
     }
 }

@@ -18,27 +18,6 @@ namespace Alternet.Drawing
                 brush.Color);
         }
 
-        /// <inheritdoc/>
-        public override void UpdateLinearGradientBrush(LinearGradientBrush brush)
-        {
-            ((UI.Native.LinearGradientBrush)brush.Handler).Initialize(
-                brush.StartPoint,
-                brush.EndPoint,
-                brush.GradientStops.Select(x => x.Color).ToArray(),
-                brush.GradientStops.Select(x => x.Offset).ToArray());
-        }
-
-        /// <inheritdoc/>
-        public override void UpdateRadialGradientBrush(RadialGradientBrush brush)
-        {
-            ((UI.Native.RadialGradientBrush)brush.Handler).Initialize(
-                brush.Center,
-                brush.Radius,
-                brush.GradientOrigin,
-                brush.GradientStops.Select(x => x.Color).ToArray(),
-                brush.GradientStops.Select(x => x.Offset).ToArray());
-        }
-
         public override void UpdateTextureBrush(TextureBrush brush)
         {
             ((UI.Native.TextureBrush)brush.Handler).Initialize(
@@ -46,21 +25,23 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateTransparentBrush() => new UI.Native.Brush();
+        public override IBrushHandler CreateTransparentBrushHandler() => new UI.Native.Brush();
 
         /// <inheritdoc/>
-        public override object CreateHatchBrush() => new UI.Native.HatchBrush();
+        public override object CreateHatchBrushHandler() => new UI.Native.HatchBrush();
 
         /// <inheritdoc/>
-        public override object CreateLinearGradientBrush() => new UI.Native.LinearGradientBrush();
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+            => new UI.Native.LinearGradientBrush();
 
         /// <inheritdoc/>
-        public override object CreateRadialGradientBrush() => new UI.Native.RadialGradientBrush();
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+            => new UI.Native.RadialGradientBrush();
 
         /// <inheritdoc/>
-        public override ISolidBrushHandler CreateSolidBrush() => new UI.Native.SolidBrush();
+        public override ISolidBrushHandler CreateSolidBrushHandler() => new UI.Native.SolidBrush();
 
         /// <inheritdoc/>
-        public override object CreateTextureBrush() => new UI.Native.TextureBrush();
+        public override object CreateTextureBrushHandler() => new UI.Native.TextureBrush();
     }
 }

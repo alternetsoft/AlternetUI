@@ -14,9 +14,9 @@ namespace Alternet.Drawing
 
         public Color Color => color;
 
-        public void Initialize(Color color)
+        public virtual void Update(SolidBrush brush)
         {
-            this.color = color;
+            this.color = brush?.Color ?? Color.Black;
         }
     }
 }

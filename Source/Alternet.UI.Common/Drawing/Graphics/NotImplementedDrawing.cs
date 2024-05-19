@@ -17,25 +17,23 @@ namespace Alternet.Drawing
     {
         public override object CreatePen() => NotImplemented();
 
-        public override object CreateTransparentBrush() => NotImplemented();
+        public override IBrushHandler CreateTransparentBrushHandler() => NotImplemented<IBrushHandler>();
 
-        public override object CreateHatchBrush() => NotImplemented();
+        public override object CreateHatchBrushHandler() => NotImplemented();
 
-        public override object CreateLinearGradientBrush() => NotImplemented();
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+            => NotImplemented<ILinearGradientBrushHandler>();
 
-        public override object CreateRadialGradientBrush() => NotImplemented();
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+            => NotImplemented<IRadialGradientBrushHandler>();
 
-        public override ISolidBrushHandler CreateSolidBrush() => NotImplemented<ISolidBrushHandler>();
+        public override ISolidBrushHandler CreateSolidBrushHandler() => NotImplemented<ISolidBrushHandler>();
 
-        public override object CreateTextureBrush() => NotImplemented();
+        public override object CreateTextureBrushHandler() => NotImplemented();
 
         public override void UpdatePen(Pen pen) => NotImplemented();
 
         public override void UpdateHatchBrush(HatchBrush brush) => NotImplemented();
-
-        public override void UpdateLinearGradientBrush(LinearGradientBrush brush) => NotImplemented();
-
-        public override void UpdateRadialGradientBrush(RadialGradientBrush brush) => NotImplemented();
 
         public override Color GetColor(SystemSettingsColor index) => NotImplemented<Color>();
 

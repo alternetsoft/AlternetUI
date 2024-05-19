@@ -20,55 +20,43 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreateTransparentBrush()
+        public override IBrushHandler CreateTransparentBrushHandler()
+        {
+            return new MauiTransparentBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ISolidBrushHandler CreateSolidBrushHandler()
+        {
+            return new MauiSolidBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override object CreateHatchBrushHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override ISolidBrushHandler CreateSolidBrush()
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
         {
-            return new PlessSolidBrushHandler();
+            return new MauiLinearGradientBrushHandler();
         }
 
         /// <inheritdoc/>
-        public override object CreateHatchBrush()
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
         {
-            throw new NotImplementedException();
+            return new MauiRadialGradientBrushHandler();
         }
 
         /// <inheritdoc/>
-        public override object CreateLinearGradientBrush()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override object CreateRadialGradientBrush()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override object CreateTextureBrush()
+        public override object CreateTextureBrushHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override void UpdateHatchBrush(HatchBrush brush)
-        {
-            NotImplemented();
-        }
-
-        /// <inheritdoc/>
-        public override void UpdateLinearGradientBrush(LinearGradientBrush brush)
-        {
-            NotImplemented();
-        }
-
-        /// <inheritdoc/>
-        public override void UpdateRadialGradientBrush(RadialGradientBrush brush)
         {
             NotImplemented();
         }

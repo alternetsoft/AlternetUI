@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.UI.Native
+namespace Alternet.Drawing
 {
-    internal partial class SolidBrush : Alternet.Drawing.ISolidBrushHandler
+    public class MauiRadialGradientBrushHandler : PlessRadialGradientBrushHandler
     {
     }
 }

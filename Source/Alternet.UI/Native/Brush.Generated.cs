@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class Brush : NativeObject
+    internal partial class Brush : NativeObject, Alternet.Drawing.IBrushHandler
     {
         static Brush()
         {

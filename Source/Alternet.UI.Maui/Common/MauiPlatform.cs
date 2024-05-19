@@ -61,12 +61,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color SystemSettingsGetColor(SystemSettingsColor index)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override Font SystemSettingsGetFont(SystemSettingsFont systemFont)
         {
             throw new NotImplementedException();

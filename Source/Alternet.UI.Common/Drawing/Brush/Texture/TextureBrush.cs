@@ -67,7 +67,7 @@
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateTextureBrush();
+            return NativeDrawing.Default.CreateTextureBrushHandler();
         }
 
         /// <inheritdoc/>

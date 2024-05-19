@@ -203,13 +203,13 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateRadialGradientBrush();
+            return NativeDrawing.Default.CreateRadialGradientBrushHandler();
         }
 
         /// <inheritdoc/>
         protected override void UpdateHandler()
         {
-            NativeDrawing.Default.UpdateRadialGradientBrush(this);
+            ((IRadialGradientBrushHandler)Handler).Update(this);
         }
 
         private static GradientStop[] GetGradientStopsFromEdgeColors(
