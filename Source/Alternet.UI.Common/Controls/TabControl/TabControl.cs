@@ -103,9 +103,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<FrameworkElement> ContentElements => Pages;
-
         /// <summary>
         /// Gets or sets the index of the currently selected tab page.
         /// </summary>
@@ -461,6 +458,10 @@ namespace Alternet.UI
         [Browsable(false)]
         internal CardPanel Contents => cardPanel;
 
+        /// <inheritdoc/>
+        [Browsable(false)]
+        internal override IReadOnlyList<FrameworkElement> ContentElements => Pages;
+
         /// <summary>
         /// Gets internal control with tab labels.
         /// </summary>
@@ -468,7 +469,8 @@ namespace Alternet.UI
         internal CardPanelHeader Header => cardPanelHeader;
 
         /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
+        [Browsable(false)]
+        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
 
         /// <summary>
         /// Gets default interior border color as <see cref="LightDarkColor"/>.

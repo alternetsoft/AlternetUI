@@ -41,7 +41,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Menu;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<FrameworkElement> ContentElements
+        internal override IReadOnlyList<FrameworkElement> ContentElements
         {
             get
             {
@@ -52,10 +52,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc />
-        protected override bool IsDummy => true;
+        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
 
         /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
+        protected override bool IsDummy => true;
 
         /// <summary>
         /// Performs some action for the each element in <see cref="Items"/>.

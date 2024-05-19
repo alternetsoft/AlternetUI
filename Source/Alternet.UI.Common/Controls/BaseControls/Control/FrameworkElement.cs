@@ -72,7 +72,7 @@ namespace Alternet.UI
         ///     raising of the DataContextChanged event.  The changes can happen
         ///     before the event, after the event, or in any mixture.
         /// </remarks>
-        public event DependencyPropertyChangedEventHandler DataContextChanged
+        internal event DependencyPropertyChangedEventHandler DataContextChanged
         {
             add { EventHandlersStoreAdd(DataContextChangedKey, value); }
             remove { EventHandlersStoreRemove(DataContextChangedKey, value); }
@@ -104,11 +104,11 @@ namespace Alternet.UI
         /// find content items by index.
         /// </summary>
         [Browsable(false)]
-        public virtual IReadOnlyList<FrameworkElement> ContentElements =>
+        internal virtual IReadOnlyList<FrameworkElement> ContentElements =>
             LogicalChildrenCollection.ToArray();
 
         [Browsable(false)]
-        public FrameworkElement? LogicalParent
+        internal FrameworkElement? LogicalParent
         {
             get => logicalParent;
             set
@@ -187,7 +187,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns enumerator to logical children
         /// </summary>
-        protected internal virtual IEnumerator LogicalChildren =>
+        internal virtual IEnumerator LogicalChildren =>
             LogicalChildrenCollection.GetEnumerator();
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Alternet.UI
         ///     firing property invalidations when the flag was
         ///     changed.
         /// </remarks>
-        protected internal InheritanceBehavior InheritanceBehavior
+        internal InheritanceBehavior InheritanceBehavior
         {
             get
             {
@@ -277,7 +277,7 @@ namespace Alternet.UI
         /// this element.
         /// </summary>
         [Browsable(false)]
-        protected virtual IEnumerable<FrameworkElement> LogicalChildrenCollection =>
+        internal virtual IEnumerable<FrameworkElement> LogicalChildrenCollection =>
             Array.Empty<FrameworkElement>();
 
         /// <summary>

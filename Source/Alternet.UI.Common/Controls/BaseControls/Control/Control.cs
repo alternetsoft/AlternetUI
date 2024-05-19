@@ -1401,18 +1401,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        [Browsable(false)]
-        public override IReadOnlyList<FrameworkElement> ContentElements
-        {
-            get
-            {
-                if (children == null)
-                    return Array.Empty<FrameworkElement>();
-                return children;
-            }
-        }
-
         /// <summary>
         /// Gets or sets the parent container of the control.
         /// </summary>
@@ -2793,6 +2781,22 @@ namespace Alternet.UI
 
         IWindow? IControl.ParentWindow => ParentWindow;
 
+        /// <inheritdoc />
+        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
+            => HasChildren ? Children : Array.Empty<FrameworkElement>();
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        internal override IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                if (children == null)
+                    return Array.Empty<FrameworkElement>();
+                return children;
+            }
+        }
+
         /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
         /// a pressed state.</summary>
@@ -2841,10 +2845,6 @@ namespace Alternet.UI
         }
 
         protected virtual bool IsDummy => false;
-
-        /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
-            => HasChildren ? Children : Array.Empty<FrameworkElement>();
 
         /// <summary>
         /// Gets child control at the specified index in the collection of child controls.

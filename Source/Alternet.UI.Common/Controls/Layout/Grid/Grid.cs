@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection =>
+        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection =>
             base.LogicalChildrenCollection.Concat(ColumnDefinitions).Concat(RowDefinitions);
 
         // bool showGridLines = false;

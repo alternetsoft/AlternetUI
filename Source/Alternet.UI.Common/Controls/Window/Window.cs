@@ -749,7 +749,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
+        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
             get
             {

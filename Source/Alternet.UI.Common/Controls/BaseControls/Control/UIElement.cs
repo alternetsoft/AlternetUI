@@ -475,7 +475,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="routedEvent"/>
         /// <param name="handler"/>
-        public void AddHandler(RoutedEvent routedEvent, Delegate handler)
+        internal void AddHandler(RoutedEvent routedEvent, Delegate handler)
         {
             // HandledEventToo defaults to false
             // Call forwarded
@@ -520,7 +520,7 @@ namespace Alternet.UI
         ///     Flag indicating whether or not the listener wants to
         ///     hear about events that have already been handled
         /// </param>
-        public void AddHandler(
+        internal void AddHandler(
             RoutedEvent routedEvent,
             Delegate handler,
             bool handledEventsToo)
@@ -582,7 +582,7 @@ namespace Alternet.UI
         /// <param name="handler">
         ///     The handler for this object instance to be removed
         /// </param>
-        public void RemoveHandler(RoutedEvent routedEvent, Delegate handler)
+        internal void RemoveHandler(RoutedEvent routedEvent, Delegate handler)
         {
             if (routedEvent == null)
             {
