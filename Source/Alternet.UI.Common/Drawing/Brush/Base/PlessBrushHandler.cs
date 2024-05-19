@@ -10,5 +10,8 @@ namespace Alternet.Drawing
 {
     public class PlessBrushHandler : DisposableObject, IBrushHandler
     {
+        public PlessBrushHandler(Brush brush)
+        {
+        }
     }
 }

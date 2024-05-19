@@ -40,27 +40,33 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IPenHandler CreatePenHandler() => new UI.Native.Pen();
+        public override IPenHandler CreatePenHandler(Pen pen) => new UI.Native.Pen();
 
         /// <inheritdoc/>
-        public override IBrushHandler CreateTransparentBrushHandler() => new UI.Native.Brush();
+        public override IBrushHandler CreateTransparentBrushHandler(Brush brush)
+            => new UI.Native.Brush();
 
         /// <inheritdoc/>
-        public override IHatchBrushHandler CreateHatchBrushHandler() => new UI.Native.HatchBrush();
+        public override IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
+            => new UI.Native.HatchBrush();
 
         /// <inheritdoc/>
-        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
+            LinearGradientBrush brush)
             => new UI.Native.LinearGradientBrush();
 
         /// <inheritdoc/>
-        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
+            RadialGradientBrush brush)
             => new UI.Native.RadialGradientBrush();
 
         /// <inheritdoc/>
-        public override ISolidBrushHandler CreateSolidBrushHandler() => new UI.Native.SolidBrush();
+        public override ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
+            => new UI.Native.SolidBrush();
 
         /// <inheritdoc/>
-        public override ITextureBrushHandler CreateTextureBrushHandler() => new UI.Native.TextureBrush();
+        public override ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
+            => new UI.Native.TextureBrush();
 
         /// <inheritdoc/>
         public override Window? GetActiveWindow()

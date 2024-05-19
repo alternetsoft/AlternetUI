@@ -8,5 +8,9 @@ namespace Alternet.Drawing
 {
     public class MauiSolidBrushHandler : PlessSolidBrushHandler
     {
+        public MauiSolidBrushHandler(SolidBrush brush)
+            : base(brush)
+        {
+        }
     }
 }

@@ -318,7 +318,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         protected override object CreateHandler()
         {
-            return NativePlatform.Default.CreatePenHandler();
+            return NativePlatform.Default.CreatePenHandler(this);
         }
 
         /// <summary>

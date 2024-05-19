@@ -105,39 +105,39 @@ namespace Alternet.UI
         /// Creates transparent brush handler.
         /// </summary>
         /// <returns></returns>
-        public abstract IBrushHandler CreateTransparentBrushHandler();
+        public abstract IBrushHandler CreateTransparentBrushHandler(Brush brush);
 
         /// <summary>
         /// Creates hatch brush handler.
         /// </summary>
         /// <returns></returns>
-        public abstract IHatchBrushHandler CreateHatchBrushHandler();
+        public abstract IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush);
 
         /// <summary>
         /// Creates linear gradient brush handler.
         /// </summary>
         /// <returns></returns>
-        public abstract ILinearGradientBrushHandler CreateLinearGradientBrushHandler();
+        public abstract ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush);
 
         /// <summary>
         /// Creates radial gradient brush handler.
         /// </summary>
         /// <returns></returns>
-        public abstract IRadialGradientBrushHandler CreateRadialGradientBrushHandler();
+        public abstract IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush);
 
-        public abstract IPenHandler CreatePenHandler();
+        public abstract IPenHandler CreatePenHandler(Pen pen);
 
         /// <summary>
         /// Creates solid brush handler.
         /// </summary>
         /// <returns></returns>
-        public abstract ISolidBrushHandler CreateSolidBrushHandler();
+        public abstract ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush);
 
         /// <summary>
         /// Creates texture brush handler.
         /// </summary>
         /// <returns></returns>
-        public abstract ITextureBrushHandler CreateTextureBrushHandler();
+        public abstract ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush);
 
         public abstract void ShowDeveloperTools();
 

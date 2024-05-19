@@ -12,6 +12,11 @@ namespace Alternet.Drawing
     {
         private Color color = Color.Black;
 
+        public PlessSolidBrushHandler(SolidBrush brush)
+            : base(brush)
+        {
+        }
+
         public Color Color => color;
 
         public virtual void Update(SolidBrush brush)

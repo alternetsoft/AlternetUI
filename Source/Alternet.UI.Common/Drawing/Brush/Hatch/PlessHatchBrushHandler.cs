@@ -11,6 +11,11 @@ namespace Alternet.Drawing
         private BrushHatchStyle hatchStyle;
         private Color color = Color.Black;
 
+        public PlessHatchBrushHandler(HatchBrush brush)
+            : base(brush)
+        {
+        }
+
         public BrushHatchStyle HatchStyle => hatchStyle;
 
         public Color Color => color;

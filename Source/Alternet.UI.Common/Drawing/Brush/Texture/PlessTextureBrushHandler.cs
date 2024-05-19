@@ -10,6 +10,11 @@ namespace Alternet.Drawing
     {
         private Image? image;
 
+        public PlessTextureBrushHandler(TextureBrush brush)
+            : base(brush)
+        {
+        }
+
         public Image? Image => image;
 
         public virtual void Update(TextureBrush brush)

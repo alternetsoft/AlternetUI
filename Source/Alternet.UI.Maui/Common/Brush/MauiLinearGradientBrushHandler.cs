@@ -8,5 +8,9 @@ namespace Alternet.Drawing
 {
     public class MauiLinearGradientBrushHandler : PlessLinearGradientBrushHandler
     {
+        public MauiLinearGradientBrushHandler(LinearGradientBrush brush)
+            : base(brush)
+        {
+        }
     }
 }

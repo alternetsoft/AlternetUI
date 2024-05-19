@@ -140,7 +140,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativePlatform.Default.CreateTransparentBrushHandler();
+            return NativePlatform.Default.CreateTransparentBrushHandler(this);
         }
 
         /// <inheritdoc/>

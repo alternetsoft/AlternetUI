@@ -16,6 +16,10 @@ namespace Alternet.Drawing
         private LineJoin lineJoin;
         private double width;
 
+        public PlessPenHandler(Pen pen)
+        {
+        }
+
         public Color Color => color;
 
         public DashStyle DashStyle => dashStyle;

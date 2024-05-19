@@ -13,19 +13,25 @@ namespace Alternet.UI
     {
         public override IFontFactoryHandler FontFactory => throw new NotImplementedException();
 
-        public override IBrushHandler CreateTransparentBrushHandler() => NotImplemented<IBrushHandler>();
+        public override IBrushHandler CreateTransparentBrushHandler(Brush brush)
+            => NotImplemented<IBrushHandler>();
 
-        public override IHatchBrushHandler CreateHatchBrushHandler() => NotImplemented<IHatchBrushHandler>();
+        public override IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
+            => NotImplemented<IHatchBrushHandler>();
 
-        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
+            LinearGradientBrush brush)
             => NotImplemented<ILinearGradientBrushHandler>();
 
-        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
+            RadialGradientBrush brush)
             => NotImplemented<IRadialGradientBrushHandler>();
 
-        public override ISolidBrushHandler CreateSolidBrushHandler() => NotImplemented<ISolidBrushHandler>();
+        public override ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
+            => NotImplemented<ISolidBrushHandler>();
 
-        public override ITextureBrushHandler CreateTextureBrushHandler() => NotImplemented<ITextureBrushHandler>();
+        public override ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
+            => NotImplemented<ITextureBrushHandler>();
 
         public override void BeginBusyCursor()
         {
@@ -485,7 +491,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override IPenHandler CreatePenHandler()
+        public override IPenHandler CreatePenHandler(Pen pen)
         {
             throw new NotImplementedException();
         }

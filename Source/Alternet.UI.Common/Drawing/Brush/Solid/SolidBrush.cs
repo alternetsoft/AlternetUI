@@ -86,7 +86,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativePlatform.Default.CreateSolidBrushHandler();
+            return NativePlatform.Default.CreateSolidBrushHandler(this);
         }
 
         /// <inheritdoc/>

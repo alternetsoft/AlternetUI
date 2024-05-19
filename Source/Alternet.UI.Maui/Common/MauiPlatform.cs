@@ -31,39 +31,41 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IBrushHandler CreateTransparentBrushHandler()
+        public override IBrushHandler CreateTransparentBrushHandler(Brush brush)
         {
-            return new MauiTransparentBrushHandler();
+            return new MauiTransparentBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public override ISolidBrushHandler CreateSolidBrushHandler()
+        public override ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
         {
-            return new MauiSolidBrushHandler();
+            return new MauiSolidBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public override IHatchBrushHandler CreateHatchBrushHandler()
+        public override IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
         {
-            return new MauiHatchBrushHandler();
+            return new MauiHatchBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
+            LinearGradientBrush brush)
         {
-            return new MauiLinearGradientBrushHandler();
+            return new MauiLinearGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
+            RadialGradientBrush brush)
         {
-            return new MauiRadialGradientBrushHandler();
+            return new MauiRadialGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public override ITextureBrushHandler CreateTextureBrushHandler()
+        public override ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
         {
-            return new MauiTextureBrushHandler();
+            return new MauiTextureBrushHandler(brush);
         }
 
         /// <inheritdoc/>
@@ -483,9 +485,9 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override IPenHandler CreatePenHandler()
+        public override IPenHandler CreatePenHandler(Pen pen)
         {
-            return new MauiPenHandler();
+            return new MauiPenHandler(pen);
         }
     }
 }

@@ -13,7 +13,12 @@ namespace Alternet.Drawing
         private PointD center;
         private double radius;
         private PointD gradientOrigin;
-        private GradientStop[] gradientStops;
+        private GradientStop[]? gradientStops;
+
+        public PlessRadialGradientBrushHandler(RadialGradientBrush brush)
+            : base(brush)
+        {
+        }
 
         public PointD Center => center;
 
@@ -21,7 +26,7 @@ namespace Alternet.Drawing
 
         public PointD GradientOrigin => gradientOrigin;
 
-        public GradientStop[] GradientStops => gradientStops;
+        public GradientStop[]? GradientStops => gradientStops;
 
         public virtual void Update(RadialGradientBrush brush)
         {

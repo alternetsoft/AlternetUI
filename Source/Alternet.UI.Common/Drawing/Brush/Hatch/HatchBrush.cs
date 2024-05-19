@@ -83,7 +83,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativePlatform.Default.CreateHatchBrushHandler();
+            return NativePlatform.Default.CreateHatchBrushHandler(this);
         }
 
         /// <inheritdoc/>

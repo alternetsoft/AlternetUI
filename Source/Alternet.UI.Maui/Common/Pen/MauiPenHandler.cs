@@ -8,5 +8,9 @@ namespace Alternet.Drawing
 {
     public class MauiPenHandler : PlessPenHandler
     {
+        public MauiPenHandler(Pen pen)
+            : base(pen)
+        {
+        }
     }
 }

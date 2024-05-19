@@ -12,13 +12,18 @@ namespace Alternet.Drawing
     {
         private PointD startPoint;
         private PointD endPoint;
-        private GradientStop[] gradientStops;
+        private GradientStop[]? gradientStops;
+
+        public PlessLinearGradientBrushHandler(LinearGradientBrush brush)
+            : base(brush)
+        {
+        }
 
         public PointD StartPoint => startPoint;
 
         public PointD EndPoint => endPoint;
 
-        public GradientStop[] GradientStops => gradientStops;
+        public GradientStop[]? GradientStops => gradientStops;
 
         public virtual void Update(LinearGradientBrush brush)
         {
