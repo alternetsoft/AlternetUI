@@ -22,8 +22,8 @@ namespace Alternet.UI
         private bool logFocusedControl;
 
         public WindowDeveloperTools()
-            : base()
         {
+            Application.LogFileIsEnabled = true;
             StartLocation = WindowStartLocation.CenterScreen;
             Title = "Developer Tools";
             panel.Parent = this;

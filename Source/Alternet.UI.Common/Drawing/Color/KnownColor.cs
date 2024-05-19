@@ -4,7 +4,7 @@
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Specifies the known system colors.
+    /// Specifies the known colors.
     /// </summary>
     public enum KnownColor
     {
