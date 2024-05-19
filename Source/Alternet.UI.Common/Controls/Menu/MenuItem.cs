@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -10,41 +11,6 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class MenuItem : Menu, ICommandSource
     {
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the
-        /// <see cref="Command"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register(
-                "Command",
-                typeof(ICommand),
-                typeof(MenuItem),
-                new FrameworkPropertyMetadata(
-                    null,
-                    new PropertyChangedCallback(OnCommandChanged)));
-
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the
-        /// <see cref="CommandParameter"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register(
-                "CommandParameter",
-                typeof(object),
-                typeof(MenuItem),
-                new PropertyMetadata(null));
-
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the
-        /// <see cref="CommandTarget"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register(
-                "CommandTarget",
-                typeof(object),
-                typeof(MenuItem),
-                new PropertyMetadata(null));
-
         private KeyGesture? shortcut;
         private MenuItemRole? role;
         private bool preCommandEnabledValue = true;
@@ -52,6 +18,9 @@ namespace Alternet.UI
         private Action? action;
         private ImageSet? image;
         private ImageSet? disabledImage;
+        private ICommand? command;
+        private object? commandParameter;
+        private object? commandTarget;
 
         static MenuItem()
         {
@@ -359,27 +328,52 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual ICommand? Command
         {
-            get { return (ICommand?)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
+            get
+            {
+                return command;
+            }
+
+            set
+            {
+                if (command == value)
+                    return;
+                var oldCommand = command;
+                command = value;
+                OnCommandChanged(oldCommand, value);
+            }
         }
 
         /// <inheritdoc/>
         public virtual object? CommandParameter
         {
-            get { return (object?)GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
+            get
+            {
+                return commandParameter;
+            }
+
+            set
+            {
+                if (commandParameter == value)
+                    return;
+                commandParameter = value;
+            }
         }
 
         /// <inheritdoc/>
         public virtual object? CommandTarget
         {
-            get { return GetValue(CommandTargetProperty); }
-            set { SetValue(CommandTargetProperty, value); }
+            get
+            {
+                return commandTarget;
+            }
+
+            set
+            {
+                if (commandTarget == value)
+                    return;
+                commandTarget = value;
+            }
         }
-
-        /*internal new MenuItemHandler Handler => (MenuItemHandler)base.Handler;
-
-        internal Native.MenuItem NativeControl => Handler.NativeControl;*/
 
         /// <inheritdoc/>
         protected override bool IsDummy => true;
@@ -420,15 +414,7 @@ namespace Alternet.UI
             return NativePlatform.Default.CreateMenuItemHandler(this);
         }
 
-        private static void OnCommandChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-           MenuItem b = (MenuItem)d;
-           b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
-        }
-
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
                 UnhookCommand(oldCommand);
