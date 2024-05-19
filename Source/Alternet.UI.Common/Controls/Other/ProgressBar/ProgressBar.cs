@@ -32,26 +32,11 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class ProgressBar : Control
     {
-        /// <summary>
-        /// Identifies the <see cref="Value"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(
-                    "Value",
-                    typeof(int),
-                    typeof(ProgressBar),
-                    new FrameworkPropertyMetadata(
-                            0,
-                            PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),
-                            new CoerceValueCallback(CoerceValue),
-                            true,
-                            UpdateSourceTrigger.PropertyChanged));
-
         private bool isIndeterminate;
         private int minimum;
         private int maximum = 100;
         private ProgressBarOrientation orientation;
+        private int value;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Value"/> property changes.
@@ -132,8 +117,19 @@ namespace Alternet.UI
         /// </exception>
         public virtual int Value
         {
-            get { return (int)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get
+            {
+                return value;
+            }
+
+            set
+            {
+                value = CoerceValue(value);
+                if (this.value == value)
+                    return;
+                this.value = value;
+                RaiseValueChanged(EventArgs.Empty);
+            }
         }
 
         /// <inheritdoc/>
@@ -241,36 +237,14 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Callback for changes to the Value property
-        /// </summary>
-        private static void OnValuePropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
+        private int CoerceValue(int value)
         {
-            ProgressBar control = (ProgressBar)d;
-            control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
-        }
+            if (value < Minimum)
+                return Minimum;
 
-        private static object CoerceValue(DependencyObject d, object value)
-        {
-            var o = (ProgressBar)d;
-
-            var intValue = (int)value;
-            if (intValue < o.Minimum)
-                return o.Minimum;
-
-            if (intValue > o.Maximum)
-                return o.Maximum;
-
+            if (value > Maximum)
+                return Maximum;
             return value;
-        }
-
-#pragma warning disable
-        private void OnValuePropertyChanged(int oldValue, int newValue)
-#pragma warning restore
-        {
-            RaiseValueChanged(EventArgs.Empty);
         }
     }
 }
