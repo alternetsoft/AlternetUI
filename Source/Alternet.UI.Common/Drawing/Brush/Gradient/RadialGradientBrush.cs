@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -83,7 +85,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the center of the outermost circle of the radial gradient.
         /// </summary>
-        public PointD Center
+        public virtual PointD Center
         {
             get => center;
             set
@@ -99,7 +101,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the radius of the outermost circle of the radial gradient.
         /// </summary>
-        public double Radius
+        public virtual double Radius
         {
             get => radius;
             set
@@ -116,7 +118,7 @@ namespace Alternet.Drawing
         /// Gets or sets the location of the two-dimensional focal point that defines the
         /// beginning of the gradient.
         /// </summary>
-        public PointD GradientOrigin
+        public virtual PointD GradientOrigin
         {
             get => gradientOrigin;
             set
@@ -133,7 +135,7 @@ namespace Alternet.Drawing
         /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
         /// transition in this brush.
         /// </summary>
-        public GradientStop[] GradientStops
+        public virtual GradientStop[] GradientStops
         {
             get => gradientStops;
             set
@@ -203,7 +205,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateRadialGradientBrushHandler();
+            return NativePlatform.Default.CreateRadialGradientBrushHandler();
         }
 
         /// <inheritdoc/>

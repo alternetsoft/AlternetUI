@@ -31,6 +31,42 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IBrushHandler CreateTransparentBrushHandler()
+        {
+            return new MauiTransparentBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ISolidBrushHandler CreateSolidBrushHandler()
+        {
+            return new MauiSolidBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IHatchBrushHandler CreateHatchBrushHandler()
+        {
+            return new MauiHatchBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+        {
+            return new MauiLinearGradientBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+        {
+            return new MauiRadialGradientBrushHandler();
+        }
+
+        /// <inheritdoc/>
+        public override ITextureBrushHandler CreateTextureBrushHandler()
+        {
+            return new MauiTextureBrushHandler();
+        }
+
+        /// <inheritdoc/>
         public override void ProcessPendingEvents()
         {
             throw new NotImplementedException();

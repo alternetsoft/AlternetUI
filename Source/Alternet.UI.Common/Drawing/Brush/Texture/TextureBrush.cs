@@ -1,4 +1,8 @@
-﻿namespace Alternet.Drawing
+﻿using System;
+
+using Alternet.UI;
+
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines a brush of a single color. Brushes are used to fill graphics shapes, such
@@ -24,7 +28,7 @@
         /// </summary>
         /// <value>An <see cref="Image"/> structure that represents the
         /// texture of this brush.</value>
-        public Image Image
+        public virtual Image Image
         {
             get => image;
 
@@ -67,13 +71,13 @@
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateTextureBrushHandler();
+            return NativePlatform.Default.CreateTextureBrushHandler();
         }
 
         /// <inheritdoc/>
         protected override void UpdateHandler()
         {
-            NativeDrawing.Default.UpdateTextureBrush(this);
+            ((ITextureBrushHandler)Handler).Update(this);
         }
     }
 }

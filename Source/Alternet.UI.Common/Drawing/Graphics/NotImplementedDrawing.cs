@@ -17,23 +17,7 @@ namespace Alternet.Drawing
     {
         public override object CreatePen() => NotImplemented();
 
-        public override IBrushHandler CreateTransparentBrushHandler() => NotImplemented<IBrushHandler>();
-
-        public override object CreateHatchBrushHandler() => NotImplemented();
-
-        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
-            => NotImplemented<ILinearGradientBrushHandler>();
-
-        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
-            => NotImplemented<IRadialGradientBrushHandler>();
-
-        public override ISolidBrushHandler CreateSolidBrushHandler() => NotImplemented<ISolidBrushHandler>();
-
-        public override object CreateTextureBrushHandler() => NotImplemented();
-
         public override void UpdatePen(Pen pen) => NotImplemented();
-
-        public override void UpdateHatchBrush(HatchBrush brush) => NotImplemented();
 
         public override Color GetColor(SystemSettingsColor index) => NotImplemented<Color>();
 
@@ -993,11 +977,6 @@ namespace Alternet.Drawing
         }
 
         public override object ImageConvertToGenericImage(Image image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateTextureBrush(TextureBrush brush)
         {
             throw new NotImplementedException();
         }

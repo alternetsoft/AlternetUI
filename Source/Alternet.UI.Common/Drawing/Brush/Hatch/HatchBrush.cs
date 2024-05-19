@@ -1,5 +1,7 @@
 using System;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -32,14 +34,20 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this
         /// <see cref="HatchBrush"/>.</value>
-        public Color Color { get; }
+        public Color Color
+        {
+            get;
+        }
 
         /// <summary>
         /// Gets the hatch style of this <see cref="HatchBrush"/> object.
         /// </summary>
         /// <value>One of the <see cref="BrushHatchStyle"/> values that represents the pattern of
         /// this <see cref="HatchBrush"/>.</value>
-        public BrushHatchStyle HatchStyle { get; }
+        public BrushHatchStyle HatchStyle
+        {
+            get;
+        }
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.Hatch;
@@ -75,13 +83,13 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateHatchBrushHandler();
+            return NativePlatform.Default.CreateHatchBrushHandler();
         }
 
         /// <inheritdoc/>
         protected override void UpdateHandler()
         {
-            NativeDrawing.Default.UpdateHatchBrush(this);
+            ((IHatchBrushHandler)Handler).Update(this);
         }
     }
 }

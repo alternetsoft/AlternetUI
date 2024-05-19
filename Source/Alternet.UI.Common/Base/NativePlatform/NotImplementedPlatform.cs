@@ -13,6 +13,20 @@ namespace Alternet.UI
     {
         public override IFontFactoryHandler FontFactory => throw new NotImplementedException();
 
+        public override IBrushHandler CreateTransparentBrushHandler() => NotImplemented<IBrushHandler>();
+
+        public override IHatchBrushHandler CreateHatchBrushHandler() => NotImplemented<IHatchBrushHandler>();
+
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+            => NotImplemented<ILinearGradientBrushHandler>();
+
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+            => NotImplemented<IRadialGradientBrushHandler>();
+
+        public override ISolidBrushHandler CreateSolidBrushHandler() => NotImplemented<ISolidBrushHandler>();
+
+        public override ITextureBrushHandler CreateTextureBrushHandler() => NotImplemented<ITextureBrushHandler>();
+
         public override void BeginBusyCursor()
         {
             throw new NotImplementedException();

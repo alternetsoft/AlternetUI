@@ -1,3 +1,5 @@
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -84,7 +86,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateSolidBrushHandler();
+            return NativePlatform.Default.CreateSolidBrushHandler();
         }
 
         /// <inheritdoc/>

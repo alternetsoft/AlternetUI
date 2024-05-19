@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -80,7 +82,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the starting two-dimensional coordinates of the linear gradient.
         /// </summary>
-        public PointD StartPoint
+        public virtual PointD StartPoint
         {
             get => startPoint;
 
@@ -97,7 +99,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the ending two-dimensional coordinates of the linear gradient.
         /// </summary>
-        public PointD EndPoint
+        public virtual PointD EndPoint
         {
             get => endPoint;
 
@@ -115,7 +117,7 @@ namespace Alternet.Drawing
         /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
         /// transition in this brush.
         /// </summary>
-        public GradientStop[] GradientStops
+        public virtual GradientStop[] GradientStops
         {
             get => gradientStops;
 
@@ -211,7 +213,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateLinearGradientBrushHandler();
+            return NativePlatform.Default.CreateLinearGradientBrushHandler();
         }
 
         /// <inheritdoc/>

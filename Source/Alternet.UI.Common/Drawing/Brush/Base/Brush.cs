@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.UI;
 using Alternet.UI.Localization;
 
@@ -57,7 +58,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Pen created only once and saved internally in the brush instance.
         /// </remarks>
-        public Pen AsPen
+        public virtual Pen AsPen
         {
             get
             {
@@ -139,7 +140,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreateTransparentBrushHandler();
+            return NativePlatform.Default.CreateTransparentBrushHandler();
         }
 
         /// <inheritdoc/>

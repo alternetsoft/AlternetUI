@@ -101,6 +101,42 @@ namespace Alternet.UI
 
         public abstract Window? GetActiveWindow();
 
+        /// <summary>
+        /// Creates transparent brush handler.
+        /// </summary>
+        /// <returns></returns>
+        public abstract IBrushHandler CreateTransparentBrushHandler();
+
+        /// <summary>
+        /// Creates hatch brush handler.
+        /// </summary>
+        /// <returns></returns>
+        public abstract IHatchBrushHandler CreateHatchBrushHandler();
+
+        /// <summary>
+        /// Creates linear gradient brush handler.
+        /// </summary>
+        /// <returns></returns>
+        public abstract ILinearGradientBrushHandler CreateLinearGradientBrushHandler();
+
+        /// <summary>
+        /// Creates radial gradient brush handler.
+        /// </summary>
+        /// <returns></returns>
+        public abstract IRadialGradientBrushHandler CreateRadialGradientBrushHandler();
+
+        /// <summary>
+        /// Creates solid brush handler.
+        /// </summary>
+        /// <returns></returns>
+        public abstract ISolidBrushHandler CreateSolidBrushHandler();
+
+        /// <summary>
+        /// Creates texture brush handler.
+        /// </summary>
+        /// <returns></returns>
+        public abstract ITextureBrushHandler CreateTextureBrushHandler();
+
         public abstract void ShowDeveloperTools();
 
         public abstract string GetLibraryVersionString();

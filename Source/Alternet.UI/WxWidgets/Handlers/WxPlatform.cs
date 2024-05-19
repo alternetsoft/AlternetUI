@@ -40,6 +40,26 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IBrushHandler CreateTransparentBrushHandler() => new UI.Native.Brush();
+
+        /// <inheritdoc/>
+        public override IHatchBrushHandler CreateHatchBrushHandler() => new UI.Native.HatchBrush();
+
+        /// <inheritdoc/>
+        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler()
+            => new UI.Native.LinearGradientBrush();
+
+        /// <inheritdoc/>
+        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler()
+            => new UI.Native.RadialGradientBrush();
+
+        /// <inheritdoc/>
+        public override ISolidBrushHandler CreateSolidBrushHandler() => new UI.Native.SolidBrush();
+
+        /// <inheritdoc/>
+        public override ITextureBrushHandler CreateTextureBrushHandler() => new UI.Native.TextureBrush();
+
+        /// <inheritdoc/>
         public override Window? GetActiveWindow()
         {
             var activeWindow = Native.Window.ActiveWindow;
