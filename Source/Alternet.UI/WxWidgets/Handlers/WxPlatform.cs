@@ -40,6 +40,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IPenHandler CreatePenHandler() => new UI.Native.Pen();
+
+        /// <inheritdoc/>
         public override IBrushHandler CreateTransparentBrushHandler() => new UI.Native.Brush();
 
         /// <inheritdoc/>

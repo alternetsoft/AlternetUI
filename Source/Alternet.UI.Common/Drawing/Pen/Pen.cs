@@ -1,5 +1,7 @@
 using System;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -316,7 +318,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         protected override object CreateHandler()
         {
-            return NativeDrawing.Default.CreatePen();
+            return NativePlatform.Default.CreatePenHandler();
         }
 
         /// <summary>
@@ -324,7 +326,7 @@ namespace Alternet.Drawing
         /// </summary>
         protected override void UpdateHandler()
         {
-            NativeDrawing.Default.UpdatePen(this);
+            ((IPenHandler)Handler).Update(this);
         }
     }
 }

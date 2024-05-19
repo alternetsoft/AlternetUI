@@ -65,7 +65,7 @@ namespace Alternet.UI.Native
             NativeApi.Region_InitializeWithRect_(NativePointer, rect);
         }
         
-        public void InitializeWithPolygon(Alternet.Drawing.PointD[] points, FillMode fillMode)
+        public void InitializeWithPolygon(Alternet.Drawing.PointD[] points, Alternet.Drawing.FillMode fillMode)
         {
             CheckDisposed();
             NativeApi.Region_InitializeWithPolygon_(NativePointer, points, points.Length, fillMode);
@@ -174,7 +174,7 @@ namespace Alternet.UI.Native
             public static extern void Region_InitializeWithRect_(IntPtr obj, Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_InitializeWithPolygon_(IntPtr obj, Alternet.Drawing.PointD[] points, int pointsCount, FillMode fillMode);
+            public static extern void Region_InitializeWithPolygon_(IntPtr obj, Alternet.Drawing.PointD[] points, int pointsCount, Alternet.Drawing.FillMode fillMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_IntersectWithRect_(IntPtr obj, Alternet.Drawing.RectD rect);

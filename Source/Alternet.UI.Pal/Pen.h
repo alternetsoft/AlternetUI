@@ -14,7 +14,7 @@ namespace Alternet::UI
         wxPen GetWxPen();
 
     private:
-        wxPenStyle GetWxStyle(PenDashStyle style);
+        wxPenStyle GetWxStyle(DashStyle style);
         wxPenCap GetWxPenCap(LineCap value);
         wxPenJoin GetWxPenJoin(LineJoin value);
 

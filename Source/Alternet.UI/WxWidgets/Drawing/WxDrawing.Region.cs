@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         public override object CreateRegion(PointD[] points, FillMode fillMode = FillMode.Alternate)
         {
             var nativeObject = new UI.Native.Region();
-            ((UI.Native.Region)nativeObject).InitializeWithPolygon(points, (UI.Native.FillMode)fillMode);
+            ((UI.Native.Region)nativeObject).InitializeWithPolygon(points, fillMode);
             return nativeObject;
         }
 

@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public FillMode FillMode
+        public Alternet.Drawing.FillMode FillMode
         {
             get
             {
@@ -126,10 +126,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr GraphicsPath_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern FillMode GraphicsPath_GetFillMode_(IntPtr obj);
+            public static extern Alternet.Drawing.FillMode GraphicsPath_GetFillMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_SetFillMode_(IntPtr obj, FillMode value);
+            public static extern void GraphicsPath_SetFillMode_(IntPtr obj, Alternet.Drawing.FillMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_Initialize_(IntPtr obj, IntPtr dc);

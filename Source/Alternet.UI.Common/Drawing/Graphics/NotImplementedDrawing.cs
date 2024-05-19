@@ -15,10 +15,6 @@ namespace Alternet.Drawing
     /// </summary>
     internal class NotImplementedDrawing : NativeDrawing
     {
-        public override object CreatePen() => NotImplemented();
-
-        public override void UpdatePen(Pen pen) => NotImplemented();
-
         public override Color GetColor(SystemSettingsColor index) => NotImplemented<Color>();
 
         public override void UpdateTransformMatrix(TransformMatrix mtrx, double m11, double m12, double m21, double m22, double dx, double dy)

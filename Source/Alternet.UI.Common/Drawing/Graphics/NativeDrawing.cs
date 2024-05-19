@@ -27,18 +27,6 @@ namespace Alternet.Drawing
         public abstract Graphics CreateGraphicsFromImage(Image image);
 
         /// <summary>
-        /// Creates native pen.
-        /// </summary>
-        /// <returns></returns>
-        public abstract object CreatePen();
-
-        /// <summary>
-        /// Updates native pen properties.
-        /// </summary>
-        /// <returns></returns>
-        public abstract void UpdatePen(Pen pen);
-
-        /// <summary>
         /// Gets a standard system color.
         /// </summary>
         /// <param name="index">System color identifier.</param>

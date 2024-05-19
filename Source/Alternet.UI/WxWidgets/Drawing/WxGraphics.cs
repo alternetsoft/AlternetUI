@@ -66,12 +66,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                return (InterpolationMode)dc.InterpolationMode;
+                return dc.InterpolationMode;
             }
 
             set
             {
-                dc.InterpolationMode = (UI.Native.InterpolationMode)value;
+                dc.InterpolationMode = value;
             }
         }
 
@@ -288,7 +288,7 @@ namespace Alternet.Drawing
                 (UI.Native.Pen)pen.Handler,
                 (UI.Native.Brush)brush.Handler,
                 points,
-                (UI.Native.FillMode)fillMode);
+                fillMode);
         }
 
         /// <inheritdoc/>
@@ -423,7 +423,7 @@ namespace Alternet.Drawing
             dc.FillPolygon(
                 (UI.Native.Brush)brush.Handler,
                 points,
-                (UI.Native.FillMode)fillMode);
+                fillMode);
         }
 
         /// <inheritdoc/>
@@ -624,10 +624,10 @@ namespace Alternet.Drawing
                 bounds,
                 (UI.Native.Font)font.Handler,
                 (UI.Native.Brush)brush.Handler,
-                (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
-                (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
-                (UI.Native.TextTrimming)format.Trimming,
-                (UI.Native.TextWrapping)format.Wrapping);
+                format.HorizontalAlignment,
+                format.VerticalAlignment,
+                format.Trimming,
+                format.Wrapping);
         }
 
         /// <inheritdoc/>
@@ -639,7 +639,7 @@ namespace Alternet.Drawing
                 text,
                 (UI.Native.Font)font.Handler,
                 double.NaN,
-                UI.Native.TextWrapping.None);
+                TextWrapping.None);
         }
 
         /// <inheritdoc/>
@@ -651,7 +651,7 @@ namespace Alternet.Drawing
                 text,
                 (UI.Native.Font)font.Handler,
                 maximumWidth,
-                UI.Native.TextWrapping.Character);
+                TextWrapping.Character);
         }
 
         /// <inheritdoc/>
@@ -668,7 +668,7 @@ namespace Alternet.Drawing
                 text,
                 (UI.Native.Font)font.Handler,
                 maximumWidth,
-                (UI.Native.TextWrapping)format.Wrapping);
+                format.Wrapping);
         }
 
         /// <inheritdoc/>

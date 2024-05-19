@@ -29,7 +29,7 @@ namespace Alternet.Drawing
 
         public override void GraphicsPathSetFillMode(GraphicsPath graphicsPath, FillMode value)
         {
-            ((UI.Native.GraphicsPath)graphicsPath.Handler).FillMode = (UI.Native.FillMode)value;
+            ((UI.Native.GraphicsPath)graphicsPath.Handler).FillMode = value;
         }
 
         public override void GraphicsPathAddLines(GraphicsPath graphicsPath, PointD[] points)

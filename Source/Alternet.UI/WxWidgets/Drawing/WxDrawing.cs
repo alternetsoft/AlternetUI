@@ -24,23 +24,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override object CreatePen() => new UI.Native.Pen();
-
-        /// <inheritdoc/>
         public override Color GetColor(SystemSettingsColor index)
         {
             return UI.Native.WxOtherFactory.SystemSettingsGetColor((int)index);
-        }
-
-        /// <inheritdoc/>
-        public override void UpdatePen(Pen pen)
-        {
-            ((UI.Native.Pen)pen.Handler).Initialize(
-                (UI.Native.PenDashStyle)pen.DashStyle,
-                pen.Color,
-                pen.Width,
-                (UI.Native.LineCap)pen.LineCap,
-                (UI.Native.LineJoin)pen.LineJoin);
         }
     }
 }

@@ -125,6 +125,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public abstract IRadialGradientBrushHandler CreateRadialGradientBrushHandler();
 
+        public abstract IPenHandler CreatePenHandler();
+
         /// <summary>
         /// Creates solid brush handler.
         /// </summary>

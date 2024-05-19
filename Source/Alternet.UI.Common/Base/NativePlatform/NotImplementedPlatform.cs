@@ -484,5 +484,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IPenHandler CreatePenHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

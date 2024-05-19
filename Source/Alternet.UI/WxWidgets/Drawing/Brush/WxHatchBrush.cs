@@ -10,9 +10,7 @@ namespace Alternet.UI.Native
     {
         public void Update(Alternet.Drawing.HatchBrush brush)
         {
-            Initialize(
-                (UI.Native.BrushHatchStyle)brush.HatchStyle,
-                brush.Color);
+            Initialize(brush.HatchStyle, brush.Color);
         }
     }
 }
