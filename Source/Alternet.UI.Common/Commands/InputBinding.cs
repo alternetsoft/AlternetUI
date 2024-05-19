@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel;
 using System.Security;
+
 using Alternet.UI.Internal;
 
 namespace Alternet.UI
@@ -15,31 +16,12 @@ namespace Alternet.UI
     /// </summary>
     public class InputBinding : FrameworkElement, ICommandSource
     {
-        /// <summary>
-        /// Dependency property for <see cref="CommandTarget"/>.
-        /// </summary>
-        public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register("CommandTarget", typeof(object), typeof(InputBinding));
-
-        /// <summary>
-        /// Dependency property for <see cref="Command"/> property.
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register(
-                "Command",
-                typeof(ICommand),
-                typeof(InputBinding),
-                new UIPropertyMetadata(null, new PropertyChangedCallback(OnCommandPropertyChanged)));
-
-        /// <summary>
-        /// Dependency property for <see cref="CommandParameter"/>.
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(InputBinding));
-
         private static readonly object DataLock = new();
 
         private InputGesture? gesture = null;
+        private ICommand? command;
+        private object? commandTarget;
+        private object? commandParameter;
 
         // Fields to implement DO's inheritance context
         private DependencyObject? inheritanceContext = null;
@@ -66,37 +48,37 @@ namespace Alternet.UI
         /// <summary>
         /// Command Object associated
         /// </summary>
-        [TypeConverter(
-            "System.Windows.Input.CommandConverter, PresentationFramework, Version="
-            + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +
-            BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
         [Localizability(LocalizationCategory.NeverLocalize)]
-        public ICommand Command
+        public ICommand? Command
         {
             get
             {
-                return (ICommand)GetValue(CommandProperty);
+                return command;
             }
 
             set
             {
-                SetValue(CommandProperty, value);
+                if (command == value)
+                    return;
+                command = value;
             }
         }
 
         /// <summary>
         ///     A parameter for the command.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
             get
             {
-                return GetValue(CommandParameterProperty);
+                return commandParameter;
             }
 
             set
             {
-                SetValue(CommandParameterProperty, value);
+                if (commandParameter == value)
+                    return;
+                commandParameter = value;
             }
         }
 
@@ -107,12 +89,14 @@ namespace Alternet.UI
         {
             get
             {
-                return GetValue(CommandTargetProperty);
+                return commandTarget;
             }
 
             set
             {
-                SetValue(CommandTargetProperty, value);
+                if (commandTarget == value)
+                    return;
+                commandTarget = value;
             }
         }
 
@@ -178,15 +162,6 @@ namespace Alternet.UI
                 this,
                 ref hasMultipleInheritanceContexts,
                 ref inheritanceContext);
-        }
-
-        /// <summary>
-        ///     Property changed callback for Command property
-        /// </summary>
-        private static void OnCommandPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
         }
     }
 }
