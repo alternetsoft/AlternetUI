@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -13,14 +15,11 @@ namespace Alternet.UI
 
         private static SelectDirectoryDialog? defaultDialog;
 
-        private readonly Native.SelectDirectoryDialog nativeDialog;
-
         /// <summary>
         /// Initializes a new instance of <see cref="SelectDirectoryDialog"/>.
         /// </summary>
         public SelectDirectoryDialog()
         {
-            nativeDialog = new Native.SelectDirectoryDialog();
         }
 
         /// <summary>
@@ -31,13 +30,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.DirectoryName;
+                return Handler.DirectoryName;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.DirectoryName = value;
+                Handler.DirectoryName = value;
             }
         }
 
@@ -49,39 +48,22 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.InitialDirectory;
+                return Handler.InitialDirectory;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.InitialDirectory = value;
+                Handler.InitialDirectory = value;
             }
         }
 
-        /// <inheritdoc/>
-        public override string? Title
-        {
-            get
-            {
-                CheckDisposed();
-                return nativeDialog.Title;
-            }
+        [Browsable(false)]
+        public new ISelectDirectoryDialogHandler Handler => (ISelectDirectoryDialogHandler)base.Handler;
 
-            set
-            {
-                CheckDisposed();
-                nativeDialog.Title = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override ModalResult ShowModal(Window? owner)
+        protected override IDialogHandler CreateHandler()
         {
-            CheckDisposed();
-            var nativeOwner = owner == null ?
-                null : ((WindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            return NativePlatform.Default.CreateSelectDirectoryDialogHandler(this);
         }
     }
 }

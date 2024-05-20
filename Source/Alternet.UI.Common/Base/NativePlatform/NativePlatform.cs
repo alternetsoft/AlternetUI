@@ -139,6 +139,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public abstract ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush);
 
+        public abstract ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
+            SelectDirectoryDialog dialog);
+
         public abstract IFontDialogHandler CreateFontDialogHandler(FontDialog dialog);
 
         public abstract IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);

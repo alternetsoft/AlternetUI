@@ -505,5 +505,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(SelectDirectoryDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

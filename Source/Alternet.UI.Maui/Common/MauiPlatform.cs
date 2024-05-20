@@ -489,5 +489,20 @@ namespace Alternet.UI
         {
             return new MauiPenHandler(pen);
         }
+
+        public override ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(SelectDirectoryDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

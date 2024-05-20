@@ -46,6 +46,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
+            SelectDirectoryDialog dialog)
+        {
+            return new UI.Native.SelectDirectoryDialog();
+        }
+
+        /// <inheritdoc/>
         public override IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
         {
             return new UI.Native.FontDialog();

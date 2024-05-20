@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public interface ISelectDirectoryDialogHandler
+    public interface ISelectDirectoryDialogHandler : IDialogHandler
     {
+        string? InitialDirectory { get; set; }
+
+        string? DirectoryName { get; set; }
     }
 }
