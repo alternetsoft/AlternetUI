@@ -34,7 +34,8 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    public class MauiFontHandler : PlessFontHandler
+    public class MauiFontHandler
+		: PlessFontHandler, Microsoft.Maui.Graphics.IFont
     {
         private Microsoft.Maui.Graphics.Font font;
         private SKFont? skiaFont;
@@ -47,9 +48,19 @@ namespace Alternet.Drawing
         public MauiFontHandler(Microsoft.Maui.Graphics.Font font)
         {
             this.font = font;
+			Name = font.Name;
+			if (font.StyleType == FontStyleType.Italic)
+				Style = FontStyle.Italic;
+			SetNumericWeight(font.Weight);
         }
 
-		public SKFont? SkiaFont
+        public Microsoft.Maui.Graphics.Font Font
+		{
+			get => font;
+			set => font = value;
+		}
+
+        public SKFont? SkiaFont
 		{
 			get => skiaFont;
 			set => skiaFont = value;
@@ -67,5 +78,38 @@ namespace Alternet.Drawing
 				return result;
             }
 		}
+
+		string IFont.Name => Name;
+
+        int IFont.Weight => GetNumericWeight();
+
+		FontStyleType IFont.StyleType => GetStyleType();
+
+        public FontStyleType GetStyleType()
+        {
+            if (GetItalic())
+                return FontStyleType.Italic;
+            else
+                return FontStyleType.Normal;
+        }
+
+        public override void Update(IFontHandler.FontParams prm)
+        {
+			var oldFontName = Name;
+			var oldFontWeight = GetNumericWeight();
+			var oldFontStyle = GetStyleType();
+
+            base.Update(prm);
+
+            var newFontName = Name;
+            var newFontWeight = GetNumericWeight();
+            var newFontStyle = GetStyleType();
+
+			if(oldFontName != newFontName || oldFontWeight != newFontWeight
+				|| oldFontStyle != newFontStyle)
+			{
+				font = new(newFontName, newFontWeight, newFontStyle);
+            }
+        }
     }
 }

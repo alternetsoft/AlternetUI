@@ -95,7 +95,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         bool Equals(Font font);
 
-        public struct FontParams
+        public class FontParams
         {
             public GenericFontFamily? GenericFamily;
 

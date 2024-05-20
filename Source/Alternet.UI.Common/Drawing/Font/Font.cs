@@ -451,7 +451,10 @@ namespace Alternet.Drawing
         /// <remarks>
         ///  See <see cref="FontWeight"/> for the numeric weight values.
         /// </remarks>
-        public virtual int NumericWeight => Handler.GetNumericWeight();
+        public virtual int NumericWeight
+        {
+            get => Handler.GetNumericWeight();
+        }
 
         /// <summary>
         /// Gets whether this font is a fixed width (or monospaced) font.
@@ -522,7 +525,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is bold;
         /// otherwise, <c>false</c>.</value>
-        public virtual bool IsBold => GetIsBold(Handler);
+        public virtual bool IsBold => GetIsBold(Weight);
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/> is italic.
@@ -942,7 +945,7 @@ namespace Alternet.Drawing
             }
         }
 
-        public static void CoerceFontParams(ref IFontHandler.FontParams prm)
+        public static void CoerceFontParams(IFontHandler.FontParams prm)
         {
             if (prm.Unit != GraphicsUnit.Point)
             {
@@ -1060,16 +1063,16 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public static bool GetIsBold(IFontHandler font)
+        public static bool GetIsBold(FontWeight weight)
         {
-            return font.GetWeight() > FontWeight.Normal;
+            return weight > FontWeight.Normal;
         }
 
         public static FontStyle GetStyle(IFontHandler font)
         {
             FontStyle result = FontStyle.Regular;
 
-            if (GetIsBold(font))
+            if (GetIsBold(font.GetWeight()))
                 result |= FontStyle.Bold;
 
             if (font.GetItalic())

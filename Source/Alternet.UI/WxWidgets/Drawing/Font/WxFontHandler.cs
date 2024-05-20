@@ -13,7 +13,7 @@ namespace Alternet.UI.Native
     {
         void IFontHandler.Update(IFontHandler.FontParams prm)
         {
-            Alternet.Drawing.Font.CoerceFontParams(ref prm);
+            Alternet.Drawing.Font.CoerceFontParams(prm);
             Initialize(
                prm.GenericFamily ?? 0,
                prm.FamilyName,
