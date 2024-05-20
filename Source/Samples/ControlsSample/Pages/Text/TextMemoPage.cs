@@ -16,16 +16,9 @@ namespace ControlsSample
             "Proin fermentum rhoncus dictum.\n";
 
         private readonly PanelMultilineTextBox memoPanel = new();
-        /*private readonly TextMemoPageProperties properties;*/
 
         public TextMemoPage()
         {
-            /*properties = new(this);*/
-            Margin = 10;
-            memoPanel.DefaultRightPaneBestSize = 250;
-            memoPanel.DefaultRightPaneMinSize = 250;
-
-            memoPanel.SuggestedSize = new(500, 400); // how without it?
             memoPanel.TextBox.KeyDown += TextBox_KeyDown;
             memoPanel.TextBox.AutoUrlOpen = true;
             memoPanel.TextBox.TextUrl += MultiLineTextBox_TextUrl;
@@ -50,42 +43,13 @@ namespace ControlsSample
 
             Idle += TextInputPage_Idle;
 
-            /*memoPanel.PropGrid.ApplyFlags |= PropertyGridApplyFlags.SetValueAndReload;
-            memoPanel.PropGrid.SetProps(properties, true);*/
-
             memoPanel.Parent = this;
             memoPanel.TextBox.Text = multilineDemoText;
             memoPanel.TextBox.SetInsertionPoint(0);
-            memoPanel.EnableTool(memoPanel.ButtonIdNew, false);
-            memoPanel.EnableTool(memoPanel.ButtonIdOpen, false);
-            memoPanel.EnableTool(memoPanel.ButtonIdSave, false);
-            /*memoPanel.PropGrid.SuggestedInitDefaults();*/
-            /*memoPanel.RightNotebook.PageChanged += RightNotebook_PageChanged;*/
-            memoPanel.ActionsControl.Required();
-            memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);
-        }
 
-        /*private void RightNotebook_PageChanged(object? sender, EventArgs e)
-        {
-            if(memoPanel.RightNotebook.EventSelection == memoPanel.PropGridPage?.Index)
-            {
-                memoPanel.PropGrid.CenterSplitter();
-                memoPanel.RightNotebook.PageChanged -= RightNotebook_PageChanged;
-            }
-        }*/
-
-        internal void AddTestIdleTasks()
-        {
-            memoPanel.AddAction("Add Idle Tasks", () =>
-            {
-                for(int i = 0; i <= 5; i++)
-                {
-                    Application.AddIdleTask((a) =>
-                    {
-                        Application.Log(a);
-                    }, i);
-                }
-            });
+            memoPanel.ToolBar.SetToolEnabled(memoPanel.ButtonIdNew, false);
+            memoPanel.ToolBar.SetToolEnabled(memoPanel.ButtonIdOpen, false);
+            memoPanel.ToolBar.SetToolEnabled(memoPanel.ButtonIdSave, false);
         }
 
         private void TextInputPage_Idle(object? sender, EventArgs e)

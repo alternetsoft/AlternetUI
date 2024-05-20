@@ -11,7 +11,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements panel with <see cref="WebBrowser"/> and <see cref="AuiToolbar"/> with
+    /// Implements panel with <see cref="WebBrowser"/> and toolbar with
     /// web navigation buttons.
     /// </summary>
     [ControlCategory("Panels")]

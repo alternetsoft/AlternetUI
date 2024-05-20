@@ -4,32 +4,30 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements panel with <see cref="RichTextBox"/> and toolbar with
+    /// Implements panel with <see cref="MultilineTextBox"/> and toolbar with
     /// text edit buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public partial class PanelRichTextBox : PanelWithToolBar
+    public partial class PanelMultilineTextBox : PanelWithToolBar
     {
-        private readonly RichTextBox textBox = new();
+        private readonly MultilineTextBox textBox = new();
 
         private ObjectUniqueId buttonIdNew;
         private ObjectUniqueId buttonIdOpen;
         private ObjectUniqueId buttonIdSave;
         private ObjectUniqueId buttonIdUndo;
         private ObjectUniqueId buttonIdRedo;
-        private ObjectUniqueId buttonIdBold;
-        private ObjectUniqueId buttonIdItalic;
-        private ObjectUniqueId buttonIdUnderline;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PanelRichTextBox"/> class.
+        /// Initializes a new instance of the <see cref="PanelMultilineTextBox"/> class.
         /// </summary>
-        public PanelRichTextBox()
+        public PanelMultilineTextBox()
         {
             textBox.HasBorder = false;
             textBox.VerticalAlignment = VerticalAlignment.Fill;
@@ -82,28 +80,10 @@ namespace Alternet.UI
         public ObjectUniqueId ButtonIdRedo => buttonIdRedo;
 
         /// <summary>
-        /// Gets id of the 'Bold' toolbar item.
-        /// </summary>
-        [Browsable(false)]
-        public ObjectUniqueId ButtonIdBold => buttonIdBold;
-
-        /// <summary>
-        /// Gets id of the 'Italic' toolbar item.
-        /// </summary>
-        [Browsable(false)]
-        public ObjectUniqueId ButtonIdItalic => buttonIdItalic;
-
-        /// <summary>
-        /// Gets id of the 'Underline' toolbar item.
-        /// </summary>
-        [Browsable(false)]
-        public ObjectUniqueId ButtonIdUnderline => buttonIdUnderline;
-
-        /// <summary>
         /// Gets <see cref="RichTextBox"/> control used in this panel.
         /// </summary>
         [Browsable(false)]
-        public RichTextBox TextBox => textBox;
+        public MultilineTextBox TextBox => textBox;
 
         /// <inheritdoc/>
         protected override void CreateToolbarItems()
@@ -113,9 +93,6 @@ namespace Alternet.UI
             buttonIdSave = ToolBar.AddSpeedBtn(KnownButton.Save, FileSave_Click);
             buttonIdUndo = ToolBar.AddSpeedBtn(KnownButton.Undo, Undo_Click);
             buttonIdRedo = ToolBar.AddSpeedBtn(KnownButton.Redo, Redo_Click);
-            buttonIdBold = ToolBar.AddSpeedBtn(KnownButton.Bold, Bold_Click);
-            buttonIdItalic = ToolBar.AddSpeedBtn(KnownButton.Italic, Italic_Click);
-            buttonIdUnderline = ToolBar.AddSpeedBtn(KnownButton.Underline, Underline_Click);
         }
 
         private void Undo_Click(object? sender, EventArgs e)
@@ -126,21 +103,6 @@ namespace Alternet.UI
         private void Redo_Click(object? sender, EventArgs e)
         {
             TextBox.Redo();
-        }
-
-        private void Bold_Click(object? sender, EventArgs e)
-        {
-            TextBox.SelectionToggleBold();
-        }
-
-        private void Italic_Click(object? sender, EventArgs e)
-        {
-            TextBox.SelectionToggleItalic();
-        }
-
-        private void Underline_Click(object? sender, EventArgs e)
-        {
-            TextBox.SelectionToggleUnderlined();
         }
 
         private void FileNew_Click(object? sender, EventArgs e)

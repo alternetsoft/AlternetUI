@@ -23,9 +23,6 @@ namespace ControlsSample
 
         public TextRichPage()
         {
-            Margin = 10;
-            richPanel.ActionsControl.Required();
-            richPanel.SuggestedSize = new(500, 400); // how without it?
             richPanel.Parent = this;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richPanel.TextBox.KeyDown += RichEdit_KeyDown;
@@ -39,13 +36,6 @@ namespace ControlsSample
             InitRichEdit2();
             richPanel.TextBox.SetCaretPosition(0, true);
             richPanel.TextBox.TextChanged += RichTextBox_TextChanged;
-
-            // ==== Add test actions
-
-            richPanel.AddAction("Bell", SoundUtils.Bell);
-            richPanel.AddAction("Go To Line", richPanel.TextBox.ShowDialogGoToLine);
-
-            PerformLayout();
         }
 
         internal void InitRichEdit()
