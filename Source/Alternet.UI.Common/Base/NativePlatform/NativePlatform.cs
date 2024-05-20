@@ -142,6 +142,10 @@ namespace Alternet.UI
         public abstract ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
             SelectDirectoryDialog dialog);
 
+        public abstract IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog);
+
+        public abstract ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog);
+
         public abstract IFontDialogHandler CreateFontDialogHandler(FontDialog dialog);
 
         public abstract IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);

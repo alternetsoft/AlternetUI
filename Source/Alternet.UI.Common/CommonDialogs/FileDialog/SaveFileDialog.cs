@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -26,13 +27,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeDialog.OverwritePrompt;
+                return Handler.OverwritePrompt;
             }
 
             set
             {
                 CheckDisposed();
-                NativeDialog.OverwritePrompt = value;
+                Handler.OverwritePrompt = value;
             }
         }
 
@@ -47,7 +48,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool AllowNullFileName { get; set; } = false;
 
-        private protected override bool IsOpenDialog => false;
+        [Browsable(false)]
+        public new ISaveFileDialogHandler Handler => (ISaveFileDialogHandler)base.Handler;
 
         /// <inheritdoc/>
         public override ModalResult ShowModal(Window? owner)
@@ -63,6 +65,11 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        protected override IDialogHandler CreateHandler()
+        {
+            return NativePlatform.Default.CreateSaveFileDialogHandler(this);
         }
     }
 }

@@ -29,13 +29,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeDialog.FileMustExist;
+                return Handler.FileMustExist;
             }
 
             set
             {
                 CheckDisposed();
-                NativeDialog.FileMustExist = value;
+                Handler.FileMustExist = value;
             }
         }
 
@@ -53,13 +53,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeDialog.AllowMultipleSelection;
+                return Handler.AllowMultipleSelection;
             }
 
             set
             {
                 CheckDisposed();
-                NativeDialog.AllowMultipleSelection = value;
+                Handler.AllowMultipleSelection = value;
             }
         }
 
@@ -72,10 +72,16 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeDialog.FileNames;
+                return Handler.FileNames;
             }
         }
 
-        private protected override bool IsOpenDialog => true;
+        [Browsable(false)]
+        public new IOpenFileDialogHandler Handler => (IOpenFileDialogHandler)base.Handler;
+
+        protected override IDialogHandler CreateHandler()
+        {
+            return NativePlatform.Default.CreateOpenFileDialogHandler(this);
+        }
     }
 }

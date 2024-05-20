@@ -40,6 +40,24 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog)
+        {
+            return new UI.Native.FileDialog()
+            {
+                Mode = Native.FileDialogMode.Open,
+            };
+        }
+
+        /// <inheritdoc/>
+        public override ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
+        {
+            return new UI.Native.FileDialog()
+            {
+                Mode = Native.FileDialogMode.Save,
+            };
+        }
+
+        /// <inheritdoc/>
         public override IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
         {
             return new UI.Native.ColorDialog();

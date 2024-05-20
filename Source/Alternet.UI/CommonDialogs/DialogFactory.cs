@@ -15,6 +15,26 @@ namespace Alternet.UI
     public static class DialogFactory
     {
         /// <summary>
+        /// Used as event handler.
+        /// </summary>
+        /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>
+        /// Calls <see cref="DialogFactory.EditPropertyWithListEditor(object,string)"/> for
+        /// the <paramref name="sender"/>,
+        /// if it implements <see cref="IPropInfoAndInstance"/> interface.
+        /// </remarks>
+        public static void EditWithListEdit(object? sender, EventArgs e)
+        {
+            if (sender is not IPropInfoAndInstance prop)
+                return;
+            var instance = prop.Instance;
+            var propInfo = prop.PropInfo;
+
+            DialogFactory.EditPropertyWithListEditor(instance, propInfo);
+        }
+
+        /// <summary>
         /// Edits property with list editor.
         /// </summary>
         /// <param name="instance">Object which contains the property.</param>

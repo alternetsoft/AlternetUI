@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Alternet.UI
@@ -9,17 +10,11 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public abstract class FileDialog : CommonDialog
     {
-        private readonly Native.FileDialog nativeDialog;
-
         /// <summary>
         /// Initializes a new instance of <see cref="FileDialog"/>.
         /// </summary>
         public FileDialog()
         {
-            nativeDialog = new Native.FileDialog
-            {
-                Mode = IsOpenDialog ? Native.FileDialogMode.Open : Native.FileDialogMode.Save,
-            };
         }
 
         /// <summary>
@@ -38,13 +33,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.NoShortcutFollow;
+                return Handler.NoShortcutFollow;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.NoShortcutFollow = value;
+                Handler.NoShortcutFollow = value;
             }
         }
 
@@ -57,13 +52,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.ChangeDir;
+                return Handler.ChangeDir;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.ChangeDir = value;
+                Handler.ChangeDir = value;
             }
         }
 
@@ -76,13 +71,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.PreviewFiles;
+                return Handler.PreviewFiles;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.PreviewFiles = value;
+                Handler.PreviewFiles = value;
             }
         }
 
@@ -94,13 +89,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.ShowHiddenFiles;
+                return Handler.ShowHiddenFiles;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.ShowHiddenFiles = value;
+                Handler.ShowHiddenFiles = value;
             }
         }
 
@@ -112,13 +107,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.InitialDirectory;
+                return Handler.InitialDirectory;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.InitialDirectory = value;
+                Handler.InitialDirectory = value;
             }
         }
 
@@ -146,13 +141,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.Filter;
+                return Handler.Filter;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.Filter = value;
+                Handler.Filter = value;
             }
         }
 
@@ -164,13 +159,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.SelectedFilterIndex;
+                return Handler.SelectedFilterIndex;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.SelectedFilterIndex = value;
+                Handler.SelectedFilterIndex = value;
             }
         }
 
@@ -182,44 +177,17 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return nativeDialog.FileName;
+                return Handler.FileName;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.FileName = value;
+                Handler.FileName = value;
             }
         }
 
-        /// <inheritdoc/>
-        public override string? Title
-        {
-            get
-            {
-                CheckDisposed();
-                return nativeDialog.Title;
-            }
-
-            set
-            {
-                CheckDisposed();
-                nativeDialog.Title = value;
-            }
-        }
-
-        private protected Native.FileDialog NativeDialog => nativeDialog;
-
-        private protected abstract bool IsOpenDialog { get; }
-
-        /// <inheritdoc/>
-        public override ModalResult ShowModal(Window? owner)
-        {
-            CheckDisposed();
-            var nativeOwner = owner == null ? null
-                : ((WindowHandler)owner.Handler).NativeControl;
-            var result = (ModalResult)nativeDialog.ShowModal(nativeOwner);
-            return result;
-        }
+        [Browsable(false)]
+        public new IFileDialogHandler Handler => (IFileDialogHandler)base.Handler;
     }
 }

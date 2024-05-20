@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="Window"/> on the screen.
     /// </summary>
     [ControlCategory("Hidden")]
-    internal class UIDialogCommon : DisposableObject
+    internal class UICommonDialog : DisposableObject
     {
         private string? title;
         private DialogWindow? window;

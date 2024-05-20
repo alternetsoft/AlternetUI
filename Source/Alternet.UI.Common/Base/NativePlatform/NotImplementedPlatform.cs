@@ -510,5 +510,15 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
