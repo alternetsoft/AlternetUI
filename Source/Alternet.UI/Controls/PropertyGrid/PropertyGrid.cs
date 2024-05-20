@@ -38,7 +38,6 @@ namespace Alternet.UI
 
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
 
-        private static StaticStateFlags staticStateFlags;
         private static PropertyGridEditKindColor defaultEditKindColor =
             PropertyGridEditKindColor.ComboBox;
 
@@ -50,6 +49,8 @@ namespace Alternet.UI
 
         static PropertyGrid()
         {
+            EditWithListEdit += DialogFactory.EditWithListEdit;
+
             RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
             RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
             RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
@@ -60,16 +61,6 @@ namespace Alternet.UI
                 Native.PropertyGrid.KnownColorsSetCustomColorTitle(KnownColorStrings.Default.Custom);
             };
         }
-
-        /// <summary>
-        /// Occurs when new property item is created.
-        /// </summary>
-        /// <remarks>
-        /// Use this event to override default property item creation mechanism
-        /// used inside <see cref="SetProps"/> and similar methods where object's
-        /// <see cref="PropertyInfo"/> is converted to the <see cref="IPropertyGridItem"/>.
-        /// </remarks>
-        public event CreatePropertyEventHandler? PropertyCustomCreate;
 
         /// <summary>
         /// Occurs when a property selection has been changed, either by user action
@@ -159,12 +150,15 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? ColEndDrag;
 
-        [Flags]
-        private enum StaticStateFlags
-        {
-            CollectionEditorsRegistered = 1,
-            KnownColorsAdded = 2,
-        }
+        /// <summary>
+        /// Occurs when new property item is created.
+        /// </summary>
+        /// <remarks>
+        /// Use this event to override default property item creation mechanism
+        /// used inside <see cref="SetProps"/> and similar methods where object's
+        /// <see cref="PropertyInfo"/> is converted to the <see cref="IPropertyGridItem"/>.
+        /// </remarks>
+        public event CreatePropertyEventHandler? PropertyCustomCreate;
 
         /// <summary>
         /// Defines default style for the newly created
@@ -522,157 +516,6 @@ namespace Alternet.UI
         public static IPropertyGrid CreatePropertyGrid()
         {
             return new PropertyGrid();
-        }
-
-        /// <summary>
-        /// Register collection editors for all controls.
-        /// </summary>
-        public static void RegisterCollectionEditors()
-        {
-            // todo: List edit for ImageList.Images
-            // todo: List edit for ImageSet.Images
-            // todo: List edit for TabControl.Pages
-            // todo: List edit for Toolbar.Items
-            // todo: List edit for Menu.Items
-            /* todo: List edit for Window.InputBindings*/
-
-            if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
-                return;
-            staticStateFlags |= StaticStateFlags.CollectionEditorsRegistered;
-
-            /*RegisterCollectionEditor(
-                typeof(ImageList),
-                nameof(ImageList.Images),
-                null);*/
-
-            /*RegisterCollectionEditor(
-                typeof(ImageSet),
-                nameof(ImageSet.Images),
-                null);*/
-
-            RegisterCollectionEditor(
-                typeof(TreeView),
-                nameof(TreeView.Items),
-                typeof(ListEditSourceTreeViewItem));
-
-            RegisterCollectionEditor(
-                typeof(ListView),
-                nameof(ListView.Items),
-                typeof(ListEditSourceListViewItem));
-
-            RegisterCollectionEditor(
-                typeof(ListView),
-                nameof(ListView.Columns),
-                typeof(ListEditSourceListViewColumn));
-
-            RegisterCollectionEditor(
-                typeof(ListViewItem),
-                nameof(ListViewItem.Cells),
-                typeof(ListEditSourceListViewCell));
-
-            RegisterCollectionEditor(
-                typeof(ListBox),
-                nameof(ListBox.Items),
-                typeof(ListEditSourceListBox));
-
-            RegisterCollectionEditor(
-                typeof(StatusBar),
-                nameof(StatusBar.Panels),
-                typeof(ListEditSourceStatusBar));
-
-            RegisterCollectionEditor(
-                typeof(CheckListBox),
-                nameof(CheckListBox.Items),
-                typeof(ListEditSourceListBox));
-
-            RegisterCollectionEditor(
-                typeof(ComboBox),
-                nameof(ComboBox.Items),
-                typeof(ListEditSourceListBox));
-
-            /*RegisterCollectionEditor(
-                typeof(TabControl),
-                nameof(TabControl.Pages),
-                null);*/
-
-            /*RegisterCollectionEditor(
-                typeof(Toolbar),
-                nameof(Toolbar.Items),
-                null);*/
-
-            /*RegisterCollectionEditor(
-                typeof(Menu),
-                nameof(Menu.Items),
-                null);*/
-
-            /*RegisterCollectionEditor(
-                typeof(Window),
-                nameof(Window.InputBindings),
-                null);*/
-
-            RegisterCollectionEditor(
-                typeof(PropertyGridAdapterBrush),
-                nameof(PropertyGridAdapterBrush.GradientStops),
-                typeof(ListEditSourceGradientStops));
-        }
-
-        /// <summary>
-        /// Gets type of the registered list editor source for the specified <paramref name="type"/>
-        /// and <paramref name="propInfo"/>. This is used in list editor dialog.
-        /// </summary>
-        /// <param name="type">Type which contains the property.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static Type? GetListEditSourceType(Type? type, PropertyInfo? propInfo)
-        {
-            static bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
-            {
-                var result = registry.ListEditSourceType != null;
-                return result;
-            }
-
-            var registry = GetValidBasePropRegistry(type, propInfo, ValidatorFunc);
-            var result = registry?.ListEditSourceType;
-            return result;
-        }
-
-        /// <summary>
-        /// Shows or hides ellipsis button in the property editor.
-        /// </summary>
-        /// <param name="type">Type which contains the property.</param>
-        /// <param name="propName">Property name.</param>
-        /// <param name="value"><c>true</c> to show ellipsis button, <c>false</c> to hide it.</param>
-        /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
-        /// specified in <paramref name="propName"/>.</returns>
-        public static IPropertyGridPropInfoRegistry ShowEllipsisButton(
-            Type type,
-            string propName,
-            bool value = true)
-        {
-            var typeRegistry = PropertyGrid.GetTypeRegistry(type);
-            var propRegistry = typeRegistry.GetPropRegistry(propName);
-            propRegistry.NewItemParams.HasEllipsis = value;
-            return propRegistry;
-        }
-
-        /// <summary>
-        /// Registers collection editor for the specified property of the class.
-        /// </summary>
-        /// <param name="type">Type which contains the property.</param>
-        /// <param name="propName">Property name.</param>
-        /// <param name="editType">Editor type which implements
-        /// <see cref="IListEditSource"/> interface.</param>
-        /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
-        /// specified in <paramref name="propName"/>.</returns>
-        public static IPropertyGridPropInfoRegistry RegisterCollectionEditor(
-            Type type,
-            string propName,
-            Type? editType)
-        {
-            var propRegistry = ShowEllipsisButton(type, propName);
-            propRegistry.NewItemParams.OnlyTextReadOnly = true;
-            propRegistry.ListEditSourceType = editType;
-            propRegistry.NewItemParams.ButtonClick += ListEditSource.EditWithListEdit;
-            return propRegistry;
         }
 
         /// <summary>
@@ -4304,9 +4147,9 @@ namespace Alternet.UI
 
         internal static void KnownColorsAdd()
         {
-            if (staticStateFlags.HasFlag(StaticStateFlags.KnownColorsAdded))
+            if (StaticFlags.HasFlag(StaticStateFlags.KnownColorsAdded))
                 return;
-            staticStateFlags |= StaticStateFlags.KnownColorsAdded;
+            StaticFlags |= StaticStateFlags.KnownColorsAdded;
 
             var items = ColorUtils.GetColorInfos();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,6 +17,177 @@ namespace Alternet.UI
             TypeRegistry = new();
 
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
+        private static StaticStateFlags staticStateFlags;
+
+        public static event EventHandler? EditWithListEdit;
+
+        [Flags]
+        protected enum StaticStateFlags
+        {
+            CollectionEditorsRegistered = 1,
+            KnownColorsAdded = 2,
+        }
+
+        protected static StaticStateFlags StaticFlags
+        {
+            get => staticStateFlags;
+            set => staticStateFlags = value;
+        }
+
+        /// <summary>
+        /// Shows or hides ellipsis button in the property editor.
+        /// </summary>
+        /// <param name="type">Type which contains the property.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="value"><c>true</c> to show ellipsis button, <c>false</c> to hide it.</param>
+        /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
+        /// specified in <paramref name="propName"/>.</returns>
+        public static IPropertyGridPropInfoRegistry ShowEllipsisButton(
+            Type type,
+            string propName,
+            bool value = true)
+        {
+            var typeRegistry = BasePropertyGrid.GetTypeRegistry(type);
+            var propRegistry = typeRegistry.GetPropRegistry(propName);
+            propRegistry.NewItemParams.HasEllipsis = value;
+            return propRegistry;
+        }
+
+        /// <summary>
+        /// Registers collection editor for the specified property of the class.
+        /// </summary>
+        /// <param name="type">Type which contains the property.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="editType">Editor type which implements
+        /// <see cref="IListEditSource"/> interface.</param>
+        /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
+        /// specified in <paramref name="propName"/>.</returns>
+        public static IPropertyGridPropInfoRegistry RegisterCollectionEditor(
+            Type type,
+            string propName,
+            Type? editType)
+        {
+            var propRegistry = ShowEllipsisButton(type, propName);
+            propRegistry.NewItemParams.OnlyTextReadOnly = true;
+            propRegistry.ListEditSourceType = editType;
+            propRegistry.NewItemParams.ButtonClick += (s, e) =>
+            {
+                EditWithListEdit?.Invoke(s, e);
+            };
+
+            return propRegistry;
+        }
+
+        /// <summary>
+        /// Register collection editors for all controls.
+        /// </summary>
+        public static void RegisterCollectionEditors()
+        {
+            // todo: List edit for ImageList.Images
+            // todo: List edit for ImageSet.Images
+            // todo: List edit for TabControl.Pages
+            // todo: List edit for Toolbar.Items
+            // todo: List edit for Menu.Items
+            /* todo: List edit for Window.InputBindings*/
+
+            if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
+                return;
+            staticStateFlags |= StaticStateFlags.CollectionEditorsRegistered;
+
+            /*RegisterCollectionEditor(
+                typeof(ImageList),
+                nameof(ImageList.Images),
+                null);*/
+
+            /*RegisterCollectionEditor(
+                typeof(ImageSet),
+                nameof(ImageSet.Images),
+                null);*/
+
+            RegisterCollectionEditor(
+                typeof(TreeView),
+                nameof(TreeView.Items),
+                typeof(ListEditSourceTreeViewItem));
+
+            RegisterCollectionEditor(
+                typeof(ListView),
+                nameof(ListView.Items),
+                typeof(ListEditSourceListViewItem));
+
+            RegisterCollectionEditor(
+                typeof(ListView),
+                nameof(ListView.Columns),
+                typeof(ListEditSourceListViewColumn));
+
+            RegisterCollectionEditor(
+                typeof(ListViewItem),
+                nameof(ListViewItem.Cells),
+                typeof(ListEditSourceListViewCell));
+
+            RegisterCollectionEditor(
+                typeof(ListBox),
+                nameof(ListBox.Items),
+                typeof(ListEditSourceListBox));
+
+            RegisterCollectionEditor(
+                typeof(StatusBar),
+                nameof(StatusBar.Panels),
+                typeof(ListEditSourceStatusBar));
+
+            RegisterCollectionEditor(
+                typeof(CheckListBox),
+                nameof(CheckListBox.Items),
+                typeof(ListEditSourceListBox));
+
+            RegisterCollectionEditor(
+                typeof(ComboBox),
+                nameof(ComboBox.Items),
+                typeof(ListEditSourceListBox));
+
+            /*RegisterCollectionEditor(
+                typeof(TabControl),
+                nameof(TabControl.Pages),
+                null);*/
+
+            /*RegisterCollectionEditor(
+                typeof(Toolbar),
+                nameof(Toolbar.Items),
+                null);*/
+
+            /*RegisterCollectionEditor(
+                typeof(Menu),
+                nameof(Menu.Items),
+                null);*/
+
+            /*RegisterCollectionEditor(
+                typeof(Window),
+                nameof(Window.InputBindings),
+                null);*/
+
+            RegisterCollectionEditor(
+                typeof(PropertyGridAdapterBrush),
+                nameof(PropertyGridAdapterBrush.GradientStops),
+                typeof(ListEditSourceGradientStops));
+        }
+
+        /// <summary>
+        /// Gets type of the registered list editor source for the specified <paramref name="type"/>
+        /// and <paramref name="propInfo"/>. This is used in list editor dialog.
+        /// </summary>
+        /// <param name="type">Type which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        public static Type? GetListEditSourceType(Type? type, PropertyInfo? propInfo)
+        {
+            static bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
+            {
+                var result = registry.ListEditSourceType != null;
+                return result;
+            }
+
+            var registry = GetValidBasePropRegistry(type, propInfo, ValidatorFunc);
+            var result = registry?.ListEditSourceType;
+            return result;
+        }
 
         /// <summary>
         /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>.
