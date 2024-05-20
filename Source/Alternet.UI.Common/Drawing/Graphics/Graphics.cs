@@ -859,40 +859,17 @@ namespace Alternet.Drawing
         /// the drawn text.</param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
-        public virtual void DrawText(string text, Font font, Brush brush, PointD origin)
-        {
-            DrawText(text, font, brush, origin, TextFormat.Default);
-        }
+        public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
         /// <summary>
         /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="origin"></param>
-        public virtual void DrawText(string text, PointD origin)
+        public void DrawText(string text, PointD origin)
         {
             DrawText(text, Font.Default, Brush.Default, origin);
         }
-
-        /// <summary>
-        /// Draws the specified text string at the specified location with the specified
-        /// <see cref="Brush"/> and <see cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
-        /// the drawn text.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
-        /// such as
-        /// alignment and trimming, that are applied to the drawn text.</param>
-        public abstract void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            PointD origin,
-            TextFormat format);
 
         /// <summary>
         /// Draws the specified text string at the specified location with the specified
@@ -904,7 +881,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
         /// the drawn text.</param>
-        public virtual void DrawText(string text, Font font, Brush brush, RectD bounds)
+        public void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
             DrawText(text, font, brush, bounds, TextFormat.Default);
         }

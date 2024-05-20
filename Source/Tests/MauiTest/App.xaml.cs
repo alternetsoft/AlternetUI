@@ -20,7 +20,7 @@ public partial class App : Application
     {
         Window window = base.CreateWindow(activationState);
 
-        hook = new TaskPoolGlobalHook();
+        /*hook = new TaskPoolGlobalHook();
 
         hook.KeyTyped += Hook_KeyTyped;
         hook.KeyPressed += Hook_KeyPressed;
@@ -34,7 +34,7 @@ public partial class App : Application
 
         hook.MouseWheel += Hook_MouseWheel;
 
-        hook.RunAsync();
+        hook.RunAsync();*/
 
         window.Created += (s, e) =>
         {

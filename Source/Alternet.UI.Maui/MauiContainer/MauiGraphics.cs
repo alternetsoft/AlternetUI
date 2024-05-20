@@ -239,48 +239,52 @@ namespace Alternet.Drawing
             Font font,
             IControl? control)
         {
-            return SizeD.Empty;
+            return GetTextExtent(text, font);
         }
-
-        /*/// <inheritdoc/>
-        public override SizeD MeasureText(string text, Font font)
-        {
-            return SizeD.Empty;
-        }*/
-
-        /*/// <inheritdoc/>
-        public override SizeD MeasureText(string text, Font font, double maximumWidth)
-        {
-            return SizeD.Empty;
-        }*/
-
-        /*/// <inheritdoc/>
-        public override SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format)
-        {
-            return SizeD.Empty;
-        }*/
 
         // Used in editor
         /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
-            return SizeD.Empty;
+            var size = canvas.GetStringSize(text, font.ToMaui(), (float)font.SizeInPoints);
+            return (size.Width, size.Height);
         }
 
-        /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, PointD origin)
+        public void FontToCanvas(Font font)
         {
-            DrawText(text, font, brush, origin, TextFormat.Default);
+            canvas.Font = font.ToMaui();
+            canvas.FontSize = (float)font.SizeInPoints;
         }
 
+        /*==========================================*/
+
+        // Used in editor
         /// <inheritdoc/>
-        public override void DrawText(string text, PointD origin)
+        public override void DrawText(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor)
         {
-            DrawText(text, Font.Default, Brush.Default, origin);
+            FontToCanvas(font);
+            canvas.FontColor = foreColor.ToMaui();
+
+            var locationX = (float)location.X;
+            var locationY = (float)location.Y;
+
+            if (backColor.IsOk)
+            {
+                canvas.FillColor = backColor.ToMaui();
+                var size = canvas.GetStringSize(text, font.ToMaui(), (float)font.SizeInPoints);
+                canvas.FillRectangle(locationX, locationY, size.Width, size.Height);
+            }
+
+            canvas.DrawString(
+                text,
+                locationX,
+                locationY,
+                Microsoft.Maui.Graphics.HorizontalAlignment.Left);
         }
 
         /// <inheritdoc/>
@@ -288,15 +292,8 @@ namespace Alternet.Drawing
             string text,
             Font font,
             Brush brush,
-            PointD origin,
-            TextFormat format)
+            PointD origin)
         {
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DrawText(text, font, brush, bounds, TextFormat.Default);
         }
 
         /// <inheritdoc/>
@@ -312,17 +309,6 @@ namespace Alternet.Drawing
         // Used in editor
         /// <inheritdoc/>
         public override void SetPixel(double x, double y, Color color)
-        {
-        }
-
-        // Used in editor
-        /// <inheritdoc/>
-        public override void DrawText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor)
         {
         }
 

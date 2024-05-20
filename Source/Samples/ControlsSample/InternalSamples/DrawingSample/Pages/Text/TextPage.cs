@@ -247,8 +247,7 @@ namespace DrawingSample
                         LoremIpsum,
                         paragraph.Font,
                         color.AsBrush,
-                        new PointD(x, y),
-                        textFormat);
+                        new PointD(x, y));
                 }
 
                 y += textHeight + 20;

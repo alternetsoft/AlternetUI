@@ -75,28 +75,12 @@ namespace Alternet.Drawing
             return SizeD.Empty;
         }
 
-        public override void DrawText(string text, Font font, Brush brush, PointD origin)
-        {
-            DrawText(text, font, brush, origin, TextFormat.Default);
-        }
-
-        public override void DrawText(string text, PointD origin)
-        {
-            DrawText(text, Font.Default, Brush.Default, origin);
-        }
-
         public override void DrawText(
             string text,
             Font font,
             Brush brush,
-            PointD origin,
-            TextFormat format)
+            PointD origin)
         {
-        }
-
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DrawText(text, font, brush, bounds, TextFormat.Default);
         }
 
         public override void DrawText(
@@ -107,20 +91,6 @@ namespace Alternet.Drawing
             TextFormat format)
         {
         }
-
-        /*public override SizeD MeasureText(string text, Font font, double maximumWidth)
-        {
-            return SizeD.Empty;
-        }*/
-
-        /*public override SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format)
-        {
-            return SizeD.Empty;
-        }*/
 
         /// <inheritdoc/>
         // Used in editor

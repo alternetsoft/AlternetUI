@@ -596,12 +596,10 @@ namespace Alternet.Drawing
             string text,
             Font font,
             Brush brush,
-            PointD origin,
-            TextFormat format)
+            PointD origin)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
-            DebugFormatAssert(format);
             dc.DrawTextAtPoint(
                 text,
                 origin,

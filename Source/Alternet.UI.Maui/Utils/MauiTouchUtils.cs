@@ -17,7 +17,7 @@ namespace Alternet.UI
             result.Id = e.Id;
             result.ActionType = (TouchAction)e.ActionType;
             result.DeviceType = (TouchDeviceType)e.DeviceType;
-            result.Location = MauiUtils.Convert(e.Location);
+            result.Location = e.Location.ToAlternet();
             result.InContact = e.InContact;
             result.WheelDelta = e.WheelDelta;
             result.Pressure = e.Pressure;
