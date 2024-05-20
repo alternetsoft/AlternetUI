@@ -310,13 +310,8 @@ namespace Alternet.UI
 
         public void InternalSetListViewAndIndex(ListView? control, long? newIndex)
         {
-            var changed = listView != control || Index != newIndex;
-            if (changed)
-            {
-                listView = control;
-                Index = newIndex;
-                ApplyColumns();
-            }
+            ListView = control;
+            Index = newIndex;
         }
 
         public void ApplyColumns()
