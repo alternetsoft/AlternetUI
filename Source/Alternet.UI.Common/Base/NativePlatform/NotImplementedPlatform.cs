@@ -495,5 +495,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

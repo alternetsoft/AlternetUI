@@ -6,6 +6,13 @@ namespace Alternet.UI
     [ControlCategory("Dialogs")]
     public class SelectDirectoryDialog : CommonDialog
     {
+        /// <summary>
+        /// Gets default <see cref="SelectDirectoryDialog"/> instance.
+        /// </summary>
+        public static SelectDirectoryDialog Default = defaultDialog ??= new();
+
+        private static SelectDirectoryDialog? defaultDialog;
+
         private readonly Native.SelectDirectoryDialog nativeDialog;
 
         /// <summary>
@@ -19,7 +26,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a string containing the directory name selected in the file dialog window.
         /// </summary>
-        public string? DirectoryName
+        public virtual string? DirectoryName
         {
             get
             {
@@ -37,7 +44,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the initial directory displayed by the file dialog window.
         /// </summary>
-        public string? InitialDirectory
+        public virtual string? InitialDirectory
         {
             get
             {

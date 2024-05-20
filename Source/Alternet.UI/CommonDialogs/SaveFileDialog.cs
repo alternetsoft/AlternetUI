@@ -9,12 +9,19 @@ namespace Alternet.UI
     public class SaveFileDialog : FileDialog
     {
         /// <summary>
+        /// Gets default <see cref="SaveFileDialog"/> instance.
+        /// </summary>
+        public static SaveFileDialog Default = defaultDialog ??= new SaveFileDialog();
+
+        private static SaveFileDialog? defaultDialog;
+
+        /// <summary>
         /// Gets or sets prompt for a confirmation if a file will be overwritten.
         /// </summary>
         /// <remarks>
         /// This style is for Save dialog only, is always enabled on MacOs and cannot be disabled.
         /// </remarks>
-        public bool OverwritePrompt
+        public virtual bool OverwritePrompt
         {
             get
             {
@@ -38,9 +45,9 @@ namespace Alternet.UI
         /// result is set to <see cref="ModalResult.Canceled"/> when file name is empty or
         /// <c>null</c>.
         /// </remarks>
-        public bool AllowNullFileName { get; set; } = false;
+        public virtual bool AllowNullFileName { get; set; } = false;
 
-        private protected override Native.FileDialogMode Mode => Native.FileDialogMode.Save;
+        private protected override bool IsOpenDialog => false;
 
         /// <inheritdoc/>
         public override ModalResult ShowModal(Window? owner)

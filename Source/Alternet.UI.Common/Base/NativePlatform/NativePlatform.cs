@@ -139,6 +139,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public abstract ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush);
 
+        public abstract IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);
+
         public abstract void ShowDeveloperTools();
 
         public abstract string GetLibraryVersionString();

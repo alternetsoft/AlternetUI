@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
-namespace Alternet.Drawing.Printing
+namespace Alternet.UI.Native
 {
-    internal class PageSetupDialogHandler : UI.Native.PageSetupDialog, IPageSetupDialogHandler
+    internal partial class PageSetupDialog : Alternet.Drawing.Printing.IPageSetupDialogHandler
     {
-        Thickness? IPageSetupDialogHandler.MinMargins
+        Thickness? Alternet.Drawing.Printing.IPageSetupDialogHandler.MinMargins
         {
             get
             {
@@ -26,20 +26,20 @@ namespace Alternet.Drawing.Printing
             }
         }
 
-        bool ICustomPrintDialogHandler.ShowHelp { get; set; }
+        public bool ShowHelp { get; set; }
 
-        string? ICustomPrintDialogHandler.Title { get; set; }
+        public string? Title { get; set; }
 
-        void ICustomPrintDialogHandler.SetDocument(IPrintDocumentHandler? value)
+        public void SetDocument(Alternet.Drawing.Printing.IPrintDocumentHandler? value)
         {
-            Document = value as PrintDocumentHandler;
+            Document = value as Alternet.Drawing.Printing.PrintDocumentHandler;
         }
 
-        ModalResult ICustomPrintDialogHandler.ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {
             var nativeOwner = owner == null ? null
                 : ((WindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)ShowModal(nativeOwner);
+            return ShowModal(nativeOwner);
         }
     }
 }

@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing.Printing
 {
-    public interface IPageSetupDialogHandler : ICustomPrintDialogHandler
+    public interface IPageSetupDialogHandler : IBasePrintDialogHandler
     {
         Thickness? MinMargins { get; set; }
 

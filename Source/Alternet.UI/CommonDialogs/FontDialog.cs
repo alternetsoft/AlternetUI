@@ -10,6 +10,13 @@ namespace Alternet.UI
     [ControlCategory("Dialogs")]
     public class FontDialog : CommonDialog
     {
+        /// <summary>
+        /// Gets default <see cref="FontDialog"/> instance.
+        /// </summary>
+        public static FontDialog Default = defaultDialog ??= new FontDialog();
+
+        private static FontDialog? defaultDialog;
+
         private readonly Native.FontDialog nativeDialog;
         private FontInfo fontInfo = Control.DefaultFont;
 
@@ -45,33 +52,6 @@ namespace Alternet.UI
                     return;
                 CheckDisposed();
                 nativeDialog.AllowSymbols = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether the Help button will be shown (Windows only).
-        /// </summary>
-        /// <remarks>
-        /// The default value is false.
-        /// </remarks>
-        public bool ShowHelp
-        {
-            get
-            {
-                if (!BaseApplication.IsWindowsOS)
-                    return false;
-
-                CheckDisposed();
-                return nativeDialog.ShowHelp;
-            }
-
-            set
-            {
-                if (!BaseApplication.IsWindowsOS)
-                    return;
-
-                CheckDisposed();
-                nativeDialog.ShowHelp = value;
             }
         }
 

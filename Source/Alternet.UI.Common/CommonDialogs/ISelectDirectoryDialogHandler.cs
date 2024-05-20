@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Alternet.UI;
-
-namespace Alternet.Drawing.Printing
+namespace Alternet.UI
 {
-    public interface IPrintPreviewDialogHandler : IBasePrintDialogHandler
+    public interface ISelectDirectoryDialogHandler
     {
     }
 }

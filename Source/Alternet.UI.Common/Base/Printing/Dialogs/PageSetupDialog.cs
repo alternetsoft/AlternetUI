@@ -30,36 +30,20 @@ namespace Alternet.UI
     /// <see cref="PageSettings"/> property before calling <see cref="CommonDialog.ShowModal()"/>.
     /// </para>
     /// </remarks>
-    public class PageSetupDialog : CommonDialog
+    public class PageSetupDialog : BasePrintDialog
     {
-        private PrintDocument? document;
+        /// <summary>
+        /// Gets default <see cref="PageSetupDialog"/> instance.
+        /// </summary>
+        public static PageSetupDialog Default = defaultDialog ??= new PageSetupDialog();
+
+        private static PageSetupDialog? defaultDialog;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PageSetupDialog"/>.
         /// </summary>
         public PageSetupDialog()
         {
-            Handler = NativePlatform.Default.CreatePageSetupDialogHandler();
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the <see cref="PrintDocument"/> to get page settings from.
-        /// </summary>
-        [Browsable(false)]
-        public virtual PrintDocument? Document
-        {
-            get
-            {
-                return document;
-            }
-
-            set
-            {
-                if (document == value)
-                    return;
-                document = value;
-                Handler.SetDocument(value?.Handler);
-            }
         }
 
         /// <summary>
@@ -147,29 +131,13 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override string? Title { get; set; }
-
-        internal IPageSetupDialogHandler Handler { get; private set; }
+        [Browsable(false)]
+        public new IPageSetupDialogHandler Handler => (IPageSetupDialogHandler)base.Handler;
 
         /// <inheritdoc/>
-        public override ModalResult ShowModal(Window? owner)
+        protected override IDialogHandler CreateHandler()
         {
-            if (Document == null)
-            {
-                BaseApplication.Alert("Cannot show the PageSetup dialog when the Document is null.");
-                return ModalResult.Canceled;
-            }
-
-            CheckDisposed();
-            return Handler.ShowModal(owner);
-        }
-
-        /// <inheritdoc/>
-        protected override void DisposeManaged()
-        {
-            Handler?.Dispose();
-            Handler = null!;
+            return NativePlatform.Default.CreatePageSetupDialogHandler();
         }
     }
 }

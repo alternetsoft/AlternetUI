@@ -40,6 +40,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
+        {
+            return new UI.Native.ColorDialog();
+        }
+
+        /// <inheritdoc/>
         public override IPenHandler CreatePenHandler(Pen pen) => new UI.Native.Pen();
 
         /// <inheritdoc/>
@@ -628,17 +634,17 @@ namespace Alternet.UI
 
         public override IPrintDialogHandler CreatePrintDialogHandler()
         {
-            return new PrintDialogHandler();
+            return new UI.Native.PrintDialog();
         }
 
         public override IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler()
         {
-            return new PrintPreviewDialogHandler();
+            return new UI.Native.PrintPreviewDialog();
         }
 
         public override IPageSetupDialogHandler CreatePageSetupDialogHandler()
         {
-            return new PageSetupDialogHandler();
+            return new UI.Native.PageSetupDialog();
         }
 
         private class SafeNativeMethods

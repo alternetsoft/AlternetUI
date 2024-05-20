@@ -18,7 +18,7 @@ namespace Alternet.UI
         {
             nativeDialog = new Native.FileDialog
             {
-                Mode = this.Mode,
+                Mode = IsOpenDialog ? Native.FileDialogMode.Open : Native.FileDialogMode.Save,
             };
         }
 
@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// The non-dereferenced link path is always returned, even without this flag, under Linux
         /// and so using it there doesn't do anything.
         /// </remarks>
-        public bool NoShortcutFollow
+        public virtual bool NoShortcutFollow
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// Gets or sets whether to change the current working directory (when the dialog is
         /// dismissed) to the directory where the file(s) chosen by the user are.
         /// </summary>
-        public bool ChangeDir
+        public virtual bool ChangeDir
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// Gets or sets whether to show the preview of the selected files (currently only
         /// supported by Linux port).
         /// </summary>
-        public bool PreviewFiles
+        public virtual bool PreviewFiles
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to show hidden files.
         /// </summary>
-        public bool ShowHiddenFiles
+        public virtual bool ShowHiddenFiles
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the initial directory displayed by the file dialog window.
         /// </summary>
-        public string? InitialDirectory
+        public virtual string? InitialDirectory
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// Use the <see cref="SelectedFilterIndex"/> property to set which filtering option
         /// is shown first to the user.
         /// </remarks>
-        public string? Filter
+        public virtual string? Filter
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the index of the filter currently selected in the file dialog window.
         /// </summary>
-        public int SelectedFilterIndex
+        public virtual int SelectedFilterIndex
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a string containing the file name selected in the file dialog window.
         /// </summary>
-        public string? FileName
+        public virtual string? FileName
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Alternet.UI
 
         private protected Native.FileDialog NativeDialog => nativeDialog;
 
-        private protected abstract Native.FileDialogMode Mode { get; }
+        private protected abstract bool IsOpenDialog { get; }
 
         /// <inheritdoc/>
         public override ModalResult ShowModal(Window? owner)

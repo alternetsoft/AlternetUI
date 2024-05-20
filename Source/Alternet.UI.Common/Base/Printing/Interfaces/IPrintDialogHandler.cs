@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing.Printing
 {
-    public interface IPrintDialogHandler : ICustomPrintDialogHandler
+    public interface IPrintDialogHandler : IBasePrintDialogHandler
     {
         bool AllowSomePages { get; set; }
 

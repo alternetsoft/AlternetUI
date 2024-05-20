@@ -8,14 +8,8 @@ using Alternet.UI;
 
 namespace Alternet.Drawing.Printing
 {
-    public interface ICustomPrintDialogHandler : IDisposable
+    public interface IBasePrintDialogHandler : IDialogHandler
     {
-        bool ShowHelp { get; set; }
-
-        string? Title { get; set; }
-
-        ModalResult ShowModal(Window? owner);
-
         void SetDocument(IPrintDocumentHandler? value);
     }
 }

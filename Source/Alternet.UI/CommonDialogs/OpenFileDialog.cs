@@ -10,6 +10,13 @@ namespace Alternet.UI
     public class OpenFileDialog : FileDialog
     {
         /// <summary>
+        /// Gets default <see cref="OpenFileDialog"/> instance.
+        /// </summary>
+        public static OpenFileDialog Default = defaultDialog ??= new OpenFileDialog();
+
+        private static OpenFileDialog? defaultDialog;
+
+        /// <summary>
         /// Gets or sets whether the user may only select files that actually exist.
         /// </summary>
         /// <remarks>
@@ -17,7 +24,7 @@ namespace Alternet.UI
         /// if this style was specified, because it is impossible to choose a file that
         /// doesn't exist from a standard MacOS file dialog.
         /// </remarks>
-        public bool FileMustExist
+        public virtual bool FileMustExist
         {
             get
             {
@@ -41,7 +48,7 @@ namespace Alternet.UI
         /// or concurrently;
         /// otherwise, <c>false</c>. The default value is <c>false</c>.
         /// </value>
-        public bool AllowMultipleSelection
+        public virtual bool AllowMultipleSelection
         {
             get
             {
@@ -60,7 +67,7 @@ namespace Alternet.UI
         /// Gets the file names of all selected files in the dialog window.
         /// </summary>
         [Browsable(false)]
-        public string[] FileNames
+        public virtual string[] FileNames
         {
             get
             {
@@ -69,6 +76,6 @@ namespace Alternet.UI
             }
         }
 
-        private protected override Native.FileDialogMode Mode => Native.FileDialogMode.Open;
+        private protected override bool IsOpenDialog => true;
     }
 }

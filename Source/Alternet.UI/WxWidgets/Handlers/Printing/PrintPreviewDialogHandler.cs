@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
-namespace Alternet.Drawing.Printing
+namespace Alternet.UI.Native
 {
-    internal class PrintPreviewDialogHandler : UI.Native.PrintPreviewDialog, IPrintPreviewDialogHandler
+    internal partial class PrintPreviewDialog : Alternet.Drawing.Printing.IPrintPreviewDialogHandler
     {
-        bool ICustomPrintDialogHandler.ShowHelp { get; set; }
+        public bool ShowHelp { get; set; }
 
-        void ICustomPrintDialogHandler.SetDocument(IPrintDocumentHandler? value)
+        public void SetDocument(Alternet.Drawing.Printing.IPrintDocumentHandler? value)
         {
-            Document = value as PrintDocumentHandler;
+            Document = value as Alternet.Drawing.Printing.PrintDocumentHandler;
         }
 
-        ModalResult ICustomPrintDialogHandler.ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {
             var nativeOwner = owner == null
                 ? null : ((WindowHandler)owner.Handler).NativeControl;
             ShowModal(nativeOwner);
-            return ModalResult.Accepted;
+            return Alternet.UI.ModalResult.Accepted;
         }
     }
 }
