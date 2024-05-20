@@ -107,6 +107,33 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor)
         {
+            var locationX = (float)location.X;
+            var locationY = (float)location.Y;
+
+            var skiaFont = font.ToSkia();
+
+            SKPaint paint = new(skiaFont);
+            paint.Color = foreColor.ToSkia();
+            paint.Style = SKPaintStyle.Fill;
+            paint.TextAlign = SKTextAlign.Left;
+
+            SKRect textBounds = default;
+            paint.MeasureText(text, ref textBounds);
+            textBounds.Offset(locationX, locationY);
+
+            if (backColor.IsOk)
+            {
+                var skiaBackColor = backColor.ToSkia();
+                using SKPaint fillPaint = new();
+                fillPaint.Color = skiaBackColor;
+                fillPaint.Style = SKPaintStyle.Fill;
+
+                canvas.DrawRect(
+                    new(locationX, locationY, textBounds.Width, textBounds.Height),
+                    fillPaint);
+            }
+
+            canvas.DrawText(text, locationX - textBounds.Left, locationY - textBounds.Top, paint);
         }
 
         /// <inheritdoc/>

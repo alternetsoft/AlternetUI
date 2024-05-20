@@ -267,16 +267,22 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor)
         {
+            var scale = canvas.DisplayScale;
+
             FontToCanvas(font);
             canvas.FontColor = foreColor.ToMaui();
 
             var locationX = (float)location.X;
             var locationY = (float)location.Y;
+            var fontSize = (float)font.SizeInPoints;
+
+            var platformFont = font.ToMaui();
+
+            var size = canvas.GetStringSize(text, platformFont, fontSize + 5);
 
             if (backColor.IsOk)
             {
                 canvas.FillColor = backColor.ToMaui();
-                var size = canvas.GetStringSize(text, font.ToMaui(), (float)font.SizeInPoints);
                 canvas.FillRectangle(locationX, locationY, size.Width, size.Height);
             }
 
@@ -284,7 +290,12 @@ namespace Alternet.Drawing
                 text,
                 locationX,
                 locationY,
-                Microsoft.Maui.Graphics.HorizontalAlignment.Left);
+                int.MaxValue,
+                int.MaxValue,
+                Microsoft.Maui.Graphics.HorizontalAlignment.Left,
+                Microsoft.Maui.Graphics.VerticalAlignment.Top,
+                TextFlow.OverflowBounds,
+                0);
         }
 
         /// <inheritdoc/>

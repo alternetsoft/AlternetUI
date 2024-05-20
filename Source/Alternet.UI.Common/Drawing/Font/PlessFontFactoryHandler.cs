@@ -50,22 +50,22 @@ namespace Alternet.Drawing
 
         public virtual Font CreateSystemFont(SystemSettingsFont systemFont)
         {
-            throw new NotImplementedException();
+            return new Font(CreateFont());
         }
 
         public virtual string[] GetFontFamiliesNames()
         {
-            throw new NotImplementedException();
+            return new string[] { Font.Default.Name };
         }
 
         public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
         {
-            throw new NotImplementedException();
+            return Font.Default.Name;
         }
 
         public virtual bool IsFontFamilyValid(string name)
         {
-            throw new NotImplementedException();
+            return Font.Default.Name == name;
         }
 
         public virtual void SetDefaultFont(Font value)

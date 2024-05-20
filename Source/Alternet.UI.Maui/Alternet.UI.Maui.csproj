@@ -14,11 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.20" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.20" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.40" />
-    <PackageReference Include="SharpHook" Version="5.3.2" />
+    <PackageReference Include="SharpHook" Version="5.3.4" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
   </ItemGroup>
 

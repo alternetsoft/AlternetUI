@@ -16,10 +16,10 @@ namespace Alternet.UI
 
             dc.DrawText(
                 "hello text",
-                (15, 15),
-                Font.Default,
-                Color.Red,
-                Color.White);
+                (0, 0),
+                Font.Default.Scaled(3),
+                Color.White,
+                Color.LightGreen);
         }
 }
 }

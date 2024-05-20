@@ -9,6 +9,7 @@ using Alternet.UI.Extensions;
 
 using Microsoft.Maui.Graphics;
 
+using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 
@@ -55,7 +56,15 @@ namespace Alternet.UI
                 graphics.Args = e;
             }
 
-            RectD dirtyRect = RectD.Empty; // How to get this?
+            var dc = e.Surface.Canvas;
+
+            RectD dirtyRect = dc.LocalClipBounds.ToAlternet();
+
+            using SKPaint fillPaint = new();
+            fillPaint.Color = Colors.LightGoldenrodYellow.ToSKColor();
+            fillPaint.Style = SKPaintStyle.Fill;
+
+            dc.DrawRect(dc.LocalClipBounds, fillPaint);
 
             control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
         }

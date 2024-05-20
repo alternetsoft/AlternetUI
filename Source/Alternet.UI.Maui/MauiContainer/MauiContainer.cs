@@ -56,6 +56,36 @@ namespace Alternet.UI
             control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect.ToRectD()));
 
             /*
+            canvas.FontColor = Colors.White; //App.SecondaryColor
+            canvas.FontSize = 18;
+
+            canvas.Font = Microsoft.Maui.Graphics.Font.Default;
+            canvas.StrokeColor = Colors.LawnGreen;
+            canvas.FillColor = Colors.LawnGreen;
+            canvas.DrawRectangle(20, 20, 380, 100);
+            var size = canvas.GetStringSize(
+                "Text is left aligned.",
+                Microsoft.Maui.Graphics.Font.Default,
+                18);
+            canvas.FillRectangle(20, 20, size.Width * 1.2f, size.Height * 1.5f);
+            canvas.DrawString("Text is left aligned.", 20, 20, 380, 100, Microsoft.Maui.Graphics.HorizontalAlignment.Left, Microsoft.Maui.Graphics.VerticalAlignment.Top);
+
+            canvas.DrawRectangle(20, 60, 380, 100);
+            canvas.DrawString("Text is centered.", 20, 60, 380, 100, Microsoft.Maui.Graphics.HorizontalAlignment.Center, Microsoft.Maui.Graphics.VerticalAlignment.Top);
+
+            canvas.DrawRectangle(20, 100, 380, 100);
+            canvas.DrawString("Text is right aligned.", 20, 100, 380, 100, Microsoft.Maui.Graphics.HorizontalAlignment.Right, Microsoft.Maui.Graphics.VerticalAlignment.Top);
+
+            canvas.Font = Microsoft.Maui.Graphics.Font.DefaultBold;
+            canvas.DrawRectangle(20, 140, 350, 100);
+            canvas.DrawString("This text is displayed using the bold system font.", 20, 140, 350, 100, Microsoft.Maui.Graphics.HorizontalAlignment.Left, Microsoft.Maui.Graphics.VerticalAlignment.Top);
+
+            canvas.Font = new Microsoft.Maui.Graphics.Font("Arial");
+            canvas.FontColor = Colors.Black;
+            canvas.SetShadow(new SizeF(6, 6), 4, Colors.Gray);
+            canvas.DrawString("This text has a shadow.", 20, 200, 300, 100, Microsoft.Maui.Graphics.HorizontalAlignment.Left, Microsoft.Maui.Graphics.VerticalAlignment.Top);
+            */
+            /*
             canvas.FontColor = Colors.Red;
             canvas.StrokeSize = 1;
             canvas.StrokeColor = Colors.Blue;

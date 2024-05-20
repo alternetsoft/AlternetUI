@@ -22,10 +22,15 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        mauiContainer.HeightRequest = 100;
-        mauiContainer.WidthRequest = 100;
-        skiaContainer.HeightRequest = 100;
-        skiaContainer.WidthRequest = 100;
+        mauiContainer.Margin = new(5);
+        mauiContainer.BackgroundColor = Colors.Cornsilk;
+        skiaContainer.BackgroundColor = Colors.Cornsilk;
+        skiaContainer.Margin = new(5);
+
+        mauiContainer.HeightRequest = 300;
+        mauiContainer.WidthRequest = 500;
+        skiaContainer.HeightRequest = 300;
+        skiaContainer.WidthRequest = 500;
         mauiContainer.Control = mauiSample;
         skiaContainer.Control = skiaSample;
 
@@ -33,14 +38,39 @@ public partial class MainPage : ContentPage
 
         InitializeComponent();
 
+        panel.BackgroundColor = Colors.CornflowerBlue;
+        panel.Padding = new(10);
+
         ListView1.ItemsSource = MyItems;
         BindingContext = this;
 
         App.LogMessage += App_LogMessage;
 
-        panel.Children.Add(mauiContainer);
-        panel.Children.Add(button);
+        //panel.Children.Add(mauiContainer);
+        //panel.Children.Add(button);
         panel.Children.Add(skiaContainer);
+
+        Alternet.UI.BaseApplication.LogFileIsEnabled = true;
+        Alternet.UI.BaseApplication.Log($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+        Alternet.UI.BaseApplication.Log($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
+        Alternet.UI.BaseApplication.Log($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+        Alternet.UI.BaseApplication.Log($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
+        Alternet.UI.BaseApplication.Log($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
+
+        openLogFileButton.Clicked += OpenLogFileButton_Clicked;
+        /*
+            Pixel width: 3840 / Pixel Height: 2160
+            18:53:04 :: Density: 2
+            18:53:04 :: Orientation: Landscape
+            18:53:04 :: Rotation: Rotation0
+            18:53:05 :: Refresh Rate: 60
+        */
+
+    }
+
+    private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
+    {
+        Alternet.UI.AppUtils.OpenLogFile();
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();
