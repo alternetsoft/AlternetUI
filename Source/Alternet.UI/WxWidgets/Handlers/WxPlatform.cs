@@ -46,6 +46,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
+        {
+            return new UI.Native.FontDialog();
+        }
+
+        /// <inheritdoc/>
         public override IPenHandler CreatePenHandler(Pen pen) => new UI.Native.Pen();
 
         /// <inheritdoc/>

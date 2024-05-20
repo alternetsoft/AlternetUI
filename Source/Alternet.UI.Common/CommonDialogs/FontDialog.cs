@@ -17,15 +17,11 @@ namespace Alternet.UI
 
         private static FontDialog? defaultDialog;
 
-        private readonly Native.FontDialog nativeDialog;
-        private FontInfo fontInfo = Control.DefaultFont;
-
         /// <summary>
         /// Initializes a new instance of <see cref="FontDialog"/>.
         /// </summary>
         public FontDialog()
         {
-            nativeDialog = new Native.FontDialog();
         }
 
         /// <summary>
@@ -35,7 +31,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The default value is true.
         /// </remarks>
-        public bool AllowSymbols
+        public virtual bool AllowSymbols
         {
             get
             {
@@ -43,7 +39,7 @@ namespace Alternet.UI
                     return true;
 
                 CheckDisposed();
-                return nativeDialog.AllowSymbols;
+                return Handler.AllowSymbols;
             }
 
             set
@@ -51,7 +47,7 @@ namespace Alternet.UI
                 if (!BaseApplication.IsWindowsOS)
                     return;
                 CheckDisposed();
-                nativeDialog.AllowSymbols = value;
+                Handler.AllowSymbols = value;
             }
         }
 
@@ -62,7 +58,7 @@ namespace Alternet.UI
         /// This refers to the controls for manipulating colour,
         /// strikeout and underline properties. The default value is true.
         /// </remarks>
-        public bool EnableEffects
+        public virtual bool EnableEffects
         {
             get
             {
@@ -70,7 +66,7 @@ namespace Alternet.UI
                     return true;
 
                 CheckDisposed();
-                return nativeDialog.EnableEffects;
+                return Handler.EnableEffects;
             }
 
             set
@@ -79,7 +75,7 @@ namespace Alternet.UI
                     return;
 
                 CheckDisposed();
-                nativeDialog.EnableEffects = value;
+                Handler.EnableEffects = value;
             }
         }
 
@@ -90,23 +86,18 @@ namespace Alternet.UI
         /// Note that currently these flags are only effectively used in Windows.
         /// By default no restrictions are applied.
         /// </remarks>
-        public FontDialogRestrictSelection RestrictSelection
+        public virtual FontDialogRestrictSelection RestrictSelection
         {
             get
             {
                 CheckDisposed();
-                return (FontDialogRestrictSelection)Enum.ToObject(
-                    typeof(FontDialogRestrictSelection),
-                    nativeDialog.RestrictSelection);
+                return Handler.RestrictSelection;
             }
 
             set
             {
-                if (!BaseApplication.IsWindowsOS)
-                    return;
-
                 CheckDisposed();
-                nativeDialog.RestrictSelection = (int)value;
+                Handler.RestrictSelection = value;
             }
         }
 
@@ -117,18 +108,18 @@ namespace Alternet.UI
         /// The default value is black color.
         /// </remarks>
         [Browsable(false)]
-        public Color Color
+        public virtual Color Color
         {
             get
             {
                 CheckDisposed();
-                return nativeDialog.Color;
+                return Handler.Color;
             }
 
             set
             {
                 CheckDisposed();
-                nativeDialog.Color = value;
+                Handler.Color = value;
             }
         }
 
@@ -136,34 +127,21 @@ namespace Alternet.UI
         /// Gets or sets the font selected by the font dialog window.
         /// </summary>
         [Browsable(false)]
-        public FontInfo FontInfo
+        public virtual FontInfo FontInfo
         {
             get
             {
-                return fontInfo;
+                return Handler.FontInfo;
             }
 
             set
             {
-                fontInfo = value;
+                Handler.FontInfo = value;
             }
         }
 
-        /// <inheritdoc/>
-        public override string? Title
-        {
-            get
-            {
-                CheckDisposed();
-                return nativeDialog.Title;
-            }
-
-            set
-            {
-                CheckDisposed();
-                nativeDialog.Title = value;
-            }
-        }
+        [Browsable(false)]
+        public new IFontDialogHandler Handler => (IFontDialogHandler)base.Handler;
 
         /// <summary>
         /// Sets the valid range for the font point size (Windows only).
@@ -175,39 +153,19 @@ namespace Alternet.UI
         /// <remarks>
         /// The default is 0, 0 (unrestricted range).
         /// </remarks>
-        public void SetRange(int minRange, int maxRange)
+        public virtual void SetRange(int minRange, int maxRange)
         {
             if (!BaseApplication.IsWindowsOS)
                 return;
 
             CheckDisposed();
-            nativeDialog.SetRange(minRange, maxRange);
+            Handler.SetRange(minRange, maxRange);
         }
 
         /// <inheritdoc/>
-        public override ModalResult ShowModal(Window? owner)
+        protected override IDialogHandler CreateHandler()
         {
-            CheckDisposed();
-            var nativeOwner = owner == null ?
-                null : ((WindowHandler)owner.Handler).NativeControl;
-
-            var fontName = fontInfo.Name;
-            var style = fontInfo.Style;
-            var genericFamily = fontInfo.FontFamily.GenericFamily ?? GenericFontFamily.None;
-
-            nativeDialog.SetInitialFont(
-                genericFamily,
-                fontName,
-                fontInfo.SizeInPoints,
-                style);
-
-            var result = (ModalResult)nativeDialog.ShowModal(nativeOwner);
-
-            fontInfo.Style = (FontStyle)nativeDialog.ResultFontStyle;
-            fontInfo.SizeInPoints = nativeDialog.ResultFontSizeInPoints;
-            fontInfo.Name = nativeDialog.ResultFontName;
-
-            return result;
+            return NativePlatform.Default.CreateFontDialogHandler(this);
         }
     }
 }

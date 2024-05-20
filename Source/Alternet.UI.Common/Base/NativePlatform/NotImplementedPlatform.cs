@@ -500,5 +500,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
