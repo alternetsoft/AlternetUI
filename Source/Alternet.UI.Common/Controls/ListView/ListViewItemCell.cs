@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets or sets the text of the cell.
         /// </summary>
         /// <value>The text to display for the cell.</value>
-        public string Text
+        public virtual string Text
         {
             get => text;
             set
@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the image in the <see cref="ImageList"/> that
         /// is displayed for the cell. The default is <c>null</c>.</value>
-        public int? ImageIndex
+        public virtual int? ImageIndex
         {
             get => imageIndex;
             set
@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// cell is not associated with any column.
         /// </summary>
         [Browsable(false)]
-        public int? ColumnIndex
+        public virtual int? ColumnIndex
         {
             get => columnIndex;
 
@@ -99,7 +99,7 @@ namespace Alternet.UI
         /// cell is not associated with any item.
         /// </summary>
         [Browsable(false)]
-        public ListViewItem? Item
+        public virtual ListViewItem? Item
         {
             get => item;
 
@@ -122,7 +122,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates copy of this <see cref="ListViewItemCell"/>.
         /// </summary>
-        public ListViewItemCell Clone()
+        public virtual ListViewItemCell Clone()
         {
             var result = new ListViewItemCell();
             result.Assign(this);
@@ -133,47 +133,48 @@ namespace Alternet.UI
         /// Assigns properties from another <see cref="ListViewItemCell"/>.
         /// </summary>
         /// <param name="item">Source of the properties to assign.</param>
-        public void Assign(ListViewItemCell item)
+        public virtual void Assign(ListViewItemCell item)
         {
-            bool applyText = text != item.Text;
-            bool applyImage = imageIndex != item.ImageIndex;
+            var newText = item.Text;
+            var newImageIndex = item.ImageIndex;
 
-            text = item.Text;
-            imageIndex = item.ImageIndex;
+            bool applyText = text != newText;
+            bool applyImage = imageIndex != newImageIndex;
 
-            if (applyText) ApplyText();
-            if (applyImage) ApplyImage();
+            text = newText;
+            imageIndex = newImageIndex;
+
+            ApplyAll(applyText, applyImage);
         }
 
-        private void ApplyAll()
-        {
-            ApplyText();
-            ApplyImage();
-        }
-
-        private void ApplyText()
-        {
-            if (TryGetItemIndex(out var listView, out var itemIndex, out var columnIndex))
-                listView.Handler.SetItemText(itemIndex.Value, columnIndex.Value, text);
-        }
-
-        private void ApplyImage()
-        {
-            if (TryGetItemIndex(out var listView, out var itemIndex, out var columnIndex))
-                listView.Handler.SetItemImageIndex(itemIndex.Value, columnIndex.Value, imageIndex);
-        }
-
-        private bool TryGetItemIndex(
-            [NotNullWhen(true)] out ListView? listView,
-            [NotNullWhen(true)] out long? itemIndex,
-            [NotNullWhen(true)] out long? columnIndex)
+        private void ApplyAll(bool applyText = true, bool applyImage = true)
         {
             var item = Item;
-            listView = item?.ListView;
-            itemIndex = item?.Index;
-            columnIndex = this.columnIndex;
+            if (item is null)
+                return;
 
-            return listView != null && itemIndex != null && columnIndex != null;
+            var listView = item.ListView;
+            if (listView is null)
+                return;
+
+            var itemIndex = item.Index;
+            if (itemIndex is null)
+                return;
+
+            if (ColumnIndex is null)
+                return;
+
+            var column = ColumnIndex.Value;
+            var index = itemIndex.Value;
+
+            if (applyText)
+                listView.Handler.SetItemText(index, column, text);
+            if (applyImage)
+                listView.Handler.SetItemImageIndex(index, column, imageIndex);
         }
+
+        private void ApplyText() => ApplyAll(true, false);
+
+        private void ApplyImage() => ApplyAll(false, true);
     }
 }

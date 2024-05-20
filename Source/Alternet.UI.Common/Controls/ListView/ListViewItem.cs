@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// or <c>null</c> if the item has not been assigned to a tree view.
         /// </value>
         [Browsable(false)]
-        public ListView? ListView
+        public virtual ListView? ListView
         {
             get => listView;
             internal set
@@ -119,7 +119,7 @@ namespace Alternet.UI
         /// <value><see langword="true"/> if the item is in the selected
         /// state; otherwise, <see langword="false"/>.</value>
         [Browsable(false)]
-        public bool IsSelected
+        public virtual bool IsSelected
             => RequiredListView.SelectedIndices.Contains(RequiredIndex);
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// <value><see langword="true"/> if the item has focus; otherwise,
         /// <see langword="false"/>.</value>
         [Browsable(false)]
-        public bool IsFocused
+        public virtual bool IsFocused
         {
             get => RequiredListView.Handler.FocusedItemIndex == RequiredIndex;
             set => RequiredListView.Handler.FocusedItemIndex = RequiredIndex;
@@ -142,7 +142,7 @@ namespace Alternet.UI
         /// <see cref="ListView"/> control.
         /// </summary>
         [Browsable(false)]
-        public long? Index { get; internal set; }
+        public virtual long? Index { get; internal set; }
 
         /// <summary>
         /// Gets or sets the text of the item.
@@ -254,14 +254,14 @@ namespace Alternet.UI
         /// <summary>
         /// Initiates the editing of the list view item label.
         /// </summary>
-        public void BeginLabelEdit() =>
+        public virtual void BeginLabelEdit() =>
             ListView?.Handler.BeginLabelEdit(RequiredIndex);
 
         /// <summary>
         /// Ensures that the item is visible within the control, scrolling the
         /// contents of the control, if necessary.
         /// </summary>
-        public void EnsureVisible() =>
+        public virtual void EnsureVisible() =>
             ListView?.Handler.EnsureItemVisible(RequiredIndex);
 
         /// <inheritdoc cref="ListControlItem.ToString"/>
@@ -276,7 +276,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates copy of this <see cref="ListViewItem"/>.
         /// </summary>
-        public ListViewItem Clone()
+        public virtual ListViewItem Clone()
         {
             var result = new ListViewItem();
             result.Assign(this);
@@ -287,7 +287,7 @@ namespace Alternet.UI
         /// Assigns properties from another <see cref="ListViewItem"/>.
         /// </summary>
         /// <param name="item">Source of the properties to assign.</param>
-        public void Assign(ListViewItem item)
+        public virtual void Assign(ListViewItem item)
         {
             Tag = item.Tag;
             var count = item.Cells.Count;
@@ -304,17 +304,17 @@ namespace Alternet.UI
         /// the item for which to retrieve the bounding rectangle.</param>
         /// <returns>A <see cref="RectD"/> that represents the bounding
         /// rectangle for the specified portion of this item.</returns>
-        public RectD GetItemBounds(
+        public virtual RectD GetItemBounds(
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
                 => RequiredListView.GetItemBounds(RequiredIndex, portion);
 
-        public void InternalSetListViewAndIndex(ListView? control, long? newIndex)
+        public virtual void InternalSetListViewAndIndex(ListView? control, long? newIndex)
         {
             ListView = control;
             Index = newIndex;
         }
 
-        public void ApplyColumns()
+        public virtual void ApplyColumns()
         {
             if (listView == null)
                 return;
