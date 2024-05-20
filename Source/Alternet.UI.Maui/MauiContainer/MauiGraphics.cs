@@ -242,6 +242,35 @@ namespace Alternet.Drawing
             return SizeD.Empty;
         }
 
+        /*/// <inheritdoc/>
+        public override SizeD MeasureText(string text, Font font)
+        {
+            return SizeD.Empty;
+        }*/
+
+        /*/// <inheritdoc/>
+        public override SizeD MeasureText(string text, Font font, double maximumWidth)
+        {
+            return SizeD.Empty;
+        }*/
+
+        /*/// <inheritdoc/>
+        public override SizeD MeasureText(
+            string text,
+            Font font,
+            double maximumWidth,
+            TextFormat format)
+        {
+            return SizeD.Empty;
+        }*/
+
+        // Used in editor
+        /// <inheritdoc/>
+        public override SizeD GetTextExtent(string text, Font font)
+        {
+            return SizeD.Empty;
+        }
+
         /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, PointD origin)
         {
@@ -278,35 +307,6 @@ namespace Alternet.Drawing
             RectD bounds,
             TextFormat format)
         {
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MeasureText(string text, Font font)
-        {
-            return SizeD.Empty;
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MeasureText(string text, Font font, double maximumWidth)
-        {
-            return SizeD.Empty;
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format)
-        {
-            return SizeD.Empty;
-        }
-
-        // Used in editor
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font)
-        {
-            return SizeD.Empty;
         }
 
         // Used in editor

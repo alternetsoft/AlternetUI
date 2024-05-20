@@ -731,7 +731,7 @@ namespace Alternet.UI
             var maxHeightD = PixelToDip(maxHeightI);
 
             var font = GetItemFont(itemIndex).AsBold;
-            var size = MeasureCanvas.MeasureText(s, font);
+            var size = MeasureCanvas.GetTextExtent(s, font);
             size.Height = Math.Max(size.Height, maxHeightD);
             size.Width += ItemMargin.Horizontal;
             size.Height += ItemMargin.Vertical;
@@ -1490,7 +1490,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
-            double CharWidth() => MeasureCanvas.MeasureText("W", GetItemFont()).Width;
+            double CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
 
             void IncOffset(double delta)
             {

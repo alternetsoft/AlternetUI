@@ -65,6 +65,13 @@ namespace Alternet.Drawing
             Font font,
             IControl? control)
         {
+            return GetTextExtent(text, font);
+        }
+
+        /// <inheritdoc/>
+        // Used in editor
+        public override SizeD GetTextExtent(string text, Font font)
+        {
             return SizeD.Empty;
         }
 
@@ -101,26 +108,19 @@ namespace Alternet.Drawing
         {
         }
 
-        public override SizeD MeasureText(string text, Font font, double maximumWidth)
+        /*public override SizeD MeasureText(string text, Font font, double maximumWidth)
         {
             return SizeD.Empty;
-        }
+        }*/
 
-        public override SizeD MeasureText(
+        /*public override SizeD MeasureText(
             string text,
             Font font,
             double maximumWidth,
             TextFormat format)
         {
             return SizeD.Empty;
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override SizeD GetTextExtent(string text, Font font)
-        {
-            return SizeD.Empty;
-        }
+        }*/
 
         /// <inheritdoc/>
         // Used in editor

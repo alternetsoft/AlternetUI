@@ -515,7 +515,7 @@ namespace Alternet.UI
                     color = SystemColors.GrayText;
                 }
 
-                var size = e.Graphics.MeasureText(s, font);
+                var size = e.Graphics.GetTextExtent(s, font);
 
                 var offsetX = TextMargin.X;
                 var offsetY = (e.ClipRectangle.Height - size.Height) / 2;

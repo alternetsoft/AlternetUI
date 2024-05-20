@@ -630,7 +630,7 @@ namespace Alternet.Drawing
                 format.Wrapping);
         }
 
-        /// <inheritdoc/>
+        /*/// <inheritdoc/>
         public override SizeD MeasureText(string text, Font font)
         {
             DebugTextAssert(text);
@@ -640,36 +640,7 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.Handler,
                 double.NaN,
                 TextWrapping.None);
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MeasureText(string text, Font font, double maximumWidth)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.Handler,
-                maximumWidth,
-                TextWrapping.Character);
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugFormatAssert(format);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.Handler,
-                maximumWidth,
-                format.Wrapping);
-        }
+        }*/
 
         /// <inheritdoc/>
         public override void Push()
@@ -758,6 +729,39 @@ namespace Alternet.Drawing
         public override RectD GetClippingBox()
         {
             return dc.GetClippingBox();
+        }
+
+        /// <summary>
+        /// Gets text measurement.
+        /// </summary>
+        public SizeD MeasureText(string text, Font font, double maximumWidth)
+        {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            return dc.MeasureText(
+                text,
+                (UI.Native.Font)font.Handler,
+                maximumWidth,
+                TextWrapping.Character);
+        }
+
+        /// <summary>
+        /// Gets text measurement.
+        /// </summary>
+        public SizeD MeasureText(
+            string text,
+            Font font,
+            double maximumWidth,
+            TextFormat format)
+        {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            DebugFormatAssert(format);
+            return dc.MeasureText(
+                text,
+                (UI.Native.Font)font.Handler,
+                maximumWidth,
+                format.Wrapping);
         }
 
         /// <inheritdoc/>

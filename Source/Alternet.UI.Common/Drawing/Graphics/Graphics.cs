@@ -1003,9 +1003,11 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        public abstract SizeD MeasureText(string text, Font font);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD MeasureText(string text, Font font)
+            => GetTextExtent(text, font);
 
-        /// <summary>
+        /*/// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/> and
         /// maximum width.
         /// </summary>
@@ -1018,9 +1020,9 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        public abstract SizeD MeasureText(string text, Font font, double maximumWidth);
+        public abstract SizeD MeasureText(string text, Font font, double maximumWidth);*/
 
-        /// <summary>
+        /*/// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/>,
         /// maximum width and <see cref="TextFormat"/>.
         /// </summary>
@@ -1040,7 +1042,7 @@ namespace Alternet.Drawing
             string text,
             Font font,
             double maximumWidth,
-            TextFormat format);
+            TextFormat format);*/
 
         /// <summary>
         /// Pushes the current state of the <see cref="Graphics"/> transformation

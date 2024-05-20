@@ -211,7 +211,7 @@ namespace DrawingSample
                 {
                     if (TextWidthLimitEnabled)
                     {
-                        textHeight = dc.MeasureText(
+                        textHeight = ((WxGraphics)dc).MeasureText(
                             LoremIpsum,
                             paragraph.Font,
                             TextWidthLimit,

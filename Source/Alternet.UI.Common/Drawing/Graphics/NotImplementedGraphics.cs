@@ -285,12 +285,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeD MeasureText(string text, Font font)
+        /*public override SizeD MeasureText(string text, Font font)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
-        public override SizeD MeasureText(string text, Font font, double maximumWidth)
+        /*public override SizeD MeasureText(string text, Font font, double maximumWidth)
         {
             throw new NotImplementedException();
         }
@@ -298,7 +298,7 @@ namespace Alternet.Drawing
         public override SizeD MeasureText(string text, Font font, double maximumWidth, TextFormat format)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         public override void Path(Pen pen, Brush brush, GraphicsPath path)
         {
