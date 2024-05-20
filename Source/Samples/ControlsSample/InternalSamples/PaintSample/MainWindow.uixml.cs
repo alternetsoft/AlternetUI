@@ -643,7 +643,7 @@ namespace PaintSample
             var size = dc.GetTextExtent(
                 s,
                 font,
-                out double descent,
+                out var descent,
                 out _,
                 null);
 
@@ -659,7 +659,8 @@ namespace PaintSample
             DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
 
             var y = location.Y - descent + size.Height;
-            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
+            if(y is not null)
+                dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y.Value), (location.X + size.Width, y.Value));
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 

@@ -11,6 +11,52 @@ using Microsoft.Maui.Graphics;
 
 #pragma warning disable
 /*
+https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/draw?view=net-maui-8.0
+
+canvas.FontColor = Colors.Blue;
+canvas.FontSize = 18;
+
+canvas.Font = Font.Default;
+
+
+public interface IAttributedText
+{
+	string Text { get; }
+
+	IReadOnlyList<IAttributedTextRun> Runs { get; }
+}
+
+public interface IAttributedTextRun
+{
+	int Start { get; }
+
+	int Length { get; }
+
+	ITextAttributes Attributes { get; }
+}
+
+public interface ITextAttributes : IReadOnlyDictionary<TextAttribute, string>, IEnumerable<KeyValuePair<TextAttribute, string>>, IEnumerable, IReadOnlyCollection<KeyValuePair<TextAttribute, string>>
+{
+}
+
+public enum TextAttribute
+{
+	FontName,
+	FontSize,
+	Bold,
+	Italic,
+	Underline,
+	Strikethrough,
+	Subscript,
+	Superscript,
+	Color,
+	Background,
+	UnorderedList,
+	Marker
+}
+
+
+
     public enum TextFlow
     {
 	    ClipBounds,
@@ -178,13 +224,13 @@ namespace Alternet.Drawing
         public override SizeD GetTextExtent(
             string text,
             Font font,
-            out double descent,
-            out double externalLeading,
+            out double? descent,
+            out double? externalLeading,
             IControl? control = null)
         {
-            descent = 0;
-            externalLeading = 0;
-            return SizeD.Empty;
+            descent = null;
+            externalLeading = null;
+            return GetTextExtent(text, font, control);
         }
 
         /// <inheritdoc/>

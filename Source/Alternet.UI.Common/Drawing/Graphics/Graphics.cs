@@ -124,8 +124,8 @@ namespace Alternet.Drawing
         public abstract SizeD GetTextExtent(
             string text,
             Font font,
-            out double descent,
-            out double externalLeading,
+            out double? descent,
+            out double? externalLeading,
             IControl? control = null);
 
         /// <summary>

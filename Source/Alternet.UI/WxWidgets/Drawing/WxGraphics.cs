@@ -85,8 +85,8 @@ namespace Alternet.Drawing
         public override SizeD GetTextExtent(
             string text,
             Font font,
-            out double descent,
-            out double externalLeading,
+            out double? descent,
+            out double? externalLeading,
             IControl? control = null)
         {
             var dc = (UI.Native.DrawingContext)NativeObject;

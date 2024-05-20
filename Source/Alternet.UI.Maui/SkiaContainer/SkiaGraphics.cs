@@ -51,13 +51,13 @@ namespace Alternet.Drawing
         public override SizeD GetTextExtent(
             string text,
             Font font,
-            out double descent,
-            out double externalLeading,
+            out double? descent,
+            out double? externalLeading,
             IControl? control = null)
         {
-            descent = 0;
-            externalLeading = 0;
-            return SizeD.Empty;
+            descent = null;
+            externalLeading = null;
+            return GetTextExtent(text, font, control);
         }
 
         public override SizeD GetTextExtent(

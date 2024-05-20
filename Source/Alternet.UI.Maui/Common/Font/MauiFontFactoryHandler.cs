@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
+    /*
+        Microsoft.Maui.FontManager
+        Microsoft.Maui.FontRegistrar
+    */
+
     public class MauiFontFactoryHandler : PlessFontFactoryHandler
     {
         public override IFontHandler CreateDefaultFont()

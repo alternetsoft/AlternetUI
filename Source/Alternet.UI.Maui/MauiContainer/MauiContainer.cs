@@ -9,6 +9,7 @@ using Alternet.UI.Extensions;
 
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Graphics.Text;
 
 namespace Alternet.UI
 {
@@ -53,6 +54,19 @@ namespace Alternet.UI
             }
 
             control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect.ToRectD()));
+
+            /*
+            canvas.FontColor = Colors.Red;
+            canvas.StrokeSize = 1;
+            canvas.StrokeColor = Colors.Blue;
+            canvas.Font = Microsoft.Maui.Graphics.Font.Default;
+            canvas.FontSize = 12f;
+
+            string markdownText =
+                @"This is *italic text*, **bold text**, __underline text__, and ***bold italic text***.";
+            IAttributedText attributedText = MarkdownAttributedTextReader.Read(markdownText);
+            canvas.DrawText(attributedText, 10, 10, 400, 400);
+            */
         }
 
         /// <param name="Touches"></param>
