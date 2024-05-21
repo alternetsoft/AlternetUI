@@ -413,7 +413,7 @@ namespace Alternet.UI
                 }
                 catch (Exception e)
                 {
-                    ThreadExceptionWindow.Show(e, "This is an additional info", true);
+                    BaseApplication.ShowExceptionWindow(e, "This is an additional info", true);
                 }
             });
 

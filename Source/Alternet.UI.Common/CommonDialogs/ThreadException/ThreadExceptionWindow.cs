@@ -57,29 +57,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows <see cref="ThreadExceptionWindow"/> on the screen.
+        /// Gets or sets whether 'Continue' button is visible.
         /// </summary>
-        /// <param name="exception">Exception information.</param>
-        /// <param name="additionalInfo">Additional information.</param>
-        /// <param name="canContinue">Whether continue button is visible.</param>
-        /// <returns><c>true</c> if continue pressed, <c>false</c> otherwise.</returns>
-        public static bool Show(
-            Exception exception,
-            string? additionalInfo = null,
-            bool canContinue = true)
+        public bool CanContinue
         {
-            using var errorWindow =
-                new ThreadExceptionWindow(exception, additionalInfo, canContinue);
-            if (Application.IsRunning)
-            {
-                return errorWindow.ShowModal() == ModalResult.Accepted;
-            }
-            else
-            {
-                errorWindow.canContinue = false;
-                Application.Current.Run(errorWindow);
-                return false;
-            }
+            get => canContinue;
+            set => canContinue = value;
         }
 
         private static string GetMessageText(Exception e)

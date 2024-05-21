@@ -502,7 +502,18 @@ namespace Alternet.UI
             string? additionalInfo = null,
             bool canContinue = true)
         {
-            return ThreadExceptionWindow.Show(exception, additionalInfo, canContinue);
+            using var errorWindow =
+                new ThreadExceptionWindow(exception, additionalInfo, canContinue);
+            if (Application.IsRunning)
+            {
+                return errorWindow.ShowModal() == ModalResult.Accepted;
+            }
+            else
+            {
+                errorWindow.CanContinue = false;
+                Application.Current.Run(errorWindow);
+                return false;
+            }
         }
 
         /// <summary>

@@ -776,6 +776,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows <see cref="ThreadExceptionWindow"/> on the screen.
+        /// </summary>
+        /// <param name="exception">Exception information.</param>
+        /// <param name="additionalInfo">Additional information.</param>
+        /// <param name="canContinue">Whether continue button is visible.</param>
+        /// <returns><c>true</c> if continue pressed, <c>false</c> otherwise.</returns>
+        public static bool ShowExceptionWindow(
+            Exception exception,
+            string? additionalInfo = null,
+            bool canContinue = true)
+        {
+            return NativePlatform.Default.ShowExceptionWindow(exception, additionalInfo, canContinue);
+        }
+
+        /// <summary>
         /// Can be called before massive outputs to log. Pairs with <see cref="LogEndUpdate"/>.
         /// </summary>
         public static void LogBeginUpdate()
