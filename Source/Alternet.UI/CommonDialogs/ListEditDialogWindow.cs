@@ -14,40 +14,60 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory("Hidden")]
-    internal class UIDialogListEditWindow : DialogWindow
+    internal class ListEditDialogWindow : DialogWindow
     {
-        private readonly AuiManager manager = new();
-        private readonly LayoutPanel panel = new();
-        private readonly AuiToolbar toolbar = new();
-        private readonly StatusBar statusbar = new();
-        private readonly int buttonIdAdd;
-        private readonly int buttonIdRemove;
-        private readonly int buttonIdRemoveAll;
-        private readonly int buttonIdAddChild;
-        private readonly int buttonIdOk;
-        private readonly int buttonIdCancel;
+        private readonly SplittedPanel panel = new()
+        {
+            TopVisible = false,
+            LeftVisible = false,
+            BottomVisible = false,
+        };
+
+        private readonly ToolBar toolbar = new()
+        {
+            TextVisible = true,
+            ItemSize = 32,
+        };
+
+        private readonly ObjectUniqueId? buttonIdAdd;
+        private readonly ObjectUniqueId? buttonIdRemove;
+        private readonly ObjectUniqueId? buttonIdRemoveAll;
+        private readonly ObjectUniqueId? buttonIdAddChild;
+        private readonly ObjectUniqueId? buttonIdOk;
 
         private readonly TreeViewPlus treeView = new()
         {
             HasBorder = false,
+            FullRowSelect = true,
+            ShowLines = false,
         };
 
         private readonly PropertyGrid propertyGrid = new()
         {
             HasBorder = false,
+            Features = PropertyGridFeature.QuestionCharInNullable,
         };
 
         private IListEditSource? dataSource;
         private object? lastPropInstance;
 
-        public UIDialogListEditWindow(IListEditSource source)
+        public ListEditDialogWindow(IListEditSource source)
         {
-            treeView.FullRowSelect = true;
-            treeView.ShowLines = false;
+            Layout = LayoutStyle.Vertical;
+            Size = new(750, 600);
+            MinimumSize = new(550, 350);
+            toolbar.Parent = this;
+
+            panel.RightPanelWidth = Size.Width / 2;
+            panel.VerticalAlignment = VerticalAlignment.Fill;
+            panel.Parent = this;
+
+            treeView.SelectionChanged += TreeView_SelectionChanged;
+            treeView.Parent = panel.FillPanel;
 
             propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
-            propertyGrid.Features = PropertyGridFeature.QuestionCharInNullable;
+            propertyGrid.Parent = panel.RightPanel;
 
             ShowInTaskbar = false;
             MinimizeEnabled = false;
@@ -55,111 +75,38 @@ namespace Alternet.UI
             Title = CommonStrings.Default.WindowTitleListEdit;
             StartLocation = WindowStartLocation.CenterScreen;
 
-            this.StatusBar = statusbar;
-
-            treeView.SelectionChanged += TreeView_SelectionChanged;
-
-            panel.Layout = LayoutStyle.None;
-            Children.Add(panel);
-            manager.SetManagedWindow(panel);
-            manager.SetDefaultSplitterSashProps();
-
-            const int defaultWidth = 300;
-
-            // Right Pane
-            var rightPane = manager.CreatePaneInfo();
-            rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
-                .TopDockable(false).BottomDockable(false)
-                .BestSizeDip(defaultWidth, 300).MinSizeDip(defaultWidth, 300)
-                .CaptionVisible(false);
-            propertyGrid.SuggestedWidth = defaultWidth;
-            manager.AddPane(propertyGrid, rightPane);
-
-            // Toolbar pane
-            var toolbarPane = manager.CreatePaneInfo();
-            toolbarPane.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
-                .Movable(false).Floatable(false).Resizable(false).Gripper(false).Fixed().DockFixed();
-
-            var toolbarStyle =
-                AuiToolbarCreateStyle.PlainBackground |
-                AuiToolbarCreateStyle.HorzLayout |
-                AuiToolbarCreateStyle.Text |
-                AuiToolbarCreateStyle.NoTooltips |
-                AuiToolbarCreateStyle.DefaultStyle;
-
-            toolbarStyle &= ~AuiToolbarCreateStyle.Gripper;
-
-            toolbar.CreateStyle = toolbarStyle;
-            var imageSize = PanelAuiManager.GetBaseToolSvgSize();
-            toolbar.ToolBitmapSizeInPixels = imageSize;
-
             if (source.AllowAdd)
             {
-                buttonIdAdd = toolbar.AddToolButton(
-                    CommonStrings.Default.ButtonAdd,
-                    KnownSvgImages.ImgAdd);
+                buttonIdAdd = toolbar.AddSpeedBtn(KnownButton.Add, AddButton_Click);
             }
 
             if(source.AllowSubItems && source.AllowAdd)
             {
-                buttonIdAddChild = toolbar.AddToolButton(
-                    CommonStrings.Default.ButtonAddChild,
-                    KnownSvgImages.ImgAddChild);
+                buttonIdAddChild = toolbar.AddSpeedBtn(KnownButton.AddChild, AddChildButton_Click);
             }
 
             if (source.AllowDelete)
             {
-                buttonIdRemove = toolbar.AddToolButton(
-                    CommonStrings.Default.ButtonRemove,
-                    KnownSvgImages.ImgRemove);
-                buttonIdRemoveAll = toolbar.AddToolButton(
-                    CommonStrings.Default.ButtonClear,
-                    KnownSvgImages.ImgRemoveAll);
+                buttonIdRemove = toolbar.AddSpeedBtn(KnownButton.Remove, RemoveButton_Click);
+                buttonIdRemoveAll = toolbar.AddSpeedBtn(KnownButton.Clear, RemoveAllButton_Click);
             }
 
             if (source.AllowApplyData)
             {
-                buttonIdOk = toolbar.AddToolButton(
-                    CommonStrings.Default.ButtonOk,
-                    KnownSvgImages.ImgOk);
+                buttonIdOk = toolbar.AddSpeedBtn(KnownButton.OK, OkButton_Click);
             }
 
-            buttonIdCancel = toolbar.AddToolButton(
-                CommonStrings.Default.ButtonCancel,
-                KnownSvgImages.ImgCancel);
-
-            toolbar.Realize();
-            manager.AddPane(toolbar, toolbarPane);
-
-            // Center pane
-            var centerPane = manager.CreatePaneInfo();
-            centerPane.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
-            manager.AddPane(treeView, centerPane);
-
-            manager.Update();
-
-            toolbar.AddToolOnClick(buttonIdAdd, AddButton_Click);
-            toolbar.AddToolOnClick(buttonIdRemove, RemoveButton_Click);
-            toolbar.AddToolOnClick(buttonIdRemoveAll, RemoveAllButton_Click);
-            toolbar.AddToolOnClick(buttonIdAddChild, AddChildButton_Click);
-            toolbar.AddToolOnClick(buttonIdOk, OkButton_Click);
-            toolbar.AddToolOnClick(buttonIdCancel, CancelButton_Click);
+            var buttonIdCancel = toolbar.AddSpeedBtn(KnownButton.Cancel, CancelButton_Click);
 
             propertyGrid.SuggestedInitDefaults();
-
-            this.Disposed += UIDialogCollectionEdit_Disposed;
             propertyGrid.PropertyChanged += PropertyGrid_PropertyChanged;
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
-            Size = new(750, 600);
-            MinimumSize = new(550, 350);
-            rightPane.BestSizeDip(defaultWidth + 1, 300).MinSizeDip(defaultWidth + 1, 300);
-            propertyGrid.SuggestedWidth = defaultWidth + 1;
-            manager.Update();
-            PerformLayout();
-            Closing += UIDialogListEditWindow_Closing;
-            Closed += UIDialogListEditWindow_Closed;
+
+            Closing += Window_Closing;
+            Closed += Window_Closed;
+            Disposed += Window_Disposed;
 
             DataSource = source;
         }
@@ -197,11 +144,11 @@ namespace Alternet.UI
             treeView.RemoveAll();
         }
 
-        private void UIDialogListEditWindow_Closed(object? sender, EventArgs e)
+        private void Window_Closed(object? sender, EventArgs e)
         {
         }
 
-        private void UIDialogListEditWindow_Closing(object? sender, WindowClosingEventArgs e)
+        private void Window_Closing(object? sender, WindowClosingEventArgs e)
         {
             ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
             if (ModalResult == ModalResult.Accepted)
@@ -233,10 +180,9 @@ namespace Alternet.UI
             }
         }
 
-        private void UIDialogCollectionEdit_Disposed(object? sender, EventArgs e)
+        private void Window_Disposed(object? sender, EventArgs e)
         {
             ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
-            manager.UnInit();
         }
 
         private void CancelButton_Click(object? sender, EventArgs e)
@@ -324,12 +270,11 @@ namespace Alternet.UI
                 canApply = dataSource.AllowApplyData;
             }
 
-            toolbar.EnableTool(buttonIdAdd, canAdd);
-            toolbar.EnableTool(buttonIdRemove, canRemove);
-            toolbar.EnableTool(buttonIdRemoveAll, canRemoveAll);
-            toolbar.EnableTool(buttonIdAddChild, canAddChild);
-            toolbar.EnableTool(buttonIdOk, canApply);
-            toolbar.Refresh();
+            toolbar.SetToolEnabled(buttonIdAdd, canAdd);
+            toolbar.SetToolEnabled(buttonIdRemove, canRemove);
+            toolbar.SetToolEnabled(buttonIdRemoveAll, canRemoveAll);
+            toolbar.SetToolEnabled(buttonIdAddChild, canAddChild);
+            toolbar.SetToolEnabled(buttonIdOk, canApply);
         }
 
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
@@ -497,49 +442,49 @@ namespace Alternet.UI
 
             internal void TreeViewPlus_Click(object sender, EventArgs e)
             {
-                Application.DebugLog("Click");
+                BaseApplication.DebugLog("Click");
             }
 
             internal void TreeViewPlus_MouseUp(object sender, MouseEventArgs e)
             {
-                Application.DebugLog("MouseUp");
+                BaseApplication.DebugLog("MouseUp");
             }
 
             internal void TreeViewPlus_MouseDown(object sender, MouseEventArgs e)
             {
-                Application.DebugLog("MouseDown");
+                BaseApplication.DebugLog("MouseDown");
             }
 
             internal void OnDragDropEvent(object? sender, DragEventArgs e)
             {
-                Application.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
-                Application.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
+                BaseApplication.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
+                BaseApplication.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
             }
 
             internal void OnDragOverEvent(object? sender, DragEventArgs e)
             {
-                Application.DebugLogReplace(
+                BaseApplication.DebugLogReplace(
                     $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
             }
 
             internal void TreeViewPlus_MouseLeftButtonUp(object sender, MouseEventArgs e)
             {
-                Application.DebugLog("MouseLeftButtonUp");
+                BaseApplication.DebugLog("MouseLeftButtonUp");
             }
 
             internal void TreeViewPlus_PreviewMouseUp(object sender, MouseEventArgs e)
             {
-                Application.DebugLog("PreviewMouseUp");
+                BaseApplication.DebugLog("PreviewMouseUp");
             }
 
             internal void OnDragEnterEvent(object? sender, DragEventArgs e)
             {
-                Application.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
+                BaseApplication.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
             }
 
             internal void OnDragLeaveEvent(object? sender, EventArgs e)
             {
-                Application.DebugLog("DragLeave");
+                BaseApplication.DebugLog("DragLeave");
             }
         }
     }

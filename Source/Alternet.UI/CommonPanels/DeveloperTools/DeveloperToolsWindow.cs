@@ -11,9 +11,9 @@ namespace Alternet.UI
     /// <summary>
     /// Developer tools window with additional debug related features.
     /// </summary>
-    internal class WindowDeveloperTools : Window
+    internal class DeveloperToolsWindow : Window
     {
-        private readonly PanelDevTools panel = new()
+        private readonly DeveloperToolsPanel panel = new()
         {
             SuggestedSize = new(900, 700),
         };
@@ -21,9 +21,9 @@ namespace Alternet.UI
         private bool logGotFocus;
         private bool logFocusedControl;
 
-        public WindowDeveloperTools()
+        public DeveloperToolsWindow()
         {
-            Application.LogFileIsEnabled = true;
+            BaseApplication.LogFileIsEnabled = true;
             StartLocation = WindowStartLocation.CenterScreen;
             Title = "Developer Tools";
             panel.Parent = this;
@@ -39,9 +39,9 @@ namespace Alternet.UI
             {
                 logGotFocus = !logGotFocus;
                 if(logGotFocus)
-                    Application.Log("GotFocus event logging enabled");
+                    BaseApplication.Log("GotFocus event logging enabled");
                 else
-                    Application.Log("GotFocus event logging disabled");
+                    BaseApplication.Log("GotFocus event logging disabled");
             });
 
             panel.AddAction("Toggle Focused Info", () =>
@@ -49,13 +49,13 @@ namespace Alternet.UI
                 logFocusedControl = !logFocusedControl;
 
                 if (logGotFocus)
-                    Application.Log("Focused control info enabled");
+                    BaseApplication.Log("Focused control info enabled");
                 else
-                    Application.Log("Focused control info disabled");
+                    BaseApplication.Log("Focused control info disabled");
             });
 
-            panel.CenterNotebook.ChangeSelection(0);
-            panel.RightNotebook.ChangeSelection(0);
+            panel.CenterNotebook.SelectedIndex = 0;
+            panel.RightNotebook.SelectedIndex = 0;
             panel.PropGrid.SuggestedInitDefaults();
         }
 
@@ -104,7 +104,7 @@ namespace Alternet.UI
 
         private bool IgnoreControl(Control control)
         {
-            if (control.ParentWindow is WindowDeveloperTools)
+            if (control.ParentWindow is DeveloperToolsWindow)
                 return true;
             return false;
         }
@@ -119,7 +119,7 @@ namespace Alternet.UI
             panel.LastFocusedControl = control;
 
             if (logGotFocus)
-                Application.Log(control.GetType().Name);
+                BaseApplication.Log(control.GetType().Name);
 
             if (logFocusedControl)
                 LogFocusedControl(control);
@@ -129,9 +129,9 @@ namespace Alternet.UI
         {
             var defaultColors = control.GetDefaultFontAndColor();
 
-            Application.LogSeparator();
-            Application.LogNameValue("Name", control.Name);
-            Application.LogNameValue("Type", control.GetType().Name);
+            BaseApplication.LogSeparator();
+            BaseApplication.LogNameValue("Name", control.Name);
+            BaseApplication.LogNameValue("Type", control.GetType().Name);
             LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
             LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
             LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);
@@ -140,10 +140,10 @@ namespace Alternet.UI
             LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
             LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
-            Application.LogNameValue("PixelScaleFactor", control.GetPixelScaleFactor());
-            Application.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
-            Application.LogNameValue("DPI", control.GetDPI());
-            Application.LogSeparator();
+            BaseApplication.LogNameValue("PixelScaleFactor", control.GetPixelScaleFactor());
+            BaseApplication.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
+            BaseApplication.LogNameValue("DPI", control.GetDPI());
+            BaseApplication.LogSeparator();
         }
     }
 }

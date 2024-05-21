@@ -15,29 +15,47 @@ namespace Alternet.UI
     /// web navigation buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public partial class PanelWebBrowser : PanelAuiManager
+    public partial class PanelWebBrowser : Control
     {
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
         private readonly WebBrowserFindParams findParams = new();
 
+        private readonly SplittedPanel panel = new()
+        {
+            LeftVisible = false,
+            RightVisible = false,
+            TopVisible = false,
+            BottomVisible = false,
+            RightPanelWidth = 150,
+            BottomPanelHeight = 200,
+        };
+
+        private readonly ToolBar toolBar = new()
+        {
+        };
+
         private readonly TextBox urlTextBox = new()
         {
+            MinWidth = 350,
         };
 
         private readonly ContextMenu moreActionsMenu = new();
         private readonly string defaultUrl = "about:blank";
         private WebBrowser? webBrowser;
         private bool historyCleared = false;
-        private int buttonIdBack;
-        private int buttonIdMoreActions;
-        private int buttonIdForward;
-        private int buttonIdZoomIn;
-        private int buttonIdZoomOut;
-        private int buttonIdUrl;
-        private int buttonIdGo;
+
+        private ObjectUniqueId buttonIdBack;
+        private ObjectUniqueId buttonIdMoreActions;
+        private ObjectUniqueId buttonIdForward;
+        private ObjectUniqueId buttonIdZoomIn;
+        private ObjectUniqueId buttonIdZoomOut;
+        private ObjectUniqueId buttonIdUrl;
+        private ObjectUniqueId buttonIdGo;
+
         private bool logEvents;
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
+        private ActionsListBox? actionsControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
@@ -72,46 +90,75 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets listbox with list of actions. This control is created by demand, it will be shown
+        /// at the right of the browser.
+        /// </summary>
+        [Browsable(false)]
+        public ActionsListBox ActionsControl
+        {
+            get
+            {
+                if(actionsControl == null)
+                {
+                    actionsControl = new()
+                    {
+                        HasBorder = false,
+                        Parent = panel.RightPanel,
+                    };
+                    panel.RightVisible = true;
+                }
+
+                return actionsControl;
+            }
+        }
+
+        /// <summary>
+        /// Gets main toolbar.
+        /// </summary>
+        [Browsable(false)]
+        public ToolBar ToolBar => toolBar;
+
+        /// <summary>
         /// Gets id of the 'Back' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdBack => buttonIdBack;
+        public ObjectUniqueId ButtonIdBack => buttonIdBack;
 
         /// <summary>
         /// Gets id of the 'More Actions' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdMoreActions => buttonIdMoreActions;
+        public ObjectUniqueId ButtonIdMoreActions => buttonIdMoreActions;
 
         /// <summary>
         /// Gets id of the 'Forward' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdForward => buttonIdForward;
+        public ObjectUniqueId ButtonIdForward => buttonIdForward;
 
         /// <summary>
         /// Gets id of the 'Zoom In' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdZoomIn => buttonIdZoomIn;
+        public ObjectUniqueId ButtonIdZoomIn => buttonIdZoomIn;
 
         /// <summary>
         /// Gets id of the 'Zoom Out' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdZoomOut => buttonIdZoomOut;
+        public ObjectUniqueId ButtonIdZoomOut => buttonIdZoomOut;
 
         /// <summary>
         /// Gets id of the 'Url' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdUrl => buttonIdUrl;
+        public ObjectUniqueId ButtonIdUrl => buttonIdUrl;
 
         /// <summary>
         /// Gets id of the 'Go' toolbar item.
         /// </summary>
         [Browsable(false)]
-        public int ButtonIdGo => buttonIdGo;
+        public ObjectUniqueId ButtonIdGo => buttonIdGo;
 
         /// <summary>
         /// Gets <see cref="ContextMenu"/> with additional actions like "Find" and "Print".
@@ -136,7 +183,12 @@ namespace Alternet.UI
         {
             get
             {
-                webBrowser ??= new WebBrowser(defaultUrl);
+                webBrowser ??= new WebBrowser(defaultUrl)
+                {
+                    HasBorder = false,
+                    Parent = panel.FillPanel,
+                };
+
                 return webBrowser;
             }
         }
@@ -144,6 +196,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="TextBox"/> control used for url editing.
         /// </summary>
+        [Browsable(false)]
         public TextBox UrlTextBox => urlTextBox;
 
         /// <summary>
@@ -223,9 +276,8 @@ namespace Alternet.UI
         /// </summary>
         public void UpdateZoomButtons()
         {
-            Toolbar.EnableTool(buttonIdZoomIn, WebBrowser.CanZoomIn);
-            Toolbar.EnableTool(buttonIdZoomOut, WebBrowser.CanZoomOut);
-            Toolbar.Refresh();
+            ToolBar.SetToolEnabled(buttonIdZoomIn, WebBrowser.CanZoomIn);
+            ToolBar.SetToolEnabled(buttonIdZoomOut, WebBrowser.CanZoomOut);
         }
 
         /// <summary>
@@ -239,9 +291,8 @@ namespace Alternet.UI
                 WebBrowser.ClearHistory();
             }
 
-            Toolbar.EnableTool(buttonIdBack, WebBrowser.CanGoBack);
-            Toolbar.EnableTool(buttonIdForward, WebBrowser.CanGoForward);
-            Toolbar.Refresh();
+            ToolBar.SetToolEnabled(buttonIdBack, WebBrowser.CanGoBack);
+            ToolBar.SetToolEnabled(buttonIdForward, WebBrowser.CanGoForward);
         }
 
         /// <summary>
@@ -258,33 +309,13 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void CreateToolbarItems()
         {
-            var toolbar = Toolbar;
-            var imageSize = GetBaseToolSvgSize();
-            toolbar.ToolBitmapSizeInPixels = imageSize;
-
-            buttonIdBack = toolbar.AddToolButton(
-                CommonStrings.Default.ButtonBack,
-                KnownSvgImages.ImgBrowserBack);
-
-            buttonIdForward = toolbar.AddToolButton(
-                CommonStrings.Default.ButtonForward,
-                KnownSvgImages.ImgBrowserForward);
-
-            buttonIdZoomIn = toolbar.AddToolButton(
-                CommonStrings.Default.ButtonZoomIn,
-                KnownSvgImages.ImgZoomIn);
-
-            buttonIdZoomOut = toolbar.AddToolButton(
-                CommonStrings.Default.ButtonZoomOut,
-                KnownSvgImages.ImgZoomOut);
-
-            buttonIdUrl = toolbar.AddControl(urlTextBox);
-
-            buttonIdGo = toolbar.AddToolButton(
-                CommonStrings.Default.ButtonGo,
-                KnownSvgImages.ImgBrowserGo);
-
-            buttonIdMoreActions = toolbar.AddToolButton(null, KnownSvgImages.ImgMoreActions);
+            buttonIdBack = toolBar.AddSpeedBtn(KnownButton.Back, BackButton_Click);
+            buttonIdForward = toolBar.AddSpeedBtn(KnownButton.Forward, ForwardBtn_Click);
+            buttonIdZoomIn = toolBar.AddSpeedBtn(KnownButton.ZoomIn, ZoomInButton_Click);
+            buttonIdZoomOut = toolBar.AddSpeedBtn(KnownButton.ZoomOut, ZoomOutButton_Click);
+            buttonIdUrl = toolBar.AddControl(urlTextBox);
+            buttonIdGo = toolBar.AddSpeedBtn(KnownButton.BrowserGo, GoButton_Click);
+            buttonIdMoreActions = toolBar.AddSpeedBtn(null, KnownSvgImages.ImgMoreActions);
 
             MenuItem itemSearch = new(
                 CommonStrings.Default.ButtonFind + "...",
@@ -297,33 +328,9 @@ namespace Alternet.UI
             MoreActionsMenu.Add(itemSearch);
             MoreActionsMenu.Add(itemPrint);
 
-            toolbar.AddToolOnClick(buttonIdBack, BackButton_Click);
-            toolbar.AddToolOnClick(buttonIdForward, ForwardBtn_Click);
-            toolbar.AddToolOnClick(buttonIdZoomIn, ZoomInButton_Click);
-            toolbar.AddToolOnClick(buttonIdZoomOut, ZoomOutButton_Click);
-            toolbar.AddToolOnClick(buttonIdGo, GoButton_Click);
-            toolbar.SetToolDropDownMenu(buttonIdMoreActions, MoreActionsMenu);
-            toolbar.SetToolDropDownOnEvent(buttonIdMoreActions, AuiToolbarItemDropDownOnEvent.Click);
+            toolBar.SetToolDropDownMenu(buttonIdMoreActions, MoreActionsMenu);
 
             urlTextBox.KeyDown += TextBox_KeyDown;
-
-            toolbar.GrowToolMinWidth(buttonIdUrl, 350);
-
-            toolbar.Realize();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnParentChanged(EventArgs e)
-        {
-            base.OnParentChanged(e);
-
-            if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
-                return;
-
-            Manager.AddPane(WebBrowser, CenterPane);
-            Manager.AddPane(Toolbar, ToolbarPane);
-
-            Manager.Update();
         }
 
         private void WebBrowser_Loaded(object? sender, WebBrowserEventArgs e)
@@ -439,10 +446,12 @@ namespace Alternet.UI
 
         private void Initialize()
         {
-            WebBrowser.HasBorder = false;
-            DefaultToolbarStyle &=
-                ~(AuiToolbarCreateStyle.Text | AuiToolbarCreateStyle.HorzLayout);
-            Toolbar.Required();
+            Layout = LayoutStyle.Vertical;
+            toolBar.Parent = this;
+
+            panel.VerticalAlignment = VerticalAlignment.Fill;
+            panel.Parent = this;
+
             CreateToolbarItems();
 
             WebBrowser.ZoomType = WebBrowserZoomType.Layout;

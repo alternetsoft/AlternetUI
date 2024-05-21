@@ -697,6 +697,16 @@ namespace Alternet.UI
                     return AddSpeedBtn(strings.ButtonItalic, KnownSvgImages.ImgItalic, action);
                 case KnownButton.Underline:
                     return AddSpeedBtn(strings.ButtonUnderline, KnownSvgImages.ImgUnderline, action);
+                case KnownButton.Back:
+                    return AddSpeedBtn(strings.ButtonBack, KnownSvgImages.ImgBrowserBack, action);
+                case KnownButton.Forward:
+                    return AddSpeedBtn(strings.ButtonForward, KnownSvgImages.ImgBrowserForward, action);
+                case KnownButton.ZoomIn:
+                    return AddSpeedBtn(strings.ButtonZoomIn, KnownSvgImages.ImgZoomIn, action);
+                case KnownButton.ZoomOut:
+                    return AddSpeedBtn(strings.ButtonZoomOut, KnownSvgImages.ImgZoomOut, action);
+                case KnownButton.BrowserGo:
+                    return AddSpeedBtn(strings.ButtonGo, KnownSvgImages.ImgBrowserGo, action);
             }
         }
 
@@ -873,9 +883,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="enabled">New property value.</param>
-        public virtual void SetToolEnabled(ObjectUniqueId id, bool enabled = true)
+        public virtual void SetToolEnabled(ObjectUniqueId? id, bool enabled = true)
         {
-            var item = GetToolControl(id);
+            if (id is null)
+                return;
+            var item = GetToolControl(id.Value);
             if (item is null)
                 return;
             item.Enabled = enabled;

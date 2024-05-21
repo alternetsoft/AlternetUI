@@ -53,7 +53,7 @@ namespace Alternet.UI
             if (source == null)
                 return null;
 
-            using UIDialogListEditWindow dialog = new(source);
+            using ListEditDialogWindow dialog = new(source);
             var result = dialog.ShowModal(Window.ActiveWindow) == ModalResult.Accepted;
             return result;
         }

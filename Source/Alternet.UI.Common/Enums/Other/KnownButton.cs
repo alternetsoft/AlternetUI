@@ -115,5 +115,30 @@ namespace Alternet.UI
         /// 'Underline' button.
         /// </summary>
         Underline,
+
+        /// <summary>
+        /// 'Back' button.
+        /// </summary>
+        Back,
+
+        /// <summary>
+        /// 'Forward' button.
+        /// </summary>
+        Forward,
+
+        /// <summary>
+        /// 'Zoom In' button.
+        /// </summary>
+        ZoomIn,
+
+        /// <summary>
+        /// 'Zoom out' button.
+        /// </summary>
+        ZoomOut,
+
+        /// <summary>
+        /// 'Go' button (can be used in browser).
+        /// </summary>
+        BrowserGo,
     }
 }

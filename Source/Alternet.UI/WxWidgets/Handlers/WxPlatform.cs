@@ -606,7 +606,7 @@ namespace Alternet.UI
 
         public override void ShowDeveloperTools()
         {
-            PanelDevTools.ShowDeveloperTools();
+            DeveloperToolsPanel.ShowDeveloperTools();
         }
 
         public override string? GetUIVersion()

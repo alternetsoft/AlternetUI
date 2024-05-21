@@ -145,6 +145,42 @@ namespace Alternet.UI
         public Splitter BottomSplitter => bottomSplitter;
 
         /// <summary>
+        /// Gets or sets width of the left panel.
+        /// </summary>
+        public virtual double LeftPanelWidth
+        {
+            get => LeftPanel.Width;
+            set => LeftPanel.Width = value;
+        }
+
+        /// <summary>
+        /// Gets or sets width of the right panel.
+        /// </summary>
+        public virtual double RightPanelWidth
+        {
+            get => RightPanel.Width;
+            set => RightPanel.Width = value;
+        }
+
+        /// <summary>
+        /// Gets or sets height of the top panel.
+        /// </summary>
+        public virtual double TopPanelHeight
+        {
+            get => TopPanel.Height;
+            set => TopPanel.Height = value;
+        }
+
+        /// <summary>
+        /// Gets or sets height of the bottom panel.
+        /// </summary>
+        public virtual double BottomPanelHeight
+        {
+            get => BottomPanel.Height;
+            set => BottomPanel.Height = value;
+        }
+
+        /// <summary>
         /// Gets or sets whether top panel is visible.
         /// </summary>
         public virtual bool TopVisible

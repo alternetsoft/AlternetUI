@@ -11,57 +11,74 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class PanelDevTools : PanelAuiManager
+    internal class DeveloperToolsPanel : Control
     {
-        private static WindowDeveloperTools? devToolsWindow;
+        private static DeveloperToolsWindow? devToolsWindow;
 
-        private readonly IAuiNotebookPage? mainLogPage;
-
-        private readonly LogListBox mainLogListBox = new()
+        private readonly ActionsListBox actionsListBox = new()
         {
             HasBorder = false,
         };
 
+        private readonly LogListBox logListBox = new()
+        {
+            HasBorder = false,
+        };
+
+        private readonly SplittedPanel panel = new()
+        {
+            TopVisible = false,
+            LeftVisible = false,
+            BottomVisible = false,
+            RightPanelWidth = 350,
+        };
+
+        private readonly PropertyGrid propGrid = new()
+        {
+        };
+
+        private readonly SideBarPanel centerNotebook = new()
+        {
+        };
+
+        private readonly SideBarPanel rightNotebook = new()
+        {
+        };
+
         private ListBox? typesListBox;
-        private IAuiNotebookPage? typesPage;
         private ListBox? controlsListBox;
-        private IAuiNotebookPage? controlsPage;
         private bool insideSetProps;
 
-        public PanelDevTools()
-            : base()
+        public DeveloperToolsPanel()
         {
-            DefaultRightPaneBestSize = (350, 200);
-            DefaultRightPaneMinSize = (350, 200);
+            centerNotebook.Parent = panel.FillPanel;
+            rightNotebook.Parent = panel.RightPanel;
+            panel.Parent = this;
 
-            CenterNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;
-            RightNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;
+            centerNotebook.Add("Output", logListBox);
+            logListBox.ContextMenu.Required();
+            logListBox.MenuItemShowDevTools?.SetEnabled(false);
+            logListBox.BindApplicationLog();
 
-            mainLogListBox.Parent = CenterNotebook;
-            mainLogListBox.ContextMenu.Required();
-            mainLogListBox.MenuItemShowDevTools?.SetEnabled(false);
-            mainLogListBox.BindApplicationLog();
-            mainLogPage = CenterNotebook.AddPage(
-                mainLogListBox,
-                CommonStrings.Default.NotebookTabTitleOutput);
-            ActionsControl.Required();
-            PropGrid.Required();
+            rightNotebook.Add("Actions", actionsListBox);
 
-            PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
+            propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
-            PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
-            PropGrid.ProcessException += PropertyGrid_ProcessException;
-            PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+            propGrid.Features = PropertyGridFeature.QuestionCharInNullable;
+            propGrid.ProcessException += PropertyGrid_ProcessException;
+            propGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+            rightNotebook.Add("Properties", propGrid);
 
             InitActions();
+
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
         }
 
-        internal IAuiNotebookPage? MainLogPage => mainLogPage;
+        public SideBarPanel CenterNotebook => centerNotebook;
 
-        internal IAuiNotebookPage? TypesPage => typesPage;
+        public SideBarPanel RightNotebook => rightNotebook;
 
-        internal IAuiNotebookPage? ControlsPage => controlsPage;
+        public PropertyGrid PropGrid => propGrid;
 
         internal object? LastFocusedControl { get; set; }
 
@@ -98,9 +115,7 @@ namespace Alternet.UI
                         AddControl(type);
                     }
 
-                    typesPage = CenterNotebook.AddPage(
-                        typesListBox,
-                        "Types");
+                    centerNotebook.Add("Types", typesListBox);
                 }
 
                 return typesListBox;
@@ -119,7 +134,7 @@ namespace Alternet.UI
                         Parent = this,
                         HasBorder = false,
                     };
-                    controlsPage = CenterNotebook.AddPage(controlsListBox, "Controls");
+                    centerNotebook.Add("Controls", controlsListBox);
                 }
 
                 return controlsListBox;
@@ -227,7 +242,12 @@ namespace Alternet.UI
             LogUtils.LogToFile(s);
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
-            Application.Log("FontFamilies logged to file.");
+            BaseApplication.Log("FontFamilies logged to file.");
+        }
+
+        public void AddAction(string title, Action? action)
+        {
+            actionsListBox.AddAction(title, action);
         }
 
         internal void PropGridSetProps(object? instance)
@@ -237,13 +257,13 @@ namespace Alternet.UI
             insideSetProps = true;
             try
             {
-                PropGrid.DoInsideUpdate(() =>
+                propGrid.DoInsideUpdate(() =>
                 {
-                    PropGrid.Clear();
+                    propGrid.Clear();
                     if (instance is null)
                         return;
-                    PropGrid.AddConstItem("(type)", "(type)", instance.GetType().Name);
-                    PropGrid.AddProps(instance, null, true);
+                    propGrid.AddConstItem("(type)", "(type)", instance.GetType().Name);
+                    propGrid.AddProps(instance, null, true);
                 });
             }
             finally
@@ -255,30 +275,30 @@ namespace Alternet.UI
         private static void LogOSInformation()
         {
             var os = Environment.OSVersion;
-            Application.Log("Current OS Information:\n");
-            Application.Log($"Platform: {os.Platform:G}");
-            Application.Log($"Version String: {os.VersionString}");
-            Application.Log($"Major version: {os.Version.Major}");
-            Application.Log($"Minor version: {os.Version.Minor}");
-            Application.Log($"Service Pack: '{os.ServicePack}'");
+            BaseApplication.Log("Current OS Information:\n");
+            BaseApplication.Log($"Platform: {os.Platform:G}");
+            BaseApplication.Log($"Version String: {os.VersionString}");
+            BaseApplication.Log($"Major version: {os.Version.Major}");
+            BaseApplication.Log($"Minor version: {os.Version.Minor}");
+            BaseApplication.Log($"Service Pack: '{os.ServicePack}'");
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            RightNotebook.ChangeSelection(PropGrid);
+            rightNotebook.SelectedControl = propGrid;
             controlsListBox?.SelectedAction?.Invoke();
         }
 
         private void PropertyGrid_ProcessException(object? sender, ControlExceptionEventArgs e)
         {
-            Application.LogFileIsEnabled = true;
+            BaseApplication.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);
         }
 
         private void ControlsActionMainForm()
         {
-            RightNotebook.ChangeSelection(PropGrid);
-            PropGridSetProps(Application.FirstWindow());
+            rightNotebook.SelectedControl = propGrid;
+            PropGridSetProps(BaseApplication.FirstWindow());
         }
 
         private void ControlsActionFocusedControl()
@@ -290,7 +310,7 @@ namespace Alternet.UI
         {
             var item = TypesListBox.SelectedItem as ListControlItem;
             var type = item?.Value as Type;
-            EventLogManager.UpdateEventsPropertyGrid(PropGrid, type);
+            EventLogManager.UpdateEventsPropertyGrid(propGrid, type);
         }
 
         private void LogUsefulDefines()
@@ -302,7 +322,7 @@ namespace Alternet.UI
 
         private void AddLogAction(string title, Action action)
         {
-            AddAction(title, Fn);
+            actionsListBox.AddAction(title, Fn);
 
             void Fn()
             {
@@ -402,7 +422,7 @@ namespace Alternet.UI
 
         private void LogControlInfo()
         {
-            Application.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(this)}");
+            BaseApplication.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(this)}");
             Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
             Log($"Font.Default: {Font.Default.ToInfoString()}");
             Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
