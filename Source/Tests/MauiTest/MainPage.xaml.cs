@@ -9,9 +9,7 @@ namespace SpinPaint;
 
 public partial class MainPage : ContentPage
 {
-    private readonly Alternet.UI.MauiContainer mauiContainer = new();
     private readonly Alternet.UI.SkiaContainer skiaContainer = new();
-    private readonly Alternet.UI.SampleControl mauiSample = new();
     private readonly Alternet.UI.SampleControl skiaSample = new();
     private readonly Button button = new();
 
@@ -22,16 +20,11 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        mauiContainer.Margin = new(5);
-        mauiContainer.BackgroundColor = Colors.Cornsilk;
         skiaContainer.BackgroundColor = Colors.Cornsilk;
         skiaContainer.Margin = new(5);
 
-        mauiContainer.HeightRequest = 300;
-        mauiContainer.WidthRequest = 500;
         skiaContainer.HeightRequest = 300;
         skiaContainer.WidthRequest = 500;
-        mauiContainer.Control = mauiSample;
         skiaContainer.Control = skiaSample;
 
         button.Text = "Hello";
