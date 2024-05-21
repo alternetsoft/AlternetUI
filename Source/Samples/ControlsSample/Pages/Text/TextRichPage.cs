@@ -223,7 +223,7 @@ namespace ControlsSample
             r.WriteText("color, like this red bit. ");
             r.EndTextColor();
 
-            var backgroundColourAttr = RichTextBox.CreateRichAttr();
+            var backgroundColourAttr = r.CreateRichAttr();
             backgroundColourAttr.SetBackgroundColor(Color.Green);
             backgroundColourAttr.SetTextColor(Color.Yellow);
             r.BeginStyle(backgroundColourAttr);

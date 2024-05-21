@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// Gets or sets whether to call <see cref="HandleAdditionalKeys"/> method
         /// when key is pressed. Default is <c>true</c>.
         /// </summary>
-        public bool AllowAdditionalKeys { get; set; } = true;
+        public virtual bool AllowAdditionalKeys { get; set; } = true;
 
         int IReadOnlyStrings.Count => GetNumberOfLines();
 
@@ -284,7 +284,7 @@ namespace Alternet.UI
         /// Creates new custom rich text style.
         /// </summary>
         /// <returns></returns>
-        public ITextBoxRichAttr CreateRichAttr()
+        public virtual ITextBoxRichAttr CreateRichAttr()
         {
             return Handler.CreateRichAttr();
         }
@@ -292,7 +292,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="TextBox.GetRange"/>
         /// </summary>
-        public string GetRange(long from, long to)
+        public virtual string GetRange(long from, long to)
         {
             return Handler.GetRange(from, to);
         }
@@ -300,7 +300,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the length of the specified line in characters.
         /// </summary>
-        public int GetLineLength(long lineNo)
+        public virtual int GetLineLength(long lineNo)
         {
             return Handler.GetLineLength(lineNo);
         }
@@ -308,7 +308,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the text for the given line.
         /// </summary>
-        public string GetLineText(long lineNo)
+        public virtual string GetLineText(long lineNo)
         {
             return Handler.GetLineText(lineNo);
         }
@@ -316,7 +316,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the number of lines in the buffer.
         /// </summary>
-        public int GetNumberOfLines()
+        public virtual int GetNumberOfLines()
         {
             return Handler.GetNumberOfLines();
         }
@@ -324,7 +324,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if the buffer has been modified.
         /// </summary>
-        public bool IsModified()
+        public virtual bool IsModified()
         {
             return Handler.IsModified();
         }
@@ -332,7 +332,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if the control is editable.
         /// </summary>
-        public bool IsEditable()
+        public virtual bool IsEditable()
         {
             return Handler.IsEditable();
         }
@@ -341,7 +341,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if the control is single-line.
         /// Currently <see cref="RichTextBox"/> does not support single-line editing.
         /// </summary>
-        public bool IsSingleLine()
+        public virtual bool IsSingleLine()
         {
             return Handler.IsSingleLine();
         }
@@ -349,7 +349,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if the control is multiline.
         /// </summary>
-        public bool IsMultiLine()
+        public virtual bool IsMultiLine()
         {
             return Handler.IsMultiLine();
         }
@@ -357,7 +357,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the text within the current selection range, if any.
         /// </summary>
-        public string GetStringSelection()
+        public virtual string GetStringSelection()
         {
             return Handler.GetStringSelection();
         }
@@ -367,7 +367,7 @@ namespace Alternet.UI
         /// This optimizes sizing for large buffers. The default is 20000.
         /// </summary>
         /// <param name="threshold"></param>
-        public void SetDelayedLayoutThreshold(long threshold)
+        public virtual void SetDelayedLayoutThreshold(long threshold)
         {
             Handler.SetDelayedLayoutThreshold(threshold);
         }
@@ -376,7 +376,7 @@ namespace Alternet.UI
         /// Gets the size of the buffer beyond which layout is delayed during resizing.
         /// This optimizes sizing for large buffers. The default is 20000.
         /// </summary>
-        public long GetDelayedLayoutThreshold()
+        public virtual long GetDelayedLayoutThreshold()
         {
             return Handler.GetDelayedLayoutThreshold();
         }
@@ -384,7 +384,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the flag indicating that full layout is required.
         /// </summary>
-        public bool GetFullLayoutRequired()
+        public virtual bool GetFullLayoutRequired()
         {
             return Handler.GetFullLayoutRequired();
         }
@@ -393,7 +393,7 @@ namespace Alternet.UI
         /// Sets the flag indicating that full layout is required.
         /// </summary>
         /// <param name="b"></param>
-        public void SetFullLayoutRequired(bool b)
+        public virtual void SetFullLayoutRequired(bool b)
         {
             Handler.SetFullLayoutRequired(b);
         }
@@ -401,7 +401,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the last time full layout was performed.
         /// </summary>
-        public long GetFullLayoutTime()
+        public virtual long GetFullLayoutTime()
         {
             return Handler.GetFullLayoutTime();
         }
@@ -410,7 +410,7 @@ namespace Alternet.UI
         /// Sets the last time full layout was performed.
         /// </summary>
         /// <param name="t"></param>
-        public void SetFullLayoutTime(long t)
+        public virtual void SetFullLayoutTime(long t)
         {
             Handler.SetFullLayoutTime(t);
         }
@@ -419,7 +419,7 @@ namespace Alternet.UI
         /// Returns the position that should be shown when full (delayed) layout is performed.
         /// </summary>
         /// <returns></returns>
-        public long GetFullLayoutSavedPosition()
+        public virtual long GetFullLayoutSavedPosition()
         {
             return Handler.GetFullLayoutSavedPosition();
         }
@@ -485,7 +485,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="SetDefaultStyle"/>
-        public bool SetDefaultRichStyle(ITextBoxRichAttr style)
+        public virtual bool SetDefaultRichStyle(ITextBoxRichAttr style)
         {
             return Handler.SetDefaultRichStyle(style);
         }
@@ -542,7 +542,7 @@ namespace Alternet.UI
         /// Sets the position that should be shown when full (delayed) layout is performed.
         /// </summary>
         /// <param name="p"></param>
-        public void SetFullLayoutSavedPosition(long p)
+        public virtual void SetFullLayoutSavedPosition(long p)
         {
             Handler.SetFullLayoutSavedPosition(p);
         }
@@ -550,7 +550,7 @@ namespace Alternet.UI
         /// <summary>
         /// Forces any pending layout due to delayed, partial layout when the control was resized.
         /// </summary>
-        public void ForceDelayedLayout()
+        public virtual void ForceDelayedLayout()
         {
             Handler.ForceDelayedLayout();
         }
@@ -560,7 +560,7 @@ namespace Alternet.UI
         /// instead of at the end of the previous one.
         /// </summary>
         /// <returns></returns>
-        public bool GetCaretAtLineStart()
+        public virtual bool GetCaretAtLineStart()
         {
             return Handler.GetCaretAtLineStart();
         }
@@ -570,7 +570,7 @@ namespace Alternet.UI
         /// instead of at the end of the previous one.
         /// </summary>
         /// <param name="atStart"></param>
-        public void SetCaretAtLineStart(bool atStart)
+        public virtual void SetCaretAtLineStart(bool atStart)
         {
             Handler.SetCaretAtLineStart(atStart);
         }
@@ -579,7 +579,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if we are dragging a selection.
         /// </summary>
         /// <returns></returns>
-        public bool GetDragging()
+        public virtual bool GetDragging()
         {
             return Handler.GetDragging();
         }
@@ -596,7 +596,7 @@ namespace Alternet.UI
         /// Sets a flag to remember if we are dragging a selection.
         /// </summary>
         /// <param name="dragging"></param>
-        public void SetDragging(bool dragging)
+        public virtual void SetDragging(bool dragging)
         {
             Handler.SetDragging(dragging);
         }
@@ -605,7 +605,7 @@ namespace Alternet.UI
         /// Returns an anchor so we know how to extend the selection.
         /// It's a caret position since it's between two characters.
         /// </summary>
-        public long GetSelectionAnchor()
+        public virtual long GetSelectionAnchor()
         {
             return Handler.GetSelectionAnchor();
         }
@@ -614,7 +614,7 @@ namespace Alternet.UI
         /// Sets an anchor so we know how to extend the selection.
         /// It's a caret position since it's between two characters.
         /// </summary>
-        public void SetSelectionAnchor(long anchor)
+        public virtual void SetSelectionAnchor(long anchor)
         {
             Handler.SetSelectionAnchor(anchor);
         }
@@ -622,7 +622,7 @@ namespace Alternet.UI
         /// <summary>
         /// Clears the buffer content, leaving a single empty paragraph. Cannot be undone.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             Handler.Clear();
         }
@@ -630,7 +630,7 @@ namespace Alternet.UI
         /// <summary>
         /// Replaces the content in the specified range with the string specified by @a value.
         /// </summary>
-        public void Replace(long from, long to, string value)
+        public virtual void Replace(long from, long to, string value)
         {
             Handler.Replace(from, to, value);
         }
@@ -638,7 +638,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes the content in the specified range.
         /// </summary>
-        public void Remove(long from, long to)
+        public virtual void Remove(long from, long to)
         {
             Handler.Remove(from, to);
         }
@@ -655,7 +655,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use <see cref="SetFileHandlerFlags"/> to setup load options.
         /// </remarks>
-        public bool LoadFromFile(string file, RichTextFileType type = RichTextFileType.Any)
+        public virtual bool LoadFromFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
             return Handler.LoadFromFile(file, type);
         }
@@ -672,7 +672,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use <see cref="SetFileHandlerFlags"/> to setup save options.
         /// </remarks>
-        public bool SaveToFile(string file, RichTextFileType type = RichTextFileType.Any)
+        public virtual bool SaveToFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
             return Handler.SaveToFile(file, type);
         }
@@ -688,7 +688,7 @@ namespace Alternet.UI
         /// <returns>
         /// <c>true</c> on success, <c>false</c> if an error occurred.
         /// </returns>
-        public bool SaveToStream(Stream stream, RichTextFileType type)
+        public virtual bool SaveToStream(Stream stream, RichTextFileType type)
         {
             return Handler.SaveToStream(stream, type);
         }
@@ -704,7 +704,7 @@ namespace Alternet.UI
         /// <returns>
         /// <c>true</c> on success, <c>false</c> if an error occurred.
         /// </returns>
-        public bool LoadFromStream(Stream stream, RichTextFileType type)
+        public virtual bool LoadFromStream(Stream stream, RichTextFileType type)
         {
             return Handler.LoadFromStream(stream, type);
         }
@@ -714,7 +714,7 @@ namespace Alternet.UI
         /// See the documentation for each handler class to see what flags are
         /// relevant for each handler.
         /// </summary>
-        public void SetFileHandlerFlags(RichTextHandlerFlags knownFlags, int customFlags = 0)
+        public virtual void SetFileHandlerFlags(RichTextHandlerFlags knownFlags, int customFlags = 0)
         {
             Handler.SetFileHandlerFlags(knownFlags, customFlags);
         }
@@ -724,7 +724,7 @@ namespace Alternet.UI
         /// See the documentation for each handler class to see what flags are
         /// relevant for each handler.
         /// </summary>
-        public int GetFileHandlerFlags()
+        public virtual int GetFileHandlerFlags()
         {
             return Handler.GetFileHandlerFlags();
         }
@@ -732,7 +732,7 @@ namespace Alternet.UI
         /// <summary>
         /// Marks the buffer as modified.
         /// </summary>
-        public void MarkDirty()
+        public virtual void MarkDirty()
         {
             Handler.MarkDirty();
         }
@@ -740,7 +740,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the buffer's modified status to false, and clears the buffer's command history.
         /// </summary>
-        public void DiscardEdits()
+        public virtual void DiscardEdits()
         {
             Handler.DiscardEdits();
         }
@@ -749,7 +749,7 @@ namespace Alternet.UI
         /// Sets the maximum number of characters that may be entered in a single line
         /// text control. For compatibility only; currently does nothing.
         /// </summary>
-        public void SetMaxLength(ulong len)
+        public virtual void SetMaxLength(ulong len)
         {
             Handler.SetMaxLength(len);
         }
@@ -757,7 +757,7 @@ namespace Alternet.UI
         /// <summary>
         /// Writes text at the current position.
         /// </summary>
-        public void WriteText(string text)
+        public virtual void WriteText(string text)
         {
             Handler.WriteText(text);
         }
@@ -765,7 +765,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the insertion point to the end of the buffer and writes the text.
         /// </summary>
-        public void AppendText(string text)
+        public virtual void AppendText(string text)
         {
             Handler.AppendText(text);
         }
@@ -773,7 +773,7 @@ namespace Alternet.UI
         /// <summary>
         /// Translates from column and line number to position.
         /// </summary>
-        public long XYToPosition(long x, long y)
+        public virtual long XYToPosition(long x, long y)
         {
             return Handler.XYToPosition(x, y);
         }
@@ -781,7 +781,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the buffer so that the given position is in view.
         /// </summary>
-        public void ShowPosition(long pos)
+        public virtual void ShowPosition(long pos)
         {
             Handler.ShowPosition(pos);
         }
@@ -789,7 +789,7 @@ namespace Alternet.UI
         /// <summary>
         /// Copies the selected content (if any) to the clipboard.
         /// </summary>
-        public void Copy()
+        public virtual void Copy()
         {
             Handler.Copy();
         }
@@ -798,7 +798,7 @@ namespace Alternet.UI
         /// Copies the selected content (if any) to the clipboard and deletes the selection.
         /// This is undoable.
         /// </summary>
-        public void Cut()
+        public virtual void Cut()
         {
             Handler.Cut();
         }
@@ -806,7 +806,7 @@ namespace Alternet.UI
         /// <summary>
         /// Pastes content from the clipboard to the buffer.
         /// </summary>
-        public void Paste()
+        public virtual void Paste()
         {
             Handler.Paste();
         }
@@ -814,7 +814,7 @@ namespace Alternet.UI
         /// <summary>
         /// Deletes the content in the selection, if any. This is undoable.
         /// </summary>
-        public void DeleteSelection()
+        public virtual void DeleteSelection()
         {
             Handler.DeleteSelection();
         }
@@ -822,7 +822,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if selected content can be copied to the clipboard.
         /// </summary>
-        public bool CanCopy()
+        public virtual bool CanCopy()
         {
             return Handler.CanCopy();
         }
@@ -830,7 +830,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if selected content can be copied to the clipboard and deleted.
         /// </summary>
-        public bool CanCut()
+        public virtual bool CanCut()
         {
             return Handler.CanCut();
         }
@@ -838,7 +838,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if the clipboard content can be pasted to the buffer.
         /// </summary>
-        public bool CanPaste()
+        public virtual bool CanPaste()
         {
             return Handler.CanPaste();
         }
@@ -846,7 +846,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if selected content can be deleted.
         /// </summary>
-        public bool CanDeleteSelection()
+        public virtual bool CanDeleteSelection()
         {
             return Handler.CanDeleteSelection();
         }
@@ -854,7 +854,7 @@ namespace Alternet.UI
         /// <summary>
         /// Undoes the command at the top of the command history, if there is one.
         /// </summary>
-        public void Undo()
+        public virtual void Undo()
         {
             Handler.Undo();
         }
@@ -862,7 +862,7 @@ namespace Alternet.UI
         /// <summary>
         /// Redoes the current command.
         /// </summary>
-        public void Redo()
+        public virtual void Redo()
         {
             Handler.Redo();
         }
@@ -870,7 +870,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if there is a command in the command history that can be undone.
         /// </summary>
-        public bool CanUndo()
+        public virtual bool CanUndo()
         {
             return Handler.CanUndo();
         }
@@ -878,7 +878,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if there is a command in the command history that can be redone.
         /// </summary>
-        public bool CanRedo()
+        public virtual bool CanRedo()
         {
             return Handler.CanRedo();
         }
@@ -887,7 +887,7 @@ namespace Alternet.UI
         /// Sets the insertion point and causes the current editing style to be taken from
         /// the new position (unlike <see cref="SetCaretPosition"/>).
         /// </summary>
-        public void SetInsertionPoint(long pos)
+        public virtual void SetInsertionPoint(long pos)
         {
             Handler.SetInsertionPoint(pos);
         }
@@ -895,7 +895,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the insertion point to the end of the text control.
         /// </summary>
-        public void SetInsertionPointEnd()
+        public virtual void SetInsertionPointEnd()
         {
             Handler.SetInsertionPointEnd();
         }
@@ -903,7 +903,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the current insertion point.
         /// </summary>
-        public long GetInsertionPoint()
+        public virtual long GetInsertionPoint()
         {
             return Handler.GetInsertionPoint();
         }
@@ -915,7 +915,7 @@ namespace Alternet.UI
         /// So, for example, to set the selection for a character at position 5, use the
         /// range (5,6).
         /// </summary>
-        public void SetSelection(long from, long to)
+        public virtual void SetSelection(long from, long to)
         {
             Handler.SetSelection(from, to);
         }
@@ -923,7 +923,7 @@ namespace Alternet.UI
         /// <summary>
         /// Makes the control editable, or not.
         /// </summary>
-        public void SetEditable(bool editable)
+        public virtual void SetEditable(bool editable)
         {
             Handler.SetEditable(editable);
         }
@@ -932,7 +932,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if there is a selection and the object containing the selection
         /// was the same as the current focus object.
         /// </summary>
-        public bool HasSelection()
+        public virtual bool HasSelection()
         {
             return Handler.HasSelection();
         }
@@ -941,7 +941,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if there was a selection, whether or not the current focus object
         /// is the same as the selection's container object.
         /// </summary>
-        public bool HasUnfocusedSelection()
+        public virtual bool HasUnfocusedSelection()
         {
             return Handler.HasUnfocusedSelection();
         }
@@ -949,12 +949,12 @@ namespace Alternet.UI
         /// <summary>
         /// Inserts new paragraphs at the current insertion point. See <see cref="LineBreak"/>.
         /// </summary>
-        public bool NewLine() => NewLine(1);
+        public virtual bool NewLine() => NewLine(1);
 
         /// <summary>
         /// Inserts a new paragraph at the current insertion point. See <see cref="LineBreak"/>.
         /// </summary>
-        public bool NewLine(int count)
+        public virtual bool NewLine(int count)
         {
             for (int i = 0; i < count; i++)
             {
@@ -971,7 +971,7 @@ namespace Alternet.UI
         /// A line break forces wrapping within a paragraph, and can be introduced by
         /// using this function or by typing Shift-Return.
         /// </summary>
-        public bool LineBreak()
+        public virtual bool LineBreak()
         {
             return Handler.LineBreak();
         }
@@ -979,7 +979,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends the current style.
         /// </summary>
-        public bool EndStyle()
+        public virtual bool EndStyle()
         {
             return Handler.EndStyle();
         }
@@ -987,7 +987,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends application of all styles in the current style stack.
         /// </summary>
-        public bool EndAllStyles()
+        public virtual bool EndAllStyles()
         {
             return Handler.EndAllStyles();
         }
@@ -995,7 +995,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using bold.
         /// </summary>
-        public bool BeginBold()
+        public virtual bool BeginBold()
         {
             return Handler.BeginBold();
         }
@@ -1003,7 +1003,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends using bold.
         /// </summary>
-        public bool EndBold()
+        public virtual bool EndBold()
         {
             return Handler.EndBold();
         }
@@ -1011,7 +1011,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using italic.
         /// </summary>
-        public bool BeginItalic()
+        public virtual bool BeginItalic()
         {
             return Handler.BeginItalic();
         }
@@ -1019,7 +1019,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends using italic.
         /// </summary>
-        public bool EndItalic()
+        public virtual bool EndItalic()
         {
             return Handler.EndItalic();
         }
@@ -1027,7 +1027,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using underlining.
         /// </summary>
-        public bool BeginUnderline()
+        public virtual bool BeginUnderline()
         {
             return Handler.BeginUnderline();
         }
@@ -1035,7 +1035,7 @@ namespace Alternet.UI
         /// <summary>
         /// End applying underlining.
         /// </summary>
-        public bool EndUnderline()
+        public virtual bool EndUnderline()
         {
             return Handler.EndUnderline();
         }
@@ -1043,7 +1043,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using the given point size.
         /// </summary>
-        public bool BeginFontSize(int pointSize)
+        public virtual bool BeginFontSize(int pointSize)
         {
             return Handler.BeginFontSize(pointSize);
         }
@@ -1051,7 +1051,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using the given point size.
         /// </summary>
-        public bool BeginFontSize(double pointSize)
+        public virtual bool BeginFontSize(double pointSize)
         {
             return Handler.BeginFontSize((int)pointSize);
         }
@@ -1059,7 +1059,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends using a point size.
         /// </summary>
-        public bool EndFontSize()
+        public virtual bool EndFontSize()
         {
             return Handler.EndFontSize();
         }
@@ -1067,7 +1067,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends using a font.
         /// </summary>
-        public bool EndFont()
+        public virtual bool EndFont()
         {
             return Handler.EndFont();
         }
@@ -1075,7 +1075,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using this color.
         /// </summary>
-        public bool BeginTextColor(Color color)
+        public virtual bool BeginTextColor(Color color)
         {
             return Handler.BeginTextColor(color);
         }
@@ -1083,7 +1083,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends applying a text color.
         /// </summary>
-        public bool EndTextColor()
+        public virtual bool EndTextColor()
         {
             return Handler.EndTextColor();
         }
@@ -1091,7 +1091,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using alignment.
         /// </summary>
-        public bool BeginAlignment(TextBoxTextAttrAlignment alignment)
+        public virtual bool BeginAlignment(TextBoxTextAttrAlignment alignment)
         {
             return Handler.BeginAlignment(alignment);
         }
@@ -1099,7 +1099,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends alignment.
         /// </summary>
-        public bool EndAlignment()
+        public virtual bool EndAlignment()
         {
             return Handler.EndAlignment();
         }
@@ -1125,7 +1125,7 @@ namespace Alternet.UI
         /// content of the paragraph, including the first line, starts at the
         /// leftIndent plus the leftSubIndent.
         /// </remarks>
-        public bool BeginLeftIndent(int leftIndent, int leftSubIndent = 0)
+        public virtual bool BeginLeftIndent(int leftIndent, int leftSubIndent = 0)
         {
             return Handler.BeginLeftIndent(leftIndent, leftSubIndent);
         }
@@ -1133,7 +1133,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends left indent.
         /// </summary>
-        public bool EndLeftIndent()
+        public virtual bool EndLeftIndent()
         {
             return Handler.EndLeftIndent();
         }
@@ -1141,7 +1141,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins a right indent, specified in tenths of a millimetre.
         /// </summary>
-        public bool BeginRightIndent(int rightIndent)
+        public virtual bool BeginRightIndent(int rightIndent)
         {
             return Handler.BeginRightIndent(rightIndent);
         }
@@ -1149,7 +1149,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends right indent.
         /// </summary>
-        public bool EndRightIndent()
+        public virtual bool EndRightIndent()
         {
             return Handler.EndRightIndent();
         }
@@ -1158,7 +1158,7 @@ namespace Alternet.UI
         /// Begins paragraph spacing; pass the before-paragraph and after-paragraph spacing
         /// in tenths of a millimetre.
         /// </summary>
-        public bool BeginParagraphSpacing(int before, int after)
+        public virtual bool BeginParagraphSpacing(int before, int after)
         {
             return Handler.BeginParagraphSpacing(before, after);
         }
@@ -1166,7 +1166,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends paragraph spacing.
         /// </summary>
-        public bool EndParagraphSpacing()
+        public virtual bool EndParagraphSpacing()
         {
             return Handler.EndParagraphSpacing();
         }
@@ -1180,7 +1180,7 @@ namespace Alternet.UI
         /// The <see cref="TextBoxTextAttrLineSpacing"/> constants are defined for convenience.
         /// </remarks>
         /// <returns></returns>
-        public bool BeginLineSpacing(int lineSpacing)
+        public virtual bool BeginLineSpacing(int lineSpacing)
         {
             return Handler.BeginLineSpacing(lineSpacing);
         }
@@ -1188,7 +1188,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends line spacing.
         /// </summary>
-        public bool EndLineSpacing()
+        public virtual bool EndLineSpacing()
         {
             return Handler.EndLineSpacing();
         }
@@ -1213,7 +1213,7 @@ namespace Alternet.UI
         /// left of the actual paragraph is leftSubIndent.
         /// </remarks>
         /// <returns></returns>
-        public bool BeginNumberedBullet(
+        public virtual bool BeginNumberedBullet(
             int bulletNumber,
             int leftIndent,
             int leftSubIndent,
@@ -1229,7 +1229,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends application of a numbered bullet.
         /// </summary>
-        public bool EndNumberedBullet()
+        public virtual bool EndNumberedBullet()
         {
             return Handler.EndNumberedBullet();
         }
@@ -1239,7 +1239,7 @@ namespace Alternet.UI
         /// See <see cref="BeginNumberedBullet"/> for an explanation of how indentation is used
         /// to render the bulleted paragraph.
         /// </summary>
-        public bool BeginSymbolBullet(
+        public virtual bool BeginSymbolBullet(
             string symbol,
             int leftIndent,
             int leftSubIndent,
@@ -1255,7 +1255,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends applying a symbol bullet.
         /// </summary>
-        public bool EndSymbolBullet()
+        public virtual bool EndSymbolBullet()
         {
             return Handler.EndSymbolBullet();
         }
@@ -1263,7 +1263,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins applying a symbol bullet.
         /// </summary>
-        public bool BeginStandardBullet(
+        public virtual bool BeginStandardBullet(
             string bulletName,
             int leftIndent,
             int leftSubIndent,
@@ -1279,7 +1279,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins applying a standard bullet.
         /// </summary>
-        public bool EndStandardBullet()
+        public virtual bool EndStandardBullet()
         {
             return Handler.EndStandardBullet();
         }
@@ -1287,7 +1287,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using the named character style.
         /// </summary>
-        public bool BeginCharacterStyle(string characterStyle)
+        public virtual bool BeginCharacterStyle(string characterStyle)
         {
             return Handler.BeginCharacterStyle(characterStyle);
         }
@@ -1295,7 +1295,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends application of a named character style.
         /// </summary>
-        public bool EndCharacterStyle()
+        public virtual bool EndCharacterStyle()
         {
             return Handler.EndCharacterStyle();
         }
@@ -1303,7 +1303,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins applying the named paragraph style.
         /// </summary>
-        public bool BeginParagraphStyle(string paragraphStyle)
+        public virtual bool BeginParagraphStyle(string paragraphStyle)
         {
             return Handler.BeginParagraphStyle(paragraphStyle);
         }
@@ -1311,7 +1311,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends application of a named paragraph style.
         /// </summary>
-        public bool EndParagraphStyle()
+        public virtual bool EndParagraphStyle()
         {
             return Handler.EndParagraphStyle();
         }
@@ -1320,7 +1320,7 @@ namespace Alternet.UI
         /// Begins using a specified list style.
         /// Optionally, you can also pass a level and a number.
         /// </summary>
-        public bool BeginListStyle(string listStyle, int level = 1, int number = 1)
+        public virtual bool BeginListStyle(string listStyle, int level = 1, int number = 1)
         {
             return Handler.BeginListStyle(listStyle, level, number);
         }
@@ -1328,7 +1328,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends using a specified list style.
         /// </summary>
-        public bool EndListStyle()
+        public virtual bool EndListStyle()
         {
             return Handler.EndListStyle();
         }
@@ -1338,7 +1338,7 @@ namespace Alternet.UI
         /// Pass a URL and optionally, a character style to apply, since it is common
         /// to mark a URL with a familiar style such as blue text with underlining.
         /// </summary>
-        public bool BeginURL(string url, string? characterStyle = default)
+        public virtual bool BeginURL(string url, string? characterStyle = default)
         {
             characterStyle ??= string.Empty;
             return Handler.BeginURL(url, characterStyle);
@@ -1347,7 +1347,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends applying a URL.
         /// </summary>
-        public bool EndURL()
+        public virtual bool EndURL()
         {
             return Handler.EndURL();
         }
@@ -1356,7 +1356,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is bold.
         /// </summary>
-        public bool IsSelectionBold()
+        public virtual bool IsSelectionBold()
         {
             return Handler.IsSelectionBold();
         }
@@ -1365,7 +1365,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is italic.
         /// </summary>
-        public bool IsSelectionItalics()
+        public virtual bool IsSelectionItalics()
         {
             return Handler.IsSelectionItalics();
         }
@@ -1374,7 +1374,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is underlined.
         /// </summary>
-        public bool IsSelectionUnderlined()
+        public virtual bool IsSelectionUnderlined()
         {
             return Handler.IsSelectionUnderlined();
         }
@@ -1383,7 +1383,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the current caret position, has the supplied effects flag(s).
         /// </summary>
-        public bool DoesSelectionHaveTextEffectFlag(TextBoxTextAttrEffects flag)
+        public virtual bool DoesSelectionHaveTextEffectFlag(TextBoxTextAttrEffects flag)
         {
             return Handler.DoesSelectionHaveTextEffectFlag(flag);
         }
@@ -1392,7 +1392,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is aligned according to the specified flag.
         /// </summary>
-        public bool IsSelectionAligned(TextBoxTextAttrAlignment alignment)
+        public virtual bool IsSelectionAligned(TextBoxTextAttrAlignment alignment)
         {
             return Handler.IsSelectionAligned(alignment);
         }
@@ -1400,7 +1400,7 @@ namespace Alternet.UI
         /// <summary>
         /// Apples bold to the selection or default style (undoable).
         /// </summary>
-        public bool ApplyBoldToSelection()
+        public virtual bool ApplyBoldToSelection()
         {
             return Handler.ApplyBoldToSelection();
         }
@@ -1408,7 +1408,7 @@ namespace Alternet.UI
         /// <summary>
         /// Applies italic to the selection or default style (undoable).
         /// </summary>
-        public bool ApplyItalicToSelection()
+        public virtual bool ApplyItalicToSelection()
         {
             return Handler.ApplyItalicToSelection();
         }
@@ -1416,7 +1416,7 @@ namespace Alternet.UI
         /// <summary>
         /// Applies underline to the selection or default style (undoable).
         /// </summary>
-        public bool ApplyUnderlineToSelection()
+        public virtual bool ApplyUnderlineToSelection()
         {
             return Handler.ApplyUnderlineToSelection();
         }
@@ -1425,7 +1425,7 @@ namespace Alternet.UI
         /// Applies one or more <see cref="TextBoxTextAttrEffects"/> flags to the selection (undoable).
         /// If there is no selection, it is applied to the default style.
         /// </summary>
-        public bool ApplyTextEffectToSelection(TextBoxTextAttrEffects flags)
+        public virtual bool ApplyTextEffectToSelection(TextBoxTextAttrEffects flags)
         {
             return Handler.ApplyTextEffectToSelection(flags);
         }
@@ -1433,7 +1433,7 @@ namespace Alternet.UI
         /// <summary>
         /// Applies the given alignment to the selection or the default style (undoable).
         /// </summary>
-        public bool ApplyAlignmentToSelection(TextBoxTextAttrAlignment alignment)
+        public virtual bool ApplyAlignmentToSelection(TextBoxTextAttrAlignment alignment)
         {
             return Handler.ApplyAlignmentToSelection(alignment);
         }
@@ -1441,7 +1441,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the default style to the style under the cursor.
         /// </summary>
-        public bool SetDefaultStyleToCursorStyle()
+        public virtual bool SetDefaultStyleToCursorStyle()
         {
             return Handler.SetDefaultStyleToCursorStyle();
         }
@@ -1449,7 +1449,7 @@ namespace Alternet.UI
         /// <summary>
         /// Cancels any selection.
         /// </summary>
-        public void SelectNone()
+        public virtual void SelectNone()
         {
             Handler.SelectNone();
         }
@@ -1457,7 +1457,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects the word at the given character position.
         /// </summary>
-        public bool SelectWord(long position)
+        public virtual bool SelectWord(long position)
         {
             return Handler.SelectWord(position);
         }
@@ -1467,7 +1467,7 @@ namespace Alternet.UI
         /// setting the caret position.
         /// This function should not normally be required by the application.
         /// </summary>
-        public bool LayoutContent(bool onlyVisibleRect = false)
+        public virtual bool LayoutContent(bool onlyVisibleRect = false)
         {
             return Handler.LayoutContent(onlyVisibleRect);
         }
@@ -1475,7 +1475,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves right.
         /// </summary>
-        public bool MoveRight(int noPositions = 1, int flags = 0)
+        public virtual bool MoveRight(int noPositions = 1, int flags = 0)
         {
             return Handler.MoveRight(noPositions, flags);
         }
@@ -1483,7 +1483,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves left.
         /// </summary>
-        public bool MoveLeft(int noPositions = 1, int flags = 0)
+        public virtual bool MoveLeft(int noPositions = 1, int flags = 0)
         {
             return Handler.MoveLeft(noPositions, flags);
         }
@@ -1491,7 +1491,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the paragraph.
         /// </summary>
-        public bool MoveUp(int noLines = 1, int flags = 0)
+        public virtual bool MoveUp(int noLines = 1, int flags = 0)
         {
             return Handler.MoveUp(noLines, flags);
         }
@@ -1499,7 +1499,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves the caret down.
         /// </summary>
-        public bool MoveDown(int noLines = 1, int flags = 0)
+        public virtual bool MoveDown(int noLines = 1, int flags = 0)
         {
             return Handler.MoveDown(noLines, flags);
         }
@@ -1507,7 +1507,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the end of the line.
         /// </summary>
-        public bool MoveToLineEnd(int flags = 0)
+        public virtual bool MoveToLineEnd(int flags = 0)
         {
             return Handler.MoveToLineEnd(flags);
         }
@@ -1515,7 +1515,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the line.
         /// </summary>
-        public bool MoveToLineStart(int flags = 0)
+        public virtual bool MoveToLineStart(int flags = 0)
         {
             return Handler.MoveToLineStart(flags);
         }
@@ -1523,7 +1523,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the end of the paragraph.
         /// </summary>
-        public bool MoveToParagraphEnd(int flags = 0)
+        public virtual bool MoveToParagraphEnd(int flags = 0)
         {
             return Handler.MoveToParagraphEnd(flags);
         }
@@ -1531,7 +1531,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the paragraph.
         /// </summary>
-        public bool MoveToParagraphStart(int flags = 0)
+        public virtual bool MoveToParagraphStart(int flags = 0)
         {
             return Handler.MoveToParagraphStart(flags);
         }
@@ -1539,7 +1539,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the buffer.
         /// </summary>
-        public bool MoveHome(int flags = 0)
+        public virtual bool MoveHome(int flags = 0)
         {
             return Handler.MoveHome(flags);
         }
@@ -1547,7 +1547,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the end of the buffer.
         /// </summary>
-        public bool MoveEnd(int flags = 0)
+        public virtual bool MoveEnd(int flags = 0)
         {
             return Handler.MoveEnd(flags);
         }
@@ -1555,7 +1555,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves one or more pages up.
         /// </summary>
-        public bool PageUp(int noPages = 1, int flags = 0)
+        public virtual bool PageUp(int noPages = 1, int flags = 0)
         {
             return Handler.PageUp(noPages, flags);
         }
@@ -1563,7 +1563,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves one or more pages down.
         /// </summary>
-        public bool PageDown(int noPages = 1, int flags = 0)
+        public virtual bool PageDown(int noPages = 1, int flags = 0)
         {
             return Handler.PageDown(noPages, flags);
         }
@@ -1571,7 +1571,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves a number of words to the left.
         /// </summary>
-        public bool WordLeft(int noPages = 1, int flags = 0)
+        public virtual bool WordLeft(int noPages = 1, int flags = 0)
         {
             return Handler.WordLeft(noPages, flags);
         }
@@ -1579,7 +1579,7 @@ namespace Alternet.UI
         /// <summary>
         /// Move a number of words to the right.
         /// </summary>
-        public bool WordRight(int noPages = 1, int flags = 0)
+        public virtual bool WordRight(int noPages = 1, int flags = 0)
         {
             return Handler.WordRight(noPages, flags);
         }
@@ -1587,7 +1587,7 @@ namespace Alternet.UI
         /// <summary>
         /// Starts batching undo history for commands.
         /// </summary>
-        public bool BeginBatchUndo(string cmdName)
+        public virtual bool BeginBatchUndo(string cmdName)
         {
             return Handler.BeginBatchUndo(cmdName);
         }
@@ -1595,7 +1595,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends batching undo command history.
         /// </summary>
-        public bool EndBatchUndo()
+        public virtual bool EndBatchUndo()
         {
             return Handler.EndBatchUndo();
         }
@@ -1603,7 +1603,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if undo commands are being batched.
         /// </summary>
-        public bool BatchingUndo()
+        public virtual bool BatchingUndo()
         {
             return Handler.BatchingUndo();
         }
@@ -1611,7 +1611,7 @@ namespace Alternet.UI
         /// <summary>
         /// Starts suppressing undo history for commands.
         /// </summary>
-        public bool BeginSuppressUndo()
+        public virtual bool BeginSuppressUndo()
         {
             return Handler.BeginSuppressUndo();
         }
@@ -1619,7 +1619,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends suppressing undo command history.
         /// </summary>
-        public bool EndSuppressUndo()
+        public virtual bool EndSuppressUndo()
         {
             return Handler.EndSuppressUndo();
         }
@@ -1636,7 +1636,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if undo history suppression is on.
         /// </summary>
-        public bool SuppressingUndo()
+        public virtual bool SuppressingUndo()
         {
             return Handler.SuppressingUndo();
         }
@@ -1644,7 +1644,7 @@ namespace Alternet.UI
         /// <summary>
         /// Enable or disable the vertical scrollbar.
         /// </summary>
-        public void EnableVerticalScrollbar(bool enable)
+        public virtual void EnableVerticalScrollbar(bool enable)
         {
             Handler.EnableVerticalScrollbar(enable);
         }
@@ -1652,7 +1652,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if the vertical scrollbar is enabled.
         /// </summary>
-        public bool GetVerticalScrollbarEnabled()
+        public virtual bool GetVerticalScrollbarEnabled()
         {
             return Handler.GetVerticalScrollbarEnabled();
         }
@@ -1660,7 +1660,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the scale factor for displaying fonts, for example for more comfortableediting.
         /// </summary>
-        public void SetFontScale(double fontScale, bool refresh = false)
+        public virtual void SetFontScale(double fontScale, bool refresh = false)
         {
             Handler.SetFontScale(fontScale, refresh);
         }
@@ -1668,7 +1668,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the scale factor for displaying fonts, for example for more comfortable editing.
         /// </summary>
-        public double GetFontScale()
+        public virtual double GetFontScale()
         {
             return Handler.GetFontScale();
         }
@@ -1676,7 +1676,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if this control can use attributes and text. The default is false.
         /// </summary>
-        public bool GetVirtualAttributesEnabled()
+        public virtual bool GetVirtualAttributesEnabled()
         {
             return Handler.GetVirtualAttributesEnabled();
         }
@@ -1684,7 +1684,7 @@ namespace Alternet.UI
         /// <summary>
         /// Pass <c>true</c> to let the control use attributes. The default is false.
         /// </summary>
-        public void EnableVirtualAttributes(bool b)
+        public virtual void EnableVirtualAttributes(bool b)
         {
             Handler.EnableVirtualAttributes(b);
         }
@@ -1692,7 +1692,7 @@ namespace Alternet.UI
         /// <summary>
         /// Writes text.
         /// </summary>
-        public void DoWriteText(string value, int flags = 0)
+        public virtual void DoWriteText(string value, int flags = 0)
         {
             Handler.DoWriteText(value, flags);
         }
@@ -1701,7 +1701,7 @@ namespace Alternet.UI
         /// Helper function for extending the selection, returning <c>true</c> if the selection
         /// was changed. Selections are in caret positions.
         /// </summary>
-        public bool ExtendSelection(long oldPosition, long newPosition, int flags)
+        public virtual bool ExtendSelection(long oldPosition, long newPosition, int flags)
         {
             return Handler.ExtendSelection(oldPosition, newPosition, flags);
         }
@@ -1716,7 +1716,7 @@ namespace Alternet.UI
         /// from the new position or cause the actual caret to be refreshed; to do that,
         /// call <see cref="SetInsertionPoint"/> instead.
         /// </remarks>
-        public void SetCaretPosition(long position, bool showAtLineStart = false)
+        public virtual void SetCaretPosition(long position, bool showAtLineStart = false)
         {
             Handler.SetCaretPosition(position, showAtLineStart);
         }
@@ -1724,7 +1724,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the current caret position.
         /// </summary>
-        public long GetCaretPosition()
+        public virtual long GetCaretPosition()
         {
             return Handler.GetCaretPosition();
         }
@@ -1737,7 +1737,7 @@ namespace Alternet.UI
         /// into account whether we're at the start of a paragraph, in which case
         /// style information should be taken from the next position, not current one.
         /// </remarks>
-        public long GetAdjustedCaretPosition(long caretPos)
+        public virtual long GetAdjustedCaretPosition(long caretPos)
         {
             return Handler.GetAdjustedCaretPosition(caretPos);
         }
@@ -1747,7 +1747,7 @@ namespace Alternet.UI
         /// and keeping the same position if we're going from the end of one line
         /// to the start of the next, which may be the exact same caret position.
         /// </summary>
-        public void MoveCaretForward(long oldPosition)
+        public virtual void MoveCaretForward(long oldPosition)
         {
             Handler.MoveCaretForward(oldPosition);
         }
@@ -1755,7 +1755,7 @@ namespace Alternet.UI
         /// <summary>
         /// Transforms logical (unscrolled) position to physical window position.
         /// </summary>
-        public PointI GetPhysicalPoint(PointI ptLogical)
+        public virtual PointI GetPhysicalPoint(PointI ptLogical)
         {
             return Handler.GetPhysicalPoint(ptLogical);
         }
@@ -1763,7 +1763,7 @@ namespace Alternet.UI
         /// <summary>
         /// Transforms physical window position to logical (unscrolled) position.
         /// </summary>
-        public PointI GetLogicalPoint(PointI ptPhysical)
+        public virtual PointI GetLogicalPoint(PointI ptPhysical)
         {
             return Handler.GetLogicalPoint(ptPhysical);
         }
@@ -1772,7 +1772,7 @@ namespace Alternet.UI
         /// Helper function for finding the caret position for the next word.
         /// Direction is 1 (forward) or -1 (backwards).
         /// </summary>
-        public long FindNextWordPosition(int direction = 1)
+        public virtual long FindNextWordPosition(int direction = 1)
         {
             return Handler.FindNextWordPosition(direction);
         }
@@ -1780,7 +1780,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if the given position is visible on the screen.
         /// </summary>
-        public bool IsPositionVisible(long pos)
+        public virtual bool IsPositionVisible(long pos)
         {
             return Handler.IsPositionVisible(pos);
         }
@@ -1788,7 +1788,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the first visible position in the current view.
         /// </summary>
-        public long GetFirstVisiblePosition()
+        public virtual long GetFirstVisiblePosition()
         {
             return Handler.GetFirstVisiblePosition();
         }
@@ -1799,7 +1799,7 @@ namespace Alternet.UI
         /// in the UI. A value of -2 means that we should only reflect the style of the
         /// content under the caret.
         /// </summary>
-        public long GetCaretPositionForDefaultStyle()
+        public virtual long GetCaretPositionForDefaultStyle()
         {
             return Handler.GetCaretPositionForDefaultStyle();
         }
@@ -1807,7 +1807,7 @@ namespace Alternet.UI
         /// <summary>
         /// Set the caret position for the default style that the user is selecting.
         /// </summary>
-        public void SetCaretPositionForDefaultStyle(long pos)
+        public virtual void SetCaretPositionForDefaultStyle(long pos)
         {
             Handler.SetCaretPositionForDefaultStyle(pos);
         }
@@ -1817,7 +1817,7 @@ namespace Alternet.UI
         /// and keeping the same position if we're going from the end of one line
         /// to the start of the next, which may be the exact same caret position.
         /// </summary>
-        public void MoveCaretBack(long oldPosition)
+        public virtual void MoveCaretBack(long oldPosition)
         {
             Handler.MoveCaretBack(oldPosition);
         }
@@ -1825,7 +1825,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using this font.
         /// </summary>
-        public bool BeginFont(Font? font)
+        public virtual bool BeginFont(Font? font)
         {
             return Handler.BeginFont(font);
         }
@@ -1835,7 +1835,7 @@ namespace Alternet.UI
         /// the caret, and therefore the UI needs to reflect the default style and not
         /// the style at the caret.
         /// </summary>
-        public bool IsDefaultStyleShowing()
+        public virtual bool IsDefaultStyleShowing()
         {
             return Handler.IsDefaultStyleShowing();
         }
@@ -1843,7 +1843,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the first visible point in the control.
         /// </summary>
-        public PointI GetFirstVisiblePoint()
+        public virtual PointI GetFirstVisiblePoint()
         {
             return Handler.GetFirstVisiblePoint();
         }
@@ -1851,7 +1851,7 @@ namespace Alternet.UI
         /// <summary>
         /// Enable or disable images.
         /// </summary>
-        public void EnableImages(bool b)
+        public virtual void EnableImages(bool b)
         {
             Handler.EnableImages(b);
         }
@@ -1859,7 +1859,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if images are enabled.
         /// </summary>
-        public bool GetImagesEnabled()
+        public virtual bool GetImagesEnabled()
         {
             return Handler.GetImagesEnabled();
         }
@@ -1867,7 +1867,7 @@ namespace Alternet.UI
         /// <summary>
         /// Enable or disable delayed image loading.
         /// </summary>
-        public void EnableDelayedImageLoading(bool b)
+        public virtual void EnableDelayedImageLoading(bool b)
         {
             Handler.EnableDelayedImageLoading(b);
         }
@@ -1875,7 +1875,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <c>true</c> if delayed image loading is enabled.
         /// </summary>
-        public bool GetDelayedImageLoading()
+        public virtual bool GetDelayedImageLoading()
         {
             return Handler.GetDelayedImageLoading();
         }
@@ -1883,7 +1883,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the flag indicating that delayed image processing is required.
         /// </summary>
-        public bool GetDelayedImageProcessingRequired()
+        public virtual bool GetDelayedImageProcessingRequired()
         {
             return Handler.GetDelayedImageProcessingRequired();
         }
@@ -1891,7 +1891,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the flag indicating that delayed image processing is required.
         /// </summary>
-        public void SetDelayedImageProcessingRequired(bool b)
+        public virtual void SetDelayedImageProcessingRequired(bool b)
         {
             Handler.SetDelayedImageProcessingRequired(b);
         }
@@ -1899,7 +1899,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the last time delayed image processing was performed.
         /// </summary>
-        public long GetDelayedImageProcessingTime()
+        public virtual long GetDelayedImageProcessingTime()
         {
             return Handler.GetDelayedImageProcessingTime();
         }
@@ -1907,7 +1907,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the last time delayed image processing was performed.
         /// </summary>
-        public void SetDelayedImageProcessingTime(long t)
+        public virtual void SetDelayedImageProcessingTime(long t)
         {
             Handler.SetDelayedImageProcessingTime(t);
         }
@@ -1915,7 +1915,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the content of the entire control as a string.
         /// </summary>
-        public string GetValue()
+        public virtual string GetValue()
         {
             return Handler.GetValue();
         }
@@ -1923,7 +1923,7 @@ namespace Alternet.UI
         /// <summary>
         /// Replaces existing content with the given text.
         /// </summary>
-        public void SetValue(string value)
+        public virtual void SetValue(string value)
         {
             Handler.SetValue(value);
         }
@@ -1931,7 +1931,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the line increment height in pixels.
         /// </summary>
-        public void SetLineHeight(int height)
+        public virtual void SetLineHeight(int height)
         {
             Handler.SetLineHeight(height);
         }
@@ -1939,7 +1939,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the line increment height in pixels.
         /// </summary>
-        public int GetLineHeight()
+        public virtual int GetLineHeight()
         {
             return Handler.GetLineHeight();
         }
@@ -1947,7 +1947,7 @@ namespace Alternet.UI
         /// <summary>
         /// Does delayed image loading and garbage-collect other images.
         /// </summary>
-        public bool ProcessDelayedImageLoading(bool refresh)
+        public virtual bool ProcessDelayedImageLoading(bool refresh)
         {
             return Handler.ProcessDelayedImageLoading(refresh);
         }
@@ -1955,7 +1955,7 @@ namespace Alternet.UI
         /// <summary>
         /// Requests delayed image processing.
         /// </summary>
-        public void RequestDelayedImageProcessing()
+        public virtual void RequestDelayedImageProcessing()
         {
             Handler.RequestDelayedImageProcessing();
         }
@@ -1963,7 +1963,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the last position in the buffer.
         /// </summary>
-        public long GetLastPosition()
+        public virtual long GetLastPosition()
         {
             return Handler.GetLastPosition();
         }
@@ -1982,7 +1982,7 @@ namespace Alternet.UI
         /// <paramref name="specifiedLevel"/> should be used
         /// as the level for all paragraphs, otherwise the current indentation will be used.
         /// </remarks>
-        public bool SetListStyle(
+        public virtual bool SetListStyle(
             long startRange,
             long endRange,
             string defName,
@@ -2011,7 +2011,7 @@ namespace Alternet.UI
         /// <paramref name="flags"/> is a bit list of the following:
         /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will be undoable.
         /// </remarks>
-        public bool ClearListStyle(
+        public virtual bool ClearListStyle(
             long startRange,
             long endRange,
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
@@ -2022,7 +2022,7 @@ namespace Alternet.UI
         /// <summary>
         /// Write a table at the current insertion point, returning the table.
         /// </summary>
-        public object WriteTable(
+        public virtual object WriteTable(
             int rows,
             int cols,
             ITextBoxRichAttr? tableAttr = default,
@@ -2048,7 +2048,7 @@ namespace Alternet.UI
         /// <paramref name="specifiedLevel"/> should be used
         /// as the level for all paragraphs, otherwise the current indentation will be used.
         /// </remarks>
-        public bool NumberList(
+        public virtual bool NumberList(
             long startRange,
             long endRange,
             string defName,
@@ -2087,7 +2087,7 @@ namespace Alternet.UI
         /// style attributes.
         /// To get the character or paragraph style alone, use GetUncombinedStyle.
         /// </remarks>
-        public ITextBoxTextAttr GetStyle(long position)
+        public virtual ITextBoxTextAttr GetStyle(long position)
         {
             return Handler.GetStyle(position);
         }
@@ -2101,7 +2101,7 @@ namespace Alternet.UI
         /// style attributes.
         /// To get the character or paragraph style alone, use GetUncombinedStyle.
         /// </remarks>
-        public ITextBoxRichAttr GetRichStyle(long position)
+        public virtual ITextBoxRichAttr GetRichStyle(long position)
         {
             return Handler.GetRichStyle(position);
         }
@@ -2123,7 +2123,7 @@ namespace Alternet.UI
         /// <see cref="RichTextSetStyleFlags.Reset"/>,
         /// <see cref="RichTextSetStyleFlags.Remove"/>.
         /// </remarks>
-        public bool SetStyleEx(
+        public virtual bool SetStyleEx(
             long startRange,
             long endRange,
             ITextBoxRichAttr style,
@@ -2149,7 +2149,7 @@ namespace Alternet.UI
         /// <paramref name="specifiedLevel"/> should be used
         /// as the level for all paragraphs, otherwise the current indentation will be used.
         /// </remarks>
-        public bool PromoteList(
+        public virtual bool PromoteList(
             int promoteBy,
             long startRange,
             long endRange,
@@ -2169,7 +2169,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the text (normal) cursor.
         /// </summary>
-        public void SetTextCursor(Cursor? cursor)
+        public virtual void SetTextCursor(Cursor? cursor)
         {
             Handler.SetTextCursor(cursor);
         }
@@ -2177,7 +2177,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the text (normal) cursor.
         /// </summary>
-        public Cursor GetTextCursor()
+        public virtual Cursor GetTextCursor()
         {
             return Handler.GetTextCursor();
         }
@@ -2185,7 +2185,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the cursor to be used over URLs.
         /// </summary>
-        public void SetURLCursor(Cursor? cursor)
+        public virtual void SetURLCursor(Cursor? cursor)
         {
             Handler.SetURLCursor(cursor);
         }
@@ -2193,7 +2193,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the cursor to be used over URLs.
         /// </summary>
-        public Cursor GetURLCursor()
+        public virtual Cursor GetURLCursor()
         {
             return Handler.GetURLCursor();
         }
@@ -2219,7 +2219,7 @@ namespace Alternet.UI
         /// Sets <paramref name="attr"/> as the default style and tells the control that the UI should
         /// reflect this attribute until the user moves the caret.
         /// </summary>
-        public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
+        public virtual void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
         {
             Handler.SetAndShowDefaultStyle(attr);
         }
@@ -2233,7 +2233,7 @@ namespace Alternet.UI
         /// applied (for example, setting the default style to bold will cause
         /// subsequently inserted text to be bold).
         /// </remarks>
-        public void SetBasicStyle(ITextBoxRichAttr style)
+        public virtual void SetBasicStyle(ITextBoxRichAttr style)
         {
             Handler.SetBasicStyle(style);
         }
@@ -2246,7 +2246,7 @@ namespace Alternet.UI
         /// You can use this to implement, for example, centering button updating.
         /// <paramref name="style"/> must have flags indicating which attributes are of interest.
         /// </remarks>
-        public bool HasParagraphAttributes(
+        public virtual bool HasParagraphAttributes(
             long startRange,
             long endRange,
             ITextBoxRichAttr style)
@@ -2263,7 +2263,7 @@ namespace Alternet.UI
         /// applied (for example, setting the default style to bold will cause
         /// subsequently inserted text to be bold).
         /// </remarks>
-        public ITextBoxRichAttr GetBasicStyle()
+        public virtual ITextBoxRichAttr GetBasicStyle()
         {
             return Handler.GetBasicStyle();
         }
@@ -2271,7 +2271,7 @@ namespace Alternet.UI
         /// <summary>
         /// Deletes the content within the given range.
         /// </summary>
-        public bool Delete(long startRange, long endRange)
+        public virtual bool Delete(long startRange, long endRange)
         {
             return Handler.Delete(startRange, endRange);
         }
@@ -2279,7 +2279,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins applying a style.
         /// </summary>
-        public bool BeginStyle(ITextBoxRichAttr style)
+        public virtual bool BeginStyle(ITextBoxRichAttr style)
         {
             return Handler.BeginStyle(style);
         }
@@ -2292,7 +2292,7 @@ namespace Alternet.UI
         /// of text, plus one. So, for example, to set the style for a character at
         /// position 5, use the range (5,6).
         /// </remarks>
-        public bool SetStyle(long start, long end, ITextBoxTextAttr style)
+        public virtual bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
             return Handler.SetStyle(start, end, style);
         }
@@ -2305,7 +2305,7 @@ namespace Alternet.UI
         /// of text, plus one. So, for example, to set the style for a character at
         /// position 5, use the range (5,6).
         /// </remarks>
-        public bool SetRichStyle(long start, long end, ITextBoxRichAttr style)
+        public virtual bool SetRichStyle(long start, long end, ITextBoxRichAttr style)
         {
             return Handler.SetRichStyle(start, end, style);
         }
@@ -2317,7 +2317,7 @@ namespace Alternet.UI
         /// So, for example, to set the selection for a character at position 5, use the
         /// range (5,6).
         /// </summary>
-        public void SetSelectionRange(long startRange, long endRange)
+        public virtual void SetSelectionRange(long startRange, long endRange)
         {
             Handler.SetSelectionRange(startRange, endRange);
         }
@@ -2325,7 +2325,7 @@ namespace Alternet.UI
         /// <summary>
         /// Converts a text position to zero-based column and line numbers.
         /// </summary>
-        public PointI PositionToXY(long pos)
+        public virtual PointI PositionToXY(long pos)
         {
             return Handler.PositionToXY(pos);
         }
@@ -2335,7 +2335,7 @@ namespace Alternet.UI
         /// Attributes that differ in value within the range will not be included
         /// in style flags.
         /// </summary>
-        public ITextBoxTextAttr GetStyleForRange(long startRange, long endRange)
+        public virtual ITextBoxTextAttr GetStyleForRange(long startRange, long endRange)
         {
             return Handler.GetStyleForRange(startRange, endRange);
         }
@@ -2345,7 +2345,7 @@ namespace Alternet.UI
         /// Attributes that differ in value within the range will not be included
         /// in style flags.
         /// </summary>
-        public ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange)
+        public virtual ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange)
         {
             return Handler.GetRichStyleForRange(startRange, endRange);
         }
@@ -2354,7 +2354,7 @@ namespace Alternet.UI
         /// Creates text attributes object.
         /// </summary>
         /// <returns></returns>
-        public ITextBoxTextAttr CreateTextAttr()
+        public virtual ITextBoxTextAttr CreateTextAttr()
         {
             return Handler.CreateTextAttr();
         }
@@ -2364,7 +2364,7 @@ namespace Alternet.UI
         /// Returns the new caret position in @e newPos, or leaves it if there
         /// was no action. This is undoable.
         /// </summary>
-        public long DeleteSelectedContent()
+        public virtual long DeleteSelectedContent()
         {
             return Handler.DeleteSelectedContent();
         }
@@ -2376,7 +2376,7 @@ namespace Alternet.UI
         /// <param name="size">Image size.</param>
         /// <param name="textAttr">Optional text attribute.</param>
         /// <returns></returns>
-        public bool WriteImageAsNormal(SvgImage? image, int size, ITextBoxRichAttr? textAttr = null)
+        public virtual bool WriteImageAsNormal(SvgImage? image, int size, ITextBoxRichAttr? textAttr = null)
         {
             if (image is null)
                 return false;
@@ -2387,7 +2387,7 @@ namespace Alternet.UI
         /// Writes a bitmap at the current insertion point.
         /// Supply an optional type to use for internal and file storage of the raw data.
         /// </summary>
-        public bool WriteImage(
+        public virtual bool WriteImage(
             Image? bitmap,
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
@@ -2398,7 +2398,7 @@ namespace Alternet.UI
         /// <summary>
         /// Loads an image from a file and writes it at the current insertion point.
         /// </summary>
-        public bool WriteImage(
+        public virtual bool WriteImage(
             string filename,
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
@@ -2406,9 +2406,9 @@ namespace Alternet.UI
             return Handler.WriteImage(filename, bitmapType, textAttr);
         }
 
-        public string GetFileName() => Handler.GetFileName();
+        public virtual string GetFileName() => Handler.GetFileName();
 
-        public void SetFileName(string value) => Handler.SetFileName(value ?? string.Empty);
+        public virtual void SetFileName(string value) => Handler.SetFileName(value ?? string.Empty);
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()

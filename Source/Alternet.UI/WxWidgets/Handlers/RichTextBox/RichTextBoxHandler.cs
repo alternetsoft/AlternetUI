@@ -89,7 +89,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetSelectionAnchor(long anchor)
         {
-            NativeControl.;
+            NativeControl.SetSelectionAnchor(anchor);
         }
 
         string IRichTextBox.GetValue()
@@ -99,7 +99,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetValue(string value)
         {
-            NativeControl.;
+            NativeControl.SetValue(value);
         }
 
         bool IRichTextBox.IsModified()
@@ -124,7 +124,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetDelayedLayoutThreshold(long threshold)
         {
-            NativeControl.;
+            NativeControl.SetDelayedLayoutThreshold(threshold);
         }
 
         long IRichTextBox.GetDelayedLayoutThreshold()
@@ -139,7 +139,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetFullLayoutRequired(bool b)
         {
-            NativeControl.;
+            NativeControl.SetFullLayoutRequired(b);
         }
 
         long IRichTextBox.GetFullLayoutTime()
@@ -149,7 +149,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetFullLayoutTime(long t)
         {
-            NativeControl.;
+            NativeControl.SetFullLayoutTime(t);
         }
 
         long IRichTextBox.GetFullLayoutSavedPosition()
@@ -159,7 +159,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetFullLayoutSavedPosition(long p)
         {
-            NativeControl.;
+            NativeControl.SetFullLayoutSavedPosition(p);
         }
 
         void IRichTextBox.ForceDelayedLayout()
@@ -174,7 +174,7 @@ namespace Alternet.UI
 
         void IRichTextBox.SetCaretAtLineStart(bool atStart)
         {
-            NativeControl.;
+            NativeControl.SetCaretAtLineStart(atStart);
         }
 
         bool IRichTextBox.GetDragging()
@@ -194,547 +194,547 @@ namespace Alternet.UI
 
         void IRichTextBox.DiscardEdits()
         {
-            NativeControl.;
+            NativeControl.DiscardEdits();
         }
 
         void IRichTextBox.DeleteSelection()
         {
-            NativeControl.;
+            NativeControl.DeleteSelection();
         }
 
         bool IRichTextBox.CanCopy()
         {
-            return NativeControl.;
+            return NativeControl.CanCopy();
         }
 
         bool IRichTextBox.CanCut()
         {
-            return NativeControl.;
+            return NativeControl.CanCut();
         }
 
         bool IRichTextBox.CanPaste()
         {
-            return NativeControl.;
+            return NativeControl.CanPaste();
         }
 
         bool IRichTextBox.CanDeleteSelection()
         {
-            return NativeControl.;
+            return NativeControl.CanDeleteSelection();
         }
 
         bool IRichTextBox.CanUndo()
         {
-            return NativeControl.;
+            return NativeControl.CanUndo();
         }
 
         bool IRichTextBox.CanRedo()
         {
-            return NativeControl.;
+            return NativeControl.CanRedo();
         }
 
         void IRichTextBox.SetEditable(bool editable)
         {
-            NativeControl.;
+            NativeControl.SetEditable(editable);
         }
 
         bool IRichTextBox.HasSelection()
         {
-            return NativeControl.;
+            return NativeControl.HasSelection();
         }
 
         bool IRichTextBox.HasUnfocusedSelection()
         {
-            return NativeControl.;
+            return NativeControl.HasUnfocusedSelection();
         }
 
         bool IRichTextBox.NewLine()
         {
-            return NativeControl.;
+            return NativeControl.Newline();
         }
 
         bool IRichTextBox.LineBreak()
         {
-            return NativeControl.;
+            return NativeControl.LineBreak();
         }
 
         bool IRichTextBox.EndStyle()
         {
-            return NativeControl.;
+            return NativeControl.EndStyle();
         }
 
         bool IRichTextBox.EndAllStyles()
         {
-            return NativeControl.;
+            return NativeControl.EndAllStyles();
         }
 
         bool IRichTextBox.BeginBold()
         {
-            return NativeControl.;
+            return NativeControl.BeginBold();
         }
 
         bool IRichTextBox.EndBold()
         {
-            return NativeControl.;
+            return NativeControl.EndBold();
         }
 
         bool IRichTextBox.BeginItalic()
         {
-            return NativeControl.;
+            return NativeControl.BeginItalic();
         }
 
         bool IRichTextBox.EndItalic()
         {
-            return NativeControl.;
+            return NativeControl.EndItalic();
         }
 
         bool IRichTextBox.BeginUnderline()
         {
-            return NativeControl.;
+            return NativeControl.BeginUnderline();
         }
 
         bool IRichTextBox.EndUnderline()
         {
-            return NativeControl.;
+            return NativeControl.EndUnderline();
         }
 
         bool IRichTextBox.EndFontSize()
         {
-            return NativeControl.;
+            return NativeControl.EndFontSize();
         }
 
         bool IRichTextBox.EndFont()
         {
-            return NativeControl.;
+            return NativeControl.EndFont();
         }
 
         bool IRichTextBox.BeginAlignment(TextBoxTextAttrAlignment alignment)
         {
-            return NativeControl.;
+            return NativeControl.BeginAlignment((int)alignment);
         }
 
         bool IRichTextBox.EndAlignment()
         {
-            return NativeControl.;
+            return NativeControl.EndAlignment();
         }
 
         bool IRichTextBox.BeginLeftIndent(int leftIndent, int leftSubIndent)
         {
-            return NativeControl.;
+            return NativeControl.BeginLeftIndent(leftIndent, leftSubIndent);
         }
 
         bool IRichTextBox.EndLeftIndent()
         {
-            return NativeControl.;
+            return NativeControl.EndLeftIndent();
         }
 
         bool IRichTextBox.BeginRightIndent(int rightIndent)
         {
-            return NativeControl.;
+            return NativeControl.BeginRightIndent(rightIndent);
         }
 
         bool IRichTextBox.EndRightIndent()
         {
-            return NativeControl.;
+            return NativeControl.EndRightIndent();
         }
 
         bool IRichTextBox.BeginParagraphSpacing(int before, int after)
         {
-            return NativeControl.;
+            return NativeControl.BeginParagraphSpacing(before, after);
         }
 
         bool IRichTextBox.EndParagraphSpacing()
         {
-            return NativeControl.;
+            return NativeControl.EndParagraphSpacing();
         }
 
         bool IRichTextBox.BeginLineSpacing(int lineSpacing)
         {
-            return NativeControl.;
+            return NativeControl.BeginLineSpacing(lineSpacing);
         }
 
         bool IRichTextBox.EndLineSpacing()
         {
-            return NativeControl.;
+            return NativeControl.EndLineSpacing();
         }
 
         bool IRichTextBox.EndNumberedBullet()
         {
-            return NativeControl.;
+            return NativeControl.EndNumberedBullet();
         }
 
         bool IRichTextBox.EndSymbolBullet()
         {
-            return NativeControl.;
+            return NativeControl.EndSymbolBullet();
         }
 
         bool IRichTextBox.EndStandardBullet()
         {
-            return NativeControl.;
+            return NativeControl.EndStandardBullet();
         }
 
         bool IRichTextBox.BeginCharacterStyle(string characterStyle)
         {
-            return NativeControl.;
+            return NativeControl.BeginCharacterStyle(characterStyle);
         }
 
         bool IRichTextBox.EndCharacterStyle()
         {
-            return NativeControl.;
+            return NativeControl.EndCharacterStyle();
         }
 
         bool IRichTextBox.BeginParagraphStyle(string paragraphStyle)
         {
-            return NativeControl.;
+            return NativeControl.BeginParagraphStyle(paragraphStyle);
         }
 
         bool IRichTextBox.EndParagraphStyle()
         {
-            return NativeControl.;
+            return NativeControl.EndParagraphStyle();
         }
 
         bool IRichTextBox.BeginListStyle(string listStyle, int level, int number)
         {
-            return NativeControl.;
+            return NativeControl.BeginListStyle(listStyle, level, number);
         }
 
         bool IRichTextBox.EndListStyle()
         {
-            return NativeControl.;
+            return NativeControl.EndListStyle();
         }
 
         bool IRichTextBox.BeginURL(string url, string? characterStyle)
         {
-            return NativeControl.;
+            return NativeControl.BeginURL(url, characterStyle ?? string.Empty);
         }
 
         bool IRichTextBox.EndURL()
         {
-            return NativeControl.;
+            return NativeControl.EndURL();
         }
 
         bool IRichTextBox.IsSelectionBold()
         {
-            return NativeControl.;
+            return NativeControl.IsSelectionBold();
         }
 
         bool IRichTextBox.IsSelectionItalics()
         {
-            return NativeControl.;
+            return NativeControl.IsSelectionItalics();
         }
 
         bool IRichTextBox.IsSelectionUnderlined()
         {
-            return NativeControl.;
+            return NativeControl.IsSelectionUnderlined();
         }
 
         bool IRichTextBox.ApplyBoldToSelection()
         {
-            return NativeControl.;
+            return NativeControl.ApplyBoldToSelection();
         }
 
         bool IRichTextBox.ApplyItalicToSelection()
         {
-            return NativeControl.;
+            return NativeControl.ApplyItalicToSelection();
         }
 
         bool IRichTextBox.ApplyUnderlineToSelection()
         {
-            return NativeControl.;
+            return NativeControl.ApplyUnderlineToSelection();
         }
 
         bool IRichTextBox.SetDefaultStyleToCursorStyle()
         {
-            return NativeControl.;
+            return NativeControl.SetDefaultStyleToCursorStyle();
         }
 
         bool IRichTextBox.SelectWord(long position)
         {
-            return NativeControl.;
+            return NativeControl.SelectWord(position);
         }
 
         bool IRichTextBox.LayoutContent(bool onlyVisibleRect)
         {
-            return NativeControl.;
+            return NativeControl.LayoutContent(onlyVisibleRect);
         }
 
         bool IRichTextBox.MoveRight(int noPositions, int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveRight(noPositions, flags);
         }
 
         bool IRichTextBox.MoveLeft(int noPositions, int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveLeft(noPositions, flags);
         }
 
         bool IRichTextBox.MoveUp(int noLines, int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveUp(noLines, flags);
         }
 
         bool IRichTextBox.MoveDown(int noLines, int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveDown(noLines, flags);
         }
 
         bool IRichTextBox.MoveToLineEnd(int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveToLineEnd(flags);
         }
 
         bool IRichTextBox.MoveToLineStart(int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveToLineStart(flags);
         }
 
         bool IRichTextBox.MoveToParagraphEnd(int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveToParagraphEnd(flags);
         }
 
         bool IRichTextBox.MoveToParagraphStart(int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveToParagraphStart(flags);
         }
 
         bool IRichTextBox.MoveHome(int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveHome(flags);
         }
 
         bool IRichTextBox.MoveEnd(int flags)
         {
-            return NativeControl.;
+            return NativeControl.MoveEnd(flags);
         }
 
         bool IRichTextBox.PageUp(int noPages, int flags)
         {
-            return NativeControl.;
+            return NativeControl.PageUp(noPages, flags);
         }
 
         bool IRichTextBox.PageDown(int noPages, int flags)
         {
-            return NativeControl.;
+            return NativeControl.PageDown(noPages, flags);
         }
 
         bool IRichTextBox.WordLeft(int noPages, int flags)
         {
-            return NativeControl.;
+            return NativeControl.WordLeft(noPages, flags);
         }
 
         bool IRichTextBox.WordRight(int noPages, int flags)
         {
-            return NativeControl.;
+            return NativeControl.WordRight(noPages, flags);
         }
 
         bool IRichTextBox.BeginBatchUndo(string cmdName)
         {
-            return NativeControl.;
+            return NativeControl.BeginBatchUndo(cmdName);
         }
 
         bool IRichTextBox.EndBatchUndo()
         {
-            return NativeControl.;
+            return NativeControl.EndBatchUndo();
         }
 
         bool IRichTextBox.BatchingUndo()
         {
-            return NativeControl.;
+            return NativeControl.BatchingUndo();
         }
 
         bool IRichTextBox.BeginSuppressUndo()
         {
-            return NativeControl.;
+            return NativeControl.BeginSuppressUndo();
         }
 
         bool IRichTextBox.EndSuppressUndo()
         {
-            return NativeControl.;
+            return NativeControl.EndSuppressUndo();
         }
 
         bool IRichTextBox.SuppressingUndo()
         {
-            return NativeControl.;
+            return NativeControl.SuppressingUndo();
         }
 
         void IRichTextBox.EnableVerticalScrollbar(bool enable)
         {
-            NativeControl.;
+            NativeControl.EnableVerticalScrollbar(enable);
         }
 
         bool IRichTextBox.GetVerticalScrollbarEnabled()
         {
-            return NativeControl.;
+            return NativeControl.GetVerticalScrollbarEnabled();
         }
 
         void IRichTextBox.SetFontScale(double fontScale, bool refresh)
         {
-            NativeControl.;
+            NativeControl.SetFontScale(fontScale, refresh);
         }
 
         double IRichTextBox.GetFontScale()
         {
-            return NativeControl.;
+            return NativeControl.GetFontScale();
         }
 
         bool IRichTextBox.GetVirtualAttributesEnabled()
         {
-            return NativeControl.;
+            return NativeControl.GetVirtualAttributesEnabled();
         }
 
         void IRichTextBox.EnableVirtualAttributes(bool b)
         {
-            NativeControl.;
+            NativeControl.EnableVirtualAttributes(b);
         }
 
         void IRichTextBox.DoWriteText(string value, int flags)
         {
-            NativeControl.;
+            NativeControl.DoWriteText(value, flags);
         }
 
         bool IRichTextBox.ExtendSelection(long oldPosition, long newPosition, int flags)
         {
-            return NativeControl.;
+            return NativeControl.ExtendSelection(oldPosition, newPosition, flags);
         }
 
         void IRichTextBox.SetCaretPosition(long position, bool showAtLineStart)
         {
-            NativeControl.;
+            NativeControl.SetCaretPosition(position, showAtLineStart);
         }
 
         long IRichTextBox.GetCaretPosition()
         {
-            return NativeControl.;
+            return NativeControl.GetCaretPosition();
         }
 
         long IRichTextBox.GetAdjustedCaretPosition(long caretPos)
         {
-            return NativeControl.;
+            return NativeControl.GetAdjustedCaretPosition(caretPos);
         }
 
         void IRichTextBox.MoveCaretForward(long oldPosition)
         {
-            NativeControl.;
+            NativeControl.MoveCaretForward(oldPosition);
         }
 
         PointI IRichTextBox.GetPhysicalPoint(PointI ptLogical)
         {
-            return NativeControl.;
+            return NativeControl.GetPhysicalPoint(ptLogical);
         }
 
         PointI IRichTextBox.GetLogicalPoint(PointI ptPhysical)
         {
-            return NativeControl.;
+            return NativeControl.GetLogicalPoint(ptPhysical);
         }
 
         long IRichTextBox.FindNextWordPosition(int direction)
         {
-            return NativeControl.;
+            return NativeControl.FindNextWordPosition(direction);
         }
 
         bool IRichTextBox.IsPositionVisible(long pos)
         {
-            return NativeControl.;
+            return NativeControl.IsPositionVisible(pos);
         }
 
         long IRichTextBox.GetFirstVisiblePosition()
         {
-            return NativeControl.;
+            return NativeControl.GetFirstVisiblePosition();
         }
 
         long IRichTextBox.GetCaretPositionForDefaultStyle()
         {
-            return NativeControl.;
+            return NativeControl.GetCaretPositionForDefaultStyle();
         }
 
         void IRichTextBox.SetCaretPositionForDefaultStyle(long pos)
         {
-            NativeControl.;
+            NativeControl.SetCaretPositionForDefaultStyle(pos);
         }
 
         void IRichTextBox.MoveCaretBack(long oldPosition)
         {
-            NativeControl.;
+            NativeControl.MoveCaretBack(oldPosition);
         }
 
         bool IRichTextBox.IsDefaultStyleShowing()
         {
-            return NativeControl.;
+            return NativeControl.IsDefaultStyleShowing();
         }
 
         PointI IRichTextBox.GetFirstVisiblePoint()
         {
-            return NativeControl.;
+            return NativeControl.GetFirstVisiblePoint();
         }
 
         void IRichTextBox.EnableImages(bool b)
         {
-            NativeControl.;
+            NativeControl.EnableImages(b);
         }
 
         bool IRichTextBox.GetImagesEnabled()
         {
-            return NativeControl.;
+            return NativeControl.GetImagesEnabled();
         }
 
         void IRichTextBox.EnableDelayedImageLoading(bool b)
         {
-            NativeControl.;
+            NativeControl.EnableDelayedImageLoading(b);
         }
 
         bool IRichTextBox.GetDelayedImageLoading()
         {
-            return NativeControl.;
+            return NativeControl.GetDelayedImageLoading();
         }
 
         bool IRichTextBox.GetDelayedImageProcessingRequired()
         {
-            return NativeControl.;
+            return NativeControl.GetDelayedImageProcessingRequired();
         }
 
         void IRichTextBox.SetDelayedImageProcessingRequired(bool b)
         {
-            NativeControl.;
+            NativeControl.SetDelayedImageProcessingRequired(b);
         }
 
         long IRichTextBox.GetDelayedImageProcessingTime()
         {
-            return NativeControl.;
+            return NativeControl.GetDelayedImageProcessingTime();
         }
 
         void IRichTextBox.SetDelayedImageProcessingTime(long t)
         {
-            NativeControl.;
+            NativeControl.SetDelayedImageProcessingTime(t);
         }
 
         void IRichTextBox.SetLineHeight(int height)
         {
-            NativeControl.;
+            NativeControl.SetLineHeight(height);
         }
 
         int IRichTextBox.GetLineHeight()
         {
-            return NativeControl.;
+            return NativeControl.GetLineHeight();
         }
 
         bool IRichTextBox.ProcessDelayedImageLoading(bool refresh)
         {
-            return NativeControl.;
+            return NativeControl.ProcessDelayedImageLoading(refresh);
         }
 
         void IRichTextBox.RequestDelayedImageProcessing()
         {
-            NativeControl.;
+            NativeControl.RequestDelayedImageProcessing();
         }
 
         ITextBoxRichAttr IRichTextBox.CreateUrlAttr()
         {
-            return NativeControl.;
+            return Control.CreateUrlAttr();
         }
 
         bool IRichTextBox.Delete(long startRange, long endRange)
         {
-            return NativeControl.;
+            return NativeControl.Delete(startRange, endRange);
         }
 
         void IRichTextBox.SetSelectionRange(long startRange, long endRange)
