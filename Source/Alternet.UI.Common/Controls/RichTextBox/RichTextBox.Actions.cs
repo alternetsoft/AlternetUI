@@ -78,9 +78,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool ApplyStyleToSelection(ITextBoxRichAttr style, RichTextSetStyleFlags flags)
         {
-            if (style is not TextBoxRichAttr s)
-                return false;
-            return NativeControl.ApplyStyleToSelection(s.Handle, (int)flags);
+            return Handler.ApplyStyleToSelection(style, flags);
         }
 
         /// <summary>
@@ -88,7 +86,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectionClearFormatting()
         {
-            var style = RichTextBox.CreateRichAttr();
+            var style = CreateRichAttr();
             var flags = TextBoxTextAttrFlags.Character | TextBoxTextAttrFlags.Alignment
                 | TextBoxTextAttrFlags.ParaSpacingAfter | TextBoxTextAttrFlags.ParaSpacingBefore
                 | TextBoxTextAttrFlags.LineSpacing | TextBoxTextAttrFlags.CharacterStyleName;

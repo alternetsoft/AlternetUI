@@ -17,7 +17,6 @@ namespace Alternet.UI
 
         static RichTextBox()
         {
-            Native.RichTextBox.InitFileHandlers();
         }
 
         /// <summary>
@@ -109,12 +108,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GetFileName();
+                return Handler.GetFileName();
             }
 
             set
             {
-                SetFileName(value ?? string.Empty);
+                Handler.SetFileName(value ?? string.Empty);
             }
         }
 
@@ -165,13 +164,13 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.GetValue();
+                return Handler.GetValue();
             }
 
             set
             {
                 value ??= string.Empty;
-                NativeControl.SetValue(value);
+                Handler.SetValue(value);
             }
         }
 
@@ -249,7 +248,7 @@ namespace Alternet.UI
                 if (hasBorder == value)
                     return;
                 hasBorder = value;
-                NativeControl.HasBorder = value;
+                Handler.HasBorder = value;
             }
         }
 
@@ -257,16 +256,14 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.RichTextBox;
 
         [Browsable(false)]
-        internal new RichTextBoxHandler Handler
+        internal new IRichTextBoxHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (RichTextBoxHandler)base.Handler;
+                return (IRichTextBoxHandler)base.Handler;
             }
         }
-
-        internal Native.RichTextBox NativeControl => Handler.NativeControl;
 
         string? IReadOnlyStrings.this[int index]
         {
@@ -284,20 +281,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Clears the cache of available font names.
-        /// </summary>
-        public static void ClearAvailableFontNames()
-        {
-            Native.RichTextBox.ClearAvailableFontNames();
-        }
-
-        /// <summary>
         /// Creates new custom rich text style.
         /// </summary>
         /// <returns></returns>
-        public static ITextBoxRichAttr CreateRichAttr()
+        public ITextBoxRichAttr CreateRichAttr()
         {
-            return new TextBoxRichAttr();
+            return Handler.CreateRichAttr();
         }
 
         /// <summary>
@@ -305,7 +294,7 @@ namespace Alternet.UI
         /// </summary>
         public string GetRange(long from, long to)
         {
-            return NativeControl.GetRange(from, to);
+            return Handler.GetRange(from, to);
         }
 
         /// <summary>
@@ -313,7 +302,7 @@ namespace Alternet.UI
         /// </summary>
         public int GetLineLength(long lineNo)
         {
-            return NativeControl.GetLineLength(lineNo);
+            return Handler.GetLineLength(lineNo);
         }
 
         /// <summary>
@@ -321,7 +310,7 @@ namespace Alternet.UI
         /// </summary>
         public string GetLineText(long lineNo)
         {
-            return NativeControl.GetLineText(lineNo);
+            return Handler.GetLineText(lineNo);
         }
 
         /// <summary>
@@ -329,7 +318,7 @@ namespace Alternet.UI
         /// </summary>
         public int GetNumberOfLines()
         {
-            return NativeControl.GetNumberOfLines();
+            return Handler.GetNumberOfLines();
         }
 
         /// <summary>
@@ -337,7 +326,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsModified()
         {
-            return NativeControl.IsModified();
+            return Handler.IsModified();
         }
 
         /// <summary>
@@ -345,7 +334,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsEditable()
         {
-            return NativeControl.IsEditable();
+            return Handler.IsEditable();
         }
 
         /// <summary>
@@ -354,7 +343,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsSingleLine()
         {
-            return NativeControl.IsSingleLine();
+            return Handler.IsSingleLine();
         }
 
         /// <summary>
@@ -362,7 +351,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsMultiLine()
         {
-            return NativeControl.IsMultiLine();
+            return Handler.IsMultiLine();
         }
 
         /// <summary>
@@ -370,7 +359,7 @@ namespace Alternet.UI
         /// </summary>
         public string GetStringSelection()
         {
-            return NativeControl.GetStringSelection();
+            return Handler.GetStringSelection();
         }
 
         /// <summary>
@@ -380,7 +369,7 @@ namespace Alternet.UI
         /// <param name="threshold"></param>
         public void SetDelayedLayoutThreshold(long threshold)
         {
-            NativeControl.SetDelayedLayoutThreshold(threshold);
+            Handler.SetDelayedLayoutThreshold(threshold);
         }
 
         /// <summary>
@@ -389,7 +378,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetDelayedLayoutThreshold()
         {
-            return NativeControl.GetDelayedLayoutThreshold();
+            return Handler.GetDelayedLayoutThreshold();
         }
 
         /// <summary>
@@ -397,7 +386,7 @@ namespace Alternet.UI
         /// </summary>
         public bool GetFullLayoutRequired()
         {
-            return NativeControl.GetFullLayoutRequired();
+            return Handler.GetFullLayoutRequired();
         }
 
         /// <summary>
@@ -406,7 +395,7 @@ namespace Alternet.UI
         /// <param name="b"></param>
         public void SetFullLayoutRequired(bool b)
         {
-            NativeControl.SetFullLayoutRequired(b);
+            Handler.SetFullLayoutRequired(b);
         }
 
         /// <summary>
@@ -414,7 +403,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetFullLayoutTime()
         {
-            return NativeControl.GetFullLayoutTime();
+            return Handler.GetFullLayoutTime();
         }
 
         /// <summary>
@@ -423,7 +412,7 @@ namespace Alternet.UI
         /// <param name="t"></param>
         public void SetFullLayoutTime(long t)
         {
-            NativeControl.SetFullLayoutTime(t);
+            Handler.SetFullLayoutTime(t);
         }
 
         /// <summary>
@@ -432,7 +421,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public long GetFullLayoutSavedPosition()
         {
-            return NativeControl.GetFullLayoutSavedPosition();
+            return Handler.GetFullLayoutSavedPosition();
         }
 
         /// <summary>
@@ -492,17 +481,13 @@ namespace Alternet.UI
         /// </returns>
         public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
-                return false;
-            return NativeControl.SetDefaultStyle(s.Handle);
+            return Handler.SetDefaultStyle(style);
         }
 
         /// <inheritdoc cref="SetDefaultStyle"/>
         public bool SetDefaultRichStyle(ITextBoxRichAttr style)
         {
-            if (style is not TextBoxRichAttr s)
-                return false;
-            return NativeControl.SetDefaultRichStyle(s.Handle);
+            return Handler.SetDefaultRichStyle(style);
         }
 
         /// <summary>
@@ -559,7 +544,7 @@ namespace Alternet.UI
         /// <param name="p"></param>
         public void SetFullLayoutSavedPosition(long p)
         {
-            NativeControl.SetFullLayoutSavedPosition(p);
+            Handler.SetFullLayoutSavedPosition(p);
         }
 
         /// <summary>
@@ -567,7 +552,7 @@ namespace Alternet.UI
         /// </summary>
         public void ForceDelayedLayout()
         {
-            NativeControl.ForceDelayedLayout();
+            Handler.ForceDelayedLayout();
         }
 
         /// <summary>
@@ -577,7 +562,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public bool GetCaretAtLineStart()
         {
-            return NativeControl.GetCaretAtLineStart();
+            return Handler.GetCaretAtLineStart();
         }
 
         /// <summary>
@@ -587,7 +572,7 @@ namespace Alternet.UI
         /// <param name="atStart"></param>
         public void SetCaretAtLineStart(bool atStart)
         {
-            NativeControl.SetCaretAtLineStart(atStart);
+            Handler.SetCaretAtLineStart(atStart);
         }
 
         /// <summary>
@@ -596,7 +581,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public bool GetDragging()
         {
-            return NativeControl.GetDragging();
+            return Handler.GetDragging();
         }
 
         /// <summary>
@@ -613,7 +598,7 @@ namespace Alternet.UI
         /// <param name="dragging"></param>
         public void SetDragging(bool dragging)
         {
-            NativeControl.SetDragging(dragging);
+            Handler.SetDragging(dragging);
         }
 
         /// <summary>
@@ -622,7 +607,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetSelectionAnchor()
         {
-            return NativeControl.GetSelectionAnchor();
+            return Handler.GetSelectionAnchor();
         }
 
         /// <summary>
@@ -631,7 +616,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetSelectionAnchor(long anchor)
         {
-            NativeControl.SetSelectionAnchor(anchor);
+            Handler.SetSelectionAnchor(anchor);
         }
 
         /// <summary>
@@ -639,7 +624,7 @@ namespace Alternet.UI
         /// </summary>
         public void Clear()
         {
-            NativeControl.Clear();
+            Handler.Clear();
         }
 
         /// <summary>
@@ -647,7 +632,7 @@ namespace Alternet.UI
         /// </summary>
         public void Replace(long from, long to, string value)
         {
-            NativeControl.Replace(from, to, value);
+            Handler.Replace(from, to, value);
         }
 
         /// <summary>
@@ -655,7 +640,7 @@ namespace Alternet.UI
         /// </summary>
         public void Remove(long from, long to)
         {
-            NativeControl.Remove(from, to);
+            Handler.Remove(from, to);
         }
 
         /// <summary>
@@ -672,7 +657,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool LoadFromFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
-            return NativeControl.LoadFile(file, (int)type);
+            return Handler.LoadFromFile(file, type);
         }
 
         /// <summary>
@@ -689,7 +674,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool SaveToFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
-            return NativeControl.SaveFile(file, (int)type);
+            return Handler.SaveToFile(file, type);
         }
 
         /// <summary>
@@ -705,8 +690,7 @@ namespace Alternet.UI
         /// </returns>
         public bool SaveToStream(Stream stream, RichTextFileType type)
         {
-            using var outputStream = new UI.Native.OutputStream(stream);
-            return NativeControl.SaveToStream(outputStream, (int)type);
+            return Handler.SaveToStream(stream, type);
         }
 
         /// <summary>
@@ -722,8 +706,7 @@ namespace Alternet.UI
         /// </returns>
         public bool LoadFromStream(Stream stream, RichTextFileType type)
         {
-            using var inputStream = new UI.Native.InputStream(stream);
-            return NativeControl.LoadFromStream(inputStream, (int)type);
+            return Handler.LoadFromStream(stream, type);
         }
 
         /// <summary>
@@ -733,8 +716,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetFileHandlerFlags(RichTextHandlerFlags knownFlags, int customFlags = 0)
         {
-            var flags = customFlags | (int)knownFlags;
-            NativeControl.SetHandlerFlags(flags);
+            Handler.SetFileHandlerFlags(knownFlags, customFlags);
         }
 
         /// <summary>
@@ -744,7 +726,7 @@ namespace Alternet.UI
         /// </summary>
         public int GetFileHandlerFlags()
         {
-            return NativeControl.GetHandlerFlags();
+            return Handler.GetFileHandlerFlags();
         }
 
         /// <summary>
@@ -752,7 +734,7 @@ namespace Alternet.UI
         /// </summary>
         public void MarkDirty()
         {
-            NativeControl.MarkDirty();
+            Handler.MarkDirty();
         }
 
         /// <summary>
@@ -760,7 +742,7 @@ namespace Alternet.UI
         /// </summary>
         public void DiscardEdits()
         {
-            NativeControl.DiscardEdits();
+            Handler.DiscardEdits();
         }
 
         /// <summary>
@@ -769,7 +751,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetMaxLength(ulong len)
         {
-            NativeControl.SetMaxLength(len);
+            Handler.SetMaxLength(len);
         }
 
         /// <summary>
@@ -777,7 +759,7 @@ namespace Alternet.UI
         /// </summary>
         public void WriteText(string text)
         {
-            NativeControl.WriteText(text);
+            Handler.WriteText(text);
         }
 
         /// <summary>
@@ -785,7 +767,7 @@ namespace Alternet.UI
         /// </summary>
         public void AppendText(string text)
         {
-            NativeControl.AppendText(text);
+            Handler.AppendText(text);
         }
 
         /// <summary>
@@ -793,7 +775,7 @@ namespace Alternet.UI
         /// </summary>
         public long XYToPosition(long x, long y)
         {
-            return NativeControl.XYToPosition(x, y);
+            return Handler.XYToPosition(x, y);
         }
 
         /// <summary>
@@ -801,7 +783,7 @@ namespace Alternet.UI
         /// </summary>
         public void ShowPosition(long pos)
         {
-            NativeControl.ShowPosition(pos);
+            Handler.ShowPosition(pos);
         }
 
         /// <summary>
@@ -809,7 +791,7 @@ namespace Alternet.UI
         /// </summary>
         public void Copy()
         {
-            NativeControl.Copy();
+            Handler.Copy();
         }
 
         /// <summary>
@@ -818,7 +800,7 @@ namespace Alternet.UI
         /// </summary>
         public void Cut()
         {
-            NativeControl.Cut();
+            Handler.Cut();
         }
 
         /// <summary>
@@ -826,7 +808,7 @@ namespace Alternet.UI
         /// </summary>
         public void Paste()
         {
-            NativeControl.Paste();
+            Handler.Paste();
         }
 
         /// <summary>
@@ -834,7 +816,7 @@ namespace Alternet.UI
         /// </summary>
         public void DeleteSelection()
         {
-            NativeControl.DeleteSelection();
+            Handler.DeleteSelection();
         }
 
         /// <summary>
@@ -842,7 +824,7 @@ namespace Alternet.UI
         /// </summary>
         public bool CanCopy()
         {
-            return NativeControl.CanCopy();
+            return Handler.CanCopy();
         }
 
         /// <summary>
@@ -850,7 +832,7 @@ namespace Alternet.UI
         /// </summary>
         public bool CanCut()
         {
-            return NativeControl.CanCut();
+            return Handler.CanCut();
         }
 
         /// <summary>
@@ -858,7 +840,7 @@ namespace Alternet.UI
         /// </summary>
         public bool CanPaste()
         {
-            return NativeControl.CanPaste();
+            return Handler.CanPaste();
         }
 
         /// <summary>
@@ -866,7 +848,7 @@ namespace Alternet.UI
         /// </summary>
         public bool CanDeleteSelection()
         {
-            return NativeControl.CanDeleteSelection();
+            return Handler.CanDeleteSelection();
         }
 
         /// <summary>
@@ -874,7 +856,7 @@ namespace Alternet.UI
         /// </summary>
         public void Undo()
         {
-            NativeControl.Undo();
+            Handler.Undo();
         }
 
         /// <summary>
@@ -882,7 +864,7 @@ namespace Alternet.UI
         /// </summary>
         public void Redo()
         {
-            NativeControl.Redo();
+            Handler.Redo();
         }
 
         /// <summary>
@@ -890,7 +872,7 @@ namespace Alternet.UI
         /// </summary>
         public bool CanUndo()
         {
-            return NativeControl.CanUndo();
+            return Handler.CanUndo();
         }
 
         /// <summary>
@@ -898,7 +880,7 @@ namespace Alternet.UI
         /// </summary>
         public bool CanRedo()
         {
-            return NativeControl.CanRedo();
+            return Handler.CanRedo();
         }
 
         /// <summary>
@@ -907,7 +889,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetInsertionPoint(long pos)
         {
-            NativeControl.SetInsertionPoint(pos);
+            Handler.SetInsertionPoint(pos);
         }
 
         /// <summary>
@@ -915,7 +897,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetInsertionPointEnd()
         {
-            NativeControl.SetInsertionPointEnd();
+            Handler.SetInsertionPointEnd();
         }
 
         /// <summary>
@@ -923,7 +905,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetInsertionPoint()
         {
-            return NativeControl.GetInsertionPoint();
+            return Handler.GetInsertionPoint();
         }
 
         /// <summary>
@@ -935,7 +917,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetSelection(long from, long to)
         {
-            NativeControl.SetSelection(from, to);
+            Handler.SetSelection(from, to);
         }
 
         /// <summary>
@@ -943,7 +925,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetEditable(bool editable)
         {
-            NativeControl.SetEditable(editable);
+            Handler.SetEditable(editable);
         }
 
         /// <summary>
@@ -952,7 +934,7 @@ namespace Alternet.UI
         /// </summary>
         public bool HasSelection()
         {
-            return NativeControl.HasSelection();
+            return Handler.HasSelection();
         }
 
         /// <summary>
@@ -961,17 +943,22 @@ namespace Alternet.UI
         /// </summary>
         public bool HasUnfocusedSelection()
         {
-            return NativeControl.HasUnfocusedSelection();
+            return Handler.HasUnfocusedSelection();
         }
+
+        /// <summary>
+        /// Inserts new paragraphs at the current insertion point. See <see cref="LineBreak"/>.
+        /// </summary>
+        public bool NewLine() => NewLine(1);
 
         /// <summary>
         /// Inserts a new paragraph at the current insertion point. See <see cref="LineBreak"/>.
         /// </summary>
-        public bool NewLine(int count = 1)
+        public bool NewLine(int count)
         {
             for (int i = 0; i < count; i++)
             {
-                var result = NativeControl.Newline();
+                var result = Handler.NewLine();
                 if (!result)
                     return false;
             }
@@ -986,7 +973,7 @@ namespace Alternet.UI
         /// </summary>
         public bool LineBreak()
         {
-            return NativeControl.LineBreak();
+            return Handler.LineBreak();
         }
 
         /// <summary>
@@ -994,7 +981,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndStyle()
         {
-            return NativeControl.EndStyle();
+            return Handler.EndStyle();
         }
 
         /// <summary>
@@ -1002,7 +989,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndAllStyles()
         {
-            return NativeControl.EndAllStyles();
+            return Handler.EndAllStyles();
         }
 
         /// <summary>
@@ -1010,7 +997,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginBold()
         {
-            return NativeControl.BeginBold();
+            return Handler.BeginBold();
         }
 
         /// <summary>
@@ -1018,7 +1005,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndBold()
         {
-            return NativeControl.EndBold();
+            return Handler.EndBold();
         }
 
         /// <summary>
@@ -1026,7 +1013,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginItalic()
         {
-            return NativeControl.BeginItalic();
+            return Handler.BeginItalic();
         }
 
         /// <summary>
@@ -1034,7 +1021,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndItalic()
         {
-            return NativeControl.EndItalic();
+            return Handler.EndItalic();
         }
 
         /// <summary>
@@ -1042,7 +1029,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginUnderline()
         {
-            return NativeControl.BeginUnderline();
+            return Handler.BeginUnderline();
         }
 
         /// <summary>
@@ -1050,7 +1037,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndUnderline()
         {
-            return NativeControl.EndUnderline();
+            return Handler.EndUnderline();
         }
 
         /// <summary>
@@ -1058,7 +1045,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginFontSize(int pointSize)
         {
-            return NativeControl.BeginFontSize(pointSize);
+            return Handler.BeginFontSize(pointSize);
         }
 
         /// <summary>
@@ -1066,7 +1053,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginFontSize(double pointSize)
         {
-            return NativeControl.BeginFontSize((int)pointSize);
+            return Handler.BeginFontSize((int)pointSize);
         }
 
         /// <summary>
@@ -1074,7 +1061,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndFontSize()
         {
-            return NativeControl.EndFontSize();
+            return Handler.EndFontSize();
         }
 
         /// <summary>
@@ -1082,7 +1069,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndFont()
         {
-            return NativeControl.EndFont();
+            return Handler.EndFont();
         }
 
         /// <summary>
@@ -1090,7 +1077,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginTextColor(Color color)
         {
-            return NativeControl.BeginTextColour(color);
+            return Handler.BeginTextColor(color);
         }
 
         /// <summary>
@@ -1098,7 +1085,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndTextColor()
         {
-            return NativeControl.EndTextColour();
+            return Handler.EndTextColor();
         }
 
         /// <summary>
@@ -1106,7 +1093,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginAlignment(TextBoxTextAttrAlignment alignment)
         {
-            return NativeControl.BeginAlignment((int)alignment);
+            return Handler.BeginAlignment(alignment);
         }
 
         /// <summary>
@@ -1114,7 +1101,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndAlignment()
         {
-            return NativeControl.EndAlignment();
+            return Handler.EndAlignment();
         }
 
         /// <summary>
@@ -1140,7 +1127,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool BeginLeftIndent(int leftIndent, int leftSubIndent = 0)
         {
-            return NativeControl.BeginLeftIndent(leftIndent, leftSubIndent);
+            return Handler.BeginLeftIndent(leftIndent, leftSubIndent);
         }
 
         /// <summary>
@@ -1148,7 +1135,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndLeftIndent()
         {
-            return NativeControl.EndLeftIndent();
+            return Handler.EndLeftIndent();
         }
 
         /// <summary>
@@ -1156,7 +1143,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginRightIndent(int rightIndent)
         {
-            return NativeControl.BeginRightIndent(rightIndent);
+            return Handler.BeginRightIndent(rightIndent);
         }
 
         /// <summary>
@@ -1164,7 +1151,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndRightIndent()
         {
-            return NativeControl.EndRightIndent();
+            return Handler.EndRightIndent();
         }
 
         /// <summary>
@@ -1173,7 +1160,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginParagraphSpacing(int before, int after)
         {
-            return NativeControl.BeginParagraphSpacing(before, after);
+            return Handler.BeginParagraphSpacing(before, after);
         }
 
         /// <summary>
@@ -1181,7 +1168,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndParagraphSpacing()
         {
-            return NativeControl.EndParagraphSpacing();
+            return Handler.EndParagraphSpacing();
         }
 
         /// <summary>
@@ -1195,7 +1182,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public bool BeginLineSpacing(int lineSpacing)
         {
-            return NativeControl.BeginLineSpacing(lineSpacing);
+            return Handler.BeginLineSpacing(lineSpacing);
         }
 
         /// <summary>
@@ -1203,7 +1190,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndLineSpacing()
         {
-            return NativeControl.EndLineSpacing();
+            return Handler.EndLineSpacing();
         }
 
         /// <summary>
@@ -1232,11 +1219,11 @@ namespace Alternet.UI
             int leftSubIndent,
             TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Arabic | TextBoxTextAttrBulletStyle.Period)
         {
-            return NativeControl.BeginNumberedBullet(
+            return Handler.BeginNumberedBullet(
                 bulletNumber,
                 leftIndent,
                 leftSubIndent,
-                (int)bulletStyle);
+                bulletStyle);
         }
 
         /// <summary>
@@ -1244,7 +1231,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndNumberedBullet()
         {
-            return NativeControl.EndNumberedBullet();
+            return Handler.EndNumberedBullet();
         }
 
         /// <summary>
@@ -1258,11 +1245,11 @@ namespace Alternet.UI
             int leftSubIndent,
             TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Symbol)
         {
-            return NativeControl.BeginSymbolBullet(
+            return Handler.BeginSymbolBullet(
                 symbol,
                 leftIndent,
                 leftSubIndent,
-                (int)bulletStyle);
+                bulletStyle);
         }
 
         /// <summary>
@@ -1270,7 +1257,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndSymbolBullet()
         {
-            return NativeControl.EndSymbolBullet();
+            return Handler.EndSymbolBullet();
         }
 
         /// <summary>
@@ -1282,11 +1269,11 @@ namespace Alternet.UI
             int leftSubIndent,
             TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Standard)
         {
-            return NativeControl.BeginStandardBullet(
+            return Handler.BeginStandardBullet(
                 bulletName,
                 leftIndent,
                 leftSubIndent,
-                (int)bulletStyle);
+                bulletStyle);
         }
 
         /// <summary>
@@ -1294,7 +1281,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndStandardBullet()
         {
-            return NativeControl.EndStandardBullet();
+            return Handler.EndStandardBullet();
         }
 
         /// <summary>
@@ -1302,7 +1289,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginCharacterStyle(string characterStyle)
         {
-            return NativeControl.BeginCharacterStyle(characterStyle);
+            return Handler.BeginCharacterStyle(characterStyle);
         }
 
         /// <summary>
@@ -1310,7 +1297,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndCharacterStyle()
         {
-            return NativeControl.EndCharacterStyle();
+            return Handler.EndCharacterStyle();
         }
 
         /// <summary>
@@ -1318,7 +1305,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginParagraphStyle(string paragraphStyle)
         {
-            return NativeControl.BeginParagraphStyle(paragraphStyle);
+            return Handler.BeginParagraphStyle(paragraphStyle);
         }
 
         /// <summary>
@@ -1326,7 +1313,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndParagraphStyle()
         {
-            return NativeControl.EndParagraphStyle();
+            return Handler.EndParagraphStyle();
         }
 
         /// <summary>
@@ -1335,7 +1322,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginListStyle(string listStyle, int level = 1, int number = 1)
         {
-            return NativeControl.BeginListStyle(listStyle, level, number);
+            return Handler.BeginListStyle(listStyle, level, number);
         }
 
         /// <summary>
@@ -1343,7 +1330,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndListStyle()
         {
-            return NativeControl.EndListStyle();
+            return Handler.EndListStyle();
         }
 
         /// <summary>
@@ -1354,7 +1341,7 @@ namespace Alternet.UI
         public bool BeginURL(string url, string? characterStyle = default)
         {
             characterStyle ??= string.Empty;
-            return NativeControl.BeginURL(url, characterStyle);
+            return Handler.BeginURL(url, characterStyle);
         }
 
         /// <summary>
@@ -1362,7 +1349,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndURL()
         {
-            return NativeControl.EndURL();
+            return Handler.EndURL();
         }
 
         /// <summary>
@@ -1371,7 +1358,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsSelectionBold()
         {
-            return NativeControl.IsSelectionBold();
+            return Handler.IsSelectionBold();
         }
 
         /// <summary>
@@ -1380,7 +1367,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsSelectionItalics()
         {
-            return NativeControl.IsSelectionItalics();
+            return Handler.IsSelectionItalics();
         }
 
         /// <summary>
@@ -1389,7 +1376,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsSelectionUnderlined()
         {
-            return NativeControl.IsSelectionUnderlined();
+            return Handler.IsSelectionUnderlined();
         }
 
         /// <summary>
@@ -1398,7 +1385,7 @@ namespace Alternet.UI
         /// </summary>
         public bool DoesSelectionHaveTextEffectFlag(TextBoxTextAttrEffects flag)
         {
-            return NativeControl.DoesSelectionHaveTextEffectFlag((int)flag);
+            return Handler.DoesSelectionHaveTextEffectFlag(flag);
         }
 
         /// <summary>
@@ -1407,7 +1394,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsSelectionAligned(TextBoxTextAttrAlignment alignment)
         {
-            return NativeControl.IsSelectionAligned((int)alignment);
+            return Handler.IsSelectionAligned(alignment);
         }
 
         /// <summary>
@@ -1415,7 +1402,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ApplyBoldToSelection()
         {
-            return NativeControl.ApplyBoldToSelection();
+            return Handler.ApplyBoldToSelection();
         }
 
         /// <summary>
@@ -1423,7 +1410,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ApplyItalicToSelection()
         {
-            return NativeControl.ApplyItalicToSelection();
+            return Handler.ApplyItalicToSelection();
         }
 
         /// <summary>
@@ -1431,7 +1418,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ApplyUnderlineToSelection()
         {
-            return NativeControl.ApplyUnderlineToSelection();
+            return Handler.ApplyUnderlineToSelection();
         }
 
         /// <summary>
@@ -1440,7 +1427,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ApplyTextEffectToSelection(TextBoxTextAttrEffects flags)
         {
-            return NativeControl.ApplyTextEffectToSelection((int)flags);
+            return Handler.ApplyTextEffectToSelection(flags);
         }
 
         /// <summary>
@@ -1448,7 +1435,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ApplyAlignmentToSelection(TextBoxTextAttrAlignment alignment)
         {
-            return NativeControl.ApplyAlignmentToSelection((int)alignment);
+            return Handler.ApplyAlignmentToSelection(alignment);
         }
 
         /// <summary>
@@ -1456,7 +1443,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SetDefaultStyleToCursorStyle()
         {
-            return NativeControl.SetDefaultStyleToCursorStyle();
+            return Handler.SetDefaultStyleToCursorStyle();
         }
 
         /// <summary>
@@ -1464,7 +1451,7 @@ namespace Alternet.UI
         /// </summary>
         public void SelectNone()
         {
-            NativeControl.SelectNone();
+            Handler.SelectNone();
         }
 
         /// <summary>
@@ -1472,7 +1459,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SelectWord(long position)
         {
-            return NativeControl.SelectWord(position);
+            return Handler.SelectWord(position);
         }
 
         /// <summary>
@@ -1482,7 +1469,7 @@ namespace Alternet.UI
         /// </summary>
         public bool LayoutContent(bool onlyVisibleRect = false)
         {
-            return NativeControl.LayoutContent(onlyVisibleRect);
+            return Handler.LayoutContent(onlyVisibleRect);
         }
 
         /// <summary>
@@ -1490,7 +1477,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveRight(int noPositions = 1, int flags = 0)
         {
-            return NativeControl.MoveRight(noPositions, flags);
+            return Handler.MoveRight(noPositions, flags);
         }
 
         /// <summary>
@@ -1498,7 +1485,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveLeft(int noPositions = 1, int flags = 0)
         {
-            return NativeControl.MoveLeft(noPositions, flags);
+            return Handler.MoveLeft(noPositions, flags);
         }
 
         /// <summary>
@@ -1506,7 +1493,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveUp(int noLines = 1, int flags = 0)
         {
-            return NativeControl.MoveUp(noLines, flags);
+            return Handler.MoveUp(noLines, flags);
         }
 
         /// <summary>
@@ -1514,7 +1501,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveDown(int noLines = 1, int flags = 0)
         {
-            return NativeControl.MoveDown(noLines, flags);
+            return Handler.MoveDown(noLines, flags);
         }
 
         /// <summary>
@@ -1522,7 +1509,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveToLineEnd(int flags = 0)
         {
-            return NativeControl.MoveToLineEnd(flags);
+            return Handler.MoveToLineEnd(flags);
         }
 
         /// <summary>
@@ -1530,7 +1517,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveToLineStart(int flags = 0)
         {
-            return NativeControl.MoveToLineStart(flags);
+            return Handler.MoveToLineStart(flags);
         }
 
         /// <summary>
@@ -1538,7 +1525,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveToParagraphEnd(int flags = 0)
         {
-            return NativeControl.MoveToParagraphEnd(flags);
+            return Handler.MoveToParagraphEnd(flags);
         }
 
         /// <summary>
@@ -1546,7 +1533,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveToParagraphStart(int flags = 0)
         {
-            return NativeControl.MoveToParagraphStart(flags);
+            return Handler.MoveToParagraphStart(flags);
         }
 
         /// <summary>
@@ -1554,7 +1541,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveHome(int flags = 0)
         {
-            return NativeControl.MoveHome(flags);
+            return Handler.MoveHome(flags);
         }
 
         /// <summary>
@@ -1562,7 +1549,7 @@ namespace Alternet.UI
         /// </summary>
         public bool MoveEnd(int flags = 0)
         {
-            return NativeControl.MoveEnd(flags);
+            return Handler.MoveEnd(flags);
         }
 
         /// <summary>
@@ -1570,7 +1557,7 @@ namespace Alternet.UI
         /// </summary>
         public bool PageUp(int noPages = 1, int flags = 0)
         {
-            return NativeControl.PageUp(noPages, flags);
+            return Handler.PageUp(noPages, flags);
         }
 
         /// <summary>
@@ -1578,7 +1565,7 @@ namespace Alternet.UI
         /// </summary>
         public bool PageDown(int noPages = 1, int flags = 0)
         {
-            return NativeControl.PageDown(noPages, flags);
+            return Handler.PageDown(noPages, flags);
         }
 
         /// <summary>
@@ -1586,7 +1573,7 @@ namespace Alternet.UI
         /// </summary>
         public bool WordLeft(int noPages = 1, int flags = 0)
         {
-            return NativeControl.WordLeft(noPages, flags);
+            return Handler.WordLeft(noPages, flags);
         }
 
         /// <summary>
@@ -1594,7 +1581,7 @@ namespace Alternet.UI
         /// </summary>
         public bool WordRight(int noPages = 1, int flags = 0)
         {
-            return NativeControl.WordRight(noPages, flags);
+            return Handler.WordRight(noPages, flags);
         }
 
         /// <summary>
@@ -1602,7 +1589,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginBatchUndo(string cmdName)
         {
-            return NativeControl.BeginBatchUndo(cmdName);
+            return Handler.BeginBatchUndo(cmdName);
         }
 
         /// <summary>
@@ -1610,7 +1597,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndBatchUndo()
         {
-            return NativeControl.EndBatchUndo();
+            return Handler.EndBatchUndo();
         }
 
         /// <summary>
@@ -1618,7 +1605,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BatchingUndo()
         {
-            return NativeControl.BatchingUndo();
+            return Handler.BatchingUndo();
         }
 
         /// <summary>
@@ -1626,7 +1613,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginSuppressUndo()
         {
-            return NativeControl.BeginSuppressUndo();
+            return Handler.BeginSuppressUndo();
         }
 
         /// <summary>
@@ -1634,7 +1621,7 @@ namespace Alternet.UI
         /// </summary>
         public bool EndSuppressUndo()
         {
-            return NativeControl.EndSuppressUndo();
+            return Handler.EndSuppressUndo();
         }
 
         /// <summary>
@@ -1643,8 +1630,7 @@ namespace Alternet.UI
         /// </summary>
         public ITextBoxRichAttr GetDefaultStyleEx()
         {
-            var result = NativeControl.GetDefaultStyleEx();
-            return new TextBoxRichAttr(result);
+            return Handler.GetDefaultStyleEx();
         }
 
         /// <summary>
@@ -1652,7 +1638,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SuppressingUndo()
         {
-            return NativeControl.SuppressingUndo();
+            return Handler.SuppressingUndo();
         }
 
         /// <summary>
@@ -1660,7 +1646,7 @@ namespace Alternet.UI
         /// </summary>
         public void EnableVerticalScrollbar(bool enable)
         {
-            NativeControl.EnableVerticalScrollbar(enable);
+            Handler.EnableVerticalScrollbar(enable);
         }
 
         /// <summary>
@@ -1668,7 +1654,7 @@ namespace Alternet.UI
         /// </summary>
         public bool GetVerticalScrollbarEnabled()
         {
-            return NativeControl.GetVerticalScrollbarEnabled();
+            return Handler.GetVerticalScrollbarEnabled();
         }
 
         /// <summary>
@@ -1676,7 +1662,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetFontScale(double fontScale, bool refresh = false)
         {
-            NativeControl.SetFontScale(fontScale, refresh);
+            Handler.SetFontScale(fontScale, refresh);
         }
 
         /// <summary>
@@ -1684,7 +1670,7 @@ namespace Alternet.UI
         /// </summary>
         public double GetFontScale()
         {
-            return NativeControl.GetFontScale();
+            return Handler.GetFontScale();
         }
 
         /// <summary>
@@ -1692,7 +1678,7 @@ namespace Alternet.UI
         /// </summary>
         public bool GetVirtualAttributesEnabled()
         {
-            return NativeControl.GetVirtualAttributesEnabled();
+            return Handler.GetVirtualAttributesEnabled();
         }
 
         /// <summary>
@@ -1700,7 +1686,7 @@ namespace Alternet.UI
         /// </summary>
         public void EnableVirtualAttributes(bool b)
         {
-            NativeControl.EnableVirtualAttributes(b);
+            Handler.EnableVirtualAttributes(b);
         }
 
         /// <summary>
@@ -1708,7 +1694,7 @@ namespace Alternet.UI
         /// </summary>
         public void DoWriteText(string value, int flags = 0)
         {
-            NativeControl.DoWriteText(value, flags);
+            Handler.DoWriteText(value, flags);
         }
 
         /// <summary>
@@ -1717,7 +1703,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ExtendSelection(long oldPosition, long newPosition, int flags)
         {
-            return NativeControl.ExtendSelection(oldPosition, newPosition, flags);
+            return Handler.ExtendSelection(oldPosition, newPosition, flags);
         }
 
         /// <summary>
@@ -1732,7 +1718,7 @@ namespace Alternet.UI
         /// </remarks>
         public void SetCaretPosition(long position, bool showAtLineStart = false)
         {
-            NativeControl.SetCaretPosition(position, showAtLineStart);
+            Handler.SetCaretPosition(position, showAtLineStart);
         }
 
         /// <summary>
@@ -1740,7 +1726,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetCaretPosition()
         {
-            return NativeControl.GetCaretPosition();
+            return Handler.GetCaretPosition();
         }
 
         /// <summary>
@@ -1753,7 +1739,7 @@ namespace Alternet.UI
         /// </remarks>
         public long GetAdjustedCaretPosition(long caretPos)
         {
-            return NativeControl.GetAdjustedCaretPosition(caretPos);
+            return Handler.GetAdjustedCaretPosition(caretPos);
         }
 
         /// <summary>
@@ -1763,7 +1749,7 @@ namespace Alternet.UI
         /// </summary>
         public void MoveCaretForward(long oldPosition)
         {
-            NativeControl.MoveCaretForward(oldPosition);
+            Handler.MoveCaretForward(oldPosition);
         }
 
         /// <summary>
@@ -1771,7 +1757,7 @@ namespace Alternet.UI
         /// </summary>
         public PointI GetPhysicalPoint(PointI ptLogical)
         {
-            return NativeControl.GetPhysicalPoint(ptLogical);
+            return Handler.GetPhysicalPoint(ptLogical);
         }
 
         /// <summary>
@@ -1779,7 +1765,7 @@ namespace Alternet.UI
         /// </summary>
         public PointI GetLogicalPoint(PointI ptPhysical)
         {
-            return NativeControl.GetLogicalPoint(ptPhysical);
+            return Handler.GetLogicalPoint(ptPhysical);
         }
 
         /// <summary>
@@ -1788,7 +1774,7 @@ namespace Alternet.UI
         /// </summary>
         public long FindNextWordPosition(int direction = 1)
         {
-            return NativeControl.FindNextWordPosition(direction);
+            return Handler.FindNextWordPosition(direction);
         }
 
         /// <summary>
@@ -1796,7 +1782,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsPositionVisible(long pos)
         {
-            return NativeControl.IsPositionVisible(pos);
+            return Handler.IsPositionVisible(pos);
         }
 
         /// <summary>
@@ -1804,7 +1790,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetFirstVisiblePosition()
         {
-            return NativeControl.GetFirstVisiblePosition();
+            return Handler.GetFirstVisiblePosition();
         }
 
         /// <summary>
@@ -1815,7 +1801,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetCaretPositionForDefaultStyle()
         {
-            return NativeControl.GetCaretPositionForDefaultStyle();
+            return Handler.GetCaretPositionForDefaultStyle();
         }
 
         /// <summary>
@@ -1823,7 +1809,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetCaretPositionForDefaultStyle(long pos)
         {
-            NativeControl.SetCaretPositionForDefaultStyle(pos);
+            Handler.SetCaretPositionForDefaultStyle(pos);
         }
 
         /// <summary>
@@ -1833,7 +1819,7 @@ namespace Alternet.UI
         /// </summary>
         public void MoveCaretBack(long oldPosition)
         {
-            NativeControl.MoveCaretBack(oldPosition);
+            Handler.MoveCaretBack(oldPosition);
         }
 
         /// <summary>
@@ -1841,7 +1827,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginFont(Font? font)
         {
-            return NativeControl.BeginFont((UI.Native.Font?)font?.Handler);
+            return Handler.BeginFont(font);
         }
 
         /// <summary>
@@ -1851,7 +1837,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsDefaultStyleShowing()
         {
-            return NativeControl.IsDefaultStyleShowing();
+            return Handler.IsDefaultStyleShowing();
         }
 
         /// <summary>
@@ -1859,7 +1845,7 @@ namespace Alternet.UI
         /// </summary>
         public PointI GetFirstVisiblePoint()
         {
-            return NativeControl.GetFirstVisiblePoint();
+            return Handler.GetFirstVisiblePoint();
         }
 
         /// <summary>
@@ -1867,7 +1853,7 @@ namespace Alternet.UI
         /// </summary>
         public void EnableImages(bool b)
         {
-            NativeControl.EnableImages(b);
+            Handler.EnableImages(b);
         }
 
         /// <summary>
@@ -1875,7 +1861,7 @@ namespace Alternet.UI
         /// </summary>
         public bool GetImagesEnabled()
         {
-            return NativeControl.GetImagesEnabled();
+            return Handler.GetImagesEnabled();
         }
 
         /// <summary>
@@ -1883,7 +1869,7 @@ namespace Alternet.UI
         /// </summary>
         public void EnableDelayedImageLoading(bool b)
         {
-            NativeControl.EnableDelayedImageLoading(b);
+            Handler.EnableDelayedImageLoading(b);
         }
 
         /// <summary>
@@ -1891,7 +1877,7 @@ namespace Alternet.UI
         /// </summary>
         public bool GetDelayedImageLoading()
         {
-            return NativeControl.GetDelayedImageLoading();
+            return Handler.GetDelayedImageLoading();
         }
 
         /// <summary>
@@ -1899,7 +1885,7 @@ namespace Alternet.UI
         /// </summary>
         public bool GetDelayedImageProcessingRequired()
         {
-            return NativeControl.GetDelayedImageProcessingRequired();
+            return Handler.GetDelayedImageProcessingRequired();
         }
 
         /// <summary>
@@ -1907,7 +1893,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetDelayedImageProcessingRequired(bool b)
         {
-            NativeControl.SetDelayedImageProcessingRequired(b);
+            Handler.SetDelayedImageProcessingRequired(b);
         }
 
         /// <summary>
@@ -1915,7 +1901,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetDelayedImageProcessingTime()
         {
-            return NativeControl.GetDelayedImageProcessingTime();
+            return Handler.GetDelayedImageProcessingTime();
         }
 
         /// <summary>
@@ -1923,7 +1909,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetDelayedImageProcessingTime(long t)
         {
-            NativeControl.SetDelayedImageProcessingTime(t);
+            Handler.SetDelayedImageProcessingTime(t);
         }
 
         /// <summary>
@@ -1931,7 +1917,7 @@ namespace Alternet.UI
         /// </summary>
         public string GetValue()
         {
-            return NativeControl.GetValue();
+            return Handler.GetValue();
         }
 
         /// <summary>
@@ -1939,7 +1925,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetValue(string value)
         {
-            NativeControl.SetValue(value);
+            Handler.SetValue(value);
         }
 
         /// <summary>
@@ -1947,7 +1933,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetLineHeight(int height)
         {
-            NativeControl.SetLineHeight(height);
+            Handler.SetLineHeight(height);
         }
 
         /// <summary>
@@ -1955,7 +1941,7 @@ namespace Alternet.UI
         /// </summary>
         public int GetLineHeight()
         {
-            return NativeControl.GetLineHeight();
+            return Handler.GetLineHeight();
         }
 
         /// <summary>
@@ -1963,7 +1949,7 @@ namespace Alternet.UI
         /// </summary>
         public bool ProcessDelayedImageLoading(bool refresh)
         {
-            return NativeControl.ProcessDelayedImageLoading(refresh);
+            return Handler.ProcessDelayedImageLoading(refresh);
         }
 
         /// <summary>
@@ -1971,7 +1957,7 @@ namespace Alternet.UI
         /// </summary>
         public void RequestDelayedImageProcessing()
         {
-            NativeControl.RequestDelayedImageProcessing();
+            Handler.RequestDelayedImageProcessing();
         }
 
         /// <summary>
@@ -1979,7 +1965,7 @@ namespace Alternet.UI
         /// </summary>
         public long GetLastPosition()
         {
-            return NativeControl.GetLastPosition();
+            return Handler.GetLastPosition();
         }
 
         /// <summary>
@@ -2004,11 +1990,11 @@ namespace Alternet.UI
             int startFrom = 1,
             int specifiedLevel = -1)
         {
-            return NativeControl.SetListStyle2(
+            return Handler.SetListStyle(
                 startRange,
                 endRange,
                 defName,
-                (int)flags,
+                flags,
                 startFrom,
                 specifiedLevel);
         }
@@ -2030,7 +2016,7 @@ namespace Alternet.UI
             long endRange,
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
         {
-            return NativeControl.ClearListStyle(startRange, endRange, (int)flags);
+            return Handler.ClearListStyle(startRange, endRange, flags);
         }
 
         /// <summary>
@@ -2042,20 +2028,11 @@ namespace Alternet.UI
             ITextBoxRichAttr? tableAttr = default,
             ITextBoxRichAttr? cellAttr = default)
         {
-            IntPtr tableAttrPtr = default;
-            IntPtr cellAttrPtr = default;
-
-            if (tableAttr is TextBoxRichAttr ta)
-                tableAttrPtr = ta.Handle;
-
-            if (cellAttr is TextBoxRichAttr ca)
-                cellAttrPtr = ca.Handle;
-
-            return NativeControl.WriteTable(
+            return Handler.WriteTable(
                 rows,
                 cols,
-                tableAttrPtr,
-                cellAttrPtr);
+                tableAttr,
+                cellAttr);
         }
 
         /// <summary>
@@ -2079,11 +2056,11 @@ namespace Alternet.UI
             int startFrom = 1,
             int specifiedLevel = -1)
         {
-            return NativeControl.NumberList2(
+            return Handler.NumberList(
                 startRange,
                 endRange,
                 defName,
-                (int)flags,
+                flags,
                 startFrom,
                 specifiedLevel);
         }
@@ -2112,8 +2089,7 @@ namespace Alternet.UI
         /// </remarks>
         public ITextBoxTextAttr GetStyle(long position)
         {
-            var result = NativeControl.GetStyle(position);
-            return new TextBoxTextAttr(result);
+            return Handler.GetStyle(position);
         }
 
         /// <summary>
@@ -2127,8 +2103,7 @@ namespace Alternet.UI
         /// </remarks>
         public ITextBoxRichAttr GetRichStyle(long position)
         {
-            var result = NativeControl.GetRichStyle(position);
-            return new TextBoxRichAttr(result);
+            return Handler.GetRichStyle(position);
         }
 
         /// <summary>
@@ -2154,9 +2129,7 @@ namespace Alternet.UI
             ITextBoxRichAttr style,
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
         {
-            if (style is not TextBoxRichAttr s)
-                return false;
-            return NativeControl.SetStyleEx(startRange, endRange, s.Handle, (int)flags);
+            return Handler.SetStyleEx(startRange, endRange, style, flags);
         }
 
         /// <summary>
@@ -2184,12 +2157,12 @@ namespace Alternet.UI
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo,
             int specifiedLevel = -1)
         {
-            return NativeControl.PromoteList2(
+            return Handler.PromoteList(
                 promoteBy,
                 startRange,
                 endRange,
                 defName,
-                (int)flags,
+                flags,
                 specifiedLevel);
         }
 
@@ -2198,10 +2171,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetTextCursor(Cursor? cursor)
         {
-            if (cursor is null)
-                NativeControl.SetTextCursor(default);
-            else
-                NativeControl.SetTextCursor((IntPtr)cursor.Handler);
+            Handler.SetTextCursor(cursor);
         }
 
         /// <summary>
@@ -2209,7 +2179,7 @@ namespace Alternet.UI
         /// </summary>
         public Cursor GetTextCursor()
         {
-            return new Cursor(NativeControl.GetTextCursor());
+            return Handler.GetTextCursor();
         }
 
         /// <summary>
@@ -2217,10 +2187,15 @@ namespace Alternet.UI
         /// </summary>
         public void SetURLCursor(Cursor? cursor)
         {
-            if (cursor is null)
-                NativeControl.SetURLCursor(default);
-            else
-                NativeControl.SetURLCursor((IntPtr)cursor.Handler);
+            Handler.SetURLCursor(cursor);
+        }
+
+        /// <summary>
+        /// Returns the cursor to be used over URLs.
+        /// </summary>
+        public Cursor GetURLCursor()
+        {
+            return Handler.GetURLCursor();
         }
 
         /// <summary>
@@ -2246,16 +2221,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
         {
-            if (attr is TextBoxRichAttr s)
-                NativeControl.SetAndShowDefaultStyle(s.Handle);
-        }
-
-        /// <summary>
-        /// Returns the cursor to be used over URLs.
-        /// </summary>
-        public Cursor GetURLCursor()
-        {
-            return new Cursor(NativeControl.GetURLCursor());
+            Handler.SetAndShowDefaultStyle(attr);
         }
 
         /// <summary>
@@ -2269,8 +2235,7 @@ namespace Alternet.UI
         /// </remarks>
         public void SetBasicStyle(ITextBoxRichAttr style)
         {
-            if (style is TextBoxRichAttr s)
-                NativeControl.SetBasicStyle(s.Handle);
+            Handler.SetBasicStyle(style);
         }
 
         /// <summary>
@@ -2286,15 +2251,7 @@ namespace Alternet.UI
             long endRange,
             ITextBoxRichAttr style)
         {
-            if (style is TextBoxRichAttr s)
-            {
-                return NativeControl.HasParagraphAttributes(
-                    startRange,
-                    endRange,
-                    s.Handle);
-            }
-            else
-                return false;
+            return Handler.HasParagraphAttributes(startRange, endRange, style);
         }
 
         /// <summary>
@@ -2308,8 +2265,7 @@ namespace Alternet.UI
         /// </remarks>
         public ITextBoxRichAttr GetBasicStyle()
         {
-            var result = NativeControl.GetBasicStyle();
-            return new TextBoxRichAttr(result);
+            return Handler.GetBasicStyle();
         }
 
         /// <summary>
@@ -2317,7 +2273,7 @@ namespace Alternet.UI
         /// </summary>
         public bool Delete(long startRange, long endRange)
         {
-            return NativeControl.Delete(startRange, endRange);
+            return Handler.Delete(startRange, endRange);
         }
 
         /// <summary>
@@ -2325,9 +2281,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginStyle(ITextBoxRichAttr style)
         {
-            if (style is not TextBoxRichAttr s)
-                return false;
-            return NativeControl.BeginStyle(s.Handle);
+            return Handler.BeginStyle(style);
         }
 
         /// <summary>
@@ -2340,9 +2294,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
-                return false;
-            return NativeControl.SetStyle(start, end, s.Handle);
+            return Handler.SetStyle(start, end, style);
         }
 
         /// <summary>
@@ -2355,9 +2307,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool SetRichStyle(long start, long end, ITextBoxRichAttr style)
         {
-            if (style is not TextBoxRichAttr s)
-                return false;
-            return NativeControl.SetRichStyle(start, end, s.Handle);
+            return Handler.SetRichStyle(start, end, style);
         }
 
         /// <summary>
@@ -2369,7 +2319,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetSelectionRange(long startRange, long endRange)
         {
-            NativeControl.SetSelectionRange(startRange, endRange);
+            Handler.SetSelectionRange(startRange, endRange);
         }
 
         /// <summary>
@@ -2377,7 +2327,7 @@ namespace Alternet.UI
         /// </summary>
         public PointI PositionToXY(long pos)
         {
-            return NativeControl.PositionToXY(pos);
+            return Handler.PositionToXY(pos);
         }
 
         /// <summary>
@@ -2387,8 +2337,7 @@ namespace Alternet.UI
         /// </summary>
         public ITextBoxTextAttr GetStyleForRange(long startRange, long endRange)
         {
-            var result = NativeControl.GetStyleForRange(startRange, endRange);
-            return new TextBoxTextAttr(result);
+            return Handler.GetStyleForRange(startRange, endRange);
         }
 
         /// <summary>
@@ -2398,8 +2347,7 @@ namespace Alternet.UI
         /// </summary>
         public ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange)
         {
-            var result = NativeControl.GetStyleForRange2(startRange, endRange);
-            return new TextBoxRichAttr(result);
+            return Handler.GetRichStyleForRange(startRange, endRange);
         }
 
         /// <summary>
@@ -2408,7 +2356,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public ITextBoxTextAttr CreateTextAttr()
         {
-            return new TextBoxTextAttr();
+            return Handler.CreateTextAttr();
         }
 
         /// <summary>
@@ -2418,7 +2366,7 @@ namespace Alternet.UI
         /// </summary>
         public long DeleteSelectedContent()
         {
-            return NativeControl.DeleteSelectedContent();
+            return Handler.DeleteSelectedContent();
         }
 
         /// <summary>
@@ -2444,11 +2392,7 @@ namespace Alternet.UI
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
         {
-            if (bitmap is null)
-                return false;
-            if (textAttr is TextBoxRichAttr s)
-                return NativeControl.WriteImage((UI.Native.Image)bitmap.NativeObject, (int)bitmapType, s.Handle);
-            return NativeControl.WriteImage((UI.Native.Image)bitmap.NativeObject, (int)bitmapType, default);
+            return Handler.WriteImage(bitmap, bitmapType, textAttr);
         }
 
         /// <summary>
@@ -2459,545 +2403,17 @@ namespace Alternet.UI
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
         {
-            if (textAttr is TextBoxRichAttr s)
-                return NativeControl.WriteImage2(filename, (int)bitmapType, s.Handle);
-            return NativeControl.WriteImage2(filename, (int)bitmapType, default);
+            return Handler.WriteImage(filename, bitmapType, textAttr);
         }
 
-        /// <summary>
-        /// Returns the current context menu.
-        /// </summary>
-        internal IntPtr GetContextMenu()
-        {
-            return NativeControl.GetContextMenu();
-        }
+        public string GetFileName() => Handler.GetFileName();
 
-        /// <summary>
-        /// Sets the current context menu.
-        /// </summary>
-        internal void SetContextMenu(IntPtr menu)
-        {
-            NativeControl.SetContextMenu(menu);
-        }
-
-        /// <summary>
-        /// Returns the anchor object if selecting multiple containers.
-        /// </summary>
-        internal IntPtr GetSelectionAnchorObject()
-        {
-            return NativeControl.GetSelectionAnchorObject();
-        }
-
-        /// <summary>
-        /// Sets the anchor object if selecting multiple containers.
-        /// </summary>
-        internal void SetSelectionAnchorObject(IntPtr anchor)
-        {
-            NativeControl.SetSelectionAnchorObject(anchor);
-        }
-
-        /// <summary>
-        /// Returns object that currently has the editing focus.
-        /// If there are no composite objects, this will be the top-level buffer.
-        /// </summary>
-        internal IntPtr GetFocusObject()
-        {
-            return NativeControl.GetFocusObject();
-        }
-
-        /// <summary>
-        /// Sets focus object without making any alterations.
-        /// </summary>
-        internal void StoreFocusObject(IntPtr richObj)
-        {
-            NativeControl.StoreFocusObject(richObj);
-        }
-
-        /// <summary>
-        /// Applies the style sheet to the buffer, matching paragraph styles in the sheet
-        /// against named styles in the buffer.
-        /// This might be useful if the styles have changed.
-        /// If sheet is null, the sheet set with SetStyleSheet() is used.
-        /// Currently this applies paragraph styles only.
-        /// </summary>
-        internal bool ApplyStyle(IntPtr def)
-        {
-            return NativeControl.ApplyStyle(def);
-        } // wxRichTextStyleDefinition
-
-        /// <summary>
-        /// Sets the style sheet associated with the control.
-        /// A style sheet allows named character and paragraph styles to be applied.
-        /// </summary>
-        internal void SetStyleSheet(IntPtr styleSheet)
-        {
-            NativeControl.SetStyleSheet(styleSheet);
-        }
-
-        /// <summary>
-        /// Move the caret to the given character position.
-        /// Please note that this does not update the current editing style
-        /// from the new position; to do that, call <see cref="SetInsertionPoint"/> instead.
-        /// </summary>
-        internal bool MoveCaret(long pos, bool showAtLineStart = false, IntPtr container = default)
-        {
-            return NativeControl.MoveCaret(pos, showAtLineStart, container);
-        }
-
-        /// <summary>
-        /// Push the style sheet to top of stack.
-        /// </summary>
-        internal bool PushStyleSheet(IntPtr styleSheet)
-        {
-            return NativeControl.PushStyleSheet(styleSheet);
-        }
-
-        /// <summary>
-        /// Pops the style sheet from top of stack.
-        /// </summary>
-        internal IntPtr PopStyleSheet()
-        {
-            return NativeControl.PopStyleSheet();
-        }
-
-        /// <summary>
-        /// Applies the style sheet to the buffer, for example if the styles have changed.
-        /// </summary>
-        internal bool ApplyStyleSheet(IntPtr styleSheet = default)
-        {
-            return NativeControl.ApplyStyleSheet(styleSheet);
-        }
-
-        /// <summary>
-        /// Shows the given context menu, optionally adding appropriate property-editing
-        /// commands for the current position in the object hierarchy.
-        /// </summary>
-        internal bool ShowContextMenu(IntPtr menu, PointI pt, bool addPropertyCommands = true)
-        {
-            return NativeControl.ShowContextMenu(menu, pt, addPropertyCommands);
-        }
-
-        /// <summary>
-        /// Prepares the context menu, optionally adding appropriate property-editing commands.
-        /// Returns the number of property commands added.
-        /// </summary>
-        internal int PrepareContextMenu(IntPtr menu, PointI pt, bool addPropertyCommands = true)
-        {
-            return NativeControl.PrepareContextMenu(menu, pt, addPropertyCommands);
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if we can edit the object's properties via a GUI.
-        /// </summary>
-        internal bool CanEditProperties(IntPtr richObj)
-        {
-            return NativeControl.CanEditProperties(richObj);
-        }
-
-        /// <summary>
-        /// Edits the object's properties via a GUI.
-        /// </summary>
-        internal bool EditProperties(IntPtr richObj, IntPtr parentWindow)
-        {
-            return NativeControl.EditProperties(richObj, parentWindow);
-        }
-
-        /// <summary>
-        /// Extends a table selection in the given direction.
-        /// </summary>
-        internal bool ExtendCellSelection(IntPtr table, int noRowSteps, int noColSteps)
-        {
-            return NativeControl.ExtendCellSelection(table, noRowSteps, noColSteps);
-        }
-
-        /// <summary>
-        /// Starts selecting table cells.
-        /// </summary>
-        internal bool StartCellSelection(IntPtr table, IntPtr newCell)
-        {
-            return NativeControl.StartCellSelection(table, newCell);
-        }
-
-        /// <summary>
-        /// Scrolls <paramref name="position"/> into view. This function takes a caret position.
-        /// </summary>
-        internal bool ScrollIntoView(long position, int keyCode)
-        {
-            return NativeControl.ScrollIntoView(position, keyCode);
-        }
-
-        /// <summary>
-        /// Returns the caret height and position for the given character position.
-        /// If container is null, the current focus object will be used.
-        /// </summary>
-        internal bool GetCaretPositionForIndex(
-            long position,
-            RectI rect,
-            IntPtr container = default)
-        {
-            return NativeControl.GetCaretPositionForIndex(position, rect, container);
-        }
-
-        /// <summary>
-        /// Internal helper function returning the line for the visible caret position.
-        /// If the caret is shown at the very end of the line, it means the next character
-        /// is actually on the following line.
-        /// So this function gets the line we're expecting to find if this is the case.
-        /// </summary>
-        internal IntPtr GetVisibleLineForCaretPosition(long caretPosition)
-        {
-            return NativeControl.GetVisibleLineForCaretPosition(caretPosition);
-        }
-
-        /// <summary>
-        /// Gets the command processor associated with the control's buffer.
-        /// </summary>
-        internal IntPtr GetCommandProcessor()
-        {
-            return NativeControl.GetCommandProcessor();
-        }
-
-        /// <summary>
-        /// Sets up the caret for the given position and container, after a mouse click.
-        /// </summary>
-        internal bool SetCaretPositionAfterClick(
-            IntPtr container,
-            long position,
-            int hitTestFlags,
-            bool extendSelection = false)
-        {
-            return NativeControl.SetCaretPositionAfterClick(
-                container,
-                position,
-                hitTestFlags,
-                extendSelection);
-        }
-
-        /// <summary>
-        /// Gets the attributes at the given position.
-        /// </summary>
-        /// <remarks>
-        /// This function gets the uncombined style - that is, the attributes associated
-        /// with the paragraph or character content, and not necessarily the combined
-        /// attributes you see on the screen.
-        /// To get the combined attributes, use GetStyle().
-        /// If you specify (any) paragraph attribute in style's flags, this function
-        /// will fetch the paragraph attributes.
-        /// Otherwise, it will return the character attributes.
-        /// </remarks>
-        internal bool GetUncombinedStyle(long position, IntPtr style)
-        {
-            return NativeControl.GetUncombinedStyle(position, style);
-        } // wxRichTextAttr& style param to result
-
-        internal bool GetUncombinedStyle(long position, IntPtr style, IntPtr container)
-        {
-            return NativeControl.GetUncombinedStyle2(position, style, container);
-        } // wxRichTextAttr& style param to result
-
-        internal IntPtr GetStyleInContainer(long position, IntPtr container)
-        {
-            return NativeControl.GetStyleInContainer(position, container);
-        }
-
-        /// <summary>
-        /// Sets the attributes for a single object.
-        /// </summary>
-        internal void SetStyle(
-            IntPtr richObj,
-            IntPtr textAttr,
-            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
-        {
-            NativeControl.SetStyle2(richObj, textAttr, (int)flags);
-        }
-
-        internal IntPtr GetStyleForRange(long startRange, long endRange, IntPtr container)
-        {
-            return NativeControl.GetStyleForRange3(startRange, endRange, container);
-        }
-
-        /// <summary>
-        /// Sets the list attributes for the given range, passing flags to determine how
-        /// the attributes are set.
-        /// </summary>
-        /// <remarks>
-        /// <paramref name="flags"/> is a bit list of the following:
-        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will
-        /// be undoable.
-        /// <see cref="RichTextSetStyleFlags.Renumber"/>: specifies that numbering
-        /// should start from <paramref name="startFrom"/>, otherwise existing attributes are used.
-        /// <see cref="RichTextSetStyleFlags.SpecifyLevel"/>: specifies that
-        /// <paramref name="specifiedLevel"/> should be used
-        /// as the level for all paragraphs, otherwise the current indentation will be used.
-        /// </remarks>
-        internal bool SetListStyle(
-            long startRange,
-            long endRange,
-            IntPtr def,
-            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo,
-            int startFrom = 1,
-            int specifiedLevel = -1)
-        {
-            return NativeControl.SetListStyle(
-                startRange,
-                endRange,
-                def,
-                (int)flags,
-                startFrom,
-                specifiedLevel);
-        } // wxRichTextListStyleDefinition
-
-        /// <summary>
-        /// Numbers the paragraphs in the given range.
-        /// </summary>
-        /// <remarks>
-        /// <paramref name="flags"/> is a bit list of the following:
-        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will
-        /// be undoable.
-        /// <see cref="RichTextSetStyleFlags.Renumber"/>: specifies that numbering
-        /// should start from <paramref name="startFrom"/>, otherwise existing attributes are used.
-        /// <see cref="RichTextSetStyleFlags.SpecifyLevel"/>: specifies that
-        /// <paramref name="specifiedLevel"/> should be used
-        /// as the level for all paragraphs, otherwise the current indentation will be used.
-        /// </remarks>
-        internal bool NumberList(
-            long startRange,
-            long endRange,
-            IntPtr def = default,
-            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo,
-            int startFrom = 1,
-            int specifiedLevel = -1)
-        {
-            return NativeControl.NumberList(
-                startRange,
-                endRange,
-                def,
-                (int)flags,
-                startFrom,
-                specifiedLevel);
-        } // wxRichTextListStyleDefinition
-
-        /// <summary>
-        /// Promotes or demotes the paragraphs in the given range.
-        /// </summary>
-        /// <remarks>
-        /// A positive <paramref name="promoteBy"/> produces a smaller indent, and a negative number
-        /// produces a larger indent. Pass flags to determine how the attributes are set.
-        /// </remarks>
-        /// <remarks>
-        /// <paramref name="flags"/> is a bit list of the following:
-        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will
-        /// be undoable.
-        /// <see cref="RichTextSetStyleFlags.Renumber"/>: specifies that numbering
-        /// should start from start number, otherwise existing attributes are used.
-        /// <see cref="RichTextSetStyleFlags.SpecifyLevel"/>: specifies that
-        /// <paramref name="specifiedLevel"/> should be used
-        /// as the level for all paragraphs, otherwise the current indentation will be used.
-        /// </remarks>
-        internal bool PromoteList(
-            int promoteBy,
-            long startRange,
-            long endRange,
-            IntPtr def = default,
-            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo,
-            int specifiedLevel = -1)
-        {
-            return NativeControl.PromoteList(
-                promoteBy,
-                startRange,
-                endRange,
-                def,
-                (int)flags,
-                specifiedLevel);
-        } // wxRichTextListStyleDefinition
-
-        /// <summary>
-        /// Test if this whole range has character attributes of the specified kind.
-        /// </summary>
-        /// <remarks>
-        /// If any of the attributes are different within the range, the test fails.
-        /// You can use this to implement, for example, bold button updating.
-        /// Style must have flags indicating which attributes are of interest.
-        /// </remarks>
-        internal bool HasCharacterAttributes(long startRange, long endRange, ITextBoxRichAttr style)
-        {
-            if (style is TextBoxRichAttr s)
-                return NativeControl.HasCharacterAttributes(startRange, endRange, s.Handle);
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Returns the style sheet associated with the control, if any.
-        /// A style sheet allows named character and paragraph styles to be applied.
-        /// </summary>
-        internal IntPtr GetStyleSheet()
-        {
-            return NativeControl.GetStyleSheet();
-        }
-
-        /// <summary>
-        /// Write a text box at the current insertion point, returning the text box.
-        /// You can then call SetFocusObject() to set the focus to the new object.
-        /// </summary>
-        internal IntPtr WriteTextBox(IntPtr textAttr = default)
-        {
-            return NativeControl.WriteTextBox(textAttr);
-        }
-
-        /// <summary>
-        /// Sets the properties for the given range, passing flags to determine how the
-        /// attributes are set. You can merge properties or replace them.
-        /// </summary>
-        /// <remarks>
-        /// The end point of range is specified as the last character position of the span
-        /// of text, plus one. So, for example, to set the properties for a character at
-        /// position 5, use the range (5,6).
-        /// </remarks>
-        /// <remarks>
-        /// <paramref name="flags"/> may contain a bit list of the following values:
-        /// <see cref="RichTextSetStyleFlags.None"/>,
-        /// <see cref="RichTextSetStyleFlags.WithUndo"/>,
-        /// <see cref="RichTextSetStyleFlags.ParagraphsOnly"/>,
-        /// <see cref="RichTextSetStyleFlags.CharactersOnly"/>,
-        /// <see cref="RichTextSetStyleFlags.Reset"/>,
-        /// <see cref="RichTextSetStyleFlags.Remove"/>.
-        /// </remarks>
-        internal bool SetProperties(
-            long startRange,
-            long endRange,
-            IntPtr properties,
-            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
-        {
-            return NativeControl.SetProperties(
-                startRange,
-                endRange,
-                properties,
-                (int)flags);
-        }
-
-        /// <summary>
-        /// Returns the range of the current selection.
-        /// </summary>
-        /// <remarks>
-        /// The end point of range is specified as the last character position of the span
-        /// of text, plus one.
-        /// If the return values 'from' and 'to' are the same, there is no selection.
-        /// </remarks>
-        internal IntPtr GetSelection()
-        {
-            return NativeControl.GetSelection();
-        }
-
-        /// <summary>
-        /// Returns an object that stores information about context menu property item(s),
-        /// in order to communicate between the context menu event handler and the code
-        /// that responds to it.
-        /// </summary>
-        /// <remarks>
-        /// The result stores one
-        /// item for each object that could respond to a property-editing event. If
-        /// objects are nested, several might be editable.
-        /// </remarks>
-        internal IntPtr GetContextMenuPropertiesInfo()
-        {
-            return NativeControl.GetContextMenuPropertiesInfo();
-        }
-
-        internal void SetSelection(IntPtr sel)
-        {
-            NativeControl.SetSelection2(sel);
-        }
-
-        /// <summary>
-        /// Writes an image block at the current insertion point.
-        /// </summary>
-        internal bool WriteImage(IntPtr imageBlock, IntPtr textAttr = default)
-        {
-            return NativeControl.WriteImage3(imageBlock, textAttr);
-        }
-
-        /// <summary>
-        /// Writes a field at the current insertion point.
-        /// </summary>
-        /// <param name="fieldType">The field type, matching an existing field type definition.</param>
-        /// <param name="properties">Extra data for the field.</param>
-        /// <param name="textAttr">Optional attributes.</param>
-        /// <returns></returns>
-        internal IntPtr WriteField(
-            string fieldType,
-            IntPtr properties,
-            IntPtr textAttr = default)
-        {
-            return NativeControl.WriteField(
-                fieldType,
-                properties,
-                textAttr);
-        }
-
-        /// <summary>
-        /// Can we delete this range?
-        /// Sends an event to the control.
-        /// </summary>
-        internal bool CanDeleteRange(IntPtr container, long startRange, long endRange)
-        {
-            return NativeControl.CanDeleteRange(container, startRange, endRange);
-        }
-
-        /// <summary>
-        /// Can we insert content at this position?
-        /// Sends an event to the control.
-        /// </summary>
-        internal bool CanInsertContent(IntPtr container, long pos)
-        {
-            return NativeControl.CanInsertContent(container, pos);
-        }
-
-        /// <summary>
-        /// Returns the buffer associated with the control.
-        /// </summary>
-        internal IntPtr GetBuffer()
-        {
-            return NativeControl.GetBuffer();
-        }
-
-        /// <summary>
-        /// Gets the object's properties menu label.
-        /// </summary>
-        internal string GetPropertiesMenuLabel(IntPtr richObj)
-        {
-            return NativeControl.GetPropertiesMenuLabel(richObj);
-        }
-
-        /// <summary>
-        /// Gets the current filename associated with the control.
-        /// </summary>
-        internal string GetFileName()
-        {
-            return NativeControl.GetFilename();
-        }
-
-        /// <summary>
-        /// Sets the current filename.
-        /// </summary>
-        /// <param name="filename"></param>
-        internal void SetFileName(string filename)
-        {
-            NativeControl.SetFilename(filename);
-        }
-
-        /// <summary>
-        /// Sets the object that currently has the editing focus.
-        /// </summary>
-        internal bool SetFocusObject(IntPtr richObj, bool setCaretPosition = true)
-        {
-            return NativeControl.SetFocusObject(richObj, setCaretPosition);
-        }
+        public void SetFileName(string value) => Handler.SetFileName(value ?? string.Empty);
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return new RichTextBoxHandler();
+            return NativePlatform.Default.CreateRichTextBoxHandler(this);
         }
 
         /// <inheritdoc/>

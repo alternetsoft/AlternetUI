@@ -497,6 +497,11 @@ namespace Alternet.UI
             return new Font(fnt);
         }
 
+        public override IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)
+        {
+            return new RichTextBoxHandler();
+        }
+
         public override bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,

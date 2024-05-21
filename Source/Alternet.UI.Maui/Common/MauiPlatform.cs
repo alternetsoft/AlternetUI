@@ -514,5 +514,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

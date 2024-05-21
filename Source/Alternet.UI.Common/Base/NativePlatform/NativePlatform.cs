@@ -150,6 +150,8 @@ namespace Alternet.UI
 
         public abstract IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);
 
+        public abstract IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor);
+
         public abstract void ShowDeveloperTools();
 
         public abstract string GetLibraryVersionString();
