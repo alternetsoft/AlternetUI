@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -226,6 +227,31 @@ namespace Alternet.UI
                 (t) => Debug.WriteLine(t.Name));
         }
 
+        public static void UpdateEventsPropertyGrid(PropertyGrid eventGrid, Type? type)
+        {
+            eventGrid.DoInsideUpdate(() =>
+            {
+                eventGrid.Clear();
+                if (type == null)
+                    return;
+                var events = AssemblyUtils.EnumEvents(type, true);
+
+                foreach (var item in events)
+                {
+                    if (item.DeclaringType != type)
+                        continue;
+                    var isBinded = LogUtils.IsEventLogged(type, item);
+                    var prop = eventGrid.CreateBoolItem(item.Name, null, isBinded);
+                    prop.FlagsAndAttributes.Attr["InstanceType"] = type;
+                    prop.FlagsAndAttributes.Attr["EventInfo"] = item;
+                    prop.PropertyChanged += Event_PropertyChanged;
+                    eventGrid.Add(prop);
+                }
+
+                eventGrid.FitColumns();
+            });
+        }
+
         /// <summary>
         /// Logs <see cref="FontFamily.FamiliesNames"/>.
         /// </summary>
@@ -264,12 +290,23 @@ namespace Alternet.UI
                         return;
                     propGrid.AddConstItem("(type)", "(type)", instance.GetType().Name);
                     propGrid.AddProps(instance, null, true);
+                    propGrid.FitColumns();
                 });
             }
             finally
             {
                 insideSetProps = false;
             }
+        }
+
+        private static void Event_PropertyChanged(object? sender, EventArgs e)
+        {
+            if (sender is not IPropertyGridItem item)
+                return;
+            var type = item.FlagsAndAttributes.Attr.GetAttribute<Type?>("InstanceType");
+            var eventInfo = item.FlagsAndAttributes.Attr.GetAttribute<EventInfo?>("EventInfo");
+            var value = item.Owner.GetPropertyValueAsBool(item);
+            LogUtils.SetEventLogged(type, eventInfo, value);
         }
 
         private static void LogOSInformation()
@@ -310,7 +347,7 @@ namespace Alternet.UI
         {
             var item = TypesListBox.SelectedItem as ListControlItem;
             var type = item?.Value as Type;
-            EventLogManager.UpdateEventsPropertyGrid(propGrid, type);
+            UpdateEventsPropertyGrid(propGrid, type);
         }
 
         private void LogUsefulDefines()
