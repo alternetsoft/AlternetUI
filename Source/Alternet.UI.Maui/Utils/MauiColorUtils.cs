@@ -27,7 +27,7 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public static SKColor ToSkia(this Color color)
+        public static SKColor ToSkColor(this Color color)
         {
             if (color is null || !color.IsOk)
                 return NullColorSkia;

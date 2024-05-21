@@ -72,7 +72,18 @@ namespace Alternet.Drawing
         // Used in editor
         public override SizeD GetTextExtent(string text, Font font)
         {
-            return SizeD.Empty;
+            var skiaFont = font.ToSkFont();
+            using SKPaint paint = new(skiaFont);
+            SKRect textBounds = default;
+            paint.MeasureText(text, ref textBounds);
+            var width = textBounds.Width;
+            var height = textBounds.Height;
+
+            if (font.Style.HasFlag(FontStyle.Underline))
+            {
+            }
+
+            return (width, height);
         }
 
         public override void DrawText(
@@ -81,6 +92,12 @@ namespace Alternet.Drawing
             Brush brush,
             PointD origin)
         {
+            DrawText(
+                text,
+                origin,
+                font,
+                brush.BrushColor,
+                Color.Empty);
         }
 
         public override void DrawText(
@@ -97,7 +114,7 @@ namespace Alternet.Drawing
         public override void SetPixel(double x, double y, Color color)
         {
             using SKPaint paint = new();
-            paint.Color = color.ToSkia();
+            paint.Color = color.ToSkColor();
             canvas.DrawPoint((float)x, (float)y, paint);
         }
 
@@ -113,28 +130,32 @@ namespace Alternet.Drawing
             var locationX = (float)location.X;
             var locationY = (float)location.Y;
 
-            var skiaFont = font.ToSkia();
+            var skiaFont = font.ToSkFont();
 
             using SKPaint paint = new(skiaFont);
-            paint.Color = foreColor.ToSkia();
+            paint.Color = foreColor.ToSkColor();
             paint.Style = SKPaintStyle.Fill;
             paint.TextAlign = SKTextAlign.Left;
 
             SKRect textBounds = default;
             paint.MeasureText(text, ref textBounds);
-            textBounds.Offset(locationX, locationY);
+            var width = textBounds.Width;
+            var height = textBounds.Height;
+
+            SKRect textRect = SKRect.Create(width, height);
+            textRect.Offset(locationX, locationY);
 
             if (backColor.IsOk)
             {
-                var skiaBackColor = backColor.ToSkia();
+                var skiaBackColor = backColor.ToSkColor();
                 using SKPaint fillPaint = new();
                 fillPaint.Color = skiaBackColor;
                 fillPaint.Style = SKPaintStyle.Fill;
 
-                canvas.DrawRect(textBounds, fillPaint);
+                canvas.DrawRect(textRect, fillPaint);
             }
 
-            canvas.DrawText(text, locationX, locationY, paint);
+            canvas.DrawText(text, locationX - textBounds.Left, locationY - textBounds.Top, paint);
 
             if (font.Style.HasFlag(FontStyle.Underline))
             {
@@ -142,12 +163,12 @@ namespace Alternet.Drawing
 
             if (font.Style.HasFlag(FontStyle.Strikeout))
             {
-                float y = textBounds.Top + (textBounds.Height / 2);
-                SKPoint point1 = new(textBounds.Left, y);
-                SKPoint point2 = new(textBounds.Left + textBounds.Width, y);
+                float y = textRect.Top + (height / 2);
+                SKPoint point1 = new(textRect.Left, y);
+                SKPoint point2 = new(textRect.Left + width, y);
 
                 var thickness = paint.FontMetrics.StrikeoutThickness;
-                thickness ??= Math.Min(textBounds.Height / 5, 2);
+                thickness ??= Math.Min(height / 5, 2);
                 paint.StrokeWidth = thickness.Value;
                 canvas.DrawLine(point1, point2, paint);
             }

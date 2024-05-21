@@ -34,7 +34,7 @@ namespace Alternet.UI
             return (IFont)font.Handler;
         }
 
-        public static SKFont ToSkia(this Alternet.Drawing.Font font)
+        public static SKFont ToSkFont(this Alternet.Drawing.Font font)
         {
             var handler = (MauiFontHandler)font.Handler;
             if (handler.SkiaFont is not null)
