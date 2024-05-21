@@ -853,7 +853,7 @@ namespace Alternet.UI
                 e.Graphics,
                 ClientRectangle,
                 r,
-                GetInteriorBorderColor(),
+                GetInteriorBorderColor().AsBrush,
                 TabAlignment);
         }
 
@@ -901,7 +901,7 @@ namespace Alternet.UI
                 Header,
                 e.Graphics,
                 r,
-                GetInteriorBorderColor(),
+                GetInteriorBorderColor().AsBrush,
                 TabAlignment);
         }
 

@@ -87,7 +87,7 @@ namespace ControlsSample
 
                     var dc = WxGraphics.FromScreen();
 
-                    dc.FillRectangleI(Color.White, (rect.Location, (500, 400)));
+                    dc.FillRectangleI(Color.White.AsBrush, (rect.Location, (500, 400)));
 
                     dc.DrawRotatedTextI(
                         $"Display {index}",

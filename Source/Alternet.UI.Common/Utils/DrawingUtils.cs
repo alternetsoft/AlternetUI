@@ -403,13 +403,13 @@ namespace Alternet.UI
             var hasInnerBorder = innerColor != Color.Empty;
             if (hasOuterBorder)
             {
-                DrawingUtils.FillRectangleBorder(canvas, outerColor, result);
+                DrawingUtils.FillRectangleBorder(canvas, outerColor.AsBrush, result);
                 result.Deflate();
             }
 
             if (hasInnerBorder)
             {
-                DrawingUtils.FillRectangleBorder(canvas, innerColor, result);
+                DrawingUtils.FillRectangleBorder(canvas, innerColor.AsBrush, result);
                 result.Deflate();
             }
 

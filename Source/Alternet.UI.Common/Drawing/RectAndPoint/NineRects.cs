@@ -274,11 +274,11 @@ namespace Alternet.Drawing
             protected override void OnPaint(PaintEventArgs e)
             {
                 NineRects rects = new(e.ClipRectangle.ToRect(), PatchRect);
-                DrawingUtils.FillRectanglesBorder(e.Graphics, Color.Red, rects.Rects);
-                DrawingUtils.FillRectangleBorder(e.Graphics, Color.Navy, PatchRect);
+                DrawingUtils.FillRectanglesBorder(e.Graphics, Color.Red.AsBrush, rects.Rects);
+                DrawingUtils.FillRectangleBorder(e.Graphics, Color.Navy.AsBrush, PatchRect);
                 DrawingUtils.FillRectangleBorder(
                     e.Graphics,
-                    Color.Green,
+                    Color.Green.AsBrush,
                     rects.GetRect(SelectedHorz, SelectedVert));
             }
         }

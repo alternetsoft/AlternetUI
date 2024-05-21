@@ -427,7 +427,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='Color'/> to a <see cref='Brush'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Brush(Color color) => color.AsBrush;
+        public static explicit operator Brush(Color color) => color.AsBrush;
 
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='Pen'/>.
@@ -436,7 +436,7 @@ namespace Alternet.Drawing
         /// Pen width is set to 1 dip (1/96 inch).
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Pen(Color color) => color.AsPen;
+        public static explicit operator Pen(Color color) => color.AsPen;
 
         /// <summary>
         /// Converts the specified <see cref='System.Drawing.Color'/> to a <see cref='Color'/>.

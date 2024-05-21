@@ -537,7 +537,7 @@ namespace Alternet.UI
                 e.Graphics.DrawText(
                     s,
                     font,
-                    color,
+                    color.AsBrush,
                     (e.ClipRectangle.X + 2, e.ClipRectangle.Y));
             }
         }
