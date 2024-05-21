@@ -96,6 +96,9 @@ namespace Alternet.Drawing
         // Used in editor
         public override void SetPixel(double x, double y, Color color)
         {
+            using SKPaint paint = new();
+            paint.Color = color.ToSkia();
+            canvas.DrawPoint((float)x, (float)y, paint);
         }
 
         /// <inheritdoc/>
@@ -112,7 +115,7 @@ namespace Alternet.Drawing
 
             var skiaFont = font.ToSkia();
 
-            SKPaint paint = new(skiaFont);
+            using SKPaint paint = new(skiaFont);
             paint.Color = foreColor.ToSkia();
             paint.Style = SKPaintStyle.Fill;
             paint.TextAlign = SKTextAlign.Left;
@@ -128,12 +131,26 @@ namespace Alternet.Drawing
                 fillPaint.Color = skiaBackColor;
                 fillPaint.Style = SKPaintStyle.Fill;
 
-                canvas.DrawRect(
-                    new(locationX, locationY, textBounds.Width, textBounds.Height),
-                    fillPaint);
+                canvas.DrawRect(textBounds, fillPaint);
             }
 
-            canvas.DrawText(text, locationX - textBounds.Left, locationY - textBounds.Top, paint);
+            canvas.DrawText(text, locationX, locationY, paint);
+
+            if (font.Style.HasFlag(FontStyle.Underline))
+            {
+            }
+
+            if (font.Style.HasFlag(FontStyle.Strikeout))
+            {
+                float y = textBounds.Top + (textBounds.Height / 2);
+                SKPoint point1 = new(textBounds.Left, y);
+                SKPoint point2 = new(textBounds.Left + textBounds.Width, y);
+
+                var thickness = paint.FontMetrics.StrikeoutThickness;
+                thickness ??= Math.Min(textBounds.Height / 5, 2);
+                paint.StrokeWidth = thickness.Value;
+                canvas.DrawLine(point1, point2, paint);
+            }
         }
 
         /// <inheritdoc/>
