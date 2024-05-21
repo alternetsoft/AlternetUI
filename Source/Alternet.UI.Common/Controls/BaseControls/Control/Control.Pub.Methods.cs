@@ -198,7 +198,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If <paramref name="newIndex"/> = -1, moves to the end of the collection.
         /// </remarks>
-        public void SetChildIndex(Control child, int newIndex)
+        public virtual void SetChildIndex(Control child, int newIndex)
         {
             Children.SetItemIndex(child, newIndex);
             PerformLayout(false);
@@ -328,7 +328,7 @@ namespace Alternet.UI
         /// This method is useful, for example, when you need to get
         /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
         /// </remarks>
-        public IEnumerable<T> ChildrenOfType<T>()
+        public virtual IEnumerable<T> ChildrenOfType<T>()
         {
             if (HasChildren)
                 return Children.OfType<T>();
@@ -345,7 +345,7 @@ namespace Alternet.UI
         /// given method. This can be <c>null</c> if no arguments are needed.</param>
         /// <returns>An <see cref="IAsyncResult"/> that represents the result
         /// of the operation.</returns>
-        public IAsyncResult BeginInvoke(Delegate method, object?[] args)
+        public virtual IAsyncResult BeginInvoke(Delegate method, object?[] args)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
@@ -967,7 +967,7 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
-        public void SuspendLayout()
+        public virtual void SuspendLayout()
         {
             layoutSuspendCount++;
         }
@@ -1167,7 +1167,7 @@ namespace Alternet.UI
         /// Gets child with the specified id.
         /// </summary>
         /// <param name="id">Child control id.</param>
-        public Control? FindChild(ObjectUniqueId? id)
+        public virtual Control? FindChild(ObjectUniqueId? id)
         {
             if (id is null)
                 return null;
@@ -1180,17 +1180,17 @@ namespace Alternet.UI
             return null;
         }
 
-        public void RaiseMouseWheel(MouseEventArgs e)
+        public virtual void RaiseMouseWheel(MouseEventArgs e)
         {
             OnMouseWheel(e);
         }
 
-        public void RaiseMouseDoubleClick(MouseEventArgs e)
+        public virtual void RaiseMouseDoubleClick(MouseEventArgs e)
         {
             OnMouseDoubleClick(e);
         }
 
-        public void RaiseKeyDown(KeyEventArgs e)
+        public virtual void RaiseKeyDown(KeyEventArgs e)
         {
             var control = this;
             var form = ParentWindow;
@@ -1223,7 +1223,7 @@ namespace Alternet.UI
             return Handler.GetHandle();
         }
 
-        public void RaiseKeyUp(KeyEventArgs e)
+        public virtual void RaiseKeyUp(KeyEventArgs e)
         {
             var control = this;
             var form = ParentWindow;
@@ -1247,7 +1247,7 @@ namespace Alternet.UI
             }
         }
 
-        public void RaiseKeyPress(KeyPressEventArgs e)
+        public virtual void RaiseKeyPress(KeyPressEventArgs e)
         {
             var control = this;
             var form = ParentWindow;
@@ -1270,12 +1270,12 @@ namespace Alternet.UI
             }
         }
 
-        public void RaiseMouseMove(MouseEventArgs e)
+        public virtual void RaiseMouseMove(MouseEventArgs e)
         {
             OnMouseMove(e);
         }
 
-        public void RaiseMouseUp(MouseEventArgs e)
+        public virtual void RaiseMouseUp(MouseEventArgs e)
         {
             OnMouseUp(e);
 
@@ -1289,7 +1289,7 @@ namespace Alternet.UI
             }
         }
 
-        public void RaiseMouseDown(MouseEventArgs e)
+        public virtual void RaiseMouseDown(MouseEventArgs e)
         {
             OnMouseDown(e);
 
@@ -1716,20 +1716,6 @@ namespace Alternet.UI
         public virtual SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
-        /// Call this function to force one or both scrollbars to be always shown, even if
-        /// the control is big enough to show its entire contents without scrolling.
-        /// </summary>
-        /// <param name="hflag">Whether the horizontal scroll bar should always be visible.</param>
-        /// <param name="vflag">Whether the vertical scroll bar should always be visible.</param>
-        /// <remarks>
-        /// This function is currently only implemented under Mac/Carbon.
-        /// </remarks>
-        public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
-        {
-            Handler.AlwaysShowScrollbars(hflag, vflag);
-        }
-
-        /// <summary>
         /// Performs some action for the each child of the control.
         /// </summary>
         /// <typeparam name="T">Specifies type of the child control.</typeparam>
@@ -1798,7 +1784,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public int PixelFromDip(double value)
+        public virtual int PixelFromDip(double value)
         {
             return Handler.PixelFromDip(value);
         }
@@ -1900,7 +1886,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Image.</param>
         /// <param name="state">Control state.</param>
-        public void SetImage(Image? value, GenericControlState state = GenericControlState.Normal)
+        public virtual void SetImage(
+            Image? value,
+            GenericControlState state = GenericControlState.Normal)
         {
             StateObjects ??= new();
             StateObjects.Images ??= new();
@@ -1912,7 +1900,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Background brush.</param>
         /// <param name="state">Control state.</param>
-        public void SetBackground(Brush? value, GenericControlState state = GenericControlState.Normal)
+        public virtual void SetBackground(
+            Brush? value,
+            GenericControlState state = GenericControlState.Normal)
         {
             StateObjects ??= new();
             StateObjects.Backgrounds ??= new();
@@ -1924,7 +1914,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Border settings.</param>
         /// <param name="state">Control state.</param>
-        public void SetBorder(BorderSettings? value, GenericControlState state = GenericControlState.Normal)
+        public virtual void SetBorder(
+            BorderSettings? value,
+            GenericControlState state = GenericControlState.Normal)
         {
             StateObjects ??= new();
             StateObjects.Borders ??= new();
@@ -1983,7 +1975,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
-        public double PixelToDip(int value)
+        public virtual double PixelToDip(int value)
         {
             return Handler.PixelToDip(value);
         }
@@ -1993,7 +1985,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public double PixelFromDipF(double value)
+        public virtual double PixelFromDipF(double value)
         {
             return Handler.PixelFromDipF(value);
         }
@@ -2013,54 +2005,6 @@ namespace Alternet.UI
                 return;
             var rect = region.GetBounds();
             Invalidate(rect);
-        }
-
-        /// <summary>
-        /// Sets system scrollbar properties.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <param name="visible">Is scrollbar visible or not.</param>
-        /// <param name="value">Thumb position.</param>
-        /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
-        /// <param name="maximum">Scrollbar Range.</param>
-        public virtual void SetScrollBar(
-            bool isVertical,
-            bool visible,
-            int value,
-            int largeChange,
-            int maximum)
-        {
-            Handler.SetScrollBar(this, isVertical, visible, value, largeChange, maximum);
-        }
-
-        /// <summary>
-        /// Gets whether system scrollbar is visible.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual bool IsScrollBarVisible(bool isVertical)
-        {
-            return Handler.IsScrollBarVisible(isVertical);
-        }
-
-        /// <summary>
-        /// Gets system scrollbar thumb position.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual int GetScrollBarValue(bool isVertical)
-        {
-            return Handler.GetScrollBarValue(isVertical);
-        }
-
-        /// <summary>
-        /// Gets system scrollbar large change value.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual int GetScrollBarLargeChange(bool isVertical)
-        {
-            return Handler.GetScrollBarLargeChange(isVertical);
         }
 
         /// <summary>
@@ -2093,84 +2037,72 @@ namespace Alternet.UI
             return Handler.GetDefaultAttributesFont();
         }
 
-        /// <summary>
-        /// Gets system scrollbar max range.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual int GetScrollBarMaximum(bool isVertical)
-        {
-            return Handler.GetScrollBarMaximum(isVertical);
-        }
-
-        public void RaiseNativeSizeChanged()
+        public virtual void RaiseNativeSizeChanged()
         {
             OnNativeSizeChanged(EventArgs.Empty);
         }
 
-        public void RaiseDeactivated()
+        public virtual void RaiseDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseHandleCreated()
+        public virtual void RaiseHandleCreated()
         {
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseHandleDestroyed()
+        public virtual void RaiseHandleDestroyed()
         {
             OnHandleDestroyed(EventArgs.Empty);
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseMouseCaptureLost()
+        public virtual void RaiseMouseCaptureLost()
         {
             OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
+        public virtual void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
 
-        public void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
+        public virtual void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
 
-        public void RaiseScroll(ScrollEventArgs e) => OnScroll(e);
-
-        public void RaiseMouseEnter()
+        public virtual void RaiseMouseEnter()
         {
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseCurrentStateChanged()
+        public virtual void RaiseCurrentStateChanged()
         {
             OnCurrentStateChanged(EventArgs.Empty);
             CurrentStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseIsMouseOverChanged()
+        public virtual void RaiseIsMouseOverChanged()
         {
             OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
             RaiseCurrentStateChanged();
         }
 
-        public void RaiseMouseLeave()
+        public virtual void RaiseMouseLeave()
         {
             RaiseIsMouseOverChanged();
             OnMouseLeave(EventArgs.Empty);
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseChildInserted(Control childControl)
+        public virtual void RaiseChildInserted(Control childControl)
         {
             OnChildInserted(childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
         }
 
-        public void RaiseChildRemoved(Control childControl)
+        public virtual void RaiseChildRemoved(Control childControl)
         {
             OnChildInserted(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
@@ -2182,19 +2114,19 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        public void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
+        public virtual void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
 
-        public void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
+        public virtual void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
 
-        public void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
+        public virtual void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
 
-        public void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
+        public virtual void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
 
-        public void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
+        public virtual void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
 
-        public void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
+        public virtual void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
 
-        public void ReportBoundsChanged()
+        public virtual void ReportBoundsChanged()
         {
             var newBounds = Bounds;
 
@@ -2213,7 +2145,7 @@ namespace Alternet.UI
                 PerformLayout(true);
         }
 
-        public void RaiseGotFocus()
+        public virtual void RaiseGotFocus()
         {
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
@@ -2221,14 +2153,14 @@ namespace Alternet.UI
             RaiseCurrentStateChanged();
         }
 
-        public void RaiseLostFocus()
+        public virtual void RaiseLostFocus()
         {
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseCurrentStateChanged();
         }
 
-        public void RaiseActivated()
+        public virtual void RaiseActivated()
         {
             Activated?.Invoke(this, EventArgs.Empty);
         }
@@ -2241,28 +2173,6 @@ namespace Alternet.UI
             using var dc = Handler.OpenPaintDrawingContext();
 
             RaisePaint(new PaintEventArgs(dc, ClientRectangle));
-        }
-
-        public virtual void OnNativeControlHorizontalScrollBarValueChanged()
-        {
-            var args = new ScrollEventArgs
-            {
-                ScrollOrientation = ScrollOrientation.HorizontalScroll,
-                NewValue = Handler.GetScrollBarEvtPosition(),
-                Type = Handler.GetScrollBarEvtKind(),
-            };
-            RaiseScroll(args);
-        }
-
-        public virtual void OnNativeControlVerticalScrollBarValueChanged()
-        {
-            var args = new ScrollEventArgs
-            {
-                ScrollOrientation = ScrollOrientation.VerticalScroll,
-                NewValue = Handler.GetScrollBarEvtPosition(),
-                Type = Handler.GetScrollBarEvtKind(),
-            };
-            RaiseScroll(args);
         }
 
         /// <summary>

@@ -113,12 +113,6 @@ namespace Alternet.UI
         public static event EventHandler<DefaultLayoutEventArgs>? GlobalOnLayout;
 
         /// <summary>
-        /// Occurs when the user scrolls through the control contents using scrollbars.
-        /// </summary>
-        [Category("Action")]
-        public event ScrollEventHandler? Scroll;
-
-        /// <summary>
         /// Occurs when cell settings are changed.
         /// </summary>
         /// <remarks>
@@ -705,17 +699,6 @@ namespace Alternet.UI
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// Gets or sets whether controls is scrollable.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsScrollable
-        {
-            get => Handler.IsScrollable;
-
-            set => Handler.IsScrollable = value;
         }
 
         /// <summary>
@@ -2817,22 +2800,6 @@ namespace Alternet.UI
             {
                 var modifiers = Keyboard.Modifiers;
                 return modifiers.ToKeys();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether scroll events are binded and recveived in the control.
-        /// </summary>
-        protected virtual bool BindScrollEvents
-        {
-            get
-            {
-                return Handler.BindScrollEvents;
-            }
-
-            set
-            {
-                Handler.BindScrollEvents = value;
             }
         }
 
