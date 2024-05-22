@@ -8,10 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Contains common methods and properties for all property grid controls.
-    /// </summary>
-    public class BasePropertyGrid : Control
+    public partial class PropertyGrid : Control
     {
         public static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
             TypeRegistry = new();
@@ -47,7 +44,7 @@ namespace Alternet.UI
             string propName,
             bool value = true)
         {
-            var typeRegistry = BasePropertyGrid.GetTypeRegistry(type);
+            var typeRegistry = PropertyGrid.GetTypeRegistry(type);
             var propRegistry = typeRegistry.GetPropRegistry(propName);
             propRegistry.NewItemParams.HasEllipsis = value;
             return propRegistry;

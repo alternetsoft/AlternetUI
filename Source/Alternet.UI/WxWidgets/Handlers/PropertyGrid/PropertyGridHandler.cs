@@ -367,259 +367,6 @@ namespace Alternet.UI
             return Native.PropertyGrid.IsSmallScreen();
         }
 
-        internal static Color SetColorKind(Color value, uint kind)
-        {
-            Color Fn()
-            {
-                const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
-
-                if (kind == PG_COLOUR_CUSTOM)
-                    return value;
-                else
-                {
-                    KnownColor knownColor = WxColorUtils.Convert((SystemSettingsColor)kind);
-                    if (knownColor == 0)
-                        return value;
-                    Color result = Color.FromKnownColor(knownColor);
-                    return result;
-                }
-            }
-
-            var result = Fn();
-            if (result.IsKnownColor)
-                return result;
-            if (!result.IsOpaque)
-                return result;
-            var knownResult = KnownColorTable.ArgbToKnownColor(result.AsUInt());
-            return knownResult;
-        }
-
-        internal static uint GetColorKind(Color value)
-        {
-            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
-            uint kind = PG_COLOUR_CUSTOM;
-
-            if (value.IsKnownColor)
-            {
-                KnownColor knownColor = value.ToKnownColor();
-                SystemSettingsColor converted = WxColorUtils.Convert(knownColor);
-                if (converted != SystemSettingsColor.Max)
-                    kind = (uint)converted;
-            }
-
-            return kind;
-        }
-
-        internal static void KnownColorsClear()
-        {
-            Native.PropertyGrid.KnownColorsClear();
-        }
-
-        internal static void KnownColorsAdd()
-        {
-            if (BasePropertyGrid.StaticFlags.HasFlag(BasePropertyGrid.StaticStateFlags.KnownColorsAdded))
-                return;
-            BasePropertyGrid.StaticFlags |= BasePropertyGrid.StaticStateFlags.KnownColorsAdded;
-
-            var items = ColorUtils.GetColorInfos();
-
-            KnownColorsClear();
-
-            foreach (var item in items)
-            {
-                if (!item.Visible)
-                    continue;
-                KnownColorsAdd(
-                            item.Label,
-                            item.LabelLocalized,
-                            item.Value,
-                            item.KnownColor);
-            }
-
-            KnownColorsApply();
-        }
-
-        internal static void KnownColorsAdd(
-            string name,
-            string title,
-            Color value,
-            KnownColor knownColor)
-        {
-            Native.PropertyGrid.KnownColorsAdd(name, title, value, (int)knownColor);
-        }
-
-        internal static void KnownColorsApply()
-        {
-            Native.PropertyGrid.KnownColorsApply();
-        }
-
-        internal static IntPtr GetEditorByName(string editorName)
-        {
-            return Native.PropertyGrid.GetEditorByName(editorName);
-        }
-
-        internal override Native.Control CreateNativeControl()
-        {
-            return new NativePropertyGrid(PropertyGrid.DefaultCreateStyle);
-        }
-
-        internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
-        {
-            return NativeControl.GetPropertyValidator(ItemToPtr(prop));
-        }
-
-        internal bool CommitChangesFromEditor()
-        {
-            return NativeControl.CommitChangesFromEditor(0);
-        }
-
-        internal IntPtr GetPropertyImage(IPropertyGridItem prop)
-        {
-            return NativeControl.GetPropertyImage(ItemToPtr(prop));
-        }
-
-        internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
-        {
-            NativeControl.SetPropertyEditor(ItemToPtr(prop), editor);
-        }
-
-        internal IntPtr ItemToPtr(IPropertyGridItem? prop)
-        {
-            if (prop is null)
-                return default;
-            var handle = ((WxPropertyGridItemHandle)prop.Handle).Handle;
-            return handle;
-        }
-
-        internal void DeleteProperty(IPropertyGridItem prop)
-        {
-            NativeControl.DeleteProperty(ItemToPtr(prop));
-        }
-
-        internal void SetupTextCtrlValue(string text)
-        {
-            NativeControl.SetupTextCtrlValue(text);
-        }
-
-        internal void EndAddChildren(IPropertyGridItem prop)
-        {
-            NativeControl.EndAddChildren(ItemToPtr(prop));
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-            NativeControl.ButtonClick = null;
-            NativeControl.Selected = null;
-            NativeControl.Changed = null;
-            NativeControl.Changing -= NativeControl_Changing;
-            NativeControl.Highlighted = null;
-            NativeControl.RightClick = null;
-            NativeControl.DoubleClick = null;
-            NativeControl.ItemCollapsed = null;
-            NativeControl.ItemExpanded = null;
-            NativeControl.LabelEditBegin -= NativeControl_LabelEditBegin;
-            NativeControl.LabelEditEnding -= NativeControl_LabelEditEnding;
-            NativeControl.ColBeginDrag -= NativeControl_ColBeginDrag;
-            NativeControl.ColDragging = null;
-            NativeControl.ColEndDrag = null;
-        }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-
-            NativeControl.ButtonClick += NativeControl_ButtonClick;
-            NativeControl.Selected += NativeControl_Selected;
-            NativeControl.Changed += NativeControl_Changed;
-            NativeControl.Changing += NativeControl_Changing;
-            NativeControl.Highlighted += NativeControl_Highlighted;
-            NativeControl.RightClick += NativeControl_RightClick;
-            NativeControl.DoubleClick += NativeControl_DoubleClick;
-            NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
-            NativeControl.ItemExpanded += NativeControl_ItemExpanded;
-            NativeControl.LabelEditBegin += NativeControl_LabelEditBegin;
-            NativeControl.LabelEditEnding += NativeControl_LabelEditEnding;
-            NativeControl.ColBeginDrag += NativeControl_ColBeginDrag;
-            NativeControl.ColDragging += NativeControl_ColDragging;
-            NativeControl.ColEndDrag += NativeControl_ColEndDrag;
-        }
-
-        private void NativeControl_ButtonClick()
-        {
-            Control.RaiseButtonClick(EventArgs.Empty);
-        }
-
-        private void NativeControl_ColEndDrag()
-        {
-            Control.RaiseColEndDrag(EventArgs.Empty);
-        }
-
-        private void NativeControl_ColDragging()
-        {
-            Control.RaiseColDragging(EventArgs.Empty);
-        }
-
-        private void NativeControl_ColBeginDrag(object? sender, CancelEventArgs e)
-        {
-            Control.RaiseColBeginDrag(e);
-        }
-
-        private void NativeControl_LabelEditEnding(object? sender, CancelEventArgs e)
-        {
-            Control.RaiseLabelEditEnding(e);
-        }
-
-        private void NativeControl_LabelEditBegin(object? sender, CancelEventArgs e)
-        {
-            Control.RaiseLabelEditBegin(e);
-        }
-
-        private void NativeControl_ItemExpanded()
-        {
-            Control.RaiseItemExpanded(EventArgs.Empty);
-        }
-
-        private void NativeControl_ItemCollapsed()
-        {
-            Control.RaiseItemCollapsed(EventArgs.Empty);
-        }
-
-        private void NativeControl_DoubleClick()
-        {
-            Control.RaisePropertyDoubleClick(EventArgs.Empty);
-        }
-
-        private void NativeControl_RightClick()
-        {
-            Control.RaisePropertyRightClick(EventArgs.Empty);
-        }
-
-        private void NativeControl_Highlighted()
-        {
-            Control.RaisePropertyHighlighted(EventArgs.Empty);
-        }
-
-        private void NativeControl_Changing(object? sender, CancelEventArgs e)
-        {
-            Control.RaisePropertyChanging(e);
-        }
-
-        private void NativeControl_Changed()
-        {
-            Control.RaisePropertyChanged(EventArgs.Empty);
-        }
-
-        private IPropertyGridItem? PtrToItem(IntPtr ptr)
-        {
-            return Control.HandleToItem(new WxPropertyGridItemHandle(ptr));
-        }
-
-        private void NativeControl_Selected()
-        {
-            Control.RaisePropertySelected(EventArgs.Empty);
-        }
-
         void IPropertyGridHandler.RefreshProperty(IPropertyGridItem p)
         {
             NativeControl.RefreshProperty(ItemToPtr(p));
@@ -1417,6 +1164,259 @@ namespace Alternet.UI
         Color IPropertyGridHandler.GetSelectionForegroundColor()
         {
             return NativeControl.GetSelectionForegroundColor();
+        }
+
+        internal static Color SetColorKind(Color value, uint kind)
+        {
+            Color Fn()
+            {
+                const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
+
+                if (kind == PG_COLOUR_CUSTOM)
+                    return value;
+                else
+                {
+                    KnownColor knownColor = WxColorUtils.Convert((SystemSettingsColor)kind);
+                    if (knownColor == 0)
+                        return value;
+                    Color result = Color.FromKnownColor(knownColor);
+                    return result;
+                }
+            }
+
+            var result = Fn();
+            if (result.IsKnownColor)
+                return result;
+            if (!result.IsOpaque)
+                return result;
+            var knownResult = KnownColorTable.ArgbToKnownColor(result.AsUInt());
+            return knownResult;
+        }
+
+        internal static uint GetColorKind(Color value)
+        {
+            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
+            uint kind = PG_COLOUR_CUSTOM;
+
+            if (value.IsKnownColor)
+            {
+                KnownColor knownColor = value.ToKnownColor();
+                SystemSettingsColor converted = WxColorUtils.Convert(knownColor);
+                if (converted != SystemSettingsColor.Max)
+                    kind = (uint)converted;
+            }
+
+            return kind;
+        }
+
+        internal static void KnownColorsClear()
+        {
+            Native.PropertyGrid.KnownColorsClear();
+        }
+
+        internal static void KnownColorsAdd()
+        {
+            if (PropertyGrid.StaticFlags.HasFlag(PropertyGrid.StaticStateFlags.KnownColorsAdded))
+                return;
+            PropertyGrid.StaticFlags |= PropertyGrid.StaticStateFlags.KnownColorsAdded;
+
+            var items = ColorUtils.GetColorInfos();
+
+            KnownColorsClear();
+
+            foreach (var item in items)
+            {
+                if (!item.Visible)
+                    continue;
+                KnownColorsAdd(
+                            item.Label,
+                            item.LabelLocalized,
+                            item.Value,
+                            item.KnownColor);
+            }
+
+            KnownColorsApply();
+        }
+
+        internal static void KnownColorsAdd(
+            string name,
+            string title,
+            Color value,
+            KnownColor knownColor)
+        {
+            Native.PropertyGrid.KnownColorsAdd(name, title, value, (int)knownColor);
+        }
+
+        internal static void KnownColorsApply()
+        {
+            Native.PropertyGrid.KnownColorsApply();
+        }
+
+        internal static IntPtr GetEditorByName(string editorName)
+        {
+            return Native.PropertyGrid.GetEditorByName(editorName);
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new NativePropertyGrid(PropertyGrid.DefaultCreateStyle);
+        }
+
+        internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValidator(ItemToPtr(prop));
+        }
+
+        internal bool CommitChangesFromEditor()
+        {
+            return NativeControl.CommitChangesFromEditor(0);
+        }
+
+        internal IntPtr GetPropertyImage(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyImage(ItemToPtr(prop));
+        }
+
+        internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
+        {
+            NativeControl.SetPropertyEditor(ItemToPtr(prop), editor);
+        }
+
+        internal IntPtr ItemToPtr(IPropertyGridItem? prop)
+        {
+            if (prop is null)
+                return default;
+            var handle = ((WxPropertyGridItemHandle)prop.Handle).Handle;
+            return handle;
+        }
+
+        internal void DeleteProperty(IPropertyGridItem prop)
+        {
+            NativeControl.DeleteProperty(ItemToPtr(prop));
+        }
+
+        internal void SetupTextCtrlValue(string text)
+        {
+            NativeControl.SetupTextCtrlValue(text);
+        }
+
+        internal void EndAddChildren(IPropertyGridItem prop)
+        {
+            NativeControl.EndAddChildren(ItemToPtr(prop));
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+            NativeControl.ButtonClick = null;
+            NativeControl.Selected = null;
+            NativeControl.Changed = null;
+            NativeControl.Changing -= NativeControl_Changing;
+            NativeControl.Highlighted = null;
+            NativeControl.RightClick = null;
+            NativeControl.DoubleClick = null;
+            NativeControl.ItemCollapsed = null;
+            NativeControl.ItemExpanded = null;
+            NativeControl.LabelEditBegin -= NativeControl_LabelEditBegin;
+            NativeControl.LabelEditEnding -= NativeControl_LabelEditEnding;
+            NativeControl.ColBeginDrag -= NativeControl_ColBeginDrag;
+            NativeControl.ColDragging = null;
+            NativeControl.ColEndDrag = null;
+        }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            NativeControl.ButtonClick += NativeControl_ButtonClick;
+            NativeControl.Selected += NativeControl_Selected;
+            NativeControl.Changed += NativeControl_Changed;
+            NativeControl.Changing += NativeControl_Changing;
+            NativeControl.Highlighted += NativeControl_Highlighted;
+            NativeControl.RightClick += NativeControl_RightClick;
+            NativeControl.DoubleClick += NativeControl_DoubleClick;
+            NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
+            NativeControl.ItemExpanded += NativeControl_ItemExpanded;
+            NativeControl.LabelEditBegin += NativeControl_LabelEditBegin;
+            NativeControl.LabelEditEnding += NativeControl_LabelEditEnding;
+            NativeControl.ColBeginDrag += NativeControl_ColBeginDrag;
+            NativeControl.ColDragging += NativeControl_ColDragging;
+            NativeControl.ColEndDrag += NativeControl_ColEndDrag;
+        }
+
+        private void NativeControl_ButtonClick()
+        {
+            Control.RaiseButtonClick(EventArgs.Empty);
+        }
+
+        private void NativeControl_ColEndDrag()
+        {
+            Control.RaiseColEndDrag(EventArgs.Empty);
+        }
+
+        private void NativeControl_ColDragging()
+        {
+            Control.RaiseColDragging(EventArgs.Empty);
+        }
+
+        private void NativeControl_ColBeginDrag(object? sender, CancelEventArgs e)
+        {
+            Control.RaiseColBeginDrag(e);
+        }
+
+        private void NativeControl_LabelEditEnding(object? sender, CancelEventArgs e)
+        {
+            Control.RaiseLabelEditEnding(e);
+        }
+
+        private void NativeControl_LabelEditBegin(object? sender, CancelEventArgs e)
+        {
+            Control.RaiseLabelEditBegin(e);
+        }
+
+        private void NativeControl_ItemExpanded()
+        {
+            Control.RaiseItemExpanded(EventArgs.Empty);
+        }
+
+        private void NativeControl_ItemCollapsed()
+        {
+            Control.RaiseItemCollapsed(EventArgs.Empty);
+        }
+
+        private void NativeControl_DoubleClick()
+        {
+            Control.RaisePropertyDoubleClick(EventArgs.Empty);
+        }
+
+        private void NativeControl_RightClick()
+        {
+            Control.RaisePropertyRightClick(EventArgs.Empty);
+        }
+
+        private void NativeControl_Highlighted()
+        {
+            Control.RaisePropertyHighlighted(EventArgs.Empty);
+        }
+
+        private void NativeControl_Changing(object? sender, CancelEventArgs e)
+        {
+            Control.RaisePropertyChanging(e);
+        }
+
+        private void NativeControl_Changed()
+        {
+            Control.RaisePropertyChanged(EventArgs.Empty);
+        }
+
+        private IPropertyGridItem? PtrToItem(IntPtr ptr)
+        {
+            return Control.HandleToItem(new WxPropertyGridItemHandle(ptr));
+        }
+
+        private void NativeControl_Selected()
+        {
+            Control.RaisePropertySelected(EventArgs.Empty);
         }
 
         public class WxPropertyGridItemHandle : PropertyGridItemHandle

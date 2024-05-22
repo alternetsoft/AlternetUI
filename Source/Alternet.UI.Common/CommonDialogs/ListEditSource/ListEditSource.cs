@@ -76,7 +76,7 @@ namespace Alternet.UI
         {
             if (propInfo == null)
                 return null;
-            var editType = BasePropertyGrid.GetListEditSourceType(instance?.GetType(), propInfo);
+            var editType = PropertyGrid.GetListEditSourceType(instance?.GetType(), propInfo);
             if (editType == null)
                 return null;
 

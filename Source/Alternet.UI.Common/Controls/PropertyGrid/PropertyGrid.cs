@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// arbitrary per-property attributes.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class PropertyGrid : BasePropertyGrid, IPropertyGrid
+    public partial class PropertyGrid : Control, IPropertyGrid
     {
         internal const string PropEditClassCheckBox = "CheckBox";
         internal const string PropEditClassChoice = "Choice";

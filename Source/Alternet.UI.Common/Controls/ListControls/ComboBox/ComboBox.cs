@@ -447,7 +447,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void BindEnumProp(object instance, string propName)
         {
-            var choices = BasePropertyGrid.GetPropChoices(instance, propName);
+            var choices = PropertyGrid.GetPropChoices(instance, propName);
             if (choices is null)
                 return;
             IsEditable = false;

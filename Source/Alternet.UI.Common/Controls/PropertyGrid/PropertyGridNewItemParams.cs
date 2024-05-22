@@ -11,7 +11,7 @@ namespace Alternet.UI
     public class PropertyGridNewItemParams : IPropertyGridNewItemParams
     {
         public static readonly IPropertyGridNewItemParams Default =
-            BasePropertyGrid.CreateNewItemParams(null!);
+            PropertyGrid.CreateNewItemParams(null!);
 
         private readonly IPropertyGridPropInfoRegistry? owner;
         private PropertyInfo? propInfo;
@@ -354,7 +354,7 @@ namespace Alternet.UI
                     return registry.HasNewItemParams && func(registry) is not null;
                 }
 
-                var pr = BasePropertyGrid.GetValidBasePropRegistry(
+                var pr = PropertyGrid.GetValidBasePropRegistry(
                             OwnerInstanceType,
                             PropInfo,
                             ValidatorFunc);
