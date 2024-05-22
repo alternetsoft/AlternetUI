@@ -18,16 +18,18 @@ namespace Alternet.UI
                 .Scaled(3).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
 
             dc.DrawText(
-                "hello text",
+                $"hello text: {font.SizeInPoints}",
                 (0, 0),
                 font,
                 Color.Black,
                 Color.LightGreen);
 
+            font = font.Scaled(2);
+
             dc.DrawText(
-                "hello text 2",
+                $"hello text 2: {font.SizeInPoints}",
                 (50, 150),
-                font.Scaled(2),
+                font,
                 Color.Black,
                 Color.LightGreen);
 
