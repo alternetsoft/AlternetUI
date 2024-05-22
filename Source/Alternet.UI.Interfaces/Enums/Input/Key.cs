@@ -1,26 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-#if !ALTERNET_UI_INTEGRATION_REMOTING
-using Alternet.UI.Markup;
-#endif
-
 using System.ComponentModel;
 
-#if ALTERNET_UI_INTEGRATION_REMOTING
-namespace Alternet.UI.Integration.Remoting
-#else
+using Alternet.UI.Markup;
+
 namespace Alternet.UI
-#endif
 {
     /// <summary>
     ///     An enumeration of all of the possible key values on a keyboard.
     /// </summary>
-#if !ALTERNET_UI_INTEGRATION_REMOTING
-    [TypeConverter(typeof(KeyConverter))]
-    [ValueSerializer(typeof(KeyValueSerializer))]
-#endif
+    [TypeConverter("Alternet.UI.KeyConverter")]
+    [ValueSerializer("Alternet.UI.KeyValueSerializer")]
     public enum Key
     {
         /// <summary>

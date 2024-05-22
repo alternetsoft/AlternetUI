@@ -23,7 +23,7 @@ namespace Alternet.UI.Documentation.Examples
 
             var r = richTextBox1;
 
-            r.SetDefaultStyle(TextBox.CreateTextAttr());
+            r.SetDefaultStyle(r.CreateTextAttr());
 
             r.BeginUpdate();
             r.BeginSuppressUndo();
@@ -62,7 +62,7 @@ namespace Alternet.UI.Documentation.Examples
             r.WriteText("color, like this red bit. ");
             r.EndTextColor();
 
-            var backgroundColourAttr = RichTextBox.CreateRichAttr();
+            var backgroundColourAttr = r.CreateRichAttr();
             backgroundColourAttr.SetBackgroundColor(Alternet.Drawing.Color.Green);
             backgroundColourAttr.SetTextColor(Alternet.Drawing.Color.Yellow);
             r.BeginStyle(backgroundColourAttr);

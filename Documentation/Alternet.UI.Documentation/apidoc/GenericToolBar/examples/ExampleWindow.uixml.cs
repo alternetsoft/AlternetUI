@@ -26,9 +26,9 @@ namespace Alternet.UI.Documentation.Examples
         }
 
         #region CSharpCreation
-        public static GenericToolBar InitGenericToolBar()
+        public static ToolBar InitGenericToolBar()
         {
-            GenericToolBar toolbar = new()
+            ToolBar toolbar = new()
             {
                 Margin = (0, 0, 0, 4),
             };

@@ -32,7 +32,7 @@ namespace Alternet.UI.Documentation.Examples
             };
             RightLabel.Add("Right");
 
-            GenericToolBar toolbar = new()
+            ToolBar toolbar = new()
             {
                 Parent = panel.TopPanel,
             };
@@ -64,7 +64,7 @@ namespace Alternet.UI.Documentation.Examples
 
         public static void InitGenericToolBar(object control)
         {
-            if (control is not GenericToolBar toolbar)
+            if (control is not ToolBar toolbar)
                 return;
 
             toolbar.Margin = (0, 0, 0, 4);

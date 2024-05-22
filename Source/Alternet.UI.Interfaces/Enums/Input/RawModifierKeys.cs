@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.ComponentModel;
+
 using Alternet.UI.Markup;
 
 namespace Alternet.UI
@@ -12,8 +9,8 @@ namespace Alternet.UI
     ///     The RawModifierKeys enumeration describes a set of keys
     ///     used to modify other input operations, including macOS-specific keys.
     /// </summary>
-    [TypeConverter(typeof(ModifierKeysConverter))]
-    [ValueSerializer(typeof(ModifierKeysValueSerializer))]
+    [TypeConverter("Alternet.UI.ModifierKeysConverter")]
+    [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
     [Flags]
     public enum RawModifierKeys
     {

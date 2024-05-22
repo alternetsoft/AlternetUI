@@ -1,29 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
-
-#if !ALTERNET_UI_INTEGRATION_REMOTING
-using Alternet.UI.Markup;
-#endif
-
 using System.ComponentModel;
+using Alternet.UI.Markup;
 
-#if ALTERNET_UI_INTEGRATION_REMOTING
-namespace Alternet.UI.Integration.Remoting
-#else
 namespace Alternet.UI
-#endif
 {
     /// <summary>
     ///     The ModifierKeys enumeration describes a set of common keys
     ///     used to modify other input operations.
     /// </summary>
-#if !ALTERNET_UI_INTEGRATION_REMOTING
-    [TypeConverter(typeof(Alternet.UI.ModifierKeysConverter))]
-    [ValueSerializer(typeof(Alternet.UI.ModifierKeysValueSerializer))]
-#endif
+    [TypeConverter("Alternet.UI.ModifierKeysConverter")]
+    [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
     [Flags]
     public enum ModifierKeys
     {
