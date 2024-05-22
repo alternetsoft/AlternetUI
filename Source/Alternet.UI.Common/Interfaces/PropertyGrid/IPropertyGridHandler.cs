@@ -32,7 +32,7 @@ namespace Alternet.UI
 
         bool IsSmallScreen();
 
-        void SetPropertyReadOnly(IPropertyGridItem id, bool set, int flags);
+        void SetPropertyReadOnly(IPropertyGridItem id, bool set, PropertyGridItemValueFlags flags);
 
         void SetPropertyValueUnspecified(IPropertyGridItem id);
 
@@ -98,7 +98,7 @@ namespace Alternet.UI
 
         DateTime GetPropertyValueAsDateTime(IPropertyGridItem id);
 
-        bool HideProperty(IPropertyGridItem id, bool hide, int flags);
+        bool HideProperty(IPropertyGridItem id, bool hide, PropertyGridItemValueFlags flags);
 
         void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty);
 
@@ -122,11 +122,11 @@ namespace Alternet.UI
 
         void ReplaceProperty(IPropertyGridItem id, IPropertyGridItem property);
 
-        void SetPropertyBackgroundColor(IPropertyGridItem id, Color color, int flags);
+        void SetPropertyBackgroundColor(IPropertyGridItem id, Color color, PropertyGridItemValueFlags flags);
 
-        void SetPropertyColorsToDefault(IPropertyGridItem id, int flags);
+        void SetPropertyColorsToDefault(IPropertyGridItem id, PropertyGridItemValueFlags flags);
 
-        void SetPropertyTextColor(IPropertyGridItem id, Color col, int flags);
+        void SetPropertyTextColor(IPropertyGridItem id, Color col, PropertyGridItemValueFlags flags);
 
         Color GetPropertyBackgroundColor(IPropertyGridItem id);
 
@@ -158,7 +158,7 @@ namespace Alternet.UI
 
         void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags);
 
-        void SortChildren(IPropertyGridItem id, int flags);
+        void SortChildren(IPropertyGridItem id, PropertyGridItemValueFlags flags);
 
         bool ChangePropertyValue(IPropertyGridItem id, IPropertyGridVariant variant);
 
@@ -330,15 +330,15 @@ namespace Alternet.UI
 
         string GetPropertyName(IPropertyGridItem property);
 
-        bool RestoreEditableState(string src, int restoreStates);
+        bool RestoreEditableState(string src, PropertyGridEditableState restoreStates);
 
-        string SaveEditableState(int includedStates);
+        string SaveEditableState(PropertyGridEditableState includedStates);
 
         bool SetColumnProportion(uint column, int proportion);
 
         int GetColumnProportion(uint column);
 
-        void Sort(int flags);
+        void Sort(PropertyGridItemValueFlags flags);
 
         PointI CalcScrolledPosition(PointI point);
 
@@ -348,15 +348,18 @@ namespace Alternet.UI
 
         IPropertyGridItem? GetHitTestProp(PointD point);
 
-        void SetPropertyFlag(IPropertyGridItem prop, int flag, bool value);
+        void SetPropertyFlag(IPropertyGridItem prop, PropertyGridItemFlags flag, bool value);
 
-        void AddActionTrigger(int action, int keycode, int modifiers);
+        void AddActionTrigger(
+            PropertyGridKeyboardAction action,
+            Key keycode,
+            ModifierKeys modifiers = 0);
 
-        void DedicateKey(int keycode);
+        void DedicateKey(Key keycode);
 
         void CenterSplitter(bool enableAutoResizing);
 
-        void ClearActionTriggers(int action);
+        void ClearActionTriggers(PropertyGridKeyboardAction action);
 
         bool CommitChangesFromEditor(uint flags);
 

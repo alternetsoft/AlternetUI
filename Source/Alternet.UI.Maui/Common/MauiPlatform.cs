@@ -450,5 +450,15 @@ namespace Alternet.UI
         {
             return new MauiSystemSettingsHandler();
         }
+
+        public override IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IPropertyGridVariant CreateVariant()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

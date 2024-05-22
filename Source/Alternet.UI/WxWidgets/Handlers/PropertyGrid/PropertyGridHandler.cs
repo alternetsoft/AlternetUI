@@ -372,9 +372,12 @@ namespace Alternet.UI
             NativeControl.RefreshProperty(ItemToPtr(p));
         }
 
-        void IPropertyGridHandler.SetPropertyReadOnly(IPropertyGridItem id, bool set, int flags)
+        void IPropertyGridHandler.SetPropertyReadOnly(
+            IPropertyGridItem id,
+            bool set,
+            PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyReadOnly(ItemToPtr(id), set, flags);
+            NativeControl.SetPropertyReadOnly(ItemToPtr(id), set, (int)flags);
         }
 
         void IPropertyGridHandler.SetPropertyValueUnspecified(IPropertyGridItem id)
@@ -482,9 +485,12 @@ namespace Alternet.UI
             return NativeControl.GetPropertyValueAsDateTime(ItemToPtr(id));
         }
 
-        bool IPropertyGridHandler.HideProperty(IPropertyGridItem id, bool hide, int flags)
+        bool IPropertyGridHandler.HideProperty(
+            IPropertyGridItem id,
+            bool hide,
+            PropertyGridItemValueFlags flags)
         {
-            return NativeControl.HideProperty(ItemToPtr(id), hide, flags);
+            return NativeControl.HideProperty(ItemToPtr(id), hide, (int)flags);
         }
 
         void IPropertyGridHandler.Insert(
@@ -543,19 +549,27 @@ namespace Alternet.UI
             NativeControl.ReplaceProperty(ItemToPtr(id), ItemToPtr(property));
         }
 
-        void IPropertyGridHandler.SetPropertyBackgroundColor(IPropertyGridItem id, Color color, int flags)
+        void IPropertyGridHandler.SetPropertyBackgroundColor(
+            IPropertyGridItem id,
+            Color color,
+            PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyBackgroundColor(ItemToPtr(id), color, flags);
+            NativeControl.SetPropertyBackgroundColor(ItemToPtr(id), color, (int)flags);
         }
 
-        void IPropertyGridHandler.SetPropertyColorsToDefault(IPropertyGridItem id, int flags)
+        void IPropertyGridHandler.SetPropertyColorsToDefault(
+            IPropertyGridItem id,
+            PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyColorsToDefault(ItemToPtr(id), flags);
+            NativeControl.SetPropertyColorsToDefault(ItemToPtr(id), (int)flags);
         }
 
-        void IPropertyGridHandler.SetPropertyTextColor(IPropertyGridItem id, Color col, int flags)
+        void IPropertyGridHandler.SetPropertyTextColor(
+            IPropertyGridItem id,
+            Color col,
+            PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyTextColor(ItemToPtr(id), col, flags);
+            NativeControl.SetPropertyTextColor(ItemToPtr(id), col, (int)flags);
         }
 
         Color IPropertyGridHandler.GetPropertyBackgroundColor(IPropertyGridItem id)
@@ -638,9 +652,9 @@ namespace Alternet.UI
             NativeControl.SetValidationFailureBehavior((int)vfbFlags);
         }
 
-        void IPropertyGridHandler.SortChildren(IPropertyGridItem id, int flags)
+        void IPropertyGridHandler.SortChildren(IPropertyGridItem id, PropertyGridItemValueFlags flags)
         {
-            NativeControl.SortChildren(ItemToPtr(id), flags);
+            NativeControl.SortChildren(ItemToPtr(id), (int)flags);
         }
 
         bool IPropertyGridHandler.ChangePropertyValue(IPropertyGridItem id, IPropertyGridVariant variant)
@@ -1006,14 +1020,14 @@ namespace Alternet.UI
             return NativeControl.GetPropertyName(ItemToPtr(property));
         }
 
-        bool IPropertyGridHandler.RestoreEditableState(string src, int restoreStates)
+        bool IPropertyGridHandler.RestoreEditableState(string src, PropertyGridEditableState restoreStates)
         {
-            return NativeControl.RestoreEditableState(src, restoreStates);
+            return NativeControl.RestoreEditableState(src, (int)restoreStates);
         }
 
-        string IPropertyGridHandler.SaveEditableState(int includedStates)
+        string IPropertyGridHandler.SaveEditableState(PropertyGridEditableState includedStates)
         {
-            return NativeControl.SaveEditableState(includedStates);
+            return NativeControl.SaveEditableState((int)includedStates);
         }
 
         bool IPropertyGridHandler.SetColumnProportion(uint column, int proportion)
@@ -1026,9 +1040,9 @@ namespace Alternet.UI
             return NativeControl.GetColumnProportion(column);
         }
 
-        void IPropertyGridHandler.Sort(int flags)
+        void IPropertyGridHandler.Sort(PropertyGridItemValueFlags flags)
         {
-            NativeControl.Sort(flags);
+            NativeControl.Sort((int)flags);
         }
 
         PointI IPropertyGridHandler.CalcScrolledPosition(PointI point)
@@ -1046,19 +1060,25 @@ namespace Alternet.UI
             return NativeControl.GetHitTestColumn(point);
         }
 
-        void IPropertyGridHandler.SetPropertyFlag(IPropertyGridItem prop, int flag, bool value)
+        void IPropertyGridHandler.SetPropertyFlag(
+            IPropertyGridItem prop,
+            PropertyGridItemFlags flag,
+            bool value)
         {
-            NativeControl.SetPropertyFlag(ItemToPtr(prop), flag, value);
+            NativeControl.SetPropertyFlag(ItemToPtr(prop), (int)flag, value);
         }
 
-        void IPropertyGridHandler.AddActionTrigger(int action, int keycode, int modifiers)
+        void IPropertyGridHandler.AddActionTrigger(
+            PropertyGridKeyboardAction action,
+            Key keycode,
+            ModifierKeys modifiers)
         {
-            NativeControl.AddActionTrigger(action, keycode, modifiers);
+            NativeControl.AddActionTrigger((int)action, (int)keycode, (int)modifiers);
         }
 
-        void IPropertyGridHandler.DedicateKey(int keycode)
+        void IPropertyGridHandler.DedicateKey(Key keycode)
         {
-            NativeControl.DedicateKey(keycode);
+            NativeControl.DedicateKey((int)keycode);
         }
 
         void IPropertyGridHandler.CenterSplitter(bool enableAutoResizing)
@@ -1066,9 +1086,9 @@ namespace Alternet.UI
             NativeControl.CenterSplitter(enableAutoResizing);
         }
 
-        void IPropertyGridHandler.ClearActionTriggers(int action)
+        void IPropertyGridHandler.ClearActionTriggers(PropertyGridKeyboardAction action)
         {
-            NativeControl.ClearActionTriggers(action);
+            NativeControl.ClearActionTriggers((int)action);
         }
 
         bool IPropertyGridHandler.CommitChangesFromEditor(uint flags)

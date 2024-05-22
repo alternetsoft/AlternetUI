@@ -30,9 +30,9 @@ namespace Alternet.UI
         internal const string PropEditClassSpinCtrl = "SpinCtrl";
         internal const string PropEditClassTextCtrlAndButton = "TextCtrlAndButton";
 
-        private const int PGDONTRECURSE = 0x00000000;
+        /*private const int PGDONTRECURSE = 0x00000000;
         private const int PGRECURSE = 0x00000020;
-        private const int PGSORTTOPLEVELONLY = 0x00000200;
+        private const int PGSORTTOPLEVELONLY = 0x00000200;*/
 
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
 
@@ -481,13 +481,10 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.PropertyGrid;
 
         /// <summary>
-        /// Defines default extended style for the newly created
-        /// <see cref="PropertyGrid"/> controls.
+        /// Gets control handler.
         /// </summary>
-        internal static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
-            = PropertyGridCreateStyleEx.DefaultStyle;
-
-        internal new IPropertyGridHandler Handler
+        [Browsable(false)]
+        public new IPropertyGridHandler Handler
         {
             get
             {
@@ -495,6 +492,13 @@ namespace Alternet.UI
                 return (IPropertyGridHandler)base.Handler;
             }
         }
+
+        /// <summary>
+        /// Defines default extended style for the newly created
+        /// <see cref="PropertyGrid"/> controls.
+        /// </summary>
+        internal static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
+            = PropertyGridCreateStyleEx.DefaultStyle;
 
         /// <summary>
         /// Creates new <see cref="IPropertyGrid"/> instance.
@@ -2247,7 +2251,7 @@ namespace Alternet.UI
         /// <c>false</c> otherwise.</param>
         public virtual void Sort(bool topLevelOnly = false)
         {
-            var flags = topLevelOnly ? PGSORTTOPLEVELONLY : 0;
+            var flags = topLevelOnly ? PropertyGridItemValueFlags.SortTopLevelOnly : 0;
             Handler.Sort(flags);
         }
 
@@ -2263,7 +2267,8 @@ namespace Alternet.UI
             bool isSet,
             bool recurse = true)
         {
-            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            var flags = recurse
+                ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
 
             Handler.SetPropertyReadOnly(prop, isSet, flags);
         }
@@ -2459,7 +2464,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public virtual bool HideProperty(IPropertyGridItem prop, bool hide, bool recurse = true)
         {
-            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            var flags = recurse
+                ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             return Handler.HideProperty(prop, hide, flags);
         }
 
@@ -2592,7 +2598,8 @@ namespace Alternet.UI
             Color color,
             bool recurse = true)
         {
-            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            var flags = recurse
+                ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SetPropertyBackgroundColor(prop, color, flags);
         }
 
@@ -2605,7 +2612,8 @@ namespace Alternet.UI
         /// any of its children.</param>
         public virtual void SetPropertyColorsToDefault(IPropertyGridItem prop, bool recurse = true)
         {
-            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            var flags = recurse
+                ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SetPropertyColorsToDefault(prop, flags);
         }
 
@@ -2622,7 +2630,8 @@ namespace Alternet.UI
             Color color,
             bool recurse = true)
         {
-            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            var flags = recurse
+                ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SetPropertyTextColor(prop, color, flags);
         }
 
@@ -2642,7 +2651,7 @@ namespace Alternet.UI
             string src,
             PropertyGridEditableState restoreStates = PropertyGridEditableState.AllStates)
         {
-            return Handler.RestoreEditableState(src, (int)restoreStates);
+            return Handler.RestoreEditableState(src, restoreStates);
         }
 
         /// <summary>
@@ -2670,7 +2679,7 @@ namespace Alternet.UI
             PropertyGridEditableState includedStates =
                 PropertyGridEditableState.AllStates)
         {
-            return Handler.SaveEditableState((int)includedStates);
+            return Handler.SaveEditableState(includedStates);
         }
 
         /// <summary>
@@ -2840,7 +2849,8 @@ namespace Alternet.UI
         /// otherwise.</param>
         public virtual void SortChildren(IPropertyGridItem prop, bool recurse = false)
         {
-            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            var flags = recurse
+                ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SortChildren(prop, flags);
         }
 
@@ -2970,7 +2980,7 @@ namespace Alternet.UI
             Key keycode,
             ModifierKeys modifiers = 0)
         {
-            Handler.AddActionTrigger((int)action, (int)keycode, (int)modifiers);
+            Handler.AddActionTrigger(action, keycode, modifiers);
         }
 
         /// <summary>
@@ -2980,7 +2990,7 @@ namespace Alternet.UI
         /// be removed.</param>
         public virtual void ClearActionTriggers(PropertyGridKeyboardAction action)
         {
-            Handler.ClearActionTriggers((int)action);
+            Handler.ClearActionTriggers(action);
         }
 
         /// <summary>
@@ -2994,7 +3004,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DedicateKey(Key keycode)
         {
-            Handler.DedicateKey((int)keycode);
+            Handler.DedicateKey(keycode);
         }
 
         /// <summary>
@@ -3650,7 +3660,7 @@ namespace Alternet.UI
             PropertyGridItemFlags flag,
             bool value)
         {
-            Handler.SetPropertyFlag(prop, (int)flag, value);
+            Handler.SetPropertyFlag(prop, flag, value);
         }
 
         /// <summary>
