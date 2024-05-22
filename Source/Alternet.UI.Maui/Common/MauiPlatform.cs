@@ -75,54 +75,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override UIPlatformKind GetPlatformKind()
-        {
-            return UIPlatformKind.Maui;
-        }
-
-        /// <inheritdoc/>
-        public override LangDirection GetLangDirection()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override bool SystemSettingsAppearanceIsDark()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override string SystemSettingsAppearanceName()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override Font SystemSettingsGetFont(SystemSettingsFont systemFont)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override int SystemSettingsGetMetric(SystemSettingsMetric index)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override bool SystemSettingsHasFeature(SystemSettingsFeature index)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override bool SystemSettingsIsUsingDarkBackground()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void BeginBusyCursor()
         {
             throw new NotImplementedException();
@@ -150,12 +102,6 @@ namespace Alternet.UI
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control)
         {
             throw new NotImplementedException();
         }
@@ -340,21 +286,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override string GetLibraryVersionString()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string? GetUIVersion()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetSystemOption(string name, int value)
-        {
-            throw new NotImplementedException();
-        }
-
         public override IDataObject? ClipboardGetDataObject()
         {
             throw new NotImplementedException();
@@ -455,11 +386,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override void ValidatorSuppressBellOnError(bool value)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void RegisterDefaultPreviewControls(PreviewFile preview)
         {
             throw new NotImplementedException();
@@ -518,6 +444,11 @@ namespace Alternet.UI
         public override IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)
         {
             throw new NotImplementedException();
+        }
+
+        public override ISystemSettingsHandler CreateSystemSettingsHandler()
+        {
+            return new MauiSystemSettingsHandler();
         }
     }
 }

@@ -43,22 +43,8 @@ public partial class MainPage : ContentPage
         //panel.Children.Add(button);
         panel.Children.Add(skiaContainer);
 
-        Alternet.UI.BaseApplication.LogFileIsEnabled = true;
-        Alternet.UI.BaseApplication.Log($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
-        Alternet.UI.BaseApplication.Log($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
-        Alternet.UI.BaseApplication.Log($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
-        Alternet.UI.BaseApplication.Log($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
-        Alternet.UI.BaseApplication.Log($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
 
         openLogFileButton.Clicked += OpenLogFileButton_Clicked;
-        /*
-            Pixel width: 3840 / Pixel Height: 2160
-            18:53:04 :: Density: 2
-            18:53:04 :: Orientation: Landscape
-            18:53:04 :: Rotation: Rotation0
-            18:53:05 :: Refresh Rate: 60
-        */
-
     }
 
     private void OpenLogFileButton_Clicked(object? sender, EventArgs e)

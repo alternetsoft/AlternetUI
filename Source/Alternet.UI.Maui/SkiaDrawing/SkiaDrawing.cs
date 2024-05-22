@@ -24,11 +24,5 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
-
-        /// <inheritdoc/>
-        public override Color GetColor(KnownSystemColor index)
-        {
-            return PlessSystemColors.GetColor(index);
-        }
    }
 }
