@@ -176,6 +176,9 @@ namespace Alternet.UI
             char? value = null,
             IPropertyGridNewItemParams? prm = null);
 
+        /// <inheritdoc cref="PropertyGrid.GetPropNameAsLabel"/>
+        string GetPropNameAsLabel();
+
         /// <inheritdoc cref="PropertyGrid.CreateBoolItem"/>
         IPropertyGridItem CreateBoolItem(
             string label,

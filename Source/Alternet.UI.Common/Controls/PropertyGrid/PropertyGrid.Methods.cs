@@ -45,31 +45,31 @@ namespace Alternet.UI
         /// <returns>Returns true if successful or if there was no selection. May fail if validation
         /// was enabled and active editor had invalid value.</returns>
         public virtual bool ClearSelection(bool validation)
-            => NativeControl.ClearSelection(validation);
+            => Handler.ClearSelection(validation);
 
         /// <summary>
         /// Resets modified status of all properties.
         /// </summary>
-        public virtual void ClearModifiedStatus() => NativeControl.ClearModifiedStatus();
+        public virtual void ClearModifiedStatus() => Handler.ClearModifiedStatus();
 
         /// <summary>
         /// Collapses all items that can be collapsed. This functions clears selection.
         /// </summary>
-        public virtual bool CollapseAll() => NativeControl.CollapseAll();
+        public virtual bool CollapseAll() => Handler.CollapseAll();
 
         /// <summary>
         /// Returns true if all property grid data changes have been committed.
         /// </summary>
         /// <returns>Usually only returns false if value in active editor has been invalidated
         /// by a validator.</returns>
-        public virtual bool EditorValidate() => NativeControl.EditorValidate();
+        public virtual bool EditorValidate() => Handler.EditorValidate();
 
         /// <summary>
         /// Expands all items that can be expanded. This functions clears selection.
         /// </summary>
         /// <param name="expand"></param>
         /// <returns></returns>
-        public virtual bool ExpandAll(bool expand) => NativeControl.ExpandAll(expand);
+        public virtual bool ExpandAll(bool expand) => Handler.ExpandAll(expand);
 
         /// <summary>
         /// Translates the logical coordinates to the device ones.
@@ -86,7 +86,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointI CalcScrolledPositionI(PointI point)
         {
-            return NativeControl.CalcScrolledPosition(point);
+            return Handler.CalcScrolledPosition(point);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Alternet.UI
         public virtual PointD CalcScrolledPositionD(PointD point)
         {
             var pointI = PixelFromDip(point);
-            var result = NativeControl.CalcScrolledPosition(pointI);
+            var result = Handler.CalcScrolledPosition(pointI);
             var pointD = PixelToDip(result);
             return pointD;
         }
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointI CalcUnscrolledPositionI(PointI point)
         {
-            return NativeControl.CalcUnscrolledPosition(point);
+            return Handler.CalcUnscrolledPosition(point);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Alternet.UI
         public virtual PointD CalcUnscrolledPositionD(PointD point)
         {
             var pointI = PixelFromDip(point);
-            var result = NativeControl.CalcUnscrolledPosition(pointI);
+            var result = Handler.CalcUnscrolledPosition(pointI);
             var pointD = PixelToDip(result);
             return pointD;
         }
@@ -162,7 +162,7 @@ namespace Alternet.UI
         public virtual int GetHitTestColumn(PointD point)
         {
             var pointI = PixelFromDip(point);
-            var result = NativeControl.GetHitTestColumn(pointI);
+            var result = Handler.GetHitTestColumn(pointI);
             return result;
         }
 
@@ -178,10 +178,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual IPropertyGridItem? GetHitTestProp(PointD point)
         {
-            var pointI = PixelFromDip(point);
-            var ptr = NativeControl.GetHitTestProp(pointI);
-            var item = PtrToItem(ptr);
-            return item;
+            return Handler.GetHitTestProp(point);
         }
 
         /// <summary>

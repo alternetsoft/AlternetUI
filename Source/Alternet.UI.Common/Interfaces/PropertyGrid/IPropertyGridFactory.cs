@@ -40,35 +40,17 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.GetTypeRegistry"/>
         IPropertyGridTypeRegistry GetTypeRegistry(Type type);
 
-        /// <inheritdoc cref="PropertyGrid.IsSmallScreen"/>
-        bool IsSmallScreen();
-
         /// <inheritdoc cref="PropertyGrid.CreateChoices()"/>
         IPropertyGridChoices CreateChoices();
 
         /// <inheritdoc cref="PropertyGrid.CreatePropertyGrid"/>
         IPropertyGrid CreatePropertyGrid();
 
-        /// <inheritdoc cref="PropertyGrid.CreateVariant"/>
-        IPropertyGridVariant CreateVariant();
-
         /// <inheritdoc cref="PropertyGrid.CreateChoicesOnce"/>
         IPropertyGridChoices CreateChoicesOnce(Type enumType);
 
         /// <inheritdoc cref="PropertyGrid.CreateChoices(Type)"/>
         IPropertyGridChoices CreateChoices(Type enumType);
-
-        /// <inheritdoc cref="PropertyGrid.AutoGetTranslation"/>
-        void AutoGetTranslation(bool enable);
-
-        /// <inheritdoc cref="PropertyGrid.InitAllTypeHandlers"/>
-        void InitAllTypeHandlers();
-
-        /// <inheritdoc cref="PropertyGrid.RegisterAdditionalEditors"/>
-        void RegisterAdditionalEditors();
-
-        /// <inheritdoc cref="PropertyGrid.SetBoolChoices"/>
-        void SetBoolChoices(string trueChoice, string falseChoice);
 
         /// <inheritdoc cref="PropertyGrid.GetChoices"/>
         IPropertyGridChoices GetChoices<T>()

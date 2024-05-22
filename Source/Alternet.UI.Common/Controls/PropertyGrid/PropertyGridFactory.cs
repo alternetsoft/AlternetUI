@@ -48,11 +48,6 @@ namespace Alternet.UI
             return PropertyGrid.CreateNewItemParams(null, propInfo);
         }
 
-        public void AutoGetTranslation(bool enable)
-        {
-            PropertyGrid.AutoGetTranslation(enable);
-        }
-
         public IPropertyGridChoices CreateChoices()
         {
             return PropertyGrid.CreateChoices();
@@ -73,39 +68,14 @@ namespace Alternet.UI
             return PropertyGrid.CreatePropertyGrid();
         }
 
-        public IPropertyGridVariant CreateVariant()
-        {
-            return PropertyGrid.CreateVariant();
-        }
-
         public IPropertyGridTypeRegistry GetTypeRegistry(Type type)
         {
             return PropertyGrid.GetTypeRegistry(type);
         }
 
-        public void InitAllTypeHandlers()
-        {
-            PropertyGrid.InitAllTypeHandlers();
-        }
-
-        public bool IsSmallScreen()
-        {
-            return PropertyGrid.IsSmallScreen();
-        }
-
-        public void RegisterAdditionalEditors()
-        {
-            PropertyGrid.RegisterAdditionalEditors();
-        }
-
         public void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func)
         {
             PropertyGrid.RegisterPropCreateFunc(type, func);
-        }
-
-        public void SetBoolChoices(string trueChoice, string falseChoice)
-        {
-            PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
         }
     }
 }

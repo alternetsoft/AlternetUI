@@ -22,13 +22,13 @@ namespace Alternet.UI
         public static event EventHandler? EditWithListEdit;
 
         [Flags]
-        protected enum StaticStateFlags
+        public enum StaticStateFlags
         {
             CollectionEditorsRegistered = 1,
             KnownColorsAdded = 2,
         }
 
-        protected static StaticStateFlags StaticFlags
+        public static StaticStateFlags StaticFlags
         {
             get => staticStateFlags;
             set => staticStateFlags = value;

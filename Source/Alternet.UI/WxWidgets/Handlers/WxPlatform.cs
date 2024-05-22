@@ -40,6 +40,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control)
+        {
+            return new PropertyGridHandler();
+        }
+
+        /// <inheritdoc/>
         public override IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog)
         {
             return new UI.Native.FileDialog()

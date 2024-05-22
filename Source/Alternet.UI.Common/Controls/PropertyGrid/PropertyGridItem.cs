@@ -13,11 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public class PropertyGridItem : BaseControlItem, IPropertyGridItem
     {
-        private readonly IntPtr handle;
+        private readonly PropertyGridItemHandle handle;
         private readonly string defaultName;
         private readonly string defaultLabel;
         private readonly object? defaultValue;
-        private readonly PropertyGrid owner;
+        private readonly IPropertyGrid owner;
         private readonly IPropertyGridNewItemParams? prm;
         private bool isCategory = false;
         private object? instance;
@@ -28,9 +28,9 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyGridItem"/> class.
         /// </summary>
-        internal PropertyGridItem(
-            PropertyGrid owner,
-            IntPtr handle,
+        public PropertyGridItem(
+            IPropertyGrid owner,
+            PropertyGridItemHandle handle,
             string label,
             string? name,
             object? defaultValue,
@@ -41,7 +41,7 @@ namespace Alternet.UI
             this.defaultLabel = label;
             this.defaultValue = defaultValue;
             this.prm = prm;
-            if (name == PropertyGrid.NameAsLabel || name == null)
+            if (name == owner.GetPropNameAsLabel() || name == null)
                 this.defaultName = label;
             else
                 this.defaultName = name;
@@ -118,7 +118,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IntPtr Handle => handle;
+        public PropertyGridItemHandle Handle => handle;
 
         /// <inheritdoc/>
         public string DefaultName => defaultName;

@@ -37,6 +37,8 @@ namespace Alternet.UI
 
         public abstract INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control);
 
+        public abstract IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control);
+
         public abstract ICheckBoxHandler CreateCheckBoxHandler(CheckBox control);
 
         public abstract IButtonHandler CreateButtonHandler(Button control);
