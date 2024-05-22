@@ -365,11 +365,6 @@ namespace Alternet.UI
             ((Native.Timer)timer.NativeTimer).Enabled = value;
         }
 
-        public override UIPlatformKind GetPlatformKind()
-        {
-            return UIPlatformKind.WxWidgets;
-        }
-
         public override int TimerGetInterval(Timer timer)
         {
             return ((Native.Timer)timer.NativeTimer).Interval;
@@ -435,12 +430,6 @@ namespace Alternet.UI
         {
             Application.Current.NativeClipboard.SetDataObject(
                 UnmanagedDataObjectService.GetUnmanagedDataObject(value));
-        }
-
-        public override LangDirection GetLangDirection()
-        {
-            return (LangDirection?)Application.Current?.nativeApplication.GetLayoutDirection()
-                ?? LangDirection.LeftToRight;
         }
 
         public override void ProcessPendingEvents()
@@ -592,22 +581,6 @@ namespace Alternet.UI
             DeveloperToolsPanel.ShowDeveloperTools();
         }
 
-        public override string? GetUIVersion()
-        {
-            var ui = WebBrowser.DoCommandGlobal("UIVersion");
-            return ui;
-        }
-
-        public override string GetLibraryVersionString()
-        {
-            return WebBrowser.GetLibraryVersionString();
-        }
-
-        public override void SetSystemOption(string name, int value)
-        {
-            Native.Application.SetSystemOptionInt(name, value);
-        }
-
         public override void RegisterDefaultPreviewControls(PreviewFile preview)
         {
             preview.RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
@@ -618,11 +591,6 @@ namespace Alternet.UI
         public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
         {
             return new ValueValidatorText(style);
-        }
-
-        public override void ValidatorSuppressBellOnError(bool value)
-        {
-            Native.Validator.SuppressBellOnError(value);
         }
 
         public override IValueValidatorText CreateValueValidatorNum(

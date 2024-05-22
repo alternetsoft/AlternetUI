@@ -96,12 +96,12 @@ namespace Alternet.UI
             if (LogUtils.Flags.HasFlag(LogUtils.LogFlags.VersionLogged))
                 return;
             LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
-            var wxWidgets = NativePlatform.Default.GetLibraryVersionString();
+            var wxWidgets = SystemSettings.Handler.GetLibraryVersionString();
             var bitsOS = BaseApplication.Is64BitOS ? "x64" : "x86";
             var bitsApp = BaseApplication.Is64BitProcess ? "x64" : "x86";
             var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
             var dpi = $"DPI: {BaseApplication.FirstWindow()?.GetDPI().Width}";
-            var ui = $"UI: {NativePlatform.Default.GetUIVersion()}";
+            var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
             var counterStr = $"Counter: {BaseApplication.BuildCounter}";
             var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
             BaseApplication.Log(s);

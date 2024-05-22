@@ -154,12 +154,6 @@ namespace Alternet.UI
 
         public abstract void ShowDeveloperTools();
 
-        public abstract string GetLibraryVersionString();
-
-        public abstract string? GetUIVersion();
-
-        public abstract void SetSystemOption(string name, int value);
-
         public abstract ISystemSettingsHandler CreateSystemSettingsHandler();
 
         public abstract void ExitMainLoop();
@@ -176,8 +170,6 @@ namespace Alternet.UI
         public abstract void EndBusyCursor();
 
         public abstract void ProcessPendingEvents();
-
-        public abstract LangDirection GetLangDirection();
 
         public abstract IDataObject? ClipboardGetDataObject();
 
@@ -203,8 +195,6 @@ namespace Alternet.UI
 
         public abstract void TimerSetInterval(Timer timer, int value);
 
-        public abstract UIPlatformKind GetPlatformKind();
-
         public abstract IPropertyGridChoices CreateChoices();
 
         public abstract IPrintDocumentHandler CreatePrintDocumentHandler();
@@ -222,8 +212,6 @@ namespace Alternet.UI
             int valueBase = 10);
 
         public abstract IPageSetupDialogHandler CreatePageSetupDialogHandler();
-
-        public abstract void ValidatorSuppressBellOnError(bool value);
 
         public abstract void RegisterDefaultPreviewControls(PreviewFile preview);
 

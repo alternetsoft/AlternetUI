@@ -10,6 +10,24 @@ namespace Alternet.UI
 {
     public interface ISystemSettingsHandler
     {
+        string AppName { get; set; }
+
+        string AppDisplayName { get; set; }
+
+        string AppClassName { get; set; }
+
+        string VendorName { get; set; }
+
+        string VendorDisplayName { get; set; }
+
+        bool UseBestVisual { get; set; }
+
+        IDisplayFactoryHandler CreateDisplayFactoryHandler();
+
+        bool SetNativeTheme(string theme);
+
+        void SetUseBestVisual(bool flag, bool forceTrueColour = false);
+
         string GetAppearanceName();
 
         bool GetAppearanceIsDark();
@@ -25,5 +43,17 @@ namespace Alternet.UI
         Color GetColor(KnownSystemColor index);
 
         int GetMetric(SystemSettingsMetric index, IControl? control);
+
+        string GetLibraryVersionString();
+
+        string? GetUIVersion();
+
+        void SetSystemOption(string name, int value);
+
+        LangDirection GetLangDirection();
+
+        UIPlatformKind GetPlatformKind();
+
+        void SuppressBellOnError(bool value);
     }
 }

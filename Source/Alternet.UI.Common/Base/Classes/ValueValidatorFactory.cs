@@ -47,7 +47,7 @@ namespace Alternet.UI
             set
             {
                 isSilent = value;
-                NativePlatform.Default.ValidatorSuppressBellOnError(value);
+                SystemSettings.Handler.SuppressBellOnError(value);
             }
         }
 

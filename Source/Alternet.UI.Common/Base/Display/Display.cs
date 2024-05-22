@@ -8,8 +8,9 @@ namespace Alternet.UI
     /// <summary>
     /// Determines the sizes and locations of displays connected to the system.
     /// </summary>
-    public class Display : HandledObject<object>
+    public class Display : HandledObject<IDisplayHandler>
     {
+        private static IDisplayFactoryHandler? factory;
         private static Display? primary;
         private static Display[]? allScreens;
 
@@ -34,7 +35,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Display(int index)
         {
-            Handler = NativeDrawing.Default.CreateDisplay(index);
+            Handler = Factory.CreateDisplay(index);
         }
 
         /// <summary>
@@ -48,10 +49,13 @@ namespace Alternet.UI
             this.control = control;
         }
 
+        public static IDisplayFactoryHandler Factory =>
+            factory ??= SystemSettings.Handler.CreateDisplayFactoryHandler();
+
         /// <summary>
         /// Gets the number of connected displays.
         /// </summary>
-        public static int Count => NativeDrawing.Default.DisplayGetCount();
+        public static int Count => Factory.GetCount();
 
         /// <summary>
         /// Gets default display resolution for the current platform in pixels per inch.
@@ -61,7 +65,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static int DefaultDPIValue => NativeDrawing.Default.DisplayGetDefaultDPIValue();
+        public static int DefaultDPIValue => DefaultDPI.Width;
 
         /// <summary>
         ///  Gets an array of all of the displays on the system.
@@ -103,7 +107,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static SizeI DefaultDPI => NativeDrawing.Default.DisplayGetDefaultDPI();
+        public static SizeI DefaultDPI => Factory.GetDefaultDPI();
 
         /// <summary>
         /// Gets the display's name.
@@ -115,27 +119,27 @@ namespace Alternet.UI
         /// Gets the display's name.
         /// </summary>
         /// <remarks>Same as <see cref="DeviceName"/></remarks>
-        public string Name => NativeDrawing.Default.DisplayGetName(this);
+        public string Name => Handler.GetName();
 
         /// <summary>
         /// Gets display resolution in pixels per inch.
         /// </summary>
-        public SizeI DPI => NativeDrawing.Default.DisplayGetDPI(this);
+        public SizeI DPI => Handler.GetDPI();
 
         /// <summary>
         /// Gets scaling factor used by this display.
         /// </summary>
-        public double ScaleFactor => NativeDrawing.Default.DisplayGetScaleFactor(this);
+        public double ScaleFactor => Handler.GetScaleFactor();
 
         /// <summary>
         /// Gets <c>true</c> if the display is the primary display.
         /// </summary>
-        public bool IsPrimary => NativeDrawing.Default.DisplayGetIsPrimary(this);
+        public bool IsPrimary => Handler.IsPrimary();
 
         /// <summary>
         /// Gets the client area of the display.
         /// </summary>
-        public RectI ClientArea => NativeDrawing.Default.DisplayGetClientArea(this);
+        public RectI ClientArea => Handler.GetClientArea();
 
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
@@ -177,7 +181,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
         /// </summary>
-        public RectI Geometry => NativeDrawing.Default.DisplayGetGeometry(this);
+        public RectI Geometry => Handler.GetGeometry();
 
         /// <summary>
         /// Returns the bounding rectangle of the display in the
@@ -198,8 +202,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="pt">Point for which index of display is returned.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetFromPoint(PointI pt) =>
-            NativeDrawing.Default.DisplayGetFromPoint(pt);
+        public static int GetFromPoint(PointI pt) => Factory.GetFromPoint(pt);
 
         /// <summary>
         /// Returns the index of the display on which the given control lies.
@@ -208,7 +211,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetFromControl(IControl control)
         {
-            return NativeDrawing.Default.DisplayGetFromControl(control);
+            return Factory.GetFromControl(control);
         }
 
         /// <summary>
@@ -345,15 +348,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManaged()
+        protected override IDisplayHandler CreateHandler()
         {
-            NativeDrawing.Default.DisposeDisplay(this);
-        }
-
-        /// <inheritdoc/>
-        protected override object CreateHandler()
-        {
-            return NativeDrawing.Default.CreateDisplay();
+            return Factory.CreateDisplay();
         }
     }
 }

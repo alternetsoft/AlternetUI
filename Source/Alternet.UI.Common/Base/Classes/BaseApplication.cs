@@ -10,11 +10,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    public class BaseApplication : BaseObject
+    public class BaseApplication : DisposableObject
     {
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -84,6 +85,8 @@ namespace Alternet.UI
 
         public static CultureInfo InvariantEnglishUS = CultureInfo.InvariantCulture;
 
+        internal static readonly Destructor MyDestructor = new();
+
         private static readonly ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
         private static readonly ConcurrentQueue<(string Msg, LogItemKind Kind)> LogQueue = new();
 
@@ -93,6 +96,7 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionModeDebug
             = UnhandledExceptionMode.ThrowException;
 
+        private static IconSet? icon;
         private static bool terminating = false;
         private static int logUpdateCount;
         private static bool logFileIsEnabled;
@@ -100,7 +104,6 @@ namespace Alternet.UI
 
         private readonly List<Window> windows = new();
         private Window? window;
-        private volatile bool isDisposed;
 
         static BaseApplication()
         {
@@ -201,7 +204,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets currently used platform.
         /// </summary>
-        public static UIPlatformKind PlatformKind => NativePlatform.Default.GetPlatformKind();
+        public static UIPlatformKind PlatformKind => SystemSettings.Handler.GetPlatformKind();
 
         /// <summary>
         /// Gets the <see cref="Application"/> object for the currently
@@ -322,6 +325,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default icon for the application.
+        /// </summary>
+        /// <remarks>
+        /// By default it returns icon of the the first <see cref="Window"/>.
+        /// You can assing <see cref="IconSet"/> here to override default behavior.
+        /// If you assing <c>null</c>, this property will again return icon of
+        /// the the first <see cref="Window"/>. Change to this property doesn't
+        /// update the icon of the the first <see cref="Window"/>.
+        /// </remarks>
+        public static IconSet? DefaultIcon
+        {
+            get
+            {
+                return icon ?? FirstWindow()?.Icon;
+            }
+
+            set
+            {
+                icon = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether execution is inside the <see cref="Run"/> method.
+        /// </summary>
+        public static bool IsRunning { get; protected set; }
+
+        /// <summary>
         /// Gets whether application has forms.
         /// </summary>
         public static bool HasForms => HasApplication && Current.Windows.Count > 0;
@@ -348,15 +379,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether <see cref="Dispose(bool)"/> has been called.
-        /// </summary>
-        public virtual bool IsDisposed
-        {
-            get => isDisposed;
-            protected set => isDisposed = value;
-        }
-
-        /// <summary>
         /// Gets or sets whether application in uixml preview mode.
         /// </summary>
         public virtual bool InUixmlPreviewerMode
@@ -368,6 +390,94 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether application will use the best visual on systems that
+        /// support different visuals.
+        /// </summary>
+        public virtual bool UseBestVisual
+        {
+            get => SystemSettings.Handler.UseBestVisual;
+            set => SystemSettings.Handler.UseBestVisual = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the application name.
+        /// </summary>
+        /// <remarks>
+        /// It is used for paths, config, and other places the user doesn't see.
+        /// By default it is set to the executable program name.
+        /// </remarks>
+        public virtual string Name
+        {
+            get => SystemSettings.Handler.AppName;
+            set => SystemSettings.Handler.AppName = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the application display name.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The display name is the name shown to the user in titles, reports, etc.
+        /// while the application name is used for paths, config, and other
+        /// places the user doesn't see.
+        /// </para>
+        /// <para>
+        /// By default the application display name is the same as application
+        /// name or a capitalized version of the program if the application
+        /// name was not set either.
+        /// It's usually better to set it explicitly to something nicer.
+        /// </para>
+        /// </remarks>
+        public virtual string DisplayName
+        {
+            get => SystemSettings.Handler.AppDisplayName;
+            set => SystemSettings.Handler.AppDisplayName = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the application class name.
+        /// </summary>
+        /// <remarks>
+        /// It should be set by the application itself, there are
+        /// no reasonable defaults.
+        /// </remarks>
+        public virtual string AppClassName
+        {
+            get => SystemSettings.Handler.AppClassName;
+            set => SystemSettings.Handler.AppClassName = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the vendor name.
+        /// </summary>
+        /// <remarks>
+        /// It is used in some areas such as configuration, standard paths, etc.
+        /// It should be set by the application itself, there are
+        /// no reasonable defaults.
+        /// </remarks>
+        public virtual string VendorName
+        {
+            get => SystemSettings.Handler.VendorName;
+            set => SystemSettings.Handler.VendorName = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the vendor display name.
+        /// </summary>
+        /// <remarks>
+        /// It is shown in titles, reports, dialogs to the user, while
+        /// the vendor name is used in some areas such as configuration,
+        /// standard paths, etc.
+        /// It should be set by the application itself, there are
+        /// no reasonable defaults.
+        /// </remarks>
+        public virtual string VendorDisplayName
+        {
+            get => SystemSettings.Handler.VendorDisplayName;
+            set => SystemSettings.Handler.VendorDisplayName = value;
+        }
+
+        /// <summary>
         /// Gets the layout direction for the current locale or <see cref="LangDirection.Default"/>
         /// if it's unknown.
         /// </summary>
@@ -375,7 +485,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativePlatform.Default.GetLangDirection();
+                return SystemSettings.Handler.GetLangDirection();
             }
         }
 
@@ -385,6 +495,74 @@ namespace Alternet.UI
         {
             get => window;
             set => window = value;
+        }
+
+        /// <summary>
+        /// Executes the specified delegate on the thread that owns the application.
+        /// </summary>
+        /// <param name="method">A delegate that contains a method to be called
+        /// in the control's thread context.</param>
+        /// <returns>An <see cref="object"/> that contains the return value from
+        /// the delegate being invoked, or <c>null</c> if the delegate has no
+        /// return value.</returns>
+        public static object? Invoke(Delegate? method)
+        {
+            if (method == null)
+                return null;
+            return Invoke(method, Array.Empty<object?>());
+        }
+
+        /// <summary>
+        /// Executes the specified action on the thread that owns the application.
+        /// </summary>
+        /// <param name="action">An action to be called in the control's
+        /// thread context.</param>
+        public static void Invoke(Action? action)
+        {
+            if (action == null)
+                return;
+            Invoke(action, Array.Empty<object?>());
+        }
+
+        /// <summary>
+        /// Executes the specified delegate, on the thread that owns the application,
+        /// with the specified list of arguments.
+        /// </summary>
+        /// <param name="method">A delegate to a method that takes parameters of
+        /// the same number and type that are contained in the
+        /// <c>args</c> parameter.</param>
+        /// <param name="args">An array of objects to pass as arguments to
+        /// the specified method. This parameter can be <c>null</c> if the
+        /// method takes no arguments.</param>
+        /// <returns>An <see cref="object"/> that contains the return value
+        /// from the delegate being invoked, or <c>null</c> if the delegate has
+        /// no return value.</returns>
+        public static object? Invoke(Delegate method, object?[] args)
+            => SynchronizationService.Invoke(method, args);
+
+        /// <summary>
+        /// Executes <see cref="BaseApplication.IdleLog"/> using <see cref="Invoke(Action?)"/>.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <param name="kind">Message kind.</param>
+        public static void InvokeIdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
+        {
+            Invoke(() =>
+            {
+                BaseApplication.IdleLog(obj, kind);
+            });
+        }
+
+        /// <summary>
+        /// Executes action in the application idle state using <see cref="Invoke(Action?)"/>.
+        /// </summary>
+        /// <param name="action">Action to execute.</param>
+        public static void InvokeIdle(Action? action)
+        {
+            Invoke(() =>
+            {
+                AddIdleTask(action);
+            });
         }
 
         /// <summary>
@@ -540,7 +718,7 @@ namespace Alternet.UI
         /// <param name="value">Option value.</param>
         public static void SetSystemOption(string name, int value)
         {
-            NativePlatform.Default.SetSystemOption(name, value);
+            SystemSettings.Handler.SetSystemOption(name, value);
         }
 
         /// <summary>
@@ -835,6 +1013,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Allows runtime switching of the UI environment theme.
+        /// </summary>
+        /// <param name="theme">Theme name</param>
+        /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
+        public virtual bool SetNativeTheme(string theme)
+        {
+            return SystemSettings.Handler.SetNativeTheme(theme);
+        }
+
+        /// <summary>
+        /// Allows the programmer to specify whether the application will use the best
+        /// visual on systems that support several visual on the same display.
+        /// </summary>
+        public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
+        {
+            SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
+        }
+
+        /// <summary>
         /// Raises <see cref="Idle"/> event.
         /// </summary>
         public void RaiseIdle()
@@ -934,6 +1131,15 @@ namespace Alternet.UI
             }
             catch
             {
+            }
+        }
+
+        internal sealed class Destructor
+        {
+            ~Destructor()
+            {
+                if (LogFileIsEnabled)
+                    LogUtils.LogToFileAppFinished();
             }
         }
 

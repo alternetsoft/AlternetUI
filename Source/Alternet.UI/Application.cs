@@ -21,11 +21,8 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : BaseApplication, IDisposable
     {
-        internal static readonly Destructor MyDestructor = new();
-
         internal Native.Application nativeApplication;
 
-        private static IconSet? icon;
         private static bool inOnThreadException;
 
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -75,34 +72,6 @@ namespace Alternet.UI
         public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
 
         /// <summary>
-        /// Gets or sets default icon for the application.
-        /// </summary>
-        /// <remarks>
-        /// By default it returns icon of the the first <see cref="Window"/>.
-        /// You can assing <see cref="IconSet"/> here to override default behavior.
-        /// If you assing <c>null</c>, this property will again return icon of
-        /// the the first <see cref="Window"/>. Change to this property doesn't
-        /// update the icon of the the first <see cref="Window"/>.
-        /// </remarks>
-        public static IconSet? DefaultIcon
-        {
-            get
-            {
-                return icon ?? Application.FirstWindow()?.Icon;
-            }
-
-            set
-            {
-                icon = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether execution is inside the <see cref="Run"/> method.
-        /// </summary>
-        public static bool IsRunning { get; internal set; }
-
-        /// <summary>
         /// Gets the <see cref="Application"/> object for the currently
         /// runnning application.
         /// </summary>
@@ -115,84 +84,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the application name.
-        /// </summary>
-        /// <remarks>
-        /// It is used for paths, config, and other places the user doesn't see.
-        /// By default it is set to the executable program name.
-        /// </remarks>
-        public virtual string Name
-        {
-            get => nativeApplication.Name;
-            set => nativeApplication.Name = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the application display name.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// The display name is the name shown to the user in titles, reports, etc.
-        /// while the application name is used for paths, config, and other
-        /// places the user doesn't see.
-        /// </para>
-        /// <para>
-        /// By default the application display name is the same as application
-        /// name or a capitalized version of the program if the application
-        /// name was not set either.
-        /// It's usually better to set it explicitly to something nicer.
-        /// </para>
-        /// </remarks>
-        public virtual string DisplayName
-        {
-            get => nativeApplication.DisplayName;
-            set => nativeApplication.DisplayName = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the application class name.
-        /// </summary>
-        /// <remarks>
-        /// It should be set by the application itself, there are
-        /// no reasonable defaults.
-        /// </remarks>
-        public virtual string AppClassName
-        {
-            get => nativeApplication.AppClassName;
-            set => nativeApplication.AppClassName = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the vendor name.
-        /// </summary>
-        /// <remarks>
-        /// It is used in some areas such as configuration, standard paths, etc.
-        /// It should be set by the application itself, there are
-        /// no reasonable defaults.
-        /// </remarks>
-        public virtual string VendorName
-        {
-            get => nativeApplication.VendorName;
-            set => nativeApplication.VendorName = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the vendor display name.
-        /// </summary>
-        /// <remarks>
-        /// It is shown in titles, reports, dialogs to the user, while
-        /// the vendor name is used in some areas such as configuration,
-        /// standard paths, etc.
-        /// It should be set by the application itself, there are
-        /// no reasonable defaults.
-        /// </remarks>
-        public virtual string VendorDisplayName
-        {
-            get => nativeApplication.VendorDisplayName;
-            set => nativeApplication.VendorDisplayName = value;
-        }
-
-        /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
         /// top-level frame is deleted.
         /// Returns true if the application will exit when the top-level frame is deleted.
@@ -201,16 +92,6 @@ namespace Alternet.UI
         {
             get => nativeApplication.GetExitOnFrameDelete();
             set => nativeApplication.SetExitOnFrameDelete(value);
-        }
-
-        /// <summary>
-        /// Gets or sets whether application will use the best visual on systems that
-        /// support different visuals.
-        /// </summary>
-        public virtual bool UseBestVisual
-        {
-            get => nativeApplication.GetUseBestVisual();
-            set => nativeApplication.SetUseBestVisual(value, false);
         }
 
         /// <summary>
@@ -265,74 +146,6 @@ namespace Alternet.UI
 
             window.Dispose();
             application.Dispose();
-        }
-
-        /// <summary>
-        /// Executes the specified delegate on the thread that owns the application.
-        /// </summary>
-        /// <param name="method">A delegate that contains a method to be called
-        /// in the control's thread context.</param>
-        /// <returns>An <see cref="object"/> that contains the return value from
-        /// the delegate being invoked, or <c>null</c> if the delegate has no
-        /// return value.</returns>
-        public static object? Invoke(Delegate? method)
-        {
-            if (method == null)
-                return null;
-            return Invoke(method, Array.Empty<object?>());
-        }
-
-        /// <summary>
-        /// Executes the specified action on the thread that owns the application.
-        /// </summary>
-        /// <param name="action">An action to be called in the control's
-        /// thread context.</param>
-        public static void Invoke(Action? action)
-        {
-            if (action == null)
-                return;
-            Invoke(action, Array.Empty<object?>());
-        }
-
-        /// <summary>
-        /// Executes the specified delegate, on the thread that owns the application,
-        /// with the specified list of arguments.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters of
-        /// the same number and type that are contained in the
-        /// <c>args</c> parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to
-        /// the specified method. This parameter can be <c>null</c> if the
-        /// method takes no arguments.</param>
-        /// <returns>An <see cref="object"/> that contains the return value
-        /// from the delegate being invoked, or <c>null</c> if the delegate has
-        /// no return value.</returns>
-        public static object? Invoke(Delegate method, object?[] args)
-            => SynchronizationService.Invoke(method, args);
-
-        /// <summary>
-        /// Executes <see cref="BaseApplication.IdleLog"/> using <see cref="Invoke(Action?)"/>.
-        /// </summary>
-        /// <param name="obj">Message text or object to log.</param>
-        /// <param name="kind">Message kind.</param>
-        public static void InvokeIdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
-        {
-            Invoke(() =>
-            {
-                Application.IdleLog(obj, kind);
-            });
-        }
-
-        /// <summary>
-        /// Executes action in the application idle state using <see cref="Invoke(Action?)"/>.
-        /// </summary>
-        /// <param name="action">Action to execute.</param>
-        public static void InvokeIdle(Action? action)
-        {
-            Invoke(() =>
-            {
-                AddIdleTask(action);
-            });
         }
 
         /// <summary>
@@ -410,34 +223,6 @@ namespace Alternet.UI
                 Terminating = true;
                 IsRunning = false;
             }
-        }
-
-        /// <summary>
-        /// Releases all resources used by the object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Allows runtime switching of the UI environment theme.
-        /// </summary>
-        /// <param name="theme">Theme name</param>
-        /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public virtual bool SetNativeTheme(string theme)
-        {
-            return nativeApplication.SetNativeTheme(theme);
-        }
-
-        /// <summary>
-        /// Allows the programmer to specify whether the application will use the best
-        /// visual on systems that support several visual on the same display.
-        /// </summary>
-        public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
-        {
-            nativeApplication.SetUseBestVisual(flag, forceTrueColour);
         }
 
         [return: MaybeNull]
@@ -532,31 +317,18 @@ namespace Alternet.UI
             nativeApplication.BeginInvoke(action);
         }
 
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and
-        /// unmanaged resources; <c>false</c> to release only unmanaged
-        /// resources.</param>
-        protected virtual void Dispose(bool disposing)
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
         {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    nativeApplication.Idle -= NativeApplication_Idle;
-                    nativeApplication.LogMessage -= NativeApplication_LogMessage;
-                    keyboardInputProvider.Dispose();
-                    mouseInputProvider.Dispose();
-                    nativeApplication.Dispose();
-                    nativeApplication = null!;
+            base.DisposeManaged();
+            nativeApplication.Idle -= NativeApplication_Idle;
+            nativeApplication.LogMessage -= NativeApplication_LogMessage;
+            keyboardInputProvider.Dispose();
+            mouseInputProvider.Dispose();
+            nativeApplication.Dispose();
+            nativeApplication = null!;
 
-                    BaseApplication.Current = null!;
-                }
-
-                IsDisposed = true;
-            }
+            BaseApplication.Current = null!;
         }
 
         [return: MaybeNull]
@@ -619,20 +391,5 @@ namespace Alternet.UI
 
             Log(s);
         }
-
-        private void CheckDisposed()
-        {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        internal sealed class Destructor
-        {
-            ~Destructor()
-            {
-                if (LogFileIsEnabled)
-                    LogUtils.LogToFileAppFinished();
-            }
-        }
-    }
+   }
 }
