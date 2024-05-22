@@ -13,11 +13,6 @@ namespace Alternet.UI
     public interface IPropertyGridChoices
     {
         /// <summary>
-        /// Gets <see cref="IPropertyGridChoices"/> object handle.
-        /// </summary>
-        IntPtr Handle { get; }
-
-        /// <summary>
         /// Gets the number of elements actually contained in the <see cref="IPropertyGridChoices"/>.
         /// </summary>
         int Count { get; }

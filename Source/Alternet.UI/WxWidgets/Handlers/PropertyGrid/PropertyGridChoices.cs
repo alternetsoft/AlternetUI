@@ -133,7 +133,10 @@ namespace Alternet.UI
         public void SetBitmap(int index, ImageSet? bitmap)
         {
             hasBitmaps = true;
-            Native.PropertyGridChoices.SetBitmap(handle, (uint)index, (UI.Native.ImageSet?)bitmap?.Handler);
+            Native.PropertyGridChoices.SetBitmap(
+                handle,
+                (uint)index,
+                (UI.Native.ImageSet?)bitmap?.Handler);
             ChoicesChanged();
         }
 
@@ -289,7 +292,7 @@ namespace Alternet.UI
                     Native.PropertyGridChoices.SetBitmapFromItem(
                         Handle,
                         (uint)index,
-                        choices.Handle,
+                        ((PropertyGridChoices)choices).Handle,
                         (uint)i);
                 }
 

@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     public interface IPropertyGridHandler : IControlHandler
     {
-        int EventValidationFailureBehavior { get; set; }
+        PropertyGridValidationFailure EventValidationFailureBehavior { get; set; }
 
         IPropertyGridVariant EventPropValueAsVariant { get; }
 
@@ -36,7 +36,7 @@ namespace Alternet.UI
 
         void SetPropertyValueUnspecified(IPropertyGridItem id);
 
-        IPropertyGridItem AppendIn(IPropertyGridItem id, IPropertyGridItem newproperty);
+        void AppendIn(IPropertyGridItem id, IPropertyGridItem newproperty);
 
         void AutoGetTranslation(bool enable);
 
@@ -54,7 +54,7 @@ namespace Alternet.UI
 
         void DeleteProperty(IPropertyGridItem id);
 
-        IPropertyGridItem RemoveProperty(IPropertyGridItem id);
+        void RemoveProperty(IPropertyGridItem id);
 
         bool DisableProperty(IPropertyGridItem id);
 
@@ -100,9 +100,9 @@ namespace Alternet.UI
 
         bool HideProperty(IPropertyGridItem id, bool hide, int flags);
 
-        IPropertyGridItem Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty);
+        void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty);
 
-        IPropertyGridItem InsertByIndex(IPropertyGridItem parent, int index, IPropertyGridItem newproperty);
+        void InsertByIndex(IPropertyGridItem parent, int index, IPropertyGridItem newproperty);
 
         bool IsPropertyCategory(IPropertyGridItem id);
 
@@ -120,7 +120,7 @@ namespace Alternet.UI
 
         void LimitPropertyEditing(IPropertyGridItem id, bool limit);
 
-        IPropertyGridItem ReplaceProperty(IPropertyGridItem id, IPropertyGridItem property);
+        void ReplaceProperty(IPropertyGridItem id, IPropertyGridItem property);
 
         void SetPropertyBackgroundColor(IPropertyGridItem id, Color color, int flags);
 
@@ -156,7 +156,7 @@ namespace Alternet.UI
 
         void SetPropertyValueAsDateTime(IPropertyGridItem id, DateTime value);
 
-        void SetValidationFailureBehavior(int vfbFlags);
+        void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags);
 
         void SortChildren(IPropertyGridItem id, int flags);
 
@@ -304,7 +304,7 @@ namespace Alternet.UI
 
         void Clear();
 
-        IPropertyGridItem Append(IPropertyGridItem property);
+        void Append(IPropertyGridItem property);
 
         bool ClearSelection(bool validation);
 

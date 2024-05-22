@@ -206,13 +206,13 @@ namespace Alternet.UI
             {
                 var color = Native.PropertyGridVariant.GetColor(handle);
                 var kind = Native.PropertyGridVariant.GetLastColorKind();
-                var result = PropertyGrid.SetColorKind(color, kind);
+                var result = PropertyGridHandler.SetColorKind(color, kind);
                 return result;
             }
 
             set
             {
-                uint kind = PropertyGrid.GetColorKind(value);
+                uint kind = PropertyGridHandler.GetColorKind(value);
                 Native.PropertyGridVariant.SetColor(handle, value, kind);
             }
         }

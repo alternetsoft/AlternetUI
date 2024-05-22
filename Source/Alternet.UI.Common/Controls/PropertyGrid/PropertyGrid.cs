@@ -282,12 +282,12 @@ namespace Alternet.UI
         {
             get
             {
-                return (PropertyGridValidationFailure)Handler.EventValidationFailureBehavior;
+                return Handler.EventValidationFailureBehavior;
             }
 
             set
             {
-                Handler.EventValidationFailureBehavior = (int)value;
+                Handler.EventValidationFailureBehavior = value;
             }
         }
 
@@ -504,6 +504,11 @@ namespace Alternet.UI
             return new PropertyGrid();
         }
 
+        public static IPropertyGridVariant CreateVariant()
+        {
+            return NativePlatform.Default.CreateVariant();
+        }
+
         /// <summary>
         /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
         /// </summary>
@@ -544,7 +549,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates new variant instance for use with <see cref="PropertyGrid"/>
         /// </summary>
-        public IPropertyGridVariant CreateVariant()
+        public virtual IPropertyGridVariant CreateVar()
         {
             return Handler.CreateVariant();
         }
@@ -2824,7 +2829,7 @@ namespace Alternet.UI
         /// <param name="vfbFlags">Validation failure flags.</param>
         public virtual void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
         {
-            Handler.SetValidationFailureBehavior((int)vfbFlags);
+            Handler.SetValidationFailureBehavior(vfbFlags);
         }
 
         /// <summary>

@@ -470,5 +470,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public override IPropertyGridVariant CreateVariant()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

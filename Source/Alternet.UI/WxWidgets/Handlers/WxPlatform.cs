@@ -54,6 +54,11 @@ namespace Alternet.UI
             };
         }
 
+        public override IPropertyGridVariant CreateVariant()
+        {
+            return new PropertyGridVariant();
+        }
+
         /// <inheritdoc/>
         public override ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
         {

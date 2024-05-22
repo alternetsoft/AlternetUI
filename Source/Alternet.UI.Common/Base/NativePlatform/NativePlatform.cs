@@ -39,6 +39,8 @@ namespace Alternet.UI
 
         public abstract IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control);
 
+        public abstract IPropertyGridVariant CreateVariant();
+
         public abstract ICheckBoxHandler CreateCheckBoxHandler(CheckBox control);
 
         public abstract IButtonHandler CreateButtonHandler(Button control);

@@ -14,11 +14,6 @@ namespace Alternet.UI
     public interface IPropertyGridVariant : IDisposable
     {
         /// <summary>
-        /// Gets instance handle.
-        /// </summary>
-        IntPtr Handle { get; }
-
-        /// <summary>
         /// Gets or sets variant value as <see cref="object"/>.
         /// </summary>
         /// <remarks>

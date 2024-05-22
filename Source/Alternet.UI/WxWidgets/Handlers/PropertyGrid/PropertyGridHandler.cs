@@ -56,10 +56,10 @@ namespace Alternet.UI
         public new Native.PropertyGrid NativeControl =>
             (Native.PropertyGrid)base.NativeControl!;
 
-        int IPropertyGridHandler.EventValidationFailureBehavior
+        PropertyGridValidationFailure IPropertyGridHandler.EventValidationFailureBehavior
         {
-            get => NativeControl.EventValidationFailureBehavior;
-            set => NativeControl.EventValidationFailureBehavior = value;
+            get => (PropertyGridValidationFailure)NativeControl.EventValidationFailureBehavior;
+            set => NativeControl.EventValidationFailureBehavior = (int)value;
         }
 
         IPropertyGridItem? IPropertyGridHandler.EventProperty
@@ -622,789 +622,806 @@ namespace Alternet.UI
 
         void IPropertyGridHandler.RefreshProperty(IPropertyGridItem p)
         {
-            NativeControl.;
+            NativeControl.RefreshProperty(ItemToPtr(p));
         }
 
         void IPropertyGridHandler.SetPropertyReadOnly(IPropertyGridItem id, bool set, int flags)
         {
-            NativeControl.;
+            NativeControl.SetPropertyReadOnly(ItemToPtr(id), set, flags);
         }
 
         void IPropertyGridHandler.SetPropertyValueUnspecified(IPropertyGridItem id)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueUnspecified(ItemToPtr(id));
         }
 
-        IPropertyGridItem IPropertyGridHandler.AppendIn(
-            IPropertyGridItem id,
-            IPropertyGridItem newproperty)
+        void IPropertyGridHandler.AppendIn(IPropertyGridItem id, IPropertyGridItem newproperty)
         {
-            return NativeControl.;
+            NativeControl.AppendIn(ItemToPtr(id), ItemToPtr(newproperty));
         }
 
         void IPropertyGridHandler.BeginAddChildren(IPropertyGridItem id)
         {
-            NativeControl.;
+            NativeControl.BeginAddChildren(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.Collapse(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.Collapse(ItemToPtr(id));
         }
 
         void IPropertyGridHandler.DeleteProperty(IPropertyGridItem id)
         {
-            return NativeControl.;
+            NativeControl.DeleteProperty(ItemToPtr(id));
         }
 
-        IPropertyGridItem IPropertyGridHandler.RemoveProperty(IPropertyGridItem id)
+        void IPropertyGridHandler.RemoveProperty(IPropertyGridItem id)
         {
-            return NativeControl.;
+            NativeControl.RemoveProperty(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.DisableProperty(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.DisableProperty(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.EnableProperty(IPropertyGridItem id, bool enable)
         {
-            return NativeControl.;
+            return NativeControl.EnableProperty(ItemToPtr(id), enable);
         }
 
         void IPropertyGridHandler.EndAddChildren(IPropertyGridItem id)
         {
-            return NativeControl.;
+            NativeControl.EndAddChildren(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.Expand(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.Expand(ItemToPtr(id));
         }
 
         nint IPropertyGridHandler.GetPropertyClientData(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyClientData(ItemToPtr(id));
         }
 
         string IPropertyGridHandler.GetPropertyHelpString(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyHelpString(ItemToPtr(id));
         }
 
         string IPropertyGridHandler.GetPropertyLabel(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyLabel(ItemToPtr(id));
         }
 
         string IPropertyGridHandler.GetPropertyValueAsString(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsString(ItemToPtr(id));
         }
 
         long IPropertyGridHandler.GetPropertyValueAsLong(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsLong(ItemToPtr(id));
         }
 
         string IPropertyGridHandler.GetPropNameAsLabel()
         {
-            return NativeControl.;
+            return Native.PropertyGrid.NameAsLabel;
         }
 
         ulong IPropertyGridHandler.GetPropertyValueAsULong(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsULong(ItemToPtr(id));
         }
 
         int IPropertyGridHandler.GetPropertyValueAsInt(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsInt(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.GetPropertyValueAsBool(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsBool(ItemToPtr(id));
         }
 
         double IPropertyGridHandler.GetPropertyValueAsDouble(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsDouble(ItemToPtr(id));
         }
 
         DateTime IPropertyGridHandler.GetPropertyValueAsDateTime(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyValueAsDateTime(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.HideProperty(IPropertyGridItem id, bool hide, int flags)
         {
-            return NativeControl.;
+            return NativeControl.HideProperty(ItemToPtr(id), hide, flags);
         }
 
-        IPropertyGridItem IPropertyGridHandler.Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty)
+        void IPropertyGridHandler.Insert(
+            IPropertyGridItem priorThis, IPropertyGridItem newproperty)
         {
-            return NativeControl.;
+            NativeControl.Insert(ItemToPtr(priorThis), ItemToPtr(newproperty));
         }
 
-        IPropertyGridItem IPropertyGridHandler.InsertByIndex(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
+        void IPropertyGridHandler.InsertByIndex(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
         {
-            return NativeControl.;
+            NativeControl.InsertByIndex(ItemToPtr(parent), index, ItemToPtr(newproperty));
         }
 
         bool IPropertyGridHandler.IsPropertyCategory(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertyCategory(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.IsPropertyEnabled(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertyEnabled(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.IsPropertyExpanded(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertyExpanded(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.IsPropertyModified(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertyModified(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.IsPropertySelected(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertySelected(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.IsPropertyShown(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertyShown(ItemToPtr(id));
         }
 
         bool IPropertyGridHandler.IsPropertyValueUnspecified(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.IsPropertyValueUnspecified(ItemToPtr(id));
         }
 
         void IPropertyGridHandler.LimitPropertyEditing(IPropertyGridItem id, bool limit)
         {
-            NativeControl.;
+            NativeControl.LimitPropertyEditing(ItemToPtr(id), limit);
         }
 
-        IPropertyGridItem IPropertyGridHandler.ReplaceProperty(IPropertyGridItem id, IPropertyGridItem property)
+        void IPropertyGridHandler.ReplaceProperty(IPropertyGridItem id, IPropertyGridItem property)
         {
-            return NativeControl.;
+            NativeControl.ReplaceProperty(ItemToPtr(id), ItemToPtr(property));
         }
 
         void IPropertyGridHandler.SetPropertyBackgroundColor(IPropertyGridItem id, Color color, int flags)
         {
-            NativeControl.;
+            NativeControl.SetPropertyBackgroundColor(ItemToPtr(id), color, flags);
         }
 
         void IPropertyGridHandler.SetPropertyColorsToDefault(IPropertyGridItem id, int flags)
         {
-            NativeControl.;
+            NativeControl.SetPropertyColorsToDefault(ItemToPtr(id), flags);
         }
 
         void IPropertyGridHandler.SetPropertyTextColor(IPropertyGridItem id, Color col, int flags)
         {
-            NativeControl.;
+            NativeControl.SetPropertyTextColor(ItemToPtr(id), col, flags);
         }
 
         Color IPropertyGridHandler.GetPropertyBackgroundColor(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyBackgroundColor(ItemToPtr(id));
         }
 
         Color IPropertyGridHandler.GetPropertyTextColor(IPropertyGridItem id)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyTextColor(ItemToPtr(id));
         }
 
         void IPropertyGridHandler.SetPropertyEditorByName(IPropertyGridItem id, string editorName)
         {
-            NativeControl.;
+            NativeControl.SetPropertyEditorByName(ItemToPtr(id), editorName);
         }
 
         void IPropertyGridHandler.SetPropertyLabel(IPropertyGridItem id, string newproplabel)
         {
-            NativeControl.;
+            NativeControl.SetPropertyLabel(ItemToPtr(id), newproplabel);
         }
 
         void IPropertyGridHandler.SetPropertyName(IPropertyGridItem id, string newName)
         {
-            NativeControl.;
+            NativeControl.SetPropertyName(ItemToPtr(id), newName);
         }
 
         void IPropertyGridHandler.SetPropertyHelpString(IPropertyGridItem id, string helpString)
         {
-            NativeControl.;
+            NativeControl.SetPropertyHelpString(ItemToPtr(id), helpString);
         }
 
         bool IPropertyGridHandler.SetPropertyMaxLength(IPropertyGridItem id, int maxLen)
         {
-            return NativeControl.;
+            return NativeControl.SetPropertyMaxLength(ItemToPtr(id), maxLen);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsLong(IPropertyGridItem id, long value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsLong(ItemToPtr(id), value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsInt(IPropertyGridItem id, int value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsInt(ItemToPtr(id), value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsDouble(IPropertyGridItem id, double value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsDouble(ItemToPtr(id), value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsBool(IPropertyGridItem id, bool value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsBool(ItemToPtr(id), value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsStr(IPropertyGridItem id, string value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsStr(ItemToPtr(id), value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsVariant(IPropertyGridItem id, IPropertyGridVariant variant)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsVariant(ItemToPtr(id), VariantToHandle(variant));
+        }
+
+        public nint VariantToHandle(IPropertyGridVariant variant)
+        {
+            return ((PropertyGridVariant)variant).Handle;
         }
 
         void IPropertyGridHandler.SetPropertyValueAsDateTime(IPropertyGridItem id, DateTime value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyValueAsDateTime(ItemToPtr(id), value);
         }
 
-        void IPropertyGridHandler.SetValidationFailureBehavior(int vfbFlags)
+        void IPropertyGridHandler.SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
         {
-            NativeControl.;
+            NativeControl.SetValidationFailureBehavior((int)vfbFlags);
         }
 
         void IPropertyGridHandler.SortChildren(IPropertyGridItem id, int flags)
         {
-            NativeControl.;
+            NativeControl.SortChildren(ItemToPtr(id), flags);
         }
 
         bool IPropertyGridHandler.ChangePropertyValue(IPropertyGridItem id, IPropertyGridVariant variant)
         {
-            return NativeControl.;
+            return NativeControl.ChangePropertyValue(ItemToPtr(id), VariantToHandle(variant));
         }
 
         void IPropertyGridHandler.SetPropertyClientData(IPropertyGridItem prop, nint clientData)
         {
-            NativeControl.;
+            NativeControl.SetPropertyClientData(ItemToPtr(prop), clientData);
         }
 
-        void IPropertyGridHandler.SetPropertyAttribute(IPropertyGridItem id, string attrName, IPropertyGridVariant variant, PropertyGridItemValueFlags argFlags)
+        void IPropertyGridHandler.SetPropertyAttribute(
+            IPropertyGridItem id,
+            string attrName,
+            IPropertyGridVariant variant,
+            PropertyGridItemValueFlags argFlags)
         {
-            NativeControl.;
+            NativeControl.SetPropertyAttribute(
+                ItemToPtr(id),
+                attrName,
+                VariantToHandle(variant),
+                (int)argFlags);
         }
 
         void IPropertyGridHandler.SetPropertyAttributeAll(string attrName, IPropertyGridVariant variant)
         {
-            NativeControl.;
+            NativeControl.SetPropertyAttributeAll(attrName, VariantToHandle(variant));
         }
 
         int IPropertyGridHandler.GetSplitterPosition(uint splitterIndex)
         {
-            return NativeControl.;
+            return NativeControl.GetSplitterPosition(splitterIndex);
         }
 
         int IPropertyGridHandler.GetVerticalSpacing()
         {
-            return NativeControl.;
+            return NativeControl.GetVerticalSpacing();
         }
 
         bool IPropertyGridHandler.IsEditorFocused()
         {
-            return NativeControl.;
+            return NativeControl.IsEditorFocused();
         }
 
         bool IPropertyGridHandler.IsEditorsValueModified()
         {
-            NativeControl.;
+            return NativeControl.IsEditorsValueModified();
         }
 
         bool IPropertyGridHandler.IsAnyModified()
         {
-            return NativeControl.;
+            return NativeControl.IsAnyModified();
         }
 
         void IPropertyGridHandler.ResetColors()
         {
-            NativeControl.;
+            NativeControl.ResetColors();
         }
 
         void IPropertyGridHandler.ResetColumnSizes(bool enableAutoResizing)
         {
-            NativeControl.;
+            NativeControl.ResetColumnSizes(enableAutoResizing);
         }
 
         void IPropertyGridHandler.MakeColumnEditable(uint column, bool editable)
         {
-            NativeControl.;
+            NativeControl.MakeColumnEditable(column, editable);
         }
 
         void IPropertyGridHandler.BeginLabelEdit(uint column)
         {
-            NativeControl.;
+            NativeControl.BeginLabelEdit(column);
         }
 
         void IPropertyGridHandler.EndLabelEdit(bool commit)
         {
-            NativeControl.;
+            NativeControl.EndLabelEdit(commit);
         }
 
         void IPropertyGridHandler.SetCaptionBackgroundColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetCaptionBackgroundColor(col);
         }
 
         void IPropertyGridHandler.SetCaptionTextColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetCaptionTextColor(col);
         }
 
         void IPropertyGridHandler.SetCellBackgroundColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetCellBackgroundColor(col);
         }
 
         void IPropertyGridHandler.SetCellDisabledTextColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetCellDisabledTextColor(col);
         }
 
         void IPropertyGridHandler.SetCellTextColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetCellTextColor(col);
         }
 
         void IPropertyGridHandler.SetColumnCount(int colCount)
         {
-            NativeControl.;
+            NativeControl.SetColumnCount(colCount);
         }
 
         void IPropertyGridHandler.SetEmptySpaceColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetEmptySpaceColor(col);
         }
 
         void IPropertyGridHandler.SetLineColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetLineColor(col);
         }
 
         void IPropertyGridHandler.SetMarginColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetMarginColor(col);
         }
 
         void IPropertyGridHandler.SetSelectionBackgroundColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetSelectionBackgroundColor(col);
         }
 
         void IPropertyGridHandler.SetSelectionTextColor(Color col)
         {
-            NativeControl.;
+            NativeControl.SetSelectionTextColor(col);
         }
 
         void IPropertyGridHandler.SetSplitterPosition(int newXPos, int col)
         {
-            NativeControl.;
+            NativeControl.SetSplitterPosition(newXPos, col);
         }
 
         string IPropertyGridHandler.GetUnspecifiedValueText(int argFlags)
         {
-            return NativeControl.;
+            return NativeControl.GetUnspecifiedValueText(argFlags);
         }
 
         void IPropertyGridHandler.SetVirtualWidth(int width)
         {
-            NativeControl.;
+            NativeControl.SetVirtualWidth(width);
         }
 
         void IPropertyGridHandler.SetSplitterLeft(bool privateChildrenToo)
         {
-            NativeControl.;
+            NativeControl.SetSplitterLeft(privateChildrenToo);
         }
 
         void IPropertyGridHandler.SetVerticalSpacing(int vspacing)
         {
-            NativeControl.;
+            NativeControl.SetVerticalSpacing(vspacing);
         }
 
         bool IPropertyGridHandler.HasVirtualWidth()
         {
-            return NativeControl.;
+            return NativeControl.HasVirtualWidth();
         }
 
         uint IPropertyGridHandler.GetCommonValueCount()
         {
-            return NativeControl.;
+            return NativeControl.GetCommonValueCount();
         }
 
         string IPropertyGridHandler.GetCommonValueLabel(uint i)
         {
-            return NativeControl.;
+            return NativeControl.GetCommonValueLabel(i);
         }
 
         int IPropertyGridHandler.GetUnspecifiedCommonValue()
         {
-            return NativeControl.;
+            return NativeControl.GetUnspecifiedCommonValue();
         }
 
         void IPropertyGridHandler.SetUnspecifiedCommonValue(int index)
         {
-            NativeControl.;
+            NativeControl.SetUnspecifiedCommonValue(index);
         }
 
         void IPropertyGridHandler.RefreshEditor()
         {
-            NativeControl.;
+            NativeControl.RefreshEditor();
         }
 
         bool IPropertyGridHandler.WasValueChangedInEvent()
         {
-            return NativeControl.;
+            return NativeControl.WasValueChangedInEvent();
         }
 
         int IPropertyGridHandler.GetSpacingY()
         {
-            return NativeControl.;
+            return NativeControl.GetSpacingY();
         }
 
         void IPropertyGridHandler.SetupTextCtrlValue(string text)
         {
-            NativeControl.;
+            NativeControl.SetupTextCtrlValue(text);
         }
 
         bool IPropertyGridHandler.UnfocusEditor()
         {
-            return NativeControl.;
+            return NativeControl.UnfocusEditor();
         }
 
         bool IPropertyGridHandler.EnsureVisible(IPropertyGridItem propArg)
         {
-            return NativeControl.;
+            return NativeControl.EnsureVisible(ItemToPtr(propArg));
         }
 
         bool IPropertyGridHandler.SelectProperty(IPropertyGridItem propArg, bool focus)
         {
-            return NativeControl.;
+            return NativeControl.SelectProperty(ItemToPtr(propArg), focus);
         }
 
         bool IPropertyGridHandler.AddToSelection(IPropertyGridItem propArg)
         {
-            return NativeControl.;
+            return NativeControl.AddToSelection(ItemToPtr(propArg));
         }
 
         bool IPropertyGridHandler.RemoveFromSelection(IPropertyGridItem propArg)
         {
-            return NativeControl.;
+            return NativeControl.RemoveFromSelection(ItemToPtr(propArg));
         }
 
         void IPropertyGridHandler.SetCurrentCategory(IPropertyGridItem propArg)
         {
-            NativeControl.;
+            NativeControl.SetCurrentCategory(ItemToPtr(propArg));
         }
 
         RectI IPropertyGridHandler.GetImageRect(IPropertyGridItem p, int item)
         {
-            return NativeControl.;
+            return NativeControl.GetImageRect(ItemToPtr(p), item);
         }
 
         SizeI IPropertyGridHandler.GetImageSize(IPropertyGridItem? p, int item)
         {
-            return NativeControl.;
+            return NativeControl.GetImageSize(ItemToPtr(p), item);
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateStringProperty(string label, string name, string value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateStringProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateFilenameProperty(string label, string name, string value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateFilenameProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateDirProperty(string label, string name, string value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateDirProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateImageFilenameProperty(string label, string name, string value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateImageFilenameProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateCursorProperty(string label, string name, int value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateCursorProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateBoolProperty(string label, string name, bool value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateBoolProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateIntProperty(string label, string name, long value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateIntProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateFloatProperty(string label, string name, double value)
         {
-            NativeControl.;
+            return CreateHandle(NativeControl.CreateFloatProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateUIntProperty(string label, string name, ulong value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateUIntProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateLongStringProperty(string label, string name, string value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateLongStringProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateDateProperty(string label, string name, DateTime value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateDateProperty(label, name, value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateEditEnumProperty(string label, string name, IPropertyGridChoices choices, string value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateEditEnumProperty(label, name, ChoicesToPtr(choices), value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateEnumProperty(string label, string name, IPropertyGridChoices choices, int value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateEnumProperty(label, name, ChoicesToPtr(choices), value));
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateFlagsProperty(string label, string name, IPropertyGridChoices choices, int value)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreateFlagsProperty(label, name, ChoicesToPtr(choices), value));
+        }
+
+        public nint ChoicesToPtr(IPropertyGridChoices choices)
+        {
+            return ((PropertyGridChoices)choices).Handle;
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreatePropCategory(string label, string name)
         {
-            return NativeControl.;
+            return CreateHandle(NativeControl.CreatePropCategory(label, name));
         }
 
         void IPropertyGridHandler.Clear()
         {
-            NativeControl.;
+            NativeControl.Clear();
         }
 
-        IPropertyGridItem IPropertyGridHandler.Append(IPropertyGridItem property)
+        void IPropertyGridHandler.Append(IPropertyGridItem property)
         {
-            return NativeControl.;
+            NativeControl.Append(ItemToPtr(property));
         }
 
         bool IPropertyGridHandler.ClearSelection(bool validation)
         {
-            return NativeControl.;
+            return NativeControl.ClearSelection(validation);
         }
 
         void IPropertyGridHandler.ClearModifiedStatus()
         {
-            NativeControl.;
+            NativeControl.ClearModifiedStatus();
         }
 
         bool IPropertyGridHandler.CollapseAll()
         {
-            return NativeControl.;
+            return NativeControl.CollapseAll();
         }
 
         bool IPropertyGridHandler.EditorValidate()
         {
-            return NativeControl.;
+            return NativeControl.EditorValidate();
         }
 
         bool IPropertyGridHandler.ExpandAll(bool expand)
         {
-            return NativeControl.;
+            return NativeControl.ExpandAll(expand);
         }
 
         string IPropertyGridHandler.GetPropertyName(IPropertyGridItem property)
         {
-            return NativeControl.;
+            return NativeControl.GetPropertyName(ItemToPtr(property));
         }
 
         bool IPropertyGridHandler.RestoreEditableState(string src, int restoreStates)
         {
-            return NativeControl.;
+            return NativeControl.RestoreEditableState(src, restoreStates);
         }
 
         string IPropertyGridHandler.SaveEditableState(int includedStates)
         {
-            return NativeControl.;
+            return NativeControl.SaveEditableState(includedStates);
         }
 
         bool IPropertyGridHandler.SetColumnProportion(uint column, int proportion)
         {
-            return NativeControl.;
+            return NativeControl.SetColumnProportion(column, proportion);
         }
 
         int IPropertyGridHandler.GetColumnProportion(uint column)
         {
-            return NativeControl.;
+            return NativeControl.GetColumnProportion(column);
         }
 
         void IPropertyGridHandler.Sort(int flags)
         {
-            NativeControl.;
+            NativeControl.Sort(flags);
         }
 
         PointI IPropertyGridHandler.CalcScrolledPosition(PointI point)
         {
-            return NativeControl.;
+            return NativeControl.CalcScrolledPosition(point);
         }
 
         PointI IPropertyGridHandler.CalcUnscrolledPosition(PointI point)
         {
-            return NativeControl.;
+            return NativeControl.CalcUnscrolledPosition(point);
         }
 
         int IPropertyGridHandler.GetHitTestColumn(PointI point)
         {
-            NativeControl.;
+            return NativeControl.GetHitTestColumn(point);
         }
 
         void IPropertyGridHandler.SetPropertyFlag(IPropertyGridItem prop, int flag, bool value)
         {
-            NativeControl.;
+            NativeControl.SetPropertyFlag(ItemToPtr(prop), flag, value);
         }
 
         void IPropertyGridHandler.AddActionTrigger(int action, int keycode, int modifiers)
         {
-            NativeControl.;
+            NativeControl.AddActionTrigger(action, keycode, modifiers);
         }
 
         void IPropertyGridHandler.DedicateKey(int keycode)
         {
-            NativeControl.;
+            NativeControl.DedicateKey(keycode);
         }
 
         void IPropertyGridHandler.CenterSplitter(bool enableAutoResizing)
         {
-            NativeControl.;
+            NativeControl.CenterSplitter(enableAutoResizing);
         }
 
         void IPropertyGridHandler.ClearActionTriggers(int action)
         {
-            NativeControl.;
+            NativeControl.ClearActionTriggers(action);
         }
 
         bool IPropertyGridHandler.CommitChangesFromEditor(uint flags)
         {
-            return NativeControl.;
+            return NativeControl.CommitChangesFromEditor(flags);
         }
 
         void IPropertyGridHandler.EditorsValueWasModified()
         {
-            NativeControl.;
+            NativeControl.EditorsValueWasModified();
         }
 
         void IPropertyGridHandler.EditorsValueWasNotModified()
         {
-            NativeControl.;
+            NativeControl.EditorsValueWasNotModified();
         }
 
         bool IPropertyGridHandler.EnableCategories(bool enable)
         {
-            return NativeControl.;
+            return NativeControl.EnableCategories(enable);
         }
 
         SizeD IPropertyGridHandler.FitColumns()
         {
-            return NativeControl.;
+            return NativeControl.FitColumns();
         }
 
         Color IPropertyGridHandler.GetCaptionBackgroundColor()
         {
-            return NativeControl.;
+            return NativeControl.GetCaptionBackgroundColor();
         }
 
         Color IPropertyGridHandler.GetCaptionForegroundColor()
         {
-            return NativeControl.;
+            return NativeControl.GetCaptionForegroundColor();
         }
 
         Color IPropertyGridHandler.GetCellBackgroundColor()
         {
-            return NativeControl.;
+            return NativeControl.GetCellBackgroundColor();
         }
 
         Color IPropertyGridHandler.GetCellDisabledTextColor()
         {
-            return NativeControl.;
+            return NativeControl.GetCellDisabledTextColor();
         }
 
         Color IPropertyGridHandler.GetCellTextColor()
         {
-            return NativeControl.;
+            return NativeControl.GetCellTextColor();
         }
 
         uint IPropertyGridHandler.GetColumnCount()
         {
-            return NativeControl.;
+            return NativeControl.GetColumnCount();
         }
 
         Color IPropertyGridHandler.GetEmptySpaceColor()
         {
-            return NativeControl.;
+            return NativeControl.GetEmptySpaceColor();
         }
 
         int IPropertyGridHandler.GetFontHeight()
         {
-            return NativeControl.;
+            return NativeControl.GetFontHeight();
         }
 
         Color IPropertyGridHandler.GetLineColor()
         {
-            return NativeControl.;
+            return NativeControl.GetLineColor();
         }
 
         Color IPropertyGridHandler.GetMarginColor()
         {
-            return NativeControl.;
+            return NativeControl.GetMarginColor();
         }
 
         int IPropertyGridHandler.GetMarginWidth()
         {
-            return NativeControl.;
+            return NativeControl.GetMarginWidth();
         }
 
         int IPropertyGridHandler.GetRowHeight()
         {
-            return NativeControl.;
+            return NativeControl.GetRowHeight();
         }
 
         Color IPropertyGridHandler.GetSelectionBackgroundColor()
         {
-            return NativeControl.;
+            return NativeControl.GetSelectionBackgroundColor();
         }
 
         Color IPropertyGridHandler.GetSelectionForegroundColor()
         {
-            return NativeControl.;
+            return NativeControl.GetSelectionForegroundColor();
         }
 
         public class WxPropertyGridItemHandle : PropertyGridItemHandle
         {
-            private IntPtr handle;
+            private readonly IntPtr handle;
 
             public WxPropertyGridItemHandle(IntPtr handle)
             {
