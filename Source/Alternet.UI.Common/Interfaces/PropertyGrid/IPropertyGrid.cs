@@ -80,6 +80,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.HasItems"/>
         bool HasItems { get; }
 
+        IPropertyGridHandler Handler { get; }
+
         /// <inheritdoc cref="PropertyGrid.FirstItem"/>
         IPropertyGridItem? FirstItem { get; }
 
@@ -641,10 +643,10 @@ namespace Alternet.UI
                 PropertyGridEditableState.AllStates);
 
         /// <inheritdoc cref="PropertyGrid.SetColumnProportion"/>
-        bool SetColumnProportion(uint column, int proportion);
+        bool SetColumnProportion(int column, int proportion);
 
         /// <inheritdoc cref="PropertyGrid.GetColumnProportion"/>
-        int GetColumnProportion(uint column);
+        int GetColumnProportion(int column);
 
         /// <inheritdoc cref="PropertyGrid.GetPropertyBackgroundColor"/>
         Color GetPropertyBackgroundColor(IPropertyGridItem prop);
@@ -754,7 +756,7 @@ namespace Alternet.UI
         SizeD FitColumns();
 
         /// <inheritdoc cref="PropertyGrid.GetColumnCount"/>
-        uint GetColumnCount();
+        int GetColumnCount();
 
         /// <inheritdoc cref="PropertyGrid.GetFontHeight"/>
         int GetFontHeight();
@@ -766,7 +768,7 @@ namespace Alternet.UI
         int GetRowHeight();
 
         /// <inheritdoc cref="PropertyGrid.GetSplitterPosition"/>
-        int GetSplitterPosition(uint splitterIndex = 0);
+        int GetSplitterPosition(int splitterIndex = 0);
 
         /// <inheritdoc cref="PropertyGrid.GetVerticalSpacing"/>
         int GetVerticalSpacing();
@@ -787,10 +789,10 @@ namespace Alternet.UI
         void ResetColumnSizes(bool enableAutoResizing = false);
 
         /// <inheritdoc cref="PropertyGrid.MakeColumnEditable"/>
-        void MakeColumnEditable(uint column, bool editable = true);
+        void MakeColumnEditable(int column, bool editable = true);
 
         /// <inheritdoc cref="PropertyGrid.BeginLabelEdit"/>
-        void BeginLabelEdit(uint column = 0);
+        void BeginLabelEdit(int column = 0);
 
         /// <inheritdoc cref="PropertyGrid.EndLabelEdit"/>
         void EndLabelEdit(bool commit = true);
@@ -802,7 +804,7 @@ namespace Alternet.UI
         void SetSplitterPosition(int newXPos, int col = 0);
 
         /// <inheritdoc cref="PropertyGrid.GetUnspecifiedValueText"/>
-        string GetUnspecifiedValueText();
+        string GetUnspecifiedValueText(PropertyGridValueFormatFlags flags = 0);
 
         /// <inheritdoc cref="PropertyGrid.SetVirtualWidth"/>
         void SetVirtualWidth(int width);
@@ -817,10 +819,10 @@ namespace Alternet.UI
         bool HasVirtualWidth();
 
         /// <inheritdoc cref="PropertyGrid.GetCommonValueCount"/>
-        uint GetCommonValueCount();
+        int GetCommonValueCount();
 
         /// <inheritdoc cref="PropertyGrid.GetCommonValueLabel"/>
-        string GetCommonValueLabel(uint i);
+        string GetCommonValueLabel(int i);
 
         /// <inheritdoc cref="PropertyGrid.GetUnspecifiedCommonValue"/>
         int GetUnspecifiedCommonValue();

@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     // Misc. argument flags.
     [Flags]
-    internal enum PropertyGridMiscArgFlags
+    public enum PropertyGridValueFormatFlags
     {
         // Get/Store full value instead of displayed value.
         FullValue = 0x00000001,

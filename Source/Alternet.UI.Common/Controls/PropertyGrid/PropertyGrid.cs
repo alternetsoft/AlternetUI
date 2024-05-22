@@ -30,10 +30,6 @@ namespace Alternet.UI
         internal const string PropEditClassSpinCtrl = "SpinCtrl";
         internal const string PropEditClassTextCtrlAndButton = "TextCtrlAndButton";
 
-        /*private const int PGDONTRECURSE = 0x00000000;
-        private const int PGRECURSE = 0x00000020;
-        private const int PGSORTTOPLEVELONLY = 0x00000200;*/
-
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
 
         private static PropertyGridEditKindColor defaultEditKindColor =
@@ -2692,7 +2688,7 @@ namespace Alternet.UI
         /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> style needs to be used
         /// to indicate that columns are auto-resizable.
         /// </remarks>
-        public virtual bool SetColumnProportion(uint column, int proportion)
+        public virtual bool SetColumnProportion(int column, int proportion)
         {
             return Handler.SetColumnProportion(column, proportion);
         }
@@ -2701,7 +2697,7 @@ namespace Alternet.UI
         /// Gets auto-resize proportion of the given column.
         /// </summary>
         /// <param name="column">Column index.</param>
-        public virtual int GetColumnProportion(uint column)
+        public virtual int GetColumnProportion(int column)
         {
             return Handler.GetColumnProportion(column);
         }
@@ -3074,7 +3070,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets number of columns currently on grid.
         /// </summary>
-        public virtual uint GetColumnCount()
+        public virtual int GetColumnCount()
         {
             return Handler.GetColumnCount();
         }
@@ -3107,7 +3103,7 @@ namespace Alternet.UI
         /// Gets current splitter x position.
         /// </summary>
         /// <param name="splitterIndex">Splitter index (starting from 0).</param>
-        public virtual int GetSplitterPosition(uint splitterIndex = 0)
+        public virtual int GetSplitterPosition(int splitterIndex = 0)
         {
             return Handler.GetSplitterPosition(splitterIndex);
         }
@@ -3175,7 +3171,7 @@ namespace Alternet.UI
         /// <param name="column">The index of the column to make editable.</param>
         /// <param name="editable">Using <c>false</c> here will disable column
         /// from being editable.</param>
-        public virtual void MakeColumnEditable(uint column, bool editable = true)
+        public virtual void MakeColumnEditable(int column, bool editable = true)
         {
             Handler.MakeColumnEditable(column, editable);
         }
@@ -3188,7 +3184,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When multiple selection is enabled, this applies to all selected properties.
         /// </remarks>
-        public virtual void BeginLabelEdit(uint column = 0)
+        public virtual void BeginLabelEdit(int column = 0)
         {
             Handler.BeginLabelEdit(column);
         }
@@ -3230,9 +3226,9 @@ namespace Alternet.UI
         /// <summary>
         /// Returns (visual) text representation of the unspecified property value.
         /// </summary>
-        public virtual string GetUnspecifiedValueText()
+        public virtual string GetUnspecifiedValueText(PropertyGridValueFormatFlags flags = 0)
         {
-            return Handler.GetUnspecifiedValueText(0);
+            return Handler.GetUnspecifiedValueText(flags);
         }
 
         /// <summary>
@@ -3295,7 +3291,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets number of common values.
         /// </summary>
-        public virtual uint GetCommonValueCount()
+        public virtual int GetCommonValueCount()
         {
             return Handler.GetCommonValueCount();
         }
@@ -3304,7 +3300,7 @@ namespace Alternet.UI
         /// Gets label of given common value.
         /// </summary>
         /// <param name="i">Index of the commo nvalue.</param>
-        public virtual string GetCommonValueLabel(uint i)
+        public virtual string GetCommonValueLabel(int i)
         {
             return Handler.GetCommonValueLabel(i);
         }

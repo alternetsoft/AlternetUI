@@ -685,9 +685,9 @@ namespace Alternet.UI
             NativeControl.SetPropertyAttributeAll(attrName, VariantToHandle(variant));
         }
 
-        int IPropertyGridHandler.GetSplitterPosition(uint splitterIndex)
+        int IPropertyGridHandler.GetSplitterPosition(int splitterIndex)
         {
-            return NativeControl.GetSplitterPosition(splitterIndex);
+            return NativeControl.GetSplitterPosition((uint)splitterIndex);
         }
 
         int IPropertyGridHandler.GetVerticalSpacing()
@@ -720,14 +720,14 @@ namespace Alternet.UI
             NativeControl.ResetColumnSizes(enableAutoResizing);
         }
 
-        void IPropertyGridHandler.MakeColumnEditable(uint column, bool editable)
+        void IPropertyGridHandler.MakeColumnEditable(int column, bool editable)
         {
-            NativeControl.MakeColumnEditable(column, editable);
+            NativeControl.MakeColumnEditable((uint)column, editable);
         }
 
-        void IPropertyGridHandler.BeginLabelEdit(uint column)
+        void IPropertyGridHandler.BeginLabelEdit(int column)
         {
-            NativeControl.BeginLabelEdit(column);
+            NativeControl.BeginLabelEdit((uint)column);
         }
 
         void IPropertyGridHandler.EndLabelEdit(bool commit)
@@ -795,9 +795,9 @@ namespace Alternet.UI
             NativeControl.SetSplitterPosition(newXPos, col);
         }
 
-        string IPropertyGridHandler.GetUnspecifiedValueText(int argFlags)
+        string IPropertyGridHandler.GetUnspecifiedValueText(PropertyGridValueFormatFlags argFlags)
         {
-            return NativeControl.GetUnspecifiedValueText(argFlags);
+            return NativeControl.GetUnspecifiedValueText((int)argFlags);
         }
 
         void IPropertyGridHandler.SetVirtualWidth(int width)
@@ -820,14 +820,14 @@ namespace Alternet.UI
             return NativeControl.HasVirtualWidth();
         }
 
-        uint IPropertyGridHandler.GetCommonValueCount()
+        int IPropertyGridHandler.GetCommonValueCount()
         {
-            return NativeControl.GetCommonValueCount();
+            return (int)NativeControl.GetCommonValueCount();
         }
 
-        string IPropertyGridHandler.GetCommonValueLabel(uint i)
+        string IPropertyGridHandler.GetCommonValueLabel(int i)
         {
-            return NativeControl.GetCommonValueLabel(i);
+            return NativeControl.GetCommonValueLabel((uint)i);
         }
 
         int IPropertyGridHandler.GetUnspecifiedCommonValue()
@@ -1030,14 +1030,14 @@ namespace Alternet.UI
             return NativeControl.SaveEditableState((int)includedStates);
         }
 
-        bool IPropertyGridHandler.SetColumnProportion(uint column, int proportion)
+        bool IPropertyGridHandler.SetColumnProportion(int column, int proportion)
         {
-            return NativeControl.SetColumnProportion(column, proportion);
+            return NativeControl.SetColumnProportion((uint)column, proportion);
         }
 
-        int IPropertyGridHandler.GetColumnProportion(uint column)
+        int IPropertyGridHandler.GetColumnProportion(int column)
         {
-            return NativeControl.GetColumnProportion(column);
+            return NativeControl.GetColumnProportion((uint)column);
         }
 
         void IPropertyGridHandler.Sort(PropertyGridItemValueFlags flags)
@@ -1091,9 +1091,9 @@ namespace Alternet.UI
             NativeControl.ClearActionTriggers((int)action);
         }
 
-        bool IPropertyGridHandler.CommitChangesFromEditor(uint flags)
+        bool IPropertyGridHandler.CommitChangesFromEditor(PropertyGridSelectPropFlags flags)
         {
-            return NativeControl.CommitChangesFromEditor(flags);
+            return NativeControl.CommitChangesFromEditor((uint)flags);
         }
 
         void IPropertyGridHandler.EditorsValueWasModified()
@@ -1141,9 +1141,9 @@ namespace Alternet.UI
             return NativeControl.GetCellTextColor();
         }
 
-        uint IPropertyGridHandler.GetColumnCount()
+        int IPropertyGridHandler.GetColumnCount()
         {
-            return NativeControl.GetColumnCount();
+            return (int)NativeControl.GetColumnCount();
         }
 
         Color IPropertyGridHandler.GetEmptySpaceColor()

@@ -174,7 +174,7 @@ namespace Alternet.UI
 
         void SetPropertyAttributeAll(string attrName, IPropertyGridVariant variant);
 
-        int GetSplitterPosition(uint splitterIndex);
+        int GetSplitterPosition(int splitterIndex);
 
         int GetVerticalSpacing();
 
@@ -188,9 +188,9 @@ namespace Alternet.UI
 
         void ResetColumnSizes(bool enableAutoResizing);
 
-        void MakeColumnEditable(uint column, bool editable);
+        void MakeColumnEditable(int column, bool editable);
 
-        void BeginLabelEdit(uint column);
+        void BeginLabelEdit(int column);
 
         void EndLabelEdit(bool commit);
 
@@ -218,7 +218,7 @@ namespace Alternet.UI
 
         void SetSplitterPosition(int newXPos, int col);
 
-        string GetUnspecifiedValueText(int argFlags);
+        string GetUnspecifiedValueText(PropertyGridValueFormatFlags argFlags = 0);
 
         void SetVirtualWidth(int width);
 
@@ -228,9 +228,9 @@ namespace Alternet.UI
 
         bool HasVirtualWidth();
 
-        uint GetCommonValueCount();
+        int GetCommonValueCount();
 
-        string GetCommonValueLabel(uint i);
+        string GetCommonValueLabel(int i);
 
         int GetUnspecifiedCommonValue();
 
@@ -334,9 +334,9 @@ namespace Alternet.UI
 
         string SaveEditableState(PropertyGridEditableState includedStates);
 
-        bool SetColumnProportion(uint column, int proportion);
+        bool SetColumnProportion(int column, int proportion);
 
-        int GetColumnProportion(uint column);
+        int GetColumnProportion(int column);
 
         void Sort(PropertyGridItemValueFlags flags);
 
@@ -361,7 +361,7 @@ namespace Alternet.UI
 
         void ClearActionTriggers(PropertyGridKeyboardAction action);
 
-        bool CommitChangesFromEditor(uint flags);
+        bool CommitChangesFromEditor(PropertyGridSelectPropFlags flags);
 
         void EditorsValueWasModified();
 
@@ -381,7 +381,7 @@ namespace Alternet.UI
 
         Color GetCellTextColor();
 
-        uint GetColumnCount();
+        int GetColumnCount();
 
         Color GetEmptySpaceColor();
 
