@@ -459,42 +459,9 @@ namespace Alternet.UI
             Application.Current.NativeApplication.ExitMainLoop();
         }
 
-        public override int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control)
+        public override ISystemSettingsHandler CreateSystemSettingsHandler()
         {
-            return Native.WxOtherFactory.SystemSettingsGetMetric(
-                (int)index,
-                WxPlatform.WxWidget(control));
-        }
-
-        public override int SystemSettingsGetMetric(SystemSettingsMetric index)
-        {
-            return Native.WxOtherFactory.SystemSettingsGetMetric((int)index, default);
-        }
-
-        public override string SystemSettingsAppearanceName()
-        {
-            return Native.WxOtherFactory.SystemAppearanceGetName();
-        }
-
-        public override bool SystemSettingsAppearanceIsDark()
-        {
-            return Native.WxOtherFactory.SystemAppearanceIsDark();
-        }
-
-        public override bool SystemSettingsIsUsingDarkBackground()
-        {
-            return Native.WxOtherFactory.SystemAppearanceIsUsingDarkBackground();
-        }
-
-        public override bool SystemSettingsHasFeature(SystemSettingsFeature index)
-        {
-            return Native.WxOtherFactory.SystemSettingsHasFeature((int)index);
-        }
-
-        public override Font SystemSettingsGetFont(SystemSettingsFont systemFont)
-        {
-            var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
-            return new Font(fnt);
+            return new WxSystemSettingsHandler();
         }
 
         public override IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)

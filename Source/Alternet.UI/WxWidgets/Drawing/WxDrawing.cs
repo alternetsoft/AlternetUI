@@ -22,12 +22,5 @@ namespace Alternet.Drawing
                 UI.Native.DrawingContext.FromImage(
                     (UI.Native.Image)image.NativeObject));
         }
-
-        /// <inheritdoc/>
-        public override Color GetColor(KnownSystemColor index)
-        {
-            SystemSettingsColor systemSettingsColor = WxColorUtils.Convert(index);
-            return UI.Native.WxOtherFactory.SystemSettingsGetColor((int)systemSettingsColor);
-        }
     }
 }

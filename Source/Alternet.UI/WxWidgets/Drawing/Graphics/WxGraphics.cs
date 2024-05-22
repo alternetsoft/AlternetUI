@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    public class WxGraphics : Graphics
+    public partial class WxGraphics : Graphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
@@ -134,21 +134,6 @@ namespace Alternet.Drawing
                 backColor,
                 angle);
         }
-
-        /*/// <summary>
-        /// If supported by the platform and the type of <see cref="Graphics"/>,
-        /// fetches the contents
-        /// of the graphics, or a subset of it, as an <see cref="Image"/>.
-        /// </summary>
-        /// <param name="subrect">Subset rectangle or <c>null</c> to get full image.
-        /// Rectangle is specified in pixels.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Image GetAsBitmapI(RectI? subrect = default)
-        {
-            var result = dc.GetAsBitmapI(subrect ?? RectI.Empty);
-            return new Bitmap(result);
-        }*/
 
         /// <inheritdoc/>
         public override bool BlitI(
@@ -628,18 +613,6 @@ namespace Alternet.Drawing
                 format.Wrapping);
         }
 
-        /*/// <inheritdoc/>
-        public override SizeD MeasureText(string text, Font font)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.Handler,
-                double.NaN,
-                TextWrapping.None);
-        }*/
-
         /// <inheritdoc/>
         public override void Push()
         {
@@ -727,39 +700,6 @@ namespace Alternet.Drawing
         public override RectD GetClippingBox()
         {
             return dc.GetClippingBox();
-        }
-
-        /// <summary>
-        /// Gets text measurement.
-        /// </summary>
-        public SizeD MeasureText(string text, Font font, double maximumWidth)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.Handler,
-                maximumWidth,
-                TextWrapping.Character);
-        }
-
-        /// <summary>
-        /// Gets text measurement.
-        /// </summary>
-        public SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugFormatAssert(format);
-            return dc.MeasureText(
-                text,
-                (UI.Native.Font)font.Handler,
-                maximumWidth,
-                format.Wrapping);
         }
 
         /// <inheritdoc/>

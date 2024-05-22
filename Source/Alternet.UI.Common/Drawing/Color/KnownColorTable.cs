@@ -422,6 +422,21 @@ namespace Alternet.Drawing
             return ColorKindTable[(int)color] == KnownColorKindSystem
                  ? GetSystemColorArgb(color)
                  : ColorValueTable[(int)color];
+
+            /// <summary>
+            /// Gets ARGB color value of the system color.
+            /// </summary>
+            /// <param name="color">System color.</param>
+            /// <remarks><paramref name="color"/> must be a system color, web colors (which are
+            /// also in <see cref="KnownColor"/>) are not supported here.</remarks>
+            /// <returns></returns>
+            static uint GetSystemColorArgb(KnownColor knownColor)
+            {
+                Debug.Assert(Color.IsKnownColorSystem(knownColor), nameof(GetSystemColorArgb));
+                var color = SystemSettings.GetColor((KnownSystemColor)knownColor);
+                var result = color.AsUInt();
+                return result;
+            }
         }
 
         /// <summary>
@@ -445,26 +460,6 @@ namespace Alternet.Drawing
 
             // Not a known color
             return Color.FromArgb((int)argb);
-        }
-
-        public static uint GetSystemColorArgbUseSystemSettings(KnownColor knownColor)
-        {
-            var color = NativeDrawing.Default.GetColor((KnownSystemColor)knownColor);
-            var result = color.AsUInt();
-            return result;
-        }
-
-        /// <summary>
-        /// Gets ARGB color value of the system color.
-        /// </summary>
-        /// <param name="color">System color.</param>
-        /// <remarks><paramref name="color"/> must be a system color, web colors (which are
-        /// also in <see cref="KnownColor"/>) are not supported here.</remarks>
-        /// <returns></returns>
-        public static uint GetSystemColorArgb(KnownColor color)
-        {
-            Debug.Assert(Color.IsKnownColorSystem(color), nameof(GetSystemColorArgb));
-            return GetSystemColorArgbUseSystemSettings(color);
         }
     }
 }

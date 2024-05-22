@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public static class SystemSettings
     {
+        private static ISystemSettingsHandler? handler;
+
+        public static ISystemSettingsHandler Handler
+            => handler ??= NativePlatform.Default.CreateSystemSettingsHandler();
+
         /// <summary>
         /// Returns the name if available or empty string otherwise.
         /// </summary>
@@ -23,7 +28,7 @@ namespace Alternet.UI
         /// </remarks>
         public static string AppearanceName
         {
-            get => NativePlatform.Default.SystemSettingsAppearanceName();
+            get => Handler.GetAppearanceName();
         }
 
         /// <summary>
@@ -36,7 +41,7 @@ namespace Alternet.UI
         /// </remarks>
         public static bool AppearanceIsDark
         {
-            get => NativePlatform.Default.SystemSettingsAppearanceIsDark();
+            get => Handler.GetAppearanceIsDark();
         }
 
         /// <summary>
@@ -46,7 +51,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsUsingDarkBackground
         {
-            get => NativePlatform.Default.SystemSettingsIsUsingDarkBackground();
+            get => Handler.IsUsingDarkBackground();
         }
 
         /// <summary>
@@ -56,7 +61,7 @@ namespace Alternet.UI
         /// <param name="index">System metric identifier.</param>
         public static int GetMetric(SystemSettingsMetric index)
         {
-            return NativePlatform.Default.SystemSettingsGetMetric(index);
+            return Handler.GetMetric(index);
         }
 
         /// <summary>
@@ -81,7 +86,7 @@ namespace Alternet.UI
         /// </remarks>
         public static int GetMetric(SystemSettingsMetric index, IControl? control)
         {
-            return NativePlatform.Default.SystemSettingsGetMetric(index, control);
+            return Handler.GetMetric(index, control);
         }
 
         /// <summary>
@@ -145,7 +150,7 @@ namespace Alternet.UI
         /// <param name="index">System feature identifier.</param>
         public static bool HasFeature(SystemSettingsFeature index)
         {
-            return NativePlatform.Default.SystemSettingsHasFeature(index);
+            return Handler.HasFeature(index);
         }
 
         /// <summary>
@@ -154,7 +159,7 @@ namespace Alternet.UI
         /// <param name="index">System color identifier.</param>
         public static Color GetColor(KnownSystemColor index)
         {
-            return NativeDrawing.Default.GetColor(index);
+            return Handler.GetColor(index);
         }
 
         /// <summary>
@@ -163,8 +168,7 @@ namespace Alternet.UI
         /// <param name="systemFont">Font identifier.</param>
         public static Font GetFont(SystemSettingsFont systemFont)
         {
-            var fnt = NativePlatform.Default.SystemSettingsGetFont(systemFont);
-            return fnt;
+            return Handler.GetFont(systemFont);
         }
     }
 }

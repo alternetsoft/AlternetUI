@@ -25,11 +25,5 @@ namespace Alternet.Drawing
         public abstract Graphics CreateGraphicsFromScreen();
 
         public abstract Graphics CreateGraphicsFromImage(Image image);
-
-        /// <summary>
-        /// Gets a standard system color.
-        /// </summary>
-        /// <param name="index">System color identifier.</param>
-        public abstract Color GetColor(KnownSystemColor index);
     }
 }

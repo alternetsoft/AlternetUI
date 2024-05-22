@@ -158,23 +158,11 @@ namespace Alternet.UI
 
         public abstract string? GetUIVersion();
 
-        public abstract int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control);
-
         public abstract void SetSystemOption(string name, int value);
 
+        public abstract ISystemSettingsHandler CreateSystemSettingsHandler();
+
         public abstract void ExitMainLoop();
-
-        public abstract int SystemSettingsGetMetric(SystemSettingsMetric index);
-
-        public abstract string SystemSettingsAppearanceName();
-
-        public abstract bool SystemSettingsAppearanceIsDark();
-
-        public abstract bool SystemSettingsIsUsingDarkBackground();
-
-        public abstract bool SystemSettingsHasFeature(SystemSettingsFeature index);
-
-        public abstract Font SystemSettingsGetFont(SystemSettingsFont systemFont);
 
         public abstract bool ShowExceptionWindow(
             Exception exception,

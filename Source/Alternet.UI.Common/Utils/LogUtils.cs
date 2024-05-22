@@ -422,7 +422,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Tests different methods of getting Argb of the system color.
         /// </summary>
         internal static void TestSystemColors()
@@ -472,6 +472,6 @@ namespace Alternet.UI
             Test(KnownColor.GradientInactiveCaption);
             Test(KnownColor.MenuBar);
             Test(KnownColor.MenuHighlight);
-        }
+        }*/
     }
 }

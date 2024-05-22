@@ -421,41 +421,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override bool SystemSettingsAppearanceIsDark()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string SystemSettingsAppearanceName()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Font SystemSettingsGetFont(SystemSettingsFont systemFont)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int SystemSettingsGetMetric(SystemSettingsMetric index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int SystemSettingsGetMetric(SystemSettingsMetric index, IControl? control)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool SystemSettingsHasFeature(SystemSettingsFeature index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool SystemSettingsIsUsingDarkBackground()
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool TimerGetEnabled(Timer timer)
         {
             throw new NotImplementedException();
@@ -522,6 +487,11 @@ namespace Alternet.UI
         }
 
         public override IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ISystemSettingsHandler CreateSystemSettingsHandler()
         {
             throw new NotImplementedException();
         }
