@@ -488,6 +488,16 @@ namespace Alternet.UI
             }
         }
 
+        public override IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)
+        {
+            return new WebBrowserHandler();
+        }
+
+        public override IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler()
+        {
+            return new WebBrowserFactoryHandler();
+        }
+
         /// <summary>
         /// Pop up a dialog box with title set to <paramref name="caption"/>,
         /// <paramref name="message"/>, and a <paramref name="defaultValue"/>.
@@ -590,13 +600,6 @@ namespace Alternet.UI
         public override void ShowDeveloperTools()
         {
             DeveloperToolsPanel.ShowDeveloperTools();
-        }
-
-        public override void RegisterDefaultPreviewControls(PreviewFile preview)
-        {
-            preview.RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
-            preview.RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
-            preview.RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
         }
 
         public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)

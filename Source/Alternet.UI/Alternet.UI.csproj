@@ -58,15 +58,15 @@
 
   <ItemGroup>
     <Compile Remove="build\**" />
-    <Compile Remove="Controls\BrowsableProps\**" />
+    <Compile Remove="Classes\BrowsableProps\**" />
     <Compile Remove="Drawing.System.Imported\**" />
     <Compile Remove="System\**" />
     <EmbeddedResource Remove="build\**" />
-    <EmbeddedResource Remove="Controls\BrowsableProps\**" />
+    <EmbeddedResource Remove="Classes\BrowsableProps\**" />
     <EmbeddedResource Remove="Drawing.System.Imported\**" />
     <EmbeddedResource Remove="System\**" />
     <None Remove="build\**" />
-    <None Remove="Controls\BrowsableProps\**" />
+    <None Remove="Classes\BrowsableProps\**" />
     <None Remove="Drawing.System.Imported\**" />
     <None Remove="System\**" />
   </ItemGroup>

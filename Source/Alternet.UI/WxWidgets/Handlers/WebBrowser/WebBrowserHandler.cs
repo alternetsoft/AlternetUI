@@ -1,12 +1,11 @@
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
     internal partial class WebBrowserHandler :
-        NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
+        NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
     {
-        public bool HasBoder
+        public bool HasBorder
         {
             get => NativeControl.HasBorder;
             set => NativeControl.HasBorder = value;
@@ -131,6 +130,26 @@ namespace Alternet.UI
 
         public IntPtr GetNativeBackend() => NativeControl.GetNativeBackend();
 
+        public WebBrowserEventArgs CreateArgs(
+            Native.NativeEventArgs<Native.WebBrowserEventData> e,
+            WebBrowserEvent eventType = WebBrowserEvent.Unknown)
+        {
+            var result = new WebBrowserEventArgs();
+
+            result.Url = e.Data.Url;
+            result.TargetFrameName = e.Data.Target;
+            result.NavigationAction = (WebBrowserNavigationAction)Enum.ToObject(
+                typeof(WebBrowserNavigationAction), e.Data.ActionFlags);
+            result.MessageHandler = e.Data.MessageHandler;
+            result.IsError = e.Data.IsError;
+            result.EventType = eventType.ToString();
+            result.Text = e.Data.Text;
+            result.IntVal = e.Data.IntVal;
+            result.ClientData = e.Data.ClientData;
+
+            return result;
+        }
+
         public string? DoCommand(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
@@ -210,7 +229,7 @@ namespace Alternet.UI
                     data = (IntPtr)clientData;
 
                 e.ClientData = data;
-                Control.OnScriptResult(e);
+                Control.RaiseScriptResult(e);
                 return;
             }
 
@@ -288,11 +307,14 @@ namespace Alternet.UI
             return NativeControl.AddUserScript(javascript, injectionTime);
         }
 
-        internal static bool IsBackendIEAvailable() => WebBrowserHandlerApi.WebBrowser_IsBackendIEAvailable_();
+        internal static bool IsBackendIEAvailable()
+            => WebBrowserHandlerApi.WebBrowser_IsBackendIEAvailable_();
 
-        internal static bool IsBackendEdgeAvailable() => WebBrowserHandlerApi.WebBrowser_IsBackendEdgeAvailable_();
+        internal static bool IsBackendEdgeAvailable()
+            => WebBrowserHandlerApi.WebBrowser_IsBackendEdgeAvailable_();
 
-        internal static bool IsBackendWebKitAvailable() => WebBrowserHandlerApi.WebBrowser_IsBackendWebKitAvailable_();
+        internal static bool IsBackendWebKitAvailable()
+            => WebBrowserHandlerApi.WebBrowser_IsBackendWebKitAvailable_();
 
         internal override Native.Control CreateNativeControl()
         {
@@ -300,36 +322,99 @@ namespace Alternet.UI
             return browser;
         }
 
+        internal void OnNativeScriptMessageReceived(
+          object? sender,
+          Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.ScriptMessageReceived);
+            Control.RaiseScriptMessageReceived(ea);
+        }
+
+        internal void OnNativeFullScreenChanged(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.FullScreenChanged);
+            Control.RaiseFullScreenChanged(ea);
+        }
+
+        internal void OnNativeScriptResult(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.ScriptResult);
+            Control.RaiseScriptResult(ea);
+        }
+
+        internal void OnNativeNavigated(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.Navigated);
+            Control.RaiseNavigated(ea);
+        }
+
+        internal void OnNativeNavigating(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.Navigating);
+            Control.RaiseNavigating(ea);
+            e.Result = ea.CancelAsIntPtr();
+        }
+
+        internal void OnNativeBeforeBrowserCreate(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.BeforeBrowserCreate);
+            Control.RaiseBeforeBrowserCreate(ea);
+        }
+
+        internal void OnNativeLoaded(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.Loaded);
+            Control.RaiseLoaded(ea);
+        }
+
+        internal void OnNativeError(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.Error);
+            Control.RaiseError(ea);
+        }
+
+        internal void OnNativeNewWindow(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.NewWindow);
+            Control.RaiseNewWindow(ea);
+        }
+
+        internal void OnNativeTitleChanged(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
+        {
+            WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.TitleChanged);
+            Control.RaiseDocumentTitleChanged(ea);
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();
 
-            NativeControl.BeforeBrowserCreate += Control.OnNativeBeforeBrowserCreate;
-            NativeControl.Navigating += Control.OnNativeNavigating;
-            NativeControl.Navigated += Control.OnNativeNavigated;
-            NativeControl.Loaded += Control.OnNativeLoaded;
-            NativeControl.Error += Control.OnNativeError;
-            NativeControl.NewWindow += Control.OnNativeNewWindow;
-            NativeControl.TitleChanged += Control.OnNativeTitleChanged;
-            NativeControl.FullScreenChanged += Control.OnNativeFullScreenChanged;
-            NativeControl.ScriptMessageReceived += Control.OnNativeScriptMessageReceived;
-            NativeControl.ScriptResult += Control.OnNativeScriptResult;
+            NativeControl.BeforeBrowserCreate += OnNativeBeforeBrowserCreate;
+            NativeControl.Navigating += OnNativeNavigating;
+            NativeControl.Navigated += OnNativeNavigated;
+            NativeControl.Loaded += OnNativeLoaded;
+            NativeControl.Error += OnNativeError;
+            NativeControl.NewWindow += OnNativeNewWindow;
+            NativeControl.TitleChanged += OnNativeTitleChanged;
+            NativeControl.FullScreenChanged += OnNativeFullScreenChanged;
+            NativeControl.ScriptMessageReceived += OnNativeScriptMessageReceived;
+            NativeControl.ScriptResult += OnNativeScriptResult;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
 
-            NativeControl.BeforeBrowserCreate -= Control.OnNativeBeforeBrowserCreate;
-            NativeControl.Navigating -= Control.OnNativeNavigating;
-            NativeControl.Navigated -= Control.OnNativeNavigated;
-            NativeControl.Loaded -= Control.OnNativeLoaded;
-            NativeControl.Error -= Control.OnNativeError;
-            NativeControl.NewWindow -= Control.OnNativeNewWindow;
-            NativeControl.TitleChanged -= Control.OnNativeTitleChanged;
-            NativeControl.FullScreenChanged -= Control.OnNativeFullScreenChanged;
-            NativeControl.ScriptMessageReceived -= Control.OnNativeScriptMessageReceived;
-            NativeControl.ScriptResult -= Control.OnNativeScriptResult;
+            NativeControl.BeforeBrowserCreate -= OnNativeBeforeBrowserCreate;
+            NativeControl.Navigating -= OnNativeNavigating;
+            NativeControl.Navigated -= OnNativeNavigated;
+            NativeControl.Loaded -= OnNativeLoaded;
+            NativeControl.Error -= OnNativeError;
+            NativeControl.NewWindow -= OnNativeNewWindow;
+            NativeControl.TitleChanged -= OnNativeTitleChanged;
+            NativeControl.FullScreenChanged -= OnNativeFullScreenChanged;
+            NativeControl.ScriptMessageReceived -= OnNativeScriptMessageReceived;
+            NativeControl.ScriptResult -= OnNativeScriptResult;
         }
 
         private protected override void OnNativeControlCreated()

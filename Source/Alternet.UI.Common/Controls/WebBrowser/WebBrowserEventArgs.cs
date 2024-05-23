@@ -7,27 +7,11 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal enum WebBrowserEvent
-    {
-        Unknown,
-        Navigating,
-        Navigated,
-        Loaded,
-        Error,
-        NewWindow,
-        TitleChanged,
-        FullScreenChanged,
-        ScriptMessageReceived,
-        ScriptResult,
-        BeforeBrowserCreate,
-    }
-
     /// <summary>
     ///     Provides data for the <see cref="WebBrowser"/> events.
     /// </summary>
-    public class WebBrowserEventArgs : CancelEventArgs
+    public class WebBrowserEventArgs : BaseCancelEventArgs
     {
-        private readonly int intVal = 0;
         private bool isError = false;
 
         /// <summary>
@@ -37,7 +21,6 @@ namespace Alternet.UI
         /// A <see cref="string"/> representing type of the event.
         /// </param>
         public WebBrowserEventArgs(string? eventType = null)
-            : base()
         {
             if (eventType == null)
             {
@@ -46,23 +29,6 @@ namespace Alternet.UI
             }
 
             EventType = eventType;
-        }
-
-        internal WebBrowserEventArgs(
-            Native.NativeEventArgs<Native.WebBrowserEventData> e,
-            WebBrowserEvent eventType = WebBrowserEvent.Unknown)
-            : base()
-        {
-            Url = e.Data.Url;
-            TargetFrameName = e.Data.Target;
-            NavigationAction = (WebBrowserNavigationAction)Enum.ToObject(
-                typeof(WebBrowserNavigationAction), e.Data.ActionFlags);
-            MessageHandler = e.Data.MessageHandler;
-            isError = e.Data.IsError;
-            EventType = eventType.ToString();
-            Text = e.Data.Text;
-            intVal = e.Data.IntVal;
-            ClientData = e.Data.ClientData;
         }
 
         /// <summary>
@@ -81,12 +47,12 @@ namespace Alternet.UI
         /// A <see cref="string"/> representing the type of
         /// the <see cref="WebBrowser"/> event.
         /// </returns>
-        public string EventType { get; }
+        public string EventType { get; set; }
 
         /// <summary>
         ///     Gets the integer value for the received event.
         /// </summary>
-        public int IntVal { get => intVal; }
+        public int IntVal { get; set; } = 0;
 
         /// <summary>
         ///     Gets the type of error that can caused navigation to fail.
@@ -104,7 +70,7 @@ namespace Alternet.UI
 
                 return (WebBrowserNavigationError)Enum.ToObject(
                         typeof(WebBrowserNavigationError),
-                        intVal);
+                        IntVal);
             }
         }
 
@@ -122,7 +88,7 @@ namespace Alternet.UI
         /// <returns>
         /// A <see cref="string"/> representing the URL being visited.
         /// </returns>
-        public string? Url { get; }
+        public string? Url { get; set; }
 
         /// <summary>
         ///     Gets the name of the target frame which the url of this event
@@ -136,7 +102,7 @@ namespace Alternet.UI
         /// which the url of this event
         /// has been or will be loaded into.
         /// </returns>
-        public string? TargetFrameName { get; }
+        public string? TargetFrameName { get; set; }
 
         /// <summary>
         ///     Gets the type of navigation action.
@@ -148,7 +114,7 @@ namespace Alternet.UI
         /// A <see cref="WebBrowserNavigationAction"/> representing the type
         /// of navigation action.
         /// </returns>
-        public WebBrowserNavigationAction NavigationAction { get; }
+        public WebBrowserNavigationAction NavigationAction { get; set; }
 
         /// <summary>
         ///     Gets the name of the script handler.
@@ -159,7 +125,7 @@ namespace Alternet.UI
         /// <returns>
         /// A <see cref="string"/> representing the name of the script handler.
         /// </returns>
-        public string? MessageHandler { get; }
+        public string? MessageHandler { get; set; }
 
         /// <summary>
         ///     Returns true the script execution failed.
@@ -186,7 +152,7 @@ namespace Alternet.UI
             }
         }
 
-        internal IntPtr CancelAsIntPtr()
+        public IntPtr CancelAsIntPtr()
         {
             return Cancel ? (IntPtr)1 : IntPtr.Zero;
         }

@@ -37,6 +37,10 @@ namespace Alternet.UI
 
         public abstract INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control);
 
+        public abstract IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control);
+
+        public abstract IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler();
+
         public abstract IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control);
 
         public abstract IPropertyGridVariant CreateVariant();
@@ -216,8 +220,6 @@ namespace Alternet.UI
             int valueBase = 10);
 
         public abstract IPageSetupDialogHandler CreatePageSetupDialogHandler();
-
-        public abstract void RegisterDefaultPreviewControls(PreviewFile preview);
 
         public abstract IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
 

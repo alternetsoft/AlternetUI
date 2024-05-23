@@ -371,11 +371,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override void RegisterDefaultPreviewControls(PreviewFile preview)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void ShowDeveloperTools()
         {
             throw new NotImplementedException();
@@ -472,6 +467,16 @@ namespace Alternet.UI
         }
 
         public override IPropertyGridVariant CreateVariant()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler()
         {
             throw new NotImplementedException();
         }

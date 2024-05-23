@@ -71,10 +71,10 @@ namespace ControlsTest
                 if (pandaInMemory)
                     return;
                 pandaInMemory = true;
-                WebBrowser.MemoryFS.AddTextFile(
+                WebBrowser.MemoryFS.AddString(
                     "index.html",
                     "<html><body><b>index.html</b></body></html>");
-                WebBrowser.MemoryFS.AddTextFile(
+                WebBrowser.MemoryFS.AddString(
                     "myFolder/index.html",
                     "<html><body><b>file in subfolder</b></body></html>");
 
@@ -88,11 +88,7 @@ namespace ControlsTest
                 void AddPandaFile(string name, string? mimeType = null)
                 {
                     string sPath = CommonUtils.GetAppFolder() + "Html/SampleArchive/" + name;
-
-                    if (mimeType == null)
-                        WebBrowser.MemoryFS.AddOSFile(name, sPath);
-                    else
-                        WebBrowser.MemoryFS.AddOSFileWithMimeType(name, sPath, mimeType);
+                    WebBrowser.MemoryFS.Add(name, sPath, mimeType);
                 }
             }
 

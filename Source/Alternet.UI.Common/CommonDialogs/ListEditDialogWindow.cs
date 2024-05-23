@@ -187,9 +187,9 @@ namespace Alternet.UI
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
-            toolbar.SetMouseCapture(false);
+            /*toolbar.SetMouseCapture(false);
             SetFocusIfPossible();
-            Application.DoEvents();
+            BaseApplication.DoEvents();*/
             if (Modal)
                 ModalResult = ModalResult.Canceled;
             Close();
@@ -197,11 +197,11 @@ namespace Alternet.UI
 
         private void OkButton_Click(object? sender, EventArgs e)
         {
-            toolbar.SetMouseCapture(false);
+            /*toolbar.SetMouseCapture(false);*/
             if (!propertyGrid.ClearSelection(true))
                 return;
             SetFocusIfPossible();
-            Application.DoEvents();
+            /*BaseApplication.DoEvents();*/
             if (Modal)
                 ModalResult = ModalResult.Accepted;
             Close();
