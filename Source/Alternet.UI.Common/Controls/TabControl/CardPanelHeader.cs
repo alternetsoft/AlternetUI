@@ -764,7 +764,7 @@ namespace Alternet.UI
                 result.MinimumSize = TabControl.DefaultMinTabSize;
             return result;
 
-            SpeedButton Fn()
+            static SpeedButton Fn()
             {
                 var result = new SpeedButton();
                 result.TextVisible = true;

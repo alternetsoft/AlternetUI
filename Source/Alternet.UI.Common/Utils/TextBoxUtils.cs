@@ -27,7 +27,7 @@ namespace Alternet.UI
         {
             var lastLineNumber = lines;
             var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
-            var result = MessageBox.GetNumberFromUser(
+            var result = DialogFactory.GetNumberFromUser(
                 null,
                 prompt,
                 CommonStrings.Default.WindowTitleGoToLine,
@@ -55,7 +55,7 @@ namespace Alternet.UI
 
             var lastLineNumber = richTextBox.LastLineNumber + 1;
             var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
-            var result = MessageBox.GetNumberFromUser(
+            var result = DialogFactory.GetNumberFromUser(
                 null,
                 prompt,
                 CommonStrings.Default.WindowTitleGoToLine,

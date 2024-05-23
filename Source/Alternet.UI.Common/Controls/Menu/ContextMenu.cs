@@ -124,7 +124,7 @@ namespace Alternet.UI
             ForEachItem(UpdateEnabled, true);
             Opening?.Invoke(this, e);
 
-            void UpdateEnabled(MenuItem item)
+            static void UpdateEnabled(MenuItem item)
             {
                 var func = item.EnabledFunc;
                 if (func is null)

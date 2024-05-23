@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// </summary>
         public NotifyIcon()
         {
-            nativeNotifyIcon = new Native.NotifyIcon();
+            nativeNotifyIcon = new();
             nativeNotifyIcon.Click = NativeNotifyIcon_Click;
             nativeNotifyIcon.DoubleClick = NativeNotifyIcon_DoubleClick;
         }
