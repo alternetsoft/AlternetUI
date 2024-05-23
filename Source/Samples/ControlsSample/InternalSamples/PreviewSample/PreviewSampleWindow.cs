@@ -165,7 +165,7 @@ namespace ControlsSample
 
             var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
 
-            r.SetDefaultStyle(TextBox.CreateTextAttr());
+            r.SetDefaultStyle(r.CreateTextAttr());
 
             r.BeginUpdate();
             r.BeginSuppressUndo();

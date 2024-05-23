@@ -28,7 +28,7 @@ namespace PropertyGridSample
             };
             RightLabel.Add("Right");
 
-            GenericToolBar toolbar = new();
+            ToolBar toolbar = new();
             toolbar.Parent = panel.TopPanel;
             InitGenericToolBar(toolbar);
             panel.TopSplitter.Visible = false;

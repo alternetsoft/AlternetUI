@@ -163,10 +163,10 @@ ALTERNET_UI_API void Toolbar_SetIsRight_(Toolbar* obj, c_bool value)
     #endif
 }
 
-ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
+ALTERNET_UI_API ImageToText Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
 {
     #if !defined(__WXMSW__)
-    return MarshalExceptions<ToolbarItemImageToTextDisplayMode>([&](){
+    return MarshalExceptions<ImageToText>([&](){
     #endif
         return obj->GetImageToTextDisplayMode();
     #if !defined(__WXMSW__)
@@ -174,7 +174,7 @@ ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayM
     #endif
 }
 
-ALTERNET_UI_API void Toolbar_SetImageToTextDisplayMode_(Toolbar* obj, ToolbarItemImageToTextDisplayMode value)
+ALTERNET_UI_API void Toolbar_SetImageToTextDisplayMode_(Toolbar* obj, ImageToText value)
 {
     #if !defined(__WXMSW__)
     MarshalExceptions<void>([&](){

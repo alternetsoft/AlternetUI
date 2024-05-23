@@ -68,7 +68,7 @@ namespace Alternet.UI
         {
             if (dragging)
             {
-                var location = e.GetPosition(this);
+                var location = e.Location;
                 int opos = Value;
                 int pos = opos;
                 var delta = dragStartPosition.Y - location.Y;
@@ -90,10 +90,10 @@ namespace Alternet.UI
         {
             CaptureMouse();
 
-            var location = e.GetPosition(this);
+            var location = e.Location;
 
             SetFocus();
-            if (MathUtils.IsPointInCircle(
+            if (DrawingUtils.IsPointInCircle(
                 location,
                 GetControlCenter(),
                 GetControlRadius()))

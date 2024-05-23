@@ -41,140 +41,6 @@ namespace Alternet.UI.Native
         Question = 4,
     }
     
-    enum ListBoxSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    }
-    
-    enum ListViewColumnWidthMode
-    {
-        Fixed = 0,
-        AutoSize = 1,
-        AutoSizeHeader = 2,
-    }
-    
-    enum ListViewGridLinesDisplayMode
-    {
-        None = 0,
-        Vertical = 1,
-        Horizontal = 2,
-        VerticalAndHorizontal = 3,
-    }
-    
-    enum ListViewHitTestLocations
-    {
-        None = 2,
-        AboveClientArea = 4,
-        BelowClientArea = 8,
-        LeftOfClientArea = 16,
-        RightOfClientArea = 32,
-        ItemImage = 64,
-        ItemLabel = 128,
-        RightOfItem = 256,
-    }
-    
-    enum ListViewItemBoundsPortion
-    {
-        EntireItem = 0,
-        Icon = 1,
-        Label = 2,
-    }
-    
-    enum ListViewSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    }
-    
-    enum ListViewSortMode
-    {
-        None = 0,
-        Ascending = 1,
-        Descending = 2,
-        Custom = 3,
-    }
-    
-    enum ListViewView
-    {
-        List = 0,
-        Details = 1,
-        SmallIcon = 2,
-        LargeIcon = 3,
-    }
-    
-    enum ProgressBarOrientation
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    }
-    
-    enum ScrollBarOrientation
-    {
-        Vertical = 0,
-        Horizontal = 1,
-    }
-    
-    enum SliderOrientation
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    }
-    
-    enum SliderTickStyle
-    {
-        None = 0,
-        TopLeft = 1,
-        BottomRight = 2,
-        Both = 3,
-    }
-    
-    enum TabAlignment
-    {
-        Top = 0,
-        Bottom = 1,
-        Left = 2,
-        Right = 3,
-    }
-    
-    enum TreeViewHitTestLocations
-    {
-        None = 2,
-        AboveClientArea = 4,
-        BelowClientArea = 8,
-        LeftOfClientArea = 16,
-        RightOfClientArea = 32,
-        ItemExpandButton = 64,
-        ItemImage = 128,
-        ItemIndent = 256,
-        ItemLabel = 512,
-        RightOfItemLabel = 1024,
-        ItemStateImage = 2048,
-        ItemUpperPart = 4096,
-        ItemLowerPart = 8192,
-    }
-    
-    enum TreeViewSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    }
-    
-    enum DragAction
-    {
-        Continue = 0,
-        Drop = 1,
-        Cancel = 2,
-    }
-    
-    enum DragDropEffects
-    {
-        None = 0,
-        Copy = 1,
-        Move = 2,
-        Link = 4,
-    }
-    
     enum BrushHatchStyle
     {
         BackwardDiagonal = 0,
@@ -183,6 +49,22 @@ namespace Alternet.UI.Native
         Cross = 3,
         Horizontal = 4,
         Vertical = 5,
+    }
+    
+    enum DashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        Custom = 4,
+    }
+    
+    enum Duplex
+    {
+        Simplex = 0,
+        Vertical = 1,
+        Horizontal = 2,
     }
     
     enum FillMode
@@ -228,22 +110,6 @@ namespace Alternet.UI.Native
         Miter = 0,
         Bevel = 1,
         Round = 2,
-    }
-    
-    enum PenDashStyle
-    {
-        Solid = 0,
-        Dot = 1,
-        Dash = 2,
-        DashDot = 3,
-        Custom = 4,
-    }
-    
-    enum Duplex
-    {
-        Simplex = 0,
-        Vertical = 1,
-        Horizontal = 2,
     }
     
     enum PaperKind
@@ -586,6 +452,62 @@ namespace Alternet.UI.Native
         Windows = 8,
     }
     
+    enum ListViewColumnWidthMode
+    {
+        Fixed = 0,
+        AutoSize = 1,
+        AutoSizeHeader = 2,
+    }
+    
+    enum ListViewGridLinesDisplayMode
+    {
+        None = 0,
+        Vertical = 1,
+        Horizontal = 2,
+        VerticalAndHorizontal = 3,
+    }
+    
+    enum ListViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemImage = 64,
+        ItemLabel = 128,
+        RightOfItem = 256,
+    }
+    
+    enum ListViewItemBoundsPortion
+    {
+        EntireItem = 0,
+        Icon = 1,
+        Label = 2,
+    }
+    
+    enum ListViewSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    }
+    
+    enum ListViewSortMode
+    {
+        None = 0,
+        Ascending = 1,
+        Descending = 2,
+        Custom = 3,
+    }
+    
+    enum ListViewView
+    {
+        List = 0,
+        Details = 1,
+        SmallIcon = 2,
+        LargeIcon = 3,
+    }
+    
     enum MouseButton
     {
         Left = 0,
@@ -601,10 +523,88 @@ namespace Alternet.UI.Native
         Pressed = 1,
     }
     
-    enum ToolbarItemImageToTextDisplayMode
+    enum DragAction
+    {
+        Continue = 0,
+        Drop = 1,
+        Cancel = 2,
+    }
+    
+    enum DragDropEffects
+    {
+        None = 0,
+        Copy = 1,
+        Move = 2,
+        Link = 4,
+    }
+    
+    enum ImageToText
     {
         Horizontal = 0,
         Vertical = 1,
+    }
+    
+    enum ListBoxSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    }
+    
+    enum ProgressBarOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
+    enum ScrollBarOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1,
+    }
+    
+    enum SliderOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
+    enum SliderTickStyle
+    {
+        None = 0,
+        TopLeft = 1,
+        BottomRight = 2,
+        Both = 3,
+    }
+    
+    enum TabAlignment
+    {
+        Top = 0,
+        Bottom = 1,
+        Left = 2,
+        Right = 3,
+    }
+    
+    enum TreeViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemExpandButton = 64,
+        ItemImage = 128,
+        ItemIndent = 256,
+        ItemLabel = 512,
+        RightOfItemLabel = 1024,
+        ItemStateImage = 2048,
+        ItemUpperPart = 4096,
+        ItemLowerPart = 8192,
+    }
+    
+    enum TreeViewSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
     }
     
     enum ModalResult

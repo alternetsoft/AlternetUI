@@ -7,7 +7,7 @@
         HorizontalAlignment="Stretch">
   <Window.StatusBar>
     <StatusBar Name="statusBar">
-      <StatusBarPanel Text=" " />
+      <StatusBarPanel Text="Ready" />
     </StatusBar>
   </Window.StatusBar>
 

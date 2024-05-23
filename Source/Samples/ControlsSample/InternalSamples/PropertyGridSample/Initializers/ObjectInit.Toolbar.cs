@@ -54,7 +54,7 @@ namespace PropertyGridSample
 
         public static void InitGenericToolBar(object control)
         {
-            if (control is not GenericToolBar toolbar)
+            if (control is not ToolBar toolbar)
                 return;
 
             toolbar.Margin = (0, 0, 0, 4);

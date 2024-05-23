@@ -20,6 +20,7 @@ SizeI GetPixelSize();
 bool IsUsingSizeInPixels();
 int GetNumericWeight();
 bool GetUnderlined();
+bool GetItalic();
 bool GetStrikethrough();
 int GetEncoding();
 bool IsFixedWidth();

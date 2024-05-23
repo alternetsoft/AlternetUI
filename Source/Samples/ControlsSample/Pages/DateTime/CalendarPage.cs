@@ -8,7 +8,7 @@ namespace ControlsSample
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
-        private TabControl tabControl = new();
+        private readonly TabControl tabControl = new();
 
         static CalendarPage()
         {
@@ -120,7 +120,7 @@ namespace ControlsSample
 
             void SetDayColors()
             {
-                var dateAttr = Calendar.CreateDateAttr();
+                var dateAttr = calendar.CreateDateAttr();
 
                 dateAttr.Border = CalendarDateBorder.Round;
                 dateAttr.BorderColor = Color.Red;

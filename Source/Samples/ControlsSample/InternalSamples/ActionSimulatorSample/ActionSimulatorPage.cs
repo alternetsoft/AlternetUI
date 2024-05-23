@@ -50,7 +50,6 @@ namespace ControlsSample
 
             AddLabels(
                 "Simulator currently doesn't work when using Wayland on Linux.");
-
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

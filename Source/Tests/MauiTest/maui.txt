@@ -1,0 +1,28 @@
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.6" />
+GraphicsView
+
+        <skia:SKCanvasView x:Name="canvasView"
+                           Grid.Row="2"
+                           VerticalOptions="Fill"
+                           PaintSurface="OnCanvasViewPaintSurface" />
+   PaintSurface="OnCanvasViewPaintSurface"
+   EnableTouchEvents="True"
+   Touch="OnTouch"
+   IgnorePixelScaling="True" 
+protected override void OnPaintSurface(SKPaintSurfaceEventArgs args)
+void OnTouch(object sender, SKTouchEventArgs e)
+
+
+Keyboard events
+https://stackoverflow.com/questions/77229679/how-do-i-register-keyboard-keydown-keyup-in-net-maui-for-windows
+
+https://stackoverflow.com/questions/73250778/how-to-detect-when-any-key-pressed-in-net-maui-keydown-event-handler
+
+https://github.com/TolikPylypchuk/SharpHook
+
+
+App state events
+https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/app-lifecycle?view=net-maui-8.0

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Alternet.UI\Utils\CommonUtils.cs" Link="CommonUtils.cs" />
-    <Compile Include="..\..\Alternet.UI\Utils\PathUtils.cs" Link="PathUtils.cs" />
+    <Compile Include="..\..\Alternet.UI.Common\Utils\CommonUtils.cs" Link="CommonUtils.cs" />
+    <Compile Include="..\..\Alternet.UI.Common\Utils\PathUtils.cs" Link="PathUtils.cs" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ namespace Alternet::UI
     {
     }
 
-    void Pen::Initialize(PenDashStyle style, const Color& color, double width, LineCap lineCap, LineJoin lineJoin)
+    void Pen::Initialize(DashStyle style, const Color& color, double width, LineCap lineCap, LineJoin lineJoin)
     {
         _pen = wxPen(color, fromDip(width, nullptr), GetWxStyle(style));
         _pen.SetCap(GetWxPenCap(lineCap));
@@ -31,19 +31,19 @@ namespace Alternet::UI
         return _pen;
     }
 
-    wxPenStyle Pen::GetWxStyle(PenDashStyle style)
+    wxPenStyle Pen::GetWxStyle(DashStyle style)
     {
         switch (style)
         {
-        case PenDashStyle::Solid:
+        case DashStyle::Solid:
             return wxPenStyle::wxPENSTYLE_SOLID;
-        case PenDashStyle::Dot:
+        case DashStyle::Dot:
             return wxPenStyle::wxPENSTYLE_DOT;
-        case PenDashStyle::Dash:
+        case DashStyle::Dash:
             return wxPenStyle::wxPENSTYLE_SHORT_DASH;
-        case PenDashStyle::DashDot:
+        case DashStyle::DashDot:
             return wxPenStyle::wxPENSTYLE_DOT_DASH;
-        case PenDashStyle::Custom:
+        case DashStyle::Custom:
             return wxPenStyle::wxPENSTYLE_USER_DASH;
         default:
             throwExInvalidOp;

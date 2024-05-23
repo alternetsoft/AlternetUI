@@ -5,11 +5,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <DefineConstants>ALTERNET_UI_INTEGRATION_REMOTING;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="..\..\..\Alternet.UI\Base\Input\Keyboard\Key.cs" Link="Key.cs" />
-    <Compile Include="..\..\..\Alternet.UI\Base\Input\Keyboard\ModifierKeys.cs" Link="ModifierKeys.cs" />
-    <Compile Include="..\..\..\Alternet.UI\Base\Input\Mouse\MouseButton.cs" Link="MouseButton.cs" />
+    <ProjectReference Include="..\..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
   </ItemGroup>
 </Project>

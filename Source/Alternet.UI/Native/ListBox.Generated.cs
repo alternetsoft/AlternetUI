@@ -49,7 +49,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public ListBoxSelectionMode SelectionMode
+        public Alternet.UI.ListBoxSelectionMode SelectionMode
         {
             get
             {
@@ -212,10 +212,10 @@ namespace Alternet.UI.Native
             public static extern int ListBox_GetItemsCount_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ListBoxSelectionMode ListBox_GetSelectionMode_(IntPtr obj);
+            public static extern Alternet.UI.ListBoxSelectionMode ListBox_GetSelectionMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetSelectionMode_(IntPtr obj, ListBoxSelectionMode value);
+            public static extern void ListBox_SetSelectionMode_(IntPtr obj, Alternet.UI.ListBoxSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ListBox_OpenSelectedIndicesArray_(IntPtr obj);

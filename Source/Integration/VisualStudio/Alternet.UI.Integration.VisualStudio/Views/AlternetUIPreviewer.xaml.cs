@@ -9,8 +9,8 @@ using Alternet.UI.Integration.VisualStudio.Services;
 using Microsoft.VisualStudio.Shell;
 using Serilog;
 
-using UIMouseButton = Alternet.UI.Integration.Remoting.MouseButton;
-using UIModifierKeys = Alternet.UI.Integration.Remoting.ModifierKeys;
+/*using UIMouseButton = Alternet.UI.MouseButton;
+using UIModifierKeys = Alternet.UI.ModifierKeys;*/
 
 using WpfMouseButton = System.Windows.Input.MouseButton;
 using WpfModifierKeys = System.Windows.Input.ModifierKeys;
@@ -270,7 +270,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 return FindParent<T>(parentObject);
         }
 
-        private static UIMouseButton GetButton(WpfMouseButton button)
+        /*private static UIMouseButton GetButton(WpfMouseButton button)
         {
             switch (button)
             {
@@ -279,9 +279,9 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 case WpfMouseButton.Right: return UIMouseButton.Right;
                 default: throw new Exception();
             }
-        }
+        }*/
 
-        private static UIModifierKeys[] GetModifiers(MouseEventArgs e)
+        /*private static UIModifierKeys[] GetModifiers(MouseEventArgs e)
         {
             var result = new List<UIModifierKeys>();
 
@@ -321,7 +321,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             //}
 
             return result.ToArray();
-        }
+        }*/
     }
 }
 #pragma warning restore VSTHRD100, VSTHRD010, VSTHRD110

@@ -118,7 +118,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public FontStyle ResultFontStyle
+        public Alternet.Drawing.FontStyle ResultFontStyle
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.FontDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
@@ -155,7 +155,7 @@ namespace Alternet.UI.Native
             NativeApi.FontDialog_SetRange_(NativePointer, minRange, maxRange);
         }
         
-        public void SetInitialFont(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style)
+        public void SetInitialFont(Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, Alternet.Drawing.FontStyle style)
         {
             CheckDisposed();
             NativeApi.FontDialog_SetInitialFont_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
@@ -207,7 +207,7 @@ namespace Alternet.UI.Native
             public static extern double FontDialog_GetResultFontSizeInPoints_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern FontStyle FontDialog_GetResultFontStyle_(IntPtr obj);
+            public static extern Alternet.Drawing.FontStyle FontDialog_GetResultFontStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string? FontDialog_GetTitle_(IntPtr obj);
@@ -216,13 +216,13 @@ namespace Alternet.UI.Native
             public static extern void FontDialog_SetTitle_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult FontDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern Alternet.UI.ModalResult FontDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FontDialog_SetRange_(IntPtr obj, int minRange, int maxRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FontDialog_SetInitialFont_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style);
+            public static extern void FontDialog_SetInitialFont_(IntPtr obj, Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, Alternet.Drawing.FontStyle style);
             
         }
     }

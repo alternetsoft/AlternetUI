@@ -5,6 +5,16 @@
 namespace Alternet::UI
 {
     #pragma pack(push, 1)
+    struct DragEventData
+    {
+        void* data;
+        double mouseClientLocationX;
+        double mouseClientLocationY;
+        DragDropEffects effect;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct CompareListViewItemsEventData
     {
         int64_t item1Index;
@@ -74,16 +84,6 @@ namespace Alternet::UI
         char16_t* Text;
         int IntVal;
         void* ClientData;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct DragEventData
-    {
-        void* data;
-        double mouseClientLocationX;
-        double mouseClientLocationY;
-        DragDropEffects effect;
     };
     #pragma pack(pop)
     

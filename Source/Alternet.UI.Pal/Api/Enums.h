@@ -42,140 +42,6 @@ namespace Alternet::UI
         Question = 4,
     };
     
-    enum class ListBoxSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    };
-    
-    enum class ListViewColumnWidthMode
-    {
-        Fixed = 0,
-        AutoSize = 1,
-        AutoSizeHeader = 2,
-    };
-    
-    enum class ListViewGridLinesDisplayMode
-    {
-        None = 0,
-        Vertical = 1,
-        Horizontal = 2,
-        VerticalAndHorizontal = 3,
-    };
-    
-    enum class ListViewHitTestLocations
-    {
-        None = 2,
-        AboveClientArea = 4,
-        BelowClientArea = 8,
-        LeftOfClientArea = 16,
-        RightOfClientArea = 32,
-        ItemImage = 64,
-        ItemLabel = 128,
-        RightOfItem = 256,
-    };
-    
-    enum class ListViewItemBoundsPortion
-    {
-        EntireItem = 0,
-        Icon = 1,
-        Label = 2,
-    };
-    
-    enum class ListViewSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    };
-    
-    enum class ListViewSortMode
-    {
-        None = 0,
-        Ascending = 1,
-        Descending = 2,
-        Custom = 3,
-    };
-    
-    enum class ListViewView
-    {
-        List = 0,
-        Details = 1,
-        SmallIcon = 2,
-        LargeIcon = 3,
-    };
-    
-    enum class ProgressBarOrientation
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    };
-    
-    enum class ScrollBarOrientation
-    {
-        Vertical = 0,
-        Horizontal = 1,
-    };
-    
-    enum class SliderOrientation
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    };
-    
-    enum class SliderTickStyle
-    {
-        None = 0,
-        TopLeft = 1,
-        BottomRight = 2,
-        Both = 3,
-    };
-    
-    enum class TabAlignment
-    {
-        Top = 0,
-        Bottom = 1,
-        Left = 2,
-        Right = 3,
-    };
-    
-    enum class TreeViewHitTestLocations
-    {
-        None = 2,
-        AboveClientArea = 4,
-        BelowClientArea = 8,
-        LeftOfClientArea = 16,
-        RightOfClientArea = 32,
-        ItemExpandButton = 64,
-        ItemImage = 128,
-        ItemIndent = 256,
-        ItemLabel = 512,
-        RightOfItemLabel = 1024,
-        ItemStateImage = 2048,
-        ItemUpperPart = 4096,
-        ItemLowerPart = 8192,
-    };
-    
-    enum class TreeViewSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
-    };
-    
-    enum class DragAction
-    {
-        Continue = 0,
-        Drop = 1,
-        Cancel = 2,
-    };
-    
-    enum class DragDropEffects
-    {
-        None = 0,
-        Copy = 1,
-        Move = 2,
-        Link = 4,
-    };
-    
     enum class BrushHatchStyle
     {
         BackwardDiagonal = 0,
@@ -184,6 +50,22 @@ namespace Alternet::UI
         Cross = 3,
         Horizontal = 4,
         Vertical = 5,
+    };
+    
+    enum class DashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        Custom = 4,
+    };
+    
+    enum class Duplex
+    {
+        Simplex = 0,
+        Vertical = 1,
+        Horizontal = 2,
     };
     
     enum class FillMode
@@ -229,22 +111,6 @@ namespace Alternet::UI
         Miter = 0,
         Bevel = 1,
         Round = 2,
-    };
-    
-    enum class PenDashStyle
-    {
-        Solid = 0,
-        Dot = 1,
-        Dash = 2,
-        DashDot = 3,
-        Custom = 4,
-    };
-    
-    enum class Duplex
-    {
-        Simplex = 0,
-        Vertical = 1,
-        Horizontal = 2,
     };
     
     enum class PaperKind
@@ -587,6 +453,62 @@ namespace Alternet::UI
         Windows = 8,
     };
     
+    enum class ListViewColumnWidthMode
+    {
+        Fixed = 0,
+        AutoSize = 1,
+        AutoSizeHeader = 2,
+    };
+    
+    enum class ListViewGridLinesDisplayMode
+    {
+        None = 0,
+        Vertical = 1,
+        Horizontal = 2,
+        VerticalAndHorizontal = 3,
+    };
+    
+    enum class ListViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemImage = 64,
+        ItemLabel = 128,
+        RightOfItem = 256,
+    };
+    
+    enum class ListViewItemBoundsPortion
+    {
+        EntireItem = 0,
+        Icon = 1,
+        Label = 2,
+    };
+    
+    enum class ListViewSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    };
+    
+    enum class ListViewSortMode
+    {
+        None = 0,
+        Ascending = 1,
+        Descending = 2,
+        Custom = 3,
+    };
+    
+    enum class ListViewView
+    {
+        List = 0,
+        Details = 1,
+        SmallIcon = 2,
+        LargeIcon = 3,
+    };
+    
     enum class MouseButton
     {
         Left = 0,
@@ -602,10 +524,88 @@ namespace Alternet::UI
         Pressed = 1,
     };
     
-    enum class ToolbarItemImageToTextDisplayMode
+    enum class DragAction
+    {
+        Continue = 0,
+        Drop = 1,
+        Cancel = 2,
+    };
+    
+    enum class DragDropEffects
+    {
+        None = 0,
+        Copy = 1,
+        Move = 2,
+        Link = 4,
+    };
+    
+    enum class ImageToText
     {
         Horizontal = 0,
         Vertical = 1,
+    };
+    
+    enum class ListBoxSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    };
+    
+    enum class ProgressBarOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
+    enum class ScrollBarOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1,
+    };
+    
+    enum class SliderOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
+    enum class SliderTickStyle
+    {
+        None = 0,
+        TopLeft = 1,
+        BottomRight = 2,
+        Both = 3,
+    };
+    
+    enum class TabAlignment
+    {
+        Top = 0,
+        Bottom = 1,
+        Left = 2,
+        Right = 3,
+    };
+    
+    enum class TreeViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemExpandButton = 64,
+        ItemImage = 128,
+        ItemIndent = 256,
+        ItemLabel = 512,
+        RightOfItemLabel = 1024,
+        ItemStateImage = 2048,
+        ItemUpperPart = 4096,
+        ItemLowerPart = 8192,
+    };
+    
+    enum class TreeViewSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
     };
     
     enum class ModalResult
@@ -631,9 +631,9 @@ namespace Alternet::UI
     };
     
 }
-template<> struct enable_bitmask_operators<Alternet::UI::ListViewHitTestLocations> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ListViewHitTestLocations> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };

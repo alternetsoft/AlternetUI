@@ -21,8 +21,8 @@ namespace DrawingSample
             {
                 InitializeComponent();
 
-                ControlSet labels = new(horzAlignLabel, vertAlignLabel, trimmingLabel, wrappingLabel);
-                ControlSet comboBoxes = new(
+                var labels = Group(horzAlignLabel, vertAlignLabel, trimmingLabel, wrappingLabel);
+                var comboBoxes = Group(
                     horizontalAlignmentComboBox,
                     verticalAlignmentComboBox,
                     trimmingComboBox,
@@ -31,7 +31,7 @@ namespace DrawingSample
                 comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
 
-                LayoutFactory.SetupGrid(propGrid, gridControls);
+                propGrid.Setup(gridControls);
             });
         }
 
@@ -45,10 +45,92 @@ namespace DrawingSample
             verticalAlignmentComboBox.AddEnumValues<TextVerticalAlignment>();
             horizontalAlignmentComboBox.AddEnumValues<TextHorizontalAlignment>();
 
-            horizontalAlignmentComboBox.BindSelectedItem(nameof(TextPage.HorizontalAlignment));
-            verticalAlignmentComboBox.BindSelectedItem(nameof(TextPage.VerticalAlignment));
-            wrappingComboBox.BindSelectedItem(nameof(TextPage.Wrapping));
-            trimmingComboBox.BindSelectedItem(nameof(TextPage.Trimming));
+            horizontalAlignmentComboBox.SelectedItem = page.HorizontalAlignment;
+            horizontalAlignmentComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.HorizontalAlignment = horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
+            };
+
+            verticalAlignmentComboBox.SelectedItem = page.VerticalAlignment;
+            verticalAlignmentComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.VerticalAlignment = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
+            };
+
+            wrappingComboBox.SelectedItem = page.Wrapping;
+            wrappingComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.Wrapping = wrappingComboBox.SelectedItemAs<TextWrapping>();
+            };
+
+            trimmingComboBox.SelectedItem = page.Trimming;
+            trimmingComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.Trimming = trimmingComboBox.SelectedItemAs<TextTrimming>();
+            };
+
+            fontSizeSlider.Value = (int)page.FontSize;
+            fontSizeSlider.ValueChanged += (s, e) =>
+            {
+                page.FontSize = fontSizeSlider.Value;
+            };
+
+            boldCheckBox.IsChecked = page.Bold;
+            boldCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Bold = boldCheckBox.IsChecked;
+            };
+
+            italicCheckBox.IsChecked = page.Italic;
+            italicCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Italic = italicCheckBox.IsChecked;
+            };
+
+            underlinedCheckBox.IsChecked = page.Underlined;
+            underlinedCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Underlined = underlinedCheckBox.IsChecked;
+            };
+
+            strikethroughCheckBox.IsChecked = page.Strikethrough;
+            strikethroughCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.Strikethrough = strikethroughCheckBox.IsChecked;
+            };
+
+            textWidthLimitEnabledCheckBox.IsChecked = page.TextWidthLimitEnabled;
+            textWidthLimitEnabledCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.TextWidthLimitEnabled = textWidthLimitEnabledCheckBox.IsChecked;
+            };
+
+            textHeightSetCheckBox.IsChecked = page.TextHeightSet;
+            textHeightSetCheckBox.CheckedChanged += (s, e) =>
+            {
+                page.TextHeightSet = textHeightSetCheckBox.IsChecked;
+            };
+
+            textWidthLimitSlider.Minimum = page.MinTextWidthLimit;
+            textWidthLimitSlider.Maximum = page.MaxTextWidthLimit;
+            textWidthLimitSlider.Value = page.TextWidthLimit;
+            textWidthLimitSlider.ValueChanged += (s, e) => {
+                page.TextWidthLimit = textWidthLimitSlider.Value;
+            };
+
+            textHeightValueSlider.Minimum = page.MinTextHeightValue;
+            textHeightValueSlider.Maximum = page.MaxTextHeightValue;
+            textHeightValueSlider.Value= page.TextHeightValue;
+            textHeightValueSlider.ValueChanged += (s, e) => {
+                page.TextHeightValue = textHeightValueSlider.Value;
+            };
+
+            customFontFamilyComboBox.SelectedItem = page.CustomFontFamilyName;
+            customFontFamilyComboBox.SelectedItemChanged += (s, e) =>
+            {
+                page.CustomFontFamilyName = customFontFamilyComboBox.SelectedItemAs<string>()
+                    ?? Font.Default.Name;
+            };
 
             GetChildrenRecursive().Action<Slider>((c) => c.ClearTicks());
         }

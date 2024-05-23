@@ -30,7 +30,7 @@ namespace Alternet.UI.Native
             return NativeApi.Mouse_GetPosition_(NativePointer);
         }
         
-        public MouseButtonState GetButtonState(MouseButton button)
+        public Alternet.UI.MouseButtonState GetButtonState(Alternet.UI.MouseButton button)
         {
             CheckDisposed();
             return NativeApi.Mouse_GetButtonState_(NativePointer, button);
@@ -122,7 +122,7 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.PointD Mouse_GetPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern MouseButtonState Mouse_GetButtonState_(IntPtr obj, MouseButton button);
+            public static extern Alternet.UI.MouseButtonState Mouse_GetButtonState_(IntPtr obj, Alternet.UI.MouseButton button);
             
         }
     }

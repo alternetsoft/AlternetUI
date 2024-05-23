@@ -131,7 +131,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.PageSetupDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
@@ -189,7 +189,7 @@ namespace Alternet.UI.Native
             public static extern void PageSetupDialog_SetAllowPrinter_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult PageSetupDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern Alternet.UI.ModalResult PageSetupDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

@@ -151,6 +151,17 @@ ALTERNET_UI_API c_bool Font_GetUnderlined_(Font* obj)
     #endif
 }
 
+ALTERNET_UI_API c_bool Font_GetItalic_(Font* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetItalic();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool Font_GetStrikethrough_(Font* obj)
 {
     #if !defined(__WXMSW__)

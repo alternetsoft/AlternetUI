@@ -19,9 +19,11 @@ namespace EmployeeFormSample
             employeeFoto.Image = Image.FromUrl(
                 "embres:ControlsSample.Resources.EmployeePhoto.jpg");
 
-            PopulateComboBoxes();
+            prefixComboBox.AddEnumValues<EmployeePrefix>();
+            stateComboBox.AddEnumValues<State>();
+            departmentComboBox.AddEnumValues<Department>();
 
-            DataContext = new Employee
+            var employee = new Employee
             {
                 FirstName = "Alice",
                 LastName = "Jameson",
@@ -41,20 +43,22 @@ namespace EmployeeFormSample
                 Status = Status.Salaried
             };
 
+            DataContext = employee;
+
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2018,12,4).ToShortDateString(), 
+                new DateTime(2018,12,4).ToShortDateString(),
                 "2018 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2019,12,10).ToShortDateString(), 
+                new DateTime(2019,12,10).ToShortDateString(),
                 "2019 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2020,12,1).ToShortDateString(), 
+                new DateTime(2020,12,1).ToShortDateString(),
                 "2020 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2021,12,20).ToShortDateString(), 
+                new DateTime(2021,12,20).ToShortDateString(),
                 "2021 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2022,12,5).ToShortDateString(), 
+                new DateTime(2022,12,5).ToShortDateString(),
                 "2022 Employee Review", "James Smith" }));
             evaluationsListView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
@@ -62,50 +66,112 @@ namespace EmployeeFormSample
 
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
-            LayoutFactory.AdjustTextBoxesHeight(this);
-/*
-            panelHeader.Add("Information", infoPanel);
-            panelHeader.Add("Contacts", contactsPanel);
-            panelHeader.Add("Evaluations", evalPanel);
-            tabControlPanel.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
-*/
+            TextBoxUtils.AdjustTextBoxesHeight(this);
+            /*
+                        panelHeader.Add("Information", infoPanel);
+                        panelHeader.Add("Contacts", contactsPanel);
+                        panelHeader.Add("Evaluations", evalPanel);
+                        tabControlPanel.Children.Insert(0, panelHeader);
+                        panelHeader.SelectedTab = panelHeader.Tabs[0];
+            */
             this.MinimumSize = new(900, 700);
 
-            firstNameTextBox.BindText(nameof(Employee.FirstName));
-            lastNameTextBox.BindText(nameof(Employee.LastName));
-            statusTextBox.BindText(nameof(Employee.Status));
-            emailTextBox.BindText(nameof(Employee.Email));
-            skypeTextBox.BindText(nameof(Employee.Skype));            
-            titleTextBox.BindText(nameof(Employee.Title));
-            addressTextBox.BindText(nameof(Employee.Address));
-            cityTextBox.BindText(nameof(Employee.City));
-            zipCodeTextBox.BindText(nameof(Employee.ZipCode));
-            homePhoneTextBox.BindText(nameof(Employee.HomePhone));
-            mobilePhone.BindText(nameof(Employee.MobilePhone));
-            prefixComboBox.BindSelectedItem(nameof(Employee.Prefix));
-            stateComboBox.BindSelectedItem(nameof(Employee.State));
-            departmentComboBox.BindSelectedItem(nameof(Employee.Department));
-            birthDatePicker.BindValue(nameof(Employee.BirthDate));
-            hireDatePicker.BindValue(nameof(Employee.HireDate));          
+            firstNameTextBox.Text = employee.FirstName;
+            firstNameTextBox.TextChanged += (s, e) =>
+            {
+                employee.FirstName = firstNameTextBox.Text;
+            };
+
+            lastNameTextBox.Text = employee.LastName;
+            lastNameTextBox.TextChanged += (s, e) =>
+            {
+                employee.LastName = lastNameTextBox.Text;
+            };
+
+            statusTextBox.Text = employee.Status.ToString();
+            statusTextBox.TextChanged += (s, e) =>
+            {
+                employee.Status = (Status)Enum.Parse(typeof(Status), statusTextBox.Text);
+            };
+
+            emailTextBox.Text = employee.Email;
+            emailTextBox.TextChanged += (s, e) =>
+            {
+                employee.Email = emailTextBox.Text;
+            };
+
+            skypeTextBox.Text = employee.Skype;
+            skypeTextBox.TextChanged += (s, e) =>
+            {
+                employee.Skype = skypeTextBox.Text;
+            };
+
+            titleTextBox.TextChanged += (s, e) =>
+            {
+                employee.Title = titleTextBox.Text;
+            };
+
+            addressTextBox.Text = employee.Address;
+            addressTextBox.TextChanged += (s, e) =>
+            {
+                employee.Address = addressTextBox.Text;
+            };
+
+            cityTextBox.Text = employee.City;
+            cityTextBox.TextChanged += (s, e) =>
+            {
+                employee.City = cityTextBox.Text;
+            };
+
+            zipCodeTextBox.Text = employee.ZipCode;
+            zipCodeTextBox.TextChanged += (s, e) =>
+            {
+                employee.ZipCode = zipCodeTextBox.Text;
+            };
+
+            homePhoneTextBox.Text = employee.HomePhone;
+            homePhoneTextBox.TextChanged += (s, e) =>
+            {
+                employee.HomePhone = homePhoneTextBox.Text;
+            };
+
+            mobilePhone.Text = employee.MobilePhone;
+            mobilePhone.TextChanged += (s, e) =>
+            {
+                employee.MobilePhone = mobilePhone.Text;
+            };
+
+            prefixComboBox.SelectedItem = employee.Prefix;
+            prefixComboBox.SelectedItemChanged += (s, e) =>
+            {
+                employee.Prefix = prefixComboBox.SelectedItemAs<EmployeePrefix>();
+            };
+
+            stateComboBox.SelectedItem = employee.State;
+            stateComboBox.SelectedItemChanged += (s, e) =>
+            {
+                employee.State = stateComboBox.SelectedItemAs<State>();
+            };
+
+            departmentComboBox.SelectedItem = employee.Department;
+            departmentComboBox.SelectedItemChanged += (s, e) =>
+            {
+                employee.Department = departmentComboBox.SelectedItemAs<Department>();
+            };
+
+            birthDatePicker.Value = employee.BirthDate;
+            birthDatePicker.ValueChanged += (s, e) =>
+            {
+                employee.BirthDate = birthDatePicker.Value;
+            };
+
+            hireDatePicker.Value = employee.HireDate;
+            hireDatePicker.ValueChanged += (s, e) =>
+            {
+                employee.HireDate = hireDatePicker.Value;
+            };
 
             this.SetSizeToContent();
-        }
-
-        private void PopulateComboBoxes()
-        {
-            static void FillComboBoxWithEnumValues(ComboBox cb, Type enumType)
-            {
-                cb.BeginInit();
-                cb.BeginUpdate();
-                cb.Items.AddRange(Enum.GetValues(enumType).Cast<object>());
-                cb.EndUpdate();
-                cb.EndInit();
-            }
-
-            FillComboBoxWithEnumValues(prefixComboBox, typeof(EmployeePrefix));
-            FillComboBoxWithEnumValues(stateComboBox, typeof(State));
-            FillComboBoxWithEnumValues(departmentComboBox, typeof(Department));
         }
     }
 }

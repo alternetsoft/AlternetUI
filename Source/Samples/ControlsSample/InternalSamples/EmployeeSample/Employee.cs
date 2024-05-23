@@ -7,22 +7,118 @@ namespace EmployeeFormSample
 {
     internal class Employee
     {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public string? Title { get; set; }
-        public EmployeePrefix Prefix { get; set; }
-        public string? Address { get; set; }
-        public string? City { get; set; }
-        public State State { get; set; }
-        public string? ZipCode { get; set; }
-        public string? HomePhone { get; set; }
-        public string? MobilePhone { get; set; }
-        public string? Email { get; set; }
-        public string? Skype { get; set; }
-        public Department Department { get; set; }
-        public DateTime? HireDate { get; set; }
-        public Status Status { get; set; }
+        private string? firstName;
+        private string? lastName;
+        private DateTime birthDate;
+        private string? title;
+        private EmployeePrefix prefix;
+        private string? address;
+        private string? city;
+        private State state;
+        private string? zipCode;
+        private string? homePhone;
+        private string? mobilePhone;
+        private string? email;
+        private string? skype;
+        private Department department;
+        private DateTime hireDate;
+        private Status status;
+
+        public string? FirstName
+        {
+            get => firstName;
+            set => firstName = value;
+        }
+        
+        public string? LastName
+        {
+            get => lastName;
+            set => lastName = value;
+        }
+
+        public DateTime BirthDate
+        {
+            get => birthDate;
+            set => birthDate = value;
+        }
+
+        public string? Title
+        {
+            get => title;
+            set => title = value;
+        }
+
+        public EmployeePrefix Prefix
+        {
+            get => prefix;
+            set => prefix = value;
+        }
+
+        public string? Address
+        {
+            get => address;
+            set => address = value;
+        }
+
+        public string? City
+        {
+            get => city;
+            set => city = value;
+        }
+
+        public State State
+        {
+            get => state;
+            set => state = value;
+        }
+
+        public string? ZipCode
+        {
+            get => zipCode;
+            set => zipCode = value;
+        }
+
+        public string? HomePhone
+        {
+            get => homePhone;
+            set => homePhone = value;
+        }
+
+        public string? MobilePhone
+        {
+            get => mobilePhone;
+            set => mobilePhone = value;
+        }
+
+        public string? Email
+        {
+            get => email;
+            set => email = value;
+        }
+
+        public string? Skype
+        {
+            get => skype;
+            set => skype = value;
+        }
+
+        public Department Department
+        {
+            get => department;
+            set => department = value;
+        }
+
+        public DateTime HireDate
+        {
+            get => hireDate;
+            set => hireDate = value;
+        }
+
+        public Status Status
+        {
+            get => status;
+            set => status = value;
+        }
     }
 
     enum Status

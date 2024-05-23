@@ -15,8 +15,6 @@ namespace ControlsSample
 
             foreach (SliderTickStyle item in Enum.GetValues(typeof(SliderTickStyle)))
             {
-                /*if (item == SliderTickStyle.None && Application.IsLinuxOS)
-                    continue;*/
                 if (item == SliderTickStyle.Both && !Application.IsWindowsOS)
                     continue;
                 tickStyleComboBox.Items.Add(item);

@@ -18,7 +18,7 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
         private static void GenerateAssembly(Assembly assembly, XElement parentElement)
         {
             var assemblyElement = new XElement("Assembly");
-            assemblyElement.Add(new XAttribute("Name", assembly.FullName));
+            assemblyElement.Add(new XAttribute("Name", assembly.FullName!));
             foreach (var type in assembly.GetExportedTypes())
                 GenerateType(type, assemblyElement);
 
@@ -28,7 +28,7 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
         private static void GenerateType(Type type, XElement parentElement)
         {
             var typeElement = new XElement("Type");
-            typeElement.Add(new XAttribute("Name", type.FullName));
+            typeElement.Add(new XAttribute("Name", type.FullName!));
             foreach (var @event in type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
                 GenerateEvent(@event, typeElement);
 

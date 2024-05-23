@@ -6,13 +6,8 @@ namespace ControlsSample
 {
     internal partial class CheckBoxesPage : Control
     {
-        private readonly CheckBoxesPageDataContext dataContext = new ();
-
         public CheckBoxesPage()
         {
-            dataContext.IsCheckedChanged += DataContext_IsCheckedChanged;
-            DataContext = dataContext;
-
             InitializeComponent();
 
             threeStatesCheckBox.CheckedChanged += ThreeStatesCheckBox_CheckedChanged;
@@ -35,15 +30,6 @@ namespace ControlsSample
             checkStateCheckedButton.Click += CheckStateCheckedButton_Click;
             checkStateIndeterminateButton.Click += CheckStateIndeterminateButton_Click;
             textEmptyButton.Click += TextEmptyButton_Click;
-
-            checkBox.BindIsChecked(nameof(CheckBoxesPageDataContext.IsChecked));
-
-            DataContext_IsCheckedChanged(null, EventArgs.Empty);
-        }
-
-        private void DataContext_IsCheckedChanged(object? sender, EventArgs e)
-        {
-            boundLabel.Text = $"DataContext.IsChecked: {dataContext.IsChecked}";
         }
 
         private void TextEmptyButton_Click(object? sender, EventArgs e)
@@ -100,29 +86,6 @@ namespace ControlsSample
         private void ThreeStatesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             checkBox.ThreeState = threeStatesCheckBox.IsChecked;
-        }
-
-        internal class CheckBoxesPageDataContext
-        {
-            private bool isChecked;
-
-            public event EventHandler? IsCheckedChanged;
-
-            public bool IsChecked
-            {
-                get
-                {
-                    return isChecked;
-                }
-
-                set
-                {
-                    if (isChecked == value)
-                        return;
-                    isChecked = value;
-                    IsCheckedChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
         }
     }
 }

@@ -38,7 +38,7 @@ namespace ControlsSample
             object? sender, 
             MouseEventArgs e)
         {
-            var result = checkListBox.HitTest(e.GetPosition(checkListBox));
+            var result = checkListBox.HitTest(Mouse.GetPosition(checkListBox));
             var item = (result == null ? 
                 "<none>" : checkListBox.Items[result.Value]);
             Application.Log($"HitTest result: Item: '{item}'");

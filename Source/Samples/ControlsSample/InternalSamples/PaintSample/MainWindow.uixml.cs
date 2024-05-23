@@ -15,7 +15,7 @@ namespace PaintSample
         private readonly UndoService? undoService;
 
         private readonly CanvasControl canvasControl;
-        private readonly GenericToolBar toolbar = new();
+        private readonly ToolBar toolbar = new();
         private readonly ColorSelector colorSelector;
         private readonly Border border;
         private readonly Grid mainGrid;
@@ -53,7 +53,7 @@ namespace PaintSample
             Size = (750, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            var menu = Menu!;
+            var menu = (Menu as Menu)!;
 
             fileMainMenu = menu.Add("_File");
             editMainMenu = menu.Add("_Edit");
@@ -172,7 +172,7 @@ namespace PaintSample
                 var url = "embres:ControlsSample.Resources.ToolIcons." +
                     tool.GetType().Name.Replace("Tool", "") + ".svg";
                 var (normalImage, disabledImage) =
-                    ImageSet.GetNormalAndDisabledSvg(url, this);
+                    ToolBarUtils.GetNormalAndDisabledSvg(url, this);
                 var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);
 
                 void ClickMe()
@@ -213,7 +213,7 @@ namespace PaintSample
                 throw new InvalidOperationException();
 #pragma warning restore
 
-            var image = ImageSet.GetNormalAndDisabledSvg(stream, 32, this);
+            var image = SvgUtils.GetNormalAndDisabledSvg(stream, 32, this);
             return image;
         }
 
@@ -643,7 +643,7 @@ namespace PaintSample
             var size = dc.GetTextExtent(
                 s,
                 font,
-                out double descent,
+                out var descent,
                 out _,
                 null);
 
@@ -659,7 +659,8 @@ namespace PaintSample
             DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
 
             var y = location.Y - descent + size.Height;
-            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
+            if(y is not null)
+                dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y.Value), (location.X + size.Width, y.Value));
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 

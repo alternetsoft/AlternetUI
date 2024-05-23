@@ -40,8 +40,7 @@ namespace ControlsSample
 
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
 
-            AddVerticalStackPanel()
-            .AddButtons(
+            AddVerticalStackPanel().AddButtons(
                 ("Play", Play),
                 ("Stop", Stop))
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax();
@@ -90,7 +89,7 @@ namespace ControlsSample
                 dialog ??= new OpenFileDialog();
                 dialog.FileMustExist = true;
                 dialog.Filter = "Audio Files (*.wav)|*.wav";
-                var result = dialog.ShowModal(this);
+                var result = dialog.ShowModal(this.ParentWindow);
                 if (result == ModalResult.Accepted)
                 {
                     if (File.Exists(dialog.FileName))

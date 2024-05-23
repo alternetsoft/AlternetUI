@@ -85,12 +85,12 @@ namespace Alternet::UI
     {
     }
 
-    ToolbarItemImageToTextDisplayMode Toolbar::GetImageToTextDisplayMode()
+    ImageToText Toolbar::GetImageToTextDisplayMode()
     {
         return _imageToTextDisplayMode;
     }
 
-    void Toolbar::SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value)
+    void Toolbar::SetImageToTextDisplayMode(ImageToText value)
     {
         if (_imageToTextDisplayMode == value)
             return;
@@ -224,7 +224,7 @@ namespace Alternet::UI
             if (!_itemImagesVisible)
                 style |= wxTB_NOICONS;
 
-            if (_imageToTextDisplayMode == ToolbarItemImageToTextDisplayMode::Horizontal)
+            if (_imageToTextDisplayMode == ImageToText::Horizontal)
                 style |= wxTB_HORZ_LAYOUT;
 
             return style;

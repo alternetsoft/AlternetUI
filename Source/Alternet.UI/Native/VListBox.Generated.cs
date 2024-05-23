@@ -142,7 +142,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ListBoxSelectionMode SelectionMode
+        public Alternet.UI.ListBoxSelectionMode SelectionMode
         {
             get
             {
@@ -420,10 +420,10 @@ namespace Alternet.UI.Native
             public static extern void VListBox_SetItemsCount_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ListBoxSelectionMode VListBox_GetSelectionMode_(IntPtr obj);
+            public static extern Alternet.UI.ListBoxSelectionMode VListBox_GetSelectionMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void VListBox_SetSelectionMode_(IntPtr obj, ListBoxSelectionMode value);
+            public static extern void VListBox_SetSelectionMode_(IntPtr obj, Alternet.UI.ListBoxSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectI VListBox_GetItemRectI_(IntPtr obj, int index);

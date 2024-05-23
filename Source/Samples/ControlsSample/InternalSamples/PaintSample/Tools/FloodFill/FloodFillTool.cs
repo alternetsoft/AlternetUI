@@ -1,6 +1,7 @@
 using Alternet.Drawing;
 using Alternet.UI;
 using System;
+using Alternet.UI.Extensions;
 
 namespace PaintSample
 {
@@ -16,7 +17,7 @@ namespace PaintSample
             if (e.ChangedButton != MouseButton.Left)
                 return;
 
-            var point = e.GetPosition(Canvas);
+            var point = Mouse.GetPosition(Canvas);
 
             if (!new RectD(new PointD(), Document.Bitmap.SizeDip(Canvas)).Contains(point))
                 return;

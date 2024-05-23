@@ -1,0 +1,189 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Alternet.Drawing;
+
+namespace Alternet.UI
+{
+    /// <summary>
+    /// Contains static methods and properties related to the toolbars.
+    /// </summary>
+    public class ToolBarUtils
+    {
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 96 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 16. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+        public static int DefaultImageSize96dpi { get; set; } = 16;
+
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 144 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 24. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+        public static int DefaultImageSize144dpi { get; set; } = 24;
+
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 192 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 32. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+        public static int DefaultImageSize192dpi { get; set; } = 32;
+
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 288 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 48. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+        public static int DefaultImageSize288dpi { get; set; } = 48;
+
+        /// <summary>
+        /// Returns suggested toolbar image size depending on the given DPI value.
+        /// </summary>
+        /// <param name="deviceDpi">DPI for which default image size is
+        /// returned.</param>
+        public static int GetDefaultImageSize(double deviceDpi)
+        {
+            decimal deviceDpiRatio = (decimal)deviceDpi / 96m;
+
+            if (deviceDpi <= 96 || deviceDpiRatio < 1.5m)
+                return DefaultImageSize96dpi;
+            if (deviceDpiRatio < 2m)
+                return DefaultImageSize144dpi;
+            if (deviceDpiRatio < 3m)
+                return DefaultImageSize192dpi;
+            return DefaultImageSize288dpi;
+        }
+
+        /// <summary>
+        /// Returns suggested toolbar image size in pixels depending on the given DPI value.
+        /// </summary>
+        /// <param name="control">Control's <see cref="Control.GetDPI"/> method
+        /// is used to get DPI settings.</param>
+        public static SizeI GetDefaultImageSize(Control? control = null)
+        {
+            control ??= BaseApplication.FirstWindow();
+            SizeD? dpi;
+            if (control is null)
+                dpi = Window.DefaultDPI ?? Display.Primary.DPI;
+            else
+                dpi = control.GetDPI();
+            if (dpi is null)
+                throw new ArgumentNullException(nameof(control));
+            var result = ToolBarUtils.GetDefaultImageSize(dpi.Value);
+            return result;
+        }
+
+        /// <inheritdoc cref="GetDefaultImageSize(double)"/>
+        public static SizeI GetDefaultImageSize(SizeD deviceDpi)
+        {
+            var width = GetDefaultImageSize(deviceDpi.Width);
+            var height = GetDefaultImageSize(deviceDpi.Height);
+            return new(width, height);
+        }
+
+        /// <summary>
+        /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
+        /// from the specified url which contains svg data. Images are loaded
+        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// </summary>
+        /// <param name="size">Image size in pixels. If it is not specified,
+        /// <see cref="ToolBarUtils.GetDefaultImageSize(Control)"/> is used to get image size.</param>
+        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// method is called to get color information.</param>
+        /// <returns></returns>
+        /// <param name="url">"embres" or "file" url with svg image data.</param>
+        /// <returns></returns>
+        public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
+            string url,
+            Control control,
+            SizeI? size = null)
+        {
+            size ??= ToolBarUtils.GetDefaultImageSize(control);
+
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            var image = ImageSet.FromSvgStream(
+                stream,
+                size.Value,
+                control.GetSvgColor(KnownSvgColor.Normal),
+                control.GetSvgColor(KnownSvgColor.Disabled));
+            return image;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <remarks>
+        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(double)"/>
+        /// to get appropriate image size which is best suitable for toolbars.
+        /// </remarks>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.</param>
+        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI.</param>
+        /// <returns><see cref="ImageSet"/> instance loaded from Svg data for use
+        /// on the toolbars.</returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static ImageSet FromSvgUrlForToolbar(string url, Control control, Color? color = null)
+        {
+            var imageSize = ToolBarUtils.GetDefaultImageSize(control);
+            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
+            return result;
+        }
+    }
+}

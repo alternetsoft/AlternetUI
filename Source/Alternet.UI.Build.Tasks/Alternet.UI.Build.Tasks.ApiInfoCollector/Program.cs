@@ -21,7 +21,7 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
                 var outPath = args[1];
                 var outPathDirectory = Path.GetDirectoryName(outPath);
                 if (!Directory.Exists(outPathDirectory))
-                    Directory.CreateDirectory(outPathDirectory);
+                    Directory.CreateDirectory(outPathDirectory!);
                 xmlDocument.Save(outPath);
             }
             catch (Exception e)

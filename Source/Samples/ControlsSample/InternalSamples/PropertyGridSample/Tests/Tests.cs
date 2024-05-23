@@ -27,19 +27,19 @@ namespace PropertyGridSample
 #if DEBUG
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
 
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Visible", TestGenericToolBarVisible);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Enabled", TestGenericToolBarEnabled);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Delete", TestGenericToolBarDelete);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Sticky", TestGenericToolBarSticky);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Foreground Color", TestGenericToolBarForegroundColor);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background Color", TestGenericToolBarBackgroundColor);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Font", TestGenericToolBarFont);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Test Background", TestGenericToolBarBackground);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Reset Background", TestGenericToolBarResetBackground);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Clear", TestGenericToolBarClear);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Add OK button", TestGenericToolBarAddOk);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
-            PropertyGrid.AddSimpleAction<GenericToolBar>("ReInit", TestGenericToolBarReInit);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Delete", TestGenericToolBarDelete);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Sticky", TestGenericToolBarSticky);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Foreground Color", TestGenericToolBarForegroundColor);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Background Color", TestGenericToolBarBackgroundColor);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Font", TestGenericToolBarFont);
+            PropertyGrid.AddSimpleAction<ToolBar>("Test Background", TestGenericToolBarBackground);
+            PropertyGrid.AddSimpleAction<ToolBar>("Reset Background", TestGenericToolBarResetBackground);
+            PropertyGrid.AddSimpleAction<ToolBar>("Clear", TestGenericToolBarClear);
+            PropertyGrid.AddSimpleAction<ToolBar>("Add OK button", TestGenericToolBarAddOk);
+            PropertyGrid.AddSimpleAction<ToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
+            PropertyGrid.AddSimpleAction<ToolBar>("ReInit", TestGenericToolBarReInit);
 #endif
         }
 
@@ -82,7 +82,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarFont()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.Font = Control.DefaultFont.Scaled(2);
@@ -90,7 +90,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarForegroundColor()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.ForegroundColor = Color.Red;
@@ -98,7 +98,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarBackgroundColor()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.Background = null;
@@ -107,7 +107,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarBackground()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.Background = Color.RebeccaPurple.AsBrush;
@@ -116,7 +116,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarClear()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.DeleteAll();
@@ -124,7 +124,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarAddOk()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.AddSpeedBtn(KnownButton.OK);
@@ -132,7 +132,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarAddCancel()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.AddSpeedBtn(KnownButton.Cancel);
@@ -140,7 +140,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarReInit()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.DeleteAll(false);
@@ -150,7 +150,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarResetBackground()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             control.Background = null;
@@ -159,7 +159,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarVisible()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             var childId = control.GetToolId(1);
@@ -170,7 +170,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarEnabled()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             var childId = control.GetToolId(1);
@@ -181,7 +181,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarSticky()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             var childId = control.GetToolId(1);
@@ -192,7 +192,7 @@ namespace PropertyGridSample
 
         void TestGenericToolBarDelete()
         {
-            var control = GetSelectedControl<GenericToolBar>();
+            var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
             var childId = control.GetToolId(1);

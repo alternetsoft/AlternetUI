@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class PrinterSettings : NativeObject
+    internal partial class PrinterSettings : NativeObject, Alternet.Drawing.Printing.IPrinterSettingsHandler
     {
         static PrinterSettings()
         {
@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Duplex Duplex
+        public Alternet.Drawing.Printing.Duplex Duplex
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PrintRange PrintRange
+        public Alternet.Drawing.Printing.PrintRange PrintRange
         {
             get
             {
@@ -218,10 +218,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr PrinterSettings_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Duplex PrinterSettings_GetDuplex_(IntPtr obj);
+            public static extern Alternet.Drawing.Printing.Duplex PrinterSettings_GetDuplex_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetDuplex_(IntPtr obj, Duplex value);
+            public static extern void PrinterSettings_SetDuplex_(IntPtr obj, Alternet.Drawing.Printing.Duplex value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int PrinterSettings_GetFromPage_(IntPtr obj);
@@ -248,10 +248,10 @@ namespace Alternet.UI.Native
             public static extern void PrinterSettings_SetMaximumPage_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern PrintRange PrinterSettings_GetPrintRange_(IntPtr obj);
+            public static extern Alternet.Drawing.Printing.PrintRange PrinterSettings_GetPrintRange_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetPrintRange_(IntPtr obj, PrintRange value);
+            public static extern void PrinterSettings_SetPrintRange_(IntPtr obj, Alternet.Drawing.Printing.PrintRange value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PrinterSettings_GetCollate_(IntPtr obj);

@@ -4,6 +4,15 @@ using System.Runtime.InteropServices;
 namespace Alternet.UI.Native
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class DragEventData
+    {
+        public System.IntPtr data;
+        public double mouseClientLocationX;
+        public double mouseClientLocationY;
+        public DragDropEffects effect;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class CompareListViewItemsEventData
     {
         public long item1Index;
@@ -66,15 +75,6 @@ namespace Alternet.UI.Native
         public string Text;
         public int IntVal;
         public System.IntPtr ClientData;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class DragEventData
-    {
-        public System.IntPtr data;
-        public double mouseClientLocationX;
-        public double mouseClientLocationY;
-        public DragDropEffects effect;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

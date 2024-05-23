@@ -55,7 +55,7 @@ namespace DrawingSample
                 var c = bounds.Center;
                 for (double a = 0; a <= 360; a += 10)
                 {
-                    lines.Add(MathUtils.GetPointOnCircle(c, r, a));
+                    lines.Add(DrawingUtils.GetPointOnCircle(c, r, a));
                 }
 
 #pragma warning disable
@@ -142,12 +142,12 @@ namespace DrawingSample
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseDown)
-                AddClipAreaPart(e.GetPosition(Canvas));
+                AddClipAreaPart(Mouse.GetPosition(Canvas));
         }
 
         private void Canvas_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
-            AddClipAreaPart(e.GetPosition(Canvas));
+            AddClipAreaPart(Mouse.GetPosition(Canvas));
             Canvas!.CaptureMouse();
             mouseDown = true;
         }

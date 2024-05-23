@@ -6,12 +6,12 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
 {
     sealed class DirectoryCopier
     {
-        void _CopyFoldersDeep(string currentPath, string rootPathCurrent, string rootPathNew)
+        void CopyFoldersDeep(string currentPath, string rootPathCurrent, string rootPathNew)
         {
             // recursivly copies from one root dir to another dir all data.
 
             // Walk Dir
-            DirectoryInfo di = new DirectoryInfo(currentPath);
+            DirectoryInfo di = new(currentPath);
 
             //if(!MakeFlatCopy)
             //{
@@ -46,9 +46,8 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
 
                 if (!MakeFlatCopy)
                 {
-                    var dirPathNew = Path.GetDirectoryName(filePathNew);
-                    if (dirPathNew == null)
-                        throw new InvalidOperationException();
+                    var dirPathNew = Path.GetDirectoryName(filePathNew)
+                        ?? throw new InvalidOperationException();
                     if (!Directory.Exists(dirPathNew))
                         Directory.CreateDirectory(dirPathNew);
                 }
@@ -65,10 +64,10 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
                         continue;
                 }
 
-                if (_ExcludedDirectories.Contains(_NormalizeDirectoryName(d.FullName)))
+                if (_ExcludedDirectories.Contains(NormalizeDirectoryName(d.FullName)))
                     continue;
 
-                _CopyFoldersDeep(d.FullName, rootPathCurrent, rootPathNew);
+                CopyFoldersDeep(d.FullName, rootPathCurrent, rootPathNew);
             }
         }
 
@@ -98,7 +97,7 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
 
             if (!Directory.Exists(SourceDirectoryPath))
                 throw new Exception(string.Format("Directory '{0}' does not exist.", SourceDirectoryPath));
-            _CopyFoldersDeep(SourceDirectoryPath, SourceDirectoryPath, TargetDirectoryPath);
+            CopyFoldersDeep(SourceDirectoryPath, SourceDirectoryPath, TargetDirectoryPath);
         }
 
         public static void Copy(string sourceDirectoryPath, string destinationDirectoryPath)
@@ -123,16 +122,16 @@ namespace Alternet.UI.PublicSourceGenerator.Utils
             set;
         }
 
-        static string _NormalizeDirectoryName(string path)
+        static string NormalizeDirectoryName(string path)
         {
             return Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         }
 
-        HashSet<string> _ExcludedDirectories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private readonly HashSet<string> _ExcludedDirectories = new(StringComparer.OrdinalIgnoreCase);
 
         public void ExcludeDirectory(string path)
         {
-            _ExcludedDirectories.Add(_NormalizeDirectoryName(path));
+            _ExcludedDirectories.Add(NormalizeDirectoryName(path));
         }
 
         public void ResetExcludedDirectories()

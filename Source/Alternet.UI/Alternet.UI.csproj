@@ -58,15 +58,15 @@
 
   <ItemGroup>
     <Compile Remove="build\**" />
-    <Compile Remove="Controls\BrowsableProps\**" />
+    <Compile Remove="Classes\BrowsableProps\**" />
     <Compile Remove="Drawing.System.Imported\**" />
     <Compile Remove="System\**" />
     <EmbeddedResource Remove="build\**" />
-    <EmbeddedResource Remove="Controls\BrowsableProps\**" />
+    <EmbeddedResource Remove="Classes\BrowsableProps\**" />
     <EmbeddedResource Remove="Drawing.System.Imported\**" />
     <EmbeddedResource Remove="System\**" />
     <None Remove="build\**" />
-    <None Remove="Controls\BrowsableProps\**" />
+    <None Remove="Classes\BrowsableProps\**" />
     <None Remove="Drawing.System.Imported\**" />
     <None Remove="System\**" />
   </ItemGroup>
@@ -176,7 +176,6 @@
     <None Remove="Resources\Svg\toggle-on.svg" />
     <None Remove="Resources\Svg\trash-can.svg" />
     <None Remove="Resources\Svg\triangle-exclamation.svg" />
-    <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
@@ -313,15 +312,8 @@
 -->	
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Strings.resx">
-      <Generator>MSBuild:_GenerateResxSource</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
   <!-- ================================================= -->
-  <!--  and '$(TargetFramework)' == 'net8.0'  Condition="'$(Configuration)'=='Debug'"-->  
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -330,6 +322,11 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+    <ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
   </ItemGroup>
 
   <!-- ================================================= -->

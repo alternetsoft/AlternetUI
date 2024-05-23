@@ -49,7 +49,7 @@ namespace PropertyGridSample
                     typeof(Border),
                     typeof(PictureBox),
                     typeof(Button),
-                    typeof(GenericToolBar),
+                    typeof(ToolBar),
                     typeof(SplittedPanel),
                     typeof(Calendar),
                     typeof(CheckBox),
@@ -113,6 +113,10 @@ namespace PropertyGridSample
                 items.Add(CreateDialogItem<SaveFileDialog>());
                 items.Add(CreateDialogItem<SelectDirectoryDialog>());
                 items.Add(CreateDialogItem<FontDialog>());
+
+                items.Add(CreateDialogItem<PageSetupDialog>());
+                items.Add(CreateDialogItem<PrintPreviewDialog>());
+                items.Add(CreateDialogItem<PrintDialog>());
 
                 items.Sort();
 

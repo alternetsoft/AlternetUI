@@ -14,10 +14,10 @@ namespace DrawingContextTutorial
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.DrawingContext.FillRectangle(Brushes.LightBlue, e.Bounds);
+            e.Graphics.FillRectangle(Brushes.LightBlue, e.ClipRectangle);
 
             for (int size = 10; size < 200; size += 10)
-                e.DrawingContext.DrawEllipse(Pens.Red, new(10, 10, size, size));
+                e.Graphics.DrawEllipse(Pens.Red, new(10, 10, size, size));
         }
     }
 }

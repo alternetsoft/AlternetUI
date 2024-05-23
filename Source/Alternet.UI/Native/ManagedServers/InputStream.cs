@@ -5,8 +5,8 @@ namespace Alternet.UI.Native
 {
     internal partial class InputStream
     {
+        private readonly bool disposeStream;
         private Stream stream;
-        private bool disposeStream;
 
         public InputStream(Stream stream, bool disposeStream = true)
         {

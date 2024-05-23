@@ -3,9 +3,4 @@
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Strings.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>

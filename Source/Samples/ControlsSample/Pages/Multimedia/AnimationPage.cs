@@ -33,7 +33,7 @@ namespace ControlsSample
 
         static AnimationPage()
         {
-            AnimationPlayer.DefaultDriver = AnimationPlayer.KnownDriver.Generic;
+            AnimationPlayer.DefaultHandlerKind = AnimationPlayer.KnownHandler.Generic;
         }
 
         public AnimationPage()
@@ -56,8 +56,7 @@ namespace ControlsSample
 
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
 
-            AddVerticalStackPanel()
-            .AddButtons(
+            AddVerticalStackPanel().AddButtons(
                 ("Play", () => { animation.Play(); }),
                 ("Stop", animation.Stop),
                 ("Info", ShowInfo),
@@ -88,7 +87,7 @@ namespace ControlsSample
             {
                 using var dialog = new OpenFileDialog();
                 dialog.FileMustExist = true;
-                var result = dialog.ShowModal(this);
+                var result = dialog.ShowModal(this.ParentWindow);
                 if (result == ModalResult.Accepted)
                 {
                     if (File.Exists(dialog.FileName))

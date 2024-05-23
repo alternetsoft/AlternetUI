@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class PageSettings : NativeObject
+    internal partial class PageSettings : NativeObject, Alternet.Drawing.Printing.IPageSettingsHandler
     {
         static PageSettings()
         {
@@ -98,7 +98,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PaperKind PaperSize
+        public Alternet.Drawing.Printing.PaperKind PaperSize
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PrinterResolutionKind PrinterResolution
+        public Alternet.Drawing.Printing.PrinterResolutionKind PrinterResolution
         {
             get
             {
@@ -168,16 +168,16 @@ namespace Alternet.UI.Native
             public static extern void PageSettings_SetUseCustomPaperSize_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern PaperKind PageSettings_GetPaperSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Printing.PaperKind PageSettings_GetPaperSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetPaperSize_(IntPtr obj, PaperKind value);
+            public static extern void PageSettings_SetPaperSize_(IntPtr obj, Alternet.Drawing.Printing.PaperKind value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern PrinterResolutionKind PageSettings_GetPrinterResolution_(IntPtr obj);
+            public static extern Alternet.Drawing.Printing.PrinterResolutionKind PageSettings_GetPrinterResolution_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetPrinterResolution_(IntPtr obj, PrinterResolutionKind value);
+            public static extern void PageSettings_SetPrinterResolution_(IntPtr obj, Alternet.Drawing.Printing.PrinterResolutionKind value);
             
         }
     }

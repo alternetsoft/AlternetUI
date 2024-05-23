@@ -68,7 +68,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.SelectDirectoryDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
@@ -102,7 +102,7 @@ namespace Alternet.UI.Native
             public static extern void SelectDirectoryDialog_SetDirectoryName_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult SelectDirectoryDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern Alternet.UI.ModalResult SelectDirectoryDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

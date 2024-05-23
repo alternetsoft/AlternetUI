@@ -286,7 +286,7 @@ namespace ControlsSample
 
         private void TreeView_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
-            var result = treeView.HitTest(e.GetPosition(treeView));
+            var result = treeView.HitTest(Mouse.GetPosition(treeView));
             var s = result.Item?.Text ?? "<none>";
             Application.Log($"HitTest result: Item: '{s}, Location: {result.Location}'");
         }

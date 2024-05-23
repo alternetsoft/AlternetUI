@@ -10,14 +10,27 @@ namespace PaintSample
         public PenLikeToolOptionsControl()
         {
             InitializeComponent();
-
-            thicknessNumericUpDown.BindValue("Thickness");
         }
 
         public PenLikeTool? Tool
         {
             get => (PenLikeTool?)DataContext;
-            set => DataContext = value;
+            set
+            {
+                thicknessNumericUpDown.ValueChanged -= ThicknessNumericUpDown_ValueChanged;
+                DataContext = value;
+                if(value != null)
+                {
+                    thicknessNumericUpDown.Value = (int)value.Thickness;
+                    thicknessNumericUpDown.ValueChanged += ThicknessNumericUpDown_ValueChanged;
+                }
+            }
+        }
+
+        private void ThicknessNumericUpDown_ValueChanged(object? sender, EventArgs e)
+        {
+            if(Tool is not null)
+                Tool.Thickness = thicknessNumericUpDown.Value;
         }
     }
 }

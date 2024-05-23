@@ -25,8 +25,8 @@ namespace ApiGenerator.Managed
                     w.WriteLine($"enum {typeName}");
                     using (new BlockIndent(w))
                     {
-                        foreach (var m in MemberProvider.GetEnumNamesAndValues(type))
-                            w.WriteLine($"{m.Name} = {m.Value},");
+                        foreach (var (Name, Value) in MemberProvider.GetEnumNamesAndValues(type))
+                            w.WriteLine($"{Name} = {Value},");
                     }
                     w.WriteLine();
                 }

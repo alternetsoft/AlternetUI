@@ -42,11 +42,6 @@
     </MainMenu>
   </Window.Menu>
 
-  <Window.ToolBar>
-    <ToolBar NoDivider="true">
-    </ToolBar>
-  </Window.ToolBar>
-
   <Window.StatusBar>
     <StatusBar>
       <StatusBarPanel Text="Ready" />

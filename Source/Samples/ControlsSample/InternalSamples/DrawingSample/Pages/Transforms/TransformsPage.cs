@@ -126,7 +126,8 @@ namespace DrawingSample
 
                 var pathRadius = 80;
 
-                PointD GetPointOnCircle(double r, double a) => MathUtils.GetPointOnCircle(center, r, a);
+                PointD GetPointOnCircle(double r, double a) =>
+                    DrawingUtils.GetPointOnCircle(center, r, a);
 
                 path.StartFigure(GetPointOnCircle(pathRadius, 0));
 

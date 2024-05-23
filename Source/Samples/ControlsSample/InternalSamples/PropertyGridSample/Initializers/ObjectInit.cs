@@ -7,6 +7,7 @@ using System.Collections;
 using System.Reflection;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.Drawing.Printing;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
@@ -52,8 +53,77 @@ namespace PropertyGridSample
             };
         }
 
+        public static void InitPageSetupDialog(object control)
+        {
+            if (control is not PageSetupDialog dialog)
+                return;
+            dialog.Document = CreatePrintDocument();
+        }
+
+        public static void InitPrintPreviewDialog(object control)
+        {
+            if (control is not PrintPreviewDialog dialog)
+                return;
+            dialog.Document = CreatePrintDocument();
+        }
+
+        public static void InitPrintDialog(object control)
+        {
+            if (control is not PrintDialog dialog)
+                return;
+            dialog.Document = CreatePrintDocument();
+        }
+
+        public static PrintDocument CreatePrintDocument()
+        {
+            var document = new PrintDocument
+            {
+                OriginAtMargins = false,
+                DocumentName = "Sample document",
+            };
+
+            document.PrinterSettings.FromPage = 1;
+            document.PrinterSettings.MinimumPage = 1;
+
+            var maxPage = 3 + 1;
+            document.PrinterSettings.MaximumPage = maxPage;
+            document.PrinterSettings.ToPage = maxPage;
+
+            document.PageSettings.Color = true;
+            document.PageSettings.Margins = 20;
+
+            document.PrintPage += Document_PrintPage;
+
+            return document;
+
+            void Document_PrintPage(object? sender, PrintPageEventArgs e)
+            {
+                int pageNumber = e.PageNumber;
+
+                var bounds = new RectD(new PointD(), e.PrintablePageBounds.Size);
+
+                if (pageNumber == 1)
+                {
+                    PrintingSample.MainWindow.DrawFirstPage(
+                        e.DrawingContext,
+                        bounds);
+                }
+                else
+                {
+                    PrintingSample.MainWindow.DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
+                }
+
+                var v = 3;
+
+                e.HasMorePages = pageNumber - 1 < v;
+            }
+        }
+
         static ObjectInit()
         {
+            Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
+            Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
+            Actions.Add(typeof(PrintDialog), InitPrintDialog);
             Actions.Add(typeof(ContextMenu), InitContextMenu);
             Actions.Add(typeof(SplittedPanel), InitSplittedPanel);
             Actions.Add(typeof(ScrollViewer), InitScrollViewer);
@@ -63,11 +133,10 @@ namespace PropertyGridSample
             Actions.Add(typeof(ScrollBar), InitScrollBar);
             Actions.Add(typeof(SpeedButton), InitSpeedButton);
             Actions.Add(typeof(PictureBox), InitPictureBox);
-            Actions.Add(typeof(GenericToolBar), InitGenericToolBar);
+            Actions.Add(typeof(ToolBar), InitGenericToolBar);
             Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
             Actions.Add(typeof(ToolBarSet), InitGenericToolBarSet);
             Actions.Add(typeof(CardPanel), InitCardPanel);
-            /*Actions.Add(typeof(CardPanelHeader), InitCardPanelHeader);*/
             Actions.Add(typeof(TextBox), InitTextBox);
             Actions.Add(typeof(TextBoxAndLabel), InitTextBoxAndLabel);
             Actions.Add(typeof(RichTextBox), InitRichTextBox);

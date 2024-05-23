@@ -40,9 +40,19 @@ using System.Security;");
 
             var baseTypeName = GetBaseClass(type, types) ?? "NativeObject";
             var extendsClause = baseTypeName == null ? "" : " : " + baseTypeName;
+
+            var additionalInterface = TypeProvider.GetAdditionalInterfaceName(type);
+
             var abstractModifier = type.IsAbstract ? " abstract" : "";
 
-            w.WriteLine($"internal{abstractModifier} partial class {typeName}{extendsClause}");
+            var classDecl = $"internal{abstractModifier} partial class {typeName}{extendsClause}";
+
+            if(additionalInterface is not null)
+            {
+                classDecl += ", " + additionalInterface;
+            }
+
+            w.WriteLine(classDecl);
             w.WriteLine("{");
             w.Indent++;
 

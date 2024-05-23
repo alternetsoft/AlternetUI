@@ -7,7 +7,8 @@ namespace PrintingSample
 {
     public partial class MainWindow : Window
     {
-        private readonly Font font = new(FontFamily.GenericSerif, 25);
+        private static readonly Font font = new(FontFamily.GenericSerif, 25);
+        private static readonly Pen thickGrayPen = new(Color.Gray, 4);
 
         public MainWindow()
         {
@@ -34,9 +35,7 @@ namespace PrintingSample
             DrawFirstPage(dc, bounds);
         }
 
-        private readonly Pen thickGrayPen = new(Color.Gray, 4);
-
-        private void DrawFirstPage(Graphics dc, RectD bounds)
+        public static void DrawFirstPage(Graphics dc, RectD bounds)
         {
             dc.DrawRectangle(Pens.Blue, bounds);
 
@@ -176,7 +175,7 @@ namespace PrintingSample
             e.HasMorePages = pageNumber - 1 < v;
         }
 
-        private void DrawAdditionalPage(Graphics dc, int pageNumber, RectD bounds)
+        public static void DrawAdditionalPage(Graphics dc, int pageNumber, RectD bounds)
         {
             dc.DrawText(
                 "Additional page #" + pageNumber,

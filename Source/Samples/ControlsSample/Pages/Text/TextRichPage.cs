@@ -23,9 +23,6 @@ namespace ControlsSample
 
         public TextRichPage()
         {
-            Margin = 10;
-            richPanel.ActionsControl.Required();
-            richPanel.SuggestedSize = new(500, 400); // how without it?
             richPanel.Parent = this;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richPanel.TextBox.KeyDown += RichEdit_KeyDown;
@@ -39,57 +36,52 @@ namespace ControlsSample
             InitRichEdit2();
             richPanel.TextBox.SetCaretPosition(0, true);
             richPanel.TextBox.TextChanged += RichTextBox_TextChanged;
-
-            // ==== Add test actions
-
-            richPanel.AddAction("Bell", SoundUtils.Bell);
-            richPanel.AddAction("Go To Line", richPanel.TextBox.ShowDialogGoToLine);
-
-            PerformLayout();
         }
 
         internal void InitRichEdit()
         {
+            var richEdit = richPanel.TextBox;
+
             var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
 
-            var taTextColorRed = TextBox.CreateTextAttr();
+            var taTextColorRed = richEdit.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);
 
-            var taBackColorYellow = TextBox.CreateTextAttr();
+            var taBackColorYellow = richEdit.CreateTextAttr();
             taBackColorYellow.SetBackgroundColor(Color.Yellow);
             taBackColorYellow.SetTextColor(Color.Black);
 
-            var taUnderlined = TextBox.CreateTextAttr();
+            var taUnderlined = richEdit.CreateTextAttr();
             taUnderlined.SetFontUnderlined();
 
-            var taItalic = TextBox.CreateTextAttr();
+            var taItalic = richEdit.CreateTextAttr();
             taItalic.SetFontItalic();
 
-            var taBold = TextBox.CreateTextAttr();
+            var taBold = richEdit.CreateTextAttr();
             taBold.SetFontWeight(FontWeight.Bold);
 
-            var taStrikeOut = TextBox.CreateTextAttr();
+            var taStrikeOut = richEdit.CreateTextAttr();
             taStrikeOut.SetFontStrikethrough();
 
             var homePage = @"https://www.alternet-ui.com/";
 
-            var taUrl = TextBox.CreateTextAttr();
+            var taUrl = richEdit.CreateTextAttr();
             taUrl.SetURL(homePage);
 
-            var taDefault = TextBox.CreateTextAttr();
+            var taDefault = richEdit.CreateTextAttr();
 
-            var taUnorderedList = TextBox.CreateTextAttr();
+            var taUnorderedList = richEdit.CreateTextAttr();
             taUnorderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Standard);
             taUnorderedList.SetBulletName("standard/circle");
 
-            var taOrderedList = TextBox.CreateTextAttr();
+            var taOrderedList = richEdit.CreateTextAttr();
             taOrderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Arabic);
             taOrderedList.SetBulletNumber(1);
 
-            var taBig = TextBox.CreateTextAttr();
+            var taBig = richEdit.CreateTextAttr();
             taBig.SetFontPointSize(baseFontSize + 15);
 
-            var taUnderlined2 = TextBox.CreateTextAttr();
+            var taUnderlined2 = richEdit.CreateTextAttr();
             taUnderlined2.SetFontUnderlinedEx(
                 TextBoxTextAttrUnderlineType.Special,
                 Color.Red);
@@ -146,8 +138,6 @@ namespace ControlsSample
 
             // richEdit.AutoUrl = true;
 
-            var richEdit = richPanel.TextBox;
-
             richEdit.DoInsideUpdate(() =>
             {
                 richEdit.AppendTextAndStyles(list);
@@ -194,7 +184,7 @@ namespace ControlsSample
 
             var r = richPanel.TextBox;
 
-            r.SetDefaultStyle(TextBox.CreateTextAttr());
+            r.SetDefaultStyle(r.CreateTextAttr());
 
             r.BeginUpdate();
             r.BeginSuppressUndo();
@@ -233,7 +223,7 @@ namespace ControlsSample
             r.WriteText("color, like this red bit. ");
             r.EndTextColor();
 
-            var backgroundColourAttr = RichTextBox.CreateRichAttr();
+            var backgroundColourAttr = r.CreateRichAttr();
             backgroundColourAttr.SetBackgroundColor(Color.Green);
             backgroundColourAttr.SetTextColor(Color.Yellow);
             r.BeginStyle(backgroundColourAttr);
@@ -509,7 +499,7 @@ namespace ControlsSample
                 FileName = richPanel.TextBox.FileName,
             };
 
-            if (dialog.ShowModal(this) != ModalResult.Accepted)
+            if (dialog.ShowModal(this.ParentWindow) != ModalResult.Accepted)
                 return;
 
             if (SaveFile(dialog.FileName!))
@@ -546,7 +536,7 @@ namespace ControlsSample
                 FileMustExist = true,
             };
 
-            if (dialog.ShowModal(this) != ModalResult.Accepted)
+            if (dialog.ShowModal(this.ParentWindow) != ModalResult.Accepted)
                 return;
 
             if (LoadFile(dialog.FileName!))

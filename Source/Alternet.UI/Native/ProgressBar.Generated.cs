@@ -83,7 +83,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ProgressBarOrientation Orientation
+        public Alternet.UI.ProgressBarOrientation Orientation
         {
             get
             {
@@ -132,10 +132,10 @@ namespace Alternet.UI.Native
             public static extern void ProgressBar_SetIsIndeterminate_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ProgressBarOrientation ProgressBar_GetOrientation_(IntPtr obj);
+            public static extern Alternet.UI.ProgressBarOrientation ProgressBar_GetOrientation_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ProgressBar_SetOrientation_(IntPtr obj, ProgressBarOrientation value);
+            public static extern void ProgressBar_SetOrientation_(IntPtr obj, Alternet.UI.ProgressBarOrientation value);
             
         }
     }
