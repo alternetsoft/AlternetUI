@@ -223,7 +223,7 @@ namespace DrawingSample
 
                 if (TextWidthLimitEnabled)
                 {
-                    dc.DrawText(
+                    ((WxGraphics)dc).DrawText(
                         LoremIpsum,
                         paragraph.Font,
                         color.AsBrush,
@@ -234,7 +234,7 @@ namespace DrawingSample
                 if (TextHeightSet)
                 {
                     var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
-                    dc.DrawText(
+                    ((WxGraphics)dc).DrawText(
                         LoremIpsum,
                         paragraph.Font,
                         color.AsBrush,

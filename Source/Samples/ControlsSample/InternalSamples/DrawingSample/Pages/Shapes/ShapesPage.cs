@@ -162,7 +162,7 @@ namespace DrawingSample
 
                 if (nameVisible)
                 {
-                    dc.DrawText(
+                    ((WxGraphics)dc).DrawText(
                         cell.Name,
                         Control.DefaultFont,
                         Brushes.Black,

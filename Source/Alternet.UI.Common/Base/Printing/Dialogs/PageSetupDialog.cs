@@ -137,7 +137,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
-            return NativePlatform.Default.CreatePageSetupDialogHandler();
+            return BaseApplication.Handler.CreatePageSetupDialogHandler();
         }
     }
 }

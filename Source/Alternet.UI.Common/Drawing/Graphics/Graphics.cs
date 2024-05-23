@@ -881,31 +881,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
         /// the drawn text.</param>
-        public void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DrawText(text, font, brush, bounds, TextFormat.Default);
-        }
-
-        /// <summary>
-        /// Draws the specified text string at the specified location with the specified
-        /// <see cref="Brush"/> and <see
-        /// cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture
-        /// of the drawn text.</param>
-        /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
-        /// the drawn text.</param>
-        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
-        /// such as
-        /// alignment and trimming, that are applied to the drawn text.</param>
-        public abstract void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            RectD bounds,
-            TextFormat format);
+        public abstract void DrawText(string text, Font font, Brush brush, RectD bounds);
 
         /// <summary>
         /// Draws waved line in the specified rectangular area.

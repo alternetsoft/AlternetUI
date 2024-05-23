@@ -70,7 +70,7 @@ namespace Alternet.UI
         public event EventHandler<WebBrowserEventArgs>? DocumentTitleChanged;
 
         public static IWebBrowserFactoryHandler Factory
-            => factory ??= NativePlatform.Default.CreateWebBrowserFactoryHandler();
+            => factory ??= BaseApplication.Handler.CreateWebBrowserFactoryHandler();
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Is64Bit/*'/>
         public static bool Is64Bit
@@ -1229,7 +1229,7 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CreateHandler/*'/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateWebBrowserHandler(this);
+            return BaseApplication.Handler.CreateWebBrowserHandler(this);
         }
 
         /// <summary>

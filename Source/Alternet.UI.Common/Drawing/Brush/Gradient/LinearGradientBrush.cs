@@ -213,7 +213,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativePlatform.Default.CreateLinearGradientBrushHandler(this);
+            return BaseApplication.Handler.CreateLinearGradientBrushHandler(this);
         }
 
         /// <inheritdoc/>

@@ -206,7 +206,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateNumericUpDownHandler(this);
+            return BaseApplication.Handler.CreateNumericUpDownHandler(this);
         }
 
         /// <summary>

@@ -30,13 +30,15 @@ namespace Alternet.UI
 
         static Application()
         {
+            Handler = new WxApplicationHandler();
             WxPlatform.Initialize();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
         /// </summary>
-        public Application()
+        public Application(IApplicationHandler? handler = null)
+            : base(handler ?? Handler ?? new WxApplicationHandler())
         {
             nativeApplication = new Native.Application();
 
@@ -297,7 +299,7 @@ namespace Alternet.UI
         /// <param name="window">New 'top' window.</param>
         internal virtual void SetTopWindow(Window window)
         {
-            nativeApplication.SetTopWindow(WxPlatform.WxWidget(window));
+            nativeApplication.SetTopWindow(WxApplicationHandler.WxWidget(window));
         }
 
         internal void WakeUpIdle()

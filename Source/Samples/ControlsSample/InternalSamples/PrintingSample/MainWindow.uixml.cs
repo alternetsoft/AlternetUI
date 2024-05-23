@@ -49,7 +49,7 @@ namespace PrintingSample
 
             var drawTextBounds = bounds.InflatedBy(-50, -50);
 
-            dc.DrawText(
+            ((WxGraphics)dc).DrawText(
                 "The quick brown fox jumps over the lazy dog.",
                 font,
                 Brushes.Black,

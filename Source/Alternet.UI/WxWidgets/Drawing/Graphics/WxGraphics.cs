@@ -94,7 +94,7 @@ namespace Alternet.Drawing
             var result = dc.GetTextExtent(
                 text,
                 (UI.Native.Font)font.Handler,
-                WxPlatform.WxWidget(control));
+                WxApplicationHandler.WxWidget(control));
             descent = result.X;
             externalLeading = result.Y;
             return result.Size;
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
             var result = dc.GetTextExtentSimple(
                 text,
                 (UI.Native.Font)font.Handler,
-                WxPlatform.WxWidget(control));
+                WxApplicationHandler.WxWidget(control));
             return result;
         }
 
@@ -577,6 +577,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
+        {
+            DrawText(text, font, brush, bounds, TextFormat.Default);
+        }
+
+        /// <inheritdoc/>
         public override void DrawText(
             string text,
             Font font,
@@ -590,27 +596,6 @@ namespace Alternet.Drawing
                 origin,
                 (UI.Native.Font)font.Handler,
                 (UI.Native.Brush)brush.Handler);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            RectD bounds,
-            TextFormat format)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            dc.DrawTextAtRect(
-                text,
-                bounds,
-                (UI.Native.Font)font.Handler,
-                (UI.Native.Brush)brush.Handler,
-                format.HorizontalAlignment,
-                format.VerticalAlignment,
-                format.Trimming,
-                format.Wrapping);
         }
 
         /// <inheritdoc/>

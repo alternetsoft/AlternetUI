@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateLabelHandler(this);
+            return BaseApplication.Handler.CreateLabelHandler(this);
         }
     }
 }

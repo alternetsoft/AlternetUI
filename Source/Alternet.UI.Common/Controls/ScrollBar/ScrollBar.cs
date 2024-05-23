@@ -348,7 +348,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateScrollBarHandler(this);
+            return BaseApplication.Handler.CreateScrollBarHandler(this);
         }
 
         /// <summary>

@@ -23,13 +23,6 @@ namespace Alternet.UI
             get => WxFontFactoryHandler.Default;
         }
 
-        public static IntPtr WxWidget(IControl? control)
-        {
-            if (control is null)
-                return default;
-            return ((UI.Native.Control)control.NativeControl).WxWidget;
-        }
-
         public static void Initialize()
         {
             if (initialized)
@@ -40,104 +33,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control)
-        {
-            return new PropertyGridHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog)
-        {
-            return new UI.Native.FileDialog()
-            {
-                Mode = Native.FileDialogMode.Open,
-            };
-        }
-
-        public override IPropertyGridVariant CreateVariant()
-        {
-            return new PropertyGridVariant();
-        }
-
-        /// <inheritdoc/>
-        public override ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
-        {
-            return new UI.Native.FileDialog()
-            {
-                Mode = Native.FileDialogMode.Save,
-            };
-        }
-
-        /// <inheritdoc/>
-        public override IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
-        {
-            return new UI.Native.ColorDialog();
-        }
-
-        /// <inheritdoc/>
-        public override ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
-            SelectDirectoryDialog dialog)
-        {
-            return new UI.Native.SelectDirectoryDialog();
-        }
-
-        /// <inheritdoc/>
-        public override IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
-        {
-            return new UI.Native.FontDialog();
-        }
-
-        /// <inheritdoc/>
-        public override IPenHandler CreatePenHandler(Pen pen) => new UI.Native.Pen();
-
-        /// <inheritdoc/>
-        public override IBrushHandler CreateTransparentBrushHandler(Brush brush)
-            => new UI.Native.Brush();
-
-        /// <inheritdoc/>
-        public override IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
-            => new UI.Native.HatchBrush();
-
-        /// <inheritdoc/>
-        public override ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
-            LinearGradientBrush brush)
-            => new UI.Native.LinearGradientBrush();
-
-        /// <inheritdoc/>
-        public override IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
-            RadialGradientBrush brush)
-            => new UI.Native.RadialGradientBrush();
-
-        /// <inheritdoc/>
-        public override ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
-            => new UI.Native.SolidBrush();
-
-        /// <inheritdoc/>
-        public override ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
-            => new UI.Native.TextureBrush();
-
-        /// <inheritdoc/>
-        public override Window? GetActiveWindow()
-        {
-            var activeWindow = Native.Window.ActiveWindow;
-            if (activeWindow == null)
-                return null;
-
-            var handler = WxControlHandler.NativeControlToHandler(activeWindow) ??
-                throw new InvalidOperationException();
-            return ((WindowHandler)handler).Control;
-        }
-
-        /// <inheritdoc/>
         public override CustomControlPainter GetPainter()
         {
             return NativeControlPainter.Default;
-        }
-
-        /// <inheritdoc/>
-        public override void NotifyCaptureLost()
-        {
-            Native.Control.NotifyCaptureLost();
         }
 
         /// <inheritdoc/>
@@ -169,201 +67,6 @@ namespace Alternet.UI
                 (int)controlType,
                 (int)renderSize);
             return Font.FromInternal(font);
-        }
-
-        /// <inheritdoc/>
-        public override IControl? GetFocusedControl()
-        {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
-                return null;
-
-            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
-            if (handler == null || !handler.IsAttached)
-                return null;
-
-            return handler.Control;
-        }
-
-        /// <inheritdoc/>
-        public override ICalendarHandler CreateCalendarHandler(Calendar control)
-        {
-            return new CalendarHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IProgressBarHandler CreateProgressBarHandler(ProgressBar control)
-        {
-            return new ProgressBarHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IRadioButtonHandler CreateRadioButtonHandler(RadioButton control)
-        {
-            return new RadioButtonHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IWindowHandler CreateWindowHandler(Window window) => new WindowHandler();
-
-        /// <inheritdoc/>
-        public override IListViewHandler CreateListViewHandler(ListView control)
-        {
-            return new ListViewHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control)
-        {
-            return new DateTimePickerHandler();
-        }
-
-        /// <inheritdoc/>
-        public override INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control)
-        {
-            return new NumericUpDownHandler();
-        }
-
-        /// <inheritdoc/>
-        public override ICheckBoxHandler CreateCheckBoxHandler(CheckBox control)
-        {
-            return new CheckBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IButtonHandler CreateButtonHandler(Button control)
-        {
-            return new ButtonHandler();
-        }
-
-        /// <inheritdoc/>
-        public override ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control)
-        {
-            Native.LinkLabel.UseGenericControl = LinkLabel.UseGenericControl;
-            return new LinkLabelHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control)
-        {
-            switch (AnimationPlayer.DefaultHandlerKind)
-            {
-                case AnimationPlayer.KnownHandler.Native:
-                    return new AnimationPlayerHandler(false);
-                case AnimationPlayer.KnownHandler.Generic:
-                default:
-                    return new AnimationPlayerHandler(true);
-                case AnimationPlayer.KnownHandler.WebBrowser:
-                    throw new NotImplementedException(
-                        "KnownDriver.WebBrowser is not currently supported.");
-            }
-        }
-
-        /// <inheritdoc/>
-        public override ISliderHandler CreateSliderHandler(Slider control)
-        {
-            return new SliderHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IColorPickerHandler CreateColorPickerHandler(ColorPicker control)
-        {
-            return new ColorPickerHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IGroupBoxHandler CreateGroupBoxHandler(GroupBox control)
-        {
-            return new GroupBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override ITextBoxHandler CreateTextBoxHandler(TextBox control)
-        {
-            return new TextBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IComboBoxHandler CreateComboBoxHandler(ComboBox control)
-        {
-            return new ComboBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override ILabelHandler CreateLabelHandler(Label control)
-        {
-            return new LabelHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
-        {
-            return new ScrollBarHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IMenuItemHandler CreateMenuItemHandler(MenuItem control)
-        {
-            return new MenuItemHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
-        {
-            return new ContextMenuHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IMainMenuHandler CreateMainMenuHandler(MainMenu control)
-        {
-            return new MainMenuHandler();
-        }
-
-        /// <inheritdoc/>
-        public override ITreeViewHandler CreateTreeViewHandler(TreeView control)
-        {
-            return new TreeViewHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control)
-        {
-            return new ScrollViewerHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IVListBoxHandler CreateVListBoxHandler(VListBox control)
-        {
-            return new VListBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control)
-        {
-            return new CheckListBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IListBoxHandler CreateListBoxHandler(ListBox control)
-        {
-            return new ListBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public override IStatusBarHandler CreateStatusBarHandler(StatusBar control)
-        {
-            return new StatusBarHandler(control);
-        }
-
-        /// <inheritdoc/>
-        public override IControlHandler CreateControlHandler(Control control)
-        {
-            return new WxControlHandler();
-        }
-
-        public override IPropertyGridChoices CreateChoices()
-        {
-            return new PropertyGridChoices();
         }
 
         public override bool TimerGetEnabled(Timer timer)
@@ -443,31 +146,11 @@ namespace Alternet.UI
                 UnmanagedDataObjectService.GetUnmanagedDataObject(value));
         }
 
-        public override void ProcessPendingEvents()
-        {
-            Application.Current?.nativeApplication.ProcessPendingEvents();
-        }
-
         public override bool IsBusyCursor() => Native.WxOtherFactory.IsBusyCursor();
 
         public override void BeginBusyCursor() => Native.WxOtherFactory.BeginBusyCursor();
 
         public override void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
-
-        public override void ExitMainLoop()
-        {
-            Application.Current.NativeApplication.ExitMainLoop();
-        }
-
-        public override ISystemSettingsHandler CreateSystemSettingsHandler()
-        {
-            return new WxSystemSettingsHandler();
-        }
-
-        public override IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)
-        {
-            return new RichTextBoxHandler();
-        }
 
         public override bool ShowExceptionWindow(
             Exception exception,
@@ -486,16 +169,6 @@ namespace Alternet.UI
                 Application.Current.Run(errorWindow);
                 return false;
             }
-        }
-
-        public override IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)
-        {
-            return new WebBrowserHandler();
-        }
-
-        public override IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler()
-        {
-            return new WebBrowserFactoryHandler();
         }
 
         /// <summary>
@@ -521,7 +194,7 @@ namespace Alternet.UI
             int y,
             bool centre)
         {
-            var handle = WxPlatform.WxWidget(parent);
+            var handle = WxApplicationHandler.WxWidget(parent);
             var result = Native.WxOtherFactory.GetTextFromUser(
                 message,
                 caption,
@@ -572,7 +245,7 @@ namespace Alternet.UI
             Control? parent,
             PointI pos)
         {
-            var handle = WxPlatform.WxWidget(parent);
+            var handle = WxApplicationHandler.WxWidget(parent);
             var result = Native.WxOtherFactory.GetNumberFromUser(
                 message,
                 prompt,
@@ -585,57 +258,6 @@ namespace Alternet.UI
             if (result < 0)
                 return null;
             return result;
-        }
-
-        public override IPrinterSettingsHandler CreatePrinterSettingsHandler()
-        {
-            return new UI.Native.PrinterSettings();
-        }
-
-        public override IPageSettingsHandler CreatePageSettingsHandler()
-        {
-            return new UI.Native.PageSettings();
-        }
-
-        public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
-        {
-            return new ValueValidatorText(style);
-        }
-
-        public override IValueValidatorText CreateValueValidatorNum(
-            ValueValidatorNumStyle numericType,
-            int valueBase = 10)
-        {
-            return new ValueValidatorNumProp(numericType, valueBase);
-        }
-
-        public override IRichToolTipHandler CreateRichToolTipHandler(
-            string title,
-            string message,
-            bool useGeneric)
-        {
-            Native.WxOtherFactory.RichToolTipUseGeneric = useGeneric;
-            return new RichToolTipHandler(title, message);
-        }
-
-        public override IPrintDocumentHandler CreatePrintDocumentHandler()
-        {
-            return new PrintDocumentHandler();
-        }
-
-        public override IPrintDialogHandler CreatePrintDialogHandler()
-        {
-            return new UI.Native.PrintDialog();
-        }
-
-        public override IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler()
-        {
-            return new UI.Native.PrintPreviewDialog();
-        }
-
-        public override IPageSetupDialogHandler CreatePageSetupDialogHandler()
-        {
-            return new UI.Native.PageSetupDialog();
         }
 
         private class SafeNativeMethods

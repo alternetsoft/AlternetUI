@@ -156,7 +156,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
-        public static Window? ActiveWindow => NativePlatform.Default.GetActiveWindow();
+        public static Window? ActiveWindow => BaseApplication.Handler.GetActiveWindow();
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -898,7 +898,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
-            => NativePlatform.Default.CreateWindowHandler(this);
+            => BaseApplication.Handler.CreateWindowHandler(this);
 
         protected void ApplyStartLocationOnce(Control? owner)
         {
@@ -989,7 +989,7 @@ namespace Alternet.UI
             {
                 BaseApplication.Current.UnregisterWindow(this);
                 if (!BaseApplication.Current.VisibleWindows.Any())
-                    NativePlatform.Default.ExitMainLoop();
+                    BaseApplication.Handler.ExitMainLoop();
             }
         }
 

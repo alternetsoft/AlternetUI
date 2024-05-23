@@ -1518,7 +1518,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateTextBoxHandler(this);
+            return BaseApplication.Handler.CreateTextBoxHandler(this);
         }
 
         /// <inheritdoc/>

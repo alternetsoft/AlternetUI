@@ -100,15 +100,6 @@ namespace Alternet.Drawing
                 Color.Empty);
         }
 
-        public override void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            RectD bounds,
-            TextFormat format)
-        {
-        }
-
         /// <inheritdoc/>
         // Used in editor
         public override void SetPixel(double x, double y, Color color)

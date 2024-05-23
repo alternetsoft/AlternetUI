@@ -10,6 +10,27 @@ namespace Alternet.Drawing
 {
     public partial class WxGraphics
     {
+        /// <inheritdoc/>
+        public void DrawText(
+            string text,
+            Font font,
+            Brush brush,
+            RectD bounds,
+            TextFormat format)
+        {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            dc.DrawTextAtRect(
+                text,
+                bounds,
+                (UI.Native.Font)font.Handler,
+                (UI.Native.Brush)brush.Handler,
+                format.HorizontalAlignment,
+                format.VerticalAlignment,
+                format.Trimming,
+                format.Wrapping);
+        }
+
         /// <summary>
         /// Gets text measurement.
         /// </summary>

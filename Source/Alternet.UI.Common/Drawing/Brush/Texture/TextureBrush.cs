@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override object CreateHandler()
         {
-            return NativePlatform.Default.CreateTextureBrushHandler(this);
+            return BaseApplication.Handler.CreateTextureBrushHandler(this);
         }
 
         /// <inheritdoc/>

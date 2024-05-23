@@ -583,7 +583,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateComboBoxHandler(this);
+            return BaseApplication.Handler.CreateComboBoxHandler(this);
         }
 
         /// <summary>

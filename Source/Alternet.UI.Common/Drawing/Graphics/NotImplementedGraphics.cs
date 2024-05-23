@@ -190,12 +190,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds, TextFormat format)
+        public override void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor)
         {
             throw new NotImplementedException();
         }
 
-        public override void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor)
+        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
             throw new NotImplementedException();
         }

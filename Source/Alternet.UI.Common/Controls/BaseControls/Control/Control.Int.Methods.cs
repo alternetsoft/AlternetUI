@@ -91,7 +91,7 @@ namespace Alternet.UI
 
         internal static void NotifyCaptureLost()
         {
-            NativePlatform.Default.NotifyCaptureLost();
+            BaseApplication.Handler.NotifyCaptureLost();
         }
 
         internal static void PerformDefaultLayout(

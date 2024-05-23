@@ -25,75 +25,7 @@ namespace Alternet.UI
 
         public abstract IFontFactoryHandler FontFactory { get; }
 
-        public abstract ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control);
-
-        public abstract IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control);
-
-        public abstract ICalendarHandler CreateCalendarHandler(Calendar control);
-
-        public abstract IListViewHandler CreateListViewHandler(ListView control);
-
-        public abstract IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control);
-
-        public abstract INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control);
-
-        public abstract IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control);
-
-        public abstract IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler();
-
-        public abstract IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control);
-
-        public abstract IPropertyGridVariant CreateVariant();
-
-        public abstract ICheckBoxHandler CreateCheckBoxHandler(CheckBox control);
-
-        public abstract IButtonHandler CreateButtonHandler(Button control);
-
-        public abstract IColorPickerHandler CreateColorPickerHandler(ColorPicker control);
-
-        public abstract ISliderHandler CreateSliderHandler(Slider control);
-
-        public abstract IProgressBarHandler CreateProgressBarHandler(ProgressBar control);
-
-        public abstract IGroupBoxHandler CreateGroupBoxHandler(GroupBox control);
-
-        public abstract IRadioButtonHandler CreateRadioButtonHandler(RadioButton control);
-
-        public abstract ITextBoxHandler CreateTextBoxHandler(TextBox control);
-
-        public abstract IComboBoxHandler CreateComboBoxHandler(ComboBox control);
-
-        public abstract ILabelHandler CreateLabelHandler(Label control);
-
-        public abstract IScrollBarHandler CreateScrollBarHandler(ScrollBar control);
-
-        public abstract IMenuItemHandler CreateMenuItemHandler(MenuItem control);
-
-        public abstract IContextMenuHandler CreateContextMenuHandler(ContextMenu control);
-
-        public abstract IMainMenuHandler CreateMainMenuHandler(MainMenu control);
-
-        public abstract IListBoxHandler CreateListBoxHandler(ListBox control);
-
-        public abstract IWindowHandler CreateWindowHandler(Window window);
-
-        public abstract IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control);
-
-        public abstract ITreeViewHandler CreateTreeViewHandler(TreeView control);
-
-        public abstract IStatusBarHandler CreateStatusBarHandler(StatusBar control);
-
-        public abstract IControlHandler CreateControlHandler(Control control);
-
-        public abstract ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control);
-
-        public abstract IVListBoxHandler CreateVListBoxHandler(VListBox control);
-
-        public abstract IControl? GetFocusedControl();
-
         public abstract CustomControlPainter GetPainter();
-
-        public abstract void NotifyCaptureLost();
 
         public abstract Color GetClassDefaultAttributesBgColor(
             ControlTypeId controlType,
@@ -107,63 +39,6 @@ namespace Alternet.UI
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
 
-        public abstract Window? GetActiveWindow();
-
-        /// <summary>
-        /// Creates transparent brush handler.
-        /// </summary>
-        /// <returns></returns>
-        public abstract IBrushHandler CreateTransparentBrushHandler(Brush brush);
-
-        /// <summary>
-        /// Creates hatch brush handler.
-        /// </summary>
-        /// <returns></returns>
-        public abstract IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush);
-
-        /// <summary>
-        /// Creates linear gradient brush handler.
-        /// </summary>
-        /// <returns></returns>
-        public abstract ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush);
-
-        /// <summary>
-        /// Creates radial gradient brush handler.
-        /// </summary>
-        /// <returns></returns>
-        public abstract IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush);
-
-        public abstract IPenHandler CreatePenHandler(Pen pen);
-
-        /// <summary>
-        /// Creates solid brush handler.
-        /// </summary>
-        /// <returns></returns>
-        public abstract ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush);
-
-        /// <summary>
-        /// Creates texture brush handler.
-        /// </summary>
-        /// <returns></returns>
-        public abstract ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush);
-
-        public abstract ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
-            SelectDirectoryDialog dialog);
-
-        public abstract IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog);
-
-        public abstract ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog);
-
-        public abstract IFontDialogHandler CreateFontDialogHandler(FontDialog dialog);
-
-        public abstract IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);
-
-        public abstract IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor);
-
-        public abstract ISystemSettingsHandler CreateSystemSettingsHandler();
-
-        public abstract void ExitMainLoop();
-
         public abstract bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
@@ -174,8 +49,6 @@ namespace Alternet.UI
         public abstract void BeginBusyCursor();
 
         public abstract void EndBusyCursor();
-
-        public abstract void ProcessPendingEvents();
 
         public abstract IDataObject? ClipboardGetDataObject();
 
@@ -200,31 +73,6 @@ namespace Alternet.UI
         public abstract int TimerGetInterval(Timer timer);
 
         public abstract void TimerSetInterval(Timer timer, int value);
-
-        public abstract IPropertyGridChoices CreateChoices();
-
-        public abstract IPrintDocumentHandler CreatePrintDocumentHandler();
-
-        public abstract IPrinterSettingsHandler CreatePrinterSettingsHandler();
-
-        public abstract IPrintDialogHandler CreatePrintDialogHandler();
-
-        public abstract IPageSettingsHandler CreatePageSettingsHandler();
-
-        public abstract IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style);
-
-        public abstract IValueValidatorText CreateValueValidatorNum(
-            ValueValidatorNumStyle numericType,
-            int valueBase = 10);
-
-        public abstract IPageSetupDialogHandler CreatePageSetupDialogHandler();
-
-        public abstract IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
-
-        public abstract IRichToolTipHandler CreateRichToolTipHandler(
-            string title,
-            string message,
-            bool useGeneric);
 
         public abstract string? GetTextFromUser(
             string message,

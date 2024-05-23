@@ -313,6 +313,8 @@
   </ItemGroup>
 
   <!-- ================================================= -->
+
+  <!--  
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -323,6 +325,7 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
+-->
 
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />

@@ -684,7 +684,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateCalendarHandler(this);
+            return BaseApplication.Handler.CreateCalendarHandler(this);
         }
 
         /// <inheritdoc/>

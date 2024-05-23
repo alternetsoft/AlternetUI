@@ -191,7 +191,7 @@ namespace Alternet.UI
 
                 StatusBarHandle =
                     Native.WxStatusBarFactory.CreateStatusBar(
-                        WxPlatform.WxWidget(window),
+                        WxApplicationHandler.WxWidget(window),
                         GetStyle());
                 control.ApplyPanels();
             }

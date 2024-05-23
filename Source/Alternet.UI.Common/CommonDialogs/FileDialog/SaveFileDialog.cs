@@ -69,7 +69,7 @@ namespace Alternet.UI
 
         protected override IDialogHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateSaveFileDialogHandler(this);
+            return BaseApplication.Handler.CreateSaveFileDialogHandler(this);
         }
     }
 }

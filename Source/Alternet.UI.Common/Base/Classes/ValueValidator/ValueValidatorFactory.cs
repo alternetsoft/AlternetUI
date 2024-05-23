@@ -119,7 +119,7 @@ namespace Alternet.UI
         /// <param name="style">Text format style.</param>
         public virtual IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
         {
-            return NativePlatform.Default.CreateValueValidatorText(style);
+            return BaseApplication.Handler.CreateValueValidatorText(style);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Alternet.UI
             ValueValidatorNumStyle numericType,
             int valueBase = 10)
         {
-            return NativePlatform.Default.CreateValueValidatorNum(numericType, valueBase);
+            return BaseApplication.Handler.CreateValueValidatorNum(numericType, valueBase);
         }
     }
 }

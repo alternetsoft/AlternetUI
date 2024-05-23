@@ -35,6 +35,7 @@
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
 
+<!--  
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -45,6 +46,7 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
+-->  
 
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
@@ -55,6 +57,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:_GenerateResxSource</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Base\Classes\NewFolder6\" />
+    <Folder Include="Base\Classes\NewFolder7\" />
+    <Folder Include="Base\Classes\NewFolder8\" />
   </ItemGroup>
 
 </Project>

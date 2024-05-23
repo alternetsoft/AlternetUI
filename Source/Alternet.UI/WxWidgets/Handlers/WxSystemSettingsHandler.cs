@@ -171,7 +171,7 @@ namespace Alternet.UI
         {
             return Native.WxOtherFactory.SystemSettingsGetMetric(
                 (int)index,
-                WxPlatform.WxWidget(control));
+                WxApplicationHandler.WxWidget(control));
         }
 
         public int GetMetric(SystemSettingsMetric index)

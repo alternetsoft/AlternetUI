@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <param name="message">Tooltip message.</param>
         public RichToolTip(string? title, string? message)
         {
-            Handler = NativePlatform.Default.CreateRichToolTipHandler(
+            Handler = BaseApplication.Handler.CreateRichToolTipHandler(
                 title ?? string.Empty,
                 message ?? string.Empty,
                 useGeneric);

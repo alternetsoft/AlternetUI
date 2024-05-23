@@ -15,7 +15,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    public class BaseApplication : DisposableObject
+    public abstract class BaseApplication : DisposableObject
     {
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -82,6 +82,8 @@ namespace Alternet.UI
         /// Under other systems default value is <c>false</c> and all calls are wrapped.
         /// </remarks>
         public static bool FastThreadExceptions;
+
+        public static IApplicationHandler Handler = new NotImplementedApplicationHandler();
 
         public static CultureInfo InvariantEnglishUS = CultureInfo.InvariantCulture;
 
@@ -159,6 +161,11 @@ namespace Alternet.UI
             BackendOS = OperatingSystems.Windows;
             IsWindowsOS = true;
 #endif
+        }
+
+        public BaseApplication(IApplicationHandler handler)
+        {
+            Handler = handler;
         }
 
         /// <summary>
@@ -998,7 +1005,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ProcessPendingEvents()
         {
-            NativePlatform.Default.ProcessPendingEvents();
+            BaseApplication.Handler.ProcessPendingEvents();
         }
 
         /// <summary>

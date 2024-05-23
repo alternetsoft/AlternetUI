@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// Gets handler for the control.
         /// </summary>
         public IStatusBarHandler Handler
-            => handler ??= NativePlatform.Default.CreateStatusBarHandler(this);
+            => handler ??= BaseApplication.Handler.CreateStatusBarHandler(this);
 
         /// <inheritdoc cref="Control.BeginUpdate"/>
         public virtual void BeginUpdate()

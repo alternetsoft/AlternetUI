@@ -100,7 +100,7 @@ namespace DrawingSample
 
         private void DrawDemoForeground(Graphics dc, RectD bounds)
         {
-            dc.DrawText(
+            ((WxGraphics)dc).DrawText(
                 "\n\nClick and drag here to draw.\nYou can select the path segment type to draw in the combo box in the panel to the right.",
                 Control.DefaultFont,
                 Brushes.Black,

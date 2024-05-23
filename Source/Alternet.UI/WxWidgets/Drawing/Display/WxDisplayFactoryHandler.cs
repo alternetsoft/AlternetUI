@@ -12,7 +12,7 @@ namespace Alternet.UI
     {
         public int GetFromControl(IControl control)
         {
-            return UI.Native.WxOtherFactory.DisplayGetFromWindow(WxPlatform.WxWidget(control));
+            return UI.Native.WxOtherFactory.DisplayGetFromWindow(WxApplicationHandler.WxWidget(control));
         }
 
         public IDisplayHandler CreateDisplay()

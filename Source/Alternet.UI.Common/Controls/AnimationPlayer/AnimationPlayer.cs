@@ -256,7 +256,7 @@ namespace Alternet.UI
                 return CreateHandlerOverride(this);
             }
 
-            return NativePlatform.Default.CreateAnimationPlayerHandler(this);
+            return BaseApplication.Handler.CreateAnimationPlayerHandler(this);
         }
     }
 }
