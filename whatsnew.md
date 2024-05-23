@@ -1,3 +1,18 @@
+# 0.9.601 (2024 May 23)
+
+- All controls are now separated from WxWidgets and were moved to Alternet.UI.Common.
+- Font: GetNumericWeightOf, CoerceFontParams, GetWeightClosestToNumericValue.
+- Font.SizeInPixels is now int.
+- Font: different static ToUserString methods.
+- Font.Encoding is now FontEncoding (previously was int).
+- FontFamily.GetName(GenericFontFamily family).
+- Application.Idle is now static event.
+- Use KnownSystemColor instead of SystemSettingsColor in all places.
+- Speed optimization: CheckBox, ProgressBar, MenuItem, KeyBinding, InputBinding.
+- Add touch related enums and event.
+- Implemented Default property in all common dialogs.
+- Enums moved to UI.Interfaces dll.
+
 # 0.9.600 (2024 May 16)
 
 - Alternet.UI is now fully crossplatform. It was separated from WxWidgets. 
