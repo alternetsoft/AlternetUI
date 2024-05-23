@@ -2,10 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +17,11 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    public abstract class BaseApplication : DisposableObject
+    /// <summary>
+    /// Provides methods and properties to manage an application.
+    /// </summary>
+    [System.ComponentModel.DesignerCategory("Code")]
+    public class BaseApplication : DisposableObject
     {
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -98,6 +104,7 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionModeDebug
             = UnhandledExceptionMode.ThrowException;
 
+        private static bool inOnThreadException;
         private static IconSet? icon;
         private static bool terminating = false;
         private static int logUpdateCount;
@@ -166,7 +173,21 @@ namespace Alternet.UI
         public BaseApplication(IApplicationHandler handler)
         {
             Handler = handler;
+            SynchronizationContext.InstallIfNeeded();
+            BaseApplication.Current = this;
+
+            Initialized = true;
+            Window.UpdateDefaultFont();
+
+#if DEBUG
+            WebBrowser.CrtSetDbgFlag(0);
+#endif
         }
+
+        /// <summary>
+        /// Occurs before native debug message needs to be displayed.
+        /// </summary>
+        public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
@@ -199,6 +220,30 @@ namespace Alternet.UI
         /// about to enter the idle state.
         /// </summary>
         public static event EventHandler? Idle;
+
+        /// <summary>
+        /// Allows the programmer to specify whether the application will exit when the
+        /// top-level frame is deleted.
+        /// Returns true if the application will exit when the top-level frame is deleted.
+        /// </summary>
+        public virtual bool ExitOnFrameDelete
+        {
+            get => Handler.ExitOnFrameDelete;
+            set => Handler.ExitOnFrameDelete = value;
+        }
+
+        /// <summary>
+        /// Gets whether the application is active, i.e. if one of its windows is currently in
+        /// the foreground.
+        /// </summary>
+        public virtual bool IsActive => Handler.IsActive;
+
+        /// <inheritdoc/>
+        public virtual bool InUixmlPreviewerMode
+        {
+            get => Handler.InUixmlPreviewerMode;
+            set => Handler.InUixmlPreviewerMode = value;
+        }
 
         /// <summary>
         /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when\
@@ -386,17 +431,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether application in uixml preview mode.
-        /// </summary>
-        public virtual bool InUixmlPreviewerMode
-        {
-            get => false;
-            set
-            {
-            }
-        }
-
-        /// <summary>
         /// Gets or sets whether application will use the best visual on systems that
         /// support different visuals.
         /// </summary>
@@ -496,13 +530,38 @@ namespace Alternet.UI
             }
         }
 
-        protected internal virtual bool InvokeRequired => throw new NotImplementedException();
+        protected internal virtual bool InvokeRequired => Handler.InvokeRequired;
 
         protected Window? MainWindow
         {
             get => window;
             set => window = value;
         }
+
+        /// <summary>
+        /// Informs all message pumps that they must terminate, and then closes
+        /// all application windows after the messages have been processed.
+        /// </summary>
+        public static void Exit()
+        {
+            if (HasApplication)
+                Handler.Exit();
+        }
+
+        /// <summary>
+        /// Calls <see cref="Exit"/> and after that terminates this process and returns an
+        /// exit code to the operating system.
+        /// </summary>
+        /// <param name="exitCode">
+        /// The exit code to return to the operating system. Use 0 (zero) to indicate that
+        /// the process completed successfully.
+        /// </param>
+        public static void ExitAndTerminate(int exitCode = 0)
+        {
+            Exit();
+            Environment.Exit(exitCode);
+        }
+
 
         /// <summary>
         /// Executes the specified delegate on the thread that owns the application.
@@ -637,6 +696,25 @@ namespace Alternet.UI
                 Log(obj, kind);
         }
 
+        [return: MaybeNull]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T HandleThreadExceptions<T>(Func<T> func)
+        {
+            if (FastThreadExceptions)
+                return func();
+
+            return HandleThreadExceptionsCore(func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void HandleThreadExceptions(Action action)
+        {
+            if (FastThreadExceptions)
+                action();
+            else
+                HandleThreadExceptionsCore(action);
+        }
+
         /// <summary>
         /// Adds <paramref name="task"/> which will be executed one time
         /// when the application finished processing events and is
@@ -692,6 +770,19 @@ namespace Alternet.UI
             if (LogMessage is null || LogInUpdates())
                 return;
             ProcessLogQueue(true);
+        }
+
+        public static void LogNativeMessage(string s)
+        {
+            if (BeforeNativeLogMessage is not null)
+            {
+                LogMessageEventArgs e = new(s);
+                BeforeNativeLogMessage(current, e);
+                if (e.Cancel)
+                    return;
+            }
+
+            Log(s);
         }
 
         /// <summary>
@@ -1001,6 +1092,140 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks whether there are any pending events in the queue.
+        /// </summary>
+        /// <returns><c>true</c> if there are any pending events in the queue,
+        /// <c>false</c> otherwise.</returns>
+        public bool HasPendingEvents()
+        {
+            return Handler.HasPendingEvents();
+        }
+
+        /// <summary>
+        /// Starts an application UI event loop and makes the specified window
+        /// visible.
+        /// Begins running a UI event processing loop on the current thread.
+        /// </summary>
+        /// <param name="window">A <see cref="Window"/> that opens automatically
+        /// when an application starts.</param>
+        /// <remarks>Typically, the main function of an application calls this
+        /// method and passes to it the main window of the application.</remarks>
+        public void Run(Window window)
+        {
+            IsRunning = true;
+
+            try
+            {
+                this.MainWindow = window ?? throw new ArgumentNullException(nameof(window));
+                CheckDisposed();
+                window.Show();
+
+                while (true)
+                {
+                    try
+                    {
+                        Handler.Run(window);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        OnThreadException(e);
+                    }
+                }
+
+                SynchronizationContext.Uninstall();
+                this.MainWindow = null;
+            }
+            finally
+            {
+                Terminating = true;
+                IsRunning = false;
+            }
+        }
+
+        public static void OnThreadException(Exception exception)
+        {
+            if (inOnThreadException)
+                return;
+
+            inOnThreadException = true;
+            try
+            {
+                if (LogUnhandledThreadException)
+                {
+                    LogUtils.LogException(exception, "Application.OnThreadException");
+                }
+
+                if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
+                    throw exception;
+
+                if (ThreadExceptionAssigned)
+                {
+                    var args = new ThreadExceptionEventArgs(exception);
+                    RaiseThreadException(Thread.CurrentThread, args);
+                }
+                else
+                {
+                    var td = new ThreadExceptionWindow(exception);
+                    var result = ModalResult.Accepted;
+
+                    try
+                    {
+                        result = td.ShowModal();
+                    }
+                    finally
+                    {
+                        td.Dispose();
+                    }
+
+                    if (result == ModalResult.Canceled)
+                    {
+                        ExitAndTerminate(ThreadExceptionExitCode);
+                    }
+                }
+            }
+            finally
+            {
+                inOnThreadException = false;
+            }
+        }
+
+        [return: MaybeNull]
+        private static T HandleThreadExceptionsCore<T>(Func<T> func)
+        {
+            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
+                return func();
+
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+                return default!;
+            }
+        }
+
+        private static void HandleThreadExceptionsCore(Action action)
+        {
+            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
+            {
+                action();
+                return;
+            }
+
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+            }
+        }
+
+        /// <summary>
         /// Processes all pending events.
         /// </summary>
         public virtual void ProcessPendingEvents()
@@ -1041,9 +1266,20 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="Idle"/> event.
         /// </summary>
-        public void RaiseIdle()
+        public static void RaiseIdle()
         {
-            Idle?.Invoke(this, EventArgs.Empty);
+            if (HasForms)
+            {
+                ProcessLogQueue(true);
+                ProcessIdleTasks();
+            }
+
+            Idle?.Invoke(current, EventArgs.Empty);
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            Handler.BeginInvoke(action);
         }
 
         /// <summary>
@@ -1069,9 +1305,29 @@ namespace Alternet.UI
             windows.Remove(window);
         }
 
-        protected internal virtual void BeginInvoke(Action action)
+        /// <summary>
+        /// Sets the 'top' window.
+        /// </summary>
+        /// <param name="window">New 'top' window.</param>
+        internal virtual void SetTopWindow(Window window)
         {
-            throw new NotImplementedException();
+            Handler.SetTopWindow(window);
+        }
+
+        public void WakeUpIdle()
+        {
+            Handler.WakeUpIdle();
+        }
+
+        internal void RecreateAllHandlers()
+        {
+            foreach (var window in Windows)
+                window.RecreateAllHandlers();
+        }
+
+        protected override void DisposeManaged()
+        {
+            BaseApplication.Current = null!;
         }
 
         /// <summary>

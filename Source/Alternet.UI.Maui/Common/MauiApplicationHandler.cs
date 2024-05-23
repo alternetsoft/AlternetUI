@@ -9,8 +9,34 @@ using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
-    public class MauiApplicationHandler : IApplicationHandler
+    public class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
+        /// <inheritdoc/>
+        public bool ExitOnFrameDelete
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool IsActive
+        {
+            get => throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool InUixmlPreviewerMode
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool InvokeRequired
+        {
+            get => throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         public IPenHandler CreatePenHandler(Pen pen)
         {
@@ -331,17 +357,42 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public ISoundFactoryHandler CreateSoundFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
         public ITimerHandler CreateTimerHandler(Timer timer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Run(Window window)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetTopWindow(Window window)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WakeUpIdle()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasPendingEvents()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Exit()
         {
             throw new NotImplementedException();
         }

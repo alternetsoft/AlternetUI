@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </returns>
         protected override KeyStates GetKeyStatesFromSystem(Key key)
         {
-            return Application.Current.NativeKeyboard.GetKeyState(key);
+            return WxApplicationHandler.NativeKeyboard.GetKeyState(key);
         }
     }
 }

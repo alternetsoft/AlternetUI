@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     internal class WxSystemSettingsHandler : ISystemSettingsHandler
     {
-        public UI.Native.Application? NativeApplication => Application.Current?.nativeApplication;
+        public UI.Native.Application? NativeApplication => WxApplicationHandler.NativeApplication;
 
         /// <summary>
         /// Gets or sets the application name.

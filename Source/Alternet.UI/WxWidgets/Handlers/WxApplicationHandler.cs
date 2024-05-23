@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +13,92 @@ namespace Alternet.UI
 {
     internal class WxApplicationHandler : DisposableObject, IApplicationHandler
     {
+        private static Native.Application nativeApplication;
+        private static readonly KeyboardInputProvider keyboardInputProvider;
+        private static readonly MouseInputProvider mouseInputProvider;
+
+        static WxApplicationHandler()
+        {
+            if (BaseApplication.SupressDiagnostics)
+                Native.Application.SuppressDiagnostics(-1);
+
+            nativeApplication = new Native.Application();
+            nativeApplication.Idle = BaseApplication.RaiseIdle;
+            nativeApplication.LogMessage += NativeApplication_LogMessage;
+            nativeApplication.Name = Path.GetFileNameWithoutExtension(
+                Process.GetCurrentProcess()?.MainModule?.FileName!);
+
+            keyboardInputProvider = new KeyboardInputProvider(
+                nativeApplication.Keyboard);
+            mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
+
+            Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
+            Mouse.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+        }
+
+        public WxApplicationHandler()
+        {
+        }
+
+        /// <summary>
+        /// Allows the programmer to specify whether the application will exit when the
+        /// top-level frame is deleted.
+        /// Returns true if the application will exit when the top-level frame is deleted.
+        /// </summary>
+        public bool ExitOnFrameDelete
+        {
+            get => nativeApplication.GetExitOnFrameDelete();
+            set => nativeApplication.SetExitOnFrameDelete(value);
+        }
+
+        /// <summary>
+        /// Gets whether the application is active, i.e. if one of its windows is currently in
+        /// the foreground.
+        /// </summary>
+        public bool IsActive => nativeApplication.IsActive();
+
+        /// <inheritdoc/>
+        public bool InUixmlPreviewerMode
+        {
+            get => nativeApplication.InUixmlPreviewerMode;
+            set => nativeApplication.InUixmlPreviewerMode = value;
+        }
+
+        internal static Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
+
+        internal static Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
+
+        internal static Native.Application NativeApplication => nativeApplication;
+
+        internal static Native.Mouse NativeMouse => nativeApplication.Mouse;
+
+        internal static string EventArgString => nativeApplication.EventArgString;
+
         public static IntPtr WxWidget(IControl? control)
         {
             if (control is null)
                 return default;
             return ((UI.Native.Control)control.NativeControl).WxWidget;
+        }
+
+        /// <summary>
+        /// Informs all message pumps that they must terminate, and then closes
+        /// all application windows after the messages have been processed.
+        /// </summary>
+        public void Exit()
+        {
+            nativeApplication.Exit();
+        }
+
+        public bool HasPendingEvents()
+        {
+            return nativeApplication.HasPendingEvents();
+        }
+
+        public void Run(Window window)
+        {
+            nativeApplication.Run(
+                ((WindowHandler)window.Handler).NativeControl);
         }
 
         public IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)
@@ -30,12 +113,34 @@ namespace Alternet.UI
 
         public void ProcessPendingEvents()
         {
-            Application.Current?.nativeApplication.ProcessPendingEvents();
+            nativeApplication.ProcessPendingEvents();
         }
 
         public void ExitMainLoop()
         {
-            Application.Current.NativeApplication.ExitMainLoop();
+            nativeApplication.ExitMainLoop();
+        }
+
+        public void SetTopWindow(Window window)
+        {
+            nativeApplication.SetTopWindow(WxApplicationHandler.WxWidget(window));
+        }
+
+        public void WakeUpIdle()
+        {
+            nativeApplication.WakeUpIdle();
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            nativeApplication.BeginInvoke(action);
+        }
+
+        private static void NativeApplication_LogMessage()
+        {
+            var s = nativeApplication.EventArgString;
+
+            BaseApplication.LogNativeMessage(s);
         }
 
         public ISystemSettingsHandler CreateSystemSettingsHandler()
@@ -395,6 +500,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public bool InvokeRequired => nativeApplication.InvokeRequired;
+
+        /// <inheritdoc/>
         public IFontFactoryHandler CreateFontFactoryHandler()
         {
             return new WxFontFactoryHandler();
@@ -403,6 +511,18 @@ namespace Alternet.UI
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new UI.Native.Timer();
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
+            nativeApplication.Idle = null;
+            nativeApplication.LogMessage = null;
+            keyboardInputProvider.Dispose();
+            mouseInputProvider.Dispose();
+            nativeApplication.Dispose();
+            nativeApplication = null!;
         }
     }
 }

@@ -11,13 +11,42 @@ namespace Alternet.UI
 {
     public interface IApplicationHandler : IDisposable
     {
+        /// <summary>
+        /// Allows the programmer to specify whether the application will exit when the
+        /// top-level frame is deleted.
+        /// Returns true if the application will exit when the top-level frame is deleted.
+        /// </summary>
+        bool ExitOnFrameDelete { get; set; }
+
+        /// <summary>
+        /// Gets whether the application is active, i.e. if one of its windows is currently in
+        /// the foreground.
+        /// </summary>
+        bool IsActive { get; }
+
+        bool InUixmlPreviewerMode { get; set; }
+
+        bool InvokeRequired { get; }
+
         Window? GetActiveWindow();
 
         Control? GetFocusedControl();
 
+        void Run(Window window);
+
+        void SetTopWindow(Window window);
+
+        void WakeUpIdle();
+
+        void BeginInvoke(Action action);
+
+        bool HasPendingEvents();
+
         void NotifyCaptureLost();
 
         void ExitMainLoop();
+
+        void Exit();
 
         ITimerHandler CreateTimerHandler(Timer timer);
 

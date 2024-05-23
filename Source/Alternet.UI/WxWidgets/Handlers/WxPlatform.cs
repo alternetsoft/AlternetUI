@@ -79,7 +79,7 @@ namespace Alternet.UI
         public override IDataObject? ClipboardGetDataObject()
         {
             var unmanagedDataObject =
-                Application.Current.NativeClipboard.GetDataObject();
+                WxApplicationHandler.NativeClipboard.GetDataObject();
             if (unmanagedDataObject == null)
                 return null;
 
@@ -88,7 +88,7 @@ namespace Alternet.UI
 
         public override void ClipboardSetDataObject(IDataObject value)
         {
-            Application.Current.NativeClipboard.SetDataObject(
+            WxApplicationHandler.NativeClipboard.SetDataObject(
                 UnmanagedDataObjectService.GetUnmanagedDataObject(value));
         }
 

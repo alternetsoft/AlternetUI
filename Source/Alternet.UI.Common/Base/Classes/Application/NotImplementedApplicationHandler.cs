@@ -11,6 +11,33 @@ namespace Alternet.UI
 {
     internal class NotImplementedApplicationHandler : DisposableObject, IApplicationHandler
     {
+        public bool ExitOnFrameDelete
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+        
+        public bool IsActive
+        {
+            get => throw new NotImplementedException();
+        }
+        
+        public bool InUixmlPreviewerMode
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+        
+        public bool InvokeRequired
+        {
+            get => throw new NotImplementedException();
+        }
+
+        public void BeginInvoke(Action action)
+        {
+            throw new NotImplementedException();
+        }
+
         public IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control)
         {
             throw new NotImplementedException();
@@ -306,6 +333,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public void Exit()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExitMainLoop()
         {
             throw new NotImplementedException();
@@ -321,12 +353,32 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public bool HasPendingEvents()
+        {
+            throw new NotImplementedException();
+        }
+
         public void NotifyCaptureLost()
         {
             throw new NotImplementedException();
         }
 
         public void ProcessPendingEvents()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Run(Window window)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetTopWindow(Window window)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WakeUpIdle()
         {
             throw new NotImplementedException();
         }
