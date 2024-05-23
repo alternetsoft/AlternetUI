@@ -226,6 +226,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public ISoundFactoryHandler CreateSoundFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public IStatusBarHandler CreateStatusBarHandler(StatusBar control)
         {
             throw new NotImplementedException();
@@ -242,6 +247,11 @@ namespace Alternet.UI
         }
 
         public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimerHandler CreateTimerHandler(Timer timer)
         {
             throw new NotImplementedException();
         }

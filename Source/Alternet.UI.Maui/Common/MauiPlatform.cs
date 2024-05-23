@@ -91,51 +91,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override void StopSound()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Bell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void MessageBeep(SystemSoundType soundType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TimerSetTick(Timer timer, Action? value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateTimer()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TimerGetEnabled(Timer timer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TimerSetEnabled(Timer timer, bool value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int TimerGetInterval(Timer timer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TimerSetInterval(Timer timer, int value)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string? GetTextFromUser(string message, string caption, string defaultValue, Control? parent, int x, int y, bool centre)
         {
             throw new NotImplementedException();

@@ -19,6 +19,10 @@ namespace Alternet.UI
 
         void ExitMainLoop();
 
+        ITimerHandler CreateTimerHandler(Timer timer);
+
+        ISoundFactoryHandler CreateSoundFactoryHandler();
+
         /// <summary>
         /// Creates transparent brush handler.
         /// </summary>

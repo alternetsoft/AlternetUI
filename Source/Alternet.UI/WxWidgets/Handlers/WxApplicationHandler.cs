@@ -388,5 +388,15 @@ namespace Alternet.UI
         {
             return new UI.Native.PageSetupDialog();
         }
+
+        public ISoundFactoryHandler CreateSoundFactoryHandler()
+        {
+            return new WxSoundFactoryHandler();
+        }
+
+        public ITimerHandler CreateTimerHandler(Timer timer)
+        {
+            return new UI.Native.Timer();
+        }
     }
 }

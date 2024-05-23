@@ -69,54 +69,6 @@ namespace Alternet.UI
             return Font.FromInternal(font);
         }
 
-        public override bool TimerGetEnabled(Timer timer)
-        {
-            return ((Native.Timer)timer.NativeTimer).Enabled;
-        }
-
-        public override void TimerSetEnabled(Timer timer, bool value)
-        {
-            ((Native.Timer)timer.NativeTimer).Enabled = value;
-        }
-
-        public override int TimerGetInterval(Timer timer)
-        {
-            return ((Native.Timer)timer.NativeTimer).Interval;
-        }
-
-        public override void TimerSetInterval(Timer timer, int value)
-        {
-            ((Native.Timer)timer.NativeTimer).Interval = value;
-        }
-
-        public override object CreateTimer()
-        {
-            return new Native.Timer();
-        }
-
-        public override void TimerSetTick(Timer timer, Action? value)
-        {
-            ((Native.Timer)timer.NativeTimer).Tick = value;
-        }
-
-        public override void StopSound()
-        {
-            Native.WxOtherFactory.SoundStop();
-        }
-
-        public override void MessageBeep(SystemSoundType soundType)
-        {
-            if (BaseApplication.IsWindowsOS)
-                SafeNativeMethods.MessageBeep((int)soundType);
-            else
-                Bell();
-        }
-
-        public override void Bell()
-        {
-            Native.WxOtherFactory.Bell();
-        }
-
         public override DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = info.Owner == null ? null :
@@ -258,12 +210,6 @@ namespace Alternet.UI
             if (result < 0)
                 return null;
             return result;
-        }
-
-        private class SafeNativeMethods
-        {
-            [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-            internal static extern bool MessageBeep(int type);
         }
     }
 }

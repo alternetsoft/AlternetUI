@@ -59,10 +59,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Base\Classes\NewFolder6\" />
-    <Folder Include="Base\Classes\NewFolder7\" />
-    <Folder Include="Base\Classes\NewFolder8\" />
-  </ItemGroup>
-
 </Project>

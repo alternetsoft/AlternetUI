@@ -11,6 +11,11 @@ namespace Alternet.UI
     /// </summary>
     public static class SoundUtils
     {
+        private static ISoundFactoryHandler? handler;
+
+        public static ISoundFactoryHandler Handler =>
+            handler ??= BaseApplication.Handler.CreateSoundFactoryHandler();
+
         /// <summary>
         /// Gets or sets whether <see cref="Bell"/> method is supressed.
         /// Default is <c>false</c>.
@@ -26,7 +31,7 @@ namespace Alternet.UI
         /// </summary>
         public static void StopSound()
         {
-            NativePlatform.Default.StopSound();
+            Handler.StopSound();
         }
 
         /// <summary>

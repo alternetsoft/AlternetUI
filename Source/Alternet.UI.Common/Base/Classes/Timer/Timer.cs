@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public class Timer : DisposableObject, IComponent, IDisposable
     {
-        private object? nativeTimer;
+        private ITimerHandler? handler;
         private bool autoReset = true;
 
         /// <summary>
@@ -95,17 +95,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets native timer.
         /// </summary>
-        public virtual object NativeTimer
+        public virtual ITimerHandler Handler
         {
             get
             {
-                if(nativeTimer is null)
+                if(handler is null)
                 {
-                    nativeTimer = NativePlatform.Default.CreateTimer();
-                    NativePlatform.Default.TimerSetTick(this, NativeTimer_Tick);
+                    handler = BaseApplication.Handler.CreateTimerHandler(this);
+                    handler.Tick = NativeTimer_Tick;
                 }
 
-                return nativeTimer;
+                return handler;
             }
         }
 
@@ -150,13 +150,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativePlatform.Default.TimerGetInterval(this);
+                return Handler.Interval;
             }
 
             set
             {
                 CheckDisposed();
-                NativePlatform.Default.TimerSetInterval(this, value);
+                Handler.Interval = value;
             }
         }
 
@@ -206,13 +206,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativePlatform.Default.TimerGetEnabled(this);
+                return Handler.Enabled;
             }
 
             set
             {
                 CheckDisposed();
-                NativePlatform.Default.TimerSetEnabled(this, value);
+                Handler.Enabled = value;
             }
         }
 
@@ -276,9 +276,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            NativePlatform.Default.TimerSetTick(this, null);
-            ((IDisposable?)nativeTimer)?.Dispose();
-            nativeTimer = null!;
+            if (handler is null)
+                return;
+
+            handler.Tick = null;
+            handler.Dispose();
+            handler = null;
         }
 
         private void NativeTimer_Tick()

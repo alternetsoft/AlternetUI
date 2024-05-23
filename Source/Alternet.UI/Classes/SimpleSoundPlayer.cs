@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Stop()
         {
-            NativePlatform.Default.StopSound();
+            SoundUtils.Handler.StopSound();
         }
 
         /// <summary>

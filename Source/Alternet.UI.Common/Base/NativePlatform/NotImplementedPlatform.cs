@@ -18,22 +18,12 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override void Bell()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IDataObject? ClipboardGetDataObject()
         {
             throw new NotImplementedException();
         }
 
         public override void ClipboardSetDataObject(IDataObject value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateTimer()
         {
             throw new NotImplementedException();
         }
@@ -133,47 +123,12 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override void MessageBeep(SystemSoundType soundType)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool ShowExceptionWindow(Exception exception, string? additionalInfo = null, bool canContinue = true)
         {
             throw new NotImplementedException();
         }
 
         public override DialogResult ShowMessageBox(MessageBoxInfo info)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void StopSound()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TimerGetEnabled(Timer timer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int TimerGetInterval(Timer timer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TimerSetEnabled(Timer timer, bool value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TimerSetInterval(Timer timer, int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TimerSetTick(Timer timer, Action? value)
         {
             throw new NotImplementedException();
         }

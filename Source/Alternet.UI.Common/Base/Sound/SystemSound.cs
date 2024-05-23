@@ -61,7 +61,7 @@ namespace Alternet.UI
                     return;
             }
 
-            NativePlatform.Default.MessageBeep(soundType);
+            SoundUtils.Handler.MessageBeep(soundType);
         }
     }
 }

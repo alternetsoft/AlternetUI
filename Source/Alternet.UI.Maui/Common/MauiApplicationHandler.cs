@@ -329,5 +329,15 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public ISoundFactoryHandler CreateSoundFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimerHandler CreateTimerHandler(Timer timer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
