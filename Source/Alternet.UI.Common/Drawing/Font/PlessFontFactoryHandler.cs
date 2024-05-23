@@ -23,26 +23,26 @@ namespace Alternet.Drawing
             set => defaultFontEncoding = value;
         }
 
-        public virtual IFontHandler CreateDefaultFont()
+        public virtual IFontHandler CreateDefaultFontHandler()
         {
             defaultFont ??= new PlessFontHandler();
             return defaultFont;
         }
 
-        public virtual IFontHandler CreateDefaultMonoFont()
+        public virtual IFontHandler CreateDefaultMonoFontHandler()
         {
             defaultMonoFont ??= new PlessFontHandler();
             return defaultMonoFont;
         }
 
-        public virtual IFontHandler CreateFont()
+        public virtual IFontHandler CreateFontHandler()
         {
             return new PlessFontHandler();
         }
 
-        public virtual IFontHandler CreateFont(Font font)
+        public virtual IFontHandler CreateFontHandler(Font font)
         {
-            var result = CreateFont();
+            var result = CreateFontHandler();
             IFontHandler.FontParams prm = new(font);
             result.Update(prm);
             return result;
@@ -50,7 +50,7 @@ namespace Alternet.Drawing
 
         public virtual Font CreateSystemFont(SystemSettingsFont systemFont)
         {
-            return new Font(CreateFont());
+            return new Font(CreateFontHandler());
         }
 
         public virtual string[] GetFontFamiliesNames()

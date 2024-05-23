@@ -13,19 +13,19 @@ namespace Alternet.Drawing
 
     public class MauiFontFactoryHandler : PlessFontFactoryHandler
     {
-        public override IFontHandler CreateDefaultFont()
+        public override IFontHandler CreateDefaultFontHandler()
         {
             return new MauiFontHandler(Microsoft.Maui.Graphics.Font.Default);
         }
 
-        public override IFontHandler CreateDefaultMonoFont()
+        public override IFontHandler CreateDefaultMonoFontHandler()
         {
-            return CreateDefaultFont();
+            return CreateDefaultFontHandler();
         }
 
-        public override IFontHandler CreateFont()
+        public override IFontHandler CreateFontHandler()
         {
-            return CreateDefaultFont();
+            return CreateDefaultFontHandler();
         }
     }
 }

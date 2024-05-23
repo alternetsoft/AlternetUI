@@ -28,6 +28,11 @@ namespace Alternet.UI
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
 
+        static SkiaContainer()
+        {
+            BaseApplication.Handler ??= new MauiApplicationHandler();
+        }
+
         public SkiaContainer()
         {
             EnableTouchEvents = true;

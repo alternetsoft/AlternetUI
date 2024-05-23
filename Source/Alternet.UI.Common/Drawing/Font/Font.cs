@@ -350,7 +350,7 @@ namespace Alternet.Drawing
                 GdiCharSet = 1,
             };
 
-            Handler = NativePlatform.Default.FontFactory.CreateFont();
+            Handler = FontFactory.Handler.CreateFontHandler();
             Handler.Update(prm);
         }
 
@@ -616,8 +616,8 @@ namespace Alternet.Drawing
         /// </summary>
         internal static FontEncoding DefaultEncoding
         {
-            get => NativePlatform.Default.FontFactory.DefaultFontEncoding;
-            set => NativePlatform.Default.FontFactory.DefaultFontEncoding = value;
+            get => FontFactory.Handler.DefaultFontEncoding;
+            set => FontFactory.Handler.DefaultFontEncoding = value;
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Font Clone()
         {
-            var nativeFont = NativePlatform.Default.FontFactory.CreateFont(this);
+            var nativeFont = FontFactory.Handler.CreateFontHandler(this);
             var result = new Font(nativeFont);
             return result;
         }
@@ -1125,7 +1125,7 @@ namespace Alternet.Drawing
 
         internal static Font CreateDefaultFont()
         {
-            var nativeFont = NativePlatform.Default.FontFactory.CreateDefaultFont();
+            var nativeFont = FontFactory.Handler.CreateDefaultFontHandler();
             return new Font(nativeFont);
         }
 

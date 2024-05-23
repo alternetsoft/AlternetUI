@@ -21,6 +21,8 @@ namespace Alternet.UI
 
         ITimerHandler CreateTimerHandler(Timer timer);
 
+        IFontFactoryHandler CreateFontFactoryHandler();
+
         ISoundFactoryHandler CreateSoundFactoryHandler();
 
         /// <summary>

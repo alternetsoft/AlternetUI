@@ -10,35 +10,33 @@ namespace Alternet.Drawing
 {
     internal class WxFontFactoryHandler : IFontFactoryHandler
     {
-        public static readonly IFontFactoryHandler Default = new WxFontFactoryHandler();
-
         public FontEncoding DefaultFontEncoding
         {
             get => (FontEncoding)UI.Native.Font.GetDefaultEncoding();
             set => UI.Native.Font.SetDefaultEncoding((int)value);
         }
 
-        public IFontHandler CreateDefaultFont()
+        public IFontHandler CreateDefaultFontHandler()
         {
             var result = new UI.Native.Font();
             result.InitializeWithDefaultFont();
             return result;
         }
 
-        public IFontHandler CreateDefaultMonoFont()
+        public IFontHandler CreateDefaultMonoFontHandler()
         {
             var result = new UI.Native.Font();
             result.InitializeWithDefaultMonoFont();
             return result;
         }
 
-        public IFontHandler CreateFont()
+        public IFontHandler CreateFontHandler()
         {
             var result = new UI.Native.Font();
             return result;
         }
 
-        public IFontHandler CreateFont(Font font)
+        public IFontHandler CreateFontHandler(Font font)
         {
             var result = new UI.Native.Font();
             result.InitializeFromFont((UI.Native.Font)font.Handler);

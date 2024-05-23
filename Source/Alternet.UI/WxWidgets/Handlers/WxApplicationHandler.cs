@@ -394,6 +394,12 @@ namespace Alternet.UI
             return new WxSoundFactoryHandler();
         }
 
+        /// <inheritdoc/>
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            return new WxFontFactoryHandler();
+        }
+
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new UI.Native.Timer();

@@ -112,7 +112,7 @@ namespace Alternet.Drawing
         /// A string array of <see cref="FontFamily"/> names currently available
         /// in the system.
         /// </value>
-        public static string[] FamiliesNames => NativePlatform.Default.FontFactory.GetFontFamiliesNames();
+        public static string[] FamiliesNames => FontFactory.Handler.GetFontFamiliesNames();
 
         /// <summary>
         /// Returns a string array that contains all names of the
@@ -140,7 +140,7 @@ namespace Alternet.Drawing
         /// <value>A string that represents the name of this
         /// <see cref="FontFamily"/>.</value>
         public string Name => name ??=
-            NativePlatform.Default.FontFactory.GetFontFamilyName(GenericFamily ?? throw new Exception());
+            FontFactory.Handler.GetFontFamilyName(GenericFamily ?? throw new Exception());
 
         /// <summary>
         /// Gets generic font family type.
@@ -151,7 +151,7 @@ namespace Alternet.Drawing
         /// Gets whether font family is installed on this computer.
         /// </summary>
         public static bool IsFamilyValid(string name) =>
-            NativePlatform.Default.FontFactory.IsFontFamilyValid(name);
+            FontFactory.Handler.IsFontFamilyValid(name);
 
         /// <summary>
         /// Gets name of the font family specified with <see cref="GenericFontFamily"/> enum.
@@ -162,7 +162,7 @@ namespace Alternet.Drawing
         {
             if (family == GenericFontFamily.None)
                 family = GenericFontFamily.Default;
-            return NativePlatform.Default.FontFactory.GetFontFamilyName(family);
+            return FontFactory.Handler.GetFontFamilyName(family);
         }
     }
 }

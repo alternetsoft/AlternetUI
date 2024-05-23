@@ -18,6 +18,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            return new MauiFontFactoryHandler();
+        }
+
+        /// <inheritdoc/>
         public IBrushHandler CreateTransparentBrushHandler(Brush brush)
         {
             return new MauiTransparentBrushHandler(brush);
@@ -262,7 +268,7 @@ namespace Alternet.UI
 
         public IControlHandler CreateControlHandler(Control control)
         {
-            throw new NotImplementedException();
+            return new MauiControlHandler();
         }
 
         public ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control)

@@ -541,7 +541,7 @@ namespace Alternet.UI
             set
             {
                 defaultFont = value;
-                NativePlatform.Default.FontFactory.SetDefaultFont(value);
+                FontFactory.Handler.SetDefaultFont(value);
             }
         }
 

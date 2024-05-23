@@ -17,12 +17,6 @@ namespace Alternet.UI
 
         private static bool initialized;
 
-        /// <inheritdoc/>
-        public override IFontFactoryHandler FontFactory
-        {
-            get => WxFontFactoryHandler.Default;
-        }
-
         public static void Initialize()
         {
             if (initialized)

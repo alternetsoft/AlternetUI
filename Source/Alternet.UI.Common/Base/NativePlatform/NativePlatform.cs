@@ -23,8 +23,6 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
-        public abstract IFontFactoryHandler FontFactory { get; }
-
         public abstract CustomControlPainter GetPainter();
 
         public abstract Color GetClassDefaultAttributesBgColor(

@@ -76,6 +76,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public IGroupBoxHandler CreateGroupBoxHandler(GroupBox control)
         {
             throw new NotImplementedException();

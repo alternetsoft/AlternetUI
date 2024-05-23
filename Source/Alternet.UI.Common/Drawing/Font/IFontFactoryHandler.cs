@@ -25,19 +25,19 @@ namespace Alternet.Drawing
         /// Creates default native mono font.
         /// </summary>
         /// <returns></returns>
-        IFontHandler CreateDefaultMonoFont();
+        IFontHandler CreateDefaultMonoFontHandler();
 
         /// <summary>
         /// Creates native font.
         /// </summary>
         /// <returns></returns>
-        IFontHandler CreateFont();
+        IFontHandler CreateFontHandler();
 
         /// <summary>
         /// Creates default native font.
         /// </summary>
         /// <returns></returns>
-        IFontHandler CreateDefaultFont();
+        IFontHandler CreateDefaultFontHandler();
 
         /// <summary>
         /// Creates system font specified with <see cref="SystemSettingsFont"/>.
@@ -50,7 +50,7 @@ namespace Alternet.Drawing
         /// Creates native font using other font properties.
         /// </summary>
         /// <returns></returns>
-        IFontHandler CreateFont(Font font);
+        IFontHandler CreateFontHandler(Font font);
 
         /// <summary>
         /// Returns a string array that contains all font families names

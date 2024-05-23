@@ -13,14 +13,6 @@ namespace Alternet.UI
     {
         private static bool initialized;
 
-        public override IFontFactoryHandler FontFactory
-        {
-            get
-            {
-                return new MauiFontFactoryHandler();
-            }
-        }
-
         public static void Initialize()
         {
             if (initialized)
