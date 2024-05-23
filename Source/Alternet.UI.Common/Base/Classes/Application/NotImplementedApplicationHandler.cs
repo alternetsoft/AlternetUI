@@ -153,6 +153,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public IMemoryHandler CreateMemoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public IMenuItemHandler CreateMenuItemHandler(MenuItem control)
         {
             throw new NotImplementedException();

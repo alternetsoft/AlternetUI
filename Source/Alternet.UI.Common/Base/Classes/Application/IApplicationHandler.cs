@@ -48,6 +48,8 @@ namespace Alternet.UI
 
         void Exit();
 
+        IMemoryHandler CreateMemoryHandler();
+
         ICursorFactoryHandler CreateCursorFactoryHandler();
 
         ITimerHandler CreateTimerHandler(Timer timer);

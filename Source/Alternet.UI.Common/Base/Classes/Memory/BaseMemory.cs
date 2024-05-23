@@ -8,6 +8,11 @@ namespace Alternet.UI
     /// </summary>
     public static class BaseMemory
     {
+        private static IMemoryHandler? handler;
+
+        public static IMemoryHandler Handler
+            => handler ??= BaseApplication.Handler.CreateMemoryHandler();
+
         /// <summary>
         /// Allocates size bytes of uninitialized storage.
         /// </summary>
@@ -37,7 +42,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr Alloc(int size)
         {
-            return NativePlatform.Default.MemoryAlloc(size);
+            return Handler.Alloc(size);
         }
 
         /// <summary>
@@ -85,7 +90,7 @@ namespace Alternet.UI
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr Realloc(IntPtr ptr, int newSize)
-            => NativePlatform.Default.MemoryRealloc(ptr, newSize);
+            => Handler.Realloc(ptr, newSize);
 
         /// <summary>
         /// Deallocates the space previously allocated by <see cref="Alloc"/> or <see cref="Realloc"/>.
@@ -104,7 +109,7 @@ namespace Alternet.UI
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void FreeMem(IntPtr ptr)
-            => NativePlatform.Default.MemoryFree(ptr);
+            => Handler.Free(ptr);
 
         /// <summary>
         /// Copies <paramref name="count"/> bytes from the object pointed to by
@@ -126,7 +131,7 @@ namespace Alternet.UI
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr Copy(IntPtr dest, IntPtr src, int count)
-            => NativePlatform.Default.MemoryCopy(dest, src, count);
+            => Handler.Copy(dest, src, count);
 
         /// <summary>
         /// Copies <paramref name="count"/> bytes from the object pointed to by
@@ -150,7 +155,7 @@ namespace Alternet.UI
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr Move(IntPtr dest, IntPtr src, int count)
-            => NativePlatform.Default.MemoryMove(dest, src, count);
+            => Handler.Move(dest, src, count);
 
         /// <summary>
         /// Copies the <paramref name="fillByte"/> into each of the first count bytes of the object
@@ -168,33 +173,33 @@ namespace Alternet.UI
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr Fill(IntPtr dest, byte fillByte, int count) =>
-            NativePlatform.Default.MemorySet(dest, fillByte, count);
+            Handler.Fill(dest, fillByte, count);
 
         /// <inheritdoc cref="AllocLong"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr AllocLong(ulong size)
         {
-            return NativePlatform.Default.MemoryAllocLong(size);
+            return Handler.AllocLong(size);
         }
 
         /// <inheritdoc cref="Realloc"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr ReallocLong(IntPtr ptr, ulong newSize)
-            => NativePlatform.Default.MemoryReallocLong(ptr, newSize);
+            => Handler.ReallocLong(ptr, newSize);
 
         /// <inheritdoc cref="Copy"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr CopyLong(IntPtr dest, IntPtr src, ulong count)
-            => NativePlatform.Default.MemoryCopyLong(dest, src, count);
+            => Handler.CopyLong(dest, src, count);
 
         /// <inheritdoc cref="Move"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr MoveLong(IntPtr dest, IntPtr src, ulong count)
-            => NativePlatform.Default.MemoryMoveLong(dest, src, count);
+            => Handler.MoveLong(dest, src, count);
 
         /// <inheritdoc cref="Fill"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr FillLong(IntPtr dest, byte fillByte, ulong count) =>
-            NativePlatform.Default.MemorySetLong(dest, fillByte, count);
+            Handler.FillLong(dest, fillByte, count);
     }
 }

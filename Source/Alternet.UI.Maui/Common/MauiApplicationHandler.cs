@@ -401,5 +401,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public IMemoryHandler CreateMemoryHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

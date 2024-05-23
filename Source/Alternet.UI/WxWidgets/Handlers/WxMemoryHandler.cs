@@ -6,54 +6,54 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal partial class WxPlatform
+    internal class WxMemoryHandler : DisposableObject, IMemoryHandler
     {
         /// <inheritdoc/>
-        public override IntPtr MemoryAlloc(int size)
+        public IntPtr Alloc(int size)
         {
             return Native.WxOtherFactory.MemoryAlloc((ulong)size);
         }
 
         /// <inheritdoc/>
-        public override IntPtr MemoryRealloc(IntPtr ptr, int newSize)
+        public IntPtr Realloc(IntPtr ptr, int newSize)
             => Native.WxOtherFactory.MemoryRealloc(ptr, (ulong)newSize);
 
         /// <inheritdoc/>
-        public override void MemoryFree(IntPtr ptr)
+        public void Free(IntPtr ptr)
             => Native.WxOtherFactory.MemoryFree(ptr);
 
         /// <inheritdoc/>
-        public override IntPtr MemoryCopy(IntPtr dest, IntPtr src, int count)
+        public IntPtr Copy(IntPtr dest, IntPtr src, int count)
             => Native.WxOtherFactory.MemoryCopy(dest, src, (ulong)count);
 
         /// <inheritdoc/>
-        public override IntPtr MemoryMove(IntPtr dest, IntPtr src, int count)
+        public IntPtr Move(IntPtr dest, IntPtr src, int count)
             => Native.WxOtherFactory.MemoryMove(dest, src, (ulong)count);
 
         /// <inheritdoc/>
-        public override IntPtr MemorySet(IntPtr dest, byte fillByte, int count) =>
+        public IntPtr Fill(IntPtr dest, byte fillByte, int count) =>
             Native.WxOtherFactory.MemorySet(dest, fillByte, (ulong)count);
 
         /// <inheritdoc/>
-        public override IntPtr MemoryAllocLong(ulong size)
+        public IntPtr AllocLong(ulong size)
         {
             return Native.WxOtherFactory.MemoryAlloc(size);
         }
 
         /// <inheritdoc/>
-        public override IntPtr MemoryReallocLong(IntPtr ptr, ulong newSize)
+        public IntPtr ReallocLong(IntPtr ptr, ulong newSize)
             => Native.WxOtherFactory.MemoryRealloc(ptr, newSize);
 
         /// <inheritdoc/>
-        public override IntPtr MemoryCopyLong(IntPtr dest, IntPtr src, ulong count)
+        public IntPtr CopyLong(IntPtr dest, IntPtr src, ulong count)
             => Native.WxOtherFactory.MemoryCopy(dest, src, count);
 
         /// <inheritdoc/>
-        public override IntPtr MemoryMoveLong(IntPtr dest, IntPtr src, ulong count)
+        public IntPtr MoveLong(IntPtr dest, IntPtr src, ulong count)
             => Native.WxOtherFactory.MemoryMove(dest, src, count);
 
         /// <inheritdoc/>
-        public override IntPtr MemorySetLong(IntPtr dest, byte fillByte, ulong count) =>
+        public IntPtr FillLong(IntPtr dest, byte fillByte, ulong count) =>
             Native.WxOtherFactory.MemorySet(dest, fillByte, count);
     }
 }

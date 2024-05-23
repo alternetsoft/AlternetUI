@@ -494,6 +494,7 @@ namespace Alternet.UI
             return new UI.Native.PageSetupDialog();
         }
 
+        /// <inheritdoc/>
         public ISoundFactoryHandler CreateSoundFactoryHandler()
         {
             return new WxSoundFactoryHandler();
@@ -508,11 +509,19 @@ namespace Alternet.UI
             return new WxFontFactoryHandler();
         }
 
+        /// <inheritdoc/>
+        public IMemoryHandler CreateMemoryHandler()
+        {
+            return new WxMemoryHandler();
+        }
+
+        /// <inheritdoc/>
         public ICursorFactoryHandler CreateCursorFactoryHandler()
         {
             return new WxCursorFactoryHandler();
         }
 
+        /// <inheritdoc/>
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new UI.Native.Timer();
