@@ -597,11 +597,6 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
-        public override void ShowDeveloperTools()
-        {
-            DeveloperToolsPanel.ShowDeveloperTools();
-        }
-
         public override IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
         {
             return new ValueValidatorText(style);

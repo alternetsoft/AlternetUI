@@ -160,8 +160,6 @@ namespace Alternet.UI
 
         public abstract IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor);
 
-        public abstract void ShowDeveloperTools();
-
         public abstract ISystemSettingsHandler CreateSystemSettingsHandler();
 
         public abstract void ExitMainLoop();

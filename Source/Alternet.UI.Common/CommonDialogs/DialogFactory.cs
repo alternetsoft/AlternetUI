@@ -15,6 +15,14 @@ namespace Alternet.UI
     public static class DialogFactory
     {
         /// <summary>
+        /// Shows developer tools window.
+        /// </summary>
+        public static void ShowDeveloperTools()
+        {
+            DeveloperToolsPanel.ShowDeveloperTools();
+        }
+
+        /// <summary>
         /// Used as event handler.
         /// </summary>
         /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>

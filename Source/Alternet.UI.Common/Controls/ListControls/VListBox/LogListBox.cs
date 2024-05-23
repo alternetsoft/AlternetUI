@@ -209,7 +209,7 @@ namespace Alternet.UI
 
             void ShowDevTools()
             {
-                NativePlatform.Default.ShowDeveloperTools();
+                DialogFactory.ShowDeveloperTools();
             }
         }
 

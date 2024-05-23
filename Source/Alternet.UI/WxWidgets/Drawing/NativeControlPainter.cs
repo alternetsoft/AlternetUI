@@ -817,12 +817,8 @@ namespace Alternet.Drawing
             return control.PixelToDip(result);
         }
 
-        /// <summary>
-        /// Returns the default size of a check mark in dips.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <returns></returns>
-        public SizeD GetCheckMarkSize(Control control)
+        /// <inheritdoc/>
+        public override SizeD GetCheckMarkSize(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckMarkSize(
                 default,
@@ -830,12 +826,8 @@ namespace Alternet.Drawing
             return control.PixelToDip(result);
         }
 
-        /// <summary>
-        /// Returns the default size of a expander in dips.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <returns></returns>
-        public SizeD GetExpanderSize(Control control)
+        /// <inheritdoc/>
+        public override SizeD GetExpanderSize(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetExpanderSize(
                 default,
@@ -843,13 +835,8 @@ namespace Alternet.Drawing
             return control.PixelToDip(result);
         }
 
-        /// <summary>
-        /// Returns the default height of a header button in dips, either a fixed platform
-        /// height if available, or a generic height based on the window's font.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <returns></returns>
-        public double GetHeaderButtonHeight(Control control)
+        /// <inheritdoc/>
+        public override double GetHeaderButtonHeight(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
                 default,
@@ -857,12 +844,8 @@ namespace Alternet.Drawing
             return control.PixelToDip(result);
         }
 
-        /// <summary>
-        /// Returns the margin on left and right sides of header button's label in dips.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <returns></returns>
-        public double GetHeaderButtonMargin(Control control)
+        /// <inheritdoc/>
+        public override double GetHeaderButtonMargin(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
                 default,
@@ -870,13 +853,8 @@ namespace Alternet.Drawing
             return control.PixelToDip(result);
         }
 
-        /// <summary>
-        /// Returns the default size of a collapse button in dips.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <returns></returns>
-        public SizeD GetCollapseButtonSize(Control control, Graphics dc)
+        /// <inheritdoc/>
+        public override SizeD GetCollapseButtonSize(Control control, Graphics dc)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
                 default,
@@ -1029,16 +1007,6 @@ namespace Alternet.Drawing
                 default:
                     return 0;
             }
-        }
-
-        internal void LogPartSize(Control control)
-        {
-            Application.Log($"CheckMarkSize: {GetCheckMarkSize(control)}");
-            Application.Log($"CheckBoxSize(0): {GetCheckBoxSize(control, 0)}");
-            Application.Log($"CheckBoxSize(Cell): {GetCheckBoxSize(control, DrawFlags.Cell)}");
-            Application.Log($"GetExpanderSize: {GetExpanderSize(control)}");
-            Application.Log($"GetHeaderButtonHeight: {GetHeaderButtonHeight(control)}");
-            Application.Log($"GetHeaderButtonMargin: {GetHeaderButtonMargin(control)}");
         }
 
         /// <summary>

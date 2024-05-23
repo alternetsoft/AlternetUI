@@ -281,11 +281,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override void ShowDeveloperTools()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IDataObject? ClipboardGetDataObject()
         {
             throw new NotImplementedException();

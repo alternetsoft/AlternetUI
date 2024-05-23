@@ -391,7 +391,7 @@ namespace Alternet.UI
         {
             KeyDown?.Invoke(this, e);
 #if DEBUG
-            KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, NativePlatform.Default.ShowDeveloperTools);
+            KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
 #endif
         }
 

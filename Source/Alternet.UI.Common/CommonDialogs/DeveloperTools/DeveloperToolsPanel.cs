@@ -217,7 +217,7 @@ namespace Alternet.UI
                 (t) => Debug.WriteLine(t.Name));
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
         /// </summary>
         public static void NativeObjectToConsole()
@@ -225,7 +225,7 @@ namespace Alternet.UI
             EnumerableUtils.ForEach<Type>(
                 AssemblyUtils.GetTypeDescendants(typeof(Native.NativeObject), true, false),
                 (t) => Debug.WriteLine(t.Name));
-        }
+        }*/
 
         public static void UpdateEventsPropertyGrid(PropertyGrid eventGrid, Type? type)
         {
@@ -363,16 +363,16 @@ namespace Alternet.UI
 
             void Fn()
             {
-                Application.DoInsideBusyCursor(() =>
+                BaseApplication.DoInsideBusyCursor(() =>
                 {
-                    Application.LogBeginUpdate();
+                    BaseApplication.LogBeginUpdate();
                     try
                     {
                         action();
                     }
                     finally
                     {
-                        Application.LogEndUpdate();
+                        BaseApplication.LogEndUpdate();
                     }
                 });
             }
@@ -397,7 +397,7 @@ namespace Alternet.UI
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI";
 
-                Application.Log("Embedded Resource Names added to log file");
+                BaseApplication.Log("Embedded Resource Names added to log file");
 
                 var items = ResourceLoader.GetAssets(new Uri(s), null);
                 LogUtils.LogToFile(LogUtils.SectionSeparator);
@@ -411,34 +411,34 @@ namespace Alternet.UI
 
             AddAction("Show Second MainForm", () =>
             {
-                var type = Application.FirstWindow()?.GetType();
+                var type = BaseApplication.FirstWindow()?.GetType();
                 var instance = Activator.CreateInstance(type ?? typeof(Window)) as Window;
                 instance?.Show();
             });
 
             AddAction("Log test error and warning items", () =>
             {
-                Application.Log("Sample error", LogItemKind.Error);
-                Application.Log("Sample warning", LogItemKind.Warning);
-                Application.Log("Sample info", LogItemKind.Information);
+                BaseApplication.Log("Sample error", LogItemKind.Error);
+                BaseApplication.Log("Sample warning", LogItemKind.Warning);
+                BaseApplication.Log("Sample info", LogItemKind.Information);
             });
 
             AddLogAction("Log NativeControlPainter metrics", () =>
             {
-                NativeControlPainter.Default.LogPartSize(this);
+                CustomControlPainter.Current.LogPartSize(this);
             });
 
             AddAction("Exception: Throw C++", () =>
             {
-                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                BaseApplication.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                BaseApplication.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
 
             AddAction("Exception: Throw C#", () =>
             {
-                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                BaseApplication.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                BaseApplication.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
 
