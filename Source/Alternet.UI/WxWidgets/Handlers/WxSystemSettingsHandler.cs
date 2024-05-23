@@ -213,6 +213,37 @@ namespace Alternet.UI
             NativeApplication?.SetUseBestVisual(flag, forceTrueColour);
         }
 
+        /// <inheritdoc/>
+        public Color GetClassDefaultAttributesBgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesBgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        /// <inheritdoc/>
+        public Color GetClassDefaultAttributesFgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesFgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        /// <inheritdoc/>
+        public Font? GetClassDefaultAttributesFont(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            var font = Native.Control.GetClassDefaultAttributesFont(
+                (int)controlType,
+                (int)renderSize);
+            return Font.FromInternal(font);
+        }
+
         public bool IsUsingDarkBackground()
         {
             return Native.WxOtherFactory.SystemAppearanceIsUsingDarkBackground();

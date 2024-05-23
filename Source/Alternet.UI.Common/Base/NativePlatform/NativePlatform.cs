@@ -25,28 +25,10 @@ namespace Alternet.UI
 
         public abstract CustomControlPainter GetPainter();
 
-        public abstract Color GetClassDefaultAttributesBgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
-        public abstract Color GetClassDefaultAttributesFgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
-        public abstract Font? GetClassDefaultAttributesFont(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
         public abstract bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true);
-
-        public abstract bool IsBusyCursor();
-
-        public abstract void BeginBusyCursor();
-
-        public abstract void EndBusyCursor();
 
         public abstract IDataObject? ClipboardGetDataObject();
 

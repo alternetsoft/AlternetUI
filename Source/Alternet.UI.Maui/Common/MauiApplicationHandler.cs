@@ -396,5 +396,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public ICursorFactoryHandler CreateCursorFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

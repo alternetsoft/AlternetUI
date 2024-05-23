@@ -32,37 +32,6 @@ namespace Alternet.UI
             return NativeControlPainter.Default;
         }
 
-        /// <inheritdoc/>
-        public override Color GetClassDefaultAttributesBgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return Native.Control.GetClassDefaultAttributesBgColor(
-                (int)controlType,
-                (int)renderSize);
-        }
-
-        /// <inheritdoc/>
-        public override Color GetClassDefaultAttributesFgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return Native.Control.GetClassDefaultAttributesFgColor(
-                (int)controlType,
-                (int)renderSize);
-        }
-
-        /// <inheritdoc/>
-        public override Font? GetClassDefaultAttributesFont(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            var font = Native.Control.GetClassDefaultAttributesFont(
-                (int)controlType,
-                (int)renderSize);
-            return Font.FromInternal(font);
-        }
-
         public override DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = info.Owner == null ? null :
@@ -91,12 +60,6 @@ namespace Alternet.UI
             WxApplicationHandler.NativeClipboard.SetDataObject(
                 UnmanagedDataObjectService.GetUnmanagedDataObject(value));
         }
-
-        public override bool IsBusyCursor() => Native.WxOtherFactory.IsBusyCursor();
-
-        public override void BeginBusyCursor() => Native.WxOtherFactory.BeginBusyCursor();
-
-        public override void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
 
         public override bool ShowExceptionWindow(
             Exception exception,

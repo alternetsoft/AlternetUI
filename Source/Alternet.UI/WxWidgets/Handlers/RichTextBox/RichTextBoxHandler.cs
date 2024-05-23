@@ -901,10 +901,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetTextCursor(Cursor? cursor)
         {
-            if (cursor is null)
-                NativeControl.SetTextCursor(default);
-            else
-                NativeControl.SetTextCursor((IntPtr)cursor.Handler);
+            NativeControl.SetTextCursor(WxCursorHandler.CursorToPtr(cursor));
         }
 
         /// <summary>
@@ -912,7 +909,8 @@ namespace Alternet.UI
         /// </summary>
         public Cursor GetTextCursor()
         {
-            return new Cursor(NativeControl.GetTextCursor());
+            var handler = new WxCursorHandler(NativeControl.GetTextCursor(), true);
+            return new Cursor(handler);
         }
 
         /// <summary>
@@ -920,10 +918,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetURLCursor(Cursor? cursor)
         {
-            if (cursor is null)
-                NativeControl.SetURLCursor(default);
-            else
-                NativeControl.SetURLCursor((IntPtr)cursor.Handler);
+            NativeControl.SetURLCursor(WxCursorHandler.CursorToPtr(cursor));
         }
 
         /// <summary>
@@ -1384,7 +1379,8 @@ namespace Alternet.UI
         /// </summary>
         public Cursor GetURLCursor()
         {
-            return new Cursor(NativeControl.GetURLCursor());
+            var handler = new WxCursorHandler(NativeControl.GetURLCursor(), true);
+            return new Cursor(handler);
         }
 
         /// <summary>

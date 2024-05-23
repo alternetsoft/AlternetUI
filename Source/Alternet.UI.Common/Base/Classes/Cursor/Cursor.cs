@@ -12,8 +12,10 @@ namespace Alternet.UI
     /// A cursor is a small bitmap usually used for denoting where the mouse pointer is, with
     /// a picture that might indicate the interpretation of a mouse click.
     /// </summary>
-    public class Cursor : HandledObject<object>
+    public class Cursor : HandledObject<ICursorHandler>
     {
+        private static ICursorFactoryHandler? factoryHandler;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
         /// </summary>
@@ -24,9 +26,9 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
         /// </summary>
-        public Cursor(object nativeCursor)
+        public Cursor(ICursorHandler handler)
         {
-            Handler = nativeCursor;
+            Handler = handler;
         }
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace Alternet.UI
         /// <param name="cursor">Built in cursor type.</param>
         public Cursor(CursorType cursor)
         {
-            Handler = NativeDrawing.Default.CreateCursor(cursor);
+            Handler = FactoryHandler.CreateCursorHandler(cursor);
         }
 
         /// <summary>
@@ -53,11 +55,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            Handler = NativeDrawing.Default.CreateCursor(
-                    cursorName,
-                    type,
-                    hotSpotX,
-                    hotSpotY);
+            Handler = FactoryHandler.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
         }
 
         /// <summary>
@@ -76,7 +74,15 @@ namespace Alternet.UI
         /// <param name="image">Image with cursor.</param>
         public Cursor(Image image)
         {
-            Handler = NativeDrawing.Default.CreateCursor(image);
+            Handler = FactoryHandler.CreateCursorHandler(image);
+        }
+
+        public static ICursorFactoryHandler FactoryHandler
+        {
+            get
+            {
+                return factoryHandler ??= BaseApplication.Handler.CreateCursorFactoryHandler();
+            }
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeDrawing.Default.CursorIsOk(this);
+                return Handler.IsOk;
             }
         }
 
@@ -97,7 +103,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeDrawing.Default.CursorGetHotSpot(this);
+                return Handler.GetHotSpot();
             }
         }
 
@@ -111,7 +117,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void SetGlobal(Cursor? cursor = null)
         {
-            NativeDrawing.Default.CursorSetGlobal(cursor);
+            FactoryHandler.SetGlobal(cursor);
         }
 
         /// <summary>
@@ -150,15 +156,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManaged()
+        protected override ICursorHandler CreateHandler()
         {
-            NativeDrawing.Default.DisposeCursor(this);
-        }
-
-        /// <inheritdoc/>
-        protected override object CreateHandler()
-        {
-            return NativeDrawing.Default.CreateCursor();
+            return FactoryHandler.CreateCursorHandler();
         }
     }
 }

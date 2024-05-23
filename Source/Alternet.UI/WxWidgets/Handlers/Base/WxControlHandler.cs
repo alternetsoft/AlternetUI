@@ -381,10 +381,7 @@ namespace Alternet.UI
 
         public void SetCursor(Cursor? value)
         {
-            if (value is null)
-                NativeControl.SetCursor(default);
-            else
-                NativeControl.SetCursor((IntPtr)value.Handler);
+            NativeControl.SetCursor(WxCursorHandler.CursorToPtr(value));
         }
 
         public void SetToolTip(string? value)

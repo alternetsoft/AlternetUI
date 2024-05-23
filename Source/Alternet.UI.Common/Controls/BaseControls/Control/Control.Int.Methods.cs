@@ -135,21 +135,21 @@ namespace Alternet.UI
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return NativePlatform.Default.GetClassDefaultAttributesBgColor(controlType, renderSize);
+            return SystemSettings.Handler.GetClassDefaultAttributesBgColor(controlType, renderSize);
         }
 
         internal static Color GetClassDefaultAttributesFgColor(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return NativePlatform.Default.GetClassDefaultAttributesFgColor(controlType, renderSize);
+            return SystemSettings.Handler.GetClassDefaultAttributesFgColor(controlType, renderSize);
         }
 
         internal static Font? GetClassDefaultAttributesFont(
             ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
-            return NativePlatform.Default.GetClassDefaultAttributesFont(controlType, renderSize);
+            return SystemSettings.Handler.GetClassDefaultAttributesFont(controlType, renderSize);
         }
 
         /// <summary>

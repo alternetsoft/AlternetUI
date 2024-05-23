@@ -508,6 +508,11 @@ namespace Alternet.UI
             return new WxFontFactoryHandler();
         }
 
+        public ICursorFactoryHandler CreateCursorFactoryHandler()
+        {
+            return new WxCursorFactoryHandler();
+        }
+
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new UI.Native.Timer();

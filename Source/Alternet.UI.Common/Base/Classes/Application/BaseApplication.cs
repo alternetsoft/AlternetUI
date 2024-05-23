@@ -351,7 +351,7 @@ namespace Alternet.UI
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
         /// <see cref="EndBusyCursor"/> calls.
         /// </summary>
-        public static bool IsBusyCursor => NativePlatform.Default.IsBusyCursor();
+        public static bool IsBusyCursor => Cursor.FactoryHandler.IsBusyCursor();
 
         /// <summary>
         /// Allows to suppress some debug messages.
@@ -933,7 +933,7 @@ namespace Alternet.UI
         /// Use <see cref="EndBusyCursor"/> to revert the cursor back to its previous state.
         /// These two calls can be nested, and a counter ensures that only the outer calls take effect.
         /// </remarks>
-        public static void BeginBusyCursor() => NativePlatform.Default.BeginBusyCursor();
+        public static void BeginBusyCursor() => Cursor.FactoryHandler.BeginBusyCursor();
 
         /// <summary>
         /// Changes the cursor back to the original cursor, for all windows in the application.
@@ -941,7 +941,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use with <see cref="BeginBusyCursor"/> and <see cref="IsBusyCursor"/>.
         /// </remarks>
-        public static void EndBusyCursor() => NativePlatform.Default.EndBusyCursor();
+        public static void EndBusyCursor() => Cursor.FactoryHandler.EndBusyCursor();
 
         /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="BeginBusyCursor"/>

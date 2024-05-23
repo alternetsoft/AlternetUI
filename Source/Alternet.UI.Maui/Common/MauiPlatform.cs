@@ -23,23 +23,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void BeginBusyCursor()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void EndBusyCursor()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsBusyCursor()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
@@ -49,21 +32,6 @@ namespace Alternet.UI
         }
 
         public override CustomControlPainter GetPainter()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Color GetClassDefaultAttributesBgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Color GetClassDefaultAttributesFgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Font? GetClassDefaultAttributesFont(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             throw new NotImplementedException();
         }

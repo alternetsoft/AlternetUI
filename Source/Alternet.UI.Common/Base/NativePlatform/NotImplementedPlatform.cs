@@ -11,37 +11,12 @@ namespace Alternet.UI
 {
     internal class NotImplementedPlatform : NativePlatform
     {
-        public override void BeginBusyCursor()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IDataObject? ClipboardGetDataObject()
         {
             throw new NotImplementedException();
         }
 
         public override void ClipboardSetDataObject(IDataObject value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void EndBusyCursor()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Color GetClassDefaultAttributesBgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Color GetClassDefaultAttributesFgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Font? GetClassDefaultAttributesFont(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             throw new NotImplementedException();
         }
@@ -57,11 +32,6 @@ namespace Alternet.UI
         }
 
         public override string? GetTextFromUser(string message, string caption, string defaultValue, Control? parent, int x, int y, bool centre)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsBusyCursor()
         {
             throw new NotImplementedException();
         }
