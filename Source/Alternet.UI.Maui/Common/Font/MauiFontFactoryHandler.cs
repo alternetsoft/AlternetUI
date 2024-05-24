@@ -13,6 +13,15 @@ namespace Alternet.Drawing
 
     public class MauiFontFactoryHandler : PlessFontFactoryHandler
     {
+        public override bool AllowNullFontName
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
         public override IFontHandler CreateDefaultFontHandler()
         {
             return new MauiFontHandler(Microsoft.Maui.Graphics.Font.Default);

@@ -956,9 +956,10 @@ namespace Alternet.Drawing
                     prm.Size);
             }
 
-            if (prm.GenericFamily == null && prm.FamilyName == null)
+            if (prm.GenericFamily == null && prm.FamilyName == null )
             {
-                BaseApplication.LogError("Font name and family are null, using default font.");
+                if(!FontFactory.Handler.AllowNullFontName)
+                    BaseApplication.LogError("Font name and family are null, using default font.");
                 prm.GenericFamily = Alternet.Drawing.GenericFontFamily.Default;
             }
 
