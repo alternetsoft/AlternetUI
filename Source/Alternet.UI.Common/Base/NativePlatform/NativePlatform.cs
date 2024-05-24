@@ -23,8 +23,6 @@ namespace Alternet.UI
         /// </summary>
         public static NativePlatform Default = new NotImplementedPlatform();
 
-        public abstract CustomControlPainter GetPainter();
-
         public abstract bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,

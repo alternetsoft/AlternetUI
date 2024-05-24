@@ -43,11 +43,11 @@ namespace ControlsTest
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {
-                    NativeControlPainter.Default.DrawComboBox(
+                    WxControlPainterHandler.Default.DrawComboBox(
                         control,
                         canvas,
                         (50, 50, 150, 100),
-                        NativeControlPainter.DrawFlags.None);
+                        WxControlPainterHandler.DrawFlags.None);
                 });
             });
 
@@ -64,7 +64,7 @@ namespace ControlsTest
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {
-                    var painter = NativeControlPainter.Default;
+                    var painter = WxControlPainterHandler.Default;
 
                     Fn((50, 50), CheckState.Unchecked, GenericControlState.Normal, "unchecked");
 

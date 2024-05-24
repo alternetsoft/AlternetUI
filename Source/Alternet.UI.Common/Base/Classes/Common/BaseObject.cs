@@ -54,6 +54,6 @@ namespace Alternet.UI
         /// Same as <see cref="BaseApplication.Log"/>.
         /// </summary>
         /// <param name="s">Object to log.</param>
-        public void Log(object? s) => BaseApplication.Log(s);
+        public virtual void Log(object? s) => BaseApplication.Log(s);
     }
 }

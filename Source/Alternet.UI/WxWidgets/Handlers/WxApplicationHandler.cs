@@ -510,6 +510,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public IControlPainterHandler CreateControlPainterHandler()
+        {
+            return new WxControlPainterHandler();
+        }
+
+        /// <inheritdoc/>
         public IMemoryHandler CreateMemoryHandler()
         {
             return new WxMemoryHandler();

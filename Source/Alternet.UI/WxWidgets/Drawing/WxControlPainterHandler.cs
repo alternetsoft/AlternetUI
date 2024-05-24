@@ -10,22 +10,16 @@ namespace Alternet.Drawing
     /// <summary>
     /// Draws control parts using native operating system visual style.
     /// </summary>
-    public class NativeControlPainter : CustomControlPainter
+    public class WxControlPainterHandler : DisposableObject, IControlPainterHandler
     {
-        /// <summary>
-        /// Gets default instance of the <see cref="NativeControlPainter"/>.
-        /// </summary>
-        public static NativeControlPainter Default;
-
-        static NativeControlPainter()
+        static WxControlPainterHandler()
         {
-            Default ??= new();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NativeControlPainter"/> class.
+        /// Initializes a new instance of the <see cref="WxControlPainterHandler"/> class.
         /// </summary>
-        public NativeControlPainter()
+        public WxControlPainterHandler()
         {
         }
 
@@ -271,18 +265,17 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetCheckBoxSize(
+        public SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState,
             GenericControlState controlState)
         {
             var flags = Convert(checkState, controlState);
-            var painter = NativeControlPainter.Default;
-            return painter.GetCheckBoxSize(control, flags);
+            return GetCheckBoxSize(control, flags);
         }
 
         /// <inheritdoc/>
-        public override void DrawCheckBox(
+        public void DrawCheckBox(
             Control control,
             Graphics canvas,
             RectD rect,
@@ -290,8 +283,7 @@ namespace Alternet.Drawing
             GenericControlState controlState)
         {
             var flags = Convert(checkState, controlState);
-            var painter = NativeControlPainter.Default;
-            painter.DrawCheckBox(control, canvas, rect, flags);
+            DrawCheckBox(control, canvas, rect, flags);
         }
 
         /// <summary>
@@ -818,7 +810,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetCheckMarkSize(Control control)
+        public SizeD GetCheckMarkSize(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckMarkSize(
                 default,
@@ -827,7 +819,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetExpanderSize(Control control)
+        public SizeD GetExpanderSize(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetExpanderSize(
                 default,
@@ -836,7 +828,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override double GetHeaderButtonHeight(Control control)
+        public double GetHeaderButtonHeight(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
                 default,
@@ -845,7 +837,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override double GetHeaderButtonMargin(Control control)
+        public double GetHeaderButtonMargin(Control control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
                 default,
@@ -854,7 +846,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetCollapseButtonSize(Control control, Graphics dc)
+        public SizeD GetCollapseButtonSize(Control control, Graphics dc)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
                 default,

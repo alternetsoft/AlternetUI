@@ -93,6 +93,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public IControlPainterHandler CreateControlPainterHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public ICursorFactoryHandler CreateCursorFactoryHandler()
         {
             throw new NotImplementedException();

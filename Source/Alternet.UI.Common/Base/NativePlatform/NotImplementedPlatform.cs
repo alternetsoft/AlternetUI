@@ -26,11 +26,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override CustomControlPainter GetPainter()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string? GetTextFromUser(string message, string caption, string defaultValue, Control? parent, int x, int y, bool centre)
         {
             throw new NotImplementedException();

@@ -31,11 +31,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override CustomControlPainter GetPainter()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IDataObject? ClipboardGetDataObject()
         {
             throw new NotImplementedException();

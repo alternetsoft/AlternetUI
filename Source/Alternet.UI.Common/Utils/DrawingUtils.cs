@@ -37,16 +37,16 @@ namespace Alternet.UI
             SetParentBackground(control, Brushes.Yellow);
         }
 
-        /// <inheritdoc cref="CustomControlPainter.GetCheckBoxSize"/>
+        /// <inheritdoc cref="ControlPainter.GetCheckBoxSize"/>
         public static SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState,
             GenericControlState controlState)
         {
-            return CustomControlPainter.Current.GetCheckBoxSize(control, checkState, controlState);
+            return ControlPainter.Handler.GetCheckBoxSize(control, checkState, controlState);
         }
 
-        /// <inheritdoc cref="CustomControlPainter.DrawCheckBox"/>
+        /// <inheritdoc cref="ControlPainter.DrawCheckBox"/>
         public static void DrawCheckBox(
             this Graphics canvas,
             Control control,
@@ -54,7 +54,7 @@ namespace Alternet.UI
             CheckState checkState,
             GenericControlState controlState)
         {
-            CustomControlPainter.Current.DrawCheckBox(
+            ControlPainter.Handler.DrawCheckBox(
                 control,
                 canvas,
                 rect,

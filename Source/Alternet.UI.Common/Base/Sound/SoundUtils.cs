@@ -13,8 +13,15 @@ namespace Alternet.UI
     {
         private static ISoundFactoryHandler? handler;
 
-        public static ISoundFactoryHandler Handler =>
-            handler ??= BaseApplication.Handler.CreateSoundFactoryHandler();
+        /// <summary>
+        /// Gets or sets handler.
+        /// </summary>
+        public static ISoundFactoryHandler Handler
+        {
+            get => handler ??= BaseApplication.Handler.CreateSoundFactoryHandler();
+
+            set => handler = value;
+        }
 
         /// <summary>
         /// Gets or sets whether <see cref="Bell"/> method is supressed.

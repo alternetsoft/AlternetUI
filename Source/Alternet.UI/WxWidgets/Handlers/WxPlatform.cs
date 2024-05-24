@@ -26,12 +26,6 @@ namespace Alternet.UI
             initialized = true;
         }
 
-        /// <inheritdoc/>
-        public override CustomControlPainter GetPainter()
-        {
-            return NativeControlPainter.Default;
-        }
-
         public override DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = info.Owner == null ? null :

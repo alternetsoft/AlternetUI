@@ -9,17 +9,19 @@ namespace PropertyGridSample
 {
     public class ControlPainterPreview : UserControl
     {
-        private NativeControlPainter.ControlPartKind kind
-            = NativeControlPainter.ControlPartKind.PushButton;
+        private static WxControlPainterHandler Painter = new();
 
-        private NativeControlPainter.DrawFlags flags;
+        private WxControlPainterHandler.ControlPartKind kind
+            = WxControlPainterHandler.ControlPartKind.PushButton;
+
+        private WxControlPainterHandler.DrawFlags flags;
 
         public ControlPainterPreview()
             : base()
         {
         }
 
-        public NativeControlPainter.ControlPartKind Kind
+        public WxControlPainterHandler.ControlPartKind Kind
         {
             get
             {
@@ -35,7 +37,7 @@ namespace PropertyGridSample
             }
         }
 
-        public NativeControlPainter.DrawFlags Flags
+        public WxControlPainterHandler.DrawFlags Flags
         {
             get
             {
@@ -65,7 +67,7 @@ namespace PropertyGridSample
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
 
-            NativeControlPainter.Default.DrawItem(
+            Painter.DrawItem(
                 Kind,
                 this,
                 dc,

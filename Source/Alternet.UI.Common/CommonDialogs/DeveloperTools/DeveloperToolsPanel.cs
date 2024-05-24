@@ -425,7 +425,7 @@ namespace Alternet.UI
 
             AddLogAction("Log NativeControlPainter metrics", () =>
             {
-                CustomControlPainter.Current.LogPartSize(this);
+                ControlPainter.LogPartSize(this);
             });
 
             AddAction("Exception: Throw C++", () =>

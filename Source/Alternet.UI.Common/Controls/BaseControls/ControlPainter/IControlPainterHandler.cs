@@ -3,26 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    /// <summary>
-    /// Base class for the control painters.
-    /// </summary>
-    public abstract class CustomControlPainter : DisposableObject
+    public interface IControlPainterHandler : IDisposable
     {
-        private static CustomControlPainter? current;
-
-        /// <summary>
-        /// Gets or sets current control painter.
-        /// </summary>
-        public static CustomControlPainter Current
-        {
-            get => current ??= NativePlatform.Default.GetPainter();
-            set => current = value;
-        }
-
         /// <summary>
         /// Gets default checkbox size.
         /// </summary>
@@ -30,7 +17,7 @@ namespace Alternet.Drawing
         /// <param name="checkState">Check state.</param>
         /// <param name="controlState">Control part state.</param>
         /// <returns></returns>
-        public abstract SizeD GetCheckBoxSize(
+        SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState = CheckState.Unchecked,
             GenericControlState controlState = GenericControlState.Normal);
@@ -40,14 +27,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        public abstract SizeD GetCheckMarkSize(Control control);
+        SizeD GetCheckMarkSize(Control control);
 
         /// <summary>
         /// Returns the default size of a expander in dips.
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        public abstract SizeD GetExpanderSize(Control control);
+        SizeD GetExpanderSize(Control control);
 
         /// <summary>
         /// Returns the default height of a header button in dips, either a fixed platform
@@ -55,14 +42,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        public abstract double GetHeaderButtonHeight(Control control);
+        double GetHeaderButtonHeight(Control control);
 
         /// <summary>
         /// Returns the margin on left and right sides of header button's label in dips.
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        public abstract double GetHeaderButtonMargin(Control control);
+        double GetHeaderButtonMargin(Control control);
 
         /// <summary>
         /// Returns the default size of a collapse button in dips.
@@ -70,7 +57,7 @@ namespace Alternet.Drawing
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <param name="dc">Drawing context.</param>
         /// <returns></returns>
-        public abstract SizeD GetCollapseButtonSize(Control control, Graphics dc);
+        SizeD GetCollapseButtonSize(Control control, Graphics dc);
 
         /// <summary>
         /// Draws checkbox.
@@ -80,21 +67,11 @@ namespace Alternet.Drawing
         /// <param name="controlState">Control part state.</param>
         /// <param name="canvas"><see cref="Graphics"/> used for painting the checkbox.</param>
         /// <param name="rect">Rectangle where checkbox is painted.</param>
-        public abstract void DrawCheckBox(
+        void DrawCheckBox(
             Control control,
             Graphics canvas,
             RectD rect,
             CheckState checkState,
             GenericControlState controlState);
-
-        internal void LogPartSize(Control control)
-        {
-            Log($"CheckMarkSize: {GetCheckMarkSize(control)}");
-            Log($"CheckBoxSize(0): {GetCheckBoxSize(control)}");
-            /*Log($"CheckBoxSize(Cell): {GetCheckBoxSize(control, DrawFlags.Cell)}");*/
-            Log($"GetExpanderSize: {GetExpanderSize(control)}");
-            Log($"GetHeaderButtonHeight: {GetHeaderButtonHeight(control)}");
-            Log($"GetHeaderButtonMargin: {GetHeaderButtonMargin(control)}");
-        }
     }
 }

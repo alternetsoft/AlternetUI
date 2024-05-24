@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class Cursor : HandledObject<ICursorHandler>
     {
-        private static ICursorFactoryHandler? factoryHandler;
+        private static ICursorFactoryHandler? factory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <param name="cursor">Built in cursor type.</param>
         public Cursor(CursorType cursor)
         {
-            Handler = FactoryHandler.CreateCursorHandler(cursor);
+            Handler = Factory.CreateCursorHandler(cursor);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            Handler = FactoryHandler.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
+            Handler = Factory.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
         }
 
         /// <summary>
@@ -74,15 +74,20 @@ namespace Alternet.UI
         /// <param name="image">Image with cursor.</param>
         public Cursor(Image image)
         {
-            Handler = FactoryHandler.CreateCursorHandler(image);
+            Handler = Factory.CreateCursorHandler(image);
         }
 
-        public static ICursorFactoryHandler FactoryHandler
+        /// <summary>
+        /// Gets or sets factory handler.
+        /// </summary>
+        public static ICursorFactoryHandler Factory
         {
             get
             {
-                return factoryHandler ??= BaseApplication.Handler.CreateCursorFactoryHandler();
+                return factory ??= BaseApplication.Handler.CreateCursorFactoryHandler();
             }
+
+            set => factory = value;
         }
 
         /// <summary>
@@ -117,7 +122,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void SetGlobal(Cursor? cursor = null)
         {
-            FactoryHandler.SetGlobal(cursor);
+            Factory.SetGlobal(cursor);
         }
 
         /// <summary>
@@ -158,7 +163,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override ICursorHandler CreateHandler()
         {
-            return FactoryHandler.CreateCursorHandler();
+            return Factory.CreateCursorHandler();
         }
     }
 }
