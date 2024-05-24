@@ -16,6 +16,11 @@ namespace Alternet.Drawing
             set => UI.Native.Font.SetDefaultEncoding((int)value);
         }
 
+        public bool AllowNullFontName
+        {
+            get => false;
+        }
+
         public IFontHandler CreateDefaultFontHandler()
         {
             var result = new UI.Native.Font();

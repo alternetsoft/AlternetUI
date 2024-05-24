@@ -1063,7 +1063,21 @@ namespace Alternet.UI
             string? additionalInfo = null,
             bool canContinue = true)
         {
-            return NativePlatform.Default.ShowExceptionWindow(exception, additionalInfo, canContinue);
+            using var errorWindow =
+                new ThreadExceptionWindow(exception, additionalInfo, canContinue);
+            if (BaseApplication.IsRunning)
+            {
+                return errorWindow.ShowModal() == ModalResult.Accepted;
+            }
+            else
+            {
+                if (BaseApplication.current is null)
+                    return false;
+
+                errorWindow.CanContinue = false;
+                BaseApplication.Current.Run(errorWindow);
+                return false;
+            }
         }
 
         /// <summary>

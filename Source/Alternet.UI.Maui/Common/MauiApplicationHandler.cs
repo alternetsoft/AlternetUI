@@ -416,5 +416,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public IDialogFactoryHandler CreateDialogFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

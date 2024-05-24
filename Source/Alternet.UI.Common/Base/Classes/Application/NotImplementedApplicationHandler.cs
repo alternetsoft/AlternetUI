@@ -113,6 +113,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public IDialogFactoryHandler CreateDialogFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
         {
             throw new NotImplementedException();

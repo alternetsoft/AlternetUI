@@ -88,7 +88,7 @@ namespace Alternet.UI
                     && ShowExceptionDialog)
                 {
                     var s = $"Resource Name: {resName}";
-                    NativePlatform.Default.ShowExceptionWindow(e, s, false);
+                    BaseApplication.ShowExceptionWindow(e, s, false);
                 }
 
                 throw e;

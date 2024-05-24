@@ -19,6 +19,8 @@ namespace Alternet.UI
 
         static WxApplicationHandler()
         {
+            NativeDrawing.Default = new WxDrawing();
+
             if (BaseApplication.SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
 
@@ -99,6 +101,11 @@ namespace Alternet.UI
         {
             nativeApplication.Run(
                 ((WindowHandler)window.Handler).NativeControl);
+        }
+
+        public IDialogFactoryHandler CreateDialogFactoryHandler()
+        {
+            return new WxDialogFactoryHandler();
         }
 
         public IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)

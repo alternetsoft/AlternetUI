@@ -657,7 +657,7 @@ namespace Alternet.UI
 
             ValidateButtons(info.Buttons, info.DefaultButton);
 
-            return NativePlatform.Default.ShowMessageBox(info);
+            return DialogFactory.Handler.ShowMessageBox(info);
         }
 
         internal static MessageBoxIcon ValidateIcon(MessageBoxIcon icon)

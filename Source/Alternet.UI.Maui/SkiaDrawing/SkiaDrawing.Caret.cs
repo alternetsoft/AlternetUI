@@ -14,58 +14,6 @@ namespace Alternet.Drawing
     public partial class SkiaDrawing
     {
         /// <inheritdoc/>
-        public override object CreateCursor()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override object CreateCursor(CursorType cursor)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override object CreateCursor(
-            string cursorName,
-            BitmapType type,
-            int hotSpotX = 0,
-            int hotSpotY = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override object CreateCursor(Image image)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override bool CursorIsOk(Cursor cursor)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override PointI CursorGetHotSpot(Cursor cursor)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void CursorSetGlobal(Cursor? cursor)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DisposeCursor(Cursor cursor)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override object CreateCaret()
         {
             throw new NotImplementedException();

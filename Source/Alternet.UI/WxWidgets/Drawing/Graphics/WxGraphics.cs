@@ -17,7 +17,6 @@ namespace Alternet.Drawing
 
         static WxGraphics()
         {
-            WxPlatform.Initialize();
         }
 
         internal WxGraphics(UI.Native.DrawingContext dc, bool dispose = true)

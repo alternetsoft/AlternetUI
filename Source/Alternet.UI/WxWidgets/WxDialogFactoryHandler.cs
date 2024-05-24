@@ -1,32 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
-using Alternet.Drawing.Printing;
-using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal partial class WxPlatform : NativePlatform
+    internal class WxDialogFactoryHandler : DisposableObject, IDialogFactoryHandler
     {
         internal const string DialogCancelGuid = "5DB20A10B5974CD4885CFCF346AF0F81";
 
-        private static bool initialized;
-
-        public static void Initialize()
-        {
-            if (initialized)
-                return;
-            NativeDrawing.Default = new WxDrawing();
-            Default = new WxPlatform();
-            initialized = true;
-        }
-
-        public override DialogResult ShowMessageBox(MessageBoxInfo info)
+        public DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = info.Owner == null ? null :
                 ((WindowHandler)info.Owner.Handler).NativeControl;
@@ -37,25 +23,6 @@ namespace Alternet.UI
                 (Native.MessageBoxButtons)info.Buttons,
                 (Native.MessageBoxIcon)info.Icon,
                 (Native.MessageBoxDefaultButton)info.DefaultButton);
-        }
-
-        public override bool ShowExceptionWindow(
-            Exception exception,
-            string? additionalInfo = null,
-            bool canContinue = true)
-        {
-            using var errorWindow =
-                new ThreadExceptionWindow(exception, additionalInfo, canContinue);
-            if (Application.IsRunning)
-            {
-                return errorWindow.ShowModal() == ModalResult.Accepted;
-            }
-            else
-            {
-                errorWindow.CanContinue = false;
-                Application.Current.Run(errorWindow);
-                return false;
-            }
         }
 
         /// <summary>
@@ -72,7 +39,7 @@ namespace Alternet.UI
         /// <param name="y">Y-position on the screen. Optional. By default is -1.</param>
         /// <param name="centre">If <c>true</c>, the message text (which may include new line
         /// characters) is centred; if <c>false</c>, the message is left-justified.</param>
-        public override string? GetTextFromUser(
+        public string? GetTextFromUser(
             string message,
             string caption,
             string defaultValue,
@@ -122,7 +89,7 @@ namespace Alternet.UI
         /// <param name="max">A positive maximal value. Optional. Default is 100.</param>
         /// <param name="parent">Dialog parent.</param>
         /// <param name="pos"></param>
-        public override long? GetNumberFromUser(
+        public long? GetNumberFromUser(
             string message,
             string prompt,
             string caption,

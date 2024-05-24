@@ -21,7 +21,6 @@ namespace Alternet.UI
         static Application()
         {
             Handler = new WxApplicationHandler();
-            WxPlatform.Initialize();
         }
 
         /// <summary>
