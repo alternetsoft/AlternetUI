@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains methods which work with attributes.
+    /// Contains methods and properties which allow to work with readonly attributes.
     /// </summary>
-    public interface ICustomAttributes
+    public interface IReadOnlyCustomAttributes
     {
         /// <summary>
-        /// Calls <see cref="SetAttribute"/> and <see cref="GetAttribute"/>.
+        /// Calls <see cref="GetAttribute"/>.
         /// </summary>
         /// <param name="name">Attribute name.</param>
         /// <returns></returns>
-        object? this[string name] { get; set; }
+        object? this[string name] { get; }
 
         /// <summary>
         /// Attribute with <paramref name="name"/> was added.
@@ -24,26 +24,6 @@ namespace Alternet.UI
         /// <param name="name">Attribute name.</param>
         /// <returns><c>true</c> if attribute was added; <c>false</c> otherwise.</returns>
         bool HasAttribute(string name);
-
-        /// <summary>
-        /// Removes attribute with <paramref name="name"/>.
-        /// </summary>
-        /// <param name="name">Attribute name.</param>
-        bool RemoveAttribute(string name);
-
-        /// <summary>
-        /// Sets attribute value.
-        /// </summary>
-        /// <param name="name">Attribute name.</param>
-        /// <param name="value">Attribute value.</param>
-        void SetAttribute(string name, object? value);
-
-        /// <summary>
-        /// Sets attribute value.
-        /// </summary>
-        /// <param name="name">Attribute name.</param>
-        /// <param name="value">Attribute value.</param>
-        void SetAttribute<T>(string name, T value);
 
         /// <summary>
         /// Gets attribute value. Returns <c>null</c> if there is no such attribute.

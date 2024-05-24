@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains methods which work with flags and attributes.
+    /// Contains methods which allow to work with flags and attributes.
     /// </summary>
     /// <remarks>
     /// Both flags and attributes share the same dictionary, so you can't have

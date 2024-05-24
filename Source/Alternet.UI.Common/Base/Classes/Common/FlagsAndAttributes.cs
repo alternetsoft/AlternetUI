@@ -19,6 +19,11 @@ namespace Alternet.UI
             set => SetFlag(name, value);
         }
 
+        bool IReadOnlyCustomFlags.this[string name]
+        {
+            get => HasFlag(name);
+        }
+
         object? ICustomAttributes.this[string name]
         {
             get => GetAttribute(name);

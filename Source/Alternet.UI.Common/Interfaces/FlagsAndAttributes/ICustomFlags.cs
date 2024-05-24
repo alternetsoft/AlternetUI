@@ -7,23 +7,16 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains methods which work with flags.
+    /// Contains methods and properties which allow to work with flags.
     /// </summary>
-    public interface ICustomFlags
+    public interface ICustomFlags : IReadOnlyCustomFlags
     {
         /// <summary>
         /// Calls <see cref="HasFlag"/> and <see cref="SetFlag"/>.
         /// </summary>
         /// <param name="name">Flag name.</param>
         /// <returns></returns>
-        bool this[string name] { get; set; }
-
-        /// <summary>
-        /// Flag with <paramref name="name"/> was added.
-        /// </summary>
-        /// <param name="name">Flag name.</param>
-        /// <returns><c>true</c> if flag was added; <c>false</c> otherwise.</returns>
-        bool HasFlag(string name);
+        new bool this[string name] { get; set; }
 
         /// <summary>
         /// Adds flag with <paramref name="name"/>.
