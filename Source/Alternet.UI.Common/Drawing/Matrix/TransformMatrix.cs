@@ -1,16 +1,46 @@
 using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /*
+    https://learn.microsoft.com/en-us/previous-versions/xamarin/xamarin-forms/user-interface/graphics/skiasharp/transforms/matrix
+    
+    ScaleX  SkewY   Persp0
+    SkewX   ScaleY  Persp1
+    TransX  TransY  Persp2
+
+    https://docs.wxwidgets.org/3.0/classwx_affine_matrix2_d.html
+
+    m_11  m_12   0
+    m_21  m_22   0
+    m_tx  m_ty   1
+
+        m11 - The value in the first row and first column.
+        m12 - The value in the first row and second column.
+        m21 - The value in the second row and first column.
+        m22 - The value in the second row and second column.
+        dx - The value in the third row and first column.
+        dy - The value in the third row and second column.
+
+    */
+
     /// <summary>
     /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
     /// This class cannot be inherited.
     /// </summary>
-    public sealed class TransformMatrix : HandledObject<object>
+    public partial class TransformMatrix : BaseObject
     {
+        double m11;
+        double m12;
+        double m21;
+        double m22;
+        double dx;
+        double dy;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
         /// as the identity matrix.
@@ -18,25 +48,19 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TransformMatrix()
         {
+            Reset();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
         /// with the specified elements.
         /// </summary>
-        /// <param name="m11">The value in the first row and first column
-        /// of the new <see cref="TransformMatrix"/>.</param>
-        /// <param name="m12">The value in the first row and second column of the
-        /// new <see cref="TransformMatrix"/>.</param>
-        /// <param name="m21">The value in the second row and first column of the
-        /// new <see cref="TransformMatrix"/>.</param>
-        /// <param name="m22">The value in the second row and second column of the
-        /// new <see cref="TransformMatrix"/>.</param>
-        /// <param name="dx">The value in the third row and first column of the
-        /// new <see cref="TransformMatrix"/>.</param>
-        /// <param name="dy">The value in the third row and second column of the
-        /// new <see cref="TransformMatrix"/>.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <param name="m11">The value in the first row and first column.</param>
+        /// <param name="m12">The value in the first row and second column.</param>
+        /// <param name="m21">The value in the second row and first column.</param>
+        /// <param name="m22">The value in the second row and second column.</param>
+        /// <param name="dx">The value in the third row and first column.</param>
+        /// <param name="dy">The value in the third row and second column.</param>
         public TransformMatrix(
             double m11,
             double m12,
@@ -45,24 +69,12 @@ namespace Alternet.Drawing
             double dx,
             double dy)
         {
-            NativeDrawing.Default.UpdateTransformMatrix(
-                this,
-                m11,
-                m12,
-                m21,
-                m22,
-                dx,
-                dy);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TransformMatrix"/> class.
-        /// </summary>
-        /// <param name="nativeMatrix">Native transform matrix instance.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TransformMatrix(object nativeMatrix)
-        {
-            Handler = nativeMatrix;
+            this.m11 = m11;
+            this.m12 = m12;
+            this.m21 = m21;
+            this.m22 = m22;
+            this.dx = dx;
+            this.dy = dy;
         }
 
         /// <summary>
@@ -78,17 +90,15 @@ namespace Alternet.Drawing
         /// </remarks>
         public double[] Elements
         {
-            get => new[] { M11, M12, M21, M22, DX, DY };
+            get => new[] { m11, m12, m21, m22, dx, dy };
             set
             {
-                NativeDrawing.Default.UpdateTransformMatrix(
-                    this,
-                    value[0],
-                    value[1],
-                    value[2],
-                    value[3],
-                    value[4],
-                    value[5]);
+                m11 = value[0];
+                m12 = value[1];
+                m21 = value[2];
+                m22 = value[3];
+                dx = value[4];
+                dy = value[5];
             }
         }
 
@@ -100,14 +110,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM11(this);
+                return m11;
             }
 
             set
             {
-                CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM11(this, value);
+                m11 = value;
             }
         }
 
@@ -119,14 +127,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM12(this);
+                return m12;
             }
 
             set
             {
-                CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM12(this, value);
+                m12 = value;
             }
         }
 
@@ -138,14 +144,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM21(this);
+                return m21;
             }
 
             set
             {
-                CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM21(this, value);
+                m21 = value;
             }
         }
 
@@ -157,14 +161,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixM22(this);
+                return m22;
             }
 
             set
             {
-                CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixM22(this, value);
+                m22 = value;
             }
         }
 
@@ -177,14 +179,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixDX(this);
+                return dx;
             }
 
             set
             {
-                CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixDX(this, value);
+                dx = value;
             }
         }
 
@@ -197,14 +197,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixDY(this);
+                return dy;
             }
 
             set
             {
-                CheckDisposed();
-                NativeDrawing.Default.SetTransformMatrixDY(this, value);
+                dy = value;
             }
         }
 
@@ -219,8 +217,21 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return NativeDrawing.Default.GetTransformMatrixIsIdentity(this);
+                return m11 == 1d && m12 == 0d &&
+                       m21 == 0d && m22 == 1d &&
+                       dx == 0d && dy == 0d;
+            }
+        }
+
+        /// <summary>
+        /// Gets the determinant of this matrix.
+        /// </summary>
+        [Browsable(false)]
+        public double Determinant
+        {
+            get
+            {
+                return (m11 * m22) - (m12 * m21);
             }
         }
 
@@ -231,7 +242,6 @@ namespace Alternet.Drawing
         /// this <see cref="TransformMatrix"/>.</param>
         /// <param name="offsetY">The y value by which to translate
         /// this <see cref="TransformMatrix"/>.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TransformMatrix CreateTranslation(double offsetX, double offsetY)
         {
             var matrix = new TransformMatrix();
@@ -246,7 +256,6 @@ namespace Alternet.Drawing
         /// this <see cref="TransformMatrix"/> in the x-axis direction.</param>
         /// <param name="scaleY">The value by which to scale
         /// this <see cref="TransformMatrix"/> in the y-axis direction.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TransformMatrix CreateScale(double scaleX, double scaleY)
         {
             var matrix = new TransformMatrix();
@@ -259,7 +268,6 @@ namespace Alternet.Drawing
         /// angle about the origin.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TransformMatrix CreateRotation(double angle)
         {
             var matrix = new TransformMatrix();
@@ -270,11 +278,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Resets this <see cref="TransformMatrix"/> to have the elements of the identity matrix.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            CheckDisposed();
-            NativeDrawing.Default.ResetTransformMatrix(this);
+            m11 = 1d;
+            m12 = 0d;
+            m21 = 0d;
+            m22 = 1d;
+            dx = 0d;
+            dy = 0d;
         }
 
         /// <summary>
@@ -284,11 +295,31 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="matrix">The <see cref="TransformMatrix"/> by
         /// which this <see cref="TransformMatrix"/> is to be multiplied.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Multiply(TransformMatrix matrix)
         {
-            CheckDisposed();
-            NativeDrawing.Default.MultiplyTransformMatrix(this, matrix);
+            /*
+            concatenates the matrix
+            | t.m_11  t.m_12  0 |   | m_11  m_12   0 |
+            | t.m_21  t.m_22  0 | x | m_21  m_22   0 |
+            | t.m_tx  t.m_ty  1 |   | m_tx  m_ty   1 |
+            */
+
+            var matrixDX = matrix.dx;
+            var matrixDY = matrix.dy;
+            var matrixM11 = matrix.m11;
+            var matrixM12 = matrix.m12;
+            var matrixM21 = matrix.m21;
+            var matrixM22 = matrix.m22;
+
+            dx += matrixDX * m11 + matrixDY * m21;
+            dy += matrixDX * m12 + matrixDY * m22;
+            var e11 = matrixM11 * m11 + matrixM12 * m21;
+            var e12 = matrixM11 * m12 + matrixM12 * m22;
+            var e21 = matrixM21 * m11 + matrixM22 * m21;
+            m22 = matrixM21 * m12 + matrixM22 * m22;
+            m11 = e11;
+            m12 = e12;
+            m21 = e21;
         }
 
         /// <summary>
@@ -299,11 +330,17 @@ namespace Alternet.Drawing
         /// translate this <see cref="TransformMatrix"/>.</param>
         /// <param name="offsetY">The y value by which to
         /// translate this <see cref="TransformMatrix"/>.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Translate(double offsetX, double offsetY)
         {
-            CheckDisposed();
-            NativeDrawing.Default.TranslateTransformMatrix(this, offsetX, offsetY);
+            /*
+            add the translation to this matrix
+            |  1   0   0 |   | m_11  m_12   0 |
+            |  0   1   0 | x | m_21  m_22   0 |
+            | dx  dy   1 |   | m_tx  m_ty   1 |
+            */
+
+            dx += m11 * offsetX + m21 * offsetY;
+            dy += m12 * offsetX + m22 * offsetY;
         }
 
         /// <summary>
@@ -314,33 +351,86 @@ namespace Alternet.Drawing
         /// scale this <see cref="TransformMatrix"/> in the x-axis direction.</param>
         /// <param name="scaleY">The value by which to
         /// scale this <see cref="TransformMatrix"/> in the y-axis direction.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Scale(double scaleX, double scaleY)
         {
-            CheckDisposed();
-            NativeDrawing.Default.ScaleTransformMatrix(this, scaleX, scaleY);
+            /*
+            // add the scale to this matrix
+            // | xScale   0      0 |   | m_11  m_12   0 |
+            // |   0    yScale   0 | x | m_21  m_22   0 |
+            // |   0      0      1 |   | m_tx  m_ty   1 |
+            */
+
+            m11 *= scaleX;
+            m12 *= scaleX;
+            m21 *= scaleY;
+            m22 *= scaleY;
         }
 
         /// <summary>
-        /// Applies a clockwise rotation of the specified angle about the
+        /// Applies a clockwise rotation of the specified angle (degrees) about the
         /// origin to this <see cref="TransformMatrix"/>.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rotate(double angle)
         {
-            CheckDisposed();
-            NativeDrawing.Default.RotateTransformMatrix(this, angle);
+            angle %= 360.0; // Doing the modulo before converting to radians reduces total error
+            RotateRadians(angle * MathUtils.DegToRad);
+        }
+
+        /// <summary>
+        /// Applies a clockwise rotation of the specified angle (radians) about the
+        /// origin to this <see cref="TransformMatrix"/>.
+        /// </summary>
+        /// <param name="angle">The angle of the clockwise rotation, in radians.</param>
+        public void RotateRadians(double angleRadians)
+        {
+            /*
+            // add the rotation to this matrix (clockwise, radians)
+            // | cos    sin   0 |   | m_11  m_12   0 |
+            // | -sin   cos   0 | x | m_21  m_22   0 |
+            // |  0      0    1 |   | m_tx  m_ty   1 |
+            */
+
+            var c = Math.Cos(angleRadians);
+            var s = Math.Sin(angleRadians);
+
+            var e11 = c * m11 + s * m21;
+            var e12 = c * m12 + s * m22;
+            m21 = c * m21 - s * m11;
+            m22 = c * m22 - s * m12;
+            m11 = e11;
+            m12 = e12;
         }
 
         /// <summary>
         /// Inverts this matrix, if it is invertible.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invert()
+        public bool Invert()
         {
-            CheckDisposed();
-            NativeDrawing.Default.InvertTransformMatrix(this);
+            /*
+            makes this its inverse matrix.
+            Invert
+            | m_11  m_12   0 |
+            | m_21  m_22   0 |
+            | m_tx  m_ty   1 |
+            */
+
+            var det = Determinant;
+
+            if (det == 0)
+                return false;
+
+            var ex = (m21 * dy - m22 * dx) / det;
+            dy = (-m11 * dy + m12 * dx) / det;
+            dx = ex;
+            var e11 = m22 / det;
+            m12 = -m12 / det;
+            m21 = -m21 / det;
+            m22 = m11 / det;
+            m11 = e11;
+
+            return true;
         }
 
         /// <summary>
@@ -348,10 +438,22 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="point">A <see cref="PointD"/> to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PointD TransformPoint(PointD point)
+        public PointD TransformPoint(PointD src)
         {
-            CheckDisposed();
-            return NativeDrawing.Default.TransformMatrixOnPoint(this, point);
+            /*
+            applies that matrix to the point
+                                      | m_11  m_12   0 |
+            | src.m_x  src._my  1 | x | m_21  m_22   0 |
+                                      | m_tx  m_ty   1 |
+            */
+
+            if (IsIdentity)
+                return src;
+
+            var x = src.X * m11 + src.Y * m21 + DX;
+            var y = src.X * m12 + src.Y * m22 + DY;
+
+            return new(x,y);
         }
 
         /// <summary>
@@ -359,31 +461,44 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">A <see cref="SizeD"/> to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD TransformSize(SizeD size)
+        public SizeD TransformSize(SizeD src)
         {
-            CheckDisposed();
-            return NativeDrawing.Default.TransformMatrixOnSize(this, size);
+            /*
+            applies the matrix except for translations
+                                      | m_11  m_12   0 |
+            | src.m_x  src._my  0 | x | m_21  m_22   0 |
+                                      | m_tx  m_ty   1 |
+            */
+
+            if (IsIdentity)
+                return src;
+
+            var width = src.Width * m11 + src.Height * m21;
+            var height = src.Width * m12 + src.Height * m22;
+            
+            return new(width, height);
         }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            if (obj is not TransformMatrix matrix2)
+            if (obj is not TransformMatrix matrix)
                 return false;
-            CheckDisposed();
-            return NativeDrawing.Default.TransformMatrixEquals(this, matrix2);
+
+            var result =
+                m11 == matrix.m11 &&
+                m12 == matrix.m12 &&
+                m21 == matrix.m21 &&
+                m22 == matrix.m22 &&
+                dx  == matrix.dx &&
+                dy == matrix.dy;
+            return result;
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NativeDrawing.Default.TransformMatrixGetHashCode(this);
-        }
-
-        /// <inheritdoc/>
-        protected override object CreateHandler()
-        {
-            return NativeDrawing.Default.CreateTransformMatrix();
+            return (m11, m12, m21, m22, dx, dy).GetHashCode();
         }
     }
 }

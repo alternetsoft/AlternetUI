@@ -53,11 +53,16 @@ namespace Alternet.Drawing
         {
             get
             {
+                var result = canvas.TotalMatrix; // !!!
+
                 throw new NotImplementedException();
             }
 
             set
             {
+                SKMatrix matrix = SKMatrix.CreateIdentity(); // !!!
+                canvas.SetMatrix(matrix);
+
                 throw new NotImplementedException();
             }
         }
@@ -257,10 +262,3 @@ namespace Alternet.Drawing
         }
     }
 }
-
-/*
-SKMatrix TotalMatrix
-void ResetMatrix()
-void SetMatrix(SKMatrix matrix)
-void Concat(ref SKMatrix m)
-*/

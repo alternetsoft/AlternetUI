@@ -33,12 +33,21 @@ namespace Alternet.Drawing
         {
             get
             {
-                return new TransformMatrix(dc.Transform);
+                var matrix = dc.Transform;
+                return new TransformMatrix(
+                    matrix.M11,
+                    matrix.M12,
+                    matrix.M21,
+                    matrix.M22,
+                    matrix.DX,
+                    matrix.DY);
             }
 
             set
             {
-                dc.Transform = (UI.Native.TransformMatrix)value.Handler;
+                var matrix = new UI.Native.TransformMatrix();
+                matrix.Initialize(value.M11, value.M12, value.M21, value.M22, value.DX, value.DY);
+                dc.Transform = matrix;
             }
         }
 
