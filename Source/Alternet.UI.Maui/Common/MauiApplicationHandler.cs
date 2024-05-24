@@ -144,7 +144,7 @@ namespace Alternet.UI
 
         public ISystemSettingsHandler CreateSystemSettingsHandler()
         {
-            throw new NotImplementedException();
+            return new MauiSystemSettingsHandler();
         }
 
         public ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control)
