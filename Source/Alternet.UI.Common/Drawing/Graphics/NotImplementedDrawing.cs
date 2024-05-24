@@ -50,41 +50,6 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool GetTransformMatrixIsIdentity(TransformMatrix mtrx)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ResetTransformMatrix(TransformMatrix mtrx)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void MultiplyTransformMatrix(TransformMatrix mtrx1, TransformMatrix mtrx2)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void TranslateTransformMatrix(TransformMatrix mtrx, double offsetX, double offsetY)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ScaleTransformMatrix(TransformMatrix mtrx, double scaleX, double scaleY)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RotateTransformMatrix(TransformMatrix mtrx, double angle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void InvertTransformMatrix(TransformMatrix mtrx)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void SetTransformMatrixM11(TransformMatrix mtrx, double value)
         {
             throw new NotImplementedException();
@@ -121,16 +86,6 @@ namespace Alternet.Drawing
         }
 
         public override SizeD TransformMatrixOnSize(TransformMatrix mtrx, SizeD size)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TransformMatrixEquals(TransformMatrix mtrx1, TransformMatrix mtrx2)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int TransformMatrixGetHashCode(TransformMatrix mtrx)
         {
             throw new NotImplementedException();
         }

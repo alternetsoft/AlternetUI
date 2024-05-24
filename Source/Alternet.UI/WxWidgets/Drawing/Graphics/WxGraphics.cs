@@ -597,11 +597,11 @@ namespace Alternet.Drawing
                 (UI.Native.Brush)brush.Handler);
         }
 
-        /// <inheritdoc/>
+        /*/// <inheritdoc/>
         public override void Push()
         {
             dc.Push();
-        }
+        }*/
 
         /// <inheritdoc/>
         public override void DrawText(
@@ -648,25 +648,16 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void PushTransform(TransformMatrix transform)
-        {
-            Push();
-            var currentTransform = Transform;
-            currentTransform.Multiply(transform);
-            Transform = currentTransform;
-        }
-
-        /// <inheritdoc/>
         public override SizeD GetDPI()
         {
             return dc.GetDpi();
         }
 
-        /// <inheritdoc/>
+        /*/// <inheritdoc/>
         public override void Pop()
         {
             dc.Pop();
-        }
+        }*/
 
         /// <inheritdoc/>
         public override void DestroyClippingRegion()

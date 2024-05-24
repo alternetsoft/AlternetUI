@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
@@ -11,6 +12,8 @@ namespace Alternet.Drawing
     /// </summary>
     public abstract class Graphics : DisposableObject
     {
+        private Stack<TransformMatrix>? stack;
+
         /// <summary>
         /// Returns true if the object is ok to use.
         /// </summary>
@@ -998,10 +1001,37 @@ namespace Alternet.Drawing
             TextFormat format);*/
 
         /// <summary>
-        /// Pushes the current state of the <see cref="Graphics"/> transformation
-        /// matrix on a stack.
+        /// Pops a stored state from the stack and sets the current transformation matrix
+        /// to that state.
         /// </summary>
-        public abstract void Push();
+        public void Pop()
+        {
+            stack ??= new();
+            Transform = stack.Pop(); 
+        }
+
+        /// <summary>
+        /// Pushes the current state of the <see cref="Graphics"/> transformation
+        /// matrix on a stack
+        /// and concatenates the current transform with a new transform.
+        /// </summary>
+        /// <param name="transform">A transform to concatenate with the current transform.</param>
+        public void PushTransform(TransformMatrix transform)
+        {
+            Push();
+            var currentTransform = Transform;
+            currentTransform.Multiply(transform);
+            Transform = currentTransform;
+        }
+
+        /// <summary>
+        /// Pushes the current state of the transformation matrix on a stack.
+        /// </summary>
+        public void Push()
+        {
+            stack ??= new();
+            stack.Push(Transform);
+        }
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors.
@@ -1044,14 +1074,6 @@ namespace Alternet.Drawing
             int indexAccel = -1);
 
         /// <summary>
-        /// Pushes the current state of the <see cref="Graphics"/> transformation
-        /// matrix on a stack
-        /// and concatenates the current transform with a new transform.
-        /// </summary>
-        /// <param name="transform">A transform to concatenate with the current transform.</param>
-        public abstract void PushTransform(TransformMatrix transform);
-
-        /// <summary>
         /// Returns the DPI of the display used by this object.
         /// </summary>
         /// <returns>
@@ -1060,12 +1082,6 @@ namespace Alternet.Drawing
         /// returns Size(0,0) object.
         /// </returns>
         public abstract SizeD GetDPI();
-
-        /// <summary>
-        /// Pops a stored state from the stack and sets the current transformation matrix
-        /// to that state.
-        /// </summary>
-        public abstract void Pop();
 
         /// <summary>
         /// Destroys the current clipping region so that none of the DC is clipped.

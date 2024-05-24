@@ -300,21 +300,6 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void Pop()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Push()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void PushTransform(TransformMatrix transform)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
             throw new NotImplementedException();

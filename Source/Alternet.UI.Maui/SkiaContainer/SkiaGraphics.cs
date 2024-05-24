@@ -49,6 +49,19 @@ namespace Alternet.Drawing
             set => canvas = value;
         }
 
+        public override TransformMatrix Transform
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public override SizeD GetTextExtent(
             string text,
             Font font,
@@ -239,19 +252,15 @@ namespace Alternet.Drawing
         public override void DrawBeziers(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
+            var skiaPoints = Convert(points);
             using var paint = pen.ToSkia();
-
-        }
-
-        /// <inheritdoc/>
-        public override void PushTransform(TransformMatrix transform)
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override void Pop()
-        {
         }
     }
 }
+
+/*
+SKMatrix TotalMatrix
+void ResetMatrix()
+void SetMatrix(SKMatrix matrix)
+void Concat(ref SKMatrix m)
+*/
