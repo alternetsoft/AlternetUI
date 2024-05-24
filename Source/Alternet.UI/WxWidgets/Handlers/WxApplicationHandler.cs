@@ -545,6 +545,16 @@ namespace Alternet.UI
             return new WxToolTipHandler();
         }
 
+        public object? GetAttributeValue(string name)
+        {
+            if(name == "NotifyIcon.IsAvailable")
+            {
+                return Native.NotifyIcon.IsAvailable;
+            }
+
+            return null;
+        }
+
         /// <inheritdoc/>
         public INotifyIconHandler CreateNotifyIconHandler()
         {

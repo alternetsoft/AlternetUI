@@ -21,6 +21,8 @@ namespace Alternet.UI
     /// </remarks>
     public class NotifyIcon : HandledObject<INotifyIconHandler>
     {
+        private static bool? isAvailable;
+
         private Image? icon;
         private ContextMenu? menu;
 
@@ -54,7 +56,8 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.NotifyIcon.IsAvailable;
+                return isAvailable
+                    ??= (bool?)BaseApplication.Handler.GetAttributeValue("NotifyIcon.IsAvailable") ?? false;
             }
         }
 

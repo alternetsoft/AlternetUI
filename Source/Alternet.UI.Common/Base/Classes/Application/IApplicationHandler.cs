@@ -28,6 +28,12 @@ namespace Alternet.UI
 
         bool InvokeRequired { get; }
 
+        /// <summary>
+        /// Gets attribute value. Returns <c>null</c> if there is no such attribute.
+        /// </summary>
+        /// <param name="name">Attribute name.</param>
+        object? GetAttributeValue(string name);
+
         Window? GetActiveWindow();
 
         Control? GetFocusedControl();

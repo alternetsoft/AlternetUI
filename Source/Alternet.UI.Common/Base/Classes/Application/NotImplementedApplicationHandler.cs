@@ -383,6 +383,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public object? GetAttributeValue(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public Control? GetFocusedControl()
         {
             throw new NotImplementedException();
