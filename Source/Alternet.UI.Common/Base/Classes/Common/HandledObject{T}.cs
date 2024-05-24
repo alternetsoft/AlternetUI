@@ -53,6 +53,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether handler was created.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsHandlerCreated => handler is not null;
+
+        /// <summary>
         /// Gets handler.
         /// </summary>
         [Browsable(false)]

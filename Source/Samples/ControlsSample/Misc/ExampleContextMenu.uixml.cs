@@ -10,14 +10,19 @@ namespace ControlsSample
             InitializeComponent();
         }
 
-        private void OpenMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Open");
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+            => Log("ExampleContextMenu: Open");
 
-        private void SaveMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Save");
+        private void SaveMenuItem_Click(object sender, EventArgs e)
+            => Log("ExampleContextMenu: Save");
 
-        private void ExportToPdfMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PDF");
+        private void ExportToPdfMenuItem_Click(object sender, EventArgs e)
+            => Log("ExampleContextMenu: Export to PDF");
 
-        private void ExportToPngMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PNG");
+        private void ExportToPngMenuItem_Click(object sender, EventArgs e)
+            => Log("ExampleContextMenu: Export to PNG");
 
-        private void ExampleMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Example context menu item was clicked");
+        private void ExampleMenuItem_Click(object sender, EventArgs e)
+            => Log("ExampleContextMenu: item was clicked");
     }
 }

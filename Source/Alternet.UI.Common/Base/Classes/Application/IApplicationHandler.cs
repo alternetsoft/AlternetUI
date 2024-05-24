@@ -48,6 +48,10 @@ namespace Alternet.UI
 
         void Exit();
 
+        IToolTipHandler CreateToolTipHandler();
+
+        INotifyIconHandler CreateNotifyIconHandler();
+
         IDialogFactoryHandler CreateDialogFactoryHandler();
 
         IClipboardHandler CreateClipboardHandler();

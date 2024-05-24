@@ -540,6 +540,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public IToolTipHandler CreateToolTipHandler()
+        {
+            return new WxToolTipHandler();
+        }
+
+        /// <inheritdoc/>
+        public INotifyIconHandler CreateNotifyIconHandler()
+        {
+            return new UI.Native.NotifyIcon();
+        }
+
+        /// <inheritdoc/>
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new UI.Native.Timer();

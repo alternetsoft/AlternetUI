@@ -178,6 +178,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public INotifyIconHandler CreateNotifyIconHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control)
         {
             throw new NotImplementedException();
@@ -309,6 +314,11 @@ namespace Alternet.UI
         }
 
         public ITimerHandler CreateTimerHandler(Timer timer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IToolTipHandler CreateToolTipHandler()
         {
             throw new NotImplementedException();
         }

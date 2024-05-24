@@ -421,5 +421,15 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public IToolTipHandler CreateToolTipHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public INotifyIconHandler CreateNotifyIconHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
