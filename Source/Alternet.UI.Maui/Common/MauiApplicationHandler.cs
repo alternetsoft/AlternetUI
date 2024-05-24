@@ -352,11 +352,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public IRichToolTipHandler CreateRichToolTipHandler(string title, string message, bool useGeneric)
-        {
-            throw new NotImplementedException();
-        }
-
         public ISoundFactoryHandler CreateSoundFactoryHandler()
         {
             throw new NotImplementedException();
@@ -422,7 +417,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public IToolTipHandler CreateToolTipHandler()
+        public IToolTipFactoryHandler CreateToolTipHandler()
         {
             throw new NotImplementedException();
         }
@@ -433,6 +428,11 @@ namespace Alternet.UI
         }
 
         public object? GetAttributeValue(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IToolTipFactoryHandler CreateToolTipFactoryHandler()
         {
             throw new NotImplementedException();
         }

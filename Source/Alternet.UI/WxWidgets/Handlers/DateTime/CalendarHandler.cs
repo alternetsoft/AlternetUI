@@ -340,6 +340,10 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+            BackgroundColor = SystemColors.Window;
+
             NativeControl.SelectionChanged = NativeControl_SelectionChanged;
             NativeControl.PageChanged = NativeControl_PageChanged;
             NativeControl.WeekNumberClick = NativeControl_WeekNumberClick;

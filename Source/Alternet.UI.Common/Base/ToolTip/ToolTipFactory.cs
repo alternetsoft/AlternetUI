@@ -7,46 +7,30 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This class holds information about a tooltip associated with a control.
+    /// Contains static methods and properties which allow to change tooltips behaviour.
     /// </summary>
-    /// <remarks>
-    /// The static methods can be used to globally alter tooltips behaviour.
-    /// </remarks>
-    public class ToolTip : DisposableObject<IntPtr>
+    public static class ToolTipFactory
     {
-        internal ToolTip(string message)
-            : base(Native.WxOtherFactory.CreateToolTip(message), false)
-        {
-        }
-
-        internal ToolTip()
-            : base(Native.WxOtherFactory.CreateToolTip(string.Empty), false)
-        {
-        }
+        private static IToolTipFactoryHandler? handler;
 
         /// <summary>
-        /// Gets or sets text of the tooltip.
+        /// Gets or sets handler.
         /// </summary>
-        public string Text
+        public static IToolTipFactoryHandler Handler
         {
-            get
-            {
-                return Native.WxOtherFactory.ToolTipGetTip(Handle);
-            }
+            get => handler ??= BaseApplication.Handler.CreateToolTipFactoryHandler();
 
-            set
-            {
-                Native.WxOtherFactory.ToolTipSetTip(Handle, value ?? string.Empty);
-            }
+            set => handler = value;
         }
 
         /// <summary>
         /// Sets the delay between subsequent tooltips to appear.
         /// </summary>
         /// <param name="msecs">Delay in milliseconds.</param>
-        public static void SetReshow(long msecs)
+        /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
+        public static bool SetReshow(long msecs)
         {
-            Native.WxOtherFactory.ToolTipSetReshow(msecs);
+            return Handler.SetReshow(msecs);
         }
 
         /// <summary>
@@ -56,9 +40,10 @@ namespace Alternet.UI
         /// May not be supported on all platforms (eg. wxCocoa).
         /// </remarks>
         /// <param name="flag">Enables or disables tooltips.</param>
-        public static void SetEnabled(bool flag)
+        /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
+        public static bool SetEnabled(bool flag)
         {
-            Native.WxOtherFactory.ToolTipEnable(flag);
+            return Handler.SetEnabled(flag);
         }
 
         /// <summary>
@@ -68,9 +53,10 @@ namespace Alternet.UI
         /// May not be supported on all platforms (eg. wxCocoa, GTK).
         /// </remarks>
         /// <param name="msecs">Delay in milliseconds.</param>
-        public static void SetAutoPop(long msecs)
+        /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
+        public static bool SetAutoPop(long msecs)
         {
-            Native.WxOtherFactory.ToolTipSetAutoPop(msecs);
+            return Handler.SetAutoPop(msecs);
         }
 
         /// <summary>
@@ -80,9 +66,10 @@ namespace Alternet.UI
         /// <remarks>
         /// May not be supported on all platforms.
         /// </remarks>
-        public static void SetDelay(long msecs)
+        /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
+        public static bool SetDelay(long msecs)
         {
-            Native.WxOtherFactory.ToolTipSetDelay(msecs);
+            return Handler.SetDelay(msecs);
         }
 
         /// <summary>
@@ -96,23 +83,10 @@ namespace Alternet.UI
         /// the tooltips created before calling it. Currently this function is Windows-only.
         /// </remarks>
         /// <param name="width">ToolTip width in pixels.</param>
-        public static void ToolTipSetMaxWidth(int width)
+        /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>
+        public static bool SetMaxWidth(int width)
         {
-            Native.WxOtherFactory.ToolTipSetMaxWidth(width);
-        }
-
-        /// <summary>
-        /// Gets the control to which this tooltip is attached.
-        /// </summary>
-        internal IntPtr GetWindow()
-        {
-            return Native.WxOtherFactory.ToolTipGetWindow(Handle);
-        }
-
-        /// <inheritdoc/>
-        protected override void DisposeUnmanaged()
-        {
-            Native.WxOtherFactory.DeleteToolTip(Handle);
+            return Handler.SetMaxWidth(width);
         }
     }
 }

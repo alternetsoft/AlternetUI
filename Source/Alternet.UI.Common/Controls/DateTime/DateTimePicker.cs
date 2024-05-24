@@ -25,8 +25,6 @@ namespace Alternet.UI
         /// </summary>
         public DateTimePicker()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
         }
 
         /// <summary>

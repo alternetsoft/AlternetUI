@@ -477,15 +477,6 @@ namespace Alternet.UI
             return new ValueValidatorNumProp(numericType, valueBase);
         }
 
-        public IRichToolTipHandler CreateRichToolTipHandler(
-            string title,
-            string message,
-            bool useGeneric)
-        {
-            Native.WxOtherFactory.RichToolTipUseGeneric = useGeneric;
-            return new RichToolTipHandler(title, message);
-        }
-
         public IPrintDocumentHandler CreatePrintDocumentHandler()
         {
             return new PrintDocumentHandler();
@@ -540,9 +531,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IToolTipHandler CreateToolTipHandler()
+        public IToolTipFactoryHandler CreateToolTipFactoryHandler()
         {
-            return new WxToolTipHandler();
+            return new WxToolTipFactoryHandler();
         }
 
         public object? GetAttributeValue(string name)

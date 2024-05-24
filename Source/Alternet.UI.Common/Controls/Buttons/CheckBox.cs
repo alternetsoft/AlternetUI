@@ -39,8 +39,6 @@ namespace Alternet.UI
         /// </summary>
         public CheckBox()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace Alternet.UI
 
         void Exit();
 
-        IToolTipHandler CreateToolTipHandler();
+        IToolTipFactoryHandler CreateToolTipFactoryHandler();
 
         INotifyIconHandler CreateNotifyIconHandler();
 
@@ -211,10 +211,5 @@ namespace Alternet.UI
         IPageSetupDialogHandler CreatePageSetupDialogHandler();
 
         IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
-
-        IRichToolTipHandler CreateRichToolTipHandler(
-            string title,
-            string message,
-            bool useGeneric);
     }
 }

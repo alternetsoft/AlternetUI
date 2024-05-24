@@ -72,6 +72,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
             NativeControl.Value = Control.Value;
 
             Control.ValueChanged += Control_ValueChanged;

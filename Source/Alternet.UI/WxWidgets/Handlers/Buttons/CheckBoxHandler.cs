@@ -69,6 +69,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
             NativeControl.Text = Control.Text;
             NativeControl.IsChecked = Control.IsChecked;
 

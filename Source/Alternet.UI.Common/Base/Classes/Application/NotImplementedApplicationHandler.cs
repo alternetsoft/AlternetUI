@@ -253,11 +253,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public IRichToolTipHandler CreateRichToolTipHandler(string title, string message, bool useGeneric)
-        {
-            throw new NotImplementedException();
-        }
-
         public ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
         {
             throw new NotImplementedException();
@@ -318,7 +313,12 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public IToolTipHandler CreateToolTipHandler()
+        public IToolTipFactoryHandler CreateToolTipFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IToolTipFactoryHandler CreateToolTipHandler()
         {
             throw new NotImplementedException();
         }

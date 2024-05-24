@@ -49,9 +49,6 @@ namespace Alternet.UI
         /// </summary>
         public Calendar()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
-            BackgroundColor = SystemColors.Window;
         }
 
         /// <summary>
