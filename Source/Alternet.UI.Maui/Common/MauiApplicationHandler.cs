@@ -411,5 +411,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public IClipboardHandler CreateClipboardHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

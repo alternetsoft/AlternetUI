@@ -11,16 +11,6 @@ namespace Alternet.UI
 {
     internal class NotImplementedPlatform : NativePlatform
     {
-        public override IDataObject? ClipboardGetDataObject()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ClipboardSetDataObject(IDataObject value)
-        {
-            throw new NotImplementedException();
-        }
-
         public override long? GetNumberFromUser(string message, string prompt, string caption, long value, long min, long max, Control? parent, PointI pos)
         {
             throw new NotImplementedException();

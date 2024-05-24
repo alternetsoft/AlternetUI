@@ -31,16 +31,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public override IDataObject? ClipboardGetDataObject()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ClipboardSetDataObject(IDataObject value)
-        {
-            throw new NotImplementedException();
-        }
-
         public override DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             throw new NotImplementedException();

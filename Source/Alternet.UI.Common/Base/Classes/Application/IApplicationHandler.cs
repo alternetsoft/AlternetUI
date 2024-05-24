@@ -48,6 +48,8 @@ namespace Alternet.UI
 
         void Exit();
 
+        IClipboardHandler CreateClipboardHandler();
+
         IControlPainterHandler CreateControlPainterHandler();
 
         IMemoryHandler CreateMemoryHandler();

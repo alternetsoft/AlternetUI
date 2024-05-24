@@ -39,22 +39,6 @@ namespace Alternet.UI
                 (Native.MessageBoxDefaultButton)info.DefaultButton);
         }
 
-        public override IDataObject? ClipboardGetDataObject()
-        {
-            var unmanagedDataObject =
-                WxApplicationHandler.NativeClipboard.GetDataObject();
-            if (unmanagedDataObject == null)
-                return null;
-
-            return new UnmanagedDataObjectAdapter(unmanagedDataObject);
-        }
-
-        public override void ClipboardSetDataObject(IDataObject value)
-        {
-            WxApplicationHandler.NativeClipboard.SetDataObject(
-                UnmanagedDataObjectService.GetUnmanagedDataObject(value));
-        }
-
         public override bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,

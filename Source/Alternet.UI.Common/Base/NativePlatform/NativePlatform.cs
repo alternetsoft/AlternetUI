@@ -28,10 +28,6 @@ namespace Alternet.UI
             string? additionalInfo = null,
             bool canContinue = true);
 
-        public abstract IDataObject? ClipboardGetDataObject();
-
-        public abstract void ClipboardSetDataObject(IDataObject value);
-
         public abstract DialogResult ShowMessageBox(MessageBoxInfo info);
 
         public abstract string? GetTextFromUser(

@@ -106,6 +106,11 @@ namespace Alternet.UI
             return new WebBrowserHandler();
         }
 
+        public IClipboardHandler CreateClipboardHandler()
+        {
+            return new WxClipboardHandler();
+        }
+
         public IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler()
         {
             return new WebBrowserFactoryHandler();
