@@ -44,12 +44,12 @@ namespace PaintSample
                 {
                     var newName = Path.ChangeExtension(fileName, ext);
                     if(!Bitmap.Save(newName))
-                        Application.Log($"Error saving: {newName}");
+                        BaseApplication.Log($"Error saving: {newName}");
                 }
             else
             {
                 if (!Bitmap.Save(fileName))
-                    Application.Log($"Error saving: {fileName}");
+                    BaseApplication.Log($"Error saving: {fileName}");
             }
             Dirty = false;
             FileName = fileName;
@@ -95,10 +95,10 @@ namespace PaintSample
 
         public void Modify(Action<Graphics> action)
         {
-            using (var dc = WxGraphics.FromImage(Bitmap))
+            using (var dc = Graphics.FromImage(Bitmap))
                 action(dc);
 
-            using (var dc = WxGraphics.FromImage(Bitmap)) { }
+            using (var dc = Graphics.FromImage(Bitmap)) { }
 
             OnChanged();
         }
@@ -140,7 +140,7 @@ namespace PaintSample
         {
             var pixelSize = control.PixelFromDip(new SizeD(600, 600));
             var bitmap = new Bitmap(pixelSize, control);
-            using var dc = WxGraphics.FromImage(bitmap);
+            using var dc = Graphics.FromImage(bitmap);
             dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.BoundsDip(control)); 
             return bitmap;
         }

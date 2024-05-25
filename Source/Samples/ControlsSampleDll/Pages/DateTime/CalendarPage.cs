@@ -189,7 +189,7 @@ namespace ControlsSample
 
         private void LogEvent(string evName)
         {
-            Application.Log($"Calendar event: {evName}");
+            BaseApplication.Log($"Calendar event: {evName}");
         }
     }
 }

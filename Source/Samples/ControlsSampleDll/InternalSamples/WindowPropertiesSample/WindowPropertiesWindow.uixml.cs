@@ -13,7 +13,7 @@ namespace WindowPropertiesSample
         public WindowPropertiesWindow()
         {
             setBoundsProperties = new(this);
-            Icon = Application.DefaultIcon;
+            Icon = BaseApplication.DefaultIcon;
 
             InitializeComponent();
             pageControl.TabsVisible = true;
@@ -97,7 +97,7 @@ namespace WindowPropertiesSample
 
             dialogWindow.ShowModal(this);
 
-            Application.Log("ModalResult: " + dialogWindow.ModalResult);
+            BaseApplication.Log("ModalResult: " + dialogWindow.ModalResult);
             dialogWindow.Dispose();
             OnWindowClosed();
         }
@@ -181,29 +181,29 @@ namespace WindowPropertiesSample
 
         private void OkButton_Click(object? sender, EventArgs e)
         {
-            Application.Log("OK Clicked");
+            BaseApplication.Log("OK Clicked");
         }
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
-            Application.Log("Cancel Clicked");
+            BaseApplication.Log("Cancel Clicked");
         }
 
         private void TestWindow_LocationChanged(object? sender, EventArgs e)
         {
             var s = "LocationChanged. Bounds: ";
-            Application.LogReplace(s + testWindow?.Bounds.ToString(), s);
+            BaseApplication.LogReplace(s + testWindow?.Bounds.ToString(), s);
         }
 
         private void TestWindow_SizeChanged(object? sender, EventArgs e)
         {
             var s = "SizeChanged. Bounds: ";
-            Application.LogReplace(s + testWindow?.Bounds.ToString(), s);
+            BaseApplication.LogReplace(s + testWindow?.Bounds.ToString(), s);
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)
         {
-            Application.Log("StateChanged");
+            BaseApplication.Log("StateChanged");
             UpdateWindowState();
         }
 
@@ -214,7 +214,7 @@ namespace WindowPropertiesSample
 
         private void UpdateActiveWindowInfoLabel()
         {
-            Application.AddIdleTask(() =>
+            BaseApplication.AddIdleTask(() =>
             {
                 var title = ActiveWindow?.Title ?? "N/A";
                 activeWindowTitleLabel.Text = title;
@@ -228,19 +228,19 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Deactivated(object? sender, EventArgs e)
         {
-            Application.Log("Deactivated");
+            BaseApplication.Log("Deactivated");
             UpdateActiveWindowInfoLabel();
         }
 
         private void TestWindow_Activated(object? sender, EventArgs e)
         {
-            Application.Log("Activated");
+            BaseApplication.Log("Activated");
             UpdateActiveWindowInfoLabel();
         }
 
         private void UpdateControls()
         {
-            Application.AddIdleTask(Fn);
+            BaseApplication.AddIdleTask(Fn);
 
             void Fn(object? data)
             {
@@ -281,7 +281,7 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Closed(object? sender, EventArgs e)
         {
-            Application.Log("Closed");
+            BaseApplication.Log("Closed");
 
             if (testWindow == null)
                 throw new InvalidOperationException();
@@ -313,7 +313,7 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
-            Application.Log("Closing");
+            BaseApplication.Log("Closing");
             e.Cancel = cancelClosingCheckBox.IsChecked;
         }
 

@@ -70,7 +70,7 @@ namespace ControlsSample
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupCalendar.MainControl.Value;
-            Application.Log($"AfterHide PopupResult: {popupCalendar.PopupResult}, Value: {resultItem}");
+            BaseApplication.Log($"AfterHide PopupResult: {popupCalendar.PopupResult}, Value: {resultItem}");
         }
 
         private void ShowPopupButton_Click(object? sender, EventArgs e)

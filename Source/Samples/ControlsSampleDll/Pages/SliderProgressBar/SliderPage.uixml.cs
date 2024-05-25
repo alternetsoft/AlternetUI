@@ -11,11 +11,11 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            clearTicksButton.Visible = Application.IsWindowsOS || Application.IsLinuxOS;
+            clearTicksButton.Visible = BaseApplication.IsWindowsOS || BaseApplication.IsLinuxOS;
 
             foreach (SliderTickStyle item in Enum.GetValues(typeof(SliderTickStyle)))
             {
-                if (item == SliderTickStyle.Both && !Application.IsWindowsOS)
+                if (item == SliderTickStyle.Both && !BaseApplication.IsWindowsOS)
                     continue;
                 tickStyleComboBox.Items.Add(item);
             }
@@ -41,7 +41,7 @@ namespace ControlsSample
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
         {
-            Application.Log("New slider value is: " + ((Slider)sender!).Value);
+            BaseApplication.Log("New slider value is: " + ((Slider)sender!).Value);
         }
 
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)

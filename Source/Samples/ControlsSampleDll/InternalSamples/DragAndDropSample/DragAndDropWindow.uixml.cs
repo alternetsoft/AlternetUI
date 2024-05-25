@@ -17,7 +17,7 @@ namespace DragAndDropSample
 
         public DragAndDropWindow()
         {
-            Icon = Application.DefaultIcon;
+            Icon = BaseApplication.DefaultIcon;
 
             InitializeComponent();
 

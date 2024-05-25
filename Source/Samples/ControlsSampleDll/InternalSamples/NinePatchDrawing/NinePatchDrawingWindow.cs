@@ -62,7 +62,7 @@ namespace ControlsSample
 
             button2.ClickAction = () =>
             {
-                Application.Log("Some Linux versions don't support getting screen image.");
+                BaseApplication.Log("Some Linux versions don't support getting screen image.");
                 var bitmap = Image.FromScreen();
                 if (bitmap is not null)
                 {
@@ -71,12 +71,12 @@ namespace ControlsSample
                     picturePopup.ShowPopup(button2);
                 }
                 else
-                    Application.LogError("Screen picture is null");
+                    BaseApplication.LogError("Screen picture is null");
             };           
 
             button.ClickAction = () =>
             {
-                Application.Log("Some Linux versions don't support drawing on screen.");
+                BaseApplication.Log("Some Linux versions don't support drawing on screen.");
 
                 for(int i = 0; i < Display.Count; i++)
                     DrawOnDisplay(i);
@@ -85,7 +85,7 @@ namespace ControlsSample
                 {
                     var rect = Display.AllScreens[index].Bounds;
 
-                    var dc = WxGraphics.FromScreen();
+                    var dc = Graphics.FromScreen();
 
                     dc.FillRectangleI(Color.White.AsBrush, (rect.Location, (500, 400)));
 

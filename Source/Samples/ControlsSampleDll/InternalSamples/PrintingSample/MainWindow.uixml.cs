@@ -12,7 +12,7 @@ namespace PrintingSample
 
         public MainWindow()
         {
-            Icon = Application.DefaultIcon;
+            Icon = BaseApplication.DefaultIcon;
             InitializeComponent();
             DrawingArea.UserPaint = true;
 

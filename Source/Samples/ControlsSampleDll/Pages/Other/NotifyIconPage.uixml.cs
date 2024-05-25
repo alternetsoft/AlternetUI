@@ -48,7 +48,7 @@ namespace ControlsSample
 
         private void ToolTipLabel_Click(object? sender, EventArgs e)
         {
-            Application.Log("ToolTipLabel_Click");
+            BaseApplication.Log("ToolTipLabel_Click");
             tooltipPreview.BackgroundColor = Color.White;
             toolTipLabel.Text = string.Empty;
             toolTipLabel.BackgroundColor = Color.White;
@@ -99,12 +99,12 @@ namespace ControlsSample
 
         private void NotifyIcon_DoubleClick(object? sender, EventArgs e)
         {
-            Application.Log("NotifyIcon: DoubleClick");
+            BaseApplication.Log("NotifyIcon: DoubleClick");
         }
 
         private void NotifyIcon_Click(object? sender, EventArgs e)
         {
-            Application.Log("NotifyIcon: Click");
+            BaseApplication.Log("NotifyIcon: Click");
         }
 
         private void NotifyIconVisibleCheckBox_CheckedChanged(object sender, EventArgs e)

@@ -59,9 +59,9 @@ namespace ControlsSample
         {
             var selected = tabControl.SelectedPage as TabPage;
             if(selected is not null)
-                Application.Log($"TabControl TabPage.Index: {selected.Index}");
+                BaseApplication.Log($"TabControl TabPage.Index: {selected.Index}");
             else
-                Application.Log($"TabControl SelectedIndex: {tabControl.SelectedIndex}");
+                BaseApplication.Log($"TabControl SelectedIndex: {tabControl.SelectedIndex}");
         }
 
         private int GenItemIndex()
@@ -133,7 +133,7 @@ namespace ControlsSample
 
         private void Page_Disposed(object? sender, EventArgs e)
         {
-            Application.Log("Page Disposed");
+            BaseApplication.Log("Page Disposed");
         }
 
         private void ClearPagesButton_Click(object? sender, EventArgs e)

@@ -440,13 +440,13 @@ namespace ControlsSample
         private void RichTextBox_TextChanged(object? sender, EventArgs e)
         {
             var s = "RichTextBox Text Changed.";
-            Application.LogReplace(s, s);
+            BaseApplication.LogReplace(s, s);
         }
 
         private void RichTextBox_EnterPressed(object? sender, EventArgs e)
         {
             var s = "RichTextBox Enter pressed.";
-            Application.LogReplace(s, s);
+            BaseApplication.LogReplace(s, s);
         }
 
         private RichTextFileType GetFileTypeFromName(string filename)
@@ -505,10 +505,10 @@ namespace ControlsSample
             if (SaveFile(dialog.FileName!))
             {
                 richPanel.TextBox.FileName = dialog.FileName!;
-                Application.Log($"Saved to file: {dialog.FileName}");
+                BaseApplication.Log($"Saved to file: {dialog.FileName}");
             }
             else
-                Application.Log($"Error saving to file: {dialog.FileName}");
+                BaseApplication.Log($"Error saving to file: {dialog.FileName}");
         }
 
         private void RichPanel_FileOpenClick(object? sender, EventArgs e)
@@ -542,10 +542,10 @@ namespace ControlsSample
             if (LoadFile(dialog.FileName!))
             {
                 richPanel.TextBox.FileName = dialog.FileName!;
-                Application.Log($"Loaded from file: {dialog.FileName}");
+                BaseApplication.Log($"Loaded from file: {dialog.FileName}");
             }
             else
-                Application.Log($"Error loading from file: {dialog.FileName}");
+                BaseApplication.Log($"Error loading from file: {dialog.FileName}");
         }
 
         private void RichPanel_FileNewClick(object? sender, EventArgs e)

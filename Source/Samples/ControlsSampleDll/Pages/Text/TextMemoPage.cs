@@ -26,12 +26,12 @@ namespace ControlsSample
             //memoPanel.FileOpenClick += MemoPanel_FileOpenClick;
             //memoPanel.FileSaveClick += MemoPanel_FileSaveClick;
 
-            if (!Application.IsMacOS)
+            if (!BaseApplication.IsMacOS)
                 memoPanel.TextBox.AutoUrlOpen = true;
 
             var multilineDemoText = LoremIpsum;
 
-            if (!SystemSettings.AppearanceIsDark || Application.IsWindowsOS)
+            if (!SystemSettings.AppearanceIsDark || BaseApplication.IsWindowsOS)
             {
                 memoPanel.TextBox.AutoUrl = true;
                 multilineDemoText += "\nSample url: https://www.alternet-ui.com/\n";
@@ -76,12 +76,12 @@ namespace ControlsSample
 
         internal static void MultiLineTextBox_TextUrl(object? sender, UrlEventArgs e)
         {
-            Application.Log("TextBox: Url clicked =>" + e.Url);
+            BaseApplication.Log("TextBox: Url clicked =>" + e.Url);
             var modifiers = AllPlatformDefaults.PlatformCurrent.TextBoxUrlClickModifiers;
             if (e.Modifiers != modifiers)
             {
                 var modifiersText = ModifierKeysConverter.ToString(modifiers, true);
-                Application.Log($"Use {modifiersText}+Click to open in the default browser: " + e.Url);
+                BaseApplication.Log($"Use {modifiersText}+Click to open in the default browser: " + e.Url);
             }
         }
 

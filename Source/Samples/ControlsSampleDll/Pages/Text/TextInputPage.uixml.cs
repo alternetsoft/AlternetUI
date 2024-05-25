@@ -82,7 +82,7 @@ namespace ControlsSample
 
         private void TextBox_TextMaxLength(object? sender, EventArgs e)
         {
-            Application.Log("TextBox: Text max length reached");
+            BaseApplication.Log("TextBox: Text max length reached");
         }
 
         private void MaxLengthBox_TextChanged(object? sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace ControlsSample
             if (asNumber is not null)
                 asNumber = $" => {asNumber} | {asNumber.GetType().Name}";
 
-            Application.LogReplace($"{prefix}{value}{asNumber}", prefix);
+            BaseApplication.LogReplace($"{prefix}{value}{asNumber}", prefix);
         }
 
         private void ChangeTextButton_Click(object? sender, EventArgs e)

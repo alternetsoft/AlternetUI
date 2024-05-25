@@ -24,7 +24,7 @@ namespace InputSample
 
         private void UpdateModifierKeys()
         {
-            var macOs = Application.IsMacOS;
+            var macOs = BaseApplication.IsMacOS;
 
             var modifiers = Keyboard.Modifiers;
 
@@ -60,7 +60,7 @@ namespace InputSample
 
         private void HelloButton_Click(object sender, EventArgs e)
         {
-            Application.Log("Hello button clicked");
+            BaseApplication.Log("Hello button clicked");
         }
 
         public bool HandledInButton { get; set; } = false;
@@ -97,11 +97,11 @@ namespace InputSample
             if (e.IsRepeat && !LogRepeated)
                 return;
 
-            Application.Log($"{objectName}.{eventName} [{e.Key}], ({e.ModifierKeys}), Repeat: {e.IsRepeat}");
+            BaseApplication.Log($"{objectName}.{eventName} [{e.Key}], ({e.ModifierKeys}), Repeat: {e.IsRepeat}");
         }
 
         private void LogTextInput(KeyPressEventArgs e, string objectName, string eventName) =>
-            Application.Log($"{objectName}.{eventName} '{e.KeyChar}'");
+            BaseApplication.Log($"{objectName}.{eventName} '{e.KeyChar}'");
 
         private void HelloButton_KeyDown(object sender, KeyEventArgs e)
         {

@@ -42,7 +42,7 @@ namespace ControlsSample
         private void ListBox_CheckedChanged(object? sender, EventArgs e)
         {
             string checkedIndicesString = IndexesToStr(listBox.CheckedIndices);
-            Application.Log(
+            BaseApplication.Log(
                 $"ListBox.CheckedChanged: ({checkedIndicesString})");
         }
 
@@ -71,7 +71,7 @@ namespace ControlsSample
 
         private void ListBox_HandleCreated(object? sender, EventArgs e)
         {
-            Application.LogIf("ListBox.HandleCreated", false);
+            BaseApplication.LogIf("ListBox.HandleCreated", false);
         }
 
         private void FindText_TextChanged(object? sender, EventArgs e)
@@ -109,7 +109,7 @@ namespace ControlsSample
 
             item ??= result;
 
-            Application.Log($"HitTest result: Item: '{item}'");
+            BaseApplication.Log($"HitTest result: Item: '{item}'");
         }
 
         private static string IndexesToStr(IReadOnlyList<int>? indexes)
@@ -124,7 +124,7 @@ namespace ControlsSample
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
             string s = IndexesToStr(listBox.SelectedIndexes);
-            Application.Log($"ListBox: SelectionChanged. SelectedIndexes: ({s})");
+            BaseApplication.Log($"ListBox: SelectionChanged. SelectedIndexes: ({s})");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)

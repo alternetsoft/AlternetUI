@@ -19,10 +19,10 @@ namespace PropertyGridSample
 
             static void ScrollBar_Scroll(object sender, ScrollEventArgs e)
             {
-                Application.LogBeginSection();
-                Application.Log($"Scrollbar Event {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
+                BaseApplication.LogBeginSection();
+                BaseApplication.Log($"Scrollbar Event {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
                 (sender as ScrollBar)?.LogInfo();
-                Application.LogEndSection();
+                BaseApplication.LogEndSection();
             }
 
             static void ScrollBar_IsVerticalChanged(object? sender, EventArgs e)

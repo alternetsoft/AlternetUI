@@ -65,12 +65,12 @@ namespace ControlsSample
             if (checkBox.ThreeState)
                 checkBox.CheckState = CheckState.Indeterminate;
             else
-                Application.Log("CheckBox.ThreeState is false, indeterminate state is not set.");
+                BaseApplication.Log("CheckBox.ThreeState is false, indeterminate state is not set.");
         }
 
         private void CheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            Application.Log($"CheckBox.CheckState: {checkBox.CheckState}");
+            BaseApplication.Log($"CheckBox.CheckState: {checkBox.CheckState}");
         }
 
         private void AllowAllStatesForUserCheckBox_CheckedChanged(object? sender, EventArgs e)

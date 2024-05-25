@@ -14,7 +14,7 @@ namespace ControlsSample
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
         {
-            Application.Log("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
+            BaseApplication.Log("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
         }
 
         private void ProgressBarControlNumericUpDown_ValueChanged(

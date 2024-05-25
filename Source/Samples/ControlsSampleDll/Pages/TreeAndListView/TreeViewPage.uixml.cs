@@ -46,7 +46,7 @@ namespace ControlsSample
         private void PopupTreeView_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupTreeView.MainControl.SelectedItem?.Text ?? "<null>";
-            Application.Log($"AfterHide PopupResult: {popupTreeView.PopupResult}, Item: {resultItem}");
+            BaseApplication.Log($"AfterHide PopupResult: {popupTreeView.PopupResult}, Item: {resultItem}");
         }
 
         private void ShowPopupButton_Click(object? sender, EventArgs e)
@@ -137,7 +137,7 @@ namespace ControlsSample
             string s = selectedItems.Count > 100 ?
                 "too many indices to display" :
                 string.Join(",", selectedItems.Select(x => x.Text));
-            Application.Log($"TreeView: SelectionChanged. SelectedItems: ({s})");
+            BaseApplication.Log($"TreeView: SelectionChanged. SelectedItems: ({s})");
         }
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
@@ -145,14 +145,14 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             var exp = e.Item.IsExpanded;
-            Application.Log($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {exp}");
+            BaseApplication.Log($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {exp}");
         }
 
         private void TreeView_BeforeLabelEdit(object? sender, TreeViewEditEventArgs e)
         {
             e.Cancel = cancelBeforeLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
-            Application.Log($"TreeView: BeforeLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
+            BaseApplication.Log($"TreeView: BeforeLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
         }
 
         private void TreeView_AfterLabelEdit(
@@ -161,7 +161,7 @@ namespace ControlsSample
         {
             e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
-            Application.Log($"TreeView: AfterLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
+            BaseApplication.Log($"TreeView: AfterLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
         }
 
         private void TreeView_BeforeExpand(
@@ -171,7 +171,7 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeExpandEventsCheckBox.IsChecked;
-            Application.Log($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
+            BaseApplication.Log($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
         }
 
         private void TreeView_BeforeCollapse(
@@ -181,7 +181,7 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeCollapseEventsCheckBox.IsChecked;
-            Application.Log($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
+            BaseApplication.Log($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
         }
 
         private void CancelBeforeExpandEventsCheckBox_CheckedChanged(
@@ -288,7 +288,7 @@ namespace ControlsSample
         {
             var result = treeView.HitTest(Mouse.GetPosition(treeView));
             var s = result.Item?.Text ?? "<none>";
-            Application.Log($"HitTest result: Item: '{s}, Location: {result.Location}'");
+            BaseApplication.Log($"HitTest result: Item: '{s}, Location: {result.Location}'");
         }
 
         private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)

@@ -107,31 +107,31 @@ namespace ControlsSample
         {
             var r = popupCheckListBox.PopupResult;
             var ch = popupCheckListBox.MainControl.CheckedIndices.Count;
-            Application.Log($"CheckListBoxPopup AfterHide PopupResult: {r}, Checked: {ch}");
+            BaseApplication.Log($"CheckListBoxPopup AfterHide PopupResult: {r}, Checked: {ch}");
         }
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupListBox.ResultItem ?? "<null>";
-            Application.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
+            BaseApplication.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
         private void PopupVListBox_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupVListBox.ResultItem ?? "<null>";
-            Application.Log($"AfterHide PopupResult: {popupVListBox.PopupResult}, Item: {resultItem}");
+            BaseApplication.Log($"AfterHide PopupResult: {popupVListBox.PopupResult}, Item: {resultItem}");
         }
 
         private void PopupColorListBox_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupColorListBox.ResultValue?.ToString() ?? "<null>";
-            Application.Log($"AfterHide PopupResult: {popupColorListBox.PopupResult}, Item: {resultItem}");
+            BaseApplication.Log($"AfterHide PopupResult: {popupColorListBox.PopupResult}, Item: {resultItem}");
         }
 
         internal void LogPopupListBoxEvent(string eventName)
         {
             var selectedItem = popupListBox.MainControl.SelectedItem ?? "<null>";
-            Application.Log($"Popup: {eventName}. Selected Item: {selectedItem}");
+            BaseApplication.Log($"Popup: {eventName}. Selected Item: {selectedItem}");
         }
 
         internal void LogPopupListBoxMouseEvent(string eventName, MouseEventArgs e)
@@ -139,7 +139,7 @@ namespace ControlsSample
             var itemIndex = popupListBox.MainControl.HitTest(
                 Mouse.GetPosition(popupListBox.MainControl));
             var selectedItem = popupListBox.MainControl[itemIndex];
-            Application.Log($"Popup: {eventName}. Item: {selectedItem}");
+            BaseApplication.Log($"Popup: {eventName}. Item: {selectedItem}");
         }
 
         private void PopupListBox_MouseDoubleClick(object sender, MouseEventArgs e)

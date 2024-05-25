@@ -80,7 +80,7 @@ namespace ControlsSample
             
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
             var prefix = "ComboBox: TextChanged. Text:";
-            Application.LogReplace($"{prefix} {text}", prefix);
+            BaseApplication.LogReplace($"{prefix} {text}", prefix);
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -89,7 +89,7 @@ namespace ControlsSample
                 return;
             var s = (comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString());
             var prefix = "ComboBox: SelectedItemChanged.SelectedIndex:";
-            Application.LogReplace($"{prefix} {s}", prefix);
+            BaseApplication.LogReplace($"{prefix} {s}", prefix);
         }
 
         private void OwnerDrawCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -133,7 +133,7 @@ namespace ControlsSample
             bool isEditable = comboBox.IsEditable;
 
             if (!isEditable)
-                Application.Log("Cannot perform this operation on a non-editable ComboBox.");
+                BaseApplication.Log("Cannot perform this operation on a non-editable ComboBox.");
 
             return isEditable;
         }
@@ -155,7 +155,7 @@ namespace ControlsSample
             var length = comboBox.TextSelectionLength;
             var selectedText = comboBox.Text.Substring(start, length);
             var message = $"[{start}..{start + length}], selected text: '{selectedText}'";
-            Application.Log("ComboBox Text Selection: " + message);
+            BaseApplication.Log("ComboBox Text Selection: " + message);
         }
 
         private void SetItem_Click(object? sender, System.EventArgs e)

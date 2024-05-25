@@ -190,7 +190,7 @@ namespace ControlsSample
 
         private void Log(string s)
         {
-            Application.Log(s);
+            BaseApplication.Log(s);
         }
 
         private void Button_SelectionChanged(object? sender, EventArgs e)
@@ -252,7 +252,7 @@ namespace ControlsSample
         private void ListView_ColumnClick(object? sender, ListViewColumnEventArgs e)
         {
             var s = listView.Columns[e.ColumnIndex].Title;
-            Application.Log($"ListView: ColumnClick. Column title: '{s}'");
+            BaseApplication.Log($"ListView: ColumnClick. Column title: '{s}'");
         }
 
         private void AllowLabelEditingCheckBox_CheckedChanged(

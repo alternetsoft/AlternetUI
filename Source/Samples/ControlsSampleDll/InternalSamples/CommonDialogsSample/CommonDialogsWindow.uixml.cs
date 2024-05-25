@@ -13,7 +13,7 @@ namespace ControlsSample
         public CommonDialogsWindow()
         {
             this.SuspendLayout();
-            Icon = Application.DefaultIcon;
+            Icon = BaseApplication.DefaultIcon;
             InitializeComponent();
 
             messageBoxButtonsComboBox.Add(MessageBoxButtons.OK);
@@ -161,16 +161,16 @@ namespace ControlsSample
 
         private void ThrowExceptionButton_Click(object? sender, EventArgs e)
         {
-            if (Application.UnhandledExceptionMode != UnhandledExceptionMode.CatchException)
+            if (BaseApplication.UnhandledExceptionMode != UnhandledExceptionMode.CatchException)
             {
-                Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                Application.Log("Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)");
+                BaseApplication.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                BaseApplication.Log("Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)");
             }
 
-            if(Application.UnhandledExceptionModeIfDebugger != UnhandledExceptionMode.CatchException)
+            if(BaseApplication.UnhandledExceptionModeIfDebugger != UnhandledExceptionMode.CatchException)
             {
-                Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
-                Application.Log("Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException)");
+                BaseApplication.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                BaseApplication.Log("Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException)");
             }
 
             throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch
