@@ -13,5 +13,7 @@ namespace Alternet.UI
         void MessageBeep(SystemSoundType soundType);
         
         void Bell();
+
+        ISoundPlayerHandler CreateSoundPlayerHandler(string fileName);
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
-namespace Alternet.Drawing
+namespace Alternet.UI
 {
     /// <summary>
     /// Implements base class that pass calls to it's handler.

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Controls playback of a sound from a audio file. This player supports only wav files.
     /// On Linux requires package osspd.
     /// </summary>
-    public class SimpleSoundPlayer : DisposableObject<IntPtr>
+    public class SimpleSoundPlayer : HandledObject<ISoundPlayerHandler>
     {
         private readonly string fileName;
 
@@ -19,32 +19,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="fileName">Path to audio file.</param>
         public SimpleSoundPlayer(string fileName)
-            : base(Native.WxOtherFactory.SoundCreate2(fileName, false), true)
         {
             this.fileName = fileName;
-        }
-
-        /// <summary>
-        /// Defines flags for the <see cref="Play"/> method.
-        /// </summary>
-        [Flags]
-        public enum SoundPlayFlags : uint
-        {
-            /// <summary>
-            /// Play will block and wait until the sound is replayed.
-            /// </summary>
-            Synchronous = 0,
-
-            /// <summary>
-            /// Sound is played asynchronously, <see cref="Play"/> returns immediately.
-            /// </summary>
-            Asynchronous = 1,
-
-            /// <summary>
-            /// Sound is played asynchronously and loops until another sound is played,
-            /// <see cref="Stop"/> is called or the program terminates.
-            /// </summary>
-            AsynchronousLoop = 2 | Asynchronous,
         }
 
         /// <summary>
@@ -60,9 +36,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (IsDisposed)
-                    return false;
-                return Native.WxOtherFactory.SoundIsOk(Handle);
+                return Handler.IsOk;
             }
         }
 
@@ -89,15 +63,13 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Play(SoundPlayFlags flags = SoundPlayFlags.Asynchronous)
         {
-            if (IsDisposed || !IsOk)
-                return false;
-            return Native.WxOtherFactory.SoundPlay(Handle, (uint)flags);
+            return Handler.Play(flags);
         }
 
         /// <inheritdoc/>
-        protected override void DisposeUnmanaged()
+        protected override ISoundPlayerHandler CreateHandler()
         {
-            Native.WxOtherFactory.SoundDelete(Handle);
+            return SoundUtils.Handler.CreateSoundPlayerHandler(fileName);
         }
     }
 }

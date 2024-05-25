@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>

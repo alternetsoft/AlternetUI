@@ -14,6 +14,11 @@ namespace Alternet.UI
             Native.WxOtherFactory.SoundStop();
         }
 
+        public ISoundPlayerHandler CreateSoundPlayerHandler(string fileName)
+        {
+            return new WxSoundPlayerHandler(fileName);
+        }
+
         public void MessageBeep(SystemSoundType soundType)
         {
             if (BaseApplication.IsWindowsOS)
