@@ -19,25 +19,12 @@ namespace Alternet.UI
         {
             var resName = url.AbsolutePath;
 
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assembly = AssemblyUtils.FindAssemblyForResource(resName);
 
-            foreach (var assembly in assemblies)
-            {
-                var resources = assembly.GetManifestResourceNames();
+            if (assembly is null)
+                return null;
 
-                if (resources.Length == 0)
-                    continue;
-
-                foreach (var resource in resources)
-                {
-                    if(resource == resName)
-                    {
-                        return GetOrLoadAssemblyDescriptor(assembly.GetName().Name!, assembly);
-                    }
-                }
-            }
-
-            return null;
+            return GetOrLoadAssemblyDescriptor(assembly.GetName().Name!, assembly);
         }
 
         public IAssemblyDescriptor GetOrLoadAssemblyDescriptor(string name, Assembly assembly)
