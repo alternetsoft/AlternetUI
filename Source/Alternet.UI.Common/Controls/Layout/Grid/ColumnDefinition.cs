@@ -35,7 +35,7 @@ namespace Alternet.UI
             set
             {
                 if (!IsUserSizePropertyValueValid(value))
-                    throw new ArgumentException();
+                    throw new ArgumentException(nameof(Width));
 
                 var oldValue = width;
                 width = value;
@@ -57,7 +57,7 @@ namespace Alternet.UI
             set
             {
                 if (!IsUserMinSizePropertyValueValid(value))
-                    throw new ArgumentException();
+                    throw new ArgumentException(nameof(MinWidth));
 
                 minWidth = value;
                 OnUserMinSizePropertyChanged(value);
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// <summary>Gets or sets a value that represents the maximum width of a
         /// <see cref="ColumnDefinition" />.   </summary>
         /// <returns>A <see cref="double" /> that represents the maximum width.
-        /// The default value is <see cref="F:System.Double.PositiveInfinity" />.</returns>
+        /// The default value is <see cref="System.Double.PositiveInfinity" />.</returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MaxWidth
         {
@@ -79,7 +79,7 @@ namespace Alternet.UI
             set
             {
                 if (!IsUserMaxSizePropertyValueValid(value))
-                    throw new ArgumentException();
+                    throw new ArgumentException(nameof(MaxWidth));
 
                 maxWidth = value;
                 OnUserMaxSizePropertyChanged(value);

@@ -498,7 +498,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return (m11, m12, m21, m22, dx, dy).GetHashCode();
+            return HashCode.Combine(m11, m12, m21, m22, dx, dy);
         }
     }
 }

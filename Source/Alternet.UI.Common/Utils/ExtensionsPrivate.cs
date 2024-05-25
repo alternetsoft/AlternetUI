@@ -86,6 +86,12 @@ namespace Alternet.UI.Extensions
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ContainsDot(this string s)
+        {
+            return ContainsChar(s, '.');
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsComma(this string s)
         {
             return ContainsChar(s, ',');

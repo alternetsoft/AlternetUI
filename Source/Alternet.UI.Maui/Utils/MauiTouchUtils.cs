@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SkiaSharp.Views.Maui;
-
 using Alternet.UI.Extensions;
+
+using SkiaSharp.Views.Maui;
 
 namespace Alternet.UI
 {

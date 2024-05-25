@@ -11,7 +11,7 @@ namespace PropertyGridSample
 {
     public class ControlPainterPreview : UserControl
     {
-        private static WxControlPainterHandler Painter = new();
+        private static readonly WxControlPainterHandler Painter = new();
 
         private WxControlPainterHandler.ControlPartKind kind
             = WxControlPainterHandler.ControlPartKind.PushButton;

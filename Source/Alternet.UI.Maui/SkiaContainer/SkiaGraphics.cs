@@ -225,7 +225,7 @@ namespace Alternet.Drawing
             DebugPenAssert(pen);
             using var paint = pen.ToSkia();
             var skiaRect = rect.ToSkia();
-            SKRoundRect roundRect = new SKRoundRect(skiaRect, (float)cornerRadius);
+            SKRoundRect roundRect = new(skiaRect, (float)cornerRadius);
             canvas.DrawRoundRect(roundRect, paint);
         }
 
@@ -235,7 +235,7 @@ namespace Alternet.Drawing
             DebugBrushAssert(brush);
             using var paint = brush.ToSkia();
             var skiaRect = rect.ToSkia();
-            SKRoundRect roundRect = new SKRoundRect(skiaRect, (float)cornerRadius);
+            SKRoundRect roundRect = new(skiaRect, (float)cornerRadius);
             canvas.DrawRoundRect(roundRect, paint);
         }
 

@@ -1,4 +1,5 @@
-﻿using ApiCommon;
+﻿#pragma warning disable
+using ApiCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace NativeApi.Api
 {
-#pragma warning disable CS8618
     public class WebBrowserEventData : NativeEventData
     {
         public string Url;
