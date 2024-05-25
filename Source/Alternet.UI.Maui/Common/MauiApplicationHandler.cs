@@ -394,7 +394,7 @@ namespace Alternet.UI
 
         public ICursorFactoryHandler CreateCursorFactoryHandler()
         {
-            throw new NotImplementedException();
+            return new PlessCursorFactoryHandler();
         }
 
         public IMemoryHandler CreateMemoryHandler()
