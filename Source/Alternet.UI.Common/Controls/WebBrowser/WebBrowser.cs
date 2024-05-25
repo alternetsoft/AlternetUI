@@ -11,7 +11,32 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <include file="Interfaces/IWebBrowser.xml" path='doc/WebBrowser/*'/>
+    /// <summary>
+    /// This control may be used to render full featured web documents.
+    /// It supports using multiple backends, corresponding to different
+    /// implementations of the same functionality.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Each backend is a full rendering engine (Internet Explorer, Edge or WebKit). 
+    /// This allows the correct viewing of complex web pages with full JavaScript
+    /// and CSS support.Under macOS and Unix platforms a single backend is provided
+    /// (WebKit-based). Under MSW both the old IE backend and the new Edge
+    /// backend can be used.
+    /// </para>
+    /// <para>
+    /// WebBrowser has many asynchronous methods.They return immediately and
+    /// perform their work in the background.This includes functions such as 
+    /// <see cref = "Reload()" /> and < see cref= "LoadURL" />.
+    /// </para >
+    /// <para >
+    /// To receive notification of the progress and completion of these functions
+    /// you need to handle the events that are provided.
+    /// Specifically<see cref="Loaded"/> event notifies when the page or a sub-frame
+    /// has finished loading and<see cref="Error"/> event notifies that an
+    /// error has occurred.
+    /// </para>
+    /// </remarks>
     [DefaultProperty("Name")]
     [DefaultEvent("Enter")]
     [ControlCategory("Common")]
@@ -38,41 +63,212 @@ namespace Alternet.UI
             defaultUrl = url;
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/FullScreenChanged/*'/>
+        /*
+<summary>
+Occurs when the the page wants to enter or leave fullscreen. 
+</summary>
+<remarks>
+Use the <see cref="WebBrowserEventArgs.IntVal"/> property of the event 
+arguments to get the status. 
+Not implemented for the IE backend.
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? FullScreenChanged;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/ScriptMessageReceived/*'/>
+        /*
+<summary>
+Occurs when your application receives message from JS code of the loaded web page.
+</summary>
+<remarks>
+For usage details see <see cref="WebBrowser.AddScriptMessageHandler"/>.
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? ScriptMessageReceived;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/ScriptResult/*'/>
+        /*
+<summary>
+Occurs when your application receives results after 
+RunScriptAsync call.
+</summary>
+<remarks>
+For usage details see description of RunScriptAsync method.
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? ScriptResult;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Navigated/*'/>
+        /*
+<summary>
+Occurs when the WebBrowser control has navigated to a new web page 
+and has begun loading it. 
+</summary>
+<remarks>
+ <para>
+	 This event may not be canceled. Note that 
+	 if the displayed HTML document has several frames, one such event will
+	 be generated per frame.
+ </para>
+ <para>
+	 Handle the Navigated event to receive notification when the WebBrowser
+	 control has navigated to a new web page.
+ </para>
+ <para>
+	 When the Navigated event occurs, the new web page has begun loading, 
+	 which means you can access the loaded content through the WebBrowser properties and methods.
+ </para>
+ <para>
+	 Handle the <see cref="Loaded"/> event to receive notification when the
+	 WebBrowser control finishes loading the new document.
+ </para>
+ <para>
+	 You can also receive notification before navigation begins by handling the
+	 <see cref="Navigating"/> event. Handling this event lets you cancel navigation if 
+	 certain conditions have not been met. For example, the user has not 
+	 completely filled out a form.
+ </para>
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? Navigated;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Navigating/*'/>
+        /*
+<summary>
+Occurs before the WebBrowser control navigates to a new web page.
+</summary>
+<remarks>		    
+ <para>
+	 This event may be canceled to prevent navigating to this resource. 
+	 Note that if the displayed HTML document has several frames, one such 
+	 event will be generated per frame.
+ </para>
+ <para>
+	 You can handle the Navigating event to cancel navigation if certain 
+	 conditions 
+	 have not been met, for example, when the user has not completely filled 
+	 out a form. To cancel navigation, set the 
+	 <see cref="System.ComponentModel.CancelEventArgs.Cancel"/> property of the events
+	  object passed to the event handler to <see langword = "true"/>. 
+ </para>
+ <para>
+	 Handle the <see cref="Navigated"/> event to receive notification when the WebBrowser 
+	 control finishes navigation and has begun loading the document at the
+	 new location.
+ </para>
+ <para>
+	 Handle the <see cref="Loaded"/> event to receive 
+	 notification when the WebBrowser control finishes loading the new document.
+ </para>
+ <para>
+	 You can also use <see cref="WebBrowserEventArgs"/> object to retrieve the URL of the 
+	 new document through the <see cref="WebBrowserEventArgs.Url"/> property. If the new 
+	 document will be displayed in a Web page frame, you can retrieve the 
+	 name of the frame through the 
+	 <see cref="WebBrowserEventArgs.TargetFrameName"/> property.
+ </para>
+</remarks>	
+        */
         public event EventHandler<WebBrowserEventArgs>? Navigating;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/BeforeBrowserCreate/*'/>
+        /*
+<summary>
+Occurs after backend is created, but before actual browser
+control creation. 
+</summary>
+<remarks>
+You should not normally use it.
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? BeforeBrowserCreate;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Loaded/*'/>
+        /*
+<summary>
+<para>
+	Occurs when the WebBrowser control finishes loading a document.
+</para>
+</summary>
+<remarks>
+<para>
+	Handle the Loaded event to receive notification when the new 
+	document finishes loading. When the Loaded event occurs, the
+	new document is fully loaded, which means you can access its
+	contents through WebBrowser properties and methods.
+</para>
+<para>
+	To receive notification before navigation begins, handle the 
+	<see cref="Navigating"/> event. Handling this event lets you cancel
+	navigation if certain conditions have not been met,
+	for example, when the user has not completely filled out a form.
+</para>
+<para>
+	Handle the <see cref="Navigated"/> event to receive notification when the 
+	WebBrowser control finishes navigation and has begun loading
+	the document at the new location.
+</para>
+<para>
+	Note that if the displayed HTML document has several 
+	frames, one such event will be generated per frame.
+</para>
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? Loaded;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Error/*'/>
+        /*
+<summary>
+	Occurs when a navigation error occurs.
+</summary>
+<remarks>
+<para>
+	The <see cref="WebBrowserEventArgs.NavigationError"/> will contain an error type. 
+	The <see cref="WebBrowserEventArgs.Text"/> may contain a backend-specific
+	more precise error message or code.
+</para>
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? Error;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/NewWindow/*'/>
+        /*
+<summary>
+<para>
+	Occurs when a new browser window is created.
+</para>
+</summary>
+<remarks>
+<para>
+	You must handle this event if you want anything to happen, for example to 
+	load the page in a new window or tab.
+</para>
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? NewWindow;
 
-        /// <include file="Interfaces/IWebBrowser.xml"
-        ///     path='doc/Events/DocumentTitleChanged/*'/>
+        /*
+<summary>
+Occurs when the web page title changes. 
+Use <see cref="WebBrowserEventArgs.Text"/> to get the title.
+</summary>
+<remarks>
+You can handle this event to update the title bar of your 
+application with the current title of the loaded document.
+</remarks>
+        */
         public event EventHandler<WebBrowserEventArgs>? DocumentTitleChanged;
 
+        /*
+        
+        */
         public static IWebBrowserFactoryHandler Factory
-            => factory ??= BaseApplication.Handler.CreateWebBrowserFactoryHandler();
+        {
+            get => factory ??= BaseApplication.Handler.CreateWebBrowserFactoryHandler();
+            set => factory = value;
+        }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Is64Bit/*'/>
+        /*
+<summary>
+Gets a value indicating whether the WebBrowser runs on a 64 bit platform.
+</summary>
+<returns>
+<see langword="true"/> if the WebBrowser runs on a 64 bit platform;
+otherwise, <see langword="false"/>.
+</returns>
+        */
         public static bool Is64Bit
         {
             get
@@ -81,7 +277,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/MemoryFS/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public IWebBrowserMemoryFS MemoryFS
         {
             get
@@ -91,15 +290,22 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
+        /*
+        
+        */
+        [Browsable(false)]
         public override ControlTypeId ControlKind => ControlTypeId.WebBrowser;
 
         /// <summary>
         /// Gets default url (the first loaded url).
         /// </summary>
+        [Browsable(false)]
         public string DefaultUrl => defaultUrl;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/HasSelection/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool HasSelection
         {
             get
@@ -109,7 +315,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomFactor/*'/>
+        /*
+        
+        */
         public virtual float ZoomFactor
         {
             get
@@ -128,7 +336,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public bool HasBorder
+        public virtual bool HasBorder
         {
             get
             {
@@ -143,7 +351,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomType/*'/>
+        /*
+        
+        */
         public virtual WebBrowserZoomType ZoomType
         {
             get
@@ -159,7 +369,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Source/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual Uri Source
         {
             get
@@ -173,10 +386,23 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanZoomIn/*'/>
+        /*
+<summary>
+Gets a value indicating whether the zoom factor of the page can be increased,
+which allows the <see cref="ZoomIn"/> method to succeed.
+</summary>
+<returns>
+<see langword="true"/> if the web page can be zoomed in;
+otherwise, <see langword="false"/>.
+</returns>        
+        */
+        [Browsable(false)]
         public virtual bool CanZoomIn { get => Zoom != WebBrowserZoom.Largest; }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanGoBack/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanGoBack
         {
             get
@@ -186,8 +412,11 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanUndo/*'/>
-        public bool CanUndo
+        /*
+        
+        */
+        [Browsable(false)]
+        public virtual bool CanUndo
         {
             get
             {
@@ -196,7 +425,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanRedo/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanRedo
         {
             get
@@ -206,7 +438,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/AccessToDevToolsEnabled/*'/>
+        /*
+        
+        */
         public virtual bool AccessToDevToolsEnabled
         {
             get
@@ -222,7 +456,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/UserAgent/*'/>
+        /*
+        
+        */
         public virtual string UserAgent
         {
             get
@@ -238,7 +474,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ContextMenuEnabled/*'/>
+        /*
+        
+        */
         public virtual bool ContextMenuEnabled
         {
             get
@@ -254,7 +492,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Backend/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual WebBrowserBackend Backend
         {
             get
@@ -264,7 +505,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Editable/*'/>
+        /*
+        
+        */
         public virtual bool Editable
         {
             get
@@ -280,7 +523,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Zoom/*'/>
+        /*
+        
+        */
         public virtual WebBrowserZoom Zoom
         {
             get
@@ -296,7 +541,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/IsBusy/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool IsBusy
         {
             get
@@ -306,7 +554,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/PageSource/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual string PageSource
         {
             get
@@ -316,7 +567,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/PageText/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual string PageText
         {
             get
@@ -326,7 +580,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SelectedText/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual string SelectedText
         {
             get
@@ -336,7 +593,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SelectedSource/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual string SelectedSource
         {
             get
@@ -346,7 +606,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanCut/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanCut
         {
             get
@@ -356,7 +619,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Url/*'/>
+        /*
+        
+        */
         public string Url
         {
             get
@@ -370,8 +635,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml"
-        /// path='doc/PreferredColorScheme/*'/>
+        /*
+        
+        */
         public virtual WebBrowserPreferredColorScheme PreferredColorScheme
         {
             get
@@ -387,7 +653,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanCopy/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanCopy
         {
             get
@@ -397,7 +666,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanPaste/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanPaste
         {
             get
@@ -407,7 +679,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanGoForward/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanGoForward
         {
             get
@@ -417,22 +692,21 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanZoomOut/*'/>
+        /*
+        
+        */
+        [Browsable(false)]
         public virtual bool CanZoomOut { get => Zoom != WebBrowserZoom.Tiny; }
 
-        /*internal static Brush UixmlPreviewerBrush
-        {
-            get
-            {
-                if (uixmlPreviewerBrush == null)
-                    uixmlPreviewerBrush = Brushes.White;
-                return uixmlPreviewerBrush;
-            }
-        }*/
-
+        /*
+        
+        */
+        [Browsable(false)]
         internal new IWebBrowserHandler Handler => (IWebBrowserHandler)base.Handler;
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendOS/*'/>
+        /*
+        
+        */
         public static WebBrowserBackendOS GetBackendOS()
         {
             return Factory.GetBackendOS();
@@ -453,7 +727,23 @@ namespace Alternet.UI
         /// </remarks>
         public static string PrepareFileUrl(string filename) => CommonUtils.PrepareFileUrl(filename);
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackendPath/*'/>
+        /*
+<summary>
+Sets path to a fixed version of the WebView2 Edge runtime.
+</summary>
+<param name="path">
+Path to an extracted fixed version of the WebView2 Edge runtime.
+</param>
+<param name="isRelative">
+<see langword = "true"/> if specified path is relative to the application 
+folder; otherwise, <see langword = "false"/>.
+</param>
+<example>
+<code language="C#">
+SetBackendPath("Edge",true);
+</code>
+</example>        
+        */
         public static void SetBackendPath(string path, bool isRelative = false)
         {
             if (isRelative)
@@ -478,7 +768,9 @@ namespace Alternet.UI
 #pragma warning restore
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommandGlobal/*'/>
+        /*
+        
+        */
         public static string? DoCommandGlobal(string cmdName, params object?[] args)
         {
             if(cmdName == "CppThrow")
@@ -511,19 +803,35 @@ namespace Alternet.UI
             return Factory.DoCommand(cmdName, args);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CrtSetDbgFlag/*'/>
+        /*
+<summary>
+Retrieves or modifies the state of the debug flag to control the 
+allocation behavior of the debug heap manager. 
+</summary>
+<param name="value">
+New debug flag state.
+</param>
+<remarks>
+This is for debug purposes.
+CrtSetDbgFlag(0) allows to turn off debug output with heap manager information.
+</remarks>
+        */
         public static void CrtSetDbgFlag(int value)
         {
             Factory.CrtSetDbgFlag(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/IsBackendAvailable/*'/>
+        /*
+        
+        */
         public static bool IsBackendAvailable(WebBrowserBackend value)
         {
             return Factory.IsBackendAvailable(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackend/*'/>
+        /*
+        
+        */
         public static void SetBackend(WebBrowserBackend value)
         {
             if (value == WebBrowserBackend.IE || value == WebBrowserBackend.IELatest
@@ -536,47 +844,57 @@ namespace Alternet.UI
             Factory.SetBackend(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetLibraryVersionString/*'/>
+        /*
+        
+        */
         public static string GetLibraryVersionString()
         {
             return Factory.GetLibraryVersionString();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendVersionString/*'/>
+        /*
+        
+        */
         public static string GetBackendVersionString(WebBrowserBackend value)
         {
             return Factory.GetBackendVersionString(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml"
-        ///     path='doc/SetDefaultUserAgent/*'/>
+        /*
+        
+        */
         public static void SetDefaultUserAgent(string value)
         {
             Factory.SetDefaultUserAgent(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml"
-        ///     path='doc/SetDefaultScriptMesageName/*'/>
+        /*
+        
+        */
         public static void SetDefaultScriptMesageName(string value)
         {
             Factory.SetDefaultScriptMesageName(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml"
-        ///     path='doc/SetDefaultFSNameMemory/*'/>
+        /*
+        
+        */
         public static void SetDefaultFSNameMemory(string value)
         {
             Factory.SetDefaultFSNameMemory(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml"
-        ///     path='doc/SetDefaultFSNameArchive/*'/>
+        /*
+        
+        */
         public static void SetDefaultFSNameArchive(string value)
         {
             Factory.SetDefaultFSNameArchive(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetLatestBackend/*'/>
+        /*
+        
+        */
         public static void SetLatestBackend()
         {
             if (IsBackendAvailable(WebBrowserBackend.Edge))
@@ -600,8 +918,10 @@ namespace Alternet.UI
             SetBackend(WebBrowserBackend.Default);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/LoadUrlOrSearch/*'/>
-        public void LoadUrlOrSearch(string? url)
+        /*
+        
+        */
+        public virtual void LoadUrlOrSearch(string? url)
         {
             if (url == null)
             {
@@ -638,35 +958,45 @@ namespace Alternet.UI
             LoadURL(uri.ToString());
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommand/*'/>
-        public string? DoCommand(string cmdName, params object?[] args)
+        /*
+
+        */
+        public virtual string? DoCommand(string cmdName, params object?[] args)
         {
             CheckDisposed();
             return Handler.DoCommand(cmdName, args);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomIn/*'/>
+        /*
+
+        */
         public virtual void ZoomIn()
         {
             if (CanZoomIn)
                 ZoomInOut(1);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomOut/*'/>
+        /*
+
+        */
         public virtual void ZoomOut()
         {
             if (CanZoomOut)
                 ZoomInOut(-1);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Navigate_string/*'/>
+        /*
+
+        */
         public void Navigate(string urlString)
         {
             LoadURL(urlString);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Navigate_uri/*'/>
-        public void Navigate(Uri source)
+        /*
+
+        */
+        public void Navigate(Uri? source)
         {
             if (source == null)
                 LoadURL();
@@ -674,7 +1004,9 @@ namespace Alternet.UI
                 LoadURL(source.ToString());
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GoBack/*'/>
+        /*
+
+        */
         public virtual bool GoBack()
         {
             if (!CanGoBack)
@@ -683,7 +1015,9 @@ namespace Alternet.UI
             return Handler.GoBack();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GoForward/*'/>
+        /*
+
+        */
         public virtual bool GoForward()
         {
             if (!CanGoForward)
@@ -692,42 +1026,54 @@ namespace Alternet.UI
             return Handler.GoForward();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Stop/*'/>
+        /*
+
+        */
         public virtual void Stop()
         {
             CheckDisposed();
             Handler.Stop();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ClearHistory/*'/>
+        /*
+
+        */
         public virtual void ClearHistory()
         {
             CheckDisposed();
             Handler.ClearHistory();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/EnableHistory/*'/>
+        /*
+
+        */
         public virtual void EnableHistory(bool enable = true)
         {
             CheckDisposed();
             Handler.EnableHistory(enable);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Reload/*'/>
+        /*
+
+        */
         public virtual void Reload()
         {
             CheckDisposed();
             Handler.Reload();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Reload_noCache/*'/>
+        /*
+
+        */
         public virtual void Reload(bool noCache)
         {
             CheckDisposed();
             Handler.Reload(noCache);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/NavigateToString/*'/>
+        /*
+
+        */
         public virtual void NavigateToString(string html, string? baseUrl = null)
         {
             CheckDisposed();
@@ -740,7 +1086,9 @@ namespace Alternet.UI
             Handler.NavigateToString(html, baseUrl ?? string.Empty);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/NavigateToStream/*'/>
+        /*
+
+        */
         public virtual void NavigateToStream(Stream stream)
         {
             if (stream == null)
@@ -758,7 +1106,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanSetZoomType/*'/>
+        /*
+
+        */
         public virtual bool CanSetZoomType(WebBrowserZoomType zoomType)
         {
             CheckDisposed();
@@ -895,21 +1245,27 @@ namespace Alternet.UI
             OnNewWindow(e);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SelectAll/*'/>
+        /*
+
+        */
         public virtual void SelectAll()
         {
             CheckDisposed();
             Handler.SelectAll();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/DeleteSelection/*'/>
+        /*
+
+        */
         public virtual void DeleteSelection()
         {
             CheckDisposed();
             Handler.DeleteSelection();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Undo/*'/>
+        /*
+
+        */
         public virtual void Undo()
         {
             if (!CanUndo)
@@ -918,7 +1274,9 @@ namespace Alternet.UI
             Handler.Undo();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Redo/*'/>
+        /*
+
+        */
         public virtual void Redo()
         {
             if (!CanRedo)
@@ -927,14 +1285,18 @@ namespace Alternet.UI
             Handler.Redo();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ClearSelection/*'/>
+        /*
+
+        */
         public virtual void ClearSelection()
         {
             CheckDisposed();
             Handler.ClearSelection();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Cut/*'/>
+        /*
+
+        */
         public virtual void Cut()
         {
             if (!CanCut)
@@ -943,7 +1305,9 @@ namespace Alternet.UI
             Handler.Cut();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Copy/*'/>
+        /*
+
+        */
         public virtual void Copy()
         {
             if (!CanCopy)
@@ -952,7 +1316,9 @@ namespace Alternet.UI
             Handler.Copy();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Paste/*'/>
+        /*
+
+        */
         public virtual void Paste()
         {
             if (!CanPaste)
@@ -961,49 +1327,63 @@ namespace Alternet.UI
             Handler.Paste();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Find/*'/>
+        /*
+
+        */
         public virtual int Find(string text, WebBrowserFindParams? prm = null)
         {
             CheckDisposed();
             return Handler.Find(text, prm);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/FindClearResult/*'/>
+        /*
+
+        */
         public virtual void FindClearResult()
         {
             CheckDisposed();
             Handler.FindClearResult();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Print/*'/>
+        /*
+
+        */
         public virtual void Print()
         {
             CheckDisposed();
             Handler.Print();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RemoveAllUserScripts/*'/>
+        /*
+
+        */
         public virtual void RemoveAllUserScripts()
         {
             CheckDisposed();
             Handler.RemoveAllUserScripts();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/AddScriptMessageHandler/*'/>
+        /*
+
+        */
         public virtual bool AddScriptMessageHandler(string name)
         {
             CheckDisposed();
             return Handler.AddScriptMessageHandler(name);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RemoveScriptMessageHandler/*'/>
+        /*
+
+        */
         public virtual bool RemoveScriptMessageHandler(string name)
         {
             CheckDisposed();
             return Handler.RemoveScriptMessageHandler(name);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/AddUserScript/*'/>
+        /*
+
+        */
         public virtual bool AddUserScript(
             string javascript,
             bool injectDocStart = true)
@@ -1048,8 +1428,10 @@ namespace Alternet.UI
             return result;
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ToInvokeScriptArgs/*'/>
-        public string ToInvokeScriptArgs(object?[] args)
+        /*
+
+        */
+        public virtual string ToInvokeScriptArgs(object?[] args)
         {
             if (args == null || args.Length == 0)
                 return string.Empty;
@@ -1065,7 +1447,9 @@ namespace Alternet.UI
             return s!;
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScriptAsync/*'/>
+        /*
+
+        */
         public virtual void InvokeScriptAsync(
             string scriptName,
             IntPtr clientData,
@@ -1084,7 +1468,9 @@ namespace Alternet.UI
             RunScriptAsync(scriptName + "(" + s + ")", clientData);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ToInvokeScriptArg/*'/>
+        /*
+
+        */
         public virtual string? ToInvokeScriptArg(object? arg)
         {
             if (arg == null)
@@ -1136,7 +1522,9 @@ namespace Alternet.UI
             return arg.ToString();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/LoadURL/*'/>
+        /*
+
+        */
         public virtual void LoadURL(string? url = null)
         {
             url ??= "about:blank";
@@ -1144,21 +1532,27 @@ namespace Alternet.UI
             Handler.LoadURL(url);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetCurrentTitle/*'/>
+        /*
+
+        */
         public virtual string GetCurrentTitle()
         {
             CheckDisposed();
             return Handler.GetCurrentTitle();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetCurrentURL/*'/>
+        /*
+
+        */
         public virtual string GetCurrentURL()
         {
             CheckDisposed();
             return Handler.GetCurrentURL();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetVirtualHostNameToFolderMapping/*'/>
+        /*
+
+        */
         public virtual void SetVirtualHostNameToFolderMapping(
             string hostName,
             string folderPath,
@@ -1168,14 +1562,18 @@ namespace Alternet.UI
             Handler.SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetNativeBackend/*'/>
+        /*
+
+        */
         public IntPtr GetNativeBackend()
         {
             CheckDisposed();
             return Handler.GetNativeBackend();
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScriptAsync/*'/>
+        /*
+
+        */
         public virtual void RunScriptAsync(
             string javascript,
             IntPtr? clientData = null)
@@ -1184,7 +1582,9 @@ namespace Alternet.UI
             Handler.RunScriptAsync(javascript, clientData);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
+        /*
+
+        */
         internal static void SetDefaultPage(string url)
         {
             Factory.SetDefaultPage(url);
@@ -1226,7 +1626,7 @@ namespace Alternet.UI
             return result;
         }*/
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CreateHandler/*'/>
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return BaseApplication.Handler.CreateWebBrowserHandler(this);
