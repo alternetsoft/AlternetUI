@@ -19,5 +19,7 @@ namespace Alternet.UI
         bool IsOk { get; }
 
         bool Visible { get; set; }
+
+        Control? Control { get; }
     }
 }

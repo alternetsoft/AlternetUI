@@ -439,12 +439,12 @@ namespace Alternet.UI
 
         public ICaretHandler CreateCaretHandler()
         {
-            throw new NotImplementedException();
+            return new PlessCaretHandler();
         }
 
         public ICaretHandler CreateCaretHandler(Control control, int width, int height)
         {
-            throw new NotImplementedException();
+            return new PlessCaretHandler(control, width, height);
         }
     }
 }

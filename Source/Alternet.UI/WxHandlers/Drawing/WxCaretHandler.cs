@@ -10,6 +10,8 @@ namespace Alternet.UI
 {
     internal class WxCaretHandler : DisposableObject<IntPtr>, ICaretHandler
     {
+        private Control? control;
+
         public WxCaretHandler()
             : base(UI.Native.WxOtherFactory.CreateCaret(), true)
         {
@@ -21,6 +23,7 @@ namespace Alternet.UI
                 width,
                 height), true)
         {
+            this.control = control;
         }
 
         public int BlinkTime
@@ -81,6 +84,11 @@ namespace Alternet.UI
             {
                 UI.Native.WxOtherFactory.CaretShow(Handle, value);
             }
+        }
+
+        public Control? Control
+        {
+            get => control;
         }
 
         protected override void DisposeUnmanaged()
