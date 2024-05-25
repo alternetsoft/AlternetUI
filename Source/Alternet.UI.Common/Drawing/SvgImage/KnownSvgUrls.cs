@@ -14,7 +14,7 @@ namespace Alternet.UI
     public static class KnownSvgUrls
     {
         private const string ResTemplate =
-            "embres:Alternet.UI.Resources.Svg.{0}.svg?assembly=Alternet.UI";
+            "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
         /// Gets or sets url used to load an empty svg image.
