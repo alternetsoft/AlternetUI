@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    public partial class WxGraphics : Graphics
+    public partial class WxGraphics : Graphics, IWxGraphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;

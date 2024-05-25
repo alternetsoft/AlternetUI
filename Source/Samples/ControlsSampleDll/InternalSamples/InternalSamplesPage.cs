@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace ControlsSample
 {
-    internal partial class InternalSamplesPage : Control
+    public partial class InternalSamplesPage : Control
     {
         private readonly VListBox view = new()
         {
@@ -43,38 +43,44 @@ namespace ControlsSample
             view.EnsureVisible(0);
         }
 
+        public static Stack<ListControlItem> SampleItems = new();
+
+        public static void Add(string text, Func<Window> createForm)
+        {
+            ListControlItem item = new(text);
+            item.CustomAttr.SetAttribute<Action>("Fn", Fn);
+            SampleItems.Push(item);
+
+            void Fn()
+            {
+                var form = createForm();
+                form.Show();
+            }
+        }
+
         private void AddDefaultItems()
         {
-            void Add(string text, Func<Window> createForm)
-            {
-                ListControlItem item = new(text);
-                item.CustomAttr.SetAttribute<Action>("Fn", Fn);
-                view.Items.Add(item);
-
-                void Fn()
-                {
-                    var form = createForm();
-                    form.Show();
-                }
-            }
-
-            Add("Property Grid", () => new PropertyGridSample.MainWindow());
-            Add("Employee Form", ()=> new EmployeeFormSample.EmployeeWindow());
-            Add("Common Dialogs", () => new CommonDialogsWindow());
-            Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());
-            Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
-            Add("Paint Sample", () => new PaintSample.MainWindow());            
-            Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
-            Add("Drawing Sample", () => new DrawingSample.MainWindow());
-            Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
-            Add("Mouse Input", () => new InputSample.MouseInputWindow());
-            Add("Menu Sample", () => new MenuSample.MainWindow());
-            Add("Printing Sample", () => new PrintingSample.MainWindow());
-            Add("Preview Uixml and other files", () => new PreviewSampleWindow());
-            Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
-            Add("Threading Sample", () => new ThreadingSample.MainWindow());
-            Add("Action Simulator Sample", () => new ActionSimulatorPage());
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
+            Add("Threading Sample", () => new ThreadingSample.MainWindow());
+            Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
+            Add("Preview Uixml and other files", () => new PreviewSampleWindow());
+            Add("Printing Sample", () => new PrintingSample.MainWindow());
+            Add("Menu Sample", () => new MenuSample.MainWindow());
+            Add("Mouse Input", () => new InputSample.MouseInputWindow());
+            Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
+            Add("Drawing Sample", () => new DrawingSample.MainWindow());
+            Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
+            Add("Paint Sample", () => new PaintSample.MainWindow());
+            Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
+            Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());
+            Add("Common Dialogs", () => new CommonDialogsWindow());
+            Add("Employee Form", () => new EmployeeFormSample.EmployeeWindow());
+            Add("Property Grid", () => new PropertyGridSample.MainWindow());
+
+            while(SampleItems.Count > 0)
+            {
+                view.Items.Add(SampleItems.Pop());
+            }
         }
 
         private void RunButton_Click(object? sender, EventArgs e)

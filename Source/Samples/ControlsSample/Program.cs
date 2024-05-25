@@ -1,12 +1,26 @@
 ﻿using System;
 using System.ComponentModel;
 using Alternet.Drawing;
+
 using Alternet.UI;
 
 namespace ControlsSample
 {
     internal class Program
     {
+        public static void InitSamples()
+        {
+            InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
+
+            PropertyGridSample.MainWindow.LimitedTypes.Add(typeof(PropertyGridSample.ControlPainterPreview));
+
+            PropertyGridSample.ObjectInit.Actions.Add(typeof(PropertyGridSample.ControlPainterPreview), (c) =>
+            {
+                var control = (c as PropertyGridSample.ControlPainterPreview)!;
+                control.SuggestedSize = 200;
+            });
+        }
+
         [STAThread]
         public static void Main()
         {
@@ -15,6 +29,8 @@ namespace ControlsSample
             var testBadFont = false;
 
             var application = new Application();
+
+            InitSamples();
 
             /*application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             DebugUtils.HookExceptionEvents();*/

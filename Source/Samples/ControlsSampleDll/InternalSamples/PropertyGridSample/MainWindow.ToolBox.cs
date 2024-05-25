@@ -12,6 +12,8 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
+        public static List<Type> LimitedTypes = new();
+
         private T? GetSelectedControl<T>()
         {
             if (ToolBox.SelectedItem is not ControlListBoxItem item)
@@ -44,58 +46,54 @@ namespace PropertyGridSample
                 };
                 ToolBox.Add(item);
 
-                Type[] limitedTypes =
-                {
-                    typeof(Border),
-                    typeof(PictureBox),
-                    typeof(Button),
-                    typeof(ToolBar),
-                    typeof(SplittedPanel),
-                    typeof(Calendar),
-                    typeof(CheckBox),
-                    typeof(ColorPicker),
-                    typeof(ComboBox),
-                    typeof(DateTimePicker),
-                    typeof(GroupBox),
-                    typeof(HorizontalStackPanel),
-                    typeof(Label),
-                    typeof(GenericLabel),
-                    typeof(TabControl),
-                    typeof(LinkLabel),
-                    typeof(ListBox),
-                    typeof(ListView),
-                    typeof(MultilineTextBox),
-                    typeof(NumericUpDown),
-                    typeof(Panel),
-                    typeof(PanelOkCancelButtons),
-                    typeof(ProgressBar),
-                    typeof(RadioButton),
-                    typeof(RichTextBox),
-                    typeof(FindReplaceControl),
-                    typeof(Slider),
-                    typeof(ScrollBar),
-                    typeof(StackPanel),
-                    typeof(TextBox),
-                    typeof(TreeView),
-                    typeof(VerticalStackPanel),
-                    typeof(CardPanel),
-                    typeof(SpeedButton),
-                    typeof(ComboBoxAndLabel),
-                    typeof(TextBoxAndLabel),
-                    typeof(SpeedTextButton),
-                    typeof(SpeedColorButton),
-                    typeof(ToolBarSet),
-                    typeof(SideBarPanel),
-                    typeof(ControlPainterPreview),
-                    typeof(ColorComboBox),
-                    typeof(ColorListBox),
-                    typeof(VListBox),
-                    typeof(UserControl),
-                };
+                LimitedTypes.Add(typeof(Border));
+                LimitedTypes.Add(typeof(PictureBox));
+                LimitedTypes.Add(typeof(Button));
+                LimitedTypes.Add(typeof(ToolBar));
+                LimitedTypes.Add(typeof(SplittedPanel));
+                LimitedTypes.Add(typeof(Calendar));
+                LimitedTypes.Add(typeof(CheckBox));
+                LimitedTypes.Add(typeof(ColorPicker));
+                LimitedTypes.Add(typeof(ComboBox));
+                LimitedTypes.Add(typeof(DateTimePicker));
+                LimitedTypes.Add(typeof(GroupBox));
+                LimitedTypes.Add(typeof(HorizontalStackPanel));
+                LimitedTypes.Add(typeof(Label));
+                LimitedTypes.Add(typeof(GenericLabel));
+                LimitedTypes.Add(typeof(TabControl));
+                LimitedTypes.Add(typeof(LinkLabel));
+                LimitedTypes.Add(typeof(ListBox));
+                LimitedTypes.Add(typeof(ListView));
+                LimitedTypes.Add(typeof(MultilineTextBox));
+                LimitedTypes.Add(typeof(NumericUpDown));
+                LimitedTypes.Add(typeof(Panel));
+                LimitedTypes.Add(typeof(PanelOkCancelButtons));
+                LimitedTypes.Add(typeof(ProgressBar));
+                LimitedTypes.Add(typeof(RadioButton));
+                LimitedTypes.Add(typeof(RichTextBox));
+                LimitedTypes.Add(typeof(FindReplaceControl));
+                LimitedTypes.Add(typeof(Slider));
+                LimitedTypes.Add(typeof(ScrollBar));
+                LimitedTypes.Add(typeof(StackPanel));
+                LimitedTypes.Add(typeof(TextBox));
+                LimitedTypes.Add(typeof(TreeView));
+                LimitedTypes.Add(typeof(VerticalStackPanel));
+                LimitedTypes.Add(typeof(CardPanel));
+                LimitedTypes.Add(typeof(SpeedButton));
+                LimitedTypes.Add(typeof(ComboBoxAndLabel));
+                LimitedTypes.Add(typeof(TextBoxAndLabel));
+                LimitedTypes.Add(typeof(SpeedTextButton));
+                LimitedTypes.Add(typeof(SpeedColorButton));
+                LimitedTypes.Add(typeof(ToolBarSet));
+                LimitedTypes.Add(typeof(SideBarPanel));
+                LimitedTypes.Add(typeof(ColorComboBox));
+                LimitedTypes.Add(typeof(ColorListBox));
+                LimitedTypes.Add(typeof(VListBox));
+                LimitedTypes.Add(typeof(UserControl));
 
                 List<ControlListBoxItem> items = new();
                 
-                foreach (Type type in limitedTypes)
+                foreach (Type type in LimitedTypes)
                 {
                     item = new(type)
                     {

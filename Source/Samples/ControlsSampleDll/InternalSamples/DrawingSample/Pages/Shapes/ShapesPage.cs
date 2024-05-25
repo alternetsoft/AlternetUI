@@ -133,7 +133,7 @@ namespace DrawingSample
                 var cellNameRect = cellRect.InflatedBy(-2, -2);
                 cellNameRect.Height -= 4;
 
-                var nameTextSize = ((WxGraphics)dc).MeasureText(
+                var nameTextSize = ((IWxGraphics)dc).MeasureText(
                     cell.Name,
                     Control.DefaultFont,
                     cellNameRect.Width,
@@ -162,7 +162,7 @@ namespace DrawingSample
 
                 if (nameVisible)
                 {
-                    ((WxGraphics)dc).DrawText(
+                    ((IWxGraphics)dc).DrawText(
                         cell.Name,
                         Control.DefaultFont,
                         Brushes.Black,

@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    internal partial class ObjectInit
+    public partial class ObjectInit
     {
         public static void InitSplittedPanel(object control)
         {

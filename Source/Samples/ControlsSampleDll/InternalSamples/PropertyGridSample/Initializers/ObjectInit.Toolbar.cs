@@ -9,7 +9,7 @@ using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {
-    internal partial class ObjectInit
+    public partial class ObjectInit
     {
         public static void InitFindReplaceControl(object control)
         {

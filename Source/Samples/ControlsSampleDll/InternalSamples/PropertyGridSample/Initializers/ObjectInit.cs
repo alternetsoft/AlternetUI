@@ -13,7 +13,7 @@ using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {
-    internal partial class ObjectInit
+    public partial class ObjectInit
     {
         private const int defaultListHeight = 250;
         private const string LoremIpsum =
@@ -155,12 +155,6 @@ namespace PropertyGridSample
             Actions.Add(typeof(ComboBox), InitComboBox);
             Actions.Add(typeof(ColorComboBox), InitColorComboBox);
             Actions.Add(typeof(CheckListBox), InitCheckListBox);
-
-            Actions.Add(typeof(ControlPainterPreview), (c) =>
-            {
-                var control = (c as ControlPainterPreview)!;
-                control.SuggestedSize = 200;
-            });
 
             Actions.Add(typeof(SaveFileDialog), (c) =>
             {

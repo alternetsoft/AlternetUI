@@ -7,7 +7,7 @@ namespace PrintingSample
 {
     public partial class MainWindow : Window
     {
-        private static readonly Font font = new(FontFamily.GenericSerif, 25);
+        private static readonly Font font = new(FontFamily.GenericSerif, 20);
         private static readonly Pen thickGrayPen = new(Color.Gray, 4);
 
         public MainWindow()
@@ -49,12 +49,11 @@ namespace PrintingSample
 
             var drawTextBounds = bounds.InflatedBy(-50, -50);
 
-            ((WxGraphics)dc).DrawText(
-                "The quick brown fox jumps over the lazy dog.",
+            dc.DrawText(
+                "The brown fox jumps over the lazy dog.",
                 font,
                 Brushes.Black,
-                drawTextBounds,
-                new TextFormat { Wrapping = TextWrapping.Word });
+                drawTextBounds.Location);
 
             dc.FillEllipse(Brushes.Gold, cornerRectLeft.InflatedBy(-5, -5));
             dc.FillEllipse(Brushes.Gold, cornerRectRight.InflatedBy(-5, -5));

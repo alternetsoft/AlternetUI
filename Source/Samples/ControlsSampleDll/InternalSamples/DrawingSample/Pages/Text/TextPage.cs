@@ -211,7 +211,7 @@ namespace DrawingSample
                 {
                     if (TextWidthLimitEnabled)
                     {
-                        textHeight = ((WxGraphics)dc).MeasureText(
+                        textHeight = ((IWxGraphics)dc).MeasureText(
                             LoremIpsum,
                             paragraph.Font,
                             TextWidthLimit,
@@ -223,7 +223,7 @@ namespace DrawingSample
 
                 if (TextWidthLimitEnabled)
                 {
-                    ((WxGraphics)dc).DrawText(
+                    ((IWxGraphics)dc).DrawText(
                         LoremIpsum,
                         paragraph.Font,
                         color.AsBrush,
@@ -234,7 +234,7 @@ namespace DrawingSample
                 if (TextHeightSet)
                 {
                     var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
-                    ((WxGraphics)dc).DrawText(
+                    ((IWxGraphics)dc).DrawText(
                         LoremIpsum,
                         paragraph.Font,
                         color.AsBrush,

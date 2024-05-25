@@ -137,7 +137,7 @@ namespace DragAndDropSample
             if (filesFormatCheckBox!.IsChecked)
                 result.SetFiles(
                     (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
-                    typeof(Application).Assembly.Location);
+                    typeof(BaseApplication).Assembly.Location);
 
             if (bitmapFormatCheckBox!.IsChecked)
                 result.SetBitmap(testBitmap);

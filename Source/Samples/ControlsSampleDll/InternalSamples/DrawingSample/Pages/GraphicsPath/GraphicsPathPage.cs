@@ -100,12 +100,15 @@ namespace DrawingSample
 
         private void DrawDemoForeground(Graphics dc, RectD bounds)
         {
-            ((WxGraphics)dc).DrawText(
-                "\n\nClick and drag here to draw.\nYou can select the path segment type to draw in the combo box in the panel to the right.",
+            var s1 = "Click and drag here to draw.";
+            var s2 = "You can select the path segment type";
+            var s3 = "to draw in the combo box in the panel to the right.";
+
+            dc.DrawText(
+                new string[] { s1, s2, s3 },
                 Control.DefaultFont,
                 Brushes.Black,
-                bounds,
-                new TextFormat { Wrapping = TextWrapping.Word, HorizontalAlignment = TextHorizontalAlignment.Center });
+                bounds.Location);
 
             using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
 

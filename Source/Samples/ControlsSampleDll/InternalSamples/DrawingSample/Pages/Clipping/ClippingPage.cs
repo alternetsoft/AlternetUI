@@ -81,7 +81,7 @@ namespace DrawingSample
 
             dc.Pop();
 
-            ((WxGraphics)dc).DrawText(
+            ((IWxGraphics)dc).DrawText(
                 "Click and drag the mouse to add or subtract rectangles to/from the clip region.",
                 Control.DefaultFont,
                 Brushes.Black,

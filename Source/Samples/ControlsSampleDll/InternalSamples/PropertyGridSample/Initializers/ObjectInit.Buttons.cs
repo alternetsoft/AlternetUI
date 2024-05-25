@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
-    internal partial class ObjectInit
+    public partial class ObjectInit
     {
         public static void LogClick(object? sender, EventArgs e)
         {

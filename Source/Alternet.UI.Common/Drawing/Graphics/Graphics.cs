@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a custom drawing surface.
     /// </summary>
-    public abstract class Graphics : DisposableObject
+    public abstract class Graphics : DisposableObject, IGraphics
     {
         private Stack<TransformMatrix>? stack;
 
@@ -864,6 +864,15 @@ namespace Alternet.Drawing
         /// corner of the drawn text.</param>
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
+        public void DrawText(string[] text, Font font, Brush brush, PointD origin)
+        {
+            foreach(var s in text)
+            {
+                DrawText(s, font, brush, origin);
+                origin.Y += MeasureText(s, font).Height;
+            }
+        }
+
         /// <summary>
         /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.
         /// </summary>
@@ -963,48 +972,11 @@ namespace Alternet.Drawing
         public SizeD MeasureText(string text, Font font)
             => GetTextExtent(text, font);
 
-        /*/// <summary>
-        /// Measures the specified string when drawn with the specified <see cref="Font"/> and
-        /// maximum width.
-        /// </summary>
-        /// <param name="text">String to measure.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="maximumWidth">Maximum width of the string in device-independent
-        /// units (1/96th inch per unit).</param>
-        /// <returns>
-        /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
-        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
-        /// </returns>
-        public abstract SizeD MeasureText(string text, Font font, double maximumWidth);*/
-
-        /*/// <summary>
-        /// Measures the specified string when drawn with the specified <see cref="Font"/>,
-        /// maximum width and <see cref="TextFormat"/>.
-        /// </summary>
-        /// <param name="text">String to measure.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="maximumWidth">Maximum width of the string in device-independent
-        /// units (1/96th inch per unit).</param>
-        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
-        /// such as
-        /// alignment and trimming, that are applied to the drawn text.</param>
-        /// <returns>
-        /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
-        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
-        /// </returns>
-        public abstract SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format);*/
-
         /// <summary>
         /// Pops a stored state from the stack and sets the current transformation matrix
         /// to that state.
         /// </summary>
-        public void Pop()
+        public virtual void Pop()
         {
             stack ??= new();
             Transform = stack.Pop(); 
@@ -1016,7 +988,7 @@ namespace Alternet.Drawing
         /// and concatenates the current transform with a new transform.
         /// </summary>
         /// <param name="transform">A transform to concatenate with the current transform.</param>
-        public void PushTransform(TransformMatrix transform)
+        public virtual void PushTransform(TransformMatrix transform)
         {
             Push();
             var currentTransform = Transform;
