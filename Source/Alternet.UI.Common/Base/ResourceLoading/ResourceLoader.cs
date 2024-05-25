@@ -291,8 +291,10 @@ namespace Alternet.UI
                 if (uri.IsEmbres())
                 {
                     var assemblyName = uri.GetAssemblyNameFromQuery();
-                    if (assemblyName.Length > 0)
+                    if (!string.IsNullOrEmpty(assemblyName))
                         return assemblyDescriptorResolver.GetAssembly(assemblyName);
+                    else
+                        return assemblyDescriptorResolver.GetAssemblyFromUrl(uri);
                 }
             }
 

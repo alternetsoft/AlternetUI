@@ -10,6 +10,53 @@ namespace Alternet.UI
     {
         private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = new();
 
+        public void GetAllAssemblies()
+        {
+
+        }
+
+        public IAssemblyDescriptor? GetAssemblyFromUrl(Uri url)
+        {
+            var resName = url.AbsolutePath;
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                var resources = assembly.GetManifestResourceNames();
+
+                if (resources.Length == 0)
+                    continue;
+
+                foreach (var resource in resources)
+                {
+                    if(resource == resName)
+                    {
+                        return GetOrLoadAssemblyDescriptor(assembly.GetName().Name!, assembly);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public IAssemblyDescriptor GetOrLoadAssemblyDescriptor(string name, Assembly assembly)
+        {
+            if (!assemblyNameCache.TryGetValue(name, out var result))
+            {
+                result = LoadAssemblyDescriptor(name, assembly);
+            }
+
+            return result;
+        }
+
+        public IAssemblyDescriptor LoadAssemblyDescriptor(string name, Assembly assembly)
+        {
+            var result = new AssemblyDescriptor(assembly);
+            assemblyNameCache[name] = result;
+            return result;
+        }
+
         public IAssemblyDescriptor GetAssembly(string name)
         {
             if (name == null)
@@ -19,9 +66,10 @@ namespace Alternet.UI
             {
                 var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
                 var match = loadedAssemblies.FirstOrDefault(a => a.GetName().Name == name);
+
                 if (match != null)
                 {
-                    assemblyNameCache[name] = rv = new AssemblyDescriptor(match);
+                    rv = LoadAssemblyDescriptor(name, match);
                 }
                 else
                 {
@@ -33,7 +81,7 @@ namespace Alternet.UI
                     }
 #endif
                     name = Uri.UnescapeDataString(name);
-                    assemblyNameCache[name] = rv = new AssemblyDescriptor(Assembly.Load(name));
+                    rv = LoadAssemblyDescriptor(name, Assembly.Load(name));
                 }
             }
 
@@ -45,6 +93,7 @@ namespace Alternet.UI
     internal interface IAssemblyDescriptorResolver
     {
         IAssemblyDescriptor GetAssembly(string name);
+        IAssemblyDescriptor? GetAssemblyFromUrl(Uri url);
     }
 #pragma warning restore
 }

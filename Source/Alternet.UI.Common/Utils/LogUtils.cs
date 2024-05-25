@@ -387,6 +387,30 @@ namespace Alternet.UI
             }
         }
 
+        public static void LogResourceNames()
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                var resources = assembly.GetManifestResourceNames();
+
+                if (resources.Length == 0)
+                    continue;
+
+                LogUtils.LogToFile("========");
+                LogUtils.LogToFile($"Name: {assembly.FullName}");
+                LogUtils.LogToFile(" ");
+
+                foreach (var resource in resources)
+                {
+                    LogUtils.LogToFile(resource);
+                }
+
+                LogUtils.LogToFile("========");
+            }
+        }
+
         /// <summary>
         /// Writes to log file "Application finished" header text.
         /// </summary>
