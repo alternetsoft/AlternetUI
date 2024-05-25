@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 using Alternet.UI.Localization;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -246,10 +247,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when\
+        /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
-        public static bool DebugWriteLine { get; set; } = false;
+        public static LogItemKindFlags DebugWriteLine { get; set; } = LogItemKindFlags.Error;
 
         public static bool ThreadExceptionAssigned => ThreadException is not null;
 
@@ -891,7 +892,7 @@ namespace Alternet.UI
             if (msg is null || msg.Length == 0)
                 return;
             WriteToLogFileIfAllowed(msg);
-            if (DebugWriteLine)
+            if (DebugWriteLine.HasKind(kind))
                 Debug.WriteLine(msg);
             prefix ??= msg;
 
@@ -1021,7 +1022,7 @@ namespace Alternet.UI
                 StringUtils.StringSplitToArrayChars,
                 StringSplitOptions.RemoveEmptyEntries);
 
-            if (DebugWriteLine || LogMessage is null)
+            if (DebugWriteLine.HasKind(kind) || LogMessage is null)
             {
                 foreach (string s2 in result)
                 {
