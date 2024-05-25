@@ -231,6 +231,7 @@ namespace Alternet.UI
         public static readonly object DefaultDateTime = default(DateTime);
 
         private static AdvDictionary<string, Assembly>? ResNameToAssembly;
+        private static int resNameToAssemblySavedLength = 0;
 
         /// <summary>
         /// Creates <see cref="Action"/> for the specified <see cref="MethodInfo"/>.
@@ -866,11 +867,12 @@ namespace Alternet.UI
 
         public static Assembly? FindAssemblyForResource(string resName)
         {
-            if(ResNameToAssembly is null)
-            {
-                ResNameToAssembly = new();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            if (ResNameToAssembly is null || assemblies.Length != resNameToAssemblySavedLength)
+            {
+                ResNameToAssembly ??= new();
+                resNameToAssemblySavedLength = assemblies.Length;
 
                 foreach (var assembly in assemblies)
                 {
