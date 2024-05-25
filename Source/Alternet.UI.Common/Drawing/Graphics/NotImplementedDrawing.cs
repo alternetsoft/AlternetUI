@@ -970,66 +970,6 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override object CreateCaret()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateCaret(IControl control, int width, int height)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int CaretGetBlinkTime()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void CaretSetBlinkTime(int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override SizeI CaretGetSize(Caret caret)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void CaretSetSize(Caret caret, SizeI value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override PointI CaretGetPosition(Caret caret)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void CaretSetPosition(Caret caret, PointI value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CaretIsOk(Caret caret)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CaretGetVisible(Caret caret)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void CaretSetVisible(Caret caret, bool value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void DisposeCaret(Caret caret)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Graphics CreateGraphicsFromScreen()
         {
             throw new NotImplementedException();

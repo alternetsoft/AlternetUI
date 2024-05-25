@@ -20,15 +20,14 @@ namespace Alternet.UI
     /// <remarks>
     /// Currently, the caret appears as a rectangle of the given size.
     /// </remarks>
-    public class Caret : HandledObject<object>
+    public class Caret : HandledObject<ICaretHandler>
     {
-        private readonly IControl? control;
+        private readonly Control? control;
         private SizeI? size;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Caret"/> class.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Caret()
         {
         }
@@ -40,8 +39,7 @@ namespace Alternet.UI
         /// <param name="control">A control the caret is associated with.</param>
         /// <param name="width">Caret width in pixels.</param>
         /// <param name="height">Caret height in pixels.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Caret(IControl control, int width, int height)
+        public Caret(Control control, int width, int height)
         {
             this.control = control;
             size = (width, height);
@@ -53,68 +51,61 @@ namespace Alternet.UI
         /// <remarks>
         /// Blink time is measured in milliseconds and is the time elapsed
         /// between 2 inversions of the caret (blink time of the caret is common
-        /// to all carets in the application, so this property is static).
+        /// to all carets in the application).
         /// </remarks>
-        public static int BlinkTime
+        public virtual int BlinkTime
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetBlinkTime();
+                return Handler.BlinkTime;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetBlinkTime(value);
+                Handler.BlinkTime = value;
             }
         }
 
         /// <summary>
         /// Gets or sets the caret size.
         /// </summary>
-        public SizeI Size
+        public virtual SizeI Size
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetSize(this);
+                return Handler.Size;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetSize(this, value);
+                Handler.Size = value;
             }
         }
 
         /// <summary>
         /// Gets or sets the caret position (in pixels).
         /// </summary>
-        public PointI Position
+        public virtual PointI Position
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetPosition(this);
+                return Handler.Position;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetPosition(this, value);
+                Handler.Position = value;
             }
         }
 
         /// <summary>
         /// Returns true if the caret was created successfully.
         /// </summary>
-        public bool IsOk
+        public virtual bool IsOk
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretIsOk(this);
+                return Handler.IsOk;
             }
         }
 
@@ -126,18 +117,16 @@ namespace Alternet.UI
         /// is permanently hidden (if it is blinking and not shown
         /// currently but will be after the next blink, this method still returns true).
         /// </remarks>
-        public bool Visible
+        public virtual bool Visible
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return NativeDrawing.Default.CaretGetVisible(this);
+                return Handler.Visible;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                NativeDrawing.Default.CaretSetVisible(this, value);
+                Handler.Visible = value;
             }
         }
 
@@ -162,17 +151,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override ICaretHandler CreateHandler()
         {
             if(control is null || size is null)
-                return NativeDrawing.Default.CreateCaret();
-            return NativeDrawing.Default.CreateCaret(control, size.Value.Width, size.Value.Height);
-        }
-
-        /// <inheritdoc/>
-        protected override void DisposeManaged()
-        {
-            NativeDrawing.Default.DisposeCaret(this);
+                return BaseApplication.Handler.CreateCaretHandler();
+            return BaseApplication.Handler.CreateCaretHandler(
+                control,
+                size.Value.Width,
+                size.Value.Height);
         }
     }
 }

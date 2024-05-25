@@ -470,6 +470,16 @@ namespace Alternet.UI
             return new ValueValidatorText(style);
         }
 
+        public ICaretHandler CreateCaretHandler()
+        {
+            return new WxCaretHandler();
+        }
+
+        public ICaretHandler CreateCaretHandler(Control control, int width, int height)
+        {
+            return new WxCaretHandler(control, width, height);
+        }
+
         public IValueValidatorText CreateValueValidatorNum(
             ValueValidatorNumStyle numericType,
             int valueBase = 10)

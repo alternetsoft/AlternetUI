@@ -436,5 +436,15 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public ICaretHandler CreateCaretHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICaretHandler CreateCaretHandler(Control control, int width, int height)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
