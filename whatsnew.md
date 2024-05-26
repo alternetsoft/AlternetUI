@@ -1,3 +1,12 @@
+# 0.9.602 (2024 May 26)
+
+- TransformMatrix reimplemented on c#.
+- Graphics: Push and Pop reimplemented on c#.
+- Resource url embres protocol now works without assembly name in url.
+- WebBrowser: moved xml comments to cs file.
+- Fixed csproj files so FrameworksOverride.props now works.
+- Add Changed event to IconSet and ImageList.
+
 # 0.9.601 (2024 May 23)
 
 - All controls are now separated from WxWidgets and were moved to Alternet.UI.Common.
