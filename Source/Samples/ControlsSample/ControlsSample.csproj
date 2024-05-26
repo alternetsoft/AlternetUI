@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\CommonData\TargetFrameworks.props" />
+
     <PropertyGroup>
       <WxWidgets>true</WxWidgets>
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
       <OutputType>WinExe</OutputType>
       <ApplicationManifest>app.manifest</ApplicationManifest>
-	<TargetFrameworks>net8.0</TargetFrameworks>
     </PropertyGroup>                 
 
     <ItemGroup>

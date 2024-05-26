@@ -44,18 +44,6 @@
     <None Include="..\Licenses\License.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>$(UITargetFrameworksWindows)</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-    <TargetFrameworks>$(UITargetFrameworksLinux)</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-    <TargetFrameworks>$(UITargetFrameworksMacOs)</TargetFrameworks>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="build\**" />
     <Compile Remove="Classes\BrowsableProps\**" />

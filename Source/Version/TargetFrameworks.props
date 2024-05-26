@@ -4,22 +4,27 @@
 <!-- Also edit \Source\Samples\CommonData\TargetFrameworks.props -->	
 
   <PropertyGroup>
-  
-  	<BoolNoNet8>false</BoolNoNet8>
-	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
-
-    <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
 	<TargetFramework48Version>net480</TargetFramework48Version>
 	<TargetFramework46Version>net462</TargetFramework46Version>
-	<UITargetFrameworksWindows>net8.0;net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
+  	<BoolNoNet8>false</BoolNoNet8>
+	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
+    	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
+    	<UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
+	<TargetFrameworks>net8.0</TargetFrameworks>
+  </PropertyGroup>
 
-	<UITargetFrameworksLinux Condition="$(BoolNoNet8)">net7.0;net6.0</UITargetFrameworksLinux>
-	<UITargetFrameworksMacOs Condition="$(BoolNoNet8)">net7.0;net6.0</UITargetFrameworksMacOs>
+ <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+	<TargetFrameworks>net8.0;net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</TargetFrameworks>
+ </PropertyGroup>
 
-	<UITargetFrameworksLinux Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</UITargetFrameworksLinux>
-	<UITargetFrameworksMacOs Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</UITargetFrameworksMacOs>
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+	<TargetFrameworks Condition="$(BoolNoNet8)">net7.0;net6.0</TargetFrameworks>
+	<TargetFrameworks Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</TargetFrameworks>
+  </PropertyGroup>
 
-    <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+	<TargetFrameworks Condition="$(BoolNoNet8)">net7.0;net6.0</TargetFrameworks>
+	<TargetFrameworks Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
