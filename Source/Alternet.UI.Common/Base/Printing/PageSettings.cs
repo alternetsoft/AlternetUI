@@ -24,7 +24,7 @@ namespace Alternet.Drawing.Printing
         /// Initializes a new instance of the <see cref="PageSettings"/> class.
         /// </summary>
         public PageSettings()
-            : this(NativePlatform.Default.CreatePageSettingsHandler())
+            : this(BaseApplication.Handler.CreatePageSettingsHandler())
         {
         }
 

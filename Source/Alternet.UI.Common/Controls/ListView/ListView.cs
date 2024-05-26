@@ -821,7 +821,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateListViewHandler(this);
+            return BaseApplication.Handler.CreateListViewHandler(this);
         }
 
         /// <summary>

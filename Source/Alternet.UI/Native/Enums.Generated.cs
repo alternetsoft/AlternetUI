@@ -102,7 +102,8 @@ namespace Alternet.UI.Native
     enum LineCap
     {
         Flat = 0,
-        Round = 1,
+        Square = 1,
+        Round = 2,
     }
     
     enum LineJoin

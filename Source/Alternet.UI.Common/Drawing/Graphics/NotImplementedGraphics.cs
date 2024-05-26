@@ -190,12 +190,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds, TextFormat format)
+        public override void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor)
         {
             throw new NotImplementedException();
         }
 
-        public override void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor)
+        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
             throw new NotImplementedException();
         }
@@ -296,21 +296,6 @@ namespace Alternet.Drawing
         }
 
         public override void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Pop()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Push()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void PushTransform(TransformMatrix transform)
         {
             throw new NotImplementedException();
         }

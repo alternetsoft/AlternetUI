@@ -49,9 +49,6 @@ namespace Alternet.UI
         /// </summary>
         public Calendar()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
-            BackgroundColor = SystemColors.Window;
         }
 
         /// <summary>
@@ -684,7 +681,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateCalendarHandler(this);
+            return BaseApplication.Handler.CreateCalendarHandler(this);
         }
 
         /// <inheritdoc/>

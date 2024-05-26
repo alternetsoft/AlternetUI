@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateRadioButtonHandler(this);
+            return BaseApplication.Handler.CreateRadioButtonHandler(this);
         }
 
         /// <summary>

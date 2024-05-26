@@ -1,15 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+  <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-    <TargetFrameworks>net8.0</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-    <TargetFrameworks>net8.0</TargetFrameworks>
-  </PropertyGroup>
 </Project>

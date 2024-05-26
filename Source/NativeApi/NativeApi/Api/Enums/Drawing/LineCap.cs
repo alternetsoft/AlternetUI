@@ -7,7 +7,8 @@ namespace NativeApi.Api
     [ManagedName("Alternet.Drawing.LineCap")]
     public enum LineCap
     {
-        Flat,
-        Round
+        Flat = 0,
+        Square = 1,
+        Round = 2,
     }
 }

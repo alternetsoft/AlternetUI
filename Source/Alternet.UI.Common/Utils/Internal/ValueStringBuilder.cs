@@ -26,7 +26,7 @@ namespace Alternet.UI
 
         public int Length
         {
-            get
+            readonly get
             {
                 return fpos;
             }

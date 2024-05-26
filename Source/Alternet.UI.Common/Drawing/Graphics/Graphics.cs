@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
@@ -9,8 +10,10 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a custom drawing surface.
     /// </summary>
-    public abstract class Graphics : DisposableObject
+    public abstract class Graphics : DisposableObject, IGraphics
     {
+        private Stack<TransformMatrix>? stack;
+
         /// <summary>
         /// Returns true if the object is ok to use.
         /// </summary>
@@ -66,7 +69,7 @@ namespace Alternet.Drawing
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
-            return NativeDrawing.Default.CreateGraphicsFromImage(image);
+            return GraphicsFactory.Handler.CreateGraphicsFromImage(image);
         }
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static Graphics FromScreen()
         {
-            return NativeDrawing.Default.CreateGraphicsFromScreen();
+            return GraphicsFactory.Handler.CreateGraphicsFromScreen();
         }
 
         /// <summary>
@@ -861,6 +864,15 @@ namespace Alternet.Drawing
         /// corner of the drawn text.</param>
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
+        public void DrawText(string[] text, Font font, Brush brush, PointD origin)
+        {
+            foreach(var s in text)
+            {
+                DrawText(s, font, brush, origin);
+                origin.Y += MeasureText(s, font).Height;
+            }
+        }
+
         /// <summary>
         /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.
         /// </summary>
@@ -881,31 +893,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
         /// the drawn text.</param>
-        public void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DrawText(text, font, brush, bounds, TextFormat.Default);
-        }
-
-        /// <summary>
-        /// Draws the specified text string at the specified location with the specified
-        /// <see cref="Brush"/> and <see
-        /// cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture
-        /// of the drawn text.</param>
-        /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
-        /// the drawn text.</param>
-        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
-        /// such as
-        /// alignment and trimming, that are applied to the drawn text.</param>
-        public abstract void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            RectD bounds,
-            TextFormat format);
+        public abstract void DrawText(string text, Font font, Brush brush, RectD bounds);
 
         /// <summary>
         /// Draws waved line in the specified rectangular area.
@@ -984,48 +972,38 @@ namespace Alternet.Drawing
         public SizeD MeasureText(string text, Font font)
             => GetTextExtent(text, font);
 
-        /*/// <summary>
-        /// Measures the specified string when drawn with the specified <see cref="Font"/> and
-        /// maximum width.
+        /// <summary>
+        /// Pops a stored state from the stack and sets the current transformation matrix
+        /// to that state.
         /// </summary>
-        /// <param name="text">String to measure.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="maximumWidth">Maximum width of the string in device-independent
-        /// units (1/96th inch per unit).</param>
-        /// <returns>
-        /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
-        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
-        /// </returns>
-        public abstract SizeD MeasureText(string text, Font font, double maximumWidth);*/
-
-        /*/// <summary>
-        /// Measures the specified string when drawn with the specified <see cref="Font"/>,
-        /// maximum width and <see cref="TextFormat"/>.
-        /// </summary>
-        /// <param name="text">String to measure.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="maximumWidth">Maximum width of the string in device-independent
-        /// units (1/96th inch per unit).</param>
-        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
-        /// such as
-        /// alignment and trimming, that are applied to the drawn text.</param>
-        /// <returns>
-        /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
-        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
-        /// </returns>
-        public abstract SizeD MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextFormat format);*/
+        public virtual void Pop()
+        {
+            stack ??= new();
+            Transform = stack.Pop(); 
+        }
 
         /// <summary>
         /// Pushes the current state of the <see cref="Graphics"/> transformation
-        /// matrix on a stack.
+        /// matrix on a stack
+        /// and concatenates the current transform with a new transform.
         /// </summary>
-        public abstract void Push();
+        /// <param name="transform">A transform to concatenate with the current transform.</param>
+        public virtual void PushTransform(TransformMatrix transform)
+        {
+            Push();
+            var currentTransform = Transform;
+            currentTransform.Multiply(transform);
+            Transform = currentTransform;
+        }
+
+        /// <summary>
+        /// Pushes the current state of the transformation matrix on a stack.
+        /// </summary>
+        public void Push()
+        {
+            stack ??= new();
+            stack.Push(Transform);
+        }
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors.
@@ -1068,14 +1046,6 @@ namespace Alternet.Drawing
             int indexAccel = -1);
 
         /// <summary>
-        /// Pushes the current state of the <see cref="Graphics"/> transformation
-        /// matrix on a stack
-        /// and concatenates the current transform with a new transform.
-        /// </summary>
-        /// <param name="transform">A transform to concatenate with the current transform.</param>
-        public abstract void PushTransform(TransformMatrix transform);
-
-        /// <summary>
         /// Returns the DPI of the display used by this object.
         /// </summary>
         /// <returns>
@@ -1084,12 +1054,6 @@ namespace Alternet.Drawing
         /// returns Size(0,0) object.
         /// </returns>
         public abstract SizeD GetDPI();
-
-        /// <summary>
-        /// Pops a stored state from the stack and sets the current transformation matrix
-        /// to that state.
-        /// </summary>
-        public abstract void Pop();
 
         /// <summary>
         /// Destroys the current clipping region so that none of the DC is clipped.

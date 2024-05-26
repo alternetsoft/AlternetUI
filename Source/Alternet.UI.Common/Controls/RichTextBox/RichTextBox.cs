@@ -2413,7 +2413,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateRichTextBoxHandler(this);
+            return BaseApplication.Handler.CreateRichTextBoxHandler(this);
         }
 
         /// <inheritdoc/>

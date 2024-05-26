@@ -226,7 +226,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateProgressBarHandler(this);
+            return BaseApplication.Handler.CreateProgressBarHandler(this);
         }
 
         /// <summary>

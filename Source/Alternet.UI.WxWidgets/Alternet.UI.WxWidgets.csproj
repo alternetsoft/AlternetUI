@@ -4,18 +4,6 @@
   <Import Project="..\Version\TargetFrameworks.props" />
   <Import Project="..\Keys\Keys.props" />
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>$(UITargetFrameworksWindows)</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-    <TargetFrameworks>$(UITargetFrameworksLinux)</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-    <TargetFrameworks>$(UITargetFrameworksMacOs)</TargetFrameworks>
-  </PropertyGroup>
-
   <PropertyGroup>
     <Platforms>AnyCPU;x64</Platforms>
     <Nullable>enable</Nullable>
@@ -32,13 +20,6 @@
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

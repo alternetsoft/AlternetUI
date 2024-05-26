@@ -55,5 +55,17 @@ namespace Alternet.UI
         UIPlatformKind GetPlatformKind();
 
         void SuppressBellOnError(bool value);
+
+        Color GetClassDefaultAttributesBgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
+        Color GetClassDefaultAttributesFgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
+
+        Font? GetClassDefaultAttributesFont(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
     }
 }

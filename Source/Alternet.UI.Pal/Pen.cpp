@@ -10,7 +10,12 @@ namespace Alternet::UI
     {
     }
 
-    void Pen::Initialize(DashStyle style, const Color& color, double width, LineCap lineCap, LineJoin lineJoin)
+    void Pen::Initialize(
+        DashStyle style,
+        const Color& color,
+        double width,
+        LineCap lineCap,
+        LineJoin lineJoin)
     {
         _pen = wxPen(color, fromDip(width, nullptr), GetWxStyle(style));
         _pen.SetCap(GetWxPenCap(lineCap));
@@ -56,6 +61,8 @@ namespace Alternet::UI
         {
         case LineCap::Flat:
             return wxPenCap::wxCAP_BUTT;
+        case LineCap::Square:
+            return wxPenCap::wxCAP_PROJECTING;
         case LineCap::Round:
             return wxPenCap::wxCAP_ROUND;
         default:

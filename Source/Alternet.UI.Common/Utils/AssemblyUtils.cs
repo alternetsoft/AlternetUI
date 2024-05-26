@@ -230,6 +230,9 @@ namespace Alternet.UI
         /// </summary>
         public static readonly object DefaultDateTime = default(DateTime);
 
+        private static AdvDictionary<string, Assembly>? ResNameToAssembly;
+        private static int resNameToAssemblySavedLength = 0;
+
         /// <summary>
         /// Creates <see cref="Action"/> for the specified <see cref="MethodInfo"/>.
         /// </summary>
@@ -860,6 +863,34 @@ namespace Alternet.UI
             result.Sort(StringUtils.ComparerObjectUsingToString);
 
             return result;
+        }
+
+        public static Assembly? FindAssemblyForResource(string resName)
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            if (ResNameToAssembly is null || assemblies.Length != resNameToAssemblySavedLength)
+            {
+                ResNameToAssembly ??= new();
+                resNameToAssemblySavedLength = assemblies.Length;
+
+                foreach (var assembly in assemblies)
+                {
+                    var resources = assembly.GetManifestResourceNames();
+
+                    if (resources.Length == 0)
+                        continue;
+
+                    foreach (var resource in resources)
+                    {
+                        ResNameToAssembly.TryAdd(resource, assembly);
+                    }
+                }
+            }
+
+            if (ResNameToAssembly.TryGetValue(resName, out var result))
+                return result;
+            return null;
         }
     }
 }

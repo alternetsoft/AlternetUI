@@ -409,6 +409,12 @@ namespace Alternet.UI
                 LogUtils.LogToFile(LogUtils.SectionSeparator);
             });
 
+            AddLogAction("Log Embedded Resources", () =>
+            {
+                LogUtils.LogResourceNames();
+                BaseApplication.Log("Resource Names added to log file");
+            });
+
             AddAction("Show Second MainForm", () =>
             {
                 var type = BaseApplication.FirstWindow()?.GetType();
@@ -425,7 +431,7 @@ namespace Alternet.UI
 
             AddLogAction("Log NativeControlPainter metrics", () =>
             {
-                CustomControlPainter.Current.LogPartSize(this);
+                ControlPainter.LogPartSize(this);
             });
 
             AddAction("Exception: Throw C++", () =>

@@ -44,8 +44,6 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
         }
 
         /// <inheritdoc/>
@@ -83,7 +81,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateLabelHandler(this);
+            return BaseApplication.Handler.CreateLabelHandler(this);
         }
     }
 }

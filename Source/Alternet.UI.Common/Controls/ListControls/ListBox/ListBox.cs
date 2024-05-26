@@ -37,13 +37,6 @@ namespace Alternet.UI
         /// </summary>
         public ListBox()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
-
-            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
-
-            if (hasBorder is not null)
-                HasBorder = hasBorder.Value;
         }
 
         /// <summary>
@@ -572,7 +565,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateListBoxHandler(this);
+            return BaseApplication.Handler.CreateListBoxHandler(this);
         }
 
         /// <summary>

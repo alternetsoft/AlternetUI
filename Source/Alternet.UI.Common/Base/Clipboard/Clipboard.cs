@@ -8,6 +8,15 @@ namespace Alternet.UI
     /// </summary>
     public static class Clipboard
     {
+        private static IClipboardHandler? handler;
+
+        public static IClipboardHandler Handler
+        {
+            get => handler ??= BaseApplication.Handler.CreateClipboardHandler();
+
+            set => handler = value;
+        }
+
         /// <summary>
         /// Gets a value indicating whether there is data on the
         /// <see cref='Clipboard'/> that is in the
@@ -45,7 +54,7 @@ namespace Alternet.UI
         /// </summary>
         public static IDataObject? GetDataObject()
         {
-            return NativePlatform.Default.ClipboardGetDataObject();
+            return Handler.GetData();
         }
 
         /// <summary>
@@ -54,7 +63,7 @@ namespace Alternet.UI
         /// <param name="value">The data to place on the Clipboard.</param>
         public static void SetDataObject(IDataObject value)
         {
-            NativePlatform.Default.ClipboardSetDataObject(value);
+            Handler.SetData(value);
         }
 
         /// <summary>

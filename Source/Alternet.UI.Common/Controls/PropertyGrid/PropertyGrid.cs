@@ -506,7 +506,7 @@ namespace Alternet.UI
 
         public static IPropertyGridVariant CreateVariant()
         {
-            return NativePlatform.Default.CreateVariant();
+            return BaseApplication.Handler.CreateVariant();
         }
 
         /// <summary>
@@ -4192,7 +4192,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreatePropertyGridHandler(this);
+            return BaseApplication.Handler.CreatePropertyGridHandler(this);
         }
 
         /// <summary>

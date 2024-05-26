@@ -35,7 +35,7 @@ namespace Alternet.UI
             set
             {
                 if (!IsUserSizePropertyValueValid(value))
-                    throw new ArgumentException();
+                    throw new ArgumentException(nameof(Height));
 
                 var oldValue = height;
                 height = value;
@@ -60,7 +60,7 @@ namespace Alternet.UI
             set
             {
                 if (!IsUserMinSizePropertyValueValid(value))
-                    throw new ArgumentException();
+                    throw new ArgumentException(nameof(MinHeight));
 
                 minHeight = value;
                 OnUserMinSizePropertyChanged(value);
@@ -84,7 +84,7 @@ namespace Alternet.UI
             set
             {
                 if (!IsUserMaxSizePropertyValueValid(value))
-                    throw new ArgumentException();
+                    throw new ArgumentException(nameof(MaxHeight));
 
                 maxHeight = value;
                 OnUserMaxSizePropertyChanged(value);

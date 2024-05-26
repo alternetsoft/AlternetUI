@@ -10,17 +10,41 @@ namespace Alternet.UI
 {
     public class MauiSystemSettingsHandler : DisposableObject, ISystemSettingsHandler
     {
-        public string AppName { get; set; }
+        public string AppName
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
-        public string AppDisplayName { get; set; }
+        public string AppDisplayName
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
-        public string AppClassName { get; set; }
+        public string AppClassName
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
-        public string VendorName { get; set; }
+        public string VendorName
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
-        public string VendorDisplayName { get; set; }
+        public string VendorDisplayName
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
-        public bool UseBestVisual { get; set; }
+        public bool UseBestVisual
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
         public IDisplayFactoryHandler CreateDisplayFactoryHandler()
         {
@@ -33,6 +57,21 @@ namespace Alternet.UI
         }
 
         public string GetAppearanceName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Color GetClassDefaultAttributesBgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Color GetClassDefaultAttributesFgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Font? GetClassDefaultAttributesFont(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             throw new NotImplementedException();
         }

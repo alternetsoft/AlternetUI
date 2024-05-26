@@ -8,6 +8,7 @@
     <LangVersion>11.0</LangVersion>
   </PropertyGroup>
 
+<!--  
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -18,5 +19,6 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
+-->  
 
 </Project>

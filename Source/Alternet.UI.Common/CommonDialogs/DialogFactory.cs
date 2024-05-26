@@ -14,6 +14,15 @@ namespace Alternet.UI
     /// </summary>
     public static class DialogFactory
     {
+        private static IDialogFactoryHandler? handler;
+
+        public static IDialogFactoryHandler Handler
+        {
+            get => handler ??= BaseApplication.Handler.CreateDialogFactoryHandler();
+
+            set => handler = value;
+        }
+
         /// <summary>
         /// Shows developer tools window.
         /// </summary>
@@ -64,7 +73,7 @@ namespace Alternet.UI
             caption ??= CommonStrings.Default.WindowTitleInput;
             pos ??= PointI.MinusOne;
 
-            return NativePlatform.Default.GetNumberFromUser(
+            return Handler.GetNumberFromUser(
                 message,
                 prompt,
                 caption,
@@ -102,7 +111,7 @@ namespace Alternet.UI
             message ??= string.Empty;
             caption ??= CommonStrings.Default.WindowTitleInput;
 
-            var result = NativePlatform.Default.GetTextFromUser(
+            var result = Handler.GetTextFromUser(
                 message,
                 caption,
                 defaultValue,

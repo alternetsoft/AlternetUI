@@ -16,7 +16,11 @@ namespace Alternet.UI
         private static ISystemSettingsHandler? handler;
 
         public static ISystemSettingsHandler Handler
-            => handler ??= NativePlatform.Default.CreateSystemSettingsHandler();
+        {
+            get => handler ??= BaseApplication.Handler.CreateSystemSettingsHandler();
+
+            set => handler = value;
+        }
 
         /// <summary>
         /// Returns the name if available or empty string otherwise.

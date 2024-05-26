@@ -8,73 +8,68 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     All methods and properties of the <see cref="WebBrowser"/> control
-    ///     are defined in this interface.
+    /// Declares methods and properties which allow to work with <see cref="WebBrowser"/> control.
     /// </summary>
-    /// <inheritdoc cref="IWebBrowserLite"/>
     public interface IWebBrowser : IWebBrowserLite
     {
-        /*/// <include file="IWebBrowser.xml" path='doc/RunScript/*'/>
-        bool RunScript(string javascript);*/
-
-        /// <include file="IWebBrowser.xml" path='doc/Events/Navigated/*'/>
+        /// <inheritdoc cref="WebBrowser.Navigated"/>
         event EventHandler<WebBrowserEventArgs> Navigated;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/Navigating/*'/>
+        /// <inheritdoc cref="WebBrowser.Navigating"/>
         event EventHandler<WebBrowserEventArgs> Navigating;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/Loaded/*'/>
+        /// <inheritdoc cref="WebBrowser.Loaded"/>
         event EventHandler<WebBrowserEventArgs> Loaded;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/Error/*'/>
+        /// <inheritdoc cref="WebBrowser.Error"/>
         event EventHandler<WebBrowserEventArgs> Error;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/NewWindow/*'/>
+        /// <inheritdoc cref="WebBrowser.NewWindow"/>
         event EventHandler<WebBrowserEventArgs> NewWindow;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/DocumentTitleChanged/*'/>
+        /// <inheritdoc cref="WebBrowser.DocumentTitleChanged"/>
         event EventHandler<WebBrowserEventArgs> DocumentTitleChanged;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/FullScreenChanged/*'/>
+        /// <inheritdoc cref="WebBrowser.FullScreenChanged"/>
         event EventHandler<WebBrowserEventArgs> FullScreenChanged;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/ScriptMessageReceived/*'/>
+        /// <inheritdoc cref="WebBrowser.ScriptMessageReceived"/>
         event EventHandler<WebBrowserEventArgs> ScriptMessageReceived;
 
-        /// <include file="IWebBrowser.xml" path='doc/Events/ScriptResult/*'/>
+        /// <inheritdoc cref="WebBrowser.ScriptResult"/>
         event EventHandler<WebBrowserEventArgs> ScriptResult;
 
-        /// <include file="IWebBrowser.xml" path='doc/Source/*'/>
+        /// <inheritdoc cref="WebBrowser.Source"/>
         Uri Source { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/Url/*'/>
+        /// <inheritdoc cref="WebBrowser.Url"/>
         string Url { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanZoomIn/*'/>
+        /// <inheritdoc cref="WebBrowser.CanZoomIn"/>
         bool CanZoomIn { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanZoomOut/*'/>
+        /// <inheritdoc cref="WebBrowser.CanZoomOut"/>
         bool CanZoomOut { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/ZoomIn/*'/>
+        /// <inheritdoc cref="WebBrowser.ZoomIn"/>
         void ZoomIn();
 
-        /// <include file="IWebBrowser.xml" path='doc/ZoomOut/*'/>
+        /// <inheritdoc cref="WebBrowser.ZoomOut"/>
         void ZoomOut();
 
-        /// <include file="IWebBrowser.xml" path='doc/NavigateToStream/*'/>
+        /// <inheritdoc cref="WebBrowser.NavigateToStream(stream)"/>
         void NavigateToStream(Stream stream);
 
-        /// <include file="IWebBrowser.xml" path='doc/Navigate_uri/*'/>
+        /// <inheritdoc cref="WebBrowser.Navigate(Uri)"/>
         void Navigate(Uri source);
 
-        /// <include file="IWebBrowser.xml" path='doc/Navigate_string/*'/>
+        /// <inheritdoc cref="WebBrowser.Navigate(string)"/>
         void Navigate(string urlString);
 
-        /// <include file="IWebBrowser.xml" path='doc/ToInvokeScriptArg/*'/>
+        /// <inheritdoc cref="WebBrowser.ToInvokeScriptArg"/>
         string? ToInvokeScriptArg(object arg);
 
-        /// <include file="IWebBrowser.xml" path='doc/InvokeScriptAsync/*'/>
+        /// <inheritdoc cref="WebBrowser.InvokeScriptAsync"/>
         void InvokeScriptAsync(string scriptName, IntPtr clientData, params object[] args);
     }
 }

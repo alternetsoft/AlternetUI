@@ -103,7 +103,8 @@ namespace Alternet::UI
     enum class LineCap
     {
         Flat = 0,
-        Round = 1,
+        Square = 1,
+        Round = 2,
     };
     
     enum class LineJoin

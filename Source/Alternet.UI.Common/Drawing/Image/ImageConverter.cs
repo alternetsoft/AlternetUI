@@ -37,11 +37,11 @@ namespace Alternet.Drawing
             if (uri.IsAbsoluteUri && uri.IsFile)
             {
                 using var stream = File.OpenRead(uri.LocalPath);
-                return new Image(stream);
+                return new Bitmap(stream);
             }
 
             var assets = new UI.ResourceLoader();
-            return new Image(assets.Open(uri, GetContextBaseUri(context)));
+            return new Bitmap(assets.Open(uri, GetContextBaseUri(context)));
         }
 
         internal static Uri? GetContextBaseUri(IServiceProvider? ctx)

@@ -39,8 +39,6 @@ namespace Alternet.UI
         /// </summary>
         public CheckBox()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
         }
 
         /// <summary>
@@ -230,7 +228,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateCheckBoxHandler(this);
+            return BaseApplication.Handler.CreateCheckBoxHandler(this);
         }
 
         /// <summary>

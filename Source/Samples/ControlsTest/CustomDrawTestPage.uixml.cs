@@ -12,6 +12,8 @@ namespace ControlsTest
 {
     internal partial class CustomDrawTestPage : Control
     {
+        private static WxControlPainterHandler painter = new();
+
         private readonly CustomDrawControl customDrawControl = new()
         {
             VerticalAlignment = VerticalAlignment.Fill,
@@ -43,11 +45,11 @@ namespace ControlsTest
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {
-                    NativeControlPainter.Default.DrawComboBox(
+                    painter.DrawComboBox(
                         control,
                         canvas,
                         (50, 50, 150, 100),
-                        NativeControlPainter.DrawFlags.None);
+                        WxControlPainterHandler.DrawFlags.None);
                 });
             });
 
@@ -64,8 +66,6 @@ namespace ControlsTest
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {
-                    var painter = NativeControlPainter.Default;
-
                     Fn((50, 50), CheckState.Unchecked, GenericControlState.Normal, "unchecked");
 
                     Fn((150, 50), CheckState.Checked, GenericControlState.Normal, "checked");

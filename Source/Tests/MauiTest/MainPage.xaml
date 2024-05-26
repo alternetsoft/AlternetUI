@@ -7,7 +7,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <ListView x:Name="ListView1" 
                            Grid.Row="0"
-                  HeightRequest="200"
+                  HeightRequest="100"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>

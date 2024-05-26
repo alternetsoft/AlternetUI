@@ -12,7 +12,7 @@ namespace Alternet.UI
     public static class KnownColorSvgUrls
     {
         private const string ResTemplate =
-            "embres:Alternet.UI.Resources.ColorSvg.{0}.svg?assembly=Alternet.UI";
+            "embres:Alternet.UI.Common.Resources.ColorSvg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
         /// Gets or sets url used to load "Error" svg image.

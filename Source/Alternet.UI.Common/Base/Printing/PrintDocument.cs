@@ -30,7 +30,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         public PrintDocument()
         {
-            Handler = NativePlatform.Default.CreatePrintDocumentHandler();
+            Handler = BaseApplication.Handler.CreatePrintDocumentHandler();
 
             Handler.PrintPage += NativePrintDocument_PrintPage;
             Handler.BeginPrint += NativePrintDocument_BeginPrint;

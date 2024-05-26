@@ -97,9 +97,9 @@ namespace Alternet.UI
         {
             if (source != null)
             {
-                if (source is string)
+                if (source is string v)
                 {
-                    return FromString((string)source, cultureInfo);
+                    return FromString(v, cultureInfo);
                 }
                 else
                 {
@@ -152,13 +152,13 @@ namespace Alternet.UI
         {
             if (destinationType == null)
             {
-                throw new ArgumentNullException("destinationType");
+                throw new ArgumentNullException(nameof(destinationType));
             }
 
             if (value != null
-                && value is GridLength)
+                && value is GridLength length)
             {
-                GridLength gl = (GridLength)value;
+                GridLength gl = length;
 
                 if (destinationType == typeof(string))
                 {
@@ -167,7 +167,10 @@ namespace Alternet.UI
 
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    ConstructorInfo ci = typeof(GridLength).GetConstructor(new Type[] { typeof(double), typeof(GridUnitType) });
+                    ConstructorInfo ci =
+                        typeof(GridLength).GetConstructor(
+                            new Type[] { typeof(double),
+                                typeof(GridUnitType) });
                     return (new InstanceDescriptor(ci, new object[] { gl.Value, gl.GridUnitType }));
                 }
             }
@@ -232,10 +235,9 @@ namespace Alternet.UI
         /// </remarks>
         static internal GridLength FromString(string s, CultureInfo cultureInfo)
         {
-            double value;
             GridUnitType unit;
             XamlGridLengthSerializer.FromString(s, cultureInfo,
-                out value, out unit);
+                out double value, out unit);
 
             return (new GridLength(value, unit));
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,24 @@ namespace Alternet.Drawing
             set => canvas = value;
         }
 
+        public override TransformMatrix Transform
+        {
+            get
+            {
+                var result = canvas.TotalMatrix; // !!!
+
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                SKMatrix matrix = SKMatrix.CreateIdentity(); // !!!
+                canvas.SetMatrix(matrix);
+
+                throw new NotImplementedException();
+            }
+        }
+
         public override SizeD GetTextExtent(
             string text,
             Font font,
@@ -69,7 +88,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        // Used in editor
         public override SizeD GetTextExtent(string text, Font font)
         {
             var skiaFont = font.ToSkFont();
@@ -86,6 +104,7 @@ namespace Alternet.Drawing
             return (width, height);
         }
 
+        /// <inheritdoc/>
         public override void DrawText(
             string text,
             Font font,
@@ -100,17 +119,7 @@ namespace Alternet.Drawing
                 Color.Empty);
         }
 
-        public override void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            RectD bounds,
-            TextFormat format)
-        {
-        }
-
         /// <inheritdoc/>
-        // Used in editor
         public override void SetPixel(double x, double y, Color color)
         {
             using SKPaint paint = new();
@@ -119,7 +128,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        // Used in editor
         public override void DrawText(
             string text,
             PointD location,
@@ -142,6 +150,8 @@ namespace Alternet.Drawing
             var width = textBounds.Width;
             var height = textBounds.Height;
 
+            Debug.WriteLine($"SizeInPoints: {font.SizeInPoints}, SizeInPixels: {font.SizeInPixels}, Height: {textBounds.Height}");
+
             SKRect textRect = SKRect.Create(width, height);
             textRect.Offset(locationX, locationY);
 
@@ -159,6 +169,7 @@ namespace Alternet.Drawing
 
             if (font.Style.HasFlag(FontStyle.Underline))
             {
+                // !!!
             }
 
             if (font.Style.HasFlag(FontStyle.Strikeout))
@@ -175,63 +186,79 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        // Used in editor
-        public override void PushTransform(TransformMatrix transform)
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override void FillRectangle(Brush brush, RectD rectangle)
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override void Pop()
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override void DrawBeziers(Pen pen, PointD[] points)
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
-        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
-        {
-        }
-
-        /// <inheritdoc/>
-        // Used in editor
         public override void DrawPolygon(Pen pen, PointD[] points)
         {
+            DebugPenAssert(pen);
+            using var paint = pen.ToSkia();
+            var skiaPoints = Convert(points);
+            canvas.DrawPoints(SKPointMode.Polygon, skiaPoints, paint);
+        }
+
+        public SKPoint[] Convert(PointD[] points)
+        {
+            var length = points.Length;
+            SKPoint[] result = new SKPoint[length];
+            for (int i = 0; i < length; i++)
+                result[i] = points[i].ToSkia();
+            return result;
         }
 
         /// <inheritdoc/>
-        // Used in editor
         public override void DrawRectangle(Pen pen, RectD rectangle)
         {
+            DebugPenAssert(pen);
+            using var paint = pen.ToSkia();
+            canvas.DrawRect(rectangle.ToSkia(), paint);
         }
 
         /// <inheritdoc/>
-        // Used in editor
+        public override void DrawLine(Pen pen, PointD a, PointD b)
+        {
+            DebugPenAssert(pen);
+            using var paint = pen.ToSkia();
+            canvas.DrawLine(a.ToSkia(), b.ToSkia(), paint);
+        }
+
+        /// <inheritdoc/>
+        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        {
+            DebugPenAssert(pen);
+            using var paint = pen.ToSkia();
+            var skiaRect = rect.ToSkia();
+            SKRoundRect roundRect = new(skiaRect, (float)cornerRadius);
+            canvas.DrawRoundRect(roundRect, paint);
+        }
+
+        /// <inheritdoc/>
+        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        {
+            DebugBrushAssert(brush);
+            using var paint = brush.ToSkia();
+            var skiaRect = rect.ToSkia();
+            SKRoundRect roundRect = new(skiaRect, (float)cornerRadius);
+            canvas.DrawRoundRect(roundRect, paint);
+        }
+
+        /// <inheritdoc/>
+        public override void FillRectangle(Brush brush, RectD rectangle)
+        {
+            DebugBrushAssert(brush);
+            using var paint = brush.ToSkia();
+            var skiaRect = rectangle.ToSkia();
+            canvas.DrawRect(skiaRect, paint);
+        }
+
+        /// <inheritdoc/>
         public override void DrawImage(Image image, PointD origin, bool useMask = false)
         {
         }
 
         /// <inheritdoc/>
-        // Used in editor
-        public override void DrawLine(Pen pen, PointD a, PointD b)
+        public override void DrawBeziers(Pen pen, PointD[] points)
         {
+            DebugPenAssert(pen);
+            var skiaPoints = Convert(points);
+            using var paint = pen.ToSkia();
         }
     }
 }

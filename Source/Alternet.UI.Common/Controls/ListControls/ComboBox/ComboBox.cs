@@ -74,10 +74,6 @@ namespace Alternet.UI
         /// </summary>
         public ComboBox()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-            {
-                UserPaint = true;
-            }
         }
 
         /// <summary>
@@ -583,7 +579,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return NativePlatform.Default.CreateComboBoxHandler(this);
+            return BaseApplication.Handler.CreateComboBoxHandler(this);
         }
 
         /// <summary>

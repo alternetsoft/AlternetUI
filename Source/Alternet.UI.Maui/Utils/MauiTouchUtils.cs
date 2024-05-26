@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Extensions;
+
 using SkiaSharp.Views.Maui;
 
 namespace Alternet.UI
@@ -21,7 +23,7 @@ namespace Alternet.UI
             result.InContact = e.InContact;
             result.WheelDelta = e.WheelDelta;
             result.Pressure = e.Pressure;
-            result.MouseButton = MauiUtils.Convert(e.MouseButton);
+            result.MouseButton = e.MouseButton.ToAlternet();
             return result;
         }
     }

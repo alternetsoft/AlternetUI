@@ -7,170 +7,170 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Subset of the <see cref="WebBrowser"/> control's methods and properties.
+    /// Subset of the <see cref="WebBrowser"/> control's methods and properties.
     /// </summary>
     public interface IWebBrowserLite
     {
-        /// <include file="IWebBrowser.xml" path='doc/PreferredColorScheme/*'/>
+        /// <inheritdoc cref="WebBrowser.PreferredColorScheme"/>
         WebBrowserPreferredColorScheme PreferredColorScheme { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/Editable/*'/>
+        /// <inheritdoc cref="WebBrowser.Editable"/>
         bool Editable { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanGoBack/*'/>
+        /// <inheritdoc cref="WebBrowser.CanGoBack"/>
         bool CanGoBack { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanGoForward/*'/>
+        /// <inheritdoc cref="WebBrowser.CanGoForward"/>
         bool CanGoForward { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanCut/*'/>
+        /// <inheritdoc cref="WebBrowser.CanCut"/>
         bool CanCut { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanCopy/*'/>
+        /// <inheritdoc cref="WebBrowser.CanCopy"/>
         bool CanCopy { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanUndo/*'/>
+        /// <inheritdoc cref="WebBrowser.CanUndo"/>
         bool CanUndo { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanRedo/*'/>
+        /// <inheritdoc cref="WebBrowser.CanRedo"/>
         bool CanRedo { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/IsBusy/*'/>
+        /// <inheritdoc cref="WebBrowser.IsBusy"/>
         bool IsBusy { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/CanPaste/*'/>
+        /// <inheritdoc cref="WebBrowser.CanPaste"/>
         bool CanPaste { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/ZoomFactor/*'/>
+        /// <inheritdoc cref="WebBrowser.ZoomFactor"/>
         float ZoomFactor { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/ZoomType/*'/>
+        /// <inheritdoc cref="WebBrowser.ZoomType"/>
         WebBrowserZoomType ZoomType { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/Zoom/*'/>
+        /// <inheritdoc cref="WebBrowser.Zoom"/>
         WebBrowserZoom Zoom { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/HasSelection/*'/>
+        /// <inheritdoc cref="WebBrowser.HasSelection"/>
         bool HasSelection { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/SelectedSource/*'/>
+        /// <inheritdoc cref="WebBrowser.SelectedSource"/>
         string SelectedSource { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/SelectedText/*'/>
+        /// <inheritdoc cref="WebBrowser.SelectedText"/>
         string SelectedText { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/PageSource/*'/>
+        /// <inheritdoc cref="WebBrowser.PageSource"/>
         string PageSource { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/PageText/*'/>
+        /// <inheritdoc cref="WebBrowser.PageText"/>
         string PageText { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/AccessToDevToolsEnabled/*'/>
+        /// <inheritdoc cref="WebBrowser.AccessToDevToolsEnabled"/>
         bool AccessToDevToolsEnabled { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/UserAgent/*'/>
+        /// <inheritdoc cref="WebBrowser.UserAgent"/>
         string UserAgent { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/ContextMenuEnabled/*'/>
+        /// <inheritdoc cref="WebBrowser.ContextMenuEnabled"/>
         bool ContextMenuEnabled { get; set; }
 
-        /// <include file="IWebBrowser.xml" path='doc/Backend/*'/>
+        /// <inheritdoc cref="WebBrowser.Backend"/>
         WebBrowserBackend Backend { get; }
 
-        /// <include file="IWebBrowser.xml" path='doc/GetNativeBackend/*'/>
+        /// <inheritdoc cref="WebBrowser.GetNativeBackend"/>
         IntPtr GetNativeBackend();
 
-        /// <include file="IWebBrowser.xml" path='doc/DoCommand/*'/>
+        /// <inheritdoc cref="WebBrowser.DoCommand"/>
         string? DoCommand(string cmdName, params object?[] args);
 
-        /// <include file="IWebBrowser.xml" path='doc/AddUserScript/*'/>
+        /// <inheritdoc cref="WebBrowser.AddUserScript"/>
         bool AddUserScript(string javascript, bool injectDocStart);
 
-        /// <include file="IWebBrowser.xml" path='doc/LoadURL/*'/>
+        /// <inheritdoc cref="WebBrowser.LoadURL"/>
         void LoadURL(string url);
 
-        /// <include file="IWebBrowser.xml" path='doc/CanSetZoomType/*'/>
+        /// <inheritdoc cref="WebBrowser.CanSetZoomType"/>
         bool CanSetZoomType(WebBrowserZoomType zoomType);
 
-        /// <include file="IWebBrowser.xml" path='doc/GetCurrentTitle/*'/>
+        /// <inheritdoc cref="WebBrowser.GetCurrentTitle"/>
         string GetCurrentTitle();
 
-        /// <include file="IWebBrowser.xml" path='doc/GetCurrentURL/*'/>
+        /// <inheritdoc cref="WebBrowser.GetCurrentURL"/>
         string GetCurrentURL();
 
-        /// <include file="IWebBrowser.xml" path='doc/NavigateToString/*'/>
+        /// <inheritdoc cref="WebBrowser.NavigateToString"/>
         void NavigateToString(string html, string? baseUrl = null);
 
-        /// <include file="IWebBrowser.xml" path='doc/GoBack/*'/>
+        /// <inheritdoc cref="WebBrowser.GoBack"/>
         bool GoBack();
 
-        /// <include file="IWebBrowser.xml" path='doc/GoForward/*'/>
+        /// <inheritdoc cref="WebBrowser.GoForward"/>
         bool GoForward();
 
-        /// <include file="IWebBrowser.xml" path='doc/Stop/*'/>
+        /// <inheritdoc cref="WebBrowser.Stop"/>
         void Stop();
 
-        /// <include file="IWebBrowser.xml" path='doc/ClearSelection/*'/>
+        /// <inheritdoc cref="WebBrowser.ClearSelection"/>
         void ClearSelection();
 
-        /// <include file="IWebBrowser.xml" path='doc/Copy/*'/>
+        /// <inheritdoc cref="WebBrowser.Copy"/>
         void Copy();
 
-        /// <include file="IWebBrowser.xml" path='doc/Paste/*'/>
+        /// <inheritdoc cref="WebBrowser.Paste"/>
         void Paste();
 
-        /// <include file="IWebBrowser.xml" path='doc/Cut/*'/>
+        /// <inheritdoc cref="WebBrowser.Cut"/>
         void Cut();
 
-        /// <include file="IWebBrowser.xml" path='doc/SetVirtualHostNameToFolderMapping/*'/>
+        /// <inheritdoc cref="WebBrowser.SetVirtualHostNameToFolderMapping"/>
         public void SetVirtualHostNameToFolderMapping(
             string hostName,
             string folderPath,
             WebBrowserHostResourceAccessKind accessKind);
 
-        /// <include file="IWebBrowser.xml" path='doc/ClearHistory/*'/>
+        /// <inheritdoc cref="WebBrowser.ClearHistory"/>
         void ClearHistory();
 
-        /// <include file="IWebBrowser.xml" path='doc/EnableHistory/*'/>
+        /// <inheritdoc cref="WebBrowser.EnableHistory"/>
         void EnableHistory(bool enable = true);
 
-        /// <include file="IWebBrowser.xml" path='doc/Reload/*'/>
+        /// <inheritdoc cref="WebBrowser.Reload"/>
         void Reload();
 
-        /// <include file="IWebBrowser.xml" path='doc/Reload_noCache/*'/>
+        /// <inheritdoc cref="WebBrowser.Reload"/>
         void Reload(bool noCache);
 
-        /// <include file="IWebBrowser.xml" path='doc/SelectAll/*'/>
+        /// <inheritdoc cref="WebBrowser.SelectAll"/>
         void SelectAll();
 
-        /// <include file="IWebBrowser.xml" path='doc/DeleteSelection/*'/>
+        /// <inheritdoc cref="WebBrowser.DeleteSelection"/>
         void DeleteSelection();
 
-        /// <include file="IWebBrowser.xml" path='doc/Undo/*'/>
+        /// <inheritdoc cref="WebBrowser.Undo"/>
         void Undo();
 
-        /// <include file="IWebBrowser.xml" path='doc/Redo/*'/>
+        /// <inheritdoc cref="WebBrowser.Redo"/>
         void Redo();
 
-        /// <include file="IWebBrowser.xml" path='doc/Find/*'/>
+        /// <inheritdoc cref="WebBrowser.Find"/>
         int Find(string text, WebBrowserFindParams? prm = null);
 
-        /// <include file="IWebBrowser.xml" path='doc/FindClearResult/*'/>
+        /// <inheritdoc cref="WebBrowser.FindClearResult"/>
         void FindClearResult();
 
-        /// <include file="IWebBrowser.xml" path='doc/Print/*'/>
+        /// <inheritdoc cref="WebBrowser.Print"/>
         void Print();
 
-        /// <include file="IWebBrowser.xml" path='doc/RemoveAllUserScripts/*'/>
+        /// <inheritdoc cref="WebBrowser.RemoveAllUserScripts"/>
         void RemoveAllUserScripts();
 
-        /// <include file="IWebBrowser.xml" path='doc/AddScriptMessageHandler/*'/>
+        /// <inheritdoc cref="WebBrowser.AddScriptMessageHandler"/>
         bool AddScriptMessageHandler(string name);
 
-        /// <include file="IWebBrowser.xml" path='doc/RemoveScriptMessageHandler/*'/>
+        /// <inheritdoc cref="WebBrowser.RemoveScriptMessageHandler"/>
         bool RemoveScriptMessageHandler(string name);
 
-        /// <include file="IWebBrowser.xml" path='doc/RunScriptAsync/*'/>
+        /// <inheritdoc cref="WebBrowser.RunScriptAsync"/>
         void RunScriptAsync(string javascript, IntPtr? clientData);
     }
 }

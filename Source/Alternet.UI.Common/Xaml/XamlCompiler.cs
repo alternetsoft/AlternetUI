@@ -130,10 +130,7 @@ namespace Alternet.UI
                 isp).Compile();
 
             var epar = System.Linq.Expressions.Expression.Parameter(typeof(object));
-            var populate = created.GetMethod("Populate");
-            if (populate == null)
-                throw new InvalidOperationException();
-
+            var populate = created.GetMethod("Populate") ?? throw new InvalidOperationException();
             isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));
             var populateCb =
                 System.Linq.Expressions.Expression.Lambda<Action<IServiceProvider?, object>>(
