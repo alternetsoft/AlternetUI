@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// You can add images to the <see cref="ImageList"/>, and the controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : HandledObject<object>
+    public class ImageList : HandledObject<IImageListHandler>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageList"/> with default values.
@@ -24,10 +24,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Occurs when object is changed (image is added or removed).
+        /// </summary>
+        public event EventHandler? Changed;
+
+        /// <summary>
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
-        public Collection<Image> Images { get; } = new();
+        public virtual Collection<Image> Images { get; } = new();
 
         /// <summary>
         /// Gets or sets the size of the images in the image list, in pixels.
@@ -43,10 +48,10 @@ namespace Alternet.Drawing
         /// the <see cref="Images"/>collection causes the images to be resized to the size
         /// specified.
         /// </remarks>
-        public SizeI PixelImageSize
+        public virtual SizeI PixelImageSize
         {
-            get => NativeDrawing.Default.ImageListGetPixelImageSize(this);
-            set => NativeDrawing.Default.ImageListSetPixelImageSize(this, value);
+            get => Handler.PixelImageSize;
+            set => Handler.PixelImageSize = value;
         }
 
         /// <summary>
@@ -62,26 +67,33 @@ namespace Alternet.Drawing
         /// the <see cref="Images"/>collection causes the images to be resized to the size
         /// specified.
         /// </remarks>
-        public SizeD ImageSize
+        public virtual SizeD ImageSize
         {
-            get => NativeDrawing.Default.ImageListGetImageSize(this);
-            set => NativeDrawing.Default.ImageListSetImageSize(this, value);
+            get => Handler.ImageSize;
+            set => Handler.ImageSize = value;
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IImageListHandler CreateHandler()
         {
-            return NativeDrawing.Default.CreateImageList();
+            return GraphicsFactory.Handler.CreateImageListHandler();
         }
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
-            NativeDrawing.Default.ImageListAdd(this, index, item);
+            Handler.Add(item);
+            OnChanged();
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
-            NativeDrawing.Default.ImageListRemove(this, index, item);
+            OnChanged();
+            throw new NotImplementedException();
+        }
+
+        private void OnChanged()
+        {
+            Changed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
