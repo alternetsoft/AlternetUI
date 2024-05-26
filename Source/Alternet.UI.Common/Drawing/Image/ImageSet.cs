@@ -309,12 +309,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public Image AsImage(SizeI size) => new(this, size);
+        public Image AsImage(SizeI size) => new Bitmap(this, size);
 
         /// <summary>
         /// Gets first image with size equal to <see cref="DefaultSize"/>.
         /// </summary>
-        public Image AsImage() => new(this, DefaultSize);
+        public Image AsImage() => new Bitmap(this, DefaultSize);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI

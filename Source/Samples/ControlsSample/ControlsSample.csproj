@@ -3,7 +3,11 @@
   <Import Project="..\CommonData\TargetFrameworks.props" />
 
     <PropertyGroup>
-      <WxWidgets>true</WxWidgets>
+      <Platforms>AnyCPU;x64</Platforms>
+      <LangVersion>11.0</LangVersion>
+      <Nullable>enable</Nullable>
+      <UseStyleCop>false</UseStyleCop>
+      <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
       <OutputType>WinExe</OutputType>
       <ApplicationManifest>app.manifest</ApplicationManifest>

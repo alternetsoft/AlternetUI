@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void ImageSetAddImage(ImageSet imgSet, int index, Image item)
         {
-            ((UI.Native.ImageSet)imgSet.Handler).AddImage((UI.Native.Image)item.NativeObject);
+            ((UI.Native.ImageSet)imgSet.Handler).AddImage((UI.Native.Image)item.Handler);
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void ImageListAdd(ImageList imgList, int index, Image item)
         {
-            ((UI.Native.ImageList)imgList.Handler).AddImage((UI.Native.Image)item.NativeObject);
+            ((UI.Native.ImageList)imgList.Handler).AddImage((UI.Native.Image)item.Handler);
         }
 
         /// <inheritdoc/>
@@ -136,7 +136,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void IconSetAdd(IconSet icnSet, Image image)
         {
-            ((UI.Native.IconSet)icnSet.Handler).AddImage((UI.Native.Image)image.NativeObject);
+            ((UI.Native.IconSet)icnSet.Handler).AddImage((UI.Native.Image)image.Handler);
         }
 
         /// <inheritdoc/>

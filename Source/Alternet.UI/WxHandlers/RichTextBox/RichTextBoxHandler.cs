@@ -2021,8 +2021,8 @@ namespace Alternet.UI
             if (bitmap is null)
                 return false;
             if (textAttr is TextBoxRichAttr s)
-                return NativeControl.WriteImage((UI.Native.Image)bitmap.NativeObject, (int)bitmapType, s.Handle);
-            return NativeControl.WriteImage((UI.Native.Image)bitmap.NativeObject, (int)bitmapType, default);
+                return NativeControl.WriteImage((UI.Native.Image)bitmap.Handler, (int)bitmapType, s.Handle);
+            return NativeControl.WriteImage((UI.Native.Image)bitmap.Handler, (int)bitmapType, default);
         }
 
         /// <summary>

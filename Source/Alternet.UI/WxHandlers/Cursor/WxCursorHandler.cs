@@ -36,7 +36,7 @@ namespace Alternet.UI
         }
 
         public WxCursorHandler(Image image)
-            : base(UI.Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.NativeObject), true)
+            : base(UI.Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.Handler), true)
         {
         }
 

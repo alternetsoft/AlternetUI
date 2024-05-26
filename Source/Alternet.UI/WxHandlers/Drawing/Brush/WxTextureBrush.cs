@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public void Update(Alternet.Drawing.TextureBrush brush)
         {
-            Initialize((UI.Native.Image)brush.Image.NativeObject);
+            Initialize((UI.Native.Image)brush.Image.Handler);
         }
     }
 }

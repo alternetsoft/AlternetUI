@@ -15,166 +15,6 @@ namespace Alternet.Drawing
     /// </summary>
     internal class NotImplementedDrawing : NativeDrawing
     {
-        public override object CreateImage()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageSave(Image img, string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageSave(Image img, Stream stream, ImageFormat format)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override SizeI GetImagePixelSize(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageLoadFromStream(Image img, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromImage(Image original, SizeI newSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromGenericImage(GenericImage genericImage, int depth = -1)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromGraphics(int width, int height, Graphics dc)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromGraphicsAndGenericImage(GenericImage genericImage, Graphics dc)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageWithSizeAndDepth(SizeI size, int depth = 32)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override BitmapType GetDefaultBitmapType()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool GetImageHasAlpha(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetImageHasAlpha(Image img, bool hasAlpha)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override double GetImageScaleFactor(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetImageScaleFactor(Image img, double value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override SizeI GetImageDipSize(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override double GetImageScaledHeight(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override SizeI GetImageScaledSize(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override double GetImageScaledWidth(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetImageDepth(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromScreen()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromSvgStream(Stream stream, int width, int height, Color? color = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromSvgString(string s, int width, int height, Color? color = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageLoad(Image img, string name, BitmapType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageSaveToFile(Image img, string name, BitmapType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageSaveToStream(Image img, Stream stream, BitmapType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ImageLoadFromStream(Image img, Stream stream, BitmapType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object ImageGetSubBitmap(Image img, RectI rect)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object ImageConvertToDisabled(Image img, byte brightness = 255)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ImageRescale(Image img, SizeI sizeNeeded)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ImageResetAlpha(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool GetImageIsOk(Image img)
-        {
-            throw new NotImplementedException();
-        }
-
         public override object CreateGenericImage()
         {
             throw new NotImplementedException();
@@ -845,11 +685,6 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override object ImageConvertToGenericImage(Image image)
-        {
-            throw new NotImplementedException();
-        }
-
         public override object CreateGraphicsPath(Graphics graphics)
         {
             throw new NotImplementedException();
@@ -961,21 +796,6 @@ namespace Alternet.Drawing
         }
 
         public override void ImageSetLoadFromStream(ImageSet imageSet, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImage(ImageSet imageSet, SizeI size)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImage(ImageSet imageSet, IControl control)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object CreateImageFromImage(Image image)
         {
             throw new NotImplementedException();
         }

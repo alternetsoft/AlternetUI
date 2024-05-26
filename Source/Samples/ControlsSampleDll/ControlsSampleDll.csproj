@@ -7,7 +7,6 @@
       <Nullable>enable</Nullable>
       <UseStyleCop>false</UseStyleCop>
       <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	<TargetFrameworks>net8.0</TargetFrameworks>
     </PropertyGroup>                 
 
   <ItemGroup>

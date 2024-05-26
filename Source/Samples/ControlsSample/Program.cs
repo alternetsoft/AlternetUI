@@ -30,6 +30,8 @@ namespace ControlsSample
 
             var application = new Application();
 
+            application.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+
             InitSamples();
 
             /*application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);

@@ -385,7 +385,9 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override GenericImage GenericImageRotate90(GenericImage img, bool clockwise = true)
         {
-            return new(UI.Native.GenericImage.Rotate90((IntPtr)img.Handler, clockwise));
+            var ptr = (IntPtr)img.Handler;
+            var resultPtr = UI.Native.GenericImage.Rotate90(ptr, clockwise);
+            return new(resultPtr);
         }
 
         /// <inheritdoc/>

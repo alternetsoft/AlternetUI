@@ -494,7 +494,7 @@ namespace Alternet.Drawing
         {
             DebugImageAssert(image);
             dc.DrawImageAtPoint(
-                (UI.Native.Image)image.NativeObject,
+                (UI.Native.Image)image.Handler,
                 origin,
                 useMask);
         }
@@ -504,7 +504,7 @@ namespace Alternet.Drawing
         {
             DebugImageAssert(image);
             dc.DrawImageAtRect(
-                (UI.Native.Image)image.NativeObject,
+                (UI.Native.Image)image.Handler,
                 destinationRect,
                 useMask);
         }
@@ -514,7 +514,7 @@ namespace Alternet.Drawing
         {
             DebugImageAssert(image);
             dc.DrawImagePortionAtRect(
-                (UI.Native.Image)image.NativeObject,
+                (UI.Native.Image)image.Handler,
                 destinationRect,
                 sourceRect);
         }
@@ -524,7 +524,7 @@ namespace Alternet.Drawing
         {
             DebugImageAssert(image);
             dc.DrawImagePortionAtPixelRect(
-                (UI.Native.Image)image.NativeObject,
+                (UI.Native.Image)image.Handler,
                 destinationRect,
                 sourceRect);
         }
@@ -650,7 +650,7 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.Handler,
                 foreColor,
                 backColor,
-                (UI.Native.Image?)image?.NativeObject,
+                (UI.Native.Image?)image?.Handler,
                 rect,
                 (int)alignment,
                 indexAccel);

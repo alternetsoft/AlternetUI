@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
             set
             {
-                Icon = (UI.Native.Image?)value?.NativeObject ?? null;
+                Icon = (UI.Native.Image?)value?.Handler ?? null;
             }
         }
 
