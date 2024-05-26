@@ -181,7 +181,14 @@ namespace Alternet.UI
         public bool UserPaint
         {
             get => NativeControl.UserPaint;
-            set => NativeControl.UserPaint = value;
+
+            set
+            {
+                if (value && !Control.CanUserPaint)
+                    return;
+
+                NativeControl.UserPaint = value;
+            }
         }
 
         public SizeD MinimumSize
