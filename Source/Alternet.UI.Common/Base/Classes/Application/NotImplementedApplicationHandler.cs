@@ -138,6 +138,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
         public IGroupBoxHandler CreateGroupBoxHandler(GroupBox control)
         {
             throw new NotImplementedException();

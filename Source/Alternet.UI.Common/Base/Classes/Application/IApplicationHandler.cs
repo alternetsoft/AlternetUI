@@ -212,6 +212,8 @@ namespace Alternet.UI
 
         IPrintPreviewDialogHandler CreatePrintPreviewDialogHandler();
 
+        IGraphicsFactoryHandler CreateGraphicsFactoryHandler();
+
         ICaretHandler CreateCaretHandler();
 
         ICaretHandler CreateCaretHandler(Control control, int width, int height);

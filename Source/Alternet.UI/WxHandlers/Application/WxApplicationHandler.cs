@@ -465,6 +465,11 @@ namespace Alternet.UI
             return new UI.Native.PageSettings();
         }
 
+        public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
+        {
+            return new WxGraphicsFactoryHandler();
+        }
+
         public IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
         {
             return new ValueValidatorText(style);

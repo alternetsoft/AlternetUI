@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
-            return NativeDrawing.Default.CreateGraphicsFromImage(image);
+            return GraphicsFactory.Handler.CreateGraphicsFromImage(image);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static Graphics FromScreen()
         {
-            return NativeDrawing.Default.CreateGraphicsFromScreen();
+            return GraphicsFactory.Handler.CreateGraphicsFromScreen();
         }
 
         /// <summary>

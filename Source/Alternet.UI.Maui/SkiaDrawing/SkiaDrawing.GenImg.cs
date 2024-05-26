@@ -12,7 +12,7 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    public partial class SkiaDrawing
+    public partial class SkiaDrawing : NativeDrawing
     {
         /// <inheritdoc/>
         public override object CreateGenericImage()

@@ -446,5 +446,10 @@ namespace Alternet.UI
         {
             return new PlessCaretHandler(control, width, height);
         }
+
+        public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

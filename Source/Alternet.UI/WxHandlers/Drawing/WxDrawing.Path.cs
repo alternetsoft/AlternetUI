@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    internal partial class WxDrawing
+    internal partial class WxDrawing : NativeDrawing
     {
         public override object CreateGraphicsPath(Graphics graphics)
         {

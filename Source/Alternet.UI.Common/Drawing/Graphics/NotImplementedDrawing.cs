@@ -970,16 +970,6 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override Graphics CreateGraphicsFromScreen()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Graphics CreateGraphicsFromImage(Image image)
-        {
-            throw new NotImplementedException();
-        }
-
         public override object CreateImage(ImageSet imageSet, IControl control)
         {
             throw new NotImplementedException();

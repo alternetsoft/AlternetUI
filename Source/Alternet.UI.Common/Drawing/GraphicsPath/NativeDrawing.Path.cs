@@ -8,8 +8,13 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public partial class NativeDrawing
+    public abstract partial class NativeDrawing : BaseObject
     {
+        /// <summary>
+        /// Gets default native drawing implementation.
+        /// </summary>
+        public static NativeDrawing Default = new NotImplementedDrawing();
+
         public abstract object CreateGraphicsPath();
 
         public abstract object CreateGraphicsPath(Graphics graphics);
