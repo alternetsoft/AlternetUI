@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// same picture.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : HandledObject<object>, IDisposable
+    public class ImageSet : HandledObject<IImageSetHandler>
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
@@ -60,7 +60,7 @@ namespace Alternet.UI
         public ImageSet(Stream stream)
             : this()
         {
-            NativeDrawing.Default.ImageSetLoadFromStream(this, stream);
+            Handler.LoadFromStream(stream);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Alternet.UI
                 return;
             }
 
-            NativeDrawing.Default.ImageSetLoadFromStream(this, stream);
+            Handler.LoadFromStream(stream);
         }
 
         /// <summary>
@@ -91,14 +91,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="imageSet">Native image set instance.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ImageSet(object imageSet)
+        public ImageSet(IImageSetHandler imageSet)
             : this()
         {
             Handler = imageSet;
         }
 
         /// <summary>
-        /// Occurs when the image set is changed, i.e. an image is added to it or removed from it.
+        /// Occurs when object is changed (image is added or removed).
         /// </summary>
         public event EventHandler? Changed;
 
@@ -111,11 +111,11 @@ namespace Alternet.UI
         /// size of the smallest bitmap in it. Note that this function is mostly used by
         /// library itself and not the application.
         /// </remarks>
-        public SizeI DefaultSize
+        public virtual SizeI DefaultSize
         {
             get
             {
-                return NativeDrawing.Default.ImageSetGetDefaultSize(this);
+                return Handler.DefaultSize;
             }
         }
 
@@ -123,18 +123,18 @@ namespace Alternet.UI
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
-        public Collection<Image> Images { get; internal set; } = new() { ThrowOnNullAdd = true };
+        public virtual Collection<Image> Images { get; internal set; } = new() { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets whether this <see cref="ImageSet"/> instance is valid and contains image(s).
         /// </summary>
         [Browsable(false)]
-        public bool IsOk => NativeDrawing.Default.ImageSetIsOk(this);
+        public virtual bool IsOk => Handler.IsOk;
 
         /// <inheritdoc/>
         [Browsable(false)]
         public override bool IsReadOnly
-            => Immutable || NativeDrawing.Default.ImageSetIsReadOnly(this);
+            => Immutable || Handler.IsReadOnly;
 
         /// <summary>
         /// Converts the specified <see cref='Image'/> to a <see cref='ImageSet'/>.
@@ -235,12 +235,12 @@ namespace Alternet.UI
         /// <paramref name="stream"/>. </returns>
         public static ImageSet FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
-            var nativeImage = NativeDrawing.Default.CreateImageSetFromSvgStream(
+            var handler = GraphicsFactory.Handler.CreateImageSetHandlerFromSvg(
                 stream,
                 width,
                 height,
                 color);
-            var result = new ImageSet(nativeImage);
+            var result = new ImageSet(handler);
             return result;
         }
 
@@ -257,12 +257,12 @@ namespace Alternet.UI
         /// <paramref name="s"/>. </returns>
         public static ImageSet FromSvgString(string s, int width, int height, Color? color = null)
         {
-            var nativeImage = NativeDrawing.Default.CreateImageSetFromSvgString(
+            var handler = GraphicsFactory.Handler.CreateImageSetHandlerFromSvg(
                 s,
                 width,
                 height,
                 color);
-            var result = new ImageSet(nativeImage);
+            var result = new ImageSet(handler);
             return result;
         }
 
@@ -309,12 +309,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public Image AsImage(SizeI size) => new Bitmap(this, size);
+        public virtual Image AsImage(SizeI size) => new Bitmap(this, size);
 
         /// <summary>
         /// Gets first image with size equal to <see cref="DefaultSize"/>.
         /// </summary>
-        public Image AsImage() => new Bitmap(this, DefaultSize);
+        public virtual Image AsImage() => new Bitmap(this, DefaultSize);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
@@ -328,9 +328,9 @@ namespace Alternet.UI
         /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
         /// </remarks>
         /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
-        public SizeI GetPreferredBitmapSizeFor(IControl control)
+        public virtual SizeI GetPreferredBitmapSizeFor(IControl control)
         {
-            return NativeDrawing.Default.ImageSetGetPreferredBitmapSizeFor(this, control);
+            return Handler.GetPreferredBitmapSizeFor(control);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="control">Control to get DPI scaling factor from.</param>
         /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
-        public Image AsImageFor(IControl control) => new Bitmap(this, control);
+        public virtual Image AsImageFor(IControl control) => new Bitmap(this, control);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at
@@ -362,29 +362,29 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public SizeI GetPreferredBitmapSizeAtScale(double scale)
+        public virtual SizeI GetPreferredBitmapSizeAtScale(double scale)
         {
-            return NativeDrawing.Default.ImageSetGetPreferredBitmapSizeAtScale(this, scale);
+            return Handler.GetPreferredBitmapSizeAtScale(scale);
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IImageSetHandler CreateHandler()
         {
-            return NativeDrawing.Default.CreateImageSet();
+            return GraphicsFactory.Handler.CreateImageSetHandler();
         }
 
         private void Images_ItemInserted(object? sender, int index, Image item)
         {
             CheckReadOnly();
-            NativeDrawing.Default.ImageSetAddImage(this, index, item);
+            Handler.Add(item);
             OnChanged();
         }
 
         private void Images_ItemRemoved(object? sender, int index, Image item)
         {
             CheckReadOnly();
-            NativeDrawing.Default.ImageSetRemoveImage(this, index, item);
             OnChanged();
+            throw new NotImplementedException();
         }
 
         private void OnChanged()

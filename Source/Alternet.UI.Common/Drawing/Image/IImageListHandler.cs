@@ -10,5 +10,10 @@ namespace Alternet.Drawing
 {
     public interface IImageListHandler : IDisposable
     {
+        SizeI PixelImageSize { get; set; }
+
+        SizeD ImageSize { get; set; }
+
+        void Add(Image item);
     }
 }

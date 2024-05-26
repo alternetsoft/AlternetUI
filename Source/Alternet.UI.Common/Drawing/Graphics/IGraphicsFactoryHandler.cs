@@ -48,5 +48,23 @@ namespace Alternet.Drawing
             int width,
             int height,
             Color? color = null);
+
+        IImageSetHandler CreateImageSetHandler();
+
+        IImageSetHandler CreateImageSetHandlerFromSvg(
+            Stream stream,
+            int width,
+            int height,
+            Color? color = null);
+
+        IImageSetHandler CreateImageSetHandlerFromSvg(
+            string s,
+            int width,
+            int height,
+            Color? color = null);
+
+        IImageListHandler CreateImageListHandler();
+
+        IIconSetHandler CreateIconSetHandler();
     }
 }

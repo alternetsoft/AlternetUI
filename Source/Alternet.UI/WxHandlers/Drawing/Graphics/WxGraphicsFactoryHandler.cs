@@ -11,6 +11,44 @@ namespace Alternet.Drawing
 {
     internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
+        public IImageSetHandler CreateImageSetHandler()
+        {
+            return new UI.Native.ImageSet();
+        }
+
+        public IImageSetHandler CreateImageSetHandlerFromSvg(
+            Stream stream,
+            int width,
+            int height,
+            Color? color = null)
+        {
+            var nativeImage = new UI.Native.ImageSet();
+            using var inputStream = new UI.Native.InputStream(stream, false);
+            nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
+            return nativeImage;
+        }
+
+        public IImageSetHandler CreateImageSetHandlerFromSvg(
+            string s,
+            int width,
+            int height,
+            Color? color = null)
+        {
+            var nativeImage = new UI.Native.ImageSet();
+            nativeImage.LoadSvgFromString(s, width, height, color ?? Color.Black);
+            return nativeImage;
+        }
+
+        public IImageListHandler CreateImageListHandler()
+        {
+            return new UI.Native.ImageList();
+        }
+
+        public IIconSetHandler CreateIconSetHandler()
+        {
+            return new UI.Native.IconSet();
+        }
+
         public BitmapType GetDefaultBitmapType()
         {
             return (BitmapType)UI.Native.Image.GetDefaultBitmapType();
@@ -37,13 +75,11 @@ namespace Alternet.Drawing
             return image;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler()
         {
             return new UI.Native.Image();
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(GenericImage genericImage, int depth = -1)
         {
             var nativeImage = CreateImageHandler();
@@ -51,7 +87,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(int width, int height, Graphics dc)
         {
             var nativeImage = CreateImageHandler();
@@ -63,7 +98,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)
         {
             var nativeObject = CreateImageHandler();
@@ -73,7 +107,6 @@ namespace Alternet.Drawing
             return nativeObject;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
         {
             var nativeImage = CreateImageHandler();
@@ -84,7 +117,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(Image image)
         {
             var nativeImage = CreateImageHandler();
@@ -92,7 +124,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(Image original, SizeI newSize)
         {
             var nativeImage = CreateImageHandler();
@@ -102,7 +133,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandler(SizeI size, int depth = 32)
         {
             var nativeImage = CreateImageHandler();
@@ -110,7 +140,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandlerFromScreen()
         {
             var nativeImage = CreateImageHandler();
@@ -118,7 +147,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandlerFromSvg(
             Stream stream,
             int width,
@@ -135,7 +163,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        /// <inheritdoc/>
         public IImageHandler CreateImageHandlerFromSvg(
             string s,
             int width,
