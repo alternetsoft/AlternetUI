@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Allows to use icons in the application.
     /// </summary>
-    public class IconSet : HandledObject<object>
+    public class IconSet : HandledObject<IIconSetHandler>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
@@ -68,9 +68,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Occurs when object is changed (image is added or removed).
+        /// </summary>
+        public event EventHandler? Changed;
+
+        /// <summary>
         /// Gets whether object is ok.
         /// </summary>
-        public bool IsOk => NativeDrawing.Default.IconSetIsOk(this);
+        public virtual bool IsOk => Handler.IsOk;
 
         /// <summary>
         /// Creates <see cref="IconSet"/> instance from
@@ -137,35 +142,40 @@ namespace Alternet.Drawing
         /// Adds image.
         /// </summary>
         /// <param name="image">Image to add.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Add(Image image)
+        public virtual void Add(Image image)
         {
-            NativeDrawing.Default.IconSetAdd(this, image);
+            Handler.Add(image);
+            OnChanged();
         }
 
         /// <summary>
         /// Adds image from the stream.
         /// </summary>
         /// <param name="stream">Stream with image.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Add(Stream stream)
+        public virtual void Add(Stream stream)
         {
-            NativeDrawing.Default.IconSetAdd(this, stream);
+            Handler.Add(stream);
+            OnChanged();
         }
 
         /// <summary>
         /// Removes all icons from the <see cref="IconSet"/>.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Clear()
+        public virtual void Clear()
         {
-            NativeDrawing.Default.IconSetClear(this);
+            Handler.Clear();
+            OnChanged();
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IIconSetHandler CreateHandler()
         {
-            return NativeDrawing.Default.CreateIconSet();
+            return GraphicsFactory.Handler.CreateIconSetHandler();
+        }
+
+        private void OnChanged()
+        {
+            Changed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
