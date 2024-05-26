@@ -71,7 +71,7 @@ namespace Alternet.UI
         }
 
         private static int reportedProgress = -1;
-        public static void DownloadFileProgressChangedToConsole(object sender, float progress)
+        public static void DownloadFileProgressChangedToConsole(object? sender, float progress)
         {
             int p = (int)progress;
             if (p == reportedProgress)
