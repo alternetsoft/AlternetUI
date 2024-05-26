@@ -103,6 +103,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
             ApplyItems();
             ApplyIsEditable();
             ApplySelectedItem();

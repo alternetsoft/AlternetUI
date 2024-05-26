@@ -18,6 +18,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
             NativeControl.Text = Control.Text;
 
             Control.TextChanged += Control_TextChanged;

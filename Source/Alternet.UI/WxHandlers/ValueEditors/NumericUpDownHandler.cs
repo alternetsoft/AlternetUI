@@ -25,6 +25,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
             NativeControl.Minimum = (int)Control.Minimum;
             NativeControl.Maximum = (int)Control.Maximum;
             NativeControl.Value = (int)Control.Value;

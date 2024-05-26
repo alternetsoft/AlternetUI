@@ -335,6 +335,13 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
+            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(Control.ControlKind);
+            if (hasBorder is not null)
+                HasBorder = hasBorder.Value;
+
             ApplyItems();
             ApplyImageList();
             ApplySelectionMode();

@@ -85,13 +85,6 @@ namespace Alternet.UI
         {
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
-
-            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
-
-            if (hasBorder is not null)
-                HasBorder = hasBorder.Value;
         }
 
         /// <summary>

@@ -32,6 +32,8 @@ namespace Alternet.UI
 
             set
             {
+                if (HasBorder == value)
+                    return;
                 NativeControl.HasBorder = value;
             }
         }
@@ -57,6 +59,13 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
+
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
+            bool? value = AllPlatformDefaults.GetHasBorderOverride(Control.ControlKind);
+            if (value is not null)
+                HasBorder = value.Value;
 
             ApplyItems();
             ApplySelectionMode();

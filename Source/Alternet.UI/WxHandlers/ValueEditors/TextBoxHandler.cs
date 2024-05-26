@@ -458,6 +458,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (BaseApplication.IsWindowsOS)
+                UserPaint = true;
+
             ApplyMultiline();
             ApplyReadOnly();
             NativeControl.Text = Control.Text;

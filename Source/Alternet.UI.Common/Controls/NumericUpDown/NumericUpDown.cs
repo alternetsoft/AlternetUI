@@ -26,8 +26,6 @@ namespace Alternet.UI
         /// </summary>
         public NumericUpDown()
         {
-            if (BaseApplication.IsWindowsOS && BaseApplication.PlatformKind == UIPlatformKind.WxWidgets)
-                UserPaint = true;
         }
 
         /// <summary>
