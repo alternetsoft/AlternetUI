@@ -16,14 +16,20 @@ namespace Alternet.UI
 
         public Color BackgroundColor
         {
-            get;
-            set;
+            get => SystemColors.Window;
+
+            set
+            {
+            }
         }
 
         public Color ForegroundColor
         {
-            get;
-            set;
+            get => SystemColors.WindowText;
+
+            set
+            {
+            }
         }
 
         public Action? Idle { get; set; }
@@ -243,7 +249,7 @@ namespace Alternet.UI
 
         public object GetNativeControl()
         {
-            return default;
+            return AssemblyUtils.Default;
         }
 
         public double GetPixelScaleFactor()

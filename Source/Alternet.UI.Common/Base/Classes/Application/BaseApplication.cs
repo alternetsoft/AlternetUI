@@ -171,9 +171,10 @@ namespace Alternet.UI
 #endif
         }
 
-        public BaseApplication(IApplicationHandler handler)
+        public BaseApplication(IApplicationHandler? handler)
         {
-            Handler = handler;
+            if(handler is not null)
+                Handler = handler;
             SynchronizationContext.InstallIfNeeded();
             BaseApplication.Current = this;
 
@@ -269,8 +270,7 @@ namespace Alternet.UI
             {
                 // maybe make it thread static?
                 // maybe move this to native?
-                return current ?? throw new InvalidOperationException(
-                    ErrorMessages.Default.CurrentApplicationIsNotSet);
+                return current ??= new BaseApplication(null);
             }
 
             protected set
