@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
 using SkiaSharp;
@@ -35,7 +36,37 @@ namespace Alternet.UI
 
         public SkiaContainer()
         {
+            /*
+                IsEnabled
+                IsVisible
+                Width
+                Height
+                BackgroundColor
+                Background
+                IsFocused
+                Window
+                Bounds
+                MinimumWidthRequest
+                MinimumHeightRequest
+                MaximumWidthRequest
+                MaximumHeightRequest
+
+                bool Focus()
+                event EventHandler MeasureInvalidated;
+                event EventHandler ChildrenReordered;
+                event EventHandler? WindowChanged;
+
+                // Window != null
+                event EventHandler? Loaded
+                event EventHandler? Unloaded
+                bool IsLoaded
+            */
+
             EnableTouchEvents = true;
+
+            Focused += SkiaContainer_Focused;
+            Unfocused += SkiaContainer_Unfocused;
+            SizeChanged += SkiaContainer_SizeChanged;
         }
 
         public Alternet.UI.Control? Control
@@ -48,6 +79,16 @@ namespace Alternet.UI
                     return;
                 control = value;
             }
+        }
+
+        protected override void OnChildAdded(Element child)
+        {
+            base.OnChildAdded(child);
+        }
+
+        protected override void OnChildRemoved(Element child, int oldLogicalIndex)
+        {
+            base.OnChildRemoved(child, oldLogicalIndex);
         }
 
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
@@ -83,6 +124,18 @@ namespace Alternet.UI
                 control.RaiseTouch(args);
                 e.Handled = args.Handled;
             }
+        }
+
+        private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
+        {
+        }
+
+        private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
+        {
+        }
+
+        private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
+        {
         }
     }
 }
