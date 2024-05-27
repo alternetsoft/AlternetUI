@@ -249,7 +249,7 @@ namespace Alternet.UI
 
         public IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
         {
-            throw new NotImplementedException();
+            return new PlessScrollBarHandler();
         }
 
         public IMenuItemHandler CreateMenuItemHandler(MenuItem control)

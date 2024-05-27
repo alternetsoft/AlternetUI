@@ -398,7 +398,7 @@ namespace Alternet.UI
             return false;
         }
 
-        public void SetScrollBar(IControl control, bool isVertical, bool visible, int value, int largeChange, int maximum)
+        public void SetScrollBar(bool isVertical, bool visible, int value, int largeChange, int maximum)
         {
         }
 
