@@ -19,8 +19,6 @@ namespace Alternet.UI
 
         static WxApplicationHandler()
         {
-            NativeDrawing.Default = new WxDrawing();
-
             if (BaseApplication.SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
 

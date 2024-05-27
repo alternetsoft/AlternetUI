@@ -8,19 +8,23 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class MauiControlHandler : DisposableObject, IControlHandler
+    internal class MauiControlHandler : BaseControlHandler, IControlHandler
     {
-        private Control control;
-
         public MauiControlHandler()
         {
         }
 
-        public Color BackgroundColor { get; set; }
+        public Color BackgroundColor
+        {
+            get;
+            set;
+        }
 
-        public Color ForegroundColor { get; set; }
-
-        public Control Control { get; }
+        public Color ForegroundColor
+        {
+            get;
+            set;
+        }
 
         public Action? Idle { get; set; }
 
@@ -67,8 +71,6 @@ namespace Alternet.UI
         public LangDirection LangDirection { get; set; }
 
         public ControlBorderStyle BorderStyle { get; set; }
-
-        public bool IsAttached { get; }
 
         public bool IsNativeControlCreated { get; }
 
@@ -126,11 +128,13 @@ namespace Alternet.UI
 
         public bool IsFocusable { get; }
 
-        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
-        {
-        }
+        public Action<DragEventArgs>? DragDrop { get; set; }
 
-        public void Attach(Control control)
+        public Action<DragEventArgs>? DragOver { get; set; }
+
+        public Action<DragEventArgs>? DragEnter { get; set; }
+
+        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
         }
 
@@ -166,16 +170,12 @@ namespace Alternet.UI
 
         public Graphics OpenPaintDrawingContext()
         {
-            return default;
+            return default!;
         }
 
         public Graphics CreateDrawingContext()
         {
-            return default;
-        }
-
-        public void Detach()
-        {
+            return default!;
         }
 
         public PointD DeviceToScreen(PointI point)
@@ -218,17 +218,17 @@ namespace Alternet.UI
 
         public Color GetDefaultAttributesBgColor()
         {
-            return default;
+            return SystemColors.Window;
         }
 
         public Color GetDefaultAttributesFgColor()
         {
-            return default;
+            return SystemColors.WindowText;
         }
 
         public Font? GetDefaultAttributesFont()
         {
-            return default;
+            return null;
         }
 
         public SizeD GetDPI()
@@ -305,10 +305,6 @@ namespace Alternet.UI
         }
 
         public void Lower()
-        {
-        }
-
-        public void OnLayoutChanged()
         {
         }
 
@@ -415,6 +411,14 @@ namespace Alternet.UI
         }
 
         public void Update()
+        {
+        }
+
+        public void OnChildInserted(Control childControl)
+        {
+        }
+
+        public void OnChildRemoved(Control childControl)
         {
         }
     }

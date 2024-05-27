@@ -11,6 +11,8 @@ namespace Alternet.Drawing
 {
     public interface IGraphicsFactoryHandler : IDisposable
     {
+        GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }
+
         BitmapType GetDefaultBitmapType();
 
         Graphics CreateGraphicsFromScreen();
@@ -78,5 +80,59 @@ namespace Alternet.Drawing
         IImageListHandler CreateImageListHandler();
 
         IIconSetHandler CreateIconSetHandler();
+
+        bool CanReadGenericImage(string filename);
+
+        bool CanReadGenericImage(Stream stream);
+
+        string GetGenericImageExtWildcard();
+
+        bool RemoveGenericImageHandler(string name);
+
+        int GetGenericImageCount(
+            string filename,
+            BitmapType bitmapType = BitmapType.Any);
+
+        int GetGenericImageCount(
+            Stream stream,
+            BitmapType bitmapType = BitmapType.Any);
+
+        void CleanUpGenericImageHandlers();
+
+        IGenericImageHandler CreateGenericImageHandler();
+
+        IGenericImageHandler CreateGenericImageHandler(int width, int height, bool clear = false);
+
+        IGenericImageHandler CreateGenericImageHandler(SizeI size, bool clear = false);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            string fileName,
+            BitmapType bitmapType = BitmapType.Any,
+            int index = -1);
+
+        IGenericImageHandler CreateGenericImageHandler(string name, string mimetype, int index = -1);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            Stream stream,
+            BitmapType bitmapType = BitmapType.Any,
+            int index = -1);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            Stream stream,
+            string mimeType,
+            int index = -1);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            int width,
+            int height,
+            IntPtr data,
+            bool staticData = false);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            int width,
+            int height,
+            IntPtr data,
+            IntPtr alpha,
+            bool staticData = false);
     }
 }

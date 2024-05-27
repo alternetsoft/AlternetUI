@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal abstract class BaseControlHandler : DisposableObject
+    public abstract class BaseControlHandler : DisposableObject
     {
         private Control? control;
 
