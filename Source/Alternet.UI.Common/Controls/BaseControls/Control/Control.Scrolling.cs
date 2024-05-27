@@ -116,28 +116,6 @@ namespace Alternet.UI
 
         public virtual void RaiseScroll(ScrollEventArgs e) => OnScroll(e);
 
-        public virtual void OnNativeControlHorizontalScrollBarValueChanged()
-        {
-            var args = new ScrollEventArgs
-            {
-                ScrollOrientation = ScrollOrientation.HorizontalScroll,
-                NewValue = Handler.GetScrollBarEvtPosition(),
-                Type = Handler.GetScrollBarEvtKind(),
-            };
-            RaiseScroll(args);
-        }
-
-        public virtual void OnNativeControlVerticalScrollBarValueChanged()
-        {
-            var args = new ScrollEventArgs
-            {
-                ScrollOrientation = ScrollOrientation.VerticalScroll,
-                NewValue = Handler.GetScrollBarEvtPosition(),
-                Type = Handler.GetScrollBarEvtKind(),
-            };
-            RaiseScroll(args);
-        }
-
         /// <summary>
         /// Raises the <see cref="Scroll"/> event.
         /// </summary>

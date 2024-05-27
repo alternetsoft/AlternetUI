@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
@@ -55,5 +56,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">Object to log.</param>
         public virtual void Log(object? s) => BaseApplication.Log(s);
+
+        /// <summary>
+        /// Checks current thread on <see cref="ApartmentState.STA"/>.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Raised if
+        /// <see cref="Thread.GetApartmentState"/> is not <see cref="ApartmentState.STA"/>.</exception>
+        /// <remarks>
+        /// This method performs checks only on MSW, on other os it does nothing.
+        /// </remarks>
+        protected void CheckSTARequirement()
+        {
+            if (!BaseApplication.IsWindowsOS)
+                return;
+
+            // STA Requirement
+            // Alternet UI doesn't necessarily require STA, but many components do.  Examples
+            // include Cicero, OLE, COM, etc.  So we throw an exception here if the
+            // thread is not STA.
+            if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
+            {
+                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
+            }
+        }
     }
 }

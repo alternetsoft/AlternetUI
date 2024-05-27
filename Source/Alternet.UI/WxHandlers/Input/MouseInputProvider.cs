@@ -67,7 +67,7 @@ namespace Alternet.UI
             object? sender,
             NativeEventArgs<MouseButtonEventData> e)
         {
-            InputManager.Current.ReportMouseDoubleClick(
+            Mouse.ReportMouseDoubleClick(
                 GetTargetControl(e.Data.targetControl),
                 e.Data.timestamp,
                 (MouseButton)e.Data.changedButton,
@@ -78,7 +78,7 @@ namespace Alternet.UI
 
         private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
         {
-            InputManager.Current.ReportMouseWheel(
+            Mouse.ReportMouseWheel(
                 GetTargetControl(e.Data.targetControl),
                 e.Data.timestamp,
                 e.Data.delta,
@@ -88,7 +88,7 @@ namespace Alternet.UI
 
         private void NativeMouse_MouseUp(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
-            InputManager.Current.ReportMouseUp(
+            Mouse.ReportMouseUp(
                 GetTargetControl(e.Data.targetControl),
                 e.Data.timestamp,
                 (MouseButton)e.Data.changedButton,
@@ -99,7 +99,7 @@ namespace Alternet.UI
 
         private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
-            InputManager.Current.ReportMouseDown(
+            Mouse.ReportMouseDown(
                 GetTargetControl(e.Data.targetControl),
                 e.Data.timestamp,
                 (MouseButton)e.Data.changedButton,
@@ -112,7 +112,7 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.MouseEventData> e)
         {
-            InputManager.Current.ReportMouseMove(
+            Mouse.ReportMouseMove(
                 GetTargetControl(e.Data.targetControl),
                 e.Data.timestamp,
                 out _);

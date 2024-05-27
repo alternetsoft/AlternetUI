@@ -13,6 +13,45 @@ namespace Alternet.UI
         {
         }
 
+        public bool ReadOnly
+        {
+            get
+            {
+                return NativeControl.ReadOnly;
+            }
+
+            set
+            {
+                NativeControl.ReadOnly = value;
+            }
+        }
+
+        public bool HasBorder
+        {
+            get
+            {
+                return !NativeControl.EditControlOnly;
+            }
+
+            set
+            {
+                NativeControl.EditControlOnly = !value;
+            }
+        }
+
+        public bool Multiline
+        {
+            get
+            {
+                return NativeControl.Multiline;
+            }
+
+            set
+            {
+                NativeControl.Multiline = value;
+            }
+        }
+
         public string ReportedUrl
         {
             get
@@ -437,7 +476,6 @@ namespace Alternet.UI
             return new NativeTextBox(Control)
             {
                 Text = Control.Text,
-                EditControlOnly = !Control.HasBorder,
             };
         }
 
@@ -445,9 +483,6 @@ namespace Alternet.UI
         {
             base.OnDetach();
             Control.TextChanged -= Control_TextChanged;
-            Control.HasBorderChanged -= Control_HasBorderChanged;
-            Control.MultilineChanged -= Control_MultilineChanged;
-            Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
             NativeControl.TextChanged = null;
             NativeControl.TextEnter = null;
             NativeControl.TextUrl = null;
@@ -461,60 +496,20 @@ namespace Alternet.UI
             if (BaseApplication.IsWindowsOS)
                 UserPaint = true;
 
-            ApplyMultiline();
-            ApplyReadOnly();
             NativeControl.Text = Control.Text;
 
-            Control.HasBorderChanged += Control_HasBorderChanged;
             Control.TextChanged += Control_TextChanged;
-            Control.MultilineChanged += Control_MultilineChanged;
-            Control.ReadOnlyChanged += Control_ReadOnlyChanged;
 
+            NativeControl.TextEnter = Control.OnEnterPressed;
+            NativeControl.TextMaxLength = Control.OnTextMaxLength;
             NativeControl.TextChanged = NativeControl_TextChanged;
-            NativeControl.TextEnter = NativeControl_TextEnter;
             NativeControl.TextUrl = NativeControl_TextUrl;
-            NativeControl.TextMaxLength = NativeControl_TextMaxLength;
-        }
-
-        private void NativeControl_TextMaxLength()
-        {
-            Control.OnTextMaxLength(EventArgs.Empty);
         }
 
         private void NativeControl_TextUrl()
         {
             var url = ReportedUrl;
             Control.OnTextUrl(new UrlEventArgs(url));
-        }
-
-        private void NativeControl_TextEnter()
-        {
-            Control.OnEnterPressed(EventArgs.Empty);
-        }
-
-        private void Control_ReadOnlyChanged(object? sender, EventArgs e)
-        {
-            ApplyReadOnly();
-        }
-
-        private void ApplyReadOnly()
-        {
-            NativeControl.ReadOnly = Control.ReadOnly;
-        }
-
-        private void ApplyMultiline()
-        {
-            NativeControl.Multiline = Control.Multiline;
-        }
-
-        private void Control_MultilineChanged(object? sender, EventArgs e)
-        {
-            ApplyMultiline();
-        }
-
-        private void Control_HasBorderChanged(object? sender, EventArgs e)
-        {
-            NativeControl.EditControlOnly = !Control.HasBorder;
         }
 
         private void NativeControl_TextChanged()
@@ -542,7 +537,6 @@ namespace Alternet.UI
         internal class NativeTextBox : Native.TextBox
         {
             public NativeTextBox(TextBox control)
-                : base()
             {
                 var validator = control.Validator;
                 IntPtr ptr = default;

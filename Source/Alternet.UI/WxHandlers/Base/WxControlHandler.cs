@@ -16,9 +16,6 @@ namespace Alternet.UI
     {
         private Native.Control? nativeControl;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Control"/> class.
-        /// </summary>
         public WxControlHandler()
         {
         }
@@ -720,102 +717,53 @@ namespace Alternet.UI
             return result;
         }
 
-        protected override void OnChildInserted(Control childControl)
+        public void OnChildInserted(Control childControl)
         {
-            TryInsertNativeControl(childControl);
+            var child = (childControl.Handler as WxControlHandler)?.NativeControl;
+            if (child == null)
+                return;
+            if (child.ParentRefCounted != null)
+                return;
+            nativeControl?.AddChild(child);
         }
 
-        protected override void OnChildRemoved(Control childControl)
+        public void OnChildRemoved(Control childControl)
         {
-            TryRemoveNativeControl(childControl);
+            var child = (childControl.Handler as WxControlHandler)?.nativeControl;
+            if (child != null)
+                nativeControl?.RemoveChild(child);
         }
 
         protected override void OnDetach()
         {
             /*todo: consider clearing the native control's children.*/
 
-            if (NativeControl != null)
-            {
-                NativeControl.HandleCreated = null;
-                NativeControl.HandleDestroyed = null;
-                NativeControl.Activated = null;
-                NativeControl.Deactivated = null;
-                NativeControl.Idle = null;
-                NativeControl.Paint = null;
-                NativeControl.VisibleChanged = null;
-                NativeControl.MouseEnter = null;
-                NativeControl.MouseLeave = null;
-                NativeControl.MouseCaptureLost = null;
-                NativeControl.DragOver -= NativeControl_DragOver;
-                NativeControl.DragEnter -= NativeControl_DragEnter;
-                NativeControl.DragLeave = null;
-                NativeControl.DragDrop -= NativeControl_DragDrop;
-                NativeControl.GotFocus = null;
-                NativeControl.LostFocus = null;
-                NativeControl.SizeChanged = null;
-                NativeControl.VerticalScrollBarValueChanged = null;
-                NativeControl.HorizontalScrollBarValueChanged = null;
-            }
+            Control.UnbindNativeEvents();
+
+            NativeControl.DragOver -= NativeControl_DragOver;
+            NativeControl.DragEnter -= NativeControl_DragEnter;
+            NativeControl.DragDrop -= NativeControl_DragDrop;
         }
 
-        /// <summary>
-        /// Called when native control size is changed.
-        /// </summary>
-        protected virtual void NativeControlSizeChanged()
-        {
-            Control.RaiseNativeSizeChanged();
-        }
-
-        protected override void OnAttach()
-        {
-            NativeControl.Visible = Control.Visible;
-            NativeControl.Enabled = Control.Enabled;
-            ApplyChildren();
-        }
-
-        private protected virtual void OnNativeControlCreated()
+        protected virtual void OnNativeControlCreated()
         {
             var parent = Control.Parent;
 
             if (parent is not null)
             {
-                (parent.Handler as WxControlHandler)?.TryInsertNativeControl(Control);
+                (parent.Handler as WxControlHandler)?.OnChildInserted(Control);
                 parent.PerformLayout();
             }
 
-            NativeControl.HandleCreated = Control.RaiseHandleCreated;
-            NativeControl.HandleDestroyed = Control.RaiseHandleDestroyed;
-            NativeControl.Activated = Control.RaiseActivated;
-            NativeControl.Deactivated = Control.RaiseDeactivated;
-            NativeControl.Paint = Control.OnNativeControlPaint;
-            NativeControl.VisibleChanged = Control.OnNativeControlVisibleChanged;
-            NativeControl.MouseEnter = NativeControl_MouseEnter;
-            NativeControl.MouseLeave = NativeControl_MouseLeave;
-            NativeControl.MouseCaptureLost = Control.RaiseMouseCaptureLost;
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
-            NativeControl.DragLeave = NativeControl_DragLeave;
             NativeControl.DragDrop += NativeControl_DragDrop;
-            NativeControl.GotFocus = Control.RaiseGotFocus;
-            NativeControl.LostFocus = Control.RaiseLostFocus;
-            NativeControl.SizeChanged = NativeControl_SizeChanged;
-            NativeControl.Idle = Control.RaiseIdle;
-            NativeControl.VerticalScrollBarValueChanged =
-                Control.OnNativeControlVerticalScrollBarValueChanged;
-            NativeControl.HorizontalScrollBarValueChanged =
-                Control.OnNativeControlHorizontalScrollBarValueChanged;
         }
 
         private static void DisposeNativeControlCore(Native.Control control)
         {
             control.handler = null;
             control.Dispose();
-        }
-
-        private void NativeControl_SizeChanged()
-        {
-            NativeControlSizeChanged();
-            Control.ReportBoundsChanged();
         }
 
 #pragma warning disable
@@ -839,28 +787,17 @@ namespace Alternet.UI
         private void NativeControl_DragOver(
             object? sender,
             Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, ea => Control.RaiseDragOver(ea));
+            RaiseDragAndDropEvent(e, Control.RaiseDragOver);
 
         private void NativeControl_DragEnter(
             object? sender,
             Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, ea => Control.RaiseDragEnter(ea));
+            RaiseDragAndDropEvent(e, Control.RaiseDragEnter);
 
         private void NativeControl_DragDrop(
             object? sender,
             Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, ea => Control.RaiseDragDrop(ea));
-
-        private void NativeControl_DragLeave() =>
-            Control.RaiseDragLeave(EventArgs.Empty);
-
-        private void ApplyChildren()
-        {
-            if (!Control.HasChildren)
-                return;
-            for (var i = 0; i < Control.Children.Count; i++)
-                RaiseChildInserted(Control.Children[i]);
-        }
+            RaiseDragAndDropEvent(e, Control.RaiseDragDrop);
 
         private void DisposeNativeControl()
         {
@@ -883,41 +820,6 @@ namespace Alternet.UI
             var nativeControl = (Native.Control)sender!;
             nativeControl.Destroyed -= NativeControl_Destroyed;
             DisposeNativeControlCore(nativeControl);
-        }
-
-        private void TryInsertNativeControl(Control childControl)
-        {
-            // todo: use index
-            var childNativeControl = (childControl.Handler as WxControlHandler)?.NativeControl;
-            if (childNativeControl == null)
-                return;
-
-            if (childNativeControl.ParentRefCounted != null)
-                return;
-
-            var parentNativeControl = NativeControl;
-            parentNativeControl?.AddChild(childNativeControl);
-        }
-
-        private void TryRemoveNativeControl(Control childControl)
-        {
-            var childHandler = (childControl.Handler as WxControlHandler)?.nativeControl;
-            if (childHandler != null)
-                nativeControl?.RemoveChild(childHandler);
-        }
-
-        private void NativeControl_MouseEnter()
-        {
-            var myControl = Control;
-            var currentTarget = InputManager.GetMouseTargetControl(ref myControl);
-            currentTarget?.RaiseMouseEnter();
-        }
-
-        private void NativeControl_MouseLeave()
-        {
-            var myControl = Control;
-            var currentTarget = InputManager.GetMouseTargetControl(ref myControl);
-            currentTarget?.RaiseMouseLeave();
         }
     }
 }

@@ -138,7 +138,7 @@ namespace Alternet.UI
         /// Called when a <see cref="Control"/> is inserted into
         /// the <see cref="Control.Children"/>.
         /// </summary>
-        protected virtual void OnChildInserted(Control childControl)
+        protected virtual void OnChildInserted(int index, Control childControl)
         {
         }
 
@@ -168,7 +168,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        protected virtual void OnNativeSizeChanged(EventArgs e)
+        protected virtual void OnHandlerSizeChanged(EventArgs e)
         {
         }
 

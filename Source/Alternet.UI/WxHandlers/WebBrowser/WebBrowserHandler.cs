@@ -417,11 +417,6 @@ namespace Alternet.UI
             NativeControl.ScriptResult -= OnNativeScriptResult;
         }
 
-        private protected override void OnNativeControlCreated()
-        {
-            base.OnNativeControlCreated();
-        }
-
         private static void ArgsToDoCommandParams(
            object?[] args,
            out string? cmdParam1,

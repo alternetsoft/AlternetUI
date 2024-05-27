@@ -42,7 +42,7 @@ namespace Alternet.UI
         {
             if (e.Data.keyChar == 0)
                 return;
-            InputManager.Current.ReportTextInput(e.Data.keyChar, out var handled);
+            Keyboard.ReportTextInput(e.Data.keyChar, out var handled);
             e.Handled = handled;
         }
 
@@ -50,7 +50,7 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            InputManager.Current.ReportKeyDown(
+            Keyboard.ReportKeyDown(
                 (Key)e.Data.key,
                 e.Data.isRepeat,
                 out var handled);
@@ -61,7 +61,7 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            InputManager.Current.ReportKeyUp(
+            Keyboard.ReportKeyUp(
                 (Key)e.Data.key,
                 e.Data.isRepeat,
                 out var handled);

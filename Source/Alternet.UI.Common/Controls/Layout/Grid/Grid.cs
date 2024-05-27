@@ -407,9 +407,9 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override void OnChildInserted(Control childControl)
+        protected override void OnChildInserted(int index, Control childControl)
         {
-            base.OnChildInserted(childControl);
+            base.OnChildInserted(index, childControl);
             OnChildrenChanged();
         }
 

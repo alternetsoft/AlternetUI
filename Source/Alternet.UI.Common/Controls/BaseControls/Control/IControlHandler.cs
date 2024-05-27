@@ -255,9 +255,9 @@ namespace Alternet.UI
 
         object GetNativeControl();
 
-        void RaiseChildInserted(Control childControl);
+        void OnChildInserted(Control childControl);
 
-        void RaiseChildRemoved(Control childControl);
+        void OnChildRemoved(Control childControl);
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.

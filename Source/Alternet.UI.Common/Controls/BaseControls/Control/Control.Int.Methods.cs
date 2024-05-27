@@ -209,6 +209,57 @@ namespace Alternet.UI
             Handler.EndRepositioningChildren();
         }
 
+        internal virtual void OnHandlerVisibleChanged()
+        {
+            bool visible = Handler.Visible;
+            Visible = visible;
+
+            if (BaseApplication.IsLinuxOS && visible)
+            {
+                // todo: this is a workaround for a problem on Linux when
+                // ClientSize is not reported correctly until the window is shown
+                // So we need to relayout all after the proper client size is available
+                // This should be changed later in respect to RedrawOnResize functionality.
+                // Also we may need to do this for top-level windows.
+                // Doing this on Windows results in strange glitches like disappearing
+                // tab controls' tab.
+                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                PerformLayout();
+            }
+        }
+
+        internal virtual void OnHandlerHorizontalScrollBarValueChanged()
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.HorizontalScroll,
+                NewValue = Handler.GetScrollBarEvtPosition(),
+                Type = Handler.GetScrollBarEvtKind(),
+            };
+            RaiseScroll(args);
+        }
+
+        internal virtual void OnHandlerVerticalScrollBarValueChanged()
+        {
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollOrientation.VerticalScroll,
+                NewValue = Handler.GetScrollBarEvtPosition(),
+                Type = Handler.GetScrollBarEvtKind(),
+            };
+            RaiseScroll(args);
+        }
+
+        internal virtual void OnHandlerPaint()
+        {
+            if (!UserPaint)
+                return;
+
+            using var dc = Handler.OpenPaintDrawingContext();
+
+            RaisePaint(new PaintEventArgs(dc, ClientRectangle));
+        }
+
         internal void DoInsideRepositioningChildren(Action action)
         {
             var repositioning = BeginRepositioningChildren();
