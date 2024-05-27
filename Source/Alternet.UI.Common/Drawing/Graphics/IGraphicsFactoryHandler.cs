@@ -15,6 +15,18 @@ namespace Alternet.Drawing
 
         Graphics CreateGraphicsFromScreen();
 
+        IRegionHandler CreateRegionHandler();
+
+        IRegionHandler CreateRegionHandler(RectD rect);
+
+        IRegionHandler CreateRegionHandler(Region region);
+
+        IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode = FillMode.Alternate);
+
+        IGraphicsPathHandler CreateGraphicsPathHandler();
+
+        IGraphicsPathHandler CreateGraphicsPathHandler(Graphics drawingContext);
+
         Graphics CreateGraphicsFromImage(Image image);
 
         IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size);

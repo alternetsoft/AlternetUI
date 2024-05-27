@@ -11,6 +11,44 @@ namespace Alternet.Drawing
 {
     internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
+        public IRegionHandler CreateRegionHandler()
+        {
+            return new UI.Native.Region();
+        }
+
+        public IRegionHandler CreateRegionHandler(RectD rect)
+        {
+            var region = new UI.Native.Region();
+            region.InitializeWithRect(rect);
+            return region;
+        }
+
+        public IGraphicsPathHandler CreateGraphicsPathHandler(Graphics graphics)
+        {
+            var result = new UI.Native.GraphicsPath();
+            result.Initialize((UI.Native.DrawingContext)graphics.NativeObject);
+            return result;
+        }
+
+        public IRegionHandler CreateRegionHandler(Region region)
+        {
+            var nativeObject = new UI.Native.Region();
+            nativeObject.InitializeWithRegion((UI.Native.Region)region.Handler);
+            return nativeObject;
+        }
+
+        public IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode = FillMode.Alternate)
+        {
+            var nativeObject = new UI.Native.Region();
+            nativeObject.InitializeWithPolygon(points, fillMode);
+            return nativeObject;
+        }
+
+        public IGraphicsPathHandler CreateGraphicsPathHandler()
+        {
+            return new UI.Native.GraphicsPath();
+        }
+
         public IImageSetHandler CreateImageSetHandler()
         {
             return new UI.Native.ImageSet();

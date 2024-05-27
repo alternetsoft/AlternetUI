@@ -20,6 +20,12 @@ namespace Alternet.UI
         {
         }
 
+        public Action<DragEventArgs>? DragDrop { get; set; }
+
+        public Action<DragEventArgs>? DragOver { get; set; }
+
+        public Action<DragEventArgs>? DragEnter { get; set; }
+
         public Action? Idle
         {
             get => NativeControl.Idle;
@@ -766,11 +772,9 @@ namespace Alternet.UI
             control.Dispose();
         }
 
-#pragma warning disable
         private void RaiseDragAndDropEvent(
             Native.NativeEventArgs<Native.DragEventData> e,
-            Action<DragEventArgs> raiseAction)
-#pragma warning restore
+            Action<DragEventArgs>? raiseAction)
         {
             var data = e.Data;
             var ea = new DragEventArgs(
@@ -779,7 +783,7 @@ namespace Alternet.UI
                 new PointD(data.mouseClientLocationX, data.mouseClientLocationY),
                 (DragDropEffects)data.effect);
 
-            raiseAction(ea);
+            raiseAction?.Invoke(ea);
 
             e.Result = new IntPtr((int)ea.Effect);
         }
@@ -787,17 +791,17 @@ namespace Alternet.UI
         private void NativeControl_DragOver(
             object? sender,
             Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, Control.RaiseDragOver);
+            RaiseDragAndDropEvent(e, DragOver);
 
         private void NativeControl_DragEnter(
             object? sender,
             Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, Control.RaiseDragEnter);
+            RaiseDragAndDropEvent(e, DragEnter);
 
         private void NativeControl_DragDrop(
             object? sender,
             Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, Control.RaiseDragDrop);
+            RaiseDragAndDropEvent(e, DragDrop);
 
         private void DisposeNativeControl()
         {

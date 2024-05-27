@@ -9,7 +9,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    internal partial class WxDrawing
+    internal partial class WxDrawing : NativeDrawing
     {
         /// <inheritdoc/>
         public override bool GenericImageCanRead(string filename)

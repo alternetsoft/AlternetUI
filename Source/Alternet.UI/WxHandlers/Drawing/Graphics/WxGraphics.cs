@@ -65,7 +65,7 @@ namespace Alternet.Drawing
 
             set
             {
-                dc.Clip = (UI.Native.Region?)value?.NativeObject;
+                dc.Clip = (UI.Native.Region?)value?.Handler;
             }
         }
 

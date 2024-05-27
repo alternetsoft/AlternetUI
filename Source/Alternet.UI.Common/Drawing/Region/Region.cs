@@ -1,22 +1,22 @@
 using System;
 using System.Runtime.CompilerServices;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
     /// Describes the interior of a graphics shape composed of rectangles and paths.
     /// </summary>
-    public class Region : IDisposable
+    public partial class Region : HandledObject<IRegionHandler>
     {
-        private bool isDisposed;
-
         /// <summary>
         /// This constructor creates an invalid (empty, null) <see cref="Region"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region()
         {
-            NativeObject = NativeDrawing.Default.CreateRegion();
+            Handler = GraphicsFactory.Handler.CreateRegionHandler();
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(RectD rect)
         {
-            NativeObject = NativeDrawing.Default.CreateRegion(rect);
+            Handler = GraphicsFactory.Handler.CreateRegionHandler(rect);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(Region region)
         {
-            NativeObject = NativeDrawing.Default.CreateRegion(region);
+            Handler = GraphicsFactory.Handler.CreateRegionHandler(region);
         }
 
         /// <summary>
@@ -51,32 +51,27 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(PointD[] points, FillMode fillMode = FillMode.Alternate)
         {
-            NativeObject = NativeDrawing.Default.CreateRegion(points, fillMode);
+            Handler = GraphicsFactory.Handler.CreateRegionHandler(points, fillMode);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Region"/> class.
         /// </summary>
         /// <param name="region">Native region instance.</param>
-        public Region(object region)
+        public Region(IRegionHandler region)
         {
-            NativeObject = region;
+            Handler = region;
         }
 
         /// <summary>
         /// Returns true if the region is empty, false otherwise.
         /// </summary>
-        public bool IsEmpty => isDisposed || NativeDrawing.Default.RegionIsEmpty(this);
+        public bool IsEmpty => IsDisposed || Handler.IsEmpty();
 
         /// <summary>
         /// Returns true if the region is ok, false otherwise.
         /// </summary>
-        public bool IsOk => !isDisposed && NativeDrawing.Default.RegionIsOk(this);
-
-        /// <summary>
-        /// Gets native region.
-        /// </summary>
-        public object NativeObject { get; private set; }
+        public bool IsOk => !IsDisposed && Handler.IsOk();
 
         /// <summary>
         /// Clears the region.
@@ -85,7 +80,7 @@ namespace Alternet.Drawing
         public void Clear()
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionClear(this);
+            Handler.Clear();
         }
 
         /// <summary>
@@ -97,7 +92,7 @@ namespace Alternet.Drawing
         public RegionContain Contains(PointD pt)
         {
             CheckDisposed();
-            return NativeDrawing.Default.RegionContains(this, pt);
+            return Handler.ContainsPoint(pt);
         }
 
         /// <summary>
@@ -109,7 +104,7 @@ namespace Alternet.Drawing
         public RegionContain Contains(RectD rect)
         {
             CheckDisposed();
-            return NativeDrawing.Default.RegionContains(this, rect);
+            return Handler.ContainsRect(rect);
         }
 
         /// <summary>
@@ -122,7 +117,7 @@ namespace Alternet.Drawing
         public void Intersect(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionIntersect(this, rect);
+            Handler.IntersectWithRect(rect);
         }
 
         /// <summary>
@@ -135,7 +130,7 @@ namespace Alternet.Drawing
         public void Intersect(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionIntersect(this, region);
+            Handler.IntersectWithRegion(region);
         }
 
         /// <summary>
@@ -148,7 +143,7 @@ namespace Alternet.Drawing
         public void Union(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionUnion(this, rect);
+            Handler.UnionWithRect(rect);
         }
 
         /// <summary>
@@ -161,7 +156,7 @@ namespace Alternet.Drawing
         public void Union(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionUnion(this, region);
+            Handler.UnionWithRegion(region);
         }
 
         /// <summary>
@@ -174,7 +169,7 @@ namespace Alternet.Drawing
         public void Xor(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionXor(this, region);
+            Handler.XorWithRegion(region);
         }
 
         /// <summary>
@@ -187,7 +182,7 @@ namespace Alternet.Drawing
         public void Xor(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionXor(this, rect);
+            Handler.XorWithRect(rect);
         }
 
         /// <summary>
@@ -206,7 +201,7 @@ namespace Alternet.Drawing
         public void Subtract(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionSubtract(this, rect);
+            Handler.SubtractRect(rect);
         }
 
         /// <summary>
@@ -225,7 +220,7 @@ namespace Alternet.Drawing
         public void Subtract(Region region)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionSubtract(this, region);
+            Handler.SubtractRegion(region);
         }
 
         /// <summary>
@@ -237,7 +232,7 @@ namespace Alternet.Drawing
         public void Translate(double dx, double dy)
         {
             CheckDisposed();
-            NativeDrawing.Default.RegionTranslate(this, dx, dy);
+            Handler.Translate(dx, dy);
         }
 
         /// <summary>
@@ -248,7 +243,7 @@ namespace Alternet.Drawing
         public RectD GetBounds()
         {
             CheckDisposed();
-            return NativeDrawing.Default.RegionGetBounds(this);
+            return Handler.GetBounds();
         }
 
         /// <inheritdoc/>
@@ -259,45 +254,19 @@ namespace Alternet.Drawing
             if (obj is not Region region)
                 return false;
 
-            return NativeDrawing.Default.RegionEquals(this, region);
+            return Handler.Equals(region);
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NativeDrawing.Default.RegionGetHashCode(this);
+            return Handler.GetHashCode();
         }
 
-        /// <summary>
-        /// Releases all resources used by this <see cref="TransformMatrix"/>.
-        /// </summary>
-        public void Dispose()
+        /// <inheritdoc/>
+        protected override IRegionHandler CreateHandler()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
-        /// </summary>
-        private void CheckDisposed()
-        {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    ((IDisposable)NativeObject).Dispose();
-                    NativeObject = null!;
-                }
-
-                isDisposed = true;
-            }
+            return GraphicsFactory.Handler.CreateRegionHandler();
         }
     }
 }

@@ -2162,6 +2162,9 @@ namespace Alternet.UI
             Handler.SizeChanged = null;
             Handler.VerticalScrollBarValueChanged = null;
             Handler.HorizontalScrollBarValueChanged = null;
+            Handler.DragOver = null;
+            Handler.DragEnter = null;
+            Handler.DragDrop = null;
         }
 
         public virtual void BindNativeEvents()
@@ -2182,6 +2185,9 @@ namespace Alternet.UI
             Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
             Handler.DragLeave = RaiseDragLeave;
             Handler.SizeChanged = RaiseHandlerSizeChanged;
+            Handler.DragOver = RaiseDragOver;
+            Handler.DragEnter = RaiseDragEnter;
+            Handler.DragDrop = RaiseDragDrop;
         }
 
         public virtual void ReportBoundsChanged()

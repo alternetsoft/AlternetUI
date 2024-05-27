@@ -10,6 +10,12 @@ namespace Alternet.UI
 {
     public interface IControlHandler : IDisposableObject
     {
+        Action<DragEventArgs>? DragDrop { get; set; }
+
+        Action<DragEventArgs>? DragOver { get; set; }
+
+        Action<DragEventArgs>? DragEnter { get; set; }
+
         Action? Idle { get; set; }
 
         Action? Paint { get; set; }

@@ -22,7 +22,7 @@ namespace Alternet.Drawing
     /// The starting and ending points of a geometric shape primitive are defined by
     /// the primitive specification.
     /// </remarks>
-    public sealed class GraphicsPath : HandledObject<object>
+    public partial class GraphicsPath : HandledObject<IGraphicsPathHandler>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         {
             if (drawingContext is null)
                 throw new ArgumentNullException(nameof(drawingContext));
-            Handler = NativeDrawing.Default.CreateGraphicsPath(drawingContext);
+            Handler = GraphicsFactory.Handler.CreateGraphicsPathHandler(drawingContext);
         }
 
         /// <summary>
@@ -49,13 +49,13 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return NativeDrawing.Default.GraphicsPathGetFillMode(this);
+                return Handler.FillMode;
             }
 
             set
             {
                 CheckDisposed();
-                NativeDrawing.Default.GraphicsPathSetFillMode(this, value);
+                Handler.FillMode = value;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Alternet.Drawing
         public void AddLines(PointD[] points)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddLines(this, points);
+            Handler.AddLines(points);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Alternet.Drawing
         public void AddLine(PointD pt1, PointD pt2)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddLine(this, pt1, pt2);
+            Handler.AddLine(pt1, pt2);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Alternet.Drawing
         public void AddLineTo(PointD pt)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddLineTo(this, pt);
+            Handler.AddLineTo(pt);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Alternet.Drawing
         public void AddEllipse(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddEllipse(this, rect);
+            Handler.AddEllipse(rect);
         }
 
         /// <summary>
@@ -158,8 +158,7 @@ namespace Alternet.Drawing
             PointD endPoint)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddBezier(
-                this,
+            Handler.AddBezier(
                 startPoint,
                 controlPoint1,
                 controlPoint2,
@@ -186,8 +185,7 @@ namespace Alternet.Drawing
         public void AddBezierTo(PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddBezierTo(
-                this,
+            Handler.AddBezierTo(
                 controlPoint1,
                 controlPoint2,
                 endPoint);
@@ -218,8 +216,7 @@ namespace Alternet.Drawing
         public void AddArc(PointD center, double radius, double startAngle, double sweepAngle)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddArc(
-                this,
+            Handler.AddArc(
                 center,
                 radius,
                 startAngle,
@@ -234,7 +231,7 @@ namespace Alternet.Drawing
         public void AddRectangle(RectD rect)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddRectangle(this, rect);
+            Handler.AddRectangle(rect);
         }
 
         /// <summary>
@@ -246,7 +243,7 @@ namespace Alternet.Drawing
         public void AddRoundedRectangle(RectD rect, double cornerRadius)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathAddRoundedRectangle(this, rect, cornerRadius);
+            Handler.AddRoundedRectangle(rect, cornerRadius);
         }
 
         /// <summary>
@@ -258,7 +255,7 @@ namespace Alternet.Drawing
         public RectD GetBounds()
         {
             CheckDisposed();
-            return NativeDrawing.Default.GraphicsPathGetBounds(this);
+            return Handler.GetBounds();
         }
 
         /// <summary>
@@ -269,7 +266,7 @@ namespace Alternet.Drawing
         public void StartFigure(PointD point)
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathStartFigure(this, point);
+            Handler.StartFigure(point);
         }
 
         /// <summary>
@@ -282,13 +279,13 @@ namespace Alternet.Drawing
         public void CloseFigure()
         {
             CheckDisposed();
-            NativeDrawing.Default.GraphicsPathCloseFigure(this);
+            Handler.CloseFigure();
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IGraphicsPathHandler CreateHandler()
         {
-            return NativeDrawing.Default.CreateGraphicsPath();
+            return GraphicsFactory.Handler.CreateGraphicsPathHandler();
         }
     }
 }
