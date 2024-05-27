@@ -24,7 +24,7 @@ namespace Alternet.UI
 
             OnHandlerAttached(EventArgs.Empty);
 
-            BindNativeEvents();
+            BindHandlerEvents();
 
             void ApplyChildren()
             {

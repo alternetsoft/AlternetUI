@@ -16,6 +16,8 @@ namespace Alternet.UI
     /// </summary>
     public static class AssemblyUtils
     {
+        public static BaseObject Default = new();
+
         /// <summary>
         /// Gets <c>true</c> value as <see cref="object"/>.
         /// </summary>

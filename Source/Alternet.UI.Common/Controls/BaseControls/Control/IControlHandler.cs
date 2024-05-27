@@ -208,7 +208,6 @@ namespace Alternet.UI
         double PixelFromDipF(double value);
 
         void SetScrollBar(
-            IControl control,
             bool isVertical,
             bool visible,
             int value,

@@ -2144,52 +2144,6 @@ namespace Alternet.UI
 
         public virtual void RaiseDragLeave() => OnDragLeave(EventArgs.Empty);
 
-        public virtual void UnbindNativeEvents()
-        {
-            Handler.HandleCreated = null;
-            Handler.HandleDestroyed = null;
-            Handler.Activated = null;
-            Handler.Deactivated = null;
-            Handler.Idle = null;
-            Handler.Paint = null;
-            Handler.VisibleChanged = null;
-            Handler.MouseEnter = null;
-            Handler.MouseLeave = null;
-            Handler.MouseCaptureLost = null;
-            Handler.DragLeave = null;
-            Handler.GotFocus = null;
-            Handler.LostFocus = null;
-            Handler.SizeChanged = null;
-            Handler.VerticalScrollBarValueChanged = null;
-            Handler.HorizontalScrollBarValueChanged = null;
-            Handler.DragOver = null;
-            Handler.DragEnter = null;
-            Handler.DragDrop = null;
-        }
-
-        public virtual void BindNativeEvents()
-        {
-            Handler.MouseEnter = RaiseMouseEnterOnTarget;
-            Handler.MouseLeave = RaiseMouseLeaveOnTarget;
-            Handler.HandleCreated = RaiseHandleCreated;
-            Handler.HandleDestroyed = RaiseHandleDestroyed;
-            Handler.Activated = RaiseActivated;
-            Handler.Deactivated = RaiseDeactivated;
-            Handler.Paint = OnHandlerPaint;
-            Handler.VisibleChanged = OnHandlerVisibleChanged;
-            Handler.MouseCaptureLost = RaiseMouseCaptureLost;
-            Handler.GotFocus = RaiseGotFocus;
-            Handler.LostFocus = RaiseLostFocus;
-            Handler.Idle = RaiseIdle;
-            Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
-            Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
-            Handler.DragLeave = RaiseDragLeave;
-            Handler.SizeChanged = RaiseHandlerSizeChanged;
-            Handler.DragOver = RaiseDragOver;
-            Handler.DragEnter = RaiseDragEnter;
-            Handler.DragDrop = RaiseDragDrop;
-        }
-
         public virtual void ReportBoundsChanged()
         {
             var newBounds = Bounds;

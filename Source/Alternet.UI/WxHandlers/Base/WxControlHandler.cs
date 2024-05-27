@@ -568,7 +568,6 @@ namespace Alternet.UI
         }
 
         public void SetScrollBar(
-            IControl control,
             bool isVertical,
             bool visible,
             int value,
@@ -743,8 +742,6 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             /*todo: consider clearing the native control's children.*/
-
-            Control.UnbindNativeEvents();
 
             NativeControl.DragOver -= NativeControl_DragOver;
             NativeControl.DragEnter -= NativeControl_DragEnter;

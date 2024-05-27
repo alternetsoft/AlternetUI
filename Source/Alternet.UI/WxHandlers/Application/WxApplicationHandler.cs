@@ -296,7 +296,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
         {
-            return new ScrollBarHandler();
+            return new WxScrollBarHandler();
         }
 
         /// <inheritdoc/>

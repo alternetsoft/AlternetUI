@@ -71,7 +71,7 @@ namespace Alternet.UI
             int largeChange,
             int maximum)
         {
-            Handler.SetScrollBar(this, isVertical, visible, value, largeChange, maximum);
+            Handler.SetScrollBar(isVertical, visible, value, largeChange, maximum);
         }
 
         /// <summary>

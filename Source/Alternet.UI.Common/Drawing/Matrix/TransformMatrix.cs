@@ -34,6 +34,8 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class TransformMatrix : BaseObject
     {
+        public static readonly TransformMatrix Default = new();
+
         double m11;
         double m12;
         double m21;
