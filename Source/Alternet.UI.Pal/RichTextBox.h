@@ -24,7 +24,6 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
         wxRichTextCtrl* GetTextCtrl();
-        void OnTextChanged(wxCommandEvent& event);
         void OnTextEnter(wxCommandEvent& event);
         void OnTextUrl(wxTextUrlEvent& event);
     private:

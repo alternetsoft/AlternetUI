@@ -68,7 +68,8 @@ namespace NativeApi.Api
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? Destroyed;
-        
+
+        public event EventHandler? TextChanged;
         public event EventHandler? GotFocus;
         public event EventHandler? LostFocus;
         public event EventHandler? DragLeave;
@@ -78,11 +79,12 @@ namespace NativeApi.Api
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
         public event EventHandler? SizeChanged;
-        public event EventHandler Activated;
-        public event EventHandler Deactivated;
-        public event EventHandler HandleCreated;
-        public event EventHandler HandleDestroyed;
+        public event EventHandler? Activated;
+        public event EventHandler? Deactivated;
+        public event EventHandler? HandleCreated;
+        public event EventHandler? HandleDestroyed;
 
+        public virtual string Text { get; set; }
         public bool IsActive { get; }
         public bool IsHandleCreated { get; }
         public bool IsWxWidgetCreated { get; }

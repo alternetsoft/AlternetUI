@@ -17,7 +17,11 @@ namespace Alternet.UI
         public Action<DragEventArgs>? DragEnter { get; set; }
         
         public Action? Idle { get; set; }
-        
+
+        public string Text { get; set; } = string.Empty;
+
+        public Action? TextChanged { get; set; }
+
         public Action? Paint { get; set; }
         
         public Action? MouseEnter { get; set; }

@@ -12,12 +12,9 @@ namespace NativeApi.Api
 
         public static IntPtr CreateTextBox(IntPtr validator) => default;
 
-        public event EventHandler? TextChanged;
         public event EventHandler? TextEnter;
         public event EventHandler? TextUrl;
         public event EventHandler? TextMaxLength;
-
-        public string Text { get; set; }
 
         public string ReportedUrl { get; }
 

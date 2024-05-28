@@ -11,8 +11,6 @@ namespace NativeApi.Api
 
         public event EventHandler? Click;
 
-        public string Text { get; set; }
-
         public bool ExactFit { get; set; }
 
         public bool IsDefault { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     internal class WxScrollBarHandler
-        : NativeControlHandler<ScrollBar, Native.ScrollBar>, IScrollBarHandler
+        : WxControlHandler<ScrollBar, Native.ScrollBar>, IScrollBarHandler
     {
         public Action? Scroll
         {

@@ -63,28 +63,6 @@ ALTERNET_UI_API void TextBox_SetTextAlign_(TextBox* obj, int value)
     #endif
 }
 
-ALTERNET_UI_API char16_t* TextBox_GetText_(TextBox* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void TextBox_SetText_(TextBox* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API char16_t* TextBox_GetReportedUrl_(TextBox* obj)
 {
     #if !defined(__WXMSW__)

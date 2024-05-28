@@ -108,5 +108,21 @@ namespace Alternet.UI
             Handler.SetEnabled(Enabled);
             Parent?.OnChildPropertyChanged(this, nameof(Enabled));
         }
+
+        private void OnHandlerTextChanged()
+        {
+            if (handlerTextChanging > 0)
+                return;
+
+            handlerTextChanging++;
+            try
+            {
+                Text = Handler.Text;
+            }
+            finally
+            {
+                handlerTextChanging--;
+            }
+        }
     }
 }

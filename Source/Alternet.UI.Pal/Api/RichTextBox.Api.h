@@ -56,28 +56,6 @@ ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->WriteField(fieldType, properties, textAttr);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* container, int64_t startRange, int64_t endRange)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->CanDeleteRange(container, startRange, endRange);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* container, int64_t pos)
 {
     #if !defined(__WXMSW__)
@@ -106,28 +84,6 @@ ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
     return MarshalExceptions<int64_t>([&](){
     #endif
         return obj->DeleteSelectedContent();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_EnableVirtualAttributes_(RichTextBox* obj, c_bool b)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EnableVirtualAttributes(b);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* value, int flags)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DoWriteText(value, flags);
     #if !defined(__WXMSW__)
     });
     #endif
@@ -1046,23 +1002,23 @@ ALTERNET_UI_API c_bool RichTextBox_WriteImage3_(RichTextBox* obj, void* imageBlo
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
 {
     #if !defined(__WXMSW__)
-    return MarshalExceptions<c_bool>([&](){
+    return MarshalExceptions<void*>([&](){
     #endif
-        return obj->EndBold();
+        return obj->WriteField(fieldType, properties, textAttr);
     #if !defined(__WXMSW__)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* container, int64_t startRange, int64_t endRange)
 {
     #if !defined(__WXMSW__)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->BeginItalic();
+        return obj->CanDeleteRange(container, startRange, endRange);
     #if !defined(__WXMSW__)
     });
     #endif
@@ -1981,6 +1937,28 @@ ALTERNET_UI_API c_bool RichTextBox_GetVirtualAttributesEnabled_(RichTextBox* obj
     #endif
 }
 
+ALTERNET_UI_API void RichTextBox_EnableVirtualAttributes_(RichTextBox* obj, c_bool b)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EnableVirtualAttributes(b);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* value, int flags)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DoWriteText(value, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool RichTextBox_LoadFromStream_(RichTextBox* obj, void* stream, int type)
 {
     #if !defined(__WXMSW__)
@@ -2812,6 +2790,28 @@ ALTERNET_UI_API c_bool RichTextBox_BeginBold_(RichTextBox* obj)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->BeginBold();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->EndBold();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BeginItalic();
     #if !defined(__WXMSW__)
     });
     #endif

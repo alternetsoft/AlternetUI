@@ -3,12 +3,8 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class GroupBoxHandler : NativeControlHandler<GroupBox, Native.GroupBox>, IGroupBoxHandler
+    internal class GroupBoxHandler : WxControlHandler<GroupBox, Native.GroupBox>, IGroupBoxHandler
     {
-        public GroupBoxHandler()
-        {
-        }
-
         public int GetTopBorderForSizer()
         {
             return NativeControl.GetTopBorderForSizer();
@@ -28,8 +24,6 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Title = Control.Title;
-
             Control.TitleChanged += Control_TitleChanged;
         }
 
@@ -42,7 +36,7 @@ namespace Alternet.UI
 
         private void Control_TitleChanged(object? sender, EventArgs e)
         {
-            NativeControl.Title = Control.Title;
+            NativeControl.Text = Control.Title;
         }
     }
 }

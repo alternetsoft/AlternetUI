@@ -145,6 +145,7 @@ namespace Alternet.UI
 
         protected virtual void UnbindHandlerEvents()
         {
+            Handler.TextChanged = null;
             Handler.HandleCreated = null;
             Handler.HandleDestroyed = null;
             Handler.Activated = null;
@@ -187,6 +188,7 @@ namespace Alternet.UI
             Handler.DragOver = RaiseDragOver;
             Handler.DragEnter = RaiseDragEnter;
             Handler.DragDrop = RaiseDragDrop;
+            Handler.TextChanged = OnHandlerTextChanged;
         }
 
         /// <summary>

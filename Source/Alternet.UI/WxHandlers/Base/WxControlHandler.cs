@@ -32,6 +32,12 @@ namespace Alternet.UI
             set => NativeControl.Idle = value;
         }
 
+        public Action? TextChanged
+        {
+            get => NativeControl.TextChanged;
+            set => NativeControl.TextChanged = value;
+        }
+
         public Action? Paint
         {
             get => NativeControl.Paint;
@@ -157,6 +163,12 @@ namespace Alternet.UI
         {
             get => NativeControl.IsScrollable;
             set => NativeControl.IsScrollable = value;
+        }
+
+        public string Text
+        {
+            get => NativeControl.Text;
+            set => NativeControl.Text = value;
         }
 
         public RectD Bounds

@@ -7,13 +7,9 @@ void SetHasBorder(bool value);
 
 string GetReportedUrl();
 
-void* WriteField(const string& fieldType, void* properties, void* textAttr);
-bool CanDeleteRange(void* container, int64_t startRange, int64_t endRange);
 bool CanInsertContent(void* container, int64_t pos);
 void* GetBuffer();
 int64_t DeleteSelectedContent();
-void EnableVirtualAttributes(bool b);
-void DoWriteText(const string& value, int flags);
 bool ExtendSelection(int64_t oldPosition, int64_t newPosition, int flags);
 bool ExtendCellSelection(void* table, int noRowSteps, int noColSteps);
 bool StartCellSelection(void* table, void* newCell);
@@ -97,8 +93,8 @@ void SetSelection2(void* sel);
 bool WriteImage(Image* bitmap, int bitmapType, void* textAttr);
 bool WriteImage2(const string& filename, int bitmapType, void* textAttr);
 bool WriteImage3(void* imageBlock, void* textAttr);
-bool EndBold();
-bool BeginItalic();
+void* WriteField(const string& fieldType, void* properties, void* textAttr);
+bool CanDeleteRange(void* container, int64_t startRange, int64_t endRange);
 bool EndItalic();
 bool BeginUnderline();
 bool EndUnderline();
@@ -182,6 +178,8 @@ bool GetVerticalScrollbarEnabled();
 void SetFontScale(double fontScale, bool refresh);
 double GetFontScale();
 bool GetVirtualAttributesEnabled();
+void EnableVirtualAttributes(bool b);
+void DoWriteText(const string& value, int flags);
 bool LoadFromStream(void* stream, int type);
 bool SaveToStream(void* stream, int type);
 bool ApplyStyleToSelection(void* style, int flags);
@@ -258,10 +256,11 @@ bool LineBreak();
 bool EndStyle();
 bool EndAllStyles();
 bool BeginBold();
+bool EndBold();
+bool BeginItalic();
 public:
 enum class RichTextBoxEvent
 {
-    TextChanged,
     TextEnter,
     TextUrl,
 };

@@ -9,7 +9,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class PropertyGridHandler : ControlHandler<PropertyGrid>, IPropertyGridHandler
+    internal class PropertyGridHandler : WxControlHandler<PropertyGrid>, IPropertyGridHandler
     {
         private readonly PropertyGridVariant variant = new();
 

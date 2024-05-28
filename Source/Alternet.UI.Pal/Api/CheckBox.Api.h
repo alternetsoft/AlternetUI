@@ -19,28 +19,6 @@ ALTERNET_UI_API CheckBox* CheckBox_Create_()
     #endif
 }
 
-ALTERNET_UI_API char16_t* CheckBox_GetText_(CheckBox* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void CheckBox_SetText_(CheckBox* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool CheckBox_GetIsChecked_(CheckBox* obj)
 {
     #if !defined(__WXMSW__)

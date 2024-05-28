@@ -4,7 +4,7 @@ using Alternet.Base.Collections;
 namespace Alternet.UI
 {
     internal class MenuItemHandler
-        : NativeControlHandler<MenuItem, Native.MenuItem>, IMenuItemHandler
+        : WxControlHandler<MenuItem, Native.MenuItem>, IMenuItemHandler
     {
         public MenuItemHandler()
         {

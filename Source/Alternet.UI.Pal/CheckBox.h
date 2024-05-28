@@ -13,7 +13,9 @@ namespace Alternet::UI
         void OnCheckedChanged(wxCommandEvent& event);
 
     public:
-    
+        string GetText() override;
+        void SetText(const string& value) override;
+
     private:
 
         wxCheckBox* GetCheckBox();

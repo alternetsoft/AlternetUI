@@ -2,12 +2,8 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class CheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>, ICheckBoxHandler
+    internal class CheckBoxHandler : WxControlHandler<CheckBox, Native.CheckBox>, ICheckBoxHandler
     {
-        public CheckBoxHandler()
-        {
-        }
-
         public CheckState CheckState
         {
             get
@@ -72,35 +68,14 @@ namespace Alternet.UI
             if (BaseApplication.IsWindowsOS)
                 UserPaint = true;
 
-            NativeControl.Text = Control.Text;
-            NativeControl.IsChecked = Control.IsChecked;
-
-            Control.TextChanged += Control_TextChanged;
-            Control.CheckedChanged += Control_CheckedChanged;
-            NativeControl.CheckedChanged = NativeControl_CheckedChanged;
+            NativeControl.CheckedChanged = Control.RaiseCheckedChanged;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
 
-            Control.TextChanged -= Control_TextChanged;
-            Control.CheckedChanged -= Control_CheckedChanged;
             NativeControl.CheckedChanged = null;
-        }
-
-        private void Control_CheckedChanged(object? sender, System.EventArgs? e)
-        {
-        }
-
-        private void NativeControl_CheckedChanged()
-        {
-            Control.RaiseCheckedChanged(EventArgs.Empty);
-        }
-
-        private void Control_TextChanged(object? sender, System.EventArgs? e)
-        {
-            NativeControl.Text = Control.Text;
         }
     }
 }

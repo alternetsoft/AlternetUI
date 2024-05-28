@@ -49,6 +49,10 @@ int GetId();
 void SetId(int value);
 
 
+virtual string GetText();
+virtual void SetText(const string& value);
+
+
 bool GetIsActive();
 
 
@@ -154,6 +158,10 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+void FocusNextControl(bool forward, bool nested);
+void BeginInit();
+void EndInit();
+void Destroy();
 void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
 void SendMouseDownEvent(int x, int y);
@@ -198,10 +206,6 @@ PointD ScreenToClient(const PointD& point);
 PointI ScreenToDevice(const PointD& point);
 PointD DeviceToScreen(const PointI& point);
 bool SetFocus();
-void FocusNextControl(bool forward, bool nested);
-void BeginInit();
-void EndInit();
-void Destroy();
 bool BeginRepositioningChildren();
 void EndRepositioningChildren();
 RectI GetUpdateClientRect();
@@ -241,6 +245,7 @@ enum class ControlEvent
     VisibleChanged,
     MouseCaptureLost,
     Destroyed,
+    TextChanged,
     GotFocus,
     LostFocus,
     DragLeave,

@@ -9,9 +9,11 @@ namespace Alternet::UI
     {
 #include "Api/TextBox.inc"
     public:
+        string GetText() override;
+        void SetText(const string& value) override;
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
-        void OnTextChanged(wxCommandEvent& event);
         void OnTextEnter(wxCommandEvent& event);
         void OnTextUrl(wxTextUrlEvent& event);
         void OnTextMaxLength(wxCommandEvent& event);

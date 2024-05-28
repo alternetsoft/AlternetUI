@@ -4,16 +4,10 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     internal class LinkLabelHandler
-        : NativeControlHandler<LinkLabel, Native.LinkLabel>, ILinkLabelHandler
+        : WxControlHandler<LinkLabel, Native.LinkLabel>, ILinkLabelHandler
     {
         public LinkLabelHandler()
         {
-        }
-
-        public string Text
-        {
-            get => NativeControl.Text;
-            set => NativeControl.Text = value;
         }
 
         public string Url

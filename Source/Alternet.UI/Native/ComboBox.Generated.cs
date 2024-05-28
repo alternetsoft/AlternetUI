@@ -94,21 +94,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string Text
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.ComboBox_GetText_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.ComboBox_SetText_(NativePointer, value);
-            }
-        }
-        
         public int TextSelectionStart
         {
             get
@@ -340,10 +325,6 @@ namespace Alternet.UI.Native
                 {
                     SelectedItemChanged?.Invoke(); return IntPtr.Zero;
                 }
-                case NativeApi.ComboBoxEvent.TextChanged:
-                {
-                    TextChanged?.Invoke(); return IntPtr.Zero;
-                }
                 case NativeApi.ComboBoxEvent.MeasureItem:
                 {
                     MeasureItem?.Invoke(); return IntPtr.Zero;
@@ -365,7 +346,6 @@ namespace Alternet.UI.Native
         }
         
         public Action? SelectedItemChanged;
-        public Action? TextChanged;
         public Action? MeasureItem;
         public Action? MeasureItemWidth;
         public Action? DrawItem;
@@ -382,7 +362,6 @@ namespace Alternet.UI.Native
             public enum ComboBoxEvent
             {
                 SelectedItemChanged,
-                TextChanged,
                 MeasureItem,
                 MeasureItemWidth,
                 DrawItem,
@@ -421,12 +400,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_SetSelectedIndex_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string ComboBox_GetText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_GetTextSelectionStart_(IntPtr obj);

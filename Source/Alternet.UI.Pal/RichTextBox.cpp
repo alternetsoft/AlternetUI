@@ -50,7 +50,6 @@ namespace Alternet::UI
 			wxDefaultSize,
 			style);
 
-		result->Bind(wxEVT_TEXT, &RichTextBox::OnTextChanged, this);
 		result->Bind(wxEVT_TEXT_ENTER, &RichTextBox::OnTextEnter, this);
 		result->Bind(wxEVT_TEXT_URL, &RichTextBox::OnTextUrl, this);
 
@@ -93,12 +92,6 @@ namespace Alternet::UI
 		RaiseEvent(RichTextBoxEvent::TextEnter);
 	}
 
-	void RichTextBox::OnTextChanged(wxCommandEvent& event)
-	{
-		event.Skip();
-		RaiseEvent(RichTextBoxEvent::TextChanged);
-	}
-
 	wxRichTextCtrl* RichTextBox::GetTextCtrl()
 	{
 		return dynamic_cast<wxRichTextCtrl*>(GetWxWindow());
@@ -116,7 +109,6 @@ namespace Alternet::UI
 			auto window = GetWxWindow();
 			if (window != nullptr)
 			{
-				window->Unbind(wxEVT_TEXT, &RichTextBox::OnTextChanged, this);
 				window->Unbind(wxEVT_TEXT_ENTER, &RichTextBox::OnTextEnter, this);
 				window->Unbind(wxEVT_TEXT_URL, &RichTextBox::OnTextUrl, this);
 			}

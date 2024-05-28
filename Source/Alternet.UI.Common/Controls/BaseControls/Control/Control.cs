@@ -39,6 +39,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private int handlerTextChanging;
         private int rowIndex;
         private int columnIndex;
         private int columnSpan = 1;
@@ -745,6 +746,13 @@ namespace Alternet.UI
                 if (text == value)
                     return;
                 text = value;
+
+                if (handlerTextChanging == 0)
+                {
+                    if (Handler.Text != value)
+                        Handler.Text = value;
+                }
+
                 RaiseTextChanged(EventArgs.Empty);
             }
         }

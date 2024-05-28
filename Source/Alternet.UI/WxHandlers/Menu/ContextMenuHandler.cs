@@ -4,7 +4,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ContextMenuHandler : NativeControlHandler<ContextMenu, Native.Menu>, IContextMenuHandler
+    internal class ContextMenuHandler : WxControlHandler<ContextMenu, Native.Menu>, IContextMenuHandler
     {
         public ContextMenuHandler()
         {

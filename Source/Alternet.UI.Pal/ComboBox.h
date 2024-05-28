@@ -168,11 +168,13 @@ namespace Alternet::UI
     {
 #include "Api/ComboBox.inc"
     public:
+        string GetText() override;
+        void SetText(const string& value) override;
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
 
         void OnSelectedItemChanged(wxCommandEvent& event);
-        void OnTextChanged(wxCommandEvent& event);
 
         /* Fixed for MACOS ControlsSample[2411:15866] This application is trying
         to draw a very large combo box, 30 points tall.Vertically resizable combo
@@ -192,7 +194,7 @@ namespace Alternet::UI
         void OnBeforeDestroyWxWindow() override;
 
     private:
-        wxDC* eventDc;
+        wxDC* eventDc = nullptr;
         RectI eventRect;
         int eventItem = -1;
         int eventFlags = 0;

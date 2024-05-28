@@ -28,6 +28,8 @@ namespace Alternet.UI
 
         Action? VisibleChanged { get; set; }
 
+        Action? TextChanged { get; set; }
+
         Action? MouseCaptureLost { get; set; }
 
         Action? GotFocus { get; set; }
@@ -49,6 +51,8 @@ namespace Alternet.UI
         Action? HandleCreated { get; set; }
 
         Action? HandleDestroyed { get; set; }
+
+        string Text { get; set; }
 
         bool WantChars { get; set; }
 

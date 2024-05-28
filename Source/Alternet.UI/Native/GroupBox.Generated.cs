@@ -23,21 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string? Title
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.GroupBox_GetTitle_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.GroupBox_SetTitle_(NativePointer, value);
-            }
-        }
-        
         public int GetTopBorderForSizer()
         {
             CheckDisposed();
@@ -58,12 +43,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GroupBox_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? GroupBox_GetTitle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GroupBox_SetTitle_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int GroupBox_GetTopBorderForSizer_(IntPtr obj);

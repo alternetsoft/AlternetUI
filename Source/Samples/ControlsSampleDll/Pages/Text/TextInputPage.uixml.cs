@@ -11,8 +11,8 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
-        private readonly ValueEditorUInt32 minLengthEdit = new("Min Length", 0);
-        private readonly ValueEditorUInt32 maxLengthEdit = new("Max Length", 0);
+        private readonly ValueEditorUInt32 minLengthEdit;
+        private readonly ValueEditorUInt32 maxLengthEdit;
         private PopupPropertyGrid? popup;
 
         static TextInputPage()
@@ -21,6 +21,9 @@ namespace ControlsSample
 
         public TextInputPage()
         {
+            minLengthEdit = new("Min Length", 0);
+            maxLengthEdit = new("Max Length", 0);
+
             InitializeComponent();
 
             textBox.EmptyTextHint = "Sample Hint";

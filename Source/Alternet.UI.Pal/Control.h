@@ -67,6 +67,8 @@ namespace Alternet::UI
     {
 #include "Api/Control.inc"
     public:
+        void OnTextChanged(wxCommandEvent& event);
+
         long BuildStyle(long style, long element, bool value);
         void UpdateWindowStyle(long element, bool value);
         static wxString GetMouseEventDesc(const wxMouseEvent& ev);
@@ -201,6 +203,8 @@ namespace Alternet::UI
         bool IsInitInProgress();
 
     private:
+        string _textValue = u"";
+
         bool CanSetScrollbar();
 
         void NotifyAllChildrenOnParentChange();

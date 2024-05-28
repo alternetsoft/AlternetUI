@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     internal partial class WebBrowserHandler :
-        NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
+        WxControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
     {
         public bool HasBorder
         {

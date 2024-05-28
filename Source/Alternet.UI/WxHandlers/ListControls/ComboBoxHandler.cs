@@ -10,10 +10,6 @@ namespace Alternet.UI
     {
         private ComboBoxItemPaintEventArgs? paintEventArgs;
 
-        public ComboBoxHandler()
-        {
-        }
-
         [Flags]
         private enum DrawItemFlags
         {
@@ -109,15 +105,13 @@ namespace Alternet.UI
             ApplyItems();
             ApplyIsEditable();
             ApplySelectedItem();
-            ApplyText();
-
+ 
             Control.Items.ItemRangeAdditionFinished +=
                 Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.Items.CollectionChanged += Items_CollectionChanged;
             Control.IsEditableChanged += Control_IsEditableChanged;
-            Control.TextChanged += Control_TextChanged;
             Control.SelectedItemChanged += Control_SelectedItemChanged;
 
             NativeControl.SelectedItemChanged = NativeControl_SelectedItemChanged;
@@ -125,7 +119,6 @@ namespace Alternet.UI
             NativeControl.DrawItemBackground = NativeControl_DrawItemBackground;
             NativeControl.MeasureItemWidth = NativeControl_MeasureItemWidth;
             NativeControl.MeasureItem = NativeControl_MeasureItem;
-            NativeControl.TextChanged = NativeControl_TextChanged;
         }
 
         protected override void OnDetach()
@@ -139,7 +132,6 @@ namespace Alternet.UI
             Control.SelectedItemChanged -= Control_SelectedItemChanged;
 
             NativeControl.SelectedItemChanged = null;
-            NativeControl.TextChanged = null;
             NativeControl.DrawItem = null;
             NativeControl.DrawItemBackground = null;
             NativeControl.MeasureItemWidth = null;
@@ -257,16 +249,6 @@ namespace Alternet.UI
             ApplySelectedItem();
         }
 
-        private void NativeControl_TextChanged()
-        {
-            ReceiveText();
-        }
-
-        private void Control_TextChanged(object? sender, EventArgs e)
-        {
-            ApplyText();
-        }
-
         private void Control_SelectionModeChanged(object? sender, EventArgs e)
         {
             ApplyIsEditable();
@@ -301,20 +283,10 @@ namespace Alternet.UI
             NativeControl.SelectedIndex = Control.SelectedIndex ?? -1;
         }
 
-        private void ApplyText()
-        {
-            NativeControl.Text = Control.Text;
-        }
-
         private void ReceiveSelectedItem()
         {
             var selectedIndex = NativeControl.SelectedIndex;
             Control.SelectedIndex = selectedIndex == -1 ? null : selectedIndex;
-        }
-
-        private void ReceiveText()
-        {
-            Control.Text = NativeControl.Text;
         }
 
         private void Items_ItemInserted(object? sender, int index, object item)

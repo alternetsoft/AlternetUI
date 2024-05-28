@@ -4,7 +4,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     internal class ColorPickerHandler
-        : NativeControlHandler<ColorPicker, Native.ColorPicker>, IColorPickerHandler
+        : WxControlHandler<ColorPicker, Native.ColorPicker>, IColorPickerHandler
     {
         public ColorPickerHandler()
         {

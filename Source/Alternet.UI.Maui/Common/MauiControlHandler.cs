@@ -14,6 +14,10 @@ namespace Alternet.UI
         {
         }
 
+        public string Text { get; set; } = string.Empty;
+
+        public Action? TextChanged { get; set; }
+
         public Color BackgroundColor
         {
             get => SystemColors.Window;

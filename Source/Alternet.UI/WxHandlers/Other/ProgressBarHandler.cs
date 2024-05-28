@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class ProgressBarHandler : ControlHandler<ProgressBar>, IProgressBarHandler
+    internal class ProgressBarHandler : WxControlHandler<ProgressBar>, IProgressBarHandler
     {
         public ProgressBarHandler()
         {
