@@ -10,10 +10,6 @@
         
 		<GroupBox Title="Color Picker" Margin="0,0,0,10">
           <HorizontalStackPanel MinChildMargin="5" Name="colorGroupBox" Padding="10">
-                <Label Text="Native:" VerticalAlignment="Center"/>
-                <ColorPicker Value="Red" HorizontalAlignment="Left"
-                             Name="nativeColorPicker"/>
-                <Label Text="SpeedButton:" VerticalAlignment="Center"/>
           </HorizontalStackPanel>
         </GroupBox>
 

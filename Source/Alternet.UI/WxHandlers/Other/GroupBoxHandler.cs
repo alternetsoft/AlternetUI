@@ -24,6 +24,8 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            NativeControl.Text = Control.Title;
+
             Control.TitleChanged += Control_TitleChanged;
         }
 

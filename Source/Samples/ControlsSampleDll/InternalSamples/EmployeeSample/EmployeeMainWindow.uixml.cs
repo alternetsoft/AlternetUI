@@ -106,6 +106,7 @@ namespace EmployeeFormSample
                 employee.Skype = skypeTextBox.Text;
             };
 
+            titleTextBox.Text = employee.Title;
             titleTextBox.TextChanged += (s, e) =>
             {
                 employee.Title = titleTextBox.Text;

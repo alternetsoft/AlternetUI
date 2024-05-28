@@ -211,6 +211,7 @@ namespace Alternet.UI
             var result = new Label(text)
             {
                 Parent = this,
+                VerticalAlignment = VerticalAlignment.Center,
             };
 
             return result;
