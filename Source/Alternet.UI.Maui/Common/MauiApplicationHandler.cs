@@ -14,27 +14,31 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public bool ExitOnFrameDelete
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => false;
+            set
+            {
+            }
         }
 
         /// <inheritdoc/>
         public bool IsActive
         {
-            get => throw new NotImplementedException();
+            get => false;
         }
 
         /// <inheritdoc/>
         public bool InUixmlPreviewerMode
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => false;
+            set
+            {
+            }
         }
 
         /// <inheritdoc/>
         public bool InvokeRequired
         {
-            get => throw new NotImplementedException();
+            get => false;
         }
 
         /// <inheritdoc/>
@@ -82,7 +86,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void ExitMainLoop()
         {
-            throw new NotImplementedException();
+            Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
         /// <inheritdoc/>
@@ -94,22 +98,20 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void ProcessPendingEvents()
         {
-            throw new NotImplementedException();
         }
 
         public Window? GetActiveWindow()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Control? GetFocusedControl()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void NotifyCaptureLost()
         {
-            throw new NotImplementedException();
         }
 
         public ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(SelectDirectoryDialog dialog)
@@ -337,7 +339,9 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public IValueValidatorText CreateValueValidatorNum(ValueValidatorNumStyle numericType, int valueBase = 10)
+        public IValueValidatorText CreateValueValidatorNum(
+            ValueValidatorNumStyle numericType,
+            int valueBase = 10)
         {
             throw new NotImplementedException();
         }
@@ -359,7 +363,7 @@ namespace Alternet.UI
 
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
-            throw new NotImplementedException();
+            return new MauiTimerHandler();
         }
 
         public void Run(Window window)
@@ -369,12 +373,10 @@ namespace Alternet.UI
 
         public void SetTopWindow(Window window)
         {
-            throw new NotImplementedException();
         }
 
         public void WakeUpIdle()
         {
-            throw new NotImplementedException();
         }
 
         public void BeginInvoke(Action action)
@@ -384,12 +386,12 @@ namespace Alternet.UI
 
         public bool HasPendingEvents()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public void Exit()
         {
-            throw new NotImplementedException();
+            Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
         public ICursorFactoryHandler CreateCursorFactoryHandler()
