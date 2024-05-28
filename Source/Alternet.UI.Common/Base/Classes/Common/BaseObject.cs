@@ -36,6 +36,28 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObject : IBaseObject
     {
+        /// <summary>
+        /// Calls the specified function inside try catch block.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// If exception is raised inside <paramref name="func"/>,
+        /// exception is logged and <c>false</c> is returned.
+        /// </remarks>
+        public static bool InsideTryCatch(Func<bool> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogException(e);
+                return false;
+            }
+        }
+
         /// <inheritdoc/>
         public virtual void Required()
         {
