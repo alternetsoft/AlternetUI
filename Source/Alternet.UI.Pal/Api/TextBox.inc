@@ -9,10 +9,6 @@ int GetTextAlign();
 void SetTextAlign(int value);
 
 
-string GetText();
-void SetText(const string& value);
-
-
 string GetReportedUrl();
 
 
@@ -127,7 +123,6 @@ int64_t GetSelectionEnd();
 public:
 enum class TextBoxEvent
 {
-    TextChanged,
     TextEnter,
     TextUrl,
     TextMaxLength,

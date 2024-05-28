@@ -5,10 +5,6 @@ static bool GetImagesEnabled();
 static void SetImagesEnabled(bool value);
 
 
-string GetText();
-void SetText(const string& value);
-
-
 bool GetExactFit();
 void SetExactFit(bool value);
 

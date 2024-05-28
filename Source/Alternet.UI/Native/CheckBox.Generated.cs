@@ -24,21 +24,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string Text
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.CheckBox_GetText_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.CheckBox_SetText_(NativePointer, value);
-            }
-        }
-        
         public bool IsChecked
         {
             get
@@ -166,12 +151,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr CheckBox_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string CheckBox_GetText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void CheckBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool CheckBox_GetIsChecked_(IntPtr obj);

@@ -118,28 +118,6 @@ ALTERNET_UI_API void ComboBox_SetSelectedIndex_(ComboBox* obj, int value)
     #endif
 }
 
-ALTERNET_UI_API char16_t* ComboBox_GetText_(ComboBox* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void ComboBox_SetText_(ComboBox* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API int ComboBox_GetTextSelectionStart_(ComboBox* obj)
 {
     #if !defined(__WXMSW__)

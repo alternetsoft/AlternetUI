@@ -311,7 +311,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual void LogInfo()
         {
-            Handler.Log();
+            BaseApplication.Log(ToString());
+            var position = $"Position: {Handler.ThumbPosition}";
+            var thumbSize = $"ThumbSize: {Handler.ThumbSize}";
+            var range = $"Range: {Handler.Range}";
+            var pageSize = $"PageSize: {Handler.PageSize}";
+            BaseApplication.Log($"Native: {position}, {thumbSize}, {range}, {pageSize}");
         }
 
         /// <summary>
@@ -397,6 +402,21 @@ namespace Alternet.UI
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            UpdateScrollInfo();
+            Handler.Scroll = RaiseScroll;
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.Scroll = null;
         }
     }
 }

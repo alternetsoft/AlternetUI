@@ -12,6 +12,9 @@ namespace Alternet::UI
     {
 #include "Api/LinkLabel.inc"
     public:
+        string GetText() override;
+        void SetText(const string& value) override;
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
 

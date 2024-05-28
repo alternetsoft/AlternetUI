@@ -46,6 +46,9 @@ namespace Alternet::UI
 
         void RaiseClick();
 
+        string GetText() override;
+        void SetText(const string& value) override;
+
     protected:
         virtual void OnWxWindowCreated() override;
         virtual void OnParentChanged() override;

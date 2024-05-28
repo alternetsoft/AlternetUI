@@ -10,8 +10,6 @@ namespace Alternet.UI
 {
     public interface ILinkLabelHandler : IControlHandler
     {
-        string Text { get; set; }
-
         string Url { get; set; }
 
         Color HoverColor { get; set; }

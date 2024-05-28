@@ -11,6 +11,16 @@ namespace Alternet.UI
     /// </summary>
     public interface IScrollBarHandler : IControlHandler
     {
+        Action? Scroll { get; set; }
+
+        int ThumbPosition { get; set; }
+
+        int Range { get; }
+
+        int ThumbSize { get; }
+
+        int PageSize { get; }
+
         /// <summary>
         /// Gets or sets whether scrollbar is vertical.
         /// </summary>
@@ -38,10 +48,5 @@ namespace Alternet.UI
             int range,
             int pageSize,
             bool refresh = true);
-
-        /// <summary>
-        /// Logs scrollbar info.
-        /// </summary>
-        void Log();
     }
 }

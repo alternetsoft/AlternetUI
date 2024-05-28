@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 
 namespace Alternet.UI
@@ -81,6 +77,48 @@ namespace Alternet.UI
         public static KeyStates GetKeyStates(Key key)
         {
             return Keyboard.PrimaryDevice.GetKeyStates(key);
+        }
+
+        public static void ReportKeyDown(Key key, bool isRepeat, out bool handled)
+        {
+            var control = Control.GetFocusedControl();
+            if (control is null)
+            {
+                handled = false;
+                return;
+            }
+
+            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
+            control.RaiseKeyDown(eventArgs);
+            handled = eventArgs.Handled;
+        }
+
+        public static void ReportKeyUp(Key key, bool isRepeat, out bool handled)
+        {
+            var control = Control.GetFocusedControl();
+            if (control is null)
+            {
+                handled = false;
+                return;
+            }
+
+            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
+            control.RaiseKeyUp(eventArgs);
+            handled = eventArgs.Handled;
+        }
+
+        public static void ReportTextInput(char keyChar, out bool handled)
+        {
+            var control = Control.GetFocusedControl();
+            if (control is null)
+            {
+                handled = false;
+                return;
+            }
+
+            var eventArgs = new KeyPressEventArgs(control, keyChar, Keyboard.PrimaryDevice);
+            control.RaiseKeyPress(eventArgs);
+            handled = eventArgs.Handled;
         }
 
         // Check for Valid enum, as any int can be casted to the enum.

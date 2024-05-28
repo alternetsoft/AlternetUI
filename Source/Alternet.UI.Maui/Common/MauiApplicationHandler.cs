@@ -249,7 +249,7 @@ namespace Alternet.UI
 
         public IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
         {
-            throw new NotImplementedException();
+            return new PlessScrollBarHandler();
         }
 
         public IMenuItemHandler CreateMenuItemHandler(MenuItem control)
@@ -450,6 +450,10 @@ namespace Alternet.UI
         public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
         {
             throw new NotImplementedException();
+        }
+
+        public void CrtSetDbgFlag(int value)
+        {
         }
     }
 }

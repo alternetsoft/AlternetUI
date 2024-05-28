@@ -217,5 +217,7 @@ namespace Alternet.UI
         ICaretHandler CreateCaretHandler();
 
         ICaretHandler CreateCaretHandler(Control control, int width, int height);
+
+        void CrtSetDbgFlag(int value);
     }
 }

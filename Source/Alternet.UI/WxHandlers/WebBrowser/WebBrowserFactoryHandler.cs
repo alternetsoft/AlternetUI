@@ -28,11 +28,6 @@ namespace Alternet.UI
             Native.WebBrowser.SetDefaultFSNameArchive(value);
         }
 
-        public void CrtSetDbgFlag(int value)
-        {
-            WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
-        }
-
         public WebBrowserBackendOS GetBackendOS()
         {
             return (WebBrowserBackendOS)Native.WebBrowser.GetBackendOS();

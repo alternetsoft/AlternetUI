@@ -54,21 +54,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string Text
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.TextBox_GetText_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.TextBox_SetText_(NativePointer, value);
-            }
-        }
-        
         public string ReportedUrl
         {
             get
@@ -583,10 +568,6 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
-                case NativeApi.TextBoxEvent.TextChanged:
-                {
-                    TextChanged?.Invoke(); return IntPtr.Zero;
-                }
                 case NativeApi.TextBoxEvent.TextEnter:
                 {
                     TextEnter?.Invoke(); return IntPtr.Zero;
@@ -603,7 +584,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Action? TextChanged;
         public Action? TextEnter;
         public Action? TextUrl;
         public Action? TextMaxLength;
@@ -618,7 +598,6 @@ namespace Alternet.UI.Native
             
             public enum TextBoxEvent
             {
-                TextChanged,
                 TextEnter,
                 TextUrl,
                 TextMaxLength,
@@ -641,12 +620,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetTextAlign_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string TextBox_GetReportedUrl_(IntPtr obj);

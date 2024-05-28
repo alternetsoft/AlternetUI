@@ -9,10 +9,6 @@ namespace Alternet.UI
     {
         private ControlStateImages? stateImages;
 
-        public ButtonHandler()
-        {
-        }
-
         /// <summary>
         /// Gets a <see cref="Button"/> this handler provides the implementation for.
         /// </summary>
@@ -31,7 +27,7 @@ namespace Alternet.UI
             }
         }
 
-        public new Native.Button NativeControl => (Native.Button)base.NativeControl!;
+        public new Native.Button NativeControl => (Native.Button)base.NativeControl;
 
         public bool IsDefault
         {
@@ -111,11 +107,8 @@ namespace Alternet.UI
             if (BaseApplication.IsWindowsOS)
                 Control.UserPaint = true;
 
-            NativeControl.Text = Control.Text;
-
             InitializeStateImages();
 
-            Control.TextChanged += Control_TextChanged;
             NativeControl.Click = NativeControl_Click;
         }
 
@@ -123,7 +116,6 @@ namespace Alternet.UI
         {
             base.OnDetach();
 
-            Control.TextChanged -= Control_TextChanged;
             NativeControl.Click = null;
         }
 
@@ -202,11 +194,6 @@ namespace Alternet.UI
         private void NativeControl_Click()
         {
             Control.RaiseClick(EventArgs.Empty);
-        }
-
-        private void Control_TextChanged(object? sender, EventArgs e)
-        {
-            NativeControl.Text = Control.Text;
         }
     }
 }

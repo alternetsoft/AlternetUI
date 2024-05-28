@@ -19,28 +19,6 @@ ALTERNET_UI_API RadioButton* RadioButton_Create_()
     #endif
 }
 
-ALTERNET_UI_API char16_t* RadioButton_GetText_(RadioButton* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RadioButton_SetText_(RadioButton* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool RadioButton_GetIsChecked_(RadioButton* obj)
 {
     #if !defined(__WXMSW__)

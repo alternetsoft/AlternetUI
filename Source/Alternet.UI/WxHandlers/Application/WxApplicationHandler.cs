@@ -19,8 +19,6 @@ namespace Alternet.UI
 
         static WxApplicationHandler()
         {
-            NativeDrawing.Default = new WxDrawing();
-
             if (BaseApplication.SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
 
@@ -298,7 +296,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
         {
-            return new ScrollBarHandler();
+            return new WxScrollBarHandler();
         }
 
         /// <inheritdoc/>
@@ -571,6 +569,12 @@ namespace Alternet.UI
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new UI.Native.Timer();
+        }
+
+        /// <inheritdoc/>
+        public void CrtSetDbgFlag(int value)
+        {
+            WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
 
         /// <inheritdoc/>

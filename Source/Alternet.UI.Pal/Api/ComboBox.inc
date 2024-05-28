@@ -20,10 +20,6 @@ int GetSelectedIndex();
 void SetSelectedIndex(int value);
 
 
-string GetText();
-void SetText(const string& value);
-
-
 int GetTextSelectionStart();
 
 
@@ -76,7 +72,6 @@ public:
 enum class ComboBoxEvent
 {
     SelectedItemChanged,
-    TextChanged,
     MeasureItem,
     MeasureItemWidth,
     DrawItem,

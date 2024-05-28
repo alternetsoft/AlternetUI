@@ -7,7 +7,6 @@ namespace NativeApi.Api
     public class ComboBox : Control
     {
         public event EventHandler? SelectedItemChanged;
-        public event EventHandler? TextChanged;
         public event EventHandler? MeasureItem;
         public event EventHandler? MeasureItemWidth;
         public event EventHandler? DrawItem;
@@ -18,7 +17,6 @@ namespace NativeApi.Api
         public int ItemsCount { get; }
         public bool IsEditable { get; set; }
         public int SelectedIndex { get; set; }
-        public string Text { get; set; }
         public int TextSelectionStart { get; }
         public int TextSelectionLength { get; }
 

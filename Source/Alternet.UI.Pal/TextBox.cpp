@@ -17,7 +17,6 @@ namespace Alternet::UI
 			auto window = GetWxWindow();
 			if (window != nullptr)
 			{
-				window->Unbind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
 				if (_processEnter)
 					window->Unbind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
 				window->Unbind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
@@ -91,7 +90,6 @@ namespace Alternet::UI
 			textCtrl->EnableVisibleFocus(false);
 #endif
 
-		textCtrl->Bind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
 		if (_processEnter)
 			textCtrl->Bind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
 		textCtrl->Bind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
@@ -323,12 +321,6 @@ namespace Alternet::UI
 	{
 		event.Skip();
 		RaiseEvent(TextBoxEvent::TextMaxLength);
-	}
-
-	void TextBox::OnTextChanged(wxCommandEvent& event)
-	{
-		event.Skip();
-		RaiseEvent(TextBoxEvent::TextChanged);
 	}
 
 	bool TextBox::GetEditControlOnly()

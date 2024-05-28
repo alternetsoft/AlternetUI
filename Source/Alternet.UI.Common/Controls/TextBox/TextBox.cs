@@ -180,6 +180,7 @@ namespace Alternet.UI
                 if (multiline == value)
                     return;
                 multiline = value;
+                Handler.Multiline = value;
                 MultilineChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -285,6 +286,7 @@ namespace Alternet.UI
                     return;
 
                 readOnly = value;
+                Handler.ReadOnly = value;
                 ReadOnlyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -322,6 +324,7 @@ namespace Alternet.UI
                 if (hasBorder == value)
                     return;
                 hasBorder = value;
+                Handler.HasBorder = value;
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -887,12 +890,9 @@ namespace Alternet.UI
         /// <summary>
         ///     Raises the <see cref="TextMaxLength"/> event.
         /// </summary>
-        /// <param name="e">
-        ///     An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        public virtual void OnTextMaxLength(EventArgs e)
+        public virtual void OnTextMaxLength()
         {
-            TextMaxLength?.Invoke(this, e);
+            TextMaxLength?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -923,12 +923,9 @@ namespace Alternet.UI
         /// <summary>
         ///     Raises the <see cref="EnterPressed"/> event.
         /// </summary>
-        /// <param name="e">
-        ///     An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        public virtual void OnEnterPressed(EventArgs e)
+        public virtual void OnEnterPressed()
         {
-            EnterPressed?.Invoke(this, e);
+            EnterPressed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>

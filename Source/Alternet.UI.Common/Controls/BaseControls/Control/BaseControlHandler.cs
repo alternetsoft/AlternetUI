@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal abstract class BaseControlHandler : DisposableObject
+    public abstract class BaseControlHandler : DisposableObject
     {
         private Control? control;
 
@@ -25,18 +25,6 @@ namespace Alternet.UI
         /// to a <see cref="Control"/>.
         /// </summary>
         public bool IsAttached => control != null;
-
-        public void RaiseChildInserted(Control childControl)
-        {
-            Control.RaiseChildInserted(childControl);
-            OnChildInserted(childControl);
-        }
-
-        public void RaiseChildRemoved(Control childControl)
-        {
-            Control.RaiseChildRemoved(childControl);
-            OnChildRemoved(childControl);
-        }
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
@@ -67,29 +55,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when a <see cref="Control"/> is inserted into the
-        /// <see cref="Control.Children"/> collection.
-        /// </summary>
-        protected virtual void OnChildInserted(Control childControl)
-        {
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the
-        /// <see cref="Control.Children"/> collections.
-        /// </summary>
-        protected virtual void OnChildRemoved(Control childControl)
-        {
-        }
-
-        /// <summary>
         /// Called after this handler has been detached from the <see cref="Control"/>.
         /// </summary>
-        protected abstract void OnDetach();
+        protected virtual void OnDetach()
+        {
+        }
 
         /// <summary>
         /// Called after this handler has been attached to a <see cref="Control"/>.
         /// </summary>
-        protected abstract void OnAttach();
+        protected virtual void OnAttach()
+        {
+        }
     }
 }

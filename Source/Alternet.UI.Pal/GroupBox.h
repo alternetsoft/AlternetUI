@@ -8,6 +8,9 @@ namespace Alternet::UI
     {
 #include "Api/GroupBox.inc"
     public:
+        string GetText() override;
+        void SetText(const string& value) override;
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
 
@@ -17,10 +20,10 @@ namespace Alternet::UI
     private:
         wxStaticBox* GetStaticBox();
 
-        DelayedValue<GroupBox, optional<string>> _title;
+        DelayedValue<GroupBox, string> _title;
 
-        optional<string> RetrieveTitle();
-        void ApplyTitle(const optional<string>& value);
+        string RetrieveTitle();
+        void ApplyTitle(const string& value);
 
         Thickness GetIntrinsicPadding(bool preferredSize);
     };

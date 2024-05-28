@@ -32,6 +32,7 @@ namespace Alternet.UI
             if (handler == null)
                 throw new InvalidOperationException();
             OnHandlerDetaching(EventArgs.Empty);
+            UnbindHandlerEvents();
             handler.Detach();
             handler = null;
         }
@@ -138,8 +139,56 @@ namespace Alternet.UI
         /// Called when a <see cref="Control"/> is inserted into
         /// the <see cref="Control.Children"/>.
         /// </summary>
-        protected virtual void OnChildInserted(Control childControl)
+        protected virtual void OnChildInserted(int index, Control childControl)
         {
+        }
+
+        protected virtual void UnbindHandlerEvents()
+        {
+            Handler.TextChanged = null;
+            Handler.HandleCreated = null;
+            Handler.HandleDestroyed = null;
+            Handler.Activated = null;
+            Handler.Deactivated = null;
+            Handler.Idle = null;
+            Handler.Paint = null;
+            Handler.VisibleChanged = null;
+            Handler.MouseEnter = null;
+            Handler.MouseLeave = null;
+            Handler.MouseCaptureLost = null;
+            Handler.DragLeave = null;
+            Handler.GotFocus = null;
+            Handler.LostFocus = null;
+            Handler.SizeChanged = null;
+            Handler.VerticalScrollBarValueChanged = null;
+            Handler.HorizontalScrollBarValueChanged = null;
+            Handler.DragOver = null;
+            Handler.DragEnter = null;
+            Handler.DragDrop = null;
+        }
+
+        protected virtual void BindHandlerEvents()
+        {
+            Handler.MouseEnter = RaiseMouseEnterOnTarget;
+            Handler.MouseLeave = RaiseMouseLeaveOnTarget;
+            Handler.HandleCreated = RaiseHandleCreated;
+            Handler.HandleDestroyed = RaiseHandleDestroyed;
+            Handler.Activated = RaiseActivated;
+            Handler.Deactivated = RaiseDeactivated;
+            Handler.Paint = OnHandlerPaint;
+            Handler.VisibleChanged = OnHandlerVisibleChanged;
+            Handler.MouseCaptureLost = RaiseMouseCaptureLost;
+            Handler.GotFocus = RaiseGotFocus;
+            Handler.LostFocus = RaiseLostFocus;
+            Handler.Idle = RaiseIdle;
+            Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
+            Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
+            Handler.DragLeave = RaiseDragLeave;
+            Handler.SizeChanged = RaiseHandlerSizeChanged;
+            Handler.DragOver = RaiseDragOver;
+            Handler.DragEnter = RaiseDragEnter;
+            Handler.DragDrop = RaiseDragDrop;
+            Handler.TextChanged = OnHandlerTextChanged;
         }
 
         /// <summary>
@@ -168,7 +217,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        protected virtual void OnNativeSizeChanged(EventArgs e)
+        protected virtual void OnHandlerSizeChanged(EventArgs e)
         {
         }
 

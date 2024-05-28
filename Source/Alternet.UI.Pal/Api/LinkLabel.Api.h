@@ -107,28 +107,6 @@ ALTERNET_UI_API void LinkLabel_SetVisited_(LinkLabel* obj, c_bool value)
     #endif
 }
 
-ALTERNET_UI_API char16_t* LinkLabel_GetText_(LinkLabel* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void LinkLabel_SetText_(LinkLabel* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API char16_t* LinkLabel_GetUrl_(LinkLabel* obj)
 {
     #if !defined(__WXMSW__)

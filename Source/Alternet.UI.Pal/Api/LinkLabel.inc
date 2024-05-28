@@ -17,10 +17,6 @@ bool GetVisited();
 void SetVisited(bool value);
 
 
-string GetText();
-void SetText(const string& value);
-
-
 string GetUrl();
 void SetUrl(const string& value);
 

@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     internal partial class WebBrowserHandler :
-        NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
+        WxControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
     {
         public bool HasBorder
         {
@@ -415,11 +415,6 @@ namespace Alternet.UI
             NativeControl.FullScreenChanged -= OnNativeFullScreenChanged;
             NativeControl.ScriptMessageReceived -= OnNativeScriptMessageReceived;
             NativeControl.ScriptResult -= OnNativeScriptResult;
-        }
-
-        private protected override void OnNativeControlCreated()
-        {
-            base.OnNativeControlCreated();
         }
 
         private static void ArgsToDoCommandParams(

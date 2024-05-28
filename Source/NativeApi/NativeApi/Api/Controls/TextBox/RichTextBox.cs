@@ -28,7 +28,6 @@ namespace NativeApi.Api
 
         public string ReportedUrl { get; }
 
-        public event EventHandler? TextChanged;
         public event EventHandler? TextEnter;
         public event EventHandler? TextUrl;
 

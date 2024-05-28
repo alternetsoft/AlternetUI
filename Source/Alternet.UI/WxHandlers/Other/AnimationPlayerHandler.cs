@@ -88,9 +88,7 @@ namespace Alternet.UI
 
         public virtual GenericImage GetFrame(uint i)
         {
-            var ptr = NativeControl.GetFrame(i);
-            var result = new GenericImage(ptr);
-            return result;
+            return WxGenericImageHandler.Create(NativeControl.GetFrame(i));
         }
 
         internal override Native.Control CreateNativeControl()

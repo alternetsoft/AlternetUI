@@ -42,28 +42,6 @@ ALTERNET_UI_API void Button_SetImagesEnabled_(c_bool value)
     #endif
 }
 
-ALTERNET_UI_API char16_t* Button_GetText_(Button* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Button_SetText_(Button* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool Button_GetExactFit_(Button* obj)
 {
     #if !defined(__WXMSW__)

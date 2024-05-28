@@ -49,18 +49,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public System.IntPtr WriteField(string fieldType, System.IntPtr properties, System.IntPtr textAttr)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_WriteField_(NativePointer, fieldType, properties, textAttr);
-        }
-        
-        public bool CanDeleteRange(System.IntPtr container, long startRange, long endRange)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_CanDeleteRange_(NativePointer, container, startRange, endRange);
-        }
-        
         public bool CanInsertContent(System.IntPtr container, long pos)
         {
             CheckDisposed();
@@ -77,18 +65,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             return NativeApi.RichTextBox_DeleteSelectedContent_(NativePointer);
-        }
-        
-        public void EnableVirtualAttributes(bool b)
-        {
-            CheckDisposed();
-            NativeApi.RichTextBox_EnableVirtualAttributes_(NativePointer, b);
-        }
-        
-        public void DoWriteText(string value, int flags)
-        {
-            CheckDisposed();
-            NativeApi.RichTextBox_DoWriteText_(NativePointer, value, flags);
         }
         
         public bool ExtendSelection(long oldPosition, long newPosition, int flags)
@@ -588,16 +564,16 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_WriteImage3_(NativePointer, imageBlock, textAttr);
         }
         
-        public bool EndBold()
+        public System.IntPtr WriteField(string fieldType, System.IntPtr properties, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_EndBold_(NativePointer);
+            return NativeApi.RichTextBox_WriteField_(NativePointer, fieldType, properties, textAttr);
         }
         
-        public bool BeginItalic()
+        public bool CanDeleteRange(System.IntPtr container, long startRange, long endRange)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginItalic_(NativePointer);
+            return NativeApi.RichTextBox_CanDeleteRange_(NativePointer, container, startRange, endRange);
         }
         
         public bool EndItalic()
@@ -1098,6 +1074,18 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_GetVirtualAttributesEnabled_(NativePointer);
         }
         
+        public void EnableVirtualAttributes(bool b)
+        {
+            CheckDisposed();
+            NativeApi.RichTextBox_EnableVirtualAttributes_(NativePointer, b);
+        }
+        
+        public void DoWriteText(string value, int flags)
+        {
+            CheckDisposed();
+            NativeApi.RichTextBox_DoWriteText_(NativePointer, value, flags);
+        }
+        
         public bool LoadFromStream(InputStream stream, int type)
         {
             CheckDisposed();
@@ -1553,6 +1541,18 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_BeginBold_(NativePointer);
         }
         
+        public bool EndBold()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_EndBold_(NativePointer);
+        }
+        
+        public bool BeginItalic()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_BeginItalic_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1577,10 +1577,6 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
-                case NativeApi.RichTextBoxEvent.TextChanged:
-                {
-                    TextChanged?.Invoke(); return IntPtr.Zero;
-                }
                 case NativeApi.RichTextBoxEvent.TextEnter:
                 {
                     TextEnter?.Invoke(); return IntPtr.Zero;
@@ -1593,7 +1589,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Action? TextChanged;
         public Action? TextEnter;
         public Action? TextUrl;
         
@@ -1607,7 +1602,6 @@ namespace Alternet.UI.Native
             
             public enum RichTextBoxEvent
             {
-                TextChanged,
                 TextEnter,
                 TextUrl,
             }
@@ -1628,12 +1622,6 @@ namespace Alternet.UI.Native
             public static extern string RichTextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_WriteField_(IntPtr obj, string fieldType, System.IntPtr properties, System.IntPtr textAttr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanDeleteRange_(IntPtr obj, System.IntPtr container, long startRange, long endRange);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_CanInsertContent_(IntPtr obj, System.IntPtr container, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1641,12 +1629,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long RichTextBox_DeleteSelectedContent_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_EnableVirtualAttributes_(IntPtr obj, bool b);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_DoWriteText_(IntPtr obj, string value, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_ExtendSelection_(IntPtr obj, long oldPosition, long newPosition, int flags);
@@ -1898,10 +1880,10 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_WriteImage3_(IntPtr obj, System.IntPtr imageBlock, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndBold_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_WriteField_(IntPtr obj, string fieldType, System.IntPtr properties, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginItalic_(IntPtr obj);
+            public static extern bool RichTextBox_CanDeleteRange_(IntPtr obj, System.IntPtr container, long startRange, long endRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndItalic_(IntPtr obj);
@@ -2153,6 +2135,12 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_GetVirtualAttributesEnabled_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void RichTextBox_EnableVirtualAttributes_(IntPtr obj, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void RichTextBox_DoWriteText_(IntPtr obj, string value, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_LoadFromStream_(IntPtr obj, IntPtr stream, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -2379,6 +2367,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_BeginBold_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_EndBold_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_BeginItalic_(IntPtr obj);
             
         }
     }

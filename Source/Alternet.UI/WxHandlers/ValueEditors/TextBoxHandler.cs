@@ -5,12 +5,45 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     internal class TextBoxHandler
-        : NativeControlHandler<TextBox, Native.TextBox>, ITextBoxHandler
+        : WxControlHandler<TextBox, Native.TextBox>, ITextBoxHandler
     {
-        private bool handlingNativeControlTextChanged;
-
-        public TextBoxHandler()
+        public bool ReadOnly
         {
+            get
+            {
+                return NativeControl.ReadOnly;
+            }
+
+            set
+            {
+                NativeControl.ReadOnly = value;
+            }
+        }
+
+        public bool HasBorder
+        {
+            get
+            {
+                return !NativeControl.EditControlOnly;
+            }
+
+            set
+            {
+                NativeControl.EditControlOnly = !value;
+            }
+        }
+
+        public bool Multiline
+        {
+            get
+            {
+                return NativeControl.Multiline;
+            }
+
+            set
+            {
+                NativeControl.Multiline = value;
+            }
         }
 
         public string ReportedUrl
@@ -434,22 +467,12 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new NativeTextBox(Control)
-            {
-                Text = Control.Text,
-                EditControlOnly = !Control.HasBorder,
-            };
+            return new NativeTextBox(Control);
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
-            Control.TextChanged -= Control_TextChanged;
-            Control.HasBorderChanged -= Control_HasBorderChanged;
-            Control.MultilineChanged -= Control_MultilineChanged;
-            Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
-            NativeControl.TextChanged = null;
-            NativeControl.TextEnter = null;
             NativeControl.TextUrl = null;
             NativeControl.TextMaxLength = null;
         }
@@ -461,24 +484,9 @@ namespace Alternet.UI
             if (BaseApplication.IsWindowsOS)
                 UserPaint = true;
 
-            ApplyMultiline();
-            ApplyReadOnly();
-            NativeControl.Text = Control.Text;
-
-            Control.HasBorderChanged += Control_HasBorderChanged;
-            Control.TextChanged += Control_TextChanged;
-            Control.MultilineChanged += Control_MultilineChanged;
-            Control.ReadOnlyChanged += Control_ReadOnlyChanged;
-
-            NativeControl.TextChanged = NativeControl_TextChanged;
-            NativeControl.TextEnter = NativeControl_TextEnter;
+            NativeControl.TextEnter = Control.OnEnterPressed;
+            NativeControl.TextMaxLength = Control.OnTextMaxLength;
             NativeControl.TextUrl = NativeControl_TextUrl;
-            NativeControl.TextMaxLength = NativeControl_TextMaxLength;
-        }
-
-        private void NativeControl_TextMaxLength()
-        {
-            Control.OnTextMaxLength(EventArgs.Empty);
         }
 
         private void NativeControl_TextUrl()
@@ -487,62 +495,9 @@ namespace Alternet.UI
             Control.OnTextUrl(new UrlEventArgs(url));
         }
 
-        private void NativeControl_TextEnter()
-        {
-            Control.OnEnterPressed(EventArgs.Empty);
-        }
-
-        private void Control_ReadOnlyChanged(object? sender, EventArgs e)
-        {
-            ApplyReadOnly();
-        }
-
-        private void ApplyReadOnly()
-        {
-            NativeControl.ReadOnly = Control.ReadOnly;
-        }
-
-        private void ApplyMultiline()
-        {
-            NativeControl.Multiline = Control.Multiline;
-        }
-
-        private void Control_MultilineChanged(object? sender, EventArgs e)
-        {
-            ApplyMultiline();
-        }
-
-        private void Control_HasBorderChanged(object? sender, EventArgs e)
-        {
-            NativeControl.EditControlOnly = !Control.HasBorder;
-        }
-
-        private void NativeControl_TextChanged()
-        {
-            handlingNativeControlTextChanged = true;
-            try
-            {
-                Control.Text = NativeControl.Text!;
-            }
-            finally
-            {
-                handlingNativeControlTextChanged = false;
-            }
-        }
-
-        private void Control_TextChanged(object? sender, EventArgs e)
-        {
-            if (!handlingNativeControlTextChanged)
-            {
-                if (NativeControl.Text != Control.Text)
-                    NativeControl.Text = Control.Text;
-            }
-        }
-
         internal class NativeTextBox : Native.TextBox
         {
             public NativeTextBox(TextBox control)
-                : base()
             {
                 var validator = control.Validator;
                 IntPtr ptr = default;

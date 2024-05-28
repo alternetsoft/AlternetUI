@@ -16,8 +16,23 @@ namespace Alternet.UI
             else
                 handler = BaseApplication.Handler.CreateControlHandler(this);
 
-            handler?.Attach(this);
+            handler.Attach(this);
+
+            handler.Visible = Visible;
+            handler.SetEnabled(Enabled);
+            ApplyChildren();
+
             OnHandlerAttached(EventArgs.Empty);
+
+            BindHandlerEvents();
+
+            void ApplyChildren()
+            {
+                if (!HasChildren)
+                    return;
+                for (var i = 0; i < Children.Count; i++)
+                    handler.OnChildInserted(Children[i]);
+            }
         }
 
         /// <summary>
@@ -35,14 +50,14 @@ namespace Alternet.UI
         private void Children_ItemInserted(object? sender, int index, Control item)
         {
             item.SetParentInternal(this);
-            Handler.RaiseChildInserted(item);
+            RaiseChildInserted(index, item);
             PerformLayout();
         }
 
         private void Children_ItemRemoved(object? sender, int index, Control item)
         {
             item.SetParentInternal(null);
-            Handler.RaiseChildRemoved(item);
+            RaiseChildRemoved(item);
             PerformLayout();
         }
 
@@ -92,6 +107,22 @@ namespace Alternet.UI
             EnabledChanged?.Invoke(this, e);
             Handler.SetEnabled(Enabled);
             Parent?.OnChildPropertyChanged(this, nameof(Enabled));
+        }
+
+        private void OnHandlerTextChanged()
+        {
+            if (handlerTextChanging > 0)
+                return;
+
+            handlerTextChanging++;
+            try
+            {
+                Text = Handler.Text;
+            }
+            finally
+            {
+                handlerTextChanging--;
+            }
         }
     }
 }

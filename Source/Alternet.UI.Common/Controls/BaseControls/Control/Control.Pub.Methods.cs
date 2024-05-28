@@ -10,6 +10,21 @@ namespace Alternet.UI
 {
     public partial class Control
     {
+        public static Control? GetMouseTargetControl(Control? control)
+        {
+            var result = control;
+
+            while (result is not null)
+            {
+                if (result.BubbleMouse)
+                    result = result.Parent;
+                else
+                    return result;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Called when the control should
         /// reposition its child controls.
@@ -2037,9 +2052,10 @@ namespace Alternet.UI
             return Handler.GetDefaultAttributesFont();
         }
 
-        public virtual void RaiseNativeSizeChanged()
+        public virtual void RaiseHandlerSizeChanged()
         {
-            OnNativeSizeChanged(EventArgs.Empty);
+            OnHandlerSizeChanged(EventArgs.Empty);
+            ReportBoundsChanged();
         }
 
         public virtual void RaiseDeactivated()
@@ -2096,15 +2112,17 @@ namespace Alternet.UI
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseChildInserted(Control childControl)
+        public virtual void RaiseChildInserted(int index, Control childControl)
         {
-            OnChildInserted(childControl);
+            OnChildInserted(index, childControl);
+            Handler.OnChildInserted(childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
         }
 
         public virtual void RaiseChildRemoved(Control childControl)
         {
-            OnChildInserted(childControl);
+            OnChildRemoved(childControl);
+            Handler.OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
         }
 
@@ -2124,7 +2142,7 @@ namespace Alternet.UI
 
         public virtual void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
 
-        public virtual void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
+        public virtual void RaiseDragLeave() => OnDragLeave(EventArgs.Empty);
 
         public virtual void ReportBoundsChanged()
         {
@@ -2163,16 +2181,6 @@ namespace Alternet.UI
         public virtual void RaiseActivated()
         {
             Activated?.Invoke(this, EventArgs.Empty);
-        }
-
-        public virtual void OnNativeControlPaint()
-        {
-            if (!UserPaint)
-                return;
-
-            using var dc = Handler.OpenPaintDrawingContext();
-
-            RaisePaint(new PaintEventArgs(dc, ClientRectangle));
         }
 
         /// <summary>
@@ -2226,23 +2234,16 @@ namespace Alternet.UI
             CellChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void OnNativeControlVisibleChanged()
+        public void RaiseMouseEnterOnTarget()
         {
-            bool visible = Handler.Visible;
-            Visible = visible;
+            var currentTarget = UI.Control.GetMouseTargetControl(this);
+            currentTarget?.RaiseMouseEnter();
+        }
 
-            if (BaseApplication.IsLinuxOS && visible)
-            {
-                // todo: this is a workaround for a problem on Linux when
-                // ClientSize is not reported correctly until the window is shown
-                // So we need to relayout all after the proper client size is available
-                // This should be changed later in respect to RedrawOnResize functionality.
-                // Also we may need to do this for top-level windows.
-                // Doing this on Windows results in strange glitches like disappearing
-                // tab controls' tab.
-                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
-                PerformLayout();
-            }
+        public void RaiseMouseLeaveOnTarget()
+        {
+            var currentTarget = UI.Control.GetMouseTargetControl(this);
+            currentTarget?.RaiseMouseLeave();
         }
     }
 }

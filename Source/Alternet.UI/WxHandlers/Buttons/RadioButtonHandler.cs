@@ -3,12 +3,8 @@ using System;
 namespace Alternet.UI
 {
     internal class RadioButtonHandler
-        : NativeControlHandler<RadioButton, Native.RadioButton>, IRadioButtonHandler
+        : WxControlHandler<RadioButton, Native.RadioButton>, IRadioButtonHandler
     {
-        public RadioButtonHandler()
-        {
-        }
-
         internal override Native.Control CreateNativeControl()
         {
             return new Native.RadioButton();
@@ -21,7 +17,6 @@ namespace Alternet.UI
             NativeControl.Text = Control.Text;
             NativeControl.IsChecked = Control.IsChecked;
 
-            Control.TextChanged += Control_TextChanged;
             Control.CheckedChanged += Control_CheckedChanged;
             NativeControl.CheckedChanged = NativeControl_CheckedChanged;
         }
@@ -30,7 +25,6 @@ namespace Alternet.UI
         {
             base.OnDetach();
 
-            Control.TextChanged -= Control_TextChanged;
             Control.CheckedChanged -= Control_CheckedChanged;
             NativeControl.CheckedChanged = null;
         }
@@ -43,11 +37,6 @@ namespace Alternet.UI
         private void NativeControl_CheckedChanged()
         {
             Control.IsChecked = NativeControl.IsChecked;
-        }
-
-        private void Control_TextChanged(object? sender, EventArgs e)
-        {
-            NativeControl.Text = Control.Text;
         }
     }
 }

@@ -10,6 +10,12 @@ namespace Alternet.UI
 {
     public interface IControlHandler : IDisposableObject
     {
+        Action<DragEventArgs>? DragDrop { get; set; }
+
+        Action<DragEventArgs>? DragOver { get; set; }
+
+        Action<DragEventArgs>? DragEnter { get; set; }
+
         Action? Idle { get; set; }
 
         Action? Paint { get; set; }
@@ -21,6 +27,8 @@ namespace Alternet.UI
         Action? MouseClick { get; set; }
 
         Action? VisibleChanged { get; set; }
+
+        Action? TextChanged { get; set; }
 
         Action? MouseCaptureLost { get; set; }
 
@@ -43,6 +51,8 @@ namespace Alternet.UI
         Action? HandleCreated { get; set; }
 
         Action? HandleDestroyed { get; set; }
+
+        string Text { get; set; }
 
         bool WantChars { get; set; }
 
@@ -202,7 +212,6 @@ namespace Alternet.UI
         double PixelFromDipF(double value);
 
         void SetScrollBar(
-            IControl control,
             bool isVertical,
             bool visible,
             int value,
@@ -255,9 +264,9 @@ namespace Alternet.UI
 
         object GetNativeControl();
 
-        void RaiseChildInserted(Control childControl);
+        void OnChildInserted(Control childControl);
 
-        void RaiseChildRemoved(Control childControl);
+        void OnChildRemoved(Control childControl);
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.

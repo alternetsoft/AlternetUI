@@ -271,6 +271,7 @@ namespace Alternet.UI
                 var item = (LogListBoxItem)LastItem!;
                 item.Text = ConstructLogMessage(message);
                 item.Kind = kind;
+                RefreshRow(Count - 1);
                 return item;
             }
             else

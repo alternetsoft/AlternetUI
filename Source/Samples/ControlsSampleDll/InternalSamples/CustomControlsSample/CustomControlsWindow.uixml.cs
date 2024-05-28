@@ -43,6 +43,11 @@ namespace CustomControlsSample
             Margin = new Thickness(5, 0, 0, 0),
         };
 
+        private readonly ColorPicker nativeColorPicker = new()
+        {
+            Value = Color.Red,
+        };
+
         public CustomControlsWindow()
         {
             Icon = BaseApplication.DefaultIcon;
@@ -53,8 +58,14 @@ namespace CustomControlsSample
 
             void Fn()
             {
-                nativeColorPicker.SuggestedSize = 32;
+                colorGroupBox.AddLabel("Native:");
+
+                nativeColorPicker.SuggestedHeight = 32;
+                nativeColorPicker.Parent = colorGroupBox;
+
+                colorGroupBox.AddLabel("SpeedButton:");
                 colorPicker.Parent = colorGroupBox;
+
                 colorComboLabel.Parent = colorGroupBox;
                 colorCombo.Parent = colorGroupBox;
                 ticTacToe.Parent = ticTacToeStackPanel;

@@ -44,6 +44,12 @@ namespace Alternet::UI
         {
             Create(parent, id, col, pos, size, style, validator, name);
         }
+    protected:
+        long GetPickerStyle(long style) const wxOVERRIDE
+        {
+            return (style & (/*wxCLRP_SHOW_LABEL | */wxCLRP_SHOW_ALPHA));
+        }
+
     };
 
     wxWindow* ColorPicker::CreateWxWindowUnparented()

@@ -19,28 +19,6 @@ ALTERNET_UI_API Label* Label_Create_()
     #endif
 }
 
-ALTERNET_UI_API char16_t* Label_GetText_(Label* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Label_SetText_(Label* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool Label_IsEllipsized_(Label* obj)
 {
     #if !defined(__WXMSW__)

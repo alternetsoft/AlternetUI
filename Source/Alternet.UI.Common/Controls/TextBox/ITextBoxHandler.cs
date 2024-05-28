@@ -42,6 +42,12 @@ namespace Alternet.UI
 
         string EmptyTextHint { get; set; }
 
+        bool Multiline { get; set; }
+
+        bool HasBorder { get; set; }
+
+        bool ReadOnly { get; set; }
+
         TextBoxTextWrap TextWrap { get; set; }
 
         GenericAlignment TextAlign { get; set; }

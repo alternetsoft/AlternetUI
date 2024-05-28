@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     internal class DateTimePickerHandler
-        : NativeControlHandler<DateTimePicker, Native.DateTimePicker>, IDateTimePickerHandler
+        : WxControlHandler<DateTimePicker, Native.DateTimePicker>, IDateTimePickerHandler
     {
         public DateTimePickerHandler()
         {

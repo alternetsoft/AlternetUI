@@ -204,6 +204,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public string Text
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetText_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetText_(NativePointer, value);
+            }
+        }
+        
         public bool IsActive
         {
             get
@@ -590,6 +605,30 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void FocusNextControl(bool forward, bool nested)
+        {
+            CheckDisposed();
+            NativeApi.Control_FocusNextControl_(NativePointer, forward, nested);
+        }
+        
+        public void BeginInit()
+        {
+            CheckDisposed();
+            NativeApi.Control_BeginInit_(NativePointer);
+        }
+        
+        public void EndInit()
+        {
+            CheckDisposed();
+            NativeApi.Control_EndInit_(NativePointer);
+        }
+        
+        public void Destroy()
+        {
+            CheckDisposed();
+            NativeApi.Control_Destroy_(NativePointer);
+        }
+        
         public void SaveScreenshot(string fileName)
         {
             CheckDisposed();
@@ -863,30 +902,6 @@ namespace Alternet.UI.Native
             return NativeApi.Control_SetFocus_(NativePointer);
         }
         
-        public void FocusNextControl(bool forward, bool nested)
-        {
-            CheckDisposed();
-            NativeApi.Control_FocusNextControl_(NativePointer, forward, nested);
-        }
-        
-        public void BeginInit()
-        {
-            CheckDisposed();
-            NativeApi.Control_BeginInit_(NativePointer);
-        }
-        
-        public void EndInit()
-        {
-            CheckDisposed();
-            NativeApi.Control_EndInit_(NativePointer);
-        }
-        
-        public void Destroy()
-        {
-            CheckDisposed();
-            NativeApi.Control_Destroy_(NativePointer);
-        }
-        
         public bool BeginRepositioningChildren()
         {
             CheckDisposed();
@@ -1120,6 +1135,10 @@ namespace Alternet.UI.Native
                         return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
                     }
                 }
+                case NativeApi.ControlEvent.TextChanged:
+                {
+                    TextChanged?.Invoke(); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.GotFocus:
                 {
                     GotFocus?.Invoke(); return IntPtr.Zero;
@@ -1187,6 +1206,7 @@ namespace Alternet.UI.Native
         public Action? VisibleChanged;
         public Action? MouseCaptureLost;
         public event EventHandler<CancelEventArgs>? Destroyed;
+        public Action? TextChanged;
         public Action? GotFocus;
         public Action? LostFocus;
         public Action? DragLeave;
@@ -1219,6 +1239,7 @@ namespace Alternet.UI.Native
                 VisibleChanged,
                 MouseCaptureLost,
                 Destroyed,
+                TextChanged,
                 GotFocus,
                 LostFocus,
                 DragLeave,
@@ -1308,6 +1329,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetId_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Control_GetText_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsActive_(IntPtr obj);
@@ -1448,6 +1475,18 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_BeginInit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EndInit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Destroy_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1578,18 +1617,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_SetFocus_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_BeginInit_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_EndInit_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Destroy_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_BeginRepositioningChildren_(IntPtr obj);

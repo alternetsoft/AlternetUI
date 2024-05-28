@@ -3,7 +3,7 @@
 namespace Alternet::UI
 {
     GroupBox::GroupBox() :
-        _title(*this, nullopt, &Control::IsWxWindowCreated,
+        _title(*this, u"", &Control::IsWxWindowCreated,
             &GroupBox::RetrieveTitle, &GroupBox::ApplyTitle)
     {
         GetDelayedValues().Add(&_title);
@@ -13,12 +13,12 @@ namespace Alternet::UI
     {
     }
 
-    optional<string> GroupBox::GetTitle()
+    string GroupBox::GetText()
     {
         return _title.Get();
     }
 
-    void GroupBox::SetTitle(optional<string> value)
+    void GroupBox::SetText(const string& value)
     {
         _title.Set(value);
     }
@@ -108,18 +108,18 @@ namespace Alternet::UI
         return dynamic_cast<wxStaticBox*>(GetWxWindow());
     }
 
-    optional<string> GroupBox::RetrieveTitle()
+    string GroupBox::RetrieveTitle()
     {
         auto value = wxStr(GetStaticBox()->GetLabel());
 
         if (value.empty())
-            return nullopt;
+            return u"";
 
         return value;
     }
 
-    void GroupBox::ApplyTitle(const optional<string>& value)
+    void GroupBox::ApplyTitle(const string& value)
     {
-        GetStaticBox()->SetLabel(wxStr(value.value_or(u"")));
+        GetStaticBox()->SetLabel(wxStr(value));
     }
 }

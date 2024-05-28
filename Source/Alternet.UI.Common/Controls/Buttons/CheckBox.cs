@@ -69,7 +69,7 @@ namespace Alternet.UI
                 if (CheckState == value)
                     return;
                 Handler.CheckState = value;
-                RaiseCheckedChanged(EventArgs.Empty);
+                RaiseCheckedChanged();
             }
         }
 
@@ -217,12 +217,10 @@ namespace Alternet.UI
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
-        public void RaiseCheckedChanged(EventArgs e)
+        public void RaiseCheckedChanged()
         {
-            OnCheckedChanged(e);
-            CheckedChanged?.Invoke(this, e);
+            OnCheckedChanged(EventArgs.Empty);
+            CheckedChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>

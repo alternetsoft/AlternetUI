@@ -2077,15 +2077,13 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-            NativeControl.TextChanged = NativeControl_TextChanged;
-            NativeControl.TextEnter = NativeControl_TextEnter;
+            NativeControl.TextEnter = Control.OnEnterPressed;
             NativeControl.TextUrl = NativeControl_TextUrl;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
-            NativeControl.TextChanged = null;
             NativeControl.TextEnter = null;
             NativeControl.TextUrl = null;
         }
@@ -2094,16 +2092,6 @@ namespace Alternet.UI
         {
             var url = NativeControl.ReportedUrl;
             Control.OnTextUrl(new UrlEventArgs(url));
-        }
-
-        private void NativeControl_TextEnter()
-        {
-            Control.OnEnterPressed(EventArgs.Empty);
-        }
-
-        private void NativeControl_TextChanged()
-        {
-            Control.RaiseTextChanged(EventArgs.Empty);
         }
    }
 }

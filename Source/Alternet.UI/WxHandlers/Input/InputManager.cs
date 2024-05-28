@@ -17,7 +17,6 @@ namespace Alternet.UI
     {
         private static readonly KeyboardDevice KeyboardDevice;
         private static readonly MouseDevice MouseDevice;
-        private long? mouseWheelTimestamp;
 
         static InputManager()
         {
@@ -85,178 +84,6 @@ namespace Alternet.UI
             return handler.IsAttached ? handler.Control : null;
         }
 
-        internal static Control? GetMouseTargetControl(ref Control? control)
-        {
-            /*control ??= GetControlUnderMouse();*/
-
-            var result = control;
-
-            while (result is not null)
-            {
-                if (result.BubbleMouse)
-                    result = result.Parent;
-                else
-                    return result;
-            }
-
-            return result;
-        }
-
-        internal void ReportMouseMove(
-            Control? targetControl,
-            long timestamp,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(ref targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(
-                control,
-                targetControl!,
-                timestamp,
-                Mouse.PrimaryDevice,
-                Mouse.GetPosition(control));
-            control.RaiseMouseMove(eventArgs);
-        }
-
-        internal void ReportMouseDown(
-            Control? targetControl,
-            long timestamp,
-            MouseButton changedButton,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(ref targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs = new MouseEventArgs(
-                control,
-                targetControl!,
-                changedButton,
-                timestamp,
-                Mouse.PrimaryDevice,
-                Mouse.GetPosition(control));
-            /*Application.LogIf(eventArgs, true);*/
-
-            control.RaiseMouseDown(eventArgs);
-        }
-
-        internal void ReportMouseDoubleClick(
-            Control? targetControl,
-            long timestamp,
-            MouseButton changedButton,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(ref targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs =
-                new MouseEventArgs(
-                    control,
-                    targetControl!,
-                    changedButton,
-                    timestamp,
-                    Mouse.PrimaryDevice,
-                    Mouse.GetPosition(control));
-            control.RaiseMouseDoubleClick(eventArgs);
-        }
-
-        internal void ReportMouseUp(
-            Control? targetControl,
-            long timestamp,
-            MouseButton changedButton,
-            out bool handled)
-        {
-            handled = false;
-            var control = GetMouseTargetControl(ref targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs
-                = new MouseEventArgs(
-                    control,
-                    targetControl!,
-                    changedButton,
-                    timestamp,
-                    Mouse.PrimaryDevice,
-                    Mouse.GetPosition(control));
-            control.RaiseMouseUp(eventArgs);
-        }
-
-        internal void ReportMouseWheel(
-            Control? targetControl,
-            long timestamp,
-            int delta,
-            out bool handled)
-        {
-            handled = false;
-
-            if (mouseWheelTimestamp == timestamp)
-                return;
-            mouseWheelTimestamp = timestamp;
-
-            var control = GetMouseTargetControl(ref targetControl);
-            if (control == null)
-                return;
-
-            var eventArgs
-                = new MouseEventArgs(
-                    control,
-                    targetControl!,
-                    timestamp,
-                    Mouse.PrimaryDevice,
-                    Mouse.GetPosition(control));
-            eventArgs.Delta = delta;
-            control.RaiseMouseWheel(eventArgs);
-        }
-
-        internal void ReportKeyDown(Key key, bool isRepeat, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
-            control.RaiseKeyDown(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        internal void ReportKeyUp(Key key, bool isRepeat, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
-            control.RaiseKeyUp(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        internal void ReportTextInput(char keyChar, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyPressEventArgs(control, keyChar, Keyboard.PrimaryDevice);
-            control.RaiseKeyPress(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
         /// <summary>
         ///     Implementation of InputManager.Current
         /// </summary>
@@ -271,21 +98,6 @@ namespace Alternet.UI
             }
 
             return inputManager;
-        }
-
-        private void CheckSTARequirement()
-        {
-            if (!Application.IsWindowsOS)
-                return;
-
-            // STA Requirement
-            // Alternet UI doesn't necessarily require STA, but many components do.  Examples
-            // include Cicero, OLE, COM, etc.  So we throw an exception here if the
-            // thread is not STA.
-            if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-            {
-                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
-            }
         }
     }
 }

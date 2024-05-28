@@ -47,8 +47,7 @@ namespace Alternet.UI.Native
 
         public Alternet.Drawing.GenericImage ToGenericImage()
         {
-            var ptr = ConvertToGenericImage();
-            return new Alternet.Drawing.GenericImage(ptr);
+            return Alternet.Drawing.WxGenericImageHandler.Create(ConvertToGenericImage());
         }
 
         Alternet.Drawing.IImageHandler Alternet.Drawing.IImageHandler.ConvertToDisabled(byte brightness)

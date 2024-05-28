@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DrawingSample
 {
-    internal partial class MainWindow : Window
+    public partial class MainWindow : Window
     {
         private readonly TabControl tabControl = new();
         private Control? selectedPage;

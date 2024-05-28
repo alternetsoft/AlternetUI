@@ -3,15 +3,11 @@ using System;
 namespace Alternet.UI
 {
     internal class LabelHandler
-        : NativeControlHandler<Label, Native.Label>, ILabelHandler
+        : WxControlHandler<Label, Native.Label>, ILabelHandler
     {
-        public LabelHandler()
-        {
-        }
-
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.Label() { Text = Control.Text };
+            return new Native.Label();
         }
 
         protected override void OnAttach()
@@ -20,22 +16,6 @@ namespace Alternet.UI
 
             if (BaseApplication.IsWindowsOS)
                 UserPaint = true;
-
-            NativeControl.Text = Control.Text;
-
-            Control.TextChanged += Control_TextChanged;
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-            Control.TextChanged -= Control_TextChanged;
-        }
-
-        private void Control_TextChanged(object? sender, EventArgs e)
-        {
-            if (NativeControl.Text != Control.Text)
-                NativeControl.Text = Control.Text;
         }
     }
 }

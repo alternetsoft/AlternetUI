@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Security;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -37,6 +34,7 @@ namespace Alternet.UI
         public const int MouseWheelDeltaForOneLine = 120;
 
         private static MouseDevice mouseDevice = MouseDevice.Empty;
+        private static long? mouseWheelTimestamp;
 
         /// <summary>
         ///     The state of the left button.
@@ -118,6 +116,118 @@ namespace Alternet.UI
             if (relativeTo is null)
                 return Mouse.PrimaryDevice.GetScreenPosition();
             return relativeTo.ScreenToClient(Mouse.PrimaryDevice.GetScreenPosition());
+        }
+
+        public static void ReportMouseMove(
+            Control? targetControl,
+            long timestamp,
+            out bool handled)
+        {
+            handled = false;
+            var control = Control.GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(
+                control,
+                targetControl!,
+                timestamp,
+                Mouse.PrimaryDevice,
+                Mouse.GetPosition(control));
+            control.RaiseMouseMove(eventArgs);
+        }
+
+        public static void ReportMouseDown(
+            Control? targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
+        {
+            handled = false;
+            var control = Control.GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(
+                control,
+                targetControl!,
+                changedButton,
+                timestamp,
+                Mouse.PrimaryDevice,
+                Mouse.GetPosition(control));
+
+            control.RaiseMouseDown(eventArgs);
+        }
+
+        public static void ReportMouseDoubleClick(
+            Control? targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
+        {
+            handled = false;
+            var control = Control.GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs =
+                new MouseEventArgs(
+                    control,
+                    targetControl!,
+                    changedButton,
+                    timestamp,
+                    Mouse.PrimaryDevice,
+                    Mouse.GetPosition(control));
+            control.RaiseMouseDoubleClick(eventArgs);
+        }
+
+        public static void ReportMouseUp(
+            Control? targetControl,
+            long timestamp,
+            MouseButton changedButton,
+            out bool handled)
+        {
+            handled = false;
+            var control = Control.GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs
+                = new MouseEventArgs(
+                    control,
+                    targetControl!,
+                    changedButton,
+                    timestamp,
+                    Mouse.PrimaryDevice,
+                    Mouse.GetPosition(control));
+            control.RaiseMouseUp(eventArgs);
+        }
+
+        public static void ReportMouseWheel(
+            Control? targetControl,
+            long timestamp,
+            int delta,
+            out bool handled)
+        {
+            handled = false;
+
+            if (mouseWheelTimestamp == timestamp)
+                return;
+            mouseWheelTimestamp = timestamp;
+
+            var control = Control.GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs
+                = new MouseEventArgs(
+                    control,
+                    targetControl!,
+                    timestamp,
+                    Mouse.PrimaryDevice,
+                    Mouse.GetPosition(control));
+            eventArgs.Delta = delta;
+            control.RaiseMouseWheel(eventArgs);
         }
     }
 }

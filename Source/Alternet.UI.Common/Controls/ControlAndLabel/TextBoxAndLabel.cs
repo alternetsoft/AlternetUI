@@ -109,6 +109,13 @@ namespace Alternet.UI
             OnTextChanged(EventArgs.Empty);
         }
 
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.TextChanged = null;
+        }
+
         private void MainControl_TextChanged(object? sender, EventArgs e)
         {
             MainControlTextChanged();

@@ -300,7 +300,6 @@ namespace Alternet::UI
             style);
 
         value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
-        value->Bind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
         return value;
     }
 
@@ -308,12 +307,6 @@ namespace Alternet::UI
     {
         event.Skip();
         RaiseEvent(ComboBoxEvent::SelectedItemChanged);
-    }
-
-    void ComboBox::OnTextChanged(wxCommandEvent& event)
-    {
-        event.Skip();
-        RaiseEvent(ComboBoxEvent::TextChanged);
     }
 
     int ComboBox::GetTextSelectionStart()
