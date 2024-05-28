@@ -15,6 +15,27 @@ namespace Alternet.UI.Extensions
 {
     public static class MauiExtensionsPrivate
     {
+        public static SKEncodedImageFormat? ToSKEncodedImageFormat(this BitmapType type)
+        {
+            switch (type)
+            {
+                default:
+                    return null;
+                case BitmapType.Bmp:
+                    return SKEncodedImageFormat.Bmp;
+                case BitmapType.Ico:
+                    return SKEncodedImageFormat.Ico;
+                case BitmapType.Gif:
+                    return SKEncodedImageFormat.Gif;
+                case BitmapType.Png:
+                    return SKEncodedImageFormat.Png;
+                case BitmapType.Jpeg:
+                    return SKEncodedImageFormat.Jpeg;
+                case BitmapType.Icon:
+                    return SKEncodedImageFormat.Ico;
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD ToAlternet(this SKRect value)
         {

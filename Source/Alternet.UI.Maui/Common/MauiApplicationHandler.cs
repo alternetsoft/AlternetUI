@@ -451,7 +451,7 @@ namespace Alternet.UI
 
         public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
         {
-            throw new NotImplementedException();
+            return new MauiGraphicsFactoryHandler();
         }
 
         public void CrtSetDbgFlag(int value)
