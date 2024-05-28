@@ -9,7 +9,7 @@ namespace Alternet.UI.Native
 {
     internal partial class Image : Alternet.Drawing.IImageHandler
     {
-        public bool SaveToStream(Stream stream, Alternet.Drawing.ImageFormat format)
+        public bool SaveToStream(Stream stream, Alternet.Drawing.ImageFormat format, int quality)
         {
             var outputStream = new UI.Native.OutputStream(stream);
             return SaveToStream(outputStream, format.ToString());
@@ -34,12 +34,22 @@ namespace Alternet.UI.Native
             return LoadStream(inputStream, (int)type);
         }
 
-        public bool SaveToFile(string name, BitmapType type)
+        public bool SaveToFile(string name, BitmapType type, int quality)
+        {
+            return SaveToFile(name);
+        }
+
+        bool Alternet.Drawing.IImageHandler.SaveToFile(string name, int quality)
+        {
+            return SaveToFile(name);
+        }
+
+        bool Alternet.Drawing.IImageHandler.SaveToFile(string name, BitmapType type, int quality)
         {
             return SaveFile(name, (int)type);
         }
 
-        public bool SaveToStream(Stream stream, BitmapType type)
+        public bool SaveToStream(Stream stream, BitmapType type, int quality)
         {
             using var outputStream = new UI.Native.OutputStream(stream);
             return SaveStream(outputStream, (int)type);

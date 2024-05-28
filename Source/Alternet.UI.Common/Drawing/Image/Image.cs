@@ -17,6 +17,11 @@ namespace Alternet.Drawing
     public class Image : HandledObject<IImageHandler>
     {
         /// <summary>
+        /// Gets or sets default quality used when images are saved and quality parameter is omitted.
+        /// </summary>
+        public static int DefaultSaveQuality = 70;
+
+        /// <summary>
         /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
         /// grayscale method.
         /// </summary>
@@ -452,6 +457,54 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="BitmapType"/> from the extension of the <paramref name="fileName"/>.
+        /// </summary>
+        /// <param name="fileName">Path to file.</param>
+        /// <returns></returns>
+        public static BitmapType GetBitmapTypeFromFileName(string fileName)
+        {
+            var ext = PathUtils.GetExtensionLower(fileName);
+            if (string.IsNullOrEmpty(ext))
+                return BitmapType.Invalid;
+            switch (ext)
+            {
+                case "bmp":
+                    return BitmapType.Bmp;
+                case "ico":
+                    return BitmapType.Ico;
+                case "cur":
+                    return BitmapType.Cur;
+                case "xbm":
+                    return BitmapType.Xbm;
+                case "xpm":
+                    return BitmapType.Xpm;
+                case "tiff":
+                    return BitmapType.Tiff;
+                case "gif":
+                    return BitmapType.Gif;
+                case "png":
+                    return BitmapType.Png;
+                case "jpeg":
+                case "jpg":
+                    return BitmapType.Jpeg;
+                case "pnm":
+                    return BitmapType.Pnm;
+                case "pcx":
+                    return BitmapType.Pcx;
+                case "pict":
+                    return BitmapType.Pict;
+                case "ani":
+                    return BitmapType.Ani;
+                case "iff":
+                    return BitmapType.Iff;
+                case "tga":
+                    return BitmapType.Tga;
+                default:
+                    return BitmapType.Invalid;
+            }
+        }
+
+        /// <summary>
         /// Loads an image from a file or resource.
         /// </summary>
         /// <param name="name">Either a filename or a resource name. The meaning of name
@@ -486,9 +539,10 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for
         /// the save operation.</remarks>
-        public virtual bool Save(string name, BitmapType type)
+        public virtual bool Save(string name, BitmapType type, int? quality = null)
         {
-            return Handler.SaveToFile(name, type);
+            quality ??= DefaultSaveQuality;
+            return Handler.SaveToFile(name, type, quality.Value);
         }
 
         /// <summary>
@@ -506,9 +560,10 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for
         /// the save operation.</remarks>
-        public virtual bool Save(Stream stream, BitmapType type)
+        public virtual bool Save(Stream stream, BitmapType type, int? quality = null)
         {
-            return Handler.SaveToStream(stream, type);
+            quality ??= DefaultSaveQuality;
+            return Handler.SaveToStream(stream, type, quality.Value);
         }
 
         /// <summary>
@@ -627,7 +682,7 @@ namespace Alternet.Drawing
         /// There are other save methods in the <see cref="Image"/> that support image formats not
         /// included in <see cref="ImageFormat"/>.
         /// </remarks>
-        public virtual bool Save(Stream stream, ImageFormat format)
+        public virtual bool Save(Stream stream, ImageFormat format, int? quality = null)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
@@ -635,7 +690,9 @@ namespace Alternet.Drawing
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
-            return Handler.SaveToStream(stream, format);
+            quality ??= DefaultSaveQuality;
+
+            return Handler.SaveToStream(stream, format, quality.Value);
         }
 
         /// <summary>
@@ -645,12 +702,14 @@ namespace Alternet.Drawing
         /// to which to save this <see cref="Image"/>.</param>
         /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats
         /// for the save operation.</remarks>
-        public virtual bool Save(string fileName)
+        public virtual bool Save(string fileName, int? quality = null)
         {
             if (fileName is null)
                 throw new ArgumentNullException(nameof(fileName));
 
-            return Handler.SaveToFile(fileName);
+            quality ??= DefaultSaveQuality;
+
+            return Handler.SaveToFile(fileName, quality.Value);
         }
 
         /// <summary>

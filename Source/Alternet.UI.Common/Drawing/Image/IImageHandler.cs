@@ -29,7 +29,7 @@ namespace Alternet.Drawing
 
         int Depth { get; }
 
-        bool SaveToStream(Stream stream, ImageFormat format);
+        bool SaveToStream(Stream stream, ImageFormat format, int quality);
 
         bool LoadFromStream(Stream stream);
 
@@ -37,11 +37,11 @@ namespace Alternet.Drawing
 
         bool LoadFromStream(Stream stream, BitmapType type);
 
-        bool SaveToFile(string name);
+        bool SaveToFile(string name, int quality);
 
-        bool SaveToFile(string name, BitmapType type);
+        bool SaveToFile(string name, BitmapType type, int quality);
 
-        bool SaveToStream(Stream stream, BitmapType type);
+        bool SaveToStream(Stream stream, BitmapType type, int quality);
 
         GenericImage ToGenericImage();
 
