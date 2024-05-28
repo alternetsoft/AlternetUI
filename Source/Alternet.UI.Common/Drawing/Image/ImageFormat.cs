@@ -1,5 +1,7 @@
 using System;
+
 using Alternet.Base.Collections;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -101,6 +103,25 @@ namespace Alternet.Drawing
             if (this == ImageFormat.Tiff)
                 return "Tiff";
             return "[ImageFormat: " + this.guid + "]";
+        }
+
+        /// <summary>
+        /// Gets image format as <see cref="BitmapType"/>.
+        /// </summary>
+        /// <returns></returns>
+        public BitmapType AsBitmapType()
+        {
+            if (this == ImageFormat.Bmp)
+                return BitmapType.Bmp;
+            if (this == ImageFormat.Gif)
+                return BitmapType.Gif;
+            if (this == ImageFormat.Jpeg)
+                return BitmapType.Jpeg;
+            if (this == ImageFormat.Png)
+                return BitmapType.Png;
+            if (this == ImageFormat.Tiff)
+                return BitmapType.Tiff;
+            return BitmapType.Invalid;
         }
     }
 }
