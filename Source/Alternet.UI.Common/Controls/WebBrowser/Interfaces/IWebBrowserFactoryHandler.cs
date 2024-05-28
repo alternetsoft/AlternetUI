@@ -18,8 +18,6 @@ namespace Alternet.UI
 
         void SetDefaultFSNameArchive(string value);
 
-        void CrtSetDbgFlag(int value);
-
         string? DoCommand(string cmdName, params object?[] args);
 
         IWebBrowserMemoryFS CreateMemoryFileSystem(WebBrowser browser);

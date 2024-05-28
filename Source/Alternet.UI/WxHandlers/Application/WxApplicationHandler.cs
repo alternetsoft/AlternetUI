@@ -572,6 +572,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public void CrtSetDbgFlag(int value)
+        {
+            WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
+        }
+
+        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             base.DisposeManaged();

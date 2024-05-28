@@ -451,5 +451,9 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public void CrtSetDbgFlag(int value)
+        {
+        }
     }
 }

@@ -383,6 +383,11 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public void CrtSetDbgFlag(int value)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Exit()
         {
             throw new NotImplementedException();

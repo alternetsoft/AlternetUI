@@ -957,7 +957,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves or modifies the state of the debug flag to control the 
+        /// Modifies the state of the debug flag to control the 
         /// allocation behavior of the debug heap manager. 
         /// </summary>
         /// <param name="value">
@@ -969,7 +969,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void CrtSetDbgFlag(int value)
         {
-            Factory.CrtSetDbgFlag(value);
+            BaseApplication.Handler.CrtSetDbgFlag(value);
         }
 
         /// <summary>
