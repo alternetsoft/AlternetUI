@@ -95,22 +95,16 @@ namespace Alternet.UI
         {
             base.OnPaintSurface(e);
 
-            if (graphics is null)
-                graphics = new(this, e);
-            else
-            {
-                graphics.Args = e;
-            }
-
             var dc = e.Surface.Canvas;
 
+            if (graphics is null)
+                graphics = new(dc);
+            else
+            {
+                graphics.Canvas = dc;
+            }
+
             RectD dirtyRect = dc.LocalClipBounds;
-
-            using SKPaint fillPaint = new();
-            fillPaint.Color = Colors.LightGoldenrodYellow.ToSKColor();
-            fillPaint.Style = SKPaintStyle.Fill;
-
-            dc.DrawRect(dc.LocalClipBounds, fillPaint);
 
             control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
         }

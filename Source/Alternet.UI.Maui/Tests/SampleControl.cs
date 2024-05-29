@@ -14,6 +14,8 @@ namespace Alternet.UI
         {
             var dc = e.Graphics;
 
+            dc.DrawRectangle(Color.LightGoldenrodYellow.AsPen, e.ClipRectangle);
+
             var font = Font.Default
                 .Scaled(3).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
 

@@ -16,31 +16,10 @@ namespace Alternet.Drawing
     public class SkiaGraphics : NotImplementedGraphics
     {
         private SKCanvas canvas;
-        private SKPaintSurfaceEventArgs args;
-        private SkiaContainer container;
 
-        public SkiaGraphics(SkiaContainer container, SKPaintSurfaceEventArgs args)
+        public SkiaGraphics(SKCanvas canvas)
         {
-            this.args = args;
-            canvas = args.Surface.Canvas;
-            this.container = container;
-        }
-
-        public SkiaContainer Container
-        {
-            get => container;
-            set => container = value;
-        }
-
-        public SKPaintSurfaceEventArgs Args
-        {
-            get => args;
-
-            set
-            {
-                args = value;
-                canvas = args.Surface.Canvas;
-            }
+            this.canvas = canvas;
         }
 
         public SKCanvas Canvas

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     internal class MauiControlHandler : BaseControlHandler, IControlHandler
@@ -185,7 +187,9 @@ namespace Alternet.UI
 
         public Graphics CreateDrawingContext()
         {
-            return default!;
+            SKBitmap bitmap = new();
+            SKCanvas canvas = new(bitmap);
+            return new SkiaGraphics(canvas);
         }
 
         public PointD DeviceToScreen(PointI point)
