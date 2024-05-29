@@ -19,7 +19,7 @@ using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// ICollectionView is an interface that applications writing their own

@@ -11,7 +11,7 @@
 \***************************************************************************/
 
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     // This class represents the details of a single trace (the ID, a formatted message string, and parameter labels).
     // This is used by the AvTrace class and callers.

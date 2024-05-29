@@ -9,7 +9,7 @@
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal interface IFreezeFreezables
     {

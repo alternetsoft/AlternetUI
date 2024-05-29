@@ -16,7 +16,7 @@
 //
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed]
     internal struct SecurityCriticalData<T>

@@ -16,9 +16,8 @@ using System.Net;
 using System.IO.Packaging;
 
 using System.IO;
-using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// SiteOfOriginPart is an implementation of the abstract PackagePart class. It contains an override for GetStreamCore.
@@ -88,7 +87,7 @@ namespace Alternet.UI
         {
             lock (_globalLock)
             {
-                if (onlyNeedContentType && _contentType != UI.Internal.ContentType.Empty)
+                if (onlyNeedContentType && _contentType != UI.Port.ContentType.Empty)
                 {
 #if DEBUG
                     if (SiteOfOriginContainer._traceSwitch.Enabled)
@@ -166,7 +165,7 @@ namespace Alternet.UI
                         System.Threading.Thread.CurrentThread.ManagedThreadId + 
                         ": Opening local file " + _absoluteLocation);
 #endif
-            if (_contentType == UI.Internal.ContentType.Empty)
+            if (_contentType == UI.Port.ContentType.Empty)
             {
                 _contentType = MimeTypeMapper.GetMimeTypeFromUri(Uri);                
             }
@@ -191,7 +190,7 @@ namespace Alternet.UI
                         ": Successfully retrieved stream from " + _absoluteLocation);
 #endif
 
-            if (_contentType == Internal.ContentType.Empty)
+            if (_contentType == Port.ContentType.Empty)
             {
 #if DEBUG
                 if (SiteOfOriginContainer._traceSwitch.Enabled)
@@ -223,7 +222,7 @@ namespace Alternet.UI
         #region Private Members
 
         Uri _absoluteLocation = null;
-        ContentType _contentType = Internal.ContentType.Empty;
+        ContentType _contentType = Port.ContentType.Empty;
         Stream _cacheStream = null;
         private Object _globalLock = new Object();
 

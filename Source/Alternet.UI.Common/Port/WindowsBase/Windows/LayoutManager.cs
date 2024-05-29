@@ -15,7 +15,7 @@
 using Alternet.UI.Threading;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Top-level ContextLayoutManager object. Manages the layout update and layout dirty state.

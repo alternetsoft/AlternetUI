@@ -19,7 +19,7 @@ using System.Reflection;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Class that provides methods used internally by the BamlReader to access allowed

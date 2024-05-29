@@ -9,7 +9,7 @@
 using System;
 using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Vector - A value type which defined a vector in terms of X and Y

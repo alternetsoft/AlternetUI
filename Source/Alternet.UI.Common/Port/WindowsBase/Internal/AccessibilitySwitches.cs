@@ -10,7 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Wraps all accessibility logic for switches of the form:

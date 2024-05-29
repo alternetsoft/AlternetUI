@@ -15,7 +15,7 @@ using System;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary> Describes if a validation error has been added or cleared
     /// </summary>

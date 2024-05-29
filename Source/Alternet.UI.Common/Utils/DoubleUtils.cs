@@ -1,6 +1,3 @@
-#pragma warning disable
-#nullable disable
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -43,7 +40,7 @@ namespace Alternet.UI
             return (-eps < delta) && (eps > delta);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Compares two Vector instances for fuzzy equality.  This function
         /// helps compensate for the fact that double values can 
         /// acquire error when operated upon
@@ -55,7 +52,7 @@ namespace Alternet.UI
         {
             return DoubleUtils.AreClose(vector1.X, vector2.X) &&
                    DoubleUtils.AreClose(vector1.Y, vector2.Y);
-        }
+        }*/
 
         /// <summary>
         /// Compares two rectangles for fuzzy equality.  This function
@@ -227,7 +224,7 @@ namespace Alternet.UI
         // or in the range 0xfff0000000000001L through 0xffffffffffffffffL, the result will be NaN.
         public static bool IsNaN(double value)
         {
-            NanUnion t = new NanUnion();
+            NanUnion t = new();
             t.DoubleValue = value;
 
             ulong exp = t.UintValue & 0xfff0000000000000;

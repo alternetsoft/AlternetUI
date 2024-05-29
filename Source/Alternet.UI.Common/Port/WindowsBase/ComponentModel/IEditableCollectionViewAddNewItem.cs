@@ -10,7 +10,7 @@
 // Description: AddNewItem functionality for collection views.
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// IAddNewItem is an interface that a collection view

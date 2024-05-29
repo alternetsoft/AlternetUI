@@ -17,7 +17,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// CultureInfoIetfLanguageTagConverter - Type converter for converting instances of other types to and from CultureInfo.

@@ -46,7 +46,7 @@ using System.Collections.Generic;
 // CA1812:AvoidUninstantiatedInternalClasses
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // These classes implement a frugal storage model for lists of <T>.
     // Performance measurements show that many lists contain a single item.

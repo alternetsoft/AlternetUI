@@ -14,13 +14,14 @@
 \***************************************************************************/
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///  Base class for all Xaml markup extensions.
     /// </summary>
 
-    internal class ProvideValueServiceProvider : IServiceProvider, IProvideValueTarget, IXamlTypeResolver, IUriContext, IFreezeFreezables
+    internal class ProvideValueServiceProvider
+        : IServiceProvider, IProvideValueTarget, IXamlTypeResolver, IUriContext, IFreezeFreezables
     {
         // Construction
         

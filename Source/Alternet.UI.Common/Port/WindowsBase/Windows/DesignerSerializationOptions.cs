@@ -13,7 +13,7 @@
 
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Specifies the serialization flags per property

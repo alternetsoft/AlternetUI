@@ -7,7 +7,7 @@
 using System;
 using System.Threading;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     SynchronizationContext subclass used by the Dispatcher.

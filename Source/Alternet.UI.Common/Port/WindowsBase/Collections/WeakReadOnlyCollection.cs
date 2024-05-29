@@ -18,7 +18,7 @@
 // to die (we don't), but because we need to avoid creating cycles containing the
 // WeakReadOnlyCollection.  Thus we don't check for WR.Target==null.
 
-namespace Alternet.Base.Collections.ObjectModel
+namespace Alternet.UI.Port
 {
     using System;
     using System.Collections;

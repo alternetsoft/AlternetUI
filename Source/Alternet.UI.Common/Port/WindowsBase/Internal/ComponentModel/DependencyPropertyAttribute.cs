@@ -5,7 +5,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-namespace Alternet.UI.Internal.ComponentModel
+namespace Alternet.UI.Port
 {
     using System;
     

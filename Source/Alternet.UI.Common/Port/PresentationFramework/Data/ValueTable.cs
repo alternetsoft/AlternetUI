@@ -28,7 +28,7 @@ using System.Collections.Generic;           // IEnumerable<T>
 using System.Collections.Specialized;       // HybridDictionary
 using System.ComponentModel;                // IBindingList
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal sealed class ValueTable : IWeakEventListener
     {

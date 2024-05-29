@@ -13,7 +13,7 @@
 
 using System;
 
-namespace Alternet.UI.Internal.Threading
+namespace Alternet.UI.Port
 {
     internal delegate object InternalRealCallDelegate(Delegate method, object args, int numArgs);
     internal delegate bool FilterExceptionDelegate(object source, Exception e);

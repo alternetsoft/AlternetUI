@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///  This class converts DateTime values to/from string.  We don't use the DateTimeConverter

@@ -16,7 +16,7 @@ using System.Collections.Specialized;
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// CompositeCollection will contain items shaped as strings, objects, xml nodes,
@@ -476,7 +476,7 @@ namespace Alternet.UI
             if (InternalList.Contains(cc))
                 throw new ArgumentException(SR.Get(SRID.CollectionContainerMustBeUniqueForComposite), "cc");
 
-            Alternet.Base.Collections.Specialized.CollectionChangedEventManager.AddHandler(cc, OnContainedCollectionChanged);
+            Alternet.UI.Port.CollectionChangedEventManager.AddHandler(cc, OnContainedCollectionChanged);
 
 #if DEBUG
             _hasRepeatedCollectionIsValid = false;
@@ -486,7 +486,7 @@ namespace Alternet.UI
         // Unhook a newly-deleted CollectionContainer
         private void RemoveCollectionContainer(CollectionContainer cc)
         {
-            Alternet.Base.Collections.Specialized.CollectionChangedEventManager.RemoveHandler(cc, OnContainedCollectionChanged);
+            Alternet.UI.Port.CollectionChangedEventManager.RemoveHandler(cc, OnContainedCollectionChanged);
 
 #if DEBUG
             _hasRepeatedCollectionIsValid = false;

@@ -13,7 +13,7 @@ using System.Globalization;
 
 using System.Xml;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// The XmlNodeComparer is used to sort a view of data produced by an XmlDataSource.

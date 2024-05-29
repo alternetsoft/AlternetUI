@@ -14,7 +14,7 @@ using System;
 using System.Collections.Specialized;
 using System.IO.Packaging;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // Note: we purposely didn't make this class a dictionary to limit the access
     //  to the packages in the store
@@ -88,10 +88,10 @@ namespace Alternet.UI
             //  However, uri.Equal cannot be used here since the key Uris are used as a pack Uri form and
             //  only PackUriHelper.ComparePackUri can do the proper comparison of pack Uris.
 
-            Uri packUri = PackUriHelper.Create(uri);
+            Uri packUri = System.IO.Packaging.PackUriHelper.Create(uri);
        
-            if (PackUriHelper.ComparePackUri(packUri, BaseUriHelper.PackAppBaseUri) == 0 ||
-                PackUriHelper.ComparePackUri(packUri, BaseUriHelper.SiteOfOriginBaseUri) == 0)
+            if (System.IO.Packaging.PackUriHelper.ComparePackUri(packUri, BaseUriHelper.PackAppBaseUri) == 0 ||
+                System.IO.Packaging.PackUriHelper.ComparePackUri(packUri, BaseUriHelper.SiteOfOriginBaseUri) == 0)
             {
                 throw new ArgumentException(SR.Get(SRID.NotAllowedPackageUri), nameof(uri));
             }

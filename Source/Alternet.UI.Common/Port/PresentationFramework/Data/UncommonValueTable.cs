@@ -11,7 +11,7 @@
 using System;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // An economical table for "uncommon values", identified by integers in the range [0,32).
     // Unused values incur no memory allocation

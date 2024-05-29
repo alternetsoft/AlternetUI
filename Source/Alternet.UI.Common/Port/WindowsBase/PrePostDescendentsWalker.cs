@@ -10,7 +10,7 @@
 //     which is called after a node's children have been visited.
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     A simple subclass of DescendentsWalker which introduces a second callback

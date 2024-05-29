@@ -19,7 +19,6 @@ using System.Net.Cache;
 using System.IO;
 
 using System.IO.Packaging;
-using Alternet.UI.Internal;
 
 //From Presharp documentation:
 //In order to avoid generating warnings about unknown message numbers and
@@ -27,7 +26,7 @@ using Alternet.UI.Internal;
 //you need to disable warnings 1634 and 1691. 
 #pragma warning disable 1634, 1691
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Helper class for handling all web requests/responses in the framework. Using it ensures consisent handling 
@@ -56,7 +55,7 @@ namespace Alternet.UI
         //  which is mostly for logging and config.
         // Call PackWebRequestFactory.CreateWebRequest to bypass the regression if possible
         //  by calling Create on PackWebRequest if uri is pack scheme
-        if (string.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+        if (string.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
         {
             return PackWebRequestFactory.CreateWebRequest(uri);
             // The PackWebRequest may end up creating a "real" web request as its inner request.

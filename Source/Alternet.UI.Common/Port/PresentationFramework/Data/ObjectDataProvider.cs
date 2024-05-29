@@ -48,7 +48,7 @@ using System.Threading;
 // permissions to perform reflection on the given Type or Member.
 //---------------------------------------------------------------------------
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// The ObjectDataProvider class defines an object

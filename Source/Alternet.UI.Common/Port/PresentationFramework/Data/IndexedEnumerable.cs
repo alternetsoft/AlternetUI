@@ -20,7 +20,7 @@ using System.Diagnostics;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// for a collection implementing IEnumerable this offers
@@ -66,7 +66,7 @@ namespace Alternet.UI
                 INotifyCollectionChanged icc = collection as INotifyCollectionChanged;
                 if (icc != null)
                 {
-                    Alternet.Base.Collections.Specialized.CollectionChangedEventManager.AddHandler(icc, OnCollectionChanged);
+                    Alternet.UI.Port.CollectionChangedEventManager.AddHandler(icc, OnCollectionChanged);
                 }
             }
         }
@@ -351,7 +351,7 @@ namespace Alternet.UI
                 INotifyCollectionChanged icc = Enumerable as INotifyCollectionChanged;
                 if (icc != null)
                 {
-                    Alternet.Base.Collections.Specialized.CollectionChangedEventManager.RemoveHandler(icc, OnCollectionChanged);
+                    Alternet.UI.Port.CollectionChangedEventManager.RemoveHandler(icc, OnCollectionChanged);
                 }
             }
 

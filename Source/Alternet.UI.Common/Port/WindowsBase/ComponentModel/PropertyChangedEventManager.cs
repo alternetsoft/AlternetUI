@@ -18,7 +18,7 @@ using System.ComponentModel;    // INotifyPropertyChanged
 using System.Diagnostics;       // Debug
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the INotifyPropertyChanged.PropertyChanged event.

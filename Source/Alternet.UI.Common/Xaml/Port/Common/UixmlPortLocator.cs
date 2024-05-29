@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #pragma warning disable CS1591 // Enable me later
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class UixmlPortLocator : IUixmlPortDependencyResolver
     {

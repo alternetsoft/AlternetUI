@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Unifies enumerable, collection, and dictionary support that are useful for exposing a dictionary of names in a UIXML namescope.

@@ -14,7 +14,7 @@
 using System;
 using System.ComponentModel;        // ISupportInitialize
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// XmlNamespaceMapping Class

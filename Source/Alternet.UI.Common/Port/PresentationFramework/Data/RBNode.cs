@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class RBNode<T> : INotifyPropertyChanged
     {

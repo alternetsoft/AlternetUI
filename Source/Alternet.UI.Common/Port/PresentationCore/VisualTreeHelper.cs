@@ -8,7 +8,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// The VisualTreeHelper class contains static methods that are useful for performing

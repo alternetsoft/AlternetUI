@@ -14,7 +14,7 @@ using System.Diagnostics;                    // Debug & Debugger
 using System.Threading;
 using System;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Class for Filtering and Catching Exceptions

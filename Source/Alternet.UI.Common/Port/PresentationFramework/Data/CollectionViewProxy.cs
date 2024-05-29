@@ -19,7 +19,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// Proxy view, used to interpose between the UI and a view that doesn't

@@ -27,7 +27,7 @@ using Alternet.UI.Threading;             // Thread
 
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Base class for Binding Expressions.
@@ -144,12 +144,12 @@ namespace Alternet.UI
             }
 
             // initialize tracing information
-            Alternet.Base.Diagnostics.PresentationTraceLevel traceLevel = Alternet.Base.Diagnostics.PresentationTraceSources.GetTraceLevel(binding);
+            Alternet.UI.Port.PresentationTraceLevel traceLevel = Alternet.UI.Port.PresentationTraceSources.GetTraceLevel(binding);
 
             if (traceLevel > 0)
             {
                 // copy TraceLevel from parent BindingBase - it can be changed later
-                Alternet.Base.Diagnostics.PresentationTraceSources.SetTraceLevel(this, traceLevel);
+                Alternet.UI.Port.PresentationTraceSources.SetTraceLevel(this, traceLevel);
             }
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.CreateExpression))
@@ -443,7 +443,7 @@ namespace Alternet.UI
             else    // Otherwise, marshal it to the right Dispatcher.
             {
                 Engine.Marshal(
-                    new Threading.DispatcherOperationCallback(HandlePropertyInvalidationOperation),
+                    new Port.DispatcherOperationCallback(HandlePropertyInvalidationOperation),
                     new object[]{d, args});
             }
         }
@@ -2000,7 +2000,7 @@ namespace Alternet.UI
             get { return _engine; }
         }
 
-        internal Threading.Dispatcher Dispatcher
+        internal Port.Dispatcher Dispatcher
         {
             get { return (_engine != null) ? _engine.Dispatcher : null; }
         }

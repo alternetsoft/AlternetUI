@@ -10,7 +10,7 @@ using System.ComponentModel;
 #if PBTCOMPILER
 namespace Alternet.UI.Internal.Markup
 #else
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 #endif
 {
     /// <summary>

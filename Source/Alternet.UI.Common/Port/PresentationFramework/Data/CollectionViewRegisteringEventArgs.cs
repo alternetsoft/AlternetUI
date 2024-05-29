@@ -12,7 +12,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Provides data for the <see cref="BindingOperations.CollectionViewRegistering"/> event.

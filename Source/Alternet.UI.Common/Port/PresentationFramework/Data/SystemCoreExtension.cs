@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     //FxCop can't tell that this class is instantiated via reflection, so suppress the FxCop warning.
     [SuppressMessage("Microsoft.Performance","CA1812:AvoidUninstantiatedInternalClasses")]

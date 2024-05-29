@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class DataExtensionMethods
     {

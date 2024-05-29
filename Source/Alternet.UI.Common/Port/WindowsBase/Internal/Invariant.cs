@@ -10,7 +10,7 @@
 // Description: Provides methods that assert an application is in a valid state.
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     using System;
     using System.Diagnostics;

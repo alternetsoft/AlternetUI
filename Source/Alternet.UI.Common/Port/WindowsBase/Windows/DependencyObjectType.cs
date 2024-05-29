@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Type cache for all DependencyObject derived types

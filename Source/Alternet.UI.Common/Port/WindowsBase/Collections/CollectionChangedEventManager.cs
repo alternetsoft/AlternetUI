@@ -14,7 +14,7 @@ using System;
 using System.Collections.Specialized;
 using Alternet.UI;       // WeakEventManager
 
-namespace Alternet.Base.Collections.Specialized
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the INotifyCollectionChanged.CollectionChanged event.

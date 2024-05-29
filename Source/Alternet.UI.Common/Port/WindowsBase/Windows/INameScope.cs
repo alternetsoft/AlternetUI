@@ -6,7 +6,7 @@
 
 // Description: Defines the basic Name Scoping interface for root classes
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// INameScope- Defines the basic Name Scoping interface for root classes

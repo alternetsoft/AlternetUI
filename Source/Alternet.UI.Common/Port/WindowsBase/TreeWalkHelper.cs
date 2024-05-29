@@ -13,7 +13,7 @@
 \***************************************************************************/
 using System.Diagnostics;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     This is a static helper class that has methods

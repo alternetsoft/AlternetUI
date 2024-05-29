@@ -1,7 +1,7 @@
 #pragma warning disable
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Provides extension methods for UixmlPortObject and related classes.
@@ -373,16 +373,16 @@ namespace Alternet.UI
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.
         /// </summary>
         public static IDisposable Bind(
-            this Alternet.UI.DependencyObject target,
-            Alternet.UI.DependencyProperty property,
-            Alternet.UI.Binding binding,
+            this Alternet.UI.Port.DependencyObject target,
+            Alternet.UI.Port.DependencyProperty property,
+            Alternet.UI.Port.Binding binding,
             object? anchor = null)
         {
             target = target ?? throw new ArgumentNullException(nameof(target));
             property = property ?? throw new ArgumentNullException(nameof(property));
             binding = binding ?? throw new ArgumentNullException(nameof(binding));
 
-            Alternet.UI.BindingOperations.SetBinding(target, property, binding);
+            Alternet.UI.Port.BindingOperations.SetBinding(target, property, binding);
 
             return Disposable.Empty;
         }

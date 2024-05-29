@@ -22,7 +22,7 @@ using System.Threading;
 using Alternet.UI.Internal;
 using Alternet.UI.Markup;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// called whenever any exception is encountered when trying to update

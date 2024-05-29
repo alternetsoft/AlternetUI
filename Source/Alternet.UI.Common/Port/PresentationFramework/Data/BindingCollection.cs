@@ -14,7 +14,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///  A list of bindingss, used by MultiBinding classes.

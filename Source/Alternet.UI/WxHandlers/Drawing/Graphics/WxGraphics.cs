@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
-using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
 
 namespace Alternet.Drawing

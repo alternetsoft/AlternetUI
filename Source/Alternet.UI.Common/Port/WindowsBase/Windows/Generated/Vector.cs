@@ -17,7 +17,7 @@ using System.ComponentModel;
 // These types are aliased to match the unamanaged names used in interop
 using Alternet.UI.Markup;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [Serializable]
     [TypeConverter(typeof(VectorConverter))]

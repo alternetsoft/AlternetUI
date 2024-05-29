@@ -21,7 +21,7 @@ using Alternet.UI.Threading;     // DispatcherObject
                                  // FrugalList
 using Alternet.UI.Markup;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This class manages the correspondence between event types and

@@ -15,7 +15,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// An enumeration class used by serialization to walk the a tree of objects. Markupobject's represent objects 

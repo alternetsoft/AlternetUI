@@ -10,7 +10,7 @@
 
 using System.ComponentModel; // doc comments
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This enum describes the different steps in the validation process.

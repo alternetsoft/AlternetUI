@@ -18,7 +18,7 @@ using System;
 using System.IO.Packaging;
 using System.IO;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// SiteOfOriginContainer is an implementation of the abstract Package class. 

@@ -733,7 +733,6 @@ namespace Alternet.UI
         /// The text associated with this control.
         /// </returns>
         [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
         public virtual string Text
         {
             get
@@ -1155,7 +1154,6 @@ namespace Alternet.UI
         /// in the user interface.
         /// </summary>
         [DefaultValue(null)]
-        [Localizability(LocalizationCategory.ToolTip)]
         public virtual string? ToolTip
         {
             get

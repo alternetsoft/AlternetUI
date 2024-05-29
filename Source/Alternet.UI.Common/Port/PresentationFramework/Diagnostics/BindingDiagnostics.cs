@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Provides a notification infrastructure for listening to binding failure events.

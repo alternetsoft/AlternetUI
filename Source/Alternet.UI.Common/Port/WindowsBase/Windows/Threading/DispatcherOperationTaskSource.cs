@@ -7,7 +7,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     // DispatcherOperation uses this class to access a TaskCompletionSource<T>
     // without being a generic iteself.

@@ -15,7 +15,7 @@
 using System;
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
 /// <summary>
 /// IItemProperties is an interface that a collection view

@@ -15,7 +15,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     static internal partial class EventTrace
     {

@@ -12,7 +12,7 @@ namespace MS.Internal.Markup
 namespace System.Xaml
 #else
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 #endif
 {
     #if !PBTCOMPILER && !SYSTEM_XAML

@@ -13,7 +13,7 @@
 using System;
 using System.Reflection;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class IndexerPropertyInfo : PropertyInfo
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI
 {
     /// <summary>
     /// Attribute to associate a ValueSerializer class with a value type or to override

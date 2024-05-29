@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Base class for all event arguments associated with a <see cref="Dispatcher"/>.

@@ -21,7 +21,7 @@ using System.Diagnostics;
 using System.Xaml;
 namespace MS.Internal.Xaml
 #else
-namespace Alternet.UI
+namespace Alternet.UI.Port
 #endif
 {
     [StructLayout(LayoutKind.Explicit, Size = 16)]

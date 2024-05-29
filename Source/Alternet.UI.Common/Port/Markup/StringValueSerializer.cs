@@ -15,7 +15,7 @@
 
 
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Stub string serializer. It exists to remove special caseing strings in a couple cases in the

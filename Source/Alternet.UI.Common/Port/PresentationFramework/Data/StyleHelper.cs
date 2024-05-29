@@ -18,7 +18,7 @@
 // you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     //    #region StyleHelper
 

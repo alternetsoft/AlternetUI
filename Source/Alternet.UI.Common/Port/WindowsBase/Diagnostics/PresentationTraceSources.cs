@@ -20,7 +20,7 @@ using Alternet.UI;
 using System.Diagnostics;
 using Alternet.UI.Internal;
 
-namespace Alternet.Base.Diagnostics
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// PresentationTraceLevel - Enum which describes how much detail to trace about a particular object.

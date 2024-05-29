@@ -419,10 +419,18 @@ namespace XamlX.TypeSystem
             return name;
         }
 
+        public static IXamlType FindType(this IXamlTypeSystem sys, Type t)
+        {
+            var name = t.FullName;
+            return sys.GetType(name);
+        }
+
         public static IXamlType GetType(this IXamlTypeSystem sys, string type)
         {
-            var f = sys.FindType(type)
-                ?? throw new XamlTypeSystemException("Unable to resolve type " + type);
+            var f = sys.FindType(type);
+
+            if(f is null)
+                throw new XamlTypeSystemException("Unable to resolve type " + type);
             return f;
         }
 

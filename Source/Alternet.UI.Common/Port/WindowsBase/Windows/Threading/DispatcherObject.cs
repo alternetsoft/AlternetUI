@@ -6,7 +6,7 @@
 
 using System.Threading;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     A DispatcherObject is an object associated with a

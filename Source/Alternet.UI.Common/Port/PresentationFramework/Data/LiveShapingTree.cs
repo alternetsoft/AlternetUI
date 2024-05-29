@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Specialized;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class LiveShapingTree : RBTree<LiveShapingItem>
     {

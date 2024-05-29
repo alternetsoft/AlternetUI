@@ -8,8 +8,6 @@
 // Description: Defines BindingGroup object, manages a collection of bindings.
 //
 
-using Alternet.Base.Collections.ObjectModel;
-using Alternet.UI.Internal;
 using Alternet.UI.Markup;
 using System;
 using System.Collections;               // IList
@@ -23,7 +21,7 @@ using System.Threading;                 // Thread
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// A BindingGroup manages a collection of bindings, and provides services for

@@ -7,7 +7,7 @@
 using System;
 using System.Diagnostics; // For Assert
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Authorization key for access to read-only DependencyProperty.

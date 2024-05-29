@@ -12,7 +12,7 @@ using System;
 using System.Diagnostics;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // Base class for binding workers.
     // Derived classes implement binding functionality depending on the
@@ -79,7 +79,7 @@ namespace Alternet.UI
         protected DependencyObject TargetElement { get { return ParentBindingExpression.TargetElement; } }
         protected DependencyProperty TargetProperty { get { return ParentBindingExpression.TargetProperty; } }
         protected DataBindEngine Engine { get { return ParentBindingExpression.Engine; } }
-        protected Alternet.UI.Threading.Dispatcher Dispatcher { get { return ParentBindingExpression.Dispatcher; } }
+        protected Alternet.UI.Port.Dispatcher Dispatcher { get { return ParentBindingExpression.Dispatcher; } }
 
         protected BindingStatusInternal Status
         {

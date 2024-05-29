@@ -12,9 +12,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using PresentationTraceLevel = Alternet.Base.Diagnostics.PresentationTraceLevel;
+using PresentationTraceLevel = Alternet.UI.Port.PresentationTraceLevel;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This class stores values for the attached property

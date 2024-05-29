@@ -9,11 +9,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using Alternet.UI.Internal.ComponentModel;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     This is a wrapper property descriptor that offers a merged API of

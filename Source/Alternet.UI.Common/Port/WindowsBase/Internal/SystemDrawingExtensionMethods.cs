@@ -12,7 +12,7 @@
 using System;
 using System.IO;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     internal abstract class SystemDrawingExtensionMethods
     {

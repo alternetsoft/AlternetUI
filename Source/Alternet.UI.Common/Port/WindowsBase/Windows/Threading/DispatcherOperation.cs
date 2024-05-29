@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     DispatcherOperation represents a delegate that has been

@@ -19,7 +19,7 @@ using System.Diagnostics;       // Debug
 using System.Reflection;        // EventInfo
            // WeakEventManager
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the INotifyPropertyChanged.PropertyChanged event.

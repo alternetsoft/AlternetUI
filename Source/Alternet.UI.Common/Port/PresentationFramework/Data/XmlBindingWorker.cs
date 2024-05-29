@@ -16,7 +16,7 @@ using System.Diagnostics;
 using Alternet.UI.Markup;
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class XmlBindingWorker : BindingWorker, IWeakEventListener
     {

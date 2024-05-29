@@ -22,7 +22,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Used to store mapping information for names occuring 

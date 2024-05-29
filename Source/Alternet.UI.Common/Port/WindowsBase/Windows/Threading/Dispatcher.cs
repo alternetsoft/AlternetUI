@@ -18,7 +18,7 @@ using System.ComponentModel;                 // EditorBrowsableAttribute, Browsa
 // you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Provides UI services for a thread.

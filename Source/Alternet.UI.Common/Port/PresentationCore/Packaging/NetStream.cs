@@ -46,7 +46,7 @@ using System.Threading;
 using System.Collections;               // for IComparer
 using System.Diagnostics;               // for Debug.Assert
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Implements a Stream to support ILockBytes.  This supports progressive download for performant file access over HTTP

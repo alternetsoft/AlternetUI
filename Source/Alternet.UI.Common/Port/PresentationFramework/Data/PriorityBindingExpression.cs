@@ -22,7 +22,7 @@ using System.Diagnostics;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///  Describes a collection of BindingExpressions attached to a single property.

@@ -70,7 +70,7 @@ using Alternet.UI.Threading;     // DispatcherObject
                                  // Invariant
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     //
     //  See WeakEventManagerTemplate.cs for instructions on how to subclass

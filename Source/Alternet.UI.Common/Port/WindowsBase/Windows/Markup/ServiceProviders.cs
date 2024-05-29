@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Proivde a implementation for IServiceProvider and method to add services

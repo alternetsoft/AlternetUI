@@ -14,7 +14,7 @@ using System;
 using System.Diagnostics;
 // WeakEventManager
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the DependencyObject.InheritanceContextChanged event.

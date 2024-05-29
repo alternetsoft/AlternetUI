@@ -13,7 +13,7 @@ using System.Collections;
 using System.Text;          // StringBuilder
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal enum SourceValueType { Property, Indexer, Direct };
     internal enum DrillIn { Never, IfNeeded, Always };

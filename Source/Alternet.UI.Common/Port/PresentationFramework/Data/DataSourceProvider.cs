@@ -16,7 +16,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using Alternet.UI.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Common base class and contract for data source providers.

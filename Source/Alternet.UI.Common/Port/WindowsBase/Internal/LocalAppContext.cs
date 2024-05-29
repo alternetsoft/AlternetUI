@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // error CS0436: When building PresentationFramework, the type 'LocalAppContext' 
     // conflicts with the imported type 'LocalAppContext' in 'PresentationCore

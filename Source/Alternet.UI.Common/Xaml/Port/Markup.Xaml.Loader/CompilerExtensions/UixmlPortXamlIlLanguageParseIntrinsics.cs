@@ -83,7 +83,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 try
                 {
-                    var vector = Vector.Parse(text);
+                    var vector = Port.Vector.Parse(text);
             
                     result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Vector, types.VectorFullConstructor,
                         new[] { vector.X, vector.Y });

@@ -14,7 +14,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// The FileFormatException class is thrown when an input file or a data stream that is supposed to conform

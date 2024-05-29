@@ -7,7 +7,7 @@
 using System.IO;
 using System.IO.Packaging;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Extensions to provide wrappers for functionality that no longer exists in System.IO.Packaging.PackagePart

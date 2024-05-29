@@ -18,8 +18,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using Alternet.UI.Port;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Class that provides helper functions for the parser to reflect on types, properties,

@@ -24,7 +24,7 @@ using System.Text;
 using Alternet.UI.Markup;
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal sealed class PropertyPathWorker : IWeakEventListener
     {

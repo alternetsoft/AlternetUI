@@ -55,7 +55,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
         public override string Text
         {
             get

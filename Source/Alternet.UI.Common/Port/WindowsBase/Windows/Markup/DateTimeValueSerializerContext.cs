@@ -14,7 +14,7 @@
 using System.ComponentModel;
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     // This is a helper class used by the DateTimeConverter2 to call the DateTimeValueSerializer.
     // It provides no functionality.

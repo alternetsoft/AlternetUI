@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.

@@ -23,7 +23,7 @@ using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
 using System.Diagnostics;               // For Assert
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// pack-specific WebRequest handler for cached packages

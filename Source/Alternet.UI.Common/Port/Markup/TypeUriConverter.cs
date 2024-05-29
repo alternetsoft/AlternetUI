@@ -6,7 +6,7 @@
 
 //  Contents:  Limited converter for string <--> System.Uri
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     using System;
     using System.ComponentModel;

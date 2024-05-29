@@ -26,12 +26,12 @@ using System.Threading;
 using Alternet.UI.Markup;
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// ICollectionView with checks for affinity to the UI thread dispatcher
     /// </summary>
-    public class CollectionView : Threading.DispatcherObject, ICollectionView, INotifyPropertyChanged
+    public class CollectionView : Port.DispatcherObject, ICollectionView, INotifyPropertyChanged
     {
         //------------------------------------------------------
         //
@@ -1851,7 +1851,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        _databindOperation = _engine.Marshal(new Threading.DispatcherOperationCallback(ProcessInvoke), null, changeLog.Count);
+                        _databindOperation = _engine.Marshal(new Port.DispatcherOperationCallback(ProcessInvoke), null, changeLog.Count);
                     }
                 }
             }
@@ -1943,7 +1943,7 @@ namespace Alternet.UI
                         if(_databindOperation == null)
                         {
                             _databindOperation = _engine.Marshal(
-                                new Threading.DispatcherOperationCallback(ProcessInvoke),
+                                new Port.DispatcherOperationCallback(ProcessInvoke),
                                 null, _changeLog.Count);
                         }
                     }

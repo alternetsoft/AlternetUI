@@ -9,7 +9,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     // There are cases where we have multiple assemblies that are going to import this file and
     // if they are going to also have InternalsVisibleTo between them, there will be a compiler warning

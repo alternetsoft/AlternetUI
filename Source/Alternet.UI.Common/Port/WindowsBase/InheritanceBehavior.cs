@@ -11,7 +11,7 @@
 *
 *
 \***************************************************************************/
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Modes used for inheritance property lookup as well as resource lookup

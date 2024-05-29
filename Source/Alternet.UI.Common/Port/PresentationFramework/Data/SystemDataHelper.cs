@@ -13,7 +13,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class SystemDataHelper
     {

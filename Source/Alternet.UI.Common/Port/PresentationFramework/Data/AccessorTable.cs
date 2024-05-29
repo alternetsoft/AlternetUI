@@ -18,10 +18,8 @@
 
 using System;
 using System.Collections;
-// SR
-using Alternet.UI.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal sealed class AccessorInfo
     {

@@ -11,7 +11,7 @@
 
 using System.Diagnostics;
 
-namespace Alternet.Base.Diagnostics
+namespace Alternet.UI.Port
 {
     /// <summary>Access point for TraceSources</summary>
     internal static partial class PresentationTraceSources

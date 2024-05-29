@@ -11,12 +11,10 @@ using System.Diagnostics;
 
 using Alternet.UI.Threading;
 
-using Alternet.UI.Internal.ComponentModel;
-using Alternet.UI.Internal.KnownBoxes;
 using Alternet.UI.Internal;
 using System.ComponentModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     DependencyObject is an object that participates in the property dependency system

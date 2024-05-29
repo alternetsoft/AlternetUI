@@ -15,7 +15,7 @@ using System;
 using System.Collections.Specialized;
 using System.IO.Packaging;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// PreloadedPackages

@@ -10,7 +10,7 @@ using Alternet.UI.Controls;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to
@@ -97,9 +97,9 @@ namespace Alternet.UI.Markup
         public static void ApplyNonMatchingMarkupExtensionV1(object target, object property, IServiceProvider prov,
             object value)
         {
-            if (value is Alternet.UI.Binding b)
+            if (value is Alternet.UI.Port.Binding b)
             {
-                if (property is Alternet.UI.DependencyProperty p)
+                if (property is Alternet.UI.Port.DependencyProperty p)
                     throw new Exception();
                 //((Alternet.UI.DependencyObject)target).Bind(p, b);
                 else

@@ -19,7 +19,7 @@ using System.Diagnostics;       // Debug.Assert
 using System.Globalization;     // CultureInfo
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary> This enum describes how the data flows through a given Binding
     /// </summary>

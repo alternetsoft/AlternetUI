@@ -5,14 +5,13 @@
 // See the LICENSE file in the project root for more information.
 
 
-using Alternet.UI.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed]
     internal static class MimeTypeMapper

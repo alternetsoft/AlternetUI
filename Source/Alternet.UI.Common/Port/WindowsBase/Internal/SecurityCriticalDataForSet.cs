@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
     [Serializable]

@@ -12,7 +12,7 @@
 // See spec at http://avalon/connecteddata/Specs/CollectionView.mht
 // 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Allows an implementing collection to create a view to its data.

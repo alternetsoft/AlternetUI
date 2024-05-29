@@ -17,7 +17,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     DataErrorValidationRule can be added to the ValidationRulesCollection of a Binding

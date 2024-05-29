@@ -14,7 +14,7 @@ using System;
 using System.Reflection;                // Assembly
 using System.Collections.Specialized;   // HybridDictionary
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed]   // defined in Base, used in Core and Framework
     internal static class BaseHashHelper

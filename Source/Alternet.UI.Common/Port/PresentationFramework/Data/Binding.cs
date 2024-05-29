@@ -15,10 +15,8 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.ComponentModel;
 using System.Xml;
-using Alternet.UI.Internal;
-using Alternet.UI.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Status of the Binding

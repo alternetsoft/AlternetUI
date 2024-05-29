@@ -31,7 +31,7 @@ using Alternet.UI.Threading;
 // BindUriHelper
 // XmlDataCollection
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// XmlDataProvider class, gets XmlNodes to use as source in data binding

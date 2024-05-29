@@ -11,7 +11,7 @@
 using Alternet.UI.Threading;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class DataBindOperation
     {

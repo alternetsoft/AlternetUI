@@ -25,7 +25,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Wrap returned stream so we can release the webresponse container when the stream is closed

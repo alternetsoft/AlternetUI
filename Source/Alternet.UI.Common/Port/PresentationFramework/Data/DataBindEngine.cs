@@ -19,7 +19,7 @@ using System.Threading;
 using Alternet.UI.Threading;
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal enum TaskOps
     {

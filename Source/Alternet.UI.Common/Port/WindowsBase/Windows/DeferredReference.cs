@@ -10,7 +10,7 @@
 // Description: Proxy object passed to the property system to delay load values.
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     using System;
 

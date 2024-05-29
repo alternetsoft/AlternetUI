@@ -18,7 +18,7 @@ using System.Reflection;
 using Alternet.UI.Markup;
 using XamlX;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // Miscellaneous (and internal) helper functions.
     internal static class Helper

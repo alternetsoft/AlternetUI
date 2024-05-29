@@ -11,7 +11,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Provides data for <see cref="BindingDiagnostics.BindingFailed"/> 

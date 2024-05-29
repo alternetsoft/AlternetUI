@@ -14,7 +14,7 @@
 *
 \***************************************************************************/
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal struct EntryIndex

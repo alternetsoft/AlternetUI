@@ -24,7 +24,7 @@ using Alternet.UI.Markup;
 // you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// BaseUriHelper class provides BaseUri related property, methods.
@@ -32,9 +32,9 @@ namespace Alternet.UI
     internal static class BaseUriHelper
     {
         private const string SOOBASE = "SiteOfOrigin://";
-        private static readonly Uri _siteOfOriginBaseUri = PackUriHelper.Create(new Uri(SOOBASE));
+        private static readonly Uri _siteOfOriginBaseUri = System.IO.Packaging.PackUriHelper.Create(new Uri(SOOBASE));
         private const string APPBASE = "application://";
-        private static readonly Uri _packAppBaseUri = PackUriHelper.Create(new Uri(APPBASE));
+        private static readonly Uri _packAppBaseUri = System.IO.Packaging.PackUriHelper.Create(new Uri(APPBASE));
 
         private static SecurityCriticalDataForSet<Uri> _baseUri;
 
@@ -50,7 +50,7 @@ namespace Alternet.UI
             _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
             // Add an instance of the ResourceContainer to PreloadedPackages so that PackWebRequestFactory can find it
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
-            PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(SiteOfOriginBaseUri), new SiteOfOriginContainer(), true);
+            PreloadedPackages.AddPackage(System.IO.Packaging.PackUriHelper.GetPackageUri(SiteOfOriginBaseUri), new SiteOfOriginContainer(), true);
         }
 
         #region public property and method
@@ -153,7 +153,7 @@ namespace Alternet.UI
 
                 // Does the "inner" URI have the application: scheme
                 SecurityHelper.AreStringTypesEqual(
-                    PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
+                    System.IO.Packaging.PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
                     _packageApplicationBaseUriEscaped);
         }
 
@@ -363,7 +363,7 @@ namespace Alternet.UI
         {
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
             {                
-                Uri packageUri = PackUriHelper.GetPackageUri(sUri);
+                Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(sUri);
                 if (String.Compare(packageUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped), _packageSiteOfOriginBaseUriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     return (new Uri(sUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped))).MakeRelativeUri(sUri);

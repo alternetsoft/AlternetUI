@@ -37,7 +37,7 @@ using System.ComponentModel;            // PropertyDescriptor
 using System.Diagnostics;               // Debug
                                         // WeakEventManager
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the object.ValueChanged event.

@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
 
 internal static class SecurityHelper

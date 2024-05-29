@@ -22,7 +22,7 @@ using Alternet.UI.Markup;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// PropertyPathConverter - Converter class for converting instances of other types

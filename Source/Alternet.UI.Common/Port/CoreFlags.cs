@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [Flags]
     internal enum CoreFlags : uint

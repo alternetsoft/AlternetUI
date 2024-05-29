@@ -34,7 +34,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed]
     internal class CustomCredentialPolicy : ICredentialPolicy

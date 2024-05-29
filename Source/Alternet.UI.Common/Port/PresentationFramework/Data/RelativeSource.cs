@@ -14,7 +14,7 @@ using System.ComponentModel;    // ISupportInitialize
 using System.Diagnostics;
     // MarkupExtension
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary> This enum describes the type of RelativeSource
     /// </summary>

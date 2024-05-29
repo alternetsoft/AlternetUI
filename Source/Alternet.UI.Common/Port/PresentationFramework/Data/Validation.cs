@@ -17,11 +17,11 @@ using System.Collections.ObjectModel;
 
 
 
-using Alternet.UI.Internal.KnownBoxes;
+using Alternet.UI;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Validation-related methods and DependencyProperties

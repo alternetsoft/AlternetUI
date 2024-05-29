@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// ValueSerializer allows a type to declare a serializer to control how the type
