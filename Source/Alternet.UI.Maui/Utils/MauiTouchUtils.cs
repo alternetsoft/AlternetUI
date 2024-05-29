@@ -19,7 +19,7 @@ namespace Alternet.UI
             result.Id = e.Id;
             result.ActionType = (TouchAction)e.ActionType;
             result.DeviceType = (TouchDeviceType)e.DeviceType;
-            result.Location = e.Location.ToAlternet();
+            result.Location = e.Location;
             result.InContact = e.InContact;
             result.WheelDelta = e.WheelDelta;
             result.Pressure = e.Pressure;

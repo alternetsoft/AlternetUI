@@ -53,18 +53,21 @@ namespace Alternet.Drawing
         {
             get
             {
-                var result = canvas.TotalMatrix; // !!!
-
-                throw new NotImplementedException();
+                var m = canvas.TotalMatrix;
+                var result = (TransformMatrix)m;
+                return result;
             }
 
             set
             {
-                SKMatrix matrix = SKMatrix.CreateIdentity(); // !!!
+                SKMatrix matrix = (SKMatrix)value;
                 canvas.SetMatrix(matrix);
-
-                throw new NotImplementedException();
             }
+        }
+
+        public static SKBitmap ToSkia(Image image)
+        {
+            return ((MauiImageHandler)image.Handler).ToSkia();
         }
 
         public override SizeD GetTextExtent(
@@ -190,17 +193,8 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             using var paint = pen.ToSkia();
-            var skiaPoints = Convert(points);
+            var skiaPoints = points.ToSkia();
             canvas.DrawPoints(SKPointMode.Polygon, skiaPoints, paint);
-        }
-
-        public SKPoint[] Convert(PointD[] points)
-        {
-            var length = points.Length;
-            SKPoint[] result = new SKPoint[length];
-            for (int i = 0; i < length; i++)
-                result[i] = points[i].ToSkia();
-            return result;
         }
 
         /// <inheritdoc/>
@@ -208,7 +202,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             using var paint = pen.ToSkia();
-            canvas.DrawRect(rectangle.ToSkia(), paint);
+            canvas.DrawRect(rectangle, paint);
         }
 
         /// <inheritdoc/>
@@ -216,7 +210,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             using var paint = pen.ToSkia();
-            canvas.DrawLine(a.ToSkia(), b.ToSkia(), paint);
+            canvas.DrawLine(a, b, paint);
         }
 
         /// <inheritdoc/>
@@ -224,8 +218,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             using var paint = pen.ToSkia();
-            var skiaRect = rect.ToSkia();
-            SKRoundRect roundRect = new(skiaRect, (float)cornerRadius);
+            SKRoundRect roundRect = new(rect, (float)cornerRadius);
             canvas.DrawRoundRect(roundRect, paint);
         }
 
@@ -234,8 +227,7 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             using var paint = brush.ToSkia();
-            var skiaRect = rect.ToSkia();
-            SKRoundRect roundRect = new(skiaRect, (float)cornerRadius);
+            SKRoundRect roundRect = new(rect, (float)cornerRadius);
             canvas.DrawRoundRect(roundRect, paint);
         }
 
@@ -244,21 +236,23 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             using var paint = brush.ToSkia();
-            var skiaRect = rectangle.ToSkia();
-            canvas.DrawRect(skiaRect, paint);
+            canvas.DrawRect(rectangle, paint);
         }
 
         /// <inheritdoc/>
         public override void DrawImage(Image image, PointD origin, bool useMask = false)
         {
+            DebugImageAssert(image);
+            canvas.DrawBitmap(ToSkia(image), origin);
         }
 
         /// <inheritdoc/>
         public override void DrawBeziers(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            var skiaPoints = Convert(points);
+            var skiaPoints = points.ToSkia();
             using var paint = pen.ToSkia();
+            throw new NotImplementedException();
         }
     }
 }

@@ -15,39 +15,6 @@ namespace Alternet.UI.Extensions
 {
     public static class MauiExtensionsPrivate
     {
-        public static SKEncodedImageFormat? ToSKEncodedImageFormat(this BitmapType type)
-        {
-            switch (type)
-            {
-                default:
-                    return null;
-                case BitmapType.Bmp:
-                    return SKEncodedImageFormat.Bmp;
-                case BitmapType.Ico:
-                    return SKEncodedImageFormat.Ico;
-                case BitmapType.Gif:
-                    return SKEncodedImageFormat.Gif;
-                case BitmapType.Png:
-                    return SKEncodedImageFormat.Png;
-                case BitmapType.Jpeg:
-                    return SKEncodedImageFormat.Jpeg;
-                case BitmapType.Icon:
-                    return SKEncodedImageFormat.Ico;
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RectD ToAlternet(this SKRect value)
-        {
-            return new(value.Left, value.Top, value.Width, value.Height);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD ToAlternet(this SKPoint value)
-        {
-            return new(value.X, value.Y);
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Microsoft.Maui.Graphics.IFont ToMaui(this Alternet.Drawing.Font font)
         {
@@ -104,34 +71,6 @@ namespace Alternet.UI.Extensions
             return new(value.X, value.Y, value.Width, value.Height);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SKRect ToSkia(this RectD rect)
-        {
-            SKRect result = SKRect.Create((float)rect.Width, (float)rect.Height);
-            result.Offset((float)rect.X, (float)rect.Y);
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SKPoint ToSkia(this PointD point)
-        {
-            return new SKPoint((float)point.X, (float)point.Y);
-        }
-
-        public static SKStrokeJoin ToSkia(this LineJoin value)
-        {
-            switch (value)
-            {
-                case LineJoin.Miter:
-                default:
-                    return SKStrokeJoin.Miter;
-                case LineJoin.Bevel:
-                    return SKStrokeJoin.Bevel;
-                case LineJoin.Round:
-                    return SKStrokeJoin.Round;
-            }
-        }
-
         public static SKPaint ToSkia(this Pen pen)
         {
             SKPaint result = new();
@@ -149,20 +88,6 @@ namespace Alternet.UI.Extensions
             result.Color = brush.BrushColor.ToSkColor();
             result.Style = SKPaintStyle.Fill;
             return result;
-        }
-
-        public static SKStrokeCap ToSkia(this LineCap value)
-        {
-            switch (value)
-            {
-                case LineCap.Flat:
-                default:
-                    return SKStrokeCap.Butt;
-                case LineCap.Square:
-                    return SKStrokeCap.Square;
-                case LineCap.Round:
-                    return SKStrokeCap.Round;
-            }
         }
     }
 }

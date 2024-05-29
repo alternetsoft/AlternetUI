@@ -104,7 +104,7 @@ namespace Alternet.UI
 
             var dc = e.Surface.Canvas;
 
-            RectD dirtyRect = dc.LocalClipBounds.ToAlternet();
+            RectD dirtyRect = dc.LocalClipBounds;
 
             using SKPaint fillPaint = new();
             fillPaint.Color = Colors.LightGoldenrodYellow.ToSKColor();

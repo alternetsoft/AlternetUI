@@ -16,6 +16,11 @@ namespace Alternet.UI
     {
         private SKBitmap bitmap;
 
+        public MauiImageHandler(SKBitmap bitmap)
+        {
+            this.bitmap = bitmap;
+        }
+
         public MauiImageHandler()
         {
             bitmap = new();
@@ -133,7 +138,9 @@ namespace Alternet.UI
 
         public override IImageHandler GetSubBitmap(RectI rect)
         {
-            throw new NotImplementedException();
+            var resultBitmap = new SKBitmap();
+            bitmap.ExtractSubset(resultBitmap, rect);
+            return new MauiImageHandler(resultBitmap);
         }
 
         public override bool GrayScale()
@@ -145,6 +152,8 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public virtual SKBitmap ToSkia() => bitmap;
 
         public override bool LoadFromStream(Stream stream)
         {

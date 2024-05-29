@@ -5,10 +5,72 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
+using SkiaSharp;
+
 namespace Alternet.UI.Extensions
 {
     public static class ExtensionsPrivate
     {
+        public static SKPoint[] ToSkia(this PointD[] points)
+        {
+            var length = points.Length;
+            SKPoint[] result = new SKPoint[length];
+            for (int i = 0; i < length; i++)
+                result[i] = points[i];
+            return result;
+        }
+
+        public static SKStrokeJoin ToSkia(this LineJoin value)
+        {
+            switch (value)
+            {
+                case LineJoin.Miter:
+                default:
+                    return SKStrokeJoin.Miter;
+                case LineJoin.Bevel:
+                    return SKStrokeJoin.Bevel;
+                case LineJoin.Round:
+                    return SKStrokeJoin.Round;
+            }
+        }
+
+        public static SKStrokeCap ToSkia(this LineCap value)
+        {
+            switch (value)
+            {
+                case LineCap.Flat:
+                default:
+                    return SKStrokeCap.Butt;
+                case LineCap.Square:
+                    return SKStrokeCap.Square;
+                case LineCap.Round:
+                    return SKStrokeCap.Round;
+            }
+        }
+
+        public static SKEncodedImageFormat? ToSKEncodedImageFormat(this BitmapType type)
+        {
+            switch (type)
+            {
+                default:
+                    return null;
+                case BitmapType.Bmp:
+                    return SKEncodedImageFormat.Bmp;
+                case BitmapType.Ico:
+                    return SKEncodedImageFormat.Ico;
+                case BitmapType.Gif:
+                    return SKEncodedImageFormat.Gif;
+                case BitmapType.Png:
+                    return SKEncodedImageFormat.Png;
+                case BitmapType.Jpeg:
+                    return SKEncodedImageFormat.Jpeg;
+                case BitmapType.Icon:
+                    return SKEncodedImageFormat.Ico;
+            }
+        }
+
         /// <summary>
         /// Gets whether <see cref="DockStyle"/> equals <see cref="DockStyle.Top"/> or
         /// <see cref="DockStyle.Bottom"/>.

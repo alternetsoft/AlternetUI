@@ -7,6 +7,8 @@ using Alternet.UI;
 using Alternet.UI.Localization;
 using Alternet.UI.Markup;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /*
@@ -244,6 +246,14 @@ namespace Alternet.Drawing
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RectI((PointI, SizeI) d) => new(d.Item1, d.Item2);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator SKRectI(RectI rect)
+        {
+            SKRectI result = SKRectI.Create(rect.Width, rect.Height);
+            result.Offset(rect.X, rect.Y);
+            return result;
+        }
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Rectangle'/> with the coordinates of the

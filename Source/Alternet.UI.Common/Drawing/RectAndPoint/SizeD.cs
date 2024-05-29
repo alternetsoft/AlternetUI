@@ -44,18 +44,18 @@ namespace Alternet.Drawing
         public static readonly SizeD One = new(1d, 1d);
 
         /// <summary>
-        /// Gets <see cref="SizeD"/> with width and height equal to <see cref="double.PositiveInfinity"/>.
+        /// Gets <see cref="SizeD"/> with width and height equal to <see cref="Coord.PositiveInfinity"/>.
         /// </summary>
-        public static readonly SizeD PositiveInfinity = new(double.PositiveInfinity, double.PositiveInfinity);
+        public static readonly SizeD PositiveInfinity = new(Coord.PositiveInfinity, Coord.PositiveInfinity);
 
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to
-        /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>).
+        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>).
         /// </summary>
-        public static readonly SizeD NaN = new(double.NaN, double.NaN);
+        public static readonly SizeD NaN = new(Coord.NaN, Coord.NaN);
 
-        private double width; // Do not rename (binary serialization)
-        private double height; // Do not rename (binary serialization)
+        private Coord width; // Do not rename (binary serialization)
+        private Coord height; // Do not rename (binary serialization)
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
@@ -98,7 +98,7 @@ namespace Alternet.Drawing
         /// from the specified dimensions.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD(double width, double height)
+        public SizeD(Coord width, Coord height)
         {
             this.width = width;
             this.height = height;
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="widthAndHeight"><see cref="Width"/> and <see cref="Height"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD(double widthAndHeight)
+        public SizeD(Coord widthAndHeight)
         {
             this.width = widthAndHeight;
             this.height = widthAndHeight;
@@ -130,7 +130,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.SizeD'/>.
         /// </summary>
-        public double Width
+        public Coord Width
         {
             readonly get => width;
             set => width = value;
@@ -139,7 +139,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Represents the vertical component of this <see cref='Drawing.SizeD'/>.
         /// </summary>
-        public double Height
+        public Coord Height
         {
             readonly get => height;
             set => height = value;
@@ -169,12 +169,12 @@ namespace Alternet.Drawing
             new(RectD.CoordToInt(p.Width), RectD.CoordToInt(p.Height));
 
         /// <summary>
-        /// Implicit operator convertion from tuple with two <see cref="double"/> values
+        /// Implicit operator convertion from tuple with two <see cref="Coord"/> values
         /// to <see cref="SizeD"/>.
         /// </summary>
         /// <param name="d">New size value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator SizeD((double, double) d) => new(d.Item1, d.Item2);
+        public static implicit operator SizeD((Coord, Coord) d) => new(d.Item1, d.Item2);
 
         /// <summary>
         /// Converts the specified <see cref="Drawing.Size"/> to a
@@ -194,7 +194,7 @@ namespace Alternet.Drawing
         /// Initializes <see cref="Drawing.SizeD"/> with equal width and hegiht.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator SizeD(double widthAndHeight) => new(widthAndHeight);
+        public static implicit operator SizeD(Coord widthAndHeight) => new(widthAndHeight);
 
         /// <summary>
         /// Initializes <see cref="Drawing.SizeD"/> with equal width and hegiht.
@@ -216,47 +216,46 @@ namespace Alternet.Drawing
         public static SizeD operator -(SizeD sz1, SizeD sz2) => Subtract(sz1, sz2);
 
         /// <summary>
-        /// Multiplies <see cref="SizeD"/> by a <see cref="double"/> producing
-        /// <see cref="SizeD"/>.
+        /// Multiplies <see cref="SizeD"/> by a value producing <see cref="SizeD"/>.
         /// </summary>
-        /// <param name="left">Multiplier of type <see cref="double"/>.</param>
+        /// <param name="left">Multiplier.</param>
         /// <param name="right">Multiplicand of type <see cref="SizeD"/>.</param>
         /// <returns>Product of type <see cref="SizeD"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD operator *(double left, SizeD right) =>
+        public static SizeD operator *(Coord left, SizeD right) =>
             Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="SizeD"/> by a <see cref="double"/> producing
+        /// Multiplies <see cref="SizeD"/> by a value producing
         /// <see cref="SizeD"/>.
         /// </summary>
         /// <param name="left">Multiplicand of type <see cref="SizeD"/>.</param>
-        /// <param name="right">Multiplier of type <see cref="double"/>.</param>
+        /// <param name="right">Multiplier.</param>
         /// <returns>Product of type <see cref="SizeD"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD operator *(SizeD left, double right) =>
+        public static SizeD operator *(SizeD left, Coord right) =>
             Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="SizeD"/> by a <see cref="double"/> producing
+        /// Divides <see cref="SizeD"/> by a value producing
         /// <see cref="SizeD"/>.
         /// </summary>
         /// <param name="left">Dividend of type <see cref="SizeD"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="SizeD"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD operator /(SizeD left, double right)
+        public static SizeD operator /(SizeD left, Coord right)
             => new(left.width / right, left.height / right);
 
         /// <summary>
-        /// Tests whether two <see cref='Drawing.SizeD'/> objects are identical.
+        /// Tests whether two <see cref='SizeD'/> objects are identical.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(SizeD sz1, SizeD sz2) =>
             sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
-        /// Tests whether two <see cref='Drawing.SizeD'/> objects are different.
+        /// Tests whether two <see cref='SizeD'/> objects are different.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(SizeD sz1, SizeD sz2) => !(sz1 == sz2);
@@ -285,8 +284,8 @@ namespace Alternet.Drawing
             else
             {
                 value = new SizeD(
-                    Convert.ToDouble(firstToken, formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                    Convert.ToSingle(firstToken, formatProvider),
+                    Convert.ToSingle(th.NextTokenRequired(), formatProvider));
             }
 
             // There should be no more tokens in this string.
@@ -324,20 +323,20 @@ namespace Alternet.Drawing
 
         /// <summary>Determines whether the specified value is (NaN, NaN).</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNaN(SizeD d) => double.IsNaN(d.width) && double.IsNaN(d.height);
+        public static bool IsNaN(SizeD d) => Coord.IsNaN(d.width) && Coord.IsNaN(d.height);
 
         /// <summary>Determines whether the specified value has width or height
-        /// equal to <see cref="double.NaN"/>.</summary>
+        /// equal to <see cref="Coord.NaN"/>.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AnyIsNaN(SizeD d) => double.IsNaN(d.width) || double.IsNaN(d.height);
+        public static bool AnyIsNaN(SizeD d) => Coord.IsNaN(d.width) || Coord.IsNaN(d.height);
 
         /// <summary>
         /// Returns an array filled with widths of the specified <see cref="SizeD"/> values.
         /// </summary>
         /// <param name="sizes">Array of <see cref="SizeD"/> values.</param>
-        public static double[] GetWidths(SizeD[] sizes)
+        public static Coord[] GetWidths(SizeD[] sizes)
         {
-            double[] result = new double[sizes.Length];
+            Coord[] result = new Coord[sizes.Length];
             for(int i = 0; i < sizes.Length; i++)
                 result[i] = sizes[i].Width;
             return result;
@@ -347,9 +346,9 @@ namespace Alternet.Drawing
         /// Returns an array filled with heights of the specified <see cref="SizeD"/> values.
         /// </summary>
         /// <param name="sizes">Array of <see cref="SizeD"/> values.</param>
-        public static double[] GetHeights(SizeD[] sizes)
+        public static Coord[] GetHeights(SizeD[] sizes)
         {
-            double[] result = new double[sizes.Length];
+            Coord[] result = new Coord[sizes.Length];
             for (int i = 0; i < sizes.Length; i++)
                 result[i] = sizes[i].Height;
             return result;
@@ -380,7 +379,7 @@ namespace Alternet.Drawing
         /// or <see cref="Height"/>.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly double GetSize(bool vert)
+        public readonly Coord GetSize(bool vert)
         {
             if (vert)
                 return height;
@@ -397,7 +396,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="value">New size value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetSize(bool vert, double value)
+        public void SetSize(bool vert, Coord value)
         {
             if (vert)
                 height = value;
@@ -478,7 +477,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="SizeD"/> value with ceiling of the <see cref="Width"/> and
-        /// <see cref="Height"/>. Uses <see cref="Math.Ceiling(double)"/> on values.
+        /// <see cref="Height"/>. Uses <see cref="Math.Ceiling"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -513,9 +512,9 @@ namespace Alternet.Drawing
         public override readonly string ToString()
         {
             string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
-            double[] values = { width, height };
+            Coord[] values = { width, height };
 
-            return StringUtils.ToString<double>(names, values);
+            return StringUtils.ToString<Coord>(names, values);
         }
 
         /// <summary>
@@ -555,14 +554,14 @@ namespace Alternet.Drawing
             => new(RectD.CoordToFloat(width), RectD.CoordToFloat(height));
 
         /// <summary>
-        /// Multiplies <see cref="SizeD"/> by a <see cref="double"/>
+        /// Multiplies <see cref="SizeD"/> by a value
         /// producing <see cref="SizeD"/>.
         /// </summary>
         /// <param name="size">Multiplicand of type <see cref="SizeD"/>.</param>
-        /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
+        /// <param name="multiplier">Multiplier.</param>
         /// <returns>Product of type SizeF.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SizeD Multiply(SizeD size, double multiplier) =>
+        private static SizeD Multiply(SizeD size, Coord multiplier) =>
             new(size.width * multiplier, size.height * multiplier);
     }
 }
