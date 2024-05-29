@@ -24,7 +24,7 @@ namespace Alternet.Drawing
 
         public override IFontHandler CreateDefaultFontHandler()
         {
-            return new MauiFontHandler(Microsoft.Maui.Graphics.Font.Default);
+            return new SkiaFontHandler(Microsoft.Maui.Graphics.Font.Default);
         }
 
         public override IFontHandler CreateDefaultMonoFontHandler()

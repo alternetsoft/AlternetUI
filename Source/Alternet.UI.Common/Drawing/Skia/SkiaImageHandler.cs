@@ -12,7 +12,7 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class SkiaImageHandler : PlessImageHandler, IImageHandler
+    public class SkiaImageHandler : PlessImageHandler, IImageHandler
     {
         private SKBitmap bitmap;
 

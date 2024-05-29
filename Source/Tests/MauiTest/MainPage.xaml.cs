@@ -20,7 +20,7 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        var testForm = new DrawingSample.MainWindow();
+        /*var testForm = new DrawingSample.MainWindow();*/
 
         skiaContainer.BackgroundColor = Colors.Cornsilk;
         skiaContainer.Margin = new(5);

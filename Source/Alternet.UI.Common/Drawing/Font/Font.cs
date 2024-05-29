@@ -8,6 +8,8 @@ using Alternet.UI;
 using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -20,6 +22,7 @@ namespace Alternet.Drawing
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
 
+        private SKFont? skiaFont;
         private FontStyle? style;
         private int? hashCode;
         private bool? gdiVerticalFont;
@@ -407,6 +410,15 @@ namespace Alternet.Drawing
                 else
                     return SizeInPoints;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="SKFont"/>.
+        /// </summary>
+        public virtual SKFont? SkiaFont
+        {
+            get => skiaFont;
+            set => skiaFont = value;
         }
 
         /// <summary>

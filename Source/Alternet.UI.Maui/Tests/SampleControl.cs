@@ -26,6 +26,13 @@ namespace Alternet.UI
                 Color.Black,
                 Color.LightGreen);
 
+            dc.DrawText(
+                $"; Hello text: {font.SizeInPoints}",
+                (150, 0),
+                font,
+                Color.Black,
+                Color.LightGreen);
+
             font = font.Scaled(2);
 
             dc.DrawText(

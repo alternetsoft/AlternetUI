@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -202,10 +204,10 @@ namespace Alternet.Drawing
         public byte A => unchecked((byte)(Value >> ARGBAlphaShift));
 
         /// <summary>
-        /// Gets or sets reference to the saved native color.
+        /// Gets or sets reference to the saved <see cref="SKColor"/>.
         /// </summary>
         [Browsable(false)]
-        public object? NativeObject { get; set; }
+        public SKColor? SkiaColor { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if color is opaque (<see cref="A"/> is 255).

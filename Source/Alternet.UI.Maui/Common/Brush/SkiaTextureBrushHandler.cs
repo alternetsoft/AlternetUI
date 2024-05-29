@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    public class MauiSolidBrushHandler : PlessSolidBrushHandler
+    public class SkiaTextureBrushHandler : PlessTextureBrushHandler
     {
-        public MauiSolidBrushHandler(SolidBrush brush)
+        public SkiaTextureBrushHandler(TextureBrush brush)
             : base(brush)
         {
         }

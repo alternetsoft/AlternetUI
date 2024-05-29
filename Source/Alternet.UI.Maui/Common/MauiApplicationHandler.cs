@@ -56,31 +56,31 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IBrushHandler CreateTransparentBrushHandler(Brush brush)
         {
-            return new MauiTransparentBrushHandler(brush);
+            return new SkiaTransparentBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
         {
-            return new MauiSolidBrushHandler(brush);
+            return new SkiaSolidBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
         {
-            return new MauiHatchBrushHandler(brush);
+            return new SkiaHatchBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush)
         {
-            return new MauiLinearGradientBrushHandler(brush);
+            return new SkiaLinearGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush)
         {
-            return new MauiRadialGradientBrushHandler(brush);
+            return new SkiaRadialGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
         {
-            return new MauiTextureBrushHandler(brush);
+            return new SkiaTextureBrushHandler(brush);
         }
 
         /// <inheritdoc/>
@@ -256,12 +256,12 @@ namespace Alternet.UI
 
         public IMenuItemHandler CreateMenuItemHandler(MenuItem control)
         {
-            throw new NotImplementedException();
+            return new PlessMenuItemHandler();
         }
 
         public IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
         {
-            throw new NotImplementedException();
+            return new PlessContextMenuHandler();
         }
 
         public IMainMenuHandler CreateMainMenuHandler(MainMenu control)

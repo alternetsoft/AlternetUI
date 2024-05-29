@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    public class MauiLinearGradientBrushHandler : PlessLinearGradientBrushHandler
+    public class SkiaTransparentBrushHandler : PlessBrushHandler
     {
-        public MauiLinearGradientBrushHandler(LinearGradientBrush brush)
+        public SkiaTransparentBrushHandler(Brush brush)
             : base(brush)
         {
         }

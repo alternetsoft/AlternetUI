@@ -9,7 +9,6 @@ using Alternet.UI;
 using Alternet.UI.Extensions;
 
 using SkiaSharp;
-using SkiaSharp.Views.Maui;
 
 namespace Alternet.Drawing
 {
@@ -73,11 +72,32 @@ namespace Alternet.Drawing
         public override SizeD GetTextExtent(string text, Font font)
         {
             var skiaFont = font.ToSkFont();
+
+            var typeFace = skiaFont.Typeface;
+
             using SKPaint paint = new(skiaFont);
             SKRect textBounds = default;
+
+            /*
+            var count = typeFace.GlyphCount;
+
+            int[] codepoints = new int[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                codepoints[i] = i;
+            }
+
+            ushort[] glyphs = typeFace.GetGlyphs(codepoints);
+
+            ///GetGlyph(codepoint) != 0;
+                var glyph = typeFace.GetGlyph(i);
+            skiaFont.MeasureText()
+            */
+
             paint.MeasureText(text, ref textBounds);
             var width = textBounds.Width;
-            var height = textBounds.Height;
+            var height = Math.Max(textBounds.Height, 0);
 
             if (font.Style.HasFlag(FontStyle.Underline))
             {
@@ -130,9 +150,9 @@ namespace Alternet.Drawing
             SKRect textBounds = default;
             paint.MeasureText(text, ref textBounds);
             var width = textBounds.Width;
-            var height = textBounds.Height;
+            var height = Math.Max(textBounds.Height, 0);
 
-            Debug.WriteLine($"SizeInPoints: {font.SizeInPoints}, SizeInPixels: {font.SizeInPixels}, Height: {textBounds.Height}");
+            /*Debug.WriteLine($"SizeInPoints: {font.SizeInPoints}, SizeInPixels: {font.SizeInPixels}, Height: {textBounds.Height}");*/
 
             SKRect textRect = SKRect.Create(width, height);
             textRect.Offset(locationX, locationY);
