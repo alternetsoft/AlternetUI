@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public static class DoubleUtil
+    public static class DoubleUtils
     {
         // Const values come from sdk\inc\crt\double.h
         internal const double DBL_EPSILON = 2.2204460492503131e-016; /* smallest such that 1.0+DBL_EPSILON != 1.0 */
@@ -53,8 +53,8 @@ namespace Alternet.UI
         /// <returns>Whether or not the two Vector instances are equal</returns>
         public static bool AreClose(Vector vector1, Vector vector2)
         {
-            return DoubleUtil.AreClose(vector1.X, vector2.X) &&
-                   DoubleUtil.AreClose(vector1.Y, vector2.Y);
+            return DoubleUtils.AreClose(vector1.X, vector2.X) &&
+                   DoubleUtils.AreClose(vector1.Y, vector2.Y);
         }
 
         /// <summary>
@@ -206,8 +206,8 @@ namespace Alternet.UI
         /// <returns>Whether or not the two Size instances are equal</returns>
         public static bool AreClose(SizeD size1, SizeD size2)
         {
-            return DoubleUtil.AreClose(size1.Width, size2.Width) &&
-                   DoubleUtil.AreClose(size1.Height, size2.Height);
+            return DoubleUtils.AreClose(size1.Width, size2.Width) &&
+                   DoubleUtils.AreClose(size1.Height, size2.Height);
         }
 
         /// <summary>

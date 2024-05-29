@@ -5,6 +5,9 @@
 
 namespace Alternet::UI
 {
+
+#define Coord double
+
 #pragma pack(push, 1)
 
 	extern "C"
@@ -16,7 +19,7 @@ namespace Alternet::UI
 
 		struct SizeD_C
 		{
-			double Width, Height;
+			Coord Width, Height;
 		};
 
 		struct PointI_C
@@ -26,7 +29,7 @@ namespace Alternet::UI
 
 		struct PointD_C
 		{
-			double X, Y;
+			Coord X, Y;
 		};
 
 		struct RectI_C
@@ -36,12 +39,12 @@ namespace Alternet::UI
 
 		struct RectD_C
 		{
-			double X, Y, Width, Height;
+			Coord X, Y, Width, Height;
 		};
 
 		struct Thickness_C
 		{
-			double Left, Top, Right, Bottom;
+			Coord Left, Top, Right, Bottom;
 		};
 
 		struct Color_C
@@ -107,7 +110,7 @@ namespace Alternet::UI
 			Height = 0;
 		}
 
-		Size(double width, double height)
+		Size(Coord width, Coord height)
 		{
 			Width = width;
 			Height = height;
@@ -204,7 +207,7 @@ namespace Alternet::UI
 			Y = 0;
 		}
 
-		Point(double x, double y)
+		Point(Coord x, Coord y)
 		{
 			X = x;
 			Y = y;
@@ -316,7 +319,7 @@ namespace Alternet::UI
 			Height = 0;
 		}
 
-		Rect(double x, double y, double width, double height)
+		Rect(Coord x, Coord y, Coord width, Coord height)
 		{
 			X = x;
 			Y = y;
@@ -386,7 +389,7 @@ namespace Alternet::UI
 			Bottom = 0;
 		}
 
-		Thickness(double left, double top, double right, double bottom)
+		Thickness(Coord left, Coord top, Coord right, Coord bottom)
 		{
 			Left = left;
 			Top = top;
@@ -637,7 +640,7 @@ namespace Alternet::UI
 		}
 	*/
 
-	inline double GetDPIScaleFactor(wxWindow* window)
+	inline Coord GetDPIScaleFactor(wxWindow* window)
 	{
 #if defined(__WXMSW__)
 		if (window == nullptr)
@@ -649,22 +652,22 @@ namespace Alternet::UI
 #endif
 	}
 
-	inline int fromDip(double value, wxWindow* window)
+	inline int fromDip(Coord value, wxWindow* window)
 	{
 		return wxRound(value * GetDPIScaleFactor(window));
 	}
 
-	inline double fromDipF(double value, wxWindow* window)
+	inline Coord fromDipF(Coord value, wxWindow* window)
 	{
 		return value * GetDPIScaleFactor(window);
 	}
 
-	inline double toDipF(double value, wxWindow* window)
+	inline Coord toDipF(Coord value, wxWindow* window)
 	{
 		return value / GetDPIScaleFactor(window);
 	}
 
-	inline double toDip(int value, wxWindow* window)
+	inline Coord toDip(int value, wxWindow* window)
 	{
 		return value / GetDPIScaleFactor(window);
 	}

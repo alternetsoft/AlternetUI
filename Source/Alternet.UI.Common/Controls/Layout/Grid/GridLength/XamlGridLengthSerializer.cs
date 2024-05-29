@@ -104,7 +104,7 @@ namespace Alternet.UI
             else
             {
                 Debug.Assert(unit == GridUnitType.Pixel
-                            || DoubleUtil.AreClose(unitFactor, 1.0));
+                            || DoubleUtils.AreClose(unitFactor, 1.0));
 
 //                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
                 var valueString = goodString.Substring(0, strLen - strLenUnit);

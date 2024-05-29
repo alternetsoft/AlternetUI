@@ -39,6 +39,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private Display? display;
         private int handlerTextChanging;
         private int rowIndex;
         private int columnIndex;

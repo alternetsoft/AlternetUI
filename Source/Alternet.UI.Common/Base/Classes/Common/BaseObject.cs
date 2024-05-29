@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,14 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObject : IBaseObject
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SafeDispose<T>(ref T? disposable) where T: IDisposable
+        {
+            var t = disposable;
+            disposable = default!;
+            t?.Dispose();
+        }
+
         /// <summary>
         /// Calls the specified function inside try catch block.
         /// </summary>
@@ -45,6 +54,7 @@ namespace Alternet.UI
         /// If exception is raised inside <paramref name="func"/>,
         /// exception is logged and <c>false</c> is returned.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool InsideTryCatch(Func<bool> func)
         {
             try
@@ -66,11 +76,13 @@ namespace Alternet.UI
         /// <summary>
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public object NotImplemented() => throw new NotImplementedException();
 
         /// <summary>
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T NotImplemented<T>() => throw new NotImplementedException();
 
         /// <summary>

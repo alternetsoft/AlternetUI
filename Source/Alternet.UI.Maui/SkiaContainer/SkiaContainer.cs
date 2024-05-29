@@ -95,6 +95,9 @@ namespace Alternet.UI
         {
             base.OnPaintSurface(e);
 
+            if (control is null)
+                return;
+
             var dc = e.Surface.Canvas;
 
             if (graphics is null)
@@ -106,7 +109,11 @@ namespace Alternet.UI
 
             RectD dirtyRect = dc.LocalClipBounds;
 
-            control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
+            var bounds = Bounds;
+
+            control.Bounds = (0, 0, bounds.Width, bounds.Height);
+
+            control.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
         }
 
         protected override void OnTouch(SKTouchEventArgs e)

@@ -889,7 +889,7 @@ namespace Alternet.UI
         {
             for (int i = 0; i < minSizes.Length; i++)
             {
-                if (DoubleUtil.GreaterThanOrClose(minSizes[i], 0))
+                if (DoubleUtils.GreaterThanOrClose(minSizes[i], 0))
                 {
                     if (isRows)
                     {
@@ -952,7 +952,7 @@ namespace Alternet.UI
 
                 MeasureCell(i, forceInfinityV);
 
-                hasDesiredSizeUChanged |= !DoubleUtil.AreClose(oldWidth, childPreferredSize.Width);
+                hasDesiredSizeUChanged |= !DoubleUtils.AreClose(oldWidth, childPreferredSize.Width);
 
                 if (!ignoreDesiredSizeU)
                 {
@@ -1316,10 +1316,10 @@ namespace Alternet.UI
 
                             //  sanity check: totalRemainingSize and sizeToDistribute must be real positive numbers
                             Debug.Assert(!double.IsInfinity(totalRemainingSize)
-                                        && !DoubleUtil.IsNaN(totalRemainingSize)
+                                        && !DoubleUtils.IsNaN(totalRemainingSize)
                                         && totalRemainingSize > 0
                                         && !double.IsInfinity(sizeToDistribute)
-                                        && !DoubleUtil.IsNaN(sizeToDistribute)
+                                        && !DoubleUtils.IsNaN(sizeToDistribute)
                                         && sizeToDistribute > 0);
 
                             for (int i = 0; i < count; ++i)
@@ -1814,13 +1814,13 @@ namespace Alternet.UI
             double newValue;
 
             // If DPI == 1, don't use DPI-aware rounding.
-            if (!DoubleUtil.AreClose(dpiScale, 1.0))
+            if (!DoubleUtils.AreClose(dpiScale, 1.0))
             {
                 newValue = (double)Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
-                if (DoubleUtil.IsNaN(newValue) ||
+                if (DoubleUtils.IsNaN(newValue) ||
                     double.IsInfinity(newValue) ||
-                    DoubleUtil.AreClose(newValue, double.MaxValue))
+                    DoubleUtils.AreClose(newValue, double.MaxValue))
                 {
                     newValue = value;
                 }

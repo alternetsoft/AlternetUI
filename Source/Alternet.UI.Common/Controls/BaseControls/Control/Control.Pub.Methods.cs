@@ -991,7 +991,7 @@ namespace Alternet.UI
         /// Gets <see cref="Display"/> where this control is shown.
         /// </summary>
         /// <returns></returns>
-        public virtual Display GetDisplay() => new(this);
+        public virtual Display GetDisplay() => display ??= new(this);
 
         /// <summary>
         /// Changes size of the control to fit the size of its content.

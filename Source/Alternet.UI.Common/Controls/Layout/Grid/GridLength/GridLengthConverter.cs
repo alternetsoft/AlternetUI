@@ -109,7 +109,7 @@ namespace Alternet.UI
 
                     value = Convert.ToSingle(source, cultureInfo);
 
-                    if (DoubleUtil.IsNaN(value))
+                    if (DoubleUtils.IsNaN(value))
                     {
                         // this allows for conversion from Width / Height = "Auto" 
                         value = 1.0f;
@@ -205,7 +205,7 @@ namespace Alternet.UI
                 //  in this case drop value part and print only "Star"
                 case (GridUnitType.Star):
                     return (
-                        DoubleUtil.IsOne(gl.Value)
+                        DoubleUtils.IsOne(gl.Value)
                         ? "*"
                         : Convert.ToString(gl.Value, cultureInfo) + "*");
 
@@ -235,9 +235,8 @@ namespace Alternet.UI
         /// </remarks>
         static internal GridLength FromString(string s, CultureInfo cultureInfo)
         {
-            GridUnitType unit;
             XamlGridLengthSerializer.FromString(s, cultureInfo,
-                out double value, out unit);
+                out double value, out GridUnitType unit);
 
             return (new GridLength(value, unit));
         }
