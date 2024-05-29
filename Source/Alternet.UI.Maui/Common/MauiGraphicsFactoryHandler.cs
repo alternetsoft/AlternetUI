@@ -100,47 +100,47 @@ namespace Alternet.UI
 
         public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
         {
-            return new MauiImageHandler(imageSet, size);
+            return new SkiaImageHandler(imageSet, size);
         }
 
         public IImageHandler CreateImageHandler()
         {
-            return new MauiImageHandler();
+            return new SkiaImageHandler();
         }
 
         public IImageHandler CreateImageHandler(GenericImage genericImage, int depth = -1)
         {
-            return new MauiImageHandler(genericImage, depth);
+            return new SkiaImageHandler(genericImage, depth);
         }
 
         public IImageHandler CreateImageHandler(int width, int height, Graphics dc)
         {
-            return new MauiImageHandler(width, height, dc);
+            return new SkiaImageHandler(width, height, dc);
         }
 
         public IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)
         {
-            return new MauiImageHandler(imageSet, control);
+            return new SkiaImageHandler(imageSet, control);
         }
 
         public IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
         {
-            return new MauiImageHandler(genericImage, dc);
+            return new SkiaImageHandler(genericImage, dc);
         }
 
         public IImageHandler CreateImageHandler(Image image)
         {
-            return new MauiImageHandler(image);
+            return new SkiaImageHandler(image);
         }
 
         public IImageHandler CreateImageHandler(Image original, SizeI newSize)
         {
-            return new MauiImageHandler(original, newSize);
+            return new SkiaImageHandler(original, newSize);
         }
 
         public IImageHandler CreateImageHandler(SizeI size, int depth = 32)
         {
-            return new MauiImageHandler(size, depth);
+            return new SkiaImageHandler(size, depth);
         }
 
         public IImageHandler CreateImageHandlerFromScreen()

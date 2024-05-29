@@ -12,56 +12,56 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class MauiImageHandler : PlessImageHandler, IImageHandler
+    internal class SkiaImageHandler : PlessImageHandler, IImageHandler
     {
         private SKBitmap bitmap;
 
-        public MauiImageHandler(SKBitmap bitmap)
+        public SkiaImageHandler(SKBitmap bitmap)
         {
             this.bitmap = bitmap;
         }
 
-        public MauiImageHandler()
+        public SkiaImageHandler()
         {
             bitmap = new();
         }
 
-        public MauiImageHandler(ImageSet imageSet, SizeI size)
+        public SkiaImageHandler(ImageSet imageSet, SizeI size)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(GenericImage genericImage, int depth = -1)
+        public SkiaImageHandler(GenericImage genericImage, int depth = -1)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(int width, int height, Graphics dc)
+        public SkiaImageHandler(int width, int height, Graphics dc)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(ImageSet imageSet, IControl control)
+        public SkiaImageHandler(ImageSet imageSet, IControl control)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(GenericImage genericImage, Graphics dc)
+        public SkiaImageHandler(GenericImage genericImage, Graphics dc)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(Image image)
+        public SkiaImageHandler(Image image)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(Image original, SizeI newSize)
+        public SkiaImageHandler(Image original, SizeI newSize)
         {
             throw new NotImplementedException();
         }
 
-        public MauiImageHandler(SizeI size, int depth = 32)
+        public SkiaImageHandler(SizeI size, int depth = 32)
         {
             throw new NotImplementedException();
         }
@@ -140,7 +140,7 @@ namespace Alternet.UI
         {
             var resultBitmap = new SKBitmap();
             bitmap.ExtractSubset(resultBitmap, rect);
-            return new MauiImageHandler(resultBitmap);
+            return new SkiaImageHandler(resultBitmap);
         }
 
         public override bool GrayScale()

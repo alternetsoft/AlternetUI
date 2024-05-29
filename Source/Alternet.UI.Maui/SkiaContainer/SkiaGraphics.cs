@@ -67,14 +67,14 @@ namespace Alternet.Drawing
 
         public static SKBitmap ToSkia(Image image)
         {
-            return ((MauiImageHandler)image.Handler).ToSkia();
+            return ((SkiaImageHandler)image.Handler).ToSkia();
         }
 
         public override SizeD GetTextExtent(
             string text,
             Font font,
-            out double? descent,
-            out double? externalLeading,
+            out Coord? descent,
+            out Coord? externalLeading,
             IControl? control = null)
         {
             descent = null;
@@ -123,7 +123,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void SetPixel(double x, double y, Color color)
+        public override void SetPixel(Coord x, Coord y, Color color)
         {
             using SKPaint paint = new();
             paint.Color = color.ToSkColor();
@@ -214,7 +214,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        public override void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius)
         {
             DebugPenAssert(pen);
             using var paint = pen.ToSkia();
@@ -223,7 +223,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        public override void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
         {
             DebugBrushAssert(brush);
             using var paint = brush.ToSkia();
