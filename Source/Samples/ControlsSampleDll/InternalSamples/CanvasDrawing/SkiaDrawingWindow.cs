@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
+using Alternet.Drawing;
+
+using SkiaSharp;
 
 namespace ControlsSample
 {
@@ -15,9 +19,17 @@ namespace ControlsSample
 
         internal static Image background1 = new Bitmap(backgroundUrl1);
 
-        private readonly UserControl control = new();
+        private readonly SkiaSampleControl control = new();
 
-        private readonly Button button = new("Button 1")
+        private readonly SplittedPanel panel = new()
+        {
+            LeftPanelWidth = Display.Primary.BoundsDip.Width / 2,
+            RightPanelWidth = 250,
+            TopVisible = false,
+            BottomVisible = false,
+        };
+
+        private readonly Button button = new("Update Skia image")
         {
             Visible = true,
         };
@@ -27,17 +39,42 @@ namespace ControlsSample
             Visible = true,
         };
 
+        private readonly PropertyGrid propGrid = new()
+        {
+            HasBorder = false,
+        };
+
+        private readonly PictureBox pictureBox = new()
+        {
+            ImageStretch = false,
+        };
+
+        static SkiaDrawingWindow()
+        {
+            PropertyGrid.RegisterCollectionEditors();
+        }
+
         public SkiaDrawingWindow()
         {
             Layout = LayoutStyle.Vertical;
 
+            panel.Parent = this;
+            panel.VerticalAlignment = VerticalAlignment.Fill;
+
+            propGrid.Parent = panel.RightPanel;
+            pictureBox.Parent = panel.LeftPanel;
+            propGrid.SetProps(control, true);
+
+            propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
+                | PropertyGridApplyFlags.ReloadAfterSetValue;
+            propGrid.Features = PropertyGridFeature.QuestionCharInNullable;
+
             Title = "SkiaSharp drawing demo";
 
-            control.VerticalAlignment = VerticalAlignment.Fill;
-            control.Paint += Control_Paint;
-            control.Parent = this;
+            control.Parent = panel.FillPanel;
 
-            Size = (600, 600);
+            Size = (900, 700);
+            IsMaximized = true;
 
             var buttonPanel = AddHorizontalStackPanel();
 
@@ -55,15 +92,28 @@ namespace ControlsSample
             {
             };           
 
-            button.ClickAction = () =>
-            {
-            };
+            button.ClickAction = UpdateSkiaImage;
+
+            propGrid.SuggestedInitDefaults();
         }
 
-        private void Control_Paint(object? sender, PaintEventArgs e)
+        private void UpdateSkiaImage()
         {
-            var brush = background1.AsBrush;
-            e.Graphics.FillRectangle(brush, e.ClipRectangle);
+            RectD rect = (0, 0, control.Width, control.Height);
+
+            SKBitmap bitmap = new((int)rect.Width, (int)rect.Height);
+
+            SKCanvas canvas = new(bitmap);
+
+            canvas.DrawRect(rect, Brushes.White);
+
+            SkiaGraphics graphics = new(canvas);
+
+            PaintEventArgs e = new(graphics, rect);
+
+            control.RaisePaint(e);
+
+            pictureBox.Image = (Image)bitmap;
         }
-    }
+   }
 }
