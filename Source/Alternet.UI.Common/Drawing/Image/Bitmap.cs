@@ -48,10 +48,9 @@ namespace Alternet.Drawing
         /// <param name="depth">Specifies the depth of the bitmap.
         /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
-        /// If this parameter is omitted
-        /// (= -1), the display depth of the screen is used.</param>
+        /// If this parameter is -1, the display depth of the screen is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(int width, int height, int depth = -1)
+        public Bitmap(int width, int height, int depth = 32)
             : this(new SizeI(width, height), depth)
         {
         }
@@ -76,10 +75,9 @@ namespace Alternet.Drawing
         /// <param name="depth">Specifies the depth of the bitmap.
         /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
-        /// If this parameter is omitted
-        /// (= -1), the display depth of the screen is used.</param>
+        /// If this parameter is -1, the display depth of the screen is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(SizeI size, int depth = -1)
+        public Bitmap(SizeI size, int depth = 32)
             : base(GraphicsFactory.Handler.CreateImageHandler(size, depth))
         {
         }
@@ -177,10 +175,9 @@ namespace Alternet.Drawing
         /// <param name="depth">Specifies the depth of the bitmap.
         /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
-        /// If this parameter is omitted
-        /// (= -1), the display depth of the screen is used.</param>
+        /// If this parameter is -1, the display depth of the screen is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(GenericImage genericImage, int depth = -1)
+        public Bitmap(GenericImage genericImage, int depth = 32)
             : base(GraphicsFactory.Handler.CreateImageHandler(genericImage, depth))
         {
         }
