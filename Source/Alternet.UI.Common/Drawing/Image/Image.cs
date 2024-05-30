@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -472,6 +474,17 @@ namespace Alternet.Drawing
             var height = ToolBarUtils.GetDefaultImageSize(deviceDpi.Height);
             var result = Image.FromSvgUrl(url, width, height, color);
             return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="Image"/> from <see cref="SKBitmap"/>.
+        /// </summary>
+        /// <param name="bitmap"><see cref="SKBitmap"/> with image data.</param>
+        /// <returns></returns>
+        public static Image FromSkia(SKBitmap bitmap)
+        {
+            var genericImage = GenericImage.FromSkia(bitmap);
+            return (Image)genericImage;
         }
 
         /// <summary>
