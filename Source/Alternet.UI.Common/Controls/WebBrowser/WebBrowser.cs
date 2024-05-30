@@ -238,7 +238,7 @@ namespace Alternet.UI
         /// </summary>
         public static IWebBrowserFactoryHandler Factory
         {
-            get => factory ??= BaseApplication.Handler.CreateWebBrowserFactoryHandler();
+            get => factory ??= ControlFactory.Handler.CreateWebBrowserFactoryHandler();
             set => factory = value;
         }
 
@@ -2233,7 +2233,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateWebBrowserHandler(this);
+            return Factory.CreateWebBrowserHandler(this);
         }
 
         /// <summary>

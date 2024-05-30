@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateLinkLabelHandler(this);
+            return ControlFactory.Handler.CreateLinkLabelHandler(this);
         }
 
         /// <summary>

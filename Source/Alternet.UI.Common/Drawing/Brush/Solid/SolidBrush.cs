@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         public override BrushType BrushType => BrushType.Solid;
 
         /// <inheritdoc/>
-        public override Color BrushColor => this.Color;
+        public override Color AsColor => this.Color;
 
         /// <summary>
         /// Same as <see cref="Color"/> property implemented as method.
@@ -84,9 +84,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IBrushHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateSolidBrushHandler(this);
+            return GraphicsFactory.Handler.CreateSolidBrushHandler(this);
         }
 
         /// <inheritdoc/>

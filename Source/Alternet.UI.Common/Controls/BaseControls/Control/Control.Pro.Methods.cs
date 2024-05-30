@@ -734,7 +734,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateControlHandler(this);
+            return ControlFactory.Handler.CreateControlHandler(this);
         }
 
         protected void SetVisibleValue(bool value) => visible = value;

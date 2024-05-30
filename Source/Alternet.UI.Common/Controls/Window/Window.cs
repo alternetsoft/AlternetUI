@@ -264,7 +264,7 @@ namespace Alternet.UI
         /// is pressed. Set <c>true</c> to this property in order to handle 'Esc' key
         /// so no sound will be played.
         /// </remarks>
-        public bool SupressEsc { get; set; }
+        public virtual bool SupressEsc { get; set; }
 
         /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.
@@ -565,6 +565,40 @@ namespace Alternet.UI
             get
             {
                 return Handler.OwnedWindows;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether this window is maximized.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsMaximized
+        {
+            get => State == WindowState.Maximized;
+
+            set
+            {
+                if(value)
+                    State = WindowState.Maximized;
+                else
+                    State = WindowState.Normal;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether this window is minimized.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsMinimized
+        {
+            get => State == WindowState.Minimized;
+
+            set
+            {
+                if (value)
+                    State = WindowState.Minimized;
+                else
+                    State = WindowState.Normal;
             }
         }
 
@@ -898,7 +932,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
-            => BaseApplication.Handler.CreateWindowHandler(this);
+            => ControlFactory.Handler.CreateWindowHandler(this);
 
         protected void ApplyStartLocationOnce(Control? owner)
         {

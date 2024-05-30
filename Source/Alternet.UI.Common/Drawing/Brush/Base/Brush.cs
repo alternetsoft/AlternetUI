@@ -4,6 +4,8 @@ using System.ComponentModel;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -16,7 +18,7 @@ namespace Alternet.Drawing
     /// <see cref="HatchBrush" />.
     /// </remarks>
     [TypeConverter(typeof(BrushConverter))]
-    public class Brush : HandledObject<object>, IEquatable<Brush>
+    public class Brush : HandledObject<IBrushHandler>, IEquatable<Brush>
     {
         /// <summary>
         /// Gets transparent brush.
@@ -26,6 +28,7 @@ namespace Alternet.Drawing
         private static Brush? defaultBrush;
 
         private Pen? asPen;
+        private SKPaint? paint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
@@ -53,6 +56,40 @@ namespace Alternet.Drawing
         public static Brush Default => defaultBrush ??= Brushes.Black;
 
         /// <summary>
+        /// Gets or sets <see cref="SKPaint"/> for this brush.
+        /// </summary>
+        public virtual SKPaint SkiaPaint
+        {
+            get
+            {
+                paint ??= CreateSkiaPaint();
+                return paint;
+            }
+
+            set
+            {
+                paint = value;                
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override bool UpdateRequired
+        {
+            get => base.UpdateRequired;
+
+            set
+            {
+                if (UpdateRequired == value)
+                    return;
+                base.UpdateRequired = value;
+                if (value)
+                {
+                    SafeDispose(ref paint);
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
         /// </summary>
         /// <remarks>
@@ -63,7 +100,7 @@ namespace Alternet.Drawing
             get
             {
                 if (asPen == null)
-                    asPen = new Pen(BrushColor);
+                    asPen = new Pen(AsColor);
                 return asPen;
             }
         }
@@ -76,7 +113,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets color of the brush.
         /// </summary>
-        public virtual Color BrushColor => Color.Black;
+        public virtual Color AsColor => Color.Black;
+
+        /// <summary>
+        /// Converts the specified <see cref='Pen'/> to a <see cref='SKPaint'/>.
+        /// </summary>
+        public static implicit operator SKPaint(Brush value)
+        {
+            value ??= Brush.Default;
+            return value.SkiaPaint;
+        }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -138,9 +184,21 @@ namespace Alternet.Drawing
         public override int GetHashCode() => base.GetHashCode();
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IBrushHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateTransparentBrushHandler(this);
+            return GraphicsFactory.Handler.CreateTransparentBrushHandler(this);
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKPaint"/> for this brush.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SKPaint CreateSkiaPaint()
+        {
+            SKPaint result = new();
+            result.Color = AsColor;
+            result.Style = SKPaintStyle.Fill;
+            return result;
         }
 
         /// <inheritdoc/>

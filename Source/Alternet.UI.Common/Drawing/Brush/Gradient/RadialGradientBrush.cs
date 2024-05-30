@@ -152,7 +152,7 @@ namespace Alternet.Drawing
         public override BrushType BrushType => BrushType.RadialGradient;
 
         /// <inheritdoc/>
-        public override Color BrushColor => GradientStops.Length > 0 ?
+        public override Color AsColor => GradientStops.Length > 0 ?
             GradientStops[0].Color : Color.Black;
 
         /// <inheritdoc/>
@@ -203,9 +203,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IBrushHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateRadialGradientBrushHandler(this);
+            return GraphicsFactory.Handler.CreateRadialGradientBrushHandler(this);
         }
 
         /// <inheritdoc/>

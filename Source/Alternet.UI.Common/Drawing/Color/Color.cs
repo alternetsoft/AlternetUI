@@ -108,7 +108,7 @@ namespace Alternet.Drawing
 
         private SolidBrush? asBrush;
         private Pen? asPen;
-
+        private SKColor? skiaColor;
         internal Color()
         {
         }
@@ -202,12 +202,6 @@ namespace Alternet.Drawing
         /// </remarks>
         [Browsable(false)]
         public byte A => unchecked((byte)(Value >> ARGBAlphaShift));
-
-        /// <summary>
-        /// Gets or sets reference to the saved <see cref="SKColor"/>.
-        /// </summary>
-        [Browsable(false)]
-        public SKColor? SkiaColor { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if color is opaque (<see cref="A"/> is 255).
@@ -424,6 +418,31 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(RGBValue rgb) =>
             Color.FromRgb(rgb.R, rgb.G, rgb.B);
+
+        /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='SKColor'/>.
+        /// </summary>
+        public static implicit operator SKColor(Color color)
+        {
+            if (color is null || !color.IsOk)
+                return SKColor.Empty;
+            if (color.skiaColor is not null)
+                return color.skiaColor.Value;
+
+            color.GetArgbValues(out var a, out var r, out var g, out var b);
+            var skColor = new SKColor(r, g, b, a);
+            color.skiaColor = skColor;
+            return skColor;
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='SKColor'/> to a <see cref='Color'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Color(SKColor color)
+        {
+            return FromArgb(color.Alpha, color.Red, color.Green, color.Blue);
+        }
 
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='Brush'/>.

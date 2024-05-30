@@ -1408,7 +1408,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateVListBoxHandler(this);
+            return ControlFactory.Handler.CreateVListBoxHandler(this);
         }
 
         /// <summary>

@@ -342,7 +342,7 @@ namespace Alternet.UI
                 return;
 
             brushType = Brush.BrushType;
-            color = Brush.BrushColor;
+            color = Brush.AsColor;
 
             if (GradientStops.Length > 0)
 #pragma warning disable

@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateColorDialogHandler(this);
+            return DialogFactory.Handler.CreateColorDialogHandler(this);
         }
     }
 }

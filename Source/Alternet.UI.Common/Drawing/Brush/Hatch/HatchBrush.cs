@@ -53,7 +53,7 @@ namespace Alternet.Drawing
         public override BrushType BrushType => BrushType.Hatch;
 
         /// <inheritdoc/>
-        public override Color BrushColor => this.Color;
+        public override Color AsColor => this.Color;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -81,9 +81,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IBrushHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateHatchBrushHandler(this);
+            return GraphicsFactory.Handler.CreateHatchBrushHandler(this);
         }
 
         /// <inheritdoc/>

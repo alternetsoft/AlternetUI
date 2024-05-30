@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// </summary>
         public static string GetFileDialogFilterForImageOpen(bool addAllFiles = false)
         {
-            return GetFileDialogFilter(Image.GetExtensionsForLoad(), addAllFiles);
+            return GetFileDialogFilter(Image.ExtensionsForLoad, addAllFiles);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// </summary>
         public static string GetFileDialogFilterForImageSave()
         {
-            return GetFileDialogFilter(Image.GetExtensionsForSave());
+            return GetFileDialogFilter(Image.ExtensionsForSave);
         }
 
         /// <summary>

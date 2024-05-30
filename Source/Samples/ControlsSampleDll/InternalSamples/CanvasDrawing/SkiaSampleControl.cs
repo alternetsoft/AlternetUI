@@ -8,16 +8,21 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public class SampleControl : UserControl
+    public class SkiaSampleControl : UserControl
     {
+        public SkiaSampleControl()
+        {
+            Font = Control.DefaultFont
+                .Scaled(2).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             var dc = e.Graphics;
 
-            dc.DrawRectangle(Color.LightGoldenrodYellow.AsPen, e.ClipRectangle);
+            dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, e.ClipRectangle);
 
-            var font = Font.Default
-                .Scaled(3).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
+            var font = Font ?? Control.DefaultFont;
 
             dc.DrawText(
                 $"hello text: {font.SizeInPoints}",

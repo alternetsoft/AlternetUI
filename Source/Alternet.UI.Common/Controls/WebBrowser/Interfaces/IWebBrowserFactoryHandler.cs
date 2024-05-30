@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public interface IWebBrowserFactoryHandler
+    public interface IWebBrowserFactoryHandler : IDisposable
     {
+        IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control);
+
         void ThrowError(int errorId);
 
         void SetDefaultUserAgent(string value);

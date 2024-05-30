@@ -165,7 +165,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateFontDialogHandler(this);
+            return DialogFactory.Handler.CreateFontDialogHandler(this);
         }
     }
 }

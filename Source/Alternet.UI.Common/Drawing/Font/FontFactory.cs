@@ -14,7 +14,9 @@ namespace Alternet.Drawing
 
         public static IFontFactoryHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateFontFactoryHandler();
+            get => handler ??= GraphicsFactory.Handler.CreateFontFactoryHandler();
+
+            set => handler = value;
         }
     }
 }

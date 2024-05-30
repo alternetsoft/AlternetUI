@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class WebBrowserFactoryHandler : IWebBrowserFactoryHandler
+    internal class WebBrowserFactoryHandler : DisposableObject, IWebBrowserFactoryHandler
     {
         public void SetDefaultUserAgent(string value)
         {
@@ -95,6 +95,11 @@ namespace Alternet.UI
         public void SetDefaultPage(string url)
         {
             WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
+        }
+
+        public IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)
+        {
+            return new WebBrowserHandler();
         }
     }
 }

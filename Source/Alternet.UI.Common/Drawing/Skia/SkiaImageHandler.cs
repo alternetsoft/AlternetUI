@@ -31,7 +31,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public SkiaImageHandler(GenericImage genericImage, int depth = -1)
+        public SkiaImageHandler(GenericImage genericImage, int depth = 32)
         {
             throw new NotImplementedException();
         }

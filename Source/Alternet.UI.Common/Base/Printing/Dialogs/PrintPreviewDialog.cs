@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreatePrintPreviewDialogHandler();
+            return PrintingFactory.Handler.CreatePrintPreviewDialogHandler();
         }
     }
 }

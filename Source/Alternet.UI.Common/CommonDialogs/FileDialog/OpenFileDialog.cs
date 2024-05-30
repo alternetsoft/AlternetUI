@@ -81,7 +81,7 @@ namespace Alternet.UI
 
         protected override IDialogHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateOpenFileDialogHandler(this);
+            return DialogFactory.Handler.CreateOpenFileDialogHandler(this);
         }
     }
 }

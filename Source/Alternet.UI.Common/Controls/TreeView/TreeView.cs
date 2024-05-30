@@ -1010,7 +1010,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateTreeViewHandler(this);
+            return ControlFactory.Handler.CreateTreeViewHandler(this);
         }
 
         /// <summary>

@@ -1,6 +1,9 @@
 using System;
 
 using Alternet.UI;
+using Alternet.UI.Extensions;
+
+using SkiaSharp;
 
 namespace Alternet.Drawing
 {
@@ -11,7 +14,7 @@ namespace Alternet.Drawing
     /// A <see cref="Pen"/> draws a line of specified width and style.
     /// Use the <see cref="DashStyle"/> property to draw several varieties of dashed lines.
     /// </remarks>
-    public class Pen : HandledObject<object>, IEquatable<Pen>
+    public class Pen : HandledObject<IPenHandler>, IEquatable<Pen>
     {
         private static Pen? defaultPen;
 
@@ -20,6 +23,7 @@ namespace Alternet.Drawing
         private LineCap lineCap;
         private LineJoin lineJoin;
         private double width;
+        private SKPaint? paint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pen"/> class with the specified
@@ -90,7 +94,7 @@ namespace Alternet.Drawing
         /// <param name="brush">A <see cref="Brush"/> that indicates the color of this
         /// <see cref="Pen"/>.</param>
         public Pen(Brush brush)
-            : this(brush.BrushColor)
+            : this(brush.AsColor)
         {
         }
 
@@ -130,7 +134,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value is <see cref="Color.Black"/>.
         /// </remarks>
-        public Color Color
+        public virtual Color Color
         {
             get => color;
 
@@ -144,9 +148,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets this pen as <see cref="SKPaint"/>.
+        /// </summary>
+        /// <returns></returns>
+        public virtual SKPaint SkiaPaint
+        {
+            get
+            {
+                if (paint is null)
+                {
+                    paint = new();
+                    paint.Color = Color;
+                    paint.StrokeCap = LineCap.ToSkia();
+                    paint.StrokeJoin = LineJoin.ToSkia();
+                    paint.StrokeWidth = (float)Width;
+                    paint.IsStroke = true;
+                }
+
+                return paint;
+            }
+
+            set
+            {
+                paint = value;
+            }
+        }
+
+        /// <summary>
         /// Creates <see cref="SolidBrush"/> with <see cref="Color"/> of this pen.
         /// </summary>
-        public SolidBrush AsBrush => new(Color);
+        public virtual SolidBrush AsBrush => new(Color);
 
         /// <summary>
         /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
@@ -160,7 +191,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value is <see cref="DashStyle.Solid"/>.
         /// </remarks>
-        public DashStyle DashStyle
+        public virtual DashStyle DashStyle
         {
             get => dashStyle;
 
@@ -183,7 +214,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value is <see cref="LineCap.Flat"/>.
         /// </remarks>
-        public LineCap LineCap
+        public virtual LineCap LineCap
         {
             get => lineCap;
 
@@ -206,7 +237,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value is <see cref="LineJoin.Miter"/>.
         /// </remarks>
-        public LineJoin LineJoin
+        public virtual LineJoin LineJoin
         {
             get => lineJoin;
 
@@ -232,7 +263,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value is 1.
         /// </remarks>
-        public double Width
+        public virtual double Width
         {
             get => width;
 
@@ -243,6 +274,32 @@ namespace Alternet.Drawing
                 width = value;
                 UpdateRequired = true;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override bool UpdateRequired
+        {
+            get => base.UpdateRequired;
+
+            set
+            {
+                if (UpdateRequired == value)
+                    return;
+                base.UpdateRequired = value;
+                if(value)
+                {
+                    SafeDispose(ref paint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='Pen'/> to a <see cref='SKPaint'/>.
+        /// </summary>
+        public static implicit operator SKPaint(Pen value)
+        {
+            value ??= Pen.Default;
+            return value.SkiaPaint;
         }
 
         /// <summary>
@@ -316,9 +373,9 @@ namespace Alternet.Drawing
         /// Creates native pen.
         /// </summary>
         /// <returns></returns>
-        protected override object CreateHandler()
+        protected override IPenHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreatePenHandler(this);
+            return GraphicsFactory.Handler.CreatePenHandler(this);
         }
 
         /// <summary>
@@ -326,7 +383,7 @@ namespace Alternet.Drawing
         /// </summary>
         protected override void UpdateHandler()
         {
-            ((IPenHandler)Handler).Update(this);
+            Handler.Update(this);
         }
     }
 }

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+
+using SkiaSharp;
 
 namespace Alternet.Drawing
 {
@@ -35,6 +38,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="RGBValue"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGBValue()
         {
         }
@@ -42,6 +46,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="RGBValue"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RGBValue(byte r, byte g, byte b)
         {
             R = r;
@@ -63,20 +68,32 @@ namespace Alternet.Drawing
             new(d.Item1, d.Item2, d.Item3);
 
         /// <summary>
+        /// Converts the specified <see cref='SKColor'/> to a <see cref='Color'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator RGBValue(SKColor color)
+        {
+            return new(color.Red, color.Green, color.Blue);
+        }
+
+        /// <summary>
         /// Implicit operator convertion from <see cref="HSVValue"/> to <see cref="RGBValue"/>.
         /// </summary>
         /// <param name="d">New <see cref="RGBValue"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGBValue(HSVValue d) => Color.HSVtoRGB(d);
 
         /// <summary>
         /// Implicit operator convertion from <see cref="RGBValue"/> to <see cref="HSVValue"/>.
         /// </summary>
         /// <param name="d">New <see cref="HSVValue"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator HSVValue(RGBValue d) => Color.RGBtoHSV(d);
 
         /// <summary>
         /// Tests whether two <see cref='RGBValue'/> objects are different.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(RGBValue left, RGBValue right) => !(left == right);
 
         /// <summary>
@@ -98,6 +115,7 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(RGBValue other) => this == other;
 
         /// <summary>

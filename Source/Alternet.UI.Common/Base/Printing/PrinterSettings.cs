@@ -12,18 +12,18 @@ namespace Alternet.Drawing.Printing
     /// through <see cref="PrintDocument.PrinterSettings"/>
     /// property to modify printer settings.
     /// </remarks>
-    public class PrinterSettings : IDisposable
+    public class PrinterSettings : HandledObject<IPrinterSettingsHandler>
     {
-        private bool isDisposed;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PrinterSettings"/> class.
         /// </summary>
         public PrinterSettings()
-            : this(BaseApplication.Handler.CreatePrinterSettingsHandler())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrinterSettings"/> class.
+        /// </summary>
         public PrinterSettings(IPrinterSettingsHandler nativePrinterSettings)
         {
             Handler = nativePrinterSettings;
@@ -347,38 +347,10 @@ namespace Alternet.Drawing.Printing
             }
         }
 
-        internal IPrinterSettingsHandler Handler
+        /// <inheritdoc/>
+        protected override IPrinterSettingsHandler CreateHandler()
         {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Releases all resources used by the object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and optionally releases the
-        /// managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    Handler.Dispose();
-                    Handler = null!;
-                }
-
-                isDisposed = true;
-            }
+            return PrintingFactory.Handler.CreatePrinterSettingsHandler();
         }
     }
 }

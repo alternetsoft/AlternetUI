@@ -16,15 +16,12 @@ namespace Alternet.Drawing.Printing
     /// argument included in the
     /// <see cref="PrintPageEventArgs"/>.
     /// </remarks>
-    public class PageSettings : IDisposable
+    public class PageSettings : HandledObject<IPageSettingsHandler>
     {
-        private bool isDisposed;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PageSettings"/> class.
         /// </summary>
         public PageSettings()
-            : this(BaseApplication.Handler.CreatePageSettingsHandler())
         {
         }
 
@@ -41,7 +38,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <value><see langword="true"/> if the page should be printed in color; otherwise,
         /// <see langword="false"/>.</value>
-        public bool Color
+        public virtual bool Color
         {
             get
             {
@@ -60,7 +57,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <value><see langword="true"/> if the page should be printed in landscape orientation;
         /// otherwise, <see langword="false"/>.</value>
-        public bool Landscape
+        public virtual bool Landscape
         {
             get
             {
@@ -78,7 +75,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <value>A <see cref="Thickness"/> value that represents the margins,
         /// in millimeters, for the page.</value>
-        public Thickness Margins
+        public virtual Thickness Margins
         {
             get
             {
@@ -95,7 +92,7 @@ namespace Alternet.Drawing.Printing
         /// Gets or sets the paper size for the page.
         /// </summary>
         /// <value>A <see cref="PaperSize"/> that represents the size of the paper.</value>
-        public PaperSize PaperSize
+        public virtual PaperSize PaperSize
         {
             get
             {
@@ -135,7 +132,7 @@ namespace Alternet.Drawing.Printing
         /// the <see cref="PrinterResolutionKind"/>
         /// values.
         /// </remarks>
-        public PrinterResolution PrinterResolution
+        public virtual PrinterResolution PrinterResolution
         {
             get
             {
@@ -151,34 +148,10 @@ namespace Alternet.Drawing.Printing
             }
         }
 
-        internal IPageSettingsHandler Handler { get; private set; }
-
-        /// <summary>
-        /// Releases all resources used by the object.
-        /// </summary>
-        public void Dispose()
+        /// <inheritdoc/>
+        protected override IPageSettingsHandler CreateHandler()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and optionally releases
-        /// the managed resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    Handler.Dispose();
-                    Handler = null!;
-                }
-
-                isDisposed = true;
-            }
+            return PrintingFactory.Handler.CreatePageSettingsHandler();
         }
     }
 }

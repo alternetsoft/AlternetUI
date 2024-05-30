@@ -411,7 +411,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateMenuItemHandler(this);
+            return ControlFactory.Handler.CreateMenuItemHandler(this);
         }
 
         private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)

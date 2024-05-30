@@ -296,7 +296,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateButtonHandler(this);
+            return ControlFactory.Handler.CreateButtonHandler(this);
         }
     }
 }

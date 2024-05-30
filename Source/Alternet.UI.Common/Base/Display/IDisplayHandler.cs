@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public interface IDisplayHandler
+    public interface IDisplayHandler : IDisposable
     {
         public string GetName();
 
