@@ -16,6 +16,37 @@ namespace Alternet.Drawing
     [TypeConverter(typeof(ImageConverter))]
     public class Image : HandledObject<IImageHandler>
     {
+        private static readonly string[] DefaultExtensionsForLoad =
+        {
+            ".bmp",
+            ".png",
+            ".jpeg",
+            ".jpg",
+            ".pcx",
+            ".pnm",
+            ".tiff",
+            ".tga",
+            ".xpm",
+            ".gif",
+            ".ico",
+            ".cur",
+            ".iff",
+            ".ani",
+        };
+
+        private static readonly string[] DefaultExtensionsForSave =
+        {
+            ".bmp",
+            ".png",
+            ".jpeg",
+            ".jpg",
+            ".pcx",
+            ".pnm",
+            ".tiff",
+            ".tga",
+            ".xpm",
+        };
+
         /// <summary>
         /// Gets or sets default quality used when images are saved and quality parameter is omitted.
         /// </summary>
@@ -26,6 +57,9 @@ namespace Alternet.Drawing
         /// grayscale method.
         /// </summary>
         public static EventHandler<BaseEventArgs<Image>>? GrayScale;
+
+        private static IEnumerable<string>? extensionsForLoad;
+        private static IEnumerable<string>? extensionsForSave;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
@@ -42,6 +76,42 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         public static BitmapType DefaultBitmapType => GraphicsFactory.Handler.GetDefaultBitmapType();
+
+        /// <summary>
+        /// Gets or sets list of extensions (including ".") which can be used to filter out
+        /// supported image formats when using
+        /// <see cref="OpenFileDialog"/>.
+        /// </summary>
+        public static IEnumerable<string> ExtensionsForLoad
+        {
+            get
+            {
+                return extensionsForLoad ?? DefaultExtensionsForLoad;
+            }
+
+            set
+            {
+                extensionsForLoad = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets list of extensions (including ".") which can be used to filter out
+        /// supported image formats when using
+        /// <see cref="SaveFileDialog"/>.
+        /// </summary>
+        public static IEnumerable<string> ExtensionsForSave
+        {
+            get
+            {
+                return extensionsForSave ?? DefaultExtensionsForSave;
+            }
+
+            set
+            {
+                extensionsForSave = value;
+            }
+        }
 
         /// <summary>
         /// Converts this object to <see cref="GenericImage"/>.
@@ -377,58 +447,6 @@ namespace Alternet.Drawing
             var result = new Image(nativeImage);
             return result;
         }
-
-        /// <summary>
-        /// Gets list of extensions (including ".") which can be used to filter out
-        /// supported image formats when using
-        /// <see cref="OpenFileDialog"/> and <see cref="SaveFileDialog"/>.
-        /// </summary>
-        public static IEnumerable<string> GetExtensionsForLoadSave()
-        {
-            string[] ext =
-            {
-                ".bmp",
-                ".png",
-                ".jpeg",
-                ".jpg",
-                ".pcx",
-                ".pnm",
-                ".tiff",
-                ".tga",
-                ".xpm",
-            };
-
-            return ext;
-        }
-
-        /// <summary>
-        /// Gets list of extensions (including ".") which can be used to filter out
-        /// supported image formats when using
-        /// <see cref="OpenFileDialog"/>.
-        /// </summary>
-        public static IEnumerable<string> GetExtensionsForLoad()
-        {
-            string[] ext =
-            {
-                ".gif",
-                ".ico",
-                ".cur",
-                ".iff",
-                ".ani",
-            };
-
-            var result = new List<string>();
-            result.AddRange(GetExtensionsForLoadSave());
-            result.AddRange(ext);
-            return result;
-        }
-
-        /// <summary>
-        /// Gets list of extensions (including ".") which can be used to filter out
-        /// supported image formats when using
-        /// <see cref="SaveFileDialog"/>.
-        /// </summary>
-        public static IEnumerable<string> GetExtensionsForSave() => GetExtensionsForLoadSave();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class

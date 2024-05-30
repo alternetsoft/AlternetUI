@@ -37,7 +37,7 @@ namespace PaintSample
             var saveAllFormats = false;
 
 
-            var extensions = Image.GetExtensionsForSave();
+            var extensions = Image.ExtensionsForSave;
 
             if(saveAllFormats)
                 foreach (var ext in extensions)
