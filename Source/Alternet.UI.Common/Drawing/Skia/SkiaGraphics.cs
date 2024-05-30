@@ -16,6 +16,11 @@ namespace Alternet.Drawing
     {
         private SKCanvas canvas;
 
+        public SkiaGraphics(SKBitmap bitmap)
+        {
+            canvas = new SKCanvas(bitmap);
+        }
+
         public SkiaGraphics(SKCanvas canvas)
         {
             this.canvas = canvas;
@@ -125,7 +130,7 @@ namespace Alternet.Drawing
         public override void SetPixel(Coord x, Coord y, Color color)
         {
             using SKPaint paint = new();
-            paint.Color = color.ToSkColor();
+            paint.Color = color;
             canvas.DrawPoint((float)x, (float)y, paint);
         }
 
@@ -143,7 +148,7 @@ namespace Alternet.Drawing
             var skiaFont = font.ToSkFont();
 
             using SKPaint paint = new(skiaFont);
-            paint.Color = foreColor.ToSkColor();
+            paint.Color = foreColor;
             paint.Style = SKPaintStyle.Fill;
             paint.TextAlign = SKTextAlign.Left;
 
@@ -159,9 +164,8 @@ namespace Alternet.Drawing
 
             if (backColor.IsOk)
             {
-                var skiaBackColor = backColor.ToSkColor();
                 using SKPaint fillPaint = new();
-                fillPaint.Color = skiaBackColor;
+                fillPaint.Color = backColor;
                 fillPaint.Style = SKPaintStyle.Fill;
 
                 canvas.DrawRect(textRect, fillPaint);
