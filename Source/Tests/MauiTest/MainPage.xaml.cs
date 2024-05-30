@@ -10,7 +10,7 @@ namespace SpinPaint;
 public partial class MainPage : ContentPage
 {
     private readonly Alternet.UI.SkiaContainer skiaContainer = new();
-    private readonly Alternet.UI.SampleControl skiaSample = new();
+    private readonly Alternet.UI.SkiaSampleControl skiaSample = new();
     private readonly Button button = new();
 
     static MainPage()

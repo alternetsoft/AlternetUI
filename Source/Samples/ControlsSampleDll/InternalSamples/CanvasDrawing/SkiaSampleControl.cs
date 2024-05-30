@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public class SampleControl : UserControl
+    public class SkiaSampleControl : UserControl
     {
         protected override void OnPaint(PaintEventArgs e)
         {

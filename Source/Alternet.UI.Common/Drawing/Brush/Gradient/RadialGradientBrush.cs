@@ -203,7 +203,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override object CreateHandler()
+        protected override IBrushHandler CreateHandler()
         {
             return BaseApplication.Handler.CreateRadialGradientBrushHandler(this);
         }

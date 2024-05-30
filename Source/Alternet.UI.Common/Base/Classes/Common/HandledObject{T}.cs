@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// and other graphics objects.
     /// </summary>
     public abstract class HandledObject<T> : DisposableObject
-        where T : class
+        where T : class, IDisposable
     {
         private bool immutable;
         private T? handler;
@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// Gets whether this object is immutable (properties are readonly).
         /// </summary>
         [Browsable(false)]
-        public bool Immutable
+        public virtual bool Immutable
         {
             get => immutable;
             protected set => immutable = value;
@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// Gets whether handler was created.
         /// </summary>
         [Browsable(false)]
-        public bool IsHandlerCreated => handler is not null;
+        public virtual bool IsHandlerCreated => handler is not null;
 
         /// <summary>
         /// Gets handler.
@@ -90,13 +90,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether handler update is required.
         /// </summary>
-        protected bool UpdateRequired { get; set; }
+        protected virtual bool UpdateRequired { get; set; }
 
         /// <summary>
         /// Checks whether object is readonly
         /// </summary>
         /// <exception cref="InvalidOperationException">Raised if object is readonly.</exception>
-        protected void CheckReadOnly()
+        protected virtual void CheckReadOnly()
         {
             if (IsReadOnly)
             {
@@ -121,8 +121,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            (handler as IDisposable)?.Dispose();
-            handler = null;
+            SafeDispose(ref handler);
         }
     }
 }

@@ -413,12 +413,33 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets <see cref="SKFont"/>.
+        /// Gets or sets <see cref="SKFont"/> for this font.
         /// </summary>
-        public virtual SKFont? SkiaFont
+        public virtual SKFont SkiaFont
         {
-            get => skiaFont;
-            set => skiaFont = value;
+            get
+            {
+                if (skiaFont is not null)
+                    return skiaFont;
+
+                SKFontStyleWeight skiaWeight = (SKFontStyleWeight)Weight;
+                SKFontStyleSlant skiaSlant = IsItalic ?
+                    SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
+
+                var typeFace = SKTypeface.FromFamilyName(
+                    Name,
+                    skiaWeight,
+                    SKFontStyleWidth.Normal,
+                    skiaSlant);
+
+                skiaFont = new(typeFace, (float)SizeInPixels);
+                return skiaFont;
+            }
+
+            set
+            {
+                skiaFont = value;
+            }
         }
 
         /// <summary>
@@ -639,6 +660,16 @@ namespace Alternet.Drawing
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
         internal FontEncoding Encoding => Handler.GetEncoding();
+
+        /// <summary>
+        /// Converts the specified <see cref='Font'/> to a <see cref='SKFont'/>.
+        /// </summary>
+        public static implicit operator SKFont(Font font)
+        {
+            font ??= Font.Default;
+
+            return font.SkiaFont;
+        }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.

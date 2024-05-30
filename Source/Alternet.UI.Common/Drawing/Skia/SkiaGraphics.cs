@@ -76,7 +76,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
-            var skiaFont = font.ToSkFont();
+            SKFont skiaFont = font;
 
             var typeFace = skiaFont.Typeface;
 
@@ -145,7 +145,7 @@ namespace Alternet.Drawing
             var locationX = (float)location.X;
             var locationY = (float)location.Y;
 
-            var skiaFont = font.ToSkFont();
+            SKFont skiaFont = font;
 
             using SKPaint paint = new(skiaFont);
             paint.Color = foreColor;
@@ -195,51 +195,45 @@ namespace Alternet.Drawing
         public override void DrawPolygon(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            using var paint = pen.ToSkia();
             var skiaPoints = points.ToSkia();
-            canvas.DrawPoints(SKPointMode.Polygon, skiaPoints, paint);
+            canvas.DrawPoints(SKPointMode.Polygon, skiaPoints, pen);
         }
 
         /// <inheritdoc/>
         public override void DrawRectangle(Pen pen, RectD rectangle)
         {
             DebugPenAssert(pen);
-            using var paint = pen.ToSkia();
-            canvas.DrawRect(rectangle, paint);
+            canvas.DrawRect(rectangle, pen);
         }
 
         /// <inheritdoc/>
         public override void DrawLine(Pen pen, PointD a, PointD b)
         {
             DebugPenAssert(pen);
-            using var paint = pen.ToSkia();
-            canvas.DrawLine(a, b, paint);
+            canvas.DrawLine(a, b, pen);
         }
 
         /// <inheritdoc/>
         public override void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius)
         {
             DebugPenAssert(pen);
-            using var paint = pen.ToSkia();
             SKRoundRect roundRect = new(rect, (float)cornerRadius);
-            canvas.DrawRoundRect(roundRect, paint);
+            canvas.DrawRoundRect(roundRect, pen);
         }
 
         /// <inheritdoc/>
         public override void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
         {
             DebugBrushAssert(brush);
-            using var paint = brush.ToSkia();
             SKRoundRect roundRect = new(rect, (float)cornerRadius);
-            canvas.DrawRoundRect(roundRect, paint);
+            canvas.DrawRoundRect(roundRect, brush);
         }
 
         /// <inheritdoc/>
         public override void FillRectangle(Brush brush, RectD rectangle)
         {
             DebugBrushAssert(brush);
-            using var paint = brush.ToSkia();
-            canvas.DrawRect(rectangle, paint);
+            canvas.DrawRect(rectangle, brush);
         }
 
         /// <inheritdoc/>
@@ -254,7 +248,6 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             var skiaPoints = points.ToSkia();
-            using var paint = pen.ToSkia();
             throw new NotImplementedException();
         }
     }
