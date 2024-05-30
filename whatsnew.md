@@ -1,3 +1,11 @@
+# 0.9.603 (2024 May 30)
+
+- Control: TextChanged event.
+- LogListBox: Fixed item repaint if LogReplace.
+- Image: Save methods now have optional quality parameter (but currently they are used only in maui port).
+- Added some SkiaSharp related features. 
+- Alternet.UI.Port namespace is used in all cs files in Port sub-folder.
+
 # 0.9.602 (2024 May 26)
 
 - TransformMatrix reimplemented on c#.
@@ -31,6 +39,8 @@ We plan to support at least three platforms: WxWidgets (Window, Linux, MacOs), M
 - Added ContainerControl - base class for all container controls.
 - Renamed GenericToolbar to ToolBar. Old toolbar worked only with WxWidgets, the new one is crossplatform.
 - Speedup of property handling in controls: ComboBox, NumericUpDown, Slider, DateTimePicker, TextBox. 
+
+---
 
 # 0.9.527 (2024 April 4)
 
