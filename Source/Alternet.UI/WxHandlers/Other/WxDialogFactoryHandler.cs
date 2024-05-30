@@ -12,6 +12,43 @@ namespace Alternet.UI
     {
         internal const string DialogCancelGuid = "5DB20A10B5974CD4885CFCF346AF0F81";
 
+        /// <inheritdoc/>
+        public IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog)
+        {
+            return new UI.Native.FileDialog()
+            {
+                Mode = Native.FileDialogMode.Open,
+            };
+        }
+
+        /// <inheritdoc/>
+        public ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
+        {
+            return new UI.Native.FileDialog()
+            {
+                Mode = Native.FileDialogMode.Save,
+            };
+        }
+
+        /// <inheritdoc/>
+        public IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
+        {
+            return new UI.Native.ColorDialog();
+        }
+
+        /// <inheritdoc/>
+        public ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
+            SelectDirectoryDialog dialog)
+        {
+            return new UI.Native.SelectDirectoryDialog();
+        }
+
+        /// <inheritdoc/>
+        public IFontDialogHandler CreateFontDialogHandler(FontDialog dialog)
+        {
+            return new UI.Native.FontDialog();
+        }
+
         public DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = info.Owner == null ? null :

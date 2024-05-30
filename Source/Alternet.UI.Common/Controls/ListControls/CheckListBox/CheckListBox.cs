@@ -255,7 +255,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateCheckListBoxHandler(this);
+            return ControlFactory.Handler.CreateCheckListBoxHandler(this);
         }
 
         /// <summary>

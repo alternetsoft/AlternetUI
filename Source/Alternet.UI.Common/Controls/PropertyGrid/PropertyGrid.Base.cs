@@ -375,7 +375,7 @@ namespace Alternet.UI
         /// </summary>
         public static IPropertyGridChoices CreateChoices()
         {
-            return BaseApplication.Handler.CreateChoices();
+            return ControlFactory.Handler.CreateChoices();
         }
 
         /// <summary>

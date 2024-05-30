@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// </remarks>
         public static bool FastThreadExceptions;
 
-        public static IApplicationHandler Handler = new NotImplementedApplicationHandler();
+        public static IApplicationHandler Handler = null!;
 
         public static CultureInfo InvariantEnglishUS = CultureInfo.InvariantCulture;
 

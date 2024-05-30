@@ -375,7 +375,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         protected override IPenHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreatePenHandler(this);
+            return GraphicsFactory.Handler.CreatePenHandler(this);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Alternet.Drawing
         /// </summary>
         protected override void UpdateHandler()
         {
-            ((IPenHandler)Handler).Update(this);
+            Handler.Update(this);
         }
     }
 }

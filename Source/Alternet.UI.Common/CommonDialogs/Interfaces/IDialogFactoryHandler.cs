@@ -10,6 +10,16 @@ namespace Alternet.UI
 {
     public interface IDialogFactoryHandler : IDisposable
     {
+        ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(SelectDirectoryDialog dialog);
+
+        IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog);
+
+        ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog);
+
+        IFontDialogHandler CreateFontDialogHandler(FontDialog dialog);
+
+        IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);
+
         DialogResult ShowMessageBox(MessageBoxInfo info);
 
         string? GetTextFromUser(

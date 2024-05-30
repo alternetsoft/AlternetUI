@@ -932,7 +932,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
-            => BaseApplication.Handler.CreateWindowHandler(this);
+            => ControlFactory.Handler.CreateWindowHandler(this);
 
         protected void ApplyStartLocationOnce(Control? owner)
         {

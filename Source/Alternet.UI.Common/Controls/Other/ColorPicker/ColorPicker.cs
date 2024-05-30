@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateColorPickerHandler(this);
+            return ControlFactory.Handler.CreateColorPickerHandler(this);
         }
 
         /// <summary>

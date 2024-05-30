@@ -579,7 +579,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateComboBoxHandler(this);
+            return ControlFactory.Handler.CreateComboBoxHandler(this);
         }
 
         /// <summary>

@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateGroupBoxHandler(this);
+            return ControlFactory.Handler.CreateGroupBoxHandler(this);
         }
     }
 }

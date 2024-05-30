@@ -14,7 +14,7 @@ namespace Alternet.UI
             if (GetRequiredHandlerType() == HandlerType.Native)
                 handler = CreateHandler();
             else
-                handler = BaseApplication.Handler.CreateControlHandler(this);
+                handler = ControlFactory.Handler.CreateControlHandler(this);
 
             handler.Attach(this);
 

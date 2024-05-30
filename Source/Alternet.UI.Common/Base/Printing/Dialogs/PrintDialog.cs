@@ -84,7 +84,7 @@ namespace Alternet.UI
 
         protected override IDialogHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreatePrintDialogHandler();
+            return PrintingFactory.Handler.CreatePrintDialogHandler();
         }
     }
 }

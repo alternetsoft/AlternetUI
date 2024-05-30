@@ -11,6 +11,41 @@ namespace Alternet.Drawing
 {
     internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
+        /// <inheritdoc/>
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            return new WxFontFactoryHandler();
+        }
+
+        /// <inheritdoc/>
+        public IPenHandler CreatePenHandler(Pen pen) => new UI.Native.Pen();
+
+        /// <inheritdoc/>
+        public IBrushHandler CreateTransparentBrushHandler(Brush brush)
+            => new UI.Native.Brush();
+
+        /// <inheritdoc/>
+        public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
+            => new UI.Native.HatchBrush();
+
+        /// <inheritdoc/>
+        public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
+            LinearGradientBrush brush)
+            => new UI.Native.LinearGradientBrush();
+
+        /// <inheritdoc/>
+        public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
+            RadialGradientBrush brush)
+            => new UI.Native.RadialGradientBrush();
+
+        /// <inheritdoc/>
+        public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
+            => new UI.Native.SolidBrush();
+
+        /// <inheritdoc/>
+        public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
+            => new UI.Native.TextureBrush();
+
         public IRegionHandler CreateRegionHandler()
         {
             return new UI.Native.Region();

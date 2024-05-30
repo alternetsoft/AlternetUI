@@ -2410,7 +2410,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateRichTextBoxHandler(this);
+            return ControlFactory.Handler.CreateRichTextBoxHandler(this);
         }
 
         /// <inheritdoc/>

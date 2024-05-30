@@ -19,7 +19,7 @@ namespace Alternet.Drawing.Printing
     /// <see cref="PrintPageEventArgs.DrawingContext"/> property of the
     /// <see cref="PrintPageEventArgs"/>.
     /// </remarks>
-    public class PrintDocument : DisposableObject
+    public class PrintDocument : HandledObject<IPrintDocumentHandler>
     {
         private Graphics? currentDrawingContext;
         private PrinterSettings? printerSettings;
@@ -30,11 +30,6 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         public PrintDocument()
         {
-            Handler = BaseApplication.Handler.CreatePrintDocumentHandler();
-
-            Handler.PrintPage += NativePrintDocument_PrintPage;
-            Handler.BeginPrint += NativePrintDocument_BeginPrint;
-            Handler.EndPrint += NativePrintDocument_EndPrint;
         }
 
         /// <summary>
@@ -178,8 +173,6 @@ namespace Alternet.Drawing.Printing
             }
         }
 
-        public IPrintDocumentHandler Handler { get; private set; }
-
         /// <summary>
         /// Starts the document's printing process.
         /// </summary>
@@ -247,15 +240,14 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            if (Handler is null)
+            if (!IsHandlerCreated)
                 return;
 
             Handler.PrintPage -= NativePrintDocument_PrintPage;
             Handler.BeginPrint -= NativePrintDocument_BeginPrint;
             Handler.EndPrint -= NativePrintDocument_EndPrint;
 
-            Handler.Dispose();
-            Handler = null!;
+            base.DisposeManaged();
         }
 
         private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
@@ -287,6 +279,18 @@ namespace Alternet.Drawing.Printing
             var ea = new PrintPageEventArgs(this, currentDrawingContext);
             OnPrintPage(ea);
             e.Cancel = ea.Cancel;
+        }
+
+        /// <inheritdoc/>
+        protected override IPrintDocumentHandler CreateHandler()
+        {
+            var result = PrintingFactory.Handler.CreatePrintDocumentHandler();
+
+            result.PrintPage += NativePrintDocument_PrintPage;
+            result.BeginPrint += NativePrintDocument_BeginPrint;
+            result.EndPrint += NativePrintDocument_EndPrint;
+
+            return result;
         }
     }
 }

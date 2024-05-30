@@ -186,7 +186,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IBrushHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateTransparentBrushHandler(this);
+            return GraphicsFactory.Handler.CreateTransparentBrushHandler(this);
         }
 
         /// <summary>

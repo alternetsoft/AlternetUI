@@ -63,7 +63,7 @@ namespace Alternet.UI
 
         protected override IDialogHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateSelectDirectoryDialogHandler(this);
+            return DialogFactory.Handler.CreateSelectDirectoryDialogHandler(this);
         }
     }
 }

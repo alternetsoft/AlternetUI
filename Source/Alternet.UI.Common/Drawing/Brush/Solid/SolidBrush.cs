@@ -86,7 +86,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IBrushHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateSolidBrushHandler(this);
+            return GraphicsFactory.Handler.CreateSolidBrushHandler(this);
         }
 
         /// <inheritdoc/>

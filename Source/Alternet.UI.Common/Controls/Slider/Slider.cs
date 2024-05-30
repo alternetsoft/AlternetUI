@@ -422,7 +422,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return BaseApplication.Handler.CreateSliderHandler(this);
+            return ControlFactory.Handler.CreateSliderHandler(this);
         }
 
         /// <summary>

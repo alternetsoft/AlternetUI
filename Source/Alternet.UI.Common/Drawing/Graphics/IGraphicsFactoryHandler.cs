@@ -15,6 +15,46 @@ namespace Alternet.Drawing
 
         BitmapType GetDefaultBitmapType();
 
+        IFontFactoryHandler CreateFontFactoryHandler();
+
+        /// <summary>
+        /// Creates transparent brush handler.
+        /// </summary>
+        /// <returns></returns>
+        IBrushHandler CreateTransparentBrushHandler(Brush brush);
+
+        /// <summary>
+        /// Creates hatch brush handler.
+        /// </summary>
+        /// <returns></returns>
+        IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush);
+
+        /// <summary>
+        /// Creates linear gradient brush handler.
+        /// </summary>
+        /// <returns></returns>
+        ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush);
+
+        /// <summary>
+        /// Creates radial gradient brush handler.
+        /// </summary>
+        /// <returns></returns>
+        IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush);
+
+        IPenHandler CreatePenHandler(Pen pen);
+
+        /// <summary>
+        /// Creates solid brush handler.
+        /// </summary>
+        /// <returns></returns>
+        ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush);
+
+        /// <summary>
+        /// Creates texture brush handler.
+        /// </summary>
+        /// <returns></returns>
+        ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush);
+
         Graphics CreateGraphicsFromScreen();
 
         IRegionHandler CreateRegionHandler();
