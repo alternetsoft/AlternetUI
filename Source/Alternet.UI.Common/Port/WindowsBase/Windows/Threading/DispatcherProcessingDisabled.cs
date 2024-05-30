@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     A structure that allows for dispatcher processing to be

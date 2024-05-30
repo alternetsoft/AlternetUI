@@ -16,7 +16,7 @@ using Alternet.UI.Markup;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     An attached dependency-based property
@@ -666,7 +666,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dependencyObject">DependencyObject to get metadata</param>
         /// <returns>Property metadata</returns>
-        public PropertyMetadata GetMetadata(Alternet.UI.DependencyObject dependencyObject)
+        public PropertyMetadata GetMetadata(Alternet.UI.Port.DependencyObject dependencyObject)
         {
             if (dependencyObject != null)
             {

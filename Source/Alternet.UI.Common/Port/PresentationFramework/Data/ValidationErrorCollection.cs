@@ -19,7 +19,7 @@ using System.Collections.ObjectModel;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///      ValidationErrorCollection contains the list of ValidationErrors from

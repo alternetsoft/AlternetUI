@@ -151,7 +151,7 @@ namespace Alternet.UI
         internal static bool IsUserMinSizePropertyValueValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (!DoubleUtils.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         /// <remarks>
@@ -172,7 +172,7 @@ namespace Alternet.UI
         internal static bool IsUserMaxSizePropertyValueValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
+            return (!DoubleUtils.IsNaN(v) && v >= 0.0d);
         }
 
         /// <remarks>
@@ -757,7 +757,7 @@ namespace Alternet.UI
                     sharedMinSize = Math.Max(sharedMinSize, _registry[i]._minSize);
                 }
 
-                bool sharedMinSizeChanged = !DoubleUtil.AreClose(_minSize, sharedMinSize);
+                bool sharedMinSizeChanged = !DoubleUtils.AreClose(_minSize, sharedMinSize);
 
                 //  compare accumulated min size with min sizes of the individual definitions
                 for (int i = 0, count = _registry.Count; i < count; ++i)
@@ -773,7 +773,7 @@ namespace Alternet.UI
                     // short-pole definitions.  This distinction allows us to react
                     // to changes in "long-pole-ness" more efficiently and correctly,
                     // by avoiding remeasures when a long-pole definition changes.
-                    bool useSharedMinimum = !DoubleUtil.AreClose(definitionBase._minSize, sharedMinSize);
+                    bool useSharedMinimum = !DoubleUtils.AreClose(definitionBase._minSize, sharedMinSize);
 
                     // before doing that, determine whether d's Grid needs to be remeasured.
                     // It's important _not_ to remeasure if the last measure is still
@@ -803,7 +803,7 @@ namespace Alternet.UI
                         // measure is invalid - it used the old shared size,
                         // which is larger than d's (possibly changed) minSize
                         measureIsValid = (definitionBase.LayoutWasUpdated &&
-                                        DoubleUtil.GreaterThanOrClose(definitionBase._minSize, this.MinSize));
+                                        DoubleUtils.GreaterThanOrClose(definitionBase._minSize, this.MinSize));
                     }
 
                     if (!measureIsValid)
@@ -811,7 +811,7 @@ namespace Alternet.UI
                         Grid parentGrid = (Grid)definitionBase.LogicalParent;
                         parentGrid.PerformLayout();
                     }
-                    else if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.SizeCache))
+                    else if (!DoubleUtils.AreClose(sharedMinSize, definitionBase.SizeCache))
                     {
                         //  if measure is valid then also need to check arrange.
                         //  Note: definitionBase.SizeCache is volatile but at this point

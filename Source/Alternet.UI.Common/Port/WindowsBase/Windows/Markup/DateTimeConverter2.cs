@@ -12,7 +12,7 @@ namespace Alternet.UI.Internal.Markup
 #else
 using System.Globalization;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 #endif
 {
     //+--------------------------------------------------------------------------------------

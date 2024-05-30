@@ -20,9 +20,8 @@ using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
 using System.Diagnostics;               // For Assert
 using System.IO.Packaging;
-using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// pack-specific WebRequest handler
@@ -578,7 +577,7 @@ namespace Alternet.UI
         // These are "cached" inner Uri's taken from the available application: and SiteOfOrigin: Uri's.  
         // They are kept in statics to eliminate overhead of reparsing them on every request.
         // We are essentially extracting the "application://" out of "pack://application:,,"
-        static private Uri _siteOfOriginUri = PackUriHelper.GetPackageUri(BaseUriHelper.SiteOfOriginBaseUri);
-        static private Uri _appBaseUri = PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri);
+        static private Uri _siteOfOriginUri = System.IO.Packaging.PackUriHelper.GetPackageUri(BaseUriHelper.SiteOfOriginBaseUri);
+        static private Uri _appBaseUri = System.IO.Packaging.PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri);
     }
 }

@@ -18,7 +18,7 @@ using System;
 using System.IO;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Wrap returned stream to protect non-thread-safe API's from race conditions

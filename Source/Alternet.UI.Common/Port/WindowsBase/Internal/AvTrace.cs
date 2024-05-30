@@ -24,11 +24,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Collections;
-using Alternet.Base.Diagnostics;
 using Alternet.UI.Markup;
-using PresentationTraceSources = Alternet.Base.Diagnostics.PresentationTraceSources;
+using PresentationTraceSources = Alternet.UI.Port.PresentationTraceSources;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     internal class AvTrace
     {

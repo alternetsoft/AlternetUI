@@ -12,7 +12,7 @@
 using System;
 using System.Globalization;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// An instance of this class can be used wherever you might otherwise use

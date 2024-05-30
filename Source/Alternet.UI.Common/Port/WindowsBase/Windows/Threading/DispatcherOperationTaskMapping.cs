@@ -4,7 +4,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     // An internal class used to store the operation that a task is
     // associated with.  Being internal helps prevent the implementation

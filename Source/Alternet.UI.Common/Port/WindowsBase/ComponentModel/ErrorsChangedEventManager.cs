@@ -13,7 +13,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the INotifyDataErrorInfo.ErrorsChanged event.

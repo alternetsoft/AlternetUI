@@ -6,7 +6,7 @@
 
 // The C++ version of these definitions is in inc\BuildInfo.hxx.
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class BuildInfo
     {

@@ -20,7 +20,7 @@ using System.Text;              // For Encoding
                                 // For Exception strings - SRID
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed] // Built into Base, used by Framework and Core
     internal static class PackagingUtilities

@@ -8,7 +8,7 @@ using System;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     //
     // The list of Dependents that depend on a Source[ID]

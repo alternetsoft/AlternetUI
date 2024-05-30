@@ -11,7 +11,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>Exception class thrown when a value requested by a validation rule is not available</summary>
     [Serializable]

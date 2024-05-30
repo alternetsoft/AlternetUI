@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     A timer that is integrated into the Dispatcher queues, and will

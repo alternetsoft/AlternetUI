@@ -9,7 +9,7 @@ using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class FrameworkCompatibilityPreferences
     {

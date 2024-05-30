@@ -24,7 +24,7 @@ using System.Diagnostics;
 using Alternet.UI.Internal;
 using Alternet.UI.Markup;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     #region DefaultValueConverter
 

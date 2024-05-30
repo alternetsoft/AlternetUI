@@ -19,7 +19,7 @@ using System.Collections;
 // for Invariant
 // FrugalList
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// The Freezable class encapsulates the Freezable pattern for DOs whose

@@ -21,7 +21,7 @@ using System.Diagnostics;       // Debug.Assert
 using System.Globalization;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // CollectionView classes use this class as the manager of all Grouping functionality
     internal class CollectionViewGroupRoot : CollectionViewGroupInternal, INotifyCollectionChanged

@@ -22,7 +22,7 @@ using System.IO;                        // for Path class
 using System.Diagnostics;
 // For Exception strings - SRID
 
-namespace Alternet.UI.Packaging
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This class has the utility methods for composing and parsing an Uri of pack:// scheme

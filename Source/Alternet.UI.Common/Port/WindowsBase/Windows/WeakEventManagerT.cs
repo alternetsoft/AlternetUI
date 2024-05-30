@@ -12,7 +12,7 @@
 using System;
 using System.Reflection;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Provides a type-safe <see cref="WeakEventManager"/> that enables you to specify the event handler to use for the "weak event listener" pattern.

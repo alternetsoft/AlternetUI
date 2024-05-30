@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,37 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObject : IBaseObject
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SafeDispose<T>(ref T? disposable) where T: IDisposable
+        {
+            var t = disposable;
+            disposable = default!;
+            t?.Dispose();
+        }
+
+        /// <summary>
+        /// Calls the specified function inside try catch block.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// If exception is raised inside <paramref name="func"/>,
+        /// exception is logged and <c>false</c> is returned.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool InsideTryCatch(Func<bool> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogException(e);
+                return false;
+            }
+        }
+
         /// <inheritdoc/>
         public virtual void Required()
         {
@@ -44,11 +76,13 @@ namespace Alternet.UI
         /// <summary>
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public object NotImplemented() => throw new NotImplementedException();
 
         /// <summary>
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T NotImplemented<T>() => throw new NotImplementedException();
 
         /// <summary>

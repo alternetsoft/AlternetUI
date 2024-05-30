@@ -14,27 +14,31 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public bool ExitOnFrameDelete
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => false;
+            set
+            {
+            }
         }
 
         /// <inheritdoc/>
         public bool IsActive
         {
-            get => throw new NotImplementedException();
+            get => false;
         }
 
         /// <inheritdoc/>
         public bool InUixmlPreviewerMode
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => false;
+            set
+            {
+            }
         }
 
         /// <inheritdoc/>
         public bool InvokeRequired
         {
-            get => throw new NotImplementedException();
+            get => false;
         }
 
         /// <inheritdoc/>
@@ -52,64 +56,62 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IBrushHandler CreateTransparentBrushHandler(Brush brush)
         {
-            return new MauiTransparentBrushHandler(brush);
+            return new SkiaTransparentBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
         {
-            return new MauiSolidBrushHandler(brush);
+            return new SkiaSolidBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
         {
-            return new MauiHatchBrushHandler(brush);
+            return new SkiaHatchBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush)
         {
-            return new MauiLinearGradientBrushHandler(brush);
+            return new SkiaLinearGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush)
         {
-            return new MauiRadialGradientBrushHandler(brush);
+            return new SkiaRadialGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public void ExitMainLoop()
         {
-            throw new NotImplementedException();
+            Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
         /// <inheritdoc/>
         public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
         {
-            return new MauiTextureBrushHandler(brush);
+            return new SkiaTextureBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public void ProcessPendingEvents()
         {
-            throw new NotImplementedException();
         }
 
         public Window? GetActiveWindow()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Control? GetFocusedControl()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void NotifyCaptureLost()
         {
-            throw new NotImplementedException();
         }
 
         public ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(SelectDirectoryDialog dialog)
@@ -254,12 +256,12 @@ namespace Alternet.UI
 
         public IMenuItemHandler CreateMenuItemHandler(MenuItem control)
         {
-            throw new NotImplementedException();
+            return new PlessMenuItemHandler();
         }
 
         public IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
         {
-            throw new NotImplementedException();
+            return new PlessContextMenuHandler();
         }
 
         public IMainMenuHandler CreateMainMenuHandler(MainMenu control)
@@ -337,7 +339,9 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public IValueValidatorText CreateValueValidatorNum(ValueValidatorNumStyle numericType, int valueBase = 10)
+        public IValueValidatorText CreateValueValidatorNum(
+            ValueValidatorNumStyle numericType,
+            int valueBase = 10)
         {
             throw new NotImplementedException();
         }
@@ -359,7 +363,7 @@ namespace Alternet.UI
 
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
-            throw new NotImplementedException();
+            return new MauiTimerHandler();
         }
 
         public void Run(Window window)
@@ -369,12 +373,10 @@ namespace Alternet.UI
 
         public void SetTopWindow(Window window)
         {
-            throw new NotImplementedException();
         }
 
         public void WakeUpIdle()
         {
-            throw new NotImplementedException();
         }
 
         public void BeginInvoke(Action action)
@@ -384,12 +386,12 @@ namespace Alternet.UI
 
         public bool HasPendingEvents()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public void Exit()
         {
-            throw new NotImplementedException();
+            Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
         public ICursorFactoryHandler CreateCursorFactoryHandler()
@@ -449,7 +451,7 @@ namespace Alternet.UI
 
         public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
         {
-            throw new NotImplementedException();
+            return new MauiGraphicsFactoryHandler();
         }
 
         public void CrtSetDbgFlag(int value)

@@ -290,7 +290,7 @@ namespace Alternet.UI
         {
             AddInputBinding(item);
 
-            Internal.InheritanceContextHelper.ProvideContextForObject(Control, item);
+            Port.InheritanceContextHelper.ProvideContextForObject(Control, item);
         }
 
         private void ApplyInputBindings(object? sender, EventArgs e)
@@ -310,7 +310,7 @@ namespace Alternet.UI
 
         private void InputBindings_ItemRemoved(object? sender, int index, InputBinding item)
         {
-            Internal.InheritanceContextHelper.RemoveContextFromObject(Control, item);
+            Port.InheritanceContextHelper.RemoveContextFromObject(Control, item);
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 

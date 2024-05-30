@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Class that provides functionality to obtain a TypeConverter from a property or the

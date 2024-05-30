@@ -20,7 +20,7 @@ using System.ComponentModel;
 using System.Globalization;             // CultureInfo
                                         // Invariant.Assert
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Base class for group descriptions.

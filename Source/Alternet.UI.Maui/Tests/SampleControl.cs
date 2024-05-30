@@ -14,12 +14,21 @@ namespace Alternet.UI
         {
             var dc = e.Graphics;
 
+            dc.DrawRectangle(Color.LightGoldenrodYellow.AsPen, e.ClipRectangle);
+
             var font = Font.Default
                 .Scaled(3).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
 
             dc.DrawText(
                 $"hello text: {font.SizeInPoints}",
                 (0, 0),
+                font,
+                Color.Black,
+                Color.LightGreen);
+
+            dc.DrawText(
+                $"; Hello text: {font.SizeInPoints}",
+                (150, 0),
                 font,
                 Color.Black,
                 Color.LightGreen);

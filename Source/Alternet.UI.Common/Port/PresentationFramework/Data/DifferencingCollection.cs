@@ -38,7 +38,7 @@ using System.Collections.ObjectModel;   // ObservableCollection
 using System.Collections.Specialized;   // INotifyCollectionChanged
 using System.ComponentModel;            // PropertyChangedEventArgs
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal sealed class DifferencingCollection : ObservableCollection<object>
     {

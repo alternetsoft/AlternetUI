@@ -11,7 +11,7 @@ using System.Dynamic;                   // GetMemberBinder, etc.
 using System.Reflection;                // PropertyInfo, etc.
 using System.Runtime.CompilerServices;  // CallSite
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     #region DynamicPropertyAccessorImpl
 

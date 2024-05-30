@@ -9,7 +9,7 @@
 using System.ComponentModel;
 
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// The TypeConverter value serializer uses a TypeConverter to implement the translation

@@ -18,7 +18,7 @@ using System.Globalization;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// IComparer class to sort by class property value (using reflection).

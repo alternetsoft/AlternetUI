@@ -15,7 +15,7 @@
 using System;
 
 
-namespace Alternet.UI.Internal.Utility
+namespace Alternet.UI.Port
 {
 	/// <summary>
     /// Helper class that allows using a weak reference to an item as a key in a hash table.

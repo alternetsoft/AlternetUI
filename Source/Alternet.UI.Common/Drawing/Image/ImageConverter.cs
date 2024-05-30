@@ -45,7 +45,7 @@ namespace Alternet.Drawing
         }
 
         internal static Uri? GetContextBaseUri(IServiceProvider? ctx)
-            => GetService<IUixmlUriContext>(ctx)?.BaseUri;
+            => GetService<UI.Port.IUixmlUriContext>(ctx)?.BaseUri;
 
         internal static T? GetService<T>(IServiceProvider? sp) => (T?)sp?.GetService(typeof(T));
     }

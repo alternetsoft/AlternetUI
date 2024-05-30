@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace Alternet.UI.Markup
     /// element should be associated with.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
-    public sealed class ContentPropertyAttribute : Attribute
+    internal sealed class ContentPropertyAttribute : Attribute
     {
 
         /// <summary>

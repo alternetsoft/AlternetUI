@@ -19,7 +19,7 @@ using System.Xml;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// XmlNamespaceMappingCollection Class

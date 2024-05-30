@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// The IAddChild interface is used for parsing objects that
@@ -22,7 +22,7 @@ namespace Alternet.UI.Markup
     /// do not map directly to a property. 
     ///</summary>
     //[Obsolete("IAddChild is obsolete, use the [ContentProperty] attribute instead")]
-    public interface IAddChild
+    internal interface IAddChild
     {
         ///<summary>
         /// Called to Add the object as a Child.

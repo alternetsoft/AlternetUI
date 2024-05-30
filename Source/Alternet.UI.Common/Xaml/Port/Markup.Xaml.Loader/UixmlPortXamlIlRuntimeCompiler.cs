@@ -255,7 +255,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                         null,
                         null);
 
-                    populateCb(XamlIlRuntimeHelpers.CreateRootServiceProviderV2(), obj);
+                    populateCb(Port.XamlIlRuntimeHelpers.CreateRootServiceProviderV2(), obj);
                     return obj;
                 }
 
@@ -263,7 +263,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 {
                     overrideField.SetValue(null,
                         new Action<object>(
-                            target => { populateCb(XamlIlRuntimeHelpers.CreateRootServiceProviderV2(), target); }));
+                            target => { populateCb(Port.XamlIlRuntimeHelpers.CreateRootServiceProviderV2(), target); }));
                     try
                     {
                         return Activator.CreateInstance(targetType);
@@ -277,11 +277,11 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 var createCb = Expression.Lambda<Func<IServiceProvider, object>>(
                     Expression.Convert(Expression.Call(
                         created.GetMethod(UixmlPortXamlIlCompiler.BuildName), isp), typeof(object)), isp).Compile();
-                return createCb(XamlIlRuntimeHelpers.CreateRootServiceProviderV2());
+                return createCb(Port.XamlIlRuntimeHelpers.CreateRootServiceProviderV2());
             }
             else
             {
-                populateCb(XamlIlRuntimeHelpers.CreateRootServiceProviderV2(), rootInstance);
+                populateCb(Port.XamlIlRuntimeHelpers.CreateRootServiceProviderV2(), rootInstance);
                 return rootInstance;
             }
         }

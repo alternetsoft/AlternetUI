@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// A class should implement this interface if it needs to listen to

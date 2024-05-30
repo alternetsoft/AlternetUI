@@ -14,7 +14,7 @@ using System.Diagnostics;
 using System.Collections.ObjectModel; // ObservableCollection
 using System.Collections.Specialized; // NotifyCollectionChangedEventHandler
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     // <summary>
     // ObservableCollectionDefaultValueFactory is a DefaultValueFactory implementation which will

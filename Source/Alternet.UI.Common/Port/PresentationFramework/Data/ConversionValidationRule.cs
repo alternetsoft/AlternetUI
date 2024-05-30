@@ -12,7 +12,7 @@
 
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     ConversionValidationRule is used when a ValidationError is the result of

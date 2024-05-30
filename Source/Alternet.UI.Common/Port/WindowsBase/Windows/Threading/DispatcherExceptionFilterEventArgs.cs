@@ -18,7 +18,7 @@ using System.Diagnostics;
 
 using System;
 
-namespace Alternet.UI.Threading 
+namespace Alternet.UI.Port 
 {
     /// <summary>
     ///     Arguments for the ExceptionFilter event. The event is raised when

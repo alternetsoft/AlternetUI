@@ -20,7 +20,7 @@ using System.ComponentModel;        // ICollectionView
         // XmlLanguage
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///  Describes a collection view.

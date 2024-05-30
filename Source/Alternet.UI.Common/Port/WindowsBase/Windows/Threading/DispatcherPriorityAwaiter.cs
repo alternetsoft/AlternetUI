@@ -7,7 +7,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     A simple awaiter type that will queue the continuation to a

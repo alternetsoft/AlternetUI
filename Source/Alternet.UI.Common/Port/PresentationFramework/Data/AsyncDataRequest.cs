@@ -12,7 +12,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary> Type for the work and completion delegates of an AsyncDataRequest </summary>
     internal delegate object AsyncRequestCallback(AsyncDataRequest request);

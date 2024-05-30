@@ -5,7 +5,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Property value freeze callback

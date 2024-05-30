@@ -2,7 +2,7 @@
 #pragma warning disable
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.

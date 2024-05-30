@@ -18,10 +18,10 @@ using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using PresentationTraceLevel = Alternet.Base.Diagnostics.PresentationTraceLevel;
-using PresentationTraceSources = Alternet.Base.Diagnostics.PresentationTraceSources;
+using PresentationTraceLevel = Alternet.UI.Port.PresentationTraceLevel;
+using PresentationTraceSources = Alternet.UI.Port.PresentationTraceSources;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // levels for the various extended traces
     internal enum TraceDataLevel

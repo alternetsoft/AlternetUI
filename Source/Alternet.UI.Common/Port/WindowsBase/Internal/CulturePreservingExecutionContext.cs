@@ -30,7 +30,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// An encapsulation of ExecutionContext that preserves thread culture infos 

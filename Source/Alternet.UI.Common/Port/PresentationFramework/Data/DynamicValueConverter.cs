@@ -12,7 +12,7 @@
 using System;
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // dynamically pick and switch a default value converter to convert between source and target type
     internal class DynamicValueConverter : IValueConverter

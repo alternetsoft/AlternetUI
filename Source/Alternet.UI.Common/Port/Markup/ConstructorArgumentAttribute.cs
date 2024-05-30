@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
 
     /// <summary>
@@ -26,7 +26,7 @@ namespace Alternet.UI.Markup
     /// with an argument of the supplied name is used to construct the instance. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    public sealed class ConstructorArgumentAttribute : Attribute 
+    internal sealed class ConstructorArgumentAttribute : Attribute 
     {
         /// <summary>
         /// Constructor for an ConstructorArgumentAttribute

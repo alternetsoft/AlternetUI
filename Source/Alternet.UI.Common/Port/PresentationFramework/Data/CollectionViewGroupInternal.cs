@@ -17,7 +17,7 @@ using System.Collections;       // IEnumerator
 using System.ComponentModel;    // PropertyChangedEventArgs, GroupDescription
 using System.Diagnostics;       // Debug
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class CollectionViewGroupInternal : CollectionViewGroup
     {

@@ -8,7 +8,7 @@
 // Description: Finger into a red-black tree.
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal struct RBFinger<T>
     {

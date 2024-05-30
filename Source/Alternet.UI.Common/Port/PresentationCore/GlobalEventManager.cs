@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class GlobalEventManager
     {

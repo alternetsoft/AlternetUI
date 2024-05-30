@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Security;
 using System.Threading;
 using Alternet.Drawing;
-using Alternet.UI.Threading;
 
 namespace Alternet.UI
 {
@@ -13,7 +12,7 @@ namespace Alternet.UI
     ///     The InputManager class is responsible for coordinating all of the
     ///     input system in Alternet UI.
     /// </summary>
-    public sealed class InputManager : DispatcherObject
+    public sealed class InputManager : Port.DispatcherObject
     {
         private static readonly KeyboardDevice KeyboardDevice;
         private static readonly MouseDevice MouseDevice;
@@ -64,7 +63,6 @@ namespace Alternet.UI
         /// </summary>
         internal static InputManager UnsecureCurrent
         {
-            [FriendAccessAllowed]
             get
             {
                 return GetCurrentInputManagerImpl();
@@ -89,7 +87,7 @@ namespace Alternet.UI
         /// </summary>
         private static InputManager GetCurrentInputManagerImpl()
         {
-            Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+            var dispatcher = Port.Dispatcher.CurrentDispatcher;
 
             if (dispatcher.InputManager is not InputManager inputManager)
             {

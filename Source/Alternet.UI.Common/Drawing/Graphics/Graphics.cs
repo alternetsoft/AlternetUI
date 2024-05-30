@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a custom drawing surface.
     /// </summary>
-    public abstract class Graphics : DisposableObject, IGraphics
+    public abstract class Graphics : DisposableObject, IGraphics, IDisposable
     {
         private Stack<TransformMatrix>? stack;
 
@@ -106,7 +106,7 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            double angle);
+            Coord angle);
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -127,8 +127,8 @@ namespace Alternet.Drawing
         public abstract SizeD GetTextExtent(
             string text,
             Font font,
-            out double? descent,
-            out double? externalLeading,
+            out Coord? descent,
+            out Coord? externalLeading,
             IControl? control = null);
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Alternet.Drawing
             Pen pen,
             Brush brush,
             RectD rectangle,
-            double cornerRadius);
+            Coord cornerRadius);
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -353,9 +353,9 @@ namespace Alternet.Drawing
             Pen pen,
             Brush brush,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         /// <summary>
         /// Calls <see cref="FillCircle"/> and than <see cref="DrawCircle"/>.
@@ -367,7 +367,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        public abstract void Circle(Pen pen, Brush brush, PointD center, double radius);
+        public abstract void Circle(Pen pen, Brush brush, PointD center, Coord radius);
 
         /// <summary>
         /// Calls <see cref="FillPolygon"/> and than <see cref="DrawPolygon"/>.
@@ -428,9 +428,9 @@ namespace Alternet.Drawing
         public abstract void DrawArc(
             Pen pen,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         /// <summary>
         /// Draws debug points on the corners of the specified rectangle.
@@ -460,7 +460,7 @@ namespace Alternet.Drawing
         /// <param name="x">X-coordinate of the point.</param>
         /// <param name="y">Y-coordinate of the point.</param>
         /// <exception cref="ArgumentNullException">if <paramref name="pen"/> is <c>null</c>.</exception>
-        public abstract void DrawPoint(Pen pen, double x, double y);
+        public abstract void DrawPoint(Pen pen, Coord x, Coord y);
 
         /// <summary>
         /// Fills the interior of a pie section defined by a circle specified by a center
@@ -478,9 +478,9 @@ namespace Alternet.Drawing
         public abstract void FillPie(
             Brush brush,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         /// <summary>
         /// Draws an outline of a pie section defined by a circle specified by a center
@@ -498,9 +498,9 @@ namespace Alternet.Drawing
         public abstract void DrawPie(
             Pen pen,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         /// <summary>
         /// Draws a Bézier spline defined by four <see cref="PointD"/> structures.
@@ -542,7 +542,7 @@ namespace Alternet.Drawing
         /// <param name="center"><see cref="PointD"/> structure that defines the center of
         /// the circle.</param>
         /// <param name="radius">Defines the radius of the circle.</param>
-        public abstract void DrawCircle(Pen pen, PointD center, double radius);
+        public abstract void DrawCircle(Pen pen, PointD center, Coord radius);
 
         /// <summary>
         /// Fills the interior of a circle specified by a center <see cref="PointD"/> and a radius.
@@ -552,7 +552,7 @@ namespace Alternet.Drawing
         /// <param name="center"><see cref="PointD"/> structure that defines the center of
         /// the circle.</param>
         /// <param name="radius">Defines the radius of the circle.</param>
-        public abstract void FillCircle(Brush brush, PointD center, double radius);
+        public abstract void FillCircle(Brush brush, PointD center, Coord radius);
 
         /// <summary>
         /// Draws a rounded rectangle specified by a <see cref="RectD"/> and a corner radius.
@@ -561,7 +561,7 @@ namespace Alternet.Drawing
         /// style of the rounded rectangle.</param>
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
-        public abstract void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius);
+        public abstract void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius);
 
         /// <summary>
         /// Fills the interior of a rounded rectangle specified by a <see cref="RectD"/> and
@@ -571,7 +571,7 @@ namespace Alternet.Drawing
         /// fill.</param>
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
-        public abstract void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius);
+        public abstract void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius);
 
         /// <summary>
         /// Draws a polygon defined by an array of <see cref="PointD"/> structures.
@@ -688,7 +688,7 @@ namespace Alternet.Drawing
         /// <param name="y1">Y coordinate of the first point.</param>
         /// <param name="x2">X coordinate of the second point.</param>
         /// <param name="y2">Y coordinate of the second point.</param>
-        public void DrawLine(Pen pen, double x1, double y1, double x2, double y2) =>
+        public void DrawLine(Pen pen, Coord x1, Coord y1, Coord x2, Coord y2) =>
             DrawLine(pen, new(x1, y1), new(x2, y2));
 
         /// <summary>
@@ -811,7 +811,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="x">The x-coordinate of the pixel to set.</param>
         /// <param name="y">The y-coordinate of the pixel to set.</param>
-        public abstract void SetPixel(double x, double y, Pen pen);
+        public abstract void SetPixel(Coord x, Coord y, Pen pen);
 
         /// <summary>
         /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -822,7 +822,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="x">The x-coordinate of the pixel to set.</param>
         /// <param name="y">The y-coordinate of the pixel to set.</param>
-        public abstract void SetPixel(double x, double y, Color color);
+        public abstract void SetPixel(Coord x, Coord y, Color color);
 
         /// <summary>
         /// Gets the color of the specified pixel in this <see cref="Graphics" />.</summary>

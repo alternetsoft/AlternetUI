@@ -11,7 +11,7 @@
 
 using System.ComponentModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal abstract class SystemXmlLinqExtensionMethods
     {

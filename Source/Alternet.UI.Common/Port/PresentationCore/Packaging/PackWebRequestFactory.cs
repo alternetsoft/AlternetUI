@@ -20,7 +20,7 @@ using System.Net;
 using System.Diagnostics;               // for Assert
 using System.IO.Packaging;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Invoked by .NET framework when our schema is recognized during a WebRequest
@@ -60,8 +60,8 @@ namespace Alternet.UI
 
             // Ensure uri is correct scheme because we can be called directly.  Case sensitive
             // is fine because Uri.Scheme contract is to return in lower case only.
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) != 0)
-                throw new ArgumentException(SR.Get(SRID.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
+            if (String.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.Ordinal) != 0)
+                throw new ArgumentException(SR.Get(SRID.UriSchemeMismatch, System.IO.Packaging.PackUriHelper.UriSchemePack), "uri");
 
 #if DEBUG
             if (_traceSwitch.Enabled)
@@ -139,7 +139,7 @@ namespace Alternet.UI
         [FriendAccessAllowed]
         internal static WebRequest CreateWebRequest(Uri uri)
         {
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+            if (String.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
             {
                 return ((IWebRequestCreate) _factorySingleton).Create(uri);
             }

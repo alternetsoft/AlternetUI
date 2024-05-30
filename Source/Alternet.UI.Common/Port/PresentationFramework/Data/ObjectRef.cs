@@ -16,7 +16,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     #region ObjectRefArgs
 

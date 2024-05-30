@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Implementation of a data collection based on ArrayList,

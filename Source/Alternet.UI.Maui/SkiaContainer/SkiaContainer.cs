@@ -95,24 +95,25 @@ namespace Alternet.UI
         {
             base.OnPaintSurface(e);
 
-            if (graphics is null)
-                graphics = new(this, e);
-            else
-            {
-                graphics.Args = e;
-            }
+            if (control is null)
+                return;
 
             var dc = e.Surface.Canvas;
 
-            RectD dirtyRect = dc.LocalClipBounds.ToAlternet();
+            if (graphics is null)
+                graphics = new(dc);
+            else
+            {
+                graphics.Canvas = dc;
+            }
 
-            using SKPaint fillPaint = new();
-            fillPaint.Color = Colors.LightGoldenrodYellow.ToSKColor();
-            fillPaint.Style = SKPaintStyle.Fill;
+            RectD dirtyRect = dc.LocalClipBounds;
 
-            dc.DrawRect(dc.LocalClipBounds, fillPaint);
+            var bounds = Bounds;
 
-            control?.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
+            control.Bounds = (0, 0, bounds.Width, bounds.Height);
+
+            control.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
         }
 
         protected override void OnTouch(SKTouchEventArgs e)

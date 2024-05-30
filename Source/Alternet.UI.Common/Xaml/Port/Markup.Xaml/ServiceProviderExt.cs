@@ -6,7 +6,7 @@ using System.Linq;
 using Alternet.UI;
 using Alternet.UI.Markup;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     internal static class ServiceProviderExt
     {

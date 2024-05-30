@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Security;
 
-using Alternet.UI.Internal;
+using Alternet.UI.Port;
 
 namespace Alternet.UI
 {

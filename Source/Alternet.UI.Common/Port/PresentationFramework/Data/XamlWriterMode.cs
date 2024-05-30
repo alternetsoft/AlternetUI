@@ -9,7 +9,7 @@
 //   Xaml Writer Modes for values that are of type Expression.
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///    Xaml Writer Modes for values that 

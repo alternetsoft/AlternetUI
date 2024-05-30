@@ -10,7 +10,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // Event args for the (internal) InheritedPropertyChanged event
     internal class InheritedPropertyChangedEventArgs : EventArgs

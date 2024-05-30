@@ -21,11 +21,10 @@ using System.Net;
 using System.Diagnostics;               // For Assert
 using System.Threading;                 // for ManualResetEvent
 using System.IO.Packaging;
-using Alternet.UI.Internal;
 
 #pragma warning disable 1634, 1691      // disable warning about unknown Presharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Pack-specific WebRequest handler
@@ -348,7 +347,7 @@ namespace Alternet.UI
                     WaitForResponse();
 
                     // create new pack uri with webResponse and original part name uri
-                    return PackUriHelper.Create(_fullResponse.ResponseUri, _partName);
+                    return System.IO.Packaging.PackUriHelper.Create(_fullResponse.ResponseUri, _partName);
                 }
             }
         }

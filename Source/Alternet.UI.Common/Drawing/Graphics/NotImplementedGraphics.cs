@@ -70,7 +70,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void Circle(Pen pen, Brush brush, PointD center, double radius)
+        public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
             throw new NotImplementedException();
         }
@@ -80,7 +80,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawArc(Pen pen, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
             throw new NotImplementedException();
         }
@@ -95,7 +95,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawCircle(Pen pen, PointD center, double radius)
+        public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
             throw new NotImplementedException();
         }
@@ -150,12 +150,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawPie(Pen pen, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void DrawPie(Pen pen, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
             throw new NotImplementedException();
         }
 
-        public override void DrawPoint(Pen pen, double x, double y)
+        public override void DrawPoint(Pen pen, Coord x, Coord y)
         {
             throw new NotImplementedException();
         }
@@ -175,12 +175,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawRotatedTextI(string text, PointI location, Font font, Color foreColor, Color backColor, double angle)
+        public override void DrawRotatedTextI(string text, PointI location, Font font, Color foreColor, Color backColor, Coord angle)
         {
             throw new NotImplementedException();
         }
 
-        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        public override void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius)
         {
             throw new NotImplementedException();
         }
@@ -205,7 +205,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void FillCircle(Brush brush, PointD center, double radius)
+        public override void FillCircle(Brush brush, PointD center, Coord radius)
         {
             throw new NotImplementedException();
         }
@@ -220,7 +220,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void FillPie(Brush brush, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void FillPie(Brush brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
             throw new NotImplementedException();
         }
@@ -245,7 +245,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        public override void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
         {
             throw new NotImplementedException();
         }
@@ -270,7 +270,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeD GetTextExtent(string text, Font font, out double? descent, out double? externalLeading, IControl? control = null)
+        public override SizeD GetTextExtent(string text, Font font, out Coord? descent, out Coord? externalLeading, IControl? control = null)
         {
             throw new NotImplementedException();
         }
@@ -290,7 +290,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void Pie(Pen pen, Brush brush, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void Pie(Pen pen, Brush brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
             throw new NotImplementedException();
         }
@@ -305,7 +305,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius)
+        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
             throw new NotImplementedException();
         }
@@ -320,12 +320,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void SetPixel(double x, double y, Pen pen)
+        public override void SetPixel(Coord x, Coord y, Pen pen)
         {
             throw new NotImplementedException();
         }
 
-        public override void SetPixel(double x, double y, Color color)
+        public override void SetPixel(Coord x, Coord y, Color color)
         {
             throw new NotImplementedException();
         }

@@ -42,7 +42,7 @@ using System.ComponentModel;                // PropertyDescriptor
 using System.Globalization;                 // CultureInfo
 using System.Reflection;                    // MemberInfo, PropertyInfo, etc.
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal sealed class XDeferredAxisSource
     {

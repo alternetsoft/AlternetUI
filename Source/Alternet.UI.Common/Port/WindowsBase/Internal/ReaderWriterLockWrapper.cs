@@ -20,7 +20,7 @@ using Alternet.UI.Internal;
 using System;
 using System.Threading;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // Wrapper that allows a ReaderWriterLock to work with C#'s using() clause
     // ------ CAUTION --------

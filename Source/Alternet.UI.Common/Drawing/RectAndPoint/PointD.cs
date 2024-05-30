@@ -9,6 +9,8 @@ using Alternet.UI;
 using Alternet.UI.Localization;
 using Alternet.UI.Markup;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /*
@@ -39,15 +41,15 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly PointD One = new(1d, 1d);
 
-        private double x; // Do not rename (binary serialization)
-        private double y; // Do not rename (binary serialization)
+        private Coord x; // Do not rename (binary serialization)
+        private Coord y; // Do not rename (binary serialization)
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.PointD'/> class with the
         /// specified coordinates.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PointD(double x, double y)
+        public PointD(Coord x, Coord y)
         {
             this.x = x;
             this.y = y;
@@ -73,7 +75,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the x-coordinate of this <see cref='Drawing.PointD'/>.
         /// </summary>
-        public double X
+        public Coord X
         {
             readonly get => x;
             set => x = value;
@@ -82,7 +84,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the y-coordinate of this <see cref='Drawing.PointD'/>.
         /// </summary>
-        public double Y
+        public Coord Y
         {
             readonly get => y;
             set => y = value;
@@ -118,12 +120,24 @@ namespace Alternet.Drawing
             new(RectD.CoordToInt(p.X), RectD.CoordToInt(p.Y));
 
         /// <summary>
-        /// Implicit operator convertion from tuple with two <see cref="double"/> values
+        /// Implicit operator convertion from tuple with two values
         /// to <see cref="PointD"/>.
         /// </summary>
         /// <param name="d">New point value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator PointD((double, double) d) => new(d.Item1, d.Item2);
+        public static implicit operator PointD((Coord, Coord) d) => new(d.Item1, d.Item2);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator PointD(SKPoint value)
+        {
+            return new(value.X, value.Y);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator SKPoint(PointD point)
+        {
+            return new SKPoint((float)point.X, (float)point.Y);
+        }
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeI'/>.
@@ -148,7 +162,7 @@ namespace Alternet.Drawing
         /// Moves a <see cref='PointD'/> by a given value.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD operator +(PointD pt, double offset) =>
+        public static PointD operator +(PointD pt, Coord offset) =>
             new(pt.X + offset, pt.Y + offset);
 
         /// <summary>
@@ -219,8 +233,8 @@ namespace Alternet.Drawing
             string firstToken = th.NextTokenRequired();
 
             value = new PointD(
-                Convert.ToDouble(firstToken, formatProvider),
-                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                Convert.ToSingle(firstToken, formatProvider),
+                Convert.ToSingle(th.NextTokenRequired(), formatProvider));
 
             // There should be no more tokens in this string.
             th.LastTokenRequired();
@@ -254,7 +268,7 @@ namespace Alternet.Drawing
         /// <param name="vert">Defines whether to return <see cref="X"/> or <see cref="Y"/>.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly double GetLocation(bool vert)
+        public readonly Coord GetLocation(bool vert)
         {
             if (vert)
                 return y;
@@ -269,7 +283,7 @@ namespace Alternet.Drawing
         /// <param name="vert">Defines whether to set <see cref="X"/> or <see cref="Y"/>.</param>
         /// <param name="value">New location value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetLocation(bool vert, double value)
+        public void SetLocation(bool vert, Coord value)
         {
             if (vert)
                 y = value;
@@ -281,12 +295,12 @@ namespace Alternet.Drawing
         /// Translates this <see cref='PointD'/> by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Offset(double dx, double dy)
+        public void Offset(Coord dx, Coord dy)
         {
             unchecked
             {
-                X += dx;
-                Y += dy;
+                x += dx;
+                y += dy;
             }
         }
 
@@ -294,10 +308,10 @@ namespace Alternet.Drawing
         /// Returns new <see cref='PointD'/> with coordinates of this point translated
         /// by the specified amount.
         /// </summary>
-        public readonly PointD OffsetBy(double dx, double dy)
+        public readonly PointD OffsetBy(Coord dx, Coord dy)
         {
-            double newX = x;
-            double newY = y;
+            var newX = x;
+            var newY = y;
 
             unchecked
             {
@@ -334,7 +348,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="PointD"/> value with ceiling of the <see cref="X"/> and
-        /// <see cref="Y"/>. Uses <see cref="Math.Ceiling(double)"/> on values.
+        /// <see cref="Y"/>. Uses <see cref="Math.Ceiling"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -365,9 +379,9 @@ namespace Alternet.Drawing
         public override readonly string ToString()
         {
             string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
-            double[] values = { x, y };
+            Coord[] values = { x, y };
 
-            return StringUtils.ToString<double>(names, values);
+            return StringUtils.ToString<Coord>(names, values);
         }
 
         /// <summary>

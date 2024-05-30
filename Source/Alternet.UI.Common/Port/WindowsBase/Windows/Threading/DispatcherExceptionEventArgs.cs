@@ -17,7 +17,7 @@
 using System.Diagnostics;
 using System;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///   Arguments for the events that convey an exception that was raised

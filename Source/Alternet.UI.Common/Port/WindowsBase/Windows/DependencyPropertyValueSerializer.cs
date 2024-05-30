@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class DependencyPropertyValueSerializer : ValueSerializer 
     {

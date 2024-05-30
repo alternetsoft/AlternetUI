@@ -7,7 +7,7 @@
 using System;
 using System.Text; 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
    // 
    // Methods in this partial class are shared by PresentationFramework and PresentationBuildTasks.

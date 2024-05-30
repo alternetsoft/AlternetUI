@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using Alternet.UI.Platform;
+using Alternet.UI.Port;
 
 namespace Alternet.UI.Markup.Xaml
 {
@@ -39,7 +40,7 @@ namespace Alternet.UI.Markup.Xaml
         {
             Contract.Requires<ArgumentNullException>(uri != null);
 
-            var assetLocator = UixmlPortLocator.Current.GetService<IAssetLoader>();
+            var assetLocator = Port.UixmlPortLocator.Current.GetService<IAssetLoader>();
 
             if (assetLocator == null)
             {
@@ -60,7 +61,7 @@ namespace Alternet.UI.Markup.Xaml
             }
 
             // This is intended for unit-tests only
-            var runtimeLoader = UixmlPortLocator.Current.GetService<IRuntimeXamlLoader>();
+            var runtimeLoader = Port.UixmlPortLocator.Current.GetService<IRuntimeXamlLoader>();
             if (runtimeLoader != null)
             {
                 var asset = assetLocator.OpenAndGetAssembly(uri, baseUri);

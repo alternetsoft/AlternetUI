@@ -12,7 +12,7 @@
 // See spec at http://sharepoint/sites/wpftsv/Documents/DataGrid/DataGrid_CollectionView.mht
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Describes the desired position of the new item placeholder in an

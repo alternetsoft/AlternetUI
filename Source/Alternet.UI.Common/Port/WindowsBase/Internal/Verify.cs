@@ -6,7 +6,7 @@
 
 
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     using System;
     using System.Diagnostics;

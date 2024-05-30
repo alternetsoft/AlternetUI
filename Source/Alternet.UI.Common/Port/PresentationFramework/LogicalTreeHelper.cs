@@ -15,7 +15,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /*
         public delegate bool ParentTraversalCallback(FrameworkElement parentFE, FrameworkContentElement parentFCE, object data);

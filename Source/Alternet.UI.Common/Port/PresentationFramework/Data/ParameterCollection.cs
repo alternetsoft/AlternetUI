@@ -13,7 +13,7 @@ using System;
 using System.Collections;   // IList
 using System.Collections.ObjectModel;   // Collection<T>
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class ParameterCollection : Collection<object>, IList
     {

@@ -21,7 +21,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
     {
         public static (XamlLanguageTypeMappings language, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emit) Configure(IXamlTypeSystem typeSystem)
         {
-            var runtimeHelpers = typeSystem.GetType("Alternet.UI.Markup.XamlIlRuntimeHelpers");
+            var runtimeHelpers = typeSystem.FindType(typeof(Port.XamlIlRuntimeHelpers));
             //var assignBindingAttribute = typeSystem.GetType("Alternet.UI.Data.AssignBindingAttribute");
             //var bindingType = typeSystem.GetType("Alternet.UI.Data.IBinding");
             var rv = new XamlLanguageTypeMappings(typeSystem)
@@ -29,26 +29,29 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                 SupportInitialize = typeSystem.GetType("System.ComponentModel.ISupportInitialize"),
                 XmlnsAttributes =
                 {
-                    typeSystem.GetType("Alternet.UI.XmlnsDefinitionAttribute"),
+                    typeSystem.FindType(typeof(Alternet.UI.XmlnsDefinitionAttribute)),
                     //typeSystem.GetType("Alternet.UI.Metadata.XmlnsDefinitionAttribute"),
                 },
                 ContentAttributes =
                 {
                     //typeSystem.GetType("Alternet.UI.Metadata.ContentAttribute")
-                    typeSystem.GetType("Alternet.UI.ContentAttribute")
+                    typeSystem.FindType(typeof(Alternet.UI.ContentAttribute))
                 },
-                ProvideValueTarget = typeSystem.GetType("Alternet.UI.Markup.IUixmlProvideValueTarget"),
-                RootObjectProvider = typeSystem.GetType("Alternet.UI.Markup.IUixmlRootObjectProvider"),
+                ProvideValueTarget = typeSystem.FindType(typeof(Alternet.UI.Port.IUixmlProvideValueTarget)),
+                RootObjectProvider = typeSystem.FindType(typeof(Alternet.UI.Port.IUixmlRootObjectProvider)),
                 RootObjectProviderIntermediateRootPropertyName = "IntermediateRootObject",
-                UriContextProvider = typeSystem.GetType("Alternet.UI.Markup.IUixmlUriContext"),
+                UriContextProvider = typeSystem.FindType(typeof(Alternet.UI.Port.IUixmlUriContext)),
                 ParentStackProvider =
-                    typeSystem.GetType("Alternet.UI.Markup.IUixmlPortXamlIlParentStackProvider"),
+                    typeSystem.FindType(typeof(Alternet.UI.Port.IUixmlPortXamlIlParentStackProvider)),
 
                 XmlNamespaceInfoProvider =
-                    typeSystem.GetType("Alternet.UI.Markup.IUixmlPortXamlIlXmlNamespaceInfoProvider"),
+                    typeSystem.FindType(typeof(Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider)),
                 //DeferredContentPropertyAttributes = {typeSystem.GetType("Alternet.UI.Metadata.TemplateContentAttribute")},
-                DeferredContentExecutorCustomizationDefaultTypeParameter = typeSystem.GetType("Alternet.UI.Control"),
-                DeferredContentExecutorCustomizationTypeParameterDeferredContentAttributePropertyNames = new List<string>
+                DeferredContentExecutorCustomizationDefaultTypeParameter
+                = typeSystem.FindType(typeof(Alternet.UI.Control)),
+                
+                DeferredContentExecutorCustomizationTypeParameterDeferredContentAttributePropertyNames
+                = new List<string>
                 {
                     "TemplateResultType"
                 },
@@ -78,7 +81,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             IXamlTypeBuilder<IXamlILEmitter> typebuilder, IXamlILEmitter constructor)
         {
 
-            var nameScopeType = typeSystem.FindType("Alternet.UI.Markup.INameScope");
+            var nameScopeType = typeSystem.FindType(typeof(Alternet.UI.Markup.INameScope));
             var field = typebuilder.DefineField(nameScopeType, 
                 ContextNameScopeFieldName, true, false);
             constructor

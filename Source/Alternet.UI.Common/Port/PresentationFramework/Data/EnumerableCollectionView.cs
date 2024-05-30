@@ -15,7 +15,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// Collection view over an IEnumerable.

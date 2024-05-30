@@ -16,7 +16,7 @@
 
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     ExceptionValidationRule can be added to the ValidationRulesCollection of a Binding

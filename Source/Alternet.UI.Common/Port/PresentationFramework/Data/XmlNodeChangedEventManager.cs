@@ -13,7 +13,7 @@ using System;
 using System.Xml;
        // WeakEventManager
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the XmlDocument.XmlNodeChanged event.

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     public static class InheritanceContextHelper
     {

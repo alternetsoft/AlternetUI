@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     // These classes implement a frugal storage model for key/value pair data
     // structures. The keys are integers, and the values objects.

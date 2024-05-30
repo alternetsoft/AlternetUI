@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Threading;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     internal static partial class SafeSecurityHelper
     {
@@ -329,55 +329,6 @@ namespace Alternet.UI.Markup
 #endif //PRESENTATIONCORE
 
         internal const string IMAGE = "image";
-    }
-
-    // for use as the key to a dictionary, when the "real" key is an object
-    // that we should not keep alive by a strong reference.
-    class WeakRefKey : WeakReference
-    {
-        public WeakRefKey(object target)
-            :base(target)
-        {
-            Debug.Assert(target != null);
-            _hashCode = target.GetHashCode();
-        }
-
-        public override int GetHashCode()
-        {
-            return _hashCode;
-        }
-
-        public override bool Equals(object o)
-        {
-            WeakRefKey weakRef = o as WeakRefKey;
-            if (weakRef != null)
-            {
-                object target1 = Target;
-                object target2 = weakRef.Target;
-
-                if (target1 != null && target2 != null)
-                {
-                    return (target1 == target2);
-                }
-            }
-            return base.Equals(o);
-        }
-
-        public static bool operator ==(WeakRefKey left, WeakRefKey right)
-        {
-            if (object.ReferenceEquals(left, null))
-            {
-                return object.ReferenceEquals(right, null);
-            }
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(WeakRefKey left, WeakRefKey right)
-        {
-            return !(left == right);
-        }
-
-        readonly int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
     }
 
     // This cleanup token will be immediately thrown away and as a result it will

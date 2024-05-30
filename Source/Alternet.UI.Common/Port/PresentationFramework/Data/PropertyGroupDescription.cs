@@ -19,7 +19,7 @@ using System.Globalization;     // CultureInfo
                                 // XmlHelper
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Description of grouping based on a property value.

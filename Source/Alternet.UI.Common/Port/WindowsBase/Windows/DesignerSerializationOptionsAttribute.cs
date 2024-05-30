@@ -14,7 +14,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Specifies the serialization flags per property

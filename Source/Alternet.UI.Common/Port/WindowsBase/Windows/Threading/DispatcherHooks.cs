@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Additional information provided about a dispatcher.

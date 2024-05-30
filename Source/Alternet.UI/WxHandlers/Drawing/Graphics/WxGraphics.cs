@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
-using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
@@ -93,8 +92,8 @@ namespace Alternet.Drawing
         public override SizeD GetTextExtent(
             string text,
             Font font,
-            out double? descent,
-            out double? externalLeading,
+            out Coord? descent,
+            out Coord? externalLeading,
             IControl? control = null)
         {
             var dc = (UI.Native.DrawingContext)NativeObject;
@@ -129,7 +128,7 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            double angle)
+            Coord angle)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
@@ -188,7 +187,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius)
+        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
             dc.RoundedRectangle(
                 (UI.Native.Pen)pen.Handler,
@@ -245,9 +244,9 @@ namespace Alternet.Drawing
             Pen pen,
             Brush brush,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle)
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
         {
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
@@ -261,7 +260,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Circle(Pen pen, Brush brush, PointD center, double radius)
+        public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
@@ -302,9 +301,9 @@ namespace Alternet.Drawing
         public override void DrawArc(
             Pen pen,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle)
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
         {
             DebugPenAssert(pen);
             dc.DrawArc(
@@ -316,7 +315,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawPoint(Pen pen, double x, double y)
+        public override void DrawPoint(Pen pen, Coord x, Coord y)
         {
             DebugPenAssert(pen);
             dc.DrawPoint((UI.Native.Pen)pen.Handler, x, y);
@@ -326,9 +325,9 @@ namespace Alternet.Drawing
         public override void FillPie(
             Brush brush,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle)
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
         {
             DebugBrushAssert(brush);
             dc.FillPie((UI.Native.Brush)brush.Handler, center, radius, startAngle, sweepAngle);
@@ -338,9 +337,9 @@ namespace Alternet.Drawing
         public override void DrawPie(
             Pen pen,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle)
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
         {
             DebugPenAssert(pen);
             dc.DrawPie((UI.Native.Pen)pen.Handler, center, radius, startAngle, sweepAngle);
@@ -372,28 +371,28 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawCircle(Pen pen, PointD center, double radius)
+        public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
             DebugPenAssert(pen);
             dc.DrawCircle((UI.Native.Pen)pen.Handler, center, radius);
         }
 
         /// <inheritdoc/>
-        public override void FillCircle(Brush brush, PointD center, double radius)
+        public override void FillCircle(Brush brush, PointD center, Coord radius)
         {
             DebugBrushAssert(brush);
             dc.FillCircle((UI.Native.Brush)brush.Handler, center, radius);
         }
 
         /// <inheritdoc/>
-        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        public override void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius)
         {
             DebugPenAssert(pen);
             dc.DrawRoundedRectangle((UI.Native.Pen)pen.Handler, rect, cornerRadius);
         }
 
         /// <inheritdoc/>
-        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        public override void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
         {
             DebugBrushAssert(brush);
             dc.FillRoundedRectangle((UI.Native.Brush)brush.Handler, rect, cornerRadius);
@@ -537,14 +536,14 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void SetPixel(double x, double y, Pen pen)
+        public override void SetPixel(Coord x, Coord y, Pen pen)
         {
             DebugPenAssert(pen);
             dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.Handler);
         }
 
         /// <inheritdoc/>
-        public override void SetPixel(double x, double y, Color color)
+        public override void SetPixel(Coord x, Coord y, Color color)
         {
             DebugColorAssert(color);
             dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.Handler);

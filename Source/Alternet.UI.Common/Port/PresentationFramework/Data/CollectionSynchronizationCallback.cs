@@ -13,7 +13,7 @@
 using System;
 using System.Collections;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// An application that wishes to allow Alternet UI to participate in synchronized

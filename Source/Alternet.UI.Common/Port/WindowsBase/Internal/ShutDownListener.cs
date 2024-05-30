@@ -34,7 +34,7 @@ using System;
 using System.Threading;             // Interlocked
 using Alternet.UI.Threading;     // Dispatcher
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed]   // defined in Base, also used in Framework
     [Flags]

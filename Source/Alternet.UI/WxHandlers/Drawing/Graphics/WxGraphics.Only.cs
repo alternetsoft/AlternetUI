@@ -34,7 +34,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets text measurement.
         /// </summary>
-        public SizeD MeasureText(string text, Font font, double maximumWidth)
+        public SizeD MeasureText(string text, Font font, Coord maximumWidth)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
@@ -51,7 +51,7 @@ namespace Alternet.Drawing
         public SizeD MeasureText(
             string text,
             Font font,
-            double maximumWidth,
+            Coord maximumWidth,
             TextFormat format)
         {
             DebugTextAssert(text);

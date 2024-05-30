@@ -8,7 +8,7 @@ using System;
 
 using System.Collections.Specialized;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     The container for all state associated

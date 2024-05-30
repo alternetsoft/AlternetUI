@@ -10,9 +10,9 @@
 using Alternet.UI.Internal;
 using System;
 using System.Diagnostics;
-using PresentationTraceSources = Alternet.Base.Diagnostics.PresentationTraceSources;
+using PresentationTraceSources = Alternet.UI.Port.PresentationTraceSources;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     static internal partial class TraceData
     {

@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class TraceLog
     {

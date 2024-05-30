@@ -21,7 +21,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class CookieHandler
     {

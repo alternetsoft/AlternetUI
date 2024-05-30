@@ -28,7 +28,7 @@ using System;
 using System.Reflection;            // Assembly
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     [FriendAccessAllowed]
     internal enum UncommonAssembly

@@ -15,7 +15,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Provides services to help resolve nsPrefix:LocalName into the appropriate Type.

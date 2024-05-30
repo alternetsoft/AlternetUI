@@ -9,7 +9,7 @@
 // Description: Abstract base class for all default value factories
 //
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     // <summary>
     // Abstract base class for all DefaultValueFactory implementations. Default 

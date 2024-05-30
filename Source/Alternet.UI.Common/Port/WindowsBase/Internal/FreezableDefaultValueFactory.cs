@@ -13,7 +13,7 @@ using System;
 using System.Diagnostics;
 
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     // <summary>
     // FreezableDefaultValueFactory is a DefaultValueFactory implementation which 

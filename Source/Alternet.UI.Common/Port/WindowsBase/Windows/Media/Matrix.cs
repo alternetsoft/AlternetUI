@@ -43,7 +43,7 @@ using Alternet.Drawing;
 // windows/wcp/DevTest/Drts/MediaApi/MediaPerf.cs includes the
 // simple test of matrix multiplication speed used for these results.
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// Matrix
@@ -430,7 +430,7 @@ namespace Alternet.UI
         {
             get
             {
-                return !DoubleUtil.IsZero(Determinant);
+                return !DoubleUtils.IsZero(Determinant);
             }
         }
 
@@ -445,7 +445,7 @@ namespace Alternet.UI
         {
             double determinant = Determinant;
 
-            if (DoubleUtil.IsZero(determinant))
+            if (DoubleUtils.IsZero(determinant))
             {
                 throw new System.InvalidOperationException(SR.Get(SRID.Transform_NotInvertible));
             }

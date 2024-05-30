@@ -18,7 +18,7 @@ using System.Globalization;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// VectorConverter - Converter class for converting instances of other types to and from Vector instances

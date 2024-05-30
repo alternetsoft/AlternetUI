@@ -136,7 +136,7 @@ using System.Reflection;
 // for exception strings
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     #region WeakRefKey
 

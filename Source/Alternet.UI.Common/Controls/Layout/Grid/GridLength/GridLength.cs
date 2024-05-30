@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// </exception>
         public GridLength(double value = 0, GridUnitType type = GridUnitType.Auto)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (DoubleUtils.IsNaN(value))
                 throw new ArgumentException();
 
             if (double.IsInfinity(value))

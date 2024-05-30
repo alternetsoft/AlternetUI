@@ -55,7 +55,7 @@ using Alternet.UI.Threading;
 // a root item, calls a few methods, then disconnects.  This mode is used by
 // the property engine and by animation in support of timeline setters.
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal enum PropertyPathStatus : byte { Inactive, Active, PathError, AsyncRequestPending }
 

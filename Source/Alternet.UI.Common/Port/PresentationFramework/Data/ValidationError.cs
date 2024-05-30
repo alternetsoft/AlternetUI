@@ -14,7 +14,7 @@
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// An error in validation -- either created by an ValidationRule

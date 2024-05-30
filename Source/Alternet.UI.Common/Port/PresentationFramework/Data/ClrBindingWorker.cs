@@ -15,10 +15,8 @@ using System.Threading;
 using System.ComponentModel;
 
 using System.Diagnostics;
-using Alternet.UI.Threading;
-using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class ClrBindingWorker : BindingWorker
     {

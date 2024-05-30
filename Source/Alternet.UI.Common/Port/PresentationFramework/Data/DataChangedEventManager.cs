@@ -12,7 +12,7 @@
 using System;
        // WeakEventManager
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the DataSourceProvider.DataChanged event.

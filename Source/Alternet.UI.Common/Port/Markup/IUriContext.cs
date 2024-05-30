@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Alternet.UI.Markup
+namespace Alternet.UI.Port
 {
     ///<summary>
     ///     The IUriContext interface allows elements (like Frame, PageViewer) and type converters

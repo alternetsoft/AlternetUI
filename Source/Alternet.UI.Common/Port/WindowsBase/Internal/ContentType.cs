@@ -54,7 +54,7 @@ using System.Text;                  // For StringBuilder
                                     // For Exception strings - SRID
 using System.Diagnostics;           // For Debug.Assert
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Content Type class

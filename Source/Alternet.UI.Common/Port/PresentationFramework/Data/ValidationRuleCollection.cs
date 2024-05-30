@@ -17,7 +17,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     ValidationRulesCollection is a collection of ValidationRule

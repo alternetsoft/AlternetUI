@@ -2,7 +2,7 @@
 #nullable disable
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Used to mark internal metadata

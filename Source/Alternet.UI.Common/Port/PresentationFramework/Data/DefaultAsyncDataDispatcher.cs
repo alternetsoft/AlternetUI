@@ -13,7 +13,7 @@ using System.Collections;
 using System.Threading;
 using Alternet.UI.Markup;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class DefaultAsyncDataDispatcher : IAsyncDataDispatcher
     {

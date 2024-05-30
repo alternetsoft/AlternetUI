@@ -17,7 +17,7 @@
 
 using System.Globalization;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///      ValidationRule is a member of ValidationRules Collection.

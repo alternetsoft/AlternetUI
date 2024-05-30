@@ -20,7 +20,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;        // ConstructorInfo
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// <see cref="ICollectionView"/> based on and associated to <see cref="IList"/>.

@@ -19,7 +19,7 @@ using System.ComponentModel;
 
 using System;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Holds an existing collection structure
@@ -347,7 +347,7 @@ namespace Alternet.UI
             // unhook from the old collection view
             if (View != null)
             {
-                Alternet.Base.Collections.Specialized.CollectionChangedEventManager.RemoveHandler(View, OnCollectionChanged);
+                Alternet.UI.Port.CollectionChangedEventManager.RemoveHandler(View, OnCollectionChanged);
 
                 if (_traceLog != null)
                     _traceLog.Add("Unsubscribe to CollectionChange from {0}",
@@ -363,7 +363,7 @@ namespace Alternet.UI
             // hook up to the new collection view
             if (View != null)
             {
-                Alternet.Base.Collections.Specialized.CollectionChangedEventManager.AddHandler(View, OnCollectionChanged);
+                Alternet.UI.Port.CollectionChangedEventManager.AddHandler(View, OnCollectionChanged);
 
                 if (_traceLog != null)
                     _traceLog.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));

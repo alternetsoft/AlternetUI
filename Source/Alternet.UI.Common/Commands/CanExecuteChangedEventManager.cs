@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Alternet.UI.Internal;
+using Alternet.UI.Port;
 
 namespace Alternet.UI
 {

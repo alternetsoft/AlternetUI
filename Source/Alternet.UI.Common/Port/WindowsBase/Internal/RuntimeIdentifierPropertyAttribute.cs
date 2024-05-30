@@ -19,7 +19,7 @@ namespace MS.Internal.Markup
 
 namespace Alternet.UI.Markup
 #else
-namespace Alternet.UI
+namespace Alternet.UI.Port
 #endif
 {
 #if !PBTCOMPILER && !TARGETTING35SP1 && !WINDOWS_BASE

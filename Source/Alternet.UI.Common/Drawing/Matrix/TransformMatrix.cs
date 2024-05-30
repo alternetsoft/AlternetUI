@@ -4,28 +4,31 @@ using System.Runtime.CompilerServices;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /*
+    SKMatrix:
     https://learn.microsoft.com/en-us/previous-versions/xamarin/xamarin-forms/user-interface/graphics/skiasharp/transforms/matrix
-    
+
     ScaleX  SkewY   Persp0
     SkewX   ScaleY  Persp1
     TransX  TransY  Persp2
 
+    TransformMatrix:
     https://docs.wxwidgets.org/3.0/classwx_affine_matrix2_d.html
 
     m_11  m_12   0
     m_21  m_22   0
     m_tx  m_ty   1
 
-        m11 - The value in the first row and first column.
-        m12 - The value in the first row and second column.
-        m21 - The value in the second row and first column.
-        m22 - The value in the second row and second column.
-        dx - The value in the third row and first column.
-        dy - The value in the third row and second column.
-
+    m11 - ScaleX - The value in the first row and first column.
+    m12 - SkewY - The value in the first row and second column.
+    m21 - SkewX - The value in the second row and first column.
+    m22 - ScaleY - The value in the second row and second column.
+    dx - TransX - The value in the third row and first column.
+    dy - TransY - The value in the third row and second column.
     */
 
     /// <summary>
@@ -36,12 +39,12 @@ namespace Alternet.Drawing
     {
         public static readonly TransformMatrix Default = new();
 
-        double m11;
-        double m12;
-        double m21;
-        double m22;
-        double dx;
-        double dy;
+        Coord m11;
+        Coord m12;
+        Coord m21;
+        Coord m22;
+        Coord dx;
+        Coord dy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
@@ -57,19 +60,19 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
         /// with the specified elements.
         /// </summary>
-        /// <param name="m11">The value in the first row and first column.</param>
-        /// <param name="m12">The value in the first row and second column.</param>
-        /// <param name="m21">The value in the second row and first column.</param>
-        /// <param name="m22">The value in the second row and second column.</param>
-        /// <param name="dx">The value in the third row and first column.</param>
-        /// <param name="dy">The value in the third row and second column.</param>
+        /// <param name="m11">The scaling in the x-direction.</param>
+        /// <param name="m12">The scaling in the y-direction.</param>
+        /// <param name="m21">The skew in the x-direction.</param>
+        /// <param name="m22">The skew in the y-direction.</param>
+        /// <param name="dx">The translation in the x-direction.</param>
+        /// <param name="dy">The translation in the x-direction.</param>
         public TransformMatrix(
-            double m11,
-            double m12,
-            double m21,
-            double m22,
-            double dx,
-            double dy)
+            Coord m11,
+            Coord m12,
+            Coord m21,
+            Coord m22,
+            Coord dx,
+            Coord dy)
         {
             this.m11 = m11;
             this.m12 = m12;
@@ -77,6 +80,29 @@ namespace Alternet.Drawing
             this.m22 = m22;
             this.dx = dx;
             this.dy = dy;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator TransformMatrix(SKMatrix m)
+        {
+            var result = new TransformMatrix(m.ScaleX, m.SkewY, m.SkewX, m.ScaleY, m.TransX, m.TransY);
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator SKMatrix (TransformMatrix m)
+        {
+            var result = new SKMatrix(
+                (float)m.ScaleX,
+                (float)m.SkewX,
+                (float)m.TransX,
+                (float)m.SkewY,
+                (float)m.ScaleY,
+                (float)m.TransY,
+                0,
+                0,
+                1);
+            return result;
         }
 
         /// <summary>
@@ -90,7 +116,7 @@ namespace Alternet.Drawing
         /// <see cref="TransformMatrix"/> are represented by the
         /// values in the array in that order.
         /// </remarks>
-        public double[] Elements
+        public Coord[] Elements
         {
             get => new[] { m11, m12, m21, m22, dx, dy };
             set
@@ -105,10 +131,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the first row and first column of the
-        /// new <see cref="TransformMatrix"/>.
+        /// Gets or sets the scaling in the x-direction. This is the same as <see cref="ScaleX"/>.
+        /// This is the value in the first row and first column of the matrix.
         /// </summary>
-        public double M11
+        public Coord M11
         {
             get
             {
@@ -122,10 +148,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the first row and second column of
-        /// the <see cref="TransformMatrix"/>.
+        /// Gets or sets the skew in the y-direction.
+        /// This is the value in the first row and second column of the matrix.
+        /// This is the same as <see cref="SkewY"/>.
         /// </summary>
-        public double M12
+        public Coord M12
         {
             get
             {
@@ -139,10 +166,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the second row and first column of
-        /// the <see cref="TransformMatrix"/>.
+        /// Gets or sets the skew in the x-direction. 
+        /// This is the value in the second row and first column of the matrix.
+        /// This is the same as <see cref="SkewX"/>.
         /// </summary>
-        public double M21
+        public Coord M21
         {
             get
             {
@@ -156,10 +184,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the value in the second row and second column
-        /// of the <see cref="TransformMatrix"/>.
+        /// Gets or sets the scaling in the y-direction.
+        /// This is the value in the second row and second column of the matrix.
+        /// This is the same as <see cref="ScaleY"/>.
         /// </summary>
-        public double M22
+        public Coord M22
         {
             get
             {
@@ -173,11 +202,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the x translation value (the dx value, or the element
-        /// in the third row and first column) of
-        /// this <see cref="TransformMatrix"/>.
+        /// Get or sets the translation in the x-direction (the dx value, or the element
+        /// in the third row and first column) of the matrix. This is the same as <see cref="TransX"/>.
         /// </summary>
-        public double DX
+        public Coord DX
         {
             get
             {
@@ -191,11 +219,116 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the y translation value (the dy value, or the
-        /// element in the third row and second column) of
-        /// this <see cref="TransformMatrix"/>.
+        /// Get or sets the translation in the y-direction (the dy value, or the
+        /// element in the third row and second column) of the matrix.
+        /// This is the same as <see cref="TransY"/>.
         /// </summary>
-        public double DY
+        public Coord DY
+        {
+            get
+            {
+                return dy;
+            }
+
+            set
+            {
+                dy = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the scaling in the x-direction. This is the same as <see cref="M11"/>.
+        /// This is the value in the first row and first column of the matrix.
+        /// </summary>
+        public Coord ScaleX
+        {
+            get
+            {
+                return m11;
+            }
+            set
+            {
+                m11 = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the skew in the x-direction. This is the same as <see cref="M21"/>.
+        /// This is the value in the second row and first column in the matrix.
+        /// </summary>
+        public Coord SkewX
+        {
+            get
+            {
+                return m21;
+            }
+
+            set
+            {
+                m21 = value;
+            }
+        }
+
+        /// <summary>
+        /// Get or sets the translation in the x-direction.
+        /// This is the same as <see cref="DX"/>.
+        /// This is the value in the third row and first column in the matrix.
+        /// </summary>
+        public Coord TransX
+        {
+            get
+            {
+                return dx;
+            }
+            
+            set
+            {
+                dx = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the skew in the y-direction.
+        /// This is the value in the first row and second column in the matrix.
+        /// This is the same as <see cref="M12"/>.
+        /// </summary>
+        public Coord SkewY
+        {
+            get
+            {
+                return m12;
+            }
+            
+            set
+            {
+                m12 = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the scaling in the y-direction.
+        /// This is the same as <see cref="M22"/>.
+        /// This is the value in the second row and second column in the matrix.
+        /// </summary>
+        public Coord ScaleY
+        {
+            get
+            {
+                return m22;
+            }
+
+            set
+            {
+                m22 = value;
+            }
+        }
+
+        /// <summary>
+        /// Get or sets the translation in the y-direction.
+        /// This is the same as <see cref="DY"/>.
+        /// This is the value in the third row and second column in the matrix.
+        /// </summary>
+        public Coord TransY
         {
             get
             {
@@ -229,7 +362,7 @@ namespace Alternet.Drawing
         /// Gets the determinant of this matrix.
         /// </summary>
         [Browsable(false)]
-        public double Determinant
+        public Coord Determinant
         {
             get
             {
@@ -244,7 +377,7 @@ namespace Alternet.Drawing
         /// this <see cref="TransformMatrix"/>.</param>
         /// <param name="offsetY">The y value by which to translate
         /// this <see cref="TransformMatrix"/>.</param>
-        public static TransformMatrix CreateTranslation(double offsetX, double offsetY)
+        public static TransformMatrix CreateTranslation(Coord offsetX, Coord offsetY)
         {
             var matrix = new TransformMatrix();
             matrix.Translate(offsetX, offsetY);
@@ -258,7 +391,7 @@ namespace Alternet.Drawing
         /// this <see cref="TransformMatrix"/> in the x-axis direction.</param>
         /// <param name="scaleY">The value by which to scale
         /// this <see cref="TransformMatrix"/> in the y-axis direction.</param>
-        public static TransformMatrix CreateScale(double scaleX, double scaleY)
+        public static TransformMatrix CreateScale(Coord scaleX, Coord scaleY)
         {
             var matrix = new TransformMatrix();
             matrix.Scale(scaleX, scaleY);
@@ -270,7 +403,7 @@ namespace Alternet.Drawing
         /// angle about the origin.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
-        public static TransformMatrix CreateRotation(double angle)
+        public static TransformMatrix CreateRotation(Coord angle)
         {
             var matrix = new TransformMatrix();
             matrix.Rotate(angle);
@@ -332,7 +465,7 @@ namespace Alternet.Drawing
         /// translate this <see cref="TransformMatrix"/>.</param>
         /// <param name="offsetY">The y value by which to
         /// translate this <see cref="TransformMatrix"/>.</param>
-        public void Translate(double offsetX, double offsetY)
+        public void Translate(Coord offsetX, Coord offsetY)
         {
             /*
             add the translation to this matrix
@@ -353,7 +486,7 @@ namespace Alternet.Drawing
         /// scale this <see cref="TransformMatrix"/> in the x-axis direction.</param>
         /// <param name="scaleY">The value by which to
         /// scale this <see cref="TransformMatrix"/> in the y-axis direction.</param>
-        public void Scale(double scaleX, double scaleY)
+        public void Scale(Coord scaleX, Coord scaleY)
         {
             /*
             // add the scale to this matrix
@@ -374,7 +507,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Rotate(double angle)
+        public void Rotate(Coord angle)
         {
             angle %= 360.0; // Doing the modulo before converting to radians reduces total error
             RotateRadians(angle * MathUtils.DegToRad);
@@ -385,7 +518,7 @@ namespace Alternet.Drawing
         /// origin to this <see cref="TransformMatrix"/>.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in radians.</param>
-        public void RotateRadians(double angleRadians)
+        public void RotateRadians(Coord angleRadians)
         {
             /*
             // add the rotation to this matrix (clockwise, radians)

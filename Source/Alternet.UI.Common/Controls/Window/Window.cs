@@ -882,7 +882,7 @@ namespace Alternet.UI
                 child.EnsureHandlerCreated();
         }
 
-        internal static Window? GetParentWindow(DependencyObject dp)
+        internal static Window? GetParentWindow(object dp)
         {
             if (dp is Window w)
                 return w;

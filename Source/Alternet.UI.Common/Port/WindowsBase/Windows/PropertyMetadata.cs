@@ -12,7 +12,7 @@ using System.Collections;
 using Alternet.UI.Threading;  // for DispatcherObject
 using Alternet.UI.Internal;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     Type-specific property metadata

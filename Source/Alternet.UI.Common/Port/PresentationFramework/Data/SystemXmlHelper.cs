@@ -13,7 +13,7 @@ using System.Globalization;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal static class SystemXmlHelper
     {

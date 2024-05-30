@@ -12,7 +12,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// A collection view can implement the ICollectionViewLiveShaping interface if it

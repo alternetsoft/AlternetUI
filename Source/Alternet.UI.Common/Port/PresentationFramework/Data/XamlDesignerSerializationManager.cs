@@ -13,7 +13,7 @@ using Alternet.UI.Markup;
 using System.ComponentModel;
 using System.Xml;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///     The serialization manager offers three services

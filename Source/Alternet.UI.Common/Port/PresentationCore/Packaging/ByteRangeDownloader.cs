@@ -25,7 +25,7 @@ using System.Net.Cache;                     // For RequestCachePolicy
 using System.Runtime.InteropServices;   // For Marshal
 using System.Threading;                  // For Mutex
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Downloader for byte range requests

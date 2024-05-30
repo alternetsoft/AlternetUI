@@ -15,7 +15,7 @@ using System.Threading;             // [ThreadStatic]
                                     // WeakEventManager
 using Alternet.UI.Threading;     // DispatcherObject
 
-namespace Alternet.UI.Internal
+namespace Alternet.UI.Port
 {
     internal class CleanupHelper : DispatcherObject
     {

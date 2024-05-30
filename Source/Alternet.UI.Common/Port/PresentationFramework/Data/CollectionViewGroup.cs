@@ -13,7 +13,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// A CollectionViewGroup, as created by a CollectionView according to a GroupDescription.

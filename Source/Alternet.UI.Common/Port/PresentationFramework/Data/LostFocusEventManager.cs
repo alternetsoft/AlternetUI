@@ -14,7 +14,7 @@ using System;
        // WeakEventManager
           // Helper
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the DependencyObject.LostFocus event.

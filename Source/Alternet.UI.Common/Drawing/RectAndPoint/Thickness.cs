@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <summary>
     /// Thickness is a value type used to describe the thickness of frame around
     /// a rectangle.
-    /// It contains four doubles each corresponding to a side:
+    /// It contains four values each corresponding to a side:
     /// Left, Top, Right, Bottom.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -29,17 +29,17 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness Empty = new();
 
-        private double left;
-        private double top;
-        private double right;
-        private double bottom;
+        private Coord left;
+        private Coord top;
+        private Coord right;
+        private Coord bottom;
 
         /// <summary>
         /// This constructur builds a Thickness with a specified value on every side.
         /// </summary>
         /// <param name="uniformLength">The specified uniform length.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Thickness(double uniformLength)
+        public Thickness(Coord uniformLength)
         {
             left = top = right = bottom = uniformLength;
         }
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <param name="right">The thickness for the right side.</param>
         /// <param name="bottom">The thickness for the bottom side.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Thickness(double left, double top, double right, double bottom)
+        public Thickness(Coord left, Coord top, Coord right, Coord bottom)
         {
             this.left = left;
             this.top = top;
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// <param name="horizontal">The thickness on the left and right.</param>
         /// <param name="vertical">The thickness on the top and bottom.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Thickness(double horizontal, double vertical)
+        public Thickness(Coord horizontal, Coord vertical)
         {
             left = right = horizontal;
             top = bottom = vertical;
@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// <value>Gets the sum, of the <see cref="Left"/> and
         /// <see cref="Right"/> padding values.</value>
         [Browsable(false)]
-        public readonly double Horizontal => left + right;
+        public readonly Coord Horizontal => left + right;
 
         /// <summary>
         /// Gets the combined padding for the top and bottom edges.
@@ -129,19 +129,19 @@ namespace Alternet.UI
         /// <value>Gets the sum, of the <see cref="Top"/> and
         /// <see cref="Bottom"/> padding values.</value>
         [Browsable(false)]
-        public readonly double Vertical => top + bottom;
+        public readonly Coord Vertical => top + bottom;
 
         /// <summary>
         /// This property is the Length on the thickness' left side
         /// </summary>
-        public double Left
+        public Coord Left
         {
             readonly get { return left; }
             set { left = value; }
         }
 
         /// <summary>This property is the Length on the thickness' top side</summary>
-        public double Top
+        public Coord Top
         {
             readonly get { return top; }
             set { top = value; }
@@ -150,7 +150,7 @@ namespace Alternet.UI
         /// <summary>
         /// This property is the Length on the thickness' right side
         /// </summary>
-        public double Right
+        public Coord Right
         {
             readonly get { return right; }
             set { right = value; }
@@ -158,20 +158,20 @@ namespace Alternet.UI
 
         /// <summary>This property is the Length on the thickness' bottom
         /// side</summary>
-        public double Bottom
+        public Coord Bottom
         {
             readonly get { return bottom; }
             set { bottom = value; }
         }
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="double"/> to
+        /// Implicit operator convertion from a single value to
         /// <see cref="Thickness"/>. All fields of thickness instance are assigned
-        /// with the same double value.
+        /// with the same value.
         /// </summary>
         /// <param name="d">New thickness value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Thickness(double d) => new(d);
+        public static implicit operator Thickness(Coord d) => new(d);
 
         /// <summary>
         /// Implicit operator convertion from <see cref="int"/> to
@@ -183,12 +183,12 @@ namespace Alternet.UI
         public static implicit operator Thickness(int d) => new(d);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with four <see cref="double"/> values
+        /// Implicit operator convertion from tuple with four values
         /// to <see cref="Thickness"/>.
         /// </summary>
         /// <param name="d">New thickness value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Thickness((double, double, double, double) d) =>
+        public static implicit operator Thickness((Coord, Coord, Coord, Coord) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
         /// <summary>
@@ -200,9 +200,9 @@ namespace Alternet.UI
         /// otherwise</returns>
         public static bool operator ==(Thickness t1, Thickness t2)
         {
-            static bool EqualOrNaN(double a1, double a2)
+            static bool EqualOrNaN(Coord a1, Coord a2)
             {
-                var result = a1 == a2 || (double.IsNaN(a1) && double.IsNaN(a2));
+                var result = a1 == a2 || (Coord.IsNaN(a1) && Coord.IsNaN(a2));
                 return result;
             }
 
@@ -281,11 +281,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Inflate all fields of the <see cref="Thickness"/> instance on
-        /// the same double value.
+        /// the same value.
         /// </summary>
         /// <param name="value"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Inflate(double value = 1)
+        public void Inflate(Coord value = 1)
         {
             left += value;
             top += value;
@@ -344,9 +344,9 @@ namespace Alternet.UI
                 PropNameStrings.Default.Bottom,
             };
 
-            double[] values = { left, top, right, bottom };
+            Coord[] values = { left, top, right, bottom };
 
-            return StringUtils.ToString<double>(names, values);
+            return StringUtils.ToString<Coord>(names, values);
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="min">Minimal possible thickness.</param>
         /// <param name="max">Maximal possible thikness.</param>
-        public void ApplyMinMax(double min, double max)
+        public void ApplyMinMax(Coord min, Coord max)
         {
             double SetMinMaxValue(double value)
             {

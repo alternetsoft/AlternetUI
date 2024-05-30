@@ -10,7 +10,7 @@
 // Specs:       Asynchronous Data Model.mht
 //
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary> Interface for the asynchronous data dispatcher. </summary>
     internal interface IAsyncDataDispatcher

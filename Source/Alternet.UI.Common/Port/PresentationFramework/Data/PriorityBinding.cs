@@ -19,7 +19,7 @@ using System.ComponentModel;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     /// <summary>
     ///  Describes a collection of bindings attached to a single property.

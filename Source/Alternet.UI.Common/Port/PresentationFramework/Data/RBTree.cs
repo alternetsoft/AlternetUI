@@ -47,7 +47,7 @@ using System.Collections.Generic;
 using System.Text;
 // SR, SRID
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class RBTree<T> : RBNode<T>, IList<T>
     {

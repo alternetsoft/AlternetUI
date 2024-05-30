@@ -17,7 +17,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     ///<summary>
     /// <see cref="ICollectionView"/> based on and associated to 
@@ -2434,7 +2434,7 @@ namespace Alternet.UI
                 _isLiveShapingDirty = value;
                 if (value)
                 {
-                    Dispatcher.BeginInvoke(Alternet.UI.Threading.DispatcherPriority.DataBind, (Action)RestoreLiveShaping);
+                    Dispatcher.BeginInvoke(Alternet.UI.Port.DispatcherPriority.DataBind, (Action)RestoreLiveShaping);
                 }
             }
         }

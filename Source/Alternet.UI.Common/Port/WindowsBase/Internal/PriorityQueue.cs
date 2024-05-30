@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Alternet.UI.Threading
+namespace Alternet.UI.Port
 {
     internal class PriorityQueue<T>
     {

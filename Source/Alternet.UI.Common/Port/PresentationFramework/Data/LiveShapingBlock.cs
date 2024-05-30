@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 
 
-namespace Alternet.UI
+namespace Alternet.UI.Port
 {
     internal class LiveShapingBlock : RBNode<LiveShapingItem>
     {
