@@ -1,7 +1,7 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies how a window is displayed.
+    /// Specifies how a window is displayed (normal, minimized or maximized).
     /// </summary>
     public enum WindowState
     {
