@@ -231,6 +231,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='GenericImage'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator GenericImage(SKBitmap bitmap)
+        {
+            return FromSkia(bitmap);
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
         /// with the given name.
         /// </summary>

@@ -300,6 +300,15 @@ namespace Alternet.Drawing
         public virtual Graphics Canvas => GetDrawingContext();
 
         /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='Image'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Image(SKBitmap bitmap)
+        {
+            return FromSkia(bitmap);
+        }
+
+        /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
