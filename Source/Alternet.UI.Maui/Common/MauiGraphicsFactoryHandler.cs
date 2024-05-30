@@ -13,6 +13,54 @@ namespace Alternet.UI
     {
         public GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }
 
+        /// <inheritdoc/>
+        public IPenHandler CreatePenHandler(Pen pen)
+        {
+            return new MauiPenHandler(pen);
+        }
+
+        /// <inheritdoc/>
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            return new MauiFontFactoryHandler();
+        }
+
+        /// <inheritdoc/>
+        public IBrushHandler CreateTransparentBrushHandler(Brush brush)
+        {
+            return new SkiaTransparentBrushHandler(brush);
+        }
+
+        /// <inheritdoc/>
+        public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
+        {
+            return new SkiaSolidBrushHandler(brush);
+        }
+
+        /// <inheritdoc/>
+        public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
+        {
+            return new SkiaTextureBrushHandler(brush);
+        }
+
+        /// <inheritdoc/>
+        public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
+        {
+            return new SkiaHatchBrushHandler(brush);
+        }
+
+        /// <inheritdoc/>
+        public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush)
+        {
+            return new SkiaLinearGradientBrushHandler(brush);
+        }
+
+        /// <inheritdoc/>
+        public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush)
+        {
+            return new SkiaRadialGradientBrushHandler(brush);
+        }
+
         public bool CanReadGenericImage(string filename)
         {
             throw new NotImplementedException();
