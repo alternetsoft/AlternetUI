@@ -122,7 +122,7 @@ namespace Alternet.Drawing
                 text,
                 origin,
                 font,
-                brush.BrushColor,
+                brush.AsColor,
                 Color.Empty);
         }
 

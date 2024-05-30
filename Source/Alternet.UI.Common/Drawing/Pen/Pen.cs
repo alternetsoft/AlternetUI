@@ -94,7 +94,7 @@ namespace Alternet.Drawing
         /// <param name="brush">A <see cref="Brush"/> that indicates the color of this
         /// <see cref="Pen"/>.</param>
         public Pen(Brush brush)
-            : this(brush.BrushColor)
+            : this(brush.AsColor)
         {
         }
 

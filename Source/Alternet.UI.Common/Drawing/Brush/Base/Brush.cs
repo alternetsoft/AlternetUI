@@ -100,7 +100,7 @@ namespace Alternet.Drawing
             get
             {
                 if (asPen == null)
-                    asPen = new Pen(BrushColor);
+                    asPen = new Pen(AsColor);
                 return asPen;
             }
         }
@@ -113,7 +113,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets color of the brush.
         /// </summary>
-        public virtual Color BrushColor => Color.Black;
+        public virtual Color AsColor => Color.Black;
 
         /// <summary>
         /// Converts the specified <see cref='Pen'/> to a <see cref='SKPaint'/>.
@@ -196,7 +196,7 @@ namespace Alternet.Drawing
         protected virtual SKPaint CreateSkiaPaint()
         {
             SKPaint result = new();
-            result.Color = BrushColor;
+            result.Color = AsColor;
             result.Style = SKPaintStyle.Fill;
             return result;
         }

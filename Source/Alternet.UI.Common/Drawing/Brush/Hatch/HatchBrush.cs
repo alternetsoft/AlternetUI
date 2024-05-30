@@ -53,7 +53,7 @@ namespace Alternet.Drawing
         public override BrushType BrushType => BrushType.Hatch;
 
         /// <inheritdoc/>
-        public override Color BrushColor => this.Color;
+        public override Color AsColor => this.Color;
 
         /// <inheritdoc/>
         public override string ToString()

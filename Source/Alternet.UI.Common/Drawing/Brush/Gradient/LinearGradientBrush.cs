@@ -135,7 +135,7 @@ namespace Alternet.Drawing
         public override BrushType BrushType => BrushType.LinearGradient;
 
         /// <inheritdoc/>
-        public override Color BrushColor => GradientStops.Length > 0 ?
+        public override Color AsColor => GradientStops.Length > 0 ?
             GradientStops[0].Color : Color.Black;
 
         /// <summary>
