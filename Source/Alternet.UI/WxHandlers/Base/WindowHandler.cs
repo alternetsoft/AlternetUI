@@ -9,6 +9,66 @@ namespace Alternet.UI
     {
         private object? statusBar;
 
+        public bool ShowInTaskbar
+        {
+            get => NativeControl.ShowInTaskbar;
+            set => NativeControl.ShowInTaskbar = value;
+        }
+
+        public bool MaximizeEnabled
+        {
+            get => NativeControl.MaximizeEnabled;
+            set => NativeControl.MaximizeEnabled = value;
+        }
+
+        public bool MinimizeEnabled
+        {
+            get => NativeControl.MinimizeEnabled;
+            set => NativeControl.MinimizeEnabled = value;
+        }
+
+        public bool CloseEnabled
+        {
+            get => NativeControl.CloseEnabled;
+            set => NativeControl.CloseEnabled = value;
+        }
+
+        public bool AlwaysOnTop
+        {
+            get => NativeControl.AlwaysOnTop;
+            set => NativeControl.AlwaysOnTop = value;
+        }
+
+        public bool IsToolWindow
+        {
+            get => NativeControl.IsToolWindow;
+            set => NativeControl.IsToolWindow = value;
+        }
+
+        public bool Resizable
+        {
+            get => NativeControl.Resizable;
+            set => NativeControl.Resizable = value;
+        }
+
+        public bool HasBorder
+        {
+            get => NativeControl.HasBorder;
+            set => NativeControl.HasBorder = value;
+        }
+
+        public bool HasTitleBar
+        {
+            get => NativeControl.HasTitleBar;
+            set => NativeControl.HasTitleBar = value;
+        }
+
+        public bool HasSystemMenu
+        {
+            get => NativeControl.HasSystemMenu;
+            set => NativeControl.HasSystemMenu = value;
+        }
+
         public string Title
         {
             get => NativeControl.Title;
@@ -177,17 +237,7 @@ namespace Alternet.UI
             NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
             Control.OwnerChanged -= ApplyOwner;
-            Control.ShowInTaskbarChanged -= ApplyShowInTaskbar;
-            Control.MinimizeEnabledChanged -= ApplyMinimizeEnabled;
-            Control.MaximizeEnabledChanged -= ApplyMaximizeEnabled;
-            Control.CloseEnabledChanged -= ApplyCloseEnabled;
-            Control.AlwaysOnTopChanged -= ApplyAlwaysOnTop;
-            Control.IsToolWindowChanged -= ApplyIsToolWindow;
             Control.ResizableChanged -= ApplyResizable;
-            Control.HasBorderChanged -= ApplyHasBorder;
-            Control.HasTitleBarChanged -= ApplyHasTitleBar;
-            Control.HasSystemMenuChanged -= ApplyHasSystemMenu;
-            Control.IconChanged -= ApplyIcon;
             Control.MenuChanged -= ApplyMenu;
             Control.ToolBarChanged -= ApplyToolbar;
             Control.StatusBarChanged -= ApplyStatusBar;
@@ -199,34 +249,14 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            ApplyShowInTaskbar(null, EventArgs.Empty);
             ApplyOwner(null, EventArgs.Empty);
-            ApplyMaximizeEnabled(null, EventArgs.Empty);
-            ApplyMinimizeEnabled(null, EventArgs.Empty);
-            ApplyCloseEnabled(null, EventArgs.Empty);
-            ApplyAlwaysOnTop(null, EventArgs.Empty);
-            ApplyIsToolWindow(null, EventArgs.Empty);
             ApplyResizable(null, EventArgs.Empty);
-            ApplyHasBorder(null, EventArgs.Empty);
-            ApplyHasTitleBar(null, EventArgs.Empty);
-            ApplyHasSystemMenu(null, EventArgs.Empty);
-            ApplyIcon(null, EventArgs.Empty);
             ApplyMenu(null, EventArgs.Empty);
             ApplyToolbar(null, EventArgs.Empty);
             ApplyStatusBar(null, EventArgs.Empty);
 
-            Control.ShowInTaskbarChanged += ApplyShowInTaskbar;
             Control.OwnerChanged += ApplyOwner;
-            Control.MinimizeEnabledChanged += ApplyMinimizeEnabled;
-            Control.MaximizeEnabledChanged += ApplyMaximizeEnabled;
-            Control.CloseEnabledChanged += ApplyCloseEnabled;
-            Control.AlwaysOnTopChanged += ApplyAlwaysOnTop;
-            Control.IsToolWindowChanged += ApplyIsToolWindow;
             Control.ResizableChanged += ApplyResizable;
-            Control.HasBorderChanged += ApplyHasBorder;
-            Control.HasTitleBarChanged += ApplyHasTitleBar;
-            Control.HasSystemMenuChanged += ApplyHasSystemMenu;
-            Control.IconChanged += ApplyIcon;
             Control.MenuChanged += ApplyMenu;
             Control.ToolBarChanged += ApplyToolbar;
             Control.StatusBarChanged += ApplyStatusBar;
@@ -303,19 +333,14 @@ namespace Alternet.UI
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 
-        private void ApplyIcon(object? sender, EventArgs e)
-        {
-            NativeControl.Icon = (UI.Native.IconSet?)Control.Icon?.Handler;
-        }
-
         private void ApplyMenu(object? sender, EventArgs e)
         {
-            NativeControl.Menu = (Control.Menu as IControl)?.NativeControl as Native.MainMenu;
+            SetMenu(Control.Menu);
         }
 
         private void ApplyToolbar(object? sender, EventArgs e)
         {
-            NativeControl.Toolbar = (Control.ToolBar as IControl)?.NativeControl as Native.Toolbar;
+            SetToolBar(Control.ToolBar);
         }
 
         private void ApplyStatusBar(object? sender, EventArgs e)
@@ -338,54 +363,24 @@ namespace Alternet.UI
             newOwner.AddChild(NativeControl);
         }
 
-        private void ApplyShowInTaskbar(object? sender, EventArgs e)
-        {
-            NativeControl.ShowInTaskbar = Control.ShowInTaskbar;
-        }
-
-        private void ApplyMinimizeEnabled(object? sender, EventArgs e)
-        {
-            NativeControl.MinimizeEnabled = Control.MinimizeEnabled;
-        }
-
-        private void ApplyMaximizeEnabled(object? sender, EventArgs e)
-        {
-            NativeControl.MaximizeEnabled = Control.MaximizeEnabled;
-        }
-
-        private void ApplyCloseEnabled(object? sender, EventArgs e)
-        {
-            NativeControl.CloseEnabled = Control.CloseEnabled;
-        }
-
-        private void ApplyAlwaysOnTop(object? sender, EventArgs e)
-        {
-            NativeControl.AlwaysOnTop = Control.TopMost;
-        }
-
-        private void ApplyHasSystemMenu(object? sender, EventArgs e)
-        {
-            NativeControl.HasSystemMenu = Control.HasSystemMenu;
-        }
-
-        private void ApplyIsToolWindow(object? sender, EventArgs e)
-        {
-            NativeControl.IsToolWindow = Control.IsToolWindow;
-        }
-
         private void ApplyResizable(object? sender, EventArgs e)
         {
             NativeControl.Resizable = Control.Resizable;
         }
 
-        private void ApplyHasBorder(object? sender, EventArgs e)
+        public void SetIcon(IconSet? value)
         {
-            NativeControl.HasBorder = Control.HasBorder;
+            NativeControl.Icon = (UI.Native.IconSet?)value?.Handler;
         }
 
-        private void ApplyHasTitleBar(object? sender, EventArgs e)
+        public void SetMenu(object? value)
         {
-            NativeControl.HasTitleBar = Control.HasTitleBar;
+            NativeControl.Menu = (value as IControl)?.NativeControl as Native.MainMenu;
+        }
+
+        public void SetToolBar(object? value)
+        {
+            NativeControl.Toolbar = (value as IControl)?.NativeControl as Native.Toolbar;
         }
 
         private void NativeControl_Closing(object? sender, CancelEventArgs e)

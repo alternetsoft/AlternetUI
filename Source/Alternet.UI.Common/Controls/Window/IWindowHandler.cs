@@ -10,6 +10,32 @@ namespace Alternet.UI
 {
     public interface IWindowHandler : IControlHandler
     {
+        bool ShowInTaskbar { get; set; }
+        
+        bool MaximizeEnabled { get; set; }
+
+        bool MinimizeEnabled { get; set; }
+        
+        bool CloseEnabled { get; set; }
+        
+        bool AlwaysOnTop { get; set; }
+        
+        bool IsToolWindow { get; set; }
+        
+        bool Resizable { get; set; }
+        
+        bool HasBorder { get; set; }
+        
+        bool HasTitleBar { get; set; }
+        
+        bool HasSystemMenu { get; set; }
+        
+        void SetIcon(IconSet? value);
+        
+        void SetMenu(object? value);
+        
+        void SetToolBar(object? value);
+        
         Action? StateChanged { get; set; }
 
         string Title { get; set; }

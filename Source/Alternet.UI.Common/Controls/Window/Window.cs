@@ -290,6 +290,7 @@ namespace Alternet.UI
                 info.HasTitleBar = value;
                 OnHasTitleBarChanged(EventArgs.Empty);
                 HasTitleBarChanged?.Invoke(this, EventArgs.Empty);
+                Handler.HasTitleBar = value;
             }
         }
 
@@ -316,6 +317,7 @@ namespace Alternet.UI
                 info.HasBorder = value;
                 OnHasBorderChanged(EventArgs.Empty);
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
+                Handler.HasBorder = value;
             }
         }
 
@@ -366,6 +368,7 @@ namespace Alternet.UI
                 info.IsToolWindow = value;
                 OnIsToolWindowChanged(EventArgs.Empty);
                 IsToolWindowChanged?.Invoke(this, EventArgs.Empty);
+                Handler.IsToolWindow = value;
             }
         }
 
@@ -408,6 +411,7 @@ namespace Alternet.UI
                 info.HasSystemMenu = value;
                 OnHasSystemMenuChanged(EventArgs.Empty);
                 HasSystemMenuChanged?.Invoke(this, EventArgs.Empty);
+                Handler.HasSystemMenu = value;
             }
         }
 
@@ -427,6 +431,7 @@ namespace Alternet.UI
                 info.AlwaysOnTop = value;
                 OnAlwaysOnTopChanged(EventArgs.Empty);
                 AlwaysOnTopChanged?.Invoke(this, EventArgs.Empty);
+                Handler.AlwaysOnTop = value;
             }
         }
 
@@ -444,6 +449,7 @@ namespace Alternet.UI
                 info.CloseEnabled = value;
                 OnCloseEnabledChanged(EventArgs.Empty);
                 CloseEnabledChanged?.Invoke(this, EventArgs.Empty);
+                Handler.CloseEnabled = value;
             }
         }
 
@@ -461,6 +467,7 @@ namespace Alternet.UI
                 info.MaximizeEnabled = value;
                 OnMaximizeEnabledChanged(EventArgs.Empty);
                 MaximizeEnabledChanged?.Invoke(this, EventArgs.Empty);
+                Handler.MaximizeEnabled = value;
             }
         }
 
@@ -490,6 +497,7 @@ namespace Alternet.UI
                 info.ShowInTaskbar = value;
                 OnShowInTaskbarChanged(EventArgs.Empty);
                 ShowInTaskbarChanged?.Invoke(this, EventArgs.Empty);
+                Handler.ShowInTaskbar = value;
             }
         }
 
@@ -507,6 +515,7 @@ namespace Alternet.UI
                 info.MinimizeEnabled = value;
                 OnMinimizeEnabledChanged(EventArgs.Empty);
                 MinimizeEnabledChanged?.Invoke(this, EventArgs.Empty);
+                Handler.MinimizeEnabled = value;
             }
         }
 
@@ -730,6 +739,7 @@ namespace Alternet.UI
                     return;
 
                 icon = value;
+                Handler.SetIcon(value);
                 OnIconChanged(EventArgs.Empty);
                 IconChanged?.Invoke(this, EventArgs.Empty);
             }
