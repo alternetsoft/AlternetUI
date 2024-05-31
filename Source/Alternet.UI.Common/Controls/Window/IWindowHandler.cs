@@ -31,5 +31,9 @@ namespace Alternet.UI
         void Close();
 
         void Activate();
+
+        void AddInputBinding(InputBinding value);
+
+        void RemoveInputBinding(InputBinding item);
     }
 }

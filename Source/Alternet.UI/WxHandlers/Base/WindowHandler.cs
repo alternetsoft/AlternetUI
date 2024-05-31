@@ -175,9 +175,6 @@ namespace Alternet.UI
             Control.ToolBarChanged -= ApplyToolbar;
             Control.StatusBarChanged -= ApplyStatusBar;
 
-            Control.InputBindings.ItemInserted -= InputBindings_ItemInserted;
-            Control.InputBindings.ItemRemoved -= InputBindings_ItemRemoved;
-
             base.OnDetach();
         }
 
@@ -201,7 +198,6 @@ namespace Alternet.UI
             ApplyMenu(null, EventArgs.Empty);
             ApplyToolbar(null, EventArgs.Empty);
             ApplyStatusBar(null, EventArgs.Empty);
-            ApplyInputBindings(null, EventArgs.Empty);
 
             Control.TitleChanged += ApplyTitle;
             Control.ShowInTaskbarChanged += ApplyShowInTaskbar;
@@ -220,11 +216,7 @@ namespace Alternet.UI
             Control.ToolBarChanged += ApplyToolbar;
             Control.StatusBarChanged += ApplyStatusBar;
 
-            Control.InputBindings.ItemInserted += InputBindings_ItemInserted;
-            Control.InputBindings.ItemRemoved += InputBindings_ItemRemoved;
-
             NativeControl.Closing += NativeControl_Closing;
-            /*NativeControl.SizeChanged = NativeControl_SizeChanged;*/
             NativeControl.LocationChanged = NativeControl_LocationChanged;
             NativeControl.StateChanged = Control.RaiseStateChanged;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
@@ -284,20 +276,7 @@ namespace Alternet.UI
             e.Handled = true;
         }
 
-        private void InputBindings_ItemInserted(object? sender, int index, InputBinding item)
-        {
-            AddInputBinding(item);
-
-            Port.InheritanceContextHelper.ProvideContextForObject(Control, item);
-        }
-
-        private void ApplyInputBindings(object? sender, EventArgs e)
-        {
-            foreach (var binding in Control.InputBindings)
-                AddInputBinding(binding);
-        }
-
-        private void AddInputBinding(InputBinding value)
+        public void AddInputBinding(InputBinding value)
         {
             var keyBinding = (KeyBinding)value;
             NativeControl.AddInputBinding(
@@ -306,29 +285,10 @@ namespace Alternet.UI
                 keyBinding.Modifiers);
         }
 
-        private void InputBindings_ItemRemoved(object? sender, int index, InputBinding item)
+        public void RemoveInputBinding(InputBinding item)
         {
-            Port.InheritanceContextHelper.RemoveContextFromObject(Control, item);
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
-
-        /*private void NativeControl_SizeChanged()
-        {
-            if (!BaseApplication.IsLinuxOS)
-                Control.PerformLayout();
-            BaseApplication.AddIdleTask(() =>
-            {
-                if (Control?.IsDisposed ?? true)
-                    return;
-                Control.PerformLayout();
-            });
-            Control.RaiseSizeChanged(EventArgs.Empty);
-        }*/
-
-        /*private void NativeControl_StateChanged()
-        {
-            NativeControl_SizeChanged();
-        }*/
 
         private void ApplyIcon(object? sender, EventArgs e)
         {

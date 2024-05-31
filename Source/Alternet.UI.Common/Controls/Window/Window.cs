@@ -26,6 +26,7 @@ namespace Alternet.UI
         private object? menu = null;
         private Window? owner;
         private bool needLayout = false;
+        private Collection<InputBinding>? inputBindings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -745,7 +746,30 @@ namespace Alternet.UI
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings { get; } = new();
+        public virtual Collection<InputBinding> InputBindings
+        {
+            get
+            {
+                if(inputBindings is null)
+                {
+                    inputBindings = new();
+
+                    inputBindings.ItemRemoved += (sender, index, item) =>
+                    {
+                        Port.InheritanceContextHelper.RemoveContextFromObject(this, item);
+                        Handler.RemoveInputBinding(item);
+                    };
+
+                    inputBindings.ItemInserted += (sender, index, item) =>
+                    {
+                        Handler.AddInputBinding(item);
+                        Port.InheritanceContextHelper.ProvideContextForObject(this, item);
+                    };
+                }
+
+                return inputBindings;
+            }
+        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
