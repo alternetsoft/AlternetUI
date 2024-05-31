@@ -41,7 +41,7 @@ namespace Alternet.UI
         public static SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState,
-            GenericControlState controlState)
+            VisualControlState controlState)
         {
             return ControlPainter.Handler.GetCheckBoxSize(control, checkState, controlState);
         }
@@ -52,7 +52,7 @@ namespace Alternet.UI
             Control control,
             RectD rect,
             CheckState checkState,
-            GenericControlState controlState)
+            VisualControlState controlState)
         {
             ControlPainter.Handler.DrawCheckBox(
                 control,

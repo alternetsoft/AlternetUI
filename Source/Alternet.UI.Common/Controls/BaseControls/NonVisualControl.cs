@@ -16,7 +16,7 @@ namespace Alternet.UI
     public partial class NonVisualControl : Control
     {
         /// <summary>
-        /// This property has no meaning in the <see cref="NonVisualControl"/> descendants.
+        /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
         public override double Left { get; set; }

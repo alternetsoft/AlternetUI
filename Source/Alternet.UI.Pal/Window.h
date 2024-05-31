@@ -117,8 +117,7 @@ namespace Alternet::UI
         void UpdateAcceleratorTable(wxWindow* frame);
 
         void OnClose(wxCloseEvent& event);
-        void OnSizeChanged(wxSizeEvent& event);
-        void OnMove(wxMoveEvent& event);
+        void OnSizeChanged(wxSizeEvent& event) override;
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);
         void OnCommand(wxCommandEvent& event);

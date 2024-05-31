@@ -448,18 +448,10 @@ namespace Alternet.UI.Native
                 {
                     StateChanged?.Invoke(); return IntPtr.Zero;
                 }
-                case NativeApi.WindowEvent.SizeChanged:
-                {
-                    SizeChanged?.Invoke(); return IntPtr.Zero;
-                }
                 case NativeApi.WindowEvent.InputBindingCommandExecuted:
                 {
                     var ea = new NativeEventArgs<CommandEventData>(MarshalEx.PtrToStructure<CommandEventData>(parameter));
                     InputBindingCommandExecuted?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.WindowEvent.LocationChanged:
-                {
-                    LocationChanged?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
@@ -467,9 +459,7 @@ namespace Alternet.UI.Native
         
         public event EventHandler<CancelEventArgs>? Closing;
         public Action? StateChanged;
-        public Action? SizeChanged;
         public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
-        public Action? LocationChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -483,9 +473,7 @@ namespace Alternet.UI.Native
             {
                 Closing,
                 StateChanged,
-                SizeChanged,
                 InputBindingCommandExecuted,
-                LocationChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

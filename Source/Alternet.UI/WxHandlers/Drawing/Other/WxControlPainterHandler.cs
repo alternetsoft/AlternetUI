@@ -268,7 +268,7 @@ namespace Alternet.Drawing
         public SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState,
-            GenericControlState controlState)
+            VisualControlState controlState)
         {
             var flags = Convert(checkState, controlState);
             return GetCheckBoxSize(control, flags);
@@ -280,20 +280,20 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             CheckState checkState,
-            GenericControlState controlState)
+            VisualControlState controlState)
         {
             var flags = Convert(checkState, controlState);
             DrawCheckBox(control, canvas, rect, flags);
         }
 
         /// <summary>
-        /// Converts <see cref="CheckState"/> and <see cref="GenericControlState"/>
+        /// Converts <see cref="CheckState"/> and <see cref="VisualControlState"/>
         /// to <see cref="DrawFlags"/>.
         /// </summary>
         /// <param name="checkState"></param>
         /// <param name="controlState"></param>
         /// <returns></returns>
-        public virtual DrawFlags Convert(CheckState checkState, GenericControlState controlState)
+        public virtual DrawFlags Convert(CheckState checkState, VisualControlState controlState)
         {
             DrawFlags flags;
             switch (checkState)
@@ -311,10 +311,10 @@ namespace Alternet.Drawing
 
             switch (controlState)
             {
-                case GenericControlState.Hovered:
+                case VisualControlState.Hovered:
                     flags |= DrawFlags.Current;
                     break;
-                case GenericControlState.Disabled:
+                case VisualControlState.Disabled:
                     flags |= DrawFlags.Disabled;
                     break;
             }

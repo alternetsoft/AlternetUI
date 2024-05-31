@@ -398,7 +398,7 @@ namespace MenuSample
             object? sender,
             EventArgs e)
         {
-            toolbar.TextVisible = showToolbarTextCheckBox.IsChecked;
+            toolbar.TextVisible = (sender as CheckBox)?.IsChecked ?? true;
         }
 
         /*private void ImageTextVertical()
@@ -443,7 +443,7 @@ namespace MenuSample
             object? sender,
             EventArgs e)
         {
-            toolbar.ImageVisible = showToolbarImagesCheckBox.IsChecked;
+            toolbar.ImageVisible = (sender as CheckBox)?.IsChecked ?? true;
         }
 
         private void ToolbarDropDownMenuItem_Click(object? sender, EventArgs e)

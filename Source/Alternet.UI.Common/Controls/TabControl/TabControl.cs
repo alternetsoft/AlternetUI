@@ -830,7 +830,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual Color GetInteriorBorderColor()
         {
-            var color = Borders?.GetObjectOrNull(GenericControlState.Normal)?.Color;
+            var color = Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
             color ??= ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
             return color;
         }

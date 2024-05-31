@@ -141,6 +141,7 @@ namespace WindowPropertiesSample
             testWindow.Resizable = resizableCheckBox.IsChecked;
             testWindow.HasBorder = hasBorderCheckBox.IsChecked;
             testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
+            testWindow.Layout = LayoutStyle.Vertical;
 
             if (sLocation is not null)
             {
@@ -157,26 +158,27 @@ namespace WindowPropertiesSample
             testWindow.SizeChanged += TestWindow_SizeChanged;
             testWindow.LocationChanged += TestWindow_LocationChanged;
 
-            VerticalStackPanel panel = new()
+            testWindow.Disposed += (s, e) =>
             {
-                Padding = 10,
-                Parent = testWindow,
+                BaseApplication.Log("Test Window: Disposed.");
             };
 
             PanelOkCancelButtons buttons = new()
             {
-                Parent = panel,
+                Parent = testWindow,
                 UseModalResult = true,
             };
 
             buttons.OkButton.Click += OkButton_Click;
             buttons.CancelButton.Click += CancelButton_Click;
 
-            ListBox listBox = new()
+            LogListBox listBox = new()
             {
-                Parent = panel,
+                Parent = testWindow,
                 VerticalAlignment = VerticalAlignment.Fill,
             };
+
+            listBox.BindApplicationLog();
         }
 
         private void OkButton_Click(object? sender, EventArgs e)
@@ -189,21 +191,31 @@ namespace WindowPropertiesSample
             BaseApplication.Log("Cancel Clicked");
         }
 
+        private void ReportBoundsChanged(string prefix)
+        {
+            var b = testWindow?.Bounds;
+            var eb = testWindow?.Handler.EventBounds;
+
+            var s = $"{prefix} B: {b}, EB: {eb}";
+
+            BaseApplication.LogReplace(s, prefix);
+        }
+
         private void TestWindow_LocationChanged(object? sender, EventArgs e)
         {
-            var s = "LocationChanged. Bounds: ";
-            BaseApplication.LogReplace(s + testWindow?.Bounds.ToString(), s);
+            var s = "Test Window: BoundsChanged. ";
+            ReportBoundsChanged(s);
         }
 
         private void TestWindow_SizeChanged(object? sender, EventArgs e)
         {
-            var s = "SizeChanged. Bounds: ";
-            BaseApplication.LogReplace(s + testWindow?.Bounds.ToString(), s);
+            var s = "Test Window: BoundsChanged.";
+            ReportBoundsChanged(s);
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)
         {
-            BaseApplication.Log("StateChanged");
+            BaseApplication.Log("Test Window: StateChanged");
             UpdateWindowState();
         }
 
@@ -228,13 +240,13 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Deactivated(object? sender, EventArgs e)
         {
-            BaseApplication.Log("Deactivated");
+            BaseApplication.Log("Test Window: Deactivated");
             UpdateActiveWindowInfoLabel();
         }
 
         private void TestWindow_Activated(object? sender, EventArgs e)
         {
-            BaseApplication.Log("Activated");
+            BaseApplication.Log("Test Window: Activated");
             UpdateActiveWindowInfoLabel();
         }
 
@@ -281,7 +293,7 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Closed(object? sender, EventArgs e)
         {
-            BaseApplication.Log("Closed");
+            BaseApplication.Log("Test Window: Closed");
 
             if (testWindow == null)
                 throw new InvalidOperationException();
@@ -313,7 +325,7 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
-            BaseApplication.Log("Closing");
+            BaseApplication.Log("Test Window: Closing");
             e.Cancel = cancelClosingCheckBox.IsChecked;
         }
 

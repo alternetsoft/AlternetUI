@@ -80,7 +80,7 @@ namespace Alternet.UI
         {
             get
             {
-                return StateObjects?.Images?.GetObjectOrNull(GenericControlState.Normal);
+                return StateObjects?.Images?.GetObjectOrNull(VisualControlState.Normal);
             }
 
             set
@@ -103,7 +103,7 @@ namespace Alternet.UI
         {
             get
             {
-                return StateObjects?.Images?.GetObjectOrNull(GenericControlState.Disabled);
+                return StateObjects?.Images?.GetObjectOrNull(VisualControlState.Disabled);
             }
 
             set
@@ -233,7 +233,7 @@ namespace Alternet.UI
         {
             get
             {
-                return StateObjects?.ImageSets?.GetObjectOrNull(GenericControlState.Normal);
+                return StateObjects?.ImageSets?.GetObjectOrNull(VisualControlState.Normal);
             }
 
             set
@@ -256,7 +256,7 @@ namespace Alternet.UI
         {
             get
             {
-                return StateObjects?.ImageSets?.GetObjectOrNull(GenericControlState.Disabled);
+                return StateObjects?.ImageSets?.GetObjectOrNull(VisualControlState.Disabled);
             }
 
             set
@@ -326,7 +326,7 @@ namespace Alternet.UI
 
             if (TextVisible)
             {
-                var state = CurrentState;
+                var state = VisualState;
 
                 var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
                 var origin = rect.Location;
@@ -360,7 +360,7 @@ namespace Alternet.UI
         public virtual void DrawDefaultImage(Graphics dc, RectD rect)
         {
             var primitive = Primitive;
-            var state = CurrentState;
+            var state = VisualState;
 
             var image = StateObjects?.Images?.GetObjectOrNull(state);
             image ??= Image;

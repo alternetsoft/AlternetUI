@@ -238,7 +238,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the background brush for specified state of the control.
         /// </summary>
-        public virtual Brush? GetBackground(GenericControlState state)
+        public virtual Brush? GetBackground(VisualControlState state)
         {
             return Backgrounds?.GetObjectOrNull(state);
         }
@@ -246,7 +246,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the border settings for specified state of the control.
         /// </summary>
-        public virtual BorderSettings? GetBorderSettings(GenericControlState state)
+        public virtual BorderSettings? GetBorderSettings(VisualControlState state)
         {
             return Borders?.GetObjectOrNormal(state);
         }
@@ -254,7 +254,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the foreground brush for specified state of the control.
         /// </summary>
-        public virtual Brush? GetForeground(GenericControlState state)
+        public virtual Brush? GetForeground(VisualControlState state)
         {
             return Foregrounds?.GetObjectOrNull(state);
         }
@@ -1903,7 +1903,7 @@ namespace Alternet.UI
         /// <param name="state">Control state.</param>
         public virtual void SetImage(
             Image? value,
-            GenericControlState state = GenericControlState.Normal)
+            VisualControlState state = VisualControlState.Normal)
         {
             StateObjects ??= new();
             StateObjects.Images ??= new();
@@ -1917,7 +1917,7 @@ namespace Alternet.UI
         /// <param name="state">Control state.</param>
         public virtual void SetBackground(
             Brush? value,
-            GenericControlState state = GenericControlState.Normal)
+            VisualControlState state = VisualControlState.Normal)
         {
             StateObjects ??= new();
             StateObjects.Backgrounds ??= new();
@@ -1931,7 +1931,7 @@ namespace Alternet.UI
         /// <param name="state">Control state.</param>
         public virtual void SetBorder(
             BorderSettings? value,
-            GenericControlState state = GenericControlState.Normal)
+            VisualControlState state = VisualControlState.Normal)
         {
             StateObjects ??= new();
             StateObjects.Borders ??= new();
@@ -2058,6 +2058,12 @@ namespace Alternet.UI
             ReportBoundsChanged();
         }
 
+        public virtual void RaiseHandlerLocationChanged()
+        {
+            OnHandlerLocationChanged(EventArgs.Empty);
+            ReportBoundsChanged();
+        }
+
         public virtual void RaiseDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);
@@ -2081,9 +2087,9 @@ namespace Alternet.UI
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
+        public virtual void RaiseTextChanged() => OnTextChanged(EventArgs.Empty);
 
-        public virtual void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
+        public virtual void RaiseSizeChanged() => OnSizeChanged(EventArgs.Empty);
 
         public virtual void RaiseMouseEnter()
         {
@@ -2092,17 +2098,17 @@ namespace Alternet.UI
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseCurrentStateChanged()
+        public virtual void RaiseVisualStateChanged()
         {
-            OnCurrentStateChanged(EventArgs.Empty);
-            CurrentStateChanged?.Invoke(this, EventArgs.Empty);
+            OnVisualStateChanged(EventArgs.Empty);
+            VisualStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void RaiseIsMouseOverChanged()
         {
             OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
-            RaiseCurrentStateChanged();
+            RaiseVisualStateChanged();
         }
 
         public virtual void RaiseMouseLeave()
@@ -2132,7 +2138,7 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        public virtual void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
+        public virtual void RaiseLocationChanged() => OnLocationChanged(EventArgs.Empty);
 
         public virtual void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
 
@@ -2148,19 +2154,23 @@ namespace Alternet.UI
         {
             var newBounds = Bounds;
 
-            var locationChanged = reportedBounds?.Location != newBounds.Location;
-            var sizeChanged = reportedBounds?.Size != newBounds.Size;
+            if(Handler.EventBounds != Bounds)
+            {
+
+            }
+
+            var locationChanged = reportedBounds.Location != newBounds.Location;
+            var sizeChanged = reportedBounds.Size != newBounds.Size;
 
             reportedBounds = newBounds;
 
             if (locationChanged)
-                RaiseLocationChanged(EventArgs.Empty);
+                RaiseLocationChanged();
 
             if (sizeChanged)
-                RaiseSizeChanged(EventArgs.Empty);
+                RaiseSizeChanged();
 
-            if (sizeChanged)
-                PerformLayout(true);
+            PerformLayout();
         }
 
         public virtual void RaiseGotFocus()
@@ -2168,14 +2178,14 @@ namespace Alternet.UI
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
             Designer?.RaiseGotFocus(this);
-            RaiseCurrentStateChanged();
+            RaiseVisualStateChanged();
         }
 
         public virtual void RaiseLostFocus()
         {
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
-            RaiseCurrentStateChanged();
+            RaiseVisualStateChanged();
         }
 
         public virtual void RaiseActivated()

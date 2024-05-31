@@ -25,14 +25,17 @@ namespace Alternet.UI
         private IconSet? icon = null;
         private object? menu = null;
         private Window? owner;
+        private bool needLayout = false;
+        private Collection<InputBinding>? inputBindings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
         /// </summary>
         public Window()
         {
-            BaseApplication.Current.RegisterWindow(this);
             SetVisibleValue(false);
+            ProcessIdle = true;
+            BaseApplication.Current.RegisterWindow(this);
             Bounds = GetDefaultBounds();
 
             if (Control.DefaultFont != Font.Default)
@@ -287,6 +290,7 @@ namespace Alternet.UI
                 info.HasTitleBar = value;
                 OnHasTitleBarChanged(EventArgs.Empty);
                 HasTitleBarChanged?.Invoke(this, EventArgs.Empty);
+                Handler.HasTitleBar = value;
             }
         }
 
@@ -313,6 +317,7 @@ namespace Alternet.UI
                 info.HasBorder = value;
                 OnHasBorderChanged(EventArgs.Empty);
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
+                Handler.HasBorder = value;
             }
         }
 
@@ -333,6 +338,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override string Title
+        {
+            get => base.Title;
+
+            set
+            {
+                if (Title == value)
+                    return;
+                base.Title = value;
+                Handler.Title = value;
+            }
+        }
+
         /// <summary>
         /// A tool window does not appear in the Windows taskbar or in the window that appears
         /// when the user presses ALT+TAB.
@@ -349,6 +368,7 @@ namespace Alternet.UI
                 info.IsToolWindow = value;
                 OnIsToolWindowChanged(EventArgs.Empty);
                 IsToolWindowChanged?.Invoke(this, EventArgs.Empty);
+                Handler.IsToolWindow = value;
             }
         }
 
@@ -391,6 +411,7 @@ namespace Alternet.UI
                 info.HasSystemMenu = value;
                 OnHasSystemMenuChanged(EventArgs.Empty);
                 HasSystemMenuChanged?.Invoke(this, EventArgs.Empty);
+                Handler.HasSystemMenu = value;
             }
         }
 
@@ -410,6 +431,7 @@ namespace Alternet.UI
                 info.AlwaysOnTop = value;
                 OnAlwaysOnTopChanged(EventArgs.Empty);
                 AlwaysOnTopChanged?.Invoke(this, EventArgs.Empty);
+                Handler.AlwaysOnTop = value;
             }
         }
 
@@ -427,6 +449,7 @@ namespace Alternet.UI
                 info.CloseEnabled = value;
                 OnCloseEnabledChanged(EventArgs.Empty);
                 CloseEnabledChanged?.Invoke(this, EventArgs.Empty);
+                Handler.CloseEnabled = value;
             }
         }
 
@@ -444,6 +467,7 @@ namespace Alternet.UI
                 info.MaximizeEnabled = value;
                 OnMaximizeEnabledChanged(EventArgs.Empty);
                 MaximizeEnabledChanged?.Invoke(this, EventArgs.Empty);
+                Handler.MaximizeEnabled = value;
             }
         }
 
@@ -473,6 +497,7 @@ namespace Alternet.UI
                 info.ShowInTaskbar = value;
                 OnShowInTaskbarChanged(EventArgs.Empty);
                 ShowInTaskbarChanged?.Invoke(this, EventArgs.Empty);
+                Handler.ShowInTaskbar = value;
             }
         }
 
@@ -490,6 +515,7 @@ namespace Alternet.UI
                 info.MinimizeEnabled = value;
                 OnMinimizeEnabledChanged(EventArgs.Empty);
                 MinimizeEnabledChanged?.Invoke(this, EventArgs.Empty);
+                Handler.MinimizeEnabled = value;
             }
         }
 
@@ -618,8 +644,7 @@ namespace Alternet.UI
                 if (IsDisposed)
                     return;
                 Handler.State = value;
-                OnStateChanged(EventArgs.Empty);
-                StateChanged?.Invoke(this, EventArgs.Empty);
+                RaiseStateChanged();
             }
         }
 
@@ -714,6 +739,7 @@ namespace Alternet.UI
                     return;
 
                 icon = value;
+                Handler.SetIcon(value);
                 OnIconChanged(EventArgs.Empty);
                 IconChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -744,7 +770,30 @@ namespace Alternet.UI
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings { get; } = new();
+        public virtual Collection<InputBinding> InputBindings
+        {
+            get
+            {
+                if(inputBindings is null)
+                {
+                    inputBindings = new();
+
+                    inputBindings.ItemRemoved += (sender, index, item) =>
+                    {
+                        Port.InheritanceContextHelper.RemoveContextFromObject(this, item);
+                        Handler.RemoveInputBinding(item);
+                    };
+
+                    inputBindings.ItemInserted += (sender, index, item) =>
+                    {
+                        Handler.AddInputBinding(item);
+                        Port.InheritanceContextHelper.ProvideContextForObject(this, item);
+                    };
+                }
+
+                return inputBindings;
+            }
+        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
@@ -884,6 +933,12 @@ namespace Alternet.UI
             CheckDisposed();
 
             Handler.Close();
+        }
+
+        public void RaiseStateChanged()
+        {
+            OnStateChanged(EventArgs.Empty);
+            StateChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
@@ -1071,6 +1126,20 @@ namespace Alternet.UI
         protected override void OnIdle(EventArgs e)
         {
             base.OnIdle(e);
+
+            if (needLayout)
+            {
+                PerformLayout();
+                needLayout = false;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandlerSizeChanged(EventArgs e)
+        {
+            base.OnHandlerSizeChanged(e);
+            PerformLayout();
+            needLayout = true;
         }
 
         /// <inheritdoc/>
@@ -1182,6 +1251,20 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStateChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.StateChanged = RaiseStateChanged;
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.StateChanged = null;
         }
     }
 }

@@ -199,16 +199,16 @@ namespace PropertyGridSample
                 button.Parent = border;
                 button.Click += Button_Click;
 
-                border.CurrentStateChanged += Border_CurrentStateChanged;
+                border.VisualStateChanged += Border_VisualStateChanged;
 
                 static void Button_Click(object? sender, EventArgs e)
                 {
                     BaseApplication.Log("Button in Border clicked.");
                 }
 
-                static void Border_CurrentStateChanged(object? sender, EventArgs e)
+                static void Border_VisualStateChanged(object? sender, EventArgs e)
                 {
-                    BaseApplication.LogNameValue("Border.CurrentState", (sender as Border)?.CurrentState);
+                    BaseApplication.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
                 }
             });
 

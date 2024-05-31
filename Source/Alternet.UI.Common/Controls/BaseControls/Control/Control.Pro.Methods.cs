@@ -20,6 +20,32 @@ namespace Alternet.UI
             {
                 CreateAndAttachHandler();
             }
+
+            void CreateAndAttachHandler()
+            {
+                if (GetRequiredHandlerType() == HandlerType.Native)
+                    handler = CreateHandler();
+                else
+                    handler = ControlFactory.Handler.CreateControlHandler(this);
+
+                handler.Attach(this);
+
+                handler.Visible = Visible;
+                handler.SetEnabled(Enabled);
+                ApplyChildren();
+
+                OnHandlerAttached(EventArgs.Empty);
+
+                BindHandlerEvents();
+
+                void ApplyChildren()
+                {
+                    if (!HasChildren)
+                        return;
+                    for (var i = 0; i < Children.Count; i++)
+                        handler.OnChildInserted(Children[i]);
+                }
+            }
         }
 
         /// <summary>
@@ -160,6 +186,7 @@ namespace Alternet.UI
             Handler.GotFocus = null;
             Handler.LostFocus = null;
             Handler.SizeChanged = null;
+            Handler.LocationChanged = null;
             Handler.VerticalScrollBarValueChanged = null;
             Handler.HorizontalScrollBarValueChanged = null;
             Handler.DragOver = null;
@@ -185,6 +212,7 @@ namespace Alternet.UI
             Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
             Handler.DragLeave = RaiseDragLeave;
             Handler.SizeChanged = RaiseHandlerSizeChanged;
+            Handler.LocationChanged = RaiseHandlerLocationChanged;
             Handler.DragOver = RaiseDragOver;
             Handler.DragEnter = RaiseDragEnter;
             Handler.DragDrop = RaiseDragDrop;
@@ -218,6 +246,15 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
         protected virtual void OnHandlerSizeChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the native conrol location is changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnHandlerLocationChanged(EventArgs e)
         {
         }
 
@@ -304,7 +341,7 @@ namespace Alternet.UI
             /*Application.Log($"{GetType()}.OnMouseLeftButtonDown");*/
 
             IsMouseLeftButtonDown = true;
-            RaiseCurrentStateChanged();
+            RaiseVisualStateChanged();
             Designer?.RaiseMouseLeftButtonDown(this, e);
             MouseLeftButtonDown?.Invoke(this, e);
         }
@@ -315,7 +352,7 @@ namespace Alternet.UI
         protected virtual void OnMouseLeftButtonUp(MouseEventArgs e)
         {
             IsMouseLeftButtonDown = false;
-            RaiseCurrentStateChanged();
+            RaiseVisualStateChanged();
             MouseLeftButtonUp?.Invoke(this, e);
         }
 
@@ -335,9 +372,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when <see cref="CurrentStateChanged"/> property is changed.
+        /// Called when <see cref="VisualStateChanged"/> property is changed.
         /// </summary>
-        protected virtual void OnCurrentStateChanged(EventArgs e)
+        protected virtual void OnVisualStateChanged(EventArgs e)
         {
         }
 
@@ -746,7 +783,7 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnEnabledChanged(EventArgs e)
         {
-            RaiseCurrentStateChanged();
+            RaiseVisualStateChanged();
         }
 
         /// <summary>

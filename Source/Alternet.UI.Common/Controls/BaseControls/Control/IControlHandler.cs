@@ -44,6 +44,8 @@ namespace Alternet.UI
 
         Action? SizeChanged { get; set; }
 
+        Action? LocationChanged { get; set; }
+
         Action? Activated { get; set; }
 
         Action? Deactivated { get; set; }
@@ -61,6 +63,8 @@ namespace Alternet.UI
         bool ShowVertScrollBar { get; set; }
 
         bool ScrollBarAlwaysVisible { get; set; }
+
+        RectD EventBounds { get; }
 
         LangDirection LangDirection { get; set; }
 

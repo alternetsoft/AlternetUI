@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.CurrentState"/> property is changed, control has
+        /// <see cref="Control.VisualState"/> property is changed, control has
         /// border specified in <see cref="Control.StateObjects"/> and
         /// <see cref="ControlStateSettings.HasOtherBorders"/> returns <c>true</c>.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.CurrentState"/> property is changed, control has
+        /// <see cref="Control.VisualState"/> property is changed, control has
         /// image specified in <see cref="Control.StateObjects"/> and
         /// <see cref="ControlStateSettings.HasOtherImages"/> returns <c>true</c>.
         /// </summary>
@@ -35,7 +35,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.CurrentState"/> property is changed, control has
+        /// <see cref="Control.VisualState"/> property is changed, control has
         /// background specified in <see cref="Control.StateObjects"/> and
         /// <see cref="ControlStateSettings.HasOtherBackgrounds"/> returns <c>true</c>.
         /// </summary>
@@ -43,7 +43,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.CurrentState"/> property is changed, control has
+        /// <see cref="Control.VisualState"/> property is changed, control has
         /// colors specified in <see cref="Control.StateObjects"/> and
         /// <see cref="ControlStateSettings.HasOtherColors"/> returns <c>true</c>.
         /// </summary>
@@ -51,7 +51,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.CurrentState"/> property is changed.
+        /// <see cref="Control.VisualState"/> property is changed.
         /// </summary>
         RefreshOnState = 16,
     }

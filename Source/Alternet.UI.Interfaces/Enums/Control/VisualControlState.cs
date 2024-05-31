@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines different <see cref="Control"/> states.
+    /// Defines different <see cref="Control"/> visual states.
     /// </summary>
-    public enum GenericControlState
+    public enum VisualControlState
     {
         /// <summary>
         /// Normal state.

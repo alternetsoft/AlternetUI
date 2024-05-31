@@ -79,7 +79,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         [Obsolete("'GetImage' is deprecated, please use 'GetObject' instead.")]
-        public Image? GetImage(GenericControlState state) => GetObjectOrNormal(state);
+        public Image? GetImage(VisualControlState state) => GetObjectOrNormal(state);
 
         /// <summary>
         /// Gets <see cref="Image"/> for the specified state or <c>null</c> if image for that state
@@ -87,7 +87,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         [Obsolete("'GetImageOrNull' is deprecated, please use 'GetObjectOrNull' instead.")]
-        public Image? GetImageOrNull(GenericControlState state) => GetObjectOrNull(state);
+        public Image? GetImageOrNull(VisualControlState state) => GetObjectOrNull(state);
 
         /// <summary>
         /// Creates clone of this object.

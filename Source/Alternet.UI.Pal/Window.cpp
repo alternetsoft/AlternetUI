@@ -272,8 +272,6 @@ namespace Alternet::UI
         Control::OnBeforeDestroyWxWindow();
 
         auto wxWindow = GetWxWindow();
-        wxWindow->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
-        wxWindow->Unbind(wxEVT_MOVE, &Window::OnMove, this);
         wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
@@ -478,8 +476,6 @@ namespace Alternet::UI
         ApplyIcon(frame);
         UpdateAcceleratorTable(frame);
 
-        frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
-        frame->Bind(wxEVT_MOVE, &Window::OnMove, this);
         frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
@@ -829,21 +825,14 @@ namespace Alternet::UI
 
     void Window::OnSizeChanged(wxSizeEvent& event)
     {
-        event.Skip();
-        RaiseEvent(WindowEvent::SizeChanged);
-
         auto newState = GetState();
         if (_lastState != newState)
         {
             _lastState = newState;
             RaiseEvent(WindowEvent::StateChanged);
         }
-    }
 
-    void Window::OnMove(wxMoveEvent& event)
-    {
-        event.Skip();
-        RaiseEvent(WindowEvent::LocationChanged);
+        Control::OnSizeChanged(event);
     }
 
     void Window::SetResizable(bool value)
