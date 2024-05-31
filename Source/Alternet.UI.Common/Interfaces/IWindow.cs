@@ -24,11 +24,6 @@ namespace Alternet.UI
         event EventHandler? IconChanged;
 
         /// <summary>
-        /// Occurs when the value of the "Toolbar" property changes.
-        /// </summary>
-        event EventHandler? ToolBarChanged;
-
-        /// <summary>
         /// Occurs when the value of the "Statusbar" property changes.
         /// </summary>
         event EventHandler? StatusBarChanged;

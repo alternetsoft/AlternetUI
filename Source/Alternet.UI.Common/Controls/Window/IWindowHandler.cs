@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,10 @@ namespace Alternet.UI
 {
     public interface IWindowHandler : IControlHandler
     {
+        Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
+
+        Action<CancelEventArgs>? Closing { get; set; }
+
         bool ShowInTaskbar { get; set; }
         
         bool MaximizeEnabled { get; set; }
@@ -34,8 +39,6 @@ namespace Alternet.UI
         
         void SetMenu(object? value);
         
-        void SetToolBar(object? value);
-        
         Action? StateChanged { get; set; }
 
         string Title { get; set; }
@@ -53,6 +56,8 @@ namespace Alternet.UI
         Window[] OwnedWindows { get; }
 
         ModalResult ModalResult { get; set; }
+
+        void SetOwner(Window? owner);
 
         object? StatusBar { get; set; }
 

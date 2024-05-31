@@ -180,7 +180,7 @@ namespace Alternet.UI
 
         IWindowHandler IControlFactoryHandler.CreateWindowHandler(Window window)
         {
-            throw new NotImplementedException();
+            return new MauiWindowHandler();
         }
     }
 }

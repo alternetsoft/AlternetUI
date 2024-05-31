@@ -21,7 +21,7 @@ namespace Alternet.UI
         private static int incFontSize = 0;
 
         private readonly WindowInfo info = new();
-        private object? toolbar = null;
+        /*private object? toolbar = null;*/
         private IconSet? icon = null;
         private object? menu = null;
         private Window? owner;
@@ -52,10 +52,10 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? IconChanged;
 
-        /// <summary>
+        /*/// <summary>
         /// Occurs when the value of the <see cref="ToolBar"/> property changes.
         /// </summary>
-        public event EventHandler? ToolBarChanged;
+        public event EventHandler? ToolBarChanged;*/
 
         /// <summary>
         /// Occurs when the value of the <see cref="StatusBar"/> property changes.
@@ -335,6 +335,7 @@ namespace Alternet.UI
                 info.Resizable = value;
                 OnResizableChanged(EventArgs.Empty);
                 ResizableChanged?.Invoke(this, EventArgs.Empty);
+                Handler.Resizable = value;
             }
         }
 
@@ -540,6 +541,7 @@ namespace Alternet.UI
                 owner = value;
                 OnOwnerChanged(EventArgs.Empty);
                 OwnerChanged?.Invoke(this, EventArgs.Empty);
+                Handler.SetOwner(value);
             }
         }
 
@@ -714,6 +716,8 @@ namespace Alternet.UI
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
+                Handler.SetMenu(value);
+                PerformLayout();
             }
         }
 
@@ -798,7 +802,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
-        /// <summary>
+        /*/// <summary>
         /// Gets the toolbar that is displayed in the window.
         /// </summary>
         /// <value>
@@ -808,11 +812,11 @@ namespace Alternet.UI
         /// You can use this property to switch between complete toolbar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual object? ToolBar
+        internal virtual object? ToolBar
         {
             get => toolbar;
 
-            internal set
+            set
             {
                 if (toolbar == value)
                     return;
@@ -828,8 +832,10 @@ namespace Alternet.UI
 
                 OnToolBarChanged(EventArgs.Empty);
                 ToolBarChanged?.Invoke(this, EventArgs.Empty);
+                Handler.SetToolBar(value);
+                PerformLayout();
             }
-        }
+        }*/
 
         /// <inheritdoc />
         internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
@@ -841,9 +847,6 @@ namespace Alternet.UI
 
                 if (Menu is FrameworkElement m)
                     yield return m;
-
-                if (ToolBar is FrameworkElement t)
-                    yield return t;
 
                 if (StatusBar is FrameworkElement s)
                     yield return s;
@@ -1253,11 +1256,51 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Raised by the handler when it is going to be closed.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void OnHandlerClosing(CancelEventArgs e)
+        {
+            // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
+            var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
+            RaiseClosing(closingEventArgs);
+            if (closingEventArgs.Cancel)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            RaiseClosed(new WindowClosedEventArgs());
+
+            if (!Modal)
+                Dispose();
+        }
+
+        protected virtual void OnHandlerInputBindingCommandExecuted(HandledEventArgs<string> e)
+        {
+            var binding = InputBindings.First(x => x.ManagedCommandId == e.Value);
+
+            e.Handled = false;
+
+            var command = binding.Command;
+            if (command == null)
+                return;
+
+            if (!command.CanExecute(binding.CommandParameter))
+                return;
+
+            command.Execute(binding.CommandParameter);
+            e.Handled = true;
+        }
+
         /// <inheritdoc/>
         protected override void BindHandlerEvents()
         {
             base.BindHandlerEvents();
             Handler.StateChanged = RaiseStateChanged;
+            Handler.Closing = OnHandlerClosing;
+            Handler.InputBindingCommandExecuted = OnHandlerInputBindingCommandExecuted;
         }
 
         /// <inheritdoc/>
@@ -1265,6 +1308,8 @@ namespace Alternet.UI
         {
             base.UnbindHandlerEvents();
             Handler.StateChanged = null;
+            Handler.Closing = null;
+            Handler.InputBindingCommandExecuted = null;
         }
     }
 }

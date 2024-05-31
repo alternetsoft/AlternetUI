@@ -9,6 +9,10 @@ namespace Alternet.UI
     {
         private object? statusBar;
 
+        public Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
+
+        public Action<CancelEventArgs>? Closing { get; set; }
+
         public bool ShowInTaskbar
         {
             get => NativeControl.ShowInTaskbar;
@@ -236,30 +240,12 @@ namespace Alternet.UI
             NativeControl.Closing -= NativeControl_Closing;
             NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
-            Control.OwnerChanged -= ApplyOwner;
-            Control.ResizableChanged -= ApplyResizable;
-            Control.MenuChanged -= ApplyMenu;
-            Control.ToolBarChanged -= ApplyToolbar;
-            Control.StatusBarChanged -= ApplyStatusBar;
-
             base.OnDetach();
         }
 
         protected override void OnAttach()
         {
             base.OnAttach();
-
-            ApplyOwner(null, EventArgs.Empty);
-            ApplyResizable(null, EventArgs.Empty);
-            ApplyMenu(null, EventArgs.Empty);
-            ApplyToolbar(null, EventArgs.Empty);
-            ApplyStatusBar(null, EventArgs.Empty);
-
-            Control.OwnerChanged += ApplyOwner;
-            Control.ResizableChanged += ApplyResizable;
-            Control.MenuChanged += ApplyMenu;
-            Control.ToolBarChanged += ApplyToolbar;
-            Control.StatusBarChanged += ApplyStatusBar;
 
             NativeControl.Closing += NativeControl_Closing;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
@@ -303,20 +289,12 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.CommandEventData> e)
         {
-            var binding = Control.InputBindings.First(
-                x => x.ManagedCommandId == e.Data.managedCommandId);
-
-            e.Handled = false;
-
-            var command = binding.Command;
-            if (command == null)
-                return;
-
-            if (!command.CanExecute(binding.CommandParameter))
-                return;
-
-            command.Execute(binding.CommandParameter);
-            e.Handled = true;
+            if(InputBindingCommandExecuted is not null)
+            {
+                HandledEventArgs<string> args = new(e.Data.managedCommandId);
+                InputBindingCommandExecuted.Invoke(args);
+                e.Handled = args.Handled;
+            }
         }
 
         public void AddInputBinding(InputBinding value)
@@ -333,24 +311,9 @@ namespace Alternet.UI
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 
-        private void ApplyMenu(object? sender, EventArgs e)
+        public void SetOwner(Window? owner)
         {
-            SetMenu(Control.Menu);
-        }
-
-        private void ApplyToolbar(object? sender, EventArgs e)
-        {
-            SetToolBar(Control.ToolBar);
-        }
-
-        private void ApplyStatusBar(object? sender, EventArgs e)
-        {
-            ((Control.StatusBar as StatusBar)?.Handler as StatusBarHandler)?.RecreateWidget();
-        }
-
-        private void ApplyOwner(object? sender, EventArgs e)
-        {
-            var newOwner = (Control.Owner as IControl)?.NativeControl as UI.Native.Control;
+            var newOwner = (owner as IControl)?.NativeControl as UI.Native.Control;
             var oldOwner = NativeControl.ParentRefCounted;
             if (newOwner == oldOwner)
                 return;
@@ -363,11 +326,6 @@ namespace Alternet.UI
             newOwner.AddChild(NativeControl);
         }
 
-        private void ApplyResizable(object? sender, EventArgs e)
-        {
-            NativeControl.Resizable = Control.Resizable;
-        }
-
         public void SetIcon(IconSet? value)
         {
             NativeControl.Icon = (UI.Native.IconSet?)value?.Handler;
@@ -378,25 +336,9 @@ namespace Alternet.UI
             NativeControl.Menu = (value as IControl)?.NativeControl as Native.MainMenu;
         }
 
-        public void SetToolBar(object? value)
-        {
-            NativeControl.Toolbar = (value as IControl)?.NativeControl as Native.Toolbar;
-        }
-
         private void NativeControl_Closing(object? sender, CancelEventArgs e)
         {
-            // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
-            var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
-            Control.RaiseClosing(closingEventArgs);
-            if (closingEventArgs.Cancel)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            Control.RaiseClosed(new WindowClosedEventArgs());
-            if (!Control.Modal)
-                Control.Dispose();
+            Closing?.Invoke(e);
         }
 
         private class NativeWindow : Native.Window
