@@ -20,7 +20,7 @@ namespace Alternet.Drawing
         SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState = CheckState.Unchecked,
-            GenericControlState controlState = GenericControlState.Normal);
+            VisualControlState controlState = VisualControlState.Normal);
 
         /// <summary>
         /// Returns the default size of a check mark in dips.
@@ -72,6 +72,6 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             CheckState checkState,
-            GenericControlState controlState);
+            VisualControlState controlState);
     }
 }

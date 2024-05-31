@@ -1552,7 +1552,7 @@ namespace Alternet.UI
                 return null;
             ItemCheckBoxInfo result = new();
             result.PartState = Enabled
-                ? GenericControlState.Normal : GenericControlState.Disabled;
+                ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetItemCheckState(item);
             result.CheckSize = DrawingUtils.GetCheckBoxSize(this, result.CheckState, result.PartState);
             var (checkRect, textRect) = GetItemImageRect(rect, result.CheckSize);
@@ -1563,7 +1563,7 @@ namespace Alternet.UI
 
         internal class ItemCheckBoxInfo
         {
-            public GenericControlState PartState;
+            public VisualControlState PartState;
             public SizeD CheckSize;
             public RectD CheckRect;
             public RectD TextRect;

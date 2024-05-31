@@ -427,6 +427,16 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.RectD EventBounds
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetEventBounds_(NativePointer);
+            }
+            
+        }
+        
         public Alternet.Drawing.SizeD ClientSize
         {
             get
@@ -603,6 +613,24 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.Control_SetMaximumSize_(NativePointer, value);
             }
+        }
+        
+        public Alternet.Drawing.PointI ScreenToDevice(Alternet.Drawing.PointD point)
+        {
+            CheckDisposed();
+            return NativeApi.Control_ScreenToDevice_(NativePointer, point);
+        }
+        
+        public Alternet.Drawing.PointD DeviceToScreen(Alternet.Drawing.PointI point)
+        {
+            CheckDisposed();
+            return NativeApi.Control_DeviceToScreen_(NativePointer, point);
+        }
+        
+        public bool SetFocus()
+        {
+            CheckDisposed();
+            return NativeApi.Control_SetFocus_(NativePointer);
         }
         
         public void FocusNextControl(bool forward, bool nested)
@@ -884,24 +912,6 @@ namespace Alternet.UI.Native
             return NativeApi.Control_ScreenToClient_(NativePointer, point);
         }
         
-        public Alternet.Drawing.PointI ScreenToDevice(Alternet.Drawing.PointD point)
-        {
-            CheckDisposed();
-            return NativeApi.Control_ScreenToDevice_(NativePointer, point);
-        }
-        
-        public Alternet.Drawing.PointD DeviceToScreen(Alternet.Drawing.PointI point)
-        {
-            CheckDisposed();
-            return NativeApi.Control_DeviceToScreen_(NativePointer, point);
-        }
-        
-        public bool SetFocus()
-        {
-            CheckDisposed();
-            return NativeApi.Control_SetFocus_(NativePointer);
-        }
-        
         public bool BeginRepositioningChildren()
         {
             CheckDisposed();
@@ -1178,6 +1188,10 @@ namespace Alternet.UI.Native
                 {
                     SizeChanged?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.LocationChanged:
+                {
+                    LocationChanged?.Invoke(); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.Activated:
                 {
                     Activated?.Invoke(); return IntPtr.Zero;
@@ -1216,6 +1230,7 @@ namespace Alternet.UI.Native
         public Action? VerticalScrollBarValueChanged;
         public Action? HorizontalScrollBarValueChanged;
         public Action? SizeChanged;
+        public Action? LocationChanged;
         public Action? Activated;
         public Action? Deactivated;
         public Action? HandleCreated;
@@ -1249,6 +1264,7 @@ namespace Alternet.UI.Native
                 VerticalScrollBarValueChanged,
                 HorizontalScrollBarValueChanged,
                 SizeChanged,
+                LocationChanged,
                 Activated,
                 Deactivated,
                 HandleCreated,
@@ -1409,6 +1425,9 @@ namespace Alternet.UI.Native
             public static extern void Control_SetBounds_(IntPtr obj, Alternet.Drawing.RectD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectD Control_GetEventBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD Control_GetClientSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1473,6 +1492,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.PointI Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.PointD point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.PointD Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.PointI point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_SetFocus_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
@@ -1608,15 +1636,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.PointD Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.PointD point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.PointD point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.PointI point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_SetFocus_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_BeginRepositioningChildren_(IntPtr obj);

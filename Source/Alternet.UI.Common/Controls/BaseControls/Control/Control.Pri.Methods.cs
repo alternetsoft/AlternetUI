@@ -9,32 +9,6 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        private void CreateAndAttachHandler()
-        {
-            if (GetRequiredHandlerType() == HandlerType.Native)
-                handler = CreateHandler();
-            else
-                handler = ControlFactory.Handler.CreateControlHandler(this);
-
-            handler.Attach(this);
-
-            handler.Visible = Visible;
-            handler.SetEnabled(Enabled);
-            ApplyChildren();
-
-            OnHandlerAttached(EventArgs.Empty);
-
-            BindHandlerEvents();
-
-            void ApplyChildren()
-            {
-                if (!HasChildren)
-                    return;
-                for (var i = 0; i < Children.Count; i++)
-                    handler.OnChildInserted(Children[i]);
-            }
-        }
-
         /// <summary>
         /// Raises the <see cref="TitleChanged"/> event and calls
         /// <see cref="OnTitleChanged(EventArgs)"/>.

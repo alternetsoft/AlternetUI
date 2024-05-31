@@ -155,7 +155,7 @@ namespace Alternet.UI
         /// <param name="state">Affected control state.</param>
         /// <param name="fontAndColor">Colors.</param>
         public virtual void SetStateColors(
-            GenericControlState state,
+            VisualControlState state,
             IReadOnlyFontAndColor? fontAndColor)
         {
             if (fontAndColor is null && StateObjects?.Colors is null
@@ -169,7 +169,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Brush? GetBackground(GenericControlState state)
+        public override Brush? GetBackground(VisualControlState state)
         {
             var overrideValue = Backgrounds?.GetObjectOrNull(state);
             if (overrideValue is not null)
@@ -190,7 +190,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override BorderSettings? GetBorderSettings(GenericControlState state)
+        public override BorderSettings? GetBorderSettings(VisualControlState state)
         {
             var overrideValue = Borders?.GetObjectOrNull(state);
             if (overrideValue is not null)
@@ -207,7 +207,7 @@ namespace Alternet.UI
         /// <param name="rect">Ractangle.</param>
         public virtual void DrawDefaultBackground(Graphics dc, RectD rect)
         {
-            var state = CurrentState;
+            var state = VisualState;
             var brush = GetBackground(state);
             var border = GetBorderSettings(state);
 
@@ -252,9 +252,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnCurrentStateChanged(EventArgs e)
+        protected override void OnVisualStateChanged(EventArgs e)
         {
-            base.OnCurrentStateChanged(e);
+            base.OnVisualStateChanged(e);
 
             var options = RefreshOptions;
 

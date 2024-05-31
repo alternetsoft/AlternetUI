@@ -27,7 +27,7 @@ namespace PropertyGridSample
 
             pictureBox.DisabledImage = DefaultImage.ToGrayScale();
 
-            pictureBox.CurrentStateChanged += CurrentStateChanged;
+            pictureBox.VisualStateChanged += VisualStateChanged;
             pictureBox.Click += PictureBox_Click;
             pictureBox.Activated += PictureBox_Activated;
             pictureBox.Deactivated += PictureBox_Deactivated;
@@ -47,9 +47,9 @@ namespace PropertyGridSample
                 BaseApplication.Log("PictureBox Click");
             }
 
-            static void CurrentStateChanged(object? sender, EventArgs e)
+            static void VisualStateChanged(object? sender, EventArgs e)
             {
-                BaseApplication.LogNameValue("PictureBox.CurrentState", (sender as PictureBox)?.CurrentState);
+                BaseApplication.LogNameValue("PictureBox.VisualState", (sender as PictureBox)?.VisualState);
             }
         }
     }

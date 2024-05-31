@@ -31,13 +31,13 @@ namespace PropertyGridSample
             doubleBorder.Width = 2;
 
             label.Borders.SetAll(border);
-            label.Borders.SetObject(doubleBorder, GenericControlState.Hovered);
+            label.Borders.SetObject(doubleBorder, VisualControlState.Hovered);
 
             var colors = new FontAndColor(Color.Black, null, Control.DefaultFont.AsBold);
 
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();
-            label.StateObjects.Colors.SetObject(colors, GenericControlState.Hovered);
+            label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
             SetBackgrounds(label);
         }
 

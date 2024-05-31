@@ -99,9 +99,7 @@ enum class WindowEvent
 {
     Closing,
     StateChanged,
-    SizeChanged,
     InputBindingCommandExecuted,
-    LocationChanged,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

@@ -30,6 +30,18 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly RectD Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref='RectD'/> class with
+        /// <see cref="Coord.NaN"/> in all bounds.
+        /// </summary>
+        public static readonly RectD NaN = new(Coord.NaN, Coord.NaN, Coord.NaN, Coord.NaN);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='RectD'/> class with -1
+        /// in all bounds.
+        /// </summary>
+        public static readonly RectD MinusOne = new(-1, -1, -1, -1);
+
         private Coord x; // Do not rename (binary serialization)
         private Coord y; // Do not rename (binary serialization)
         private Coord width; // Do not rename (binary serialization)

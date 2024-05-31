@@ -20,8 +20,8 @@ namespace PaintSample
                 Color = SystemColors.ControlText,
             };
             hotBorder.Color = Color.Transparent;
-            this.SetBorder(hotBorder, GenericControlState.Hovered);
-            this.SetBorder(hotBorder, GenericControlState.Pressed);
+            this.SetBorder(hotBorder, VisualControlState.Hovered);
+            this.SetBorder(hotBorder, VisualControlState.Pressed);
             this.SetBorder(normalBorder);
 
             SwatchColor = swatchColor;
@@ -29,8 +29,8 @@ namespace PaintSample
             var colorPressed = swatchColor.ChangeLightness(80);
 
             this.SetBackground((SolidBrush)swatchColor);
-            this.SetBackground((SolidBrush)colorHot, GenericControlState.Hovered);
-            this.SetBackground((SolidBrush)colorPressed, GenericControlState.Pressed);
+            this.SetBackground((SolidBrush)colorHot, VisualControlState.Hovered);
+            this.SetBackground((SolidBrush)colorPressed, VisualControlState.Pressed);
         }
 
         public Color SwatchColor { get; }

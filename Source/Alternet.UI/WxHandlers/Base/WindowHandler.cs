@@ -154,8 +154,6 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
-            NativeControl.SizeChanged = null;
-            NativeControl.LocationChanged = null;
             NativeControl.StateChanged = null;
             NativeControl.Closing -= NativeControl_Closing;
             NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
@@ -226,9 +224,9 @@ namespace Alternet.UI
             Control.InputBindings.ItemRemoved += InputBindings_ItemRemoved;
 
             NativeControl.Closing += NativeControl_Closing;
-            NativeControl.SizeChanged = NativeControl_SizeChanged;
+            /*NativeControl.SizeChanged = NativeControl_SizeChanged;*/
             NativeControl.LocationChanged = NativeControl_LocationChanged;
-            NativeControl.StateChanged = NativeControl_StateChanged;
+            NativeControl.StateChanged = Control.RaiseStateChanged;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
@@ -314,23 +312,23 @@ namespace Alternet.UI
             NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 
-        private void NativeControl_SizeChanged()
+        /*private void NativeControl_SizeChanged()
         {
             if (!BaseApplication.IsLinuxOS)
                 Control.PerformLayout();
             BaseApplication.AddIdleTask(() =>
             {
-                if (Control.IsDisposed)
+                if (Control?.IsDisposed ?? true)
                     return;
                 Control.PerformLayout();
             });
             Control.RaiseSizeChanged(EventArgs.Empty);
-        }
+        }*/
 
-        private void NativeControl_StateChanged()
+        /*private void NativeControl_StateChanged()
         {
             NativeControl_SizeChanged();
-        }
+        }*/
 
         private void ApplyIcon(object? sender, EventArgs e)
         {

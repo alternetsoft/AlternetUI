@@ -79,6 +79,7 @@ namespace NativeApi.Api
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
         public event EventHandler? SizeChanged;
+        public event EventHandler? LocationChanged;
         public event EventHandler? Activated;
         public event EventHandler? Deactivated;
         public event EventHandler? HandleCreated;
@@ -103,6 +104,8 @@ namespace NativeApi.Api
         public SizeD Size { get; set; }
         public PointD Location { get; set; }
         public RectD Bounds { get; set; }
+        public RectD EventBounds { get; }
+
         public SizeD ClientSize { get; set; }
         public virtual Thickness IntrinsicLayoutPadding { get; }
         public virtual Thickness IntrinsicPreferredSizePadding { get; }

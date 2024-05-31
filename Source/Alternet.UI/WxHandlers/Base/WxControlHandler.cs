@@ -32,6 +32,8 @@ namespace Alternet.UI
             set => NativeControl.Idle = value;
         }
 
+        public RectD EventBounds => NativeControl.EventBounds;
+
         public Action? TextChanged
         {
             get => NativeControl.TextChanged;
@@ -108,6 +110,12 @@ namespace Alternet.UI
         {
             get => NativeControl.SizeChanged;
             set => NativeControl.SizeChanged = value;
+        }
+
+        public Action? LocationChanged
+        {
+            get => NativeControl.LocationChanged;
+            set => NativeControl.LocationChanged = value;
         }
 
         public Action? Activated

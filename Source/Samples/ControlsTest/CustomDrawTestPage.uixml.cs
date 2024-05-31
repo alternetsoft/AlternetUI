@@ -66,32 +66,32 @@ namespace ControlsTest
             {
                 customDrawControl.SetPaintAction((control, canvas, rect) =>
                 {
-                    Fn((50, 50), CheckState.Unchecked, GenericControlState.Normal, "unchecked");
+                    Fn((50, 50), CheckState.Unchecked, VisualControlState.Normal, "unchecked");
 
-                    Fn((150, 50), CheckState.Checked, GenericControlState.Normal, "checked");
+                    Fn((150, 50), CheckState.Checked, VisualControlState.Normal, "checked");
 
                     Fn(
                         (250, 50),
                         CheckState.Checked,
-                        GenericControlState.Hovered,
+                        VisualControlState.Hovered,
                         "checked, current");
 
                     Fn(
                         (50, 100),
                         CheckState.Checked,
-                        GenericControlState.Disabled,
+                        VisualControlState.Disabled,
                         "disabled");
 
                     Fn(
                         (150, 100),
                         CheckState.Indeterminate,
-                        GenericControlState.Normal,
+                        VisualControlState.Normal,
                         "undetermined");
 
                     void Fn(
                         PointD location,
                         CheckState checkState,
-                        GenericControlState controlState,
+                        VisualControlState controlState,
                         string title)
                     {
                         var size = DrawingUtils.GetCheckBoxSize(control, checkState, controlState);

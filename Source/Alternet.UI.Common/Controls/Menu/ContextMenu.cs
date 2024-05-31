@@ -46,15 +46,21 @@ namespace Alternet.UI
         [Category("Action")]
         public event EventHandler? Closing;
 
-        /// <inheritdoc cref="NonVisualControl.Left"/>
+        /// <summary>
+        /// This property has no meaning.
+        /// </summary>
         [Browsable(false)]
         public override bool Visible { get => base.Visible; set => base.Visible = value; }
 
-        /// <inheritdoc cref="NonVisualControl.Left"/>
+        /// <summary>
+        /// This property has no meaning.
+        /// </summary>
         [Browsable(false)]
         public override bool Enabled { get => base.Enabled; set => base.Enabled = value; }
 
-        /// <inheritdoc cref="NonVisualControl.Left"/>
+        /// <summary>
+        /// This property has no meaning.
+        /// </summary>
         [Browsable(false)]
         public override string? ToolTip { get => base.ToolTip; set => base.ToolTip = value; }
 

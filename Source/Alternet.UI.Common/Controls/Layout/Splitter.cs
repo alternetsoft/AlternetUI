@@ -76,7 +76,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets splitter background and line color when control state
-        /// is <see cref="GenericControlState.Normal"/>.
+        /// is <see cref="VisualControlState.Normal"/>.
         /// </summary>
         /// <remarks>
         /// If this property is not assigned, <see cref="DefaultDarkColors"/>

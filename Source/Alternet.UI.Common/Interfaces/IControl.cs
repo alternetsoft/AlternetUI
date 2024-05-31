@@ -147,9 +147,9 @@ namespace Alternet.UI
         event KeyPressEventHandler? KeyPress;
 
         /// <summary>
-        /// Occurs when the <see cref="CurrentState"/> property value changes.
+        /// Occurs when the <see cref="VisualState"/> property value changes.
         /// </summary>
-        event EventHandler? CurrentStateChanged;
+        event EventHandler? VisualStateChanged;
 
         /// <summary>
         /// Occurs when the <see cref="ToolTip"/> property value changes.
@@ -800,20 +800,20 @@ namespace Alternet.UI
         bool IsMouseLeftButtonDown { get; }
 
         /// <summary>
-        /// Gets or sets override value for the <see cref="CurrentState"/>
+        /// Gets or sets override value for the <see cref="VisualState"/>
         /// property.
         /// </summary>
         /// <remarks>
-        /// When <see cref="CurrentStateOverride"/> is specified, it's value
-        /// used instead of dynamic state calculation when <see cref="CurrentState"/>
+        /// When <see cref="VisualStateOverride"/> is specified, it's value
+        /// used instead of dynamic state calculation when <see cref="VisualState"/>
         /// returns its value.
         /// </remarks>
-        GenericControlState? CurrentStateOverride { get; set; }
+        VisualControlState? VisualStateOverride { get; set; }
 
         /// <summary>
-        /// Gets current <see cref="GenericControlState"/>.
+        /// Gets current <see cref="VisualControlState"/>.
         /// </summary>
-        GenericControlState CurrentState { get; }
+        VisualControlState VisualState { get; }
 
         /// <summary>
         /// Gets whether user paint is supported for this control.
@@ -1325,17 +1325,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the background brush for specified state of the control.
         /// </summary>
-        Brush? GetBackground(GenericControlState state);
+        Brush? GetBackground(VisualControlState state);
 
         /// <summary>
         /// Gets the border settings for specified state of the control.
         /// </summary>
-        BorderSettings? GetBorderSettings(GenericControlState state);
+        BorderSettings? GetBorderSettings(VisualControlState state);
 
         /// <summary>
         /// Gets the foreground brush for specified state of the control.
         /// </summary>
-        Brush? GetForeground(GenericControlState state);
+        Brush? GetForeground(VisualControlState state);
 
         /// <summary>
         /// Sends size event.
@@ -2066,21 +2066,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Image.</param>
         /// <param name="state">Control state.</param>
-        void SetImage(Image? value, GenericControlState state = GenericControlState.Normal);
+        void SetImage(Image? value, VisualControlState state = VisualControlState.Normal);
 
         /// <summary>
         /// Sets background brush for the specified control state.
         /// </summary>
         /// <param name="value">Background brush.</param>
         /// <param name="state">Control state.</param>
-        void SetBackground(Brush? value, GenericControlState state = GenericControlState.Normal);
+        void SetBackground(Brush? value, VisualControlState state = VisualControlState.Normal);
 
         /// <summary>
         /// Sets border settings for the specified control state.
         /// </summary>
         /// <param name="value">Border settings.</param>
         /// <param name="state">Control state.</param>
-        void SetBorder(BorderSettings? value, GenericControlState state = GenericControlState.Normal);
+        void SetBorder(BorderSettings? value, VisualControlState state = VisualControlState.Normal);
 
         /// <summary>
         /// Resets the <see cref="Font" /> property to its default value.</summary>

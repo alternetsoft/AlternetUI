@@ -204,7 +204,7 @@ namespace Alternet.UI
         {
             get
             {
-                return StateObjects?.Images?.GetObjectOrNull(GenericControlState.Normal);
+                return StateObjects?.Images?.GetObjectOrNull(VisualControlState.Normal);
             }
 
             set
@@ -226,7 +226,7 @@ namespace Alternet.UI
         {
             get
             {
-                return StateObjects?.Images?.GetObjectOrNull(GenericControlState.Disabled);
+                return StateObjects?.Images?.GetObjectOrNull(VisualControlState.Disabled);
             }
 
             set
@@ -311,7 +311,7 @@ namespace Alternet.UI
             Color? backColor = null,
             Font? font = null)
         {
-            var state = CurrentState;
+            var state = VisualState;
             var paddedRect = (
                 rect.Location + Padding.LeftTop,
                 rect.Size - Padding.Size);
@@ -338,7 +338,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state"></param>
         /// <returns></returns>
-        public virtual Image? GetImage(GenericControlState state = GenericControlState.Normal)
+        public virtual Image? GetImage(VisualControlState state = VisualControlState.Normal)
         {
             var image = StateObjects?.Images?.GetObjectOrNull(state);
             image ??= Image;
@@ -366,7 +366,7 @@ namespace Alternet.UI
             {
                 result = MeasureCanvas.GetTextExtent(
                     text,
-                    GetLabelFont(GenericControlState.Normal),
+                    GetLabelFont(VisualControlState.Normal),
                     this);
             }
 
@@ -399,7 +399,7 @@ namespace Alternet.UI
         /// Gets <see cref="Font"/> which is used to draw labels text.
         /// </summary>
         /// <returns></returns>
-        protected virtual Font GetLabelFont(GenericControlState state)
+        protected virtual Font GetLabelFont(VisualControlState state)
         {
             var font = StateObjects?.Colors?.GetObjectOrNull(state)?.Font;
 
@@ -415,7 +415,7 @@ namespace Alternet.UI
         /// <returns>By default returns <see cref="Color.Empty"/> which means do not
         /// draw background under the label text. In this case control's background
         /// is used.</returns>
-        protected virtual Color GetLabelBackColor(GenericControlState state)
+        protected virtual Color GetLabelBackColor(VisualControlState state)
         {
             var color = StateObjects?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
 
@@ -426,7 +426,7 @@ namespace Alternet.UI
         /// Gets <see cref="Color"/> which is used to draw label text.
         /// </summary>
         /// <returns></returns>
-        protected virtual Color GetLabelForeColor(GenericControlState state)
+        protected virtual Color GetLabelForeColor(VisualControlState state)
         {
             var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
 

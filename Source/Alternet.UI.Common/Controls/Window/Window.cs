@@ -25,14 +25,16 @@ namespace Alternet.UI
         private IconSet? icon = null;
         private object? menu = null;
         private Window? owner;
+        private bool needLayout = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
         /// </summary>
         public Window()
         {
-            BaseApplication.Current.RegisterWindow(this);
             SetVisibleValue(false);
+            ProcessIdle = true;
+            BaseApplication.Current.RegisterWindow(this);
             Bounds = GetDefaultBounds();
 
             if (Control.DefaultFont != Font.Default)
@@ -618,8 +620,7 @@ namespace Alternet.UI
                 if (IsDisposed)
                     return;
                 Handler.State = value;
-                OnStateChanged(EventArgs.Empty);
-                StateChanged?.Invoke(this, EventArgs.Empty);
+                RaiseStateChanged();
             }
         }
 
@@ -886,6 +887,12 @@ namespace Alternet.UI
             Handler.Close();
         }
 
+        public void RaiseStateChanged()
+        {
+            OnStateChanged(EventArgs.Empty);
+            StateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 
         public void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);
@@ -1071,6 +1078,20 @@ namespace Alternet.UI
         protected override void OnIdle(EventArgs e)
         {
             base.OnIdle(e);
+
+            if (needLayout)
+            {
+                PerformLayout();
+                needLayout = false;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandlerSizeChanged(EventArgs e)
+        {
+            base.OnHandlerSizeChanged(e);
+            PerformLayout();
+            needLayout = true;
         }
 
         /// <inheritdoc/>

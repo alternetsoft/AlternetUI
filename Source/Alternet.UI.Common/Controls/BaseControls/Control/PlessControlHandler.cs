@@ -45,7 +45,9 @@ namespace Alternet.UI
         public Action? HorizontalScrollBarValueChanged { get; set; }
         
         public Action? SizeChanged { get; set; }
-        
+
+        public Action? LocationChanged { get; set; }
+
         public Action? Activated { get; set; }
         
         public Action? Deactivated { get; set; }
@@ -77,7 +79,9 @@ namespace Alternet.UI
         public virtual bool IsScrollable { get; set; }
         
         public virtual RectD Bounds { get; set; }
-        
+
+        public virtual RectD EventBounds { get; set; }
+
         public virtual bool Visible { get; set; }
         
         public virtual bool UserPaint { get; set; }

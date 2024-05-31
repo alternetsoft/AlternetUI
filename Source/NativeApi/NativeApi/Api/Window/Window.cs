@@ -17,9 +17,7 @@ namespace NativeApi.Api
         public event EventHandler? Closing;
 
         public event EventHandler StateChanged;
-        public event EventHandler SizeChanged;
         public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
-        public event EventHandler LocationChanged;
 
         public string Title { get; set; }
         public WindowStartLocation WindowStartLocation { get; set; }

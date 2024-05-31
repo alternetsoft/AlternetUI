@@ -111,6 +111,9 @@ RectD GetBounds();
 void SetBounds(const RectD& value);
 
 
+RectD GetEventBounds();
+
+
 SizeD GetClientSize();
 void SetClientSize(const SizeD& value);
 
@@ -158,6 +161,9 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+PointI ScreenToDevice(const PointD& point);
+PointD DeviceToScreen(const PointI& point);
+bool SetFocus();
 void FocusNextControl(bool forward, bool nested);
 void BeginInit();
 void EndInit();
@@ -203,9 +209,6 @@ void ResetBackgroundColor();
 void ResetForegroundColor();
 PointD ClientToScreen(const PointD& point);
 PointD ScreenToClient(const PointD& point);
-PointI ScreenToDevice(const PointD& point);
-PointD DeviceToScreen(const PointI& point);
-bool SetFocus();
 bool BeginRepositioningChildren();
 void EndRepositioningChildren();
 RectI GetUpdateClientRect();
@@ -255,6 +258,7 @@ enum class ControlEvent
     VerticalScrollBarValueChanged,
     HorizontalScrollBarValueChanged,
     SizeChanged,
+    LocationChanged,
     Activated,
     Deactivated,
     HandleCreated,

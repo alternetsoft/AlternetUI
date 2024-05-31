@@ -83,7 +83,7 @@ namespace Alternet.UI
         private DockStyle dock;
         private LayoutStyle? layout;
         private Graphics? measureCanvas;
-        private RectD? reportedBounds;
+        private RectD reportedBounds = RectD.MinusOne;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -270,9 +270,9 @@ namespace Alternet.UI
         public event KeyPressEventHandler? KeyPress;
 
         /// <summary>
-        /// Occurs when the <see cref="CurrentState"/> property value changes.
+        /// Occurs when the <see cref="VisualState"/> property value changes.
         /// </summary>
-        public event EventHandler? CurrentStateChanged;
+        public event EventHandler? VisualStateChanged;
 
         /// <summary>
         /// Occurs when the <see cref="ToolTip"/> property value changes.
@@ -1621,41 +1621,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets override value for the <see cref="CurrentState"/>
+        /// Gets or sets override value for the <see cref="VisualState"/>
         /// property.
         /// </summary>
         /// <remarks>
-        /// When <see cref="CurrentStateOverride"/> is specified, it's value
-        /// used instead of dynamic state calculation when <see cref="CurrentState"/>
+        /// When <see cref="VisualStateOverride"/> is specified, it's value
+        /// used instead of dynamic state calculation when <see cref="VisualState"/>
         /// returns its value.
         /// </remarks>
         [Browsable(false)]
-        public virtual GenericControlState? CurrentStateOverride { get; set; }
+        public virtual VisualControlState? VisualStateOverride { get; set; }
 
         /// <summary>
-        /// Gets current <see cref="GenericControlState"/>.
+        /// Gets current <see cref="VisualControlState"/>.
         /// </summary>
         [Browsable(false)]
-        public virtual GenericControlState CurrentState
+        public virtual VisualControlState VisualState
         {
             get
             {
-                if (CurrentStateOverride is not null)
-                    return CurrentStateOverride.Value;
+                if (VisualStateOverride is not null)
+                    return VisualStateOverride.Value;
 
                 if (!enabled)
-                    return GenericControlState.Disabled;
+                    return VisualControlState.Disabled;
                 if (IsMouseOver)
                 {
                     if (IsMouseLeftButtonDown)
-                        return GenericControlState.Pressed;
+                        return VisualControlState.Pressed;
                     else
-                        return GenericControlState.Hovered;
+                        return VisualControlState.Hovered;
                 }
 
                 if (Focused)
-                    return GenericControlState.Focused;
-                return GenericControlState.Normal;
+                    return VisualControlState.Focused;
+                return VisualControlState.Normal;
             }
         }
 

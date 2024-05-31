@@ -561,6 +561,17 @@ ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectD value)
     #endif
 }
 
+ALTERNET_UI_API RectD_C Control_GetEventBounds_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<RectD_C>([&](){
+    #endif
+        return obj->GetEventBounds();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
 {
     #if !defined(__WXMSW__)
@@ -798,6 +809,39 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetMaximumSize(value);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD point)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->ScreenToDevice(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API PointD_C Control_DeviceToScreen_(Control* obj, PointI point)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->DeviceToScreen(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetFocus();
     #if !defined(__WXMSW__)
     });
     #endif
@@ -1293,39 +1337,6 @@ ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD point)
     return MarshalExceptions<PointD_C>([&](){
     #endif
         return obj->ScreenToClient(point);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD point)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<PointI_C>([&](){
-    #endif
-        return obj->ScreenToDevice(point);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointD_C Control_DeviceToScreen_(Control* obj, PointI point)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<PointD_C>([&](){
-    #endif
-        return obj->DeviceToScreen(point);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetFocus();
     #if !defined(__WXMSW__)
     });
     #endif

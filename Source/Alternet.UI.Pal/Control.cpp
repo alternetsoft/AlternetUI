@@ -454,6 +454,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         wxWindow->Unbind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+        wxWindow->Unbind(wxEVT_MOVE, &Control::OnLocationChanged, this);
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
@@ -980,6 +981,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+        _wxWindow->Bind(wxEVT_MOVE, &Control::OnLocationChanged, this);
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
@@ -1495,11 +1497,37 @@ namespace Alternet::UI
         RaiseEvent(ControlEvent::VisibleChanged);
     }
 
+    RectD Control::GetEventBounds()
+    {
+        return _eventBounds;
+    }
+
+    void Control::OnLocationChanged(wxMoveEvent& event)
+    {
+        event.Skip();
+
+        auto wxWindow = GetWxWindow();
+
+        auto location = event.GetPosition();
+        auto size = wxWindow->GetSize();
+        auto rect = RectI(location.x, location.y, size.x, size.y);
+        _eventBounds = toDip(rect, wxWindow);
+
+        RaiseEvent(ControlEvent::LocationChanged);
+    }
+
     void Control::OnSizeChanged(wxSizeEvent& event)
     {
         event.Skip();
 
         _flags.Set(ControlFlags::ClientSizeCacheValid, false);
+
+        auto wxWindow = GetWxWindow();
+
+        auto location = wxWindow->GetPosition();
+        auto size = event.GetSize();
+        auto rect = RectI(location.x, location.y, size.x, size.y);
+        _eventBounds = toDip(rect, wxWindow);
 
         RaiseEvent(ControlEvent::SizeChanged);
     }

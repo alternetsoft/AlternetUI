@@ -124,14 +124,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         /// <returns></returns>
-        public virtual bool HasObject(GenericControlState state) => GetObjectOrNormal(state) != null;
+        public virtual bool HasObject(VisualControlState state) => GetObjectOrNormal(state) != null;
 
         /// <summary>
         /// Gets an object for the specified state or <see cref="Normal"/> if
         /// object for that state is not specified.
         /// </summary>
         /// <param name="state">Control state.</param>
-        public virtual T? GetObjectOrNormal(GenericControlState state)
+        public virtual T? GetObjectOrNormal(VisualControlState state)
         {
             return GetObjectOrNull(state) ?? normal;
         }
@@ -141,23 +141,23 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         /// <param name="value">Object value.</param>
-        public virtual void SetObject(T? value, GenericControlState state = GenericControlState.Normal)
+        public virtual void SetObject(T? value, VisualControlState state = VisualControlState.Normal)
         {
             switch (state)
             {
-                case GenericControlState.Normal:
+                case VisualControlState.Normal:
                     Normal = value;
                     return;
-                case GenericControlState.Hovered:
+                case VisualControlState.Hovered:
                     Hovered = value;
                     return;
-                case GenericControlState.Pressed:
+                case VisualControlState.Pressed:
                     Pressed = value;
                     return;
-                case GenericControlState.Disabled:
+                case VisualControlState.Disabled:
                     Disabled = value;
                     return;
-                case GenericControlState.Focused:
+                case VisualControlState.Focused:
                     Focused = value;
                     return;
                 default:
@@ -209,7 +209,7 @@ namespace Alternet.UI
         /// <param name="state">Control state.</param>
         /// <param name="action">Action to call if no object is assigned for the state.</param>
         /// <returns></returns>
-        public virtual T GetObjectOrAction(GenericControlState state, Func<T> action)
+        public virtual T GetObjectOrAction(VisualControlState state, Func<T> action)
         {
             return GetObjectOrNull(state) ?? action();
         }
@@ -220,7 +220,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         /// <param name="defaultValue">Default result value.</param>
-        public virtual T GetObjectOrDefault(GenericControlState state, T defaultValue)
+        public virtual T GetObjectOrDefault(VisualControlState state, T defaultValue)
         {
             return GetObjectOrNull(state) ?? defaultValue;
         }
@@ -230,14 +230,14 @@ namespace Alternet.UI
         /// is not specified.
         /// </summary>
         /// <param name="state">Control state.</param>
-        public virtual T? GetObjectOrNull(GenericControlState state)
+        public virtual T? GetObjectOrNull(VisualControlState state)
         {
             return state switch
             {
-                GenericControlState.Hovered => hovered,
-                GenericControlState.Pressed => pressed,
-                GenericControlState.Disabled => disabled,
-                GenericControlState.Focused => focused,
+                VisualControlState.Hovered => hovered,
+                VisualControlState.Pressed => pressed,
+                VisualControlState.Disabled => disabled,
+                VisualControlState.Focused => focused,
                 _ => normal,
             };
         }
