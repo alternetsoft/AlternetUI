@@ -10,6 +10,10 @@ namespace Alternet.UI
 {
     public interface IWindowHandler : IControlHandler
     {
+        Action? StateChanged { get; set; }
+
+        string Title { get; set; }
+
         bool IsModal { get; }
 
         bool IsPopupWindow { get; set; }

@@ -2087,9 +2087,9 @@ namespace Alternet.UI
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseTextChanged(EventArgs e) => OnTextChanged(e);
+        public virtual void RaiseTextChanged() => OnTextChanged(EventArgs.Empty);
 
-        public virtual void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
+        public virtual void RaiseSizeChanged() => OnSizeChanged(EventArgs.Empty);
 
         public virtual void RaiseMouseEnter()
         {
@@ -2138,7 +2138,7 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        public virtual void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
+        public virtual void RaiseLocationChanged() => OnLocationChanged(EventArgs.Empty);
 
         public virtual void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
 
@@ -2165,12 +2165,10 @@ namespace Alternet.UI
             reportedBounds = newBounds;
 
             if (locationChanged)
-                RaiseLocationChanged(EventArgs.Empty);
+                RaiseLocationChanged();
 
             if (sizeChanged)
-            {
-                RaiseSizeChanged(EventArgs.Empty);
-            }
+                RaiseSizeChanged();
 
             PerformLayout();
         }

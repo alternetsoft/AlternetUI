@@ -336,6 +336,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override string Title
+        {
+            get => base.Title;
+
+            set
+            {
+                if (Title == value)
+                    return;
+                base.Title = value;
+                Handler.Title = value;
+            }
+        }
+
         /// <summary>
         /// A tool window does not appear in the Windows taskbar or in the window that appears
         /// when the user presses ALT+TAB.
@@ -1227,6 +1241,20 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStateChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.StateChanged = RaiseStateChanged;
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.StateChanged = null;
         }
     }
 }

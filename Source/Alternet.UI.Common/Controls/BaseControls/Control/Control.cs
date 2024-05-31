@@ -753,7 +753,7 @@ namespace Alternet.UI
                         Handler.Text = value;
                 }
 
-                RaiseTextChanged(EventArgs.Empty);
+                RaiseTextChanged();
             }
         }
 

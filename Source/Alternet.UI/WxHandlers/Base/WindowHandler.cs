@@ -9,6 +9,25 @@ namespace Alternet.UI
     {
         private object? statusBar;
 
+        public string Title
+        {
+            get => NativeControl.Title;
+            set => NativeControl.Title = value;
+        }
+
+        public Action? StateChanged
+        {
+            get
+            {
+                return NativeControl.StateChanged;
+            }
+
+            set
+            {
+                NativeControl.StateChanged = value;
+            }
+        }
+
         public WindowStartLocation StartLocation
         {
             get
@@ -154,12 +173,10 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
-            NativeControl.StateChanged = null;
             NativeControl.Closing -= NativeControl_Closing;
             NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
             Control.OwnerChanged -= ApplyOwner;
-            Control.TitleChanged -= ApplyTitle;
             Control.ShowInTaskbarChanged -= ApplyShowInTaskbar;
             Control.MinimizeEnabledChanged -= ApplyMinimizeEnabled;
             Control.MaximizeEnabledChanged -= ApplyMaximizeEnabled;
@@ -182,7 +199,6 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            ApplyTitle(null, EventArgs.Empty);
             ApplyShowInTaskbar(null, EventArgs.Empty);
             ApplyOwner(null, EventArgs.Empty);
             ApplyMaximizeEnabled(null, EventArgs.Empty);
@@ -199,7 +215,6 @@ namespace Alternet.UI
             ApplyToolbar(null, EventArgs.Empty);
             ApplyStatusBar(null, EventArgs.Empty);
 
-            Control.TitleChanged += ApplyTitle;
             Control.ShowInTaskbarChanged += ApplyShowInTaskbar;
             Control.OwnerChanged += ApplyOwner;
             Control.MinimizeEnabledChanged += ApplyMinimizeEnabled;
@@ -217,8 +232,6 @@ namespace Alternet.UI
             Control.StatusBarChanged += ApplyStatusBar;
 
             NativeControl.Closing += NativeControl_Closing;
-            NativeControl.LocationChanged = NativeControl_LocationChanged;
-            NativeControl.StateChanged = Control.RaiseStateChanged;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
@@ -375,11 +388,6 @@ namespace Alternet.UI
             NativeControl.HasTitleBar = Control.HasTitleBar;
         }
 
-        private void NativeControl_LocationChanged()
-        {
-            Control.RaiseLocationChanged(EventArgs.Empty);
-        }
-
         private void NativeControl_Closing(object? sender, CancelEventArgs e)
         {
             // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
@@ -394,11 +402,6 @@ namespace Alternet.UI
             Control.RaiseClosed(new WindowClosedEventArgs());
             if (!Control.Modal)
                 Control.Dispose();
-        }
-
-        private void ApplyTitle(object? sender, EventArgs e)
-        {
-            NativeControl.Title = Control.Title;
         }
 
         private class NativeWindow : Native.Window
