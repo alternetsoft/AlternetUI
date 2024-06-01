@@ -72,15 +72,15 @@ namespace Alternet.UI
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
-            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
                 return new SizeD(specifiedWidth, specifiedHeight);
 
             var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
             var maxWidth = maxSize.Width;
             var maxHeight = maxSize.Height;
 
-            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
-            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
+            var width = Coord.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
+            var height = Coord.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
 
             return new SizeD(width, height);
         }
@@ -109,8 +109,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual SizeD GetChildrenMaxPreferredSize(SizeD availableSize)
         {
-            double maxWidth = 0;
-            double maxHeight = 0;
+            Coord maxWidth = 0;
+            Coord maxHeight = 0;
 
             foreach (var control in AllChildrenInLayout)
             {
@@ -755,8 +755,8 @@ namespace Alternet.UI
             var s = Handler.GetPreferredSize(availableSize);
             s += Padding.Size;
             return new SizeD(
-                double.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
-                double.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
+                Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
+                Coord.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
         }
 
         /// <summary>

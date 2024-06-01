@@ -9,18 +9,6 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        /// <summary>
-        /// Raises the <see cref="TitleChanged"/> event and calls
-        /// <see cref="OnTitleChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        private void RaiseTitleChanged(EventArgs e)
-        {
-            OnTitleChanged(e);
-            TitleChanged?.Invoke(this, e);
-            Parent?.OnChildPropertyChanged(this, nameof(Title));
-        }
-
         private void Children_ItemInserted(object? sender, int index, Control item)
         {
             item.SetParentInternal(this);

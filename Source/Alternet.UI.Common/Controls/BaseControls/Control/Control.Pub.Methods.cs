@@ -398,6 +398,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="TitleChanged"/> event and calls
+        /// <see cref="OnTitleChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public virtual void RaiseTitleChanged()
+        {
+            OnTitleChanged(EventArgs.Empty);
+            TitleChanged?.Invoke(this, EventArgs.Empty);
+            Parent?.OnChildPropertyChanged(this, nameof(Title));
+        }
+
+        /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
         public virtual void PerformLayoutAndInvalidate(Action? action = null)
@@ -568,8 +580,6 @@ namespace Alternet.UI
         /// <see cref="OnClick(EventArgs)"/>.
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
         public virtual void RaiseClick()
         {
             OnClick(EventArgs.Empty);
@@ -908,10 +918,10 @@ namespace Alternet.UI
         /// <param name="specified">Specifies which bounds to use when applying new
         /// location and size.</param>
         public virtual void SetBounds(
-            double x,
-            double y,
-            double width,
-            double height,
+            Coord x,
+            Coord y,
+            Coord width,
+            Coord height,
             BoundsSpecified specified)
         {
             var bounds = Bounds;
@@ -1470,7 +1480,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ResetSuggestedHeight()
         {
-            SuggestedHeight = double.NaN;
+            SuggestedHeight = Coord.NaN;
         }
 
         /// <summary>
@@ -1478,7 +1488,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ResetSuggestedWidth()
         {
-            SuggestedWidth = double.NaN;
+            SuggestedWidth = Coord.NaN;
         }
 
         /// <summary>
@@ -1799,7 +1809,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public virtual int PixelFromDip(double value)
+        public virtual int PixelFromDip(Coord value)
         {
             return Handler.PixelFromDip(value);
         }
@@ -1839,7 +1849,7 @@ namespace Alternet.UI
         /// pixels conversions.
         /// </summary>
         /// <returns></returns>
-        public virtual double GetPixelScaleFactor()
+        public virtual Coord GetPixelScaleFactor()
         {
             return Handler.GetPixelScaleFactor();
         }
@@ -1990,7 +2000,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
-        public virtual double PixelToDip(int value)
+        public virtual Coord PixelToDip(int value)
         {
             return Handler.PixelToDip(value);
         }
@@ -2000,7 +2010,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public virtual double PixelFromDipF(double value)
+        public virtual Coord PixelFromDipF(Coord value)
         {
             return Handler.PixelFromDipF(value);
         }
@@ -2211,7 +2221,7 @@ namespace Alternet.UI
         /// <param name="x">The X position in dips where the menu will appear.</param>
         /// <param name="y">The Y position in dips where the menu will appear.</param>
         /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
-        public virtual void ShowPopupMenu(ContextMenu? menu, double x = -1, double y = -1)
+        public virtual void ShowPopupMenu(ContextMenu? menu, Coord x = -1, Coord y = -1)
         {
             menu?.Show(this, (x, y));
         }

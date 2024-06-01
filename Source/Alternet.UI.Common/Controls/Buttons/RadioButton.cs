@@ -50,21 +50,7 @@ namespace Alternet.UI
                 if (IsChecked == value)
                     return;
                 Handler.IsChecked = value;
-
-                var siblings = Parent?.Children;
-
-                if(siblings is null || siblings.Count == 0)
-                {
-                    RaiseCheckedChanged();
-                    return;
-                }
-
-                foreach(var sibling in siblings)
-                {
-                    if (sibling is not RadioButton radioButton)
-                        continue;
-                    radioButton.RaiseCheckedChanged();
-                }
+                RaiseSiblingsCheckedChanged();
             }
         }
 
@@ -96,7 +82,7 @@ namespace Alternet.UI
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
-        private void RaiseCheckedChanged()
+        protected virtual void RaiseCheckedChanged()
         {
             var newChecked = IsChecked;
 
@@ -105,6 +91,27 @@ namespace Alternet.UI
             reportedChecked = newChecked;
             OnCheckedChanged(EventArgs.Empty);
             CheckedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling <see cref="RadioButtons"/>.
+        /// </summary>
+        protected virtual void RaiseSiblingsCheckedChanged()
+        {
+            var siblings = Parent?.Children;
+
+            if (siblings is null || siblings.Count == 0)
+            {
+                RaiseCheckedChanged();
+                return;
+            }
+
+            foreach (var sibling in siblings)
+            {
+                if (sibling is not RadioButton radioButton)
+                    continue;
+                radioButton.RaiseCheckedChanged();
+            }
         }
 
         /// <inheritdoc/>

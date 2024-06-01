@@ -562,7 +562,7 @@ namespace Alternet.UI
             NativeControl.BeginIgnoreRecreate();
         }
 
-        public double GetPixelScaleFactor()
+        public Coord GetPixelScaleFactor()
         {
             return Native.Control.DrawingDPIScaleFactor(NativeControl.WxWidget);
         }
@@ -572,17 +572,17 @@ namespace Alternet.UI
             return NativeControl.GetUpdateClientRect();
         }
 
-        public double PixelToDip(int value)
+        public Coord PixelToDip(int value)
         {
             return Native.Control.DrawingToDip(value, NativeControl.WxWidget);
         }
 
-        public int PixelFromDip(double value)
+        public int PixelFromDip(Coord value)
         {
             return Native.Control.DrawingFromDip(value, NativeControl.WxWidget);
         }
 
-        public double PixelFromDipF(double value)
+        public Coord PixelFromDipF(Coord value)
         {
             return Native.Control.DrawingFromDipF(value, NativeControl.WxWidget);
         }
