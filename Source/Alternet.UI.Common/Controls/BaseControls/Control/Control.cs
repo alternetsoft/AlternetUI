@@ -2594,7 +2594,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="WxControlHandler"/> associated with this class.
+        /// Gets a <see cref="IControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         public virtual IControlHandler Handler

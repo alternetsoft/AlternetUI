@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ButtonHandler : WxControlHandler, IButtonHandler
+    internal class WxButtonHandler : WxControlHandler, IButtonHandler
     {
         public Image? NormalImage
         {

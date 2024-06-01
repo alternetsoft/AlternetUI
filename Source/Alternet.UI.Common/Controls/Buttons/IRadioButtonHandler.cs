@@ -8,5 +8,8 @@ namespace Alternet.UI
 {
     public interface IRadioButtonHandler : IControlHandler
     {
+        Action? CheckedChanged { get; set; }
+
+        bool IsChecked { get; set; }
     }
 }

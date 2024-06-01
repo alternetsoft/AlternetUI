@@ -23,5 +23,8 @@
                      CheckedChanged="RadioButton_CheckedChanged" />
       </StackPanel>
     </GroupBox>
+    <HorizontalStackPanel>
+      <Button Text="Change Value" Name="changeValueButton" Margin="5"/>
+    </HorizontalStackPanel>
   </StackPanel>
   </Control>
