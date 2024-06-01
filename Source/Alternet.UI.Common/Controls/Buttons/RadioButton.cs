@@ -87,5 +87,17 @@ namespace Alternet.UI
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
         }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+        }
     }
 }

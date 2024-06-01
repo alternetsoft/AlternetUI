@@ -7,7 +7,36 @@ namespace Alternet.UI
 {
     internal class ButtonHandler : WxControlHandler, IButtonHandler
     {
-        private ControlStateImages? stateImages;
+        public Image? NormalImage
+        {
+            set => NativeControl.NormalImage = (UI.Native.Image?)value?.Handler;
+        }
+
+        public Image? HoveredImage
+        {
+            set => NativeControl.HoveredImage = (UI.Native.Image?)value?.Handler;
+        }
+
+        public Image? PressedImage
+        {
+            set => NativeControl.PressedImage = (UI.Native.Image?)value?.Handler;
+        }
+
+        public Image? DisabledImage
+        {
+            set => NativeControl.DisabledImage = (UI.Native.Image?)value?.Handler;
+        }
+
+        public Image? FocusedImage
+        {
+            set => NativeControl.FocusedImage = (UI.Native.Image?)value?.Handler;
+        }
+
+        public Action? Click
+        {
+            get => NativeControl.Click;
+            set => NativeControl.Click = value;
+        }
 
         /// <summary>
         /// Gets a <see cref="Button"/> this handler provides the implementation for.
@@ -47,32 +76,6 @@ namespace Alternet.UI
             set => NativeControl.IsCancel = value;
         }
 
-        public ControlStateImages StateImages
-        {
-            get
-            {
-                if (stateImages == null)
-                {
-                    stateImages = new ControlStateImages();
-                    stateImages.PropertyChanged += StateImages_PropertyChanged;
-                }
-
-                return stateImages;
-            }
-
-            set
-            {
-                if (value is null)
-                    throw new ArgumentNullException(nameof(StateImages));
-                if (stateImages != null)
-                    stateImages.PropertyChanged -= StateImages_PropertyChanged;
-                stateImages = value;
-                stateImages.PropertyChanged += StateImages_PropertyChanged;
-                ApplyStateImages();
-                OnImageChanged();
-            }
-        }
-
         public bool TextVisible
         {
             get => NativeControl.TextVisible;
@@ -87,12 +90,18 @@ namespace Alternet.UI
 
         public void SetImagePosition(GenericDirection dir)
         {
-            NativeControl.SetImagePosition((int)dir);
+            if(Control.Image != null)
+                NativeControl.SetImagePosition((int)dir);
         }
 
         public void SetImageMargins(double x, double y)
         {
-            NativeControl.SetImageMargins(x, y);
+            if (BaseApplication.IsWindowsOS && Control.Image != null)
+            {
+                var xPixels = PixelFromDip(x);
+                var yPixels = PixelFromDip(y);
+                NativeControl.SetImageMargins(xPixels, yPixels);
+            }
         }
 
         internal override Native.Control CreateNativeControl()
@@ -106,94 +115,6 @@ namespace Alternet.UI
 
             if (BaseApplication.IsWindowsOS)
                 Control.UserPaint = true;
-
-            InitializeStateImages();
-
-            NativeControl.Click = NativeControl_Click;
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            NativeControl.Click = null;
-        }
-
-        private void ApplyStateImages()
-        {
-            var nativeControl = NativeControl;
-            var images = StateImages;
-            nativeControl.NormalImage = (UI.Native.Image?)images.Normal?.Handler;
-            nativeControl.HoveredImage = (UI.Native.Image?)images.Hovered?.Handler;
-            nativeControl.PressedImage = (UI.Native.Image?)images.Pressed?.Handler;
-            nativeControl.DisabledImage = (UI.Native.Image?)images.Disabled?.Handler;
-            nativeControl.FocusedImage = (UI.Native.Image?)images.Focused?.Handler;
-        }
-
-        private void OnImageChanged()
-        {
-            Control.PerformLayout();
-        }
-
-        private void StateImages_PropertyChanged(
-            object? sender,
-            PropertyChangedEventArgs e)
-        {
-            var nativeControl = NativeControl;
-            if (nativeControl == null)
-                return;
-
-            var images = StateImages;
-
-            switch (e.PropertyName)
-            {
-                case nameof(ControlStateImages.Normal):
-                    nativeControl.NormalImage = (UI.Native.Image?)images.Normal?.Handler;
-                    break;
-                case nameof(ControlStateImages.Hovered):
-                    nativeControl.HoveredImage = (UI.Native.Image?)images.Hovered?.Handler;
-                    break;
-                case nameof(ControlStateImages.Pressed):
-                    nativeControl.PressedImage = (UI.Native.Image?)images.Pressed?.Handler;
-                    break;
-                case nameof(ControlStateImages.Disabled):
-                    nativeControl.DisabledImage = (UI.Native.Image?)images.Disabled?.Handler;
-                    break;
-                default:
-                    throw new Exception();
-            }
-
-            OnImageChanged();
-        }
-
-        private void InitializeStateImages()
-        {
-            var nativeControl = NativeControl;
-
-            var images = new ControlStateImages();
-
-            var normalImage = nativeControl.NormalImage;
-            if (normalImage != null)
-                images.Normal = new Bitmap(normalImage);
-
-            var hoveredImage = nativeControl.HoveredImage;
-            if (hoveredImage != null)
-                images.Hovered = new Bitmap(hoveredImage);
-
-            var pressedImage = nativeControl.PressedImage;
-            if (pressedImage != null)
-                images.Pressed = new Bitmap(pressedImage);
-
-            var disabledImage = nativeControl.DisabledImage;
-            if (disabledImage != null)
-                images.Disabled = new Bitmap(disabledImage);
-
-            StateImages = images;
-        }
-
-        private void NativeControl_Click()
-        {
-            Control.RaiseClick(EventArgs.Empty);
         }
     }
 }

@@ -4,10 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public interface IButtonHandler : IControlHandler
     {
+        Image? NormalImage { set; }
+
+        Image? HoveredImage { set; }
+        
+        Image? PressedImage { set; }
+        
+        Image? DisabledImage { set; }
+        
+        Image? FocusedImage { set; }
+
+        Action? Click { get; set; }
+
         bool HasBorder { get; set; }
 
         bool IsDefault { get; set; }
@@ -15,8 +29,6 @@ namespace Alternet.UI
         bool ExactFit { get; set; }
 
         bool IsCancel { get; set; }
-
-        ControlStateImages StateImages { get; set; }
 
         bool TextVisible { get; set; }
 
