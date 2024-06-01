@@ -402,9 +402,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc />
-        public override void RaiseClick(EventArgs e)
+        public override void RaiseClick()
         {
-            base.RaiseClick(e);
+            base.RaiseClick();
             CommandHelpers.ExecuteCommandSource(this);
         }
 

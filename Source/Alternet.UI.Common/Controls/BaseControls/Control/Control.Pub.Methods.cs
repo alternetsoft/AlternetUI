@@ -570,10 +570,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        public virtual void RaiseClick(EventArgs e)
+        public virtual void RaiseClick()
         {
-            OnClick(e);
-            Click?.Invoke(this, e);
+            OnClick(EventArgs.Empty);
+            Click?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

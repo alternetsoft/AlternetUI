@@ -169,7 +169,7 @@ namespace Alternet.UI
         private void NativeControl_Click()
         {
             Control.Checked = NativeControl.Checked;
-            Control.RaiseClick(EventArgs.Empty);
+            Control.RaiseClick();
         }
 
         private void Control_TextChanged(object? sender, EventArgs e)

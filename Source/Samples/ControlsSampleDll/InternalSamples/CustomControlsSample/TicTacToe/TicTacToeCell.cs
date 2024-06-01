@@ -81,7 +81,7 @@ namespace Alternet.UI
 
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            RaiseClick(EventArgs.Empty);
+            RaiseClick();
         }
 
         private Brush? GetBackgroundBrush()

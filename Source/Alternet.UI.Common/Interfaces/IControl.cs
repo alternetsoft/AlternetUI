@@ -1526,7 +1526,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        void RaiseClick(EventArgs e);
+        void RaiseClick();
 
         /// <summary>
         /// Raises the <see cref="Idle"/> event and calls
