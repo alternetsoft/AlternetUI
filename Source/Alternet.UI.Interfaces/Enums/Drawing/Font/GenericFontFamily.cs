@@ -18,16 +18,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// A generic Serif <see cref="FontFamily"/> object.
         /// </summary>
-        Serif,
+        Serif = 2,
 
         /// <summary>
         /// A generic Monospace <see cref="FontFamily"/> object.
         /// </summary>
-        Monospace,
+        Monospace = 3,
 
         /// <summary>
         /// Default <see cref="FontFamily"/> object.
         /// </summary>
-        Default,
+        Default = 4,
     }
 }

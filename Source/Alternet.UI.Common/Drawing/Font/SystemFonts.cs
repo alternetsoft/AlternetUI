@@ -57,5 +57,28 @@ namespace Alternet.UI
         /// all GUI elements, so some controls might use a different font by default.
         /// </remarks>
         public static Font DefaultGui => Font.Default;
+
+        /// <summary>
+        /// Gets system font.
+        /// </summary>
+        public static Font GetFont(SystemSettingsFont font)
+        {
+            switch (font)
+            {
+                case SystemSettingsFont.OemFixed:
+                    return OemFixed;
+                case SystemSettingsFont.AnsiFixed:
+                    return AnsiFixed;
+                case SystemSettingsFont.AnsiVar:
+                    return AnsiVar;
+                case SystemSettingsFont.System:
+                    return System;
+                case SystemSettingsFont.DeviceDefault:
+                    return DeviceDefault;
+                case SystemSettingsFont.DefaultGui:
+                default:
+                    return DefaultGui;
+            }
+        }
     }
 }

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     internal class DeveloperToolsPanel : Control
@@ -257,10 +259,16 @@ namespace Alternet.UI
         /// </summary>
         public static void LogFontFamilies()
         {
+            List<string> skiaNames = new(SKFontManager.Default.FontFamilies);
+            skiaNames.Sort();
+
             var s = string.Empty;
-            foreach (string s2 in FontFamily.FamiliesNames)
+            var names = FontFamily.FamiliesNames;
+            foreach (string s2 in names)
             {
-                s += s2 + Environment.NewLine;
+                var skia = skiaNames.IndexOf(s2) >= 0 ? "(skia)" : string.Empty;
+
+                s += $"{s2} {skia}{Environment.NewLine}";
             }
 
             LogUtils.LogToFile(LogUtils.SectionSeparator);
@@ -268,7 +276,7 @@ namespace Alternet.UI
             LogUtils.LogToFile(s);
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
-            BaseApplication.Log("FontFamilies logged to file.");
+            BaseApplication.Log($"{names.Count()} FontFamilies logged to file.");
         }
 
         public void AddAction(string title, Action? action)
@@ -461,6 +469,53 @@ namespace Alternet.UI
             });
 
             AddAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
+
+            AddAction("Log SKFontManager", LogSkiaFontManager);
+            AddAction("Log SKFont", LogSkiaFont);
+        }
+
+        public void LogSkiaFont()
+        {
+            BaseApplication.LogNameValue(
+                "SKTypeface.Default.FamilyName",
+                SKTypeface.Default.FamilyName);
+        }
+
+        public void LogSkiaFontManager()
+        {
+            List<string> wxNames = new(FontFamily.FamiliesNames);
+            wxNames.Sort();
+
+            var s = string.Empty;
+            var count = SKFontManager.Default.FontFamilyCount;
+            for (int i = 0; i < count; i++)
+            {
+                var s2 = SKFontManager.Default.GetFamilyName(i);
+
+                var wx = wxNames.IndexOf(s2) >= 0 ? "(wx)" : string.Empty;
+
+                s += $"{s2} {wx}{Environment.NewLine}";
+
+                var styles = SKFontManager.Default.GetFontStyles(i);
+
+                for (int k = 0; k < styles.Count; k++)
+                {
+                    var style = styles[k];
+                    var fontWeight = Font.GetWeightClosestToNumericValue(style.Weight);
+                    var fontWidth = Font.GetSkiaWidthClosestToNumericValue(style.Width).ToString()
+                        ?? style.Width.ToString();
+                    var fontSlant = style.Slant;
+
+                    s += $"{StringUtils.FourSpaces}{fontSlant}, {fontWeight}, {fontWidth}{Environment.NewLine}";
+                }
+            }
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogUtils.LogToFile("Skia Font Families:");
+            LogUtils.LogToFile(s);
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+
+            BaseApplication.Log($"{count} Skia font families logged to file.");
         }
 
         private void LogControlInfo()

@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Encapsulates a bitmap which can be used with <see cref="SkiaGraphics"/>.
     /// </summary>
-    public class SkiaBitmap : Image
+    internal class SkiaBitmap : Image
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaBitmap"/> class from

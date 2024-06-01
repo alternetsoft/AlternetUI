@@ -48,11 +48,6 @@ namespace Alternet.Drawing
             }
         }
 
-        public static SKBitmap ToSkia(Image image)
-        {
-            return ((SkiaImageHandler)image.Handler).ToSkia();
-        }
-
         public override SizeD GetTextExtent(
             string text,
             Font font,
@@ -249,6 +244,11 @@ namespace Alternet.Drawing
             DebugPenAssert(pen);
             var skiaPoints = points.ToSkia();
             throw new NotImplementedException();
+        }
+
+        internal static SKBitmap ToSkia(Image image)
+        {
+            return ((SkiaImageHandler)image.Handler).ToSkia();
         }
     }
 }

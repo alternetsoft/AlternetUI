@@ -387,7 +387,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="double"/> coordinate to the integer value.
+        /// Converts <see cref="Coord"/> coordinate to the integer value.
         /// </summary>
         /// <param name="value">Coordinate.</param>
         /// <returns></returns>
@@ -399,7 +399,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="double"/> coordinate to the <see cref="float"/> value.
+        /// Converts <see cref="Coord"/> coordinate to the <see cref="float"/> value.
         /// </summary>
         /// <param name="value">Coordinate.</param>
         /// <returns></returns>

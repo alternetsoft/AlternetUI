@@ -365,7 +365,18 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font Default => defaultFont ??= CreateDefaultFont();
+        public static Font Default
+        {
+            get => defaultFont ??= CreateDefaultFont();
+
+            set
+            {
+                if (value is null)
+                    defaultFont = CreateDefaultFont();
+                else
+                    defaultFont = value;
+            }
+        }
 
         /// <summary>
         /// Gets the default fixed width font used in the application.
@@ -375,7 +386,17 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font DefaultMono => defaultMonoFont ??= CreateDefaultMonoFont();
+        public static Font DefaultMono
+        {
+            get => defaultMonoFont ??= CreateDefaultMonoFont();
+            set
+            {
+                if(value is null)
+                    defaultMonoFont = CreateDefaultMonoFont();
+                else
+                    defaultMonoFont = value;
+            }
+        }
 
         /// <summary>
         /// Gets the name of the font originally specified.
@@ -943,9 +964,10 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Font Clone()
         {
-            var nativeFont = FontFactory.Handler.CreateFontHandler(this);
-            var result = new Font(nativeFont);
-            return result;
+            var result = FontFactory.Handler.CreateFontHandler();
+            IFontHandler.FontParams prm = new(this);
+            result.Update(prm);
+            return new Font(result);
         }
 
         /// <summary>
@@ -1007,6 +1029,19 @@ namespace Alternet.Drawing
             }
 
             prm.Size = Alternet.Drawing.Font.CheckSize(prm.Size);
+        }
+
+        /// <summary>
+        /// Helper function for converting arbitrary numeric width to the closest
+        /// value of <see cref="SKFontStyleWidth"/> enum.
+        /// </summary>
+        /// <param name="width">Numeric width.</param>
+        /// <returns></returns>
+        public static SKFontStyleWidth? GetSkiaWidthClosestToNumericValue(int width)
+        {
+            if (width > 0 && width <= (int)SKFontStyleWidth.UltraExpanded)
+                return (SKFontStyleWidth)width;
+            return null;
         }
 
         /// <summary>

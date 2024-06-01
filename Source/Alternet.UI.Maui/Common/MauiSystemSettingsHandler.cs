@@ -61,17 +61,23 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public Color GetClassDefaultAttributesBgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        public Color GetClassDefaultAttributesBgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             throw new NotImplementedException();
         }
 
-        public Color GetClassDefaultAttributesFgColor(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        public Color GetClassDefaultAttributesFgColor(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             throw new NotImplementedException();
         }
 
-        public Font? GetClassDefaultAttributesFont(ControlTypeId controlType, ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        public Font? GetClassDefaultAttributesFont(
+            ControlTypeId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             throw new NotImplementedException();
         }
@@ -79,11 +85,6 @@ namespace Alternet.UI
         public Color GetColor(KnownSystemColor index)
         {
             return PlessSystemColors.GetColor(index);
-        }
-
-        public Font GetFont(SystemSettingsFont systemFont)
-        {
-            throw new NotImplementedException();
         }
 
         public LangDirection GetLangDirection()

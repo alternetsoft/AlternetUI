@@ -16,49 +16,49 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IPenHandler CreatePenHandler(Pen pen)
         {
-            return new MauiPenHandler(pen);
+            return new PlessPenHandler(pen);
         }
 
         /// <inheritdoc/>
         public IFontFactoryHandler CreateFontFactoryHandler()
         {
-            return new MauiFontFactoryHandler();
+            return new SkiaFontFactoryHandler();
         }
 
         /// <inheritdoc/>
         public IBrushHandler CreateTransparentBrushHandler(Brush brush)
         {
-            return new SkiaTransparentBrushHandler(brush);
+            return new PlessBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
         {
-            return new SkiaSolidBrushHandler(brush);
+            return new PlessSolidBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
         {
-            return new SkiaTextureBrushHandler(brush);
+            return new PlessTextureBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
         {
-            return new SkiaHatchBrushHandler(brush);
+            return new PlessHatchBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush)
         {
-            return new SkiaLinearGradientBrushHandler(brush);
+            return new PlessLinearGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
         public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush)
         {
-            return new SkiaRadialGradientBrushHandler(brush);
+            return new PlessRadialGradientBrushHandler(brush);
         }
 
         public bool CanReadGenericImage(string filename)

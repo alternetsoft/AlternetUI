@@ -122,7 +122,7 @@ namespace Alternet.UI
             var values = Enum.GetValues(typeof(SystemSettingsFont));
             foreach(var value in values)
             {
-                var font = GetFont((SystemSettingsFont)value);
+                var font = SystemFonts.GetFont((SystemSettingsFont)value);
 
                 BaseApplication.Log($"Font {value}: {font.ToInfoString()}");
             }
@@ -166,13 +166,6 @@ namespace Alternet.UI
             return Handler.GetColor(index);
         }
 
-        /// <summary>
-        /// Gets a standard system font.
-        /// </summary>
-        /// <param name="systemFont">Font identifier.</param>
-        public static Font GetFont(SystemSettingsFont systemFont)
-        {
-            return Handler.GetFont(systemFont);
-        }
+        public static Font GetFont(SystemSettingsFont font) => SystemFonts.GetFont(font);
     }
 }

@@ -44,6 +44,11 @@ namespace Alternet.UI
         public const string OneSpace = " ";
 
         /// <summary>
+        /// Gets initialized string with four space characters.
+        /// </summary>
+        public const string FourSpaces = "    ";
+
+        /// <summary>
         /// Gets initialized string with one double quote character (").
         /// </summary>
         public const string OneDoubleQuote = "\"";

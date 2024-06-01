@@ -38,8 +38,6 @@ namespace Alternet.UI
 
         bool HasFeature(SystemSettingsFeature index);
 
-        Font GetFont(SystemSettingsFont systemFont);
-
         Color GetColor(KnownSystemColor index);
 
         int GetMetric(SystemSettingsMetric index, IControl? control);
