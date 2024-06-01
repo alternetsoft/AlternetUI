@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Encapsulates a method that has a single parameter and does not return a value.
     /// </summary>
-    /// <typeparam name="T">The type of the parameter of the method that this delegate encapsulates.</typeparam>
+    /// <typeparam name="T">The type of the parameter of the method that
+    /// this delegate encapsulates.</typeparam>
     /// <param name="item">The parameter of the method that this delegate encapsulates.</param>
     /// <remarks>
     /// This delegate is different from <see cref="Action{T}"/> in the parameter definition.
@@ -22,8 +23,10 @@ namespace Alternet.UI
     /// <summary>
     /// Encapsulates a method that has two parameters and does not return a value.
     /// </summary>
-    /// <typeparam name="T1">The type of the first parameter of the method that this delegate encapsulates.</typeparam>
-    /// <typeparam name="T2">The type of the second parameter of the method that this delegate encapsulates.</typeparam>
+    /// <typeparam name="T1">The type of the first parameter of the method that this
+    /// delegate encapsulates.</typeparam>
+    /// <typeparam name="T2">The type of the second parameter of the method that
+    /// this delegate encapsulates.</typeparam>
     /// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
     /// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
     /// <remarks>
