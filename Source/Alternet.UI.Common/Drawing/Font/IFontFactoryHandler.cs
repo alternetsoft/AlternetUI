@@ -24,12 +24,6 @@ namespace Alternet.Drawing
         void SetDefaultFont(Font value);
 
         /// <summary>
-        /// Creates default native mono font.
-        /// </summary>
-        /// <returns></returns>
-        IFontHandler CreateDefaultMonoFontHandler();
-
-        /// <summary>
         /// Creates native font.
         /// </summary>
         /// <returns></returns>

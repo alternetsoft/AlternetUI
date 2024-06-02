@@ -12,34 +12,8 @@ namespace Alternet.Drawing
 {
     public class SkiaFontFactoryHandler : DisposableObject, IFontFactoryHandler
     {
-        private static double defaultFontSize = 12;
-        private static string? defaultFontName;
-        private static string? defaultMonoFontName;
-
         static SkiaFontFactoryHandler()
         {
-        }
-
-        public static double DefaultFontSize
-        {
-            get => defaultFontSize;
-
-            set
-            {
-                defaultFontSize = value;
-            }
-        }
-
-        public static string DefaultFontName
-        {
-            get => defaultFontName ?? SKTypeface.Default.FamilyName;
-            set => defaultFontName = value;
-        }
-
-        public static string DefaultMonoFontName
-        {
-            get => defaultMonoFontName ?? SKTypeface.Default.FamilyName;
-            set => defaultMonoFontName = value;
         }
 
         public virtual FontEncoding DefaultFontEncoding
@@ -56,12 +30,7 @@ namespace Alternet.Drawing
 
         public virtual IFontHandler CreateDefaultFontHandler()
         {
-            return new PlessFontHandler(DefaultFontName, DefaultFontSize);
-        }
-
-        public virtual IFontHandler CreateDefaultMonoFontHandler()
-        {
-            return new PlessFontHandler(DefaultMonoFontName, DefaultFontSize);
+            return new PlessFontHandler(SkiaUtils.DefaultFontName, SkiaUtils.DefaultFontSize);
         }
 
         public virtual IFontHandler CreateFontHandler()
@@ -71,48 +40,21 @@ namespace Alternet.Drawing
 
         public virtual Font CreateSystemFont(SystemSettingsFont systemFont)
         {
-            IFontHandler handler;
+            var nameAndSize = SkiaUtils.GetFontNameAndSize(systemFont);
 
-            switch (systemFont)
-            {
-                case SystemSettingsFont.OemFixed:
-                case SystemSettingsFont.AnsiFixed:
-                    handler = CreateDefaultMonoFontHandler();
-                    break;
-                default:
-                    handler = CreateDefaultFontHandler();
-                    break;
-            }
-
+            var handler = new PlessFontHandler(nameAndSize.Name, nameAndSize.Size);
             return new Font(handler);
         }
 
-        public virtual string[] GetFontFamiliesNames()
-        {
-            return SKFontManager.Default.GetFontFamilies();
-        }
+        public virtual string[] GetFontFamiliesNames() => SkiaUtils.GetFontFamiliesNames();
 
         public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
-        {
-            string name;
-
-            switch (genericFamily)
-            {
-                case GenericFontFamily.Monospace:
-                    name = DefaultMonoFontName;
-                    break;
-                default:
-                    name = DefaultFontName;
-                    break;
-            }
-
-            return name;
-        }
+            => SkiaUtils.GetFontFamilyName(genericFamily);
 
         public virtual void SetDefaultFont(Font value)
         {
-            defaultFontSize = value?.SizeInPoints ?? 12;
-            defaultFontName = value?.Name;
+            SkiaUtils.DefaultFontSize = value?.SizeInPoints ?? SkiaUtils.DefaultFontSize;
+            SkiaUtils.DefaultFontName = value?.Name ?? SKTypeface.Default.FamilyName;
         }
     }
 }

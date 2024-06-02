@@ -112,20 +112,35 @@ namespace Alternet.UI
         /// </summary>
         public static void LogSystemFonts()
         {
+            BaseApplication.LogBeginSection("System Fonts");
+
             BaseApplication.Log($"Default font: {Font.Default.ToInfoString()}");
             BaseApplication.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
 
-            var family = FontFamily.GenericMonospace;
-            var fontGenericMonospace = new Font(family, 9);
-            BaseApplication.Log($"GenericMonospace: {fontGenericMonospace.ToInfoString()}");
+            BaseApplication.LogEmptyLine();
 
-            var values = Enum.GetValues(typeof(SystemSettingsFont));
+            var values = Enum.GetValues(typeof(GenericFontFamily));
+            foreach (var value in values)
+            {
+                if ((GenericFontFamily)value == GenericFontFamily.None)
+                    continue;
+
+                var font = SystemFonts.GetFont((GenericFontFamily)value);
+
+                BaseApplication.Log($"Font {value}: {font.ToInfoString()}");
+            }
+
+            BaseApplication.LogEmptyLine();
+
+            values = Enum.GetValues(typeof(SystemSettingsFont));
             foreach(var value in values)
             {
                 var font = SystemFonts.GetFont((SystemSettingsFont)value);
 
                 BaseApplication.Log($"Font {value}: {font.ToInfoString()}");
             }
+
+            BaseApplication.LogEndSection();
         }
 
         /// <summary>

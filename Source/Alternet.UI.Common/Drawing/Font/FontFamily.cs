@@ -266,5 +266,42 @@ namespace Alternet.Drawing
             var result = FontFactory.Handler.GetFontFamilyName(family.Value);
             return result;
         }
+
+        public static (string, FontSize) GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
+        {
+            switch (font)
+            {
+                case SystemSettingsFont.OemFixed:
+                    return ("Terminal", 7.5);
+                case SystemSettingsFont.AnsiFixed:
+                    return ("Courier", 4.5);
+                case SystemSettingsFont.AnsiVar:
+                    return ("MS Sans Serif", 4.5);
+                case SystemSettingsFont.System:
+                    return ("System", 7.5);
+                case SystemSettingsFont.DeviceDefault:
+                    return ("System", 7.5);
+                case SystemSettingsFont.DefaultGui:
+                default:
+                    return ("Segoe UI", 9);
+            }
+        }
+
+        public static (string, FontSize) GetSampleFontNameAndSizeWindows(GenericFontFamily family)
+        {
+            switch (family)
+            {
+                case GenericFontFamily.Default:
+                default:
+                case GenericFontFamily.None:
+                    return ("Segoe UI", 9);
+                case GenericFontFamily.SansSerif:
+                    return ("Arial", 9);
+                case GenericFontFamily.Serif:
+                    return ("Times New Roman", 9);
+                case GenericFontFamily.Monospace:
+                    return ("Courier New", 9);
+            }
+        }
     }
 }

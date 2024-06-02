@@ -42,18 +42,6 @@ namespace Alternet.UI
         /// </summary>
         DeviceDefault = 14,
 
-        /*/// <summary>
-        /// Don't use: this is here just to make the values of enum elements
-        /// coincide with the corresponding msw constants
-        /// </summary>
-        DefaultPalette = 15,*/
-
-        /*/// <summary>
-        /// Don't use: MSDN says that this is a stock object provided only
-        /// for compatibility with 16-bit windows versions earlier than 3.0!
-        /// </summary>
-        SystemFixed = 16,*/
-
         /// <summary>
         /// Default font for user interface objects such as menus and dialog boxes.
         /// </summary>

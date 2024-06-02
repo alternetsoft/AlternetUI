@@ -145,47 +145,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs <see cref="SystemSettings"/>.
-        /// </summary>
-        public static void LogSystemSettings()
-        {
-            BaseApplication.LogBeginSection();
-            BaseApplication.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
-            BaseApplication.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
-            BaseApplication.Log($"AppearanceName = {SystemSettings.AppearanceName}");
-
-            var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
-            LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
-            LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
-
-            BaseApplication.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
-            BaseApplication.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
-
-            BaseApplication.LogSeparator();
-
-            foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
-            {
-                BaseApplication.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
-            }
-
-            BaseApplication.LogSeparator();
-
-            foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
-            {
-                BaseApplication.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
-            }
-
-            BaseApplication.LogSeparator();
-
-            foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
-            {
-                BaseApplication.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
-            }
-
-            BaseApplication.LogEndSection();
-        }
-
-        /// <summary>
         /// Shows developer tools window.
         /// </summary>
         public static void ShowDeveloperTools()
@@ -254,31 +213,6 @@ namespace Alternet.UI
             });
         }
 
-        /// <summary>
-        /// Logs <see cref="FontFamily.FamiliesNames"/>.
-        /// </summary>
-        public static void LogFontFamilies()
-        {
-            List<string> skiaNames = new(SKFontManager.Default.FontFamilies);
-            skiaNames.Sort();
-
-            var s = string.Empty;
-            var names = FontFamily.FamiliesNames;
-            foreach (string s2 in names)
-            {
-                var skia = skiaNames.IndexOf(s2) >= 0 ? "(skia)" : string.Empty;
-
-                s += $"{s2} {skia}{Environment.NewLine}";
-            }
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-            LogUtils.LogToFile("Font Families:");
-            LogUtils.LogToFile(s);
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-
-            BaseApplication.Log($"{names.Count()} FontFamilies logged to file.");
-        }
-
         public void AddAction(string title, Action? action)
         {
             actionsListBox.AddAction(title, action);
@@ -317,17 +251,6 @@ namespace Alternet.UI
             LogUtils.SetEventLogged(type, eventInfo, value);
         }
 
-        private static void LogOSInformation()
-        {
-            var os = Environment.OSVersion;
-            BaseApplication.Log("Current OS Information:\n");
-            BaseApplication.Log($"Platform: {os.Platform:G}");
-            BaseApplication.Log($"Version String: {os.VersionString}");
-            BaseApplication.Log($"Major version: {os.Version.Major}");
-            BaseApplication.Log($"Minor version: {os.Version.Minor}");
-            BaseApplication.Log($"Service Pack: '{os.ServicePack}'");
-        }
-
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
             rightNotebook.SelectedControl = propGrid;
@@ -358,13 +281,6 @@ namespace Alternet.UI
             UpdateEventsPropertyGrid(propGrid, type);
         }
 
-        private void LogUsefulDefines()
-        {
-            var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
-            var splitted = s?.Split(' ');
-            LogUtils.LogAsSection(splitted);
-        }
-
         private void AddLogAction(string title, Action action)
         {
             actionsListBox.AddAction(title, Fn);
@@ -388,58 +304,16 @@ namespace Alternet.UI
 
         private void InitActions()
         {
-            AddLogAction("Log system settings", LogSystemSettings);
-            AddLogAction("Log font families", LogFontFamilies);
-            AddLogAction("Log system fonts", SystemSettings.LogSystemFonts);
-            AddLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
-            AddLogAction("Log display info", Display.Log);
-            AddLogAction("Log control info", LogControlInfo);
-            AddLogAction("Log useful defines", LogUsefulDefines);
-            AddLogAction("Log OS information", LogOSInformation);
-            AddLogAction("Log system colors", LogUtils.LogSystemColors);
+            LogUtils.EnumLogActions(AddLogAction);
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
-
-            AddLogAction("Log Embedded Resources in Alternet.UI", () =>
-            {
-                const string s = "embres:Alternet.UI?assembly=Alternet.UI";
-
-                BaseApplication.Log("Embedded Resource Names added to log file");
-
-                var items = ResourceLoader.GetAssets(new Uri(s), null);
-                LogUtils.LogToFile(LogUtils.SectionSeparator);
-                foreach (var item in items)
-                {
-                    LogUtils.LogToFile(item);
-                }
-
-                LogUtils.LogToFile(LogUtils.SectionSeparator);
-            });
-
-            AddLogAction("Log Embedded Resources", () =>
-            {
-                LogUtils.LogResourceNames();
-                BaseApplication.Log("Resource Names added to log file");
-            });
 
             AddAction("Show Second MainForm", () =>
             {
                 var type = BaseApplication.FirstWindow()?.GetType();
                 var instance = Activator.CreateInstance(type ?? typeof(Window)) as Window;
                 instance?.Show();
-            });
-
-            AddAction("Log test error and warning items", () =>
-            {
-                BaseApplication.Log("Sample error", LogItemKind.Error);
-                BaseApplication.Log("Sample warning", LogItemKind.Warning);
-                BaseApplication.Log("Sample info", LogItemKind.Information);
-            });
-
-            AddLogAction("Log NativeControlPainter metrics", () =>
-            {
-                ControlPainter.LogPartSize(this);
             });
 
             AddAction("Exception: Throw C++", () =>
@@ -470,60 +344,12 @@ namespace Alternet.UI
 
             AddAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
 
-            AddAction("Log SKFontManager", LogSkiaFontManager);
-            AddAction("Log SKFont", LogSkiaFont);
-        }
+            AddLogAction("Log control info", () => { LogUtils.LogControlInfo(this); });
 
-        public void LogSkiaFont()
-        {
-            BaseApplication.LogNameValue(
-                "SKTypeface.Default.FamilyName",
-                SKTypeface.Default.FamilyName);
-        }
-
-        public void LogSkiaFontManager()
-        {
-            List<string> wxNames = new(FontFamily.FamiliesNames);
-            wxNames.Sort();
-
-            var s = string.Empty;
-            var count = SKFontManager.Default.FontFamilyCount;
-            for (int i = 0; i < count; i++)
+            AddLogAction("Log NativeControlPainter metrics", () =>
             {
-                var s2 = SKFontManager.Default.GetFamilyName(i);
-
-                var wx = wxNames.IndexOf(s2) >= 0 ? "(wx)" : string.Empty;
-
-                s += $"{s2} {wx}{Environment.NewLine}";
-
-                var styles = SKFontManager.Default.GetFontStyles(i);
-
-                for (int k = 0; k < styles.Count; k++)
-                {
-                    var style = styles[k];
-                    var fontWeight = Font.GetWeightClosestToNumericValue(style.Weight);
-                    var fontWidth = Font.GetSkiaWidthClosestToNumericValue(style.Width).ToString()
-                        ?? style.Width.ToString();
-                    var fontSlant = style.Slant;
-
-                    s += $"{StringUtils.FourSpaces}{fontSlant}, {fontWeight}, {fontWidth}{Environment.NewLine}";
-                }
-            }
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-            LogUtils.LogToFile("Skia Font Families:");
-            LogUtils.LogToFile(s);
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-
-            BaseApplication.Log($"{count} Skia font families logged to file.");
-        }
-
-        private void LogControlInfo()
-        {
-            BaseApplication.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(this)}");
-            Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
-            Log($"Font.Default: {Font.Default.ToInfoString()}");
-            Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
+                ControlPainter.LogPartSize(this);
+            });
         }
     }
 }

@@ -28,12 +28,12 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public IFontHandler CreateDefaultMonoFontHandler()
+        /*public IFontHandler CreateDefaultMonoFontHandler()
         {
             var result = new UI.Native.Font();
             result.InitializeWithDefaultMonoFont();
             return result;
-        }
+        }*/
 
         public IFontHandler CreateFontHandler()
         {
