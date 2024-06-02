@@ -48,6 +48,8 @@ namespace Alternet.Drawing
 
         public static (string Name, FontSize Size) GetFontNameAndSize(SystemSettingsFont systemFont)
         {
+            ///FontFamily.GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
+
             switch (systemFont)
             {
                 case SystemSettingsFont.OemFixed:
@@ -69,17 +71,13 @@ namespace Alternet.Drawing
 
         public static string GetFontFamilyName(GenericFontFamily genericFamily)
         {
-            string name;
+            if (genericFamily == GenericFontFamily.Default)
+                return SkiaUtils.DefaultFontName;
 
-            switch (genericFamily)
-            {
-                case GenericFontFamily.Monospace:
-                    name = SkiaUtils.DefaultMonoFontName;
-                    break;
-                default:
-                    name = SkiaUtils.DefaultFontName;
-                    break;
-            }
+            var (name, _) = FontFamily.GetSampleFontNameAndSize(genericFamily);
+
+            if (!FontFamily.IsFamilyValid(name))
+                name = SkiaUtils.DefaultFontName;
 
             return name;
         }
