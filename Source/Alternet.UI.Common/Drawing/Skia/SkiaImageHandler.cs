@@ -35,6 +35,7 @@ namespace Alternet.UI
 
         public SkiaImageHandler(GenericImage genericImage, int depth = 32)
         {
+            depth = CoerceDepth(depth);
             bitmap = (SKBitmap)genericImage;
         }
 
@@ -85,8 +86,8 @@ namespace Alternet.UI
 
         public SkiaImageHandler(SizeI size, int depth = 32)
         {
-            CoerceDepth(depth);
-            bitmap = new(size.Width, size.Height);
+            depth = CoerceDepth(depth);
+            bitmap = new(size.Width, size.Height, depth != 32);
         }
 
         public SKBitmap Bitmap => bitmap;
@@ -142,25 +143,42 @@ namespace Alternet.UI
                 if (HasAlpha == value)
                     return;
 
-                SKBitmap newBitmap = new(bitmap.Width, bitmap.Height, !value);
+                SKBitmap? newBitmap = new(bitmap.Width, bitmap.Height, !value);
                 if (bitmap.CopyTo(newBitmap))
+                {
+                    DisposeBitmap();
                     bitmap = newBitmap;
+                }
                 else
+                {
+                    SafeDispose(ref newBitmap);
                     BaseApplication.LogError($"SkiaImageHandler.HasAlpha = {value}");
+                }
             }
         }
 
         public override int Depth
         {
-            get => 32;
+            get
+            {
+                if (HasAlpha)
+                    return 32;
+                else
+                    return 24;
+            }
         }
 
         public override bool Rescale(SizeI sizeNeeded)
         {
-            SKBitmap newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
+            SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
             var result = bitmap.ScalePixels(newBitmap, DefaultScaleQuality);
-            if(result)
+            if (result)
+            {
+                DisposeBitmap();
                 bitmap = newBitmap;
+            }
+            else
+                SafeDispose(ref newBitmap);
             return result;
         }
 
@@ -171,25 +189,21 @@ namespace Alternet.UI
 
         public override IImageHandler GetSubBitmap(RectI rect)
         {
-            var resultBitmap = new SKBitmap();
-            if(bitmap.ExtractSubset(resultBitmap, rect))
-                return new SkiaImageHandler(resultBitmap);
-            else
-            {
+            var resultBitmap = new SKBitmap(rect.Width, rect.Height);
+            if(!bitmap.ExtractSubset(resultBitmap, rect))
                 BaseApplication.LogError($"SkiaImageHandler.GetSubBitmap({rect})");
-                return new SkiaImageHandler(new SKBitmap(rect.Width, rect.Height));
-            }
-        }
-
-        public override IImageHandler ConvertToDisabled(byte brightness = 255)
-        {
-            throw new NotImplementedException();
+            return new SkiaImageHandler(resultBitmap);
         }
 
         public override bool ResetAlpha()
         {
             HasAlpha = false;
             return HasAlpha == false;
+        }
+
+        public override IImageHandler ConvertToDisabled(byte brightness = 255)
+        {
+            throw new NotImplementedException();
         }
 
         public override bool GrayScale()
@@ -234,9 +248,16 @@ namespace Alternet.UI
 
         private int CoerceDepth(int depth)
         {
-            if (depth >= 0 && depth != 32)
-                BaseApplication.LogError("Depth = 32 is expected");
-            return 32;
+            if (depth >= 0 && depth != 32 && depth != 24)
+            {
+                BaseApplication.LogError("Depth = 32 or 24 is expected");
+                return 32;
+            }
+
+            if (depth < 0)
+                return 32;
+
+            return depth;
         }
 
         private void DisposeBitmap()
