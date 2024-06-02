@@ -20,7 +20,13 @@ namespace Alternet.Drawing
         {
         }
 
-        internal SolidBrush(Color color, bool immutable)
+        /// <summary>
+        /// Initializes a new <see cref="SolidBrush"/> object of the specified color.
+        /// </summary>
+        /// <param name="color">A <see cref="Color"/> structure that represents the color of
+        /// this brush.</param>
+        /// <param name="immutable">Whether this brush is immutable (readonly).</param>
+        public SolidBrush(Color color, bool immutable)
             : base(immutable)
         {
             this.color = color;
