@@ -341,7 +341,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return asBrush ??= new(this);
+                return asBrush ??= new(this, immutable: true);
             }
         }
 
