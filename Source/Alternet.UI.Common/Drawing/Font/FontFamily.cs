@@ -11,6 +11,9 @@ namespace Alternet.Drawing
     /// </summary>
     public class FontFamily : BaseObject
     {
+        private static readonly string?[] GenericFamilyNames
+            = new string?[(int)GenericFontFamily.Default + 1];
+
         private static FontFamily? genericSerif;
         private static FontFamily? genericDefault;
         private static FontFamily? genericSansSerif;
@@ -20,6 +23,7 @@ namespace Alternet.Drawing
         private static List<string>? namesAscending;
 
         private string? name;
+        private bool? isOk;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -202,7 +206,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>A string that represents the name of this
         /// <see cref="FontFamily"/>.</value>
-        public string Name
+        public virtual string Name
         {
             get
             {
@@ -211,9 +215,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether this font family is valid.
+        /// </summary>
+        public virtual bool IsOk
+        {
+            get
+            {
+                return isOk ??= IsFamilyValid(Name);
+            }
+        }
+
+        /// <summary>
         /// Gets generic font family type.
         /// </summary>
-        public GenericFontFamily? GenericFamily { get; }
+        public virtual GenericFontFamily? GenericFamily { get; }
 
         /// <summary>
         /// Resets all loaded font families.
@@ -260,14 +275,21 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static string GetName(GenericFontFamily? family)
         {
-            family ??= GenericFontFamily.Default;
-            if (family == GenericFontFamily.None)
+            if (family is null || family == GenericFontFamily.None)
                 family = GenericFontFamily.Default;
+
+            var savedResult = GenericFamilyNames[(int)family];
+            if (savedResult is not null)
+                return savedResult;
+
             var result = FontFactory.Handler.GetFontFamilyName(family.Value);
+
+            GenericFamilyNames[(int)family] = result;
+
             return result;
         }
 
-        public static (string, FontSize) GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
+        public static (string Name, FontSize Size) GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
         {
             switch (font)
             {
@@ -287,7 +309,26 @@ namespace Alternet.Drawing
             }
         }
 
-        public static (string, FontSize) GetSampleFontNameAndSizeWindows(GenericFontFamily family)
+        public static (string Name, FontSize Size) GetSampleFontNameAndSize(GenericFontFamily family)
+        {
+            switch (BaseApplication.BackendOS)
+            {
+                case OperatingSystems.Windows:
+                case OperatingSystems.Linux:
+                case OperatingSystems.MacOs:
+                case OperatingSystems.Android:
+                case OperatingSystems.IOS:
+                default:
+                    return GetSampleFontNameAndSizeWindows(family);
+            }
+        }
+
+        public static void SetFontFamilyName(GenericFontFamily genericFamily, string? name)
+        {
+            GenericFamilyNames[(int)genericFamily] = name;
+        }
+
+        public static (string Name, FontSize Size) GetSampleFontNameAndSizeWindows(GenericFontFamily family)
         {
             switch (family)
             {
