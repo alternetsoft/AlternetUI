@@ -22,13 +22,13 @@ namespace Alternet.UI
 
         public void Log()
         {
-            BaseApplication.LogFileIsEnabled = true;
-            BaseApplication.Log($"Pixel Width: {DeviceDisplay.Current.MainDisplayInfo.Width}");
-            BaseApplication.Log($"Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
-            BaseApplication.Log($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
-            BaseApplication.Log($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
-            BaseApplication.Log($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
-            BaseApplication.Log($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
+            App.LogFileIsEnabled = true;
+            App.Log($"Pixel Width: {DeviceDisplay.Current.MainDisplayInfo.Width}");
+            App.Log($"Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+            App.Log($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
+            App.Log($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+            App.Log($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
+            App.Log($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
             /*
                 Pixel Width: 3840
                 Pixel Height: 2160

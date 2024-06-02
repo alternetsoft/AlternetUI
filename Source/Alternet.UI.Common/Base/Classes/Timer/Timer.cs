@@ -101,7 +101,7 @@ namespace Alternet.UI
             {
                 if(handler is null)
                 {
-                    handler = BaseApplication.Handler.CreateTimerHandler(this);
+                    handler = App.Handler.CreateTimerHandler(this);
                     handler.Tick = NativeTimer_Tick;
                 }
 

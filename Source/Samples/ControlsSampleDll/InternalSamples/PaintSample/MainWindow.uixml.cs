@@ -95,7 +95,7 @@ namespace PaintSample
             testMenu.Add("Make file grey...", DoMakeFileGray);
             testMenu.Add("Load Toucan image", DoLoadToucanImage);
 
-            if (!BaseApplication.IsLinuxOS)
+            if (!App.IsLinuxOS)
                 testMenu.Add("Sample draw", DoDrawOnBitmap);
 
             testMenu.Add("Rotate", DoRotate);
@@ -122,7 +122,7 @@ namespace PaintSample
                 Height = new GridLength()
             });
 
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
 
             border = new();
             border.BorderColor = Splitter.DefaultBackColor;
@@ -491,7 +491,7 @@ namespace PaintSample
             var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
             if (result is null)
                 return;
-            BaseApplication.Log($"Image.ChangeLightness: {result}");
+            App.Log($"Image.ChangeLightness: {result}");
             var bitmap = Document.Bitmap;
             GenericImage image = (GenericImage)bitmap;
             var converted = image.ChangeLightness((int)result.Value);
@@ -503,7 +503,7 @@ namespace PaintSample
             var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
             if (result is null)
                 return;
-            BaseApplication.Log($"Change lightness using GenericImage.GetData");
+            App.Log($"Change lightness using GenericImage.GetData");
             var bitmap = Document.Bitmap;
             GenericImage image = (GenericImage)bitmap;
             var lightness = (int)result.Value;
@@ -518,7 +518,7 @@ namespace PaintSample
                 return;
 
             var alpha = (byte)result.Value;
-            BaseApplication.Log($"Fill red color (alpha = {alpha}) using new image with native data");
+            App.Log($"Fill red color (alpha = {alpha}) using new image with native data");
 
             SizeI size = (600, 600);
             var pixelCount = size.PixelCount;
@@ -577,7 +577,7 @@ namespace PaintSample
 
         public unsafe void DoGenImageUseGetData()
         {
-            BaseApplication.Log($"Generate sample image using GenericImage.GetData");
+            App.Log($"Generate sample image using GenericImage.GetData");
             var bitmap = Document.Bitmap;
             GenericImage image = (GenericImage)bitmap;
             image.InitAlpha();
@@ -632,8 +632,8 @@ namespace PaintSample
         {
             dc.FillRectangle(Color.WhiteSmoke.AsBrush, (0, 0, 200, 200));
 
-            BaseApplication.LogNameValue("dc.DPI", dc.GetDPI());
-            BaseApplication.LogNameValue("window.DPI", GetDPI());
+            App.LogNameValue("dc.DPI", dc.GetDPI());
+            App.LogNameValue("window.DPI", GetDPI());
 
             var s = "Hello text";
 
@@ -647,7 +647,7 @@ namespace PaintSample
                 out _,
                 null);
 
-            BaseApplication.Log($"GetTextExtent: {measure}, {size}");
+            App.Log($"GetTextExtent: {measure}, {size}");
 
             RectD r1 = (location.X, location.Y, measure.Width, measure.Height);
             RectD r2 = (location.X, location.Y, size.Width, size.Height);

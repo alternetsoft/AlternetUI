@@ -17,7 +17,7 @@ namespace Alternet.UI
 
         public static ISystemSettingsHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateSystemSettingsHandler();
+            get => handler ??= App.Handler.CreateSystemSettingsHandler();
 
             set => handler = value;
         }
@@ -112,12 +112,12 @@ namespace Alternet.UI
         /// </summary>
         public static void LogSystemFonts()
         {
-            BaseApplication.LogBeginSection("System Fonts");
+            App.LogBeginSection("System Fonts");
 
-            BaseApplication.Log($"Default font: {Font.Default.ToInfoString()}");
-            BaseApplication.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
+            App.Log($"Default font: {Font.Default.ToInfoString()}");
+            App.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
 
-            BaseApplication.LogEmptyLine();
+            App.LogEmptyLine();
 
             var values = Enum.GetValues(typeof(GenericFontFamily));
             foreach (var value in values)
@@ -127,20 +127,20 @@ namespace Alternet.UI
 
                 var font = SystemFonts.GetFont((GenericFontFamily)value);
 
-                BaseApplication.Log($"Font {value}: {font.ToInfoString()}");
+                App.Log($"Font {value}: {font.ToInfoString()}");
             }
 
-            BaseApplication.LogEmptyLine();
+            App.LogEmptyLine();
 
             values = Enum.GetValues(typeof(SystemSettingsFont));
             foreach(var value in values)
             {
                 var font = SystemFonts.GetFont((SystemSettingsFont)value);
 
-                BaseApplication.Log($"Font {value}: {font.ToInfoString()}");
+                App.Log($"Font {value}: {font.ToInfoString()}");
             }
 
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Alternet.UI
         /// </summary>
         public static void LogFixedWidthFonts()
         {
-            BaseApplication.LogBeginSection();
+            App.LogBeginSection();
             var items = FontFamily.FamiliesNamesAscending;
             foreach(var item in items)
             {
@@ -156,11 +156,11 @@ namespace Alternet.UI
 
                 if(font.IsFixedWidth && font.Style == FontStyle.Regular && !font.GdiVerticalFont)
                 {
-                    BaseApplication.Log(font.ToInfoString());
+                    App.Log(font.ToInfoString());
                 }
             }
 
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace Alternet.UI
 
         public void MessageBeep(SystemSoundType soundType)
         {
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
                 SafeNativeMethods.MessageBeep((int)soundType);
             else
                 Bell();

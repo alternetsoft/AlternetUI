@@ -87,9 +87,9 @@ namespace ControlsSample
         internal void LogEventOnce(string s, bool once = true)
         {
             if(once)
-                BaseApplication.LogReplace(s, s);
+                App.LogReplace(s, s);
             else
-                BaseApplication.Log(s);
+                App.Log(s);
         }
     }
 }

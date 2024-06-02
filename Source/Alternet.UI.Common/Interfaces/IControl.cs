@@ -2042,7 +2042,7 @@ namespace Alternet.UI
         void EndIgnoreRecreate();
 
         /// <summary>
-        /// Same as <see cref="BaseApplication.Log"/>.
+        /// Same as <see cref="App.Log"/>.
         /// </summary>
         /// <param name="s"></param>
         void Log(object? s);

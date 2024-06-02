@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// Provides methods and properties to manage an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public class BaseApplication : DisposableObject
+    public class App : DisposableObject
     {
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -110,12 +110,12 @@ namespace Alternet.UI
         private static bool terminating = false;
         private static int logUpdateCount;
         private static bool logFileIsEnabled;
-        private static BaseApplication? current;
+        private static App? current;
 
         private readonly List<Window> windows = new();
         private Window? window;
 
-        static BaseApplication()
+        static App()
         {
             Is64BitOS = Environment.Is64BitOperatingSystem;
             Is64BitProcess = Environment.Is64BitProcess;
@@ -171,12 +171,12 @@ namespace Alternet.UI
 #endif
         }
 
-        public BaseApplication(IApplicationHandler? handler)
+        public App(IApplicationHandler? handler)
         {
             if(handler is not null)
                 Handler = handler;
             SynchronizationContext.InstallIfNeeded();
-            BaseApplication.Current = this;
+            App.Current = this;
 
             Initialized = true;
             Window.UpdateDefaultFont();
@@ -203,7 +203,7 @@ namespace Alternet.UI
         /// exceptions should be handled by a structured
         /// exception handling block. You can change whether this callback
         /// is used for unhandled Windows Forms thread
-        /// exceptions by setting <see cref="BaseApplication.SetUnhandledExceptionMode"/>.
+        /// exceptions by setting <see cref="App.SetUnhandledExceptionMode"/>.
         /// </remarks>
         public static event ThreadExceptionEventHandler? ThreadException;
 
@@ -264,13 +264,13 @@ namespace Alternet.UI
         /// Gets the <see cref="Application"/> object for the currently
         /// runnning application.
         /// </summary>
-        public static BaseApplication Current
+        public static App Current
         {
             get
             {
                 // maybe make it thread static?
                 // maybe move this to native?
-                return current ??= new BaseApplication(null);
+                return current ??= new App(null);
             }
 
             protected set
@@ -608,7 +608,7 @@ namespace Alternet.UI
             => SynchronizationService.Invoke(method, args);
 
         /// <summary>
-        /// Executes <see cref="BaseApplication.IdleLog"/> using <see cref="Invoke(Action?)"/>.
+        /// Executes <see cref="App.IdleLog"/> using <see cref="Invoke(Action?)"/>.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="kind">Message kind.</param>
@@ -616,7 +616,7 @@ namespace Alternet.UI
         {
             Invoke(() =>
             {
-                BaseApplication.IdleLog(obj, kind);
+                App.IdleLog(obj, kind);
             });
         }
 
@@ -1066,17 +1066,17 @@ namespace Alternet.UI
         {
             using var errorWindow =
                 new ThreadExceptionWindow(exception, additionalInfo, canContinue);
-            if (BaseApplication.IsRunning)
+            if (App.IsRunning)
             {
                 return errorWindow.ShowModal() == ModalResult.Accepted;
             }
             else
             {
-                if (BaseApplication.current is null)
+                if (App.current is null)
                     return false;
 
                 errorWindow.CanContinue = false;
-                BaseApplication.Current.Run(errorWindow);
+                App.Current.Run(errorWindow);
                 return false;
             }
         }
@@ -1245,7 +1245,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ProcessPendingEvents()
         {
-            BaseApplication.Handler.ProcessPendingEvents();
+            App.Handler.ProcessPendingEvents();
         }
 
         /// <summary>
@@ -1342,7 +1342,7 @@ namespace Alternet.UI
 
         protected override void DisposeManaged()
         {
-            BaseApplication.Current = null!;
+            App.Current = null!;
         }
 
         /// <summary>

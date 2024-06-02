@@ -16,7 +16,7 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return handler ??= BaseApplication.Handler.CreatePrintingHandler();
+                return handler ??= App.Handler.CreatePrintingHandler();
             }
 
             set

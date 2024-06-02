@@ -209,12 +209,12 @@ namespace PropertyGridSample
 
                 static void Button_Click(object? sender, EventArgs e)
                 {
-                    BaseApplication.Log("Button in Border clicked.");
+                    App.Log("Button in Border clicked.");
                 }
 
                 static void Border_VisualStateChanged(object? sender, EventArgs e)
                 {
-                    BaseApplication.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
+                    App.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
                 }
             });
 
@@ -330,7 +330,7 @@ namespace PropertyGridSample
 
             static void Button_Click(object? sender, EventArgs e)
             {
-                BaseApplication.Log($"Button '{(sender as Button)?.Text}' Click");
+                App.Log($"Button '{(sender as Button)?.Text}' Click");
             }
         }
 

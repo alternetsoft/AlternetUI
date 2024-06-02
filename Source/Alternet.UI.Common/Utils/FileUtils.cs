@@ -109,14 +109,14 @@ namespace Alternet.UI
 
                 foreach (var s in filesToDelete)
                 {
-                    BaseApplication.Log("Deleting file: " + s);
+                    App.Log("Deleting file: " + s);
                     try
                     {
                         File.Delete(s);
                     }
                     catch (Exception)
                     {
-                        BaseApplication.Log("ERROR deleting file: " + s);
+                        App.Log("ERROR deleting file: " + s);
                     }
                 }
             }

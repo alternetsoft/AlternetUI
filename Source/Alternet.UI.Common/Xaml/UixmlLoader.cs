@@ -84,11 +84,11 @@ namespace Alternet.UI
             {
                 if(report)
                     ReportException(e, resName);
-                if (BaseApplication.Initialized && !BaseApplication.Current.InUixmlPreviewerMode
+                if (App.Initialized && !App.Current.InUixmlPreviewerMode
                     && ShowExceptionDialog)
                 {
                     var s = $"Resource Name: {resName}";
-                    BaseApplication.ShowExceptionWindow(e, s, false);
+                    App.ShowExceptionWindow(e, s, false);
                 }
 
                 throw e;

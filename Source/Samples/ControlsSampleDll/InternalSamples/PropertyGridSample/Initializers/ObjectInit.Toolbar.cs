@@ -73,8 +73,8 @@ namespace PropertyGridSample
 
             ContextMenu? menu = new();
 
-            menu.Add("Item 1").ClickAction = ()=> { BaseApplication.Log("Item 1 clicked"); };
-            menu.Add("Item 2").ClickAction = () => { BaseApplication.Log("Item 2 clicked"); };
+            menu.Add("Item 1").ClickAction = ()=> { App.Log("Item 1 clicked"); };
+            menu.Add("Item 2").ClickAction = () => { App.Log("Item 2 clicked"); };
 
             toolbar.SetToolDropDownMenu(buttonIdOpen, menu);
 
@@ -115,7 +115,7 @@ namespace PropertyGridSample
             {
                 if (sender is not Control button)
                     return;
-                BaseApplication.Log($"Button click: {button.ToolTip}");
+                App.Log($"Button click: {button.ToolTip}");
             }
         }
     }

@@ -15,15 +15,15 @@ namespace Alternet.UI
     public static class AppUtils
     {
         /// <summary>
-        /// Opens log file <see cref="BaseApplication.LogFilePath"/> in the default editor
+        /// Opens log file <see cref="App.LogFilePath"/> in the default editor
         /// of the operating system.
         /// </summary>
         public static void OpenLogFile()
         {
-            if (!File.Exists(BaseApplication.LogFilePath))
+            if (!File.Exists(App.LogFilePath))
                 LogUtils.LogToFileAppStarted();
 
-            ShellExecute(BaseApplication.LogFilePath);
+            ShellExecute(App.LogFilePath);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Executes terminal command redirecting output and error streams
-        /// to <see cref="BaseApplication.Log"/>.
+        /// to <see cref="App.Log"/>.
         /// </summary>
         /// <param name="waitResult">Whether to wait until command finishes its execution.</param>
         /// <param name="command">Terminal command.</param>
@@ -70,7 +70,7 @@ namespace Alternet.UI
             bool waitResult = false,
             bool logStdOut = true)
         {
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
                 return ExecuteApp("cmd.exe", "/c " + command, folder, waitResult, logStdOut);
             else
                 return ExecuteApp("/bin/bash", "-c \"" + command + "\"", folder, waitResult, logStdOut);
@@ -91,7 +91,7 @@ namespace Alternet.UI
 
             Process process = new();
             if(logStdOut)
-                BaseApplication.IdleLog("Run: " + fileName + " " + arguments);
+                App.IdleLog("Run: " + fileName + " " + arguments);
             ProcessStartInfo processInfo = new(fileName, arguments)
             {
                 // If the UseShellExecute property is true,
@@ -115,7 +115,7 @@ namespace Alternet.UI
                     return;
                 if (logStdOut)
                 {
-                    BaseApplication.IdleLog($"Output> {y.Data}");
+                    App.IdleLog($"Output> {y.Data}");
                 }
             };
             process.ErrorDataReceived += (x, y) =>
@@ -125,7 +125,7 @@ namespace Alternet.UI
                     return;
                 if (logStdOut)
                 {
-                    BaseApplication.IdleLog($"Error> {y.Data}");
+                    App.IdleLog($"Error> {y.Data}");
                 }
             };
             process.Start();

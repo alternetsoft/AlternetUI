@@ -442,49 +442,49 @@ namespace Alternet.UI
 
             internal void TreeViewPlus_Click(object sender, EventArgs e)
             {
-                BaseApplication.DebugLog("Click");
+                App.DebugLog("Click");
             }
 
             internal void TreeViewPlus_MouseUp(object sender, MouseEventArgs e)
             {
-                BaseApplication.DebugLog("MouseUp");
+                App.DebugLog("MouseUp");
             }
 
             internal void TreeViewPlus_MouseDown(object sender, MouseEventArgs e)
             {
-                BaseApplication.DebugLog("MouseDown");
+                App.DebugLog("MouseDown");
             }
 
             internal void OnDragDropEvent(object? sender, DragEventArgs e)
             {
-                BaseApplication.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
-                BaseApplication.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
+                App.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
+                App.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
             }
 
             internal void OnDragOverEvent(object? sender, DragEventArgs e)
             {
-                BaseApplication.DebugLogReplace(
+                App.DebugLogReplace(
                     $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
             }
 
             internal void TreeViewPlus_MouseLeftButtonUp(object sender, MouseEventArgs e)
             {
-                BaseApplication.DebugLog("MouseLeftButtonUp");
+                App.DebugLog("MouseLeftButtonUp");
             }
 
             internal void TreeViewPlus_PreviewMouseUp(object sender, MouseEventArgs e)
             {
-                BaseApplication.DebugLog("PreviewMouseUp");
+                App.DebugLog("PreviewMouseUp");
             }
 
             internal void OnDragEnterEvent(object? sender, DragEventArgs e)
             {
-                BaseApplication.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
+                App.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
             }
 
             internal void OnDragLeaveEvent(object? sender, EventArgs e)
             {
-                BaseApplication.DebugLog("DragLeave");
+                App.DebugLog("DragLeave");
             }
         }
     }

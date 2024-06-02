@@ -17,7 +17,7 @@ namespace DragAndDropSample
 
         public DragAndDropWindow()
         {
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
 
             InitializeComponent();
 
@@ -137,7 +137,7 @@ namespace DragAndDropSample
             if (filesFormatCheckBox!.IsChecked)
                 result.SetFiles(
                     (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
-                    typeof(BaseApplication).Assembly.Location);
+                    typeof(App).Assembly.Location);
 
             if (bitmapFormatCheckBox!.IsChecked)
                 result.SetBitmap(testBitmap);

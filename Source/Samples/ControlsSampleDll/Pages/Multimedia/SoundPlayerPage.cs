@@ -56,7 +56,7 @@ namespace ControlsSample
             }
 
             player = new(url);
-            BaseApplication.Log($"SimpleSoundPlayer created. Is ok: {player.IsOk}");
+            App.Log($"SimpleSoundPlayer created. Is ok: {player.IsOk}");
         }
 
         private void Play()
@@ -66,12 +66,12 @@ namespace ControlsSample
 
             if (player is null || !player.IsOk)
             {
-                BaseApplication.Log($"SimpleSoundPlayer.Play. Is ok: {false}");
+                App.Log($"SimpleSoundPlayer.Play. Is ok: {false}");
                 return;
             }
 
             var result = player?.Play() ?? false;
-            BaseApplication.Log($"SimpleSoundPlayer.Play. Is ok: {result}");
+            App.Log($"SimpleSoundPlayer.Play. Is ok: {result}");
         }
 
         private void Stop()
@@ -100,7 +100,7 @@ namespace ControlsSample
                         Play();
                     }
                     else
-                        BaseApplication.Log($"File not found: {dialog.FileName}");
+                        App.Log($"File not found: {dialog.FileName}");
                 }
             }
             else

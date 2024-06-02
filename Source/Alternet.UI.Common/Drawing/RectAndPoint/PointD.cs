@@ -232,7 +232,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static PointD Parse(string source)
         {
-            IFormatProvider formatProvider = BaseApplication.InvariantEnglishUS;
+            IFormatProvider formatProvider = App.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 

@@ -80,7 +80,7 @@ namespace Alternet.UI
             void Fn(SKBitmap source)
             {
                 if (!source.ScalePixels(bitmap, DefaultScaleQuality))
-                    BaseApplication.LogError("Error scaling pixels in SkiaImageHandler.Create(Image, SizeI)");
+                    App.LogError("Error scaling pixels in SkiaImageHandler.Create(Image, SizeI)");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Alternet.UI
                 else
                 {
                     SafeDispose(ref newBitmap);
-                    BaseApplication.LogError($"SkiaImageHandler.HasAlpha = {value}");
+                    App.LogError($"SkiaImageHandler.HasAlpha = {value}");
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace Alternet.UI
         {
             var resultBitmap = new SKBitmap(rect.Width, rect.Height);
             if(!bitmap.ExtractSubset(resultBitmap, rect))
-                BaseApplication.LogError($"SkiaImageHandler.GetSubBitmap({rect})");
+                App.LogError($"SkiaImageHandler.GetSubBitmap({rect})");
             return new SkiaImageHandler(resultBitmap);
         }
 
@@ -250,7 +250,7 @@ namespace Alternet.UI
         {
             if (depth >= 0 && depth != 32 && depth != 24)
             {
-                BaseApplication.LogError("Depth = 32 or 24 is expected");
+                App.LogError("Depth = 32 or 24 is expected");
                 return 32;
             }
 

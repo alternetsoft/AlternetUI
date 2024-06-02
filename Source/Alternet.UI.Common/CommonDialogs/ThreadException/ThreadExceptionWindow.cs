@@ -35,7 +35,7 @@ namespace Alternet.UI
             this.canContinue = canContinue;
             InitializeControls();
 
-            if(BaseApplication.FirstWindow() is not null)
+            if(App.FirstWindow() is not null)
             {
                 var activeWindow = ActiveWindow;
                 if (activeWindow is null || activeWindow.Title.Length == 0)

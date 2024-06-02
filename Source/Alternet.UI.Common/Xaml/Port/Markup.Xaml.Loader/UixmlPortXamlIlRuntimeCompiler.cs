@@ -242,7 +242,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 var overrideField = targetType.GetField("!XamlIlPopulateOverride",
                     BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 
-                if (BaseApplication.Current.InUixmlPreviewerMode)
+                if (App.Current.InUixmlPreviewerMode)
                 {
                     var markerType = targetType.GetNestedType("UIXmlPreviewerConstructorMarkerType", BindingFlags.NonPublic);
                     var marker = Activator.CreateInstance(markerType, nonPublic: true);

@@ -87,7 +87,7 @@ namespace Alternet.UI
         {
             FindParamsFromControls();
             int findResult = webBrowser.Find(findTextBox.Text, findParams);
-            BaseApplication.DebugLog("Find Result = " + findResult.ToString());
+            App.DebugLog("Find Result = " + findResult.ToString());
         }
 
         private void FindParamsToControls()

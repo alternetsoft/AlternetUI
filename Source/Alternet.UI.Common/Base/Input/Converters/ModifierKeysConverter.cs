@@ -153,7 +153,7 @@ namespace Alternet.UI
             switch (modifierKeys)
             {
                 case ModifierKeys.Control:
-                    if (forUser && BaseApplication.IsMacOS)
+                    if (forUser && App.IsMacOS)
                         modifiers = StringUtils.MacCommandKeyTitle;
                     else
                         modifiers = "Ctrl";

@@ -17,7 +17,7 @@ namespace Alternet.UI
         private static ConsoleWriter? consoleError;
 
         /// <summary>
-        /// Binds system console output to <see cref="BaseApplication.Log"/>.
+        /// Binds system console output to <see cref="App.Log"/>.
         /// </summary>
         public static void BindConsoleOutput(string prefix = "Output> ")
         {
@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Binds console error to <see cref="BaseApplication.Log"/>.
+        /// Binds console error to <see cref="App.Log"/>.
         /// </summary>
         public static void BindConsoleError(string prefix = "Error> ")
         {
@@ -41,7 +41,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unbinds system console output from <see cref="BaseApplication.Log"/>.
+        /// Unbinds system console output from <see cref="App.Log"/>.
         /// </summary>
         public static void UnbindConsoleOutput()
         {
@@ -57,7 +57,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unbinds console error from <see cref="BaseApplication.Log"/>.
+        /// Unbinds console error from <see cref="App.Log"/>.
         /// </summary>
         public static void UnbindConsoleError()
         {
@@ -80,14 +80,14 @@ namespace Alternet.UI
 
             void ConsoleMessageReceived(object? sender, LogMessageEventArgs e)
             {
-                BaseApplication.AddIdleTask(() =>
+                App.AddIdleTask(() =>
                 {
                     var s = e.Message?.TrimEndEol();
 
                     if (string.IsNullOrWhiteSpace(s))
                         return;
 
-                    BaseApplication.Log($"{prefix}{s}");
+                    App.Log($"{prefix}{s}");
                 });
             }
         }

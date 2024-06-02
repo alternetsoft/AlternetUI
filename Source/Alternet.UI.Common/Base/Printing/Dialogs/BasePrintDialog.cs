@@ -41,7 +41,7 @@ namespace Alternet.UI
         {
             if (Document == null)
             {
-                BaseApplication.Alert("Cannot show the dialog when the Document is null.");
+                App.Alert("Cannot show the dialog when the Document is null.");
                 return ModalResult.Canceled;
             }
 

@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 
     static MainPage()
     {
-        Alternet.UI.BaseApplication.Handler = new Alternet.UI.MauiApplicationHandler();
+        Alternet.UI.App.Handler = new Alternet.UI.MauiApplicationHandler();
     }
 
     public MainPage()

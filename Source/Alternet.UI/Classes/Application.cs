@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides methods and properties to manage an application.
     /// </summary>
-    public partial class Application : BaseApplication, IDisposable
+    public partial class Application : App, IDisposable
     {
         static Application()
         {

@@ -114,7 +114,7 @@ namespace Alternet.UI
         /// is used to get DPI settings.</param>
         public static SizeI GetDefaultImageSize(Control? control = null)
         {
-            control ??= BaseApplication.FirstWindow();
+            control ??= App.FirstWindow();
             SizeD? dpi;
             if (control is null)
                 dpi = Window.DefaultDPI ?? Display.Primary.DPI;

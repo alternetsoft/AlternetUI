@@ -89,10 +89,10 @@ namespace Alternet.UI
         public T NotImplemented<T>() => throw new NotImplementedException();
 
         /// <summary>
-        /// Same as <see cref="BaseApplication.Log"/>.
+        /// Same as <see cref="App.Log"/>.
         /// </summary>
         /// <param name="s">Object to log.</param>
-        public virtual void Log(object? s) => BaseApplication.Log(s);
+        public virtual void Log(object? s) => App.Log(s);
 
         /// <summary>
         /// Checks current thread on <see cref="ApartmentState.STA"/>.
@@ -104,7 +104,7 @@ namespace Alternet.UI
         /// </remarks>
         protected void CheckSTARequirement()
         {
-            if (!BaseApplication.IsWindowsOS)
+            if (!App.IsWindowsOS)
                 return;
 
             // STA Requirement

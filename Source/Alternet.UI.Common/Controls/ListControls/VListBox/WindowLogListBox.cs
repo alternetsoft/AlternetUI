@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <see cref="Window"/> with <see cref="LogListBox"/> control inside.
     /// </summary>
     /// <remarks>
-    /// <see cref="BaseApplication.Log"/> method is automatically forwarded to the attached
+    /// <see cref="App.Log"/> method is automatically forwarded to the attached
     /// <see cref="ListBox"/>.
     /// </remarks>
     public partial class WindowLogListBox : Window

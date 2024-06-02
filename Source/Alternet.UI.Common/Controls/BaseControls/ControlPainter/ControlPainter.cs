@@ -19,17 +19,17 @@ namespace Alternet.Drawing
         /// </summary>
         public static IControlPainterHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateControlPainterHandler();
+            get => handler ??= App.Handler.CreateControlPainterHandler();
             set => handler = value;
         }
 
         internal static void LogPartSize(Control control)
         {
-            BaseApplication.Log($"CheckMarkSize: {Handler.GetCheckMarkSize(control)}");
-            BaseApplication.Log($"CheckBoxSize(0): {Handler.GetCheckBoxSize(control)}");
-            BaseApplication.Log($"GetExpanderSize: {Handler.GetExpanderSize(control)}");
-            BaseApplication.Log($"GetHeaderButtonHeight: {Handler.GetHeaderButtonHeight(control)}");
-            BaseApplication.Log($"GetHeaderButtonMargin: {Handler.GetHeaderButtonMargin(control)}");
+            App.Log($"CheckMarkSize: {Handler.GetCheckMarkSize(control)}");
+            App.Log($"CheckBoxSize(0): {Handler.GetCheckBoxSize(control)}");
+            App.Log($"GetExpanderSize: {Handler.GetExpanderSize(control)}");
+            App.Log($"GetHeaderButtonHeight: {Handler.GetHeaderButtonHeight(control)}");
+            App.Log($"GetHeaderButtonMargin: {Handler.GetHeaderButtonMargin(control)}");
         }
     }
 }

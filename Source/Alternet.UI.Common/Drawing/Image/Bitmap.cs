@@ -93,7 +93,7 @@ namespace Alternet.Drawing
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                BaseApplication.LogError($"Image not loaded from: {url}");
+                App.LogError($"Image not loaded from: {url}");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Alternet.Drawing
 
             if (!result)
             {
-                BaseApplication.LogError($"Image not loaded from: {url}");
+                App.LogError($"Image not loaded from: {url}");
                 return;
             }
         }

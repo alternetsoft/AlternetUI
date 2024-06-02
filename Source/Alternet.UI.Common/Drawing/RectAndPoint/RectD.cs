@@ -462,7 +462,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static RectD Parse(string source)
         {
-            IFormatProvider formatProvider = BaseApplication.InvariantEnglishUS;
+            IFormatProvider formatProvider = App.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 

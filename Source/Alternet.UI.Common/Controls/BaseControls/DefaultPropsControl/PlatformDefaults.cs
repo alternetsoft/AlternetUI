@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Used in <see cref="PropertyGrid.SetVerticalSpacing"/>.
         /// </remarks>
         public int PropertyGridVerticalSpacing { get; set; } =
-            BaseApplication.IsWindowsOS ? 3 : 2;
+            App.IsWindowsOS ? 3 : 2;
 
         /// <summary>
         /// Gets or sets minimum splitter sash size in dips (1/96 inch).

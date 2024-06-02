@@ -12,7 +12,7 @@ namespace Alternet.UI
 
         public static IClipboardHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateClipboardHandler();
+            get => handler ??= App.Handler.CreateClipboardHandler();
 
             set => handler = value;
         }

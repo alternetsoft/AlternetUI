@@ -14,7 +14,7 @@ namespace Alternet.UI
         {
             get
             {
-                return handler ??= BaseApplication.Handler.CreateControlFactoryHandler();
+                return handler ??= App.Handler.CreateControlFactoryHandler();
             }
 
             set

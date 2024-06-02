@@ -44,12 +44,12 @@ namespace PaintSample
                 {
                     var newName = Path.ChangeExtension(fileName, ext);
                     if(!Bitmap.Save(newName))
-                        BaseApplication.Log($"Error saving: {newName}");
+                        App.Log($"Error saving: {newName}");
                 }
             else
             {
                 if (!Bitmap.Save(fileName))
-                    BaseApplication.Log($"Error saving: {fileName}");
+                    App.Log($"Error saving: {fileName}");
             }
             Dirty = false;
             FileName = fileName;

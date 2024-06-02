@@ -106,7 +106,7 @@ namespace ControlsSample
 
         private void Log(string s)
         {
-            BaseApplication.Log(s);
+            App.Log(s);
         }
 
         private void WebBrowser1_Navigated(object? sender, WebBrowserEventArgs e)
@@ -120,7 +120,7 @@ namespace ControlsSample
 
             // Under Windows 'Black' scheme for other controls is not implemented
             // so we turn on Light scheme in browser.
-            if (!pandaLoaded && BaseApplication.IsWindowsOS)
+            if (!pandaLoaded && App.IsWindowsOS)
             {
                 webBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
             }

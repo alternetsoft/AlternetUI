@@ -99,16 +99,16 @@ namespace Alternet.UI
                 return;
             LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
             var wxWidgets = SystemSettings.Handler.GetLibraryVersionString();
-            var bitsOS = BaseApplication.Is64BitOS ? "x64" : "x86";
-            var bitsApp = BaseApplication.Is64BitProcess ? "x64" : "x86";
+            var bitsOS = App.Is64BitOS ? "x64" : "x86";
+            var bitsApp = App.Is64BitProcess ? "x64" : "x86";
             var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
-            var dpi = $"DPI: {BaseApplication.FirstWindow()?.GetDPI().Width}";
+            var dpi = $"DPI: {App.FirstWindow()?.GetDPI().Width}";
             var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
-            var counterStr = $"Counter: {BaseApplication.BuildCounter}";
+            var counterStr = $"Counter: {App.BuildCounter}";
             var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
-            BaseApplication.Log(s);
-            if (BaseApplication.LogFileIsEnabled)
-                BaseApplication.DebugLog($"Log File = {BaseApplication.LogFilePath}");
+            App.Log(s);
+            if (App.LogFileIsEnabled)
+                App.DebugLog($"Log File = {App.LogFilePath}");
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Alternet.UI
             if (items is null)
                 return;
             foreach (var item in items)
-                BaseApplication.Log(item, kind);
+                App.Log(item, kind);
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Alternet.UI
         {
             if (items is null)
                 return;
-            BaseApplication.LogBeginSection();
+            App.LogBeginSection();
             Log(items, kind);
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Alternet.UI
 
             void ToLog(object? value)
             {
-                BaseApplication.Log(value, kind);
+                App.Log(value, kind);
             }
 
             if (toFile)
@@ -184,10 +184,10 @@ namespace Alternet.UI
         {
             try
             {
-                BaseApplication.Log(SectionSeparator, LogItemKind.Error);
-                BaseApplication.Log($"Exception: {info}", LogItemKind.Error);
-                BaseApplication.Log(e.ToString(), LogItemKind.Error);
-                BaseApplication.Log(SectionSeparator, LogItemKind.Error);
+                App.Log(SectionSeparator, LogItemKind.Error);
+                App.Log($"Exception: {info}", LogItemKind.Error);
+                App.Log(e.ToString(), LogItemKind.Error);
+                App.Log(SectionSeparator, LogItemKind.Error);
             }
             catch
             {
@@ -229,7 +229,7 @@ namespace Alternet.UI
             if (logUseMaxLength > 0)
                 propValue = StringUtils.LimitLength(propValue, LogPropMaxLength);
 
-            BaseApplication.Log(s + propName + " = " + propValue, kind);
+            App.Log(s + propName + " = " + propValue, kind);
         }
 
         /// <summary>
@@ -259,8 +259,8 @@ namespace Alternet.UI
         /// </summary>
         public static void DeleteLog()
         {
-            if (File.Exists(BaseApplication.LogFilePath))
-                File.Delete(BaseApplication.LogFilePath);
+            if (File.Exists(App.LogFilePath))
+                File.Delete(App.LogFilePath);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Alternet.UI
         public static void LogToFile(object? obj = null, string? filename = null)
         {
             var msg = obj?.ToString() ?? string.Empty;
-            filename ??= BaseApplication.LogFilePath;
+            filename ??= App.LogFilePath;
 
             string dt = System.DateTime.Now.ToString("HH:mm:ss");
             string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
@@ -307,7 +307,7 @@ namespace Alternet.UI
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);
             title ??= "Color";
-            BaseApplication.Log($"{title} = {value?.ToDebugString()}");
+            App.Log($"{title} = {value?.ToDebugString()}");
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Alternet.UI
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);
             title ??= "ColorAndRect";
-            BaseApplication.Log($"{title} = {value?.ToDebugString()}, {rect}");
+            App.Log($"{title} = {value?.ToDebugString()}, {rect}");
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Alternet.UI
         public static void LogRange(IEnumerable items, LogItemKind kind = LogItemKind.Information)
         {
             foreach (var item in items)
-                BaseApplication.Log(item, kind);
+                App.Log(item, kind);
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Alternet.UI
                 value.ToString(),
                 minBound.ToString(),
                 maxBound.ToString());
-            BaseApplication.LogError(s);
+            App.LogError(s);
         }
 
         /// <summary>
@@ -436,9 +436,9 @@ namespace Alternet.UI
         /// </summary>
         public static void LogSkiaMonoFonts()
         {
-            BaseApplication.LogBeginSection();
-            BaseApplication.Log("Skia Mono Fonts:");
-            BaseApplication.LogEmptyLine();
+            App.LogBeginSection();
+            App.Log("Skia Mono Fonts:");
+            App.LogEmptyLine();
 
             var names = SKFontManager.Default.GetFontFamilies();
 
@@ -446,21 +446,21 @@ namespace Alternet.UI
             {
                 var family = SKFontManager.Default.MatchFamily(name);
                 if (family.IsFixedPitch)
-                    BaseApplication.Log(family.FamilyName);
+                    App.Log(family.FamilyName);
             }
 
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         public static void LogSkiaFont(SKFont font)
         {
-            BaseApplication.LogBeginSection();
-            BaseApplication.LogNameValue("Font", font.Typeface.FamilyName);
+            App.LogBeginSection();
+            App.LogNameValue("Font", font.Typeface.FamilyName);
 
             LogMeasureSkiaFont("Hello", font);
             LogMeasureSkiaFont("xy;", SkiaUtils.DefaultFont);
 
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         public static void LogMeasureSkiaFont(string text, SKFont font)
@@ -468,7 +468,7 @@ namespace Alternet.UI
             SKRect bounds = SKRect.Empty;
             SKPaint paint = new(font);
             var result = paint.MeasureText(text, ref bounds);
-            BaseApplication.Log($"Font.MeasureText: \"{text}\", {result}, {bounds}");
+            App.Log($"Font.MeasureText: \"{text}\", {result}, {bounds}");
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Alternet.UI
             LogUtils.LogToFile(s);
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
-            BaseApplication.Log($"{count} Skia font families logged to file.");
+            App.Log($"{count} Skia font families logged to file.");
         }
 
         /// <summary>
@@ -516,7 +516,7 @@ namespace Alternet.UI
         /// </summary>
         public static void LogControlInfo(Control control)
         {
-            BaseApplication.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(control)}");
+            App.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(control)}");
             Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
             Log($"Font.Default: {Font.Default.ToInfoString()}");
             Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
@@ -528,12 +528,12 @@ namespace Alternet.UI
         public static void LogOSInformation()
         {
             var os = Environment.OSVersion;
-            BaseApplication.Log("Current OS Information:\n");
-            BaseApplication.Log($"Platform: {os.Platform:G}");
-            BaseApplication.Log($"Version String: {os.VersionString}");
-            BaseApplication.Log($"Major version: {os.Version.Major}");
-            BaseApplication.Log($"Minor version: {os.Version.Minor}");
-            BaseApplication.Log($"Service Pack: '{os.ServicePack}'");
+            App.Log("Current OS Information:\n");
+            App.Log($"Platform: {os.Platform:G}");
+            App.Log($"Version String: {os.VersionString}");
+            App.Log($"Major version: {os.Version.Major}");
+            App.Log($"Minor version: {os.Version.Minor}");
+            App.Log($"Service Pack: '{os.ServicePack}'");
         }
 
         /// <summary>
@@ -541,40 +541,40 @@ namespace Alternet.UI
         /// </summary>
         public static void LogSystemSettings()
         {
-            BaseApplication.LogBeginSection();
-            BaseApplication.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
-            BaseApplication.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
-            BaseApplication.Log($"AppearanceName = {SystemSettings.AppearanceName}");
+            App.LogBeginSection();
+            App.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
+            App.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
+            App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
 
             var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
             LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
             LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
-            BaseApplication.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
-            BaseApplication.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
+            App.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
+            App.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
 
-            BaseApplication.LogSeparator();
+            App.LogSeparator();
 
             foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
             {
-                BaseApplication.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
+                App.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
             }
 
-            BaseApplication.LogSeparator();
+            App.LogSeparator();
 
             foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
             {
-                BaseApplication.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
+                App.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
             }
 
-            BaseApplication.LogSeparator();
+            App.LogSeparator();
 
             foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
             {
-                BaseApplication.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
+                App.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
             }
 
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace Alternet.UI
             LogUtils.LogToFile(s);
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
-            BaseApplication.Log($"{names.Count()} FontFamilies logged to file.");
+            App.Log($"{names.Count()} FontFamilies logged to file.");
         }
 
         /// <summary>
@@ -626,7 +626,7 @@ namespace Alternet.UI
 
         internal static void LogAppDomainTargetFrameworkName()
         {
-            BaseApplication.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
+            App.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
 
             var frameworkName = new System.Runtime.Versioning.FrameworkName(
                 AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
@@ -707,7 +707,7 @@ namespace Alternet.UI
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI";
 
-                BaseApplication.Log("Embedded Resource Names added to log file");
+                App.Log("Embedded Resource Names added to log file");
 
                 var items = ResourceLoader.GetAssets(new Uri(s), null);
                 LogUtils.LogToFile(LogUtils.SectionSeparator);
@@ -722,14 +722,14 @@ namespace Alternet.UI
             addLogAction("Log Embedded Resources", () =>
             {
                 LogUtils.LogResourceNames();
-                BaseApplication.Log("Resource Names added to log file");
+                App.Log("Resource Names added to log file");
             });
 
             addLogAction("Log test error and warning items", () =>
             {
-                BaseApplication.Log("Sample error", LogItemKind.Error);
-                BaseApplication.Log("Sample warning", LogItemKind.Warning);
-                BaseApplication.Log("Sample info", LogItemKind.Information);
+                App.Log("Sample error", LogItemKind.Error);
+                App.Log("Sample warning", LogItemKind.Warning);
+                App.Log("Sample info", LogItemKind.Information);
             });
 
             addLogAction("Log SKFontManager", LogUtils.LogSkiaFontManager);

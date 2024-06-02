@@ -91,7 +91,7 @@ namespace ControlsSample
             var fn = item.CustomAttr.GetAttribute<Action>("Fn");
             if (fn is not null)
             {
-                BaseApplication.DoInsideBusyCursor(() =>
+                App.DoInsideBusyCursor(() =>
                 {
                     runButton.Enabled = false;
                     runButton.Refresh();

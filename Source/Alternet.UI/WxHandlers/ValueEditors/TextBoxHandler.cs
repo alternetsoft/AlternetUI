@@ -481,7 +481,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
                 UserPaint = true;
 
             NativeControl.TextEnter = Control.OnEnterPressed;

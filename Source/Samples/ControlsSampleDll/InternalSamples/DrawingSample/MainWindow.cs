@@ -18,7 +18,7 @@ namespace DrawingSample
             Size = (960, 700);
             StartLocation = WindowStartLocation.CenterScreen;
             tabControl.SelectedIndexChanged += TabControl_SelectedPageChanged;
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
             InitializePages();
         }
 

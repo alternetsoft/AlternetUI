@@ -102,7 +102,7 @@ namespace PropertyGridSample
                     };
 
                     if (logAddedControls)
-                        BaseApplication.Log($"typeof({type.FullName}),");
+                        App.Log($"typeof({type.FullName}),");
                     items.Add(item);
                 }
 

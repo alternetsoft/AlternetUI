@@ -96,7 +96,7 @@ namespace Alternet.UI
 
         public void SetImageMargins(double x, double y)
         {
-            if (BaseApplication.IsWindowsOS && Control.Image != null)
+            if (App.IsWindowsOS && Control.Image != null)
             {
                 var xPixels = PixelFromDip(x);
                 var yPixels = PixelFromDip(y);
@@ -113,7 +113,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
                 Control.UserPaint = true;
         }
     }

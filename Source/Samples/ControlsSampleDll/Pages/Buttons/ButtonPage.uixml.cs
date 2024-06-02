@@ -73,7 +73,7 @@ namespace ControlsSample
                 labelTextColor.Parent = propsContainer2;
                 comboBoxTextColor.Parent = propsContainer2;
 
-                imageMarginsButton.Enabled = BaseApplication.IsWindowsOS;
+                imageMarginsButton.Enabled = App.IsWindowsOS;
                 imageMarginsButton.Click += ImageMarginsButton_Click;
 
                 button.Padding = 5;
@@ -222,7 +222,7 @@ namespace ControlsSample
 
         private void Button_Click(object? sender, System.EventArgs e)
         {
-            BaseApplication.Log("Button: Click");
+            App.Log("Button: Click");
         }
 
         private Color? GetColor(ListControl? control)

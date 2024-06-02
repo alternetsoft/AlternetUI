@@ -59,14 +59,14 @@ namespace Alternet.Drawing
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    BaseApplication.LogError("Font name cannot be empty, using default font.");
+                    App.LogError("Font name cannot be empty, using default font.");
                     GenericFamily = GenericFontFamily.Default;
                     return;
                 }
 
                 if (!IsFamilyValid(name))
                 {
-                    BaseApplication.LogError(
+                    App.LogError(
                         $"'{name}' font family is not installed on this computer, using default font.");
                     GenericFamily = GenericFontFamily.Default;
                     return;
@@ -288,7 +288,7 @@ namespace Alternet.Drawing
 
         public static (string Name, FontSize Size) GetSampleFontNameAndSize(SystemSettingsFont font)
         {
-            switch (BaseApplication.BackendOS)
+            switch (App.BackendOS)
             {
                 case OperatingSystems.Windows:
                 case OperatingSystems.Linux:
@@ -322,7 +322,7 @@ namespace Alternet.Drawing
 
         public static (string Name, FontSize Size) GetSampleFontNameAndSize(GenericFontFamily family)
         {
-            switch (BaseApplication.BackendOS)
+            switch (App.BackendOS)
             {
                 case OperatingSystems.Windows:
                 case OperatingSystems.Linux:

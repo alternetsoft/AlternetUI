@@ -11,15 +11,15 @@ namespace MenuSample
         }
 
         private void OpenMenuItem_Click(object sender, EventArgs e) =>
-            BaseApplication.Log("Open");
+            App.Log("Open");
 
         private void SaveMenuItem_Click(object sender, EventArgs e) =>
-            BaseApplication.Log("Save");
+            App.Log("Save");
 
         private void ExportToPdfMenuItem_Click(object sender, EventArgs e) =>
-            BaseApplication.Log("Export to PDF");
+            App.Log("Export to PDF");
 
         private void ExportToPngMenuItem_Click(object sender, EventArgs e) =>
-            BaseApplication.Log("Export to PNG");
+            App.Log("Export to PNG");
     }
 }

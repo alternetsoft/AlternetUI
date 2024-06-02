@@ -35,7 +35,7 @@ namespace Alternet.UI
         {
             SetVisibleValue(false);
             ProcessIdle = true;
-            BaseApplication.Current.RegisterWindow(this);
+            App.Current.RegisterWindow(this);
             Bounds = GetDefaultBounds();
 
             if (Control.DefaultFont != Font.Default)
@@ -159,7 +159,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
-        public static Window? ActiveWindow => BaseApplication.Handler.GetActiveWindow();
+        public static Window? ActiveWindow => App.Handler.GetActiveWindow();
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -215,7 +215,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets DPI of the first created window.
         /// </summary>
-        public static SizeD? DefaultDPI => BaseApplication.FirstWindow()?.GetDPI();
+        public static SizeD? DefaultDPI => App.FirstWindow()?.GetDPI();
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for
@@ -859,7 +859,7 @@ namespace Alternet.UI
         /// </summary>
         public static void UpdateDefaultFont()
         {
-            if (!BaseApplication.Initialized)
+            if (!App.Initialized)
                 return;
 
             var dpi = Display.Primary.DPI;
@@ -877,12 +877,12 @@ namespace Alternet.UI
         /// <summary>
         /// Shows window and focuses it.
         /// </summary>
-        /// <param name="useIdle">Whether to use <see cref="BaseApplication.Idle"/>
+        /// <param name="useIdle">Whether to use <see cref="App.Idle"/>
         /// event to show the window.</param>
         public virtual void ShowAndFocus(bool useIdle = false)
         {
             if (useIdle)
-                BaseApplication.AddIdleTask(Fn);
+                App.AddIdleTask(Fn);
             else
                 Fn();
 
@@ -1079,9 +1079,9 @@ namespace Alternet.UI
 
             if (disposing)
             {
-                BaseApplication.Current.UnregisterWindow(this);
-                if (!BaseApplication.Current.VisibleWindows.Any())
-                    BaseApplication.Handler.ExitMainLoop();
+                App.Current.UnregisterWindow(this);
+                if (!App.Current.VisibleWindows.Any())
+                    App.Handler.ExitMainLoop();
             }
         }
 

@@ -447,14 +447,14 @@ namespace ControlsTest
                 Log("=======");
             }
 
-            BaseApplication.LogBeginUpdate();
+            App.LogBeginUpdate();
             try
             {
                 Fn();
             }
             finally
             {
-                BaseApplication.LogEndUpdate();
+                App.LogEndUpdate();
             }
         }
 

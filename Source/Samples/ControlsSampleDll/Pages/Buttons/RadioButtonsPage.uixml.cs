@@ -25,7 +25,7 @@ namespace ControlsSample
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
             var rb = (RadioButton)sender;
-            BaseApplication.Log("Radio button " + rb.Text + " IsChecked changed to " + rb.IsChecked);
+            App.Log("Radio button " + rb.Text + " IsChecked changed to " + rb.IsChecked);
         }
     }
 }

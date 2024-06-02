@@ -35,7 +35,7 @@ namespace ExplorerUISample
 
         public MainWindow()
         {
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
 
             InitializeComponent();
 

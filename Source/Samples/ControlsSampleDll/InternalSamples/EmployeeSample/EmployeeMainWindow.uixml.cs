@@ -12,7 +12,7 @@ namespace EmployeeFormSample
     {
         public EmployeeWindow()
         {
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
 
             InitializeComponent();
 

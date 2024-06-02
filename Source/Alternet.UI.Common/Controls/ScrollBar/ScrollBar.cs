@@ -311,12 +311,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual void LogInfo()
         {
-            BaseApplication.Log(ToString());
+            App.Log(ToString());
             var position = $"Position: {Handler.ThumbPosition}";
             var thumbSize = $"ThumbSize: {Handler.ThumbSize}";
             var range = $"Range: {Handler.Range}";
             var pageSize = $"PageSize: {Handler.PageSize}";
-            BaseApplication.Log($"Native: {position}, {thumbSize}, {range}, {pageSize}");
+            App.Log($"Native: {position}, {thumbSize}, {range}, {pageSize}");
         }
 
         /// <summary>

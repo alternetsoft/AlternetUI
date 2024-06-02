@@ -258,7 +258,7 @@ namespace Alternet.UI
                 s += $"; NavigationError = {e.NavigationError}";
             if (e.ClientData != IntPtr.Zero)
                 s += $"; ClientData = {e.ClientData}";
-            BaseApplication.Log(s);
+            App.Log(s);
         }
 
         /// <summary>

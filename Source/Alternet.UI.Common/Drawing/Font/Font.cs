@@ -746,7 +746,7 @@ namespace Alternet.Drawing
         {
             if (emSize <= 0 || FontSize.IsInfinity(emSize) || FontSize.IsNaN(emSize))
             {
-                BaseApplication.LogError("Invalid font size {emSize}, using default font size.");
+                App.LogError("Invalid font size {emSize}, using default font size.");
                 return Font.Default.Size;
             }
 
@@ -1024,7 +1024,7 @@ namespace Alternet.Drawing
             if (prm.GenericFamily == null && prm.FamilyName == null )
             {
                 if(!FontFactory.Handler.AllowNullFontName)
-                    BaseApplication.LogError("Font name and family are null, using default font.");
+                    App.LogError("Font name and family are null, using default font.");
                 prm.GenericFamily = Alternet.Drawing.GenericFontFamily.Default;
             }
 

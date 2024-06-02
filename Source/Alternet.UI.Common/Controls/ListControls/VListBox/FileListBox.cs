@@ -127,7 +127,7 @@ namespace Alternet.UI
             {
                 if (selectedFolder == value)
                     return;
-                BaseApplication.LogIf($"FileListBox.SelectedFolder = {value}", false);
+                App.LogIf($"FileListBox.SelectedFolder = {value}", false);
                 var oldSelectedFolder = selectedFolder;
                 selectedFolder = value;
                 try
@@ -241,7 +241,7 @@ namespace Alternet.UI
             {
                 reloading++;
 
-                BaseApplication.AddIdleTask(() =>
+                App.AddIdleTask(() =>
                 {
                     if (IsDisposed)
                         return;
@@ -473,7 +473,7 @@ namespace Alternet.UI
             AddSpecialFolder(Environment.SpecialFolder.Resources);
             AddSpecialFolder(Environment.SpecialFolder.LocalizedResources);
 
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
             {
                 AddSpecialFolder(Environment.SpecialFolder.CommonProgramFilesX86);
                 AddSpecialFolder(Environment.SpecialFolder.ProgramFilesX86);

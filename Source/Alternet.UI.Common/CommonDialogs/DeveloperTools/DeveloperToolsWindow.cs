@@ -23,7 +23,7 @@ namespace Alternet.UI
 
         public DeveloperToolsWindow()
         {
-            BaseApplication.LogFileIsEnabled = true;
+            App.LogFileIsEnabled = true;
             StartLocation = WindowStartLocation.CenterScreen;
             Title = "Developer Tools";
             panel.Parent = this;
@@ -39,9 +39,9 @@ namespace Alternet.UI
             {
                 logGotFocus = !logGotFocus;
                 if(logGotFocus)
-                    BaseApplication.Log("GotFocus event logging enabled");
+                    App.Log("GotFocus event logging enabled");
                 else
-                    BaseApplication.Log("GotFocus event logging disabled");
+                    App.Log("GotFocus event logging disabled");
             });
 
             panel.AddAction("Toggle Focused Info", () =>
@@ -49,9 +49,9 @@ namespace Alternet.UI
                 logFocusedControl = !logFocusedControl;
 
                 if (logGotFocus)
-                    BaseApplication.Log("Focused control info enabled");
+                    App.Log("Focused control info enabled");
                 else
-                    BaseApplication.Log("Focused control info disabled");
+                    App.Log("Focused control info disabled");
             });
 
             panel.CenterNotebook.SelectedIndex = 0;
@@ -119,7 +119,7 @@ namespace Alternet.UI
             panel.LastFocusedControl = control;
 
             if (logGotFocus)
-                BaseApplication.Log(control.GetType().Name);
+                App.Log(control.GetType().Name);
 
             if (logFocusedControl)
                 LogFocusedControl(control);
@@ -129,9 +129,9 @@ namespace Alternet.UI
         {
             var defaultColors = control.GetDefaultFontAndColor();
 
-            BaseApplication.LogSeparator();
-            BaseApplication.LogNameValue("Name", control.Name);
-            BaseApplication.LogNameValue("Type", control.GetType().Name);
+            App.LogSeparator();
+            App.LogNameValue("Name", control.Name);
+            App.LogNameValue("Type", control.GetType().Name);
             LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
             LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
             LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);
@@ -140,10 +140,10 @@ namespace Alternet.UI
             LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
             LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
-            BaseApplication.LogNameValue("PixelScaleFactor", control.GetPixelScaleFactor());
-            BaseApplication.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
-            BaseApplication.LogNameValue("DPI", control.GetDPI());
-            BaseApplication.LogSeparator();
+            App.LogNameValue("PixelScaleFactor", control.GetPixelScaleFactor());
+            App.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
+            App.LogNameValue("DPI", control.GetDPI());
+            App.LogSeparator();
         }
     }
 }

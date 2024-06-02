@@ -259,14 +259,14 @@ namespace Alternet.UI
 
         private void PropertyGrid_ProcessException(object? sender, ControlExceptionEventArgs e)
         {
-            BaseApplication.LogFileIsEnabled = true;
+            App.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);
         }
 
         private void ControlsActionMainForm()
         {
             rightNotebook.SelectedControl = propGrid;
-            PropGridSetProps(BaseApplication.FirstWindow());
+            PropGridSetProps(App.FirstWindow());
         }
 
         private void ControlsActionFocusedControl()
@@ -287,16 +287,16 @@ namespace Alternet.UI
 
             void Fn()
             {
-                BaseApplication.DoInsideBusyCursor(() =>
+                App.DoInsideBusyCursor(() =>
                 {
-                    BaseApplication.LogBeginUpdate();
+                    App.LogBeginUpdate();
                     try
                     {
                         action();
                     }
                     finally
                     {
-                        BaseApplication.LogEndUpdate();
+                        App.LogEndUpdate();
                     }
                 });
             }
@@ -311,22 +311,22 @@ namespace Alternet.UI
 
             AddAction("Show Second MainForm", () =>
             {
-                var type = BaseApplication.FirstWindow()?.GetType();
+                var type = App.FirstWindow()?.GetType();
                 var instance = Activator.CreateInstance(type ?? typeof(Window)) as Window;
                 instance?.Show();
             });
 
             AddAction("Exception: Throw C++", () =>
             {
-                BaseApplication.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                BaseApplication.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
 
             AddAction("Exception: Throw C#", () =>
             {
-                BaseApplication.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                BaseApplication.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
 
@@ -338,7 +338,7 @@ namespace Alternet.UI
                 }
                 catch (Exception e)
                 {
-                    BaseApplication.ShowExceptionWindow(e, "This is an additional info", true);
+                    App.ShowExceptionWindow(e, "This is an additional info", true);
                 }
             });
 

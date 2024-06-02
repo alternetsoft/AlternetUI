@@ -34,22 +34,22 @@ namespace PropertyGridSample
 
             static void PictureBox_Deactivated(object? sender, EventArgs e)
             {
-                BaseApplication.Log("PictureBox Deactivated");
+                App.Log("PictureBox Deactivated");
             }
 
             static void PictureBox_Activated(object? sender, EventArgs e)
             {
-                BaseApplication.Log("PictureBox Activated");
+                App.Log("PictureBox Activated");
             }
 
             static void PictureBox_Click(object? sender, EventArgs e)
             {
-                BaseApplication.Log("PictureBox Click");
+                App.Log("PictureBox Click");
             }
 
             static void VisualStateChanged(object? sender, EventArgs e)
             {
-                BaseApplication.LogNameValue("PictureBox.VisualState", (sender as PictureBox)?.VisualState);
+                App.LogNameValue("PictureBox.VisualState", (sender as PictureBox)?.VisualState);
             }
         }
     }

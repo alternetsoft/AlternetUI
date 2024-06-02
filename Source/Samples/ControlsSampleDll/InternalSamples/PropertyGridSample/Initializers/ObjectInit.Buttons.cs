@@ -12,7 +12,7 @@ namespace PropertyGridSample
     {
         public static void LogClick(object? sender, EventArgs e)
         {
-            BaseApplication.Log($"{sender?.GetType()} Click");
+            App.Log($"{sender?.GetType()} Click");
         }
 
         public static void InitButton(object control)
@@ -29,7 +29,7 @@ namespace PropertyGridSample
 
         private static void Button_MouseWheel(object sender, MouseEventArgs e)
         {
-            BaseApplication.Log($"Button MouseWheel: {e.Delta}, {e.Timestamp}");
+            App.Log($"Button MouseWheel: {e.Delta}, {e.Timestamp}");
         }
 
         public static void InitSpeedTextButton(object control)

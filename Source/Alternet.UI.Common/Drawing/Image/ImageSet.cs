@@ -79,7 +79,7 @@ namespace Alternet.UI
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                BaseApplication.LogError($"ImageSet not loaded from: {url}");
+                App.LogError($"ImageSet not loaded from: {url}");
                 return;
             }
 

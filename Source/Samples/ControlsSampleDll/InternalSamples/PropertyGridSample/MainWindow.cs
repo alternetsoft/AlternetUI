@@ -120,7 +120,7 @@ namespace PropertyGridSample
                 InitIgnorePropNames(PropGrid.IgnorePropNames);
                 /*PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;*/
 
-                Icon = BaseApplication.DefaultIcon;
+                Icon = App.DefaultIcon;
 
                 Children.Add(panel);
 
@@ -163,7 +163,7 @@ namespace PropertyGridSample
 
                 ToolBox.SelectedItem = ToolBox.FirstItem;
 
-                BaseApplication.Idle += ApplicationIdle;
+                App.Idle += ApplicationIdle;
                 RunTests();
 
                 ComponentDesigner.InitDefault();
@@ -241,17 +241,17 @@ namespace PropertyGridSample
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
         {
-            BaseApplication.LogIf($"Window SizeChanged {Bounds}", false);
+            App.LogIf($"Window SizeChanged {Bounds}", false);
         }
 
         private void MainWindow_Deactivated(object? sender, EventArgs e)
         {
-            BaseApplication.LogIf("Window Deactivated", false);
+            App.LogIf("Window Deactivated", false);
         }
 
         private void MainWindow_Activated(object? sender, EventArgs e)
         {
-            BaseApplication.LogIf("Window Activated", false);
+            App.LogIf("Window Activated", false);
         }
 
         private void PropGrid_PropertyRightClick(object? sender, EventArgs e)
@@ -265,7 +265,7 @@ namespace PropertyGridSample
         private void ResetMenu_Click(object? sender, EventArgs e)
         {
             var selectedProp = PropGrid.GetSelection();
-            BaseApplication.Log($"Reset: {selectedProp?.DefaultName}");
+            App.Log($"Reset: {selectedProp?.DefaultName}");
             PropGrid.ResetProp(selectedProp);
         }
 
@@ -317,7 +317,7 @@ namespace PropertyGridSample
 
         private void PropertyGrid_ProcessException(object? sender, ControlExceptionEventArgs e)
         {
-            BaseApplication.LogFileIsEnabled = true;
+            App.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);
         }
 
@@ -386,7 +386,7 @@ namespace PropertyGridSample
                 if (type == typeof(WelcomePage))
                 {
                     if (useIdle)
-                        BaseApplication.AddIdleTask(InitDefaultPropertyGrid);
+                        App.AddIdleTask(InitDefaultPropertyGrid);
                     else
                         InitDefaultPropertyGrid();
                     useIdle = true;
@@ -395,7 +395,7 @@ namespace PropertyGridSample
                 }
                 else
                 {
-                    BaseApplication.AddIdleTask(() =>
+                    App.AddIdleTask(() =>
                     {
                         PropGrid.SetProps(item.PropInstance, true);
                         PropGrid.Refresh();

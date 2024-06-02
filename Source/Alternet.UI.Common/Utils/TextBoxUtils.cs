@@ -142,7 +142,7 @@ namespace Alternet.UI
                 return;
             var name = richTextBox.Name ?? textBox.GetType().Name;
             var prefix = $"{name}.CurrentPos:";
-            BaseApplication.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
+            App.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
         }
 
         internal static void AdjustTextBoxesHeightInternal(

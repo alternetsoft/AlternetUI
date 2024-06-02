@@ -21,7 +21,7 @@ namespace Alternet.UI.Native
 
             set
             {
-                if (!BaseApplication.IsWindowsOS)
+                if (!App.IsWindowsOS)
                     return;
                 RestrictSelection = (int)value;
             }

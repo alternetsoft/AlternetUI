@@ -43,7 +43,7 @@ namespace ControlsSample
             Closing += PreviewSampleWindow_Closing;
             State = WindowState.Normal;
             Margin = 10;
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
             Title = "Alternet.UI Preview File Sample";
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
@@ -115,8 +115,8 @@ namespace ControlsSample
 
                 if (number > 0)
                 {
-                    BaseApplication.InvokeIdleLog($"Extracted {number} uixml resources");
-                    BaseApplication.InvokeIdle(() =>
+                    App.InvokeIdleLog($"Extracted {number} uixml resources");
+                    App.InvokeIdle(() =>
                     {
                         fileListBox.Reload();
                     });
@@ -145,7 +145,7 @@ namespace ControlsSample
                 return;
             }
 
-            BaseApplication.LogIf($"Preview: {item.Path}", true);
+            App.LogIf($"Preview: {item.Path}", true);
 
             preview.FileName = item.Path;
 
@@ -211,7 +211,7 @@ namespace ControlsSample
 
         private void FileListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            BaseApplication.AddIdleTask(SelectionChanged);
+            App.AddIdleTask(SelectionChanged);
         }
     }
 }

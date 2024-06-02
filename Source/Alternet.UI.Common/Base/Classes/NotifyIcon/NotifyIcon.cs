@@ -57,7 +57,7 @@ namespace Alternet.UI
             get
             {
                 return isAvailable
-                    ??= (bool?)BaseApplication.Handler.GetAttributeValue("NotifyIcon.IsAvailable") ?? false;
+                    ??= (bool?)App.Handler.GetAttributeValue("NotifyIcon.IsAvailable") ?? false;
             }
         }
 
@@ -219,7 +219,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override INotifyIconHandler CreateHandler()
         {
-            var result = BaseApplication.Handler.CreateNotifyIconHandler();
+            var result = App.Handler.CreateNotifyIconHandler();
             result.Click = RaiseClick;
             result.DoubleClick = RaiseDoubleClick;
             return result;

@@ -947,7 +947,7 @@ namespace Alternet.UI
 
             if (cmdName == "UIVersion")
             {
-                Assembly thisAssembly = typeof(BaseApplication).Assembly;
+                Assembly thisAssembly = typeof(App).Assembly;
                 AssemblyName thisAssemblyName = thisAssembly.GetName();
                 Version? ver = thisAssemblyName?.Version;
                 return ver?.ToString();
@@ -969,7 +969,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void CrtSetDbgFlag(int value)
         {
-            BaseApplication.Handler.CrtSetDbgFlag(value);
+            App.Handler.CrtSetDbgFlag(value);
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (!BaseApplication.IsWindowsOS)
+                if (!App.IsWindowsOS)
                     return true;
 
                 CheckDisposed();
@@ -44,7 +44,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!BaseApplication.IsWindowsOS)
+                if (!App.IsWindowsOS)
                     return;
                 CheckDisposed();
                 Handler.AllowSymbols = value;
@@ -62,7 +62,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (!BaseApplication.IsWindowsOS)
+                if (!App.IsWindowsOS)
                     return true;
 
                 CheckDisposed();
@@ -71,7 +71,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!BaseApplication.IsWindowsOS)
+                if (!App.IsWindowsOS)
                     return;
 
                 CheckDisposed();
@@ -155,7 +155,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetRange(int minRange, int maxRange)
         {
-            if (!BaseApplication.IsWindowsOS)
+            if (!App.IsWindowsOS)
                 return;
 
             CheckDisposed();

@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public static IToolTipFactoryHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateToolTipFactoryHandler();
+            get => handler ??= App.Handler.CreateToolTipFactoryHandler();
 
             set => handler = value;
         }

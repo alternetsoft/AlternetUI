@@ -607,7 +607,7 @@ namespace Alternet.UI
 
             if (info.Buttons == MessageBoxButtons.AbortRetryIgnore || info.Buttons == MessageBoxButtons.RetryCancel)
             {
-                BaseApplication.Alert("AbortRetryIgnore and RetryCancel are not implemented");
+                App.Alert("AbortRetryIgnore and RetryCancel are not implemented");
                 return DialogResult.None;
             }
 
