@@ -46,24 +46,6 @@ namespace Alternet.Drawing
             set => defaultMonoFontName = value;
         }
 
-        public static (string Name, FontSize Size) GetFontNameAndSize(SystemSettingsFont systemFont)
-        {
-            ///FontFamily.GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
-
-            switch (systemFont)
-            {
-                case SystemSettingsFont.OemFixed:
-                case SystemSettingsFont.AnsiFixed:
-                    return (DefaultMonoFontName, DefaultFontSize);
-                case SystemSettingsFont.AnsiVar:
-                case SystemSettingsFont.System:
-                case SystemSettingsFont.DeviceDefault:
-                case SystemSettingsFont.DefaultGui:
-                default:
-                    return (DefaultFontName, DefaultFontSize);
-            }
-        }
-
         public static string[] GetFontFamiliesNames()
         {
             return SKFontManager.Default.GetFontFamilies();

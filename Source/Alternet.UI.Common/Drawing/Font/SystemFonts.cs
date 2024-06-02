@@ -25,8 +25,8 @@ namespace Alternet.UI
         /// </summary>
         public static Font OemFixed
         {
-            get => oemFixed ??= FontFactory.Handler.CreateSystemFont(SystemSettingsFont.OemFixed);
-            set => oemFixed = value ?? FontFactory.Handler.CreateSystemFont(SystemSettingsFont.OemFixed);
+            get => oemFixed ??= CreateSystemFont(SystemSettingsFont.OemFixed);
+            set => oemFixed = value ?? CreateSystemFont(SystemSettingsFont.OemFixed);
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace Alternet.UI
         /// </summary>
         public static Font AnsiFixed
         {
-            get => ansiFixed ??= FontFactory.Handler.CreateSystemFont(SystemSettingsFont.AnsiFixed);
-            set => ansiFixed = value ?? FontFactory.Handler.CreateSystemFont(SystemSettingsFont.AnsiFixed);
+            get => ansiFixed ??= CreateSystemFont(SystemSettingsFont.AnsiFixed);
+            set => ansiFixed = value ?? CreateSystemFont(SystemSettingsFont.AnsiFixed);
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Alternet.UI
         /// </summary>
         public static Font AnsiVar
         {
-            get => ansiVar ??= FontFactory.Handler.CreateSystemFont(SystemSettingsFont.AnsiVar);
-            set => ansiVar = value ?? FontFactory.Handler.CreateSystemFont(SystemSettingsFont.AnsiVar);
+            get => ansiVar ??= CreateSystemFont(SystemSettingsFont.AnsiVar);
+            set => ansiVar = value ?? CreateSystemFont(SystemSettingsFont.AnsiVar);
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace Alternet.UI
         /// </summary>
         public static Font System
         {
-            get => system ??= FontFactory.Handler.CreateSystemFont(SystemSettingsFont.System);
-            set => system = value ?? FontFactory.Handler.CreateSystemFont(SystemSettingsFont.System);
+            get => system ??= CreateSystemFont(SystemSettingsFont.System);
+            set => system = value ?? CreateSystemFont(SystemSettingsFont.System);
         } 
 
         /// <summary>
@@ -62,10 +62,8 @@ namespace Alternet.UI
         /// </summary>
         public static Font DeviceDefault
         {
-            get => deviceDefault
-                ??= FontFactory.Handler.CreateSystemFont(SystemSettingsFont.DeviceDefault);
-            set => deviceDefault = value
-                ?? FontFactory.Handler.CreateSystemFont(SystemSettingsFont.DeviceDefault);
+            get => deviceDefault ??= CreateSystemFont(SystemSettingsFont.DeviceDefault);
+            set => deviceDefault = value ?? CreateSystemFont(SystemSettingsFont.DeviceDefault);
         }
 
         /// <summary>
@@ -209,6 +207,26 @@ namespace Alternet.UI
                 case GenericFontFamily.Monospace:
                     return Font.DefaultMono;
             }
+        }
+
+        /// <summary>
+        /// Creates system font.
+        /// </summary>
+        /// <param name="font">Specifies system font to create.</param>
+        /// <returns></returns>
+        public static Font CreateSystemFont(SystemSettingsFont font)
+        {
+            var result = FontFactory.Handler.CreateSystemFont(font);
+
+            if (result is not null)
+                return result;
+
+            var (name, size) = FontFamily.GetSampleFontNameAndSize(font);
+
+            if (FontFamily.IsFamilyValid(name))
+                return new(name, size);
+
+            return new Font(Font.Default);
         }
     }
 }

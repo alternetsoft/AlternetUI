@@ -289,6 +289,20 @@ namespace Alternet.Drawing
             return result;
         }
 
+        public static (string Name, FontSize Size) GetSampleFontNameAndSize(SystemSettingsFont font)
+        {
+            switch (BaseApplication.BackendOS)
+            {
+                case OperatingSystems.Windows:
+                case OperatingSystems.Linux:
+                case OperatingSystems.MacOs:
+                case OperatingSystems.Android:
+                case OperatingSystems.IOS:
+                default:
+                    return GetSampleFontNameAndSizeWindows(font);
+            }
+        }
+
         public static (string Name, FontSize Size) GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
         {
             switch (font)

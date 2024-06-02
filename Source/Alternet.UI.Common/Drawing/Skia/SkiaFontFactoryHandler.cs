@@ -38,12 +38,9 @@ namespace Alternet.Drawing
             return new PlessFontHandler();
         }
 
-        public virtual Font CreateSystemFont(SystemSettingsFont systemFont)
+        public virtual Font? CreateSystemFont(SystemSettingsFont systemFont)
         {
-            var nameAndSize = SkiaUtils.GetFontNameAndSize(systemFont);
-
-            var handler = new PlessFontHandler(nameAndSize.Name, nameAndSize.Size);
-            return new Font(handler);
+            return null;
         }
 
         public virtual string[] GetFontFamiliesNames() => SkiaUtils.GetFontFamiliesNames();

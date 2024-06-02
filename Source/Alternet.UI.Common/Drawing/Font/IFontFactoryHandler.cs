@@ -24,13 +24,13 @@ namespace Alternet.Drawing
         void SetDefaultFont(Font value);
 
         /// <summary>
-        /// Creates native font.
+        /// Creates native font handler.
         /// </summary>
         /// <returns></returns>
         IFontHandler CreateFontHandler();
 
         /// <summary>
-        /// Creates default native font.
+        /// Creates default native font handler.
         /// </summary>
         /// <returns></returns>
         IFontHandler CreateDefaultFontHandler();
@@ -40,7 +40,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="systemFont">System font identifier.</param>
         /// <returns></returns>
-        Font CreateSystemFont(SystemSettingsFont systemFont);
+        Font? CreateSystemFont(SystemSettingsFont systemFont);
 
         /// <summary>
         /// Returns a string array that contains all font families names
