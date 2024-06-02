@@ -3,16 +3,17 @@ using System.Linq;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
     /// Paints an area with a linear gradient.
     /// </summary>
-    public class LinearGradientBrush : Brush
+    public class LinearGradientBrush : GradientBrush
     {
         private PointD startPoint;
         private PointD endPoint;
-        private GradientStop[] gradientStops;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class.
@@ -29,7 +30,7 @@ namespace Alternet.Drawing
         /// <param name="startColor">The Color at offset 0.0.</param>
         /// <param name="endColor">The Color at offset 1.0.</param>
         public LinearGradientBrush(Color startColor, Color endColor)
-            : this(GetGradientStopsFromEdgeColors(startColor, endColor))
+            : this(GradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
@@ -58,7 +59,7 @@ namespace Alternet.Drawing
             PointD endPoint,
             Color startColor,
             Color endColor)
-            : this(startPoint, endPoint, GetGradientStopsFromEdgeColors(startColor, endColor))
+            : this(startPoint, endPoint, GradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
@@ -72,11 +73,10 @@ namespace Alternet.Drawing
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
         public LinearGradientBrush(PointD startPoint, PointD endPoint, GradientStop[] gradientStops)
-            : base(false)
+            : base(gradientStops, false)
         {
             this.startPoint = startPoint;
             this.endPoint = endPoint;
-            this.gradientStops = gradientStops;
         }
 
         /// <summary>
@@ -113,44 +113,8 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
-        /// transition in this brush.
-        /// </summary>
-        public virtual GradientStop[] GradientStops
-        {
-            get => gradientStops;
-
-            set
-            {
-                if (gradientStops == value)
-                    return;
-                CheckDisposed();
-                gradientStops = value;
-                UpdateRequired = true;
-            }
-        }
-
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.LinearGradient;
-
-        /// <inheritdoc/>
-        public override Color AsColor => GradientStops.Length > 0 ?
-            GradientStops[0].Color : Color.Black;
-
-        /// <summary>
-        /// Converts two colors to array of <see cref="GradientStop"/>.
-        /// </summary>
-        /// <param name="startColor"></param>
-        /// <param name="endColor"></param>
-        /// <returns></returns>
-        public static GradientStop[] GetGradientStopsFromEdgeColors(
-            Color startColor,
-            Color endColor) => new[]
-            {
-                new GradientStop(startColor, 0),
-                new GradientStop(endColor, 1),
-            };
 
         /// <inheritdoc/>
         public override string ToString()
@@ -158,7 +122,7 @@ namespace Alternet.Drawing
             try
             {
                 return $"LinearGradientBrush (StartPoint={StartPoint}, EndPoint={EndPoint}," +
-                    $" GradientStops=({GradientStopsToString(GradientStops)}))";
+                    $" GradientStops=({ToString(GradientStops)}))";
             }
             catch
             {
@@ -173,10 +137,9 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
+            hashCode.Add(base.GetHashCode());
             hashCode.Add(StartPoint);
             hashCode.Add(EndPoint);
-            foreach (var gradientStop in GradientStops)
-                hashCode.Add(gradientStop);
 
             return hashCode.ToHashCode();
         }
@@ -194,17 +157,32 @@ namespace Alternet.Drawing
             return
                 StartPoint == o.StartPoint &&
                 EndPoint == o.EndPoint &&
-                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
+                base.Equals(other);
         }
 
-        internal static string GradientStopsToString(GradientStop[] stops)
+        /// <inheritdoc/>
+        protected override SKShader CreateSkiaShader()
         {
-            string result = string.Empty;
-            foreach(var item in stops)
+            SKShader result;
+
+            if(LocalMatrix != SKMatrix.Empty)
             {
-                if (result.Length > 0)
-                    result += ", ";
-                result += item.ToString();
+                result = SKShader.CreateLinearGradient(
+                    startPoint,
+                    endPoint,
+                    RadialGradientBrush.ToSkiaGradientColors(GradientStops),
+                    RadialGradientBrush.ToGradientOffsetsF(GradientStops),
+                    TileMode,
+                    LocalMatrix);
+            }
+            else
+            {
+                result = SKShader.CreateLinearGradient(
+                    startPoint,
+                    endPoint,
+                    RadialGradientBrush.ToSkiaGradientColors(GradientStops),
+                    RadialGradientBrush.ToGradientOffsetsF(GradientStops),
+                    TileMode);
             }
 
             return result;

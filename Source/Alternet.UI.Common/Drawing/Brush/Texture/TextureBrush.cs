@@ -2,6 +2,8 @@
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -72,6 +74,12 @@ namespace Alternet.Drawing
         protected override IBrushHandler CreateHandler()
         {
             return GraphicsFactory.Handler.CreateTextureBrushHandler(this);
+        }
+
+        /// <inheritdoc/>
+        protected override SKPaint CreateSkiaPaint()
+        {
+            return base.CreateSkiaPaint();
         }
 
         /// <inheritdoc/>

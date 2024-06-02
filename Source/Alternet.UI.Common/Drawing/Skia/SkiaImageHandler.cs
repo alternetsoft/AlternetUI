@@ -33,7 +33,7 @@ namespace Alternet.UI
 
         public SkiaImageHandler(GenericImage genericImage, int depth = 32)
         {
-            depth = CoerceDepth(depth);
+            CoerceDepth(depth);
             bitmap = (SKBitmap)genericImage;
         }
 
@@ -208,8 +208,6 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
-
-        public virtual SKBitmap ToSkia() => bitmap;
 
         public override bool LoadFromStream(Stream stream)
         {

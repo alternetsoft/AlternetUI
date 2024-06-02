@@ -72,6 +72,15 @@ namespace Alternet.Drawing
             return GetTextExtent(text, font);
         }
 
+        public static SKPaint CreateFillPaint(SKColor color)
+        {
+            var result = new SKPaint();
+            result.IsAntialias = DefaultAntialias;
+            result.Color = color;
+            result.Style = SKPaintStyle.Fill;
+            return result;
+        }
+
         public static SKPaint CreatePaint(SKColor color)
         {
             var result = new SKPaint();
@@ -99,7 +108,7 @@ namespace Alternet.Drawing
         {
             SKFont skiaFont = font;
 
-            var typeFace = skiaFont.Typeface;
+            /*var typeFace = skiaFont.Typeface;*/
 
             using SKPaint paint = CreatePaint(skiaFont);
             SKRect textBounds = default;
@@ -184,8 +193,7 @@ namespace Alternet.Drawing
 
             if (backColor.IsOk)
             {
-                using SKPaint fillPaint = CreatePaint(backColor);
-                fillPaint.Style = SKPaintStyle.Fill;
+                using SKPaint fillPaint = CreateFillPaint(backColor);
 
                 canvas.DrawRect(textRect, fillPaint);
             }
@@ -259,20 +267,15 @@ namespace Alternet.Drawing
         public override void DrawImage(Image image, PointD origin, bool useMask = false)
         {
             DebugImageAssert(image);
-            canvas.DrawBitmap(ToSkia(image), origin);
+            canvas.DrawBitmap((SKBitmap)image, origin);
         }
 
         /// <inheritdoc/>
         public override void DrawBeziers(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            var skiaPoints = points.ToSkia();
+            /*var skiaPoints = points.ToSkia();*/
             throw new NotImplementedException();
-        }
-
-        internal static SKBitmap ToSkia(Image image)
-        {
-            return ((SkiaImageHandler)image.Handler).ToSkia();
         }
     }
 }

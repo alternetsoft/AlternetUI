@@ -3,17 +3,18 @@ using System.Linq;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
     /// Paints an area with a radial gradient.
     /// </summary>
-    public class RadialGradientBrush : Brush
+    public class RadialGradientBrush : GradientBrush
     {
         private PointD center;
-        private double radius;
+        private Coord radius;
         private PointD gradientOrigin;
-        private GradientStop[] gradientStops;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class.
@@ -30,7 +31,7 @@ namespace Alternet.Drawing
         /// <param name="startColor">The Color at offset 0.0.</param>
         /// <param name="endColor">The Color at offset 1.0.</param>
         public RadialGradientBrush(Color startColor, Color endColor)
-            : this(GetGradientStopsFromEdgeColors(startColor, endColor))
+            : this(GradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
@@ -74,12 +75,11 @@ namespace Alternet.Drawing
             double radius,
             PointD gradientOrigin,
             GradientStop[] gradientStops)
-            : base(false)
+            : base(gradientStops, false)
         {
             this.center = center;
             this.radius = radius;
             this.gradientOrigin = gradientOrigin;
-            this.gradientStops = gradientStops;
         }
 
         /// <summary>
@@ -131,29 +131,8 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
-        /// transition in this brush.
-        /// </summary>
-        public virtual GradientStop[] GradientStops
-        {
-            get => gradientStops;
-            set
-            {
-                if (gradientStops == value)
-                    return;
-                CheckDisposed();
-                gradientStops = value;
-                UpdateRequired = true;
-            }
-        }
-
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.RadialGradient;
-
-        /// <inheritdoc/>
-        public override Color AsColor => GradientStops.Length > 0 ?
-            GradientStops[0].Color : Color.Black;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -162,7 +141,7 @@ namespace Alternet.Drawing
             {
                 return $"RadialGradientBrush (Center={Center}, Radius={Radius}," +
                     $" GradientOrigin={GradientOrigin}," +
-                    $" GradientStops=({LinearGradientBrush.GradientStopsToString(GradientStops)}))";
+                    $" GradientStops=({ToString(GradientStops)}))";
             }
             catch
             {
@@ -183,7 +162,7 @@ namespace Alternet.Drawing
                 Center == o.Center &&
                 GradientOrigin == o.GradientOrigin &&
                 Radius == o.Radius &&
-                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
+                base.Equals(other);
         }
 
         /// <summary>
@@ -193,11 +172,10 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
+            hashCode.Add(base.GetHashCode());
             hashCode.Add(Center);
             hashCode.Add(GradientOrigin);
             hashCode.Add(Radius);
-            foreach (var gradientStop in GradientStops)
-                hashCode.Add(gradientStop);
 
             return hashCode.ToHashCode();
         }
@@ -214,12 +192,32 @@ namespace Alternet.Drawing
             ((IRadialGradientBrushHandler)Handler).Update(this);
         }
 
-        private static GradientStop[] GetGradientStopsFromEdgeColors(
-            Color startColor,
-            Color endColor) => new[]
+        /// <inheritdoc/>
+        protected override SKShader CreateSkiaShader()
+        {
+            SKShader result;
+
+            if (LocalMatrix != SKMatrix.Empty)
             {
-                new GradientStop(startColor, 0),
-                new GradientStop(endColor, 1),
-            };
+                result = SKShader.CreateRadialGradient(
+                    center,
+                    (float)radius,
+                    ToSkiaGradientColors(GradientStops),
+                    ToGradientOffsetsF(GradientStops),
+                    TileMode,
+                    LocalMatrix);
+            }
+            else
+            {
+                result = SKShader.CreateRadialGradient(
+                    center,
+                    (float)radius,
+                    ToSkiaGradientColors(GradientStops),
+                    ToGradientOffsetsF(GradientStops),
+                    TileMode);
+            }
+
+            return result;
+        }
     }
 }

@@ -1,0 +1,178 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using SkiaSharp;
+
+namespace Alternet.Drawing
+{
+    public abstract class GradientBrush : Brush
+    {
+        private GradientStop[] gradientStops;
+        private SKShaderTileMode tileMode;
+        private SKMatrix localMatrix = SKMatrix.Empty;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Brush"/> class.
+        /// </summary>
+        /// <param name="immutable">Whether this brush is immutable.</param>
+        protected GradientBrush(GradientStop[] gradientStops, bool immutable)
+            : base(immutable)
+        {
+            this.gradientStops = gradientStops;
+        }
+
+        /// <inheritdoc/>
+        public override Color AsColor => GradientStops.Length > 0 ?
+            GradientStops[0].Color : Color.Black;
+
+        /// <summary>
+        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
+        /// transition in this brush.
+        /// </summary>
+        public virtual GradientStop[] GradientStops
+        {
+            get => gradientStops;
+
+            set
+            {
+                if (gradientStops == value)
+                    return;
+                CheckDisposed();
+                gradientStops = value;
+                UpdateRequired = true;
+            }
+        }
+
+        public virtual SKMatrix LocalMatrix
+        {
+            get
+            {
+                return localMatrix;
+            }
+
+            set
+            {
+                if (localMatrix == value)
+                    return;
+                CheckDisposed();
+                localMatrix = value;
+                UpdateRequired = true;
+            }
+        }
+
+        public virtual SKShaderTileMode TileMode
+        {
+            get => tileMode;
+            set
+            {
+                if (tileMode == value)
+                    return;
+                CheckDisposed();
+                tileMode = value;
+                UpdateRequired = true;
+            }
+        }
+
+        public static string ToString(GradientStop[] stops)
+        {
+            string result = string.Empty;
+            foreach (var item in stops)
+            {
+                if (result.Length > 0)
+                    result += ", ";
+                result += item.ToString();
+            }
+
+            return result;
+        }
+
+        public static SKColor[] ToSkiaGradientColors(GradientStop[] gradientStops)
+        {
+            var result = Array.ConvertAll(gradientStops, item => (SKColor)item.Color);
+            return result;
+        }
+
+        public static Color[] ToGradientColors(GradientStop[] gradientStops)
+        {
+            var result = Array.ConvertAll(gradientStops, item => item.Color);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts two colors to array of <see cref="GradientStop"/>.
+        /// </summary>
+        /// <param name="startColor"></param>
+        /// <param name="endColor"></param>
+        /// <returns></returns>
+        public static GradientStop[] GradientStopsFromEdgeColors(
+            Color startColor,
+            Color endColor)
+        {
+            return new[]
+            {
+                new GradientStop(startColor, 0),
+                new GradientStop(endColor, 1),
+            };
+        }
+
+        public static Coord[] ToGradientOffsets(GradientStop[] gradientStops)
+        {
+            var result = Array.ConvertAll(gradientStops, item => (Coord)item.Offset);
+            return result;
+        }
+
+        public static float[] ToGradientOffsetsF(GradientStop[] gradientStops)
+        {
+            var result = Array.ConvertAll(gradientStops, item => (float)item.Offset);
+            return result;
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(tileMode);
+            hashCode.Add(localMatrix);
+            foreach (var gradientStop in GradientStops)
+                hashCode.Add(gradientStop);
+
+            return hashCode.ToHashCode();
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public override bool Equals(object? other)
+        {
+            var o = other as GradientBrush;
+            if (o == null)
+                return false;
+            CheckDisposed();
+
+            return
+                TileMode == o.TileMode &&
+                LocalMatrix == o.LocalMatrix &&
+                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
+        }
+
+        /// <inheritdoc/>
+        protected override SKPaint CreateSkiaPaint()
+        {
+            var result = base.CreateSkiaPaint();
+            result.Shader = CreateSkiaShader();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKShader"/> for this radial gradient brush.
+        /// </summary>
+        /// <returns></returns>
+        protected abstract SKShader CreateSkiaShader();
+    }
+}
