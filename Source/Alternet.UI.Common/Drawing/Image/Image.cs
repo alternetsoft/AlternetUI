@@ -218,7 +218,7 @@ namespace Alternet.Drawing
         /// or its contents, but changes its scale factor, so that it appears in a smaller
         /// size when it is drawn on screen.
         /// </remarks>
-        public virtual double ScaleFactor
+        public virtual Coord ScaleFactor
         {
             get
             {
@@ -251,7 +251,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the height of the bitmap in logical pixels.
         /// </summary>
-        public virtual double ScaledHeight
+        public virtual Coord ScaledHeight
         {
             get
             {
@@ -273,7 +273,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the width of the bitmap in logical pixels.
         /// </summary>
-        public virtual double ScaledWidth
+        public virtual Coord ScaledWidth
         {
             get
             {
@@ -306,6 +306,15 @@ namespace Alternet.Drawing
         public static explicit operator Image(SKBitmap bitmap)
         {
             return FromSkia(bitmap);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='Image'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator SKBitmap(Image bitmap)
+        {
+            return ToSkia(bitmap);
         }
 
         /// <summary>
@@ -465,7 +474,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(double)"/>
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
@@ -494,6 +503,20 @@ namespace Alternet.Drawing
         {
             var genericImage = GenericImage.FromSkia(bitmap);
             return (Image)genericImage;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKBitmap"/> from <see cref="Image"/>.
+        /// </summary>
+        /// <param name="bitmap"><see cref="SKBitmap"/> with image data.</param>
+        /// <returns></returns>
+        public static SKBitmap ToSkia(Image bitmap)
+        {
+            if (bitmap.Handler is SkiaImageHandler skiaHandler)
+                return skiaHandler.Bitmap;
+
+            var genericImage = (GenericImage)bitmap;
+            return (SKBitmap)genericImage;
         }
 
         /// <summary>
