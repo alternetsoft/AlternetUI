@@ -362,7 +362,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public virtual SizeI GetPreferredBitmapSizeAtScale(double scale)
+        public virtual SizeI GetPreferredBitmapSizeAtScale(Coord scale)
         {
             return Handler.GetPreferredBitmapSizeAtScale(scale);
         }

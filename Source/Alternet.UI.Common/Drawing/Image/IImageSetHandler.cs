@@ -19,7 +19,7 @@ namespace Alternet.Drawing
 
         SizeI GetPreferredBitmapSizeFor(IControl control);
 
-        SizeI GetPreferredBitmapSizeAtScale(double scale);
+        SizeI GetPreferredBitmapSizeAtScale(Coord scale);
 
         void Add(Image item);
 
