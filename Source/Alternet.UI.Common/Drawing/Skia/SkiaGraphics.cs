@@ -14,6 +14,10 @@ namespace Alternet.Drawing
 {
     public class SkiaGraphics : NotImplementedGraphics
     {
+        public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
+
+        public static bool DefaultAntialias = true;
+
         private SKCanvas canvas;
 
         public SkiaGraphics(SKBitmap bitmap)
@@ -68,6 +72,28 @@ namespace Alternet.Drawing
             return GetTextExtent(text, font);
         }
 
+        public static SKPaint CreatePaint(SKColor color)
+        {
+            var result = new SKPaint();
+            result.IsAntialias = DefaultAntialias;
+            result.Color = color;
+            return result;
+        }
+
+        public static SKPaint CreatePaint(SKFont font)
+        {
+            var result = new SKPaint(font);
+            result.IsAntialias = DefaultAntialias;
+            return result;
+        }
+
+        public static SKPaint CreatePaint()
+        {
+            var result = new SKPaint();
+            result.IsAntialias = DefaultAntialias;
+            return result;
+        }
+
         /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
@@ -75,7 +101,7 @@ namespace Alternet.Drawing
 
             var typeFace = skiaFont.Typeface;
 
-            using SKPaint paint = new(skiaFont);
+            using SKPaint paint = CreatePaint(skiaFont);
             SKRect textBounds = default;
 
             /*
@@ -124,8 +150,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void SetPixel(Coord x, Coord y, Color color)
         {
-            using SKPaint paint = new();
-            paint.Color = color;
+            using SKPaint paint = CreatePaint(color);
             canvas.DrawPoint((float)x, (float)y, paint);
         }
 
@@ -142,7 +167,7 @@ namespace Alternet.Drawing
 
             SKFont skiaFont = font;
 
-            using SKPaint paint = new(skiaFont);
+            using SKPaint paint = CreatePaint(skiaFont);
             paint.Color = foreColor;
             paint.Style = SKPaintStyle.Fill;
             paint.TextAlign = SKTextAlign.Left;
@@ -159,8 +184,7 @@ namespace Alternet.Drawing
 
             if (backColor.IsOk)
             {
-                using SKPaint fillPaint = new();
-                fillPaint.Color = backColor;
+                using SKPaint fillPaint = CreatePaint(backColor);
                 fillPaint.Style = SKPaintStyle.Fill;
 
                 canvas.DrawRect(textRect, fillPaint);

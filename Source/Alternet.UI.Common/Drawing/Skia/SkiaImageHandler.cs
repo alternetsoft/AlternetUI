@@ -14,8 +14,6 @@ namespace Alternet.UI
 {
     public class SkiaImageHandler : PlessImageHandler, IImageHandler
     {
-        public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
-
         private SKBitmap bitmap;
 
         public SkiaImageHandler(SKBitmap bitmap)
@@ -79,7 +77,7 @@ namespace Alternet.UI
 
             void Fn(SKBitmap source)
             {
-                if (!source.ScalePixels(bitmap, DefaultScaleQuality))
+                if (!source.ScalePixels(bitmap, SkiaGraphics.DefaultScaleQuality))
                     App.LogError("Error scaling pixels in SkiaImageHandler.Create(Image, SizeI)");
             }
         }
@@ -171,7 +169,7 @@ namespace Alternet.UI
         public override bool Rescale(SizeI sizeNeeded)
         {
             SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
-            var result = bitmap.ScalePixels(newBitmap, DefaultScaleQuality);
+            var result = bitmap.ScalePixels(newBitmap, SkiaGraphics.DefaultScaleQuality);
             if (result)
             {
                 DisposeBitmap();
