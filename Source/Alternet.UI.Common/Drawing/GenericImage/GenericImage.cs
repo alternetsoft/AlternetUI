@@ -240,6 +240,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='GenericImage'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator SKBitmap(GenericImage bitmap)
+        {
+            return ToSkia(bitmap);
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
         /// with the given name.
         /// </summary>
@@ -249,6 +258,11 @@ namespace Alternet.Drawing
         public static bool CanRead(string filename)
         {
             return GraphicsFactory.Handler.CanReadGenericImage(filename);
+        }
+
+        public static unsafe SKBitmap ToSkia(GenericImage bitmap)
+        {
+            return new();
         }
 
         public static unsafe GenericImage FromSkia(SKBitmap bitmap)
