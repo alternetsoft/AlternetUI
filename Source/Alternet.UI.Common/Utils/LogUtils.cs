@@ -454,9 +454,35 @@ namespace Alternet.UI
 
         public static void LogSkiaFont(SKFont font)
         {
-            App.LogBeginSection();
-            App.LogNameValue("Font", font.Typeface.FamilyName);
+            App.LogBeginSection("SKFont");
+            App.LogNameValue("FamilyName", font.Typeface.FamilyName);
 
+            App.LogNameValue("Typeface.UnitsPerEm", font.Typeface.UnitsPerEm);
+            App.LogNameValue("ForceAutoHinting", font.ForceAutoHinting);
+            App.LogNameValue("Subpixel",font.Subpixel);
+            App.LogNameValue("EmbeddedBitmaps", font.EmbeddedBitmaps);
+            App.LogNameValue("LinearMetrics",font.LinearMetrics);
+            App.LogNameValue("Embolden", font.Embolden);
+            App.LogNameValue("BaselineSnap", font.BaselineSnap);
+            App.LogNameValue("Size (float)", font.Size);
+            App.LogNameValue("Spacing", font.Spacing);
+            App.LogNameValue("float Metrics.Top", font.Metrics.Top);
+            App.LogNameValue("float Metrics.Ascent", font.Metrics.Ascent);
+            App.LogNameValue("float Metrics.Descent", font.Metrics.Descent);
+            App.LogNameValue("float Metrics.Bottom", font.Metrics.Bottom);
+            App.LogNameValue("float Metrics.Leading", font.Metrics.Leading);
+            App.LogNameValue("float Metrics.AverageCharacterWidth", font.Metrics.AverageCharacterWidth);
+            App.LogNameValue("float Metrics.MaxCharacterWidth", font.Metrics.MaxCharacterWidth);
+            App.LogNameValue("float Metrics.XMin", font.Metrics.XMin);
+            App.LogNameValue("float Metrics.XMax", font.Metrics.XMax);
+            App.LogNameValue("float Metrics.XHeight", font.Metrics.XHeight);
+            App.LogNameValue("float Metrics.CapHeight", font.Metrics.CapHeight);
+            App.LogNameValue("float? Metrics.UnderlineThickness", font.Metrics.UnderlineThickness);
+            App.LogNameValue("float? Metrics.UnderlinePosition", font.Metrics.UnderlinePosition);
+            App.LogNameValue("float? Metrics.StrikeoutThickness", font.Metrics.StrikeoutThickness);
+            App.LogNameValue("float? Metrics.StrikeoutPosition", font.Metrics.StrikeoutPosition);
+
+            App.LogEmptyLine();
             LogMeasureSkiaFont("Hello", font);
             LogMeasureSkiaFont("xy;", SkiaUtils.DefaultFont);
 
