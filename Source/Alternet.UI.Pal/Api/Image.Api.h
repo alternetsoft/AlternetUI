@@ -307,12 +307,12 @@ ALTERNET_UI_API c_bool Image_GrayScale_(Image* obj)
     #endif
 }
 
-ALTERNET_UI_API void Image_ResetAlpha_(Image* obj)
+ALTERNET_UI_API c_bool Image_ResetAlpha_(Image* obj)
 {
     #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<c_bool>([&](){
     #endif
-        obj->ResetAlpha();
+        return obj->ResetAlpha();
     #if !defined(__WXMSW__)
     });
     #endif
@@ -384,12 +384,12 @@ ALTERNET_UI_API Image* Image_ConvertToDisabled_(Image* obj, uint8_t brightness)
     #endif
 }
 
-ALTERNET_UI_API void Image_Rescale_(Image* obj, SizeI sizeNeeded)
+ALTERNET_UI_API c_bool Image_Rescale_(Image* obj, SizeI sizeNeeded)
 {
     #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<c_bool>([&](){
     #endif
-        obj->Rescale(sizeNeeded);
+        return obj->Rescale(sizeNeeded);
     #if !defined(__WXMSW__)
     });
     #endif

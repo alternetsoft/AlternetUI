@@ -570,9 +570,10 @@ namespace Alternet::UI
 
 	*/
 
-	void Image::Rescale(const Int32Size& sizeNeeded)
+	bool Image::Rescale(const Int32Size& sizeNeeded)
 	{
 		wxBitmap::Rescale(_bitmap, sizeNeeded);
+		return true;
 	}
 
 	int Image::GetDefaultBitmapType()
@@ -604,9 +605,10 @@ namespace Alternet::UI
 		return _bitmap.GetDepth();
 	}
 
-	void Image::ResetAlpha()
+	bool Image::ResetAlpha()
 	{
 		_bitmap.ResetAlpha();
+		return true;
 	}
 
 	bool Image::LoadFile(const string& name, int type)
