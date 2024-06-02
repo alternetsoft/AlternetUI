@@ -52,7 +52,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             string familyName,
-            double emSize,
+            FontSize emSize,
             FontStyle style = FontStyle.Regular)
             : this(null, familyName, emSize, style)
         {
@@ -72,7 +72,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             FontFamily family,
-            double emSize,
+            FontSize emSize,
             FontStyle style = FontStyle.Regular)
             : this(
                 family.GenericFamily,
@@ -115,7 +115,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(Font prototype, double newSize)
+        public Font(Font prototype, FontSize newSize)
             : this(
                 prototype.fontFamily?.GenericFamily,
                 prototype.Name,
@@ -137,7 +137,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
+        public Font(FontFamily family, FontSize emSize, FontStyle style, GraphicsUnit unit)
             : this(family?.GenericFamily, family?.Name, emSize, style, unit)
         {
         }
@@ -158,7 +158,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             FontFamily family,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet)
@@ -185,7 +185,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             FontFamily family,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet,
@@ -211,7 +211,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             string familyName,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet)
@@ -240,7 +240,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             string familyName,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet,
@@ -273,7 +273,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, double emSize)
+        public Font(FontFamily family, FontSize emSize)
             : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular)
         {
         }
@@ -290,7 +290,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
+        public Font(string familyName, FontSize emSize, FontStyle style, GraphicsUnit unit)
             : this(null, familyName, emSize, style, unit)
         {
         }
@@ -308,7 +308,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, GraphicsUnit unit)
+        public Font(string familyName, FontSize emSize, GraphicsUnit unit)
             : this(null, familyName, emSize, FontStyle.Regular, unit)
         {
         }
@@ -321,7 +321,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize)
+        public Font(string familyName, FontSize emSize)
             : this(null, familyName, emSize, FontStyle.Regular)
         {
         }
@@ -338,7 +338,7 @@ namespace Alternet.Drawing
         internal Font(
              GenericFontFamily? genericFamily,
              string? familyName,
-             double emSize,
+             FontSize emSize,
              FontStyle style,
              GraphicsUnit unit = GraphicsUnit.Point,
              byte gdiCharSet = 1)
@@ -422,7 +422,7 @@ namespace Alternet.Drawing
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
         /// the <see cref="Font.Unit" /> property.</summary>
         /// <returns>The em-size of this <see cref="Font" />.</returns>
-        public virtual double Size
+        public virtual FontSize Size
         {
             get
             {
@@ -613,7 +613,7 @@ namespace Alternet.Drawing
         /// Gets the em-size, in points, of this <see cref="Font"/>.
         /// </summary>
         /// <value>The em-size, in points, of this <see cref="Font"/>.</value>
-        public virtual double SizeInPoints
+        public virtual FontSize SizeInPoints
         {
             get
             {
@@ -742,9 +742,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="emSize"></param>
         /// <returns></returns>
-        public static double CheckSize(double emSize)
+        public static FontSize CheckSize(FontSize emSize)
         {
-            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
+            if (emSize <= 0 || FontSize.IsInfinity(emSize) || FontSize.IsNaN(emSize))
             {
                 BaseApplication.LogError("Invalid font size {emSize}, using default font size.");
                 return Font.Default.Size;
@@ -764,7 +764,7 @@ namespace Alternet.Drawing
         /// <see cref="Font.Default"/> is used.</param>
         public static Font GetDefaultOrNew(
             string name,
-            double sizeInPoints,
+            FontSize sizeInPoints,
             FontStyle style,
             Font? defaultFont = null)
         {
@@ -839,12 +839,12 @@ namespace Alternet.Drawing
         /// (which may be less than 1 to create a smaller version of the font).
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual Font Scaled(double scaleFactor)
+        public virtual Font Scaled(FontSize scaleFactor)
         {
             return Get(this.Name, SizeInPoints * scaleFactor, this.Style);
         }
 
-        public static Font Get(string familyName, double emSize, FontStyle style = FontStyle.Regular)
+        public static Font Get(string familyName, FontSize emSize, FontStyle style = FontStyle.Regular)
         {
             return new(familyName, emSize, style);
         }
@@ -954,7 +954,7 @@ namespace Alternet.Drawing
         /// <param name="sizeInPoints">Font size.</param>
         /// <param name="style">Font style.</param>
         /// <returns></returns>
-        public virtual bool Equals(string name, double sizeInPoints, FontStyle style)
+        public virtual bool Equals(string name, FontSize sizeInPoints, FontStyle style)
         {
             return Name == name && SizeInPoints == sizeInPoints && Style == style;
         }

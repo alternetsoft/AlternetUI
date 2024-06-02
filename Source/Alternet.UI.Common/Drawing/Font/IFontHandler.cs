@@ -25,7 +25,7 @@ namespace Alternet.Drawing
         /// Gets the em-size, in points, of the font.
         /// </summary>
         /// <returns></returns>
-        double SizeInPoints { get; }
+        FontSize SizeInPoints { get; }
 
         /// <summary>
         /// Gets font encoding.
@@ -101,7 +101,7 @@ namespace Alternet.Drawing
 
             public string? FamilyName;
 
-            public double Size;
+            public FontSize Size;
 
             public FontStyle Style = FontStyle.Regular;
 
