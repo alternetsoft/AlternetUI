@@ -692,17 +692,17 @@ namespace Alternet.Drawing
         /// directly instead. Size must be valid.
         /// </remarks>
         /// <param name="sizeNeeded"></param>
-        public virtual void Rescale(SizeI sizeNeeded)
+        public virtual bool Rescale(SizeI sizeNeeded)
         {
-            Handler.Rescale(sizeNeeded);
+            return Handler.Rescale(sizeNeeded);
         }
 
         /// <summary>
         /// Resets alpha channel.
         /// </summary>
-        public virtual void ResetAlpha()
+        public virtual bool ResetAlpha()
         {
-            Handler.ResetAlpha();
+            return Handler.ResetAlpha();
         }
 
         /// <summary>

@@ -29,12 +29,12 @@ namespace ControlsSample
             BottomVisible = false,
         };
 
-        private readonly Button button = new("Update Skia image")
+        private readonly Button button = new("Paint on SKCanvas")
         {
             Visible = true,
         };
 
-        private readonly Button button2 = new("Button 2")
+        private readonly Button button2 = new("GenericImage to SKBitmap")
         {
             Visible = true,
         };
@@ -88,16 +88,21 @@ namespace ControlsSample
             button2.HorizontalAlignment = HorizontalAlignment.Left;
             button2.Parent = buttonPanel;
 
-            button2.ClickAction = () =>
-            {
-            };           
+            button2.ClickAction = GenericToSkia;
 
-            button.ClickAction = UpdateSkiaImage;
+            button.ClickAction = PaintOnCanvas;
 
             propGrid.SuggestedInitDefaults();
         }
 
-        private void UpdateSkiaImage()
+        private void GenericToSkia()
+        {
+            GenericImage image = new(backgroundUrl1);
+            var bitmap = (SKBitmap)image;
+            pictureBox.Image = (Image)bitmap;
+        }
+
+        private void PaintOnCanvas()
         {
             RectD rect = (0, 0, control.Width, control.Height);
 

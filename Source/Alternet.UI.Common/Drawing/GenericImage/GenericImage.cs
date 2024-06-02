@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a file.
         /// </summary>
-        /// <param name="fileName">Path to file.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="bitmapType">Type of the bitmap. Depending on how library
         /// and OS has been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
@@ -80,10 +80,17 @@ namespace Alternet.Drawing
         /// "choose the default image" and is interpreted as the first image(index= 0) by the GIF and
         /// TIFF handler and as the largest and most colorful one by the ICO handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string fileName, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        public GenericImage(string url, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return;
+            }
+
             Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                    fileName,
+                    stream,
                     bitmapType,
                     index);
         }
@@ -92,14 +99,24 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a file using MIME-types to specify the type.
         /// </summary>
-        /// <param name="name">Name of the file from which to load the image.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string name, string mimetype, int index = -1)
+        public GenericImage(string url, string mimetype, int index = -1)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(name, mimetype, index);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return;
+            }
+
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
+                    stream,
+                    mimetype,
+                    index);
         }
 
         /// <summary>
@@ -252,17 +269,26 @@ namespace Alternet.Drawing
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
         /// with the given name.
         /// </summary>
-        /// <param name="filename">Name of the file from which to load the image.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool CanRead(string filename)
+        public static bool CanRead(string url)
         {
-            return GraphicsFactory.Handler.CanReadGenericImage(filename);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return false;
+            }
+            return CanRead(stream);
         }
 
-        public static unsafe SKBitmap ToSkia(GenericImage bitmap)
+        public static SKBitmap ToSkia(GenericImage bitmap)
         {
-            return new();
+            if (bitmap.HasAlpha())
+                return ToSkiaWithAlpha(bitmap);
+            else
+                return ToSkiaWithoutAlpha(bitmap);
         }
 
         public static unsafe GenericImage FromSkia(SKBitmap bitmap)
@@ -333,21 +359,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Finds image load/save handler with the given name, and removes it.
-        /// </summary>
-        /// <param name="name">Name of the handler.</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool RemoveHandler(string name)
-        {
-            return GraphicsFactory.Handler.RemoveGenericImageHandler(name);
-        }
-
-        /// <summary>
         /// If the image file contains more than one image and the image handler is capable of
         /// retrieving these individually, this function will return the number of available images.
         /// </summary>
-        /// <param name="filename">Name of the file from which to load the image.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
         /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
@@ -357,10 +372,17 @@ namespace Alternet.Drawing
         /// returns the number of frames in the animation).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
-            string filename,
+            string url,
             BitmapType bitmapType = BitmapType.Any)
         {
-            return GraphicsFactory.Handler.GetGenericImageCount(filename, bitmapType);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return 0;
+            }
+
+            return GetImageCount(stream, bitmapType);
         }
 
         /// <summary>
@@ -382,15 +404,6 @@ namespace Alternet.Drawing
             BitmapType bitmapType = BitmapType.Any)
         {
             return GraphicsFactory.Handler.GetGenericImageCount(stream, bitmapType);
-        }
-
-        /// <summary>
-        /// Deletes all image handlers.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CleanUpHandlers()
-        {
-            GraphicsFactory.Handler.CleanUpGenericImageHandlers();
         }
 
         /// <summary>
@@ -1559,6 +1572,74 @@ namespace Alternet.Drawing
         protected override IGenericImageHandler CreateHandler()
         {
             return GraphicsFactory.Handler.CreateGenericImageHandler();
+        }
+
+        private static unsafe SKBitmap ToSkiaWithAlpha(GenericImage bitmap)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+
+            var result = new SKBitmap(width, height, isOpaque: false);
+
+            var rgbNativeData = bitmap.GetNativeData();
+            RGBValue* rgbData = (RGBValue*)rgbNativeData;
+
+            var alphaNativedata = bitmap.GetNativeAlphaData();
+            byte* alphaData = (byte*)alphaNativedata;
+
+            SKColor[] pixels = new SKColor[bitmap.PixelCount];
+            
+            int i = 0;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    var color = *rgbData;
+                    var alpha = *alphaData;
+
+                    pixels[i] = Color.FromArgb(alpha, color);
+
+                    rgbData++;
+                    alphaData++;
+                    i++;
+                }
+            }
+
+            result.Pixels = pixels;
+
+            return result;
+        }
+
+        private static unsafe SKBitmap ToSkiaWithoutAlpha(GenericImage bitmap)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+
+            var result = new SKBitmap(width, height, isOpaque: true);
+
+            var rgbNativeData = bitmap.GetNativeData();
+            RGBValue* rgbData = (RGBValue*)rgbNativeData;
+
+            SKColor[] pixels = new SKColor[bitmap.PixelCount];
+
+            int i = 0;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    var color = *rgbData;
+                    pixels[i] = (Color)color;
+
+                    rgbData++;
+                    i++;
+                }
+            }
+
+            result.Pixels = pixels;
+
+            return result;
         }
     }
 }
