@@ -328,7 +328,7 @@ namespace Alternet.UI
         /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
         /// </remarks>
         /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
-        public virtual SizeI GetPreferredBitmapSizeFor(IControl control)
+        public virtual SizeI GetPreferredBitmapSizeFor(Control control)
         {
             return Handler.GetPreferredBitmapSizeFor(control);
         }
@@ -345,7 +345,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="control">Control to get DPI scaling factor from.</param>
         /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
-        public virtual Image AsImageFor(IControl control) => new Bitmap(this, control);
+        public virtual Image AsImageFor(Control control) => new Bitmap(this, control);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at

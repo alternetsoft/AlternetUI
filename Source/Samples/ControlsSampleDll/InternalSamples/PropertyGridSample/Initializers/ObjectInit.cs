@@ -156,6 +156,12 @@ namespace PropertyGridSample
             Actions.Add(typeof(ColorComboBox), InitColorComboBox);
             Actions.Add(typeof(CheckListBox), InitCheckListBox);
 
+            Actions.Add(typeof(UserControl), (c) =>
+            {
+                var control = (c as UserControl)!;
+                control.SuggestedSize = 200;
+            });
+
             Actions.Add(typeof(SaveFileDialog), (c) =>
             {
                 var control = (c as SaveFileDialog)!;

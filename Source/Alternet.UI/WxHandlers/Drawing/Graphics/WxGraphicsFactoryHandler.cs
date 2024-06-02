@@ -138,16 +138,6 @@ namespace Alternet.Drawing
                 UI.Native.DrawingContext.FromImage((UI.Native.Image)image.Handler));
         }
 
-        public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
-        {
-            var image = new UI.Native.Image();
-            ((UI.Native.ImageSet)imageSet.Handler).InitImage(
-                image,
-                size.Width,
-                size.Height);
-            return image;
-        }
-
         public IImageHandler CreateImageHandler()
         {
             return new UI.Native.Image();
@@ -169,6 +159,16 @@ namespace Alternet.Drawing
                 height,
                 (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
+        }
+
+        public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
+        {
+            var image = new UI.Native.Image();
+            ((UI.Native.ImageSet)imageSet.Handler).InitImage(
+                image,
+                size.Width,
+                size.Height);
+            return image;
         }
 
         public IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)

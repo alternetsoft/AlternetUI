@@ -177,8 +177,9 @@ namespace Alternet.Drawing
             {
                 if(namesAscending is null)
                 {
+                    var names = FamiliesNames;
                     namesAscending = new();
-                    namesAscending.AddRange(FamiliesNames);
+                    namesAscending.AddRange(names);
                     namesAscending.Sort();
                 }
 
@@ -191,13 +192,9 @@ namespace Alternet.Drawing
             get
             {
                 if (items is null)
-                {
-                    items = new();
-                    var names = FontFactory.Handler.GetFontFamiliesNames();
-                    FamiliesNames = names;
-                }
+                    FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
 
-                return items;
+                return items!;
             }
         }
 
