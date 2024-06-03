@@ -209,6 +209,12 @@ namespace Alternet.Drawing
             Handler = handle;
         }
 
+        public enum PixelStrategy
+        {
+            Pixels,
+            RgbData,
+        }
+
         /// <summary>
         /// Gets the width of the image in pixels.
         /// </summary>
@@ -253,6 +259,11 @@ namespace Alternet.Drawing
         {
             get => Handler.IsOk;
         }
+
+        /// <summary>
+        /// Gets best strategy to access pixels.
+        /// </summary>
+        public PixelStrategy BestStrategy => Handler.BestStrategy;
 
         /// <summary>
         /// Converts the specified <see cref='SKBitmap'/> to a <see cref='GenericImage'/>.

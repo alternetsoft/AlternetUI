@@ -13,13 +13,7 @@ namespace Alternet.Drawing
     {
         GenericImageLoadFlags LoadFlags { get; set; }
 
-        public enum PixelStrategy
-        {
-            Pixels,
-            RgbData,
-        }
-
-        PixelStrategy BestStrategy {get;}
+        GenericImage.PixelStrategy BestStrategy {get;}
 
         bool HasAlpha { get; }
 

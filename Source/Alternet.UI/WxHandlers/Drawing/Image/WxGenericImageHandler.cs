@@ -14,9 +14,9 @@ namespace Alternet.Drawing
 {
     internal class WxGenericImageHandler : DisposableObject<IntPtr>, IGenericImageHandler
     {
-        public IGenericImageHandler.PixelStrategy BestStrategy
+        public GenericImage.PixelStrategy BestStrategy
         {
-            get => IGenericImageHandler.PixelStrategy.RgbData;
+            get => GenericImage.PixelStrategy.RgbData;
         }
 
         public int Width => UI.Native.GenericImage.GetWidth(Handle);
@@ -186,11 +186,7 @@ namespace Alternet.Drawing
 
         public void SetRGBRect(RGBValue rgb, RectI? rect = null)
         {
-            if (rect is null)
-            {
-                rect = (0, 0, Width, Height);
-            }
-
+            rect ??= RectI.Create(Width, Height);
             UI.Native.GenericImage.SetRGBRect(Handle, rect.Value, rgb.R, rgb.G, rgb.B);
         }
 

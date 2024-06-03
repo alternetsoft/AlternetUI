@@ -136,8 +136,6 @@ namespace ControlsSample
 
             canvas.DrawRect(rect, Brushes.White);
 
-            SkiaGraphics graphics = new(canvas);
-
             PointD pt = new(100, 150);
             PointD pt2 = new(300, 150);
 
