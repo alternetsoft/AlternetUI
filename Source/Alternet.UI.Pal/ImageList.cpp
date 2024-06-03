@@ -13,6 +13,16 @@ namespace Alternet::UI
         DestroyImageList();
     }
 
+    bool ImageList::Remove(int index)
+    {
+        return _imageList->Remove(index);
+    }
+
+    bool ImageList::Clear()
+    {
+        return _imageList->RemoveAll();
+    }
+
     Int32Size ImageList::GetPixelImageSize()
     {
         return _imageList->GetSize();

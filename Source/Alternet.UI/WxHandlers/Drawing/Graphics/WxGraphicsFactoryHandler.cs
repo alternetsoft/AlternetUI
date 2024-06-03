@@ -86,7 +86,7 @@ namespace Alternet.Drawing
             return new UI.Native.GraphicsPath();
         }
 
-        public IImageSetHandler CreateImageSetHandler()
+        public IImageSetHandler? CreateImageSetHandler()
         {
             return new UI.Native.ImageSet();
         }
@@ -114,12 +114,12 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        public IImageListHandler CreateImageListHandler()
+        public IImageListHandler? CreateImageListHandler()
         {
             return new UI.Native.ImageList();
         }
 
-        public IIconSetHandler CreateIconSetHandler()
+        public IIconSetHandler? CreateIconSetHandler()
         {
             return new UI.Native.IconSet();
         }

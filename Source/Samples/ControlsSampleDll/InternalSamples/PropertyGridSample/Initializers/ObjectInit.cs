@@ -525,7 +525,7 @@ namespace PropertyGridSample
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new SizeD(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();

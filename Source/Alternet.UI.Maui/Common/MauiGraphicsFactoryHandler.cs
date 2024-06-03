@@ -7,266 +7,283 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     internal class MauiGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
-        public GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }
+        GenericImageLoadFlags IGraphicsFactoryHandler.GenericImageDefaultLoadFlags { get; set; }
 
         /// <inheritdoc/>
-        public IPenHandler CreatePenHandler(Pen pen)
+        IPenHandler IGraphicsFactoryHandler.CreatePenHandler(Pen pen)
         {
             return new PlessPenHandler(pen);
         }
 
         /// <inheritdoc/>
-        public IFontFactoryHandler CreateFontFactoryHandler()
+        IFontFactoryHandler IGraphicsFactoryHandler.CreateFontFactoryHandler()
         {
             return new SkiaFontFactoryHandler();
         }
 
         /// <inheritdoc/>
-        public IBrushHandler CreateTransparentBrushHandler(Brush brush)
+        IBrushHandler IGraphicsFactoryHandler.CreateTransparentBrushHandler(Brush brush)
         {
             return new PlessBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
+        ISolidBrushHandler IGraphicsFactoryHandler.CreateSolidBrushHandler(SolidBrush brush)
         {
             return new PlessSolidBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
+        ITextureBrushHandler IGraphicsFactoryHandler.CreateTextureBrushHandler(TextureBrush brush)
         {
             return new PlessTextureBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
+        IHatchBrushHandler IGraphicsFactoryHandler.CreateHatchBrushHandler(HatchBrush brush)
         {
             return new PlessHatchBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush)
+        ILinearGradientBrushHandler IGraphicsFactoryHandler.CreateLinearGradientBrushHandler(LinearGradientBrush brush)
         {
             return new PlessLinearGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush)
+        IRadialGradientBrushHandler IGraphicsFactoryHandler.CreateRadialGradientBrushHandler(RadialGradientBrush brush)
         {
             return new PlessRadialGradientBrushHandler(brush);
         }
 
-        public bool CanReadGenericImage(string filename)
+        bool IGraphicsFactoryHandler.CanReadGenericImage(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public bool CanReadGenericImage(Stream stream)
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler()
         {
             throw new NotImplementedException();
         }
 
-        public void CleanUpGenericImageHandlers()
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler(
+            int width,
+            int height,
+            bool clear)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler()
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler(
+            SizeI size,
+            bool clear)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(int width, int height, bool clear = false)
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler(
+            Stream stream,
+            BitmapType bitmapType,
+            int index)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(SizeI size, bool clear = false)
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler(
+            Stream stream,
+            string mimeType,
+            int index)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(string fileName, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler(
+            int width,
+            int height,
+            RGBValue[] data)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(string name, string mimetype, int index = -1)
+        IGenericImageHandler IGraphicsFactoryHandler.CreateGenericImageHandler(
+            int width,
+            int height,
+            RGBValue[] data,
+            byte[] alpha)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        Graphics IGraphicsFactoryHandler.CreateGraphicsFromImage(Image image)
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(Stream stream, string mimeType, int index = -1)
+        Graphics IGraphicsFactoryHandler.CreateGraphicsFromScreen()
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(int width, int height, nint data, bool staticData = false)
+        IGraphicsPathHandler IGraphicsFactoryHandler.CreateGraphicsPathHandler()
         {
             throw new NotImplementedException();
         }
 
-        public IGenericImageHandler CreateGenericImageHandler(int width, int height, nint data, nint alpha, bool staticData = false)
+        IGraphicsPathHandler IGraphicsFactoryHandler.CreateGraphicsPathHandler(Graphics drawingContext)
         {
             throw new NotImplementedException();
         }
 
-        public Graphics CreateGraphicsFromImage(Image image)
+        IIconSetHandler? IGraphicsFactoryHandler.CreateIconSetHandler()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
-        public Graphics CreateGraphicsFromScreen()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGraphicsPathHandler CreateGraphicsPathHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGraphicsPathHandler CreateGraphicsPathHandler(Graphics drawingContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IIconSetHandler CreateIconSetHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(ImageSet imageSet, SizeI size)
         {
             return new SkiaImageHandler(imageSet, size);
         }
 
-        public IImageHandler CreateImageHandler()
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler()
         {
             return new SkiaImageHandler();
         }
 
-        public IImageHandler CreateImageHandler(GenericImage genericImage, int depth = -1)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(
+            GenericImage genericImage,
+            int depth)
         {
             return new SkiaImageHandler(genericImage, depth);
         }
 
-        public IImageHandler CreateImageHandler(int width, int height, Graphics dc)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(int width, int height, Graphics dc)
         {
             return new SkiaImageHandler(width, height, dc);
         }
 
-        public IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(ImageSet imageSet, IControl control)
         {
             return new SkiaImageHandler(imageSet, control);
         }
 
-        public IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(GenericImage genericImage, Graphics dc)
         {
             return new SkiaImageHandler(genericImage, dc);
         }
 
-        public IImageHandler CreateImageHandler(Image image)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(Image image)
         {
             return new SkiaImageHandler(image);
         }
 
-        public IImageHandler CreateImageHandler(Image original, SizeI newSize)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(Image original, SizeI newSize)
         {
             return new SkiaImageHandler(original, newSize);
         }
 
-        public IImageHandler CreateImageHandler(SizeI size, int depth = 32)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandler(
+            SizeI size,
+            int depth)
         {
             return new SkiaImageHandler(size, depth);
         }
 
-        public IImageHandler CreateImageHandlerFromScreen()
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromScreen()
         {
             throw new NotImplementedException();
         }
 
-        public IImageHandler CreateImageHandlerFromSvg(Stream stream, int width, int height, Color? color = null)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromSvg(
+            Stream stream,
+            int width,
+            int height,
+            Color? color)
         {
             throw new NotImplementedException();
         }
 
-        public IImageHandler CreateImageHandlerFromSvg(string s, int width, int height, Color? color = null)
+        IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromSvg(
+            string s,
+            int width,
+            int height,
+            Color? color)
         {
             throw new NotImplementedException();
         }
 
-        public IImageListHandler CreateImageListHandler()
+        IImageListHandler? IGraphicsFactoryHandler.CreateImageListHandler()
+        {
+            return null;
+        }
+
+        IImageSetHandler? IGraphicsFactoryHandler.CreateImageSetHandler()
+        {
+            return null;
+        }
+
+        IImageSetHandler IGraphicsFactoryHandler.CreateImageSetHandlerFromSvg(
+            Stream stream,
+            int width,
+            int height,
+            Color? color)
         {
             throw new NotImplementedException();
         }
 
-        public IImageSetHandler CreateImageSetHandler()
+        IImageSetHandler IGraphicsFactoryHandler.CreateImageSetHandlerFromSvg(
+            string s,
+            int width,
+            int height,
+            Color? color)
         {
             throw new NotImplementedException();
         }
 
-        public IImageSetHandler CreateImageSetHandlerFromSvg(Stream stream, int width, int height, Color? color = null)
+        IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler()
         {
             throw new NotImplementedException();
         }
 
-        public IImageSetHandler CreateImageSetHandlerFromSvg(string s, int width, int height, Color? color = null)
+        IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler(RectD rect)
         {
             throw new NotImplementedException();
         }
 
-        public IRegionHandler CreateRegionHandler()
+        IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler(Region region)
         {
             throw new NotImplementedException();
         }
 
-        public IRegionHandler CreateRegionHandler(RectD rect)
+        IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler(PointD[] points, FillMode fillMode)
         {
             throw new NotImplementedException();
         }
 
-        public IRegionHandler CreateRegionHandler(Region region)
+        BitmapType IGraphicsFactoryHandler.GetDefaultBitmapType()
         {
             throw new NotImplementedException();
         }
 
-        public IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode = FillMode.Alternate)
+        int IGraphicsFactoryHandler.GetGenericImageCount(
+            Stream stream,
+            BitmapType bitmapType)
         {
             throw new NotImplementedException();
         }
 
-        public BitmapType GetDefaultBitmapType()
+        string IGraphicsFactoryHandler.GetGenericImageExtWildcard()
         {
             throw new NotImplementedException();
         }
 
-        public int GetGenericImageCount(string filename, BitmapType bitmapType = BitmapType.Any)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetGenericImageCount(Stream stream, BitmapType bitmapType = BitmapType.Any)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetGenericImageExtWildcard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveGenericImageHandler(string name)
+        public IGenericImageHandler CreateGenericImageHandler(int width, int height, SKColor[] data)
         {
             throw new NotImplementedException();
         }

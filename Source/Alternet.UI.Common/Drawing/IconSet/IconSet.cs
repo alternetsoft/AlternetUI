@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Allows to use icons in the application.
     /// </summary>
-    public class IconSet : HandledObject<IIconSetHandler>
+    public class IconSet : ImageContainer<IIconSetHandler>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
@@ -21,6 +21,7 @@ namespace Alternet.Drawing
         /// to the set of icons.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet(Image image)
+            : base(false)
         {
             Add(image);
         }
@@ -32,6 +33,7 @@ namespace Alternet.Drawing
         /// <param name="stream">The data stream used to load the icon.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet(Stream stream)
+            : base(false)
         {
             Add(stream);
         }
@@ -47,6 +49,7 @@ namespace Alternet.Drawing
         /// If DEBUG is defined, exception info is logged.
         /// </remarks>
         public IconSet(string url)
+            : base(false)
         {
             try
             {
@@ -64,18 +67,9 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet()
+            : base(false)
         {
         }
-
-        /// <summary>
-        /// Occurs when object is changed (image is added or removed).
-        /// </summary>
-        public event EventHandler? Changed;
-
-        /// <summary>
-        /// Gets whether object is ok.
-        /// </summary>
-        public virtual bool IsOk => Handler.IsOk;
 
         /// <summary>
         /// Creates <see cref="IconSet"/> instance from
@@ -138,44 +132,10 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>
-        /// Adds image.
-        /// </summary>
-        /// <param name="image">Image to add.</param>
-        public virtual void Add(Image image)
-        {
-            Handler.Add(image);
-            OnChanged();
-        }
-
-        /// <summary>
-        /// Adds image from the stream.
-        /// </summary>
-        /// <param name="stream">Stream with image.</param>
-        public virtual void Add(Stream stream)
-        {
-            Handler.Add(stream);
-            OnChanged();
-        }
-
-        /// <summary>
-        /// Removes all icons from the <see cref="IconSet"/>.
-        /// </summary>
-        public virtual void Clear()
-        {
-            Handler.Clear();
-            OnChanged();
-        }
-
         /// <inheritdoc/>
         protected override IIconSetHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateIconSetHandler();
-        }
-
-        private void OnChanged()
-        {
-            Changed?.Invoke(this, EventArgs.Empty);
+            return GraphicsFactory.Handler.CreateIconSetHandler() ?? DummyIconSetHandler.Default;
         }
     }
 }

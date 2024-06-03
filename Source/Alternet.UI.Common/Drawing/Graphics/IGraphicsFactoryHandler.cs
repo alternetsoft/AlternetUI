@@ -105,7 +105,7 @@ namespace Alternet.Drawing
             int height,
             Color? color = null);
 
-        IImageSetHandler CreateImageSetHandler();
+        IImageSetHandler? CreateImageSetHandler();
 
         IImageSetHandler CreateImageSetHandlerFromSvg(
             Stream stream,
@@ -119,9 +119,9 @@ namespace Alternet.Drawing
             int height,
             Color? color = null);
 
-        IImageListHandler CreateImageListHandler();
+        IImageListHandler? CreateImageListHandler();
 
-        IIconSetHandler CreateIconSetHandler();
+        IIconSetHandler? CreateIconSetHandler();
 
         bool CanReadGenericImage(Stream stream);
 

@@ -9,20 +9,14 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public interface IImageSetHandler : IDisposable
+    public interface IImageSetHandler : IImageContainer
     {
         SizeI DefaultSize { get; }
-
-        bool IsOk { get; }
-
-        bool IsReadOnly { get; }
 
         SizeI GetPreferredBitmapSizeFor(IControl control);
 
         SizeI GetPreferredBitmapSizeAtScale(Coord scale);
 
-        void Add(Image item);
-
-        void LoadFromStream(Stream stream);
+        bool LoadFromStream(Stream stream);
     }
 }

@@ -8,12 +8,8 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public interface IImageListHandler : IDisposable
+    public interface IImageListHandler : IImageContainer
     {
-        SizeI PixelImageSize { get; set; }
-
-        SizeD ImageSize { get; set; }
-
-        void Add(Image item);
+        SizeI Size { get; set; }
     }
 }
