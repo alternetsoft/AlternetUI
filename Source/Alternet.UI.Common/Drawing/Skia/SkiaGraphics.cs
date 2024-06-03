@@ -59,9 +59,12 @@ namespace Alternet.Drawing
             out Coord? externalLeading,
             IControl? control = null)
         {
-            descent = null;
-            externalLeading = null;
-            return GetTextExtent(text, font, control);
+            return canvas.GetTextExtent(
+                text,
+                font,
+                out descent,
+                out externalLeading,
+                control);
         }
 
         public override SizeD GetTextExtent(
@@ -72,73 +75,66 @@ namespace Alternet.Drawing
             return GetTextExtent(text, font);
         }
 
+        public static void SetDefaults(SKPaint paint)
+        {
+            paint.IsAntialias = DefaultAntialias;
+        }
+
         public static SKPaint CreateFillPaint(SKColor color)
         {
             var result = new SKPaint();
-            result.IsAntialias = DefaultAntialias;
+            SetDefaults(result);
             result.Color = color;
             result.Style = SKPaintStyle.Fill;
             return result;
         }
 
-        public static SKPaint CreatePaint(SKColor color)
+        public static SKPaint CreateStrokePaint(SKColor color)
         {
             var result = new SKPaint();
-            result.IsAntialias = DefaultAntialias;
+            SetDefaults(result);
             result.Color = color;
+            result.Style = SKPaintStyle.Stroke;
             return result;
         }
 
-        public static SKPaint CreatePaint(SKFont font)
+        public static SKPaint CreateStrokeAndFillPaint(SKColor color)
+        {
+            var result = new SKPaint();
+            SetDefaults(result);
+            result.Color = color;
+            result.Style = SKPaintStyle.StrokeAndFill;
+            return result;
+        }
+
+        public static SKPaint CreateStrokePaint(SKFont font)
         {
             var result = new SKPaint(font);
-            result.IsAntialias = DefaultAntialias;
+            SetDefaults(result);
+            result.Style = SKPaintStyle.Stroke;
             return result;
         }
 
-        public static SKPaint CreatePaint()
+        public static SKPaint CreateFillPaint(SKFont font)
         {
-            var result = new SKPaint();
-            result.IsAntialias = DefaultAntialias;
+            var result = new SKPaint(font);
+            SetDefaults(result);
+            result.Style = SKPaintStyle.Fill;
+            return result;
+        }
+
+        public static SKPaint CreateStrokeAndFillPaint(SKFont font)
+        {
+            var result = new SKPaint(font);
+            SetDefaults(result);
+            result.Style = SKPaintStyle.StrokeAndFill;
             return result;
         }
 
         /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
-            SKFont skiaFont = font;
-
-            /*var typeFace = skiaFont.Typeface;*/
-
-            using SKPaint paint = CreatePaint(skiaFont);
-            SKRect textBounds = default;
-
-            /*
-            var count = typeFace.GlyphCount;
-
-            int[] codepoints = new int[count];
-
-            for (int i = 0; i < count; i++)
-            {
-                codepoints[i] = i;
-            }
-
-            ushort[] glyphs = typeFace.GetGlyphs(codepoints);
-
-            ///GetGlyph(codepoint) != 0;
-                var glyph = typeFace.GetGlyph(i);
-            skiaFont.MeasureText()
-            */
-
-            paint.MeasureText(text, ref textBounds);
-            var width = textBounds.Width;
-            var height = Math.Max(textBounds.Height, 0);
-
-            if (font.Style.HasFlag(FontStyle.Underline))
-            {
-            }
-
-            return (width, height);
+            return canvas.GetTextExtent(text, font);
         }
 
         /// <inheritdoc/>
@@ -148,7 +144,7 @@ namespace Alternet.Drawing
             Brush brush,
             PointD origin)
         {
-            DrawText(
+            canvas.DrawText(
                 text,
                 origin,
                 font,
@@ -159,8 +155,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void SetPixel(Coord x, Coord y, Color color)
         {
-            using SKPaint paint = CreatePaint(color);
-            canvas.DrawPoint((float)x, (float)y, paint);
+            canvas.DrawPoint((float)x, (float)y, color.AsFillPaint);
         }
 
         /// <inheritdoc/>
@@ -171,51 +166,12 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor)
         {
-            var locationX = (float)location.X;
-            var locationY = (float)location.Y;
-
-            SKFont skiaFont = font;
-
-            using SKPaint paint = CreatePaint(skiaFont);
-            paint.Color = foreColor;
-            paint.Style = SKPaintStyle.Fill;
-            paint.TextAlign = SKTextAlign.Left;
-
-            SKRect textBounds = default;
-            paint.MeasureText(text, ref textBounds);
-            var width = textBounds.Width;
-            var height = Math.Max(textBounds.Height, 0);
-
-            /*Debug.WriteLine($"SizeInPoints: {font.SizeInPoints}, SizeInPixels: {font.SizeInPixels}, Height: {textBounds.Height}");*/
-
-            SKRect textRect = SKRect.Create(width, height);
-            textRect.Offset(locationX, locationY);
-
-            if (backColor.IsOk)
-            {
-                using SKPaint fillPaint = CreateFillPaint(backColor);
-
-                canvas.DrawRect(textRect, fillPaint);
-            }
-
-            canvas.DrawText(text, locationX - textBounds.Left, locationY - textBounds.Top, paint);
-
-            if (font.Style.HasFlag(FontStyle.Underline))
-            {
-                // !!!
-            }
-
-            if (font.Style.HasFlag(FontStyle.Strikeout))
-            {
-                float y = textRect.Top + (height / 2);
-                SKPoint point1 = new(textRect.Left, y);
-                SKPoint point2 = new(textRect.Left + width, y);
-
-                var thickness = paint.FontMetrics.StrikeoutThickness;
-                thickness ??= Math.Min(height / 5, 2);
-                paint.StrokeWidth = thickness.Value;
-                canvas.DrawLine(point1, point2, paint);
-            }
+            canvas.DrawText(
+                text,
+                location,
+                font,
+                foreColor,
+                backColor);
         }
 
         /// <inheritdoc/>

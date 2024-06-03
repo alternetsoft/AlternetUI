@@ -68,5 +68,67 @@ namespace Alternet.Drawing
         {
             return new SKFont(SKTypeface.Default, (float)DefaultFontSize);
         }
+
+        public static SizeD GetTextExtent(
+            this SKCanvas canvas,
+            string text,
+            Font font)
+        {
+            var skFont = (SKFont)font;
+            var skFontPaint = font.AsStrokeAndFillPaint;
+
+            var measure = SKRect.Empty;
+            var measureResult = skFontPaint.MeasureText(text, ref measure);
+
+            SizeD result = new(
+                measureResult,
+                skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
+
+            return result;
+        }
+
+        public static SizeD GetTextExtent(
+            this SKCanvas canvas,
+            string text,
+            Font font,
+            out Coord? descent,
+            out Coord? externalLeading,
+            IControl? control = null)
+        {
+            descent = null;
+            externalLeading = null;
+            return canvas.GetTextExtent(text, font);
+        }
+
+        public static void DrawText(
+            this SKCanvas canvas,
+            string s,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor)
+        {
+            float x = (float)location.X;
+            float y = (float)location.Y;
+
+            var skFont = (SKFont)font;
+            var skFontPaint = font.AsStrokeAndFillPaint;
+
+            var offsetX = 0;
+            var offsetY = Math.Abs(skFont.Metrics.Top);
+
+            var measure = SKRect.Empty;
+            var measureResult = skFontPaint.MeasureText(s, ref measure);
+
+            var rect = SKRect.Create(
+                measureResult,
+                skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
+            rect.Offset(x, y);
+
+            if (backColor.IsOk)
+                canvas.DrawRect(rect, backColor.AsFillPaint);
+
+            canvas.DrawText(s, x + offsetX, y + offsetY, font, foreColor.AsStrokeAndFillPaint);
+        }
     }
 }

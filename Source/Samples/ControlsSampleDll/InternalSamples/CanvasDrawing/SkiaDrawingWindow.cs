@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.UI;
+using Alternet.UI.Extensions;
 using Alternet.Drawing;
 
 using SkiaSharp;
@@ -49,6 +50,8 @@ namespace ControlsSample
             ImageStretch = false,
         };
 
+        private readonly DrawTextParams prm = new();
+
         static SkiaDrawingWindow()
         {
             PropertyGrid.RegisterCollectionEditors();
@@ -63,7 +66,7 @@ namespace ControlsSample
 
             propGrid.Parent = panel.RightPanel;
             pictureBox.Parent = panel.LeftPanel;
-            propGrid.SetProps(control, true);
+            propGrid.SetProps(prm, true);
 
             propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
@@ -93,6 +96,8 @@ namespace ControlsSample
             button.ClickAction = PaintOnCanvas;
 
             propGrid.SuggestedInitDefaults();
+
+            DrawTextOnSkia();
         }
 
         private void GenericToSkia()
@@ -119,6 +124,39 @@ namespace ControlsSample
             control.RaisePaint(e);
 
             pictureBox.Image = (Image)bitmap;
+        }
+
+        private void DrawTextOnSkia()
+        {
+            RectD rect = (0, 0, 500, 500);
+
+            SKBitmap bitmap = new((int)rect.Width, (int)rect.Height);
+
+            SKCanvas canvas = new(bitmap);
+
+            canvas.DrawRect(rect, Brushes.White);
+
+            SkiaGraphics graphics = new(canvas);
+
+            PointD pt = new(100, 150);
+            PointD pt2 = new(300, 150);
+
+            var font = SkiaSampleControl.SampleFont;
+
+            canvas.DrawText("He|l lo", pt, font, Color.Black, Color.LightGreen);
+
+            canvas.DrawText("; hello ", pt2, font, Color.Black, Color.LightGreen);
+
+            canvas.DrawPoint(pt, Color.Red);
+            canvas.DrawPoint(pt2, Color.Red);
+
+            pictureBox.Image = (Image)bitmap;
+
+        }
+
+        private class DrawTextParams
+        {
+
         }
    }
 }

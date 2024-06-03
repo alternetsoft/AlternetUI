@@ -10,11 +10,15 @@ namespace Alternet.UI
 {
     public class SkiaSampleControl : UserControl
     {
+        private static Font? sampleFont;
+
         public SkiaSampleControl()
         {
-            Font = Control.DefaultFont
-                .Scaled(2).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
+            Font = SampleFont;
         }
+
+        public static Font SampleFont => sampleFont ??= Control.DefaultFont
+                .Scaled(2).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -25,29 +29,30 @@ namespace Alternet.UI
             var font = Font ?? Control.DefaultFont;
 
             dc.DrawText(
-                $"hello text: {font.SizeInPoints}",
-                (0, 0),
+                $"Hello:! {font.SizeInPoints}",
+                (5, 0),
                 font,
                 Color.Black,
                 Color.LightGreen);
 
             dc.DrawText(
-                $"; Hello text: {font.SizeInPoints}",
-                (150, 0),
+                $"; hello text: {font.SizeInPoints}",
+                (160, 0),
                 font,
                 Color.Black,
                 Color.LightGreen);
 
-            font = font.Scaled(2);
+            font = font.Base;
 
             dc.DrawText(
-                $"hello text 2: {font.SizeInPoints}",
+                $"Hello:! {font.SizeInPoints}",
                 (50, 150),
                 font,
                 Color.Black,
                 Color.LightGreen);
 
-            dc.SetPixel(0, 0, Color.Red);
+            dc.SetPixel(5, 0, Color.Red);
+            dc.SetPixel(160, 0, Color.Red);
             dc.SetPixel(50, 150, Color.Red);
         }
     }
