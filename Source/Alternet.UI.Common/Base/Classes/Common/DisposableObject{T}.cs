@@ -9,10 +9,10 @@ namespace Alternet.UI
 {
     public class DisposableObject<T> : DisposableObject
     {
-        private T handle;
+        private T handle = default!;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DisposableObject"/> class.
+        /// Initializes a new instance of the <see cref="DisposableObject{T}"/> class.
         /// </summary>
         /// <param name="handle">Handle to unmanaged resources.</param>
         /// <param name="disposeHandle">Specifies whether to dispose handle using
@@ -21,6 +21,16 @@ namespace Alternet.UI
             : base(disposeHandle)
         {
             this.handle = handle;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisposableObject{T}"/> class.
+        /// </summary>
+        /// <param name="disposeHandle">Specifies whether to dispose handle using
+        /// <see cref="DisposeUnmanagedResources"/>.</param>
+        public DisposableObject(bool disposeHandle)
+            : base(disposeHandle)
+        {
         }
 
         /// <summary>
