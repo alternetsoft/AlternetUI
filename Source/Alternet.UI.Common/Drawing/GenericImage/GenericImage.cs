@@ -1389,7 +1389,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file.
         /// </summary>
-        /// <param name="filename">Path to file.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
         /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
@@ -1398,12 +1398,19 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool LoadFromFile(
-            string filename,
+            string url,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1)
         {
-            return Handler.LoadFromFile(
-                filename,
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return false;
+            }
+
+            return Handler.LoadFromStream(
+                stream,
                 bitmapType,
                 index);
         }
@@ -1411,14 +1418,21 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file.
         /// </summary>
-        /// <param name="name">Path to file.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromFile(string name, string mimetype, int index = -1)
+        public virtual bool LoadFromFile(string url, string mimetype, int index = -1)
         {
-            return Handler.LoadFromFile(name, mimetype, index);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return false;
+            }
+
+            return Handler.LoadFromStream(stream, mimetype, index);
         }
 
         /// <summary>
@@ -1455,7 +1469,11 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool SaveToFile(string filename, BitmapType bitmapType)
         {
-            return Handler.SaveToFile(filename, bitmapType);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(filename);
+                return SaveToStream(stream, bitmapType);
+            });
         }
 
         /// <summary>
@@ -1466,7 +1484,11 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool SaveToFile(string filename, string mimetype)
         {
-            return Handler.SaveToFile(filename, mimetype);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(filename);
+                return SaveToStream(stream, mimetype);
+            });
         }
 
         /// <summary>
@@ -1482,7 +1504,12 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual bool SaveToFile(string filename)
         {
-            return Handler.SaveToFile(filename);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(filename);
+                var bitmapType = Image.GetBitmapTypeFromFileName(filename);
+                return SaveToStream(stream, bitmapType);
+            });
         }
 
         /// <summary>
@@ -1494,25 +1521,6 @@ namespace Alternet.Drawing
         public virtual bool SaveToStream(Stream stream, BitmapType type)
         {
             return Handler.SaveToStream(stream, type);
-        }
-
-        /// <summary>
-        /// Sets the image data without performing checks.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with malloc.</param>
-        public virtual void SetNativeData(
-            IntPtr data,
-            int width,
-            int height,
-            bool staticData = false)
-        {
-            Handler.SetNativeData(data, width, height, staticData);
         }
 
         /// <summary>
@@ -1541,53 +1549,6 @@ namespace Alternet.Drawing
         public virtual IntPtr GetNativeData()
         {
             return Handler.GetNativeData();
-        }
-
-        /// <summary>
-        /// Creates a fresh image.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with malloc.</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool CreateNativeData(int width, int height, IntPtr data, bool staticData = false)
-        {
-            return Handler.CreateNativeData(
-                width,
-                height,
-                data,
-                staticData);
-        }
-
-        /// <summary>
-        /// Creates a fresh image.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with malloc.</param>
-        /// <param name="alpha">A pointer to alpha-channel data</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool CreateNativeData(
-            int width,
-            int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false)
-        {
-            return Handler.CreateNativeData(
-                width,
-                height,
-                data,
-                alpha,
-                staticData);
         }
 
         /// <summary>

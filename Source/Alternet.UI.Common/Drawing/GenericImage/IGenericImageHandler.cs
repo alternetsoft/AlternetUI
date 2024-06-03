@@ -156,16 +156,6 @@ namespace Alternet.Drawing
             BitmapType bitmapType = BitmapType.Any,
             int index = -1);
 
-        bool LoadFromFile(
-            string filename,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1);
-
-        bool LoadFromFile(
-            string name,
-            string mimetype,
-            int index = -1);
-
         bool LoadFromStream(
             Stream stream,
             string mimetype,
@@ -173,36 +163,11 @@ namespace Alternet.Drawing
 
         bool SaveToStream(Stream stream, string mimetype);
 
-        bool SaveToFile(string filename, BitmapType bitmapType);
-
-        bool SaveToFile(string filename, string mimetype);
-
-        bool SaveToFile(string filename);
-
         bool SaveToStream(Stream stream, BitmapType type);
-
-        void SetNativeData(
-            IntPtr data,
-            int new_width,
-            int new_height,
-            bool static_data = false);
 
         IntPtr GetNativeAlphaData();
 
         IntPtr GetNativeData();
-
-        bool CreateNativeData(
-            int width,
-            int height,
-            IntPtr data,
-            bool staticData = false);
-
-        bool CreateNativeData(
-            int width,
-            int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false);
 
         void SetNativeAlphaData(
             IntPtr alpha = default,
