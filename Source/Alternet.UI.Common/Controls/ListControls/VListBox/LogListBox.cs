@@ -173,22 +173,26 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if(e.KeyData == (Keys.Control | Keys.C))
+            {
+                SelectedItemsToClipboard();
+                e.Handled = true;
+            }
+        }
+
         /// <summary>
         /// Initializes context menu with debug related actions.
         /// </summary>
         protected virtual void InitContextMenu()
         {
-            void Copy()
-            {
-                var text = SelectedItemsAsText();
-                if (string.IsNullOrEmpty(text))
-                    return;
-                Clipboard.SetText(text!);
-            }
-
             ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
 
-            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, Copy));
+            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, () => SelectedItemsToClipboard()))
+                .SetShortcutKeys(Keys.Control | Keys.C);
 
             ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
 
