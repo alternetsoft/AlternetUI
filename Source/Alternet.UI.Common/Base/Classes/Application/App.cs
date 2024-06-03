@@ -650,17 +650,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs name and value pair as "{name} = {value}".
+        /// Logs name, value and hint as "{name} = {value} ({hint})".
         /// </summary>
         /// <param name="name">Name.</param>
         /// <param name="value">Value.</param>
         /// <param name="kind">Item kind.</param>
+        /// <param name="hint">Hint string. Optinal. If present, it is
+        /// shown in () after the value.</param>
         public static void LogNameValue(
             string name,
             object? value,
-            LogItemKind kind = LogItemKind.Information)
+            LogItemKind? kind = null,
+            string? hint = null)
         {
-            Log($"{name} = {value}", kind);
+            if(hint is not null)
+            {
+                hint = $" ({hint})";
+            }
+
+            Log($"{name} = {value}{hint}", kind ?? LogItemKind.Information);
         }
 
         /// <summary>
