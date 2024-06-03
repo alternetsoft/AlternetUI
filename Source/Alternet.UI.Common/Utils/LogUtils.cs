@@ -464,23 +464,23 @@ namespace Alternet.UI
             App.LogNameValue("LinearMetrics",font.LinearMetrics);
             App.LogNameValue("Embolden", font.Embolden);
             App.LogNameValue("BaselineSnap", font.BaselineSnap);
-            App.LogNameValue("Size (float)", font.Size);
+            App.LogNameValue("Size", font.Size);
             App.LogNameValue("Spacing", font.Spacing);
-            App.LogNameValue("float Metrics.Top", font.Metrics.Top);
-            App.LogNameValue("float Metrics.Ascent", font.Metrics.Ascent);
-            App.LogNameValue("float Metrics.Descent", font.Metrics.Descent);
-            App.LogNameValue("float Metrics.Bottom", font.Metrics.Bottom);
-            App.LogNameValue("float Metrics.Leading", font.Metrics.Leading);
-            App.LogNameValue("float Metrics.AverageCharacterWidth", font.Metrics.AverageCharacterWidth);
-            App.LogNameValue("float Metrics.MaxCharacterWidth", font.Metrics.MaxCharacterWidth);
-            App.LogNameValue("float Metrics.XMin", font.Metrics.XMin);
-            App.LogNameValue("float Metrics.XMax", font.Metrics.XMax);
-            App.LogNameValue("float Metrics.XHeight", font.Metrics.XHeight);
-            App.LogNameValue("float Metrics.CapHeight", font.Metrics.CapHeight);
-            App.LogNameValue("float? Metrics.UnderlineThickness", font.Metrics.UnderlineThickness);
-            App.LogNameValue("float? Metrics.UnderlinePosition", font.Metrics.UnderlinePosition);
-            App.LogNameValue("float? Metrics.StrikeoutThickness", font.Metrics.StrikeoutThickness);
-            App.LogNameValue("float? Metrics.StrikeoutPosition", font.Metrics.StrikeoutPosition);
+            App.LogNameValue("Metrics.Top", font.Metrics.Top, null, "Greatest distance above the baseline for any glyph. (<= 0).");
+            App.LogNameValue("Metrics.Ascent", font.Metrics.Ascent, null, "Recommended distance above the baseline. (<= 0).");
+            App.LogNameValue("Metrics.Descent", font.Metrics.Descent, null, "Recommended distance below the baseline. (>= 0).");
+            App.LogNameValue("Metrics.Bottom", font.Metrics.Bottom, null, "Greatest distance below the baseline for any glyph. (>= 0).");
+            App.LogNameValue("Metrics.Leading", font.Metrics.Leading, null, "Recommended distance to add between lines of text. (>= 0).");
+            App.LogNameValue("Metrics.AverageCharacterWidth", font.Metrics.AverageCharacterWidth, null, "Average character width. (>= 0).");
+            App.LogNameValue("Metrics.MaxCharacterWidth", font.Metrics.MaxCharacterWidth, null, "Max character width. (>= 0).");
+            App.LogNameValue("Metrics.XMin", font.Metrics.XMin, null, "Minimum bounding box x value for all glyphs.");
+            App.LogNameValue("Metrics.XMax", font.Metrics.XMax, null, "Maximum bounding box x value for all glyphs.");
+            App.LogNameValue("Metrics.XHeight", font.Metrics.XHeight, null, "Height of an 'x' in px. 0 if no 'x' in face.");
+            App.LogNameValue("Metrics.CapHeight", font.Metrics.CapHeight, null, "Cap height. Will be > 0, or 0 if cannot be determined.");
+            App.LogNameValue("Metrics.UnderlineThickness?", font.Metrics.UnderlineThickness, null, "Thickness of underline. 0 - not determined. null - not set.");
+            App.LogNameValue("Metrics.UnderlinePosition?", font.Metrics.UnderlinePosition, null, "Position of top of underline relative to baseline. <0 - above. >0 - below. 0 - on baseline");
+            App.LogNameValue("Metrics.StrikeoutThickness?", font.Metrics.StrikeoutThickness, null, "Thickness of strikeout.");
+            App.LogNameValue("Metrics.StrikeoutPosition?", font.Metrics.StrikeoutPosition, null, "Position of the bottom of the strikeout stroke relative to the baseline. Is negative when valid.");
 
             App.LogEmptyLine();
             LogMeasureSkiaFont("Hello", font);
@@ -650,70 +650,59 @@ namespace Alternet.UI
             }
         }
 
-        internal static void LogAppDomainTargetFrameworkName()
-        {
-            App.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
-
-            var frameworkName = new System.Runtime.Versioning.FrameworkName(
-                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
-
-            if (frameworkName.Version >= new Version(4, 5))
-            {
-                // run code
-            }
-        }
-
-        /*/// <summary>
+        /// <summary>
         /// Tests different methods of getting Argb of the system color.
         /// </summary>
-        internal static void TestSystemColors()
+        public static void TestSystemColors(
+            Func<KnownSystemColor, int> method1,
+            Func<KnownSystemColor, int> method2)
         {
-            static void Test(KnownColor color)
+            void Test(KnownSystemColor color)
             {
-                var oldArgb = KnownColorTable.GetSystemColorArgb(color);
-                var newArgb = KnownColorTable.GetSystemColorArgbUseSystemSettings(color);
-                var equal = oldArgb == newArgb;
+                var argb1 = method1(color);
+                var argb2 = method2(color);
+                var equal = argb1 == argb2;
 
-                var oldArgbStr = oldArgb.ToString("X");
-                var newArgbStr = newArgb.ToString("X");
+                var oldArgbStr = argb1.ToString("X");
+                var newArgbStr = argb2.ToString("X");
 
-                BaseApplication.Log($"{equal} old: {oldArgbStr} new: {newArgbStr}");
+                App.Log($"{equal} 1: {oldArgbStr} 2: {newArgbStr}");
             }
 
-            Test(KnownColor.ActiveBorder);
-            Test(KnownColor.ActiveCaption);
-            Test(KnownColor.ActiveCaptionText);
-            Test(KnownColor.AppWorkspace);
-            Test(KnownColor.Control);
-            Test(KnownColor.ControlDark);
-            Test(KnownColor.ControlDarkDark);
-            Test(KnownColor.ControlLight);
-            Test(KnownColor.ControlLightLight);
-            Test(KnownColor.ControlText);
-            Test(KnownColor.Desktop);
-            Test(KnownColor.GrayText);
-            Test(KnownColor.Highlight);
-            Test(KnownColor.HighlightText);
-            Test(KnownColor.HotTrack);
-            Test(KnownColor.InactiveBorder);
-            Test(KnownColor.InactiveCaption);
-            Test(KnownColor.InactiveCaptionText);
-            Test(KnownColor.Info);
-            Test(KnownColor.InfoText);
-            Test(KnownColor.Menu);
-            Test(KnownColor.MenuText);
-            Test(KnownColor.ScrollBar);
-            Test(KnownColor.Window);
-            Test(KnownColor.WindowFrame);
-            Test(KnownColor.WindowText);
-            Test(KnownColor.ButtonFace);
-            Test(KnownColor.ButtonHighlight);
-            Test(KnownColor.ButtonShadow);
-            Test(KnownColor.GradientActiveCaption);
-            Test(KnownColor.GradientInactiveCaption);
-            Test(KnownColor.MenuBar);
-            Test(KnownColor.MenuHighlight);
-        }*/
+            Test(KnownSystemColor.ActiveBorder);
+            Test(KnownSystemColor.ActiveCaption);
+            Test(KnownSystemColor.ActiveCaptionText);
+            Test(KnownSystemColor.AppWorkspace);
+            Test(KnownSystemColor.Control);
+            Test(KnownSystemColor.ControlDark);
+            Test(KnownSystemColor.ControlDarkDark);
+            Test(KnownSystemColor.ControlLight);
+            Test(KnownSystemColor.ControlLightLight);
+            Test(KnownSystemColor.ControlText);
+            Test(KnownSystemColor.Desktop);
+            Test(KnownSystemColor.GrayText);
+            Test(KnownSystemColor.Highlight);
+            Test(KnownSystemColor.HighlightText);
+            Test(KnownSystemColor.HotTrack);
+            Test(KnownSystemColor.InactiveBorder);
+            Test(KnownSystemColor.InactiveCaption);
+            Test(KnownSystemColor.InactiveCaptionText);
+            Test(KnownSystemColor.Info);
+            Test(KnownSystemColor.InfoText);
+            Test(KnownSystemColor.Menu);
+            Test(KnownSystemColor.MenuText);
+            Test(KnownSystemColor.ScrollBar);
+            Test(KnownSystemColor.Window);
+            Test(KnownSystemColor.WindowFrame);
+            Test(KnownSystemColor.WindowText);
+            Test(KnownSystemColor.ButtonFace);
+            Test(KnownSystemColor.ButtonHighlight);
+            Test(KnownSystemColor.ButtonShadow);
+            Test(KnownSystemColor.GradientActiveCaption);
+            Test(KnownSystemColor.GradientInactiveCaption);
+            Test(KnownSystemColor.MenuBar);
+            Test(KnownSystemColor.MenuHighlight);
+        }
 
         /// <summary>
         /// Enumerates log actions.
@@ -761,6 +750,19 @@ namespace Alternet.UI
             addLogAction("Log SKFontManager", LogUtils.LogSkiaFontManager);
             addLogAction("Log SKFont", LogUtils.LogSkiaFont);
             addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
+        }
+
+        internal static void LogAppDomainTargetFrameworkName()
+        {
+            App.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
+
+            var frameworkName = new System.Runtime.Versioning.FrameworkName(
+                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
+
+            if (frameworkName.Version >= new Version(4, 5))
+            {
+                // run code
+            }
         }
     }
 }
