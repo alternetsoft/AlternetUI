@@ -390,6 +390,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="ShortcutKeys"/> but implemented as method.
+        /// </summary>
+        /// <param name="keys"></param>
+        public void SetShortcutKeys(Keys keys) => ShortcutKeys = keys;
+
+        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
@@ -402,9 +408,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc />
-        public override void RaiseClick()
+        protected override void OnClick(EventArgs e)
         {
-            base.RaiseClick();
+            base.OnClick(e);
             CommandHelpers.ExecuteCommandSource(this);
         }
 

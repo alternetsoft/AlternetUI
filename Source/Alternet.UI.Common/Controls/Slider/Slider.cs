@@ -151,7 +151,7 @@ namespace Alternet.UI
                 if (this.value == value)
                     return;
                 this.value = value;
-                RaiseValueChanged(EventArgs.Empty);
+                RaiseValueChanged();
             }
         }
 
@@ -387,12 +387,11 @@ namespace Alternet.UI
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        public virtual void RaiseValueChanged(EventArgs e)
+        public void RaiseValueChanged()
         {
             Designer?.RaisePropertyChanged(this, nameof(Value));
-            OnValueChanged(e);
-            ValueChanged?.Invoke(this, e);
+            OnValueChanged(EventArgs.Empty);
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

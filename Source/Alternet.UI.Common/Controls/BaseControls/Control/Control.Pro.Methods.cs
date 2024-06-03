@@ -123,15 +123,8 @@ namespace Alternet.UI
             return new SizeD(maxWidth, maxHeight);
         }
 
-        /// <summary>
-        /// Raises the <see cref="SizeChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
         protected virtual void OnSizeChanged(EventArgs e)
         {
-            SizeChanged?.Invoke(this, e);
-            OnResize(e);
         }
 
         /// <summary>
@@ -153,13 +146,9 @@ namespace Alternet.UI
             Resize?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="LocationChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
-        protected virtual void OnLocationChanged(EventArgs e) =>
-            LocationChanged?.Invoke(this, e);
+        protected virtual void OnLocationChanged(EventArgs e)
+        {
+        }
 
         /// <summary>
         /// Called when a <see cref="Control"/> is inserted into
@@ -249,6 +238,14 @@ namespace Alternet.UI
         {
         }
 
+        protected virtual void OnActivated(EventArgs e)
+        {
+        }
+
+        protected virtual void OnDeactivated(EventArgs e)
+        {
+        }
+
         /// <summary>
         /// Called when the native conrol location is changed.
         /// </summary>
@@ -291,13 +288,9 @@ namespace Alternet.UI
             KeyPress?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="Control.TextChanged" /> event.</summary>
-        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTextChanged(EventArgs e)
         {
-            TextChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -554,54 +547,24 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragDrop"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> that contains the
-        /// event data.</param>
         protected virtual void OnDragDrop(DragEventArgs e)
         {
-            DragDrop?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragStart"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragStartEventArgs"/> that contains the
-        /// event data.</param>
         protected virtual void OnDragStart(DragStartEventArgs e)
         {
-            DragStart?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragOver"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> that contains the
-        /// event data.</param>
         protected virtual void OnDragOver(DragEventArgs e)
         {
-            DragOver?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragEnter"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/>
-        /// that contains the event data.</param>
         protected virtual void OnDragEnter(DragEventArgs e)
         {
-            DragEnter?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragLeave"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> that
-        /// contains the event data.</param>
         protected virtual void OnDragLeave(EventArgs e)
         {
-            DragLeave?.Invoke(this, e);
         }
 
         /// <summary>
@@ -627,8 +590,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
-            LastDoubleClickTimestamp = e.Timestamp;
-            MouseDoubleClick?.Invoke(this, e);
         }
 
         /// <summary>
@@ -636,7 +597,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseWheel(MouseEventArgs e)
         {
-            MouseWheel?.Invoke(this, e);
         }
 
         /// <summary>

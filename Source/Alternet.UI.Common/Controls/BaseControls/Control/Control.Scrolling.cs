@@ -114,16 +114,19 @@ namespace Alternet.UI
             return Handler.GetScrollBarMaximum(isVertical);
         }
 
-        public virtual void RaiseScroll(ScrollEventArgs e) => OnScroll(e);
-
         /// <summary>
         /// Raises the <see cref="Scroll"/> event.
         /// </summary>
         /// <param name="e">A <see cref="ScrollEventArgs"/> that contains the event
         /// data.</param>
+        public void RaiseScroll(ScrollEventArgs e)
+        {
+            OnScroll(e);
+            Scroll?.Invoke(this, e);
+        }
+
         protected virtual void OnScroll(ScrollEventArgs e)
         {
-            Scroll?.Invoke(this, e);
         }
     }
 }
