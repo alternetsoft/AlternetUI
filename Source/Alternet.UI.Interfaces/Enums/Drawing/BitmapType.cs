@@ -19,167 +19,97 @@ namespace Alternet.UI
         /// <summary>
         /// Bitmap type is 'Bmp'.
         /// </summary>
-        Bmp,
-
-        /// <summary>
-        /// Bitmap type is 'BmpResource'.
-        /// </summary>
-        BmpResource,
-
-        /// <summary>
-        /// Bitmap type is 'Resource' (same as 'BmpResource').
-        /// </summary>
-        Resource = BmpResource,
+        Bmp = 1,
 
         /// <summary>
         /// Bitmap type is 'Ico'.
         /// </summary>
-        Ico,
-
-        /// <summary>
-        /// Bitmap type is 'IcoResource'.
-        /// </summary>
-        IcoResource,
+        Ico = 3,
 
         /// <summary>
         /// Bitmap type is 'Cur'.
         /// </summary>
-        Cur,
-
-        /// <summary>
-        /// Bitmap type is 'CurResource'.
-        /// </summary>
-        CurResource,
+        Cur = 5,
 
         /// <summary>
         /// Bitmap type is 'Xbm'.
         /// </summary>
-        Xbm,
+        Xbm = 7,
 
         /// <summary>
         /// Bitmap type is 'XbmData'.
         /// </summary>
-        XbmData,
+        XbmData = 8,
 
         /// <summary>
         /// Bitmap type is 'Xpm'.
         /// </summary>
-        Xpm,
+        Xpm = 9,
 
         /// <summary>
         /// Bitmap type is 'XpmData'.
         /// </summary>
-        XpmData,
+        XpmData = 10,
 
         /// <summary>
         /// Bitmap type is 'Tiff'.
         /// </summary>
-        Tiff,
-
-        /// <summary>
-        /// Bitmap type is 'TiffResource'.
-        /// </summary>
-        TiffResource,
+        Tiff = 11,
 
         /// <summary>
         /// Bitmap type is 'Gif'.
         /// </summary>
-        Gif,
-
-        /// <summary>
-        /// Bitmap type is 'GifResource'.
-        /// </summary>
-        GifResource,
+        Gif = 13,
 
         /// <summary>
         /// Bitmap type is 'Png'.
         /// </summary>
-        Png,
-
-        /// <summary>
-        /// Bitmap type is 'PngResource'.
-        /// </summary>
-        PngResource,
+        Png = 15,
 
         /// <summary>
         /// Bitmap type is 'Jpeg'.
         /// </summary>
-        Jpeg,
-
-        /// <summary>
-        /// Bitmap type is 'JpegResource'.
-        /// </summary>
-        JpegResource,
+        Jpeg = 17,
 
         /// <summary>
         /// Bitmap type is 'Pnm'.
         /// </summary>
-        Pnm,
-
-        /// <summary>
-        /// Bitmap type is 'PnmResource'.
-        /// </summary>
-        PnmResource,
+        Pnm = 19,
 
         /// <summary>
         /// Bitmap type is 'Pcx'.
         /// </summary>
-        Pcx,
-
-        /// <summary>
-        /// Bitmap type is 'PcxResource'.
-        /// </summary>
-        PcxResource,
+        Pcx = 21,
 
         /// <summary>
         /// Bitmap type is 'Pict'.
         /// </summary>
-        Pict,
-
-        /// <summary>
-        /// Bitmap type is 'PictResource'.
-        /// </summary>
-        PictResource,
+        Pict = 23,
 
         /// <summary>
         /// Bitmap type is 'Icon'.
         /// </summary>
-        Icon,
-
-        /// <summary>
-        /// Bitmap type is 'IconResource'.
-        /// </summary>
-        IconResource,
+        Icon = 25,
 
         /// <summary>
         /// Bitmap type is 'Ani'.
         /// </summary>
-        Ani,
+        Ani = 27,
 
         /// <summary>
         /// Bitmap type is 'Iff'.
         /// </summary>
-        Iff,
+        Iff = 28,
 
         /// <summary>
         /// Bitmap type is 'Tga'.
         /// </summary>
-        Tga,
+        Tga = 29,
 
         /// <summary>
         /// Bitmap type is 'MacCursor'.
         /// </summary>
-        MacCursor,
-
-        /// <summary>
-        /// Bitmap type is 'MacCursorResource'.
-        /// </summary>
-        MacCursorResource,
-
-        /// <summary>
-        /// Max possible value in <see cref="BitmapType"/>.
-        /// </summary>
-        Max,
+        MacCursor = 30,
 
         /// <summary>
         /// Any bitmap type.
