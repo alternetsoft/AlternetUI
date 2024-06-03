@@ -7,7 +7,7 @@ namespace Alternet.Drawing
     /// display manipulations (such
     /// as ellipsis insertion). This class cannot be inherited.
     /// </summary>
-    public sealed class TextFormat : BaseObject
+    public class TextFormat : BaseObject
     {
         /// <summary>
         /// Gets a default <see cref="TextFormat"/> object.
