@@ -13,6 +13,14 @@ namespace Alternet.Drawing
     {
         GenericImageLoadFlags LoadFlags { get; set; }
 
+        public enum PixelStrategy
+        {
+            Pixels,
+            RgbData,
+        }
+
+        PixelStrategy BestStrategy {get;}
+
         bool HasAlpha { get; }
 
         bool HasMask { get; }
@@ -22,6 +30,7 @@ namespace Alternet.Drawing
         int Height { get; }
 
         bool IsOk { get; }
+
 
         void SetAlpha(int x, int y, byte alpha);
 
@@ -174,5 +183,14 @@ namespace Alternet.Drawing
             bool staticData = false);
 
         void SetNativeData(IntPtr data, bool staticData = false);
+
+        /*
+        SKColor[] Pixels {get;set;}
+        
+        RGBValue[] RgbData {get;set;}
+        
+        byte[] AlphaData {get;set;}
+
+        */
     }
 }

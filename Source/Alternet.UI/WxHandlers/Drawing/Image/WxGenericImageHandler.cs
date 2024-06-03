@@ -14,6 +14,11 @@ namespace Alternet.Drawing
 {
     internal class WxGenericImageHandler : DisposableObject<IntPtr>, IGenericImageHandler
     {
+        public IGenericImageHandler.PixelStrategy BestStrategy
+        {
+            get => IGenericImageHandler.PixelStrategy.RgbData;
+        }
+
         public int Width => UI.Native.GenericImage.GetWidth(Handle);
 
         public int Height => UI.Native.GenericImage.GetHeight(Handle);
