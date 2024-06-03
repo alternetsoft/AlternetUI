@@ -79,7 +79,8 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override SKPaint CreateSkiaPaint()
         {
-            return base.CreateSkiaPaint();
+            var result = base.CreateSkiaPaint();
+            return result;
         }
 
         /// <inheritdoc/>

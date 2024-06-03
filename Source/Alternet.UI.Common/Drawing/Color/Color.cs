@@ -36,7 +36,7 @@ namespace Alternet.Drawing
     [DebuggerDisplay("{NameAndARGBValue}")]
     [Serializable]
     [TypeConverter(typeof(ColorConverter))]
-    public sealed partial class Color : IEquatable<Color>
+    public partial class Color : IEquatable<Color>
     {
         // Shift counts and bit masks for A, R, G, B components in ARGB mode
 
@@ -108,7 +108,12 @@ namespace Alternet.Drawing
 
         private SolidBrush? asBrush;
         private Pen? asPen;
+
         private SKColor? skiaColor;
+        private SKPaint? strokeAndFillPaint;
+        private SKPaint? strokePaint;
+        private SKPaint? fillPaint;
+
         internal Color()
         {
         }
@@ -352,6 +357,48 @@ namespace Alternet.Drawing
         public Pen AsPen => GetAsPen(1);
 
         /// <summary>
+        /// Gets <see cref="SKPaint"/> for this color with
+        /// <see cref="SKPaintStyle.StrokeAndFill"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public SKPaint AsStrokeAndFillPaint
+        {
+            get
+            {
+                strokeAndFillPaint ??= SkiaGraphics.CreateStrokeAndFillPaint((SKColor)this);
+                return strokeAndFillPaint;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this color with
+        /// <see cref="SKPaintStyle.Stroke"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public SKPaint AsStrokePaint
+        {
+            get
+            {
+                strokePaint ??= SkiaGraphics.CreateStrokePaint((SKColor)this);
+                return strokePaint;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this color with
+        /// <see cref="SKPaintStyle.Fill"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public SKPaint AsFillPaint
+        {
+            get
+            {
+                fillPaint ??= SkiaGraphics.CreateFillPaint((SKColor)this);
+                return fillPaint;
+            }
+        }
+
+        /// <summary>
         /// Gets the name of this <see cref="Color"/>.
         /// </summary>
         /// <value>The name of this <see cref="Color"/>.</value>
@@ -418,6 +465,15 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(RGBValue rgb) =>
             Color.FromRgb(rgb.R, rgb.G, rgb.B);
+
+        /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='SKPaint'/>
+        /// with <see cref="SKPaintStyle.Fill"/> style.
+        /// </summary>
+        public static explicit operator SKPaint(Color color)
+        {
+            return color.AsStrokeAndFillPaint;
+        }
 
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='SKColor'/>.

@@ -29,6 +29,9 @@ namespace Alternet.Drawing
         private Font[]? fonts;
         private Font? baseFont;
         private FontFamily? fontFamily;
+        private SKPaint? strokeAndFillPaint;
+        private SKPaint? strokePaint;
+        private SKPaint? fillPaint;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -434,6 +437,48 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="SKPaint"/> for this font with
+        /// <see cref="SKPaintStyle.StrokeAndFill"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPaint AsStrokeAndFillPaint
+        {
+            get
+            {
+                strokeAndFillPaint ??= SkiaGraphics.CreateStrokeAndFillPaint(SkiaFont);
+                return strokeAndFillPaint;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this font with
+        /// <see cref="SKPaintStyle.Stroke"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPaint AsStrokePaint
+        {
+            get
+            {
+                strokePaint ??= SkiaGraphics.CreateStrokePaint(SkiaFont);
+                return strokePaint;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this font with
+        /// <see cref="SKPaintStyle.Fill"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPaint AsFillPaint
+        {
+            get
+            {
+                fillPaint ??= SkiaGraphics.CreateFillPaint(SkiaFont);
+                return fillPaint;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="SKFont"/> for this font.
         /// </summary>
         public virtual SKFont SkiaFont
@@ -453,12 +498,15 @@ namespace Alternet.Drawing
                     SKFontStyleWidth.Normal,
                     skiaSlant);
 
-                skiaFont = new(typeFace, (float)SizeInPixels);
+                skiaFont = new(typeFace, (float)(SizeInPixels));
                 return skiaFont;
             }
 
             set
             {
+                strokeAndFillPaint = null;
+                fillPaint = null;
+                strokePaint = null;
                 skiaFont = value;
             }
         }

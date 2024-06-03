@@ -236,7 +236,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when exception is raised inside <see cref="AvoidException"/>.
         /// </summary>
-        event EventHandler<ControlExceptionEventArgs>? ProcessException;
+        event EventHandler<ThrowExceptionEventArgs>? ProcessException;
 
         /// <summary>
         /// Occurs when the mouse pointer enters the control.
