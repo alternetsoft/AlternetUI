@@ -4,6 +4,8 @@ using System.Text;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace PaintSample
 {
     public partial class MainWindow : Window
@@ -92,6 +94,7 @@ namespace PaintSample
             testMenu.Add("Gen sample image (GenericImage.GetData)", DoGenImageUseGetData);
             testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
             testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
+            testMenu.Add("Fill green (new GenericImage with native data using SKColors)", DoFillGreenUseSkiaColors);
             testMenu.Add("Make file grey...", DoMakeFileGray);
             testMenu.Add("Load Toucan image", DoLoadToucanImage);
 
@@ -511,6 +514,38 @@ namespace PaintSample
             Document.Bitmap = (Bitmap)image;
         }
 
+        public unsafe void DoFillGreenUseSkiaColors()
+        {
+            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
+            if (result is null)
+                return;
+
+            var alpha = (byte)result.Value;
+            App.Log($"Fill green color (alpha = {alpha}) using new image with native data");
+
+            SizeI size = (600, 600);
+            var pixelCount = size.PixelCount;
+            var height = size.Height;
+            var width = size.Width;
+            SKColor color = RGBValue.ToSkia(Color.Green, alpha);
+
+            var colors = new SKColor[pixelCount];
+
+            fixed (SKColor* rgbPtr = colors)
+            {
+                var ptr = rgbPtr;
+
+                for (int i = 0; i < pixelCount; i++)
+                {
+                    *ptr = color;
+                    ptr++;
+                }
+            }
+
+            GenericImage image = new(size.Width, size.Height, colors);
+            Document.Bitmap = (Bitmap)image;
+        }
+
         public unsafe void DoFillRedUseSetData()
         {
             var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
@@ -525,25 +560,27 @@ namespace PaintSample
             var height = size.Height;
             var width = size.Width;
             RGBValue rgb = Color.Red;
-            byte r = rgb.R, g = rgb.G, b = rgb.B;
 
-            var alphaData = BaseMemory.Alloc(pixelCount);
-            BaseMemory.Fill(alphaData, alpha, pixelCount);
+            var alphaData = new byte[pixelCount];
+            var rgbData = new RGBValue[pixelCount];
 
-            var dataPtr = BaseMemory.Alloc(pixelCount * 3);
-            byte* data = (byte*)dataPtr;
-
-            for (int y = 0; y < height; y++)
+            fixed(byte* alphaPtr = alphaData)
             {
-                for (int x = 0; x < width; x++)
+                BaseMemory.Fill((IntPtr)alphaPtr, alpha, pixelCount);
+            }
+
+            fixed (RGBValue* rgbPtr = rgbData)
+            {
+                var ptr = rgbPtr;
+
+                for(int i = 0; i < pixelCount; i++)
                 {
-                    *data++ = r;
-                    *data++ = g;
-                    *data++ = b;
+                    *ptr = rgb;
+                    ptr++;
                 }
             }
 
-            GenericImage image = new(size.Width, size.Height, dataPtr, alphaData, false);
+            GenericImage image = new(size.Width, size.Height, rgbData, alphaData);
             Document.Bitmap = (Bitmap)image;
         }
 

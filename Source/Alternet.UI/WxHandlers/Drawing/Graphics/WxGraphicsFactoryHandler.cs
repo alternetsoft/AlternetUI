@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
@@ -348,20 +350,26 @@ namespace Alternet.Drawing
         public IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            bool staticData = false)
+            RGBValue[] data)
         {
-            return new WxGenericImageHandler(width, height, data, staticData);
+            return new WxGenericImageHandler(width, height, data);
         }
 
         public IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false)
+            SKColor[] data)
         {
-            return new WxGenericImageHandler(width, height, data, alpha, staticData);
+            return new WxGenericImageHandler(width, height, data);
+        }
+
+        public IGenericImageHandler CreateGenericImageHandler(
+            int width,
+            int height,
+            RGBValue[] data,
+            byte[] alpha)
+        {
+            return new WxGenericImageHandler(width, height, data, alpha);
         }
     }
 }

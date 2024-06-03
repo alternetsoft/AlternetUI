@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public interface IGraphicsFactoryHandler : IDisposable
@@ -148,14 +150,17 @@ namespace Alternet.Drawing
         IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            bool staticData = false);
+            RGBValue[] data);
 
         IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false);
+            SKColor[] data);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            int width,
+            int height,
+            RGBValue[] data,
+            byte[] alpha);
     }
 }

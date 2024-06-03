@@ -162,16 +162,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">Specifies the width of the image.</param>
         /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If static_data is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with
-        /// malloc.</param>
+        /// <param name="data">Image data.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, IntPtr data, bool staticData = false)
+        public GenericImage(int width, int height, SKColor[] data)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data, staticData);
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data);
         }
 
         /// <summary>
@@ -180,22 +175,29 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">Specifies the width of the image.</param>
         /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="alpha">A pointer to alpha-channel data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with
-        /// malloc.</param>
+        /// <param name="data">RGB data.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
+        public GenericImage(int width, int height, RGBValue[] data)
+        {
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericImage"/> class.
+        /// Creates an image from data in memory.
+        /// </summary>
+        /// <param name="width">Specifies the width of the image.</param>
+        /// <param name="height">Specifies the height of the image.</param>
+        /// <param name="data">RGB data.</param>
+        /// <param name="alpha">Alpha-channel data.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public GenericImage(int width, int height, RGBValue[] data, byte[] alpha)
         {
             Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
                 width,
                 height,
                 data,
-                alpha,
-                staticData);
+                alpha);
         }
 
         /// <summary>
@@ -286,6 +288,67 @@ namespace Alternet.Drawing
                 return false;
             }
             return CanRead(stream);
+        }
+
+        public static unsafe RGBValue[] GetRGBValues(SKColor[] data)
+        {
+            var length = data.Length;
+
+            var result = new RGBValue[length];
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                fixed (RGBValue* resultPtr = result)
+                {
+                    var aptr = resultPtr;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        *aptr = (*ptr);
+                        ptr++;
+                        aptr++;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static unsafe byte[] GetAlphaValues(SKColor[] data)
+        {
+            var length = data.Length;
+
+            var alpha = new byte[length];
+
+            fixed(SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                fixed (byte* alphaPtr = alpha)
+                {
+                    var aptr = alphaPtr;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        *aptr = (*ptr).Alpha;
+                        ptr++;
+                        aptr++;
+                    }
+                }
+            }
+
+            return alpha;
+        }
+
+        public static void SeparateAlphaData(
+            SKColor[] data,
+            out RGBValue[] rgb,
+            out byte[] alpha)
+        {
+            rgb = GetRGBValues(data);
+            alpha = GetAlphaValues(data);
         }
 
         public static SKBitmap ToSkia(GenericImage bitmap)
